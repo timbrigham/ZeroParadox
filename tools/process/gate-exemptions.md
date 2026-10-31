@@ -11,14 +11,16 @@ reader position on the private working folder are here.
 
 **The exemption covers the VERIFICATION CODE (2026-08-15).** `tools/verify/**` is operating
 machinery on the same argument: a checker makes no claim about the mathematics, so there is nothing
-for an editorial or adversary gate to review. **`/rely` reviews that layer instead, and it BLOCKS** —
-the two are a pair, so weakening the routing re-opens this exemption as a hole.
+for an editorial or adversary gate to review. **`/rely` reviews that layer instead** — the two are a
+pair. Which actions `rely` gates is the served admission set (`gitRobot admission(action=...)`), and
+what it still owes at the bytes in hand is `verdictLedger coverage_gap(step='rely', admission=['rely'])`.
+Dropping `rely` from every admission set it sits in re-opens this exemption as a hole.
 
 **AND IT COVERS `tools/process/**` — DECLARED, NOT DERIVED (2026-08-20).** That directory is **this
 file's body**: `CLAUDE.md` is a routing table (a condition, the exact file to open, the cost of
 skipping) and `tools/process/` holds what the routing points at. Same argument, same price —
 operating instructions asserting nothing about the mathematics, so editorial and adversary have no
-claim to review, and **`/rely` covers it and BLOCKS.** The carve is written here **because the
+claim to review, and **`/rely` covers it**, on the terms of the paragraph above. The carve is written here **because the
 paragraph below forbids inferring it**; do not extend it to a further directory by analogy — write
 the next one down too, or it is not exempt. **Fence: anything asserting mathematics belongs in the
 corpus and is gated normally.** Criterion for what may live there, and the two sections that
@@ -93,12 +95,12 @@ absent-by-design parameters, is served by the server itself at `docs://gitrobot/
 | **`scripts/`** | every PDF build script, `zp_utils.py`, `scan_pdfs.py`, `PDF_Rendering_Standards.md` | **yes — public** |
 | **`tools/process/`** | `CLAUDE.md`'s body — the argument behind each routed rule | **yes — public** |
 | **`.claude/commands/`** | the review-gate definitions Claude Code reads | **yes — public** |
-| **`.claude-local/`** | signals (`*_cleared.txt`), `batch_state.json`, `gate_round.json`, `DEFECTS.md`, `notes/`, `feedback/`, `outreach/`, `papers/` | **not tracked by THIS repo — it is its OWN repository**, with its own history, a `master` branch and a private remote (`ZeroParadoxLocal`). The parent additionally ignores the path |
+| **`.claude-local/`** | `batch_state.json`, `gate_round.json`, `DEFECTS.md`, `notes/`, `feedback/`, `outreach/`, `papers/` | **not tracked by THIS repo — it is its OWN repository**, with its own history, a `master` branch and a private remote (`ZeroParadoxLocal`). The parent additionally ignores the path |
 
 **The line: artifacts of VERIFICATION are public; artifacts of PROCESS-IN-FLIGHT are private.**
 A checker and its baseline are reproducible from the public corpus, so withholding them protected
-nothing and only made the claims unauditable. A signal recording what this session reviewed is
-per-push state that churns on every commit.
+nothing and only made the claims unauditable. A batch state or a gate-round counter is per-session
+state that churns on every commit.
 
 ⚠ **THERE ARE NO MIRRORS ANY MORE, AND RE-CREATING ONE IS A DEFECT.** Three existed and **two had
 silently drifted**: the build scripts, duplicated between `scripts/` and the private folder
@@ -123,8 +125,8 @@ catching exactly that proposal.)
 it:** the 11 files in `.claude/commands/` are the real briefs, run verbatim, and the published
 surface as a whole references a substantial number of artifacts inside `.claude-local/` —
 measure it rather than quoting a figure; an earlier count here said 66 and an adversary pass
-measured considerably more across the wider surface — the notes, the defect ledger, the papers library, the DeepSeek
-screening scripts, and the per-push signal files. Those are deliberately private (see § *Private
+measured considerably more across the wider surface — the notes, the defect ledger, the papers library, and the DeepSeek
+screening scripts. Those are deliberately private (see § *Private
 Working Folder*), so a reader can see exactly what each gate is instructed to do and cannot open
 every artifact it names. That is the honest position and it should be stated rather than discovered:
 **the method is public; some of the material it operates on is not.**

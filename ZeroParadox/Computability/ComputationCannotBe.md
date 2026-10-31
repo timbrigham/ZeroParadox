@@ -1,0 +1,42 @@
+# ComputationCannotBe — ride-along documentation
+
+Ride-along for `ZeroParadox/Computability/ComputationCannotBe.lean`.
+
+## Formal Overview (AI-assisted)
+
+An index of what this corpus proves, and what it assumes, about computation: Kleene's second
+recursion theorem and its fixed points, the undecidability of halting, Rice's theorem, self-printing
+codes, and halting read as occurrence. It keeps the line between what is proved and what is
+committed. In the framework's terms it is the **computational face**, a `*CannotBe.lean` index
+beside `ZeroParadox/BottomCannotBe.lean`, `ZeroParadox/Order/SnapCannotBe.lean`,
+`ZeroParadox/Ordinal/Epsilon0CannotBe.lean`, `ZeroParadox/Category/ChoiceCannotBe.lean` and
+`ZeroParadox/DieCannotBe.lean`, which index the bottom, the snap, ε₀, the framework's relationship
+to `Classical.choice`, and the die's premises.
+
+Its `#check` lines state no new results: each names an already-proven declaration in its home file,
+so the `import`s recompile those files and the index cannot point at a dead or renamed result. Its
+three anonymous `example`s are controls and create no declarations. The first two each falsify one
+reading: that meeting `IsComputationalQuine` pins self-reference (every constant code meets it), and
+that being a Quine atom makes something move (c₀ is one while a state sequence at c₀ never steps).
+The third supports a CARRIER scope: `MachinePhase`, a finite carrier, admits no `SelfCopyRef` map.
+
+## The honest status of a `#check`-only line
+
+The `#check` **lines** cannot overclaim — they create no declarations. The `--` **glosses
+beside them can.** So this file is built under the standing convention:
+
+* **`Statement:`** — an accurate restatement of what the declaration proves.
+* **`Reading:`** — the framework's interpretation, explicitly NOT a claim about the theorem.
+
+No gloss is anything else, and each gloss sits ABOVE the `#check` it describes. Where a `Reading:` is
+load-bearing, the commitment carrying it is named.
+
+## The commitments the glosses name
+
+* **`KleeneStructure`** — that the class's `botCode` is the computational face of `bot`, the bottom of
+  the `ZPSemilattice L`. The field `botCode_is_quine` supplies only a periodicity condition, which
+  constant codes meet.
+* **The occurrence commitment** (instantiation occurs) — as stated in `ZeroParadox/Order/Snap.lean`'s Formal Overview, from
+  which, together with DA-1, the snap occurs. T-SNAP holds with nothing moving
+  (`tsnap_holds_but_nothing_moves`). In the computational face the framework reads occurrence as
+  halting (`occurs_iff_halts`); that identification is a modelling choice, not a theorem.

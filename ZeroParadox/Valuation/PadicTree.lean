@@ -77,16 +77,14 @@ def tree : SimpleGraph Vtx where
 
 /-! ## § II. `tree_isTree`
 
-**Acyclicity is proved directly from the definition (`IsAcyclic` = no cyclic walk), choice-free** — it
-does not touch Mathlib's bridge / `deleteEdges` API, which is where `Classical.choice` enters. A
-hypothetical cycle is rotated to start at its minimal-depth vertex `u`; both of `u`'s cycle-neighbours
-are then children `u ++ [d₁]`, `u ++ [d₂]` (a shallower neighbour is impossible at the minimum), and
-they are distinct (`a ≠ b`, from edge-nodup). The interior of the cycle is a walk from `u ++ [d₁]` to
-`u ++ [d₂]` that avoids `u`; along it, membership in the prefix-closed subtree
-`below(u ++ [d₁]) = {x | u ++ [d₁] <+: x}` is preserved (`walk_pres` — the only boundary edge,
-`u — u ++ [d₁]`, is incident to `u`), yet the walk starts inside that subtree and ends outside it. That
-is the contradiction. `tree_acyclic` and its infrastructure below measure `[propext, Quot.sound]`.
-Connectedness is immediate: every vertex reaches the root by repeatedly dropping its last digit. -/
+**Acyclicity, proved directly from `IsAcyclic` (no cyclic walk), choice-free**: Mathlib's bridge /
+`deleteEdges` API, where `Classical.choice` enters, is not used. Rotate a hypothetical cycle to start at
+its minimal-depth vertex `u`; a shallower neighbour is impossible at the minimum, so by
+`neighbor_ge_is_child` both cycle-neighbours of `u` are children `u ++ [d₁]`, `u ++ [d₂]`, distinct by
+edge-nodup. The cycle's interior walks from `u ++ [d₁]` to `u ++ [d₂]` avoiding `u`, and preserves
+membership in `below(u ++ [d₁]) = {x | u ++ [d₁] <+: x}` (`walk_pres`: the only boundary edge is incident
+to `u`), yet starts inside that subtree and ends outside it. `tree_acyclic` and its infrastructure
+measure `[propext, Quot.sound]`. Connectedness: every vertex reaches the root by dropping digits. -/
 
 /-- A prefix of `p ++ [e]` is either all of it, or already a prefix of `p`: the "either you are the
     boundary element, or you lie strictly inside the parent" dichotomy used in `prefix_pres`. -/

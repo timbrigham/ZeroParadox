@@ -1,20 +1,20 @@
 import Mathlib.Data.Finset.Basic
 import Mathlib.Data.Finset.Card
+import Mathlib.Data.Finset.Grade
 import Mathlib.Tactic
 
 /-!
 # ZP-H Extension: Power Set Lattice as Structural Floor Witness
 
-This file verifies that the power set lattice 𝒫(S) — represented via `Finset α` — is a
-member of the structural floor class: the bottom element (∅) is not a limit point of the
-non-bottom elements.
-
-The argument is elementary. Any nonempty finset has cardinality ≥ 1, so there is a discrete
-gap of size 1 between ∅ and every nonempty set. No sequence of nonempty finsets can converge
-to ∅ in the cardinality depth metric. The bottom is a structural floor, not a limit.
-
-This is proved independently of ZPA–ZPH to demonstrate that the structural floor property
-holds for its own reasons in this domain — the same class condition, a different witness.
+The structural floor class is an ORDER property: the bottom has a first step, `HasFirstStep` (`⊥ ⋖ a`,
+AX-B1, `ZeroParadox/Reals/OrderedField.lean`). Density rules one out at every element, the bottom
+included; `axb1_fails_everywhere_iff_dense` quantifies over all elements, so one element without a
+first step does not make an order dense. In `Finset α` under inclusion, ∅ is covered by every
+singleton (the `example` after T-PS6). Statement: CARRIER, the depth chart. Every nonempty finset has
+cardinality ≥ 1 (`ps_nonempty_depth_pos`), so ∅ is no limit of nonempty finsets in that depth. That
+does not decide the class: ℚ₂'s 0 is the limit of the doubling orbit, not reached in finite time, where
+ℕ's 0 is (`floor_reach_separates_mu_nu`); `LT ℚ_[2]` does not synthesize (`ZeroParadox/BottomCannotBe.lean`
+§ ROLE), so a cover there is not stated. Proved independently of ZPA–ZPH: the same order property.
 
 ## Engineer's Take
 
@@ -28,6 +28,8 @@ That is the entire proof. The rest is scaffolding to make the statement precise.
 namespace ZeroParadox
 
 variable {α : Type*}
+
+set_option maxHeartbeats 400000
 
 /-! ## Depth structure -/
 
@@ -68,15 +70,66 @@ The gap between ∅ and the simplest nonempty set is exactly 1 — a singleton.
 theorem ps_no_subgap (A : Finset α) (hA : A ≠ ∅) : ¬ psDepth A < 1 := by
   exact Nat.not_lt.mpr (ps_nonempty_depth_pos A hA)
 
-/-! ## T-PS6: The class condition
+/-! ## T-PS6: A depth threshold above ∅
 
-∅ is not a limit point of the non-empty finsets: there exists a depth threshold (1)
-below which no nonempty finset can fall. This is the structural floor property.
+Depth chart: a threshold (1) below which no nonempty finset can fall. This is not the class
+condition, which is the order property, a first step off ∅; the `example` after this theorem
+measures that.
 -/
 
 theorem ps_structural_floor :
     ∃ gap : ℕ, 0 < gap ∧ ∀ A : Finset α, A ≠ ∅ → gap ≤ psDepth A := by
   exact ⟨1, Nat.one_pos, fun A hA => ps_nonempty_depth_pos A hA⟩
+
+-- `Statement:` ∅, ⊥ of `Finset α` under inclusion, is covered by every singleton (Mathlib's
+-- `Finset.empty_covBy_singleton`); for inhabited `α` that is `HasFirstStep ∅`
+-- (`ZeroParadox/Reals/OrderedField.lean`).
+example : ∀ a : α, (∅ : Finset α) ⋖ {a} := Finset.empty_covBy_singleton
+
+/-- Statement: a descending orbit of finsets that shrinks at every nonempty step (removing an element
+    is one) is `∅` from step `(S 0).card` on. Analogs: `descent_with_strict_steps_reaches_floor`
+    (`ZeroParadox/Order/WellFoundedObstruct.lean`) and Mathlib's `Finset.lt_wf`; adds `N ≤ (S 0).card`. -/
+theorem ps_descent_reaches_floor (S : ℕ → Finset α) (hsub : ∀ k, S (k + 1) ⊆ S k)
+    (hstrict : ∀ k, S k ≠ ∅ → S (k + 1) ≠ S k) :
+    ∃ N, N ≤ (S 0).card ∧ ∀ k, N ≤ k → S k = ∅ := by
+  -- via cardinality: Mathlib's `Finset.subset_empty` measures `Classical.choice`, this route does not
+  have sub_empty : ∀ {A : Finset α}, A ⊆ ∅ → A = ∅ := fun hA => by
+    have h := Finset.card_le_card hA
+    rw [Finset.card_empty] at h
+    exact Finset.card_eq_zero.mp (Nat.le_zero.mp h)
+  have key : ∀ k, S k = ∅ ∨ (S k).card + k ≤ (S 0).card := by
+    intro k
+    induction k with
+    | zero => exact Or.inr (Nat.le_of_eq (Nat.add_zero _))
+    | succ k ih =>
+      rcases ih with h0 | h0
+      · have hs := hsub k
+        rw [h0] at hs
+        exact Or.inl (sub_empty hs)
+      · rcases Nat.eq_zero_or_pos (S k).card with hc | hc
+        · have hs := hsub k
+          rw [Finset.card_eq_zero.mp hc] at hs
+          exact Or.inl (sub_empty hs)
+        · have hk : S k ≠ ∅ := fun e => by
+            rw [e, Finset.card_empty] at hc
+            exact lt_irrefl 0 hc
+          have hlt := Finset.card_lt_card (Finset.ssubset_iff_subset_ne.mpr ⟨hsub k, hstrict k hk⟩)
+          exact Or.inr (by omega)
+  have stay : ∀ k, S k = ∅ → ∀ j, S (k + j) = ∅ := by
+    intro k hk j
+    induction j with
+    | zero => exact hk
+    | succ j ih =>
+      have hs := hsub (k + j)
+      rw [ih] at hs
+      exact sub_empty hs
+  have hN : S (S 0).card = ∅ := by
+    rcases key (S 0).card with h | h
+    · exact h
+    · exact Finset.card_eq_zero.mp (by omega)
+  refine ⟨(S 0).card, le_rfl, fun k hk => ?_⟩
+  obtain ⟨j, rfl⟩ := Nat.exists_eq_add_of_le hk
+  exact stay _ hN j
 
 /-! ## Purity check -/
 
@@ -87,6 +140,7 @@ section PurityCheck
 #print axioms ps_empty_not_limit
 #print axioms ps_no_subgap
 #print axioms ps_structural_floor
+#print axioms ps_descent_reaches_floor
 end PurityCheck
 
 end ZeroParadox

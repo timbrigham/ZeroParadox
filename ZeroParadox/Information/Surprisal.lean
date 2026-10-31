@@ -48,10 +48,10 @@ inductive BinaryState where
   | exist : BinaryState
   deriving DecidableEq, Fintype
 
-/-- Null State: non-existence, ⊥. -/
+/-- Non-existence: the `null` constructor of `BinaryState`. -/
 def nullSt : BinaryState := .null
 
-/-- First Atomic State: existence. -/
+/-- Existence: the other constructor of `BinaryState`. -/
 def firstSt : BinaryState := .exist
 
 /-- Unfold finite sums over BinaryState (replaces Fin.sum_univ_two). -/
@@ -63,10 +63,10 @@ def firstSt : BinaryState := .exist
 
 /-! ## Section II: State Representations and JSD -/
 
-/-- P: The Null State distribution — point mass at 0 (non-existence). -/
+/-- P: the point mass at 0 (non-existence). -/
 noncomputable def distP : PMF BinaryState := PMF.pure nullSt
 
-/-- Q: The First Atomic State distribution — point mass at 1 (existence). -/
+/-- Q: the point mass at 1 (existence). -/
 noncomputable def distQ : PMF BinaryState := PMF.pure firstSt
 
 /-- T1: P and Q are distinct distributions.
@@ -160,24 +160,24 @@ theorem t2_diverges : ∀ M : ℝ, ∃ n : ℕ, M < circPartial n := by
   obtain ⟨n, hn⟩ := exists_nat_gt M
   exact ⟨n, by rw [t2_partial_eq]; exact_mod_cast hn⟩
 
-/-! ## Section III-B: L-INF — Informational Extremity of the Null State -/
+/-! ## Section III-B: L-INF — Unbounded Surprisal -/
 
-/-- L-INF — Informational Extremity of ⊥.
+/-- L-INF — Unbounded Surprisal of ⊥.
 
     The surprisal I(n) = n at ball-hierarchy depth n is unbounded: for any finite
-    bound M, there exist depths n with I(n) > M. The null state ⊥ = c₀ corresponds
+    bound M, there exist depths n with I(n) > M. ⊥ of `MachinePhase` (c₀) corresponds
     to the limit point 0 ∈ Q₂ — the limit of the binary ball hierarchy at infinite
     depth. At this limit, surprisal is not finite.
 
     Formal content: surprisal is unbounded above.
-    Semantic content: ⊥ is informationally extreme — it is the compressed limit of
+    Semantic content: ⊥ has unbounded surprisal — it is the compressed limit of
     all possible binary programs. No finite program bounds its informational content,
     so no finite external interpreter can hold ⊥ as a static description. This is
-    the mathematical premise for DA-1 in ZP-E.
+    one argument for DA-1's precondition (ZP-E, Path 2), and it does not derive it.
 
-    Note: the connection from informational extremity to forced execution is a named
-    design principle (DA-1 in ZP-E), not a mathematical consequence of L-INF alone.
-    L-INF supplies the formal premise; DA-1 supplies the ontological bridge. -/
+    Note: the step from unbounded surprisal to executing is not a consequence of
+    L-INF and is not DA-1: it is a bridge principle of its own, which the framework
+    does not adopt and which is not the occurrence commitment (ZP-E, DA-1 Path 2). -/
 theorem l_inf : ∀ M : ℝ, ∃ n : ℕ, M < surprisal n := by
   intro M
   obtain ⟨n, hn⟩ := exists_nat_gt M
@@ -197,16 +197,23 @@ def c₀ : MachinePhase := .initial
 /-- c₁: the first running configuration. -/
 def c₁ : MachinePhase := .running
 
-/-- L-RUN: c₀ ≠ c₁ — the transition from initial to running is a non-null,
-    irreducible state change. Derived from AX-B1 and D7. -/
+/-- L-RUN: c₀ ≠ c₁, so the step from ⊥ of `MachinePhase` (c₀) to c₁ is a state change off it
+    (c₀ is that ⊥ under `machinePhaseZPS`, `Order/Snap.lean`). Derived from AX-B1 and D7. -/
 theorem l_run : c₀ ≠ c₁ := by decide
 
 /-! ## Section V: TQ-IH -/
 
-/-- TQ-IH: c₁ is not the null (initial) configuration.
-    Any execution passes through c₁; by L-RUN c₁ ≠ c₀ (≠ ⊥).
-    No program can produce ⊥ without a non-null intermediate state. -/
+/-- TQ-IH: the same fact read from c₁ (`Ne.symm l_run`). -/
 theorem tq_ih : c₁ ≠ c₀ := Ne.symm l_run
+
+-- `Statement:` on `MachinePhase`, being `c₁` is the same as not being `c₀`, and being `c₀` the same as
+-- not being `c₁`.
+example : ∀ p : MachinePhase, (p = c₁ ↔ p ≠ c₀) ∧ (p = c₀ ↔ p ≠ c₁) := by
+  intro p; cases p <;> decide
+
+-- `Statement:` control: on `Fin 3` the first equivalence fails, at `2`.
+example : ¬ ∀ p : Fin 3, p = 1 ↔ p ≠ 0 := by
+  intro h; exact absurd ((h 2).2 (by decide)) (by decide)
 
 /-! ## Section VI: The Binary Alphabet is Forced — the minimal non-degenerate distribution
 

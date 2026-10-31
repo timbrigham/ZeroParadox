@@ -67,7 +67,8 @@ def key_result_box(title, body_text, bg=BLUE, hdr_bg=BLUE_DARK):
 
 def tool_stack_diagram():
     """Stacked rectangles showing tool layers."""
-    dw, dh = TW, 2.2 * inch
+    # dh = 2.2 in + 8 pt: content top = caption cap height at dh - 10.5, bottom = lowest box at 10 pt
+    dw, dh = TW, 2.2 * inch + 8
     d = Drawing(dw, dh)
 
     layers = [
@@ -80,10 +81,10 @@ def tool_stack_diagram():
     n = len(layers)
     margin = 0.6 * inch
     bw = dw - 2 * margin
-    bh = (dh - 0.35*inch) / n
+    bh = (2.2*inch - 0.35*inch) / n   # fixed box height, independent of dh
     gap = 4
 
-    caption_y = dh - 12
+    caption_y = dh - 18
     d.add(String(margin, caption_y,
                  'Claude acts as reasoning layer; all formal tools are standard open software.',
                  fontSize=7.5, fontName='DV-I', fillColor=GREY))
@@ -190,9 +191,10 @@ def build():
         ['Tool', 'Used?', 'Notes'],
         [
             ['Rocq (Coq)',    'No',  'Not used. No Coq terms, tactics, or proof scripts were written.'],
-            ['Lean 4',        'Yes', 'ZP-A: full algebraic verification — NatSLat concrete instance, #print axioms clean. '
-                                     'ZP-B/C/D: concrete proxy witness (NNRealZPCat); domain theorems (C3, T1b, T4) close OQ-G3. '
-                                     'Full abstract functor objects for ZP-B/C/D remain future work. '
+            ['Lean 4',        'Yes', 'ZP-A: full algebraic verification — NatSLat concrete instance. '
+                                     'ZP-B/C/D: sorry-free functors into ℕ-indexed stand-in categories and into the standard '
+                                     'Mathlib categories TopCat, KleisliCat PMF and ModuleCat ℂ, which close OQ-G3; '
+                                     'domain theorems (C3, T1b, T4) ground the snap in each stand-in category. '
                                      'ZP-E/G/H: sorry-free proofs for key results. Source on illustrated branch. '
                                      'Note: CC-2 (&#8869; = {&#8869;}, ZF+AFA) is a metatheoretic commitment; '
                                      'Lean\'s bot is a structural proxy, not a Quine atom in Lean\'s type theory.'],
@@ -214,14 +216,19 @@ def build():
         'Key Result: What formal verification does and does not change',
         'Formal verification in Lean 4 operates at two levels. (1) Full algebraic verification: '
         'ZP-A\'s algebraic layer (A1-A4 and all derived results) is fully machine-checked via NatSLat; '
-        '#print axioms confirms the proofs depend only on the ZPSemilattice typeclass fields and '
-        'Lean\'s kernel axioms. (2) Proxy-level verification: for ZP-B, ZP-C, and ZP-D, the '
-        'NNRealZPCat concrete witness closes OQ-G3 and grounds the domain theorems (C3, T1b, T4). '
-        'Full abstract Lean functor objects for these three domains remain future work. '
+        'each proof\'s axiom footprint is the #print axioms output in ZeroParadox/Order/Lattice.lean '
+        '(the A1-A4 theorems) and ZeroParadox/Multihomed/CategoricalBridge.lean (NatSLat). '
+        '(2) Functor-level verification: for ZP-B, ZP-C, and ZP-D, '
+        'sorry-free Lean functors land in ℕ-indexed stand-in categories and in the standard Mathlib '
+        'categories TopCat, KleisliCat PMF and ModuleCat ℂ, which close OQ-G3; the domain theorems '
+        '(C3, T1b, T4) ground the snap in each stand-in category. '
         'Neither level formalizes CC-2 (&#8869; = {&#8869;}). CC-2 is a metatheoretic commitment '
-        'over ZF + AFA — Lean\'s type theory (CIC) is well-founded by construction and cannot '
-        'realize a Quine atom as a Lean term. The Lean bot is the structural proxy for the algebraic '
-        'role of &#8869;; its set-theoretic self-containment is a prose-level commitment. '
+        'over ZF + AFA. In Lean the two charts split: Mathlib\'s ZFSet, a model of ZFC, contains no '
+        'set that is a member of itself (no_quine_atom), while outside ZFSet Lean hosts a one-atom '
+        'model whose distinguished element is its own unique self-member (the QuineHost instance on '
+        'OneAtom, ZeroParadox/Settheory/QuineHost.lean &#167; V). The Lean bot is the structural proxy '
+        'for the algebraic role of &#8869;; that it is a set equal to its own singleton, CC-2\'s '
+        'set-theoretic self-containment, is a prose-level commitment. '
         'The stated axioms (AX-B1, AX-G1, AX-G2) and modeling commitments (CC-1, CC-2) remain '
         'as stated. The derived results are confirmed as derived. The framework\'s epistemic '
         'status has improved — the algebraic core is machine-checked; the metatheoretic '

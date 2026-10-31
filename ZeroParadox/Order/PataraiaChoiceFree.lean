@@ -13,8 +13,8 @@ Bourbaki-Witt, and it carried choice, both in Mathlib's Bourbaki-Witt proof and 
 own step from chains to directed sets. This one gets a fixed point below every pre-fixed point,
 and it needs no axioms at all. That reads as a stronger promise, and in this setting it turns out
 to pick out the same point. The proof isn't ours; it is Pataraia's, with a step reshaped by Taylor,
-ported from Escardó and de Jong's Agda version, and as of September 2026 we didn't find another one
-in Mathlib or Lean core.
+written in Lean following Escardó and de Jong's Agda version, and as of September 2026 we didn't
+find another one in Mathlib or Lean core.
 
 A fixed point and a pre-fixed point sounded a whole lot like epsilon zero and the asymptote that
 approaches it. The asymptote turned out to be the other side: the tower climbs up from below, the
@@ -31,7 +31,7 @@ how the internals work.
 Monotone `f` on a Mathlib `CompletePartialOrder` (directed-complete, least element `⊥`): a fixed
 point below every pre-fixed point, hence least fixed (here also conversely), and Pataraia induction.
 First published in full: Escardó, ACS 11 (2003): Pataraia's theorem is his Cor 2.1, and the induction is the second clause of his Thm 2.2, stated there for sets of inflationary maps.
-Ported from TypeTopology, `γ` of `Various.Pataraia` (Escardó), Taylor's `TC` of `Various.Pataraia-Taylor` (Escardó–de Jong).
+The Lean proof follows Pataraia's argument, with Taylor's step, as formalized in Agda in TypeTopology: `γ` of `Various.Pataraia` (Escardó), Taylor's `TC` of `Various.Pataraia-Taylor` (Escardó–de Jong). TypeTopology is GPL-3.0; this file is an independent Lean rendering of the argument, under this repository's Apache License, Version 2.0.
 -/
 
 namespace ZeroParadox
@@ -102,6 +102,14 @@ theorem pataraia_least_prefixedPoint {α : Type*} [CompletePartialOrder α] (f :
   let ⟨z, _, hz⟩ := pataraia_least_prefixedPoint_mem f Set.univ trivial (fun _ _ => trivial)
     (fun _ _ _ _ => trivial)
   ⟨z, hz⟩
+
+-- `Statement:` the statement of `dcpo_exists_least_fixedPoint`
+-- (`ZeroParadox/Order/PataraiaFromBourbakiWitt.lean`), a fixed point below every fixed point, in one
+-- line from `pataraia_least_prefixedPoint`.
+example {α : Type*} [CompletePartialOrder α] (f : α →o α) :
+    ∃ y, f y = y ∧ ∀ p, f p = p → y ≤ p :=
+  let ⟨y, hfy, hy⟩ := pataraia_least_prefixedPoint f
+  ⟨y, hfy, fun p hp => hy p (le_of_eq hp)⟩
 
 -- The fixed point below every pre-fixed point instantiates the corpus schema from `⊥`.
 example {α : Type*} [CompletePartialOrder α] (f : α →o α) :

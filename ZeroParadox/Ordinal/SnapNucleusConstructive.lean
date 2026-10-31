@@ -164,20 +164,15 @@ instance instLinearOrderSynONote : LinearOrder SynONote :=
     · exact eq_of_cmp_eq hc
     · exact (syn_cmp_gt_iff_lt _ _).mp hc
 
-/-! ### Why Mathlib's own order on `ONote` cannot be used here
+/-! ### Why Mathlib's own order on `ONote` cannot be used here (`mathlib_ONote_order_not_antisymm`)
 
-Recorded separately from the constructive development above, because it is a statement *about* the
-choice-carrying order rather than part of that development.
-
-Mathlib declares `Preorder ONote` with `le x y := repr x ≤ repr y`, and declares it as a `Preorder`
-and not a `PartialOrder` for a reason: antisymmetry genuinely fails, because notations that are not in
-normal form can denote the same ordinal. `1 + ω` and `ω` are the smallest witness. Mathlib's positive
-counterpart is `ONote.repr_inj`, and it requires `NF` on both arguments — the hypothesis this example
-violates.
-
-So Mathlib's order on `ONote` is unusable here on two independent counts: it routes through `repr`
-into `Ordinal`'s classically-built order machinery, and it is not a partial order, let alone a `SemilatticeInf`. That
-is why `SynONote` above builds its order from `ONote.cmp` instead. -/
+A statement *about* the choice-carrying order, kept apart from the constructive development above.
+Mathlib declares `Preorder ONote` with `le x y := repr x ≤ repr y`, and not as a `PartialOrder`:
+notations not in normal form can denote the same ordinal (`1 + ω` and `ω` are the smallest witness),
+and Mathlib's positive counterpart `ONote.repr_inj` requires `NF` on both arguments. So that order is
+unusable here on two independent counts: it routes through `repr` into `Ordinal`'s classically-built
+order machinery, and it is not a partial order, let alone a `SemilatticeInf`. That is why `SynONote`
+above builds its order from `ONote.cmp` instead. -/
 
 /-- **Mathlib's `repr`-based order on `ONote` is not antisymmetric.** Two distinct notations —
 `1 + ω` and `ω` — denote the same ordinal, so each is `≤` the other without being equal.
@@ -281,10 +276,10 @@ end ZeroParadox
 
 Target: `[propext]` or cleaner on everything, including the `LinearOrder`/`SemilatticeInf` structure.
 Contrast the measured `[propext, Classical.choice, Quot.sound]` on `snapNucleus` in
-`ZeroParadox/Ordinal/SnapNucleus.lean`. That footprint is **UNCLASSIFIED, not irreducible** — an earlier
-version of this line called it irreducible on the grounds that "choice is in the `Ordinal` type," which is
-FALSE as measured: `Ordinal` is `[propext, Quot.sound]`. Choice enters via `Ordinal.instLinearOrder`,
-`nfp`, `omega0` and `epsilon`. Whether it is removable is open; not attempted in this corpus as of 2026-08-02. -/
+`ZeroParadox/Ordinal/SnapNucleus.lean`. That footprint is STATEMENT-CARRIED (statement control, measured
+2026-10-08; `ZeroParadox/Category/ChoiceCannotBe.md`), though the choice is not in the `Ordinal` type
+(`[propext, Quot.sound]`): it enters via `Ordinal.instLinearOrder`, `nfp`, `omega0` and `epsilon`. The
+open question is a restatement on a choice-free carrier; on this one it is blocked by naming (above). -/
 
 section PurityCheck
 open ZeroParadox

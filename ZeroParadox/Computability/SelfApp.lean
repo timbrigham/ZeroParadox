@@ -11,57 +11,8 @@ A ZP-J self-reference sub-file. See the Engineer's Take in `ZeroParadox/Settheor
 
 ---
 
-## The question
-
-ZPJ imports three fields from AFA (via AFAStructure):
-  `selfMem`, `bot_self_mem`, `quine_unique`
-
-These encode Aczel's AFA content but appear as axioms in the Lean encoding
-because the abstract lattice lacks the graph-decoration semantics needed to
-derive them. This file asks: can they be derived from something more primitive?
-
-## The fixed-point identification
-
-Two facts from different ZP layers:
-  - Set theory (ZPJ / AFA): ⊥ is the unique fixed point of x ↦ {x}
-  - 2-adic (ZPB): 0 is the unique fixed point of x ↦ 2x (characterised by v₂ = +∞)
-
-These are the same abstract pattern: the domain's self-application operation has a
-unique fixed point, and that fixed point is the "bottom" of the domain. Neither
-requires DC — uniqueness collapses construction to identification (ZeroParadox/Settheory/AczelConn.lean).
-
-## What this file does
-
-Introduces `AbstractSelfApp`: a typeclass encoding the minimal fixed-point
-structure. From it, `selfMem`, `bot_self_mem`, and `quine_unique` are derived
-as theorems rather than class fields — reducing AFAStructure's axiom load to a
-single structural commitment (selfApp + fixed_bot + unique_fp).
-
-The 2-adic parallel is then proved standalone: `singleton_from_unique_witness`
-(already proved in ZeroParadox/Settheory/AczelConn.lean) closes the Q₂ case with the same proof term.
-Both domains are formally instances of the same abstract pattern.
-
-## What the Scale files resolved
-
-The abstract valuation typeclass described here as the remaining ZPB→ZPJ gap is
-`ValuationStructure`, defined in `ZeroParadox/Valuation/Scale.lean`. That file derives the
-unique-fixed-point chain without an AFA import:
-  ValuationStructure → scale_ne_fixed → AbstractSelfApp (unique_fp as theorem)
-`ZeroParadox/Valuation/ScaleBridge.lean` further extends this: ValBridge drops the ZPSemilattice
-constraint entirely, and both ℤ_[2] and ZPSemilattice types become instances
-of a common ancestor. The formal gap described here is closed.
+Long form, beside this file: `ZeroParadox/Computability/SelfApp.md`.
 -/
-
-/-! ⚠⚠ **READ §III BEFORE THE OVERVIEW ABOVE.** That overview says all three
-    `AFAStructure` fields become theorems. **TWO do.** `selfMem` is DATA — a predicate —
-    and is SUPPLIED by `def selfMemDerived`, never proved; `bot_self_mem` and
-    `quine_unique` are the LAWS, discharged by theorems. §III carries the measurement.
-    The overview is left uncorrected because its block is frozen by CONTENT HASH in
-    `prose_baseline.txt`: editing it re-keys the entry and `check_prose` blocks the
-    commit. Route is a byte-identical move to a ride-along first, via
-    `tools/verify/move_ridealong.py`, which dissolves the cap rather than re-keying it.
-    Its "Neither requires DC" is withdrawn as a claim about Aczel's proof, which neither case touches; in
-    Lean the lattice case is choice-free (`selfMem_eq_singleton_bot`) and the ℚ_[2] case is not. -/
 
 namespace ZeroParadox
 

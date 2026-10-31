@@ -3,6 +3,8 @@ import ZeroParadox.Computability.SelfApp
 import ZeroParadox.Computability.Kleene
 import Mathlib.Order.FixedPoints
 import Mathlib.SetTheory.Ordinal.FixedPoint
+import Mathlib.SetTheory.Cardinal.Arithmetic
+import Mathlib.Data.Fin.Embedding
 
 set_option maxHeartbeats 400000
 
@@ -82,6 +84,12 @@ theorem isLeastFixedPointFrom_nfp {f : Ordinal → Ordinal} (H : Order.IsNormal 
   fixed := Ordinal.nfp_fp H a
   least := fun _b hb hab => Ordinal.nfp_le_fp H.strictMono.monotone hab (le_of_eq hb)
 
+-- `Statement:` for a normal `f`, the supremum of the finite iterates from `a` is that least fixed point.
+example {f : Ordinal → Ordinal} (H : Order.IsNormal f) (a : Ordinal) :
+    IsLeastFixedPointFrom (· ≤ ·) f a (⨆ n, f^[n] a) := by
+  rw [Ordinal.iSup_iterate_eq_nfp]
+  exact isLeastFixedPointFrom_nfp H a
+
 /-! ## § IV. The ε₀ face — genuine ascent μ (seed ⊥ ≠ closure ε₀)
 
 ⚠ **THE ASCENT IS GENUINE; THE SEED IS NOT DISTINGUISHED WITHIN `[0, ε₀]`.**
@@ -153,20 +161,178 @@ theorem kleene_fixed_point_from_exists (f : Code → Code) (hf : Computable f) :
     ∃ c : Code, eval (f c) = eval c :=
   roger_fixed_point_exists f hf
 
+/-! ## § VII. The schema with the fixed-point equation relaxed to a relation
+
+On `Type` the type face is not stated as an `IsLeastFixedPointFrom`: its `fixed` field would be the
+equation `Option ℕ = ℕ`, which is well-typed and neither proved nor refuted here. The relaxed schema
+takes the equation as a parameter `e`; the type face uses `≃`, and the `Cardinal` quotient recovers
+the schema itself. A shared SHAPE: no map between ℕ and ε₀ is stated. Reading: the `least` field of
+`nat_isLeastFixedPointUpTo` (`Option B ≃ B` gives `ℕ ↪ B`) is one direction of the Dedekind-infinite
+characterisation; ℕ as the colimit of the `Fin`-chain and Lambek's lemma are indexed in
+`ZeroParadox/BottomCannotBe.lean` § GENERATION. -/
+
+/-- `Statement:` `mu` is `r`-above `seed`, `e (f mu) mu`, and `mu` is `r`-below every `b` with
+    `e (f b) b` that is `r`-above `seed`. -/
+-- [ZP-CUSTOM] extends: IsLeastFixedPointFrom (ZeroParadox/Order/LeastFixedPoint.lean) | reason: the
+-- same three fields with the equation `f mu = mu` passed as a relation `e`, so a carrier whose
+-- fixed points hold only up to `≃` (types) meets it; `upTo_eq_iff` recovers the original at `e = Eq`.
+structure IsLeastFixedPointUpTo {α : Type*} (r e : α → α → Prop) (f : α → α) (seed mu : α) :
+    Prop where
+  /-- The seed lies `r`-below the closure. -/
+  seed_le : r seed mu
+  /-- `mu` is a fixed point of `f` up to `e`. -/
+  fixed : e (f mu) mu
+  /-- `mu` is `r`-least among such fixed points `r`-above the seed. -/
+  least : ∀ b, e (f b) b → r seed b → r mu b
+
+/-! NO-GO gauge — what fails to be an `IsLeastFixedPointUpTo`? ℕ, for `Option` from `Empty` with `e`
+always true (the CONTROL below); members: `nat_isLeastFixedPointUpTo`, and ε₀ at `e = Eq`. -/
+
+/-- `Statement:` with `e = Eq` the relaxed schema is `IsLeastFixedPointFrom`; both directions. -/
+theorem upTo_eq_iff {α : Type*} (r : α → α → Prop) (f : α → α) (seed mu : α) :
+    IsLeastFixedPointUpTo r Eq f seed mu ↔ IsLeastFixedPointFrom r f seed mu :=
+  ⟨fun h => ⟨h.seed_le, h.fixed, h.least⟩, fun h => ⟨h.seed_le, h.fixed, h.least⟩⟩
+
+-- Statement: ε₀ in the relaxed schema with `e = Eq`, from `epsilon0_isLeastFixedPointFrom` (§ IV).
+example : IsLeastFixedPointUpTo (· ≤ ·) Eq (fun α : Ordinal => Ordinal.omega0 ^ α) (⊥ : Ordinal)
+    epsilonZero :=
+  (upTo_eq_iff _ _ _ _).2 epsilon0_isLeastFixedPointFrom
+
+/-- `Statement:` from `e : Option B ≃ B`, the injection `ℕ ↪ B` with `0 ↦ e none` and
+    `k + 1 ↦ e (some (image of k))`. -/
+def natEmbOfOptEquiv {B : Type} (e : Option B ≃ B) : ℕ ↪ B where
+  toFun := fun n => Nat.rec (e none) (fun _ b => e (some b)) n
+  inj' := by
+    intro m n h
+    induction m generalizing n with
+    | zero =>
+      cases n with
+      | zero => rfl
+      | succ n => exact absurd (e.injective h) (by simp)
+    | succ m ih =>
+      cases n with
+      | zero => exact absurd (e.injective h) (by simp)
+      | succ n =>
+        have h' := Option.some_injective _ (e.injective h)
+        exact congrArg Nat.succ (ih h')
+
+/-- `Statement:` on `Type`, with `r` = "an injection exists" and `e` = "an equivalence exists", ℕ is
+    the least fixed point of `Option` from `Empty` in the relaxed schema. -/
+theorem nat_isLeastFixedPointUpTo :
+    IsLeastFixedPointUpTo (fun A B : Type => Nonempty (A ↪ B)) (fun A B => Nonempty (A ≃ B))
+      Option Empty ℕ where
+  seed_le := ⟨⟨Empty.elim, fun a => a.elim⟩⟩
+  fixed := ⟨(Equiv.optionEquivSumPUnit ℕ : Option ℕ ≃ ℕ ⊕ PUnit.{1}).trans Equiv.natSumPUnitEquivNat⟩
+  least := fun _ ⟨e⟩ _ => ⟨natEmbOfOptEquiv e⟩
+
+-- Statement: CONTROL, the relation `e` carries the schema: with `e` always true, ℕ is not least.
+example : ¬ IsLeastFixedPointUpTo (fun A B : Type => Nonempty (A ↪ B)) (fun _ _ => True)
+    Option Empty ℕ := fun h => by
+  obtain ⟨g⟩ := h.least Empty trivial ⟨⟨Empty.elim, fun a => a.elim⟩⟩
+  exact (g 0).elim
+
+/-- `Statement:` on `Cardinal`, with `≤`, `c ↦ c + 1` and seed 0, `ℵ₀` is the least fixed point
+    (`IsLeastFixedPointFrom`). -/
+theorem aleph0_isLeastFixedPointFrom :
+    IsLeastFixedPointFrom (· ≤ ·) (fun c : Cardinal.{0} => c + 1) 0 Cardinal.aleph0 where
+  seed_le := zero_le _
+  fixed := Cardinal.add_one_eq le_rfl
+  least := fun b hb _ => by
+    by_contra hlt
+    obtain ⟨n, rfl⟩ := Cardinal.lt_aleph0.1 (not_le.1 hlt)
+    have : ((n + 1 : ℕ) : Cardinal) = (n : Cardinal) := by push_cast; exact hb
+    exact absurd (Nat.cast_injective this) (by omega)
+
+-- Statement: Mathlib's `Cardinal.mk_option`, `#(Option α) = #α + 1`, links the type face to the
+-- cardinal one.
+#check @Cardinal.mk_option
+
+/-- `Statement:` the `n`-th stage of adjoining a point to `Empty`. -/
+def optIter : ℕ → Type
+  | 0 => Empty
+  | n + 1 => Option (optIter n)
+
+/-- `Statement:` the `n`-th stage is equivalent to `Fin n`. -/
+def optIterEquiv : (n : ℕ) → optIter n ≃ Fin n
+  | 0 => show Empty ≃ Fin 0 from
+      { toFun := fun e => e.elim, invFun := fun i => i.elim0,
+        left_inv := fun e => e.elim, right_inv := fun i => i.elim0 }
+  | n + 1 => (Equiv.optionCongr (optIterEquiv n)).trans (finSuccEquiv n).symm
+
+/-- `Statement:` no equivalence `Option (Fin n) ≃ Fin n`: no finite stage is a fixed point up to `≃`. -/
+theorem fin_not_fixed (n : ℕ) : IsEmpty (Option (Fin n) ≃ Fin n) :=
+  ⟨fun e => by
+    have := Fin.equiv_iff_eq.1 ⟨(finSuccEquiv n).trans e⟩
+    omega⟩
+
+/-- `Statement:` each stage injects into ℕ and is not equivalent to ℕ. -/
+theorem optIter_lt_nat (n : ℕ) : Nonempty (optIter n ↪ ℕ) ∧ IsEmpty (optIter n ≃ ℕ) :=
+  ⟨⟨(optIterEquiv n).toEmbedding.trans ⟨Fin.val, Fin.val_injective⟩⟩,
+   ⟨fun e => by
+      haveI := Finite.of_equiv _ ((optIterEquiv n).symm.trans e)
+      exact not_finite ℕ⟩⟩
+
+/-! Adjoining a point as a motion on `Type` (`ZeroParadox/Die.lean` § XVIII). Each stage `optIter n`
+is a type of its own; on the carrier `Type` the step is one self-map. Quotiented by "an equivalence exists"
+(Mathlib's `Cardinal.isEquivalent`, whose classes are `Cardinal`), the step is `c ↦ c + 1`. -/
+
+/-- `Statement:` the motion `ofFun Option` on `Type`. -/
+-- [ZP-CUSTOM] no Mathlib analog | reason: `Option` as a self-map of `Type`, so that the stages
+-- `optIter n` form a run of one motion.
+def optionMotion : Motion Type := Motion.ofFun Option
+
+/-- `Statement:` the stages `optIter n` form a run of `optionMotion`. -/
+theorem optionMotion_isRun_optIter : optionMotion.IsRun optIter := fun _ => rfl
+
+/-- `Statement:` "an equivalence exists" is step-compatible with `optionMotion`
+    (`Equiv.optionCongr`). -/
+theorem optionMotion_stepCompat : optionMotion.StepCompat Cardinal.isEquivalent :=
+  Motion.stepCompat_ofFun fun _ _ ⟨e⟩ => ⟨Equiv.optionCongr e⟩
+
+/-- `Statement:` in the quotient, on `Cardinal.{0}`, the class `X` steps to `Y` iff `Y = X + 1`
+    (`Cardinal.mk_option`); both directions. `Reading:` from 0 the least fixed point of `c ↦ c + 1`
+    is `ℵ₀` (`aleph0_isLeastFixedPointFrom`). -/
+theorem quot_optionMotion_step_iff (X Y : Cardinal.{0}) :
+    (optionMotion.quot Cardinal.isEquivalent).step X Y ↔ Y = X + 1 := by
+  induction X using Quotient.ind with
+  | _ a =>
+    rw [Motion.quot_step_mk_iff optionMotion_stepCompat]
+    constructor
+    · rintro ⟨b, hb, rfl⟩
+      have hb' : b = Option a := hb
+      subst hb'
+      exact Cardinal.mk_option
+    · rintro rfl
+      exact ⟨Option a, rfl, Cardinal.mk_option⟩
+
+/-- `Statement:` the class of ℕ steps to itself only (`nat_isLeastFixedPointUpTo`'s `fixed`). -/
+theorem quot_optionMotion_selfOnlyAt_nat :
+    (optionMotion.quot Cardinal.isEquivalent).SelfOnlyAt (Quotient.mk _ ℕ) := by
+  rw [Motion.quot_selfOnlyAt_mk_iff optionMotion_stepCompat]
+  exact ⟨⟨Option ℕ, rfl, nat_isLeastFixedPointUpTo.fixed⟩,
+    fun b hb => (show b = Option ℕ from hb) ▸ nat_isLeastFixedPointUpTo.fixed⟩
+
+/-- `Statement:` the class of `Fin n` does not step to itself only (`fin_not_fixed`). -/
+theorem quot_optionMotion_not_selfOnlyAt_fin (n : ℕ) :
+    ¬ (optionMotion.quot Cardinal.isEquivalent).SelfOnlyAt (Quotient.mk _ (Fin n)) := by
+  rw [Motion.quot_selfOnlyAt_mk_iff optionMotion_stepCompat]
+  rintro ⟨⟨b, hb, ⟨e⟩⟩, -⟩
+  have hb' : b = Option (Fin n) := hb
+  subst hb'
+  exact (fin_not_fixed n).false e
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check
 
 The schema's `selfApp_*` instances and `IsLeastFixedPointFrom.unique` are axiom-free (no axioms at
 all); the Mathlib-`lfp` grounding `lfp_isLeastFixedPointFrom` is choice-free `[propext, Quot.sound]`.
-The ordinal faces (`isLeastFixedPointFrom_nfp`, `epsilon0_*`) inherit
-`Classical.choice` from Mathlib's `Ordinal`/`nfp` fixed-point theory. **Status: UNCLASSIFIED.**
-⚠ **Do NOT call it "representational, not intrinsic"** — that is an **eliminability claim**, which no
-footprint measurement can establish, and **no choice-free re-proof of these faces was located as of
-2026-08-02**. The choice is not in the `Ordinal` type (`[propext, Quot.sound]`) but in the order
-instance and the operations. ZP-N's choice-free
-snap-from-below is suggestive, not a re-proof. The Kleene face inherits
-`[propext, Classical.choice, Quot.sound]` from the `Code`/`Partrec` machinery. Recorded honestly. -/
+The ordinal faces (`isLeastFixedPointFrom_nfp`, `epsilon0_*`) and the Kleene face are
+STATEMENT-CARRIED (`ZeroParadox/Category/ChoiceCannotBe.md`): each statement, only assumed, already
+reports `Classical.choice` (statement control, measured 2026-10-08), from Mathlib's `Ordinal`/`nfp` and
+`Code`/`Partrec` machinery. The open question is a restatement on a choice-free carrier; ZP-N proves the
+snap-from-below (the ascent) choice-free on `ONote`, which is evidence for that question, not a
+restatement of these faces. -/
 
 section PurityCheck
 open ZeroParadox
@@ -180,5 +346,20 @@ open ZeroParadox
 #print axioms selfApp_isLeastFixedPointFrom
 #print axioms selfApp_mu_unique
 #print axioms kleene_fixed_point_from_exists
+#print axioms IsLeastFixedPointUpTo
+#print axioms upTo_eq_iff
+#print axioms natEmbOfOptEquiv
+#print axioms nat_isLeastFixedPointUpTo
+#print axioms aleph0_isLeastFixedPointFrom
+#print axioms optIter
+#print axioms optIterEquiv
+#print axioms fin_not_fixed
+#print axioms optIter_lt_nat
+#print axioms optionMotion
+#print axioms optionMotion_isRun_optIter
+#print axioms optionMotion_stepCompat
+#print axioms quot_optionMotion_step_iff
+#print axioms quot_optionMotion_selfOnlyAt_nat
+#print axioms quot_optionMotion_not_selfOnlyAt_fin
 
 end PurityCheck

@@ -156,10 +156,10 @@ example : (2 : Ordinal) < epsilonZero ∧ ∀ n : ℕ, fundamentalSeq n ≠ 2 :=
 
 /-! ## § IV. Cantor Normal Form Bridge
 
-The bridge: NONote → ℤ_[2] encodes each CNF term as a 2-adic integer, where `NONote` is
+The bridge: NONote → ℤ_[2] maps each CNF term to a 2-adic integer, where `NONote` is
 the type of ordinals below ε₀ in Cantor normal form (Mathlib.SetTheory.Ordinal.Notation).
-The tower stages' encodings converge to 0 = ⊥ in ℤ_[2] (`tower_converges_to_zero`).
-ε₀ itself has no encoding (`NONote` is the ordinals below it); how the ordinal ascent
+The tower stages' images converge to 0 = ⊥ in ℤ_[2] (`tower_converges_to_zero`).
+ε₀ itself has no image (`NONote` is the ordinals below it); how the ordinal ascent
 and this ℤ₂ descent correspond is `ZeroParadox/Ordinal/Epsilon0CannotBe.lean` § V.
 
 Derivation (CNF, recursion, valuation table, Lean scope): `ZeroParadox/Ordinal/Gentzen.md`. -/
@@ -171,16 +171,16 @@ private theorem repr_oadd (e : NONote) (n : ℕ+) (a : NONote) (h : NONote.below
     NONote.repr (NONote.oadd e n a h) =
     Ordinal.omega0 ^ NONote.repr e * ↑n + NONote.repr a := rfl
 
--- The encoding function on the underlying ONote (ignores the NF side-condition).
+-- The map on the underlying ONote (ignores the NF side-condition).
 -- Structural recursion on ONote avoids NONote subtype termination issues.
 private noncomputable def cnfToZp2Aux : ONote → ℤ_[2]
   | ONote.zero => 0
   | ONote.oadd e n a =>
       (2 : ℤ_[2]) ^ ((cnfToZp2Aux e).valuation + 1) * (n : ℤ_[2]) + cnfToZp2Aux a
 
-/-- Encoding ordinals below ε₀ into ℤ_[2] via the Cantor normal form structure.
+/-- Maps ordinals below ε₀ into ℤ_[2] via the Cantor normal form structure.
     Base: 0 ↦ 0. Recursive: (ω^e · n + a) ↦ 2^(v₂(e_val)+1) · n + a_val.
-    Valuation of the n-th tower stage equals n (proved below). -/
+    Valuation of the image of the n-th tower stage equals n (proved below). -/
 noncomputable def cnfToZp2 (α : NONote) : ℤ_[2] := cnfToZp2Aux α.1
 
 -- Definitional reduction lemmas (all rfl).
@@ -231,13 +231,13 @@ theorem cnfToZp2_tower_valuation (n : ℕ) : (cnfToZp2 (towerNONote n)).valuatio
     simp [hval]
 
 /-- The 2-adic valuation of cnfToZp2 is unbounded: for every k there is an ordinal
-    below ε₀ whose encoding has valuation ≥ k. This is the valuation-growth property. -/
+    below ε₀ whose image has valuation ≥ k. This is the valuation-growth property. -/
 theorem cnfToZp2_valuation_unbounded :
     ∀ k : ℕ, ∃ α : NONote, k ≤ (cnfToZp2 α).valuation := fun k =>
   ⟨towerNONote k, (cnfToZp2_tower_valuation k).symm ▸ le_refl k⟩
 
-/-- The tower converges to 0 in ℤ_[2]: for any bound k, all sufficiently late stages
-    have valuation ≥ k (so norm ≤ 2^(-k) → 0). -/
+/-- The tower's images converge to 0 in ℤ_[2]: for any bound k, the images of all
+    sufficiently late stages have valuation ≥ k (so norm ≤ 2^(-k) → 0). -/
 theorem fundamentalSeq_zp2_converges :
     ∀ k : ℕ, ∃ N : ℕ, ∀ n ≥ N,
       ∀ α : NONote, NONote.repr α = fundamentalSeq n →
@@ -250,7 +250,7 @@ theorem fundamentalSeq_zp2_converges :
   rw [hα_eq, cnfToZp2_tower_valuation]
   exact hn
 
--- Explicit value: towerNONote (n+1) encodes as 2^(n+1) in ℤ_[2].
+-- Explicit value: towerNONote (n+1) maps to 2^(n+1) in ℤ_[2].
 -- Follows from cnfToZp2_tower_valuation via the oadd recursion.
 private theorem cnfToZp2_tower_explicit (n : ℕ) :
     cnfToZp2 (towerNONote (n + 1)) = (2 : ℤ_[2]) ^ (n + 1) := by
@@ -258,8 +258,8 @@ private theorem cnfToZp2_tower_explicit (n : ℕ) :
   have hcast : ((1 : ℕ+) : ℤ_[2]) = 1 := by norm_cast
   rw [hunfold, cnfToZp2_oadd, cnfToZp2_tower_valuation, cnfToZp2_zero, hcast, mul_one, add_zero]
 
-/-- The tower encodings converge to 0 = ⊥ in ℤ_[2].
-    Each stage cnfToZp2(towerNONote (n+1)) = 2^(n+1) in ℤ_[2], so its 2-adic norm is
+/-- The tower images converge to 0 = ⊥ in ℤ_[2].
+    Each stage's image cnfToZp2(towerNONote (n+1)) = 2^(n+1) in ℤ_[2], so its 2-adic norm is
     ‖2‖^(n+1) = (1/2)^(n+1) → 0. -/
 theorem tower_converges_to_zero :
     Filter.Tendsto (fun n => cnfToZp2 (towerNONote n)) Filter.atTop (nhds 0) := by
@@ -509,14 +509,14 @@ theorem epsilon_zero_snap_canonical :
 /-- Four independent facts about the same tower sequence, stated together:
     (i)   Every tower stage is strictly below ε₀ in ordinals (epsilonZero_tower_lt)
     (ii)  The canonical map sends every tower stage to c₀
-    (iii) The 2-adic encodings of the tower converge to 0 = ⊥ (tower_converges_to_zero)
+    (iii) The 2-adic images of the tower stages converge to 0 = ⊥ (tower_converges_to_zero)
     (iv)  The canonical map sends ε₀ to c₁
     All four are provable from already-established theorems. The same indexing sequence
     (n : ℕ) drives the ordinal tower (fundamentalSeq n < ε₀ for all n) and the 2-adic
     tower (cnfToZp2(towerNONote n) → 0). The limits are limits in different types.
     This is a co-witness, not an identity (cnf_bridge_type_boundary,
-    ZeroParadox/Ordinal/CnfBridge.lean): ε₀ and the ℤ₂ zero live in different types, so an identity
-    between them fails to elaborate. -/
+    ZeroParadox/Ordinal/CnfBridge.lean): ε₀ and the ℤ₂ zero live in different types with no coercion
+    between them, so an identity between them fails to elaborate. -/
 theorem snap_zp2_correspondence :
     (∀ n : ℕ, fundamentalSeq n < epsilonZero) ∧
     (∀ n : ℕ, (fun α : Ordinal =>
@@ -552,7 +552,7 @@ open ZeroParadox
 #print axioms fundamentalSeq_zp2_converges
 -- § II: proved (wrapper around roger_fixed_point_exists)
 #print axioms roger_fixed_point_stability
--- § IV: tower_converges_to_zero (proved — tower encodings converge to ⊥ in ℤ_[2])
+-- § IV: tower_converges_to_zero (proved — tower images converge to ⊥ in ℤ_[2])
 #print axioms tower_converges_to_zero
 -- § V: proved
 #print axioms zpe_snap_ordinal_correspondence

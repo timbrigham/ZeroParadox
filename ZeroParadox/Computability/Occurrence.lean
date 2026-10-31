@@ -1,4 +1,5 @@
 import ZeroParadox.Settheory.Wall
+import ZeroParadox.Die
 import Mathlib.Computability.StateTransition
 import Mathlib.Computability.PartrecCode
 import Mathlib.Computability.Halting
@@ -276,7 +277,7 @@ theorem flipPoles_involutive (g : σ → Option σ) (s : σ) :
   by_cases h0 : g s = none
   · simp [h0]
   · by_cases h1 : g s = some s
-    · simp [h0, h1]
+    · simp [h1]
     · simp [h0, h1]
 
 /-- Dead becomes live. -/
@@ -303,7 +304,7 @@ theorem flipPoles_preserves_extremal (g : σ → Option σ) (s : σ) :
   by_cases h0 : g s = none
   · simp [h0]
   · by_cases h1 : g s = some s
-    · simp [h0, h1]
+    · simp [h1]
     · simp [h0, h1]
 
 end PoleSwap
@@ -511,6 +512,225 @@ theorem occurrence_shape [DecidableEq σ] (s : σ) :
    machine_snap_impossible f s,
    dead_yields_live_withholds f s⟩
 
+/-! ## § VIII. The machine as a motion — the computation face of the die's stage/closure shape
+
+UP is run-to-halt (`StateTransition.eval f`) and OVER is one step, a `Motion` in the sense of
+`ZeroParadox/Die.lean`. The configurations a run passes through before halting are not landings and
+share one closure, defined or not. Indexed in `ZeroParadox/DieCannotBe.lean` § VIII. -/
+
+/-- `Statement:` on the configurations of `f`, UP is `StateTransition.eval f` and OVER is one step. -/
+def runMotion : Motion σ :=
+  ⟨StateTransition.eval f, fun _ _ h =>
+    StateTransition.mem_eval.2 ⟨Relation.ReflTransGen.refl, (StateTransition.mem_eval.1 h).2⟩,
+    fun a b => b ∈ f a⟩
+
+/-- `Statement:` a landing of the run motion is a halted configuration. -/
+theorem runMotion_isLanding_iff (a : σ) : (runMotion f).IsLanding a ↔ f a = Option.none :=
+  ⟨fun h => (StateTransition.mem_eval.1 h).2,
+   fun h => StateTransition.mem_eval.2 ⟨Relation.ReflTransGen.refl, h⟩⟩
+
+/-- `Statement:` UP is unchanged along a step (Mathlib `StateTransition.reaches_eval`). -/
+theorem runMotion_upStepInvariant : (runMotion f).UpStepInvariant :=
+  fun _ _ h => StateTransition.reaches_eval (Relation.ReflTransGen.single h)
+
+/-- `Statement:` the not-yet-halted configurations reachable from `a` have the stage/closure shape,
+    with closure `eval f a`, defined or not. -/
+theorem runMotion_stageClosure (a : σ) :
+    (runMotion f).StageClosure {c | StateTransition.Reaches f a c ∧ f c ≠ Option.none}
+      (StateTransition.eval f a) := by
+  rintro c ⟨hr, hc⟩
+  exact ⟨fun hl => hc ((runMotion_isLanding_iff f c).1 hl), (StateTransition.reaches_eval hr).symm⟩
+
+/-- `Statement:` along a run of the motion, no stage is a landing and the closure is undefined. -/
+theorem runMotion_run_diverges {s : ℕ → σ} (hs : (runMotion f).IsRun s) :
+    (∀ n, ¬ (runMotion f).IsLanding (s n)) ∧ ¬ (StateTransition.eval f (s 0)).Dom := by
+  have hstep : ∀ n, s (n + 1) ∈ f (s n) := hs
+  refine ⟨fun n hl => ?_, fun hd => ?_⟩
+  · have h := hstep n
+    rw [(runMotion_isLanding_iff f _).1 hl] at h
+    simp at h
+  · obtain ⟨b, hb⟩ := Part.dom_iff_mem.1 hd
+    obtain ⟨hr, hb0⟩ := StateTransition.mem_eval.1 hb
+    have key : ∀ c, StateTransition.Reaches f (s 0) c → ∃ k, c = s k := by
+      intro c hc
+      induction hc with
+      | refl => exact ⟨0, rfl⟩
+      | tail _ hcd ih =>
+        obtain ⟨k, rfl⟩ := ih
+        exact ⟨k + 1, Option.mem_unique hcd (hstep k)⟩
+    obtain ⟨k, rfl⟩ := key b hr
+    have h := hstep k
+    rw [hb0] at h
+    simp at h
+
+/-- `Statement:` every configuration has at most one successor in the run motion. -/
+theorem runMotion_det (a b c : σ) (hb : (runMotion f).step a b) (hc : (runMotion f).step a c) :
+    b = c :=
+  Option.mem_unique hb hc
+
+/-- `Statement:` a configuration has no step iff `f` halts there; both directions. -/
+theorem runMotion_noStepAt_iff (s : σ) : (runMotion f).NoStepAt s ↔ f s = Option.none := by
+  constructor
+  · intro h
+    cases hf : f s with
+    | none => rfl
+    | some b => exact absurd (show b ∈ f s by rw [hf]; rfl) (h b)
+  · intro h b hb
+    change b ∈ f s at hb
+    rw [h] at hb
+    cases hb
+
+/-- `Statement:` `a` arrives at `b` (`Motion.Arrives`) iff `b` is reachable from `a`
+    (`StateTransition.Reaches`); both directions. -/
+theorem runMotion_arrives_iff_reaches (a b : σ) :
+    (runMotion f).Arrives b a ↔ StateTransition.Reaches f a b :=
+  ⟨Motion.reflTransGen_of_arrives, fun h => Motion.arrives_of_reflTransGen_of_det (runMotion_det f) h⟩
+
+/-- `Statement:` `b` is a value of the run from `a` iff `a` arrives at `b` and `b` has no step; both
+    directions. -/
+theorem mem_eval_iff_arrives_noStepAt (a b : σ) :
+    b ∈ StateTransition.eval f a ↔ (runMotion f).Arrives b a ∧ (runMotion f).NoStepAt b := by
+  rw [StateTransition.mem_eval, runMotion_arrives_iff_reaches, runMotion_noStepAt_iff]
+
+/-- `Statement:` the run from `a` halts iff `a` arrives at a configuration with no step; both
+    directions. `Reading:` halting is the arrival (liveness) cell of the die; termination is a liveness
+    example in Alpern and Schneider, "Defining Liveness", IPL 21 (1985), p. 182. -/
+theorem eval_dom_iff_arrives_noStepAt (a : σ) :
+    (StateTransition.eval f a).Dom ↔ ∃ b, (runMotion f).NoStepAt b ∧ (runMotion f).Arrives b a := by
+  rw [Part.dom_iff_mem]
+  exact exists_congr fun b => (mem_eval_iff_arrives_noStepAt f a b).trans And.comm
+
+/-- `Statement:` a configuration that steps to itself steps to itself only (`runMotion_det`: at most
+    one successor). -/
+theorem runMotion_selfOnlyAt_of_step_self (s : σ) (h : (runMotion f).step s s) :
+    (runMotion f).SelfOnlyAt s :=
+  Motion.selfOnlyAt_of_step_self (fun b c hb hc => runMotion_det f s b c hb hc) h
+
+/-- `Statement:` no configuration both steps to itself and steps elsewhere (`runMotion_det`). -/
+theorem runMotion_not_step_self_and_leavesAt (s : σ) :
+    ¬ ((runMotion f).step s s ∧ (runMotion f).LeavesAt s) :=
+  Motion.not_step_self_and_leavesAt_of_subsingleton (fun b c hb hc => runMotion_det f s b c hb hc)
+
+/-- `Statement:` every step into `y` starts at `y` iff every configuration arriving at `y` is `y`;
+    both directions. -/
+theorem runMotion_noEntry_iff_arrives (y : σ) :
+    (∀ a, (runMotion f).step a y → a = y) ↔ ∀ x, (runMotion f).Arrives y x → x = y := by
+  rw [Motion.noEntry_iff_noReach]
+  exact ⟨fun h x hx => h x (Motion.reflTransGen_of_arrives hx),
+    fun h x hx => h x ((runMotion_arrives_iff_reaches f x y).2 hx)⟩
+
+/-! ## § VIII-b. The clock machine: halting as arrival, over all codes
+
+Configurations `(code, input, budget)`: halt once `evaln budget code input` has a value, else raise
+the budget. Placed after § VIII because it uses `runMotion`. Indexed in `ZeroParadox/DieCannotBe.lean`
+§ XVI. -/
+
+/-- `Statement:` one step: `none` if `evaln k c n` has a value, else `(c, n, k + 1)`. -/
+-- [ZP-CUSTOM] no Mathlib analog | reason: a `StateTransition`-shaped step built from Mathlib's
+-- `evaln`, so that halting of a code is arrival in `runMotion`; such a machine in Mathlib was not
+-- located as of 2026-10-21 (the search is recorded in `LEAN_CUSTOM_REGISTRY.md`).
+def clockStep : Code × ℕ × ℕ → Option (Code × ℕ × ℕ) := fun p =>
+  cond (evaln p.2.2 p.1 p.2.1).isSome Option.none (some (p.1, p.2.1, p.2.2 + 1))
+
+/-- `Statement:` the step is primitive recursive (Mathlib `primrec_evaln`). -/
+theorem clockStep_primrec : Primrec clockStep := by
+  have he : Primrec fun p : Code × ℕ × ℕ => evaln p.2.2 p.1 p.2.1 :=
+    primrec_evaln.comp ((Primrec.pair (Primrec.pair (Primrec.snd.comp Primrec.snd) Primrec.fst)
+      (Primrec.fst.comp Primrec.snd)))
+  exact Primrec.cond (Primrec.option_isSome.comp he) (Primrec.const Option.none)
+    (Primrec.option_some.comp (Primrec.pair Primrec.fst (Primrec.pair
+      (Primrec.fst.comp Primrec.snd) (Primrec.succ.comp (Primrec.snd.comp Primrec.snd)))))
+
+/-- `Statement:` the step halts at `(c, n, k)` iff `evaln k c n` has a value. -/
+theorem clockStep_eq_none_iff (c : Code) (n k : ℕ) :
+    clockStep (c, n, k) = Option.none ↔ evaln k c n ≠ Option.none := by
+  unfold clockStep
+  cases h : evaln k c n <;> simp
+
+/-- `Statement:` otherwise it steps to `(c, n, k + 1)`. -/
+theorem clockStep_eq_some_iff (c : Code) (n k : ℕ) (b : Code × ℕ × ℕ) :
+    clockStep (c, n, k) = some b ↔ evaln k c n = Option.none ∧ b = (c, n, k + 1) := by
+  unfold clockStep
+  cases h : evaln k c n <;> simp [eq_comm]
+
+/-- `Statement:` every configuration reachable from `(c, n, 0)` is `(c, n, k)` for some `k`. -/
+theorem clock_reaches_form {c : Code} {n : ℕ} {b : Code × ℕ × ℕ}
+    (h : StateTransition.Reaches clockStep (c, n, 0) b) : ∃ k, b = (c, n, k) := by
+  induction h with
+  | refl => exact ⟨0, rfl⟩
+  | tail _ hst ih =>
+    obtain ⟨k, rfl⟩ := ih
+    exact ⟨k + 1, ((clockStep_eq_some_iff c n k _).1 hst).2⟩
+
+/-- `Statement:` the run from `(c, n, 0)` halts iff `Occurs c n`; both directions. -/
+theorem clock_eval_dom_iff (c : Code) (n : ℕ) :
+    (StateTransition.eval clockStep (c, n, 0)).Dom ↔ Occurs c n := by
+  constructor
+  · intro h
+    obtain ⟨b, hb⟩ := Part.dom_iff_mem.1 h
+    obtain ⟨hr, hn⟩ := StateTransition.mem_eval.1 hb
+    obtain ⟨k, rfl⟩ := clock_reaches_form hr
+    exact ⟨k, (clockStep_eq_none_iff c n k).1 hn⟩
+  · rintro ⟨k, hk⟩
+    have key : ∀ d i, i + d = k → (StateTransition.eval clockStep (c, n, i)).Dom := by
+      intro d
+      induction d with
+      | zero =>
+        intro i hi
+        simp only [Nat.add_zero] at hi
+        subst hi
+        exact Part.dom_iff_mem.2 ⟨_, StateTransition.mem_eval.2
+          ⟨Relation.ReflTransGen.refl, (clockStep_eq_none_iff c n i).2 hk⟩⟩
+      | succ d ih =>
+        intro i hi
+        cases hs : clockStep (c, n, i) with
+        | none =>
+          exact Part.dom_iff_mem.2 ⟨_, StateTransition.mem_eval.2 ⟨Relation.ReflTransGen.refl, hs⟩⟩
+        | some b =>
+          obtain ⟨-, rfl⟩ := (clockStep_eq_some_iff c n i b).1 hs
+          rw [StateTransition.reaches_eval (Relation.ReflTransGen.single (show _ ∈ clockStep _ from hs))]
+          exact ih (i + 1) (by omega)
+    exact key k 0 (by omega)
+
+/-- `Statement:` `(c, n, 0)` arrives at a configuration with no step iff `Occurs c n`; both
+    directions. -/
+theorem clock_arrival_iff (c : Code) (n : ℕ) :
+    (∃ b, (runMotion clockStep).NoStepAt b ∧ (runMotion clockStep).Arrives b (c, n, 0)) ↔
+      Occurs c n := by
+  rw [← eval_dom_iff_arrives_noStepAt, clock_eval_dom_iff]
+
+/-- `Statement:` as a predicate of the code, that arrival is not a `ComputablePred`
+    (`occurrence_undecidable`), while each step is primitive recursive (`clockStep_primrec`). -/
+theorem clock_arrival_undecidable (n : ℕ) :
+    ¬ ComputablePred (fun c : Code =>
+      ∃ b, (runMotion clockStep).NoStepAt b ∧ (runMotion clockStep).Arrives b (c, n, 0)) := by
+  have e : (fun c : Code =>
+      ∃ b, (runMotion clockStep).NoStepAt b ∧ (runMotion clockStep).Arrives b (c, n, 0)) =
+      fun c => Occurs c n := funext fun c => propext (clock_arrival_iff c n)
+  rw [e]; exact occurrence_undecidable n
+
+/-- `Statement:` that arrival is an `REPred`, and its negation is not. -/
+theorem clock_arrival_re_not_coRe (n : ℕ) :
+    REPred (fun c : Code =>
+      ∃ b, (runMotion clockStep).NoStepAt b ∧ (runMotion clockStep).Arrives b (c, n, 0)) ∧
+    ¬ REPred (fun c : Code =>
+      ¬ ∃ b, (runMotion clockStep).NoStepAt b ∧ (runMotion clockStep).Arrives b (c, n, 0)) := by
+  have e : ∀ c : Code, (∃ b, (runMotion clockStep).NoStepAt b ∧
+      (runMotion clockStep).Arrives b (c, n, 0)) = Occurs c n :=
+    fun c => propext (clock_arrival_iff c n)
+  simp only [e]
+  exact occurrence_semidecidable_nonoccurrence_not n
+
+/-- `Statement:` no step enters `(c, n, 0)`, for every code `c` and input `n`. `Reading:` at these
+    configurations the "no entry from elsewhere" cell holds for every code; nothing is stated about
+    deciding that cell elsewhere. -/
+theorem clock_start_noEntry (c : Code) (n : ℕ) :
+    ∀ a, (runMotion clockStep).step a (c, n, 0) → a = (c, n, 0) := by
+  rintro ⟨c', n', k⟩ h
+  have h' : clockStep (c', n', k) = some (c, n, 0) := h
+  obtain ⟨-, hb⟩ := (clockStep_eq_some_iff c' n' k _).1 h'
+  simp at hb
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -548,5 +768,28 @@ open ZeroParadox
 #print axioms occurs_iff_halts
 #print axioms occurrence_undecidable
 #print axioms occurrence_semidecidable_nonoccurrence_not
+#print axioms runMotion
+#print axioms runMotion_isLanding_iff
+#print axioms runMotion_upStepInvariant
+#print axioms runMotion_stageClosure
+#print axioms runMotion_run_diverges
+#print axioms runMotion_det
+#print axioms runMotion_noStepAt_iff
+#print axioms runMotion_arrives_iff_reaches
+#print axioms mem_eval_iff_arrives_noStepAt
+#print axioms eval_dom_iff_arrives_noStepAt
+#print axioms runMotion_selfOnlyAt_of_step_self
+#print axioms runMotion_not_step_self_and_leavesAt
+#print axioms runMotion_noEntry_iff_arrives
+#print axioms clockStep
+#print axioms clockStep_primrec
+#print axioms clockStep_eq_none_iff
+#print axioms clockStep_eq_some_iff
+#print axioms clock_reaches_form
+#print axioms clock_eval_dom_iff
+#print axioms clock_arrival_iff
+#print axioms clock_arrival_undecidable
+#print axioms clock_arrival_re_not_coRe
+#print axioms clock_start_noEntry
 
 end PurityCheck

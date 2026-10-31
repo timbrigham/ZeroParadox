@@ -39,7 +39,7 @@ open ZeroParadox
 
     Field (2) places ⊥ in the Quine-atom role (the lattice encoding of the ZF+AFA set Q = {Q}).
     T-EXEC follows from field (2) and its own hypothesis; field (1) is used by the converse. -/
--- [ZP-CUSTOM] no Mathlib analog | reason: Mathlib's ZFSet uses the Axiom of Foundation (ZFSet.regularity), which forbids x ∈ x. No ZFSet element can satisfy x ∈ x, so a Quine atom is not directly available as a ZFSet; AFA content is still MODELLABLE over a well-founded universe, as Aczel does via decorations of accessible pointed graphs. AFAStructure is the lattice-level encoding of what ZF+AFA provides set-theoretically, with selfMem/quine_unique/bot_self_mem as the three minimal class fields.
+-- [ZP-CUSTOM] no Mathlib analog | reason: Mathlib's ZFSet uses the Axiom of Foundation, which forbids x ∈ x (ZFSet.mem_irrefl). No ZFSet element can satisfy x ∈ x, so a Quine atom is not directly available as a ZFSet; AFA content is still MODELLABLE over a well-founded universe, as Aczel does via decorations of accessible pointed graphs. AFAStructure is the lattice-level encoding of what ZF+AFA provides set-theoretically, with selfMem/quine_unique/bot_self_mem as the three minimal class fields.
 class AFAStructure (L : Type*) [ZPSemilattice L] where
   /-- x plays the self-containment role; read in ZF+AFA, x = {x} (its own sole member). Not bare
       x ∈ x: under AFA, 0* = {∅, 0*} is self-membered and is not Ω (Aczel 1988, Example 1.5),
@@ -146,6 +146,13 @@ theorem bot_unique {L : Type*} [ZPSemilattice L]
   have hyb : y = bot := (da2_bottom_characterization y).mp hy
   rw [hxb, hyb]
 
+/-- **`Statement:` `quine_unique` does not follow from the other two fields.** On the two-state
+    lattice `MachinePhase`, the predicate true of every element meets `bot_self_mem` and fails
+    `quine_unique`, since `initial ≠ running`. -/
+theorem quine_unique_independent :
+    ¬ ∀ sm : MachinePhase → Prop, sm bot → ∀ x y, sm x → sm y → x = y := fun h =>
+  absurd (h (fun _ => True) trivial .initial .running trivial trivial) (by decide)
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check
@@ -164,5 +171,6 @@ open ZeroParadox ZeroParadox ZPSemilattice ZeroParadox
 #print axioms bot_is_quine_atom
 #print axioms t_exec_iff
 #print axioms t_exec_triple_iff
+#print axioms quine_unique_independent
 
 end PurityCheck

@@ -12,7 +12,7 @@ stub-first rationale and the full SJV sync sequence are here.
 
 ## Framework Structure (for context)
 
-The Zero Paradox is a multi-layer mathematical ontology proving the Binary Snap (⊥ → ε₀) as a theorem. The dependency order of the formal layers is:
+The Zero Paradox is a multi-layer mathematical ontology whose central theorem T-SNAP proves the shape of the Binary Snap, the step from the bottom element ⊥ of a two-state carrier to the state above it (named ε₀ in that chart), and not that the step occurs: occurrence rests on the occurrence commitment (with DA-1). The dependency order of the formal layers is:
 
 **ZP-A** (lattice algebra) → **ZP-B** (p-adic topology) → **ZP-C** (information theory) → **ZP-D** (state layer) → **ZP-E** (DA-1/T-SNAP derivation)
 
@@ -166,7 +166,9 @@ Reviewer feedback and correspondence are tracked in `.claude-local/feedback/revi
 
 ## License
 
-CC BY-NC-ND 4.0 — share with attribution; no modifications; no commercial use.
+Code, third-party material aside, is Apache License, Version 2.0 (`LICENSE`); documents, the root
+PDFs, every `.md` except `CLAUDE.md` and those under `tools/` and `.claude/`, and `_layouts/`, are
+CC BY-NC-ND 4.0 (`LICENSE-DOCS`). `NOTICE` states which paths fall under which.
 
 
 # .claudecodes instructions for Lean 4 development
@@ -187,7 +189,7 @@ All work — Lean 4 proofs and PDF rendering — happens on the `illustrated` br
 2. **Math Workflow:** Verify theorem changes with two separate calls: `lake build 2>&1 | Out-File -FilePath build.log -Encoding utf8` then `Get-Content build.log | Select-Object -Last 1`.
 3. **PDF Workflow:** Use existing rendering scripts and strictly follow the document versioning and archiving conventions defined above.
 4. **Transparency:** Maintain the `.claude-local/` folder for in-progress scripts and internal notes as a private "collaboration buffer."
-5. **Sync before starting work:** At the start of any session, `fetch()` then `merge(branch='origin/main', reason=...)` before making any changes. Never make edits against a stale base. ⚠ `merge` is **refused while the tree is dirty** — that is deliberate, and the answer is to commit first or take a worktree, never to force it. (Until 2026-08-22 this step said `git fetch` / `git merge` and had been **unexecutable by agents** since direct git was denied.)
+5. **Sync before starting work:** At the start of any session, `fetch()` then `merge(branch='origin/main', reason=...)` before making any changes. Never make edits against a stale base. ⚠ A dirty tree does not block `merge`; what does, and the remedy for each case, is in `gitRobot merge`'s own description and in its refusal. Read the receipt's `carried_forward` to see what rode along.
 6. **Verify no conflict markers after any merge:** Before committing after a merge, run `read(op='diff', args=['--check'])` to confirm no conflict markers (`<<<<<<<`, `=======`, `>>>>>>>`) remain in any file. A file with unresolved markers will commit silently and corrupt the document. This has happened twice on this project.
 7. **5-minute timeout on all external tool calls:** Every `PowerShell` or `Bash` call that invokes an external process (PDF build scripts, `lake build`, `python <script>`, long-running `git` or `gh` operations) must use `timeout: 300000` (5 minutes). If the command exceeds this limit, kill it and report back — never wait indefinitely. If it times out, diagnose the cause rather than retrying blindly.
 ⚠ **STANDARDS 8, 9 AND 10 ARE TIM'S TO RUN — `gh` IS DENIED FOR AGENTS (2026-08-22).** PR creation
@@ -227,8 +229,8 @@ As proofs grow more complex (ZP-D onward), always use a stub-first approach befo
 1. **Symbol map** — before writing any Lean, map each PDF symbol to its Lean 4 / Mathlib equivalent. Identify which imports are required and which are dangerously heavy (p-adics + EuclideanSpace together, for example, can cause elaborator hangs).
 2. **Stub file** — write the complete file with all definitions and theorem statements, but use `sorry` for every proof body. Add `set_option maxHeartbeats 400000` at the top. Do not write proof bodies during the planning or stub step — output the stub file and stop. Wait for a clean build before proceeding.
 3. **Build the stub** — run `lake build` and confirm 0 errors on the skeleton. This validates that types elaborate correctly before any proof work begins.
-4. **Commit the stub** — commit the sorry-stubbed file immediately after a clean build. This creates a rollback point before any proof work begins.
-5. **Fill proofs incrementally** — prove one theorem at a time, building after each. Commit after each theorem is successfully proved. Do not attempt to write all proofs before checking.
+4. **Build is the checkpoint, not a commit** — do not commit while any `sorry` remains (`batch.py precommit` refuses it). The clean stub build is what validates the skeleton.
+5. **Fill proofs incrementally** — prove one theorem at a time, building after each. Commit once the file is sorry-free. Do not attempt to write all proofs before checking.
 6. **Final clean build** — once all `sorry`s are removed, run a final build to confirm 0 errors and 0 warnings, then proceed to the documentation workflow below.
 
 **When to abstract away heavy dependencies:** If a layer imports both p-adic numbers and Hilbert space machinery, consider whether the cross-layer dependency can be replaced with an abstract typeclass or index type (e.g., `Fin (2^k)` instead of `ℚ_[2]`) for the purposes of the proof. Decoupling reduces elaboration load significantly.
@@ -238,7 +240,7 @@ As proofs grow more complex (ZP-D onward), always use a stub-first approach befo
 When a ZP-X document is successfully proved in Lean 4, the following steps are **mandatory** before the work is considered complete:
 
 1. **Build clean** — run as two separate calls: `lake build 2>&1 | Out-File -FilePath build.log -Encoding utf8` then `Get-Content build.log | Select-Object -Last 1`. Confirm zero errors and zero warnings.
-2. **Purity check** — add a `#print axioms` block at the bottom of every ZP-X Lean file (inside a `section PurityCheck ... end PurityCheck`), one call per proved theorem. The expected result is `'theorem_name' does not depend on any axioms`. Any kernel axiom that appears (`Classical.choice`, `propext`, `Quot.sound`) must be explicitly noted and justified in a comment in the Lean file.
+2. **Purity check** — add a `#print axioms` block at the bottom of every ZP-X Lean file (inside a `section PurityCheck ... end PurityCheck`), one call per proved theorem. The expected result is `'theorem_name' does not depend on any axioms`. Any Lean axiom that appears (`Classical.choice`, `propext`, `Quot.sound`) must be explicitly noted and justified in a comment in the Lean file.
 3. **Update README.md** — add or update a row in the `### Formal Verification (Lean 4)` subsection of The Framework, and update the Question Register row for `Formal verification (Lean/Rocq)`.
 4. **Sync the SJV registry (SSOT) — mandatory, see the standing rule below.**
 5. **Commit all changes together** on `illustrated`.

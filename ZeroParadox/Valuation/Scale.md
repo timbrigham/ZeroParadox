@@ -53,7 +53,7 @@ REGISTERED, and whether one EXISTS, are not the same question, and only the firs
 instance synthesis reports. Both are measured: `#synth` fails, because no such instance is
 declared; and the existential is provable, because § V's closing example supplies a semilattice
 with bottom 0 and discharges all four axioms over it. ⚠ So "ℤ_[2] cannot be a ValuationStructure
-instance" is true only in the not-registered reading and false read modally. The related gap
+instance" is true only in the not-registered reading and false read modally (both readings measured 2026-08-30). The related gap
 once recorded at `ZeroParadox/Valuation/Scale.lean` § V — "a ZPSemilattice instance for a concrete
 type carrying a ValuationStructure" — is CLOSED in two independent ways: ℕ∞ carries both structures (`instNatInfZPS` and
 `instNatInfVal` in `ZeroParadox/Settheory/Model.lean`, which imports Scale.lean), and
@@ -70,7 +70,8 @@ obstruction is this class's ℕ∞ target, a design choice, not the field.
 **Prior art, found 2026-09-01 and verified by compiling the reconstruction.**
 `multiplicity_addValuation PadicInt.prime_p : AddValuation ℤ_[2] ℕ∞`
 (`Mathlib/RingTheory/Valuation/PrimeMultiplicity.lean`) discharges all four axioms from stock
-API at the same axiom footprint § V already emits. Its `val_scale` is strictly stronger:
+API at the same axiom footprint § V already emits, over the cast prime `((2 : ℕ) : ℤ_[2])` (the
+`example` opening `section PadicParallel` in `Scale.lean` uses it at the numeral `2`). Its `val_scale` is strictly stronger:
 unguarded, holding at 0 as well, because ⊤ + 1 = ⊤ in ℕ∞ — so `q2Val_scale`'s `x ≠ 0`
 hypothesis is one this class does not need. ⚠ **`AddValuation.top_iff` does NOT cover the `val_bot` + `val_unique` pair on this
 carrier, and this section claimed it did until 2026-09-01.** `top_iff` is stated over a

@@ -37,8 +37,8 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Order/Snap.lean` - ZP-E: Bridge Document
   - ride-along docs: `ZeroParadox/Order/Snap.md` - ZP-E formal inserts, and what T-SNAP does and does not carry
 - `ZeroParadox/Order/SnapCannotBe.lean` - Machine-checked characterization index of the snap ⊥ → ε₀ — what the snap IS and IS NOT
-- `ZeroParadox/Order/UpAndOver.lean` - The up-and-over shape: a closure operator with a corner and a cover at every non-maximal landing
-  - ride-along docs: `ZeroParadox/Order/UpAndOver.md` - The up-and-over shape: prior art, controls and fences
+- `ZeroParadox/Order/UpAndOver.lean` - The up-and-over shape's climbing kind: a closure operator with a corner and a cover at every non-maximal landing
+  - ride-along docs: `ZeroParadox/Order/UpAndOver.md` - The up-and-over shape's climbing kind: prior art, controls and fences
 
 ### Valuation / number theory (ZP-B, ZP-F)
 
@@ -49,6 +49,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Valuation/InversionValuation.lean` - An elementary fact: 2-adic inversion reverses the valuation filtration
 - `ZeroParadox/Valuation/Ostrowski.lean` - ZP-P instance: the number-system fork (ℝ vs ℚ_p), via Ostrowski
 - `ZeroParadox/Valuation/Padic.lean` - ZP-B: p-Adic Topology
+  - ride-along docs: `ZeroParadox/Valuation/Padic.md` - Why Q₂ rather than a discrete two-point space
 - `ZeroParadox/Valuation/PadicPerfect.lean` - M11 (re-attempt): the 2-adic ball is perfect — Cantor–Bendixson rank 0
 - `ZeroParadox/Valuation/PadicTree.lean` - A rooted 2-adic tree as a `SimpleGraph`
 - `ZeroParadox/Valuation/PlaceAllPrimes.lean` - ZP-H Direction A, Cycle A5 (depth c) — the framework's OWN bottom family = all places of ℚ
@@ -76,6 +77,8 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 
 - `ZeroParadox/Information/BottomMeasure.lean` - P6: measure = +∞ at the bottom — per-domain bundle, and the type-boundary finding
 - `ZeroParadox/Information/CrossingTrials.lean` - Crossing trials: what a probability on the crossing would buy
+- `ZeroParadox/Information/Disjunctive.lean` - Disjunctive sequences: a tape on which every finite word occurs
+  - ride-along docs: `ZeroParadox/Information/Disjunctive.md` - Disjunctive sequences: prior art, footprints and fences
 - `ZeroParadox/Information/PadicSurprisal.lean` - B3 (pipeline): information surprisal ≡ 2-adic depth at the floor
 - `ZeroParadox/Information/Surprisal.lean` - ZP-C: Information Theory
   - ride-along docs: `ZeroParadox/Information/Surprisal.md` - The Archimedean fence, what repetition buys, and the concurrent readings
@@ -100,14 +103,23 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Category/BottomUndecidable.lean` - Where the keystone's classical cost sits: unresolved identity, and NOT self-containment
 - `ZeroParadox/Category/Category.lean` - ZP-G: Category Theory
 - `ZeroParadox/Category/ChoiceCannotBe.lean` - Machine-checked characterization index of the framework's relationship to `Classical.choice`
+  - ride-along docs: `ZeroParadox/Category/ChoiceCannotBe.md` - Choice and the framework: the long form of the choice index
 - `ZeroParadox/Category/DiagonalWitness.lean` - The minimum requirements to be a diagonal fixed point — the relativized Lawvere witness
+  - ride-along docs: `ZeroParadox/Category/DiagonalWitness.md` - The relativized Lawvere witness: level sets, topology and prior art
+- `ZeroParadox/Category/DieNucleus.lean` - UP legs as nuclei: the die on a meet-semilattice, the snap and its lift as members, the notation carrier as a non-member
 - `ZeroParadox/Category/DifferenceGeneratesSystem.lean` - Nuclei and sublocales — the home of "a predicated difference generates a system"
+  - ride-along docs: `ZeroParadox/Category/DifferenceGeneratesSystem.md` - Double negation as the canonical predicated difference: Glivenko's core, and logic versus choice
 - `ZeroParadox/Category/DoubleNegationNucleus.lean` - The double-negation nucleus: the excluded-middle modality
+  - ride-along docs: `ZeroParadox/Category/DoubleNegationNucleus.md` - The excluded-middle modality: its credit, its choice-free footprint, and what it is not
 - `ZeroParadox/Category/ExcludedMiddleBridge.lean` - The excluded-middle bridge: choice → excluded middle → the `Prop` nucleus is trivial
+  - ride-along docs: `ZeroParadox/Category/ExcludedMiddleBridge.md` - Why the arrow is scoped to `Prop`, how the instance is pinned, and whose argument it is
+- `ZeroParadox/Category/IgnoranceSeam.lean` - Fills and semiconjugacy (the seam) between partial and complete digit motions
 - `ZeroParadox/Category/Lawvere.lean` - ZPJ — The Lawvere bridge (keystone Tier-6 upgrade probe)
   - ride-along docs: `ZeroParadox/Category/Lawvere.md` - Category-relative verdicts: what each face fails, and what the shared shape is not
 - `ZeroParadox/Category/LawvereDecidable.lean` - Lawvere's engine, priced: the same theorems over decidable equality
 - `ZeroParadox/Category/LawvereTaboo.lean` - The diagonal engine's supplier is a constructive taboo
+  - ride-along docs: `ZeroParadox/Category/LawvereTaboo.md` - The diagonal engine's supplier is a constructive taboo: result, fences and prior art
+- `ZeroParadox/Category/LawvereTwoAdic.lean` - Add-one, doubling and the relativized Lawvere witness: on ℤ, ℤ_[2] and partial digit streams
 
 ### Multi-homed bridges (ZP-H)
 
@@ -136,6 +148,8 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Settheory/Curry.lean` - Curry's paradox — the diagonal family's EXPLOSION face (probe)
   - ride-along docs: `ZeroParadox/Settheory/Curry.md` - Why unrestricted comprehension yields every conclusion, and its floor dual
 - `ZeroParadox/Settheory/FixedPointFork.lean` - ZP-P: The Fixed-Point Fork
+- `ZeroParadox/Settheory/GraphBisim.lean` - Membership graphs up to bisimulation: what is well defined on sets
+- `ZeroParadox/Settheory/HypersetOrder.lean` - Hypersets ordered by subset: pruning as a kernel operator, and the wrap-once step
 - `ZeroParadox/Settheory/Loeb.lean` - Löb's theorem — the diagonal family's PROVABILITY-modal face (probe, from scratch)
   - ride-along docs: `ZeroParadox/Settheory/Loeb.md` - Building an abstract provability logic, and Gödel's second as a corollary
 - `ZeroParadox/Settheory/Model.lean` - ZPJ — Concrete ValuationStructure Instance: (ℕ∞, min, ⊤)
@@ -152,16 +166,21 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 ### Computability (ZP-K, ZP-J)
 
 - `ZeroParadox/Computability/ComputationCannotBe.lean` - Machine-checked characterization index of COMPUTATION — what it can and cannot be
+  - ride-along docs: `ZeroParadox/Computability/ComputationCannotBe.md` - ComputationCannotBe — ride-along documentation
 - `ZeroParadox/Computability/GroundZero.lean` - Ground zero — the bottom as a behaviour, not a configuration
+  - ride-along docs: `ZeroParadox/Computability/GroundZero.md` - GroundZero — ride-along documentation
 - `ZeroParadox/Computability/Kleene.lean` - ZP-K: Computational Grounding of Self-Reference
-  - ride-along docs: `ZeroParadox/Computability/Kleene.md` - The Gödel-number family: periods, constant codes, and the noncomputable marker
+  - ride-along docs: `ZeroParadox/Computability/Kleene.md` - The Gödel-number family, infinitely many fixed points, and a self-printing universal code
+- `ZeroParadox/Computability/KleeneChoiceFree.lean` - Kleene's second recursion theorem for transformations given as codes, choice-free
 - `ZeroParadox/Computability/Occurrence.lean` - Occurrence — what it takes for the bottom to move, in the computational face
   - ride-along docs: `ZeroParadox/Computability/Occurrence.md` - The carrier's reach, floor-directed motion, and stutter equivalence
 - `ZeroParadox/Computability/Periodicity.lean` - ZP-K metric: the selfApply periodicity invariant (P5)
 - `ZeroParadox/Computability/Rice.lean` - Rice's theorem — the computability face's UNDECIDABILITY, from the recursion theorem (probe)
-  - ride-along docs: `ZeroParadox/Computability/Rice.md` - The price of ν-existence: one recursion-theorem fixed point read on two axes
+  - ride-along docs: `ZeroParadox/Computability/Rice.md` - ν-existence beside Rice undecidability: two conjuncts, two uses of the recursion theorem
 - `ZeroParadox/Computability/SelfApp.lean` - ZPJ — Abstract Self-Application Bridge
+  - ride-along docs: `ZeroParadox/Computability/SelfApp.md` - SelfApp — ride-along documentation
 - `ZeroParadox/Computability/SelfCopyReference.lean` - Self-copying self-reference: infinite ⟺ a one-to-one, not-onto self-map with exactly one fixed point
+- `ZeroParadox/Computability/UniversalChoiceFree.lean` - A universal code for `Nat.Partrec.Code`, choice-free
 
 ### Ordinals / proof theory (ZP-L, ZP-M, ZP-N)
 
@@ -169,10 +188,12 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Ordinal/CnfBridge.lean` - The CNF/ℤ₂ value bridge, at the construction level (Gentzen.lean item 4)
   - ride-along docs: `ZeroParadox/Ordinal/CnfBridge.md` - CnfBridge — the CNF/ℤ₂ value bridge, at the construction level
 - `ZeroParadox/Ordinal/ConstructiveOrdinals.lean` - ZP-N: the ε₀ snap, constructively, on ordinal notations (choice-free)
+  - ride-along docs: `ZeroParadox/Ordinal/ConstructiveOrdinals.md` - ZP-N, the ε₀ snap on ordinal notations: the probe, the result and its fences
 - `ZeroParadox/Ordinal/Epsilon0CannotBe.lean` - Machine-checked characterization index of ε₀ — what ε₀ IS and what it IS NOT
+  - ride-along docs: `ZeroParadox/Ordinal/Epsilon0CannotBe.md` - What ε₀ is and is not: the long form of the ε₀ index
 - `ZeroParadox/Ordinal/Epsilon0LeastFP.lean` - Batch 2 / G1 (pipeline, T6): ε₀ is the LEAST fixed point of α ↦ ωᵅ — the snap sits at minimal closure
-  - ride-along docs: `ZeroParadox/Ordinal/Epsilon0LeastFP.md` - Least in which order, Veblen's Corollary 1, and three traps around the seed range
-- `ZeroParadox/Ordinal/Epsilon0MinMax.lean` - ε₀ is min ≡ max: the snap ⊥ → ε₀ is one Kleene chain (seed → closure)
+  - ride-along docs: `ZeroParadox/Ordinal/Epsilon0LeastFP.md` - Least in which order, Veblen's Corollary 1 to Theorem 4, and three traps around the seed range
+- `ZeroParadox/Ordinal/Epsilon0MinMax.lean` - ε₀ is min ≡ max: the snap from ⊥ of `Ordinal` to ε₀ is one Kleene chain (seed → closure)
   - ride-along docs: `ZeroParadox/Ordinal/Epsilon0MinMax.md` - Least fixed point as a signature, and two fences on the seed
 - `ZeroParadox/Ordinal/Gentzen.lean` - ZP-L: Incomputability Convergence
   - ride-along docs: `ZeroParadox/Ordinal/Gentzen.md` - The Kleene-ordinal bridge: where the value changes, and why that is not occurrence
@@ -184,8 +205,10 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
   - ride-along docs: `ZeroParadox/Ordinal/Kruskal.md` - Where the choice comes from, and which half of the axiom-free proof transfers
 - `ZeroParadox/Ordinal/NaturalOpsPow.lean` - Natural sum on powers of ω — the deferred CNF characterization (ported)
 - `ZeroParadox/Ordinal/OrdinalChoiceEssential.lean` - Comparability of well-orders is a constructive taboo
+  - ride-along docs: `ZeroParadox/Ordinal/OrdinalChoiceEssential.md` - Comparability of well-orders is a constructive taboo: result, prior art and fences
 - `ZeroParadox/Ordinal/P8.lean` - P8 re-attempt: ε₀ → 0 in ℤ₂ via a tower-rank 2-adic encoding
-- `ZeroParadox/Ordinal/PricedInterface.lean` - A priced interface: a carrier sized to ε₀, a map into `Ordinal`, and both sides' axiom footprints
+- `ZeroParadox/Ordinal/PricedInterface.lean` - A priced interface: notations denoting the ordinals up to ε₀, a map into `Ordinal`, and both sides' axiom footprints
+  - ride-along docs: `ZeroParadox/Ordinal/PricedInterface.md` - PricedInterface — ride-along documentation
 - `ZeroParadox/Ordinal/SnapMetaLattice.lean` - The lattice of systems: adjoining the point at infinity makes the ordinals a frame
 - `ZeroParadox/Ordinal/SnapNucleus.lean` - The snap is a nucleus: ε₀ is the modality generated from the bottom ⊥
   - ride-along docs: `ZeroParadox/Ordinal/SnapNucleus.md` - A modality on a chain: the recognized structure, its scope, and what is owed outward
@@ -194,6 +217,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Ordinal/SnapSuccession.lean` - The succession as a chain: the ε-numbers are the snap's successive targets, strictly climbing
   - ride-along docs: `ZeroParadox/Ordinal/SnapSuccession.md` - SnapSuccession — the ε-numbers as the snap's successive targets
 - `ZeroParadox/Ordinal/SyntacticCollapse.lean` - Syntactic surrogate for the 2-adic metric collapse (choice-free)
+  - ride-along docs: `ZeroParadox/Ordinal/SyntacticCollapse.md` - Syntactic surrogate for the 2-adic metric collapse: the conjecture, the result and its fences
 - `ZeroParadox/Ordinal/WeakGoodstein.lean` - Weak Goodstein termination (second-domain depth test: ordinals / proof theory)
 
 ### Algebra / wheel (ZP-J)
@@ -211,15 +235,21 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
   - ride-along docs: `ZeroParadox/ClaimsMirror.md` - Claims that are not theorems: the faithful non-representation
 - `ZeroParadox/DiagonalFixedPoint.lean` - Machine-checked characterization index of self-reference — the diagonal fixed point
   - ride-along docs: `ZeroParadox/DiagonalFixedPoint.md` - The μ/ν split, the host verdict, and what this index does not claim
+- `ZeroParadox/Die.lean` - The die: an order-free motion, its switches, and its premises
+- `ZeroParadox/DieCannotBe.lean` - Machine-checked characterization index of the die — its premises, with members and non-members
 - `ZeroParadox/Miniature.lean` - The Zero Paradox in miniature — the minimal core
 
 ### Meta / tooling (not framework content)
 
+- `ZeroParadox/Meta/AxiomLedger.lean` - Axiom ledger: declared axiom profiles, checked on every build
 - `ZeroParadox/Meta/ExtractDeps.lean` - Declaration-level dependency extractor (interop Issue 13, ZP side)
 - `ZeroParadox/Meta/Snapshot.lean` - Golden-master snapshot for refactor verification (content-preservation harness)
 
-### Vendored external code (Mathlib / CGT)
+### Vendored external code (Mathlib / CGT / GuardianEngineAI corpus auditor)
 
+- `ZeroParadox/Vendored/CorpusAudit/Audit.lean` - The replacement and axiom-profile audit
+- `ZeroParadox/Vendored/CorpusAudit/AuditChecks.lean` - Admission boundary checks
+- `ZeroParadox/Vendored/CorpusAudit/Relation.lean` - Same-statement replacement relations
 - `ZeroParadox/Vendored/NaturalOps.lean` - Natural operations on ordinals
 
 ## Experimental (branch scaffolding - the lab notebook)
@@ -282,7 +312,8 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Valuation/ScaleRealization.lean` - Realizing an abstract scale step as 2-adic doubling: the ZP-I commitment as equivariance, with the valuation law derived and both valuations bridged
   - ride-along docs: `ZeroParadox/Valuation/ScaleRealization.md` - Why the welded form is not statable, the falsifiers, and how the self-supply residue is closed
 - `ZeroParadox/Valuation/StrippedBottom.lean` - ⊥ by inversion of attribute-classes — the "typecast" stand-in (Tim, 2026-06-30)
-- `ZeroParadox/Valuation/TowerHeightFloor.lean` - Height meets floor: the ordinal tower IS an InfinitudeFloor, order-reversed — ε₀ ≠ ⊥ preserved
+- `ZeroParadox/Valuation/TowerHeightFloor.lean` - Height meets floor: the tower's 2-adic images as an InfinitudeFloor, norm order reversed from stage 1 — ε₀ ≠ ⊥ of `Ordinal` preserved
+  - ride-along docs: `ZeroParadox/Valuation/TowerHeightFloor.md` - Height meets floor — the tower's 2-adic images as an InfinitudeFloor, norm order reversed from stage 1
 
 ### State / Hilbert (ZP-D)
 
@@ -352,14 +383,15 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 
 - `ZeroParadox/Settheory/ForkFrameChange.lean` - The order-theoretic universal frame-change: duality swaps the fork's ends
   - ride-along docs: `ZeroParadox/Settheory/ForkFrameChange.md` - The fork's two closures under order-duality, and the fences on the shared shape
-- `ZeroParadox/Settheory/LawvereBridge.lean` - The Lawvere dereference — selfApp as an instance of the general engine (probe)
-  - ride-along docs: `ZeroParadox/Settheory/LawvereBridge.md` - Existence from the engine, pinning from the framework, and where the reflexive object lives
+- `ZeroParadox/Settheory/LawvereBridge.lean` - The Lawvere dereference — what the general engine gives selfApp, and what it does not (probe)
+  - ride-along docs: `ZeroParadox/Settheory/LawvereBridge.md` - What Lawvere's theorem gives the self-application fixed point, what it does not, and where its hypothesis holds
 - `ZeroParadox/Settheory/MetaFork.lean` - The meta-level fork — the double dereference (probe)
 - `ZeroParadox/Settheory/RequirementsGap.lean` - The instance-vs-requirements gap as a fork instance (probe)
 
 ### Computability (ZP-K, ZP-J)
 
 - `ZeroParadox/Computability/ChoicePurityInvariant.lean` - Is choice-purity an IN-STATEMENT μ/ν separating invariant?
+  - ride-along docs: `ZeroParadox/Computability/ChoicePurityInvariant.md` - ChoicePurityInvariant — ride-along documentation
 - `ZeroParadox/Computability/CodeDataFrameChange.lean` - The frame-change in the computability frame: the code↔data involution and the quine on its fixed locus
 - `ZeroParadox/Computability/ComputableCrossing.lean` - The Lawvere bridge, crossed in the computability face (probe)
   - ride-along docs: `ZeroParadox/Computability/ComputableCrossing.md` - Where the obstruction is absent: the universal machine as a reflexive object
@@ -376,4 +408,4 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 
 ---
 
-*Generated by `build_manifest.py` from the Lean tree + each file's `-- EXPERIMENTAL` header. Rerun after adding, moving, or renaming a file. (120 core, 106 experimental.)*
+*Generated by `build_manifest.py` from the Lean tree + each file's `-- EXPERIMENTAL` header. Rerun after adding, moving, or renaming a file. (134 core, 106 experimental.)*

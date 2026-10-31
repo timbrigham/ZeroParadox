@@ -1,43 +1,5 @@
 """
-Build ZP-B Illustrated Companion (v1.16)
-v1.16: GATE ROUND 4 DEFAULT (2026-09-15): companion sync with ZP-B v1.18: AX-B1's lead clause drops ', the bottom included'.
-v1.15: DECISION BATCH REMEDIATION AFTER GATE ROUND 3 (Tim defaults, 2026-09-15): companion sync with ZP-B v1.17: AX-B1's lead clause is aligned with its gloss (AX-B1 holds at every state with anything above it, the bottom included).
-v1.14: DECISION BATCH REMEDIATION AFTER GATE ROUND 2 (Tim ruling, 2026-09-15): companion sync with ZP-B v1.16: AX-B1's scope sentence is the conditional form (every state with anything above it; a state with nothing above it owes no step), and the derivation of the field cites AX-B1's two states (T0 Step 1), not the scope sentence.
-v1.13: DECISION BATCH REMEDIATION (Tim, 2026-09-15): companion sync with ZP-B v1.15: AX-B1's iterative-bottom scope sentence added where the companion introduces AX-B1.
-v1.12: PRECISION FIX (release-prep), grounded in the formal ZP-B claims (C3, T5). Corrected two review-flagged overclaims: (1) the "entirely disjoint / 0 unreachable" framing — zero is a genuine LIMIT of nonzero states (not isolated; the v1.4/v1.7 correction), and the true barrier is C3 (no continuous PATH from a nonzero state to zero), the only crossing being a discrete jump (the Binary Snap); (2) "infinite valuation distance" (category error) — v₂(0) is an infinite VALUATION, not a distance (2-adic distances stay finite); it places zero in a clopen class distinct from every nonzero state. Kept the general-reader register (accessible, not jargon).
-v1.10: vocab fix: null state → ⊥.
-v1.9: Strip version number from companion footer.
-v1.8: Dan feedback (2026-05-21): "dense" → "densely ordered"; rewrite para 2 of "Why p-Adic
-      Geometry?" to acknowledge ℚ₂ also has no minimum nonzero element — difference is topology
-      (clopen), not field arithmetic; add ε₀ note in key property box clarifying ε₀ is a
-      framework threshold, not a specific 2-adic number.
-v1.7: Dan feedback (2026-05-17) — PhD in metrics:
-      (1) removed "halfway between existing and not existing" (category error — existence
-          is not a quantity that can be averaged); replaced with density argument
-          (ε/2 always exists in ℝ; no first nonzero step possible);
-      (2) "first atomic state (1)" replaced with "ε₀" throughout to avoid confusion
-          with the rational number 1 in ℚ₂;
-      (3) "no point between them in the 2-adic topology" — topology does not deal with
-          betweenness; replaced with clopen ball separation language;
-      (4) "0 itself remains isolated" (line missed by v1.4 fix) corrected to
-          "clopen-separated";
-      (5) added sequences-vs-paths note box: sequences can converge to 0 in ℚ₂
-          (e.g. (2/3)ⁿ has 2-adic norm 2⁻ⁿ → 0), but continuous paths cannot reach 0
-          (total disconnectedness). These are different objects.
-v1.6: nested_balls_diagram cy fixed (was dh*0.42=90.7; ry_outer=101.2 → min_y=-10.5 overflow);
-      dh 3.0→3.2 in, cy fixed at 112 (min_y=10.8, top label=218 < dh-10=220.4)
-v1.5: nested_balls_diagram height increased (2.6 → 3.0 in) and cy lowered so outermost
-      ellipse and labels no longer overflow the drawing box; internal title string removed
-      (redundant with caption); caption "0 is isolated" corrected to match v1.4 terminology.
-v1.4: "isolation of 0" and "0 is isolated" corrected to "clopen separation of 0"
-throughout — 0 in Q2 is not a topologically isolated point; the correct claim is
-clopen-ball separation (v2(0) = +inf places 0 in its own clopen class, distinct
-from all non-zero elements). Diagram caption and remember box updated.
-v1.3: "Why p-Adic Geometry?" section added as the opening section — Conceptual Rosetta Stone
-mapping 2-adic valuation to ontological function; explains why the real line fails for binary
-existence and why ℚ₂ is the natural language for AX-B1. Key property example box added.
-v1.2: "Non-Archimedean" defined in plain language near the top.
-"2-adic valuation" briefly explained when isolation of 0 is discussed.
+Build ZP-B Illustrated Companion (v1.21)
 """
 
 import os
@@ -123,7 +85,7 @@ def nested_balls_diagram():
 
     return d
 
-VERSION = '1.16'
+VERSION = '1.21'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -183,9 +145,9 @@ def build():
     E.append(cbody(
         'The 2-adic numbers take a different route. As a number system, &#8474;&#8322; also has no '
         'smallest nonzero element — you can always find something smaller. What changes is the '
-        '<i>topology</i>: in &#8474;&#8322;, zero is still a limit of nonzero states — they can '
+        '<i>topology</i>: in &#8474;&#8322;, zero is still a limit of nonzero elements — they can '
         'converge on it as closely as you like, so it is not isolated. What &#8474;&#8322; forbids is a '
-        'continuous path: there is no continuous route from any nonzero state back to zero (Corollary '
+        'continuous path: there is no continuous route from any nonzero element back to zero (Corollary '
         'C3). The space is totally disconnected, so the only way to reach zero is a discrete jump across '
         'a clopen gap, never a continuous slide — and that discrete jump is the Binary Snap. '
         'The gap is not enforced by the number system running out of small values. It is built into '
@@ -198,12 +160,13 @@ def build():
     E.append(example_box('The key property', [
         'Mathematical object: 2-adic valuation v₂(x).',
         'What it measures in this framework: depth of binary structure — how many times 2 divides x.',
-        'The crucial point: 0 and the first nonzero state lie in separate clopen components of ℚ₂. '
+        'The crucial point: 0 and any nonzero element lie in disjoint clopen sets of ℚ₂. '
         'No continuous path connects them — the geometry enforces the binary gap.',
-        'Note on ε₀: the first nonzero state is not a specific number you can look up in ℚ₂ — '
-        'the 2-adic number system has no smallest nonzero element. ε₀ is the framework\'s name '
-        'for the minimum viable departure from null, defined by structural constraints. '
-        'The geometry provides the right topology; it does not fix the specific value.',
+        'Note on ε₀: ε₀ is a point of ℚ₂, but not one with a fixed value you can look up — '
+        'the 2-adic number system has no smallest nonzero size. ε₀ is the framework\'s name '
+        'for the minimum viable departure from 0 of ℚ₂, and it is located only by a rung: once a '
+        'finest accessible valuation is chosen, any point at that valuation fills the role. '
+        'The geometry provides the right topology; it does not fix the rung, and the rung does not fix the point.',
     ]))
     E.append(sp(8))
 
@@ -212,20 +175,22 @@ def build():
         'ZP-B puts the Zero Paradox on a specific geometric foundation: the 2-adic number field '
         'ℚ₂. This is not standard Euclidean geometry. In ℚ₂, closeness is 2-adic: two numbers are '
         'close when their difference is divisible by 2 many times over. The 2-adic valuation of zero, '
-        'v₂(0), is infinite, which places zero in a clopen class distinct from every nonzero state. It '
-        'is not that zero is infinitely far away — 2-adic distances stay finite, and nonzero states lie '
+        'v₂(0), is infinite, which places zero in a clopen class distinct from every nonzero element. It '
+        'is not that zero is infinitely far away — 2-adic distances stay finite, and nonzero elements lie '
         'arbitrarily close to it — but that zero is cleanly walled off in its own clopen class, so any '
         'return would have to jump the gap rather than cross it continuously.'))
     E.append(cbody(
         'The starting point is a single axiom: AX-B1 (Binary Existence) — a state either exists '
         'or it does not. AX-B1 holds at every state with anything above it: each '
         'has a first distinct state above it, with nothing strictly between. A state with nothing above it '
-        'owes no step. From AX-B1&#8217;s two states (T0 Step 1), together with a minimality principle (MP-1), the document '
-        'derives that the field must be ℚ₂. The choice of geometry is proven as Theorem T0, '
-        'not assumed.'))
+        'owes no step. From AX-B1&#8217;s two states (T0 Step 1), together with a minimality principle (MP-1), '
+        'Theorem T0 proves the base is 2, so among the p-adic fields the framework uses ℚ₂; that the geometry '
+        'is p-adic at all is a motivated modelling choice. MP-1 itself is a design choice, the smallest base '
+        'that encodes the two states with no unused digit, and not a theorem.'))
     E.append(example_box('Real-world example — Light switch vs. dimmer', [
         'AX-B1 says existence is like a light switch: on or off, no dimmer. This is the '
-        'foundational claim. From "binary only," the 2-adic geometry follows mathematically.',
+        'foundational claim. From "binary only," together with MP-1, the base 2 follows mathematically; '
+        'building a p-adic geometry on it is a modelling choice.',
     ]))
     E.append(sp(8))
 
@@ -286,8 +251,8 @@ def build():
 
     E.append(nested_balls_diagram())
     E.append(ccaption(
-        'Balls in ℚ₂ converging on 0 (amber). The ε₀ threshold (the first nonzero state in '
-        'the framework) marks the Snap boundary. '
+        'Balls in ℚ₂ converging on 0 (amber). The ε₀ threshold (the size of any point at the chosen '
+        'finest rung, not one fixed element of ℚ₂) marks the Snap boundary. '
         '0 is clopen-separated — no continuous path from outside ever reaches it.'))
 
     E.append(key_result_box('Key Result: Total Disconnectedness (T5)',
@@ -314,15 +279,17 @@ def build():
     E.append(example_box('Real-world example — Crossing a river with no bridge', [
         'Imagine a world where rivers have no bridges and no fords. Once you\'re on one bank, '
         'there is literally no continuous path to the other. That\'s total disconnectedness. '
-        '0 is on one side; every non-zero state is on the other. The Snap is the only crossing, '
+        '0 is on one side; every nonzero element is on the other. The Snap is the only crossing, '
         'and it only goes one way.',
     ]))
     E.append(sp(8))
 
     E.append(remember_box(
         'Remember: The 2-adic structure — ultrametric, clopen balls, clopen separation of 0 — is '
-        'fixed by the framework\'s axioms. ε₀ (the Snap threshold) is a structural concept: '
-        'the minimum nonzero state required by those axioms, not a specific physical constant. '
+        'fixed by the framework\'s axioms. ε₀ is a structural concept: a point of ℚ₂ named by its rung '
+        'rather than by a fixed value, filling the role of minimum departure from 0 relative to a chosen '
+        'finest rung v (ℚ₂ itself has no least nonzero step). Its size 2<super>&#8722;v</super>, the Snap '
+        'threshold, is set by that choice of rung; neither the point nor its threshold is a specific physical constant. '
         'The Zero Paradox is a structural argument, not a physical theory of our particular universe.'))
 
     print(f'Building: {out_path}')

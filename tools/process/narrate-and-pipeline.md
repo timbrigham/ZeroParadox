@@ -86,8 +86,8 @@ and fix them in their own batch. (Violated by the author of the rule on the day 
 not push a subset to dodge a signal. **This project has two recorded bypass incidents and both began
 by treating a block as an obstacle.**
 
-📖 **WHY THE PIPELINE IS SHAPED THIS WAY — `tools/process/pipeline.md`.** Which obligation gates at
-commit versus push and why `lake build` deliberately gates neither; the three defects that stayed
+📖 **WHY THE PIPELINE IS SHAPED THIS WAY — `tools/process/pipeline.md`.** Where to ask which steps gate
+commit versus push, and why moving a check earlier must not break stub-first; the three defects that stayed
 invisible for a month because a gate did not declare its own enforcement mode; and the `REL-1`
 ordering lesson, where delegating before fixing would have replaced a correct computation with a
 vacuous one. **Read it before changing `hooks.py`, `batch.py` or `report.py`, or before arguing a

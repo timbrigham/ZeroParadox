@@ -82,12 +82,14 @@ than one file.
 two lifecycles — registering a type is free, promoting one to gate a push is deliberate. Ask for
 it with `gitRobot admission(action=...)`, and ask **per action**: the answer differs across the
 three, so any sentence about admission that names no action is wrong about at least one of them.
-Measured 2026-09-26 — commit admits 17, push 21, tag 23.
+No count is written here: the push figure once recorded on this line went stale inside the very
+range a `/rely` round was reviewing (`RLY56-1`). The `count` field of `gitRobot
+admission(action=...)` is the only number to quote, read at the time you quote it.
 
 ⚠⚠ **THIS PARAGRAPH USED TO BEGIN *"`admission.v1.json` REMAINS"*, AND THAT NAMED THE WRONG FILE.**
 Two files carried that name and only gitRobot's `config/admission.v1.json` was ever live. The copy
-in THIS directory was a 2026-08-23 seed that nothing read — it admitted 3 types at push where the
-live set admits 21 — and a comment in `batch.py` had already recorded it *"itself dead:
+in THIS directory was a 2026-08-23 seed that nothing read — it admitted 3 types at push, a small
+fraction of the live set — and a comment in `batch.py` had already recorded it *"itself dead:
 `RLY31-12`"* while this line still advertised it. ⚠ That comment was rewritten in `8192e54`, so
 the quotation is HISTORICAL: `log -S` finds it, the working tree does not. **The file was DELETED
 2026-09-26**, so the name now resolves to one file and
@@ -235,7 +237,7 @@ design habit, not five incidents** — writing a class without asking what it EX
 | `AbstractSelfApp` | `trivialSelfApp` inhabits it, so *"L carries it, therefore…"* is vacuous |
 | `InfinitudeFloor` | characterised 2026-08-07 as **exactly** `Infinite α` — nothing more |
 | `SeparatedSuccession` | `Unit` + the always-true relation discharges every field (2026-08-07) |
-| `KleeneStructure` | bundles a `Code` (data) with the assertion that it names ⊥ (commitment) |
+| `KleeneStructure` | no field asserts that `botCode` names ⊥ of `L`; the `Code.const 0` instance shows it (the NO-GO gauge in `ZeroParadox/Computability/Kleene.lean` § II) |
 
 **⚠ THIS IS NOT A NEW RULE — IT IS TIM'S OWN 2026-06-29 NO-GO GAUGES, FINALLY ENFORCED AND FINALLY
 POINTED AT THE RIGHT OBJECT.** `.claude-local/notes/nogo_gauges_2026-06-29.md` already specifies

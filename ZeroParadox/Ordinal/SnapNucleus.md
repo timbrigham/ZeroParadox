@@ -44,9 +44,70 @@ is a CHART claim about two measurements of one object, never a point identity: i
 and `∞` are provably distinct, which is what makes the swap non-trivial.
 Completing the meta-lattice by that boundary is a separate construction, not attempted here.
 
+## Axiom footprint
+
+`snapNucleus` and the results about it are STATEMENT-CARRIED (`ZeroParadox/Category/ChoiceCannotBe.md`):
+each statement, only assumed, already reports `Classical.choice` (statement control, measured 2026-10-08).
+The choice is **not** in the `Ordinal` type — `#print axioms Ordinal` reports `[propext, Quot.sound]`. It
+enters through the *order instance and the operations*: `Ordinal.instLinearOrder`, `Ordinal.nfp`,
+`Ordinal.omega0` and `Ordinal.epsilon` each measure `[propext, Classical.choice, Quot.sound]`, and
+`snapNucleus` is built from `nfp` over `omega0 ^ ·` on that order.
+
+The open question is a restatement on a carrier whose statements are choice-free. Its state, part by
+part (measured 2026-10-08):
+
+* **The ascent below ε₀ is restated, choice-free.** On `ONote`, ZP-N proves the ascent (`exp_lt_term`,
+  `omegaPow_no_fixedpoint`, and `tower_strictMono`, the counterpart of `fundamentalSeq_strictMono`).
+  `tower_cofinal` (`ZeroParadox/Ordinal/SnapNucleusConstructive.lean`: every notation is strictly
+  below some tower stage) is the corpus's choice-free counterpart of Kraus–Nordvall Forsberg–Xu
+  Theorem 22 (below). In the 2-adic, valuation-side chart, `synCollapse_epsN`
+  (`ZeroParadox/Ordinal/SyntacticCollapse.md`) restates the tower's convergence content: the syntactic
+  valuation of the tower stages grows past every bound, and on the tower that valuation is the 2-adic
+  one (`synVal_tower_eq_valuation`, `ZeroParadox/Ordinal/CnfBridge.lean`, whose statement carries
+  choice). The statement and the proof of
+  `tower_strictMono`, `tower_cofinal` and `synCollapse_epsN` each measure `[propext]`. That is the
+  ascent, not the nucleus.
+* **The results that name ε₀ cannot be stated on `ONote`**: no notation is an upper bound for the
+  tower (`tower_no_upper_bound`, from `tower_cofinal`, both `[propext]`), so the carrier has no point
+  where ε₀ would sit. The natural counterpart route for the nucleus is therefore **blocked** there
+  (`no_snap_closure`: no idempotent endomap of the notation carrier has the ε-numbers as closed
+  points), and that obstruction is about **expressive reach, not choice**. It concerns `ONote` only
+  and says nothing about a carrier that reaches ε₀. One such carrier is constructive and outside
+  Lean: Kraus, Nordvall Forsberg and Xu (MFCS 2021, arXiv:2104.02549) build Brouwer trees with
+  exponentiation at every base (Thm 18), and their cubical Agda development defines ε₀ as the limit
+  of the ω-tower and proves ε₀ = ω^ε₀ (the development uses Agda's `{-# TERMINATING #-}` pragma to work
+  around one known Agda bug and one termination-checker limitation, KNX p. 3, which does not say which
+  results use it); every Cantor normal form lies below it (Thm 22). A lemma that
+  ε₀ is the *least* fixed point of `ω^·` was not located there as of 2026-10-08 (searched: the paper,
+  and the Agda module `BrouwerTree.Arithmetic.Properties`, pinned to a commit in
+  `ZeroParadox/Ordinal/ConstructiveOrdinals.md` § Prior art).
+* **The defined reading, in Lean: `E0Note`.** `ZeroParadox/Ordinal/PricedInterface.lean` adjoins one
+  point ⊤ above the notations (`E0Note := WithTop SynONote`), and `e0Repr` sends ⊤, and only ⊤, to ε₀
+  (`e0Repr_eq_epsilon0_iff`). There the tower operator fixes ⊤ **by definition**
+  (`e0OmegaPow_top`, `rfl`), and ⊤ is its **only** fixed point by a theorem
+  (`e0OmegaPow_fixedpoint_iff`). The statement and the proof of each measure `[propext]` (measured
+  2026-10-08). So this is a choice-free Lean restatement of the fixed-point equation and its
+  uniqueness on `E0Note`, with existence set by definition rather than derived, on an order that is not
+  well-founded (the `example` stating `¬ WellFoundedLT E0Note`). That file states no leastness
+  declaration. Its crossing into `Ordinal`, `e0Repr`, carries `Classical.choice` (its purity block).
+* **Open: the derived reading.** A well-founded Lean carrier whose statements are choice-free, on which ε₀'s fixed point is derived
+  rather than set by definition, leastness included, was not located as of 2026-10-13. Searched: this
+  corpus, 2026-10-08 and again 2026-10-13 (`ZeroParadox/**/*.lean` for carriers built over ordinal notations; `E0Note` is the
+  only one reaching ε₀); and on 2026-10-13, `theoremsearch` on "epsilon zero is the least fixed point of omega
+  exponentiation on a well-founded ordinal notation system, constructive proof" (formal and
+  informal), "no ordinal below epsilon_0 satisfies omega^a = a, and omega^epsilon_0 = epsilon_0,
+  proved for a notation type with a well-founded order" (formal) and "intuitionistic ordinal notation
+  reaching epsilon_0 as a term: well-foundedness and the fixed point of the omega map without
+  excluded middle" (informal), and one web search, "Lean 4 constructive ordinal notation epsilon_0
+  fixed point well-founded without Classical.choice"; each returned Mathlib's `Ordinal` and
+  `ONote` material (its well-foundedness `NONote.lt_wf` goes through `repr`), or work outside Lean. The crossing of any such result
+  into Mathlib's `Ordinal` carries choice, because the target statements are STATEMENT-CARRIED
+  (above).
+
 ## Credit outward
 
-`nfp`-as-closure/nucleus is textbook fixed-point theory (Knaster–Tarski / Kleene; nuclei = point-free
+`nfp`-as-closure/nucleus is textbook fixed-point theory (its classical ordinal form is Veblen 1908, credited in
+`ZeroParadox/Order/LeastFixedPoint.md`; nuclei = point-free
 Lawvere–Tierney), which Mathlib happens not to package for `nfp`. The framework contribution is the
 **instance** — its own ⊥ / snap / ε₀ triad exhibited as this modality — and the **placement** (seeded at
 the self-dual pole), not a new theorem of the general theory.

@@ -112,9 +112,10 @@ theorem k_le_cnfLogDepth (k : ℕ) : k ≤ cnfLogDepth (towerOrd k) := by
 noncomputable def cnf_log_encode (α : {α : Ordinal // α < ε₀}) : ℤ_[2] :=
   (2 : ℤ_[2]) ^ cnfLogDepth α
 
-/-- **B6 — the canonical ε₀ → ⊥ bridge.** The canonical (log-ω-depth) 2-adic encodings of the ω-tower
-    converge to 0 in ℤ₂ — the same ε₀ ↦ ⊥ limit as P8, now with the valuation growth read from the
-    ordinal's own CNF structure rather than defined via the tower. -/
+/-- **B6 — the canonical tower-to-0 limit.** The canonical (log-ω-depth) 2-adic encodings of the
+    ω-tower converge to ℤ_[2]'s 0, P8's limit (`cnf_encode_tower_tendsto_zero`), with the valuation
+    growth read from the ordinal's own CNF structure. ε₀ has no encoding: the domain is
+    `{α // α < ε₀}`. -/
 theorem cnf_log_encode_tower_tendsto_zero :
     Tendsto (fun k => cnf_log_encode (towerOrd k)) atTop (𝓝 0) := by
   have hdepth : Tendsto (fun k => cnfLogDepth (towerOrd k)) atTop atTop :=

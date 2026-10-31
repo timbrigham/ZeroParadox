@@ -16,15 +16,14 @@ machine-checked impossibility rather than a failed attempt.
 
 * **`snapNucleus` is not made choice-free here.** Nothing in the Lean file is a re-proof, replacement, or discharge
   of `snapNucleus`, `snapNucleus_bot`, or any result in `ZeroParadox/Ordinal/SnapNucleus.lean`. Those
-  stand exactly as they are, with the footprint they have.
-  **Correction of record (2026-07-19):** this bullet previously read "and cannot be," justified by
-  "Mathlib's `Ordinal` is a quotient of well-ordered types; `Classical.choice` sits in the *type*." That
-  is **false as measured** — `#print axioms Ordinal` reports `[propext, Quot.sound]`, no choice. Choice
-  enters through the order instance and the operations (`Ordinal.instLinearOrder`, `Ordinal.nfp`,
-  `Ordinal.omega0`, `Ordinal.epsilon`). The claim was reasoning from a quotient construction instead of
-  measuring it, and the "cannot be" conclusion drawn from it does not stand. Whether `snapNucleus` is
-  re-provable choice-free is **open, and untried in this corpus as of 2026-08-02**; its footprint
-  is UNCLASSIFIED.
+  stand exactly as they are, with the footprint they have. Choice is not in the `Ordinal` type
+  (`#print axioms Ordinal` reports `[propext, Quot.sound]`); it enters through the order instance and
+  the operations (`Ordinal.instLinearOrder`, `Ordinal.nfp`, `Ordinal.omega0`, `Ordinal.epsilon`). As
+  stated, `snapNucleus` and its results are STATEMENT-CARRIED (statement control, measured 2026-10-08;
+  `ZeroParadox/Category/ChoiceCannotBe.md`), so no proof of those statements can drop the choice. On
+  `ONote` a choice-free restatement is blocked by naming, not by choice (below); for its state on other
+  carriers, including the defined reading on `E0Note`, see `ZeroParadox/Ordinal/SnapNucleus.md`
+  § Axiom footprint.
 * **This is a different declaration on a different carrier.** Everything here lives on `ONote` (raw
   Cantor-normal-form syntax) and on `SynONote`, the type synonym carrying the comparator-derived
   order. `ONote` is not `Ordinal` and `SynONote` is not `Ordinal`. Exactly one theorem mentions
@@ -34,8 +33,8 @@ machine-checked impossibility rather than a failed attempt.
   systems of this shape* — Cantor normal form, whose terms name exactly the ordinals below ε₀. It says
   nothing about notation systems that extend past ε₀ (Veblen / Bachmann-Howard style), none of which
   is in this Mathlib pin as of 2026-08-02 (the pin's `Veblen.lean` is semantic, not a notation system
-  — see the scope note below). Whether some richer constructive substrate supports a snap nucleus is
-  open, and untouched in this corpus as of 2026-08-02.
+  — see the scope note below). For richer carriers, with a dated search,
+  see `ZeroParadox/Ordinal/SnapNucleus.md` § Axiom footprint.
 * **The impossibility is not "no nucleus exists on `ONote`."** Nuclei on `SynONote` exist in
   abundance — `id` is one. What is proved impossible is the *snap property*: that a nucleus's closed
   points be ε-numbers.
@@ -132,14 +131,14 @@ Both halves are measured here, and they split:
   `SynONote` — is choice-free. **The one exception is deliberate and disclosed:**
   `mathlib_ONote_order_not_antisymm` measures `[propext, Classical.choice, Quot.sound]` because it is a
   statement *about* Mathlib's `repr`-based order, not part of the constructive development.
-  **This does NOT classify `snapNucleus`'s own footprint as accidental** — that would be
-  an eliminability claim, and no re-proof of `snapNucleus` was located as of 2026-08-02. Its status is **UNCLASSIFIED**
-  (`ZeroParadox/Ordinal/SnapNucleus.lean` records the same).
+  **This does NOT classify `snapNucleus`'s own footprint as accidental** — as stated it is
+  **STATEMENT-CARRIED** (statement control, measured 2026-10-08), so neither accidental nor essential
+  can be asked of it (`ZeroParadox/Ordinal/SnapNucleus.md` records the same).
 * **The counterpart route via this carrier is blocked — for a different reason than choice.** What
   blocks it is **expressive reach**: *this* carrier cannot name the object the closure produces.
   **Scope, narrowly:** the result is about `ONote`-shaped notation systems, not about constructive
-  mathematics in general. A system extending past ε₀ (Veblen, Bachmann-Howard) is not ruled out here —
-  it is open and untouched here. **Say which sense, because the pin does ship Veblen:**
+  mathematics in general. A system extending past ε₀ (Veblen, Bachmann-Howard) is not ruled out here.
+  **Say which sense, because the pin does ship Veblen:**
   `Mathlib/SetTheory/Ordinal/Veblen.lean` defines `veblen`, `ε_` and `Γ_`, but *semantically* — they
   are `noncomputable` functions on `Ordinal`, not a computable **notation system** of the
   `ONote`/`NONote` kind this file's argument is about. **The ε₀ ceiling is a fact about the NOTATION
@@ -155,7 +154,7 @@ Both halves are measured here, and they split:
   constructively impossible, and **not** a claim that ε₀ requires choice.
 
 These are compatible and should not be conflated. "The proof needs no choice" and "the carrier cannot
-hold the answer" are different failures, and only the second one bites here.
+hold the answer" are different failures, and only the second one bites here (`tower_no_upper_bound`).
 
 ## Does `ONote` carry a choice-free `SemilatticeInf`? (measured: yes, but not Mathlib's)
 
@@ -221,15 +220,19 @@ about the effort in Lean, never about novelty. Cited here explicitly because sco
 "the carrier and the supremum" would have left this uncredited — the failure mode where a theorem-backed
 layer carries a distinctive construction with its own separate prior art.
 
-**Two further hydra-battles constructions are cited here because a sibling file instantiates them.**
+**Two further hydra-battles constructions are cited here because a sibling file follows their shape.**
 `ZeroParadox/Ordinal/PricedInterface.lean` adjoins a top to `SynONote` and maps the result into
-Mathlib's `Ordinal`. Both moves are Castéran's, and the credit above does not reach them:
+Mathlib's `Ordinal`. Both moves follow Castéran, and the credit above does not reach them:
 `theories/ordinals/OrdinalNotations/ON_plus.v` builds the **sum of two ordinal notation systems**
 generically (`compare_plus`, `plus_comp`, `lt_wf`, `ON_plus`, and `lt_eq_lt_dec` proving that
-decidability of comparison survives the adjunction), of which "notations plus one adjoined point" is the
-one-point instance; and `ON_Generic.v`'s **`ON_correct`** is the canonical statement of "this notation
-system correctly denotes into that classical ordinal" (denotes below the target, onto the segment,
-comparator agrees with the semantic order), **already instantiated at ε₀** in
+decidability of comparison survives the adjunction). "Notations plus one adjoined point" has that
+sum's shape with a one-point right summand and is not an instance of it: `ON_plus` sums two
+well-founded notation systems, and the order on `SynONote`, so on the adjoined carrier `E0Note`, is not
+well-founded (the `example` stating `¬ WellFoundedLT E0Note` in `PricedInterface.lean`). What the
+adjoined carrier does carry is a denotation map onto the ordinals at or below ε₀ (the `example` after
+`e0Repr_eq_epsilon0_iff` there). `ON_Generic.v`'s **`ON_correct`** is the canonical statement of "this
+notation system correctly denotes into that classical ordinal" (denotes below the target, onto the
+segment, comparator agrees with the semantic order), **already instantiated at ε₀** in
 `Schutte/Correctness_E0.v` (`inject`, `inject_lt_epsilon0`, `embedding`, `Instance Epsilon0_correct`).
 Recorded here so that the credit sits with the order construction it extends, rather than only in the
 file that uses it.
@@ -240,7 +243,7 @@ usable equivalent — its `ONote` order is `repr`-routed (hence choice-carrying)
 
 **The delta against them**, stated narrowly: neither states the *impossibility*. They build the
 constructive system and observe where it stops; the Lean file proves that no idempotent endomap of that
-carrier can have the ε-numbers as its closed points, which is what converts "the system stops here" into
+carrier can have the ε-numbers as its closed points (`no_snap_closure`), which is what converts "the system stops here" into
 "a closure operator of this shape cannot exist here." Given `omegaPow_no_fixedpoint` that conversion is
 two lines (see the triviality assessment) — the contribution is the statement and its placement, not
 depth.

@@ -140,8 +140,8 @@ def path_of(key):
 def claim_signal():
     """The SET of paths a current `claim_review` record covers, or None when there is no coverage.
 
-    ⚠⚠ THE LEDGER, NOT A FILE. `cr_cleared.txt` is RETIRED (2026-08-24) — the last of the
-    `*_cleared.txt` scheme to go. `gitRobot.md` § 12-0-ter set the precondition exactly: *"Register
+    ⚠⚠ THE LEDGER, NOT A FILE. `cr_cleared.txt` is RETIRED with the rest of the `*_cleared.txt`
+    scheme; coverage is a `claim_review` record. `gitRobot.md` § 12-0-ter set the precondition: *"Register
     `rely` and `claim_review` as types, and admit them, BEFORE the signal path is removed."* Both are
     registered and admitted, so the precondition was met and the reader moved.
 

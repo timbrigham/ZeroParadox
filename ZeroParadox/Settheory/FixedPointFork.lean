@@ -107,7 +107,7 @@ This file is the framework side of that boundary: the abstract fork over a compl
 section PurityCheck
 -- All four report `[propext, Quot.sound]` only — NO `Classical.choice`. The fork schema spine is
 -- choice-free. (propext = propositional extensionality, Quot.sound = quotient soundness; both are
--- benign Mathlib-wide kernel axioms, not the Axiom of Choice.) Consistent with the choice-free core:
+-- Lean axioms used throughout Mathlib, not the Axiom of Choice.) Consistent with the choice-free core:
 -- see ZeroParadox/AxiomProfile.lean.
 #print axioms fork_le
 #print axioms collapse_of_unique

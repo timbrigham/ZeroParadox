@@ -1,30 +1,13 @@
 """
-Build ZP-B: p-Adic Topology (v1.18)
-v1.18: GATE ROUND 4 DEFAULT (2026-09-15): AX-B1's lead clause drops ', the bottom included', which presupposes the bottom has something above it and fails on a one-point carrier; the conditional form (every state with anything above it) already covers the bottom wherever something is above it.
-v1.17: DECISION BATCH REMEDIATION AFTER GATE ROUND 3 (Tim defaults, 2026-09-15): AX-B1's lead clause is aligned with its gloss: AX-B1 holds at every state with anything above it, the bottom included, each having a first distinct state above it with nothing strictly between; a state with nothing above it owes no step. The box adds '(In this two-state chart, 1 is the top.)'; state 1 and the definition are unchanged.
-v1.16: DECISION BATCH REMEDIATION AFTER GATE ROUND 2 (Tim ruling, 2026-09-15): AX-B1's scope sentence is conditional: AX-B1 holds at the bottom and at every iterative bottom, every state with anything above it having a first distinct state above it with nothing strictly between; a state with nothing above it owes no step. The previous every-state reading had no model among the two-state encodings (the top state has nothing above it).
-v1.15: DECISION BATCH REMEDIATION (Tim, 2026-09-15): AX-B1's scope stated (Tim's confirmed text): AX-B1 holds at every iterative bottom, every state as the base the next step starts from having a first distinct state above it with nothing strictly between. The box previously stated it only at the origin. Still one substantive commitment.
-v1.14: D5 + R1 self-contradiction resolved (Tim's ruling, 2026-07-29): epsilon-0 is UNITLESS. The box asserted it "is a dimensionful quantity, so its numerical value depends on a choice of units", then disclaimed any physical-unit magnitude claim, then labelled the status "universe-contingent parameter" - three sentences about three different objects. epsilon-0 is a POSITION (the first step above the bottom, Ordinal.epsilon 0, Veblen (1,0)) and a position carries no units, exactly as the bottom carries none. What is contingent is the real-valued threshold 2^k of D5, on the CHOSEN exponent k - a normalisation, not a physical measurement. R1's "determined by physical constants" corrected in the same change (fix the class, not the site); Valuation/Padic.lean's docstring likewise.
-v1.13: D5 exponent/valuation conflation corrected. The box said "eps0 = 2^k where k is the maximum valuation accessible", which contradicts this document's own ball convention B(0, 2^-n): a MAXIMUM valuation gives a MINIMUM scale, so k = -v. k is the exponent, v the valuation, and they differ by sign. No semantic change (k was always free to be negative); the Lean docstring at Valuation/Padic.lean carried the same conflation and is corrected in the same change, together with a note that the definition is inert.
-v1.12: D5 Planck-scale reference struck (last live site in the corpus). An adversary review flagged "eps0 plays the structural role of a Planck-scale quantity" as a crank signal on 2026-05-21 - "the Planck-scale analogy does the opposite of what is intended: it makes the document read as a physics grand-theory" - and it was cut from the Foreword (v1.8) and both Reals/ZP-F companions (v1.3). ZP-B kept it. Replaced with the structural reason the value is contingent: eps0 is DIMENSIONFUL, so its value depends on a unit choice and cannot be instantiation-independent. That is Buckingham pi, not empirical ignorance, and it makes R1's universal/contingent split a statement about dimensions rather than about our universe.
-v1.10: Rendered self-version tags removed from C2/C3 corollary titles (C1 sweep); "null state" → ⊥ in AX-B1 Lean-encoding note (vocab gate).
-v1.9: K-17 vocab fix — "First Atomic State" -> "minimum nonzero state (ε₀)" in AX-B1 box.
-v1.8: Adversary-review pass — R1 remark (Section VI) "universal ontology of state emergence"
-replaced with precise scope statement: results hold for any AX-B1 + MP-1 instantiation.
-v1.7: "Topological isolation of 0" renamed to "Clopen gap at 0" throughout — "isolated" has a
-specific topological meaning ({p} is open) that does not hold for {0} in Q2. The correct claim
-is clopen-ball separation: v2(0) = +inf places 0 in a distinct clopen class from every nonzero
-element. Section header IV, label_box, export table, and validation table all updated.
-v1.6: Remark added after AX-B1 clarifying that 0 and 1 are both present as mathematical objects;
-"existence" in AX-B1 is a property the states represent, not a statement about set membership.
-v1.5: T3 ZP interpretation bullets labelled explicitly — "ZP Interpretation:" prefix added to
-distinguish pure topology (the theorem statement) from ZP-specific framing (the Binary Snap).
+Build ZP-B: p-Adic Topology (v1.30)
+This document makes no Planck-scale comparison for epsilon-0: an adversary review (2026-05-21)
+flagged that analogy because it makes a document read as a physics grand theory.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.18'
+VERSION = '1.30'
 FIRST_RELEASED = 'April 2026'
 
 def build():
@@ -43,8 +26,8 @@ def build():
     E.append(Paragraph('1.1  The Binary Existence Axiom', S['h2']))
     E.append(label_box('Axiom AX-B1 — Binary Existence', [
         'The foundational distinction of the Zero Paradox framework is binary: a state either exists or it does not. There is no third option at this level.',
-        '0 — non-existence (the Null State, corresponding to &#8869; in ZP-A)',
-        '1 — existence (the minimum nonzero state, &#949;<sub>0</sub>)',
+        '0 — non-existence (&#8869; in ZP-A; in Lean, &#8869; of OntologicalStates under instOntZPS)',
+        '1 — existence (&#949;<sub>0</sub>, the state off &#8869; of OntologicalStates)',
         'AX-B1 holds at every state with anything above it: each has a first distinct state above it, with nothing strictly between. A state with nothing above it owes no step. (In this two-state chart, 1 is the top.)',
         'Status: AXIOM. This is the only non-topological commitment in ZP-B. It precedes p-adic analysis and is the premise from which the field selection is derived.',
         'Scope: AX-B1 asserts the structure of the ontological distinction, not its physical realisation. It is invariant across all instantiations.',
@@ -54,7 +37,7 @@ def build():
         'neither is absent from the formal structure. The set is not a collection of things '
         'that happen to exist; it is a model of an ontological situation. '
         '0 names the null condition: the state in which nothing has been instantiated. '
-        '1 names the first non-null condition: the state in which something has. '
+        '1 names the first non-bottom condition: the state in which something has. '
         'Existence in AX-B1 is a property the states represent, not a statement about set membership.'))
     E.append(body(
         '<i>Lean encoding: AX-B1 is encoded as <b>OntologicalStates</b> — a free inductive type '
@@ -88,6 +71,17 @@ def build():
         'Step 5 — p = 2 is the unique prime satisfying both conditions simultaneously.',
         'Step 6 — The binary branching at every level of Q<sub>2</sub>\'s ball structure reflects the eventual binary resolution of any representational complexity.',
         'Therefore p = 2. Status: DERIVED given MP-1 (design commitment). OQ-B1 closed. <font name="DV">&#10003;</font>',
+        'Lean (ZeroParadox/Valuation/Padic.lean): MP-1 enters as hypotheses, in two readings. '
+        't0_mp1_faithful_nonredundant takes MP-1 as stated above, faithfulness and no redundancy, and concludes p = 2; '
+        't0_mp1_least_prime_unique takes MP-1 read as the least prime covering the two states, and concludes p = 2, '
+        'by t0_mp1_least_prime, which proves that least prime is 2.',
+        'Prior art: Shannon names the base-2 unit of information the bit (a word he credits to J. W. Tukey), '
+        'and a device with two stable positions can store one bit (C. E. Shannon, "A Mathematical '
+        'Theory of Communication", Bell System Technical Journal 27 (1948), Introduction). '
+        'MP-1 minimises digit values without redundancy and does not use the cost measure that prices a base '
+        'by the number of digit values times the number of digits it needs, with optimum e, so that 3 is almost always the most '
+        'economical integer base (B. Hayes, "Third Base", American Scientist 89(6), 490 (2001), doi:10.1511/2001.6.490). '
+        'For a given range rounding can tie or reverse that ranking (two values cost 2 in base 2 and 3 in base 3).',
     ]))
 
     E.append(Paragraph('II. The 2-Adic Field', S['h1']))
@@ -103,10 +97,10 @@ def build():
     E.append(sp(4))
     E.append(Paragraph('2.3  The Minimum Viable Deviation &#949;<sub>0</sub>', S['h2']))
     E.append(label_box('Definition D5 — Minimum Viable Deviation &#949;₀', [
-        '&#949;<sub>0</sub> = 2<super>k</super> for an integer exponent k. With the ball convention B(0, 2<super>&#8722;n</super>), the finest accessible scale has k = &#8722;v where v is the maximum accessible valuation: k is the exponent, v the valuation, and they differ by sign.',
-        'Structural role (universal): &#949;<sub>0</sub> is always the first element crossed by the Snap. Fixed by the structure of Q<sub>2</sub> and AX-B1.',
-        'Numerical value (contingent): the real-valued threshold 2<super>k</super> depends on the chosen exponent k — that is, on which valuation is taken to be the finest accessible one. The contingency is a choice of cutoff, a normalisation, not a physical measurement: this document makes no claim about magnitude in any unit system, and does not treat &#949;<sub>0</sub> as a dimensionful quantity. &#949;<sub>0</sub> itself is a position — the first step above the bottom — and a position carries no units, exactly as the bottom carries none.',
-        'Status: DEFINED — threshold parameterised by a chosen cutoff.',
+        'Role: &#949;<sub>0</sub> of Q<sub>2</sub> is the minimum viable deviation from 0 of Q<sub>2</sub>, the deviation the Snap crosses. Q<sub>2</sub> itself has no least nonzero norm (the norms 2<super>&#8722;n</super> accumulate at 0), so the role is filled only relative to a chosen finest accessible valuation v.',
+        'Requirement in Q<sub>2</sub>: a nonzero point of Q<sub>2</sub> whose 2-adic valuation is v. Occupant: any such point. The rung v names the position, which many points share; an occupant has no fixed value, and the role uses nothing about an occupant beyond being a nonzero point at that rung. Every point at rung v has norm 2<super>&#8722;v</super>, the real-valued threshold of this choice (Lean: eps0 (&#8722;v), ZeroParadox/Valuation/Padic.lean); 2<super>v</super> and &#8722;2<super>v</super> are two distinct such points.',
+        'Contingency: v, and with it the threshold 2<super>&#8722;v</super>, depends on which valuation is taken to be the finest accessible one. That is a choice of cutoff, a normalisation, not a physical measurement: this document makes no claim about magnitude in any unit system, and the rung carries no units.',
+        'Status: DEFINED — relative to a chosen finest rung v.',
     ]))
 
     E.append(Paragraph('III. The Ultrametric', S['h1']))
@@ -143,9 +137,9 @@ def build():
 
     E.append(Paragraph('IV. Clopen Gap at Zero', S['h1']))
     E.append(label_box('Theorem T3 — Clopen Gap at 0', [
-        'For any r = 2<super>&#8722;k</super>, the ball B(0,r) = { x &#8712; Q<sub>2</sub> : v<sub>2</sub>(x) &#8805; k }. Any x outside this ball has d(0,x) &#8805; 2<super>&#8722;k+1</super> > r. B(0,r) and its complement are separated by a gap of at least 2<super>&#8722;k</super>.',
+        'For any r = 2<super>&#8722;j</super>, the ball B(0,r) = { x &#8712; Q<sub>2</sub> : v<sub>2</sub>(x) &#8805; j }. Any x outside this ball has d(0,x) &#8805; 2<super>&#8722;j+1</super> > r. B(0,r) and its complement are separated by a gap of at least 2<super>&#8722;j</super>.',
         'ZP Interpretation: this discrete jump across a clopen boundary is the topological expression of the Binary Snap (defined in ZP-E).',
-        'Relationship to &#949;<sub>0</sub>: &#949;<sub>0</sub> = 2<super>k</super> is the smallest non-zero element outside the tightest ball around 0. ZP Interpretation: this is the gap the Binary Snap crosses. <font name="DV">&#10003;</font>',
+        'Relationship to &#949;<sub>0</sub>: the elements of least norm outside B(0, 2<super>&#8722;j</super>) are exactly those of valuation j &#8722; 1, all of norm 2<super>&#8722;j+1</super>; there are many of them (2<super>j&#8722;1</super> and 3 &#183; 2<super>j&#8722;1</super> among them), so the least norm is attained by many elements, not by a unique one. &#949;<sub>0</sub> of D5 is a point at rung v, so it lies outside B(0, 2<super>&#8722;j</super>) exactly when j &gt; v, and it attains the least norm outside that ball, a norm shared by every point of valuation v, exactly when j = v + 1. ZP Interpretation: the gap between B(0, 2<super>&#8722;v&#8722;1</super>) and &#949;<sub>0</sub> is the gap the Binary Snap crosses. <font name="DV">&#10003;</font>',
     ]))
 
     E.append(Paragraph('V. Topological Structure of Q₂', S['h1']))
@@ -167,9 +161,9 @@ def build():
     ]))
 
     E.append(Paragraph('VI. Universal Structure vs. Contingent Parameters', S['h1']))
-    E.append(label_box('Remark R1 — Universal Structure vs. Universe-Contingent Parameters', [
+    E.append(label_box('Remark R1 — Universal Structure vs. Instantiation-Contingent Parameters', [
         'Universal (invariant across all instantiations): AX-B1 (binary distinction — logical, not physical). MP-1 (methodological commitment). T0 (p=2 derived). T1, T2, T3, T5, C1, C2, C3 (all topological results). Structural role of &#949;<sub>0</sub>.',
-        'Instantiation-contingent (varies with the chosen cutoff): the real-valued threshold 2<super>k</super> of D5, whose exponent k records which valuation is taken to be the finest accessible one. This is a choice of normalisation, not a physical constant, and &#949;<sub>0</sub> as a position is not dimensionful.',
+        'Instantiation-contingent (varies with the chosen cutoff): the finest accessible rung v of D5 and its real-valued threshold 2<super>&#8722;v</super>. This is a choice of normalisation, not a physical constant, and &#949;<sub>0</sub>, a point named by its rung, is not dimensionful.',
         'The topological and algebraic results of this document hold for any instantiation satisfying AX-B1 and MP-1 — they are not specific to our universe.',
     ]))
 
@@ -185,7 +179,7 @@ def build():
          ['T3: Clopen gap at 0', 'Derived', 'ZP-E: grounds ontological claim about the Snap'],
          ['T5: Total disconnectedness', 'Derived', 'ZP-E: supports C3'],
          ['C3: Snap topologically irreversible', 'Derived — Corollary of T5', 'ZP-E: cross-framework irreversibility'],
-         ['&#949;<sub>0</sub> (D5)', 'Defined — contingent', 'ZP-E: Snap threshold; value depends on instantiation'],
+         ['&#949;<sub>0</sub> (D5)', 'Defined — relative to a chosen rung v', 'ZP-E: its size 2<super>&#8722;v</super>, the Snap threshold; the rung v and that threshold depend on the chosen cutoff'],
          ['R1: Universal vs. contingent', 'Remark', 'ZP-E: framework is instantiation-independent']],
         [1.6*inch, 1.8*inch, 3.1*inch]
     ))
@@ -205,7 +199,7 @@ def build():
          ['T3: Clopen gap at 0', 'Valid — Derived from D1 and D2'],
          ['T5: Q<sub>2</sub> totally disconnected', 'Valid — Derived from T2; proven before C3'],
          ['C3: Snap topologically irreversible', 'Valid — Corollary of T5; reclassified from Theorem T4'],
-         ['D5: &#949;<sub>0</sub>', 'Valid — Defined; structural role universal; value contingent'],
+         ['D5: &#949;<sub>0</sub>', 'Valid — Defined; structural role universal; the rung v and its threshold 2<super>&#8722;v</super> contingent'],
          ['R1', 'Valid — Remark; ontological scope clarified']],
         [2.5*inch, 4.0*inch]
     ))

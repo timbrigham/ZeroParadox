@@ -1,6 +1,7 @@
 import ZeroParadox.Valuation.Scale
 import Mathlib.Combinatorics.Quiver.Path
 import Mathlib.Combinatorics.Quiver.ConnectedComponent
+import Mathlib.Combinatorics.Quiver.Arborescence
 import Mathlib.Tactic
 
 set_option maxHeartbeats 400000
@@ -77,7 +78,8 @@ See: .claude-local/notes/afa_apg_zfset_correction_2026-05-27.md
 /-! ⚠ Corrections to the header above, which `check_prose` freezes by content hash (2026-09-13):
 `decoration_unique` consumes `collect_val_ge` and never `collect_singleton`, and it gives a
 SUFFICIENT condition for uniqueness, not a characterization (no converse is proved). § IV settles
-periodic points of `scale`, not an APG cycle — the cyclic case is `cyclic_decoration_eq_bot` (§ VII'). -/
+periodic points of `scale`, not an APG cycle — the cyclic case is `cyclic_decoration_eq_bot` (§ VII').
+For "x ∈ x is forbidden" the named theorem is `ZFSet.mem_irrefl`, not `ZFSet.regularity`. -/
 
 namespace ZeroParadox
 
@@ -98,7 +100,7 @@ Root and accessibility make the graph an **apg**, a picture of a unique set unde
 
 /-- An Accessible Pointed Graph: a Quiver with a distinguished root vertex
     from which every vertex is reachable via directed paths. -/
--- [ZP-CUSTOM] extends: Mathlib.Combinatorics.Quiver.Basic | reason: Mathlib's Quiver is a bare directed graph (objects + edges) with no distinguished root or accessibility requirement. APG adds root : V and the accessibility proof (every vertex reachable from root), matching Aczel's definition of Accessible Pointed Graph (1988 p. 4). ⚠ These fields are NOT load-bearing for anything proved in this file, and no claim of necessity should be made for them in either direction: decoration_unique binds the structure as `_G` and never uses it, so what is actually proved holds for EVERY finite quiver, accessible or not — structurally Aczel's own AFA generality (p. 6). No APG value is constructed anywhere in the corpus as of 2026-08-09.
+-- [ZP-CUSTOM] extends: Mathlib.Combinatorics.Quiver.Basic | reason: Mathlib's Quiver is a bare directed graph (objects + edges) with no distinguished root. APG adds root : V and the accessibility proof (every vertex reachable from root), which is Mathlib's separate class Quiver.RootedConnected root (Mathlib/Combinatorics/Quiver/Arborescence.lean; the two examples below the structure), matching Aczel's definition of Accessible Pointed Graph (1988 p. 4). ⚠ These fields are NOT load-bearing for anything proved in this file, and no claim of necessity should be made for them in either direction: decoration_unique binds the structure as `_G` and never uses it, so what is actually proved holds for EVERY finite quiver, accessible or not — structurally Aczel's own AFA generality (p. 6). No APG value is constructed anywhere in the corpus as of 2026-08-09.
 structure APG (V : Type*) [Quiver V] where
   /-- Distinguished vertex. ⚠ Aczel's term for it is the **point**; he introduces *root* only for the
       special case where every path from it is unique, i.e. a tree (1988 p. 4). The field name is
@@ -120,6 +122,11 @@ example : IsEmpty (@APG Bool ⟨fun _ _ => Empty⟩) := by
     | nil => rfl
     | cons _ e _ => exact e.elim
   exact Bool.not_ne_self r (hnil p).symm
+
+-- Statement: an `APG` on `V` gives `Quiver.RootedConnected` at its root, and a root with
+-- `Quiver.RootedConnected` gives an `APG`, so the `accessible` field is that Mathlib class.
+example {V : Type*} [Quiver V] (G : APG V) : Quiver.RootedConnected G.root := ⟨G.accessible⟩
+example {V : Type*} [Quiver V] (r : V) [h : Quiver.RootedConnected r] : APG V := ⟨r, h.nonempty_path⟩
 
 section APGBasics
 
@@ -168,7 +175,7 @@ end APGBasics
     ZFSet is NOT a valid instance: Foundation forbids x ∈ x, which any cyclic APG requires.
     OntologicalStates (ZeroParadox/Settheory/OntBridge.lean) has AbstractSelfApp but not ValuationStructure,
     which this class takes as a binder. -/
--- [ZP-CUSTOM] no Mathlib analog | reason: Mathlib's ZFSet (the only set-theory formalization) uses Foundation — x ∈ x is forbidden, making it invalid as a decoration target for any APG with a self-loop. DecorationUniverse is an abstract type with ValuationStructure + a collect operation and two axioms (collect_singleton, collect_val_ge), providing the structure the decoration-uniqueness proof consumes, without importing ZFSet or any axiomatic set theory. ⚠ NOT axiom-free, and every attribution here was isolated by changing ONE constituent: DecorationUniverse reaches Classical.choice by TWO INDEPENDENT routes — its OWN ℕ∞ numeral, the + 1 in collect_val_ge, and the inherited [ValuationStructure U], whose own route is the numeral in val_scale (pinned by the _VSlit/_VScast pair in ZeroParadox/Valuation/Scale.lean). Neither alone accounts for it: with [ValuationStructure U] DELETED and val/scale passed as plain data the class still reports [propext, Classical.choice, Quot.sound]; respelling only its own numeral as ((1 : ℕ) : ℕ∞) makes it report no axioms; respelling only that numeral with the real binders kept leaves it tainted. decoration_unique carries the same three IN ITS STATEMENT — forall {U} [ZPSemilattice U] [ValuationStructure U], True already reports them while the same with [ZPSemilattice U] alone reports none — so the [ValuationStructure U] binder suffices by itself and the cost is NOT REMOVABLE BY ANY PROOF of that theorem. Its proof additionally CALLS Nonempty.some (fun h => Classical.choice h) and reaches choice via Set.ncard_pos and Set.ncard_lt_ncard, further routes to a cost the TYPE already incurred. Provenance and necessity are independent axes (ZeroParadox/AxiomProfile.lean § 0), and #print axioms follows the STATEMENT rather than the proof. ⚠ "Minimum" is unproved: the NO-GO gauge below shows this class is inhabited over EVERY ValuationStructure carrier.
+-- [ZP-CUSTOM] no Mathlib analog | reason: Mathlib's ZFSet uses Foundation — x ∈ x is forbidden, making it invalid as a decoration target for any APG with a self-loop. DecorationUniverse is an abstract type with ValuationStructure + a collect operation and two axioms (collect_singleton, collect_val_ge), providing the structure the decoration-uniqueness proof consumes, without importing ZFSet or any axiomatic set theory. ⚠ NOT axiom-free, and every attribution here was isolated by changing ONE constituent: DecorationUniverse reaches Classical.choice by TWO INDEPENDENT routes — its OWN ℕ∞ numeral (the + 1 in collect_val_ge) and the inherited [ValuationStructure U], whose own route is the numeral in val_scale (pinned by the _VSlit/_VScast pair in ZeroParadox/Valuation/Scale.lean). Neither alone accounts for it: with [ValuationStructure U] DELETED and val/scale passed as plain data the class still reports [propext, Classical.choice, Quot.sound]; with [ValuationStructure U] also deleted, respelling its own numeral as ((1 : ℕ) : ℕ∞) makes it report no axioms; respelling only that numeral with the real binders kept leaves it tainted. decoration_unique carries the same three IN ITS STATEMENT — forall {U} [ZPSemilattice U] [ValuationStructure U], True already reports them while the same with [ZPSemilattice U] alone reports none — so the [ValuationStructure U] binder suffices by itself and the cost is NOT REMOVABLE BY ANY PROOF of that theorem. Its proof additionally CALLS Nonempty.some (fun h => Classical.choice h) and reaches choice via Set.ncard_pos and Set.ncard_lt_ncard, further routes to a cost the TYPE already incurred. Provenance and necessity are independent axes (ZeroParadox/AxiomProfile.lean § 0). ⚠ "Minimum" is unproved: the NO-GO gauge below shows this class is inhabited over EVERY ValuationStructure carrier.
 class DecorationUniverse (U : Type*) [ZPSemilattice U] [ValuationStructure U] where
   /-- A map `Set U → U`. ⚠ The two axioms below pin only the SINGLETON case and a lower bound; they
       do not require it to assemble a parent's value from its children's. -/
@@ -429,6 +436,138 @@ example {V : Type*} [Quiver V] {U : Type*} [ZPSemilattice U] [ValuationStructure
   have h := cyclic_decoration_eq_bot d hd v hcyc
   exact ⟨h, by rw [h]; exact ValuationStructure.val_bot⟩
 
+/-- `Statement:` along a path `v ⟶* w`, a decoration sending `w` to ⊥ of `U` (valuation ⊤ of ℕ∞)
+    sends `v` there too: ⊥ spreads backward to every ancestor.
+    `Reading:` rank ∞ propagates upward (Pakhomov–Walsh, JSL 86 (2021), arXiv 1805.02095,
+    Remark 5.1, with `∞ + 1 = ∞`); at graph level, every ancestor of a vertex on a cycle starts an
+    infinite path, so lies outside "A∗ = Aω", "the set of all nodes from which no infinite paths
+    starts" (Adámek-Milius-Moss 2020, arXiv:1910.09401v2, Example 6.10 p. 26). -/
+theorem path_decoration_eq_bot
+    {V : Type*} [Quiver V]
+    {U : Type*} [ZPSemilattice U] [ValuationStructure U] [DecorationUniverse U]
+    (d : V → U) (hd : IsDecoration d) {v w : V} (p : Quiver.Path v w) (hw : d w = bot) :
+    d v = bot := by
+  have h := path_val_chain d hd p
+  rw [hw, ValuationStructure.val_bot, top_add] at h
+  exact ValuationStructure.val_unique _ (top_le_iff.mp h)
+
+-- Statement: so every vertex that reaches a cyclic vertex is decorated ⊥ of `U`.
+example {V : Type*} [Quiver V] {U : Type*} [ZPSemilattice U] [ValuationStructure U]
+    [DecorationUniverse U] (d : V → U) (hd : IsDecoration d) {v w : V} (p : Quiver.Path v w)
+    (hc : HasSelfCycle w) : d v = bot :=
+  path_decoration_eq_bot d hd p (cyclic_decoration_eq_bot d hd w hc)
+
+/-! ### Absorption at ⊥ of `U`, and when the join identity is the absorber
+
+Here `v : U → ℕ∞` and `c : Set U → U` are bare data. -/
+
+-- Statement: absorption needs no join and no `val_bot`: a lower bound `v (c S) ≥ v x + 1` on members
+-- and a unique `v`-⊤ point `b` force `v b = ⊤` and `c S = b` whenever `b ∈ S`.
+-- Reading: a rank into On ∪ {∞} with `∞ + 1 = ∞` (Pakhomov–Walsh, Remark 5.1); the uniqueness of
+-- the ∞ point is the corpus's own hypothesis.
+example {U : Type*} (v : U → ℕ∞) (c : Set U → U) (hc : ∀ S x, x ∈ S → v (c S) ≥ v x + 1)
+    (b : U) (hu : ∀ x, v x = ⊤ → x = b) : v b = ⊤ ∧ ∀ S, b ∈ S → c S = b := by
+  have htop : v (c Set.univ) = ⊤ := by
+    have h := hc Set.univ (c Set.univ) trivial
+    rcases hv : v (c Set.univ) with _ | m
+    · rfl
+    · rw [hv] at h
+      change (m : ℕ∞) ≥ (m : ℕ∞) + 1 at h
+      exact absurd (show m ≥ m + 1 by exact_mod_cast h) (by omega)
+  have hb : v b = ⊤ := hu _ htop ▸ htop
+  refine ⟨hb, fun S hS => hu _ (top_le_iff.mp ?_)⟩
+  exact le_trans (hb ▸ le_self_add) (hc S b hS)
+
+-- Statement: its instance: ⊥ of `U` absorbs `collect` in every `DecorationUniverse`.
+example {U : Type*} [ZPSemilattice U] [ValuationStructure U] [DecorationUniverse U]
+    (S : Set U) (h : (bot : U) ∈ S) : DecorationUniverse.collect S = bot := by
+  have hge := DecorationUniverse.collect_val_ge S bot h
+  rw [ValuationStructure.val_bot, top_add] at hge
+  exact ValuationStructure.val_unique _ (top_le_iff.mp hge)
+
+-- Statement: `v` reverses the ZP order into ℕ∞'s iff `v (join x y) ≤ min (v x) (v y)`; Mathlib's
+-- `Antitone.map_sup_le` and `Monotone.of_le_map_sup` (through `OrderDual`), restated because the ZP
+-- order is not `≤` here. Reading: the equation form is a nonzero prime's valuation on the fractional
+-- ideals of a Dedekind domain (values in ℤ), `v_p(I + J) = min (v_p I) (v_p J)` (Aitken,
+-- arXiv 2102.11725, Prop. 86, p. 33).
+example {L : Type*} [ZPSemilattice L] (v : L → ℕ∞) :
+    (∀ x y, le x y → v y ≤ v x) ↔ ∀ x y, v (join x y) ≤ min (v x) (v y) := by
+  have hl : ∀ x y : L, le x (join x y) := fun x y =>
+    show join x (join x y) = join x y by rw [← join_assoc, join_idem]
+  refine ⟨fun h x y => le_min (h _ _ (hl x y)) (h _ _ (join_comm y x ▸ hl y x)), fun h x y hxy => ?_⟩
+  have := h x y
+  rw [show join x y = y from hxy] at this
+  exact le_trans this (min_le_left _ _)
+
+-- Statement: one way only: under order-reversal, any identity `e` of a binary operation `j` is the
+-- unique `v`-⊤ point `b`, the absorber above.
+example {U : Type*} (j : U → U → U) (v : U → ℕ∞) (c : Set U → U)
+    (hc : ∀ S x, x ∈ S → v (c S) ≥ v x + 1) (b : U) (hu : ∀ x, v x = ⊤ → x = b)
+    (hanti : ∀ x y, j x y = y → v y ≤ v x) (e : U) (he : ∀ x, j e x = x) : e = b := by
+  have htop : v (c Set.univ) = ⊤ := by
+    have h := hc Set.univ (c Set.univ) trivial
+    rcases hv : v (c Set.univ) with _ | m
+    · rfl
+    · rw [hv] at h
+      change (m : ℕ∞) ≥ (m : ℕ∞) + 1 at h
+      exact absurd (show m ≥ m + 1 by exact_mod_cast h) (by omega)
+  exact hu e (top_le_iff.mp (htop ▸ hanti e (c Set.univ) (he _)))
+
+-- Statement: the converse fails (counter-model M1, on `Option ℕ∞`): a semilattice operation with
+-- order-reversal and a unique, absorbing `v`-⊤ point, and no identity at all.
+example : ∃ (j : Option ℕ∞ → Option ℕ∞ → Option ℕ∞) (v : Option ℕ∞ → ℕ∞)
+    (c : Set (Option ℕ∞) → Option ℕ∞) (b : Option ℕ∞),
+    (∀ x y z, j (j x y) z = j x (j y z)) ∧ (∀ x y, j x y = j y x) ∧ (∀ x, j x x = x) ∧
+    (∀ x y, j x y = y → v y ≤ v x) ∧ (∀ x, v x = ⊤ → x = b) ∧
+    (∀ S x, x ∈ S → v (c S) ≥ v x + 1) ∧ (∀ S, b ∈ S → c S = b) ∧
+    ¬ ∃ e, ∀ x, j e x = x := by
+  let mj : Option ℕ∞ → Option ℕ∞ → Option ℕ∞ := fun x y => match x, y with
+    | some a, some c => some (min a c)
+    | none, none => none
+    | _, _ => some 0
+  let mv : Option ℕ∞ → ℕ∞ := fun x => x.elim 0 id
+  have hu : ∀ x, mv x = ⊤ → x = some ⊤ := by
+    intro x hx; rcases x with _ | x
+    · simp [mv] at hx
+    · simp [mv] at hx; simp [hx]
+  have hc : ∀ (S : Set (Option ℕ∞)) x, x ∈ S → mv (some (sSup (mv '' S) + 1)) ≥ mv x + 1 :=
+    fun S x hx => add_le_add (le_sSup (Set.mem_image_of_mem mv hx)) le_rfl
+  refine ⟨mj, mv, fun S => some (sSup (mv '' S) + 1), some ⊤, ?_, ?_, ?_, ?_, hu, hc, ?_, ?_⟩
+  · intro x y z
+    rcases x with _ | x <;> rcases y with _ | y <;> rcases z with _ | z <;> simp [mj, min_assoc]
+  · intro x y
+    rcases x with _ | x <;> rcases y with _ | y <;> simp [mj, min_comm]
+  · intro x; rcases x with _ | x <;> simp [mj]
+  · intro x y h
+    rcases x with _ | x <;> rcases y with _ | y
+    · exact le_rfl
+    · change some (0 : ℕ∞) = some y at h
+      change y ≤ 0
+      rw [← Option.some.inj h]
+    · change some (0 : ℕ∞) = none at h
+      exact absurd h (Option.some_ne_none _)
+    · change some (min x y) = some y at h
+      change y ≤ x
+      rw [← Option.some.inj h]
+      exact min_le_left x y
+  · intro S hS
+    refine hu _ (top_le_iff.mp ?_)
+    exact le_trans (le_self_add (a := ⊤) (b := 1)) (hc S _ hS)
+  · rintro ⟨e, he⟩
+    rcases e with _ | e
+    · have := he (some 5); simp [mj] at this
+    · have := he none; simp [mj] at this
+
+-- Statement: without order-reversal the identity and the absorber can be different elements
+-- (counter-model M2, ℕ∞ with `max`): 0 is the identity, ⊤ absorbs `sSup · + 1`.
+example : (∀ x : ℕ∞, max 0 x = x) ∧ (∀ S : Set ℕ∞, ⊤ ∈ S → sSup S + 1 = ⊤) ∧
+    (∀ (S : Set ℕ∞) x, x ∈ S → sSup S + 1 ≥ x + 1) ∧ (0 : ℕ∞) ≠ ⊤ ∧
+    ¬ ∀ x y : ℕ∞, max x y = y → y ≤ x := by
+  refine ⟨fun x => by simp, fun S hS => ?_, fun S x hx => add_le_add (le_sSup hx) le_rfl,
+    by simp, fun h => ?_⟩
+  · rw [top_le_iff.mp (le_sSup hS)]; rfl
+  · have := h 0 1 (by simp); simp at this
+
 /-! ## § VIII. Acyclic Vertex Uniqueness (superseded by § IX)
 
     For acyclic vertices, the induction step is clear:
@@ -492,6 +631,15 @@ the well-foundedness side. **The delta:** the standard route to such uniqueness 
 (Taylor's General Recursion Theorem, AMM Thm 7.2 p. 27), unavailable here since these quivers may
 carry cycles. It closes on two branches instead — cyclic vertices to ⊥ (`cyclic_decoration_eq_bot`),
 acyclic ones by strict-subset descent on the reachable set, which is what `[Fintype V]` is for. -/
+
+-- Statement: `IsDecoration d` is the coalgebra-to-algebra equation `d = collect ∘ (d '' ·) ∘ apg_children`.
+-- Reading: read from the TARGET, `decoration_unique` is then CRA-uniqueness for the algebra `collect`
+-- (Capretta-Uustalu-Vene, *Corecursive Algebras*, SBMF 2009, LNCS 5902, Def. 1 p. 86), from the
+-- coalgebras `apg_children` of finite APGs only.
+example {V : Type*} [Quiver V] {U : Type*} [ZPSemilattice U] [ValuationStructure U]
+    [DecorationUniverse U] (d : V → U) :
+    IsDecoration d ↔ d = fun v => DecorationUniverse.collect (d '' apg_children v) :=
+  ⟨fun h => funext h, fun h v => congrFun h v⟩
 
 -- `[Fintype V]` is not used in the *type* but is essential to the *proof*: it bounds the
 -- reachable-set cardinality so the strict-subset descent (`Set.ncard_lt_ncard`) terminates.
@@ -560,6 +708,7 @@ open ZeroParadox
 #print axioms kCycle_node_eq_bot
 #print axioms acyclic_induction_step
 #print axioms cyclic_decoration_eq_bot
+#print axioms path_decoration_eq_bot
 #print axioms decoration_unique
 
 end PurityCheck

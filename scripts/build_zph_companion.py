@@ -1,5 +1,5 @@
 """
-Build ZP-H Illustrated Companion (v1.16)
+Build ZP-H Illustrated Companion (v1.21)
 v1.16: DECISION BATCH REMEDIATION (Tim, 2026-09-15): the T-H3 page said the transition 'was derived as a theorem (T-SNAP), not assumed as an axiom' and called the Binary Snap 'a structural fact that survives translation'; both are scoped to the shape with the canonical AX-1 sentence.
 v1.15: CC-1 STATUS SYNC (Tim, 2026-09-13: everything in one arc). "CC-1 derived / closed / no longer a freestanding commitment" collapsed two readings: cc1_derived proves the CONDITIONAL (a state sequence starting at a Quine atom starts at bottom), and with t_exec_iff the converse holds, so the starting-point choice is RESTATED through the Quine-atom role, not forced; every ZP-A lattice carries AFAStructure trivially. Every site now keeps both halves, matching ZP-J v2.7. Four sites; the key-result box no longer calls CC-1 'not a free commitment' (ZP-A calls it a modelling choice). ROUND 1 (editorial + claim-review + adversary FAIL-BEDROCK; prior-art PASS): the sync first gave the wrong REASON for "not forced" ("every ZP-A lattice carries AFAStructure trivially, so ..."), which does not follow; the reason is that a valid state sequence can start above bottom (T2 fixes only bottom <= S0; an example on OntologicalStates in OntBridge.lean). Also CC-1 is 'the modelling commitment CC-1', not 'the structural identification CC-1', at three sites.
 v1.13: Scope "any state change" to "transition from bottom state in this framework (ZP-C T1b)" — Category 5 precision fix.
@@ -143,7 +143,7 @@ def snap_convergence_diagram():
 
     return d
 
-VERSION = '1.16'
+VERSION = '1.21'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -217,15 +217,20 @@ def build():
     E.append(ccaption(
         'ZP-H constructs four functors from the abstract category C (center) into the four '
         'domain frameworks. Each functor F carries objects and morphisms faithfully, '
-        'preserving the initial object and the forward-only structure.'))
+        'preserving the forward-only structure and the initial object (FB in its stand-in; '
+        'see T-H1).'))
     E.append(sp(6))
 
     # ── The structural floor ───────────────────────────────────────────────────
     E.append(Paragraph('The Structural Floor', CS['h1']))
     E.append(cbody(
         'Before the categorical machinery, it helps to understand one key property that ⊥ '
-        'has in every ZP framework: the bottom element is not a limit point of the elements '
-        'above it. There is a gap — a structural floor — that nothing above ⊥ can close.'))
+        'has in every ZP framework. ⊥ has nothing below it: a structural floor. How it is '
+        'approached from above depends on the setting. In ℕ a path that drops at every step until it reaches 0 '
+        'gets there in finitely many steps (descent_with_strict_steps_reaches_floor), and in a finite power set so does '
+        'removing one element at a time (ps_descent_reaches_floor); in the 2-adic metric the doubling orbit converges to it '
+        'without ever reaching it (see the box below), so there ⊥ is a limit point of the elements '
+        'above it.'))
     E.append(cbody(
         'The simplest example of this property is one most readers have already encountered: '
         'the collection of all subsets of a set. Take any set S — say <i>{a, b, c}</i> — '
@@ -242,24 +247,31 @@ def build():
         'extreme form: it sits below the entire lattice, so the minimum gap is between nothing '
         'and something. No sequence of nonempty sets closes that gap.'))
     E.append(cbody(
-        'The same property appears in the ZP framework, but for deeper reasons. In ZP-B, the '
+        'The floor appears in the ZP framework too, approached from above for deeper reasons. In ZP-B, the '
         '2-adic valuation v₂ assigns 0 the value +∞: v₂(0) = +∞, meaning 0 is divisible by '
-        'every power of 2. Every nonzero element has a finite v₂. No sequence of nonzero '
-        'elements can close this valuation gap: a nonzero element always has finite v₂, while '
+        'every power of 2. Every nonzero element has a finite v₂. No nonzero element closes '
+        'this valuation gap: a nonzero element always has finite v₂, while '
         '0 has infinite v₂, and no finite accumulation of finite values reaches infinity. '
-        'In ℚ₂, sequences can get metrically close to 0, but the valuation gap cannot be closed. '
+        'In the 2-adic integers ℤ₂, sequences of nonzero elements can get metrically close to 0, '
+        'but the valuation gap cannot be closed at any finite step (q2Val_unique: only 0 has '
+        'infinite v₂ in ℤ₂). '
         'In ZP-A, ⊥ is the bottom of the lattice and the axioms forbid any non-trivial return. '
         'In ZP-C, the informational cost of approaching ⊥ diverges — infinite '
         'cost means no finite path reaches it. In ZP-D, the basis vector e₀ is orthogonal to '
-        'every nonzero state — a right-angle separation that cannot be gradually closed.'))
+        'e₁, the image of ε₀: their inner product is 0 (T4, t4_snap_orthogonal). The state vectors '
+        'are orthonormal, so any two distinct ones sit exactly √2 apart (t4_state_gap): approach to '
+        'the floor e₀ is a jump of that fixed size, never a sequence of state vectors drawing closer.'))
     E.append(remember_box(
         'The power set example shows that the structural floor property is not exotic: it appears '
-        'in the most elementary object in set theory. What is non-trivial about the ZP framework '
-        'is that the same property appears in four analytic settings — topology, algebra, '
-        'information theory, Hilbert space — each with its own structural reason for why the '
-        'bottom cannot be approached. These settings are not independent: they share the '
-        'axioms (A1-A4, AX-B1) and the modelling commitment CC-1 (S₀ = ⊥, restated in ZP-J, not forced) '
-        'that produce this behavior in all four. '
+        'in the most elementary object in set theory. What is non-trivial is how that floor is '
+        'approached from above, which differs across four analytic settings — topology, algebra, '
+        'information theory, Hilbert space — each with its own structural reason, given in the '
+        'paragraph above. In ℚ₂, where the role is played by 0, the unique point of norm 0, the floor is '
+        'approached but not reached in finitely many steps: the doubling orbit of any nonzero point '
+        'converges to 0 in the 2-adic metric (doubling_orbit_tendsto_zero) and still never lands on 0 '
+        'at any finite step (padic_orbit_never_reaches_zero). That ⊥ has nothing below it holds in '
+        'every setting by A1–A4 (T1, T2); the four settings also share AX-B1 and the modelling '
+        'commitment CC-1 (S₀ = ⊥, restated in ZP-J, not forced). '
         'ZP-H verifies that these four reasons are consistent.'))
     E.append(sp(6))
 
@@ -298,24 +310,41 @@ def build():
         '<b>FB (p-Adic Topology):</b> The initial object 0 maps to the element 0 ∈ ℚ₂. '
         'Each morphism maps to a discrete jump across a clopen boundary — formalized as '
         'antitone depth in Q₂BallDepth. Composition corresponds to sequential jumps. '
-        'The irreversibility of ZP-B C3 (no path returns to 0 in ℚ₂) is the topological '
-        'realization of AX-G2. FB is a full Lean 4 functor (fb_functor, sorry-free) — '
-        'not a proxy witness.'))
+        'In Lean, FB is a sorry-free functor in two forms: fb_functor lands in Q₂BallDepth, '
+        'an ℕ-indexed stand-in that orders the nested balls around 0 by depth, and fB_functor '
+        'lands in TopCat, the category of all topological spaces, where 0 is the limit of the '
+        'shrinking balls. In the stand-in, AX-G2 holds by antisymmetry: a morphism from depth m '
+        'to depth 0 means m ≤ 0, so m = 0. The irreversibility of ZP-B C3 (no continuous path '
+        'returns to 0 in ℚ₂) is the domain analogue of that fact, proved in ZP-B.'))
     E.append(cbody(
         '<b>FC (Information Theory):</b> The initial object 0 maps to the zero distribution '
         'P = (1, 0). Each morphism maps to an informational transition with '
         'a non-negative cost measured in bits. The fundamental transition costs exactly '
         '1 bit (ZP-C T1b). The informational singularity of ZP-G maps to the diverging '
-        'surprisal of ZP-C T2. FC has a concrete ZPCategory categorical witness '
-        '(NNRealZPCat, ℝ≥0 with ≤) grounded by T1b. The full abstract Lean functor '
-        'for the information space codomain remains future work.'))
+        'surprisal of ZP-C T2. In Lean, FC is a sorry-free functor in two forms: fc_functor '
+        'lands in InfoDepth, an ℕ-indexed stand-in, and fC_functor lands in KleisliCat PMF, '
+        'the Kleisli category of the probability monad.'))
     E.append(cbody(
         '<b>FD (Hilbert Space):</b> The initial object 0 maps to the basis vector e₀. '
         'Each morphism maps to an orthogonal extension — a step to a perpendicular basis '
         'vector. The Binary Snap becomes a right-angle turn in state space. The design '
         'commitment DP-1 (orthogonality represents clopen separation) is inherited here. '
-        'FD has a concrete ZPCategory categorical witness (NNRealZPCat) grounded by T4. '
-        'The full abstract Lean functor for the Hilbert space codomain remains future work.'))
+        'In Lean, FD is a sorry-free functor in two forms: fd_functor lands in HilbDimDepth, '
+        'an ℕ-indexed stand-in, and fD_functor lands in ModuleCat ℂ, the category of '
+        'ℂ-modules.'))
+    E.append(cbody(
+        '<b>Where the two axioms hold.</b> ZP-G assumes both axioms of C. In the targets, '
+        'each one holds in some categories and fails in others. AX-G1 says there is an initial '
+        'object and no terminal object (an object that every object maps into by exactly one '
+        'morphism). The ℕ-indexed '
+        'stand-ins have no terminal object, because depth n always has depth n + 1 above it. '
+        'TopCat, ModuleCat ℂ and KleisliCat PMF each have one: the one-point space, the zero '
+        'module and the one-point type. For FA, a lattice has a terminal element exactly when '
+        'it has a top element, so AX-G1 there needs the optional ZP-A hypothesis HasNoTop; '
+        'ZP-A\'s two-state carriers have a top. AX-G2 says nothing other than 0 maps into 0. It holds wherever '
+        'the category is built from a partial order with a least element, by antisymmetry, as in '
+        'ZP-A\'s semilattice and in the three stand-ins. It fails in ModuleCat ℂ: the zero map '
+        'sends every module into the zero module, including modules that are not zero.'))
 
     E.append(example_box('Real-world analogy — Four instruments, one melody', [
         'Imagine the same musical phrase played on four different instruments: violin, '
@@ -329,9 +358,11 @@ def build():
     # ── T-H1: Universal property preserved ─────────────────────────────────────
     E.append(key_result_box('T-H1: Each Functor Preserves the Initial Object',
         'For each of the four functors, the image of 0 is an initial object in the target '
-        'framework — a universal source from which every other object has a unique morphism. '
-        'The privileged status of 0 is not an artifact of the abstract category: it is '
-        'preserved faithfully in every concrete realization.'))
+        'framework (for FB, in its stand-in) — a universal source from which every other object '
+        'has a unique morphism. '
+        'The privileged status of 0 is not an artifact of the abstract category. The FB '
+        'stand-in is Q₂BallDepth. In TopCat the FB leg fails: there the floor {0} is a '
+        'one-point space, which is terminal and not initial.'))
     E.append(sp(6))
 
     # ── T-H2: Singularity compatibility ────────────────────────────────────────
@@ -383,7 +414,7 @@ def build():
     E.append(ccaption(
         'All four frameworks describe the Binary Snap (T-SNAP) in their own language. '
         'The vertical line marks the moment of the Snap. '
-        'Left: ⊥. Right: the minimum nonzero state.'))
+        'Left: ⊥. Right: ε₀.'))
     E.append(sp(6))
 
     E.append(remember_box(

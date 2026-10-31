@@ -761,7 +761,7 @@ def build_zpb():
     E.append(label_box('Definition D5 — Minimum Viable Deviation &#949;\u2080', [
         '&#949;<sub>0</sub> = 2<super>k</super> for some integer k, where k is the maximum valuation accessible in the instantiation.',
         'Structural role (universal): &#949;<sub>0</sub> is always the first element crossed by the Snap. Fixed by the structure of Q<sub>2</sub> and AX-B1.',
-        'Numerical value (contingent): determined by physical constants of the instantiation. Planck-scale quantities in our universe.',
+        'Numerical value (contingent): determined by physical constants of the instantiation.',
         'Status: DEFINED — universe-contingent parameter.',
     ]))
 

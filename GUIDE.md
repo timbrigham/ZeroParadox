@@ -8,21 +8,15 @@ For a dictionary and map of ⊥ - the object the whole framework is built on - s
 
 > **Start here - [The Minimal Core](MINIMAL_CORE.md).** The whole shape the framework is built on - engine, wall, floor, the snap in both directions, and the fan-out - in one self-contained Lean file, on the smallest objects that can carry it. Written to be read either way: plain-language idea first, checkable file behind it. The shortest path to what the project is about.
 
-> **Interactive - [The Bottom Family tree](bottom-family-tree.html).** A single visual map of ⊥ across the fields: hover any node to see why it lands where it does, with the checkable Lean witness. The clearest one-picture view of what the framework assembles.
-
-> **Interactive - [The Diagonal Family](diagonal-family.html).** The self-reference arguments - Cantor, Russell, Gödel, Tarski, Turing, the recursion theorem - as one diagonal fixed point, forked by whether self-reference can close: walls (it cannot) and floors (it does). Hover any node for the checkable Lean witness.
-
-> **Interactive - [The Snap Loop](snap-loop.html).** The whole object in one picture: a single discrete step of ε₀ away from bottom, and a return to bottom - the ⊥ → ε₀ snap-arc realized as a loop in the 2-adic integers. The return is to A bottom; that it is a NEW one is a commitment, and in this 2-adic realization the arc returns to the same 0. Floor and ceiling are both ⊥; ε₀ is the first step from bottom, opening the gap between them - never a bottom and never 0. It maps the trajectory as a whole, not the route between - that runs through internal state with no external description. Hover any point for the checkable Lean witness.
-
 ---
 
 ## What This Is
 
-The Zero Paradox proves that a minimum non-bottom element is structurally forced - not assumed - given the framework's discrete state model (a bare join-semilattice alone can be dense, with no such minimum; that is exactly where the transition fails, in the reals). The result is machine-verified in Lean 4. The supporting structure examines what happens at the bottom element ⊥ across several mathematical frameworks; each independently locates the same structural constraint. One additional hypothesis per framework is required that is not derivable from that framework's axioms alone - these are catalogued in [Axiomatic Commitments](README.md#axiomatic-commitments) in README.md.
+The Zero Paradox proves that an atom above ⊥ of the discrete state chart (a state with nothing between it and ⊥; c₁ in `MachinePhase`) is structurally forced - not assumed - given the framework's discrete state model (a bare join-semilattice alone can be densely ordered, and in a dense order no element has a first step, so there is no such atom; the real numbers are the familiar dense case). The result is machine-verified in Lean 4. The supporting structure examines what happens at the bottom element ⊥ across several mathematical frameworks; each independently locates the same structural constraint. One additional hypothesis per framework is required that is not derivable from that framework's axioms alone - these are catalogued in [Axiomatic Commitments](README.md#axiomatic-commitments) in README.md.
 
 Each layer of the proof is internally closed before any cross-framework claim is made.
 
-No snap-specific axioms appear anywhere in the framework. The Binary Snap - the transition from the bottom element ⊥ to the minimum non-bottom state, whose shape is derived rather than assumed - is a theorem proved in ZP-E from A4 - the standard bottom-element axiom (∀ x, ⊥ ∨ x = x) - together with the framework's computational commitments. A4 is a standard axiom of join-semilattice theory.
+No snap-specific axioms appear anywhere in the framework. The Binary Snap - the transition from the bottom element ⊥ to an atom above ⊥ of the discrete state chart (c₁ in `MachinePhase`), whose shape is derived rather than assumed - is a theorem proved in ZP-E from A4 - the standard bottom-element axiom (∀ x, ⊥ ∨ x = x) - together with the framework's computational commitments. A4 is a standard axiom of join-semilattice theory.
 
 ---
 
@@ -57,7 +51,7 @@ This repository is connected to a Copilot Space - a GitHub AI chat with the docu
 
 **Before any path:** [The Bottom Element (⊥)](BOTTOMELEMENT.md) - a dictionary and map of the object the whole framework is built on - and its companion [The Binary Snap (⊥ → ε₀)](SNAP.md) - the same for the snap, the transition off ⊥. Together they orient you to ⊥ and the snap, and to what is proved versus still open about each, before you follow any route below.
 
-**General reader:** [The Philosophical Question](ZP_Philosophical_Question.pdf) → [Foreword](Zero_Paradox_Foreword.pdf) → any [Illustrated Companion](#illustrated-companion-documents) → [ZP-E Companion](ZP-E_Illustrated_Companion.pdf) → [ZP-I Companion](ZP-I_Illustrated_Companion.pdf) (framework closure)
+**General reader:** [Foreword](Zero_Paradox_Foreword.pdf) → any [Illustrated Companion](#illustrated-companion-documents) → [ZP-E Companion](ZP-E_Illustrated_Companion.pdf) → [ZP-I Companion](ZP-I_Illustrated_Companion.pdf) (framework closure)
 
 **Mathematician:** the formal layers are best read by field, not in one linear sequence. See the [Reading Order (by Specialty)](README.md#reading-order-by-specialty) in the formal index, which routes each specialty (number theory, proof theory, computability, set theory, category theory, order and analysis) through its own layers, the bridge that connects it, and the shared bottom ⊥.
 
@@ -96,7 +90,6 @@ One companion per formal document. Plain language, diagrams, real-world examples
 
 | File | Description |
 |------|-------------|
-| [The Philosophical Question That Started This](ZP_Philosophical_Question.pdf) | The philosophical question that motivated the framework, and what the formal results say about it. |
 | [ZP Tools and Methods](ZP_Tools_and_Methods.pdf) | How the framework was developed: Claude's role, what formal tools were and were not used (Rocq, Lean, etc.), the PDF rendering pipeline. |
 | [Forced but Not Proved: A Reader's Guide](fmc_guide.md) | Plain-language guide to the framework's confidence labels. What "proved," "forced," "chosen," and "open" mean, and why some results are chosen rather than proved. The accessible companion to [Forced Metatheoretic Commitment](fmc.md). |
 

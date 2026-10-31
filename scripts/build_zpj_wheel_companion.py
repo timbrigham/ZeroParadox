@@ -1,35 +1,6 @@
 """
 Build ZP-J Wheel Illustrated Companion
 Version 1.6 | September 2026
-v1.6: TERM-LEVEL IDENTIFICATION RESTORED (two-pole audit, 2026-09-13, Tim's call). "There is no second new element in a meadow for infinity to be equal to" is true of elements and dropped the other chart: 1/0 and 0*(1/0) both evaluate to 0 in a meadow, so it identifies the two expressions a wheel keeps apart, which no wheel with more than one element can do (Carlstrom Prop. 4.4). Companion bumped with the addendum at v1.7.
-v1.5: THE BICONDITIONAL THE ADDENDUM STRUCK AT v1.5 WAS STILL LIVE HERE, and register.md
-      asserted the opposite ("Companion unchanged at v1.4: it carries none of these").
-      "The addendum proves exactly when that holds" claims a biconditional this corpus does not
-      prove: only `inf_ne_bot (h0 : (0 : A) ∉ S)` is a declaration here, and no `0 ∈ S → trivial`
-      theorem exists anywhere in the corpus. The converse is Carlström's own observation (printed
-      p. 5, "then ≡_S is improper and ⊙_S A is trivial") and is now cited to him rather than
-      asserted flatly. Found by reading the RENDERED companion against the RENDERED addendum: a
-      source grep of the struck phrasing over the addendum returns only docstring hits and reads
-      clean, and check_paths.py --claim returned 0 sites over a domain that INCLUDED this file,
-      because this file says it in different words.
-      Also: "porthole" is glossed at first use — it was used once, cold, in a plain-language
-      document; docstring month corrected to match the rendered title block.
-v1.4: wheel/meadow claim corrected (bedrock, prior-art gate). The right-hand diagram panel
-      labelled MEADOW pictured one new node ∞ = ⊥, which is no meadow: a meadow adjoins no
-      element and sets 0⁻¹ = 0 (Bergstra, Hirshfeld & Tucker). The diagram is now three panels
-      — wheel, meadow, and the collapse — because identifying ∞ with ⊥ gives the ONE-ELEMENT
-      wheel (Carlström 2001:11 Prop. 4.4), not a second interesting algebra. "Both answers give
-      a consistent algebra" struck. Etymology corrected: the name is Setzer's, after the
-      topological picture ⊙, not after the smallest example.
-v1.3: rendered Lean-file citations synced to post-reorg basenames (namespace de-scar); docstring changelog above kept as the historical record.
-v1.1: WheelFrac.* citations updated to ZPJ_WheelFrac.* (Lean namespace standardization).
-v1.0: Initial release. Plain-language companion to the ZP-J Wheel Addendum
-      (ZPJ_Wheel.lean / ZPJ_WheelFrac.lean). Explains what a wheel is (division
-      by zero made total), the two derived elements ∞ = /0 and ⊥ = 0·/0, the
-      wheel-vs-meadow distinction, the wheel-of-fractions construction
-      ⊙_S A = (A×A)/≡_S, the machine-verified result that it is a wheel
-      (Carlström Def 1.1, choice-free [propext, Quot.sound]), and the porthole
-      connection to ZP-J. One diagram: wheel vs meadow.
 """
 
 import os

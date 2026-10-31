@@ -15,8 +15,10 @@ ZPL has four components:
    layers tabulated in §I. The footprints are not uniform:
    `ZeroParadox/Computability/Kleene.lean` §V proves one statement both ways with opposite
    footprints, and ZP-K §IV tabulates the measurements. Not a Lean proposition — and
-   `#print axioms` measures a proof's dependencies, never a theorem's need; necessity takes a
-   reduction to a taboo (`ZeroParadox/Category/ChoiceCannotBe.lean` §IV).
+   `#print axioms` on a proof measures that proof's dependencies, never a principle's need;
+   necessity takes a reduction to a taboo (`ZeroParadox/Category/ChoiceCannotBe.lean` §IV), and
+   whether a statement as written carries choice is the statement control (STATEMENT-CARRIED,
+   `ZeroParadox/Category/ChoiceCannotBe.md`).
 2. **Rogers' Fixed-Point Stability** — for any computable `f`, some code is behaviourally
    fixed by `f` (`eval (f c) = eval c`). In Lean scope; follows from ZPK's
    `roger_fixed_point_exists`.
@@ -24,8 +26,8 @@ ZPL has four components:
    it is a fixed point of `α ↦ ω^α`; it is the first such fixed point above 0. Fully in Lean
    scope via Mathlib ordinals.
 4. **Cantor Normal Form Bridge** — `cnfToZp2` maps ordinals below ε₀ (`NONote`) into `ℤ₂` by
-   recursion on their Cantor normal form; as the tower stages approach ε₀ their encodings converge to `0 = ⊥` in
-   `ℤ₂`; ε₀ itself has no encoding, and the two limits correspond as in
+   recursion on their Cantor normal form; as the tower stages approach ε₀ their images converge to `0 = ⊥` in
+   `ℤ₂`; ε₀ itself has no image, and the two limits correspond as in
    `ZeroParadox/Ordinal/Epsilon0CannotBe.lean` § V. For a map φ : Ordinal → MachinePhase,
    the tower forces the floor of where the value can change: nothing fires below ε₀
    (`snap_threshold_is_epsilon_zero`), which is not occurrence. That φ fires there is
@@ -34,7 +36,7 @@ ZPL has four components:
    and tower alignment (every tower stage sent to c₀) leave open, hε₀ selects the least, and
    so fixes φ uniquely (`ZeroParadox/Ordinal/Incompleteness.lean` § II, the examples after
    `snap_unconditional`). Whether Classical.choice is forced by the metric collapse is a
-   separate open question (`ZeroParadox/Ordinal/SyntacticCollapse.lean`).
+   separate open question (`ZeroParadox/Ordinal/SyntacticCollapse.md`).
    Proof partially in Lean scope.
 
 Axiom footprint: `[propext, Classical.choice, Quot.sound]` throughout `Gentzen.lean`, measured.
@@ -53,15 +55,15 @@ Non-constructibility appears across the layers tabulated below. The axiom footpr
 uniform — the ZPJ/K row names a witness on each side, `AFAStructure.bot_self_mem` measuring no
 axioms and `botCode` carrying them — and ZP-K § IV tabulates the measured footprints.
 Whether any of that dependence is necessary (forced by ZP geometry rather than incidental)
-is the open Classical.choice inversion conjecture (ZeroParadox/Ordinal/SyntacticCollapse.lean): #print axioms shows
-dependence, not necessity.
+is the open Classical.choice inversion conjecture (`ZeroParadox/Ordinal/SyntacticCollapse.md`): #print axioms on a
+proof shows dependence, not a principle's necessity.
 
 | Layer | Formal Language | Expression of non-constructibility |
 |-------|----------------|--------------------------------------|
 | ZPB   | Topology        | C3: no continuous path ⊥ → x ≠ ⊥   |
 | ZPC   | Information     | L-INF: infinite surprisal at ⊥       |
 | ZPJ/K | Set + Compute  | bot_self_mem (AFA); botCode (Kleene) |
-| ZPI   | Algorithmic IT  | K uncomputable; the K-ratio bridge is superseded (ZeroParadox/Valuation/SemilatticeInstance.lean § II) |
+| ZPI   | Algorithmic IT  | K uncomputable; the K-ratio bridge is refuted (counterexample Sₙ = 2ⁿ, ZP-I § II.B); T-IZ never depended on it (it goes through `t_iz_cauchy`) |
 
 K is not computed in Lean in this framework. The AFA/Kleene route reaches the same
 fixed-point structure via a path whose Kleene step is a KleeneStructure requirement.
@@ -80,7 +82,7 @@ stage 1 on, the 2-adic valuation of the image tracks ordinal height (`tower_orde
 `ZeroParadox/Ordinal/CnfBridge.lean`). For `ω^e · n + a`:
   cnfToZp2(ω^e · n + a) = 2^(v₂(cnfToZp2(e)) + 1) · n + cnfToZp2(a)
 
-This recursion ensures that the tower stages get valuation = stage index:
+This recursion ensures that the images of the tower stages get valuation = stage index:
   cnfToZp2(ω^[0] 0) = 0              (valuation 0 by convention)
   cnfToZp2(ω^[1] 0) = 2^1 = 2       (valuation 1)
   cnfToZp2(ω^[2] 0) = 2^2 = 4       (valuation 2)

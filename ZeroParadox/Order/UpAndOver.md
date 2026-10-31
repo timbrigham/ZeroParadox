@@ -1,7 +1,12 @@
-# The up-and-over shape: prior art, controls and fences
+# The up-and-over shape's climbing kind: prior art, controls and fences
 
 Ride-along for `ZeroParadox/Order/UpAndOver.lean`. The Lean file holds the declarations, the Engineer's
 Take and a `Statement:` per declaration; this file holds the standard framing and the fences.
+
+The climbing kind is a motion that, from a landing, steps to `b` and has UP send `b` to a third point
+(`Motion.Climb`, `ZeroParadox/Die.lean`); the loop kind has UP send `b` back to the landing
+(`Motion.Loop`). `UpAndOver.toMotion`, OVER every cover, climbs and never loops (§ VI of the Lean file,
+`toMotion_climb`, `toMotion_not_loop`).
 
 ## Standard framing
 
@@ -14,7 +19,7 @@ Take and a `Statement:` per declaration; this file holds the standard framing an
   `Set.Iic b` (Mathlib `covBy_iff_coatom_Iic`). `Statement:` COINCIDENCE — the from-below and
   from-above readings hold of one cover at once, in two charts (the `example` in § II of the Lean file).
 - The corner law `UpAndOver.up_eq_of_mem_Icc` is a closure-operator fact, two lines from Mathlib
-  `ClosureOperator.le_closure_iff`; the shape adds nothing to it.
+  `ClosureOperator.le_closure_iff`; the rest of `UpAndOver` adds nothing to it.
 - On the ordinals, UP from 0 (Mathlib `Ordinal.deriv_zero_right`), then OVER-then-UP at each successor
   index, and the supremum of earlier values at limit indices (Mathlib `Ordinal.deriv_limit`), is
   **Veblen's derivative** of `ω^·` (Veblen 1908): Mathlib `Ordinal.deriv_add_one`, restated
@@ -27,7 +32,7 @@ Take and a `Statement:` per declaration; this file holds the standard framing an
   `nfp_seed_successor_cell` (Veblen 1908, Corollary 1 to Theorem 4, clause (B)) and
   `seed_eq_of_nfp_eq_epsilon_limit` (`ZeroParadox/Ordinal/Epsilon0LeastFP.lean`).
 - `up` on the ordinals is `snapNucleus` (`ZeroParadox/Ordinal/SnapNucleus.lean`) through Mathlib's
-  `Nucleus.toClosureOperator`. A nucleus is not required by the shape: meet preservation needs
+  `Nucleus.toClosureOperator`. A nucleus is not required by an `UpAndOver`: meet preservation needs
   `SemilatticeInf`.
 
 ## Why each field is there

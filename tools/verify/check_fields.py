@@ -2,8 +2,9 @@
 
 WHY A CHECKER AND NOT A FIFTH CAREFUL PASS. Four consecutive gate rounds corrected this same
 claim family and each fix was incomplete; each time the response was a wider grep. The fourth
-miss is the one that settles the argument: `build_zpj_afa_addendum.py:141` renders *"the fields
-of the target typeclass are proved as theorems from the source"* — the same false claim as the
+miss is the one that settles the argument: `scripts/build_zpj_afa_addendum.py`, in the paragraph
+opening "ValuationStructure generates two further typeclasses", rendered *"the fields of the
+target typeclass are proved as theorems from the source"* — the same false claim as the
 two surfaces already fixed, in a sentence containing **no numeral at all**. Every pattern the
 round-4 sweep used required the token `three`. A wider pattern would have missed it a fifth time.
 
@@ -47,6 +48,9 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import common                                                    # noqa: E402
 
 REPO = common.REPO
+# The corpus is full of ⊥ and the report prints ⚠; Windows stdout defaults to cp1252 and RAISED on
+# the first one, so a run with findings died with a traceback whose exit 1 read as a finding.
+common.utf8_stdout()
 BASELINE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "fields_baseline.txt")
 
 # A claim that a FIELD is proved. Deliberately generous — this leg only nominates, and a false
@@ -211,6 +215,11 @@ instance toDemo : Demo L where
 '''
 
 
+def load_known(path):
+    """The grandfathered keys, or None when the baseline file does not exist (never `set()`)."""
+    return common.load_baseline(path) if os.path.exists(path) else None
+
+
 def selftest():
     """Both halves, each expectation declared BEFORE the run (`DC-22`).
 
@@ -278,6 +287,13 @@ def selftest():
             got = ("build_ctl%d.py" % i) in flagged
             cases.append((label, got == want))
 
+        # CARRY1008-27: an ABSENT baseline is None, an EMPTY one is the empty set.
+        empty = os.path.join(root, "empty_baseline.txt")
+        io.open(empty, "w", encoding="utf-8").write("# header only\n")
+        cases.append(("MUST FIRE  an absent baseline reads as ABSENT",
+                      load_known(os.path.join(root, "no_such_baseline.txt")) is None))
+        cases.append(("MUST SUPPRESS  an empty baseline reads as empty", load_known(empty) == set()))
+
         print("=== check_fields controls — MUST-FIRE and MUST-SUPPRESS ===")
         for label, ok in cases:
             print("  %-4s %s" % ("PASS" if ok else "FAIL", label))
@@ -304,11 +320,12 @@ def main(argv):
         return 0
 
     hits, exempted = scan(truth)
-    known = common.load_baseline(BASELINE) if hasattr(common, "load_baseline") else set()
-    if not known and os.path.exists(BASELINE):
-        known = {l.strip() for l in io.open(BASELINE, encoding="utf-8")
-                 if l.strip() and not l.startswith("#")}
-    new = [h for h in hits if "%s:%s" % (h[0], h[1]) not in known]
+    # ⚠ AN ABSENT BASELINE IS NOT AN EMPTY ONE (`CARRY1008-27`, R-ZERONULL). `fields_baseline.txt`
+    # does not exist, and `load_baseline` returns the same empty set for a missing file as for an
+    # empty one, so the run printed `grandfathered (baseline) : 0` — a count of a file nobody wrote.
+    # `known` is None when the file is absent, and the report says so instead of printing a zero.
+    known = load_known(BASELINE)
+    new = [h for h in hits if known is None or "%s:%s" % (h[0], h[1]) not in known]
 
     print("=" * 60)
     print("  typeclass FIELD-DISCIPLINE check")
@@ -318,7 +335,11 @@ def main(argv):
     # ⚠ PRINTED EVERY RUN, INCLUDING AT ZERO. An exemption nobody counts manufactures coverage
     # that was never earned; a rising number is the only way a growing carve stays visible.
     print("  dated changelog blocks exempted     : %d" % exempted)
-    print("  grandfathered (baseline)            : %d" % (len(hits) - len(new)))
+    if known is None:
+        print("  grandfathered (baseline)            : n/a - %s is ABSENT, so every site is NEW"
+              % os.path.basename(BASELINE))
+    else:
+        print("  grandfathered (baseline)            : %d" % (len(hits) - len(new)))
     print("  NEW sites                           : %d" % len(new))
     print("=" * 60)
     for rel, start, cls, rec, snip in new:

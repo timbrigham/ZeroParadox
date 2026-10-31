@@ -1,6 +1,7 @@
 import ZeroParadox.Settheory.SetTheoryAFA
 import ZeroParadox.Valuation.Scale
 import ZeroParadox.Computability.SelfApp
+import ZeroParadox.Die
 import Mathlib.Tactic
 
 /-!
@@ -63,7 +64,7 @@ This file:
   § II.  Derived elements: wheelInf, wheelBot; winv_one proved abstractly
   § III. Concrete carrier: ZPWheelElem (ℚ extended with ∞ and ⊥ₗ)
   § IV.  Operations and Wheel instance (all axiom proofs sorry-free)
-  § V.   Porthole theorems: /0 = ∞, 0·/0 = ⊥ₗ (proved)
+  § V.   Porthole theorems: /0 = ∞, 0·/0 = ⊥ₗ (proved); § V-b, the wheel as a die face
   § VI.  Connection to ValuationStructure: val(⊥) = ∞ ↔ /0 = ∞ (proved)
   § VII.  WheelValuationStructure: the algebraic bridge (typeclass)
   § VII-b. NO-GO gauge: the class is degenerately inhabited; nondegeneracy as an explicit predicate
@@ -219,7 +220,7 @@ end WheelBasic
 
     - `bot`:    0 · /0 — the absorbing undefined element (ZP: the porthole; the algebraic counterpart
                 of the Quine-atom role, not an identity with it — different types)
-    - `fin q`:  a finite rational (ZP: nonzero states; q = 0 is the semilattice ⊥)
+    - `fin q`:  a finite rational (ZP: nonzero states for q ≠ 0; q = 0 is the semilattice ⊥)
     - `inf`:    /0 = ∞ — the infinite element (ZP: v₂(0) = ∞)
 
     The porthole is the identification fin(0) ↔ inf via winv:
@@ -466,6 +467,45 @@ example : ¬ (∀ x y z : ZPWheelElem,
     Algebraically: the porthole contact point (fin 0 ↔ inf) is not confusion with ⊥ₗ. -/
 theorem zpw_zero_ne_bot : ZPWheelElem.fin 0 ≠ .bot := by
   simp
+
+-- ============================================================
+-- § V-b. The wheel as a die face (`ZeroParadox/Die.lean`, indexed in `ZeroParadox/DieCannotBe.lean`)
+-- ============================================================
+
+/-- `Statement:` in every wheel, `0·/0` steps only to itself in `Motion.ofFun` of `/`. -/
+theorem wheelBot_selfOnlyAt_winv {W : Type*} [Wheel W] :
+    (Motion.ofFun (Wheel.winv (W := W))).SelfOnlyAt wheelBot := by
+  refine (Motion.selfOnlyAt_ofFun_iff _ _).2 ?_
+  show Wheel.winv (Wheel.wmul (Wheel.wzero : W) (Wheel.winv Wheel.wzero)) =
+    Wheel.wmul (Wheel.wzero : W) (Wheel.winv Wheel.wzero)
+  rw [Wheel.winv_wmul, Wheel.winv_winv, Wheel.wmul_comm]
+
+/-- `Statement:` in every wheel, with OVER `a → a + z` for some `z`, `0·/0` steps only to itself and
+    every point steps to it (W14, `wadd_zeroinv_absorb`). -/
+theorem wheelBot_absorbs {W : Type*} [Wheel W] :
+    (Motion.ofTotal (id : W → W) (fun _ => rfl) (fun a b => ∃ z, b = Wheel.wadd a z)).SelfOnlyAt
+        wheelBot ∧
+      ∀ a : W, (Motion.ofTotal (id : W → W) (fun _ => rfl)
+        (fun a b => ∃ z, b = Wheel.wadd a z)).step a wheelBot := by
+  refine ⟨⟨⟨Wheel.wzero, (Wheel.wadd_zero _).symm⟩, fun b ⟨z, hz⟩ => ?_⟩,
+    fun a => ⟨wheelBot, (Wheel.wadd_zeroinv_absorb a).symm⟩⟩
+  rw [hz, Wheel.wadd_comm]
+  exact Wheel.wadd_zeroinv_absorb z
+
+/-- `Statement:` on `ZPWheelElem` that step goes `0 → 1` and `1 → 0`, so under no partial order
+    does it raise, and under none does it lower. -/
+theorem zpw_addStep_no_polarity (o : PartialOrder ZPWheelElem) :
+    ¬ @Motion.StepRaises _ (Motion.ofTotal (id : ZPWheelElem → ZPWheelElem) (fun _ => rfl)
+        (fun a b => ∃ z, b = Wheel.wadd a z)) o.toLE ∧
+      ¬ @Motion.StepLowers _ (Motion.ofTotal (id : ZPWheelElem → ZPWheelElem) (fun _ => rfl)
+        (fun a b => ∃ z, b = Wheel.wadd a z)) o.toLE := by
+  have h01 : ∃ z, ZPWheelElem.fin 1 = Wheel.wadd (ZPWheelElem.fin 0) z :=
+    ⟨.fin 1, by show ZPWheelElem.fin 1 = zpwAdd (.fin 0) (.fin 1); simp [zpwAdd]⟩
+  have h10 : ∃ z, ZPWheelElem.fin 0 = Wheel.wadd (ZPWheelElem.fin 1) z :=
+    ⟨.fin (-1), by show ZPWheelElem.fin 0 = zpwAdd (.fin 1) (.fin (-1)); simp [zpwAdd]⟩
+  have hne : ZPWheelElem.fin 0 ≠ .fin 1 := by simp
+  exact ⟨fun h => hne (o.le_antisymm _ _ (h _ _ h01) (h _ _ h10)),
+    fun h => hne (o.le_antisymm _ _ (h _ _ h10) (h _ _ h01))⟩
 
 -- ============================================================
 -- § VI. Connection to ValuationStructure
@@ -764,6 +804,9 @@ section PurityCheck
 #print axioms zpwVal_zero_eq_top
 #print axioms zpwVal_inv_zero
 #print axioms zpw_top_val_iff_inv_is_inf
+#print axioms wheelBot_selfOnlyAt_winv
+#print axioms wheelBot_absorbs
+#print axioms zpw_addStep_no_polarity
 -- § VII-b NO-GO gauge. The footprint block there asserts nothing; it is checked here.
 -- Six axiom-free, and `nondegenerate_iff_map_one` is the one that is not — read the two
 -- `nondegenerate_iff_*` lines together, they are the measurement that block describes.

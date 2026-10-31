@@ -264,10 +264,7 @@ end ZeroParadox
 
 /-! ## Axiom Purity Check
 
-`#print axioms` reports every foundational axiom a theorem depends on.
-Clean ZP-A proofs should depend only on the ZPSemilattice typeclass fields
-and Lean's kernel axioms (propext, Classical.choice, Quot.sound).
-No Mathlib-specific axioms should appear.
+Each theorem's axiom footprint is the `#print axioms` output below.
 -/
 
 section PurityCheck

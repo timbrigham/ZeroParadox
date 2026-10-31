@@ -1,4 +1,5 @@
 import Mathlib.NumberTheory.Padics.PadicNumbers
+import Mathlib.NumberTheory.Padics.PadicIntegers
 import Mathlib.Topology.MetricSpace.Ultra.Basic
 import Mathlib.Topology.MetricSpace.Ultra.TotallySeparated
 import Mathlib.Topology.Connected.TotallyDisconnected
@@ -53,20 +54,21 @@ inductive OntologicalStates where
   | exist : OntologicalStates
   deriving DecidableEq, Fintype
 
-/-- The Null State: non-existence, ⊥ in ZP-A. -/
+/-- Non-existence: ⊥ of `OntologicalStates` under `instOntZPS` (`Settheory/OntBridge.lean`). -/
 def nullState : OntologicalStates := .null
 
-/-- The First Atomic State: existence. -/
+/-- Existence: the state off ⊥ of `OntologicalStates`. -/
 def firstAtomicState : OntologicalStates := .exist
 
-/-- AX-B1: null and first atomic states are distinct.
+/-- AX-B1: the two states are distinct.
     Proved by decidable equality — no classical axioms required. -/
 theorem ax_b1_distinct : nullState ≠ firstAtomicState := by decide
 
 /-! ## Theorem T0 — p = 2 is the Unique Minimum Sufficient Base
 
-Given exactly 2 ontological states (derived via ax_b1_distinct) and MP-1 (minimum base
-without redundancy), the representational base is uniquely p = 2. -/
+`t0_mp1_faithful_nonredundant` (reading A) and `t0_mp1_least_prime_unique` (reading B) take MP-1
+as hypotheses, AX-B1 being the two-state type `OntologicalStates`; `t0_mp1_least_prime` proves the
+least prime covering the two states is 2, from `t0_two_is_prime` and `t0_no_prime_below_two`. -/
 
 /-- Every prime satisfies p ≥ 2; there is no prime below 2.
     A base p < 2 cannot encode two distinct states (fails faithfulness of MP-1). -/
@@ -81,28 +83,45 @@ theorem t0_redundancy (p : ℕ) (_hp : Nat.Prime p) (hgt : 2 < p) :
   have hcard : Fintype.card OntologicalStates = 2 := by decide
   simp [hcard, hgt]
 
+/-- T0, MP-1 as ZP-B states it: a base with no fewer digit values than states (`hfaith`) and no
+    more (`hnored`) is 2: antisymmetry (`Nat.le_antisymm`) at two states. Primality is unused;
+    `t0_two_is_prime` supplies it. -/
+theorem t0_mp1_faithful_nonredundant (p : ℕ)
+    (hfaith : Fintype.card OntologicalStates ≤ p)
+    (hnored : p ≤ Fintype.card OntologicalStates) : p = 2 := by
+  have h : Fintype.card OntologicalStates = 2 := by decide
+  omega
+
+/-- T0, MP-1 read as "the least prime covering the states": that prime is 2. -/
+theorem t0_mp1_least_prime :
+    IsLeast {p : ℕ | Nat.Prime p ∧ Fintype.card OntologicalStates ≤ p} 2 := by
+  have h : Fintype.card OntologicalStates = 2 := by decide
+  exact ⟨⟨t0_two_is_prime, by omega⟩, fun p hp => t0_no_prime_below_two p hp.1⟩
+
+/-- T0, MP-1 read as "the least prime covering the states", taken as the hypothesis `hmp1`: that
+    prime is 2 (`IsLeast.unique`). -/
+theorem t0_mp1_least_prime_unique (p : ℕ)
+    (hmp1 : IsLeast {q : ℕ | Nat.Prime q ∧ Fintype.card OntologicalStates ≤ q} p) : p = 2 :=
+  hmp1.unique t0_mp1_least_prime
+
+-- Statement: control, dropping `hnored`: 3 is prime and has at least as many digit values as states.
+example : Nat.Prime 3 ∧ Fintype.card OntologicalStates ≤ 3 := ⟨by decide, by decide⟩
+-- Statement: reading A at `n` states forces `p = n`, and at `n = 4` that value is not prime.
+example (n p : ℕ) (hfaith : n ≤ p) (hnored : p ≤ n) : p = n := le_antisymm hnored hfaith
+example : ¬ Nat.Prime 4 := by decide
+-- Statement: reading B at 4 states picks 5. So the two readings agree at 2 states and differ at 4.
+example : IsLeast {p : ℕ | Nat.Prime p ∧ 4 ≤ p} 5 := by
+  refine ⟨⟨by decide, by decide⟩, fun p ⟨hp, h4⟩ => ?_⟩
+  by_contra h
+  have : p = 4 := by omega
+  subst this; exact absurd hp (by decide)
+
 /-! ## Why Q₂ Rather Than a Discrete Two-Point Space
 
-T0 fixes the representational base at p = 2. The full Q₂ structure (p-adic field,
-ultrametric, clopen ball hierarchy) is not uniquely forced by AX-B1 alone — a
-discrete two-point space {0, 1} would also satisfy the binary distinction. Q₂ is
-chosen for three motivated reasons beyond the binary count:
-
-- **Hierarchical approximation**: Q₂ contains nested clopen balls B(0, 2⁻ⁿ) ↘ {0}
-  — a countably infinite depth hierarchy converging to the null state 0. A two-point
-  discrete space has no such hierarchy. This is the geometric substrate for ZPC's
-  surprisal field (depth n ↦ n bits) and for L-INF (informational extremity of ⊥).
-- **Ultrametric geometry**: The strong triangle inequality (T1) and clopen ball
-  structure (T2) give non-trivial topology — disjoint balls cannot be continuously
-  connected (C2). Discrete spaces make this claim vacuous (no non-constant paths exist).
-- **Irreversibility content**: C3 (no continuous path from x ≠ 0 to 0) uses the
-  genuine total disconnectedness of Q₂ via the ultrametric; in a finite discrete
-  space the argument carries no structural weight.
-
-The formal connection from Q₂'s topology to ZPC's surprisal field and ZPD's basis
-assignment is a design identification — those layers do not import ZPB as a Lean
-dependency. The choice of Q₂ is a motivated modelling commitment, not a uniquely
-forced consequence of AX-B1. -/
+T0 fixes the representational base at p = 2. The full Q₂ structure is not uniquely
+forced by AX-B1 alone: a discrete two-point space {0, 1} would also satisfy the binary
+distinction. The choice of Q₂ is a motivated modelling commitment; its three reasons are
+in `ZeroParadox/Valuation/Padic.md`. -/
 
 /-! ## II. The 2-Adic Field
 
@@ -190,26 +209,55 @@ from 0 by a discrete gap — the topological identity of the Snap. -/
 theorem t3_isolation (r : ℝ) (hr : r ≠ 0) : IsClopen (Metric.closedBall (0 : Q₂) r) :=
   t2_closedBall_isClopen 0 r hr
 
-/-- D5: The Minimum Viable Deviation, written `2 ^ k` for an integer EXPONENT `k`.
+/-- D5 support: the real norm threshold `2 ^ k`. This is ZP-B's ε₀ of ℚ₂, never `Ordinal.epsilon 0`.
 
-    **Corrected 2026-07-28.** The previous docstring said "`k` is the maximum 2-adic valuation
-    accessible", which contradicts this file's own ball convention `B(0, 2⁻ⁿ)`: a *maximum*
-    valuation gives a *minimum* scale, so the exponent is `k = -v` where `v` is that valuation.
-    `k` is the exponent, `v` is the valuation, and they differ by sign. No semantic change —
-    the definition is unaltered, and `k : ℤ` was always free to be negative.
-
-    Structural role universal; value contingent — contingent on the **chosen exponent `k`**, i.e.
-    on which valuation is taken to be the finest accessible one. That is a normalisation choice,
-    **not** a physical measurement and **not** a dimension: ε₀ is a *position* (`Ordinal.epsilon 0`,
-    Veblen (1,0), the least fixed point of `α ↦ ω^α` — **not** an order-adjacent step above ⊥;
-    see `epsilonZero_tower_lt`) and a position carries no units, exactly
-    as ⊥ carries none. (Corrected 2026-07-29: an earlier revision said "it is dimensionful, so it
-    depends on a choice of units", which imported a magnitude reading of ε₀ and contradicted the
-    same box's own no-physical-claims disclaimer.)
-
-    **Note this definition is inert**: nothing in the development depends on it. It records the
-    framework's parameterization of the snap threshold, not a load-bearing construction. -/
+    ε₀ of ℚ₂ is a role, the minimum viable deviation from ℚ₂'s `0`, and its occupant is a POINT of
+    ℚ₂ named only by its rung: any point whose 2-adic valuation is the chosen finest accessible
+    valuation `v`. Such a point has norm `eps0 (-v)` (first `example` below), shared by every point
+    at that rung, so the rung fixes the norm and not the point (second `example`). ℚ₂ supplies no
+    least nonzero norm (the `¬ HasFirstStep` example in `ZeroParadox/BottomCannotBe.lean` § ROLE),
+    so the role is filled only relative to the chosen `v`. The requirement list of the ordinal
+    chart (`ZeroParadox/Ordinal/Epsilon0CannotBe.lean` § I-b) does not transfer to this carrier.
+    Inert: nothing in the development depends on this definition. -/
 noncomputable def eps0 (k : ℤ) : ℝ := 2 ^ k
+
+-- Statement: every nonzero point `x` of ℚ₂ has norm `eps0 (-v)`, where `v` is its 2-adic valuation.
+example (x : Q₂) (hx : x ≠ 0) : ‖x‖ = eps0 (-x.valuation) := by
+  rw [Padic.norm_eq_zpow_neg_valuation hx, eps0]; norm_num
+
+-- Statement: at every rung `v`, the distinct points `2 ^ v` and `-(2 ^ v)` of ℚ₂ both have
+-- valuation `v` and norm `eps0 (-v)`.
+example (v : ℤ) :
+    ((2 : Q₂) ^ v).valuation = v ∧ (-((2 : Q₂) ^ v)).valuation = v ∧
+    (2 : Q₂) ^ v ≠ -((2 : Q₂) ^ v) ∧
+    ‖(2 : Q₂) ^ v‖ = eps0 (-v) ∧ ‖-((2 : Q₂) ^ v)‖ = eps0 (-v) := by
+  have hv : ((2 : Q₂) ^ v).valuation = v := by
+    have h := Padic.valuation_zpow (p := 2) (2 : Q₂) v
+    have h2 : (2 : Q₂).valuation = 1 := by exact_mod_cast Padic.valuation_p (p := 2)
+    rw [h, h2, mul_one]
+  have hn : ‖(2 : Q₂) ^ v‖ = eps0 (-v) := by
+    have := Padic.norm_p_zpow (p := 2) v
+    simpa [eps0] using this
+  have h0 : (2 : Q₂) ^ v ≠ 0 := zpow_ne_zero v two_ne_zero
+  have h1 : (-1 : Q₂).valuation = 0 := by
+    have := Padic.valuation_intCast (p := 2) (-1)
+    push_cast at this
+    rw [this]
+    simp
+  have hneg : (-((2 : Q₂) ^ v)).valuation = v := by
+    rw [neg_eq_neg_one_mul, Padic.valuation_mul (by norm_num) h0, hv, h1, zero_add]
+  refine ⟨hv, hneg, fun h => h0 ?_, hn, by rw [norm_neg, hn]⟩
+  have : (2 : Q₂) * (2 : Q₂) ^ v = 0 := by
+    rw [two_mul]; nth_rewrite 2 [h]; exact add_neg_cancel _
+  exact (mul_eq_zero.mp this).resolve_left two_ne_zero
+
+-- Statement: ZP-B T3's scope: a nonzero point of ℚ₂ lies in the ball `B(0, 2^(-j))` exactly when
+-- `j` is at most its valuation.
+example (x : Q₂) (hx : x ≠ 0) (j : ℤ) : ‖x‖ ≤ (2 : ℝ) ^ (-j) ↔ j ≤ x.valuation := by
+  rw [Padic.norm_eq_zpow_neg_valuation hx]
+  push_cast
+  rw [zpow_le_zpow_iff_right₀ (by norm_num : (1 : ℝ) < 2)]
+  omega
 
 /-! ## Theorem T5 — Q₂ is Totally Disconnected
 
@@ -221,20 +269,14 @@ for any 0 < s < d(a,b), giving a clopen partition. -/
 theorem t5_totallyDisconnected : TotallyDisconnectedSpace Q₂ := inferInstance
 
 /-! ## Corollary C3 — The Snap is Topologically Irreversible
-
-No continuous path γ: [0,1] → Q₂ can go from any x ≠ 0 back to 0.
-Proof: γ([0,1]) is a continuous image of the connected set [0,1] in the totally
-disconnected Q₂, hence a singleton; so γ(0) = γ(1), contradicting x ≠ 0.
-
-Note on the role of `(0 : Q₂)`: unlike the `OntologicalStates` refactor (where
-`Fin 2` was replaced by a free inductive because ⊥ = ℕ's 0 was a purely
-conventional label), the use of `0 : Q₂` here is structurally motivated and
-deliberately retained. Q₂'s additive identity is the **unique limit point** of
-the nested clopen ball hierarchy B(0, 2⁻ⁿ) ↘ {0}: no other point in Q₂ sits at
-the base of an infinite convergent nesting of clopen sets. This is what gives C3
-its content — the irreversibility is a theorem of Q₂'s ultrametric geometry, not
-a labelling convention. The identification ⊥ ↦ (0 : Q₂) is warranted by that
-metric structure (T2, T5), not by 0 being the first natural number. -/
+No continuous path γ: [0,1] → Q₂ goes from x ≠ 0 to 0: γ([0,1]) is connected in the totally
+disconnected Q₂, hence a singleton. The proof uses no property of 0, and Q₂ is topologically
+homogeneous (the `example`s after `c3_irreversible`). So topology does not single out `(0 : Q₂)`
+as the occupant of ZP-A's ⊥ role: it is the additive identity (`zero_add`) and the only point of
+valuation ⊤ (`padic_addVal_eq_top_iff`, `ZeroParadox/Valuation/ValuationAFA_Padic.lean`). Whether
+that makes 0 least or greatest depends on the order named; the `example`s after the C3 ones fix it
+for the norm preorder, ascending valuation, and divisibility on ℤ_[2]. `snapEmbed`
+(`ZeroParadox/Ordinal/Incompleteness.lean`) sends c₀, ⊥ of MachinePhase's ZP-A semilattice, to 1. -/
 
 /-- C3: There is no continuous path from x ≠ 0 to 0 in Q₂. -/
 theorem c3_irreversible (x : Q₂) (hx : x ≠ 0) :
@@ -250,6 +292,40 @@ theorem c3_irreversible (x : Q₂) (hx : x ≠ 0) :
     hsingl (Set.mem_range_self _) (Set.mem_range_self _)
   rw [hγ0, hγ1] at heq
   exact hx heq
+
+-- `Statement:` every point `x` of Q₂, not only 0, is the sole point under its own nested balls
+-- `B(x, 2⁻ⁿ)`, and those balls are clopen.
+example (x : Q₂) : (⋂ n : ℕ, Metric.ball x ((1 / 2 : ℝ) ^ n)) = {x} := by
+  ext y
+  simp only [Set.mem_iInter, Metric.mem_ball, Set.mem_singleton_iff]
+  refine ⟨fun h => ?_, fun hy n => by simp [hy]⟩
+  by_contra hne
+  obtain ⟨n, hn⟩ := exists_pow_lt_of_lt_one (dist_pos.mpr hne) (by norm_num : (1 / 2 : ℝ) < 1)
+  exact absurd (h n) (not_lt.mpr hn.le)
+example (x : Q₂) (r : ℝ) : IsClopen (Metric.ball x r) := IsUltrametricDist.isClopen_ball x r
+-- `Statement:` translation is an isometry of Q₂.
+example (a x y : Q₂) : dist (x - a) (y - a) = dist x y := dist_sub_right x y a
+-- `Statement:` `c3_irreversible` with any two distinct endpoints in place of `x` and `0`.
+example (x y : Q₂) (hxy : x ≠ y) :
+    ¬∃ γ : C(Set.Icc (0 : ℝ) 1, Q₂), γ ⟨0, by norm_num⟩ = x ∧ γ ⟨1, by norm_num⟩ = y := by
+  rintro ⟨γ, hγ0, hγ1⟩
+  haveI : PreconnectedSpace (Set.Icc (0 : ℝ) 1) := Subtype.preconnectedSpace isPreconnected_Icc
+  exact hxy (hγ0 ▸ hγ1 ▸ isTotallyDisconnected_of_totallyDisconnectedSpace Set.univ
+    (Set.range _) (Set.subset_univ _) (isPreconnected_range γ.continuous)
+    (Set.mem_range_self _) (Set.mem_range_self _))
+
+-- `Statement:` 0 is the unique least point of the norm preorder, on ℚ_[2] and on ℤ_[2].
+example (x : ℚ_[2]) : ‖(0 : ℚ_[2])‖ ≤ ‖x‖ ∧ (‖x‖ ≤ ‖(0 : ℚ_[2])‖ → x = 0) :=
+  ⟨by simp, fun h => by simpa using h⟩
+example (x : ℤ_[2]) : ‖(0 : ℤ_[2])‖ ≤ ‖x‖ ∧ (‖x‖ ≤ ‖(0 : ℤ_[2])‖ → x = 0) :=
+  ⟨by simp, fun h => by simpa using h⟩
+-- `Statement:` 0 is the unique greatest point under valuation read ascending, on ℚ_[2].
+example (x : ℚ_[2]) : Padic.addValuation x ≤ Padic.addValuation (0 : ℚ_[2]) ∧
+    (Padic.addValuation (0 : ℚ_[2]) ≤ Padic.addValuation x → x = 0) :=
+  ⟨by simp, fun h => by simpa using h⟩
+-- `Statement:` on ℤ_[2] under divisibility, 1 is least and 0 is greatest; 1 has the greatest norm.
+example (x : ℤ_[2]) : (1 : ℤ_[2]) ∣ x ∧ x ∣ 0 ∧ ‖x‖ ≤ ‖(1 : ℤ_[2])‖ :=
+  ⟨one_dvd x, dvd_zero x, by simpa using x.norm_le_one⟩
 
 /-! ## Classification Note: Non-Archimedean Fields and the Snap
 
@@ -309,9 +385,9 @@ leaves nothing else — a restriction this paragraph does not make. *(Corrected 
 implication called incomparable thirteen lines below in this same docstring. It survived because the
 fix that introduced it changed the ADJECTIVE — "non-Archimedean" → "ultrametric" — and left the claim
 wrapped around it standing.)* (An earlier revision of this
-paragraph asserted the biconditional "possible if and only if non-Archimedean". The direction that
-fails is **non-Archimedean ⟹ a first step exists**: ℚ₂ removes the density obstruction but supplies
-no closest nonzero element, so it does not yield the step.)
+paragraph asserted the biconditional "possible if and only if non-Archimedean". The direction that fails is
+**non-Archimedean ⟹ a first step exists**: ℚ₂ carries no order instance, and under its norm preorder its 0 has
+no first step, as in every nontrivially normed field, while that preorder is globally not dense (§ ROLE of `ZeroParadox/BottomCannotBe.lean`).)
 
 **What the converse actually is — and it is not about Archimedean-ness.** `f_snap_impossible`
 (`ZeroParadox/Reals/OrderedField.lean` — a declaration name is self-locating, so **no line number**;
@@ -371,7 +447,10 @@ end ZeroParadox
 
 /-! ## Axiom Purity Check
 
-Expected result: T0 results depend only on decidability (no kernel axioms beyond propext).
+Measured 2026-10-17 (the output below is authoritative): `ax_b1_distinct` depends on no Lean
+axioms; the T0 results do not share one footprint — `t0_no_prime_below_two` reaches only `propext`,
+while `t0_two_is_prime`, `t0_redundancy`, `t0_mp1_faithful_nonredundant`, `t0_mp1_least_prime` and
+`t0_mp1_least_prime_unique` reach `[propext, Classical.choice, Quot.sound]`.
 T1–C3 depend on Mathlib's p-adic and topology instances — any classical axioms used
 by those instances will appear here and are inherited from standard Mathlib, not ZP-B. -/
 
@@ -381,6 +460,9 @@ open ZeroParadox
 #print axioms t0_two_is_prime
 #print axioms t0_no_prime_below_two
 #print axioms t0_redundancy
+#print axioms t0_mp1_faithful_nonredundant
+#print axioms t0_mp1_least_prime
+#print axioms t0_mp1_least_prime_unique
 #print axioms ax_b1_distinct
 #print axioms t1_ultrametric
 #print axioms c1_isosceles

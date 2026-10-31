@@ -1,4 +1,5 @@
 import ZeroParadox.Valuation.PoleCompletion
+import ZeroParadox.Die
 import Mathlib.SetTheory.Cardinal.Arithmetic
 import Mathlib.Tactic
 
@@ -191,12 +192,66 @@ theorem doubling_only_periodic_point_zero (x : ℚ_[2]) (p : ℕ) (hp : 0 < p)
     linarith
   · exact h2
 
+/-! ## § III-b. The die form (`ZeroParadox/Die.lean`) -/
+
+/-- `Statement:` in `Motion.ofFun g`: no point has fan-in, some point has no predecessor, and exactly
+    one point steps to itself only. -/
+-- [ZP-CUSTOM] no Mathlib analog | reason: `SelfCopyRef` restated in the die's vocabulary
+-- (`FanIn`, `reverse.NoStepAt`, `SelfOnlyAt` on `Motion.ofFun`); Mathlib has the function-side
+-- notions (`Function.Injective`, `Function.Surjective`), not the die's.
+def DieSelfCopyRef {α : Type*} (g : α → α) : Prop :=
+  (∀ y, ¬ (Motion.ofFun g).FanIn y) ∧ (∃ y, (Motion.ofFun g).reverse.NoStepAt y) ∧
+    ∃! y, (Motion.ofFun g).SelfOnlyAt y
+
+-- The `DecidableEq` binder is kept in the type on purpose: the proof cases on equality, and the
+-- PurityCheck prints the footprint that binder buys.
+set_option linter.unusedDecidableInType false in
+/-- `Statement:` with decidable equality, the die form gives `SelfCopyRef`. -/
+theorem selfCopyRef_of_dieSelfCopyRef {α : Type*} [DecidableEq α] (g : α → α)
+    (h : DieSelfCopyRef g) : SelfCopyRef g := by
+  obtain ⟨hnf, ⟨y, hy⟩, hu⟩ := h
+  refine ⟨fun a b hab => ?_, fun hs => ?_, ?_⟩
+  · by_cases e : a = b
+    · exact e
+    · exact absurd ⟨a, b, e, rfl, hab⟩ (hnf (g a))
+  · obtain ⟨a, ha⟩ := hs y
+    exact hy a ha.symm
+  · obtain ⟨b, hb, hbu⟩ := hu
+    exact ⟨b, (Motion.selfOnlyAt_ofFun_iff g b).1 hb,
+      fun c hc => hbu c ((Motion.selfOnlyAt_ofFun_iff g c).2 hc)⟩
+
+/-- `Statement:` `SelfCopyRef` gives no fan-in and exactly one point stepping to itself only. -/
+theorem fanIn_selfOnlyAt_of_selfCopyRef {α : Type*} (g : α → α) (h : SelfCopyRef g) :
+    (∀ y, ¬ (Motion.ofFun g).FanIn y) ∧ ∃! y, (Motion.ofFun g).SelfOnlyAt y := by
+  obtain ⟨hi, -, b, hb, hu⟩ := h
+  exact ⟨fun y => Motion.not_fanIn_of_injective g hi (fun _ _ => Iff.rfl) y,
+    ⟨b, (Motion.selfOnlyAt_ofFun_iff g b).2 hb,
+      fun c hc => hu c ((Motion.selfOnlyAt_ofFun_iff g c).1 hc)⟩⟩
+
+/-- `Statement:` `SelfCopyRef` gives the die form; the point with no predecessor is obtained by
+    contradiction from not-onto. -/
+theorem dieSelfCopyRef_of_selfCopyRef {α : Type*} (g : α → α) (h : SelfCopyRef g) :
+    DieSelfCopyRef g := by
+  obtain ⟨hnf, hu⟩ := fanIn_selfOnlyAt_of_selfCopyRef g h
+  refine ⟨hnf, ?_, hu⟩
+  classical
+  by_contra hc
+  exact h.2.1 fun y => by
+    by_contra hy
+    exact hc ⟨y, fun a ha => hy ⟨a, ha.symm⟩⟩
+
+-- Statement: CONTROL: no `g : Fin 3 → Fin 3` meets the die form.
+example (g : Fin 3 → Fin 3) : ¬ DieSelfCopyRef g :=
+  fun h => no_selfCopyRef_of_finite g (selfCopyRef_of_dieSelfCopyRef g h)
+
 /-! ## § IV. Fences
 
-* Proved: the AVAILABILITY of a `SelfCopyRef` map. That the semilattice ⊥ PERFORMS it is a commitment — see
-  `l_inf` (`ZeroParadox/Information/Surprisal.lean`) and `KleeneStructure`
-  (`ZeroParadox/Computability/Kleene.lean`).
-* `#print axioms` reports a proof's footprint, never a theorem's necessity. -/
+* Proved: the AVAILABILITY of a `SelfCopyRef` map, on infinite carriers only. That the semilattice ⊥ on an
+  INFINITE carrier PERFORMS one is a commitment — see `l_inf` (`ZeroParadox/Information/Surprisal.lean`).
+  `MachinePhase`, the two-phase rounding that carries `machinePhaseKleene`, admits none
+  (`no_selfCopyRef_of_finite`; the `example` in `ZeroParadox/Computability/ComputationCannotBe.lean` § IX).
+* `#print axioms` on a proof reports that proof's footprint, never a principle's necessity; whether a
+  statement as written carries choice is a separate measurement (`ZeroParadox/Category/ChoiceCannotBe.md`). -/
 
 end ZeroParadox
 
@@ -210,7 +265,7 @@ open ZeroParadox
 -- Measured: the three below carry `Classical.choice` (Mathlib routes). For the ⟹ half it enters
 -- turning bare `Infinite α` into a counting — `Cardinal.aleph0_le_mk`, `Cardinal.mul_aleph0_eq`,
 -- `Cardinal.add_one_eq`, `Cardinal.mk_option` (and `Infinite.natEmbedding`) each report it;
--- `Cardinal.eq` does not. A proof's footprint, not a theorem's necessity: UNCLASSIFIED. In set theory
+-- `Cardinal.eq` does not. A proof's footprint, never a principle's necessity: UNCLASSIFIED. In set theory
 -- without choice the ⟹ half is unprovable: infinite Dedekind-finite sets, with no one-to-one, not-onto
 -- self-map, are consistent there (Banakh, arXiv:2006.01613v4, Rem. 43.14, citing Jech 1973 § 4.6).
 -- Dependent choice gives every infinite set such a self-map (Prop. 43.12); the unique fixed point is not
@@ -227,6 +282,13 @@ open ZeroParadox
 -- ACCIDENTAL for the `[Fintype] [DecidableEq]` statement, whose Mathlib route reports choice. The
 -- `[Finite]` statement `no_selfCopyRef_of_finite` is not re-proved here and stays UNCLASSIFIED.
 #print axioms no_selfCopyRef_of_fintype
+-- The die form: `dieSelfCopyRef_of_selfCopyRef` adds to `fanIn_selfOnlyAt_of_selfCopyRef` only the
+-- step obtaining a point with no predecessor by contradiction from not-onto, and only it reports
+-- `Classical.choice`.
+#print axioms DieSelfCopyRef
+#print axioms selfCopyRef_of_dieSelfCopyRef
+#print axioms fanIn_selfOnlyAt_of_selfCopyRef
+#print axioms dieSelfCopyRef_of_selfCopyRef
 #print axioms orbit_reaches_unique_periodic_of_finite
 #print axioms doubling_only_periodic_point_zero
 

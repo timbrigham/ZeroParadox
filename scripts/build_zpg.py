@@ -1,38 +1,12 @@
 """
 Zero Paradox — ZP-G: Category Theory PDF Builder
-Version 1.20 | September 2026
-v1.20: T2/T3 remark: "0 reaches every object (T2)" dropped T2's uniqueness; now "0 reaches every object in exactly one way (T2)" (Tim ruling 2026-09-29).
-v1.19: Remark R-AX: "the two axioms jointly pick out exactly the non-degenerate case" stated a conditional as a biconditional. Now only the proved direction (a strict initial that is also terminal forces every object isomorphic to it, so AX-G1 rules it out) and the failing converse (in sets, the empty set is strict initial and the one-point set terminal); both checked as examples in AxG2Reduce.lean (copy_editor panel, Tim ruling 2026-09-29).
-v1.18: Remark R-AX: the domain facts behind the four stand-ins now list ZP-A T2 (the lattice stand-in's fact, bot_le) beside ZP-B C3, ZP-C T1b and ZP-D T4 (gate round 1, Tim ruling 2026-09-29).
-v1.17: Remark R-AX: the axioms are not claimed for the three Mathlib categories ZP-H targets (TopCat, KleisliCat PMF, ModuleCat ℂ), each of which has a terminal object; the four stand-ins are one ℕ-order instance. AX-G1 box: the no-terminal half is ZP-G's own commitment (ZP-A's two-state carriers have a top). Tim rulings, 2026-09-29.
-v1.16: Remark R-AX scoped — AX-G2 (not AX-G1) is what holds in many categories; the axioms hold in the four ℕ-indexed depth categories, and AX-G1 fails in TopCat and ModuleCat ℂ, whose bottom is a zero object (initial, not strict).
-v1.15: rendered Lean citations synced to post-reorg files/namespaces the earlier passes missed (bare ZPx.lean / ZeroParadox.ZPx.* / ZPx.<decl>; SSOT-driven).
-v1.14: R-AX remark — named AX-G2 as the standard strict-initial-object property (Carboni-Lack-Walters 1993) and noted AX-G1+AX-G2 = a non-trivial strict initial; prior-art positioning, paired with the CLAIMS Convergence section.
-v1.12: Rendered version refs removed from BA-G1 compatibility remark ("ZP-G v1.0", "In v1.1") — C1 sweep, no version refs in rendered PDF content.
-v1.11: Version line style fixed (bodyI → subtitle); local make_doc override removed.
-v1.10: Hash sync — script was modified without full workflow; rebuilt to bring
-hash into alignment with register.md.
-v1.9: Version number removed from Open Items Register section header.
-v1.8: "Internal Working Document" marker removed from footer and endnote — not a working
-document; removing public-facing scaffolding label.
-v1.7: Remark R-AX added after AX-G2 — addresses non-triviality of the axioms; explains that
-the initial object is not an abstract placeholder but is grounded in ZP-H via four concrete
-domain functors; distinguishes categorical generalisation from trivial initial-object renaming.
-v1.6: D7' well-definedness note corrected — invariance scoped to what ZP-G claims
-(finite/zero/undefined), not asserted as a general AIT property.
-v1.5: T6-b/T6-c Lean scope disclosure strengthened — Lean proofs verify only
-Nat.zero_le _ (non-negativity by type); K-theoretic content not Lean-verified.
-v1.4: Lean scope note added after T6-c.
-v1.3: Remark R2 added (Categorical Expression of Self-Containment).
-v1.2: Theorem/Proposition/Lemma hierarchy applied throughout.
-v1.1: D7 replaced by D7' (native Kolmogorov surprisal); BA-G1 demoted to Remark.
-v1.0: Initial release.
+Version 1.23 | October 2026
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.20'
+VERSION = '1.23'
 FIRST_RELEASED = 'April 2026'
 
 # ZP-G uses a slightly different amber shade; override zp_utils default
@@ -209,7 +183,10 @@ def build():
             'Correspondence: in ZP-A, a join-semilattice with &#8869; and without ∧; a carrier with no top is '
             'an optional hypothesis there, and ZP-A\'s two-state carriers have a top, so the no-terminal half '
             'is ZP-G\'s own commitment. '
-            'In ZP-B: Q<sub>2</sub> has no element to which all paths converge. '
+            'In ZP-B\'s stand-in, the &#8469;-indexed ball-depth category that ZP-H\'s fb_functor (ZeroParadox/Multihomed/CategoricalBridge.lean) '
+            'lands in, there is no terminal object because the depth index has no maximum; in TopCat, where the realization fB_functor '
+            '(ZeroParadox/Valuation/TopFunctor.lean) lands, the one-point space '
+            'is a terminal object, so AX-G1 fails there (ZP-H C-H2). '
             'The present axiom is the categorical generalization.',
         ]
     ))
@@ -247,7 +224,7 @@ def build():
             'preserves the initial object. The axioms are not postulated in isolation; they are shown to hold in '
             'each of four ℕ-indexed depth categories, one per domain (ZP-H), and are not claimed for the three '
             'Mathlib categories ZP-H also targets (TopCat, KleisliCat PMF, ModuleCat ℂ) — each of which has a '
-            'terminal object, so AX-G1 fails in every one of them. ModuleCat ℂ\'s bottom is a zero object that '
+            'terminal object, so AX-G1 fails in every one of them. ModuleCat ℂ\'s zero module fD_functor.obj 0 is a zero object that '
             'every object maps into, so it is initial but not strict. The domain facts behind the stand-ins '
             '(ZP-A T2, ZP-B C3, ZP-C T1b, ZP-D T4) are proved separately in their own layers; the categorical check is '
             'the same ℕ-order instance each time.',
@@ -295,7 +272,7 @@ def build():
         'Status: Remark — connecting note to ZP-A CC-2',
         [
             'R1 frames the structural inversion of 0. This remark connects that structure to ZP-A CC-2: '
-            '⊥ = {⊥}. The null state is its own extension — a Quine atom. A self-containing object has '
+            '⊥ = {⊥}: read this way, ⊥ is its own extension — a Quine atom. A self-containing object has '
             'no external interpreter by structure; it IS its own interpretation.',
             'In categorical terms, this corresponds to two conditions together: (1) AX-G2: '
             'hom(X, 0) = ∅ for all X ≠ 0 — no morphism can reach inside 0 from outside; and '
@@ -351,7 +328,7 @@ def build():
         'Status: Derived — [OQ-G2 closed in ZP-H T-H1]',
         [
             'For each instantiation functor F ∈ {F<sub>A</sub>, F<sub>B</sub>, F<sub>C</sub>, F<sub>D</sub>}, '
-            'F(0) is an initial object in the codomain. '
+            'F(0) is an initial object in the codomain (for F<sub>B</sub>, in its stand-in). '
             'Verified by direct universal property check in ZP-H T-H1. ✓',
         ]
     ))
@@ -384,8 +361,8 @@ def build():
             'Computability note: K(x|y) is not computable in general (it is approximable from above by standard '
             'results). This is not a defect for the present purposes: the framework requires that K(x|y) be '
             'well-defined, not that it be computable. The ontological claims of ZP-G do not depend on computability.',
-            'Status: This is an import, not a bridge axiom. A bridge axiom is a claim that cannot be derived '
-            'from either side and must be assumed. K(x|y) is a defined mathematical object with a complete '
+            'Status: This is an import, not a bridge axiom. A bridge axiom is a claim derivable '
+            'from neither side, and so one that must be assumed. K(x|y) is a defined mathematical object with a complete '
             'internal theory. I-KC is a decision to use that object within ZP-G, not an assumption about it.',
         ]
     ))

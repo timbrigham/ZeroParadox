@@ -1,8 +1,86 @@
-# The Gödel-number family: periods, constant codes, and the noncomputable marker
+# The Gödel-number family, infinitely many fixed points, and a self-printing universal code
 
-Argument and fences for § VI of `ZeroParadox/Computability/Kleene.lean`, moved here verbatim from that
-section's module docstring (2026-09-15). The Lean file holds the declarations, the Engineer's Take and
-the per-declaration docstrings.
+Ride-along for `ZeroParadox/Computability/Kleene.lean`: its long header, § VI and § VIII. The Lean
+file holds the declarations, the Engineer's Take and the per-declaration docstrings.
+
+The sections from "Formal Overview" to the § VI status line are the long header of the Lean file.
+In them, "this file", "below", "the end of this file" and every bare § number refer to
+`ZeroParadox/Computability/Kleene.lean`.
+
+## Formal Overview (AI-assisted)
+
+Relates four structural roles of ⊥, of which three are proved equivalent:
+
+  (1) Quine atom       — set-theoretic self-reference (ZF + AFA)
+  (2) Bottom element   — order-theoretic minimum (ZP-A)
+  (3) Join identity    — algebraic generator (ZP-A A4)
+  (4) Kleene fixed point — computational self-reference (Mathlib: fixed_point₂)
+
+The central result (T-COMP) establishes (1) ↔ (2) ↔ (3) via T-EXEC. Its proof term is
+`t_exec_triple_iff`, a ZP-J result that does not mention computation; ⊥ is then the
+element those three pick out. **(4) is not a clause of that theorem** — it is present
+by typeclass requirement, as the class field `botCode_is_quine`. Reading (1)–(4)
+as naming the same structural role in four formal languages is the motivating commitment
+of the KleeneStructure typeclass; no field asserts it, and no theorem derives it. Note the two
+sides also differ in shape: (1)–(3) pick out a unique element, while the computational
+fixed points form an infinite family (§ VI).
+
+## Structure
+
+- § I   The Kleene fixed point — statement and computational Quine definition
+- § II  KleeneStructure — Bridging Computation and AFA
+- § III T-COMP: three proved equivalent, and where the fourth face sits
+- § IV  DA-1 closure — the witnesses the description-instantiation argument rests on
+- § V   MachinePhase instance — DA-1's concrete witness for ZP-E's machine
+- § VI  Function-Gödel-number correspondence — period = index, non-computability boundary
+- § VII The two spellings of a code's Gödel number
+- § VIII Infinitely many fixed points, padding, and a self-printing universal code
+
+## Key insight (April 26, 2026)
+
+This is the framework's reading, and it is a commitment throughout — no theorem in this
+file establishes it. On that reading, ⊥ in the computational instantiation (ZP-C D7) is
+not a state OF a Turing machine: ⊥ IS the universal Turing machine in its ground state,
+and U is not a description awaiting an external executor but IS the executor.
+
+What Lean supplies underneath: Kleene's second recursion theorem (Mathlib:
+Nat.Partrec.Code.fixed_point₂) guarantees a fixed point exists for any partially
+computable transformation. The KleeneStructure typeclass is built for the reading that the AFA
+Quine atom (⊥ = {⊥}) and the Kleene computational quine (∃ c, eval c = f c) are the same
+structural property. That identification is the motivating commitment, asserted by no field
+of the class and not a theorem proved here, and it is ill-typed as an equation — `Code` and `L` are different
+types.
+
+## Dependencies
+
+ZP-J (T-EXEC: IsQuineAtom q ↔ q = ⊥, bot_self_mem).
+Mathlib: Nat.Partrec.Code.fixed_point₂ (Kleene's second recursion theorem).
+Mathlib: Nat.Partrec.Code.fixed_point (Rogers' fixed-point theorem).
+
+## Axiom footprint (measured 2026-10-09)
+
+Not every proved theorem here carries `Classical.choice`: `encodeCode_self` has no axioms.
+A carried footprint is a fact about the statement or proof as written, never evidence that
+choice is needed (`ZeroParadox/Category/ChoiceCannotBe.md`). `Code` and `eval` are axiom-free;
+`selfApply` reaches choice through `Nat.Partrec.Code.instDenumerable`, the instance from which
+`Encodable.encode` is resolved at `Code` (that instance is built from `encodeCode` and
+`Nat.Partrec.Code.ofNatCode`, whose footprints are in `ZeroParadox/Computability/Kleene.md` § VIII); the `Encodable.encode`
+projection itself has no axioms (§ VII). Routes into Kleene's and Rogers'
+statements: `ZeroParadox/Computability/Kleene.md` § VIII. ZP-J's `t_exec` has no axioms.
+
+Note a distinction that is easy to get backwards. Several results here are ZP-J
+theorems restated under a stronger hypothesis — `t_comp` (proof term
+`t_exec_triple_iff`), `kleene_quine_is_bot` (`t_exec`), `da1_computational`
+(`bot_is_quine_atom`). The `[KleeneStructure L]` hypothesis is inert *on those proof
+routes*, and the fences below say so. It is **not** absent from their axiom footprints:
+`#print axioms` traverses the statement, and the hypothesis reaches
+`IsComputationalQuine` → `selfApply` → `Nat.Partrec.Code.instDenumerable`. So all three report the full
+triple, as the `PurityCheck` section at the end of `ZeroParadox/Computability/Kleene.lean` shows. Inert-in-the-proof and
+absent-from-the-footprint are different properties; do not infer either from the other.
+
+§ VI theorems: all fully proved — self_halting_undecidable, isComputationalQuine_undecidable,
+quine_period_is_goedel, quine_goedel_injective, and infinite_quine_family.
+No sorry stubs remain in ZPK.
 
 ## § VI. Function-Gödel-Number Correspondence
 
@@ -15,7 +93,8 @@ that family a code is recovered from its Gödel number, since encoding is inject
 all of `Code`. That does not make the function and the index mutually determining: the
 index is only *a* period of the function, and constant codes are periodic with every
 period, so the function does not fix the index. Reading that family as the DA-2 instantiation
-succession — one bottom element per instantiation, each with its own code — is the
+succession — one occupant of the ⊥ role, ⊥ of that instantiation's `ZPSemilattice`, per
+instantiation, each with its own code — is the
 framework's interpretation and is NOT what the theorems below establish; see the fence
 immediately following for what actually witnesses the family.
 
@@ -59,11 +138,149 @@ Three formal results capture this structure:
       between computation and self-reference is genuinely non-computable, not merely
       unimplemented; machinePhaseKleene's Classical.choose is this instance's choice of botCode; a
       computable instance with a constant code also satisfies the class (the example after
-      machinePhaseKleene)
+      machinePhaseKleene), so the noncomputable marker belongs to the instance, not to DA-1's
+      computational path
   (3) infinite_quine_family — the quine family is infinite: unboundedly many distinct
       (function, index) pairs exist. Its witnesses are the constant codes, so it bounds
-      the family from below without showing those members are instantiation bottoms
+      the family from below without showing those members occupy any instantiation's ⊥ role
 
-The noncomputable marker comes from this instance's choice of botCode; a computable
-instance with a constant code also satisfies the class, so the noncomputable marker belongs
-to the instance, not to DA-1's computational path.
+## § VIII. Infinitely many fixed points, padding, and a self-printing universal code
+
+Fences and controls for § VIII of `ZeroParadox/Computability/Kleene.lean`.
+
+**Many fixed points for every transformation.** `fixed_point₂_unbounded` strengthens Mathlib's
+`Nat.Partrec.Code.fixed_point₂` (Kleene's second recursion theorem): for partial computable
+`F`, a code `c` with `eval c = F c` exists above any bound on its Gödel number, so
+`fixed_points_infinite` gives an infinite set of them. The proof applies `fixed_point₂` to a
+modified `F'` that agrees with `F` above the bound and, at or below it, sends each code to a
+constant code computing something different from it at input `0`; no fixed point of `F'` can
+then sit at or below the bound. The arrow runs from the recursion theorem to the infinite
+family, for every `F` at once. That a computable transformation has infinitely many fixed points is
+the standard corollary of the recursion theorem; what is added here is its proof in Lean on
+Mathlib's `Code`.
+
+**Padding.** `padding` is `fixed_points_infinite` at an `F` that ignores the code: every
+partial recursive function has infinitely many codes. This is the Padding Lemma of § VI's
+prior-art note, the one that gives many indices for the SAME function. It is still not what
+`infinite_quine_family` proves, whose witnesses compute different functions. In the Mathlib
+pin, no lemma stating it was located as of 2026-10-04 (searched in
+`Mathlib/Computability/` for `padd`, `Infinite`, `infinitely`, `unbounded`, `fixed_point`,
+and across `Mathlib/` for `padding lemma`, `recursion theorem`, `infinitely many`, and
+`Set.Infinite` with `Code`).
+
+**A self-printing universal code.** Channel `k` of a code means its inputs `Nat.pair k n`, for
+every `n`. `SelfPrints c` says `c` returns its own Gödel number on channel `0`; `Universal c` says
+`c` agrees with the code numbered `e` on channel `e + 1`.
+`selfref_universal_exists` and `selfref_universal_infinite` get both at once from fixed
+points of `selfPrintOrDelegate`. These are statements about the partial function `eval c`,
+equalities of `Part ℕ` values; they state presence and existence of such codes, and nothing
+here says a code is run.
+
+**Where `Classical.choice` enters `selfref_universal_exists`, measured 2026-10-04.** For the
+statement of `selfref_universal_exists` as written, the choice is not removed: that statement
+carries choice, so no proof of it is choice-free. The channel spelling of the statement (second
+bullet) is choice-free, and as of 2026-10-04 no proof of it without choice was found; see the
+last bullet for the 2026-10-27 result. Measured as follows, by `#print axioms` in a scratch file
+importing this one.
+- The statement carries choice. `SelfPrints` and `Universal` each measure
+  `[propext, Classical.choice, Quot.sound]`. `Universal` names `Denumerable.ofNat Code`, which is
+  `Nat.Partrec.Code.ofNatCode` by `rfl` (`ofNatCode_eq`); `ofNatCode` carries choice, and its
+  well-founded recursion is justified by `Nat.unpair_left_le`, `Nat.unpair_right_le` and
+  `Nat.div2_val`, each carrying it. `Nat.Partrec.Code.instDenumerable` carries it, while
+  `encodeCode`, `eval`, `Nat.pair`, `Nat.unpair` and `Denumerable.ofNat` itself do not.
+- The channel spelling of the statement is choice-free: with `encodeCode` for the Gödel number
+  and the channel of code `d` written `Nat.pair (encodeCode d + 1) n`, the predicate pair and the
+  existence statement measure no axioms.
+- As of 2026-10-04, no proof of the channel spelling was found without choice. Mathlib's
+  `fixed_point₂` carries choice in its statement: its hypothesis `Partrec₂ f` measures the
+  triple. Its instance `Primcodable (Code × ℕ)` is `Primcodable.prod` over
+  `Primcodable.ofDenumerable Code`, and both `Primcodable.prod` and that instance's
+  `Denumerable Code` argument, `Nat.Partrec.Code.instDenumerable`, measure the triple (the
+  `PurityCheck` section of `ZeroParadox/Computability/Kleene.lean`), while `Partrec` measures
+  `[propext]` and `Nat.Partrec` none. `exists_code`, `eval_part`,
+  `eval_curry`, `primrec₂_curry` and `evaln` each carry it. Mathlib's other recursion theorem,
+  `fixed_point : Computable f → ∃ c, eval (f c) = eval c` for `f : Code → Code`, avoids
+  `Partrec₂` and still carries choice in its statement: that statement, restated as a `Prop`,
+  measures the triple, while `Computable` itself measures `[propext]`. `Computable` at `Code` uses
+  the instance `Primcodable.ofDenumerable Code` (`#synth Primcodable Code`), and the choice comes
+  from its `Denumerable Code` argument, `Nat.Partrec.Code.instDenumerable`, which measures the
+  triple (as does `ofNatCode`, above). `Primcodable.ofDenumerable` itself measures
+  `[propext, Quot.sound]`. `Partrec₂` is stated through `Primcodable.prod`, which measures the
+  triple (above), and the constant `Partrec₂` itself measures the triple
+  (`#print axioms Partrec₂` in the `PurityCheck` section of
+  `ZeroParadox/Computability/KleeneChoiceFree.lean`). Measured
+  with no `Code` in it: a statement whose only content is a `Partrec₂` hypothesis at
+  `ℕ → ℕ →. ℕ` carries the triple, and the same with a unary `Partrec` hypothesis at `ℕ →. ℕ`
+  does not; a unary `Partrec` hypothesis at the pair carrier `ℕ × ℕ →. ℕ` carries the triple, so
+  the choice enters with the pair instance (`Primcodable.prod`, `Encodable.Prod.encodable`), not
+  with having two arguments (`stmtPartrec₂Hyp`, `stmtPartrecHyp`, `stmtPartrecProdHyp`, § V of
+  `ZeroParadox/Computability/KleeneChoiceFree.lean`).
+  The measurements above are footprints of named Mathlib declarations; the pin was not searched
+  for a universal code whose correctness is proved without `eval_part`. One is built in this
+  corpus, `universal_code_cf` in `ZeroParadox/Computability/UniversalChoiceFree.lean` (footprint
+  in its `PurityCheck` section).
+  Every proof of the statement of `selfref_universal_exists`, as written, carries choice.
+- Built 2026-10-22 in this corpus: a recursion theorem whose statement and proof are choice-free,
+  for a transformation given as a code rather than as a `Partrec₂` function, `kleene_cf` in
+  `ZeroParadox/Computability/KleeneChoiceFree.lean` (footprints in its `PurityCheck` section). The
+  construction is Kleene's own and constructive versions are already machine-checked, in Coq and,
+  over an axiomatised naming system, in Lean 4 (prior-art pointers at the end of § V of that file);
+  this corpus proves the s-m-n step (`cf_eval_curry`) and the diagonal of Kleene's ψ-form
+  (`cf_eval_diag`) on Mathlib's `Code`, and adds the measurement there; Close's
+  `diag_closure_spec` presupposes a universal code, which `KleeneChoiceFree.lean` does not build;
+  one is built in `ZeroParadox/Computability/UniversalChoiceFree.lean` (`universal_code_cf`).
+- As of 2026-10-25, `ofNatCodeCF` and both inverse laws (`cf_encodeCode_ofNatCodeCF`,
+  `cf_ofNatCodeCF_encodeCode`) carry no `Classical.choice`, and `ofNatCodeCF_eq_ofNatCode` proves
+  `ofNatCodeCF = ofNatCode` (§ VI of `ZeroParadox/Computability/KleeneChoiceFree.lean`, footprints
+  in its `PurityCheck` section). `ofNatCode`, `instDenumerable` and `Universal` carry
+  `Classical.choice` (`#print axioms Nat.Partrec.Code.ofNatCode` in that `PurityCheck` section;
+  `#print axioms Nat.Partrec.Code.instDenumerable` and `#print axioms Universal` in the
+  `PurityCheck` section of `ZeroParadox/Computability/Kleene.lean`). The bare statement
+  `ofNatCodeCF = ofNatCode` carries `Classical.choice` whatever its proof (the statement control
+  `stmtOfNatCodeCFEq`, § VI).
+- As of 2026-10-27, measured in § IX of `ZeroParadox/Computability/UniversalChoiceFree.lean`
+  (footprints in its `PurityCheck` section). The statement of `selfref_universal_exists`, assumed
+  alone in the statement control `stmtSelfrefUniversal`, carries `Classical.choice`: it is
+  STATEMENT-CARRIED. The decoder spelling, `∃ c, SelfPrintsCF c ∧ UniversalCF c`, with
+  `encodeCode` for the Gödel number and `ofNatCodeCF` for the decoder, measures
+  `[propext, Quot.sound]` as a statement (`stmtSelfrefUniversalCF`) and has a proof at that
+  footprint, `selfref_universal_exists_cf`. The channel spelling of the second bullet,
+  `∃ c, SelfPrintsCF c ∧ UniversalEnc c`, has a proof at `[propext, Quot.sound]`,
+  `selfref_universal_exists_enc`. The spellings agree code by code (`selfPrints_iff_cf`,
+  `universal_iff_cf`, `universalCF_iff_enc`). The decoder spelling's unbounded form is
+  `selfref_universal_unbounded_cf`, and its `Set.Infinite` form is
+  `selfref_universal_infinite_cf`.
+
+**Controls.** `universal_not_selfprints`: universality alone does not give self-printing.
+The `example`s beside it: no constant code is universal, so the constant codes, which meet
+`IsComputationalQuine` (`infinite_quine_family`), never meet `SelfPrints ∧ Universal`; and
+`Code.zero` is self-printing, because its Gödel number is `0`, while not universal. Each half
+of the conjunction is met by some code without the other.
+
+**One code per behaviour, among self-printing codes.** `selfprints_behaviour_injective`: two
+codes that are BOTH self-printing and have the same `eval` are equal, because channel `0` reads
+the Gödel number back out of the behaviour and `Encodable.encode` is one-to-one. The hypothesis
+is cheap: `Code.zero`, the constant-zero code, is self-printing (its Gödel number is `0`). So
+the infinite family of self-printing universal codes is not one function reached by many codes:
+any two of them differ on channel `0`. Contrast `padding`, where infinitely many codes share one
+function. `Reading:` computational self-reference has a uniqueness, at the level of behaviour.
+
+**Two self-printing universal codes differ only on channel `0`.**
+`selfPrints_universal_address`: two self-printing universal codes give the same values on every
+channel `e + 1`, the interpreter channels, and two distinct ones give different values on
+channel `0`, which returns each code's own Gödel number; that second half is `Encodable.encode`
+being one-to-one. As codes they may differ in any way; the statement is about their values. The
+control beside it shows that `Universal` carries the first half: `Code.zero` is self-printing
+and not universal, and it disagrees with a self-printing universal code on a channel `e + 1`.
+`Reading:` replicas share everything but the address; the next instance adds only the address.
+That is a claim about relative complexity, and it stays a reading while Kolmogorov complexity is
+not in Lean (not located in the Mathlib pin as of 2026-10-04; search record in
+`ZeroParadox/Information/Disjunctive.md`).
+
+**Occurrence controls.** `Occurs` (`ZeroParadox/Computability/Occurrence.lean`) is
+`(eval c n).Dom` by `occurs_iff_halts`. `selfprints_occurs` and `zero_occurs` show it holding
+of every self-printing code on channel `0` and of `Code.zero` on every input: it is a static
+property of a (code, input) pair and does not distinguish self-reference from a constant.
+How occurrence is read, and that the identification is a modelling choice, is stated at
+`occurs_iff_halts` and `da1_closed_concrete` in
+`ZeroParadox/Computability/ComputationCannotBe.lean`.

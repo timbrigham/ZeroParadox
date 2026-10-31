@@ -1,24 +1,7 @@
 """
-Build ZP-G Illustrated Companion (v1.13)
-v1.13: "What Is a Functor?" — ZP-G states the axioms the stand-in categories are checked against (it does not
-build the category the functors target) (gate round 1, Tim ruling 2026-09-29).
-v1.12: "What Is a Functor?" — ZP-H's four functors run from the natural-number depth order, as in
-"What comes next" (Tim ruling, 2026-09-29).
-v1.11: AX-G1's no-terminal half is ZP-G's own commitment (ZP-A's two-state carriers have a top);
-"What comes next": functors from the natural-number depth order, the stand-ins are one order under
-four names, and each of the three standard categories has a terminal object (Tim rulings, 2026-09-29).
-v1.10: AX-G1 paragraph carries the no-terminal half (resting on ZP-A's no-top premise); "What comes
-next" scoped to what ZP-H proves: the axioms hold on four ℕ-indexed stand-in categories, and two of
-the standard categories do have a terminal object (Tim ruling, 2026-09-29).
-v1.8: category_diagram — fix overlapping text: use fixed cy=68, dh=2.2in, remove redundant internal title string.
-v1.7: vocab fix: null state → ⊥; categorical bridge → ZP-H.
-v1.6: Strip version number from companion footer.
-v1.4: Title "Structure without substance" → "Structure independent of domain" — removes
-philosophical framing; "independent of domain" states the actual categorical property.
-v1.3: Disclaimer updated — "formal ontology" replaced with "formal document"; "proven" → "proved".
+Build ZP-G Illustrated Companion (v1.14)
 Standalone companion for ZP-G Category Theory only.
 ZP-H gets its own companion (build_zph_companion.py).
-Changes from v1.1: plain-language explanation of ⊥ = {⊥} connection added (R2).
 
 Accessibility target: 2 years of college math (calculus, some linear algebra).
 No prior category theory assumed.
@@ -156,7 +139,7 @@ def functor_diagram():
                  fontSize=8.5, fontName='DV-I', fillColor=colors.HexColor('#555555')))
     return d
 
-VERSION = '1.13'
+VERSION = '1.14'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -278,9 +261,9 @@ def build():
         'ZP-G constructs a single abstract category C whose structure captures everything '
         'essential about the Zero Paradox: there is a privileged starting point (the initial '
         'object), all structure flows forward from it, and no morphism ever returns to it. '
-        'These properties are stated as two axioms within ZP-G. The initial object and the fact that '
-        'nothing returns to it are grounded in structure established in prior layers; that C has no '
-        'terminal object is ZP-G\'s own commitment.'))
+        'These properties are stated as two axioms within ZP-G. The initial object is grounded in structure '
+        'established in prior layers, and so is the fact that nothing returns to it wherever the category is '
+        'built from an order; that C has no terminal object is ZP-G\'s own commitment.'))
     E.append(cbody(
         '<b>AX-G1 (Initial Object):</b> The category C has an initial object, called 0, and no terminal object. '
         'An initial object is an object with exactly one morphism to every object — a '
@@ -293,8 +276,11 @@ def build():
         '<b>AX-G2 (Source Asymmetry):</b> No morphism points from any non-initial object '
         'back to 0. Once you leave the initial object, you cannot return. '
         'This is the categorical expression of irreversibility. '
-        'Not a new assumption: it follows from antisymmetry of the ZP-A partial order '
-        'and is independently confirmed by ZP-B C3 (topological irreversibility in ℚ₂).'))
+        'Where it holds, it is not a new assumption: in a category built from an order with a least element, '
+        'an arrow into 0 would say an object sits at or below 0, and antisymmetry of the order then makes it 0 '
+        'itself. ZP-B C3 (no continuous path back to 0 in ℚ₂) is the matching fact in the p-adic layer. '
+        'It does not hold in every category: in ModuleCat ℂ, the category of complex vector spaces, the zero '
+        'space (the zero module fD_functor.obj 0) is a zero object, and every space has an arrow into it, the zero map.'))
     E.append(cbody(
         '<b>The connection to ⊥ = {⊥}:</b> ZP-A CC-2 characterizes ⊥ as a '
         '<i>Quine atom</i> — ⊥ = {⊥}, meaning ⊥ is its own only member. '

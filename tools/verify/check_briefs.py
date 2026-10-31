@@ -27,7 +27,7 @@ was never reached, RETRYABLE · 4 ASKED AND REFUSED, the ledger decided and said
 vocabulary and is also `ci_report.SKIPPED_RC`, which renders **skipped**, a non-failure.
 The authority is the server, not this docstring: `vocabulary(name='exit_code')`.
 """
-import io, os, re, sys, glob, argparse, subprocess
+import io, os, re, sys, glob, json, argparse, subprocess, tempfile
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import common  # noqa: E402
@@ -47,6 +47,7 @@ LEGS = [
     ('marker', 'WARN',  'HARD CONSTRAINTS sits BELOW the spawn marker (queue ticket, 6 of 14)'),
     ('names',  'WARN',  'a brief that says "record your verdict" names the --step to use'),
     ('unexamined', 'WARN', 'path-shaped citations the BLOCK leg did NOT judge (its silence, counted)'),
+    ('unread', 'WARN', 'flag-shaped tokens in code the flags leg did NOT read (its silence, counted)'),
 ]
 BLOCKING = [n for n, m, _ in LEGS if m == 'BLOCK']
 
@@ -173,6 +174,35 @@ def flag_fragments(text):
     return out
 
 
+def code_spans(text):
+    """Every code region of `text`: fenced blocks (``` or ~~~) and inline backtick spans.
+
+    ⚠ FOR THE `unread` WARN LEG ONLY (`RLY52-1`). The `flags` leg reads two shapes — a `record.py`
+    line with its backslash chain, and a fenced block that OPENS with a flag — and a block that opens
+    with the command and continues without a backslash is in neither, nor is anything behind a
+    `~~~` fence or a stray unpaired fence. Measured: deleting ONE trailing backslash in `rely.md`
+    took every line below it out of the audit while the run said `flags ok`. This does not judge
+    those tokens; it COUNTS them, so the leg's silence prints instead of reading as coverage."""
+    out, cur, fence = [], [], None
+    for line in text.split(chr(10)):
+        st = line.lstrip()
+        mark = st[:3] if st[:3] in ('```', '~~~') else None
+        if fence is None and mark:
+            fence, cur = mark, []
+            continue
+        if fence is not None and mark == fence:
+            out.append(chr(10).join(cur))
+            fence = None
+            continue
+        if fence is not None:
+            cur.append(line)
+        else:
+            out.extend(re.findall(r'`([^`\n]+)`', line))
+    if fence is not None:
+        out.append(chr(10).join(cur))     # an unpaired fence: its tail is still code
+    return out
+
+
 def flags_from_help(text):
     """Every flag-SHAPED token anywhere in help output. **The old ground truth, kept as a control.**
 
@@ -266,6 +296,93 @@ def classify_record_failure(rc, ledger_answers):
     return rc
 
 
+# ⚠⚠ THE `--how panel` GUARDS LIVE IN `record.py`'s ARGPARSE LAYER, AND UNTIL 2026-10-14 NONE OF
+# record.py's GUARDS HAD A CONTROL ANYWHERE (searched `tools/verify/*.py` 2026-10-13: no hits). They
+# are tested HERE because this module already shells out to record.py and is unpinned; `batch.py`
+# selftest is pinned and would cost a repin for the same rows.
+# ⚠ `CNAME` IS THE FIXTURE FOR BOTH SUBJECT AND BRIEF, deliberately: the controls test record.py's
+# GUARDS, not which file is the brief, and a fixture somebody is editing gets fenced ("differs from
+# the index") and turns every row into a could-not-ask. The fixture must be byte-identical to its
+# blob at SELFTEST_REF below. It was `LICENSE` until the 2026-10-25 relicense changed that file,
+# which turned 16 rows into could-not-asks; CNAME is unchanged since that ref.
+# ⚠ THE BASIS IS PINNED (V11 collision, 2026-10-15): the default INDEX basis is the live tree, and a
+# REAL copy_editor record there made the clean rows fail V11 (one record per step/basis/revision).
+# 3148eef (2026-08-15) predates the copy_editor step, so no real copy_editor record sits at that
+# commit basis.
+SELFTEST_REF = ['--ref', '3148eef68086dcb54649ee8ca6602d59db5b58e2']
+PANEL_BASE = ['--step', 'copy_editor', '--verdict', 'pass', '--files', 'CNAME', '--tier', 'A',
+              '--how', 'panel', '--passes', '3', '--agreed', '2', '--who', 'copy_editor',
+              '--evidence', 'CNAME', '--run', 'selftest-check_briefs', '--dry-run'] + SELFTEST_REF
+# A dry run asks gitRobot to verify the subjects FIRST, then the ledger to validate, so either
+# service being down is a could-not-ask, never a finding about record.py's guards.
+OUTAGE = ('verdictLedger unreachable', 'verdictLedger returned no usable payload',
+          'gitRobot ledger_subjects unreachable', 'gitRobot ledger_subjects returned no usable payload')
+# `record.py --dry-run` prints the ledger's `validate` answer VERBATIM (`RECDRY-1`); these are its
+# two shapes. Reaching either line means every client guard admitted the record.
+VALIDATED = 'verdictLedger validate -> {"ok": true'
+VALIDATE_REFUSED = 'verdictLedger validate -> {"ok": false'
+ASKED = 'verdictLedger validate ->'
+
+
+def record_dry(args, outstanding=None, raw=None, failing=None):
+    """Run `record.py <args>` (a `--dry-run`), with `outstanding` written to a temp JSON file
+    when given, or `raw` written to it verbatim (for a malformed file), and `failing` likewise
+    to a `--failing-file`. Returns (exit code, stdout + stderr). Never appends: every caller
+    passes `--dry-run`, and the worst a dry run does is ask `validate`, which is pure."""
+    path = None
+    fpath = None
+    try:
+        if failing is not None:
+            fd, fpath = tempfile.mkstemp(suffix='.json', prefix='check_briefs_failing_')
+            with io.open(fd, 'w', encoding='utf-8') as fh:
+                json.dump(failing, fh)
+            args = args + ['--failing-file', fpath]
+        if outstanding is not None or raw is not None:
+            fd, path = tempfile.mkstemp(suffix='.json', prefix='check_briefs_panel_')
+            with io.open(fd, 'w', encoding='utf-8') as fh:
+                if raw is not None:
+                    fh.write(raw)
+                else:
+                    json.dump(outstanding, fh)
+            args = args + ['--outstanding-file', path]
+        p = subprocess.run([sys.executable, os.path.join(ROOT, 'tools', 'verify', 'record.py')]
+                           + args, capture_output=True, text=True, cwd=ROOT,
+                           encoding='utf-8', errors='replace')
+        return p.returncode, (p.stdout or '') + (p.stderr or '')
+    finally:
+        if path:
+            os.unlink(path)
+        if fpath:
+            os.unlink(fpath)
+
+
+def with_flag(args, flag, value):
+    """`args` with `flag`'s value replaced. The base is ONE list so every row differs from the
+    accepted case by exactly the defect it plants, and a row cannot pass by also breaking a
+    second, earlier guard."""
+    out = list(args)
+    out[out.index(flag) + 1] = value
+    return out
+
+
+def drop_flag(args, flag):
+    """`args` with `flag` and its value removed — the omitted-flag twin of `with_flag`."""
+    i = args.index(flag)
+    return args[:i] + args[i + 2:]
+
+
+def decided_line(out):
+    """The JSON `decided` dict a dry run prints, or None. Printed BEFORE the ledger is asked, so
+    these bytes are readable with the ledger down."""
+    for line in out.split(chr(10)):
+        if line.strip().startswith('decided '):
+            try:
+                return json.loads(line.strip()[len('decided '):])
+            except ValueError:
+                return None
+    return None
+
+
 def audit(text, flags, steps):
     """Every leg, over one brief. Returns {leg: [finding, ...]}.
 
@@ -278,6 +395,11 @@ def audit(text, flags, steps):
         used |= set(FLAG.findall(blk))
     if flags is not None:
         f['flags'] = sorted(used - flags)
+    # The silence of the `flags` leg, counted: flag tokens in code that neither extractor read.
+    seen = set()
+    for span in code_spans(text):
+        seen |= set(FLAG.findall(span))
+    f['unread'] = sorted(seen - used)
 
     declared = sorted(set(STEP.findall(text)))
     if steps is not None:
@@ -400,6 +522,19 @@ def selftest():
          'every `.lean` file in the corpus', 'unexamined', False),
         ('unexam clean   a slash command is not a path',
          'run `/rely` in a fresh agent', 'unexamined', False),
+        # RLY52-1: the `flags` leg's silence is COUNTED. A block that opens with the command and
+        # continues WITHOUT a backslash, and a `~~~` fence, are both outside its two extractors.
+        ('unread fires   continuation with no backslash',
+         '```' + chr(10) + 'python tools/verify/record.py --step rely' + chr(10)
+         + '    --nonesuch x' + chr(10) + '```', 'unread', True),
+        ('unread fires   a tilde fence',
+         '~~~' + chr(10) + '    --nonesuch x' + chr(10) + '~~~', 'unread', True),
+        ('unread fires   behind an unpaired fence',
+         '```' + chr(10) + 'echo' + chr(10) + '    --nonesuch x', 'unread', True),
+        ('unread clean   every flag in code was read',
+         'run `record.py --step rely --verdict fail --failing-file f`', 'unread', False),
+        ('unread clean   flags in prose are not code',
+         'the --verbose switch is mentioned in a sentence', 'unread', False),
         ('names  fires   records with no step',
          'Record your verdict via record.py when done.', 'names', True),
         ('names  clean   records and names the step',
@@ -472,6 +607,158 @@ def selftest():
         ran += 1
         other += 1
         print('  %-4s %-42s %s' % ('ok' if ok else 'FAIL', label, 'exit %d' % got))
+    # ⚠⚠ `--how panel` (Tim's R5a-d, 2026-10-14) — EACH REFUSAL ASSERTS ON ITS MESSAGE, NOT ONLY ON
+    # ITS EXIT CODE. An argparse refusal exits 2, which is also what a crashed record.py, a fenced
+    # subject ("nothing recordable") and an unreachable ledger exit with. A row passing on any 2
+    # would pass with record.py deleted. The substring is the guard's OWN sentence, so a row can
+    # only pass when the guard it names is the one that fired.
+    # WORD is the lone DIVERGENT reader's wording finding; WORD_P is a PASS voter's.
+    WORD = {'severity': 'ordinary', 'note': 'selftest: other wording preferred', 'shift': 'wording',
+            'vote': 'divergent'}
+    WORD_P = dict(WORD, vote='pass')
+    AGREE = drop_flag(with_flag(with_flag(PANEL_BASE, '--how', 'agreement'), '--agreed', '3'),
+                      '--who')
+    panel_refusals = (
+        ('panel  fires   bedrock dissent on a split PASS',
+         PANEL_BASE, [dict(WORD, severity='bedrock')], "may only carry severity 'ordinary'"),
+        ('panel  fires   split PASS with the dissent dropped',
+         PANEL_BASE, None, 'needs --outstanding-file carrying'),
+        ('panel  fires   two-reader panel (R5a)',
+         with_flag(with_flag(PANEL_BASE, '--passes', '2'), '--agreed', '2'), [WORD],
+         'requires --passes 3 (R5a'),
+        ('panel  fires   meaning moved, tagged ordinary (R5c)',
+         PANEL_BASE, [dict(WORD, shift='meaning')], 'cannot carry a finding whose `shift` is'),
+        ('panel  fires   finding with no shift marker',
+         PANEL_BASE, [{'severity': 'ordinary', 'note': 'selftest: unmarked'}],
+         'needs `shift` set to one of'),
+        ('panel  fires   unanimous round recorded as panel',
+         with_flag(PANEL_BASE, '--agreed', '3'), None, 'this is --how agreement, not --how panel'),
+        ('panel  fires   split below threshold (1 of 3)',
+         with_flag(PANEL_BASE, '--agreed', '1'), [WORD], 'needs --agreed >= 2 of 3'),
+        # RLYP-1: the single-round route that records no headcount and no dissent.
+        ('copyed fires   copy_editor PASS via delegated',
+         with_flag(PANEL_BASE, '--how', 'delegated'), None, 'refuses --how delegated'),
+        # RLYP-2: a MEANING finding from a reader who voted PASS still blocks a 3/3 agreement.
+        ('copyed fires   3/3 agreement PASS, meaning finding',
+         AGREE, [dict(WORD_P, shift='meaning')], 'cannot carry a finding whose `shift` is'),
+        # K1: the dissent is read off the `vote` tags.
+        ('panel  fires   split PASS, no divergent-vote finding',
+         PANEL_BASE, [WORD_P], 'must carry at least one finding with `vote`'),
+        ('copyed fires   agreement PASS, divergent-vote finding',
+         AGREE, [WORD_P, WORD], 'agreement PASS records three PASS votes'),
+        ('panel  fires   finding with no vote on a PASS',
+         PANEL_BASE, [{k: v for k, v in WORD.items() if k != 'vote'}],
+         'needs `vote` set to one of'),
+        # RLYP2-1 M15: the range check; the server does not backstop the negative half.
+        ('panel  fires   UNDECIDED with --agreed -1 (M15)',
+         with_flag(with_flag(PANEL_BASE, '--verdict', 'undecided'), '--agreed', '-1'), None,
+         '--agreed must lie between 0 and --passes'),
+        # RLYP2-1 M20: the delegated refusal is on every verdict, not only PASS.
+        ('copyed fires   copy_editor FAIL via delegated (M20)',
+         with_flag(with_flag(PANEL_BASE, '--how', 'delegated'), '--verdict', 'fail'), None,
+         'refuses --how delegated'),
+        # RLYP-3: the panel constant lives in the copy-editor path only.
+        ('panel  fires   --step editorial --how panel',
+         with_flag(PANEL_BASE, '--step', 'editorial'), [WORD], 'copy-editor panel\'s route only'),
+        # M9 / M10 and the two other per-record panel requirements.
+        ('panel  fires   --agreed omitted (M9)',
+         drop_flag(PANEL_BASE, '--agreed'), [WORD], '--agreed is required with --how panel'),
+        ('panel  fires   --who omitted (M10)',
+         drop_flag(PANEL_BASE, '--who'), [WORD], '--who is required with --how panel'),
+        ('panel  fires   tier H',
+         with_flag(PANEL_BASE, '--tier', 'H'), [WORD], '--how panel requires --tier A'),
+        ('panel  fires   --evidence omitted',
+         drop_flag(PANEL_BASE, '--evidence'), [WORD], '--evidence is required for --how panel'),
+    )
+    for label, args, outst, needle in panel_refusals:
+        rc, out = record_dry(args, outst)
+        ok = rc == 2 and needle in out and ASKED not in out
+        bad += 0 if ok else 1
+        ran += 1
+        fired += 1
+        print('  %-4s %-42s %s' % ('ok' if ok else 'FAIL', label,
+                                   'refused' if ok else 'exit %d, guard message %s'
+                                   % (rc, 'present' if needle in out else 'ABSENT')))
+    # RLYP-5: an unreadable --outstanding-file is a usage error (exit 2 with the guard's sentence),
+    # never a traceback, whose exit 1 is this layer's "finding" code.
+    _missing = os.path.join(tempfile.gettempdir(), 'check_briefs_no_such_outstanding.json')
+    for label, args, raw in (
+            ('outst  fires   malformed outstanding file', PANEL_BASE, '{not json'),
+            ('outst  fires   missing outstanding file',
+             PANEL_BASE + ['--outstanding-file', _missing], None)):
+        rc, out = record_dry(args, raw=raw)
+        needle = 'could not be read as JSON'
+        ok = rc == 2 and needle in out and ASKED not in out and 'Traceback' not in out
+        bad += 0 if ok else 1
+        ran += 1
+        fired += 1
+        print('  %-4s %-42s %s' % ('ok' if ok else 'FAIL', label,
+                                   'refused' if ok else 'exit %d, guard message %s'
+                                   % (rc, 'present' if needle in out else 'ABSENT')))
+    # ⚠ THE ACCEPT HALF, AND ITS THIRD STATE IS COUNTED, NEVER FOLDED (`R-ZERONULL`). The row tests
+    # record.py's GUARDS: reaching the ledger at all proves every client guard admitted the record.
+    # Whether the LEDGER accepts it is a second fact, measured when it answers and printed as
+    # NOT ASKED when it does not — CI has no ledger, and a control that went red there would be
+    # a finding about the runner, not about record.py. The count prints in the summary.
+    unasked = 0
+    for label, args, outst in (
+            ('panel  clean   split PASS, one ordinary wording dissent', PANEL_BASE, [WORD]),
+            # The union rule: a 3/3 agreement PASS carries every reader's wording findings.
+            ('copyed clean   3/3 agreement PASS, wording findings', AGREE, [WORD_P, WORD_P])):
+        rc, out = record_dry(args, outst)
+        if rc == 0 and VALIDATED in out:
+            ok, how = True, 'accepted by client and ledger'
+        elif rc == 2 and any(o in out for o in OUTAGE) and 'error:' not in out:
+            ok, how = True, 'client admitted; ledger NOT ASKED'
+            unasked += 1
+        else:
+            ok, how = False, 'exit %d: %s' % (rc, out.strip().split(chr(10))[-1][:60])
+        bad += 0 if ok else 1
+        ran += 1
+        clean += 1
+        print('  %-4s %-42s %s' % ('ok' if ok else 'FAIL', label, how))
+    # ⚠ THE ADMIT HALF OF THE PASS-ONLY GUARDS (RLYP2-1 M18/M19, RLYP2-2). Each row is a record a
+    # guard must NOT refuse. The property is the CLIENT's, so a row passes when record.py reached
+    # the ledger with no usage error; the ledger's own answer is printed, not asserted, because a
+    # V11 collision at the selftest's basis is a fact about the stream, not about these guards.
+    UNDEC = with_flag(with_flag(AGREE, '--verdict', 'undecided'), '--agreed', '2') + [
+        '--reason', 'selftest']
+    FAIL3 = with_flag(AGREE, '--verdict', 'fail') + ['--reason', 'selftest']
+    OTHER = ['--step', 'editorial', '--verdict', 'pass', '--files', 'CNAME', '--tier', 'A',
+             '--how', 'delegated', '--who', 'editorial', '--evidence', 'CNAME',
+             '--run', 'selftest-check_briefs', '--dry-run'] + SELFTEST_REF
+    UNTAGGED = {'severity': 'ordinary', 'note': 'selftest: untagged'}
+    for label, args, outst, fail in (
+            ('copyed admits  UNDECIDED, meaning finding (M18)', UNDEC,
+             [dict(WORD, shift='meaning')], ['CNAME']),
+            ('other  admits  editorial PASS, no shift (M19)', OTHER, [UNTAGGED], None),
+            ('copyed admits  agreement FAIL, untagged finding', FAIL3, [UNTAGGED], ['CNAME'])):
+        rc, out = record_dry(args, outst, failing=fail)
+        reached = 'DRY RUN' in out or any(o in out for o in OUTAGE)
+        ok = reached and 'error:' not in out
+        bad += 0 if ok else 1
+        ran += 1
+        clean += 1
+        ledger = ('ledger validate ok' if VALIDATED in out else
+                  'ledger validate refused' if VALIDATE_REFUSED in out else 'ledger NOT ASKED')
+        print('  %-4s %-42s %s' % ('ok' if ok else 'FAIL', label,
+                                   'client admitted; %s' % ledger if ok else
+                                   'exit %d: %s' % (rc, out.strip().split(chr(10))[-1][:60])))
+    # ⚠ THE BYTES: `threshold` under panel, and an `agreement` record UNCHANGED. Read off the
+    # `decided` line a dry run prints before it asks the ledger, so this holds with the ledger down.
+    for label, args, outst, want in (
+            ('bytes  panel decided carries threshold 2', PANEL_BASE, [WORD],
+             {'how': 'panel', 'passes': 3, 'agreed': 2, 'who': 'copy_editor', 'threshold': 2}),
+            ('bytes  agreement decided has NO threshold', AGREE, None,
+             {'how': 'agreement', 'passes': 3, 'agreed': 3, 'who': None})):
+        got = decided_line(record_dry(args, outst)[1])
+        # KEY ORDER TOO: `json.dumps` serialises in insertion order, so a reordered dict is
+        # different bytes on the wire even when it compares equal.
+        ok = got is not None and got == want and list(got) == list(want)
+        bad += 0 if ok else 1
+        ran += 1
+        other += 1
+        print('  %-4s %-42s %s' % ('ok' if ok else 'FAIL', label, json.dumps(got)))
     # ⚠⚠ THE PARTITION IS A CONTROL, NOT A COMMENT. If these three stop summing to
     # `ran`, a control list has been added that the summary does not describe -- which is
     # exactly how this line went wrong twice. It fails LOUD rather than quietly printing a
@@ -486,6 +773,9 @@ def selftest():
     print('\nselftest: %s (%d/%d) - FIRES on %d planted defect(s), SUPPRESSES on %d'
           ' clean case(s), and %d further control(s) that are neither'
           % ('PASS' if not bad else 'FAIL', ran - bad, ran, fired, clean, other))
+    print('          ledger %s' % ('asked on every accept row' if not unasked else
+                                  'NOT ASKED on %d accept row(s): client guards measured, ledger '
+                                  'acceptance not' % unasked))
     return 1 if bad else 0
 
 

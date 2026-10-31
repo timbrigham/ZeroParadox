@@ -1,4 +1,5 @@
 import ZeroParadox.Category.LawvereTaboo
+import ZeroParadox.Die
 
 set_option maxHeartbeats 400000
 
@@ -116,7 +117,7 @@ non-well-founded or univalent setting as the place the question would get its te
 - § I   The identity decision on the witness carrier
 - § II  Decidable equality of the carrier implies weak excluded middle
 - § III `SelfContained`: self-containment on both sides of the decidability line
-- § IV  On a decidable carrier, "is this the bottom?" resolves
+- § IV  On a decidable carrier, "is this the bottom?" resolves; § V, the same check in the die's motion
 -/
 
 namespace ZeroParadox
@@ -128,6 +129,12 @@ glued point `gx p` equals `gb0 p` under `p` and `gb1 p` under `¬p`, while `gb0 
 unconditionally. Deciding the single identity `gx p = gb0 p` therefore decides a side of `¬p ∨ ¬¬p`.
 Nothing here is self-referential; the source of the ambiguity is the quotient. -/
 
+-- Prior art, cited not claimed, read from source: de Jong, "Apartness, sharp elements and the Scott
+-- topology of domains", MSCS (2023), arXiv:2106.05064v5, Prop 22, p. 7: "Let D be any pointed dcpo
+-- that is nontrivial in the sense that there exists x ∈ D with x ≠ ⊥. If y = ⊥ is decidable for every
+-- y ∈ D, then weak excluded middle follows." The same kind of taboo on "is this ⊥ of D?", asked
+-- uniformly over D; the implication runs from that decision to weak excluded middle, as here from
+-- the identity decision on `Glue p`. § IV is the per-carrier contrast: given `DecidableEq`, it resolves.
 /-- **The one identity decision suffices for the taboo.** A decision procedure for `gx p = gb0 p`,
 uniform in `p`, yields weak excluded middle. Choice-free: the decision is the hypothesis, and the
 witness facts (`gx_eq_gb0`, `gx_eq_gb1`, `glue_b0_ne_b1`) carry only `[propext, Quot.sound]`. -/
@@ -140,6 +147,12 @@ theorem wem_of_glue_identity (h : ∀ p : Prop, Decidable (gx p = gb0 p)) : Weak
     exact Or.inr fun hnp => glue_b0_ne_b1 p (heq.symm.trans (gx_eq_gb1 p hnp))
 
 /-! ## § II — Decidable equality of the carrier implies weak excluded middle -/
+
+-- Prior art, cited not claimed, read from source: de Jong–Escardó, arXiv:2102.08812, Cor 39(iii),
+-- p. 11: a nontrivial locally small sup-lattice (or bounded complete poset, or dcpo) with decidable
+-- equality exists iff weak excluded middle holds. A neighbour of the implication below, with a
+-- different quantifier: its hypothesis is uniform over the family, `∀ p, DecidableEq (Glue p)`,
+-- while Cor 39(iii) needs ONE nontrivial lattice with decidable equality.
 
 /-- **Decidable equality on the witness carrier is the taboo.** `DecidableEq (Glue p)` supplies the
 identity decision of § I, so its uniform availability implies weak excluded middle.
@@ -232,6 +245,26 @@ whenever the carrier is one Lean will host. -/
 def selfContaining_decidable {C : Type} [DecidableEq C] (S : SelfContained C) (x : C) :
     Decidable (S.app x = x) := inferInstance
 
+/-! ## § V — The same check in the die's motion (`ZeroParadox/Die.lean` § XI) -/
+
+/-- `Statement:` in `Motion.ofFun S.app`, `x` steps to itself only iff `x = S.bot`; both directions.
+    So each `SelfContained C` gives a motion whose one such point is `S.bot`. -/
+theorem selfOnlyAt_ofFun_app_iff {C : Type} (S : SelfContained C) (x : C) :
+    (Motion.ofFun S.app).SelfOnlyAt x ↔ x = S.bot :=
+  (Motion.selfOnlyAt_ofFun_iff _ x).trans (selfContaining_iff_bot S x)
+
+/-- `Statement:` if, for every `p`, it is decidable whether the glued point `gx p` steps to itself
+    only in `Motion.ofFun (selfContained_glue p).app`, weak excluded middle holds; one way. -/
+theorem wem_of_decidable_selfOnlyAt_glue
+    (h : ∀ p : Prop, Decidable ((Motion.ofFun (selfContained_glue p).app).SelfOnlyAt (gx p))) :
+    WeakExcludedMiddle :=
+  wem_of_glue_identity fun p =>
+    decidable_of_iff _ (selfOnlyAt_ofFun_app_iff (selfContained_glue p) (gx p))
+
+-- Statement: CONTROL: on `Bool` the same question is decidable at every point.
+example (x : Bool) : Decidable ((Motion.ofFun selfContained_bool.app).SelfOnlyAt x) :=
+  decidable_of_iff _ (selfOnlyAt_ofFun_app_iff selfContained_bool x).symm
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check
@@ -255,5 +288,9 @@ open ZeroParadox
 -- § IV — self-containment resolves to an identity decision.
 #print axioms selfContaining_iff_bot
 #print axioms selfContaining_decidable
+
+-- § V — the die form. `wem_of_decidable_selfOnlyAt_glue` MUST NOT carry `Classical.choice`.
+#print axioms selfOnlyAt_ofFun_app_iff
+#print axioms wem_of_decidable_selfOnlyAt_glue
 
 end PurityCheck

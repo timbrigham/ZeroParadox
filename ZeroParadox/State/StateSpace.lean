@@ -25,8 +25,8 @@ step in the state sequence produces an orthogonal shift.
 ## Formal Overview (AI-assisted)
 
 Formalizes the Zero Paradox Hilbert space state layer H = ℂⁿ and the
-transition operator T: Q₂ → H. Q₂'s clopen-ball partition is abstracted
-as `Fin n`, keeping this file self-contained within functional analysis
+transition operator T: Q₂ → H. The level-k clopen partition of Q₂ (see `StateSpace`) is
+abstracted as `Fin n`, keeping this file self-contained within functional analysis
 (no p-adic imports). ZP-A and ZP-B are imported conceptually, not as
 Lean dependencies.
 
@@ -34,9 +34,9 @@ Proves: T2 (existence of T by basis assignment, all five D2 requirements),
 T4 (Snap → orthogonal shift in H), T5 (monotone norms — tautology of the
 unit-norm construction), T5-b (distinct consecutive states → orthogonal
 T-images, using DP-1 via t2_orthogonal — the non-trivial content of T5).
-T3 (uniqueness up to unitary equivalence) is stated; proof deferred
-pending OrthonormalBasis API. DP-1 (orthogonality) is proved as a theorem
-of the construction — reflecting the design commitment, not a bare axiom.
+Also proves T3 (uniqueness up to unitary equivalence, `t3_uniqueness`) over
+cell-indexed maps with unit-norm, pairwise-orthogonal values, as D2(iii)–(v) require.
+DP-1 (orthogonality) is proved as a theorem of the construction — reflecting the design commitment, not a bare axiom.
 -/
 
 namespace ZeroParadox
@@ -44,7 +44,8 @@ namespace ZeroParadox
 /-! ## I. The State-Layer Hilbert Space (D1) -/
 
 /-- D1: The state-layer Hilbert space H = ℂⁿ.
-    n is the cardinality of the clopen ball partition of Q₂ at the chosen level. -/
+    n counts the cells of the level-k clopen partition of Q₂: the 2^k balls of radius 2^(-k) that
+    make up ℤ₂, plus the one cell Q₂ \ ℤ₂, so n = 2^k + 1. -/
 abbrev StateSpace (n : ℕ) := EuclideanSpace ℂ (Fin n)
 
 /-- The i-th standard basis vector eᵢ ∈ StateSpace n. -/
@@ -66,10 +67,20 @@ theorem dp1_orthogonality (n : ℕ) (i j : Fin n) (h : i ≠ j) :
   simp only [basisVec, EuclideanSpace.inner_single_left, map_one, one_mul]
   simp [h.symm]
 
+-- Statement: an orthonormal family in `StateSpace n` has finitely many members, so DP-1 stated
+-- over every pair of distinct points of an infinite set, with unit-norm images, has no model in `ℂⁿ`.
+example {ι : Type*} (n : ℕ) (v : ι → StateSpace n) (hv : Orthonormal ℂ v) : Finite ι :=
+  hv.linearIndependent.finite
+
+-- Statement: control, without nonzero images the zero map is pairwise orthogonal on any index type.
+example {ι : Type*} (n : ℕ) :
+    ∀ i j : ι, i ≠ j → @inner ℂ (StateSpace n) _ ((fun _ => 0) i) ((fun _ => 0) j) = 0 :=
+  fun _ _ _ => inner_zero_left _
+
 /-! ## III. The Transition Operator T: Fin n → StateSpace n (D2 + T2) -/
 
-/-- D2 (construction): T assigns each ball-index to its corresponding basis vector.
-    Fin n abstracts Q₂'s clopen ball partition at a given level k (2^k balls). -/
+/-- D2 (construction): T assigns each cell-index to its corresponding basis vector.
+    Fin n abstracts the level-k clopen partition of Q₂ (n = 2^k + 1 cells, see `StateSpace`). -/
 noncomputable def transitionOp (n : ℕ) : Fin n → StateSpace n :=
   basisVec n
 
@@ -97,7 +108,7 @@ theorem t2_maps_eps0 (n : ℕ) (hn : 2 ≤ n) :
     transitionOp n ⟨1, by omega⟩ = basisVec n ⟨1, by omega⟩ :=
   rfl
 
-/-- T2(iii): T is injective — distinct ball-indices map to distinct vectors.
+/-- T2(iii): T is injective — distinct cell-indices map to distinct vectors.
     Proved by contradiction via DP-1: if T(i) = T(j) then ⟨T(i),T(j)⟩ = 1 yet
     also = 0 (DP-1 when i ≠ j), contradicting norm = 1. -/
 theorem t2_injective (n : ℕ) : Function.Injective (transitionOp n) := by
@@ -111,18 +122,17 @@ theorem t2_injective (n : ℕ) : Function.Injective (transitionOp n) := by
   rw [hzero, norm_zero] at hnorm
   norm_num at hnorm
 
-/-- T2(iv): T maps disjoint ball-indices to orthogonal vectors (DP-1). -/
+/-- T2(iv): T maps distinct cell-indices to orthogonal vectors (DP-1). -/
 theorem t2_orthogonal (n : ℕ) (i j : Fin n) (h : i ≠ j) :
     @inner ℂ (StateSpace n) _ (transitionOp n i) (transitionOp n j) = 0 :=
   dp1_orthogonality n i j h
 
-/-- T2(v): All basis vectors have norm 1 ≥ 1 = ‖e₀‖ — T is norm-preserving. -/
+/-- T2(v): every T-image has norm 1 (D2(v), unit norm). -/
 theorem t2_norm_eq_one (n : ℕ) (i : Fin n) : ‖transitionOp n i‖ = 1 := by
   simp [transitionOp, basisVec]
 
-/-- T2: Existence — transitionOp satisfies all five D2 requirements.
-    (i/ii) by construction (rfl); (iii) injective; (iv) orthogonal across indices;
-    (v) norm-preserving (all basis vectors have norm 1). -/
+/-- T2: Existence — the three conjuncts are D2(iii) injectivity, D2(iv) orthogonality across
+    indices and D2(v) unit norm; D2(i) and D2(ii) are `t2_maps_null` and `t2_maps_eps0`. -/
 theorem t2_existence (n : ℕ) :
     Function.Injective (transitionOp n) ∧
     (∀ i j : Fin n, i ≠ j →
@@ -154,11 +164,24 @@ theorem t3_uniqueness (n : ℕ)
       (OrthonormalBasis.mk hOrth_T' hSpan).repr_symm_single]
   exact congr_fun (OrthonormalBasis.coe_mk hOrth_T' hSpan) i
 
+-- Statement: the two-sided form, which ZP-D T3 states: any two cell-indexed maps with unit-norm,
+-- pairwise-orthogonal values are related by a linear isometry equivalence, through `transitionOp`.
+example (n : ℕ) (T T' : Fin n → StateSpace n)
+    (hT_orth : ∀ i j : Fin n, i ≠ j → @inner ℂ (StateSpace n) _ (T i) (T j) = 0)
+    (hT_norm : ∀ i : Fin n, ‖T i‖ = 1)
+    (hT'_orth : ∀ i j : Fin n, i ≠ j → @inner ℂ (StateSpace n) _ (T' i) (T' j) = 0)
+    (hT'_norm : ∀ i : Fin n, ‖T' i‖ = 1) :
+    ∃ U : StateSpace n ≃ₗᵢ[ℂ] StateSpace n, ∀ i, U (T i) = T' i := by
+  obtain ⟨U, hU⟩ := t3_uniqueness n T hT_orth hT_norm
+  obtain ⟨U', hU'⟩ := t3_uniqueness n T' hT'_orth hT'_norm
+  refine ⟨U.symm.trans U', fun i => ?_⟩
+  rw [LinearIsometryEquiv.trans_apply, ← hU i, LinearIsometryEquiv.symm_apply_apply, hU']
+
 /-! ## V. T4 — The Binary Snap Produces an Orthogonal Shift in H -/
 
 /-- T4: The Binary Snap 0 → ε₀ in Q₂ maps to an orthogonal shift in H.
     T(0) = e₀ and T(ε₀) = e₁ satisfy ⟨e₀, e₁⟩_ℂ = 0.
-    Derived from D2(i), D2(ii), and DP-1 (disjoint ball-indices → orthogonality). -/
+    Derived from D2(i), D2(ii), and DP-1 (distinct cell-indices → orthogonality). -/
 theorem t4_snap_orthogonal (n : ℕ) (hn : 2 ≤ n) :
     @inner ℂ (StateSpace n) _
       (transitionOp n ⟨0, by omega⟩)
@@ -166,6 +189,20 @@ theorem t4_snap_orthogonal (n : ℕ) (hn : 2 ≤ n) :
   apply t2_orthogonal
   intro h
   exact absurd (congr_arg Fin.val h) (by norm_num)
+
+/-- T4 (gap): any two distinct states sit exactly √2 apart in H, so a step between states is a jump of
+    one fixed size. From `t2_orthogonal` and `t2_norm_eq_one`: ‖eᵢ − eⱼ‖² = 1 + 1 − 2·Re 0 = 2. -/
+theorem t4_state_gap (n : ℕ) (i j : Fin n) (h : i ≠ j) :
+    ‖transitionOp n i - transitionOp n j‖ = Real.sqrt 2 := by
+  have hsq : ‖transitionOp n i - transitionOp n j‖ ^ 2 = 2 := by
+    rw [@norm_sub_sq ℂ, t2_orthogonal n i j h, t2_norm_eq_one, t2_norm_eq_one]
+    norm_num
+  rw [← hsq, Real.sqrt_sq (norm_nonneg _)]
+
+-- Statement: the snap pair T(0), T(ε₀) is one instance (for n ≥ 2).
+example (n : ℕ) (hn : 2 ≤ n) :
+    ‖transitionOp n ⟨0, by omega⟩ - transitionOp n ⟨1, by omega⟩‖ = Real.sqrt 2 :=
+  t4_state_gap n _ _ (by simp [Fin.ext_iff])
 
 /-! ## VI. T5 — Monotone State Sequences Map to Non-Decreasing Norms -/
 
@@ -203,7 +240,9 @@ open ZeroParadox
 #print axioms t2_orthogonal
 #print axioms t2_norm_eq_one
 #print axioms t2_existence
+#print axioms t3_uniqueness
 #print axioms t4_snap_orthogonal
+#print axioms t4_state_gap
 #print axioms t5_monotone_norms
 #print axioms t5_strict_orthogonal
 

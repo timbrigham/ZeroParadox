@@ -1,4 +1,5 @@
 import ZeroParadox.Valuation.Scale
+import Mathlib.Algebra.Tropical.Basic
 import Mathlib.Tactic
 
 /-!
@@ -85,6 +86,41 @@ noncomputable instance instNatInfVal : ValuationStructure ℕ∞ where
   val_bot    := rfl
   val_unique := fun _x hx => hx
   val_scale  := fun _x _hx => rfl
+
+-- Reading: CARRIER, this model only (not abstract `collect`). Its join, ⊥ and scale are the min-plus
+-- semiring's addition, zero and multiplication by `trop 1` in Mathlib's `Tropical ℕ∞`
+-- (`Tropical.trop_top`, `Tropical.untrop_add`, `Tropical.untrop_mul`), so `scale_bot` is `zero_mul`:
+-- "∞ is the zero of this semiring" (Pin, "Tropical Semirings", in *Idempotency* (Cambridge UP 1998);
+-- author's preprint p. 3).
+
+-- Statement: `trop` sends this model's join to tropical `+`, ⊥ to tropical `0` and scale to `* trop 1`,
+-- so `scale_bot` is `zero_mul`.
+example : (∀ x y : ℕ∞, Tropical.trop (join x y) = Tropical.trop x + Tropical.trop y) ∧
+    Tropical.trop (bot : ℕ∞) = 0 ∧
+    (∀ x : ℕ∞, Tropical.trop (ValuationStructure.scale x) =
+      Tropical.trop x * Tropical.trop (1 : ℕ∞)) ∧
+    Tropical.trop (ValuationStructure.scale (bot : ℕ∞)) = 0 :=
+  ⟨fun _ _ => rfl, rfl, fun _ => rfl, zero_mul (Tropical.trop (1 : ℕ∞))⟩
+
+-- Statement: scale is deflationary in the ZP order and not inflationary, join is inflationary, and
+-- `scale_bot` follows from deflationarity alone (the arrow beside `t_snap_irreversible`).
+example : (∀ x : ℕ∞, le (ValuationStructure.scale x) x) ∧
+    ¬ (∀ x : ℕ∞, le x (ValuationStructure.scale x)) ∧ (∀ y z : ℕ∞, le z (join y z)) ∧
+    ValuationStructure.scale (bot : ℕ∞) = bot := by
+  have hd : ∀ x : ℕ∞, le (ValuationStructure.scale x) x := fun x =>
+    show min (x + 1) x = x from min_eq_right le_self_add
+  refine ⟨hd, fun h => ?_, fun y z => ?_, le_antisymm (hd _) (bot_le _)⟩
+  · have h0 : min (0 : ℕ∞) (0 + 1) = 0 + 1 := h 0
+    simp at h0
+  · show min z (min y z) = min y z; simp
+
+-- Statement: iterating scale from any element other than ⊥ never reaches ⊥.
+example (x : ℕ∞) (hx : x ≠ bot) (k : ℕ) : ValuationStructure.scale^[k] x ≠ bot := by
+  induction k with
+  | zero => exact hx
+  | succ k ih =>
+    rw [Function.iterate_succ_apply']
+    exact WithTop.add_ne_top.mpr ⟨ih, WithTop.one_ne_top⟩
 
 /-! ## § III. Derived AFA Content -/
 

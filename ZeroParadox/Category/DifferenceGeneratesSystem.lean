@@ -75,23 +75,10 @@ end
 
 /-! ### § The canonical predicated difference — double negation generates the classical (Boolean) core
 
-The sharpest instance of "a predicated difference generates a system": the difference is **double
-negation** `a ↦ aᶜᶜ`, and the system it generates is the **classical (Boolean) core** of the constructive
-base. On a Heyting algebra — the algebra of intuitionistic propositions — the double-negation map is a
-closure (inflationary, `a ≤ aᶜᶜ`, and a reflection); its fixed points are the **regular** elements; and
-those form a `BooleanAlgebra` (Mathlib's `Heyting.Regular`). That is the algebraic counterpart of
-**Glivenko's theorem** ("the constructive base under the `¬¬` difference is classical") — the
-`¬¬`-Boolean subtopos, textbook and cited here, not claimed.
-
-**The honest fence (logic, not choice).** What this difference generates is classical *logic* (excluded
-middle, the Boolean core), NOT the axiom of *choice*. **Choice implies excluded middle (Diaconescu 1975)**
-— and in Lean's own kernel `Classical.em` is derived from `Classical.choice` by exactly that argument.
-That **full** choice is strictly stronger than excluded middle is **Cohen 1963** / Fraenkel–Mostowski
-independence, *not* Diaconescu, whose own theorem is an **equivalence** for the restricted shape (choice
-for inhabited subobjects of a two-element object is excluded middle). So: double negation is the
-difference that generates the classical core, and full choice sits above it. See
-`ZeroParadox/Category/ChoiceCannotBe.lean` for the precise attributions. Stated below
-with `example`s only (no new declarations) — this file *identifies*, it does not add a result. -/
+The `example`s below: double negation `a ↦ aᶜᶜ` on a Heyting algebra is a closure whose fixed points,
+the regular elements, form a `BooleanAlgebra` (`Heyting.Regular`), so it generates classical logic, not
+choice. The Glivenko credit and the logic-versus-choice fence:
+`ZeroParadox/Category/DifferenceGeneratesSystem.md`. No new declarations. -/
 
 section
 variable {α : Type*} [HeytingAlgebra α]

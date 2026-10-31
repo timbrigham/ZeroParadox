@@ -1,16 +1,7 @@
 """
-Build ZP-A Illustrated Companion (v1.11)
-v1.10: FMC uniformity — "why AFA is the minimal required change" → "argued to be the minimal change".
-v1.9: Strip version number from companion footer.
-v1.8: Strip version number from ZP-A cross-reference in CC-2 section.
-v1.6: Disclaimer updated — "formal ontology" replaced with "formal document"; "proven" → "proved".
+Build ZP-A Illustrated Companion (v1.12)
 Covers: join-semilattice, partial order, Hasse diagram, one-directional transitions,
-monotonicity (T3), bottom-as-constituent (T2), four concrete examples.
-New in v1.3: CC-2 self-containment of ⊥ (Quine atom, ZF+AFA); R3 (DA-1 follows from CC-2).
-v1.4: AFA technical note now includes forward reference to ZP-J companion for plain-language
-Foundation/AFA explanation.
-v1.5: Forward reference to ZP-F added after [0,∞) example — ℝ as join-semilattice is fine
-      algebraically, but as a metric substrate for the snap it fails (ZP-F result).
+monotonicity (T3), bottom-as-constituent (T2), four concrete examples, and CC-2.
 """
 
 import os
@@ -98,7 +89,7 @@ def transition_diagram():
                  fontName='DV-B', fillColor=RED))
     return d
 
-VERSION = '1.11'
+VERSION = '1.12'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -272,17 +263,19 @@ def build():
         'says no. Any object identical to &#8869; in all structural respects IS &#8869;. '
         'There is nothing external to &#8869; by which to distinguish copies.',
         'A label requires a labeller outside it. &#8869; = {&#8869;} has no outside. '
-        'This is what grounds the execution claim in ZP-E (DA-1): the snap at P&#8320; '
-        'is not a description being read — within this framework, given the structural '
-        'constraints on &#8869;, execution is the only possibility.',
+        'That rules out an outside executor; it does not by itself make &#8869; run. '
+        'That the snap at P&#8320; is an execution rather than a description being read is '
+        'what the occurrence commitment asserts (ZP-E), and DA-1 consumes it.',
     ]))
     E.append(remember_box(
-        'Technical note (CC-2): the Quine atom property requires replacing the classical Axiom '
-        'of Foundation (which rules out self-containing sets) with Aczel\'s Anti-Foundation Axiom '
-        '(AFA). The Axiom of Choice is not assumed. This is a framework-level commitment — A1&#8211;A4 '
+        'Technical note (CC-2): the Quine atom property requires dropping the classical Axiom '
+        'of Foundation (which rules out self-containing sets); the framework replaces it with '
+        'Aczel\'s Anti-Foundation Axiom (AFA), one of several anti-foundation axioms that admit '
+        'such a set. The Axiom of Choice is not assumed. This is a framework-level commitment — A1&#8211;A4 '
         'are unaffected, but it changes what &#8869; is allowed to be. '
-        'For a plain-language explanation of why Foundation is incompatible with &#8869; = {&#8869;} '
-        'and why AFA is argued to be the minimal change, see the ZP-J Illustrated Companion.'))
+        'For a plain-language explanation of why Foundation is incompatible with &#8869; = {&#8869;}, '
+        'see the ZP-J Illustrated Companion; for why AFA is adopted rather than forced, see ZP-E '
+        'Remark R-AFA.'))
     E.append(sp(8))
 
     E.append(remember_box(

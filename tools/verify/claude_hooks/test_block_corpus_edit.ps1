@@ -40,6 +40,7 @@ if (-not (Test-Path $hook)) { Write-Host "MISSING: $hook"; exit 1 }
 $repo = (Resolve-Path (Join-Path $PSScriptRoot '..\..\..')).Path.TrimEnd('\')
 $drive = $repo.Substring(0, 1)
 $afterDrive = $repo.Substring(3)
+$repoIsWorktree = Test-Path -LiteralPath (Join-Path $repo '.git') -PathType Leaf
 
 function Invoke-HookRawAt([string]$hookPath, [string]$payload) {
     $out = $payload | powershell -NoProfile -File $hookPath 2>&1 | Out-String
@@ -81,10 +82,12 @@ $cases = @(
     @{ want='DENY';  why='notebook in the corpus';   tool='NotebookEdit'; key='notebook_path'; path="$repo\ZeroParadox\probe.ipynb" }
 
     # --- MUST DENY: the published site. Same reader, same domain, and all six were ALLOWED -----
-    # until 2026-09-20. `README.md` was denied while `bottom-family-tree.html` beside it was not.
-    @{ want='DENY';  why='published page (family tree)'; tool='Edit'; key='file_path'; path="$repo\bottom-family-tree.html" }
-    @{ want='DENY';  why='published page (diagonal)';    tool='Edit'; key='file_path'; path="$repo\diagonal-family.html" }
-    @{ want='DENY';  why='published page (snap loop)';   tool='Edit'; key='file_path'; path="$repo\snap-loop.html" }
+    # until 2026-09-20. `README.md` was denied while a root `.html` page beside it was not.
+    # The hook judges the PATH, never existence (`Get-Refusal` normalises without Resolve-Path), so
+    # a root `.html` is a pattern control: no page need exist for a Write that would create one to
+    # be denied. One row re-creates a retired page by name; one creates a page nobody has named.
+    @{ want='DENY';  why='root .html page, re-created';  tool='Write'; key='file_path'; path="$repo\snap-loop.html" }
+    @{ want='DENY';  why='root .html page, brand new';   tool='Write'; key='file_path'; path="$repo\some-new-page.html" }
     @{ want='DENY';  why='LAYOUT wrapping every page';   tool='Edit'; key='file_path'; path="$repo\_layouts\default.html" }
     @{ want='DENY';  why='site configuration';           tool='Edit'; key='file_path'; path="$repo\_config.yml" }
     @{ want='DENY';  why='the published domain';         tool='Write';key='file_path'; path="$repo\CNAME" }
@@ -121,6 +124,22 @@ $cases = @(
     @{ want='DENY';  why='loopback UNC 127.0.0.1';   tool='Edit';  key='file_path'; path="\\127.0.0.1\$drive`$\$afterDrive\ZeroParadox\Computability\Kleene.lean" }
     @{ want='DENY';  why='device prefix \\.\C:';     tool='Edit';  key='file_path'; path="\\.\$drive`:\$afterDrive\ZeroParadox\Computability\Kleene.lean" }
     @{ want='DENY';  why='device prefix, no-normalise traversal'; tool='Edit'; key='file_path'; path="\\?\$drive`:\$afterDrive\tools\..\scripts\build_zpk.py" }
+    # GUARDTEST-1: the device-UNC fold, listed in the header as measured DENY, now has its row.
+    @{ want='DENY';  why='device-UNC \\?\UNC\localhost (GUARDTEST-1)'; tool='Edit'; key='file_path'; path="\\?\UNC\localhost\$drive`$\$afterDrive\ZeroParadox\Computability\Kleene.lean" }
+    # GUARDTEST-2: the case-insensitive comparison governs the ROOT, not only the tail. The older
+    # case row varies the tail, which exercises the classifier and never `$cmp`.
+    @{ want='DENY';  why='LOWER-CASED repo root (GUARDTEST-2)'; tool='Edit'; key='file_path'; path=($repo.ToLowerInvariant() + '\ZeroParadox\Computability\Kleene.lean') }
+    @{ want='DENY';  why='UPPER-CASED repo root (GUARDTEST-2)'; tool='Edit'; key='file_path'; path=($repo.ToUpperInvariant() + '\SCRIPTS\BUILD_ZPK.PY') }
+
+    # --- MUST DENY: the directory ABOVE the checkout - the MCP server projects (GUARD-2 write half) ---
+    @{ want='DENY';  why='server project source, Write';   tool='Write'; key='file_path'; path='C:\Workspace\mcp-mayhem\gitRobot\core\engine.py' }
+    @{ want='DENY';  why='server project source, Edit';    tool='Edit';  key='file_path'; path='C:\Workspace\mcp-mayhem\verdictLedger\core\validate.py' }
+    @{ want='DENY';  why='server project, notebook';       tool='NotebookEdit'; key='notebook_path'; path='C:\Workspace\mcp-mayhem\probe.ipynb' }
+    @{ want='DENY';  why='a container sibling nobody named'; tool='Write'; key='file_path'; path='C:\Workspace\some-new-sibling\x.py' }
+    @{ want='DENY';  why='the container itself';           tool='Write'; key='file_path'; path='C:\Workspace\x.txt' }
+    @{ want='DENY';  why='server project name elsewhere';  tool='Write'; key='file_path'; path='D:\moved\mcp-mayhem\gitRobot\core\engine.py' }
+    @{ want='DENY';  why='server project via forward slashes'; tool='Edit'; key='file_path'; path='C:/Workspace/mcp-mayhem/gitRobot/core/engine.py' }
+    @{ want='DENY';  why='server project via traversal';   tool='Edit';  key='file_path'; path='C:\Workspace\ZeroParadox\..\mcp-mayhem\gitRobot\x.py' }
 
     # --- MUST ALLOW: the worktree route. THE LOAD-BEARING ROW. --------------------
     @{ want='ALLOW'; why='WORKTREE outside the repo'; tool='Edit'; key='file_path'; path='C:\Users\timbr\AppData\Local\Temp\gitrobot-worktrees\zp-a1b2\ZeroParadox\Computability\Kleene.lean' }
@@ -135,7 +154,10 @@ $cases = @(
     # root's is outside the checkout, and only the trailing separator in the StartsWith test says
     # so. Drop it and this row flips to DENY while every other row stays green - see the mutation
     # of the same name at the bottom of this file, which is this row's proof of teeth.
-    @{ want='ALLOW'; why='SIBLING dir extending the root name'; tool='Write'; key='file_path'; path="${repo}-scratch\notes.md" }
+    # In the MAIN checkout that sibling is also inside the CONTAINER, which is denied for its own
+    # reason; the expectation follows where this suite runs, and the separator itself is pinned by
+    # the mutation of the same name, planted in a synthetic WORKTREE root where no container applies.
+    @{ want=$(if ($repoIsWorktree) { 'ALLOW' } else { 'DENY' }); why='SIBLING dir extending the root name'; tool='Write'; key='file_path'; path="${repo}-scratch\notes.md" }
 
     # --- MUST ALLOW: what Tim ruled stays the main instance's. THIS IS THE WHOLE LIST. --------
     @{ want='ALLOW'; why='.claude-local note';       tool='Write'; key='file_path'; path="$repo\.claude-local\notes\x_2026-09-19.md" }
@@ -147,6 +169,9 @@ $cases = @(
 
     # --- MUST ALLOW: nothing to inspect -------------------------------------------
     @{ want='ALLOW'; why='no path in tool_input';    tool='Bash';  key='command';   path='echo hello' }
+    # ...but a FILE tool with no path is the unknown case, and is denied (R-ZERONULL).
+    @{ want='DENY';  why='Edit with no path at all (fail-closed)'; tool='Edit'; key='old_string'; path='x' }
+    @{ want='DENY';  why='Write with a blank path (fail-closed)';  tool='Write'; key='file_path'; path='  ' }
 )
 
 $fails = 0
@@ -231,7 +256,7 @@ $naming = @(
        path="$repo\ZeroParadoxNotes.txt";        expect='an unclassified file' }
     @{ why='an UNTRACKED new file is not called tracked'
        path="$repo\some-future-surface.xyz";     expect='an unclassified file' }
-    @{ why='published page names the page';      path="$repo\snap-loop.html";          expect='a published web page' }
+    @{ why='a root .html names the page';        path="$repo\some-new-page.html";      expect='a published web page' }
     @{ why='DOI record names the DOI record';    path="$repo\.zenodo.json";            expect='the permanent DOI record' }
 )
 foreach ($n in $naming) {
@@ -264,6 +289,9 @@ $src = Get-Content $hook -Raw
 $mutRepo = Join-Path ([System.IO.Path]::GetTempPath()) ("zp-guard-mut-" + [guid]::NewGuid().ToString('N').Substring(0, 8))
 $mutDir  = Join-Path $mutRepo 'tools\verify\claude_hooks'
 New-Item -ItemType Directory -Path $mutDir -Force | Out-Null
+# The synthetic root is laid out as a linked WORKTREE (`.git` is a file), so the hook does not treat
+# %TEMP% - its parent - as the protected container; otherwise every %TEMP% probe would deny.
+Set-Content -LiteralPath (Join-Path $mutRepo '.git') -Value 'gitdir: synthetic' -Encoding ASCII
 
 function Get-Sha([string]$path) { return (Get-FileHash -Algorithm SHA256 -Path $path).Hash }
 
@@ -280,6 +308,9 @@ $instr = @(
     @{ why='synthetic root: its tools/ is allowed'; p="$mutRepo\tools\verify\batch.py";                want='ALLOW' }
     @{ why='synthetic root: a real worktree is still outside it'
        p='C:\Users\timbr\AppData\Local\Temp\gitrobot-worktrees\zp-a1b2\ZeroParadox\X.lean';            want='ALLOW' }
+    @{ why='synthetic root: a sibling worktree is not a container'; p="${mutRepo}-scratch\notes.md";  want='ALLOW' }
+    @{ why='synthetic root: the server projects are still denied'
+       p='C:\Workspace\mcp-mayhem\gitRobot\core\engine.py';                                           want='DENY' }
 )
 foreach ($i in $instr) {
     $got = Invoke-HookRawAt $baseCopy (Get-Payload 'Edit' 'file_path' $i.p $null)
@@ -288,6 +319,25 @@ foreach ($i in $instr) {
     $mark = if ($ok) { 'ok  ' } else { 'FAIL' }
     "{0}  want={1,-5} got={2,-5}  instrument: {3}" -f $mark, $i.want, $got, $i.why | Write-Host
 }
+
+# The DERIVED container: a copy planted in a synthetic root that is NOT a worktree must guard that
+# root's own parent - a directory no literal in the hook names - and still allow the root itself.
+$mainRepo = Join-Path ([System.IO.Path]::GetTempPath()) ("zp-guard-main-" + [guid]::NewGuid().ToString('N').Substring(0, 8))
+$mainDir  = Join-Path $mainRepo 'tools\verify\claude_hooks'
+New-Item -ItemType Directory -Path $mainDir -Force | Out-Null
+$mainCopy = Join-Path $mainDir 'base.ps1'
+Set-Content -Path $mainCopy -Value $src -Encoding UTF8 -NoNewline
+foreach ($i in @(
+    @{ why='derived container: a sibling of a main checkout is denied'; p="${mainRepo}-other\x.txt"; want='DENY' }
+    @{ why='derived container: the checkout''s tools/ is still allowed'; p="$mainRepo\tools\x.py"; want='ALLOW' })) {
+    $got = Invoke-HookRawAt $mainCopy (Get-Payload 'Write' 'file_path' $i.p $null)
+    $ok = ($got -eq $i.want)
+    if (-not $ok) { $fails++ }
+    $extra++
+    $mark = if ($ok) { 'ok  ' } else { 'FAIL' }
+    "{0}  want={1,-5} got={2,-5}  instrument: {3}" -f $mark, $i.want, $got, $i.why | Write-Host
+}
+Remove-Item -Recurse -Force $mainRepo
 
 $mutations = @(
     @{ why  = 'carve list neutered -> a denied path must ALLOW'
@@ -316,6 +366,26 @@ $mutations = @(
        repl = 'if (-not $full.StartsWith($repoRoot, $cmp)) { return $null }'
        probe= "${mutRepo}-scratch\notes.md"
        want = 'DENY' }
+    @{ why  = 'server-project leg removed -> a named server project path must ALLOW'
+       find = "    if (`$full -match '(?i)\\mcp-mayhem(\\|`$)') {"
+       repl = "    if (`$false) {"
+       probe= 'D:\moved\mcp-mayhem\gitRobot\core\engine.py'
+       want = 'ALLOW' }
+    @{ why  = 'known-container leg removed -> an unnamed sibling of the main checkout must ALLOW'
+       find = "    if (`$full -match '(?i)^[A-Za-z]:\\Workspace\\' -and"
+       repl = "    if (`$false -and"
+       probe= 'C:\Workspace\some-new-sibling\x.py'
+       want = 'ALLOW' }
+    @{ why  = 'device-UNC fold removed -> \\?\UNC\localhost must ALLOW (GUARDTEST-1)'
+       find = "    if (`$s -match '^\\\\[?.]\\UNC\\(.+)`$')            { `$s = '\\' + `$Matches[1] }"
+       repl = "    if (`$false) { }"
+       probe= ("\\?\UNC\localhost\" + $mutRepo.Substring(0, 1) + '$\' + $mutRepo.Substring(3) + '\ZeroParadox\Computability\Kleene.lean')
+       want = 'ALLOW' }
+    @{ why  = 'case-sensitive root compare -> a LOWER-CASED root must ALLOW (GUARDTEST-2)'
+       find = '$cmp = [StringComparison]::OrdinalIgnoreCase'
+       repl = '$cmp = [StringComparison]::Ordinal'
+       probe= ($mutRepo.ToLowerInvariant() + '\ZeroParadox\Computability\Kleene.lean')
+       want = 'ALLOW' }
     @{ why  = 'both-keys loop reverted to first-only -> corpus notebook beside benign file ALLOWs'
        find = 'foreach ($t in @($data.tool_input.file_path, $data.tool_input.notebook_path)) {'
        repl = 'foreach ($t in @($data.tool_input.file_path)) {'

@@ -32,6 +32,7 @@ Usage (the exact invocation path is printed in this tool's own output):
 import ast
 import io
 import os
+import re
 import subprocess
 import sys
 
@@ -173,6 +174,88 @@ def _invokes(src, name):
     return False
 
 
+def dispatches_selftest(src):
+    """Does this source DISPATCH on `--selftest`, as opposed to merely containing the string?
+
+    ⚠ `RLY48-3`: property 1 used to be `"--selftest" in src`, which a docstring, a usage line or a
+    dead branch satisfies. A checker that accepts the flag and never dispatches on it exits 0 having
+    run nothing — `GRD-2` — and the string test certified it. PARSED, like `_invokes`: the flag must
+    sit in the TEST of an `if` whose body calls something other than `print`, either compared
+    directly (`"--selftest" in argv`, `args[0] == "--selftest"`) or, for argparse, registered by
+    `add_argument("--selftest")` and then read as `args.selftest` in such a test."""
+    try:
+        tree = ast.parse(src)
+    except SyntaxError:
+        return False
+
+    def _acts(body):
+        for stmt in body:
+            for n in ast.walk(stmt):
+                if isinstance(n, ast.Call) and not (isinstance(n.func, ast.Name)
+                                                    and n.func.id == "print"):
+                    return True
+        return False
+
+    registered = any(isinstance(n, ast.Call) and isinstance(n.func, ast.Attribute)
+                     and n.func.attr == "add_argument"
+                     and any(isinstance(a, ast.Constant) and a.value == "--selftest"
+                             for a in n.args)
+                     for n in ast.walk(tree))
+    for node in ast.walk(tree):
+        if not isinstance(node, ast.If):
+            continue
+        names = list(ast.walk(node.test))
+        direct = any(isinstance(n, ast.Constant) and n.value == "--selftest" for n in names)
+        parsed = registered and any(isinstance(n, ast.Attribute) and n.attr == "selftest"
+                                    for n in names)
+        if (direct or parsed) and _acts(node.body):
+            return True
+    return False
+
+
+# ⚠ `RLY48-2`: the exit code alone cannot hear a control announcing its own failure. A selftest
+# whose `return 1 if bad` was slipped to `return 0` prints `*** FAIL`, `controls: FAIL (3)` — and
+# exits 0. These are the failure markers the bundle's selftests print; an exit-0 run carrying one
+# is not a pass. Case-sensitive and anchored on the marker forms, so a control LABEL that merely
+# contains the word ("fails CLOSED") is not one.
+_FAIL_MARKER = re.compile(r"\*\*\*\s*FAIL\b|\b(?:selftest|controls)\s*:\s*FAIL\b")
+
+
+def fail_marker(out):
+    """The first failure marker a selftest printed, or None."""
+    m = _FAIL_MARKER.search(out or "")
+    return m.group(0) if m else None
+
+
+# ⚠ THE MARKER LIST ABOVE IS A DENYLIST, SO SILENCE CANNOT BE A PASS (`B2`, R-ZERONULL). A segment
+# whose failures print as `WRONG:` / `BROKEN:` and whose `return bad` slipped to `return 0` printed
+# none of those markers and was certified. So a pass also needs a POSITIVE line, at a line start:
+# `selftest: PASS`, `<segment> controls: PASS`, or `N of N control(s) behaved as required` with the
+# two counts equal. No such line is a violation, whatever the exit code.
+_PASS_LINE = re.compile(r"^\s*(?:[\w-]+ )?(?:selftest|controls)\s*:\s*PASS\b"
+                        r"|^\s*(\d+) of \1 control\(s\) behaved as required\b", re.M)
+
+
+def pass_line(out):
+    """The first positive pass line a selftest printed, or None."""
+    m = _PASS_LINE.search(out or "")
+    return m.group(0).strip() if m else None
+
+
+def halves_detail(out):
+    """(both, detail) for property 3. `RLY48-5`: three outcomes, not two — a run asserting
+    NEITHER half used to be reported as `only suppress asserted`, sending the reader to look for a
+    half that is not there."""
+    up = (out or "").upper()
+    fires = ("MUST FIRE" in up) or ("FIRES" in up)
+    suppresses = ("MUST SUPPRESS" in up) or ("SUPPRESS" in up)
+    if fires and suppresses:
+        return True, "both directions asserted"
+    if not (fires or suppresses):
+        return False, "neither half asserted (no FIRE/SUPPRESS marker in the output)"
+    return False, "only %s asserted" % ("fire" if fires else "suppress")
+
+
 def roster_agrees():
     """Do THIS checker's audited set and `ci_report.SELFTESTS` name the same modules?
 
@@ -250,9 +333,11 @@ def audit():
         src = source(c)
 
         # 1. controls exist
-        has = "--selftest" in src
+        has = dispatches_selftest(src)
         rows.append((c, "has controls", has or c in NO_CONTROL_EXEMPT,
-                     "--selftest present" if has else "NO --selftest"))
+                     "dispatches on --selftest" if has
+                     else ("--selftest named but NOT dispatched on" if "--selftest" in src
+                           else "NO --selftest")))
 
         # 1b. no shadowed top-level definition (SH-7). See `shadowed_defs` for why nothing else
         # catches this: the duplicate is valid Python and every other gate stays green.
@@ -262,10 +347,17 @@ def audit():
                      else "; ".join("%s at lines %s" % (n, ",".join(str(x) for x in ls))
                                     for n, ls in dups[:3])))
 
-        # 2. controls pass  (the exit code, not the text)
+        # 2. controls pass  (the exit code, no failure marker in the text — `RLY48-2` — AND a
+        # positive pass line, because a denylist hears only the failures it lists — `B2`)
         if has:
             rc, out = run(c, "--selftest")
-            rows.append((c, "controls pass", rc == 0, "selftest exit=%d" % rc))
+            marker = fail_marker(out)
+            passed = pass_line(out)
+            rows.append((c, "controls pass", rc == 0 and marker is None and passed is not None,
+                         ("selftest exit=%d but printed %r" % (rc, marker)) if marker is not None
+                         else ("selftest exit=%d and printed NO pass line — silence is not a pass"
+                               % rc) if passed is None
+                         else "selftest exit=%d" % rc))
 
             # 3. both halves present  (PROXY - see the header)
             #
@@ -275,13 +367,8 @@ def audit():
             # meta-check that fails a compliant checker for not adopting its author's output style
             # is enforcing formatting, not the property, and would push people to change working
             # code to satisfy it.
-            up = out.upper()
-            fires = ("MUST FIRE" in up) or ("FIRES" in up)
-            suppresses = ("MUST SUPPRESS" in up) or ("SUPPRESS" in up)
-            both = fires and suppresses
-            rows.append((c, "both halves [proxy]", both,
-                         "both directions asserted" if both
-                         else "only %s asserted" % ("fire" if fires else "suppress")))
+            both, detail = halves_detail(out)
+            rows.append((c, "both halves [proxy]", both, detail))
         else:
             rows.append((c, "controls pass", False, "cannot run - no --selftest"))
             rows.append((c, "both halves [proxy]", False, "cannot check - no --selftest"))
@@ -338,8 +425,120 @@ def selftest():
     ok = not any(fake in t for t in callers.values())
     bad += 0 if ok else 1
     print("    %-34s %s" % ("an orphan name is detectable", "ok" if ok else "*** WRONG ***"))
+    # `RLY48-3`: the flag NAMED but not dispatched on must fail property 1. Each case is a source
+    # string the old `"--selftest" in src` test certified.
+    for label, s in [
+            ("flag only in a docstring", '"""usage: x.py --selftest"""\ndef main(): return 0\n'),
+            ("dispatch branch does nothing",
+             'import sys\nif "--selftest" in sys.argv:\n    pass\n'),
+            ("dispatch branch only prints",
+             'import sys\nif "--selftest" in sys.argv:\n    print("controls")\n'),
+            ("argparse flag never read",
+             'ap.add_argument("--selftest", action="store_true")\nargs = ap.parse_args()\n')]:
+        ok = not dispatches_selftest(s)
+        bad += 0 if ok else 1
+        print("    %-34s %s" % ("undispatched: " + label, "ok" if ok else "*** CERTIFIED ***"))
+    # `RLY48-2`: an exit-0 selftest that PRINTS its own failure must not count as passing.
+    # ⚠ The labels must NOT echo the marker: this checker audits its own selftest output with
+    # `fail_marker`, so printing the case text would make it fail itself.
+    for form, out in [("stars", "  scan  *** FAIL (got False) ***\n"),
+                      ("controls:", "controls: FAIL (3)\n"),
+                      ("selftest:", "\nselftest: FAIL (2)\n")]:
+        ok = fail_marker(out) is not None
+        bad += 0 if ok else 1
+        print("    %-34s %s" % ("FAIL marker heard: %s form" % form,
+                                "ok" if ok else "*** DEAF ***"))
+    # `B2`: no positive pass line is not a pass. The first case is the measured breakage — a segment
+    # that spells its failures `WRONG BRANCH:` and prints no summary.
+    for form, out in [("failures spelled WRONG", "  WRONG BRANCH: x went to y\n  done\n"),
+                      ("counts unequal", "  12 of 13 control(s) behaved as required\n"),
+                      ("pass text mid-line", "  label: selftest: PASS-looking row   ok\n")]:
+        ok = pass_line(out) is None
+        bad += 0 if ok else 1
+        print("    %-34s %s" % ("no pass line: %s" % form, "ok" if ok else "*** CERTIFIED ***"))
+    # `RLY48-5`: neither half asserted is its own message, not `only suppress`.
+    _b, _d = halves_detail("selftest: PASS (3/3)\n")
+    ok = (not _b) and "neither" in _d and "only" not in _d
+    bad += 0 if ok else 1
+    print("    %-34s %s" % ("neither half is named as neither", "ok" if ok else "*** %r ***" % _d))
+    for out, want in [("  MUST FIRE\n  x ok\n", "only fire asserted"),
+                      ("  MUST SUPPRESS\n  x ok\n", "only suppress asserted")]:
+        _b, _d = halves_detail(out)
+        ok = (not _b) and _d == want
+        bad += 0 if ok else 1
+        print("    %-34s %s" % ("one half named: " + want.split()[1], "ok" if ok else "*** %r ***" % _d))
 
     print("  MUST SUPPRESS")
+    for label, s in [
+            ("`in sys.argv` -> selftest()",
+             'import sys\nif "--selftest" in sys.argv:\n    sys.exit(selftest())\n'),
+            ("`args[0] ==` -> return selftest()",
+             'def main(args):\n    if args and args[0] == "--selftest":\n'
+             '        return selftest()\n'),
+            ("argparse -> args.selftest",
+             'ap.add_argument("--selftest", action="store_true")\nargs = ap.parse_args()\n'
+             'if args.selftest:\n    print("c")\n    return selftest()\n')]:
+        ok = dispatches_selftest(s)
+        bad += 0 if ok else 1
+        print("    %-34s %s" % ("dispatched: " + label, "ok" if ok else "*** FALSE POSITIVE ***"))
+    for out in ["  selftest: PASS (fires on both, suppresses both)\n",
+                "  malformed config fails CLOSED, named   ok\n",
+                "  FAIL  check_x.py  controls pass   (a row label, not a marker)\n"]:
+        ok = fail_marker(out) is None
+        bad += 0 if ok else 1
+        print("    %-34s %s" % ("no marker: %s" % out.strip()[:22], "ok" if ok else "*** HEARD ***"))
+    for form, out in [("selftest: PASS", "\nselftest: PASS\n"),
+                      ("segment controls: PASS", "  claim-sweep controls: PASS\n"),
+                      ("N of N behaved", "  12 of 12 control(s) behaved as required\n"),
+                      ("PASS with detail", "  selftest: PASS (fires on both, suppresses both)\n")]:
+        ok = pass_line(out) is not None
+        bad += 0 if ok else 1
+        print("    %-34s %s" % ("pass line: %s" % form, "ok" if ok else "*** NOT HEARD ***"))
+    _b, _d = halves_detail("  MUST FIRE\n  MUST SUPPRESS\n")
+    ok = _b and _d == "both directions asserted"
+    bad += 0 if ok else 1
+    print("    %-34s %s" % ("both halves read as both", "ok" if ok else "*** %r ***" % _d))
+    # END TO END through `audit()`: the predicates above are only worth anything if the property
+    # rows USE them. One synthetic checker, its source and its selftest output supplied; every
+    # other part of `audit()` is real.
+    g = globals()
+    _real = {k: g[k] for k in ("checkers", "source", "run", "roster_agrees")}
+    _fake = "check_zz_probe_synthetic.py"
+    _disp = 'import sys\nif "--selftest" in sys.argv:\n    sys.exit(selftest())\n'
+
+    def _rows_for(src, out):
+        g["checkers"] = lambda: [_fake]
+        g["source"] = lambda n: src if n == _fake else _real["source"](n)
+        g["run"] = lambda *_a: (0, out)
+        g["roster_agrees"] = lambda: ([], [])
+        try:
+            return {p: ok for c, p, ok, _d in audit()[0] if c == _fake}
+        finally:
+            g.update(_real)
+    _r = _rows_for('"""x.py --selftest"""\n', "")
+    ok = _r.get("has controls") is False
+    bad += 0 if ok else 1
+    print("    %-34s %s" % ("audit: undispatched flag fails", "ok" if ok else "*** %r ***" % _r))
+    _r = _rows_for(_disp, "  MUST FIRE\n  MUST SUPPRESS\n  x *** FAIL (got False) ***\n")
+    ok = _r.get("controls pass") is False
+    bad += 0 if ok else 1
+    print("    %-34s %s" % ("audit: exit-0 FAIL marker fails", "ok" if ok else "*** %r ***" % _r))
+    _r = _rows_for(_disp, "  MUST FIRE\n  x ok\n  MUST SUPPRESS\n  WRONG BRANCH: y\n")
+    ok = _r.get("controls pass") is False
+    bad += 0 if ok else 1
+    print("    %-34s %s" % ("audit: exit-0 silent run fails", "ok" if ok else "*** %r ***" % _r))
+    _r = _rows_for(_disp, "  MUST FIRE\n  x ok\n  MUST SUPPRESS\n  y ok\n  selftest: PASS\n")
+    ok = (_r.get("has controls"), _r.get("controls pass"), _r.get("both halves [proxy]")) \
+        == (True, True, True)
+    bad += 0 if ok else 1
+    print("    %-34s %s" % ("audit: a healthy synthetic passes", "ok" if ok else "*** %r ***" % _r))
+    # And the real suite: every audited module's dispatch is SEEN (a parser that saw none would make
+    # every MUST-FIRE case above pass vacuously).
+    _blind = [c for c in checkers() if not dispatches_selftest(source(c))]
+    ok = not _blind
+    bad += 0 if ok else 1
+    print("    %-34s %s" % ("every audited dispatch is seen",
+                            "ok" if ok else "*** not seen: %s ***" % ", ".join(_blind)))
     # A real, wired checker must satisfy both.
     ok = any("check_pov.py" in t for t in callers.values())
     bad += 0 if ok else 1
@@ -408,7 +607,8 @@ def main(argv):
         for c, prop, _ok, detail in failures:
             print("  FAIL  %-24s %-22s %s" % (c, prop, detail))
         print("\nA checker that cannot fail, or that nothing runs, is not a check.")
-        print("Fix the finding, or ledger it in .claude-local/DEFECTS.md.")
+        print("Fix the finding. Nothing here reads .claude-local/DEFECTS.md, so a ledger row "
+              "records a violation and does not clear it.")
         return 1 if "--block" in argv else 0
     # ⚠ SCOPE IS THE `check_*.py` GLOB **PLUS `ALSO_AUDITED`**, which is wider than the CHECKS list
     # in both directions. `guards.py` was outside this audit until 2026-08-16 for no reason but its

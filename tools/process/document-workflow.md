@@ -210,7 +210,7 @@ After release, confirm the Zenodo snapshot minted (query `https://zenodo.org/api
 ```
 python tools/verify/check_release_ready.py <tag>
 ```
-It must **exit 0** before the release body is drafted. The script mechanically verifies the deterministic release preconditions and **exits 1 (NO-GO)** on any blocking failure: Engineer's Takes filled (no `TODO (Tim)` / `TODO: Engineer` / empty take section), build-script hash integrity vs `register.md`, the `LEAN_CUSTOM_REGISTRY` invariant (`### ` entries == `[ZP-CUSTOM]` tags), `.zenodo.json` valid JSON, no conflict markers in tracked files, a `## <tag>` entry present in `RELEASES.md`, and every README/GUIDE-linked PDF exists. It also prints WARN-level hygiene checks (register↔script VERSION, `scripts/` mirror currency, untracked root PDFs) and a **judgment checklist** of the non-mechanizable items (editorial/adversary/claim-review/prior-art ran on the PR; companion sync; major-vs-minor decision; release body approved). It **consolidates** the `.zenodo.json` and Engineer's-Take checks below (kept individually documented for context) and adds the rest. The gate cannot hook `gh release create` (no git event for tag creation), so enforcement is procedural: **the gate must exit 0 AND its judgment checklist must be confirmed before the release body is drafted.** Lives in `tools/verify/` — **TRACKED, alongside every other checker (2026-08-15).** This reverses the old rule that `check_*` dev tools stay gitignored and unmirrored: they are now tracked *in place*, which is not the same as mirroring them. There is one copy, it is the public one, and a checker edit is an ordinary reviewable diff instead of a change `git diff` could not see. Reuses `check_hashes.py` for register parsing. Spec: `.claude-local/notes/release_readiness_gate_2026-06-24.md`. (Added 2026-06-24 after `LEAN_CUSTOM_REGISTRY` went 18 days stale undetected at the v2.6 threshold — the scattered-checks model let it slip.)
+It must **exit 0** before the release body is drafted. The script mechanically verifies the deterministic release preconditions and **exits 1 (NO-GO)** on any blocking failure: Engineer's Takes filled (no `TODO (Tim)` / `TODO: Engineer` / empty take section), build-script hash integrity vs `register.md`, the `LEAN_CUSTOM_REGISTRY` invariant (`### ` entries == `[ZP-CUSTOM]` tags), `.zenodo.json` valid JSON, no conflict markers in tracked files, a `## <tag>` entry present in `RELEASES.md`, and every README/GUIDE-linked PDF exists. It also prints WARN-level hygiene checks (register↔script VERSION, which FAILS instead when no build script's `VERSION` can be read; untracked root PDFs; a deferred Engineer's Take; an em-dash in README/GUIDE), an INFO block of review coverage at HEAD read from the verdictLedger, and a **judgment checklist** of the non-mechanizable items (editorial/adversary/claim-review/prior-art ran on the PR; companion sync; major-vs-minor decision; release body approved). Its `scripts/ mirror current` row is a retired no-op (`c_scripts_mirror`, retired 2026-08-15) that always prints PASS and checks nothing: there is no mirror (`R-SCRIPTS`). It **consolidates** the `.zenodo.json` and Engineer's-Take checks below (kept individually documented for context) and adds the rest. The gate cannot hook `gh release create` (no git event for tag creation), so enforcement is procedural: **the gate must exit 0 AND its judgment checklist must be confirmed before the release body is drafted.** Lives in `tools/verify/` — **TRACKED, alongside every other checker (2026-08-15).** This reverses the old rule that `check_*` dev tools stay gitignored and unmirrored: they are now tracked *in place*, which is not the same as mirroring them. There is one copy, it is the public one, and a checker edit is an ordinary reviewable diff instead of a change `git diff` could not see. Reuses `check_hashes.py` for register parsing. Spec: `.claude-local/notes/release_readiness_gate_2026-06-24.md`. (Added 2026-06-24 after `LEAN_CUSTOM_REGISTRY` went 18 days stale undetected at the v2.6 threshold — the scattered-checks model let it slip.)
 
 **`.zenodo.json` check — mandatory before every release:** Read `.zenodo.json` and verify the `description` field accurately reflects the current layer count and layer list. Update it in the same PR as `RELEASES.md` if anything is stale. Zenodo reads this file at release creation time; it cannot be updated retroactively via the repo (only via the Zenodo web UI).
 
@@ -280,17 +280,21 @@ This rule applies to both directions:
 
 `register.md` records a SHA-256 fingerprint (first 8 chars) of every formal and companion build script in the `formal:XXXXXXXX comp:XXXXXXXX` token embedded in each row's Notes field.
 
-**Line endings are LF, enforced by `.gitattributes`.** Because the fingerprint is a hash of file *bytes*, line endings must be byte-stable across machines or the same script would hash differently (CRLF vs LF). `.gitattributes` declares `* text=auto eol=lf` (all text normalized to LF) and marks PDFs/images `binary` (never converted). Do not commit CRLF in tracked text files, and do not rely on `core.autocrlf` — the attributes override it. `check_hashes.py` hashes the active `.claude-local` scripts (LF); the `scripts/` mirror is the same content under the same LF policy. (Added 2026-06-21 after a CRLF/LF mismatch made the `scripts/` mirror hash differ from the active script for the same content.)
+**Line endings are LF, enforced by `.gitattributes`.** Because the fingerprint is a hash of file *bytes*, line endings must be byte-stable across machines or the same script would hash differently (CRLF vs LF). `.gitattributes` declares `* text=auto eol=lf` (all text normalized to LF) and marks PDFs/images `binary` (never converted). Do not commit CRLF in tracked text files, and do not rely on `core.autocrlf` — the attributes override it. `check_hashes.py` hashes the on-disk bytes of each build script under `scripts/` (`SCRIPT_DIR = REPO/scripts`), which is the scripts' only home; there is no mirror (`R-SCRIPTS`). A CRLF/LF mismatch once made identical content hash differently, which is why the LF policy exists.
 
-**Standing rule — any script change requires all four steps in the same commit:**
+**Standing rule — a script change that moves the rendered PDF takes all four steps in the same commit:**
 1. Make the change and bump the internal version number
-2. Rebuild the PDF and archive the old version
+2. Rebuild the PDF, overwriting the flat root file in place (no archive copy; `R-CONTEXT`)
 3. Recompute the hash: `python -c "import hashlib; print(hashlib.sha256(open('scripts/build_<doc>.py','rb').read()).hexdigest()[:8])"`
 4. Update the hash token in `register.md`
 
-**Session start check:** Run `python tools/verify/check_hashes.py` at the start of any session that will touch build scripts. A mismatch means a script was modified without completing the full four-step workflow — version bump and PDF rebuild are overdue.
+**A script change that does NOT move the rendered PDF resyncs the token with no version bump** (Tim, ruling R4, 2026-10-03), with the reason stated in the commit message. "Does not move" is SHOWN, never assumed, by one of two routes:
+- **Only comments or docstrings changed:** `python tools/verify/check_hashes.py --sync-hash <KEY>`. It compares the working script against the last committed blob the register token attests to, modulo comments and docstrings, and refuses anything else.
+- **Code changed but the output should not have:** `--sync-hash` refuses this by design. Copy the current PDF to the scratchpad, rebuild, and run `python tools/verify/pdf_same.py <old> <new>`. It exits 0 only when both files open, the page counts match, every page renders to identical pixels (pypdfium2, scale 2.0), the `pypdf` extracted text is identical (the extraction `check_paths.py --claim` uses), AND the document-level content is identical: the document information dictionary (every key, `/Title` included), XMP metadata, the outline and every other catalog entry, and every page's annotations (link targets, borders, appearance streams). Only exit 0 licenses hand-setting the token; put the command and its output in the commit message. Exit 1 (DIFFERENT) or exit 2 (CANNOT-DECIDE, which also covers an unreadable file, a failed import and any crash) means the four-step rule applies. An empty text diff alone is not proof: a reversed diagram arrow, a fill colour and bold type all extract to identical text, and a changed `title=` changes neither pixels nor text. **This route works only within the calendar month of the last build:** every build stamps its month into the subtitle meta line, so a rebuild in a later month is a correct DIFFERENT on that line (measured `/rely` 2026-10-04: an unchanged rebuild against the September PDF read DIFFERENT, one in the same month was byte-identical). Outside that month the four-step rule applies. (Tim, ruling R4 2026-10-03; proof tightened to pixel-identical pages 2026-10-04, and to document-level content the same day.)
 
-A hash mismatch is not just a "rebuild needed" signal — it means the version bump step was skipped. Do not rebuild without incrementing the version number.
+**Session start check:** Run `python tools/verify/check_hashes.py` at the start of any session that will touch build scripts. A mismatch means a script was modified without completing either route above.
+
+A hash mismatch is not a "rebuild needed" signal — it means a version bump was skipped, until `pdf_same.py` shows otherwise. Do not rebuild a visible change without incrementing the version number.
 
 ## PDF Build Standards
 
@@ -365,7 +369,8 @@ transparency blockquote (or, for a PDF, an amber callout). It is gone.** It boun
 and exactly one honoured it, for months, with nothing noticing — which is past this file's own
 *fix the trigger* rung and into *discipline will not work here*.
 
-**Measured the day it was retired.** Unlinked from both indexes: `ABOUTME.md`,
+**Measured the day it was retired.** Unlinked from both indexes: `ABOUTME.md` (no longer
+tracked — moved to the private folder on 2026-10-09; the measurement stands as recorded),
 `BOTTOMELEMENT_findings.md` (which no longer exists — folded into the generated `BOTTOMELEMENT.md`
 on 2026-08-29, so its stale hand-written legend became computed; the measurement below stands as
 recorded on the day), `CLAUDE.md`, `LEAN_CUSTOM_REGISTRY.md`, `RELEASES.md`,
@@ -384,8 +389,7 @@ was wrong, not that it needed one more exception.
 **What replaces it: nothing mechanical, and that is deliberate.** Disclosure lives in
 § *WHERE THINGS LIVE* and § *Private Working Folder* — pages a human reads. Where a document's
 STATUS could mislead (speculative, superseded, a development artifact), say so in its own
-opening because it is true, not because a linkage rule fired. `ABOUTME.md` keeps its note on
-exactly that basis.
+opening because it is true, not because a linkage rule fired.
 
 **Also retired with it: § *README.md Link Restrictions*,** whose table named the same two files
 and was stale the same way. Nothing is being *hidden* — if a file should not be in the index,

@@ -1,6 +1,6 @@
 """
 Build ZP-J Illustrated Companion
-Version 1.33 | September 2026
+Version 1.34 | October 2026
 v1.33: ROUND-6 OUTSTANDING CLOSEOUT, items 3a, 3b, 3d, 6 (corpus-zpj-v2.8-round6-outstanding.md
 EXECUTION SPEC 2026-09-28). 3a (CC-2 proved half): the Foundation-freeness sentence cited no
 identifier; it now cites wf_no_selfloop (ZeroParadox/Settheory/Wall.lean - fully general, no
@@ -150,7 +150,9 @@ def three_way_table():
     rows = [
         ['Set theory (AFA)',
          '&#8869; = {&#8869;}  (so &#8869; &#8712; &#8869;)',
-         '⊥ contains exactly one element: itself - the unique self-membership condition in AFA'],
+         '⊥ contains exactly one element: itself. AFA allows at most one set that is its own '
+         'sole member (x = {x}); bare self-membership is not unique there (see the T-EXEC box above). '
+         'The Lean requirement: QuineAtomHost, ZeroParadox/Settheory/QuineHost.lean &#167; VII'],
         ['Order theory (ZP-A)',
          '&#8869; &#8804; x  for all x',
          '⊥ is below everything - the universal starting point'],
@@ -208,7 +210,7 @@ def abstraction_chain_table():
     t.setStyle(ts); return t
 
 
-VERSION = '1.33'
+VERSION = '1.34'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -341,13 +343,13 @@ def build():
         'and ZeroParadox.t_exec_iff the equivalence.'))
     E.append(sp(6))
     E.append(cbody(
-        '<b>Quine atom &#8594; &#8869;:</b> Suppose q is a Quine atom: q is self-containing, '
-        'and every self-containing element equals q. The bottom element &#8869; is '
-        'self-containing by the typeclass field bot_self_mem. So &#8869; equals q.'))
+        '<b>Quine atom &#8594; &#8869;:</b> Suppose q is a Quine atom: q plays the selfMem role '
+        '(its own sole member, x = {x}), and every element playing that role equals q. The bottom '
+        'element &#8869; plays it by the typeclass field bot_self_mem. So &#8869; equals q.'))
     E.append(cbody(
-        '<b>&#8869; &#8594; Quine atom:</b> &#8869; is self-containing (bot_self_mem). '
-        'Any other self-containing x equals &#8869; by quine_unique. So &#8869; is the unique '
-        'self-containing element  - the Quine atom.'))
+        '<b>&#8869; &#8594; Quine atom:</b> &#8869; plays the selfMem role (bot_self_mem). '
+        'Any other x playing it equals &#8869; by quine_unique. So &#8869; is the unique '
+        'element in that role  - the Quine atom.'))
     E.append(sp(4))
     E.append(remember_box(
         'Remember: T-EXEC does not say ⊥ is physically self-referential. It says that '
@@ -532,8 +534,8 @@ def build():
         'Three types, three routes. &#8469;&#8734; takes the full valuation route; '
         'OntologicalStates bypasses the valuation step and connects directly to AbstractSelfApp; '
         'the 2-adic integers &#8484;&#8322; run the valuation argument through ValBridge. The '
-        'first two reach the AFA conclusion that the unique self-containing element is the '
-        'bottom. For &#8484;&#8322; the registered model reaches its shadow: 0 is the only fixed point '
+        'first two reach the AFAStructure conclusion that the unique element in the selfMem role '
+        '(its own sole member, x = {x}) is the bottom. For &#8484;&#8322; the registered model reaches its shadow: 0 is the only fixed point '
         'of multiply-by-2. The full route exists too, as an existence statement: '
         'ZeroParadox/Valuation/Scale.lean &#167; V proves &#8484;&#8322; admits a lattice carrying a '
         'valuation structure, though none is registered. '

@@ -180,7 +180,7 @@ The engine's two regimes (μ = no fixed point / ν = a fixed point exists, see `
   What the Lean file proves is the **one-relation shadow** of that theorem, not the coalgebraic statement.
 
 **So the framework's own narrow observation, stated without overclaim:** the theorems this taxonomy assigns
-to the well-founded family are, on inspection, *refusals of the engine's own ν output* rather than an
+to the well-founded family are, on inspection, *refusals of the ν fixed point* rather than an
 independent root of self-reference — `wf_no_selfloop` instantiated per host (`no_quine_atom` where the host
 is well-founded; `quineHost_not_wellFounded` / `floor_not_wellFounded` where it is not). That is a claim
 about **this repo's taxonomy**, not about mathematics, and the literature above already presents the split

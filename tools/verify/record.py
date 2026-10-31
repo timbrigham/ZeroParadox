@@ -59,13 +59,24 @@ _HEADERS = {"Content-Type": "application/json",
             "Accept": "application/json, text/event-stream"}
 
 
-def _post(payload, session=None):
+# ⚠⚠ gitRobot'S ADDRESS IS A CONSTANT, NOT AN ENVIRONMENT VARIABLE. Subject identity comes from its
+# `ledger_subjects`, which VERIFIES a reading against a ref. An address the environment could choose
+# would let a loopback stub answer "verified" for bytes nobody read, and the record would then reach
+# the REAL ledger carrying them — the forge `hooks.py` closed for `attest` (`/rely` 2026-10-03,
+# BLOCKING-1), on the recording path this time. Controls substitute the transport through
+# `_GITROBOT_SEAM`, a module attribute only in-process code can set.
+GITROBOT_URL = "http://127.0.0.1:8010/mcp"
+_GITROBOT_SEAM = None             # controls only: a callable(tool, arguments) -> payload
+_NO_PROXY = urllib.request.build_opener(urllib.request.ProxyHandler({}))
+
+
+def _post(payload, session=None, url=None, opener=None):
     headers = dict(_HEADERS)
     if session:
         headers["Mcp-Session-Id"] = session
-    req = urllib.request.Request(URL, data=json.dumps(payload).encode("utf-8"),
+    req = urllib.request.Request(url or URL, data=json.dumps(payload).encode("utf-8"),
                                  headers=headers, method="POST")
-    with urllib.request.urlopen(req, timeout=TIMEOUT) as resp:
+    with (opener.open if opener else urllib.request.urlopen)(req, timeout=TIMEOUT) as resp:
         return resp.headers.get("Mcp-Session-Id"), resp.read().decode("utf-8")
 
 
@@ -92,7 +103,20 @@ BRACE_FALLBACKS = []
 
 
 def _call(tool: str, arguments: dict):
-    """One MCP round trip. Returns the parsed tool payload, or None."""
+    """One MCP round trip to the LEDGER. Returns the parsed tool payload, or None."""
+    return _rpc(URL, tool, arguments)
+
+
+def gitrobot_call(tool: str, arguments: dict):
+    """One MCP round trip to gitRobot, at its constant loopback address and through no proxy.
+    Same handshake and the same parsing as `_call`; RAISES on a transport failure."""
+    if _GITROBOT_SEAM is not None:
+        return _GITROBOT_SEAM(tool, arguments)
+    return _rpc(GITROBOT_URL, tool, arguments, opener=_NO_PROXY)
+
+
+def _rpc(url, tool, arguments, opener=None):
+    """One MCP round trip to `url`. Returns the parsed tool payload, or None."""
     # ⚠⚠ A UUID, NOT A CONSTANT, AND IT IS THE JOIN KEY FOR TWO-SIDED LOGGING (2026-09-06).
     # JSON-RPC lets the CALLER choose `id`; it passes through the MCP layer untouched and needs no
     # header negotiation. The server logs it verbatim as `rpc_id`, so our record of what we SENT and
@@ -108,10 +132,13 @@ def _call(tool: str, arguments: dict):
     init_id, call_id = str(uuid.uuid4()), str(uuid.uuid4())
     sid, body = _post({"jsonrpc": "2.0", "id": init_id, "method": "initialize",
                        "params": {"protocolVersion": "2025-06-18", "capabilities": {},
-                                  "clientInfo": {"name": "zp-record", "version": "1"}}})
-    _post({"jsonrpc": "2.0", "method": "notifications/initialized"}, session=sid)
+                                  "clientInfo": {"name": "zp-record", "version": "1"}}},
+                      url=url, opener=opener)
+    _post({"jsonrpc": "2.0", "method": "notifications/initialized"}, session=sid,
+          url=url, opener=opener)
     _, body = _post({"jsonrpc": "2.0", "id": call_id, "method": "tools/call",
-                     "params": {"name": tool, "arguments": arguments}}, session=sid)
+                     "params": {"name": tool, "arguments": arguments}}, session=sid,
+                    url=url, opener=opener)
     res = _parse(body)
     if not res or "result" not in res:
         return None
@@ -292,6 +319,61 @@ def read_ref(ref):
     return ref
 
 
+def verify_subjects(observed, ref):
+    """`(subjects, skipped)` — gitRobot's `ledger_subjects` answer for a reading. RAISES
+    `common.SubjectsUnverified` when there is no answer to give.
+
+    `observed` is `{repo-relative path: the blob id of the bytes that were READ}`; `ref` is a resolved
+    tree or commit id. The served tool VERIFIES that reading against `ref` and does not derive one,
+    so the predicate — which paths may be subjects — lives there, and this function carries the
+    reading over and the answer back. `skipped` is `[(path, why)]` with the server's own reason.
+
+    ⚠ THE SHAPE CHECKS BELOW ARE TRANSPORT, NOT A SECOND PREDICATE. Each asks whether the answer is
+    an answer to THIS question: every path sent comes back exactly once, as a subject or a skip, and
+    a subject carries the blob that was sent. A reply that drops a path or names other bytes is not a
+    verification of this reading, so it raises (`R-ZERONULL`) rather than recording a narrower set.
+    """
+    import common
+    try:
+        out = gitrobot_call("ledger_subjects", {"observed": dict(observed), "ref": ref})
+    except (urllib.error.URLError, OSError, TimeoutError, ValueError) as exc:
+        raise common.SubjectsUnverified(
+            "subjects unverified: gitRobot ledger_subjects unreachable at %s (%s)"
+            % (GITROBOT_URL, exc))
+    if not isinstance(out, dict):
+        raise common.SubjectsUnverified(
+            "subjects unverified: gitRobot ledger_subjects returned no usable payload")
+    if out.get("_transport_is_error") or out.get("ok") is not True:
+        raise common.SubjectsUnverified(
+            "subjects unverified: gitRobot ledger_subjects refused (%s)"
+            % str(out.get("error") or out.get("errors") or out.get("reason") or out)[:400])
+    subjects, skipped = out.get("subjects"), out.get("skipped")
+    if not isinstance(subjects, list) or not isinstance(skipped, list):
+        raise common.SubjectsUnverified(
+            "subjects unverified: the answer carries no `subjects`/`skipped` lists")
+    kept, fenced, seen = [], [], []
+    for s in subjects:
+        p = s.get("path") if isinstance(s, dict) else None
+        b = s.get("git_blob_id") if isinstance(s, dict) else None
+        if p not in observed or b != observed[p]:
+            raise common.SubjectsUnverified(
+                "subjects unverified: the answer names %r at %r, which is not the reading sent"
+                % (p, b))
+        kept.append({"path": p, "git_blob_id": b})
+        seen.append(p)
+    for k in skipped:
+        if not isinstance(k, dict) or not isinstance(k.get("path"), str):
+            raise common.SubjectsUnverified(
+                "subjects unverified: a `skipped` entry is malformed (%r)" % (k,))
+        fenced.append((k["path"], str(k.get("why") or "skipped by gitRobot ledger_subjects")))
+        seen.append(k["path"])
+    if sorted(seen) != sorted(observed):
+        raise common.SubjectsUnverified(
+            "subjects unverified: %d path(s) sent, %d answered; unanswered: %s"
+            % (len(observed), len(seen), ", ".join(sorted(set(observed) - set(seen))[:5])))
+    return sorted(kept, key=lambda s: s["path"]), fenced
+
+
 def module_evidence(*paths, repo=None):
     """`[{path, git_blob_id}]` for the code that PRODUCED a verdict — V16's evidence field.
 
@@ -399,8 +481,8 @@ def build_record(step, tier, verdict, subjects, basis, reason=None,
     something it does not hold is how two halves of one system disagree in silence.
 
     ⚠ A blob id is `sha1("blob " + bytelength + "\\0" + content)` — `sha1(file_bytes)`
-    does NOT equal it. Do not compute one; read it from the index via
-    `common.ledger_subjects`, which also fences the paths it is not safe to record.
+    does NOT equal it. Subjects come from `common.ledger_subjects`, which has gitRobot
+    verify the reading and returns the paths it would not certify.
     """
     record = {
         "schema": "zp.record.v1",
@@ -574,7 +656,7 @@ def emit_ex(step, tier, verdict, subjects, basis, reason=None,
 # --------------------------------------------------------------------- the review-gate CLI
 #
 # ⚠⚠ WHY THIS EXISTS AND WHY IT IS SEPARATE FROM `common.record_if_asked`. Every mechanical checker
-# emits through `common.emit_verdict`, which derives its own subjects and stamps
+# emits through `common.emit_verdict`, which takes its own reading and stamps
 # `decided.how = "mechanical"` by default. A REVIEW gate cannot use that path: its subjects are the
 # files a reviewer actually read (a decision, not a scan) and its verdict is a judgement. Until this
 # existed there was NO way for `/editorial-review`, `/adversary-review`, `/prior-art-review` or
@@ -587,12 +669,49 @@ def emit_ex(step, tier, verdict, subjects, basis, reason=None,
 # value of a review record is the answer to "who decided this, and how", and a wrong answer there is
 # worse than no record, because it satisfies a gate that nothing actually reviewed.
 #
-# ⚠ SUBJECTS ARE READ FROM THE INDEX, NEVER HASHED HERE. `common.ledger_subjects` reads the blob id
-# the index already stores and fences the paths that are not safe to record (untracked, outside the
-# repo, differing from the index). A blob id is sha1("blob " + bytelength + "\0" + content) —
-# computing one by hand is how the field that used to be called `sha256` made every record read
-# STALE for ever, because the validator accepted a 64-hex digest while the comparator resolved a
-# 40-hex object id.
+# ⚠ SUBJECTS ARE gitRobot's VERIFIED ANSWER ABOUT A READING. `common.ledger_subjects` sends the
+# reading (`--observed-file`, or the working-tree blob ids taken now) to gitRobot's `ledger_subjects`,
+# which checks it against the basis and returns every path it will not certify with its reason. A
+# blob id is sha1("blob " + bytelength + "\0" + content) — the field that used to be called
+# `sha256` made every record read STALE for ever, because the validator accepted a 64-hex digest
+# while the comparator resolved a 40-hex object id.
+
+# ⚠⚠ `panel` IS M-OF-N, AND BOTH NUMBERS ARE CONSTANTS BY RULING, NOT BY TASTE. Tim, 2026-10-14:
+# all three readers must have RUN (R5a), and the threshold is fixed at 2 of 3 with no flag to choose
+# it and no policy key to tune it (R5d). A threshold the caller supplies is a threshold the caller
+# can lower; one written here can only be changed by a reviewed edit to this file.
+# ⚠ THE SERVER'S FLOOR IS ALSO 2 (`policy.panel.min_threshold`, served default — `policy()` exposes
+# no `panel` key, measured 2026-10-13). Equal today; if the server floor ever rises above this, V23
+# refuses every panel record, loudly, which is the safe direction for the two to disagree in.
+PANEL_PASSES = 3
+PANEL_THRESHOLD = 2
+# The two values a panel finding's `shift` may take (R5c). The FIELD NAME is shared with
+# `.claude/commands/copy-editor.md`, which tells each reader to write it; renaming it here strands
+# the brief. ⚠ The ledger stores the key without judging it (V18 reads `severity` only; validated
+# 2026-10-14 with `shift: wording` on a PASS, `ok:true`), so THIS FILE is the only reader of it.
+PANEL_SHIFTS = ("meaning", "wording")
+# The two values a copy_editor finding's `vote` may take: the vote of the READER WHO MADE IT, copied
+# as given. It is what lets this file see whether a panel PASS carries its dissent at all. ⚠ The
+# ledger stores the key without judging it (validated 2026-10-14 with `vote` on a panel PASS,
+# `ok:true`), so, like `shift`, THIS FILE is the only reader of it.
+PANEL_VOTES = ("pass", "divergent")
+# The one step `panel` belongs to (R5d puts the constant in the copy-editor path). The meaning /
+# wording vocabulary is the copy-editor brief's; no other gate's readers are asked to write it.
+PANEL_STEP = "copy_editor"
+
+
+def decided_for(how, passes, agreed, who):
+    """The `decided` dict, built in ONE place so `--selftest` can read its bytes.
+
+    ⚠ `threshold` IS WRITTEN ONLY UNDER `panel`. V23 requires it ON a panel record (*"requires
+    integer decided.passes, decided.agreed and decided.threshold"*), while every other route's
+    record must stay byte-identical to what it was — an `agreement` record growing a key it never
+    carried would be a new payload under V11 and conflict with its own earlier copy."""
+    d = {"how": how, "passes": passes, "agreed": agreed, "who": who}
+    if how == "panel":
+        d["threshold"] = PANEL_THRESHOLD
+    return d
+
 
 def _cli(argv):
     import argparse
@@ -632,6 +751,20 @@ def _cli(argv):
                          "finding it did reach.")
     ap.add_argument("--files", required=True, nargs="+",
                     help="repo-relative paths the review actually covered — its subjects")
+    # ⚠⚠ THE READING IS THE REVIEWER'S, TAKEN WHEN IT READ (`SUBJ-1`, `D1-1`). Subjects are
+    # gitRobot's verification of a reading against the basis. Without this file the reading is
+    # taken at RECORD time from the working tree, minutes after the review read it, and a file that
+    # changed and was staged in between verifies cleanly on bytes nobody examined. `--observe`
+    # below produces the file at read time.
+    ap.add_argument("--observed-file", default=None,
+                    help="JSON object {repo-relative path: git blob id} of the bytes the review "
+                         "actually READ, taken when it read them (`record.py --observe <paths>` "
+                         "prints one). Every --files path needs an entry. Without it the reading "
+                         "is taken now, from the working tree.")
+    ap.add_argument("--observe", nargs="+", default=None, metavar="PATH",
+                    help="print the JSON reading for these repo-relative paths (the blob id of "
+                         "the bytes on disk now) and exit — run it when you READ, save the output, "
+                         "and pass it later as --observed-file. Exit 2 if any path has no reading.")
     # ⚠ THE ENUMS ARE THE SERVER'S, MIRRORED HERE ONLY AS FAIL-FAST. The ledger refuses a bad value
     # either way — that is where the rule lives and this file holds no validation logic. Listing them
     # in `choices` turns a round trip into an immediate usage error, which matters for a gate brief
@@ -640,11 +773,14 @@ def _cli(argv):
                     help="A = an agent gate actually ran; H = a human decided. 'M' is mechanical "
                          "and belongs to common.record_if_asked, not here.")
     ap.add_argument("--how", required=True,
-                    choices=["delegated", "agreement", "signature", "override"],
+                    choices=["delegated", "agreement", "panel", "signature", "override"],
                     help="delegated = ONE agent round, no consensus claimed (the normal route for "
                          "a gate brief); agreement = 3+ independent passes concurred and the round "
-                         "RAN; signature = a PERSON accepted a verdict the round did not produce; "
-                         "override = a regrade, the gate erred. 'mechanical' is REFUSED here.")
+                         "RAN; panel = --step copy_editor only, exactly 3 passes ran and at least 2 "
+                         "concurred, the dissent "
+                         "CARRIED on the record and never outvoted when it is bedrock or says the "
+                         "meaning moved; signature = a PERSON accepted a verdict the round did not "
+                         "produce; override = a regrade, the gate erred. 'mechanical' is REFUSED here.")
     # ⚠⚠ THE BRIEF, NOT THE AGENT — AND THIS IS WHY `delegated` NEEDED NO NEW MECHANISM.
     # Attribution is not authentication: `sign` already concedes that, and no key material exists
     # here, so "prove you are that agent" was never on the table. What IS checkable is WHICH
@@ -654,7 +790,8 @@ def _cli(argv):
     # review rather than at checkers.
     ap.add_argument("--evidence", nargs="+", default=None,
                     help="path(s) to the BRIEF this round ran under, e.g. "
-                         ".claude/commands/adversary-review.md. REQUIRED for a delegated PASS. "
+                         ".claude/commands/adversary-review.md. REQUIRED for a delegated PASS, "
+                         "and for every agreement or panel verdict. "
                          "Not the checker module — the instructions.")
     # ⚠ A FILE, NOT ARGV. Findings carry prose notes, and prose on a command line breaks on
     # length, quoting and encoding — the same reason `--reason-file` exists. JSON list of
@@ -678,7 +815,11 @@ def _cli(argv):
                     help="JSON file of findings to carry ON the record (V18). Use when the round "
                          "reached its ORDINARY cap and R-LOOPCAP says stop-and-push: the verdict "
                          "admits, and these ride with it so they do not evaporate. Only severity "
-                         "'ordinary' may accompany a PASS.")
+                         "'ordinary' may accompany a PASS. Under --how panel it is REQUIRED on a "
+                         "split PASS. On a --step copy_editor PASS under agreement or panel, every "
+                         "finding needs `shift` set to 'meaning' or 'wording' ('meaning' is "
+                         "refused) and `vote` set to 'pass' or 'divergent'; a panel PASS needs at "
+                         "least one 'divergent' finding and an agreement PASS may carry none.")
     # ⚠⚠ `subjects` IS COVERAGE; `failing` IS INDICTMENT — AND UNTIL 2026-09-06 THIS CLI COULD ONLY
     # EXPRESS THE FIRST. `emit()` has taken `failing` since 2026-09-02 and `common.emit_verdict`
     # passes it, so every MECHANICAL step has named its indicted subset since 09-03. The review
@@ -702,9 +843,13 @@ def _cli(argv):
                          "blocking verdict: absent `failing` indicts EVERY subject, so omitting it "
                          "on a FAIL over 40 files condemns 39 that passed.")
     ap.add_argument("--passes", type=int, default=1,
-                    help="how many independent passes ran (agreement only)")
-    ap.add_argument("--agreed", type=int, default=1,
-                    help="how many of them concurred (agreement only)")
+                    help="how many independent passes ran (agreement: 3 or more; panel: exactly 3)")
+    # ⚠ DEFAULT `None`, RESOLVED TO 1 BELOW FOR EVERY ROUTE EXCEPT `panel`. A panel's agreed count
+    # IS its verdict, so it must be STATED; a default of 1 would let an omitted flag read as "one
+    # reader concurred". Every other route still records 1 when the flag is absent, byte for byte.
+    ap.add_argument("--agreed", type=int, default=None,
+                    help="how many of them concurred (agreement: all of them; panel: REQUIRED, "
+                         "at least 2 for a PASS)")
     ap.add_argument("--who", default=None, help="who decided it (agent id, or a person)")
     ap.add_argument("--reason", default=None, help="one line, recorded on a FAIL")
     # ⚠⚠ CONTENT NEVER TRAVELS ON A COMMAND LINE, AND HERE IT IS NOT A STYLE POINT. The PreToolUse
@@ -721,9 +866,11 @@ def _cli(argv):
     # 2026-08-24 on one five-file scope: `HEAD` -> 0 of 5 subjects, exit 2; `INDEX` -> 5 of 5.
     # A pre-commit gate's subject is the staged content, so that is what it records.
     ap.add_argument("--ref", default=common.INDEX,
-                    help="basis ref (default INDEX = the staged content, which is what a "
-                         "pre-commit review actually examined). Pass HEAD to record a review of "
-                         "already-committed content.")
+                    help="basis ref (default INDEX = the tree the staged content makes, which is "
+                         "what a pre-commit review examined; with nothing staged it is the tree "
+                         "HEAD carries). HEAD records against the COMMIT id instead of a tree, and "
+                         "which basis decides an action is the ledger's answer (verdictLedger "
+                         "`inventory` / `find`), so prefer the default for committed content too.")
     # ⚠ V9 REFUSES A RECORD WITH NO RUN ID, and a spawned review gate has no pipeline to inherit one
     # from: `ZPLEDGER_RUN` is set by `batch.py precommit` and `hooks.py` only. Every brief mandates a
     # FRESH ISOLATED AGENT, so every review gate hit this and none could record. Naming the run
@@ -747,8 +894,8 @@ def _cli(argv):
     # record; only the final verb changes from `append` to `validate`. A dry run that skipped any of
     # that would be checking a different command from the one the brief prints.
     #
-    # ⚠ THREE EXIT CODES, MATCHING THIS MODULE'S DOCTRINE: 0 the ledger would accept it · 1 it would
-    # refuse, and every reason is printed · 2 the ledger could not be asked. Reading 2 as 1 turns an
+    # ⚠ THREE EXIT CODES, MATCHING THIS MODULE'S DOCTRINE: 0 `validate` answered ok · 1 it returned
+    # errors, every one printed · 2 a service could not be asked. Reading 2 as 1 turns an
     # outage into "your record is bad", which sends a gate off editing a record that was fine.
     # ⚠ DECLARED so it appears in `--help` and in `_actions` like any other flag, and handled
     # below before `parse_args`, which would otherwise demand a full record to answer it.
@@ -757,9 +904,10 @@ def _cli(argv):
                          "a checker that needs to know what this program accepts without reading "
                          "its help prose.")
     ap.add_argument("--dry-run", action="store_true",
-                    help="VALIDATE the record against the ledger and print what it would say, "
-                         "WITHOUT appending. Use this to check a command — never the live stream. "
-                         "Exit 0 = would be accepted, 1 = would be refused, 2 = ledger unreachable.")
+                    help="print the basis and each verified subject's blob id, then verdictLedger "
+                         "`validate`'s answer verbatim, WITHOUT appending. Use this to check a "
+                         "command — never the live stream. Exit 0 = validate ok, 1 = validate "
+                         "returned errors, 2 = a service could not be asked.")
     # ⚠⚠ THE PARSER'S OWN TRUTH, BECAUSE `--help` IS PROSE AND PROSE IS NOT AN INTERFACE.
     # `check_briefs` asks this program which flags exist, and it used to ask by scraping `--help`
     # for anything shaped like a flag. That reads DESCRIPTIONS as well as options, so a flag named
@@ -780,12 +928,74 @@ def _cli(argv):
                 if opt.startswith("--"):
                     print(opt)
         return 0
+    # ⚠ HANDLED BEFORE `parse_args` for the same reason: taking a reading must not require a record.
+    if "--observe" in argv:
+        op = argparse.ArgumentParser(prog="record.py --observe")
+        op.add_argument("--observe", nargs="+", required=True, metavar="PATH")
+        o = op.parse_args(argv)
+        try:
+            seen, unread = common.observe_blobs(o.observe)
+        except common.SubjectsUnverified as e:
+            print("UNDECIDED: no reading taken: %s" % e, file=sys.stderr)
+            return 2
+        print(json.dumps(seen, indent=1, sort_keys=True))
+        for rel in unread:
+            print("  NO READING: %s — not a readable repo-relative file under %s"
+                  % (rel, common.REPO), file=sys.stderr)
+        return 2 if unread else 0
     a = ap.parse_args(argv)
+    # ⚠ `panel` IS THE COPY-EDITOR PANEL AND NOTHING ELSE (R5d). Its threshold, its passes and its
+    # `shift` vocabulary were ruled for that gate's three readers; on another step the record would
+    # claim a 2-of-3 vote no brief ever ran.
+    if a.how == "panel" and a.step != PANEL_STEP:
+        ap.error("--how panel is the copy-editor panel's route only (--step %s, R5d); got --step "
+                 "%s. Another gate's single round is --how delegated, and three unanimous passes "
+                 "are --how agreement." % (PANEL_STEP, a.step))
+    # ⛔⛔ A COPY_EDITOR PASS MUST NOT BE RECORDABLE WITHOUT ITS DISSENT, AND THE GUARD IS ON THE
+    # PROPERTY, SO EVERY `--how` IS ACCOUNTED FOR HERE:
+    #   delegated  — one round, no headcount, no outstanding required: a 2-1 split with a MEANING
+    #                dissent lands as a clean PASS. REFUSED below, on every verdict: the brief never
+    #                records this way, and a delegated record at the panel's basis would also take
+    #                revision 0 and leave the carrier's real record refused by V11.
+    #   agreement  — PASS needs 3 of 3 (V3 mirror, below), and any finding it carries needs `shift`
+    #                and `vote`, may not be 'meaning', and may not carry a 'divergent' vote
+    #                (outstanding loop, below). A carrier who writes `--agreed 3` over a split and
+    #                tags every finding 'pass' cannot be detected by any client; that is the residual.
+    #   panel      — PASS needs 2 of 3, never 3, and an outstanding file whose every finding is
+    #                tagged and ordinary wording, at least one with vote 'divergent'. Completeness
+    #                and faithful copying of the tags are not checkable.
+    #   signature, override — Tim's routes: a PERSON accepts or regrades. Left open by design.
+    #   mechanical — not in `choices`; refused by argparse.
+    if a.step == PANEL_STEP and a.how == "delegated":
+        ap.error("--step %s refuses --how delegated: a single round records no headcount and no "
+                 "dissent, so a 2-1 split would land as a clean verdict. The carrier records ONE "
+                 "record for the three readers: --how agreement (3 of 3), --how panel (2 of 3, every "
+                 "reader's findings on --outstanding-file), or --verdict undecided. See "
+                 ".claude/commands/copy-editor.md." % PANEL_STEP)
+    if a.agreed is None:
+        if a.how == "panel":
+            ap.error("--agreed is required with --how panel: how many of the %d readers concurred "
+                     "IS the verdict, so it is stated, never defaulted. An omitted count would "
+                     "record one concurring reader the round never reported." % PANEL_PASSES)
+        a.agreed = 1
+
+    # ⚠ EVERY INPUT FILE IS READ AS `utf-8-sig`, AND AN UNREADABLE ONE IS A USAGE ERROR (exit 2),
+    # NEVER A TRACEBACK (`RECORD-PY-BOM-CRASH-1`). PowerShell 5.1 `Set-Content -Encoding utf8` writes
+    # a BOM, and plain `utf-8` hands `json.loads` a leading U+FEFF it refuses — a traceback and exit
+    # 1, which this layer reserves for a FINDING. One reader for every input flag, so no flag is the
+    # one that was missed.
+    def _read_input(flag, path, as_json):
+        try:
+            text = io.open(path, encoding="utf-8-sig").read()
+            return json.loads(text) if as_json else text
+        except (IOError, OSError, ValueError) as exc:
+            ap.error("%s %r could not be read%s: %s"
+                     % (flag, path, " as JSON" if as_json else "", exc))
 
     if a.reason_file:
         if a.reason:
             ap.error("pass --reason or --reason-file, not both")
-        a.reason = io.open(a.reason_file, encoding="utf-8").read().strip()
+        a.reason = _read_input("--reason-file", a.reason_file, False).strip()
     if a.run:
         os.environ["ZPLEDGER_RUN"] = a.run
     if not os.environ.get("ZPLEDGER_RUN"):
@@ -870,8 +1080,39 @@ def _cli(argv):
                      "verdict that names no blob, because staleness is computed by watching a "
                      "named blob move. Only --how signature and --how override are exempt, and "
                      "they are exempt because a human decision has no producing file at all.")
+    elif a.how == "panel":
+        # ⚠⚠ THE `panel` CONTRACT (Tim's R5, 2026-10-03; follow-ups R5a-d, 2026-10-14). A 2-of-3
+        # copy-editor split used to be recordable only as UNDECIDED, routed to his signature, and
+        # wave 4 measured the price: two of his decisions re-asked and ~10 of 13 extra gate rounds
+        # downstream of a split (`CARRYW4-X-1`). `panel` lets a split whose dissent is WORDING
+        # admit, while a dissent that is bedrock or says the meaning moved still blocks.
+        #
+        # ⚠ EVERY REQUIREMENT HERE IS ON EVERY panel VERDICT, NOT ONLY THE PASS. V23 refuses a panel
+        # record with no `who` and V21 one with no blob, PASS and UNDECIDED alike (measured
+        # 2026-10-13); refusing locally names the remedy instead of spending a round trip on it.
+        if not a.who:
+            ap.error("--who is required with --how panel: name the GATE whose readers sat on the "
+                     "panel (e.g. --who copy_editor). V23 refuses a panel record without it.")
+        if a.tier != "A":
+            ap.error("--how panel requires --tier A: it records that three AGENT readers actually "
+                     "ran. 'H' claims a human decided, which is --how signature.")
+        if not a.evidence:
+            ap.error("--evidence is required for --how panel: give the path to the BRIEF the "
+                     "readers ran under. Three readers following one brief have ONE producer, as "
+                     "under --how agreement, and V21 refuses any verdict that names no blob.")
+        # ⚠ R5a — ALL THREE READERS RAN. Not "at least 3": a panel of four with a 2-vote threshold
+        # is a minority verdict, and the ruling fixed both numbers together.
+        if a.passes != PANEL_PASSES:
+            ap.error("--how panel requires --passes %d (R5a: all three readers must have run); got "
+                     "passes=%d. A panel with a reader missing is not a 2-of-3 split — it is a "
+                     "round that did not finish. Run the missing reader, or record --verdict "
+                     "undecided under a route that does not claim a panel."
+                     % (PANEL_PASSES, a.passes))
+        if not 0 <= a.agreed <= a.passes:
+            ap.error("--agreed must lie between 0 and --passes (%d); got %d. More readers cannot "
+                     "concur than ran." % (a.passes, a.agreed))
     elif a.evidence:
-        ap.error("--evidence belongs to --how delegated or --how agreement — both are produced by "
+        ap.error("--evidence belongs to --how delegated, agreement or panel — all are produced by "
                  "a BRIEF, and a panel of three reading one brief still has one producer. "
                  "--how signature (a human accept) and --how override (a regrade) have no "
                  "producing file at all, which is a difference in KIND rather than headcount.")
@@ -905,6 +1146,42 @@ def _cli(argv):
                  "A FAIL needs none of this: one agent's finding stands on its own."
                  % (a.passes, a.agreed))
 
+    # ⚠⚠ THE panel PASS, AND THE V3 MIRROR ABOVE IS DELIBERATELY UNTOUCHED BY IT. `agreement` stays
+    # unanimous; `panel` is a SEPARATE route with its own threshold, never a relaxed `agreement`.
+    if a.verdict == "pass" and a.how == "panel":
+        if a.agreed < PANEL_THRESHOLD:
+            ap.error("a PASS under --how panel needs --agreed >= %d of %d (R5d, a constant in this "
+                     "file, no flag and no policy key); got agreed=%d. A split below threshold is "
+                     "recorded honestly as --verdict undecided, and goes to Tim."
+                     % (PANEL_THRESHOLD, PANEL_PASSES, a.agreed))
+        # ⚠ R-ZERONULL: A SPLIT MUST NOT RECORD THE VALUE A UNANIMOUS ROUND RECORDS. Unanimity has a
+        # route already, the stronger one. Two spellings of one fact means a reader of the ledger
+        # can no longer tell "all three concurred" from "two did and the third was carried".
+        if a.agreed == a.passes:
+            ap.error("all %d readers concurred, so this is --how agreement, not --how panel. "
+                     "`panel` records a SPLIT; a unanimous round recorded under it would make a "
+                     "split and a unanimous verdict indistinguishable in the ledger." % a.passes)
+        # ⚠⚠ WHAT IS ENFORCED, AND WHAT CANNOT BE. Enforced here: a split PASS needs a non-empty
+        # outstanding file; every finding on it has its `severity`, `shift` and `vote` checked; and
+        # at least one finding must carry `vote: 'divergent'` (outstanding loop, below), so a file
+        # holding only the PASS voters' findings is refused. NOT enforceable by any client: that the
+        # list holds EVERY finding the dissenting reader wrote, and that each tag, `vote` included,
+        # is the one the reader gave. This file never sees the readers' raw output, only what the
+        # carrier copied, so a carrier who leaves out the one MEANING finding, relabels it
+        # 'wording', or marks a PASS voter's finding 'divergent', is accepted. That half
+        # rests on the brief's copy-verbatim instruction and on the raw outputs in the carrier's
+        # report, which a human can audit against the record.
+        # ⚠ THIS MAKES THE CLIENT STRICTER THAN THE SERVER, the direction that hides a refusal from
+        # the ledger's call log; accepted for the same reason as the evidence fence below — the
+        # ledger reads only what rides on the record, so it has no half that could see an absent one.
+        if not a.outstanding_file:
+            ap.error("a split PASS under --how panel (%d of %d) needs --outstanding-file carrying "
+                     "every reader's findings, the dissenting reader's among them. The ledger can "
+                     "refuse a bedrock dissent only if it rides on the record, so a dropped dissent "
+                     "is an outvoted one that nothing could see. Carry each finding with its "
+                     "reader's own severity, `shift` ('meaning' or 'wording') and `vote` ('pass' or "
+                     "'divergent')." % (a.agreed, a.passes))
+
     # ⚠⚠ NO CHECK CAN DECIDE WHETHER A NAME BELONGS TO A PERSON, SO IT IS STATED INSTEAD OF TESTED.
     # `agreement` refuses a single agent round, which makes the tempting fix `signature` with the
     # AGENT as `who` — and that is the anonymous-approval hole V5 closes, with a robot's name written
@@ -919,7 +1196,24 @@ def _cli(argv):
         print("  If that is an agent, this record claims an accountability that does not exist;")
         print("  a single agent round is not a review anyone signed. Use 3 passes + --how agreement.")
 
-    subjects, skipped = common.ledger_subjects(sorted(set(a.files)), a.ref)
+    observed = None
+    if a.observed_file:
+        observed = _read_input("--observed-file", a.observed_file, True)
+        if not isinstance(observed, dict) or not all(
+                isinstance(k, str) and isinstance(v, str) for k, v in observed.items()):
+            ap.error("--observed-file must hold a JSON object {repo-relative path: blob id} — "
+                     "the output of `record.py --observe <paths>` taken when the review read them")
+    else:
+        # ⚠ STATED ON EVERY RUN THAT TAKES THE READING NOW, so a record made this way is never
+        # mistaken for one carrying the review's own reading.
+        print("  reading: taken NOW from the working tree under %s — not the review's own. A file "
+              "changed and staged since it was read would verify on bytes nobody examined; pass "
+              "--observed-file (from `record.py --observe` at read time) to close that." % common.REPO)
+    try:
+        subjects, skipped = common.ledger_subjects(sorted(set(a.files)), a.ref, observed=observed)
+    except common.BasisUnresolved as e:
+        print("UNDECIDED: %s was NOT SENT: %s" % (a.step, e))
+        return 2
     for rel, why in skipped:
         print("  not recorded: %-52s %s" % (rel, why))
     if not subjects:
@@ -937,7 +1231,9 @@ def _cli(argv):
     # an agent might read as "the ledger is down".
     outstanding = ()
     if a.outstanding_file:
-        outstanding = json.loads(io.open(a.outstanding_file, encoding="utf-8").read())
+        # ⚠ A USAGE ERROR, NOT A TRACEBACK: exit 1 is this layer's "finding" code, and a missing or
+        # unparseable file is a mistake in the command, which argparse reports as exit 2.
+        outstanding = _read_input("--outstanding-file", a.outstanding_file, True)
         if not isinstance(outstanding, list) or not outstanding:
             ap.error("--outstanding-file must hold a non-empty JSON list of findings; omit the "
                      "flag entirely for a genuinely clean pass")
@@ -951,6 +1247,54 @@ def _cli(argv):
                          "R-LOOPCAP's stop-and-push at the ORDINARY cap and must NEVER become a "
                          "way to ship a bedrock or blocking finding — BEDROCK gets 5 rounds and "
                          "must not ship. Record the FAIL instead." % f.get("severity"))
+            # ⚠⚠ R5c — A "THE MEANING MOVED" DISSENT ALWAYS BLOCKS, WHATEVER ITS SEVERITY TAG. A panel
+            # outvotes only wording and expression. The severity is the DISSENTING READER'S own grade
+            # (R5b) and this file never rewrites it; it reads `shift` beside it instead, so a reader
+            # who tags a meaning change 'ordinary' still cannot be outvoted on it. ⚠ The check above
+            # already refuses a bedrock dissent on any PASS; this is the half V18 cannot see,
+            # because the server reads `severity` and nothing else.
+            # ⚠ ON BOTH AGENT ROUTES OF THE STEP, NOT ONLY `panel`: under the union rule a finding is
+            # not owned by the vote it came with, so a MEANING finding from a reader who voted PASS
+            # blocks a 3/3 `agreement` PASS too. `shift` and `vote` are REQUIRED on a PASS, or
+            # omitting a key would walk a finding past the refusal it feeds. ⚠ ON A PASS ONLY: a
+            # FAIL or UNDECIDED blocks whatever its findings say, and a client guard must never be
+            # the thing that stops a real blocking verdict from landing. `signature` and `override`
+            # are Tim's, and a person accepting a split may carry what he accepted.
+            if a.step == PANEL_STEP and a.how in ("agreement", "panel") and a.verdict == "pass":
+                if f.get("shift") not in PANEL_SHIFTS:
+                    ap.error("every finding on a --step %s PASS under --how %s needs `shift` set "
+                             "to one of %s; got %r. It is what decides whether a finding may ride "
+                             "on a PASS at all (R5c), so an unmarked finding cannot be weighed — "
+                             "ask the reader which it was, never guess."
+                             % (PANEL_STEP, a.how, ", ".join(PANEL_SHIFTS), f.get("shift")))
+                if f.get("vote") not in PANEL_VOTES:
+                    ap.error("every finding on a --step %s PASS under --how %s needs `vote` set to "
+                             "one of %s, the vote of the reader who made it, copied as given; got "
+                             "%r. Without it nothing can show whether the dissent was carried."
+                             % (PANEL_STEP, a.how, ", ".join(PANEL_VOTES), f.get("vote")))
+                if f.get("shift") == "meaning":
+                    ap.error("a %s PASS (--how %s) cannot carry a finding whose `shift` is "
+                             "'meaning' (R5c): a \"the meaning moved\" finding from ANY reader "
+                             "ALWAYS blocks, whatever its severity tag (here %r) and whatever its "
+                             "reader voted. Record --verdict undecided; it goes to Tim."
+                             % (PANEL_STEP, a.how, f.get("severity")))
+        # ⚠⚠ THE DISSENT, READ OFF THE `vote` TAGS (every finding has one by now, checked above).
+        # A panel PASS is a split, so its dissenting reader's findings must be on it; a file holding
+        # only PASS voters' findings is a dropped dissent. An agreement PASS is unanimous, so a
+        # 'divergent' finding on it contradicts its own headcount. Both read only the tags the
+        # carrier copied; whether they were copied faithfully is not checkable here.
+        if a.step == PANEL_STEP and a.verdict == "pass":
+            votes = [f.get("vote") for f in outstanding]
+            if a.how == "panel" and "divergent" not in votes:
+                ap.error("a %s panel PASS must carry at least one finding with `vote` 'divergent': "
+                         "the lone DIVERGENT reader's own findings. None is marked so, which means "
+                         "the dissent was not carried, or it reported no findings (then the round "
+                         "is UNDECIDED, never a panel PASS)." % PANEL_STEP)
+            if a.how == "agreement" and "divergent" in votes:
+                ap.error("a %s agreement PASS records three PASS votes, so it cannot carry a finding "
+                         "with `vote` 'divergent'. A DIVERGENT reader means a split: --how panel "
+                         "if its findings are all WORDING and ORDINARY, otherwise --verdict "
+                         "undecided." % PANEL_STEP)
     # ⚠⚠ VALIDATED AGAINST THE POST-FENCE `subjects`, NEVER AGAINST `--files`. `ledger_subjects`
     # DROPS paths absent from the ref or differing from the index, so `--files` is what the caller
     # asked for and `subjects` is what is actually being recorded. Indicting a path that was fenced
@@ -958,7 +1302,7 @@ def _cli(argv):
     # inside one record, which is worse than either being wrong alone.
     failing = ()
     if a.failing_file:
-        failing = json.loads(io.open(a.failing_file, encoding="utf-8").read())
+        failing = _read_input("--failing-file", a.failing_file, True)
         if not isinstance(failing, list) or not failing or \
                 not all(isinstance(p, str) and p.strip() for p in failing):
             ap.error("--failing-file must hold a non-empty JSON list of repo-relative path "
@@ -994,7 +1338,11 @@ def _cli(argv):
         # cost of the shape test, not an argument against it — the alternative is refusing the
         # honest case to catch a misspelling nothing acts on.
         PATHISH = (".py", ".md", ".lean", ".json", ".txt", ".ps1", ".toml", ".yml", ".yaml")
-        claims_content = [p for p in stray if "/" in p or p.endswith(PATHISH)]
+        # ⚠ A FILE THAT EXISTS IN THE CHECKOUT CLAIMS CONTENT, wherever it sits (`RLY54-1`). Root
+        # paths carry no slash, so a root `.pdf`, `.html` or `LICENSE` used to fall to the label
+        # side and be warned "does not name content" while naming exactly that.
+        claims_content = [p for p in stray if "/" in p or p.endswith(PATHISH)
+                          or os.path.isfile(os.path.join(str(common.REPO), p))]
         label_only = [p for p in stray if p not in claims_content]
         if claims_content:
             ap.error("--failing-file names %d path(s) that are NOT among the recorded subjects: "
@@ -1075,7 +1423,13 @@ def _cli(argv):
         print("           did not bother. An unnarrowed block over N files condemns the N-1 that")
         print("           passed, and nothing downstream can tell 'all of them' from 'could not say'.")
 
-    ev = module_evidence(*a.evidence) if a.evidence else ()
+    # ⚠ A RELATIVE `--evidence` IS REPO-RELATIVE, like `--files` (`CARRYW2-24`). It resolved against
+    # the PROCESS CWD, so a gate recording from a worktree with the brief's relative path was
+    # refused, or — from a CWD holding a same-named decoy — pinned the decoy (`RLYB-1r`). One
+    # resolution for every path this CLI takes: the checkout this `record.py` belongs to.
+    ev_paths = [e if os.path.isabs(e) else os.path.join(str(common.REPO), e)
+                for e in (a.evidence or ())]
+    ev = module_evidence(*ev_paths) if ev_paths else ()
     # ⚠⚠ EVIDENCE IS FENCED THE SAME WAY SUBJECTS ARE, AND IT WAS NOT UNTIL 2026-09-08 (RLYB-1).
     # `ledger_subjects` "fences the paths that are not safe to record (untracked, outside the repo,
     # differing from the index)" — this file says so at the top — but `module_evidence` hashes
@@ -1113,8 +1467,16 @@ def _cli(argv):
     # REFUSED an absolute in-repo path, a `./`-prefixed path and a `..`-containing path to the same
     # staged brief, because `ledger_subjects` normalises backslashes and nothing else — a false
     # "not staged" on four correct inputs (RLYB-6). One object, one fence, nine cases measured green.
+    # ⚠ The reading sent is the evidence blob ITSELF, so what gitRobot verifies is exactly the blob
+    # this record will carry, not a second hash of the file.
     if a.evidence:
-        _ev_kept, _ev_fenced = common.ledger_subjects([e["path"] for e in ev], a.ref)
+        try:
+            _ev_kept, _ev_fenced = common.ledger_subjects(
+                [e["path"] for e in ev], a.ref,
+                observed={e["path"]: e["git_blob_id"] for e in ev})
+        except common.BasisUnresolved as e:
+            print("UNDECIDED: %s was NOT SENT: --evidence could not be verified: %s" % (a.step, e))
+            return 2
         if _ev_fenced:
             ap.error("--evidence must name a TRACKED file at %s, and %d did not:\n%s\n"
                      "Evidence is what makes this verdict go stale when its producer changes — the "
@@ -1130,29 +1492,41 @@ def _cli(argv):
               "than accept an unpinned one." % (len(set(a.evidence)), len(ev)))
     # ⚠ ONE KWARGS DICT FEEDS BOTH VERBS. `check` and `emit` must be asked about the SAME record or
     # a dry run certifies a command nobody ran; building the arguments twice is where that drifts.
+    try:
+        basis = common.ledger_basis(a.ref)
+    except common.BasisUnresolved as e:
+        print("UNDECIDED: %s was NOT SENT: %s" % (a.step, e))
+        return 2
     kw = dict(step=a.step, tier=a.tier, verdict=a.verdict.upper(), subjects=subjects,
-              basis=common.ledger_basis(a.ref), reason=a.reason, evidence=ev,
+              basis=basis, reason=a.reason, evidence=ev,
               outstanding=outstanding, revision=a.revision, failing=failing,
-              decided={"how": a.how, "passes": a.passes, "agreed": a.agreed, "who": a.who})
+              decided=decided_for(a.how, a.passes, a.agreed, a.who))
 
     if a.dry_run:
+        # ⚠ PRINTED BEFORE THE LEDGER IS ASKED, so the bytes are readable even when it cannot be.
+        # `decided` is the one field whose SHAPE differs by route (`threshold` under panel only),
+        # and a dry run that hid it would certify a record nobody could inspect.
+        print("  decided  %s" % json.dumps(kw["decided"]))
         verdict = check(**kw)
         # ⚠⚠ `None` IS NOT `(False, [])`. Unreachable is exit 2 and prints nothing about the record's
         # quality, because nothing was learned about it. `check` already printed the outage line.
         if verdict is None:
             return 2
         ok, errors = verdict
-        print("  DRY RUN — nothing was appended. %s %4d subject(s) at %s"
-              % (a.verdict.upper(), len(subjects), a.ref))
-        if ok:
-            print("  the ledger WOULD ACCEPT this record.")
-            return 0
+        # ⚠⚠ THE OBJECT FIRST, THEN THE SERVER'S ANSWER VERBATIM, AND NOTHING ELSE (`RECDRY-1`). This
+        # printed "the ledger WOULD ACCEPT this record" — a sentence no service said, about bytes the
+        # output never named, so an exit 0 read as "this is the right record" when `validate` judges
+        # only the record's form. Subjects are gitRobot's verified answer and `validate` is the
+        # ledger's; each is printed as given, with the blob ids, so a reader can see WHICH bytes.
+        print("  DRY RUN — nothing was appended. %s at basis %s %s (from --ref %s), repo %s"
+              % (a.verdict.upper(), basis.get("kind"), basis.get("value"), a.ref, common.REPO))
+        for s in subjects:
+            print("  subject  %s  %s" % (s["git_blob_id"], s["path"]))
         # ⚠ EVERY violation, not the first. That is the whole reason `validate` returns a list:
         # one rule per round trip is how a caller gives up and works around the thing.
-        print("  the ledger WOULD REFUSE this record (%d violation(s)):" % len(errors))
-        for e in errors:
-            print("  - %s" % e)
-        return 1
+        print("  verdictLedger validate -> %s" % json.dumps({"ok": ok, "errors": errors},
+                                                            ensure_ascii=False))
+        return 0 if ok else 1
 
     rid = emit(**kw)
     if rid is None:
@@ -1161,5 +1535,123 @@ def _cli(argv):
     return 0
 
 
+def selftest():
+    """Controls for the review-gate CLI's input and dry-run paths. Returns 1 on any failure.
+
+    Every gitRobot answer comes through `_GITROBOT_SEAM` and every `validate` through a stand-in
+    for `check`, so nothing here reaches a service or appends. Run on the `record` MODULE (not
+    `__main__`), because that is the object `common` imports and whose seam it reads."""
+    import contextlib
+    import io as _io
+    import shutil
+    import tempfile
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    import common
+    import record as R
+    tmp = tempfile.mkdtemp(prefix="zp-record-selftest-")
+    P = "README.md"
+    seen_obs, seen_kw = [], []
+
+    def echo(tool, args):
+        seen_obs.append(dict(args["observed"]))
+        return {"ok": True, "skipped": [],
+                "subjects": [{"path": p, "git_blob_id": b} for p, b in args["observed"].items()]}
+
+    def stub_check(**kw):
+        seen_kw.append(kw)
+        return True, []
+
+    def write(name, data):
+        p = os.path.join(tmp, name)
+        with open(p, "wb") as fh:
+            fh.write(data)
+        return p
+
+    base = ["--step", "editorial", "--tier", "A", "--how", "delegated", "--who", "editorial",
+            "--run", "gate-selftest", "--evidence", ".claude/commands/editorial-review.md",
+            "--dry-run", "--files", P]
+
+    def run(argv):
+        """`(exit code, stdout+stderr text)`; a usage error is its SystemExit code, never a crash."""
+        del seen_obs[:], seen_kw[:]
+        buf = _io.StringIO()
+        saved = R._GITROBOT_SEAM, R.check
+        R._GITROBOT_SEAM, R.check = echo, stub_check
+        try:
+            with contextlib.redirect_stdout(buf), contextlib.redirect_stderr(buf):
+                try:
+                    rc = R._cli(argv)
+                except SystemExit as e:
+                    rc = e.code
+        except Exception as e:                            # noqa: BLE001 — a crash is red
+            rc = "CRASH %s: %s" % (type(e).__name__, e)
+        finally:
+            R._GITROBOT_SEAM, R.check = saved
+        return rc, buf.getvalue()
+
+    rows = []
+    try:
+        bom_fail = write("failing.json", b"\xef\xbb\xbf" + json.dumps([P]).encode())
+        rc, out = run(["--verdict", "fail", "--failing-file", bom_fail] + base)
+        rows.append(("a BOM --failing-file is read, not a traceback",
+                     rc == 0 and seen_kw and seen_kw[0].get("failing") == [P]))
+        bad_json = write("bad.json", b"\xef\xbb\xbf[not json")
+        rc, out = run(["--verdict", "fail", "--failing-file", bad_json] + base)
+        rows.append(("an unparseable --failing-file is exit 2 (usage)",
+                     rc == 2 and "could not be read as JSON" in out))
+        bom_reason = write("reason.txt", "﻿the reason".encode("utf-8"))
+        rc, out = run(["--verdict", "fail", "--failing-file", bom_fail,
+                       "--reason-file", bom_reason] + base)
+        rows.append(("a BOM --reason-file loses its BOM",
+                     rc == 0 and seen_kw and seen_kw[0].get("reason") == "the reason"))
+        rc, out = run(["--verdict", "pass"] + base)
+        rows.append(("the dry run prints validate's answer verbatim",
+                     rc == 0 and 'validate -> {"ok": true, "errors": []}' in out
+                     and "WOULD ACCEPT" not in out))
+        rows.append(("the dry run names each subject's blob",
+                     bool(seen_obs) and ("subject  %s  %s" % (seen_obs[0].get(P), P)) in out))
+        rows.append(("without --observed-file the reading is stated",
+                     "reading: taken NOW" in out))
+        obs = write("observed.json", json.dumps({P: "a" * 40}).encode())
+        rc, out = run(["--verdict", "pass", "--observed-file", obs] + base)
+        rows.append(("--observed-file is the reading sent",
+                     rc == 0 and seen_obs and seen_obs[0] == {P: "a" * 40}
+                     and "reading: taken NOW" not in out))
+        cwd = os.getcwd()
+        os.chdir(tmp)
+        try:
+            rc, out = run(["--verdict", "pass"] + base)
+        finally:
+            os.chdir(cwd)
+        rows.append(("relative --evidence resolves against the repo",
+                     rc == 0 and seen_kw and [e["path"] for e in seen_kw[0]["evidence"]]
+                     == [".claude/commands/editorial-review.md"]))
+        # A real ROOT file whose name has no slash and no `PATHISH` extension — the shape `RLY54-1`
+        # measured slipping through. Absent all three, the row fails rather than passing vacuously.
+        root = next((n for n in ("lean-toolchain", "LICENSE", "CNAME")
+                     if os.path.isfile(os.path.join(str(common.REPO), n))), "no-root-file-found")
+        stray = write("stray.json", json.dumps([P, root]).encode())
+        rc, out = run(["--verdict", "fail", "--failing-file", stray] + base)
+        rows.append(("a root file not among subjects is refused (RLY54-1)",
+                     rc == 2 and "NOT among the recorded subjects" in out))
+        label = write("label.json", json.dumps([P, "(roster)"]).encode())
+        rc, out = run(["--verdict", "fail", "--failing-file", label] + base)
+        rows.append(("a non-content label is still permitted", rc == 0 and "INERT" in out))
+        rc, out = run(["--observe", P, "nope/missing.md"])
+        rows.append(("--observe prints the reading, exit 2 on an unreadable path",
+                     rc == 2 and ('"%s"' % P) in out and "NO READING: nope/missing.md" in out))
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+    bad = 0
+    print("RECORD CLI (inputs, reading, dry run)")
+    for label_, ok in rows:
+        print("  %-56s %s" % (label_, "ok" if ok else "*** FAILED ***"))
+        bad += 0 if ok else 1
+    print("\nselftest: %s" % ("PASS" if not bad else "FAIL (%d)" % bad))
+    return 1 if bad else 0
+
+
 if __name__ == "__main__":
+    if sys.argv[1:] == ["--selftest"]:
+        sys.exit(selftest())
     sys.exit(_cli(sys.argv[1:]))

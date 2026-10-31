@@ -56,8 +56,8 @@ theorem lawvere_fixedpoint {A : Type*} {B : Type*} (e : A → (A → B))
   obtain ⟨a, ha⟩ := he (fun x => f (e x x))
   exact ⟨e a a, (congrFun ha a).symm⟩
 
-/-- **Russell — naive comprehension is impossible (a corollary of Lawvere + the engine).** No membership
-    relation `mem : A → A → Prop` realizes every predicate: viewed as `A → (A → Prop)` it would be
+/-- **Russell — naive comprehension is impossible (`russell_via_engine`, a corollary of Lawvere + the
+    engine).** No membership relation `mem : A → A → Prop` realizes every predicate: viewed as `A → (A → Prop)` it would be
     surjective, so Lawvere gives a fixed point of `Not` (an element with `mem r r ↔ ¬ mem r r`, the Russell
     set), refuted by `negation_no_fixedpoint`. Exhibits Russell as the same engine as Cantor, now routed
     through the general theorem. -/

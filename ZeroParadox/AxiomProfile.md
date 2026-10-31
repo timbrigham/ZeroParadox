@@ -16,14 +16,20 @@ Keep the two tiers apart:
 * `[propext, Quot.sound]` — choice-free, but using propositional extensionality and quotient
   soundness, both Lean 4 standard.
 
-## Where `Classical.choice` enters, and the two claims that were false
+## Where `Classical.choice` enters
 
-It appears in the layers that *realize* these results inside standard analytic structures — p-adic
-topology, Hilbert space, ordinals, computability, category theory — **mostly** inherited from
-Mathlib's classically-built libraries, shown in § II for honest contrast.
+It appears **mostly** in the layers that *realize* these results inside standard analytic structures —
+p-adic topology, Hilbert space, ordinals, computability, category theory — **mostly** inherited from
+Mathlib's classically-built libraries, shown in § III for honest contrast. It also appears in the die
+(`ZeroParadox/Die.lean`: the order-free motion and its premises, importing no face file; the order
+premises are stated over partial orders with a least element), which realizes nothing. There it is
+partly the die's own (below) and partly inherited from Mathlib's computability layer: the statement
+of the computable-registration variant, `Motion.RegisteredComputable`, carries it (below).
 
-⚠ **Not entirely inherited, and not entirely open.** Both halves of the older wording were wrong, and
-each is refuted by a measurement rather than by an argument:
+⚠ **Not entirely inherited (measured), and on the premise in `ZeroParadox/Category/ChoiceCannotBe.lean`
+§ IV not entirely removable (reduced).** The measurements below name the axioms each proof uses, and
+reading the source settles where they come from; necessity rests on the reductions of
+`ZeroParadox/Category/ChoiceCannotBe.lean` § IV, as the next paragraphs say:
 
 | measured | footprint |
 |---|---|
@@ -32,40 +38,67 @@ each is refuted by a measurement rather than by an argument:
 | `fixedPointFree_of_nontrivial` | `[propext, Classical.choice, Quot.sound]` |
 | `wem_of_fixedPointFree` | `[propext, Quot.sound]` |
 | `em_of_wellOrder_comparable` | `[propext, Quot.sound]` |
+| `botCovered_botIntervalTwo_classical` | `[propext, Classical.choice, Quot.sound]` |
+| `wem_of_botCovered_botIntervalTwo` | `[propext]` |
+| `Motion.registeredDecidable_of_classical` | `[propext, Classical.choice, Quot.sound]` |
+| `Motion.em_of_registeredDecidable` | *does not depend on any axioms* |
+| `Motion.selectedTotal_of_classical` | `[propext, Classical.choice, Quot.sound]` |
+| `Motion.em_of_selectedData` | `[propext, Quot.sound]` |
+
+Every row is printed by `ZeroParadox/AxiomProfile.lean` § 0.
 
 **Not inherited:** the category-theory face takes its choice from a bare `classical` written in
-framework source (`ZeroParadox/Category/Lawvere.lean`), not from Mathlib.
+framework source (`ZeroParadox/Category/Lawvere.lean`), not from Mathlib, and so do the die's
+cut-to-piece at the least element of a partial order (`botCovered_botIntervalTwo_classical`), its
+decision of where UP is defined (`Motion.registeredDecidable_of_classical`) and its selector of OVER
+(`Motion.selectedTotal_of_classical`, whose proof also calls `Classical.choose` directly), all in
+`ZeroParadox/Die.lean`.
+
+**Inherited, in the die:** `Motion.RegisteredComputable` (a definition, so its statement),
+`registeredDecidable_of_registeredComputable`, `registeredComputable_of_upTotal` and
+`ofOption_registeredComputable` each measure `[propext, Classical.choice, Quot.sound]`. The choice
+enters through Mathlib's `Bool` encoding instance `Primcodable.bool`, which stating `Computable d`
+for a `Bool`-valued `d` uses; `Computable` itself is choice-free. A theorem that only assumes `M.RegisteredComputable`, or only
+`∃ d : ℕ → Bool, Computable d`, reports the same (statement control, 2026-10-18), so that variant is
+**statement-carried**.
 
 ⚠ **Do not read `no_witness_of_fixedPointFree`'s axiom-freedom as evidence the choice is avoidable.**
 It is not a purer proof of the same statement — it *takes* a fixed-point-free map as a hypothesis,
 where `fixedPointFree_of_nontrivial` *constructs* one. Purity of the consumer says nothing about the
 supplier, and composing them returns `[propext, Classical.choice, Quot.sound]`. `LawvereTaboo.lean`
-§ III settles it the other way: the `classical` there is **essential**.
+§ III reduces the general statement to weak excluded middle, so the `classical` there is
+**essential** in the sense, and on the premise, of `ZeroParadox/Category/ChoiceCannotBe.lean` § IV.
 
-**Not open:** for two principles the question is *settled*. `wem_of_fixedPointFree` and
-`em_of_wellOrder_comparable` are **reductions to taboos**, and — this is the load-bearing detail —
-they are themselves choice-free. A reduction that used choice would establish nothing. Re-proving
-either principle constructively would decide a taboo, so no choice-free re-proof exists.
+**Reductions, not measurements:** `wem_of_fixedPointFree`, `em_of_wellOrder_comparable`,
+`wem_of_botCovered_botIntervalTwo`, `Motion.em_of_registeredDecidable` and `Motion.em_of_selectedData`
+each reduce a principle to a taboo, and they are themselves choice-free — a reduction that used choice
+would establish nothing. What they make essential, and the premise it rests on, is stated once in
+`ZeroParadox/Category/ChoiceCannotBe.lean` § IV.
 
-⚠⚠ **PROVENANCE AND NECESSITY ARE INDEPENDENT AXES, and collapsing them is the error this document
-has made in four successive rounds.** The two settled cases sit on *opposite* sides of provenance:
-`fixedPointFree_of_nontrivial` spends the framework's own bare `classical`, while well-order
-comparability spends **Mathlib's**, in `InitialSeg.total` — and `OrdinalChoiceEssential.lean` states
-outright that *"Mathlib's use of choice there is forced."* **So an inherited dependence can be
-essential.** That is a stronger result than "the framework's own choice is essential", and it is why
-*inherited* was never a synonym for *removable*.
+⚠⚠ **Provenance and necessity are independent axes.** The reductions sit on *both* sides of
+provenance: `fixedPointFree_of_nontrivial` and the die's `botCovered_botIntervalTwo_classical`,
+`Motion.registeredDecidable_of_classical` and `Motion.selectedTotal_of_classical` spend the
+framework's own bare `classical` (the last also `Classical.choose`, directly), while well-order comparability spends **Mathlib's**, in
+`InitialSeg.total`. **So, on § IV's premise, an
+inherited dependence can be essential**, and *inherited* is not a synonym for *removable*.
 
 | | own | inherited |
 |---|---|---|
-| **essential** | `fixedPointFree_of_nontrivial` | well-order comparability |
-| **open** | — | the remaining analytic layers |
+| **essential** (on § IV's premise) | `fixedPointFree_of_nontrivial`, `botCovered_botIntervalTwo_classical`, `Motion.registeredDecidable_of_classical`, `Motion.selectedTotal_of_classical` | well-order comparability |
+| **statement-carried** (statement control, measured 2026-10-08; the die's row 2026-10-18) | — | `c3_irreversible`, `t4_snap_orthogonal`, `fD_functor`, `fC_functor`, `snap_dichotomy`, `quine_dichotomy`; in the die, `Motion.RegisteredComputable` |
+| **open** | — | the remaining analytic layers (e.g. `fB_functor`, whose statement is choice-free) |
 
-⚠ **A footprint measurement can never establish necessity.** `#print axioms` reports what a proof
-used, not what a proof must use. The accidental side needs an **exhibited clean proof**; the essential
-side needs a **reduction**. That asymmetry is why the table above is evidence for "not inherited" and
-the two reductions are the only evidence for "not removable".
+⚠ **A proof's footprint never establishes a principle's necessity.** `#print axioms` on a proof
+reports what that proof used, not what a proof must use. (The statement control is a different
+measurement: it establishes that no proof of a statement as written can drop the choice,
+STATEMENT-CARRIED.) The accidental side needs an **exhibited clean proof**; the essential
+side needs a **reduction**. So the reductions are the evidence on the necessity side, which
+becomes "not removable" only on § IV's premise. Provenance ("not inherited") is a separate question,
+settled by the footprint table above read against the source.
 
-Whether the *remaining* analytic-layer dependence is removable is genuinely open — see the README
+For the statement-carried rows no proof can drop the choice (`ZeroParadox/Category/ChoiceCannotBe.md`,
+STATEMENT-CARRIED); the open question there is a restatement on a carrier whose statements are
+choice-free. Whether the *remaining* analytic-layer dependence is removable is genuinely open — see the README
 Question Register and the `choice-probe` experiment, which found it mostly incidental in the one layer
-classified so far. None of it is load-bearing for any ZP *claim*: what the framework asserts is proved
-without choice.
+classified so far. None of it is load-bearing for the core claims: those (`ZeroParadox/AxiomProfile.lean`
+§ I) are proved without choice.

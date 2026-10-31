@@ -44,6 +44,13 @@ import ZeroParadox.Reals.MarkovSpectralGap
 import ZeroParadox.Category.Node4Generation
 import ZeroParadox.Multihomed.TwoFacesBot
 import ZeroParadox.Computability.SelfCopyReference
+import ZeroParadox.Multihomed.BoundaryOrder
+import ZeroParadox.Valuation.InfinitudeFloor
+import ZeroParadox.Valuation.Scale
+import ZeroParadox.Information.Disjunctive
+import ZeroParadox.Settheory.GraphBisim
+import ZeroParadox.Settheory.HypersetOrder
+import Mathlib.RingTheory.Valuation.PrimeMultiplicity
 import Mathlib.Order.FixedPoints
 import Mathlib.SetTheory.Ordinal.FixedPoint
 import Mathlib.CategoryTheory.Endofunctor.Algebra
@@ -57,6 +64,7 @@ inside a gloss is not. `Statement:` restates what a declaration proves; `Reading
 not a claim about the theorem. Where a `Reading:` asserts strength, scope or genericity it should
 carry an `example` that fails to compile if it is wrong; those are the only things proved here, and
 not every such `Reading:` has one yet. Sections: what ⊥ cannot be, must be, and how it is reached.
+⊥ is a ROLE, not one object: the first section names its occupant per structure, or its absence.
 
 ## Engineer's Take
 
@@ -68,6 +76,107 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 section CannotBeIndex
 
+/-! ### ROLE — ⊥ is a position in a structure (a carrier with its order, or a category); a structure has at most one occupant, possibly none -/
+
+-- Statement: in `Ordinal` under its well-order, ⊥ is `0`.
+#check @Ordinal.bot_eq_zero
+-- Statement: in `MachinePhase` under ZP-A's join (`machinePhaseZPS`), ⊥ is `c₀`.
+example : (ZeroParadox.ZPSemilattice.bot : ZeroParadox.MachinePhase) = ZeroParadox.c₀ := rfl
+-- Statement: on the tree boundary `End = ℕ → Fin 2` under pointwise max (`instZPSemilatticeEnd`), ⊥
+-- is the all-zeros end `botEnd`.
+example : (ZeroParadox.ZPSemilattice.bot : ZeroParadox.End) = ZeroParadox.botEnd := rfl
+-- Statement: Mathlib supplies no order instance on ℚ₂: `LT ℚ_[2]` does not synthesize.
+#check_failure (inferInstance : LT ℚ_[2])
+-- Statement: under the norm preorder ℚ₂'s `0` is least, and the only point of norm `0`.
+example : ∀ x : ℚ_[2], ‖(0 : ℚ_[2])‖ ≤ ‖x‖ ∧ (‖x‖ = 0 ↔ x = 0) := fun x => ⟨by simp, norm_eq_zero⟩
+-- Statement: and in that preorder `0` has no first step (`HasFirstStep`): below any `a` above `0` lies
+-- a `c` of strictly smaller nonzero norm (`NormedField.exists_norm_lt`).
+example : letI : Preorder ℚ_[2] := Preorder.lift (‖·‖); ¬ ZeroParadox.HasFirstStep (0 : ℚ_[2]) :=
+  letI : Preorder ℚ_[2] := Preorder.lift (‖·‖)
+  fun ⟨a, h0a, hc⟩ =>
+    have ha : (0 : ℝ) < ‖a‖ := norm_zero (E := ℚ_[2]) ▸ h0a
+    let ⟨c, hc0, hca⟩ := NormedField.exists_norm_lt ℚ_[2] ha
+    hc (c := c) (show ‖(0 : ℚ_[2])‖ < ‖c‖ from norm_zero (E := ℚ_[2]) ▸ hc0) hca
+-- Statement: the same holds in every nontrivially normed field, ℝ included, so at `0` the norm
+-- preorder does not separate ℚ₂ from ℝ. The order is passed with `@`: a `letI` loses to ℝ's `<`.
+example : (∀ (K : Type) [NontriviallyNormedField K],
+      ¬ @ZeroParadox.HasFirstStep K (Preorder.lift (‖·‖ : K → ℝ)).toLT 0) ∧
+    ¬ @ZeroParadox.HasFirstStep ℝ (Preorder.lift (‖·‖ : ℝ → ℝ)).toLT 0 := by
+  have h : ∀ (K : Type) [NontriviallyNormedField K],
+      ¬ @ZeroParadox.HasFirstStep K (Preorder.lift (‖·‖ : K → ℝ)).toLT 0 := by
+    intro K _ ⟨a, h0a, hc⟩
+    have ha : (0 : ℝ) < ‖a‖ := norm_zero (E := K) ▸ h0a
+    obtain ⟨c, hc0, hca⟩ := NormedField.exists_norm_lt K ha
+    exact hc (c := c) (show ‖(0 : K)‖ < ‖c‖ from norm_zero (E := K) ▸ hc0) hca
+  exact ⟨h, h ℝ⟩
+-- Statement: globally it does. ℚ₂'s norm preorder is not dense: `2 ⋖ 1`, since `‖2‖ = 1/2`,
+-- `‖1‖ = 1`, and every nonzero norm is an integer power of 2 (`Padic.padicNormE.image`).
+example : letI : Preorder ℚ_[2] := Preorder.lift (‖·‖); (2 : ℚ_[2]) ⋖ 1 ∧ ¬ DenselyOrdered ℚ_[2] := by
+  letI : Preorder ℚ_[2] := Preorder.lift (‖·‖)
+  have h2n : ‖(2 : ℚ_[2])‖ = 2⁻¹ := by have := Padic.norm_p (p := 2); exact_mod_cast this
+  have hcov : (2 : ℚ_[2]) ⋖ 1 := by
+    refine ⟨?_, fun c h2 h1 => ?_⟩
+    · change ‖(2 : ℚ_[2])‖ < ‖(1 : ℚ_[2])‖
+      rw [h2n, norm_one]; norm_num
+    · change ‖(2 : ℚ_[2])‖ < ‖c‖ at h2
+      change ‖c‖ < ‖(1 : ℚ_[2])‖ at h1
+      rw [h2n] at h2
+      rw [norm_one] at h1
+      have hc : c ≠ 0 := by rintro rfl; rw [norm_zero] at h2; norm_num at h2
+      obtain ⟨n, hn⟩ := Padic.padicNormE.image (p := 2) hc
+      rw [hn] at h1 h2
+      push_cast at h1 h2
+      rcases lt_trichotomy n 0 with hn0 | hn0 | hn0
+      · have : (1 : ℝ) ≤ 2 ^ (-n) := one_le_zpow₀ (by norm_num) (by omega)
+        linarith
+      · subst hn0; simp at h1
+      · have : (2 : ℝ) ^ (-n) ≤ 2 ^ (-1 : ℤ) := zpow_le_zpow_right₀ (by norm_num) (by omega)
+        have e : (2 : ℝ) ^ (-1 : ℤ) = 2⁻¹ := by norm_num
+        rw [e] at this
+        exact absurd (lt_of_lt_of_le h2 this) (lt_irrefl _)
+  exact ⟨hcov, fun hd => ZeroParadox.axb1_fails_everywhere_iff_dense.mp hd 2 ⟨1, hcov⟩⟩
+-- Statement: and ℝ's norm preorder is dense, as its field order is; Mathlib's `DenselyNormedField`
+-- (`Real.denselyNormedField`) via `NormedField.exists_lt_norm_lt`.
+example : @DenselyOrdered ℝ (Preorder.lift (‖·‖ : ℝ → ℝ)).toLT ∧ DenselyOrdered ℝ :=
+  ⟨@DenselyOrdered.mk ℝ (Preorder.lift (‖·‖ : ℝ → ℝ)).toLT fun a _ h =>
+    NormedField.exists_lt_norm_lt ℝ (norm_nonneg a) h, inferInstance⟩
+-- Reading: other chart, the valuation order, stated on ℤ_[2] (the next two lines; `addVal_bot`,
+-- § POSITIVE, is `v 0 = ⊤` for an additive valuation).
+-- Statement: on ℤ_[2], ℤ_[2]'s 0 included, `q2Val x ≤ q2Val y ↔ ‖y‖ ≤ ‖x‖`.
+#check @ZeroParadox.q2Val_le_iff_norm_le
+-- Statement: ℤ_[2]'s 0 is least in the norm preorder and greatest in the `q2Val` preorder, and doubling
+-- lowers in the first and raises in the second.
+#check @ZeroParadox.z2_two_views
+-- Statement: in `TopCat` the one-point space `{0} ⊆ ℚ₂` is TERMINAL (it is not initial,
+-- `padic_bottom_not_initial`); `TopCat`'s initial object is the empty space
+-- (`ZeroParadox/Multihomed/TreeObstructions.lean`).
+example : Nonempty (CategoryTheory.Limits.IsTerminal (TopCat.of (↥({(0 : ℚ_[2])} : Set ℚ_[2])))) :=
+  ⟨TopCat.isTerminalPUnit.ofIso (TopCat.isoOfHomeo (Homeomorph.homeomorphOfUnique _ _))⟩
+-- Reading: one point, two orders, neither THE order (the next three lines).
+-- Statement: the boundary model's floor is the least element of `WithBot Ordinal`.
+#check @ZeroParadox.phase_floor_isBot
+-- Statement: and the greatest element of `WithTop Ordinal`: the floor is ⊤ and covers nothing.
+#check @ZeroParadox.phaseEquivWithTop_floor_covers_nothing
+-- Statement: the map carrying ⊥ of `WithBot Ordinal` to ⊤ of `WithTop Ordinal`, fixing every `↑o`, is
+-- not monotone.
+#check @ZeroParadox.phaseFloorToTop_apply
+-- Statement: INVARIANT within one `ZPSemilattice` structure (carrier and join): the join-identity
+-- `∀ x, join S x = x` holds exactly of `S = bot`.
+#check @ZeroParadox.da2_bottom_characterization
+-- Statement: control, one carrier with two structures has two occupants: on `Bool`, join `||` has ⊥
+-- `false` and join `&&` has ⊥ `true`.
+example :
+    @ZeroParadox.ZPSemilattice.bot Bool
+        ⟨(· || ·), false, Bool.or_assoc, Bool.or_comm, Bool.or_self, Bool.false_or⟩ ≠
+      @ZeroParadox.ZPSemilattice.bot Bool
+        ⟨(· && ·), true, Bool.and_assoc, Bool.and_comm, Bool.and_self, Bool.true_and⟩ :=
+  Bool.false_ne_true
+-- Reading: the next two controls make the other readings false.
+-- Statement: control, the role can be unoccupied: ℤ has no least element.
+example : ¬ ∃ b : ℤ, IsBot b := fun ⟨b, h⟩ => by have := h (b - 1); omega
+-- Statement: control, occupying a bottom singles out no value: every ordinal is ⊥ of its own `Set.Ici`.
+example : ∀ o : Ordinal, ((⊥ : Set.Ici o) : Ordinal) = o := fun _ => rfl
+
 /-! ### ⊥-interpretations do not unify across the μ/ν root -/
 
 -- Statement: no strictly monotone map ℝ → Ordinal exists.
@@ -75,9 +184,9 @@ section CannotBeIndex
 #check @ZeroParadox.no_strictMono_real_to_ordinal
 -- Statement: `<` on ℝ is not well-founded.
 #check @ZeroParadox.real_carrier_not_wellFounded
--- Statement: on the standard simplex, `p ≤ q` forces `p = q` — it is an antichain.
+-- Statement: on the standard simplex, `p ≤ q` in the componentwise order forces `p = q` — an antichain.
 #check @ZeroParadox.simplex_antichain
--- Statement: `{0} ⊆ ℚ₂` as a `TopCat` object admits no initial-object structure.
+-- Statement: `{0} ⊆ ℚ₂` as a `TopCat` object admits no initial-object structure (it is terminal, § ROLE).
 #check @ZeroParadox.padic_bottom_not_initial
 -- Statement: both the Kleisli and Hilbert floors are initial, and `Fin 0 ≃ StateSpace 0` is empty.
 #check @ZeroParadox.split_kleisli_vs_hilbert
@@ -109,8 +218,8 @@ example (α : Type) : Subsingleton (α ≃ PUnit) := inferInstance
 
 /-! ### the Markov interpretation cannot be a single ordered or unique point -/
 
--- Statement: for `2 ≤ n` and EVERY chain `f`, some stationary distribution of `f` is neither least
--- nor greatest in the simplex.
+-- Statement: for `2 ≤ n`, `[Nonempty (Fin n)]` and EVERY chain `f`, some stationary distribution of
+-- `f` is neither least nor greatest in the simplex.
 #check @ZeroParadox.stationary_attractor_no_order_placement
 -- Statement: a doubly-stochastic `Fin 4` chain other than the pure chain exists whose stationary
 -- distribution is not unique.
@@ -118,14 +227,16 @@ example (α : Type) : Subsingleton (α ≃ PUnit) := inferInstance
 -- Statement: so stationarity under doubly-stochastic `Fin 4` chains is not subsingleton-valued.
 #check @ZeroParadox.doublyStochastic_stationary_not_subsingleton
 
-/-! ### the p-adic floor cannot be reached from within, nor matched to the Markov rate -/
+/-! ### the p-adic floor cannot be reached from within, nor matched to `markovRate` -/
 
--- Statement: for `x ≠ 0` in ℚ₂, `2ⁿ * x ≠ 0` at every finite `n` — the orbit never lands on 0.
+-- Statement: for `x ≠ 0` in ℚ₂, `2ⁿ * x ≠ 0` at every finite `n` — the orbit never lands on ℚ₂'s 0.
+-- Reading: other chart, the 2-adic metric: the same orbit converges to that 0
+-- (`doubling_orbit_tendsto_zero`, § DYNAMICS). Reached in the limit, never at a finite step.
 #check @ZeroParadox.padic_orbit_never_reaches_zero
--- Statement: for `x ≠ 0`, no reindexing `φ : ℕ → ℕ` matches the p-adic rate to the Markov rate at
--- every step.
+-- Statement: for `x ≠ 0`, no reindexing `φ : ℕ → ℕ` matches the p-adic rate to `markovRate`, the
+-- absorbing chain's rate (`ZeroParadox/Valuation/NuRateEdge.lean`), at every step.
 #check @ZeroParadox.no_rate_conjugacy
--- Statement: for `x ≠ 0`, indeed no single pair of indices makes the two rates agree.
+-- Statement: for `x ≠ 0`, indeed no single pair of indices makes those two rates agree.
 #check @ZeroParadox.no_rate_orderIso
 
 /-! ### categorical floor and seam exclusions -/
@@ -139,8 +250,13 @@ example (α : Type) : Subsingleton (α ≃ PUnit) := inferInstance
 #check @ZeroParadox.kleisli_bottom_not_zero
 -- Statement: `{0} ⊆ ℚ₂` as a `TopCat` object is not a zero object.
 #check @ZeroParadox.padic_bottom_not_zero
--- Statement: given no top, `bot ≤ x` for all `x` while `x ≤ bot` fails for some — least, not greatest.
+-- Statement: in a `ZPSemilattice` with no top, under ZP-A's order `le`, `bot ≤ x` for all `x` while
+-- `x ≤ bot` fails for some — least, not greatest.
 #check @ZeroParadox.zpa_bot_not_greatest
+-- Statement: control, the no-top hypothesis carries it: on `Unit` (`trivialZPSemilattice`) `bot` is
+-- also greatest.
+example : letI := ZeroParadox.trivialZPSemilattice
+    ∀ x : Unit, ZeroParadox.ZPSemilattice.le x ZeroParadox.ZPSemilattice.bot := fun _ => rfl
 
 /-! ### μ/ν fork: the least fixed point is empty, or does not match the greatest -/
 
@@ -155,9 +271,9 @@ example (α : Type) : Subsingleton (α ≃ PUnit) := inferInstance
 -- Statement: `fixToCofix` is not surjective.
 #check @ZeroParadox.fixToCofix_not_surjective
 
-/-! ### orbits that cannot reach ⊥, or cannot be matched -/
+/-! ### orbits: ℚ₂ unit multipliers, the swap chain, balanced starts -/
 
--- Statement: for `‖u‖ = 1` and `x ≠ 0`, the orbit `uⁿ * x` does not converge to 0.
+-- Statement: in ℚ₂, for `‖u‖ = 1` and `x ≠ 0`, the orbit `uⁿ * x` does not converge to 0.
 #check @ZeroParadox.unit_orbit_not_tendsto_zero
 -- Statement: the swap chain's orbit from `e0vec` converges to no limit.
 #check @ZeroParadox.swap_orbit_not_convergent
@@ -172,8 +288,8 @@ example (α : Type) : Subsingleton (α ≃ PUnit) := inferInstance
 -- Statement: no binary cofan of `fD_functor.obj 1` with itself has `fD_functor.obj 0` as a colimit
 -- apex.
 #check @ZeroParadox.seam_not_mu_colimit_apex
--- Statement: the QPF seam is the canonical bijection, no `Fix ≃ Cofix` exists for the recursive
--- `idPF_Coalgebra`, the lattice seam is the identity equivalence, and the `selfApp` fixed points
+-- Statement: for `constPF Unit` the QPF seam `qpfSeam Unit` is the canonical bijection, no
+-- `Fix ≃ Cofix` exists for the recursive `idPF_Coalgebra`, the lattice seam is the identity equivalence, and the `selfApp` fixed points
 -- are `{bot}`.
 -- Reading: this records that no cross-setting map was EXHIBITED — an open "none given", not a no-go.
 -- The `IsEmpty` conjunct above is about `Fix ≃ Cofix`, not about any cross-setting map type.
@@ -186,9 +302,8 @@ example (α : Type) : Subsingleton (α ≃ PUnit) := inferInstance
 #check @ZeroParadox.t3_unreachability
 example : @ZeroParadox.t3_unreachability = @ZeroParadox.ZPCategory.ax_g2 := rfl
 -- Statement: rose trees over a partially-well-ordered preorder are partially well ordered.
--- Reading: this is the labeled Kruskal tree theorem (Kruskal 1960, after Higman 1952 and
--- Nash-Williams 1963); full attribution in `ZeroParadox/Ordinal/Kruskal.lean`. Indexed as a SCOPE
--- FENCE — a well-quasi-order is not a descent to a bottom, so the "canonical floor 0" claim does
+-- Reading: this is the labeled Kruskal tree theorem; attribution in `ZeroParadox/Ordinal/Kruskal.md`.
+-- Indexed as a SCOPE FENCE — a well-quasi-order is not a descent to a bottom, so the "canonical floor 0" claim does
 -- not reach here.
 #check @ZeroParadox.kruskal_is_wqo_not_descent
 
@@ -228,14 +343,14 @@ example : (fun x : ℤ => -x) (0 : ℤ) = 0 := rfl
 #check @ZeroParadox.q2_unique_fp
 -- Statement: and `0` is one — `q2SelfMem 0`. Existence is this declaration, not the one above.
 #check @ZeroParadox.q2_zero_is_fixed
--- Statement: the intersection of the nested balls is exactly `{0}`. [NARROW]
+-- Statement: in ℚ₂, the intersection of the nested balls is exactly `{0}`. [NARROW]
 #check @ZeroParadox.fB_bottom_is_limit
 -- Statement: the partial circulation exceeds every bound `M`. [WIDE, infinite measure]
 #check @ZeroParadox.t2_diverges
 -- Statement: surprisal exceeds every bound `M` — the same shape over a different function; this
 -- declaration is literally `l_inf`. [WIDE, measure]
 #check @ZeroParadox.info_bottom_diverges
--- Statement: for `‖c‖ < 1`, every orbit `cⁿ * x` converges to 0. [WIDE, infinite reach]
+-- Statement: in ℚ₂, for `‖c‖ < 1`, every orbit `cⁿ * x` converges to 0. [WIDE, infinite reach]
 #check @ZeroParadox.contraction_orbit_tendsto_zero
 -- Reading: narrow and reach hold of the SAME point 0 in ℚ₂ — `q2_unique_fp`'s unique point is
 -- `contraction_orbit_tendsto_zero`'s limit. That pairing is the framework's 0=∞ signature. It is a
@@ -250,7 +365,7 @@ example : (fun x : ℤ => -x) (0 : ℤ) = 0 := rfl
 -- Reading: CITED, not ZP-proved — the proof body is `v.map_zero`, i.e. Mathlib's
 -- `AddValuation.map_zero`. Indexed for the ⊥-reading of `⊤`, not as a result of this framework.
 #check @ZeroParadox.addVal_bot
--- Statement: the ε₀-tower encodings converge to 0 in ℤ_[2]. [WIDE, reach]
+-- Statement: the `cnfToZp2` images of the ω-tower stages below ε₀ converge to ℤ_[2]'s 0. [WIDE, reach]
 #check @ZeroParadox.tower_converges_to_zero
 
 /-! ### INVERSION — the symmetry linking the narrow and wide poles -/
@@ -264,13 +379,25 @@ example : (fun x : ℤ => -x) (0 : ℤ) = 0 := rfl
 #check @ZeroParadox.doubling_place_dichotomy
 -- Statement: `rInvHomeo` sends `0` to `∞` and `∞` to `0` on `OnePoint ℚ₂`.
 #check @ZeroParadox.rInv_swaps
+-- Statement: EXCHANGE, with an order: in the order lifted along the extended norm `sNorm`, `0` is
+-- least and `∞` greatest, `0 ≠ ∞`, and `rInv` swaps them; two distinct points, not the coincidence.
+#check @ZeroParadox.sphere_exchange
+-- Statement: `rInv` reverses that order.
+#check @ZeroParadox.rInv_reverses
 -- Statement: a conjunction whose first component is the DISEQUALITY of the floor pole and the
--- infinity pole; inversion exchanging them follows in the same declaration.
+-- infinity pole; inversion exchanging them, and `Infinite ℚ_[2]`, follow in the same declaration.
 -- ⚠ `rInv_swaps` directly above states two equations and nothing else, so cite THIS one wherever the
 -- distinctness is what a sentence leans on.
 #check @ZeroParadox.point_and_field_at_the_poles
 -- Statement: that inversion is a homeomorphism of the sphere.
 #check @ZeroParadox.rInvHomeo
+-- Reading: the pole ⊥ = 0 = ∞ is a CHART claim, not a point identity, and `rInv_swaps` above is only
+-- its INVERSION witness (two points exchanged, and distinct). The other two witnesses follow.
+-- Statement: COINCIDENCE — in any `InfinitudeFloor`, the complexity at the floor is `⊤ : ℕ∞`.
+#check @ZeroParadox.infinitude_forces_infinite_complexity
+-- Statement: DRIFT — in any `InfinitudeFloorInversion`, the members tend to the floor while their
+-- complexities tend to `⊤ : ℕ∞`. It carries no `cx floor = ⊤`, so it is not the coincidence witness.
+#check @ZeroParadox.pole_inversion
 -- Statement: Mathlib's `IsInitial.op` — the opposite of an initial object is terminal.
 -- Reading: CITED, not ZP-proved; attribution is the point. Passing to `Cᵒᵖ` is the categorical face
 -- of inversion, swapping the μ-bottom to a terminal object.
@@ -278,13 +405,18 @@ example : (fun x : ℤ => -x) (0 : ℤ) = 0 := rfl
 -- Statement: Mathlib's `hasZeroObject_op` — a zero object stays a zero object in the opposite.
 -- Reading: the seam is self-dual under `op`, the fixed centre of the inversion.
 #check @CategoryTheory.Limits.hasZeroObject_op
--- Reading: PRIOR-ART RECORD, do NOT rebuild. The abstract "order-reversal swaps ⊥ and ⊤" is already
--- Mathlib's, indexed below. The three inversions share no single buildable type, so their
--- "unification" is a schema, not a theorem.
--- Statement: over a bare `[Bot α]`, passing to the order dual sends ⊥ to ⊤ — by `rfl`, with no
--- lattice, complement or completeness in sight. This is the abstract fact; `compl_bot` and friends
--- are Boolean-algebra special cases of it.
-#check @OrderDual.toDual_bot
+-- Reading: PRIOR-ART RECORD, do NOT rebuild. "Order-reversal swaps ⊥ and ⊤" is Mathlib's
+-- `OrderIso.map_bot` below, applied to an order isomorphism into an order dual. The three inversions
+-- share no single buildable type, so their "unification" is a schema, not a theorem.
+-- Statement: Mathlib's `OrderIso.map_bot`: for `[LE α]`, `[PartialOrder β]`, `[OrderBot α]` and
+-- `[OrderBot β]`, an order isomorphism `α ≃o β` sends ⊥ of `α` to ⊥ of `β`.
+#check @OrderIso.map_bot
+-- Statement: in a Boolean algebra `α`, `⊥ᶜ = ⊤`, as `OrderIso.map_bot` applied to the order-reversing
+-- `OrderIso.compl α : α ≃o αᵒᵈ`.
+example {α : Type*} [BooleanAlgebra α] : (⊥ : α)ᶜ = ⊤ :=
+  congrArg OrderDual.ofDual ((OrderIso.compl α).map_bot)
+-- Statement: Mathlib's `compl_bot`: `⊥ᶜ = ⊤` in any Heyting algebra, the general home of that fact.
+#check @compl_bot
 
 /-! ### SELF-REFERENCE — the diagonal fixed point
 
@@ -294,8 +426,9 @@ The cross-field routing, and its Lawvere / Yanofsky attribution, live in
 -- Statement: under `[KleeneStructure]`, any Quine atom `q` satisfies `q = bot`. The statement has no
 -- Kleene clause; the quine-atom property is a hypothesis, and what the class supplies is the
 -- inherited `AFAStructure.bot_self_mem`.
--- Reading: the self-EXECUTING reading is the framework's, carried by the class commitment rather
--- than by this theorem. See ZP-K § II and § III.
+-- Reading: this theorem does not carry the self-EXECUTING reading; where that reading sits, and what
+-- `KleeneStructure` adds, is the `da1_closed_concrete` entry of
+-- `ZeroParadox/Computability/ComputationCannotBe.lean` § IV.
 #check @ZeroParadox.kleene_quine_is_bot
 -- Statement: some code `c` is a computational quine.
 #check @ZeroParadox.computational_quine_exists
@@ -325,12 +458,38 @@ The cross-field routing, and its Lawvere / Yanofsky attribution, live in
 -- Statement: a type is infinite iff it carries a self-map that is one-to-one, not onto, and has
 -- exactly one fixed point (`SelfCopyRef`).
 #check @ZeroParadox.infinite_iff_exists_selfCopyRef
--- Statement: `boundaryDouble` on the tree boundary is such a map; its fixed point is the all-zeros end `botEnd`.
+-- Statement: `boundaryDouble` on the tree boundary `End` is such a map (`SelfCopyRef boundaryDouble`).
+-- That its one fixed point is the all-zeros end `botEnd`, ⊥ of `End` (§ ROLE), is the next two lines.
 #check @ZeroParadox.boundaryDouble_selfCopyRef
+-- Statement: `boundaryDouble botEnd = botEnd`.
+#check @ZeroParadox.boundaryDouble_botEnd
+-- Statement: every fixed point of `boundaryDouble` is `botEnd`.
+#check @ZeroParadox.boundaryDouble_unique_fp
+-- Statement: `omegaLoop` and `omegaPair` are bisimilar (`Same`), and after deleting self-loops they
+-- are not.
+#check @ZeroParadox.MemGraph.dropLoops_not_same
+-- Statement: keeping only arrows from accessible members preserves `Same`.
+#check @ZeroParadox.MemGraph.wfPart_same
+-- Statement: and sends `omegaPair` to a graph `Same` as `empty`.
+#check @ZeroParadox.MemGraph.wfPart_omegaPair
+-- Statement: any membership graph `A` whose one-step wrap (`x ↦ {x}`, `MemGraph.wrap`) is `Same` as
+-- `A` is `Same` as `omegaLoop`; no AFA is assumed.
+-- Reading: the AFA form is Aczel 1988, p. 19: "AFA implies that there is at most one solution to
+-- the equation [x = {x}], namely Ω".
+#check @ZeroParadox.MemGraph.same_omegaLoop_of_wrap_same
+-- Reading: `omegaLoop` and `omegaPair` draw Ω and `empty` draws ∅. Ω = {Ω} is AFA's Quine atom, the
+-- shape the Quine atom (CC-2) gives ⊥ of a `ZPSemilattice`; in the `QuineAtomHost` toy on `Fin 3`
+-- (`ZeroParadox/Settheory/QuineHost.lean` § VII) Ω is the toy's `bot`. `dropLoops_not_same` and
+-- `wfPart_omegaPair` are about Ω's drawings; `wfPart_same` is the general fact, for any two `Same`
+-- graphs, and `same_omegaLoop_of_wrap_same` is about every graph `Same` as its wrap. A declaration
+-- linking these drawings to the toy was not located as of 2026-10-21, searched as follows: grep of
+-- `ZeroParadox/` for `MemGraph.` and `omegaLoop` (four files, no declaration in them taking both a
+-- `MemGraph` and a `QuineAtomHost`) and of `QuineHost.lean` for `MemGraph`, `omegaLoop`, `omegaPair`
+-- (no hit).
 
 /-! ### GENERATION — the floor generates its first step -/
 
--- Statement: `epsilonZero = nfp (ω^·) 0` — the least ordinal closed under `ω^·` above 0.
+-- Statement: `epsilonZero = nfp (ω^·) 0`, with `0` the ⊥ of `Ordinal` (§ ROLE).
 -- Reading: CITED, not ZP-proved — a one-line wrapper on Mathlib's `Ordinal.epsilon_zero_eq_nfp`
 -- (`SetTheory/Ordinal/Veblen.lean`). `epsilonZero_le_fixedPoint` and `epsilonZero_eq_iSup` below
 -- are wrappers in the same sense.
@@ -338,6 +497,9 @@ The cross-field routing, and its Lawvere / Yanofsky attribution, live in
 -- Statement: `ω^b = b → epsilonZero ≤ b` — ε₀ is below every fixed point of `ω^·`. Wraps Mathlib's
 -- `Ordinal.epsilon_zero_le_of_omega0_opow_le`, which assumes the weaker `ω^b ≤ b`.
 #check @ZeroParadox.epsilonZero_le_fixedPoint
+-- Statement: `ω ^ 0 ≠ 0` — the ⊥ of `Ordinal` is not a fixed point of `ω^·`.
+-- Reading: the base is fed in and is not itself a fixed point of the closure it seeds.
+#check @ZeroParadox.bot_is_not_a_step
 -- Statement: Mathlib's Kleene fixed-point theorem: for ωScott-continuous `f`, `lfp f = ⨆ₙ fⁿ(⊥)`.
 -- Reading: CITED prior art for generation, do NOT rebuild. ⚠ `Ordinal` is NOT an instance of it —
 -- the theorem needs `[CompleteLattice α]`, which `Ordinal` does not carry. A shared SHAPE across
@@ -365,8 +527,8 @@ noncomputable example : Ordinal.{0} →o Ordinal.{0} :=
 /-! ### DYNAMICS — how ⊥ is approached and departed -/
 
 -- Statement: `c₀ ≠ c₁`, `c₁ ≠ c₀`, and `join c₀ c₁ = c₁`.
--- Reading: the state advance off the floor. The statement constrains the SHAPE of a transition, not
--- that one occurs.
+-- Reading: the state advance off `c₀`, ⊥ of `MachinePhase`. The statement constrains the SHAPE of a
+-- transition, not that one occurs (`tsnap_holds_but_nothing_moves`, `ZeroParadox/Order/SnapCannotBe.lean`).
 #check @ZeroParadox.t_snap_derived
 -- Statement: for `x ≼ y` with `x ≠ y`, no join returns `y` to `x`.
 -- Reading: a GENERIC semilattice no-return lemma. It mentions neither ⊥ nor the snap; the snap
@@ -374,9 +536,9 @@ noncomputable example : Ordinal.{0} →o Ordinal.{0} :=
 #check @ZeroParadox.t_snap_irreversible
 -- Statement: for `0 < n`, `fC_functor.obj n ⟶ fC_functor.obj 0` is empty.
 #check @ZeroParadox.fC_no_return
--- Statement: the predecessor orbit from any `n` reaches the floor in finitely many steps. [μ]
+-- Statement: the predecessor orbit from any `n` reaches ℕ's 0 in finitely many steps. [μ]
 #check @ZeroParadox.pred_orbit_reaches_floor
--- Statement: the doubling orbit converges to 0 in the 2-adic metric. [ν]
+-- Statement: the doubling orbit converges to ℚ₂'s 0 in the 2-adic metric. [ν]
 #check @ZeroParadox.doubling_orbit_tendsto_zero
 -- Statement: for `X` not isomorphic to the initial, and given `⊥ ⟶ X`, the hom `X ⟶ ⊥` is still
 -- empty.
@@ -385,11 +547,74 @@ noncomputable example : Ordinal.{0} →o Ordinal.{0} :=
 -- equal: `t4` carries an extra unused `⊥ ⟶ X` binder, so `@t4 = @t3 := rfl` does not typecheck.
 #check @ZeroParadox.t4_chains_forward_only
 -- Statement: the relaxation operator of `fullMix` is not injective.
--- Reading: information is lost, so the relaxation cannot be reversed. ⚠ FENCE: mixing-specific, NOT
--- universal — permutation chains do not mix (`swap_orbit_not_convergent`, which exhibits one
--- non-convergent orbit and says nothing about eigenvalues).
+-- Reading: information is lost, so the relaxation cannot be reversed. ⚠ FENCE: a fact about `fullMix`,
+-- not about every chain.
 #check @ZeroParadox.fullMix_not_injective
 -- Statement: an eigenmode with `|λ| < 1` has `‖(T f)^[m] v‖ → 0`.
 #check @ZeroParadox.tendsto_norm_iterate_zero
+
+/-! ### The infinitude in two charts: content and self -/
+
+-- Reading: COINCIDENCE, two charts of one tape; the entries below, the Reading at the end.
+-- Statement: Mathlib's `sub_self`: in any additive group, `x - x = 0`.
+#check @sub_self
+-- Statement: in ℤ_[2], every `x` has self-difference ℤ_[2]'s 0, and that 0 has additive valuation ⊤
+-- under the 2-adic multiplicity valuation `AddValuation ℤ_[2] ℕ∞` (`addVal_bot`, § POSITIVE).
+example (x : ℤ_[2]) : x - x = 0 ∧ multiplicity_addValuation PadicInt.prime_p (x - x) = ⊤ :=
+  ⟨sub_self x, by rw [sub_self]; exact ZeroParadox.addVal_bot _⟩
+-- Statement: Mathlib's `dist_eq_norm`: in a seminormed additive commutative group, `dist a b = ‖a - b‖`, so every
+-- comparison of two points is the norm of their difference, measured from 0.
+#check @dist_eq_norm
+-- Statement: a tape `ℕ → Bool` is disjunctive when every finite word occurs in it infinitely often.
+#check @ZeroParadox.Disjunctive
+-- Statement: control, the all-false tape is not disjunctive.
+#check @ZeroParadox.allFalse_not_disjunctive
+-- Statement: a tape equal to its own shift by some `a > 0` is not disjunctive.
+#check @ZeroParadox.not_disjunctive_of_periodic
+-- Statement: in `ℕ → Bool` under the pointwise order, ⊥ is the all-false tape.
+example : (⊥ : ℕ → Bool) = fun _ => false := rfl
+-- Statement: reading a tape as the set of positions holding `true`, `t ⁻¹' {true}`, sends `≤` to
+-- `⊆`, is one-to-one, and sends a tape to `∅` iff it is ⊥ of `ℕ → Bool`.
+example : (∀ a b : ℕ → Bool, a ≤ b → a ⁻¹' {true} ⊆ b ⁻¹' {true}) ∧
+    Function.Injective (fun t : ℕ → Bool => t ⁻¹' {true}) ∧
+    ∀ t : ℕ → Bool, t ⁻¹' {true} = ∅ ↔ t = ⊥ := by
+  refine ⟨fun a b h n (hn : a n = true) => show b n = true from Bool.le_iff_imp.mp (h n) hn,
+    fun a b h => funext fun n => ?_, fun t => ⟨fun h => funext fun n => ?_, ?_⟩⟩
+  · have := congrArg (n ∈ ·) h
+    simp only [Set.mem_preimage, Set.mem_singleton_iff, eq_iff_iff] at this
+    revert this; cases a n <;> cases b n <;> decide
+  · have : n ∉ t ⁻¹' {true} := h ▸ Set.notMem_empty n
+    cases ht : t n
+    · rfl
+    · exact absurd ht this
+  · rintro rfl; exact Set.eq_empty_of_forall_notMem fun n h => Bool.false_ne_true h
+-- Statement: it also reflects `⊆` to `≤`, so it is an order embedding of `ℕ → Bool` into `Set ℕ`.
+example : (ℕ → Bool) ↪o Set ℕ :=
+  OrderEmbedding.ofMapLEIff (fun t : ℕ → Bool => t ⁻¹' {true}) fun a b =>
+    ⟨fun h _ => Bool.le_iff_imp.mpr fun hn => h hn,
+      fun h n (hn : a n = true) => show b n = true from Bool.le_iff_imp.mp (h n) hn⟩
+-- Statement: Mathlib's `Set.preimage_boolIndicator_true`, the inverse direction: the tape
+-- `s.boolIndicator` read back this way is `s`.
+#check @Set.preimage_boolIndicator_true
+#check @IsSimpleOrder.orderIsoBool -- Statement: Mathlib neighbour: a bounded simple order with decidable equality is order-isomorphic to `Bool`
+#check @CompleteAtomicBooleanAlgebra.toSetOfIsAtom -- Statement: Mathlib neighbour: a complete atomic Boolean algebra is order-isomorphic to the sets of its atoms
+-- Statement: under pointwise exclusive-or, every tape's self-difference is the all-false tape, so
+-- a tape read against itself is never disjunctive.
+example (x : ℕ → Bool) : (fun n => xor (x n) (x n)) = (fun _ => false) ∧
+    ¬ ZeroParadox.Disjunctive (fun n => xor (x n) (x n)) := by
+  have h : (fun n => xor (x n) (x n)) = (fun _ => false) := funext fun n => Bool.xor_self (x n)
+  exact ⟨h, h ▸ ZeroParadox.allFalse_not_disjunctive⟩
+-- Statement: read against the all-false tape, a tape is itself, so `champ` read that way is
+-- disjunctive.
+example : ZeroParadox.Disjunctive (fun n => xor (ZeroParadox.champ n) false) := by
+  simpa only [Bool.xor_false] using ZeroParadox.champ_disjunctive
+-- Reading: COINCIDENCE, Tim's reading: one tape, two charts, neither denied. Content chart: read
+-- against the reference all-false tape, ⊥ of `ℕ → Bool`, a tape is itself, and a disjunctive one
+-- carries every code word (`code_occurs_of_disjunctive`). Self chart: read against itself it is that
+-- all-false tape; in ℤ_[2] the self-difference is ℤ_[2]'s 0, of additive valuation ⊤ (the floor's
+-- `cx = ⊤`, `infinitude_forces_infinite_complexity`, `ZeroParadox/Valuation/InfinitudeFloor.lean`).
+-- That the occupant of the framework's ⊥ role, ⊥ of a `ZPSemilattice`, is MAXIMALLY complex is
+-- Tim's commitment, stated as no equation with any
+-- one tape; disjunctive is the weaker, proved property (`ZeroParadox/Information/Disjunctive.lean`).
 
 end CannotBeIndex

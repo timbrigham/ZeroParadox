@@ -1,47 +1,7 @@
 """
 Build ZP-F Illustrated Companion
 Where the Snap Fails: The Real Numbers as Counterexample
-Version 1.14 | May 2026
-v1.14: FORCING OVERCLAIM RETRACTED. The document asserted that T-SNAP establishes the snap OCCURS. It does not: T-SNAP fixes the transition's shape, and Order/Snap.lean's NO-GO gauge tsnap_holds_but_nothing_moves proves T-SNAP holds in a model where nothing moves. Occurrence is a framework commitment (Information/Surprisal.lean's l_inf docstring is the designated honest stopping point). Prose only; no claim gains support and none is withdrawn beyond this one. Section IV heading 'Finite Precision Forces the Snap' -> 'Makes the Snap Possible': finite precision supplies a smallest representable positive, i.e. availability, not occurrence.
-v1.12: vocab fix: null state → ⊥.
-v1.11: Hash sync — script was modified without full workflow; rebuilt to bring
-hash into alignment with register.md.
-v1.5: Renamed to ZP-F Illustrated Companion; disclaimer updated to cite ZP-F
-      Lean verification (F-SNAP-IMPOSSIBLE and general ordered field result).
-v1.6: Section V retitled "The Coach and the Players" — reframed around zero's
-      membership status rather than "wrong kind of zero"; directionality argument
-      added: return paths are structurally blocked only when zero is categorically
-      off the field, not a peer member of the space.
-v1.7: Section IV phrasing naturalised — "Below δ you cannot go" replaced with
-      "Below that, there's nowhere to go."
-v1.8: Multiple fixes following reviewer feedback: (1) Section II "cleanly getting
-      away" rewritten for clarity; (2) Section V "membership status" and
-      "topologically identical" language replaced throughout — zero is valuatively
-      distinguished in Q₂, not topologically isolated; (3) asymptotic limit
-      sentence direction clarified; (4) Section III Riemann sphere analogy added;
-      (5) closing "topologically isolated" replaced with correct valuative framing;
-      (6) scope note added: ZP-F targets ordered fields as comparison class, not
-      the most general setting where the phenomenon occurs.
-v1.9: Four-fingerprint scan pass — precision review of all sections; no
-      structural changes.
-v1.10: New Section VIII "Two Approaches to the Same Boundary" — the density
-       argument and the ordinal threshold argument are formally dual, approaching
-       the same structural boundary from opposite directions; the squeeze pattern
-       explained as structurally necessary rather than an optional proof technique.
-v1.0: Initial release.
-v1.1: Three clarifications following reviewer feedback (density/rationals,
-      Planck/geometry, pi/algorithm length).
-v1.2: Section V geometry note revised — floor tile / sqrt(2) argument
-      correctly scoped to macroscopic scales; at the minimum unit itself,
-      discrete geometry applies and irrational multiples cannot be realised.
-v1.3: Section V Planck paragraph replaced with single sentence — prior
-      framing overclaimed discrete geometry and integer multiples; correct
-      framing is that current models break down at that scale, and the
-      argument does not depend on what replaces them.
-v1.4: Section V renamed "The Wrong Kind of Zero" — new structural argument
-      that R models zero as a reachable point while any state-change domain
-      requires zero to be an unrealizable asymptotic floor; Q2 is more
-      honest because valuation +inf encodes this structurally.
+Version 1.19 | May 2026
 """
 
 import os, math
@@ -110,14 +70,21 @@ def comparison_table():
     hdr = [Paragraph('&#8477; Real Numbers', CS['kr_hdr']),
            Paragraph('Q&#8322; 2-adic Numbers', CS['kr_hdr'])]
     rows = [
-        ['0 is a limit point — surrounded by non-zero reals on all sides',
-         '0 is valuatively distinct — v&#8322;(0) = +&#8734;; every nonzero element has a finite valuation'],
+        ['Order: densely ordered, in its field order and in its norm preorder alike, so no '
+         'element, zero included, has a first step',
+         'Order: no field order synthesizes in Mathlib. Under the norm preorder 0 is least and has '
+         'no first step (between 0 and any non-zero element lies one of smaller norm, as in any '
+         'nontrivially normed field), yet globally it is not dense (2 has the first step 1); '
+         'under the valuation order 0 is greatest'],
+        ['Topology: connected (place_topological_signature), so not totally disconnected '
+         '(real_no_snap)',
+         'Topology: totally disconnected (t5_totallyDisconnected)'],
+        ['Metric: 0 is a limit point of the non-zero reals',
+         'Metric: 0 is a limit point too — the doubling orbit 2&#8319;x tends to 0 and does not reach it in finite time'],
         ['Infinity lives in the representation (infinite decimal = finite magnitude)',
-         'Infinity is the address of 0 (the valuation itself is +&#8734;)'],
-        ['Departure from 0 is continuous — always subdivisible',
-         'Departure from 0 is a discrete jump in valuation'],
+         'Valuation: infinity is the address of 0 — v&#8322;(0) = +&#8734;, the greatest value; every nonzero element has a finite valuation'],
         ['The snap cannot occur — density blocks every candidate first step',
-         'The snap is not blocked — the valuation gap leaves room for a first step (the step itself is AX-B1, a commitment)'],
+         'The topological obstruction is removed, and no first step at 0 is supplied (AX-B1\'s first step is a cover of &#8869; on the state carrier, a commitment)'],
     ]
     data = [hdr] + [[Paragraph(fix(r[0]), CS['kr_body']),
                      Paragraph(fix(r[1]), CS['kr_body'])] for r in rows]
@@ -140,7 +107,7 @@ def comparison_table():
     return t
 
 
-VERSION = '1.14'
+VERSION = '1.19'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -184,7 +151,12 @@ def build():
           Paragraph(
               'This companion document is written for general readers. It explains in plain '
               'language why the real number line cannot serve as the mathematical substrate '
-              'for the Binary Snap, and why the 2-adic metric Q&#8322; is required. '
+              'for the Binary Snap, and where the 2-adic numbers Q&#8322; stand: ZP-F excludes '
+              'ordered fields, by density; ZP-B records that Q&#8322; is totally disconnected '
+              '(t5_totallyDisconnected, an instance Mathlib already supplies), which removes the '
+              'topological obstruction; neither supplies the first step at &#8869; of the state '
+              'carrier, the set of states a run of the framework moves through, ordered as in '
+              'ZP-A (that first step is AX-B1, a commitment). '
               'The formal results are machine-verified in Lean 4 as part of ZP-F '
               '(F-SNAP-IMPOSSIBLE and the general ordered field result); see also '
               'ZP-B (p-adic topology) for the positive case.',
@@ -201,7 +173,8 @@ def build():
         'The answer begins with a counterexample. The real number line is not a valid '
         'substrate for the Binary Snap — not because it is wrong, but because it is '
         'the space where the snap is structurally impossible. Understanding why the snap '
-        'fails in &#8477; is the clearest path to understanding why Q&#8322; is required.'))
+        'fails in &#8477; is the clearest path to seeing what Q&#8322; removes and what it '
+        'does not supply.'))
     E.append(sp(4))
 
     # ── II. The Density Symmetry ────────────────────────────────────────────────
@@ -243,13 +216,26 @@ def build():
         'a number sitting between 3 and 4. The infinite expansion is the notation, '
         'not the thing being noted. The number itself is finite and well-located '
         'on the line. Zero is a limit point: surrounded by non-zero reals, '
-        'reachable as a limit but not isolated from them.'))
+        'reachable as a limit but not isolated from them. That is a fact about the metric, '
+        'and the 2-adic zero shares it, so being a limit point does not separate the two. The '
+        'topology does: &#8477; is connected (place_topological_signature), so not totally '
+        'disconnected (real_no_snap), and '
+        'Q&#8322; is totally disconnected (t5_totallyDisconnected). The order separates them '
+        'globally, not at zero. At zero neither has a first step: &#8477; in its field order '
+        '(axb1_fails_in_ordered_field), and Q&#8322; in the norm preorder of '
+        'ZeroParadox/BottomCannotBe.lean, &#167; ROLE, where that fact holds in every nontrivially '
+        'normed field. Globally &#8477; is densely ordered (axb1_fails_everywhere_iff_dense), in '
+        'its norm preorder as in its field order, while that norm preorder on Q&#8322; is not '
+        'dense: 2 has the first step 1 (the &#167; ROLE example stating that cover).'))
     E.append(cbody(
         'In Q&#8322;, the infinity is the <i>address</i> of zero. The 2-adic '
-        'valuation assigns +&#8734; to 0 — not as a limit the valuation approaches, '
-        'but as its actual value. Every non-zero element carries a finite integer '
-        'valuation. The gap between infinite valuation and any finite valuation is '
-        'not a limit. It is a structural discontinuity built into the metric itself.'))
+        'valuation assigns +&#8734; to 0 as its actual value, and no non-zero element '
+        'shares it (padic_addVal_eq_top_iff); every non-zero element carries a finite integer '
+        'valuation. That is the valuation chart. In the metric chart the 2-adic zero is a '
+        'limit too: doubling a non-zero element over and over converges to 0 and does not '
+        'reach it in finite time, while counting down in the natural numbers reaches 0 in '
+        'finitely many steps (floor_reach_separates_mu_nu). Q&#8322;\'s zero is a floor '
+        'approached as a limit, not one stepped onto. Neither fact is a first step.'))
     E.append(cbody(
         'A geometric analogy: the Riemann sphere maps the entire complex plane onto '
         'a sphere of diameter 1, placing the origin at one pole and the point at '
@@ -278,9 +264,17 @@ def build():
         'That is not a feature from the perspective of the Zero Paradox. It is '
         'exactly what blocks the snap.'))
     E.append(cbody(
-        'Q&#8322; is not an artificially truncated real line. It is a different '
-        'metric space in which the floor is structural — not imposed by finite '
-        'memory or finite precision, but built into the 2-adic valuation itself.'))
+        'Q&#8322; is not an artificially truncated real line, and it does not restore a '
+        'smallest step. Its zero is a floor of the other kind: a finite-precision system\'s '
+        'floor is reached by counting down, while Q&#8322;\'s is a limit the doubling orbit '
+        'approaches and does not reach in finite time (floor_reach_separates_mu_nu), marked '
+        'out by its valuation, v&#8322;(0) = +&#8734;. The first step AX-B1 commits to is a cover '
+        'of &#8869; on the state carrier (a commitment): a state directly above &#8869; with '
+        'nothing strictly between, which order theory calls an atom. t_snap_given_cover assumes '
+        'the run\'s first step is a cover; with CC-1, the commitment that the run starts at '
+        '&#8869;, that step is a cover of &#8869;. MachinePhase meets the commitment (its state '
+        'c&#8321; covers its &#8869;, c&#8320;). In neither ordering of Q&#8322; does its 0 have a '
+        'first step, so the step is not a consequence of the 2-adic structure.'))
     E.append(sp(4))
     E.append(remember_box(
         'Every finite computational system is already subject to the Binary Snap by '
@@ -288,8 +282,9 @@ def build():
         'argument fails there. The real numbers are the most familiar example of a '
         'structure that removes this floor — but any dense ordered set has the same '
         'property, including the rational numbers: for any &#949;&#8320; > 0, '
-        '&#949;&#8320; / 2 also exists. Q&#8322; puts the floor back in, '
-        'mathematically rather than by truncation.'))
+        '&#949;&#8320; / 2 also exists. Q&#8322; does not put a smallest step back in: '
+        'its zero is a floor approached as a limit and marked by its valuation, and the '
+        'step itself is AX-B1.'))
     E.append(sp(8))
 
     # ── V. The Coach and the Players ─────────────────────────────────────────────
@@ -310,9 +305,14 @@ def build():
         'from which everything departs — not a peer of the states, but their origin. '
         'In the ZP framework, zero is the asymptotic limit that the system moves '
         'away from, not a state it can stably occupy or return to. In &#8477;, zero '
-        'has no such character: it is a regular limit point, reachable from any '
-        'direction, indistinguishable in structure from 1 or &#960;. That is '
-        'exactly what disqualifies it.'))
+        'has no such character: it is a regular point of a dense line, '
+        'indistinguishable in structure from 1 or &#960;, with no first step above it. '
+        'In the order, density is what disqualifies it (axb1_fails_everywhere_iff_dense); in '
+        'the topology, the line is connected (place_topological_signature), so not totally '
+        'disconnected (real_no_snap). '
+        'Being approached as a limit is '
+        'not what disqualifies it, since the 2-adic 0 is approached as a limit too '
+        '(floor_reach_separates_mu_nu).'))
     E.append(cbody(
         'The real number line treats zero as an ordinary point — a peer of every '
         'other element, with the same local structure as 1 or &#960;. '
@@ -324,12 +324,13 @@ def build():
         'cannot be grounded in a space where zero is indistinguishable in kind '
         'from everything else.'))
     E.append(cbody(
-        'Q&#8322; gives zero a genuinely different role. The 2-adic valuation assigns '
-        'zero the address +&#8734; &#8212; not a limit the other elements approach, '
-        'but a categorical distinction built into the structure itself: v&#8322;(0) = '
-        '+&#8734;, while every non-zero element carries a finite integer valuation. '
-        'Zero is in Q&#8322; but it is not a peer. The gap between infinite and finite '
-        'valuation is not a limit. It is a structural discontinuity. '
+        'Q&#8322; gives zero a genuinely different role, and it shows in two charts. In the '
+        'valuation chart zero has the address +&#8734;: v&#8322;(0) = +&#8734;, the greatest '
+        'value, while every non-zero element carries a finite integer valuation, and only '
+        'zero has +&#8734; (padic_addVal_eq_top_iff). In the metric chart zero is a limit '
+        'the other elements approach: the doubling orbit converges to it and does not arrive '
+        'in finite time (floor_reach_separates_mu_nu). '
+        'Zero is in Q&#8322; but it is not a peer. '
         'The coach is not on the field. The path back does not exist.'))
     E.append(sp(8))
 
@@ -399,82 +400,107 @@ def build():
          'One is the absence of structure. The other is structure all the way down.']))
     E.append(sp(8))
 
-    # ── VIII. Two Approaches to the Same Boundary ────────────────────────────────
-    E.append(Paragraph('VIII. Two Approaches to the Same Boundary', CS['h1']))
+    # ── VIII. Two Limit Conditions, Side by Side ─────────────────────────────────
+    E.append(Paragraph('VIII. Two Limit Conditions, Side by Side', CS['h1']))
     E.append(cbody(
-        'The density argument and the ordinal threshold argument feel like two separate '
-        'observations &#8212; one about why the snap fails in &#8477;, one about where '
-        'it succeeds. But they are approaching the same boundary from opposite directions, '
-        'and that is not a coincidence.'))
+        'The density argument and the ordinal threshold argument are two separate '
+        'observations &#8212; one about why the snap fails in &#8477;, one about how '
+        '&#949;&#8320; of Ordinal is reached. Read side by side they share a shape, and the '
+        'shared shape is an analogy, not a proved identification.'))
     E.append(cbody(
         'From the field side: density shows there is no smallest positive element in &#8477;. '
         'For any candidate first step &#949; > 0, the value &#949;/2 is smaller '
-        'and also positive. There is always something between any candidate step and zero. '
-        'Zero is a limit point &#8212; surrounded, always approachable, never a structural floor.'))
+        'and also positive. There is always something between any candidate step and zero, '
+        'so zero has no first step. That is a fact about the order. In fact an order is dense '
+        'exactly when no element at all has a first step (axb1_fails_everywhere_iff_dense), so '
+        'density rules out a first step at zero; one element lacking a first step would not '
+        'make an order dense. Zero in &#8477; is also a limit point, a fact about the metric; '
+        'so is zero in Q&#8322; (floor_reach_separates_mu_nu), so the limit point is not what '
+        'blocks the snap.'))
     E.append(cbody(
-        'From the ordinal side: &#949;&#8320; has no ordinal immediately below it. There is '
+        'From the ordinal side: &#949;&#8320; of Ordinal has no ordinal immediately below it. There is '
         'no &#945; with &#945; + 1 = &#949;&#8320;. It is the limit of the tower '
         '&#969;, &#969;^&#969;, &#969;^&#969;^&#969;, &#8230; &#8212; approachable from below '
-        'by finite iteration, but not reachable in any finite number of steps. The snap is '
-        'possible at &#949;&#8320; precisely because it has no predecessor: there is no '
-        '&#8220;just before&#8221; it that the snap would have to pass through.'))
+        'by finite iteration, but not reachable in any finite number of steps.'))
     E.append(cbody(
-        'Both conditions describe the same structure from opposite sides. In the field '
-        'case, zero has no smallest positive neighbour in &#8477; &#8212; density fills '
-        'the gap above zero completely. In the ordinal case, &#949;&#8320; has no immediate '
-        'predecessor in the ordinals &#8212; no &#945; with &#945; + 1 = &#949;&#8320; exists. '
-        'The snap is the meeting point &#8212; the boundary both sides are approaching.'))
+        'The shared shape: in the field case, zero has no smallest positive neighbour in '
+        '&#8477;; in the ordinal case, &#949;&#8320; has no immediate predecessor in the '
+        'ordinals. Each is a point approached by a limit and not reached in finitely many '
+        'steps from one side. These are two limit-type conditions in two different '
+        'structures, not one boundary. What is proved (cnf_bridge_type_boundary) pairs a '
+        'face of &#949;&#8320; other than that limit one, its least-fixed-point face, with &#8484;&#8322;, the '
+        '2-adic integers inside Q&#8322;, and as co-witnesses, not as an identity: &#949;&#8320; is '
+        'the least fixed point of &#945; &#8614; &#969;^&#945; in the ordinals, and the 2-adic '
+        'images (cnfToZp2) of the same tower\'s codes, from its first stages 0, 1, &#969;, &#969;^&#969;, &#8230;, converge to the 2-adic 0. '
+        '&#949;&#8320; is at once that least fixed point and the supremum of those stages '
+        '(epsilon0_min_eq_max). Read through the 2-adic norm, the same convergence is the 2-adic '
+        'norms of the images tending to 0 in &#8477; (the norm-chart example in ZeroParadox/Ordinal/CnfBridge.lean '
+        '&#167; VI); there &#8477; holds the norm values, a different role from &#8477; in the '
+        'density argument. An equation between &#949;&#8320; and the 2-adic 0 does not type-check.'))
     E.append(cbody(
-        'This is why the snap cannot be located by looking in just one direction. '
-        'From inside the real numbers, you can see that density blocks something, '
-        'but you cannot see &#949;&#8320; directly. From inside the ordinals, you '
-        'can see the limit ordinal structure, but not the 2-adic topology. Neither '
-        'framework alone is enough. The snap is precisely the point where each '
-        'framework runs out of its own descriptive reach &#8212; which means you need '
-        'both frameworks, approaching from their respective directions, to pin it down.'))
-    E.append(cbody(
-        'Mathematicians call this pattern the squeeze &#8212; the same idea behind the '
-        'squeeze theorem in calculus, where two functions approaching a limit from above '
-        'and below force the middle to the same point. Here the squeeze is not an optional '
-        'proof technique. It is the only way to locate the snap, because the snap is '
-        'the point where each framework runs out of its own descriptive reach.'))
+        'Neither condition is needed for the snap itself. In the two-state carrier '
+        'MachinePhase, T-SNAP holds (t_snap_derived), and the landing c&#8321; covers '
+        'c&#8320;, the bottom of MachinePhase (the MachinePhase example in '
+        'ZeroParadox/Order/Snap.lean stating that c&#8321; covers &#8869; of MachinePhase), '
+        'so the landing has an immediate predecessor '
+        'and no limit is involved on either side. What the density argument shows is '
+        'narrower: a dense order has no first step at any element '
+        '(axb1_fails_everywhere_iff_dense), so it cannot meet AX-B1\'s commitment.'))
     E.append(sp(8))
 
     # ── Closing ─────────────────────────────────────────────────────────────────
-    E.append(Paragraph('The Minimal Required Structure', CS['h1']))
+    E.append(Paragraph('What the Counterexample Shows', CS['h1']))
     E.append(cbody(
         'The real numbers are the most natural, most familiar metric space in '
         'mathematics. They are also precisely the space where the Binary Snap '
-        'cannot occur. Zero is a limit point, density is symmetric, and every '
-        'candidate first step admits an infinite sequence of smaller steps below it.'))
+        'cannot occur. They are densely ordered, so no element, zero included, has a first '
+        'step: every candidate first step admits an infinite sequence of smaller steps below '
+        'it. Zero is also a limit point there, but so is the 2-adic zero, so being a limit '
+        'point does not separate them. Two fences do. The order separates them globally, not '
+        'at zero: at zero neither has a first step, and globally &#8477; is densely ordered '
+        '(axb1_fails_everywhere_iff_dense), in its norm preorder as in its field order, while the '
+        'norm preorder on Q&#8322; is not; the norm-preorder facts are the &#167; ROLE examples in '
+        'ZeroParadox/BottomCannotBe.lean. The topology is the second fence: '
+        '&#8477; is connected (place_topological_signature), so not totally disconnected '
+        '(real_no_snap), and Q&#8322; is totally disconnected (t5_totallyDisconnected).'))
     E.append(cbody(
         'Q&#8322; is not an exotic choice. Among all completions of the rationals, '
         'Ostrowski\'s theorem says there are exactly two kinds: Archimedean ones '
-        '(like &#8477;, where zero is a limit point — always approachable, never a floor) '
+        '(like &#8477;, which is densely ordered, so zero has no first step) '
         'and non-Archimedean ones (&#8474;<sub>p</sub>, where the p-adic valuation assigns '
         'zero infinite valuation while every non-zero element has finite valuation). '
-        'Q&#8322; is the non-Archimedean completion at p&#160;=&#160;2, '
-        'the minimum prime compatible with binary existence. '
-        'The valuative distinction of zero is not imposed; it follows from the completion. '
+        'Q&#8322; is the non-Archimedean completion at p&#160;=&#160;2. ZP-B\'s Theorem T0 fixes '
+        'that prime from binary existence (AX-B1) together with a minimality principle (MP-1), the '
+        'design choice to use the smallest base that encodes the two states. '
+        'That zero\'s valuation is +&#8734; is set by definition, not produced by the '
+        'completion; what holds in Q&#8322; is that zero alone has it (padic_addVal_eq_top_iff). '
         'The framework did not choose unusual mathematics for its own sake. '
-        'It followed the result to the structure the result required.'))
+        'ZP-F shows that ordered fields are excluded, by density; ZP-B records that Q&#8322; is '
+        'totally disconnected (t5_totallyDisconnected, an instance Mathlib already supplies), '
+        'which removes the topological obstruction. Neither supplies the first step at &#8869; '
+        'of the state carrier; that is AX-B1.'))
     E.append(cbody(
         'A note on scope: ZP-F establishes this result for linearly ordered fields — '
         'the class that contains &#8477; and &#8474; — because that is the natural '
         'comparison class for the most familiar number systems. The blocking '
-        'phenomenon is not unique to fields; simpler structures with a limit point '
-        'at zero show the same property. The ordered field result is the right '
+        'phenomenon is not unique to fields: in any densely ordered structure no element '
+        'has a first step (axb1_fails_everywhere_iff_dense). The ordered field result is the right '
         'frame for the &#8477; comparison. The broader phenomenon is the same.'))
     E.append(sp(6))
     E.append(key_result_box(
         'Where the Snap Fails',
         'The Binary Snap is impossible in &#8477;: for any &#949;&#8320; > 0, '
-        '&#949;&#8320; / 2 also exists, and the density argument shows no '
-        'discrete departure from zero can occur. Q&#8322; is required because '
-        'the 2-adic valuation valuatively distinguishes zero — v&#8322;(0) = +&#8734;, '
-        'while every non-zero element carries a finite valuation. '
-        'The gap between infinite and finite valuation is not a limit. '
-        'It is the theorem.'))
+        '&#949;&#8320; / 2 also exists; &#8477; is densely ordered, and in a dense order '
+        'no element has a first step. At zero Q&#8322; has none either, in its norm preorder; '
+        'globally that preorder is not dense, and Q&#8322; is totally disconnected where '
+        '&#8477; is connected. Its zero is '
+        'distinguished in two charts: by its valuation, v&#8322;(0) = +&#8734; while every '
+        'non-zero element carries a finite valuation, and as a limit the doubling orbit '
+        'approaches and does not reach in finite time. Neither supplies the first step AX-B1 '
+        'commits to, a cover of &#8869; on the state carrier; t_snap_given_cover assumes the '
+        'run\'s first step is a cover, and with CC-1 (the run starts at &#8869;) that step is a '
+        'cover of &#8869;. MachinePhase meets the commitment (c&#8321; covers its &#8869;, '
+        'c&#8320;).'))
 
     print(f'Building: {out_path}')
     doc.build(E)

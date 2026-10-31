@@ -104,7 +104,8 @@ split is superseded:
 - **Identity half — RETIRED as ill-typed.** That the four bottoms are *numerically one object* across
   distinct categories is NOT a commitment the framework holds — `x = y` across distinct categories is not a
   well-formed proposition in the typed language, so it was never a claim. Object equality across categories does not
-  typecheck and is not invariant under equivalence; what separates the members is proved property by property
+  typecheck, and heterogeneous equality, which does, states nothing invariant under equivalence (the
+  MC-1 row of `CLAIMS.md`); what separates the members is proved property by property
   (`seam_unique_among_named`, for the named bottoms, in a lattice with no top). The only
   oneness is the shared *shape* (the diagonal fixed point), apophatic, never a formal identity.
 
@@ -148,9 +149,10 @@ used across frameworks — as shorthand for a **structural role** rather than a 
 identity forecloses the *"ontology built on an equivocation"* referee charge before it is made. The
 reviews will flag ZP-specific language anyway, so preempt it everywhere in this form.
 
-Worked examples from ZP-W: *"the wall"* → "the class of impossibility theorems for self-referential
+Worked examples of the pattern: *"the wall"* → "the class of impossibility theorems for self-referential
 fixed points at a structure's least element; within this document, the shorthand is *the wall*".
-*"the snap"* → "the forced transition from the least element to ε₀; … the shorthand is *the snap*".
+*"the snap"* → "the step from the bottom element ⊥ of a two-state carrier to the state above it (named
+ε₀ in that chart); … the shorthand is *the snap*".
 Cross-framework ⊥ → "the least or initial element of each structure; within this document ⊥ denotes
 that shared structural position — a notational shorthand, not a cross-framework identity."
 

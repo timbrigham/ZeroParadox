@@ -2,6 +2,8 @@ import ZeroParadox.Settheory.SetTheoryAFA
 import ZeroParadox.Order.Snap
 import Mathlib.Computability.PartrecCode
 import Mathlib.Computability.Halting
+import ZeroParadox.Computability.Occurrence
+import ZeroParadox.Category.DiagonalWitness
 import Mathlib.Tactic
 
 /-!
@@ -24,76 +26,11 @@ as something the theorem shows. That one is the soft joint, and that is exactly
 why I keep coming back to it.
 
 ---
-
-## Formal Overview (AI-assisted)
-
-Relates four structural roles of ⊥, of which three are proved equivalent:
-
-  (1) Quine atom       — set-theoretic self-reference (ZF + AFA)
-  (2) Bottom element   — order-theoretic minimum (ZP-A)
-  (3) Join identity    — algebraic generator (ZP-A A4)
-  (4) Kleene fixed point — computational self-reference (Mathlib: fixed_point₂)
-
-The central result (T-COMP) establishes (1) ↔ (2) ↔ (3) via T-EXEC. Its proof term is
-`t_exec_triple_iff`, a ZP-J result that does not mention computation; ⊥ is then the
-element those three pick out. **(4) is not a clause of that theorem** — it is present
-by typeclass requirement, as the class field `botCode_is_quine`. The KleeneStructure
-typeclass taking (1)–(4) to name the same structural role in four formal languages is
-the motivating commitment, not a consequence derived by the theorems. Note the two
-sides also differ in shape: (1)–(3) pick out a unique element, while the computational
-fixed points form an infinite family (§ VI).
-
-## Structure
-
-- § I   The Kleene fixed point — statement and computational Quine definition
-- § II  KleeneStructure typeclass — the commitment bridging AFAStructure to computability
-- § III T-COMP: three proved equivalent, and where the fourth face sits
-- § IV  DA-1 closure — the witnesses the description-instantiation argument rests on
-- § V   MachinePhase instance — DA-1's concrete witness for ZP-E's machine
-- § VI  Function-Gödel-number correspondence — period = index, non-computability boundary
-
-## Key insight (April 26, 2026)
-
-This is the framework's reading, and it is a commitment throughout — no theorem in this
-file establishes it. On that reading, ⊥ in the computational instantiation (ZP-C D7) is
-not a state OF a Turing machine: ⊥ IS the universal Turing machine in its ground state,
-and U is not a description awaiting an external executor but IS the executor.
-
-What Lean supplies underneath: Kleene's second recursion theorem (Mathlib:
-Nat.Partrec.Code.fixed_point₂) guarantees a fixed point exists for any partially
-computable transformation. The KleeneStructure typeclass then takes the AFA Quine atom
-(⊥ = {⊥}) and the Kleene computational quine (∃ c, eval c = f c) to be the same
-structural property. That identification is the motivating commitment, not a theorem
-proved here, and it cannot be stated as an equation — `Code` and `L` are different
-types.
-
-## Dependencies
-
-ZP-J (T-EXEC: IsQuineAtom q ↔ q = ⊥, bot_self_mem).
-Mathlib: Nat.Partrec.Code.fixed_point₂ (Kleene's second recursion theorem).
-Mathlib: Nat.Partrec.Code.fixed_point (Rogers' fixed-point theorem).
-
-## Axiom footprint (verified)
-
-All proved ZP-K theorems depend on [propext, Classical.choice, Quot.sound].
-Source: Mathlib computability infrastructure — Kleene's theorem (fixed_point₂) and
-Rogers' theorem (fixed_point) themselves use classical logic and choice.
-ZP-J T-EXEC (axiom-free) is preserved as a ZP-J result; the classical axioms enter
-through Code/Partrec machinery, not through the ZPSemilattice or AFAStructure fields.
-
-Note a distinction that is easy to get backwards. Several results here are ZP-J
-theorems restated under a stronger hypothesis — `t_comp` (proof term
-`t_exec_triple_iff`), `kleene_quine_is_bot` (`t_exec`), `da1_computational`
-(`bot_is_quine_atom`). The `[KleeneStructure L]` hypothesis is inert *on those proof
-routes*, and the fences below say so. It is **not** absent from their axiom footprints:
-`#print axioms` traverses the statement, and the hypothesis reaches
-`IsComputationalQuine` → `selfApply` → Mathlib `eval`. So all three report the full
-triple, as the block at the end of this file shows. Inert-in-the-proof and
-absent-from-the-footprint are different properties; do not infer either from the other.
-
-§ VI theorems: all fully proved — self_halting_undecidable, isComputationalQuine_undecidable,
-quine_period_is_goedel, quine_goedel_injective, and infinite_quine_family.
-No sorry stubs remain in ZPK.
+## Formal Overview
+For `q` in a `ZPSemilattice L` with `KleeneStructure L`, T-COMP (`t_comp`, proof term `t_exec_triple_iff`):
+Quine atom ↔ (`q = bot` ∧ join identity); `da2_bottom_characterization` makes the last two equivalent.
+`botCode_is_quine` is a requirement; reading `botCode` as the computational face of ⊥ of `L` is the
+commitment. Footprints: `ZeroParadox/Computability/Kleene.md`.
 -/
 
 namespace ZeroParadox
@@ -166,9 +103,13 @@ theorem computational_quine_exists : ∃ c : Code, IsComputationalQuine c :=
 
 /- Note on computational quine uniqueness (why it is not stated here):
     Unlike the AFA quine (ZP-J quine_unique), computational fixed points of
-    selfApply are NOT unique in general. AFA uniqueness follows from the unique
-    decoration theorem: there is literally only one set satisfying x = {x}. The
-    computational setting is richer. A fixed point c of selfApply satisfies:
+    selfApply are NOT unique in general. In ZF + AFA that uniqueness is the axiom's own
+    content: AFA is "Every graph has a unique decoration" (Aczel, Non-Well-Founded Sets,
+    1988, ch. 1, p. 6), whence exactly one set satisfies x = {x} (p. 6, Example 1.3).
+    The unique-decoration lemma, Mostowski's Collapsing Lemma (p. 4), covers only
+    well-founded graphs, so it does not reach x = {x}. In Lean the uniqueness is the
+    `AFAStructure` field `quine_unique`, which each instance supplies. The computational
+    setting is richer. A fixed point c of selfApply satisfies:
       eval c n = eval c (Encodable.encode c + n)  for all n
     This is a periodicity condition on eval c, not a global identity constraint.
     Multiple programs can satisfy it independently — including the constant codes,
@@ -188,22 +129,20 @@ theorem computational_quine_exists : ∃ c : Code, IsComputationalQuine c :=
 
 /-! ## § II. KleeneStructure — Bridging Computation and AFA -/
 
-/-! ### NO-GO gauge — `KleeneStructure` BUNDLES A COMMITMENT AS DATA, and that is its known defect.
+/-! ### NO-GO gauge — `[KleeneStructure L]` does not assert that `botCode` names ⊥ of `L`.
 
-`CLAUDE.md` names it the worked example: the class carries a `Code` (data) together with the assertion
-that the code *names* ⊥ (a commitment the framework could be wrong about). Bundling the second into
-brackets is what makes `da1_closed_concrete` — which proves `IsQuineAtom (bot : MachinePhase)` and
-nothing computational — read as establishing self-execution.
-
-**The repair is a companion theorem carrying the commitment as an explicit hypothesis**, not a refactor
-— see `CLAUDE.md` § *Commitments Go In HYPOTHESES*, where this class is the first named candidate.
-Until then: `[KleeneStructure L]` asserts the identification; it does not establish it. -/
+What the class's fields assert, and that none relates `botCode` to `bot`: the
+`KleeneStructure.botCode_is_quine` entry of `ZeroParadox/Computability/ComputationCannotBe.lean` § IV.
+The `example` after `machinePhaseKleene` (§ V) is an instance with `botCode := Code.const 0`. So the
+identification is the KleeneStructure commitment, not data the class carries, and
+`da1_closed_concrete`, which proves `IsQuineAtom (bot : MachinePhase)` and nothing computational, does
+not establish it. The form for carrying a commitment as an explicit hypothesis: `CLAUDE.md` § R-COMMIT. -/
 
 /-- A ZP-A semilattice has KleeneStructure if it carries an AFAStructure and
     additionally names a `Code` satisfying `IsComputationalQuine`.
 
-    **This class is a COMMITMENT, and it is the framework's, not a theorem.** It
-    asserts that the AFA Quine atom and the Kleene computational quine name the same
+    **The identification it is built for is the framework's COMMITMENT, and no field
+    asserts it:** that the AFA Quine atom and the Kleene computational quine name the same
     structural property — the reading "botCode is the code that IS its own program,
     the universal Turing machine in ground state, and this is the computational
     expression of `bot_self_mem`". Nothing in this file derives that identification,
@@ -221,14 +160,14 @@ Until then: `[KleeneStructure L]` asserts the identification; it does not establ
       computational side has infinitely many fixed points (`infinite_quine_family`).
       The commitment relates a unique element to a family, and § VI says what that
       family is. -/
--- [ZP-CUSTOM] no Mathlib analog | reason: Bridges AFAStructure (set-theoretic self-containment) with Mathlib's computability library (Nat.Partrec.Code). No Mathlib typeclass connects AFA and Code. KleeneStructure asserts that the AFA Quine atom and the Kleene computational Quine (∃ c, eval c = f c) name the same structural property — this identification is the motivating commitment, not a derived theorem.
+-- [ZP-CUSTOM] no Mathlib analog | reason: Bridges AFAStructure (set-theoretic self-containment) with Mathlib's computability library (Nat.Partrec.Code). No Mathlib typeclass connects AFA and Code. KleeneStructure is built for the reading that the AFA Quine atom and the Kleene computational Quine (∃ c, eval c = f c) name the same structural property — this identification is the motivating commitment, not a derived theorem, and no field asserts it.
 class KleeneStructure (L : Type*) [ZPSemilattice L] extends AFAStructure L where
   /-- The code the framework nominates as ⊥'s computational witness. Nothing here
       distinguishes it: it is whatever code the instance supplies. -/
   botCode : Code
   /-- botCode satisfies `IsComputationalQuine` — a periodicity condition, which constant
       codes also satisfy (`hconst_quine`, a `have` inside `infinite_quine_family`, § VI). Reading it as "the computational
-      expression of bot_self_mem" is the class's commitment, not a consequence of this
+      expression of bot_self_mem" is the KleeneStructure commitment, not a consequence of this
       field. -/
   botCode_is_quine : IsComputationalQuine botCode
   /-- Restates the inherited `AFAStructure` field `bot_self_mem`; it records the intent
@@ -278,8 +217,8 @@ theorem t_comp {L : Type*} [ZPSemilattice L] [KleeneStructure L] (q : L) :
     computational fixed point; the proof term is `t_exec`, a pure ZP-J result. The
     `KleeneStructure` hypothesis is inert *on this proof route* — it supplies the
     `AFAStructure` this inherits from, and nothing else is used. It is not absent from
-    the axiom footprint, which follows the statement (see the footprint note in the
-    header). That the Kleene fixed point and the AFA Quine atom
+    the axiom footprint, which follows the statement (see the footprint note in
+    `ZeroParadox/Computability/Kleene.md`). That the Kleene fixed point and the AFA Quine atom
     "identify the same element" is the class's motivating commitment (header, § II),
     not what this theorem shows. -/
 theorem kleene_quine_is_bot {L : Type*} [ZPSemilattice L] [KleeneStructure L]
@@ -304,10 +243,10 @@ theorem roger_fixed_point_exists (f : Code → Code) (hf : Computable f) :
     so this statement unpacks the structure's own requirements — it does not derive
     them. Nothing computational appears in the statement or the proof.
 
-    The reading "⊥ is necessarily *executing*, not a static description" is the
-    framework's interpretation of `bot_self_mem` under the KleeneStructure commitment,
-    and DA-1's central claim. It is meaning attached to the Lean fact, not a separate
-    Lean theorem. -/
+    The reading "if ⊥ executes at all, it is its own executor" (ZP-E, DA-1 Path 1) is the
+    framework's interpretation of `bot_self_mem` under the KleeneStructure commitment.
+    That the configuration reaching P₀ is running is the occurrence commitment, which
+    DA-1 consumes (ZP-E). Neither is a separate Lean theorem. -/
 theorem da1_computational {L : Type*} [ZPSemilattice L] [KleeneStructure L] :
     IsQuineAtom (bot : L) :=
   bot_is_quine_atom
@@ -322,8 +261,8 @@ theorem da1_computational {L : Type*} [ZPSemilattice L] [KleeneStructure L] :
 
     The framework's reading — that Path 1 (AFA: nothing external to ⊥ can execute it)
     and Path 3 (AIT: no shorter external program generates it) are one structural fact
-    expressed in two languages — is DA-1's argument, carried by this pair of witnesses,
-    not proved by it.
+    expressed in two languages — is the framework's argument for DA-1's precondition,
+    carried by this pair of witnesses, not proved by it.
 
     Note also that `IsComputationalQuine` is a *periodicity* condition, satisfied by
     constant codes (`hconst_quine`, in the proof of `infinite_quine_family`). So the
@@ -340,19 +279,19 @@ theorem da1_paths_unified {L : Type*} [ZPSemilattice L] [KleeneStructure L] :
     self-containing element in `L`, nothing more.
 
     The framework's reading — that ⊥ is not a description awaiting an external
-    executor but IS the executor, so DA-1's static-description alternative is closed —
-    is the argument this witness supports. It is DA-1's claim, not this theorem's
-    content, and "no external program is prior to ⊥" is a requirement the framework
-    imposes rather than something derived here. -/
+    executor but IS the executor — is the argument this witness supports. It rules out
+    an external executor, not an inert ⊥: that the configuration reaching P₀ is running
+    is the occurrence commitment, which DA-1 consumes (ZP-E). "No external program is
+    prior to ⊥" is a requirement the framework imposes rather than derives here. -/
 theorem description_instantiation_gap_closed {L : Type*} [ZPSemilattice L]
     [KleeneStructure L] : IsQuineAtom (bot : L) ∧
     ∀ (q : L), IsQuineAtom q → q = bot := by
   exact ⟨bot_is_quine_atom, fun q hq => t_exec q hq⟩
 
-/-! ## § V. MachinePhase — DA-1's Concrete Path 1 Witness
+/-! ## § V. MachinePhase — the Concrete Lean Counterpart of DA-1's Path 1
 
 Provides AFAStructure and KleeneStructure instances for ZP-E's MachinePhase type,
-witnessing DA-1's Path 1 for ZP-E's MachinePhase model.
+the Lean counterpart of DA-1's Path 1 for ZP-E's MachinePhase model.
 
 selfMem is modelled as equality with bot — the CIC-compatible expression of AFA
 self-containment ⊥ = {⊥}. Anti-foundation is not required at the typeclass level:
@@ -366,7 +305,7 @@ open ZeroParadox ZeroParadox
     The unique self-containing element is the initial state — the bottom of the
     semilattice. This is the CIC encoding of ⊥ = {⊥}: bot is self-containing
     and is the only element with this property. -/
--- [ZP-CUSTOM] instance: AFAStructure MachinePhase | reason: selfMem x := x = bot is the CIC-compatible encoding of AFA self-containment (⊥ = {⊥} cannot be stated in Lean's well-founded type theory). Quine uniqueness and bot_self_mem are provable by rfl. This is the concrete Path 1 witness for ZP-E's machine model; DA-1 itself is closed given DP-2 (da1_minimal_path).
+-- [ZP-CUSTOM] instance: AFAStructure MachinePhase | reason: selfMem x := x = bot is the CIC-compatible encoding of AFA self-containment (⊥ = {⊥} cannot be stated in Lean's well-founded type theory). Quine uniqueness and bot_self_mem are provable by rfl. This is the concrete Lean counterpart of Path 1 for ZP-E's machine model; DA-1 itself is closed given DP-2 (da1_minimal_path).
 instance machinePhaseAFA : AFAStructure MachinePhase where
   selfMem x      := x = bot
   quine_unique _ _ hx hy := hx.trans hy.symm
@@ -378,8 +317,8 @@ instance machinePhaseAFA : AFAStructure MachinePhase where
     `kleene_fixed_point_exists` (Kleene's second recursion theorem). It is not a
     distinguished code, and the predicate it satisfies is a periodicity condition that
     constant codes also meet (§ VI). Reading it as "the code that IS its own program,
-    the computational expression of ⊥ = {⊥}" is the framework's commitment, carried by
-    the class, not a property this instance establishes. -/
+    the computational expression of ⊥ = {⊥}" is the KleeneStructure commitment, which no
+    field asserts, not a property this instance establishes. -/
 -- [ZP-CUSTOM] instance: KleeneStructure MachinePhase (noncomputable) | reason: botCode chosen via Classical.choose — it names SOME computational quine and not a distinguished one. isComputationalQuine_undecidable says the MEMBERSHIP PREDICATE is not a ComputablePred, which is why nothing can pin down which code was chosen — it does NOT say no algorithm names a witness, and the constant codes are witnesses. The noncomputable marker comes from this instance's choice of botCode; a computable instance with a constant code also satisfies the class, so the noncomputable marker belongs to the instance, not to DA-1's computational path.
 noncomputable instance machinePhaseKleene : KleeneStructure MachinePhase where
   botCode               := Classical.choose computational_quine_exists
@@ -397,7 +336,7 @@ example : KleeneStructure MachinePhase :=
       simp [selfApply, eval_const]
     bot_self_mem_from_kleene := rfl }
 
-/-- The Path 1 witness (concrete): in the MachinePhase semilattice, ⊥ is a Quine atom.
+/-- Path 1's Lean counterpart (concrete): in the MachinePhase semilattice, ⊥ is a Quine atom.
     Follows from `da1_computational` at the MachinePhase KleeneStructure instance.
 
     **Honest fence — read this before citing the theorem.** What Lean proves is exactly
@@ -408,8 +347,8 @@ example : KleeneStructure MachinePhase :=
     route.
 
     The reading "c₀ is self-**executing** — not a static description awaiting an
-    external interpreter" is DA-1's claim and the framework's requirement on the
-    computational bottom. It is meaning attached to this Lean fact, **not** what the
+    external interpreter" is the framework's: that the configuration reaching P₀ is
+    running is the occurrence commitment, which DA-1 consumes (ZP-E). It is meaning attached to this Lean fact, **not** what the
     statement carries. Two specifics that matter when this theorem is cited as
     computational grounding:
     * The statement mentions no `Code` and no execution.
@@ -442,7 +381,7 @@ theorem quine_period_is_goedel (c : Code) (hc : IsComputationalQuine c) :
   simp only [selfApply] at h
   exact h
 
-/-- Among computational quines, distinct Gödel numbers imply distinct codes.
+/-- Among computational quines, equal Gödel numbers imply equal codes.
 
     **Honest fence.** The proof is `Encodable.encode_inj` — injectivity of the encoding
     on all of `Code`. Both quine hypotheses are bound to `_` and are unused, so this is
@@ -670,6 +609,500 @@ theorem encodeCode_self (c : Code) : encodeCode c = encodeCode c := rfl
 /-- The same Gödel number, spelled through the `Encodable` instance. `rfl`. -/
 theorem encode_self (c : Code) : Encodable.encode c = Encodable.encode c := rfl
 
+/-! ## § VIII. Infinitely many fixed points, padding, and a self-printing universal code
+
+Argument, fences and controls: `ZeroParadox/Computability/Kleene.md` § VIII. -/
+
+/-- `Statement:` for partial computable `F`, some code `c` with `eval c = F c` has Gödel
+    number above any given bound `N`. -/
+theorem fixed_point₂_unbounded {F : Code → ℕ →. ℕ} (hF : Partrec₂ F) (N : ℕ) :
+    ∃ c : Code, eval c = F c ∧ N < Encodable.encode c := by
+  classical
+  let d : ℕ → Code := fun k =>
+    if eval (Denumerable.ofNat Code k) 0 = Part.some 0 then Code.const 1 else Code.const 0
+  let L : List Code := (List.range (N + 1)).map d
+  let F' : Code → ℕ →. ℕ := fun c x =>
+    cond (decide (Encodable.encode c ≤ N)) (eval (L.getD (Encodable.encode c) Code.zero) x)
+      (F c x)
+  have hF' : Partrec₂ F' := by
+    have hc : Computable fun p : Code × ℕ => decide (Encodable.encode p.1 ≤ N) :=
+      (Primrec.nat_le.decide.comp (Primrec.encode.comp Primrec.fst)
+        (Primrec.const N)).to_comp
+    have hf : Partrec fun p : Code × ℕ => eval (L.getD (Encodable.encode p.1) Code.zero) p.2 :=
+      eval_part.comp
+        ((Primrec.list_getD Code.zero).comp (Primrec.const L)
+          (Primrec.encode.comp Primrec.fst)).to_comp Computable.snd
+    exact (Partrec.cond hc hf hF).of_eq fun p => rfl
+  obtain ⟨c, hc⟩ := fixed_point₂ hF'
+  by_cases hN : Encodable.encode c ≤ N
+  · exfalso
+    have hL : L.getD (Encodable.encode c) Code.zero = d (Encodable.encode c) := by
+      simp [L, List.getD_eq_getElem?_getD, Nat.lt_succ_of_le hN]
+    have hev : eval c = eval (d (Encodable.encode c)) := by
+      rw [hc]; funext x; simp only [F', hN, decide_true, cond_true, hL]
+    have h0 := congrFun hev 0
+    by_cases hz : eval c 0 = Part.some 0
+    · have : d (Encodable.encode c) = Code.const 1 := by
+        simp [d, Denumerable.ofNat_encode, hz]
+      rw [this, hz] at h0; simp at h0
+    · have : d (Encodable.encode c) = Code.const 0 := by
+        simp [d, Denumerable.ofNat_encode, hz]
+      rw [this, eval_const] at h0; exact hz h0
+  · refine ⟨c, ?_, by omega⟩
+    rw [hc]; funext x; simp [F', hN]
+
+/-- `Statement:` for partial computable `F`, the codes `c` with `eval c = F c` form an
+    infinite set. -/
+theorem fixed_points_infinite {F : Code → ℕ →. ℕ} (hF : Partrec₂ F) :
+    {c : Code | eval c = F c}.Infinite := by
+  intro hfin
+  obtain ⟨B, hB⟩ := (hfin.image Encodable.encode).bddAbove
+  obtain ⟨c, hc, hcB⟩ := fixed_point₂_unbounded hF B
+  have := hB ⟨c, hc, rfl⟩
+  omega
+
+/-- `Statement:` the padding lemma: a partial recursive `g` has infinitely many codes. -/
+theorem padding {g : ℕ →. ℕ} (hg : Nat.Partrec g) : {c : Code | eval c = g}.Infinite := by
+  have : Partrec₂ fun (_ : Code) (x : ℕ) => g x :=
+    ((Partrec.nat_iff.2 hg).comp Computable.snd).to₂
+  exact fixed_points_infinite this
+
+/-- `Statement:` on every input `Nat.pair 0 n`, `c` returns its own Gödel number. -/
+def SelfPrints (c : Code) : Prop :=
+  ∀ n, eval c (Nat.pair 0 n) = Part.some (Encodable.encode c)
+
+/-- `Statement:` on every input `Nat.pair (e + 1) n`, `c` agrees with the code numbered `e`. -/
+def Universal (c : Code) : Prop :=
+  ∀ e n, eval c (Nat.pair (e + 1) n) = eval (Denumerable.ofNat Code e) n
+
+/-- `Statement:` the transformation whose fixed points are self-printing and universal:
+    channel `0` returns the Gödel number of `c`, channel `e + 1` is `eval` of code `e`. -/
+noncomputable def selfPrintOrDelegate (c : Code) (x : ℕ) : Part ℕ :=
+  (x.unpair.1).casesOn (Part.some (Encodable.encode c))
+    (fun e => eval (Denumerable.ofNat Code e) x.unpair.2)
+
+/-- `Statement:` `selfPrintOrDelegate` is partial computable. -/
+theorem selfPrintOrDelegate_partrec : Partrec₂ selfPrintOrDelegate := by
+  have h := Partrec.nat_casesOn_right (α := Code × ℕ) (σ := ℕ)
+    (f := fun p => p.2.unpair.1) (g := fun p => Encodable.encode p.1)
+    (h := fun p e => eval (Denumerable.ofNat Code e) p.2.unpair.2)
+    ((Computable.fst.comp Computable.unpair).comp Computable.snd)
+    (Computable.encode.comp Computable.fst)
+    (eval_part.comp ((Computable.ofNat Code).comp Computable.snd)
+      ((Computable.snd.comp Computable.unpair).comp (Computable.snd.comp Computable.fst))).to₂
+  exact h.of_eq fun p => rfl
+
+/-- `Statement:` a fixed point of `selfPrintOrDelegate` is self-printing and universal. -/
+theorem selfPrints_universal_of_fixedPoint (c : Code) (h : eval c = selfPrintOrDelegate c) :
+    SelfPrints c ∧ Universal c := by
+  refine ⟨fun n => ?_, fun e n => ?_⟩
+  · rw [h]; simp [selfPrintOrDelegate]
+  · rw [h]; simp [selfPrintOrDelegate]
+
+/-- `Statement:` a code that is both self-printing and universal exists. -/
+theorem selfref_universal_exists : ∃ c : Code, SelfPrints c ∧ Universal c := by
+  obtain ⟨c, hc⟩ := fixed_point₂ selfPrintOrDelegate_partrec
+  exact ⟨c, selfPrints_universal_of_fixedPoint c hc⟩
+
+/-- `Statement:` and infinitely many such codes exist. -/
+theorem selfref_universal_infinite : {c : Code | SelfPrints c ∧ Universal c}.Infinite :=
+  (fixed_points_infinite selfPrintOrDelegate_partrec).mono
+    fun c hc => selfPrints_universal_of_fixedPoint c hc
+
+-- `Statement:` CONTROL: no constant code is universal, so the constant codes, which meet
+-- `IsComputationalQuine` (`infinite_quine_family`), never meet `SelfPrints ∧ Universal`.
+example (k : ℕ) : ¬ Universal (Code.const k) := by
+  intro h
+  have h1 := h (Encodable.encode Code.succ) 0
+  have h0 := h (Encodable.encode Code.zero) 0
+  rw [Denumerable.ofNat_encode] at h1 h0
+  have e1 : eval Code.succ 0 = Part.some 1 := rfl
+  have e0 : eval Code.zero 0 = Part.some 0 := rfl
+  rw [eval_const, e1] at h1
+  rw [eval_const, e0] at h0
+  exact absurd ((Part.some_inj.1 h1).symm.trans (Part.some_inj.1 h0)) (by decide)
+
+-- `Statement:` `Code.zero` is `Code.const 0`, so the control above covers it.
+example : Code.const 0 = Code.zero := rfl
+
+-- `Statement:` CONTROL: `Code.zero` is self-printing, since its Gödel number is `0`; so
+-- `SelfPrints` alone holds of a code that is not universal.
+example : SelfPrints Code.zero := fun _ => by
+  rw [(by decide : Encodable.encode Code.zero = 0)]; rfl
+
+/-- `Statement:` CONTROL: a universal code that is not self-printing exists. -/
+theorem universal_not_selfprints : ∃ u : Code, Universal u ∧ ¬ SelfPrints u := by
+  let G : ℕ →. ℕ := fun x =>
+    (x.unpair.1).casesOn (Part.some 0) (fun e => eval (Denumerable.ofNat Code e) x.unpair.2)
+  have hG : Partrec G := by
+    have h := Partrec.nat_casesOn_right (α := ℕ) (σ := ℕ)
+      (f := fun x => x.unpair.1) (g := fun _ => 0)
+      (h := fun x e => eval (Denumerable.ofNat Code e) x.unpair.2)
+      (Computable.fst.comp Computable.unpair) (Computable.const 0)
+      (eval_part.comp ((Computable.ofNat Code).comp Computable.snd)
+        ((Computable.snd.comp Computable.unpair).comp Computable.fst)).to₂
+    exact h.of_eq fun x => rfl
+  obtain ⟨u, hu⟩ := exists_code.1 (Partrec.nat_iff.1 hG)
+  refine ⟨u, fun e n => by rw [hu]; simp [G], fun hs => ?_⟩
+  have h0 := hs 0
+  rw [hu] at h0
+  simp [G] at h0
+  have huz : u = Code.zero := by
+    apply Encodable.encode_injective
+    rw [(by decide : Encodable.encode Code.zero = 0)]; omega
+  have hU : eval u (Nat.pair (Encodable.encode Code.succ + 1) 0) = eval Code.succ 0 := by
+    rw [hu]; simp [G]
+  have hs1 : eval Code.succ 0 = Part.some 1 := rfl
+  have hz0 : eval Code.zero (Nat.pair (Encodable.encode Code.succ + 1) 0) = Part.some 0 := rfl
+  rw [huz, hz0, hs1] at hU
+  exact absurd (Part.some_inj.1 hU) (by decide)
+
+/-- `Statement:` two self-printing codes with the same `eval` are the same code.
+    `Reading:` among self-printing codes, behaviour determines the code (`Kleene.md` § VIII). -/
+theorem selfprints_behaviour_injective {c₁ c₂ : Code} (h₁ : SelfPrints c₁)
+    (h₂ : SelfPrints c₂) (he : eval c₁ = eval c₂) : c₁ = c₂ := by
+  have := congrFun he (Nat.pair 0 0)
+  rw [h₁, h₂] at this
+  exact Encodable.encode_injective (Part.some_inj.mp this)
+
+/-- `Statement:` two self-printing universal codes agree on every channel `e + 1`, and two
+    distinct ones differ on channel `0`, where each returns its own Gödel number.
+    `Reading:` replicas share everything but the address (`Kleene.md` § VIII). -/
+theorem selfPrints_universal_address {c d : Code} (hc : SelfPrints c ∧ Universal c)
+    (hd : SelfPrints d ∧ Universal d) :
+    (∀ e n, eval c (Nat.pair (e + 1) n) = eval d (Nat.pair (e + 1) n)) ∧
+      (c ≠ d → ∀ n, eval c (Nat.pair 0 n) ≠ eval d (Nat.pair 0 n)) := by
+  refine ⟨fun e n => by rw [hc.2, hd.2], fun hne n h => hne ?_⟩
+  rw [hc.1, hd.1] at h
+  exact Encodable.encode_injective (Part.some_inj.mp h)
+
+-- `Statement:` CONTROL: `Universal` carries the first half: a self-printing universal code and
+-- `Code.zero`, which is self-printing and not universal, differ on a channel `e + 1`.
+example {c : Code} (hc : SelfPrints c ∧ Universal c) :
+    eval c (Nat.pair (Encodable.encode Code.succ + 1) 0) ≠
+      eval Code.zero (Nat.pair (Encodable.encode Code.succ + 1) 0) := by
+  rw [hc.2, Denumerable.ofNat_encode]
+  intro h
+  have e1 : eval Code.succ 0 = Part.some 1 := rfl
+  have e0 : eval Code.zero (Nat.pair (Encodable.encode Code.succ + 1) 0) = Part.some 0 := rfl
+  rw [e1, e0] at h
+  exact absurd (Part.some_inj.1 h) (by decide)
+
+/-- `Statement:` CONTROL: a self-printing code satisfies `Occurs` on channel `0`.
+    `Reading:` `Occurs` is a static property of a (code, input) pair (`Kleene.md` § VIII). -/
+theorem selfprints_occurs (c : Code) (hS : SelfPrints c) (n : ℕ) :
+    Occurs c (Nat.pair 0 n) := by
+  rw [occurs_iff_halts, hS]; simp
+
+/-- `Statement:` CONTROL: `Code.zero`, which is not universal, satisfies `Occurs` on every
+    input. -/
+theorem zero_occurs (n : ℕ) : Occurs Code.zero n := by
+  rw [occurs_iff_halts]
+  exact Part.dom_iff_mem.mpr ⟨0, Part.mem_some 0⟩
+
+/-! ## § IX. Kleene's fixed points in the die's motion (`ZeroParadox/Die.lean`)
+
+Indexed in `ZeroParadox/DieCannotBe.lean` § XV. -/
+
+/-- `Statement:` on codes, UP the identity and OVER `a → b` when `eval b = F a`. -/
+def evalStepMotion (F : Code → ℕ →. ℕ) : Motion Code :=
+  Motion.ofTotal id (fun _ => rfl) (fun a b => eval b = F a)
+
+-- Statement: `c` steps to itself in `evalStepMotion F` iff `c` is a Kleene fixed point of `F`; both
+-- directions, by definition.
+example (F : Code → ℕ →. ℕ) (c : Code) :
+    (evalStepMotion F).step c c ↔ IsKleeneFixedPoint F c := Iff.rfl
+
+/-- `Statement:` if `c` steps to itself in `evalStepMotion F`, `c` also steps to a code other than
+    `c` (`padding`); one way. -/
+theorem evalStepMotion_leavesAt_of_step (F : Code → ℕ →. ℕ) (c : Code)
+    (h : (evalStepMotion F).step c c) : (evalStepMotion F).LeavesAt c := by
+  have hp : Nat.Partrec (eval c) := exists_code.2 ⟨c, rfl⟩
+  obtain ⟨d, hd, hne⟩ := Set.Nontrivial.exists_ne (Set.Infinite.nontrivial (padding hp)) c
+  exact ⟨d, show eval d = F c from (hd : eval d = eval c).trans h, hne⟩
+
+/-- `Statement:` no code steps to itself only in `evalStepMotion F`, for every `F`. -/
+theorem evalStepMotion_not_selfOnlyAt (F : Code → ℕ →. ℕ) (c : Code) :
+    ¬ (evalStepMotion F).SelfOnlyAt c := fun h =>
+  Motion.not_selfOnlyAt_and_leavesAt _ c ⟨h, evalStepMotion_leavesAt_of_step F c h.1⟩
+
+/-- `Statement:` `evalStepMotion F` restricted to the universal codes. -/
+def universalStepMotion (F : Code → ℕ →. ℕ) : Motion {c : Code // Universal c} :=
+  Motion.ofTotal id (fun _ => rfl) (fun a b => eval b.1 = F a.1)
+
+/-- `Statement:` CONTROL: if a universal code steps to itself in `universalStepMotion F`, it also
+    steps to a different universal code; one way. -/
+theorem universalStepMotion_leavesAt_of_step (F : Code → ℕ →. ℕ) (a : {c : Code // Universal c})
+    (h : (universalStepMotion F).step a a) : (universalStepMotion F).LeavesAt a := by
+  have hp : Nat.Partrec (eval a.1) := exists_code.2 ⟨a.1, rfl⟩
+  obtain ⟨d, hd, hne⟩ := Set.Nontrivial.exists_ne (Set.Infinite.nontrivial (padding hp)) a.1
+  have hd' : eval d = eval a.1 := hd
+  have hu : Universal d := fun e n => by rw [hd']; exact a.2 e n
+  exact ⟨⟨d, hu⟩, show eval d = F a.1 from hd'.trans h, fun he => hne (congrArg Subtype.val he)⟩
+
+/-- `Statement:` `evalStepMotion F` restricted to the self-printing codes. -/
+def selfPrintsStepMotion (F : Code → ℕ →. ℕ) : Motion {c : Code // SelfPrints c} :=
+  Motion.ofTotal id (fun _ => rfl) (fun a b => eval b.1 = F a.1)
+
+/-- `Statement:` if a self-printing code steps to itself in `selfPrintsStepMotion F`, it steps to
+    itself only (`selfprints_behaviour_injective`); one way. -/
+theorem selfPrintsStepMotion_selfOnlyAt_of_step (F : Code → ℕ →. ℕ) (a : {c : Code // SelfPrints c})
+    (h : (selfPrintsStepMotion F).step a a) : (selfPrintsStepMotion F).SelfOnlyAt a :=
+  ⟨h, fun b hb => Subtype.ext (selfprints_behaviour_injective b.2 a.2
+    ((hb : eval b.1 = F a.1).trans (h : eval a.1 = F a.1).symm))⟩
+
+/-- `Statement:` some self-printing universal code steps to itself only in
+    `selfPrintsStepMotion selfPrintOrDelegate`. -/
+theorem exists_selfPrintsStepMotion_selfOnlyAt :
+    ∃ a : {c : Code // SelfPrints c},
+      (selfPrintsStepMotion selfPrintOrDelegate).SelfOnlyAt a ∧ Universal a.1 := by
+  obtain ⟨c, hc⟩ := fixed_point₂ selfPrintOrDelegate_partrec
+  have h := selfPrints_universal_of_fixedPoint c hc
+  exact ⟨⟨c, h.1⟩, selfPrintsStepMotion_selfOnlyAt_of_step _ _ hc, h.2⟩
+
+/-- `Statement:` on inputs, UP `n ↦ n % ⌜c⌝` and OVER `n ↦ ⌜c⌝ + n`, where `⌜c⌝` is `c`'s Gödel
+    number. `Reading:` OVER is the shift in `quine_period_is_goedel`; UP is a choice of this encoding,
+    not forced by it. -/
+def shiftMotion (c : Code) : Motion ℕ :=
+  Motion.ofTotal (fun n => n % Encodable.encode c) (fun n => Nat.mod_mod n _)
+    (fun a b => b = Encodable.encode c + a)
+
+/-- `Statement:` UP is unchanged along a step of `shiftMotion c`. -/
+theorem shiftMotion_upStepInvariant (c : Code) : (shiftMotion c).UpStepInvariant := by
+  intro a b hab
+  have hb : b = Encodable.encode c + a := hab
+  subst hb
+  show Part.some (a % _) = Part.some ((Encodable.encode c + a) % _)
+  rw [Nat.add_mod_left]
+
+/-- `Statement:` `c` is a computational quine iff `eval c n = eval c (n % ⌜c⌝)` for every `n`; both
+    directions. -/
+theorem isComputationalQuine_iff_eval_mod (c : Code) :
+    IsComputationalQuine c ↔ ∀ n, eval c n = eval c (n % Encodable.encode c) := by
+  set k := Encodable.encode c
+  constructor
+  · intro hq n
+    have hp : ∀ x, eval c (k + x) = eval c x := fun x => ((quine_period_is_goedel c hq) x).symm
+    have key : ∀ m r, eval c (r + k * m) = eval c r := by
+      intro m
+      induction m with
+      | zero => intro r; simp
+      | succ m ih =>
+        intro r
+        rw [show r + k * (m + 1) = k + (r + k * m) by ring, hp, ih]
+    have := key (n / k) (n % k)
+    rw [Nat.mod_add_div] at this
+    exact this
+  · intro h
+    show eval c = selfApply c
+    funext n
+    show eval c n = eval c (k + n)
+    rw [h n, h (k + n), Nat.add_mod_left]
+
+/-- `Statement:` if `⌜c⌝ ≠ 0`, `shiftMotion c` loops (from the landing `0` to `⌜c⌝` and back). -/
+theorem shiftMotion_loop (c : Code) (hk : Encodable.encode c ≠ 0) : (shiftMotion c).Loop :=
+  ⟨0, Encodable.encode c, Part.mem_some_iff.2 (Nat.zero_mod _).symm, rfl, hk,
+    Part.mem_some_iff.2 (Nat.mod_self _).symm⟩
+
+/-- `Statement:` the corner of `shiftMotion c` fires iff `⌜c⌝ ≠ 0`; both directions. -/
+theorem shiftMotion_corner_iff (c : Code) : (shiftMotion c).Corner ↔ Encodable.encode c ≠ 0 := by
+  refine ⟨fun h hk => ?_, fun hk => Motion.loop_corner _ (shiftMotion_loop c hk)⟩
+  obtain ⟨y, b, hs, hne⟩ := Motion.corner_step_moves _ h
+  have hb : b = Encodable.encode c + y := hs
+  exact hne (by rw [hb, hk, zero_add])
+
+/-- `Statement:` in ℕ's order the legs of `shiftMotion c` oppose: UP `n ↦ n % ⌜c⌝` lowers and OVER
+    `n ↦ ⌜c⌝ + n` raises. -/
+theorem shiftMotion_oppose (c : Code) : (shiftMotion c).Oppose :=
+  ⟨fun x _ h => (Part.mem_some_iff.1 h) ▸ Nat.mod_le x _,
+   fun x _ h => (show _ = Encodable.encode c + x from h) ▸ Nat.le_add_left x _⟩
+
+/-- `Statement:` `shiftMotion c` has an elbow iff `⌜c⌝ ≠ 0`; both directions. -/
+theorem shiftMotion_elbow_iff (c : Code) : (shiftMotion c).Elbow ↔ Encodable.encode c ≠ 0 := by
+  constructor
+  · rintro ⟨x, y, -, hy, hyx, -⟩ hk
+    have hy' : y = x % Encodable.encode c := Part.mem_some_iff.1 hy
+    rw [hk, Nat.mod_zero] at hy'
+    exact hyx hy'
+  · intro hk
+    exact ⟨Encodable.encode c, 0, Encodable.encode c, Part.mem_some_iff.2 (Nat.mod_self _).symm,
+      Ne.symm hk, show _ = _ + 0 by omega⟩
+
+-- Statement: the statement of `self_halting_undecidable`, by a second route: a decider gives a
+-- computable `g`; Rogers' fixed point `c` of `g` makes "`c` halts on `⌜c⌝`" equivalent to its own
+-- negation, which would make that proposition step to itself only in `Motion.ofFun Not`, where every
+-- proposition steps elsewhere (`Motion.leavesAt_ofFun_not`).
+example : ¬ ComputablePred (fun c : Code => (eval c (Encodable.encode c)).Dom) := by
+  rintro ⟨inst, hD⟩
+  obtain ⟨cn, hcn⟩ := exists_code.1 Nat.Partrec.none
+  let g : Code → Code := fun c => cond (@decide _ (inst c)) cn Code.zero
+  have hg : Computable g := Computable.cond hD (Computable.const cn) (Computable.const Code.zero)
+  obtain ⟨c, hc⟩ := roger_fixed_point_exists g hg
+  have hA : (eval c (Encodable.encode c)).Dom → g c = cn := fun hp => by
+    show cond (@decide _ (inst c)) cn Code.zero = cn
+    rw [@decide_eq_true _ (inst c) hp]; rfl
+  have hB : ¬ (eval c (Encodable.encode c)).Dom → g c = Code.zero := fun hp => by
+    show cond (@decide _ (inst c)) cn Code.zero = Code.zero
+    rw [@decide_eq_false _ (inst c) hp]; rfl
+  have hT : (eval c (Encodable.encode c)).Dom ↔ (eval (g c) (Encodable.encode c)).Dom := by
+    rw [hc]
+  have hflip : (eval c (Encodable.encode c)).Dom ↔ ¬ (eval c (Encodable.encode c)).Dom := by
+    constructor
+    · intro hp hp'
+      have h2 := hT.1 hp
+      rw [hA hp, hcn] at h2
+      exact h2
+    · intro hp
+      apply hT.2
+      rw [hB hp]
+      exact (trivial : (Part.some 0).Dom)
+  exact Motion.not_selfOnlyAt_and_leavesAt _ _
+    ⟨(Motion.selfOnlyAt_ofFun_iff Not _).2 (propext hflip.symm), Motion.leavesAt_ofFun_not _⟩
+
+-- Statement: the statement of `isComputationalQuine_undecidable`, by the same route through Kleene's
+-- second recursion theorem (`kleene_fixed_point_exists`).
+example : ¬ ComputablePred (fun c : Code => IsComputationalQuine c) := by
+  rintro ⟨inst, hD⟩
+  let F : Code → ℕ →. ℕ := fun c n => Part.some (cond (@decide _ (inst c)) n 0)
+  have hF : Partrec₂ F :=
+    (Computable.cond (hD.comp Computable.fst) Computable.snd (Computable.const 0)).partrec
+  obtain ⟨c, hc⟩ := kleene_fixed_point_exists F hF
+  have hz : Encodable.encode Code.zero = 0 := by decide
+  have hflip : IsComputationalQuine c ↔ ¬ IsComputationalQuine c := by
+    constructor
+    · intro hq _
+      have he : eval c = fun n => Part.some n := by
+        rw [hc]; funext n; show Part.some (cond (@decide _ (inst c)) n 0) = _
+        rw [@decide_eq_true _ (inst c) hq]; rfl
+      have h0 := congrFun hq 0
+      simp only [selfApply, he] at h0
+      have hk : Encodable.encode c = 0 := by have := Part.some_inj.1 h0; omega
+      have hcz : c = Code.zero := Encodable.encode_injective (hk.trans hz.symm)
+      have h1 := congrFun he 1
+      rw [hcz] at h1
+      exact absurd (Part.some_inj.1 h1) (by decide)
+    · intro hq
+      have he : eval c = fun _ => Part.some 0 := by
+        rw [hc]; funext n; show Part.some (cond (@decide _ (inst c)) n 0) = _
+        rw [@decide_eq_false _ (inst c) hq]; rfl
+      show eval c = selfApply c
+      funext n
+      simp only [selfApply, he]
+  exact Motion.not_selfOnlyAt_and_leavesAt _ _
+    ⟨(Motion.selfOnlyAt_ofFun_iff Not _).2 (propext hflip.symm), Motion.leavesAt_ofFun_not _⟩
+
+/-! ### § IX-b. Codes and their classes up to `eval`: the quotient of a motion (`Die.lean` § XVIII)
+
+Reading: codes are drawings and classes are sets, the shape of `MemGraph.drawing_vs_set`
+(`ZeroParadox/Settheory/HypersetOrder.lean` § VII); a shared shape, proved separately here, with no
+map between `Code` and `MemGraph`. Indexed in `ZeroParadox/DieCannotBe.lean` § XXII. -/
+
+/-- `Statement:` for `eval`-respecting `F`, equal `eval` is step-compatible with
+    `evalStepMotion (eval ∘ F)`. -/
+theorem evalStep_stepCompat {F : Code → Code} (hF : EvalRespecting F) :
+    (evalStepMotion fun a => eval (F a)).StepCompat evalSetoid := by
+  intro a a' b haa' hb
+  exact ⟨b, (hb : eval b = eval (F a)).trans (hF a a' haa'), rfl⟩
+
+/-- `Statement:` the quotient of that motion steps `X` to `Y` iff `ofFun (liftEval F hF)` does; both
+    directions. -/
+theorem quot_evalStep_step_iff {F : Code → Code} (hF : EvalRespecting F) (X Y : EvalClass) :
+    ((evalStepMotion fun a => eval (F a)).quot evalSetoid).step X Y ↔
+      (Motion.ofFun (liftEval F hF)).step X Y := by
+  induction X using Quotient.ind with
+  | _ a =>
+    rw [Motion.quot_step_mk_iff (evalStep_stepCompat hF)]
+    constructor
+    · rintro ⟨b, hb, rfl⟩
+      exact Quotient.sound (hb : eval b = eval (F a))
+    · intro h
+      exact ⟨F a, rfl, h.symm⟩
+
+/-- `Statement:` for computable, `eval`-respecting `F`, no code steps to itself only
+    (`evalStepMotion_not_selfOnlyAt`), and some class steps to itself only in the quotient
+    (`effective_floor_fixedPoint`). -/
+theorem codes_vs_classes {F : Code → Code} (hc : Computable F) (hF : EvalRespecting F) :
+    (∀ c, ¬ (evalStepMotion fun a => eval (F a)).SelfOnlyAt c) ∧
+      ∃ X, ((evalStepMotion fun a => eval (F a)).quot evalSetoid).SelfOnlyAt X := by
+  refine ⟨fun c => evalStepMotion_not_selfOnlyAt _ c, ?_⟩
+  obtain ⟨c, hc'⟩ := effective_floor_fixedPoint hc
+  refine ⟨Quotient.mk evalSetoid c, ?_⟩
+  rw [Motion.quot_selfOnlyAt_mk_iff (evalStep_stepCompat hF)]
+  exact ⟨⟨c, show eval c = eval (F c) from hc'.symm, rfl⟩,
+    fun b hb => (hb : eval b = eval (F c)).trans hc'⟩
+
+/-- `Statement:` `c` followed by the identity code, `Code.comp c Code.id`. -/
+-- [ZP-CUSTOM] no Mathlib analog | reason: a named padding map on Mathlib's `Code`, used as a
+-- self-map whose motion has no self-step while every class up to `eval` steps to itself only.
+def padId (c : Code) : Code := Code.comp c Code.id
+
+/-- `Statement:` `padId c` has the same `eval` as `c`. -/
+theorem eval_padId (c : Code) : eval (padId c) = eval c := by
+  funext n
+  show eval Code.id n >>= eval c = eval c n
+  simp [Code.eval_id]
+
+/-- `Statement:` `padId c ≠ c`. -/
+theorem padId_ne (c : Code) : padId c ≠ c := by
+  intro h
+  have := congrArg sizeOf h
+  simp [padId] at this
+  omega
+
+/-- `Statement:` `padId` sends codes with equal `eval` to codes with equal `eval`. -/
+theorem padId_respects (a b : Code) (h : evalSetoid.r a b) : evalSetoid.r (padId a) (padId b) :=
+  show eval (padId a) = eval (padId b) by rw [eval_padId, eval_padId]; exact h
+
+/-- `Statement:` `padId` is computable. -/
+theorem padId_computable : Computable padId :=
+  (primrec₂_comp.comp Primrec.id (Primrec.const Code.id)).to_comp
+
+/-- `Statement:` no code steps to itself in `ofFun padId`, and every class steps to itself only in
+    its quotient by equal `eval`. -/
+theorem padId_drawing_vs_set :
+    (∀ c, ¬ (Motion.ofFun padId).step c c) ∧
+      ∀ X, ((Motion.ofFun padId).quot evalSetoid).SelfOnlyAt X := by
+  refine ⟨fun c h => padId_ne c (show c = padId c from h).symm, fun X => ?_⟩
+  induction X using Quotient.ind with
+  | _ a =>
+    rw [Motion.quot_selfOnlyAt_mk_iff (Motion.stepCompat_ofFun padId_respects)]
+    exact ⟨⟨padId a, rfl, eval_padId a⟩, fun b hb => (show b = padId a from hb) ▸ eval_padId a⟩
+
+/-- `Statement:` the constant code returning the Gödel number of `c`. -/
+-- [ZP-CUSTOM] no Mathlib analog | reason: a CONTROL map on Mathlib's `Code`, computable and not
+-- `eval`-respecting (`constEnc_not_respects`).
+def constEnc (c : Code) : Code := Code.const (Encodable.encode c)
+
+/-- `Statement:` `constEnc` is computable. -/
+theorem constEnc_computable : Computable constEnc :=
+  (primrec_const.comp Primrec.encode).to_comp
+
+/-- `Statement:` distinct constants have distinct `eval`. -/
+theorem eval_const_ne {j k : ℕ} (h : j ≠ k) : eval (Code.const j) ≠ eval (Code.const k) := by
+  intro e
+  have := congrFun e 0
+  rw [eval_const, eval_const] at this
+  exact h (Part.some_inj.1 this)
+
+/-- `Statement:` CONTROL: `constEnc` is not `eval`-respecting (at `Code.zero` and `padId Code.zero`). -/
+theorem constEnc_not_respects : ¬ EvalRespecting constEnc := fun h => by
+  have hne : Encodable.encode Code.zero ≠ Encodable.encode (padId Code.zero) := fun e =>
+    padId_ne Code.zero (Encodable.encode_injective e).symm
+  exact eval_const_ne hne (h _ _ (eval_padId Code.zero).symm)
+
+/-- `Statement:` CONTROL: in the quotient of `ofFun constEnc` by equal `eval`, some class steps to
+    two distinct classes. -/
+theorem constEnc_two_successors :
+    ∃ X Y Z, ((Motion.ofFun constEnc).quot evalSetoid).step X Y ∧
+      ((Motion.ofFun constEnc).quot evalSetoid).step X Z ∧ Y ≠ Z := by
+  have haa : evalSetoid.r (padId Code.zero) Code.zero := eval_padId Code.zero
+  have hne : Encodable.encode Code.zero ≠ Encodable.encode (padId Code.zero) := fun h =>
+    padId_ne Code.zero (Encodable.encode_injective h).symm
+  refine ⟨Quotient.mk _ Code.zero, Quotient.mk _ (constEnc Code.zero),
+    Quotient.mk _ (constEnc (padId Code.zero)),
+    ⟨Code.zero, _, rfl, rfl, rfl⟩, ⟨padId Code.zero, _, rfl, Quotient.sound haa, rfl⟩,
+    fun h => eval_const_ne hne (Quotient.exact h)⟩
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -699,8 +1132,54 @@ open ZeroParadox ZeroParadox ZPSemilattice ZeroParadox
 -- measurement rather than a rule. Re-run it rather than citing anything.
 #print axioms Nat.Partrec.Code
 #print axioms Nat.Partrec.Code.eval
+#print axioms Nat.Partrec.Code.instDenumerable
+#print axioms Primcodable.prod
 #print axioms IsKleeneFixedPoint
 #print axioms encodeCode_self
 #print axioms encode_self
+#print axioms fixed_point₂_unbounded
+#print axioms fixed_points_infinite
+#print axioms padding
+#print axioms SelfPrints
+#print axioms Universal
+#print axioms selfPrintOrDelegate
+#print axioms selfPrintOrDelegate_partrec
+#print axioms selfPrints_universal_of_fixedPoint
+#print axioms selfref_universal_exists
+#print axioms selfref_universal_infinite
+#print axioms universal_not_selfprints
+#print axioms selfprints_behaviour_injective
+#print axioms selfPrints_universal_address
+#print axioms selfprints_occurs
+#print axioms zero_occurs
+#print axioms evalStepMotion
+#print axioms evalStepMotion_leavesAt_of_step
+#print axioms evalStepMotion_not_selfOnlyAt
+#print axioms universalStepMotion
+#print axioms universalStepMotion_leavesAt_of_step
+#print axioms selfPrintsStepMotion
+#print axioms selfPrintsStepMotion_selfOnlyAt_of_step
+#print axioms exists_selfPrintsStepMotion_selfOnlyAt
+#print axioms shiftMotion
+#print axioms shiftMotion_upStepInvariant
+#print axioms isComputationalQuine_iff_eval_mod
+#print axioms shiftMotion_loop
+#print axioms shiftMotion_corner_iff
+#print axioms shiftMotion_oppose
+#print axioms shiftMotion_elbow_iff
+#print axioms evalStep_stepCompat
+#print axioms quot_evalStep_step_iff
+#print axioms codes_vs_classes
+#print axioms padId
+#print axioms eval_padId
+#print axioms padId_ne
+#print axioms padId_respects
+#print axioms padId_computable
+#print axioms padId_drawing_vs_set
+#print axioms constEnc
+#print axioms constEnc_computable
+#print axioms eval_const_ne
+#print axioms constEnc_not_respects
+#print axioms constEnc_two_successors
 
 end PurityCheck

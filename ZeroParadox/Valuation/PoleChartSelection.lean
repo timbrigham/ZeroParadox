@@ -261,7 +261,8 @@ undetermined pole.
 
 **Honest accounting of where the non-constructivity lives.** It is in `poleAdmissible`: the floor end's
 admissibility is an arbitrary undecided proposition. Feeding an undecided proposition into a selector and
-recovering a decision is not a discovery about poles; it is Diaconescu's argument with pole-shaped names.
+recovering a decision is not a discovery about poles; it is `em_of_choiceFragment`'s two-predicate
+argument with pole-shaped names.
 The theorem's usable content is the *converse-facing* one: chart selection can force excluded middle only
 if the charts are undetermined in exactly this way — which the built pole is not. -/
 theorem em_of_uniformChartSelection (h : UniformChartSelection) : ExcludedMiddle :=

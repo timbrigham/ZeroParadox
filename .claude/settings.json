@@ -70,15 +70,21 @@
         "hooks": [
           {
             "type": "command",
-            "command": "& tools\\verify\\claude_hooks\\block_git_gh.ps1",
+            "command": "& \"$env:CLAUDE_PROJECT_DIR\\tools\\verify\\claude_hooks\\block_git_gh.ps1\"",
             "shell": "powershell",
             "statusMessage": "Checking for direct git/gh..."
           },
           {
             "type": "command",
-            "command": "& tools\\verify\\claude_hooks\\block_checker_truncation.ps1",
+            "command": "& \"$env:CLAUDE_PROJECT_DIR\\tools\\verify\\claude_hooks\\block_checker_truncation.ps1\"",
             "shell": "powershell",
             "statusMessage": "Checking for truncated checker output..."
+          },
+          {
+            "type": "command",
+            "command": "& \"$env:CLAUDE_PROJECT_DIR\\tools\\verify\\claude_hooks\\block_dotnet_relative_write.ps1\"",
+            "shell": "powershell",
+            "statusMessage": "Checking for a relative-path .NET file write..."
           }
         ]
       },
@@ -87,15 +93,21 @@
         "hooks": [
           {
             "type": "command",
-            "command": "& tools\\verify\\claude_hooks\\block_git_gh.ps1",
+            "command": "& \"$env:CLAUDE_PROJECT_DIR\\tools\\verify\\claude_hooks\\block_git_gh.ps1\"",
             "shell": "powershell",
             "statusMessage": "Checking for direct git/gh..."
           },
           {
             "type": "command",
-            "command": "& tools\\verify\\claude_hooks\\block_checker_truncation.ps1",
+            "command": "& \"$env:CLAUDE_PROJECT_DIR\\tools\\verify\\claude_hooks\\block_checker_truncation.ps1\"",
             "shell": "powershell",
             "statusMessage": "Checking for truncated checker output..."
+          },
+          {
+            "type": "command",
+            "command": "& \"$env:CLAUDE_PROJECT_DIR\\tools\\verify\\claude_hooks\\block_dotnet_relative_write.ps1\"",
+            "shell": "powershell",
+            "statusMessage": "Checking for a relative-path .NET file write..."
           }
         ]
       },
@@ -104,7 +116,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "& tools\\verify\\claude_hooks\\block_corpus_edit.ps1",
+            "command": "& \"$env:CLAUDE_PROJECT_DIR\\tools\\verify\\claude_hooks\\block_corpus_edit.ps1\"",
             "shell": "powershell",
             "statusMessage": "Checking for a direct corpus edit..."
           }
@@ -115,7 +127,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "& tools\\verify\\claude_hooks\\block_corpus_edit.ps1",
+            "command": "& \"$env:CLAUDE_PROJECT_DIR\\tools\\verify\\claude_hooks\\block_corpus_edit.ps1\"",
             "shell": "powershell",
             "statusMessage": "Checking for a direct corpus edit..."
           }
@@ -126,20 +138,9 @@
         "hooks": [
           {
             "type": "command",
-            "command": "& tools\\verify\\claude_hooks\\block_corpus_edit.ps1",
+            "command": "& \"$env:CLAUDE_PROJECT_DIR\\tools\\verify\\claude_hooks\\block_corpus_edit.ps1\"",
             "shell": "powershell",
             "statusMessage": "Checking for a direct corpus edit..."
-          }
-        ]
-      },
-      {
-        "matcher": "PowerShell(gh api graphql *)",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "& tools\\verify\\claude_hooks\\enforce_graphql_timeout.ps1",
-            "shell": "powershell",
-            "statusMessage": "Enforcing 30s GraphQL timeout..."
           }
         ]
       },
@@ -148,9 +149,20 @@
         "hooks": [
           {
             "type": "command",
-            "command": "& tools\\verify\\claude_hooks\\enforce_log_read_limits.ps1",
+            "command": "& \"$env:CLAUDE_PROJECT_DIR\\tools\\verify\\claude_hooks\\enforce_log_read_limits.ps1\"",
             "shell": "powershell",
             "statusMessage": "Checking log read has row limit..."
+          }
+        ]
+      },
+      {
+        "matcher": "AskUserQuestion",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "& \"$env:CLAUDE_PROJECT_DIR\\tools\\verify\\claude_hooks\\require_search_record_in_questions.ps1\"",
+            "shell": "powershell",
+            "statusMessage": "Checking absence claims in the question carry a search record..."
           }
         ]
       }

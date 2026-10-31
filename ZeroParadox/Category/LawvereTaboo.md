@@ -1,0 +1,115 @@
+# The diagonal engine's supplier is a constructive taboo: result, fences and prior art
+
+Ride-along documentation for [`ZeroParadox/Category/LawvereTaboo.lean`](LawvereTaboo.lean). The Lean
+file holds the declarations, the Engineer's Take and a statement per declaration; this file holds the
+argument, the fences and the prior art. Where the two would overlap, **the Lean is authoritative**.
+
+`ZeroParadox/Category/Lawvere.lean` proves `fixedPointFree_of_nontrivial`: **any type with two
+distinct elements admits a fixed-point-free endofunction.** It is the *supplier* of Lawvere's engine
+— every "no Lawvere witness" result in the framework (`no_witness_of_nontrivial`,
+`nontrivial_lattice_no_witness`, `q2_no_witness`) consumes it, and the consumer
+`no_witness_of_fixedPointFree` is axiom-free. The supplier measures
+`[propext, Classical.choice, Quot.sound]`, and a single `classical` tactic is its entire classical
+footprint.
+
+`ZeroParadox/Category/LawvereDecidable.lean` prices that footprint: with `[DecidableEq β]` the same
+proof body measures `[propext]`. It closes with the correct fence — *"It does not show the general
+version's choice is necessary. `classical` is how the proof was written, and a footprint never
+reports necessity."*
+
+**`LawvereTaboo.lean` answers that open question: the choice is essential, on the premise stated in
+`ZeroParadox/Category/ChoiceCannotBe.lean` § IV.**
+
+## The result
+
+`wem_of_fixedPointFree` — the ∀-closed general statement
+
+```
+∀ (β : Type) (b₀ b₁ : β), b₀ ≠ b₁ → ∃ g : β → β, ∀ x, g x ≠ x
+```
+
+implies **weak excluded middle** (`¬p ∨ ¬¬p` for every proposition `p`, equivalently De Morgan's
+law), proved with **no `Classical.choice`**. The classical content is entirely in the hypothesis,
+which is what makes this an implication rather than a restatement — the same shape as
+`ZeroParadox/Ordinal/OrdinalChoiceEssential.lean`'s `em_of_wellOrder_comparable`, and
+`LawvereTaboo.lean` is modelled on it.
+
+So a choice-free proof of the general statement would be a choice-free proof of weak excluded
+middle, and `fixedPointFree_of_nontrivial`'s `classical` is essential in the sense, and on the
+premise, of `ZeroParadox/Category/ChoiceCannotBe.lean` § IV. Unlike § IV's first case it sits on the
+keystone (the diagonal engine) rather than on an imported order instance.
+
+## What is NOT claimed
+
+* **Not full excluded middle.** The taboo landed on is weak excluded middle, which is strictly
+  weaker than `ExcludedMiddle` in intuitionistic logic. No attempt was made here to strengthen it,
+  and the reader should not assume it can be strengthened.
+* **The converse is not machine-checked here; in Lean it is left open.** Its scope is univalent
+  foundations, the setting of de Jong–Escardó, arXiv:2601.12536: there weak excluded middle gives the
+  general statement back, in two steps. The first step is published, Prop 6.4, p. 24, *"If weak
+  excluded middle holds and the type X has two distinct points, then X has a decomposition"*, proved
+  by sending `x` to 0 if `¬(x ≠ x₀)` and to 1 if `¬¬(x ≠ x₀)`. The second step, decomposition to
+  fixed-point-free endomap, is the elementary derivation in the prior-art section below, and is ours.
+  The first step is a case split: under weak excluded middle the two mutually exclusive subobjects
+  `¬(x = b₀)` and `¬¬(x = b₀)` cover, so a map can be glued from them (Prop 6.4's two cases are
+  these two, swapped, by triple negation). An earlier instance of the same case split is Simpson's
+  proof of Thm 5 of Booij–Escardó–Lumsdaine–Shulman (arXiv:1701.05617), p. 5, in its direction from
+  weak excluded middle to a map: *"define f : U → 2 by f(A) = ff if ¬A and f(A) = tt if ¬¬A"*. Its
+  other direction, from the map to weak excluded middle via *"Z = ¬A × X + ¬¬A × Y"* (p. 6), runs
+  the way `wem_of_fixedPointFree` runs and is credited in the comment above that theorem in
+  `LawvereTaboo.lean`. The converse argument does not transfer to Lean, for the same reason recorded in
+  `ZeroParadox/Category/ExcludedMiddleBridge.lean` — `Or` in `Prop` does not eliminate into data, so
+  a `Prop`-level disjunction cannot construct the function `g`. Whether the two statements are
+  equivalent **in Lean** is left open, and a failed elaboration would not settle it either way.
+* **No priority claim.** See the prior-art section; a search was run and is reported as a search.
+* **It does not deprecate `ZeroParadox/Category/Lawvere.lean`.** The general statement stays general
+  and stays the keystone. Its `Classical.choice` is essential in the sense, and on the premise, of
+  `ZeroParadox/Category/ChoiceCannotBe.lean` § IV.
+
+## Prior art
+
+The mathematics of this genre is not new and is not claimed as new.
+
+* **M. Escardó, TypeTopology, `Taboos.Decomposability`.** A type `X` is *decomposable* when there is
+  `f : X → 𝟚` hitting both values; the module proves
+  `Ordinal-decomposition-iff-WEM : decomposition (Ordinal 𝓤) ↔ typal-WEM 𝓤`, glossed there as *"the
+  type of ordinals has no non-trivial decidable property unless weak excluded middle holds."* Read
+  from source. **This is a close neighbour, and it is a different statement**; Booij–Escardó–
+  Lumsdaine–Shulman Thm 3 and Thm 5 (below) are as close, and so is de Jong–Escardó (below) in both
+  directions. De Jong–Escardó Prop 6.4, p. 24, runs from weak excluded middle to a decomposition,
+  opposite to `wem_of_fixedPointFree`; their Lemma 6.6, Lemma 6.7 and Thm 6.10, p. 24, run the same way as
+  `wem_of_fixedPointFree`, deriving weak excluded middle from a decomposition of the type of
+  propositions `Ω_U`, of a type with `Ω`-paths, or of an injective type.
+  Decomposability is strictly stronger than what is used in `wem_of_fixedPointFree`: a decomposition
+  `f : X → 𝟚` with witnesses `x₀ x₁` yields the fixed-point-free endomap
+  `x ↦ if f x = 0 then x₁ else x₀` (it changes the value of `f`, so it cannot fix anything). So a
+  fixed-point-free endomap is the *weaker* conclusion, which makes the implication to weak excluded
+  middle formally the stronger one. That derivation is elementary and is ours, not Escardó's. No
+  source stating the fixed-point-free form was located as of 2026-10-07, searched by phrase in
+  theoremsearch and on the open web and among the sources listed here.
+* **A. B. Booij, M. Escardó, P. LeFanu Lumsdaine and M. Shulman, "Parametricity, automorphisms of the
+  universe, and excluded middle"** (arXiv:1701.05617). Read from source. Thm 3, p. 4, and Thm 5
+  (Simpson), p. 5: the statements and the contrast with `wem_of_fixedPointFree` are in the comment
+  above that theorem in `LawvereTaboo.lean`, which also credits Simpson's proof technique.
+* **T. de Jong and M. Escardó, "Examples and counterexamples of injective types"**
+  (arXiv:2601.12536, 18 January 2026). Read in full from the held copy; Prop 6.4, p. 24, is quoted
+  under "What is NOT claimed" above. From the abstract verbatim (cited, not claimed): *"any type with an apartness
+  relation and two points apart cannot be injective unless weak excluded middle holds"*, and
+  *"injective types have no non-trivial decidable properties, unless weak excluded middle holds,
+  which amounts to a Rice-like theorem for injective types."* Same genre and same landing principle
+  — a hypothesis about a type with two separated points forcing weak excluded middle — about a
+  different property (injectivity, not the existence of a fixed-point-free endomap).
+* **Lawvere (1969)**; the diagonal-across-domains reading is **Yanofsky (2003)**. Both already cited
+  in `ZeroParadox/Category/Lawvere.lean`; neither concerns the constructive strength of the
+  supplier.
+* Weak excluded middle, and the taboo methodology generally: **constructive reverse mathematics**
+  (Ishihara; Diener-Ishihara). Cited, not claimed.
+
+## Structure of `LawvereTaboo.lean`
+
+- § I   Weak excluded middle, as a hypothesis
+- § II  The witness: three tokens glued by `p` on one side and by `¬p` on the other
+- § III The taboo: the general fixed-point-free statement implies weak excluded middle
+- § IV  Non-vacuity, and the ledger consequence for `Lawvere.lean`
+- § V   The omniscience principles on bit sequences (LPO, WLPO, LLPO, Markov's principle) and the
+  arrows between them; prior art cited in the file, not claimed

@@ -33,15 +33,16 @@ READ     .claude-local/notes/access_controls_2026-08-22.md
 TRIGGER  you are about to commit a file and are deciding whether the prose gates apply.
 RULE     EXEMPT: `CLAUDE.md`, `tools/verify/**`, `tools/process/**` — operating machinery that
          asserts nothing about the mathematics, so editorial and adversary have no claim.
-         `/rely` covers those two directories INSTEAD, and it BLOCKS on executable logic and
-         exemption switches; routed `.md` only WARNS. NOT EXEMPT: `.claude/commands/**` — the
-         gate briefs are published deliberately, as the artifact showing how this project
-         reviews itself, so both gates fire on them. **Published-and-exempt is not a category
-         you may reason your way into.** Each carve is WRITTEN DOWN; do not extend one to a
+         `/rely` covers those two directories INSTEAD, owed at TAG through the ledger:
+         `coverage_gap(step='rely', action='tag')` names every path it still owes, so a push
+         may carry changes `/rely` has not examined and a release cannot. NOT EXEMPT:
+         `.claude/commands/**` — the gate briefs are published deliberately, as the artifact
+         showing how this project reviews itself, so both gates fire on them.
+         **Published-and-exempt is not a category you may reason your way into.** Each carve is WRITTEN DOWN; do not extend one to a
          further directory by analogy — write the next one, or it is not exempt. Fence:
          anything asserting mathematics belongs in the corpus and is gated normally.
-COST     the exemption is PRICED on `/rely` still blocking. Weaken that routing and the
-         exemption becomes a hole; a downgrade un-prices whatever the block paid for.
+COST     the exemption is PRICED on `rely` staying ADMITTED at tag. Narrow it out of the tag
+         set and the exemption becomes a hole; the two are a pair and go together.
 READ     tools/process/README.md
 
 ## R-NARRATE  Narrate the MATHEMATICS, in an engineer's register, in every report.
@@ -228,11 +229,12 @@ RULE     LOAD THE SUBJECT'S WHOLE ROW BELOW — every file on it — and ground 
                        `ZeroParadox/DiagonalFixedPoint.lean` (the keystone fixed point)
            snap        `ZeroParadox/Order/SnapCannotBe.lean` · `ZeroParadox/Order/Snap.lean`
            eps-0       `ZeroParadox/Ordinal/Epsilon0CannotBe.lean`
-           choice      `ZeroParadox/Category/ChoiceCannotBe.lean` (choice as an OBJECT, a face of
-                       the bottom) · `ZeroParadox/AxiomProfile.lean` (the core/realization split;
-                       T-SNAP at no axioms at all) · `ZeroParadox/Ordinal/SyntacticCollapse.lean`
-                       (the choice-free surrogate; the standing conjecture's two halves; Mathlib's
-                       ℚ instances choice-tainted at the INSTANCE level)
+           choice      `ZeroParadox/Category/ChoiceCannotBe.lean` · `ZeroParadox/Category/ChoiceCannotBe.md`
+                       (the framework's RELATIONSHIP to choice: `Classical.choice` is an ambient kernel
+                       axiom, NOT a framework object; the classification classes) ·
+                       `ZeroParadox/AxiomProfile.lean` (the core/realization split; T-SNAP at no axioms at all) ·
+                       `ZeroParadox/Ordinal/SyntacticCollapse.lean` · `ZeroParadox/Ordinal/SyntacticCollapse.md` (the
+                       choice-free surrogate; the standing conjecture's two halves; Mathlib's ℚ instances choice-tainted at the INSTANCE level)
            computation `ZeroParadox/Computability/Kleene.lean`
            a claim's status  `ZeroParadox/ClaimsMirror.lean` · `CLAIMS.md`
          Every gloss carries `Statement:` (what it proves, best form an elaborating `example`)
@@ -254,12 +256,12 @@ READ     tools/process/core-objects.md
 TRIGGER  you are about to state anything about epsilon-zero, the pole, or where the snap-arc
          returns.
 RULE
-- **ε₀ ≠ 0. Always. In any reading, carrier, or encoding.** (`epsilon0_ne_zero`.) Never "fence ε₀ = 0" or treat 0 as a candidate value — it is not a well-formed possibility.
-- **ε₀ ≠ ⊥.** (`epsilon0_ne_bot`.) ⊥ = 0 is the *base* the ε₀-tower is seeded at; ε₀ is its *closure* — the base is never its own closure.
+- **ε₀ ≠ 0 of `Ordinal`. Always.** (`epsilon0_ne_zero`.) Against another carrier's 0 (ℤ_[2]'s) the equation is ill-typed, not false. Never "fence ε₀ = 0" or treat 0 as a candidate value — it is not a well-formed possibility.
+- **ε₀ ≠ ⊥ of `Ordinal`.** (`epsilon0_ne_bot`.) That ⊥ = 0 is the *base* the ε₀-tower is seeded at; ε₀ is its *closure*. Name the carrier, never a bare ⊥: the ε₀ ROLE (least ε-number strictly above a floor) is never the floor, at any ordinal floor; the VALUE ε₀ may occupy another carrier's bottom — it IS ⊥ of `Set.Ici ε₀`, where the role passes to ε₁ (`ZeroParadox/Ordinal/Epsilon0CannotBe.lean` § I-b).
 - **ε₀ is both min AND max at once** — least fixed point ≡ tower supremum (`epsilon0_min_eq_max`); direction-/instance-specific, never collapsed to one face.
-- **ε₀ requires two conditions**: the ω-tower operator `α↦ω^α` AND the base ⊥ (`epsilon0_eq_nfp_bot`). It is the *minimum* step next to the pole, never the pole.
-- **⊥ = 0 = ∞ is the pole** — *stated*, not fenced. **A CHART claim, not a point identity.** Three distinct witnesses: **coincidence** `infinitude_forces_infinite_complexity`; **drift** `pole_inversion`; **inversion** `rInv_swaps`. **Never cite `rInv_swaps` for the coincidence** — it proves two points *exchanged*, and there they are provably distinct. This is NOT ⊥ = ε₀, which is false.
-- The snap-arc **returns to a bottom, never to ε₀** (`epsilon0_ne_bot`). Proved is the **role** half — anything playing the bottom role IS the bottom (`t_iz_limit_is_new_null`). The **novelty is a commitment, not a theorem**; in the 2-adic realization the arc reapproaches the *same* 0 (`snap_arc_z2_loop`). **Never cite `t_iz_limit_is_new_null` as a witness for novelty.**
+- **ε₀ is the ω-tower closure seeded at ⊥ of `Ordinal`** (`epsilon0_eq_nfp_bot`); ⊥ is the least seed reaching it, not the only one (`first_cell_eq_Iic`). ε₀ is the *minimum* step next to the pole, never the pole.
+- **⊥ = 0 = ∞ is the pole** — *stated*, not fenced. **A CHART claim, not a point identity.** Three distinct witnesses: **coincidence** `infinitude_forces_infinite_complexity`; **drift** `pole_inversion`; **inversion** `rInv_swaps`. **Never cite `rInv_swaps` for the coincidence** — it proves two points *exchanged*, and there they are provably distinct. This is NOT ⊥ of `Ordinal` = ε₀, which is false.
+- The snap-arc **returns to a bottom, never to ε₀ as that bottom** (`epsilon0_ne_bot`, ⊥ of `Ordinal`). Proved is the **role** half — anything playing the bottom role IS the bottom (`t_iz_limit_is_new_null`). The **novelty is a commitment, not a theorem**; in the 2-adic realization the arc reapproaches the *same* 0 (`snap_arc_z2_loop`). **Never cite `t_iz_limit_is_new_null` as a witness for novelty.**
 COST     each of these was violated in shipped prose by reconstructing from memory; a wrong one
          inside a published PDF cannot be withdrawn.
 READ     tools/process/core-objects.md
@@ -375,10 +377,10 @@ TRIGGER  ANY work on a public-facing surface, READING INCLUDED (Tim, 2026-09-14:
          question option put to Tim, an agent brief, a commit message. NO TOPIC LIST: the old
          trigger named directions, poles, min/max, and a "retired" → "never retired" flip passed
          straight through it; a list of topics is a category, and categories leak.
-RULE     FIRST load the five `*CannotBe.lean` indexes whole — `ZeroParadox/BottomCannotBe.lean`
+RULE     FIRST load the `*CannotBe.lean` indexes whole — `ZeroParadox/BottomCannotBe.lean`
          `ZeroParadox/Ordinal/Epsilon0CannotBe.lean` `ZeroParadox/Order/SnapCannotBe.lean`
          `ZeroParadox/Category/ChoiceCannotBe.lean` `ZeroParadox/Computability/ComputationCannotBe.lean`
-         — once per session and again after compaction. Before you write, delete, negate or reverse
+         `ZeroParadox/DieCannotBe.lean` — once per session and again after compaction. Before you write, delete, negate or reverse
          ANY claim — acting on a review finding and restating a ruling included — write it in the
          OTHER chart: if it holds there too, the defect is a MISSING CHART and the fix ADDS that
          chart — a flip or a delete writes the opposite one-chart sentence, the next round's finding.
@@ -538,17 +540,13 @@ COST     BOTH bypasses succeed SILENTLY and the push looks green: the identical 
          "a command that runs a GATE", a one-file `check_encoding` run did not feel like one, and
          `| Select-Object -Last 2` hid four warnings an hour after this rule was quoted. A CATEGORY
          leaks; A PIPE AFTER A PATH binds. A fail-closed `PreToolUse` hook keyed to INVOCATION
-         (`tools/verify/claude_hooks/block_checker_truncation.ps1`, 39 controls) catches the NAMED consumers, and
-         reading checker SOURCE stays free. ⚠⚠ IT IS A DENYLIST, SO THE TRIGGER LIST ABOVE IS STILL
-         LOAD-BEARING MEMORY. An earlier version of this line said "nothing here is remembered";
-         that was measured FALSE 2026-08-29 — 15 of 19 filters walked through, among them `sed -n`,
-         `awk`, `wc -l`, `cut`, `sort`, `uniq`, `less`, `ForEach-Object`, `Measure-Object` and
-         `Select-Object -Skip/-Index`, and ripgrep passes while GNU grep is denied even though ripgrep
-         is the one this project tells you to PREFER. A denylist is porous by construction: every fix
-         closes the cut its author thought of. THE FIX IS TO INVERT — deny any pipe after a checker
-         invocation, allow-list the sinks (`RLY40-1`). It also matches on the whole command STRING,
-         so writing ABOUT truncation beside a checker path trips it. Still unsealed either way:
-         run-then-grep across two calls looks clean, and `--no-verify` is unhooked.
+         (`tools/verify/claude_hooks/block_checker_truncation.ps1`, 104 controls) is an ALLOW-LIST
+         OF SINKS (`RLY40-1`): after a checker run every pipe stage must be a file write or a
+         pass-through, so a consumer nobody listed is denied on arrival, and a file the call
+         redirected into must be read WHOLE in that same call. It tests INVOCATION, not mention,
+         so reading checker SOURCE and writing ABOUT truncation stay free. ⚠⚠ IT IS NOT A SEAL, SO
+         THE TRIGGER LIST ABOVE IS STILL LOAD-BEARING MEMORY: run-then-grep across two calls looks
+         clean, so does a narrowed Read of a saved log, and `--no-verify` has no hook of its own.
 READ     tools/process/push-gate-bypass.md
 
 ## R-STAGE  Stage NAMED PATHS. Never `-A` on the main repo.
@@ -655,14 +653,15 @@ TRIGGER  you are bumping any document or companion version, or editing a build s
 RULE     order matters: (1) `register.md` — formal version, filename, companion version;
          (2) README.md's Framework table, the single derived copy. That is the whole
          propagation path. GUIDE.md carries NO version numbers, deliberately — never "sync"
-         one into it; that is a regression to revert. Any build-script change takes all four
-         steps in ONE commit: edit, bump the internal version, rebuild the PDF, recompute the
-         `formal:` / `comp:` hash token in `register.md`. A document's own version appears in
-         exactly ONE rendered place, the subtitle meta line — no self-changelogs, no
-         `[new in v1.7]` tags; cross-document citations are exempt.
-COST     a hash mismatch does not mean "rebuild needed", it means the version bump was
-         SKIPPED — do not rebuild without incrementing. `check_hashes.py` compares
-         `register.md` against README on every run and found five stale rows on its first.
+         one into it; that is a regression to revert. A build-script change that moves the
+         RENDERED PDF takes four steps in ONE commit: edit, bump the internal version, rebuild,
+         recompute the `formal:` / `comp:` token. One SHOWN not to resyncs it, NO bump, reason in
+         the commit message: `check_hashes.py --sync-hash` if only comments or docstrings moved,
+         else `tools/verify/pdf_same.py` old vs rebuilt exits 0 (pixel-identical pages and text).
+         A document's own version appears in exactly ONE rendered place, the subtitle meta line
+         — no self-changelogs, no `[new in v1.7]` tags; cross-document citations are exempt.
+COST     a hash mismatch means a SKIPPED bump until that pixel proof shows otherwise; never
+         rebuild a visible change without incrementing.
 READ     tools/process/document-workflow.md
 
 ## R-DIAGRAM  Diagram bounds are build-enforced; internal collisions are not.
@@ -826,12 +825,13 @@ COST     only ~10% of 767 notes were ever referenced again, and on one day four 
          self-reported status; verify at the artifact.
 
 
-## R-LEANDEV  Stub first. Build, commit, then fill proofs one at a time.
+## R-LEANDEV  Stub first. Build, then fill proofs one at a time; commit sorry-free.
 TRIGGER  you are creating a new `.lean` file or starting a proof.
 RULE     map each symbol to its Mathlib equivalent and identify heavy imports BEFORE writing
          Lean. Write the complete file with every proof `sorry`, `set_option maxHeartbeats
-         400000`, and STOP — wait for a clean build. Commit the stub as a rollback point. Fill
-         one theorem at a time, building and committing after each. Build as TWO separate
+         400000`, and STOP; wait for a clean build. The clean stub build is the checkpoint. Fill
+         one theorem at a time, building after each. Commit only when no `sorry` remains
+         (`batch.py precommit` refuses one); never commit a stub. Build as TWO separate
          calls: `lake build 2>&1 | Out-File -FilePath build.log -Encoding utf8`, then read the
          log — never combined with `;`. When done: zero errors and warnings, a `#print axioms`
          block per proved theorem inside `section PurityCheck`, README updated, and the SJV
@@ -856,5 +856,7 @@ COST     a file with unresolved conflict markers commits SILENTLY and corrupts t
 
 ## License
 
-CC BY-NC-ND 4.0 — share with attribution; no modifications; no commercial use.
+Code (`.lean`, `scripts/*.py`, `tools/**`, `.github/**`, `.claude/**`, this file, config), third-party material
+aside, is Apache License, Version 2.0, in `LICENSE`. Documents (the root PDFs, every `.md` except this file and those
+under `tools/` and `.claude/`, and `_layouts/`) are CC BY-NC-ND 4.0, in `LICENSE-DOCS`; `NOTICE` has the paths.
 

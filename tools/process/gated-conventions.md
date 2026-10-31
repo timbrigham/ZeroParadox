@@ -127,8 +127,8 @@ into the brief explicitly — the same way the encoding and glob warnings are al
   path no longer exists) and it was committed — a scratch probe is now in the permanent history. Put this
   line in every subagent brief.
 - **Reviews are READ-ONLY on the working tree.** A gate reads, measures, and reports; it does not modify
-  repo files. The only writes a gate may make are its signal file and its findings note under
-  `.claude-local/notes/`.
+  repo files. The only writes a gate may make are its verdict, recorded in the verdictLedger, and its
+  findings note under `.claude-local/notes/`.
 - ⚠⚠ **AN AGENT THAT EXERCISES THE HOOKS MUST NEVER `git reset --hard`, `git checkout -- .`,
   `git clean`, OR `git stash` THE SHARED TREE — IT WILL DESTROY THE CALLER'S UNCOMMITTED WORK AND
   REPORT SUCCESS.** Measured 2026-08-10: a `/rely` run was told to exercise the commit and push

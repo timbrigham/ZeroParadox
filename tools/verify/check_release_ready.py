@@ -70,8 +70,14 @@ def read(path):
 
 
 def git(*args):
-    r = subprocess.run(['git', *args], capture_output=True, text=True)
-    return r.stdout
+    """(returncode, stdout). The code is returned because an UNANSWERED probe is not a clean tree
+    (`RLY43-1`): `git grep` outside a repo returned rc=128 with empty stdout, and reading stdout
+    alone printed `[PASS] No conflict markers`. `None` means git could not be started at all."""
+    try:
+        r = subprocess.run(['git', *args], capture_output=True, text=True, cwd=REPO)
+    except OSError:
+        return None, ''
+    return r.returncode, r.stdout
 
 
 def norm_ver(v):
@@ -275,8 +281,15 @@ def c_zenodo():
 
 
 def c_conflict_markers():
-    """No unresolved git conflict markers in tracked files."""
-    out = git('grep', '-lE', r'^(<<<<<<<|>>>>>>>)')
+    """No unresolved git conflict markers in tracked files.
+
+    `git grep -l` answers 0 with matches and 1 with none; any other code is a probe that did not
+    answer, and it FAILS CLOSED rather than reading as a clean tree."""
+    rc, out = git('grep', '-lE', r'^(<<<<<<<|>>>>>>>)')
+    if rc not in (0, 1):
+        fail('Conflict-marker probe did not answer (git grep exit %s) - NOT evidence of a clean '
+             'tree' % rc)
+        return False
     files = [f for f in out.splitlines() if f.strip()]
     if files:
         for f in files:
@@ -380,7 +393,10 @@ def c_signals(tag):
 
 def c_untracked_pdfs():
     """Untracked PDFs in the repo root (the ZP_Reals_Companion.pdf class) -> WARN."""
-    out = git('status', '--porcelain')
+    rc, out = git('status', '--porcelain')
+    if rc != 0:
+        warn('untracked-PDF probe did not answer (git status exit %s) - NOT evidence of none' % rc)
+        return False
     pdfs = []
     for line in out.splitlines():
         if line.startswith('??'):
@@ -443,6 +459,29 @@ def selftest():
     ok = c_scripts_mirror() is True
     bad += 0 if ok else 1
     print('    %-34s %s' % ('the retired mirror check is inert', 'ok' if ok else '*** REVIVED ***'))
+
+    # RLY43-1: an unanswered git probe is NOT a clean tree. Driven through the shipping functions
+    # with `git` replaced, so the control reads the same return-code branch the release gate runs.
+    print('  PROBE ANSWERS (MUST FIRE on an unanswered probe, MUST SUPPRESS on a clean answer)')
+    global git
+    real_git = git
+    saved = (fails[:], warns[:])
+    try:
+        for label, fn, answer, want in (
+                ('conflict probe rc=128 fails', c_conflict_markers, (128, ''), False),
+                ('conflict probe not started fails', c_conflict_markers, (None, ''), False),
+                ('conflict markers found fail', c_conflict_markers, (0, 'a.md\n'), False),
+                ('conflict probe rc=1 is clean', c_conflict_markers, (1, ''), True),
+                ('status probe rc=128 warns', c_untracked_pdfs, (128, ''), False),
+                ('status probe clean passes', c_untracked_pdfs, (0, ''), True)):
+            git = lambda *_a, _ans=answer: _ans
+            got = fn()
+            ok = got is want
+            bad += 0 if ok else 1
+            print('    %-34s %s' % (label, 'ok' if ok else '*** got %s ***' % got))
+    finally:
+        git = real_git
+        fails[:], warns[:] = saved
 
     print('\n  selftest: %s' % ('PASS' if not bad else 'FAIL (%d)' % bad))
     return 1 if bad else 0

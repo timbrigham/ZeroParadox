@@ -1,4 +1,4 @@
-# Least in which order, Veblen's Corollary 1, and three traps around the seed range
+# Least in which order, Veblen's Corollary 1 to Theorem 4, and three traps around the seed range
 
 Argument, prior art and fences for `ZeroParadox/Ordinal/Epsilon0LeastFP.lean`. The Lean file holds the
 declarations, the Engineer's Take and the per-declaration glosses.
@@ -50,13 +50,15 @@ claiming no novelty for it. **What the declarations add is only that the prose b
 Veblen, *Continuous increasing functions of finite and transfinite ordinals*, Trans. Amer. Math. Soc. 9
 (1908), read from source and filed in the project's paper library:
 
-* **Corollary 1** has **two** clauses: *"If `f'` is the first derived function of `f`, **(A)** `f'(1)`
-  is the least upper bound of `f(1), f[f(1)], ⋯`, and **(B)** if `f'(x) < a < f'(x+1)`, then `f'(x+1)`
-  is the least upper bound of `f(a), f[f(a)], ⋯`."* **Veblen indexes from 1** (Cor 4: *"ε(x) stands for
-  the ε-number ε_{x-1}"*), so `1` is his least ordinal and `f'(1)` the first fixed point. At `f = ωˣ`,
+* **Corollary 1 to Theorem 4** (p. 284) has **two** clauses, labelled **(A)** and **(B)** here (the
+  labels are editorial; Veblen's text has none): *"If `f'` is the first derived function of `f`, `f'(1)`
+  is the least upper bound of `f(1), f[f(1)], ⋯`, and if `f'(x) < a < f'(x+1)`, then `f'(x+1)` is the
+  least upper bound of `f(a), f[f(a)], ⋯`."* (A) is the first clause, (B) the second. **Veblen indexes
+  from 1** (Corollary 4 to Theorem 4: *"ε(x) stands for the ε-number ε_{x-1}"*), so `1` is his least
+  ordinal and `f'(1)` the first fixed point. At `f = ωˣ`,
   **clause (A) is `nfp (ω^·) 1 = ε₀`** — which is `nfp_seed_independent_below_epsilon0` at `1`.
   Clause (B) is the between-consecutive-rungs case.
-* **Corollary 4**: *"The first derived function of ωˣ is the function ε"* — what licenses reading (A) at
+* **Corollary 4 to Theorem 4**: *"The first derived function of ωˣ is the function ε"* — what licenses reading (A) at
   `f = ωˣ`.
 
 ⚠ **Veblen's "derived function" is `deriv`, NOT `nfp`.** They are different objects:
@@ -77,7 +79,7 @@ markers as `t` / `I`** (other `§` on the page survive), so a literal pattern mi
 same `le_antisymm` + `nfp_le_fp` route. ⚠ **Absent from the pin is the SEED-RANGED ω-power entry**
 (searched 2026-08-07): `Ordinal.epsilon_zero_eq_nfp` (seed `0`) and `epsilon_succ_eq_nfp` (successor
 seeds) both exist. **So this closes a FORMALIZATION gap in Mathlib, not a mathematical one** — the
-classical anchor is Corollary 1 clause (A) plus monotonicity, and the declaration is that in Lean.
+classical anchor is clause (A) of Corollary 1 to Theorem 4 plus monotonicity, and the declaration is that in Lean.
 
 Lemma locations: `FixedPoint.lean` supplies `nfp_le_fp` and `nfp_fp`; `isNormal_opow` is in
 `Exponential.lean`; the ε₀ lemmas are in `Veblen.lean`.

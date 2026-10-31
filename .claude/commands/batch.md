@@ -72,25 +72,26 @@ requires it, and two notes failed that check on first write).
 `batch.py precommit` verifies: filters unmoved since start · build green · a `#print axioms` entry
 for every added declaration · every added declaration in `ssot.json` · all checkers at 0 new.
 
-Then commit with `git add` **named paths** — never `-A`.
+Then stage **named paths** with `mcp__gitRobot__stage(paths=[...])` — never `-A` — and commit with
+`mcp__gitRobot__commit(message_file=...)`.
 
 ## Stage 6 — `prepush`, then the gates
 
-`batch.py prepush` reports which reviews are **required**, validating each signal by hash and
-coverage rather than existence. Run the required gates from `.claude/commands/*.md` **verbatim, as
-separate agents**. Bump `gate_round.py` once per round with a stable `--target`; reviewers may only
-`show`.
+`batch.py prepush` prints its manifest first, then runs the push legs; its `signals` row blocks unless
+the editorial and adversary verdicts in the ledger are fresh and covering. Run the required gates
+from `.claude/commands/*.md` **verbatim, as separate agents**. Bump `gate_round.py` once per round
+with a stable `--target`; reviewers may only `show`.
 
-**Routing beyond the three prose gates:**
+**Beyond the prose gates:**
 
-| condition | routes to | why |
+| condition | gate | where it is enforced |
 |---|---|---|
-| a **checker or hook** changed | **`/rely`** | its only run produced CHK-2 and CHK-3, both checker bugs. The three prose gates never ask whether a check checks what it says |
-| a **CI workflow** changed | `/rely` | a fail-open here publishes a false verification claim |
-| ≥50 net `.lean` lines, or a new file | `/prior-art-review` | trigger 5 |
+| a new `.lean` file, or ≥50 inserted `.lean` lines | `/prior-art-review` | trigger 5 reports it; the `prior-art attrib` push leg blocks until every attributable file the push edits carries a passing `prior_art` verdict at its current bytes |
+| a **checker, hook, routed process document or CI workflow** changed | **`/rely`** | **not a push leg.** The `rely` step is admitted at TAG (`gitRobot admission(action='tag')`); verdictLedger `coverage_gap(step='rely', action='tag', admission=<that set>)` names the paths it still owes. The prose gates never ask whether a check checks what it says, and a fail-open in CI publishes a false verification claim |
 
-Record each with `batch.py review /rely`. Push only on fresh signals; never pipe `git push` through
-`head`/`grep -q`.
+Each gate records its own verdict in the ledger (`record.py --step <step>`); `batch.py review`
+refuses and records nothing. Push through `gitRobot preflight()` then `push()`, and never pipe a push
+through `head`/`grep -q`.
 
 ## Stage 7 — `close`
 

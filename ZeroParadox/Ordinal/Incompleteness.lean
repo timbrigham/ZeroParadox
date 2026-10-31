@@ -13,15 +13,14 @@
   MachinePhase) — an order-theoretic fact about MachinePhase, with no `Code` and no
   execution in the statement. Reading c₀ as *the Kleene quine* is ZP-K's
   `KleeneStructure` commitment, not a theorem, and no equation between a `Code` and a
-  `MachinePhase` is well-formed. ZP-L establishes that ε₀ is the *minimal* threshold — **given** that the transition happens,
-  it happens nowhere below ε₀. It does not establish that it happens: `snap_unconditional`
-  takes `hε₀ : φ epsilonZero = c₁` as a hypothesis. See the fuller note at § III. The formal path from c₀ = ⊥ through the snap at ε₀ to c₁ (ZP-L), mediated by
-  the 2-adic encoding, is the missing structural triangle: ⊥ → ε₀ → c₁.
+  `MachinePhase` is well-formed. Where ZP-L places the transition, and under which hypotheses:
+  `snap_unconditional` and the `example`s after it, § II. The formal path from c₀ = ⊥ through the snap at ε₀ to c₁ (ZP-L), mediated through
+  `ℤ_[2]` by `cnfToZp2` from the ordinal side and `snapEmbed` from `MachinePhase`, is the missing structural triangle: ⊥ → ε₀ → c₁.
 
   The central formal object is:
       snapEmbed : MachinePhase → ℤ_[2]
       snapEmbed c₀ = 1    (pre-snap state maps to 2-adic unit)
-      snapEmbed c₁ = 0    (snap state maps to 2-adic zero = limit of tower encodings)
+      snapEmbed c₁ = 0    (snap state maps to 2-adic zero = limit of tower images)
 
   Engineer's Take:
 
@@ -97,7 +96,7 @@ theorem snapEmbed_c1_dvd (n : ℕ) : (2 : ℤ_[2])^n ∣ snapEmbed c₁ := by
 taken as a hypothesis: of the infinitely many admissible firing points that monotonicity and
 tower alignment (every tower stage sent to c₀) leave open, `hε₀` selects the least, and so fixes φ
 uniquely (the examples after `snap_unconditional` below). Whether `Classical.choice` is forced by
-the metric collapse is a separate open question (`ZeroParadox/Ordinal/SyntacticCollapse.lean`).
+the metric collapse is a separate open question (`ZeroParadox/Ordinal/SyntacticCollapse.md`).
 -/
 
 /-- Given φ ε₀ = c₁ and monotonicity, every ordinal fixed point of ω^· maps to c₁.
@@ -174,6 +173,11 @@ example (φ : Ordinal → MachinePhase) (h0 : ∀ n : ℕ, φ (fundamentalSeq n)
       (nhds (snapEmbed c₀)) := by
     simp only [h0]; exact tendsto_const_nhds
   exact snapEmbed_injective (tendsto_nhds_unique hcont h1)
+-- `Statement:` under `h0` the tower's `snapEmbed` images are constantly `snapEmbed c₀ = 1` in ℤ₂,
+-- so they tend to `1`.
+example (φ : Ordinal → MachinePhase) (h0 : ∀ n : ℕ, φ (fundamentalSeq n) = c₀) :
+    Filter.Tendsto (fun n => snapEmbed (φ (fundamentalSeq n))) Filter.atTop (nhds (1 : ℤ_[2])) := by
+  simp only [h0, snapEmbed_c0]; exact tendsto_const_nhds
 -- `Statement:` the tower stages' `cnfToZp2` images tend to `snapEmbed c₁`.
 example : Filter.Tendsto (fun n => cnfToZp2 (towerNONote n)) Filter.atTop
     (nhds (snapEmbed c₁)) := by
@@ -230,7 +234,7 @@ theorem snap_state_zp2_is_zero :
 /-- The full triangle: all three objects co-occur and are formally connected.
     Left edge  (A ↔ C): tower stages below ε₀ map to c₀; ε₀ maps to c₁.
     Right edge (B ↔ C): snapEmbed maps c₁ to 0 = 2-adic limit.
-    Base edge  (A ↔ B): tower encodings converge to 0 in ℤ_[2] (from ZP-L). -/
+    Base edge  (A ↔ B): tower images converge to 0 in ℤ_[2] (from ZP-L). -/
 theorem zpm_triangle :
     -- A ↔ C: ordinal snap
     (∀ n : ℕ, fundamentalSeq n < epsilonZero) ∧
@@ -268,36 +272,10 @@ theorem both_fixed_points_exist :
 
 /-! ### Remark R-M.1: DA-1 Path 2 and the Limits of the Diagonalization Frame
 
-`both_fixed_points_exist` shows that Kleene diagonalization (a code acting on its own
-Gödel number) and ordinal diagonalization (ε₀ = ω^ε₀, least fixed point) each produce a
-fixed point in their own domain. The statement is a conjunction of two existentials, so
-it establishes that both exist, not that they are one structural pattern; reading them as
-the same pattern is the framework's interpretation, and no equation between a `Code` and
-an `Ordinal` is well-formed.
-
-L-INF (ZP-C Lemma L-INF: ⊥ has divergent surprisal — unbounded information content,
-incompressible by any finite description) is structurally analogous. The Kleene and
-ordinal cases are both textbook instances of the diagonalization schema; whether
-L-INF fits the same schema formally is the open question this remark is tracking.
-
-The formally unconnected instance is L-INF. This gap is DA-1 Path 2 — the
-informational bridge. The reason Path 2 resisted formalization is now visible from
-this layer: L-INF is a measure-theoretic statement (Shannon entropy, probability
-distributions over ZP-B's binary space) while the Kleene quine is a
-computability-theoretic statement (partial recursive functions, Gödel encoding).
-The two frameworks share no mathematical machinery. The diagonalization frame
-established here provides the common conceptual ground, but the formal bridge
-requires the Kolmogorov complexity connection: incompressibility is the concept
-that lives in both worlds simultaneously (a string x is incompressible iff K(x) ≥ |x| − O(1) —
-Kolmogorov complexity meets measure theory). That bridge
-is outside the current Lean scope, pending AIT infrastructure not yet available
-in Mathlib.
-
-DA-1 Path 2 was recharacterized in ZP-E/ZP-K as a foundational commitment rather
-than a missing proof. The diagonalization frame established here makes the boundary
-precise: the gap is not a skipped proof step but a genuine framework separation —
-measure-theoretic surprisal on one side, computability-theoretic encoding on the
-other, with no shared machinery in current Mathlib. -/
+`both_fixed_points_exist` is a conjunction of two existentials: each diagonalization yields a
+fixed point in its own domain, and no equation between a `Code` and an `Ordinal` is well-formed.
+Where L-INF stands relative to that schema, and how that differs from DA-1 Path 2:
+`ZeroParadox/Ordinal/Incompleteness.md` § Remark R-M.1. -/
 
 end ZeroParadox
 

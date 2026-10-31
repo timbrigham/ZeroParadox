@@ -63,7 +63,13 @@ BACKTICKED = re.compile(r'`([^`\n]+)`')
 # ⚠ `READ <path>` — 37 uses in CLAUDE.md, and the paths leg could not see one of them
 # until 2026-08-27 (RLY37-1). It is this file's dominant pointer idiom.
 READ_LINE = re.compile(r'^READ\s+(\S+)', re.M)
-CHECKER_NAMED = re.compile(r'`(check_\w+\.py|guards\.py|batch\.py|hooks\.py|report\.py)`')
+# ⚠ ANYWHERE IN THE TEXT, NOT AS A WHOLE BACKTICKED TOKEN (`RLY43-2`). The anchored form saw a
+# checker only when the name WAS the token, so `python tools/verify/gate_round.py show` and a name
+# inside any longer command were invisible — 3 of 8 harvested while the leg printed a full pass —
+# and `record.py` / `gate_round.py` were not in the alternation at all. The lookbehind keeps a name
+# from matching inside a longer one (`precheck_x.py`); a leading directory is allowed.
+CHECKER_NAMED = re.compile(
+    r'(?<![\w.\-])((?:check_\w+|guards|batch|hooks|report|record|gate_round)\.py)\b')
 
 # ⭐⭐ A REGISTRY CAN ONLY SPEAK ABOUT WHAT REGISTERED WITH IT (Tim, 2026-09-16: *"the premise of
 # a ledger saying these are the only things doing XYZ — that doesn't make sense. The only thing
@@ -278,6 +284,9 @@ def selftest():
         # the way `transient-excluded` did for three independent wrong reasons.
         ('withdrawn-registered', 'the note was about `check_attribution.py`, a DIFFERENT tool.',
                                                                                           False),
+        # RLY43-2: a checker named INSIDE a command is a name the leg must resolve.
+        ('checker-in-command',  'run `python check_definitely_absent.py --block` first.',   True),
+        ('checker-in-command-live', 'run `python tools/verify/gate_round.py show` first.',  False),
     ]
     bad = 0
 
@@ -344,6 +353,19 @@ def selftest():
              'ok' if revived_fired else 'FAIL'))
     mech += 1
     bad += (not revived_fired)
+
+    # RLY43-2: the HARVEST covers every checker the text names, `record.py` and `gate_round.py`
+    # included, and does not match a name inside a longer one.
+    _h = set(CHECKER_NAMED.findall(
+        'run `python tools/verify/gate_round.py show`, then `record.py --step x`, '
+        'then `check_paths.py --claim "x"`; `precheck_x.py` and `mybatch.py` are not ours.'))
+    _want = {'gate_round.py', 'record.py', 'check_paths.py'}
+    _hok = _h == _want
+    print('  %-22s %-14s expected %-6s got %-6s %s'
+          % ('harvest-covers-names', 'BOTH HALVES', len(_want), len(_h),
+             'ok' if _hok else 'FAIL %s' % sorted(_h ^ _want)))
+    mech += 1
+    bad += (not _hok)
 
     # ⚠⚠ THE CONTROL THIS CHECKER DID NOT HAVE, and its absence is what hid the defect above.
     # Every case here runs on a machine where `.claude-local/` EXISTS. The leg classified by
@@ -448,7 +470,8 @@ def main():
     # `--record` exited 2 with "unrecognized arguments" and recorded nothing, which reads
     # identically to a ledger refusal at the call site in `hooks.py`.
     ap.add_argument('--record', action='store_true',
-                    help='record the two BLOCKING legs to the verdictLedger (V9 needs ZPLEDGER_RUN)')
+                    help='record the two BLOCKING legs to the verdictLedger (a direct run '
+                         'mints its own run id; see common.record_if_asked)')
     args = ap.parse_args()
 
     if args.selftest:

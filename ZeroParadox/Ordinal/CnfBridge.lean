@@ -1,4 +1,5 @@
 import ZeroParadox.Ordinal.Gentzen
+import ZeroParadox.Ordinal.SyntacticCollapse
 import ZeroParadox.Order.LeastFixedPoint
 import Mathlib.Tactic
 
@@ -66,7 +67,7 @@ theorem seed_maps_to_bot_both :
 
 /-! ## § III. The 2-adic realization loops through ⊥ (the diagonal fixed point, concretely) -/
 
-/-- **Loop through ⊥.** Under `cnfToZp2` the seed's image and the tower's norm-limit are both the
+/-- **Loop through ⊥.** Under `cnfToZp2` the seed's image and the limit of the stages' images are both the
     *value* 0 in `ℤ_[2]`. So the ordinal ascent ⊥ → ε₀ realizes as a `ℤ_[2]` path departing 0 and
     whose norm returns to 0. This is a value coincidence at 0, NOT an identity: ⊥ is never ε₀ (ε₀ is the least fixed
     point of `α ↦ ω^α`, never the same as ⊥ — and **not** order-adjacent to it, see
@@ -102,16 +103,23 @@ theorem mu_construction_correspondence :
 
 /-! ## § V. The honest fence — co-witness, no type identity -/
 
-/-- **Type boundary, fenced.** The ε₀ side is a genuine least-fixed-point μ
-    (`IsLeastFixedPointFrom … epsilonZero`); the `ℤ_[2]` side is the norm-limit 0 of the same index
-    sequence — NOT itself a least fixed point (no lattice ascent to 0 on `ℤ_[2]`). Both are
-    co-witnessed and connected by the shared `towerNONote`; the literal `ε₀ = 0` is a cross-type
-    identity (ill-typed per MC-1 / ZP-P) and is deliberately absent. In the spirit of `zpm_triangle`. -/
+/-- **Type boundary, fenced.** ε₀ is the least fixed point from ⊥ (`IsLeastFixedPointFrom`); the 2-adic 0 is
+    the norm-limit of the images `cnfToZp2 (towerNONote n)`, NOT a least fixed point. `ε₀ ≠ 0`, 0 the ordinal
+    zero, is `epsilon0_ne_zero`; `ε₀ = (0 : ℤ_[2])` does not type-check, with no coercion between `Ordinal` and
+    `ℤ_[2]` in either direction (guard below). Under `cnfToZp2` that 0 is the seed `towerNONote 0`'s image and
+    the images' limit, and ε₀ has no image (`repr_lt_epsilon0`, `ZeroParadox/Ordinal/PricedInterface.lean`).
+    Through the threshold map and `snapEmbed` ε₀ lands on 0: a map value, not an identity (long form, item 5). -/
 theorem cnf_bridge_type_boundary :
     IsLeastFixedPointFrom (· ≤ ·) (fun α => Ordinal.omega0 ^ α) (⊥ : Ordinal) epsilonZero ∧
     Filter.Tendsto (fun n => cnfToZp2 (towerNONote n)) Filter.atTop (nhds 0) ∧
     (∀ n : ℕ, NONote.repr (towerNONote n) = fundamentalSeq n) :=
   ⟨epsilon0_isLeastFixedPointFrom, tower_converges_to_zero, towerNONote_repr⟩
+
+-- `Statement:` `ε₀ ≠ 0`, with 0 the ordinal zero, is a theorem (`epsilon0_ne_zero`).
+example : epsilonZero ≠ (0 : Ordinal) := epsilon0_ne_zero
+-- `Statement:` a guard: the cross-type literal, with 0 the 2-adic zero, fails to elaborate
+-- (`Ordinal` against `ℤ_[2]`, with no coercion between them).
+#check_failure (epsilonZero = (0 : ℤ_[2]))
 
 /-! ## § VI. The snap arc as one object — the ℤ_[2] loop through ⊥ -/
 
@@ -120,13 +128,15 @@ theorem cnf_bridge_type_boundary :
 
     1. **START at the floor** — `cnfToZp2 (towerNONote 0) = 0`: the arc begins at ⊥.
     2. **DEPARTURE by a discrete jump** — `∀ n ≥ 1, cnfToZp2 (towerNONote n) ≠ 0`: the trajectory
-       genuinely leaves 0. The first stage has 2-adic valuation 1 (`cnfToZp2_tower_valuation`), hence
+       genuinely leaves 0. The image of the first stage has 2-adic valuation 1 (`cnfToZp2_tower_valuation`), hence
        norm 1/2, so the norm jumps 0 → 1/2 with no intermediate stage — there is no continuous path
        off 0, the snap's discreteness rendered as geometry.
-    3. **REAPPROACH** — `Filter.Tendsto … (nhds 0)`: the stages return toward 0 in norm
-       (`tower_converges_to_zero`).
+    3. **REAPPROACH** — `Filter.Tendsto … (nhds 0)`: the images of the stages return toward 0 in
+       `ℤ_[2]` (`tower_converges_to_zero`).
 
-    The loop closes because the tower's 2-adic **norm** reapproaches 0, landing back on the floor — NOT
+    The loop closes because the images reapproach 0 in `ℤ_[2]` (equivalently, their 2-adic norms tend
+    to 0 in `ℝ`: the equivalence is Mathlib's `tendsto_zero_iff_norm_tendsto_zero`, and the `example`
+    below applies its forward direction `.1`), landing back on the floor — NOT
     because ⊥ and ε₀ are one point: **⊥ is never ε₀** (ε₀ is the least fixed point of `α ↦ ω^α`), never identical — and **not** order-adjacent, see
     `epsilonZero_tower_lt` — and
     the images of the finite stages n ≥ 1 never even reach 0 (always next to, never the same). Honest fence: this is the
@@ -141,6 +151,68 @@ theorem snap_arc_z2_loop :
   have hval : (cnfToZp2 (towerNONote n)).valuation = n := cnfToZp2_tower_valuation n
   rw [heq, PadicInt.valuation_zero] at hval
   omega
+
+-- `Statement:` the reapproach read in the norm chart: the 2-adic norms of the images tend to 0 in `ℝ`.
+example : Filter.Tendsto (fun n => ‖cnfToZp2 (towerNONote n)‖) Filter.atTop (nhds 0) :=
+  tendsto_zero_iff_norm_tendsto_zero.1 tower_converges_to_zero
+
+/-! ## § VII. The syntactic depth and the 2-adic valuation agree on the tower -/
+
+/-- `Statement:` the underlying notation of each Gentzen tower stage is ZP-N's syntactic tower stage:
+`(towerNONote n).1 = tower n` (`ZeroParadox/Ordinal/ConstructiveOrdinals.lean`). -/
+theorem towerNONote_val (n : ℕ) : (towerNONote n).1 = tower n := by
+  induction n with
+  | zero => rfl
+  | succ n ih =>
+    show ONote.oadd (towerNONote n).1 1 0 = omegaPow (tower n)
+    rw [ih]
+    rfl
+
+/-- `Statement:` on each tower stage, the syntactic depth `synVal` of the notation equals the 2-adic
+valuation of its `cnfToZp2` image. Tower-only; scope and footprint: `CnfBridge.md` item 6. -/
+theorem synVal_tower_eq_valuation (n : ℕ) :
+    synVal (towerNONote n).1 = (cnfToZp2 (towerNONote n)).valuation := by
+  rw [towerNONote_val, synVal_tower, cnfToZp2_tower_valuation]
+
+-- `Statement:` along the tower, the choice-free `synCollapse_epsN` carries across the bridge to the
+-- ε-N valuation form of the 2-adic collapse.
+example : ∀ k : ℕ, ∃ N : ℕ, ∀ n : ℕ, N ≤ n → k ≤ (cnfToZp2 (towerNONote n)).valuation := by
+  intro k
+  obtain ⟨N, hN⟩ := synCollapse_epsN k
+  exact ⟨N, fun n hn => by rw [← synVal_tower_eq_valuation, towerNONote_val]; exact hN n hn⟩
+
+-- `Statement:` the bridge need not hold off the tower (fails at ω+1), and `le_synVal_of_tower_le`
+-- has no `cnfToZp2` counterpart: ω + 1 is not `cmp`-below `tower 2` = ω and has `synVal` 2, but its
+-- image is 6, of 2-adic valuation 1.
+example : ∃ x : NONote, ONote.cmp (tower 2) x.1 ≠ Ordering.gt ∧ 2 ≤ synVal x.1 ∧
+    (cnfToZp2 x).valuation = 1 := by
+  let one : NONote := NONote.oadd 0 1 0 ONote.NFBelow.zero
+  have hb : NONote.below one one := by
+    show ONote.NFBelow (ONote.oadd 0 1 0) (ONote.oadd 0 1 0).repr
+    exact ONote.NFBelow.oadd ONote.NF.zero ONote.NFBelow.zero (by simp [ONote.repr])
+  have h2 : (2 : ℤ_[2]).valuation = 1 := by
+    rw [show (2 : ℤ_[2]) = ((2 : ℕ) : ℤ_[2]) from Nat.cast_ofNat.symm]
+    exact PadicInt.valuation_p
+  have h1 : cnfToZp2 one = 2 := by
+    show (2 : ℤ_[2]) ^ ((cnfToZp2 (0 : NONote)).valuation + 1) * ((1 : ℕ+) : ℤ_[2]) +
+      cnfToZp2 0 = 2
+    simp
+  have h6 : cnfToZp2 (NONote.oadd one 1 one hb) = 6 := by
+    show (2 : ℤ_[2]) ^ ((cnfToZp2 one).valuation + 1) * ((1 : ℕ+) : ℤ_[2]) + cnfToZp2 one = 6
+    rw [h1, h2]; norm_num
+  refine ⟨NONote.oadd one 1 one hb, ?_, ?_, ?_⟩
+  · show ONote.cmp (tower 2) (ONote.oadd (ONote.oadd 0 1 0) 1 (ONote.oadd 0 1 0)) ≠ Ordering.gt
+    decide
+  · show 2 ≤ synVal (ONote.oadd (ONote.oadd 0 1 0) 1 (ONote.oadd 0 1 0))
+    decide
+  have hq : ((cnfToZp2 (NONote.oadd one 1 one hb) : ℤ_[2]) : ℚ_[2]).valuation = 1 := by
+    rw [h6, show ((6 : ℤ_[2]) : ℚ_[2]) = ((6 : ℕ) : ℚ_[2]) by push_cast; rfl,
+      Padic.valuation_natCast, show (6 : ℕ) = 2 * 3 from rfl,
+      padicValNat.mul (by norm_num) (by norm_num), padicValNat_self,
+      padicValNat.eq_zero_of_not_dvd (by norm_num)]
+    rfl
+  rw [PadicInt.valuation_coe] at hq
+  exact_mod_cast hq
 
 end ZeroParadox
 
@@ -157,5 +229,7 @@ open ZeroParadox
 #print axioms mu_construction_correspondence
 #print axioms cnf_bridge_type_boundary
 #print axioms snap_arc_z2_loop
+#print axioms towerNONote_val
+#print axioms synVal_tower_eq_valuation
 
 end PurityCheck

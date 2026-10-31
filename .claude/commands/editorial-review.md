@@ -69,6 +69,29 @@ Working directory: use the current project root. Private working files are in `.
 
 ---
 
+## Take your READING before you open a file in scope
+
+⭐ **Your record must name the bytes you READ, and only you can say which those were.** Before you
+open any file in scope, save the blob id of every one of them:
+
+    python tools/verify/record.py --observe <every repo-relative path in scope> > <SCRATCHPAD>\observed_editorial_<run>.json
+
+then open that file whole. It holds one JSON object, `{path: git blob id of the bytes on disk now}`.
+Exit 2 means some path has no reading (`NO READING: <path>` on stderr): correct the path, or take it
+out of scope and say so. `<run>` is the value you will pass to `--run`, so a gate running beside you
+never writes the same file. **Every `record.py` command below passes this file as `--observed-file`.**
+
+⚠ **Without `--observed-file`, `record.py` takes the reading at RECORD time** and prints
+`reading: taken NOW from the working tree … not the review's own`. A file changed and staged between
+your read and your record would then be recorded as the new bytes: a verdict on content nobody
+examined, and nothing else flags it (`SUBJ-1`). With the file, gitRobot `ledger_subjects` checks
+your reading against the staged tree. A path whose staged blob is not the one you read is left out
+of the record with `not recorded: <path>  DRIFTED SINCE YOU READ IT: you examined <id>, <tree>
+holds <id>`, and a path missing from the reading is left out with `no blob was supplied for it`.
+Name every such path in your report.
+
+---
+
 ## Orientation (read before running any checks)
 
 Read these files first. They define the standards you are enforcing:
@@ -268,7 +291,8 @@ python tools/verify/record.py --step editorial --verdict fail --tier A \
     --evidence .claude/commands/editorial-review.md \
     --run gate-editorial-<YYYY-MM-DD> \
     --reason-file <path to a file holding one line: what failed> \
-    --failing-file <a JSON file in your SCRATCHPAD: the subset you indict> \
+    --failing-file <SCRATCHPAD>\failing_editorial_<run>.json \
+    --observed-file <SCRATCHPAD>\observed_editorial_<run>.json \
     --files <every file you reviewed>
 ```
 
@@ -292,8 +316,8 @@ costume. Historically, absent `failing` meant a FAIL over forty
 files condemns the thirty-nine that passed.
 
 ```
-    --failing-file <a JSON file in your SCRATCHPAD holding a list of the repo-relative paths
-                    this verdict indicts — a subset of --files>
+    --failing-file <SCRATCHPAD>\failing_editorial_<run>.json
+                   (a JSON list of the repo-relative paths this verdict indicts — a subset of --files)
 ```
 
 ⚠ **Until 2026-09-06 no review gate could express this**, because the flag did not exist —
@@ -327,6 +351,7 @@ python tools/verify/record.py --step editorial --verdict pass --tier A \
     --how delegated --who editorial \
     --evidence .claude/commands/editorial-review.md \
     --run gate-editorial-<YYYY-MM-DD> \
+    --observed-file <SCRATCHPAD>\observed_editorial_<run>.json \
     --files <every file you reviewed>
 ```
 
@@ -338,15 +363,18 @@ at round 0 that found only ordinary things is a PASS, and it carries them.** You
 past the cap to use the flag, and you must not reach for STOP-ORDINARY in order to earn it.
 
 **THE ARTIFACT, specified HERE because this is where the flag is now bound.** Write a JSON list of
-your ordinary findings **to the SCRATCHPAD, never into the repo** — one object per finding, each with
-at least `note` and `severity: "ordinary"`. That file is what `--outstanding-file` names:
+your ordinary findings **to the SCRATCHPAD, never into the repo**, as
+`<SCRATCHPAD>\outstanding_editorial_<run>.json` — one object per finding, each with at least `note`
+and `severity: "ordinary"`. The step in the name is what keeps a gate running beside you from
+writing over it (`GATE-OUTSTANDING-FILE-COLLISION-1`). That file is what `--outstanding-file` names:
 
 ```
 python tools/verify/record.py --step editorial --verdict pass --tier A \
     --how delegated --who editorial \
     --evidence .claude/commands/editorial-review.md \
     --run gate-editorial-<YYYY-MM-DD> \
-    --outstanding-file <the JSON file you wrote> \
+    --outstanding-file <SCRATCHPAD>\outstanding_editorial_<run>.json \
+    --observed-file <SCRATCHPAD>\observed_editorial_<run>.json \
     --files <every file you reviewed>
 ```
 
@@ -383,7 +411,8 @@ python tools/verify/record.py --step editorial --verdict pass --tier A \
     --how delegated --who editorial \
     --evidence .claude/commands/editorial-review.md \
     --run gate-editorial-<YYYY-MM-DD> \
-    --outstanding-file <the JSON file you wrote> \
+    --outstanding-file <SCRATCHPAD>\outstanding_editorial_<run>.json \
+    --observed-file <SCRATCHPAD>\observed_editorial_<run>.json \
     --files <every file you reviewed>
 ```
 
@@ -392,9 +421,10 @@ and that split is the entire safety of this route — it is not a way to ship on
 findings and a clean pass are different facts, and `outstanding` is the only place a reader can still
 tell them apart; omitting the key is what a genuinely clean pass looks like.
 
-⚠⚠ **STAGE THE FILES BEFORE YOU RECORD — AND THE CALLER OWNS THAT STEP.** Subjects are read from the
-git INDEX, so a review of a modified-but-unstaged tree records NOTHING: `common.ledger_subjects`
-fences every path that differs from the index, and when NOTHING survives the fence `record.py` exits
+⚠⚠ **STAGE THE FILES BEFORE YOU RECORD — AND THE CALLER OWNS THAT STEP.** The record's basis is the
+staged tree (`--ref INDEX`, the default), and gitRobot `ledger_subjects` keeps a path only when the
+blob in your reading is the blob staged there. So a review of a modified-but-unstaged tree records
+NOTHING — every path comes back `DRIFTED SINCE YOU READ IT` — and when NOTHING survives `record.py` exits
 2 — *"nothing recordable for &lt;step&gt; at &lt;ref&gt; — the review certified no recordable file"*.
 ⚠ **All-or-nothing is the wrong model, and the middle case is the dangerous one:** on a PARTIAL fence
 `record.py` prints the skip lines and **records a NARROWED subject set at exit 0**. A green exit does
@@ -412,7 +442,7 @@ same ledger state**, and the findings survived only in prose.
 
 ⚠ **`delegated` claims no consensus and must not be dressed as one.** It records ONE agent round, honestly. If a caller genuinely runs three independent passes, that is still `--how agreement` and it remains the stronger claim; V3 is untouched.
 
-⚠ **Subjects are read from the git INDEX, so the files you reviewed must be STAGED.** `common.ledger_subjects` fences anything untracked or differing from the index, which is why a review of bytes that have since changed cannot be recorded by accident. ⚠ **It fails closed ONLY when NOTHING survives the fence — on a PARTIAL fence it records a NARROWED subject set at exit 0.** See *STAGE THE FILES BEFORE YOU RECORD*: read the skip lines and say which paths did not make it. If it fences a path, say so; do not work around it.
+⚠ **The files you reviewed must be STAGED, as the bytes you read.** gitRobot `ledger_subjects` leaves out every path whose staged blob is not the one in your reading, so bytes that changed after you read them cannot be recorded by accident — when the reading is yours (`--observed-file`), not one `record.py` takes at record time. ⚠ **It fails closed ONLY when NOTHING survives the fence — on a PARTIAL fence it records a NARROWED subject set at exit 0.** See *STAGE THE FILES BEFORE YOU RECORD*: read the skip lines and say which paths did not make it. If it fences a path, say so; do not work around it.
 
 ⚠⚠ **IF YOU ARE ONE OF SEVERAL CONCURRENT PASSES, EXPECT `V11` AND DO NOT RETRY.** The server
 keys a record by `(step, basis, revision)`, so the FIRST failing pass records and later ones are
@@ -439,11 +469,12 @@ message is.**
 
 | what the message shows | what happened | what YOU do |
 |---|---|---|
-| an argparse `usage:` banner | your invocation is wrong — among others `--failing-file` missing on a FAIL, `--failing-file` on a PASS, `--outstanding-file` carrying a non-`ordinary` severity, `--evidence` absent on a delegated PASS, `--run` unset | **YOURS to fix.** Correct the flags and re-run. |
+| an argparse `usage:` banner | your invocation is wrong — among others `--failing-file` missing on a FAIL, `--failing-file` on a PASS, `--outstanding-file` carrying a non-`ordinary` severity, `--evidence` absent on a delegated PASS, `--run` unset, an `--observed-file` that is not a JSON object of path to blob id | **YOURS to fix.** Correct the flags and re-run. |
 | `nothing recordable for <step> at <ref>` | the subject fence emptied your set. **The ledger was never contacted** | You are READ-ONLY and cannot fix it — see *STAGE THE FILES BEFORE YOU RECORD*. Say so and hand the command back. |
+| `UNDECIDED: <step> was NOT SENT:` | the subjects or the basis could not be verified — gitRobot `ledger_subjects` unreachable or refusing, or the staged tree could not be resolved. **The ledger was never contacted** | **Report it**, quoting the message. Nothing was recorded; an outage decided nothing and may be retried once gitRobot is up. |
 | any line beginning `UNDECIDED: verdictLedger ` — unreachable, refused, or no usable payload — or an outage line printed by the dry-run check | the ledger was reached and refused, or could not be reached. **The message says WHICH**: `record refused by verdictLedger:` is a rule being applied; `unreachable` decided nothing | **Report it.** Do NOT retry a refusal — the same call is refused again. An outage decided nothing and may be retried once the ledger is up. Either way the review may have been fine and simply went unrecorded. |
 
-⛔ **If the message matches none of the three, it is a site added since the survey date — not one of
+⛔ **If the message matches none of the rows above, it is a site added since the survey date — not one of
 these wearing a different coat.** The binding rule still governs: report what the message actually
 said, and do not translate it into the nearest familiar case. ⚠ **Translating an unfamiliar exit 2
 into "the ledger" is the exact harm named earlier in this brief** — a reviewer with a real FAIL

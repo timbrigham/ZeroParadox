@@ -1,26 +1,11 @@
 """
-Build ZP-D: State Layer (Hilbert Space) (v1.15)
-v1.14: R-PA added — prior-art note: T is the standard p-adic ball-indicator ONB (van der Put basis), refined to Kozyrev's p-adic wavelet basis of L2(Q2) (Kozyrev 2002); p-adic-QM / p-adic-qubit context. Prior-art positioning, paired with the CLAIMS Convergence row.
-v1.12: Rendered self-version refs removed — DP-1 title tag and T2 "R3 (v1.6)" ref (C1 sweep).
-v1.11: K-11/K-18 vocab fixes — "topological isolation" -> "clopen separation" throughout DP-1; "first atomic state" -> "minimum nonzero state" in D1.
-v1.10: Version number removed from Open Items Register section header.
-v1.9: Adversary-review pass — Import I-B stale reference "Topological isolation of 0"
-corrected to "Clopen gap at 0" to match ZP-B v1.7+ terminology throughout.
-v1.8: T5 strengthened — T5-b (t5_strict_orthogonal) added in Lean and PDF. T5-b is the
-      non-trivial content of T5: distinct consecutive states map to orthogonal T-images via
-      DP-1. T5 norm result disclosed as tautology of construction (all norms = 1).
-v1.7: T5 DP-1 dependency made explicit — status line, Open Items Register, and Validation
-      Status table now consistently state "given DP-1" for T5, matching T4's treatment.
-v1.6: R3 added — topological type of T stated explicitly: locally constant, continuous from
-      (Q2, 2-adic topology) to H; connected-space concern addressed.
-v1.5: D1 updated — n = 2 foundational minimum; higher n derived, not foundational.
-v1.4: T5 proof corrected — ball-boundary argument replaces D2(v) citation.
+Build ZP-D: State Layer (Hilbert Space) (v1.19)
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.15'
+VERSION = '1.19'
 FIRST_RELEASED = 'April 2026'
 
 def build():
@@ -57,21 +42,24 @@ def build():
         'T3: Clopen gap at 0.',
         'T5: Q<sub>2</sub> is totally disconnected.',
         'C3: Snap is topologically irreversible (corollary of T5).',
-        '&#949;<sub>0</sub>: Minimum viable deviation, universe-contingent parameter (D5).',
+        '&#949;<sub>0</sub>: Minimum viable deviation, a point of Q<sub>2</sub> at a chosen finest rung v; the rung and its threshold 2<super>&#8722;v</super> are a normalisation (D5).',
     ]))
 
     E.append(Paragraph('II. The Hilbert Space State Layer', S['h1']))
     E.append(label_box('Definition D1 — State Layer H', [
         'H = &#8450;<super>n</super> is a complex Hilbert space with orthonormal basis {e<sub>0</sub>, e<sub>1</sub>, &#8230;}.',
         'The foundational minimum is n = 2, corresponding to the two ontological states of the framework: '
-        '&#8869; (null state, mapped to e<sub>0</sub>) and &#949;<sub>0</sub> (minimum nonzero state, mapped to e<sub>1</sub>). '
+        '&#8869; of OntologicalStates (mapped to e<sub>0</sub>) and &#949;<sub>0</sub>, the state off &#8869; of OntologicalStates (mapped to e<sub>1</sub>). '
         'These two orthogonal vectors express the binary existence/non-existence distinction that is the '
         'framework\'s central object. All further states are derived from this pair as joins in (L, &#8744;, &#8869;) '
         '&#8212; they require no additional foundational dimension.',
-        'The framework\'s core claims (T4: snap produces orthogonal shift; T5: monotone norms) are '
-        'established at n = 2. Extensions to higher n are consistent and natural: for level-k '
-        'approximations using the clopen ball partition of Q<sub>2</sub> at depth k, n = 2<super>k</super>. '
-        'No foundational claim of the framework requires n &gt; 2.',
+        'The orthogonality &#10216;e<sub>0</sub>, e<sub>1</sub>&#10217; = 0 that T4 uses is a fact about H alone and holds at n = 2. '
+        'T4 and T5 as stated are about T: Q<sub>2</sub> &#8594; H, so they hold at a level only where T exists (T2). The level-k partition P<sub>k</sub> of Q<sub>2</sub> has n = 2<super>k</super> + 1 '
+        'cells: the 2<super>k</super> balls of radius 2<super>&#8722;k</super> that make up Z<sub>2</sub>, '
+        'the 2-adic integers, and the one clopen set Q<sub>2</sub> \\ Z<sub>2</sub>. Level 0 gives n = 2: '
+        'Z<sub>2</sub> and its complement. By T2 a map T exists at level 0 exactly when v<sub>2</sub>(&#949;<sub>0</sub>) &lt; 0, '
+        'that is, when &#949;<sub>0</sub> lies outside Z<sub>2</sub>; otherwise T needs a level k &gt; v<sub>2</sub>(&#949;<sub>0</sub>) '
+        'and n = 2<super>k</super> + 1.',
     ]))
     E.append(sp(4))
     E.append(label_box('Remark R1 — Decoupling of Topological and State Layers', [
@@ -83,7 +71,7 @@ def build():
     E.append(Paragraph('III. The Transition Operator T: Q₂ &#8594; H', S['h1']))
     E.append(Paragraph('3.1  The Design Commitment — Orthogonality', S['h2']))
     E.append(label_box('Design Principle DP-1 — Orthogonality as the Representation of Clopen Separation', [
-        'Clopen separation in Q<sub>2</sub> (T3: 0 is clopen-separated from all nonzero elements; clopen balls are mutually separated) is represented in H by orthogonality: elements that are clopen-separated in Q<sub>2</sub> map to orthogonal vectors in H.',
+        'Clopen separation in Q<sub>2</sub> (ZP-B T3: 0 is clopen-separated from all nonzero elements; clopen balls are mutually separated) is represented in H by orthogonality: at the chosen level k, points in different cells of the clopen partition P<sub>k</sub> (D1) map to orthogonal vectors in H. Any two distinct points of Q<sub>2</sub> lie in disjoint balls, so the same requirement stated over all disjoint balls would make the images of every two distinct points orthogonal; with nonzero images, as D2(v) requires, that is an orthogonal family indexed by all of Q<sub>2</sub>, which no finite-dimensional H holds (an orthonormal family in &#8450;<super>n</super> is finite; the example after dp1_orthogonality in ZeroParadox/State/StateSpace.lean). Without the nonzero premise the zero map would meet it. P<sub>k</sub> is the finite partition it is stated over.',
         'Motivation: Orthogonality in H is the natural algebraic analogue of topological separation. &#10216;e<sub>i</sub>, e<sub>j</sub>&#10217; = 0 for i &#8800; j; two clopen balls are maximally distinct in the topological sense.',
         'Status: DESIGN PRINCIPLE — DP-1 is chosen, not derived. It is the natural and consistent choice, stated explicitly. T4 and T5 below depend on DP-1 as a premise.',
     ]))
@@ -91,27 +79,28 @@ def build():
     E.append(Paragraph('3.2  The Construction Target', S['h2']))
     E.append(label_box('Definition D2 — Transition Operator T (Requirements)', [
         'T: Q<sub>2</sub> &#8594; H must satisfy:',
-        '(i)   T(0) = e<sub>0</sub>   (null state maps to the designated base vector)',
-        '(ii)  T(&#949;<sub>0</sub>) = e<sub>1</sub>   (minimum deviation maps to the first non-base vector)',
-        '(iii) T is injective on the clopen ball partition',
-        '(iv)  If x and y are in disjoint clopen balls, then &#10216;T(x), T(y)&#10217; = 0   (DP-1)',
-        '(v)   &#8214;T(x)&#8214; &#8805; &#8214;T(0)&#8214; for all x   (norm-increasing: additive ontology preserved)',
+        '(i)   T(0) = e<sub>0</sub>   (0 of Q<sub>2</sub>, read as &#8869;, maps to the designated base vector)',
+        '(ii)  T(&#949;<sub>0</sub>) = e<sub>1</sub>   (fix one point &#949;<sub>0</sub> of Q<sub>2</sub> at the chosen finest rung of ZP-B D5, so v<sub>2</sub>(&#949;<sub>0</sub>) is that rung; D5 admits any point at that rung, and D2 binds this one. The minimum deviation maps to the first non-base vector)',
+        '(iii) T is constant on each cell of P<sub>k</sub>, and points in different cells have different images',
+        '(iv)  If x and y lie in different cells of P<sub>k</sub>, then &#10216;T(x), T(y)&#10217; = 0   (DP-1)',
+        '(v)   &#8214;T(x)&#8214; = 1 for all x   (unit norm)',
     ]))
     E.append(sp(4))
     E.append(Paragraph('3.3  Existence of T', S['h2']))
     E.append(label_box('Theorem T2 — Existence of T (Basis Assignment)', [
-        'There exists a function T: Q<sub>2</sub> &#8594; H satisfying all five requirements of D2.',
-        'Proof: Construct T by basis assignment. The clopen ball partition of Q<sub>2</sub> at level k consists of 2<super>k</super> disjoint clopen balls. Assign each ball to a distinct basis vector of H. T(x) = e<sub>i</sub> where i is the index of the ball containing x.',
-        '(i) 0 maps to e<sub>0</sub> by assignment. <font name="DV">&#10003;</font>  (ii) &#949;<sub>0</sub> maps to e<sub>1</sub> by assignment. <font name="DV">&#10003;</font>  (iii) Distinct balls &#8594; distinct basis vectors. <font name="DV">&#10003;</font>  (iv) Disjoint balls &#8594; orthogonal basis vectors. <font name="DV">&#10003;</font>  (v) All basis vectors have norm 1 &#8805; &#8214;e<sub>0</sub>&#8214; = 1. <font name="DV">&#10003;</font>',
+        'For the point &#949;<sub>0</sub> fixed in D2(ii): at each level k with k &gt; v<sub>2</sub>(&#949;<sub>0</sub>), and at no other level, there exists a function T: Q<sub>2</sub> &#8594; H, with n = 2<super>k</super> + 1, satisfying all five requirements of D2 relative to P<sub>k</sub>.',
+        'Proof: Construct T by basis assignment. P<sub>k</sub> has 2<super>k</super> + 1 cells (D1). Assign e<sub>0</sub> to the cell containing 0, e<sub>1</sub> to the cell containing &#949;<sub>0</sub>, and the remaining basis vectors to the remaining cells, one each. T(x) = e<sub>i</sub> where i is the index of the cell containing x; every x outside Z<sub>2</sub> maps to the one vector assigned to Q<sub>2</sub> \\ Z<sub>2</sub>. The cell of 0 is the ball 2<super>k</super>Z<sub>2</sub>, the points of valuation at least k, and &#949;<sub>0</sub> is a point of Q<sub>2</sub> at rung v<sub>2</sub>(&#949;<sub>0</sub>) (ZP-B D5), so it lies in that cell exactly when v<sub>2</sub>(&#949;<sub>0</sub>) &#8805; k. So 0 and &#949;<sub>0</sub> lie in different cells exactly when k &gt; v<sub>2</sub>(&#949;<sub>0</sub>). Otherwise no T satisfies D2 at level k: 0 and &#949;<sub>0</sub> share a cell, so D2(iii) forces T(0) = T(&#949;<sub>0</sub>), while D2(i) and D2(ii) require T(0) = e<sub>0</sub> and T(&#949;<sub>0</sub>) = e<sub>1</sub> &#8800; e<sub>0</sub>. When &#949;<sub>0</sub> lies outside Z<sub>2</sub>, every level k &#8805; 0 qualifies, level 0 included.',
+        '(i) 0 maps to e<sub>0</sub> by assignment. <font name="DV">&#10003;</font>  (ii) &#949;<sub>0</sub> maps to e<sub>1</sub> by assignment, its cell differing from that of 0. <font name="DV">&#10003;</font>  (iii) T is constant on each cell by construction, and distinct cells &#8594; distinct basis vectors. <font name="DV">&#10003;</font>  (iv) Different cells &#8594; orthogonal basis vectors. <font name="DV">&#10003;</font>  (v) Every basis vector has norm 1. <font name="DV">&#10003;</font>',
     ]))
     E.append(sp(4))
     E.append(label_box('Remark R3 — Topological Type of T', [
-        'T is locally constant: it is constant on each clopen ball of Q<sub>2</sub>. This follows directly from '
-        'DP-1 — clopen separation maps to orthogonality, so T does not interpolate between basis '
-        'vectors across ball boundaries.',
+        'T is locally constant: it is constant on each cell of P<sub>k</sub>, and each cell is clopen in '
+        'Q<sub>2</sub>. This is required by D2(iii), and the construction in T2 meets it: T does not interpolate between basis '
+        'vectors across cell boundaries.',
         'Continuity: T is continuous from (Q<sub>2</sub>, 2-adic topology) to H. The image of T is a '
         'discrete set of basis vectors {e<sub>0</sub>, e<sub>1</sub>, &#8230;}. Each preimage T<super>&#8722;1</super>(e<sub>i</sub>) '
-        'is a clopen ball of Q<sub>2</sub>, which is open in the 2-adic topology. Therefore preimages of '
+        'is a cell of P<sub>k</sub>, either a ball inside Z<sub>2</sub> or the set Q<sub>2</sub> \\ Z<sub>2</sub>, '
+        'and each is open in the 2-adic topology. Therefore preimages of '
         'open sets in H are open in Q<sub>2</sub>, and T is continuous. &#10003;',
         'Note on connected spaces: Q<sub>2</sub> is totally disconnected; H = &#8450;<super>n</super> with the norm '
         'topology is path-connected. A continuous map from a totally disconnected space to a '
@@ -123,8 +112,8 @@ def build():
     E.append(sp(4))
     E.append(Paragraph('3.4  Uniqueness of T', S['h2']))
     E.append(label_box('Proposition T3 — Uniqueness of T up to Unitary Equivalence', [
-        'Any two operators T, T\': Q<sub>2</sub> &#8594; H satisfying D2 are related by a unitary transformation U: H &#8594; H such that T\' = U &#8728; T.',
-        'Proof: T and T\' both assign e<sub>0</sub> to the image of 0, which is the unique additive identity (A4). The ball structure of Q<sub>2</sub> is fixed; only the labelling of basis vectors varies. A unitary map U taking T(0) to T\'(0) and preserving orthogonality relations defines the equivalence. <font name="DV">&#10003;</font>',
+        'Any two operators T, T\': Q<sub>2</sub> &#8594; H satisfying D2 at the same level k, with n = 2<super>k</super> + 1, are related by a unitary transformation U: H &#8594; H such that T\' = U &#8728; T.',
+        'Proof: By D2(iii), T and T\' are each constant on every cell of P<sub>k</sub>, so each is a map from the 2<super>k</super> + 1 cells into H. By D2(iv) and D2(v), each sends distinct cells to orthogonal unit vectors, so each image set is an orthonormal basis of H = &#8450;<super>n</super>. The linear map U sending T(c) to T\'(c) for every cell c is unitary, and T\' = U &#8728; T. Lean: t3_uniqueness relates any cell-indexed map with unit-norm, pairwise-orthogonal values to the basis assignment transitionOp; the two-sided form above follows by composing two such unitaries (the example after t3_uniqueness, ZeroParadox/State/StateSpace.lean). <font name="DV">&#10003;</font>',
     ]))
     E.append(sp(4))
     E.append(label_box('Remark R2 — What T Is Not', [
@@ -133,28 +122,29 @@ def build():
     ]))
     E.append(sp(4))
     E.append(remark_box('Remark R-PA — What T Is, in Standard Terms (Prior Art)', [
-        'Representing the clopen-ball structure of Q<sub>2</sub> by an orthonormal system in a Hilbert space is the standard p-adic construction, not a ZP novelty: the indicator functions of clopen balls form an orthonormal basis for locally constant functions (the van der Put basis), which refines to Kozyrev\'s p-adic wavelet basis of L<super>2</super>(&#8474;<sub>2</sub>) &#8212; the analog of the Haar basis and an eigenbasis of the Vladimirov operator (Kozyrev, 2002). p-adic quantum mechanics builds Hilbert-space state models (the "p-adic qubit") on the same structure.',
-        'ZP-D\'s contribution is not the embedding itself but the specific reading in DP-1 &#8212; clopen separation &#8614; orthogonality &#8212; that carries the Binary Snap into the state layer. T is an instance of the recognized construction, applied to the snap.',
+        'Representing the clopen-ball structure of Q<sub>2</sub> by orthogonal unit vectors in a Hilbert space is the standard p-adic construction, not a ZP novelty. In L<super>2</super> of the Haar measure, the indicator functions of two disjoint balls of one level are orthogonal and of equal length, so the normalized indicators of the balls of one level form an orthonormal system. T\'s basis assignment (T2) follows that pattern on the 2<super>k</super> level-k balls of Z<sub>2</sub>, and adds one further orthogonal vector for the cell Q<sub>2</sub> \\ Z<sub>2</sub>, which has infinite Haar measure, so its indicator is not in L<super>2</super>. Indicators of nested balls are not orthogonal, since the smaller ball has positive measure. One orthonormal basis of L<super>2</super>(Q<sub>p</sub>) built on balls is Kozyrev\'s p-adic wavelet basis, the analog of the Haar basis and an eigenbasis of the Vladimirov operator (Kozyrev, 2002). The van der Put basis, also made of ball indicators, expands every continuous function from Z<sub>p</sub> to Q<sub>p</sub> as a series; its balls nest, so it is not an orthonormal system in L<super>2</super>. It is orthonormal in the non-Archimedean sense, as a basis of the Banach space of continuous functions from Z<sub>p</sub> to Q<sub>p</sub> under the supremum norm (Schikhof, Ultrametric Calculus (1984), Theorem 62.2; see Bolivar-Barbosa, Le&#243;n-Cardenal and Rodr&#237;guez-Vega (2022), Theorem 2.1).',
+        'ZP-D\'s contribution is not the embedding itself but the specific reading in DP-1 &#8212; clopen separation &#8614; orthogonality &#8212; that carries the Binary Snap into the state layer. On the balls of Z<sub>2</sub>, T is an instance of the recognized construction; the one further vector, for the cell Q<sub>2</sub> \\ Z<sub>2</sub>, is added by T2 and corresponds to no normalized indicator in L<super>2</super>.',
     ]))
 
     E.append(Paragraph('IV. The Binary Snap in H', S['h1']))
     E.append(label_box('Theorem T4 — Snap Produces Orthogonal Shift in H', [
         'The Binary Snap 0 &#8594; &#949;<sub>0</sub> in Q<sub>2</sub> maps to an orthogonal shift in H: T(0) = e<sub>0</sub> and T(&#949;<sub>0</sub>) = e<sub>1</sub>, and &#10216;e<sub>0</sub>, e<sub>1</sub>&#10217; = 0.',
-        'Proof: By D2(i), T(0) = e<sub>0</sub>. By D2(ii), T(&#949;<sub>0</sub>) = e<sub>1</sub>. Since 0 and &#949;<sub>0</sub> are in disjoint clopen balls of Q<sub>2</sub> (T3), D2(iv) and DP-1 give &#10216;T(0), T(&#949;<sub>0</sub>)&#10217; = &#10216;e<sub>0</sub>, e<sub>1</sub>&#10217; = 0. <font name="DV">&#10003;</font>',
+        'Proof: By D2(i), T(0) = e<sub>0</sub>. By D2(ii), T(&#949;<sub>0</sub>) = e<sub>1</sub>. Since 0 and &#949;<sub>0</sub> lie in different cells of P<sub>k</sub> at a level k &gt; v<sub>2</sub>(&#949;<sub>0</sub>) (T2), D2(iv) and DP-1 give &#10216;T(0), T(&#949;<sub>0</sub>)&#10217; = &#10216;e<sub>0</sub>, e<sub>1</sub>&#10217; = 0. <font name="DV">&#10003;</font>',
         'Status: Derived — unconditional theorem given DP-1.',
     ]))
     E.append(sp(4))
     E.append(label_box('Proposition T5 — Monotone Sequences Map to Non-Decreasing Norms', [
         'Let (S<sub>n</sub>) be a monotone state sequence in L (ZP-A T3). Then &#8214;T(S<sub>n</sub>)&#8214; &#8804; &#8214;T(S<sub>n+1</sub>)&#8214; for all n.',
-        'T5 norm result: Derived — unconditional given DP-1. '
-        'Note: in the basis-assignment construction (D2), all T-images are unit basis vectors — all norms equal 1. '
+        'Reading of T(S<sub>n</sub>): T is a map on Q<sub>2</sub>, and S<sub>n</sub> is a state of L. Here each state is read through a chosen assignment &#963; of states of L to cells of P<sub>k</sub>, a modelling choice that this document does not derive, and T(S<sub>n</sub>) is the vector T assigns to the cell &#963;(S<sub>n</sub>). The Lean takes the cell indices directly, a sequence S: &#8469; &#8594; Fin n.',
+        'T5 norm result: Derived — immediate from D2(v). '
+        'Note: by D2(v), every T-image is a unit vector — all norms equal 1. '
         'The norm inequality &#8214;T(S<sub>n</sub>)&#8214; &#8804; &#8214;T(S<sub>n+1</sub>)&#8214; is therefore satisfied trivially (1 &#8804; 1). '
         'The Lean proof (t5_monotone_norms) verifies this tautology; it does not verify the ball-boundary argument. '
         '<font name="DV">&#10003;</font>',
-        'T5-b — Strict Orthogonality (non-trivial content, Lean-verified): For any strictly monotone state sequence — where S<sub>n</sub> &#8800; S<sub>n+1</sub> — consecutive T-images are orthogonal: '
-        '&#10216;T(S<sub>n</sub>), T(S<sub>n+1</sub>)&#10217; = 0. '
-        'Proof: S<sub>n</sub> &#8800; S<sub>n+1</sub> implies they index distinct clopen balls. By DP-1, distinct ball-indices map to orthogonal basis vectors. Therefore T(S<sub>n</sub>) &#8869; T(S<sub>n+1</sub>). '
-        'Lean: t5_strict_orthogonal (uses DP-1 via t2_orthogonal; axiom-free). <font name="DV">&#10003;</font>',
+        'T5-b — Strict Orthogonality (non-trivial content, Lean-verified): For any state sequence whose consecutive states are assigned distinct cells, &#963;(S<sub>n</sub>) &#8800; &#963;(S<sub>n+1</sub>), consecutive T-images are orthogonal: '
+        '&#10216;T(S<sub>n</sub>), T(S<sub>n+1</sub>)&#10217; = 0. When &#963; is injective, S<sub>n</sub> &#8800; S<sub>n+1</sub> suffices; when it is not, two distinct states in one cell share one vector and the conclusion fails. '
+        'Proof: by DP-1, distinct cells map to orthogonal basis vectors. Therefore T(S<sub>n</sub>) &#8869; T(S<sub>n+1</sub>). '
+        'Lean: t5_strict_orthogonal (uses DP-1 via t2_orthogonal; #print axioms: propext, Classical.choice, Quot.sound). <font name="DV">&#10003;</font>',
         'T5-b is the load-bearing result: it captures the genuine content of the ball-boundary structure and is the Hilbert-space expression of ZP-B C3 (topological irreversibility) applied to consecutive states.',
     ]))
 
@@ -162,12 +152,12 @@ def build():
     E.append(data_table(
         ['Item', 'Status', 'Description'],
         [['DP-1: Orthogonality commitment', 'Design Principle — explicit', 'Reclassified from Theorem T1. Orthogonality is chosen, not derived. Content unchanged.'],
-         ['T2: Existence of T', 'Closed', 'Basis assignment construction. All five requirements verified.'],
+         ['T2: Existence of T', 'Closed', 'Basis assignment construction at each level k &gt; v<sub>2</sub>(&#949;<sub>0</sub>), and no T at any other level. All five requirements verified.'],
          ['T3: Uniqueness of T', 'Closed', 'Unique up to unitary equivalence.'],
          ['T4: Snap &#8594; orthogonal shift', 'Closed — unconditional', 'Proven from T2 and ZP-B T3. Depends on DP-1 as premise.'],
-         ['T5: Monotone norms + T5-b: Strict orthogonality', 'Closed — unconditional given DP-1',
-          'T5 norm result: trivially satisfied (all norms = 1 by construction). '
-          'T5-b: distinct consecutive states produce orthogonal T-images — non-trivial, Lean-verified (t5_strict_orthogonal).']],
+         ['T5: Monotone norms + T5-b: Strict orthogonality', 'Closed — T5 from D2(v); T5-b given DP-1',
+          'T5 norm result: trivially satisfied (all norms = 1 by D2(v)). '
+          'T5-b: consecutive states in distinct cells produce orthogonal T-images — non-trivial, Lean-verified (t5_strict_orthogonal).']],
         [1.6*inch, 1.5*inch, 3.4*inch]
     ))
 
@@ -175,19 +165,19 @@ def build():
     E.append(data_table(
         ['Component', 'Status / Notes'],
         [['H = &#8450;<super>n</super> (D1)', 'Valid — Defined; foundational minimum n = 2 (binary existence/non-existence); '
-          'extensions to n = 2<super>k</super> consistent; no core claim requires n &gt; 2'],
+          'level-k partition P<sub>k</sub> gives n = 2<super>k</super> + 1 (level 0 gives n = 2, carrying T exactly when v<sub>2</sub>(&#949;<sub>0</sub>) &lt; 0)'],
          ['Decoupling of Q<sub>2</sub> and H (R1)', 'Valid — Structural; Q<sub>2</sub> and H are categorically distinct; T is the bridge'],
          ['Import I-A from ZP-A', 'Valid — Received; CC-1 reclassification noted'],
          ['Import I-B from ZP-B', 'Valid — Received; MP-1 included; C3 noted'],
          ['DP-1: Orthogonality', 'Valid — Design Principle; reclassified from T1; well-motivated and explicit'],
          ['D2: T requirements', 'Valid — Defined; five requirements stated; all satisfied by T2'],
-         ['T2: Existence of T', 'Valid — Derived; basis assignment; all five requirements verified; '
+         ['T2: Existence of T', 'Valid — Derived; basis assignment at each level k &gt; v<sub>2</sub>(&#949;<sub>0</sub>), none at other levels; all five requirements verified; '
           'R3 names topological type: locally constant, continuous'],
          ['T3: Uniqueness of T', 'Valid — Proposition; derived; unique up to unitary equivalence'],
          ['T4: Snap &#8594; orthogonal shift', 'Valid — Theorem; derived; unconditional; depends on DP-1'],
          ['T5 / T5-b: Monotone norms + strict orthogonality',
-          'Valid — T5 norm result: tautology of construction (all norms = 1); Lean: t5_monotone_norms. '
-          'T5-b: non-trivial Lean-verified result — distinct consecutive states produce orthogonal T-images via DP-1; Lean: t5_strict_orthogonal (axiom-free).']],
+          'Valid — T5 norm result: tautology of D2(v) (all norms = 1); Lean: t5_monotone_norms. '
+          'T5-b: non-trivial Lean-verified result — consecutive states in distinct cells produce orthogonal T-images via DP-1; Lean: t5_strict_orthogonal (#print axioms: propext, Classical.choice, Quot.sound).']],
         [2.5*inch, 4.0*inch]
     ))
 

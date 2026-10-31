@@ -8,7 +8,8 @@ is canonical for where the argument stops and stays there.
 
 The Zero Paradox information-theoretic framework over binary ontological states: T1 (unique state
 distributions), T1b (JSD = log 2), D5 (DF antisymmetry), T2 (non-conservative circulation), L-RUN
-(execution is a non-null state change), and TQ-IH (no execution avoids a non-null config).
+(c₀ ≠ c₁, so the step from ⊥ of `MachinePhase` (c₀) to c₁ is a state change off it), and TQ-IH (the same
+fact read from c₁).
 
 Self-contained within information theory and real analysis. Imports ZP-B conceptually (total
 disconnectedness, clopen balls) but not as a Lean dependency — ZP-C's theorems do not require the p-adic

@@ -1,4 +1,5 @@
 import ZeroParadox.Computability.SelfApp
+import ZeroParadox.Die
 import Mathlib.NumberTheory.Padics.PadicIntegers
 import Mathlib.Tactic
 
@@ -166,10 +167,15 @@ theorem val_selfMem_singleton :
     every axiom over it. ⭐ PRIOR ART — these theorems DUPLICATE it:
     `multiplicity_addValuation PadicInt.prime_p : AddValuation ℤ_[2] ℕ∞` discharges all four
     from stock Mathlib at the same axiom footprint, its `val_scale` STRICTLY STRONGER (unguarded,
-    holding at 0 as well). The ℕ∞-target rationale, the classical names, the neighbour
-    `BottomValuation`, and the synthesis fence are in `ZeroParadox/Valuation/Scale.md` § V. -/
+    holding at 0 as well), stated over the cast prime of the example below. The ℕ∞-target rationale,
+    the classical names, the neighbour `BottomValuation`, and the synthesis fence are in
+    `ZeroParadox/Valuation/Scale.md` § V. -/
 
 section PadicParallel
+
+-- Statement: the stock prime `PadicInt.prime_p`, stated over the cast `((2 : ℕ) : ℤ_[2])`, closes the
+-- goal at the numeral `2` that `q2Val_scale` uses, with no rewrite at the pinned Mathlib.
+example : Prime (2 : ℤ_[2]) := PadicInt.prime_p
 
 noncomputable instance instDecidableEqZ2 : DecidableEq ℤ_[2] := Classical.decEq _
 
@@ -216,13 +222,61 @@ theorem q2Val_scale (x : ℤ_[2]) (hx : x ≠ 0) :
 theorem q2Scale_unique_fp (x : ℤ_[2]) (h : 2 * x = x) : x = 0 := by
   linear_combination h
 
--- `linter.flexible` fires on the `simp_all`s in the proof below: a STYLE lint about a tactic
--- that modifies the goal, not a soundness warning. Suppressed rather than replaced, because the
--- replacement is a hand-written simp set and a guessed lemma list is how this proof broke once.
-set_option linter.flexible false in
-/-- Statement: ℤ_[2] DOES admit a `ValuationStructure`, once a semilattice is supplied. The join
-    is free — the four axioms mention only `bot` and never the join — so any associative,
-    commutative, idempotent operation with 0 as its identity serves. ⚠ It adds NO new axiom:
+/-- `Statement:` for all `x y` in ℤ_[2], ℤ_[2]'s 0 included, `q2Val x ≤ q2Val y ↔ ‖y‖ ≤ ‖x‖`: the
+    valuation preorder is the norm preorder reversed. Away from 0 this follows from Mathlib's
+    `PadicInt.norm_eq_zpow_neg_valuation`. -/
+theorem q2Val_le_iff_norm_le (x y : ℤ_[2]) : q2Val x ≤ q2Val y ↔ ‖y‖ ≤ ‖x‖ := by
+  by_cases hx : x = 0
+  · subst hx
+    simp only [q2Val_bot, top_le_iff, norm_zero]
+    constructor
+    · intro h; have := q2Val_unique y h; subst this; simp
+    · intro h; have : y = 0 := norm_le_zero_iff.mp h; subst this; exact q2Val_bot
+  by_cases hy : y = 0
+  · subst hy
+    simp only [q2Val_bot, le_top, norm_zero, true_iff]
+    exact norm_nonneg x
+  · simp only [q2Val, if_neg hx, if_neg hy, Nat.cast_le]
+    rw [PadicInt.norm_eq_zpow_neg_valuation hx, PadicInt.norm_eq_zpow_neg_valuation hy]
+    rw [zpow_le_zpow_iff_right₀ (by norm_num : (1 : ℝ) < ((2 : ℕ) : ℝ))]
+    omega
+
+/-- `Statement:` on ℤ_[2] with the motion `Motion.ofFun (2 * ·)` (`ZeroParadox/Die.lean`): ℤ_[2]'s 0
+    is least in the norm preorder and greatest in the valuation preorder; the second preorder is the
+    first reversed; OVER lowers in the first, raises in the second, and does not raise in the first;
+    every step into 0 starts at 0; and 0 steps to itself only. -/
+theorem z2_two_views :
+    @IsBot ℤ_[2] (Preorder.lift (‖·‖ : ℤ_[2] → ℝ)).toLE 0 ∧
+    @IsTop ℤ_[2] (Preorder.lift q2Val).toLE 0 ∧
+    (∀ x y : ℤ_[2], q2Val x ≤ q2Val y ↔ ‖y‖ ≤ ‖x‖) ∧
+    @Motion.StepLowers ℤ_[2] (Motion.ofFun (2 * ·)) (Preorder.lift (‖·‖ : ℤ_[2] → ℝ)).toLE ∧
+    @Motion.StepRaises ℤ_[2] (Motion.ofFun (2 * ·)) (Preorder.lift q2Val).toLE ∧
+    ¬ @Motion.StepRaises ℤ_[2] (Motion.ofFun (2 * ·)) (Preorder.lift (‖·‖ : ℤ_[2] → ℝ)).toLE ∧
+    (∀ a : ℤ_[2], (Motion.ofFun (2 * ·)).step a 0 → a = 0) ∧
+    (Motion.ofFun (fun x : ℤ_[2] => 2 * x)).SelfOnlyAt 0 := by
+  have hlow : @Motion.StepLowers ℤ_[2] (Motion.ofFun (2 * ·))
+      (Preorder.lift (‖·‖ : ℤ_[2] → ℝ)).toLE := by
+    rintro x y rfl
+    show ‖(2 : ℤ_[2]) * x‖ ≤ ‖x‖
+    rw [norm_mul]
+    exact mul_le_of_le_one_left (norm_nonneg _) (PadicInt.norm_le_one 2)
+  have h2 : ‖(2 : ℤ_[2])‖ < 1 := by
+    rw [show (2 : ℤ_[2]) = ((2 : ℕ) : ℤ_[2]) from Nat.cast_ofNat.symm, PadicInt.norm_p]; norm_num
+  refine ⟨fun x => ?_, fun x => ?_, q2Val_le_iff_norm_le,
+    hlow, (Motion.stepRaises_iff_of_dual _ _ (fun x y => q2Val_le_iff_norm_le x y) _).2 hlow,
+    fun h => ?_, fun a (ha : (0 : ℤ_[2]) = 2 * a) => (mul_eq_zero.mp ha.symm).resolve_left two_ne_zero,
+    (Motion.selfOnlyAt_ofFun_iff _ _).2 (mul_zero 2)⟩
+  · show ‖(0 : ℤ_[2])‖ ≤ ‖x‖; simp
+  · show q2Val x ≤ q2Val 0; rw [q2Val_bot]; exact le_top
+  · have h' : ‖(1 : ℤ_[2])‖ ≤ ‖(2 : ℤ_[2]) * 1‖ := h 1 (2 * 1) rfl
+    rw [mul_one, norm_one] at h'
+    linarith
+
+/-- Statement: ℤ_[2] DOES admit a `ValuationStructure`, once a semilattice is supplied; the join here
+    is `max` in the order by descending `q2Val`, ties broken by `WellOrderingRel`, with ℤ_[2]'s 0 as
+    `bot`, and under it `q2Val (join x y) ≤ min (q2Val x) (q2Val y)` for all `x y`. The join is
+    free: the four axioms mention only `bot` and never the join, so every `ZPSemilattice ℤ_[2]` with
+    0 as `bot` carries a `ValuationStructure` (the `example` after this one). ⚠ It adds NO new axiom:
     `q2Val_unique` and `q2Val_scale` above already carry `Classical.choice`. ⚠⚠ **The CARRIER is
     the source, it subsumes every other, and it CLOSES the question.** `ZPSemilattice ℤ_[2]` is
     choice-tainted AS A TYPE. `#print axioms` walks a declaration's TYPE as well as its term, so
@@ -231,45 +285,52 @@ set_option linter.flexible false in
     spelling of the join ON THIS TYPE, under the `#print axioms` metric; whether a constructively
     re-founded 2-adic type would change the question is separate and not addressed. ⚠ `ZPSemilattice`
     itself is clean — it is this carrier, not that class. `PadicInt` is the evidence and
-    `q2Scale_bot` is the consequence — a theorem with no ℕ∞ and no equality test
-    in it, tainted anyway. ⚠ The class's own
-    numeral is a SEPARATE cost, and an ACCIDENTAL one in the sense
+    `q2Scale_bot` is the consequence — a theorem with no ℕ∞ and no equality test in it, tainted
+    anyway. ⚠ The class's own numeral is a SEPARATE cost, and an ACCIDENTAL one in the sense
     `ZeroParadox/Category/ChoiceCannotBe.lean` defines and sources: respelling the successor as a
-    cast from ℕ clears the class outright. ⚠ Two INDEPENDENT reasons to read the numeral half as
-    pin-relative: Brasca and Clemente (arXiv:2603.17457, §2.2) record the same `OfNat` route being
-    tainted and then repaired upstream, and `ZeroParadox/Valuation/PricedPadicInterface.lean` § I
-    dates its own measurements for that reason. The CARRIER half is not pin-relative in the same
-    way — it follows from the printer walking the TYPE, so it holds of any statement mentioning
+    cast from ℕ clears the class outright. ⚠ The numeral half is pin-relative; its routes, its
+    dated measurements and the Brasca–Clemente prior art are in
+    `ZeroParadox/Valuation/PricedPadicInterface.lean` § I (`enat_add_choice`). The CARRIER half is
+    not pin-relative in the same way — it follows from the printer walking the TYPE, so it holds of any statement mentioning
     `ℤ_[2]` for as long as `PadicInt` is built with choice. ⚠ The two counterfactual PAIRS below emit exactly that — carrier,
-    then numeral. ⚠ The UNIVERSALS here (any lawful join serves; ruled out for every spelling)
-    are not emitted and cannot be — a footprint list settles instances, never universals. The
-    printer's own type-walk IS emitted, by `_trivialAboutZ2` / `_trivialAboutNat` below. -/
-example : ∃ h : ZPSemilattice ℤ_[2], Nonempty (@ValuationStructure ℤ_[2] h) := by
-  classical
+    then numeral. ⚠ The footprint UNIVERSAL here (ruled out for every spelling) is not emitted and
+    cannot be — a footprint list settles instances, never universals. The printer's own type-walk
+    IS emitted, by `_trivialAboutZ2` / `_trivialAboutNat` below. -/
+example : ∃ h : ZPSemilattice ℤ_[2], @ZPSemilattice.bot _ h = 0 ∧
+    ∃ v : @ValuationStructure ℤ_[2] h, v.val = q2Val ∧ v.scale = (2 * ·) ∧
+      ∀ x y : ℤ_[2], q2Val (h.join x y) ≤ min (q2Val x) (q2Val y) := by
   letI : LinearOrder ℤ_[2] := IsWellOrder.linearOrder (WellOrderingRel (α := ℤ_[2]))
-  letI SL : ZPSemilattice ℤ_[2] :=
-    { join := fun x y => if x = 0 then y else if y = 0 then x else max x y
-      bot := 0
-      join_assoc := by
-        intro x y z
-        by_cases hx : x = 0 <;> by_cases hy : y = 0 <;> by_cases hz : z = 0 <;> simp_all
-        have hxy : max x y ≠ 0 := by rcases max_choice x y with h | h <;> simp_all
-        have hyz : max y z ≠ 0 := by rcases max_choice y z with h | h <;> simp_all
-        simp [hxy, hyz, max_assoc]
-      join_comm := by
-        intro x y
-        by_cases hx : x = 0 <;> by_cases hy : y = 0 <;> simp_all [max_comm]
-      join_idem := by
-        intro x
-        by_cases hx : x = 0 <;> simp_all
-      bot_join := by intro x; simp }
-  have hbot : (ZPSemilattice.bot : ℤ_[2]) = 0 := rfl
-  exact ⟨SL, ⟨{ scale := (2 * ·)
-              , val := q2Val
-              , scale_bot := by rw [hbot]; exact q2Scale_bot
-              , val_bot := by rw [hbot]; exact q2Val_bot
-              , val_unique := by intro x hx; rw [hbot]; exact q2Val_unique x hx
-              , val_scale := by intro x hx; rw [hbot] at hx; exact q2Val_scale x hx }⟩⟩
+  let f : ℤ_[2] → Lex (ℕ∞ᵒᵈ × ℤ_[2]) := fun x => toLex (OrderDual.toDual (q2Val x), x)
+  have hval : ∀ x y : ℤ_[2], f x ≤ f y → q2Val y ≤ q2Val x := fun x y h => by
+    rcases Prod.Lex.toLex_le_toLex.mp h with h1 | ⟨h1, _⟩
+    · exact (OrderDual.toDual_lt_toDual.mp h1).le
+    · exact (OrderDual.toDual_inj.mp h1).symm.le
+  have hbot : ∀ x : ℤ_[2], f 0 ≤ f x := fun x => by
+    by_cases hx : x = 0
+    · subst hx; exact le_rfl
+    · refine Prod.Lex.toLex_le_toLex.mpr (Or.inl (OrderDual.toDual_lt_toDual.mpr ?_))
+      rw [q2Val_bot]; exact lt_top_iff_ne_top.mpr (fun h => hx (q2Val_unique x h))
+  obtain ⟨R, hR⟩ : ∃ R : ℤ_[2] → ℤ_[2] → Prop, ∀ x y, R x y ↔ f x ≤ f y := ⟨_, fun _ _ => Iff.rfl⟩
+  obtain ⟨LO, hLO⟩ : ∃ LO : LinearOrder ℤ_[2], ∀ x y, LO.le x y ↔ R x y := by
+    refine ⟨LinearOrder.lift' f
+      (fun x y h => by simpa [f] using congrArg (fun p => (ofLex p).2) h), fun x y => ?_⟩
+    exact (hR x y).symm
+  let SL : ZPSemilattice ℤ_[2] :=
+    { join := @max ℤ_[2] LO.toMax, bot := 0, join_assoc := @max_assoc ℤ_[2] LO
+      join_comm := @max_comm ℤ_[2] LO, join_idem := @max_self ℤ_[2] LO
+      bot_join := fun x => @max_eq_right ℤ_[2] LO _ _ ((hLO 0 x).2 ((hR 0 x).2 (hbot x))) }
+  refine ⟨SL, rfl, @ValuationStructure.mk ℤ_[2] SL (fun x => 2 * x) q2Val q2Scale_bot q2Val_bot
+    q2Val_unique q2Val_scale, rfl, rfl, fun x y => ?_⟩
+  exact le_min (hval x _ ((hR _ _).1 ((hLO _ _).1 (@le_max_left ℤ_[2] LO x y))))
+    (hval y _ ((hR _ _).1 ((hLO _ _).1 (@le_max_right ℤ_[2] LO x y))))
+
+-- Statement: every `ZPSemilattice ℤ_[2]` whose `bot` is ℤ_[2]'s 0 carries a `ValuationStructure`
+-- (scale `×2`, val `q2Val`), whatever its join.
+example (h : ZPSemilattice ℤ_[2]) (hb : @ZPSemilattice.bot _ h = 0) :
+    Nonempty (@ValuationStructure ℤ_[2] h) :=
+  ⟨@ValuationStructure.mk ℤ_[2] h (fun x => 2 * x) q2Val (by rw [hb]; exact q2Scale_bot)
+    (by rw [hb]; exact q2Val_bot) (fun x hx => hb ▸ q2Val_unique x hx)
+    (fun x hx => q2Val_scale x (hb ▸ hx))⟩
 
 end PadicParallel
 
@@ -369,6 +430,8 @@ example {L : Type*} [ZPSemilattice L] (b : _VScast L) : _VSlit L :=
 
 -- Back to the 2-adic side: this one names the carrier, and is tainted accordingly.
 #print axioms q2Scale_unique_fp
+#print axioms q2Val_le_iff_norm_le
+#print axioms z2_two_views
 
 -- The degenerate witnesses making the NO-GO gauge's bound sharp for this class.
 #print axioms trivialZPSemilattice

@@ -1,4 +1,4 @@
--- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): a genuine eigenfunction of the ℤ_p Taibleson–Vladimirov operator D^α — the level-1 p-adic additive character, with eigenvalue 1. Unlike the ball-indicator matrix entries of PadicVladimirov §IV, this is a true eigenfunction, and the character orthogonality ∫χ=0 (the "crane") is exactly what closes the computation. Curated results indexed in ZeroParadox/MANIFEST.md.
+-- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): a genuine eigenfunction of the ℤ_p Taibleson–Vladimirov operator D^α — the level-1 p-adic additive character, with eigenvalue 1. Unlike the ball indicators of PadicVladimirov §IV, where D^α is evaluated at one point and no eigenvalue is claimed, this is a true eigenfunction, and the character orthogonality ∫χ=0 (the "crane") is exactly what closes the computation. Curated results indexed in ZeroParadox/MANIFEST.md.
 import ZeroParadox.Valuation.PadicVladimirov
 import ZeroParadox.Valuation.PadicCharacter
 import Mathlib.NumberTheory.LegendreSymbol.AddCharacter
@@ -40,8 +40,8 @@ kernel factor collapses to `1` on the whole space; (ii) a nontrivial character *
 **Fences.** This is the *compact* `ℤ_p` operator, whose eigenvalue here is `1` — not the full-space
 symbol `|ξ|^α`. The difference is exactly the large-scale shells `‖x−y‖ > 1` that the `ℚ_p` operator
 integrates over and this compact one omits; recovering `|ξ|^α` needs the `ℚ_p` operator, not built here.
-The point is structural: these characters are *eigenfunctions*, where the ball indicators of § IV were
-only matrix entries. No physical or dynamical claim.
+The point is structural: these characters are *eigenfunctions*, where for the ball indicators of § IV only
+one value of `D^α` was computed. No physical or dynamical claim.
 
 ## Structure
 - § I   Integrability of the character

@@ -1,20 +1,13 @@
 """
 Zero Paradox — ZP-R: A Cross-Category Account of the Self-Referential Fixed Point — PDF Builder
-Version 1.6 | August 2026
-v1.6: BEDROCK, and the correction is to a MECHANISM rather than to a wording. The rendered text said the escape from the Cantor obstruction is that eval lands in the partial functions "not in the codes, so the Set refutation never applied to it". That is false, and one line refutes it: the partial-function type is itself nontrivial, so no_witness_of_nontrivial forbids the Lawvere witness there exactly as it does on Code - example : not (HasLawvereWitness (Nat ->. Nat)) elaborates. Changing the codomain buys nothing. The real escape is a restriction on which MAPS exist: no computable self-map on codes is eval-fixed-point-free (no_computable_evalFixedPointFree), so the diagonal the Set refutation runs has no computable representative and the obstruction cannot fire. That theorem, with this mechanism spelled out in its own docstring, was already in the corpus - the prose asserted a different reason beside it. Found by the adversary gate at FAIL-BEDROCK, round 3, and confirmed by elaboration before the fix. Corrected at five sites across three surfaces in one sweep rather than at the one named.
-v1.0: Initial release. Synthesis / placement layer. Locates and realizes the framework's
-self-application fixed point as a Lawvere fixed point across three categories (faces): refuted in Set
-(Cantor), obstruction-free but not itself a reflexive object in the monotone/domain regime
-(Knaster-Tarski; a genuine reflexive object needs Scott D-infinity), and realized in the computability
-face (Rogers / Kleene). All theorems classical and Lean-witnessed; the contribution is the placement,
-the cross-face location, and the scope result. The global identification is held as a fenced conjecture.
+Version 1.20 | October 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.6'
+VERSION = '1.20'
 FIRST_RELEASED = 'July 2026'
 
 
@@ -33,16 +26,24 @@ def build():
         Paragraph('ZP-R: A Cross-Category Account of the Self-Referential Fixed Point', S['title']),
         Paragraph(version_line(FIRST_RELEASED, VERSION), S['subtitle']),
         Paragraph(
-            '<i>Synthesis / placement layer. It locates and realizes the framework\'s self-application '
-            'fixed point &#8869; as a Lawvere fixed point across three categories ("faces"): refuted in '
-            '<b>Set</b> (Cantor), obstruction-free but not itself a reflexive object in the '
-            '<b>monotone / domain</b> regime (Knaster&#8211;Tarski; a genuine reflexive object there '
-            'needs Scott\'s D<sub>&#8734;</sub>), and realized in the <b>computability</b> face '
-            '(Rogers / Kleene). Every theorem used is classical and every claim is backed by a '
-            'machine-checked Lean 4 theorem; the contribution is the placement, the cross-face location '
-            'under a single discriminator, and the scope result. The global identification &#8212; that '
-            'the keystone is Lawvere across all its faces &#8212; is held as a fenced conjecture '
-            'throughout.</i>',
+            '<i>Synthesis / placement layer. The framework\'s self-application fixed point is a '
+            '<b>role</b>, filled per face: in the fork / AFA face by &#8869; of the ZPSemilattice (the '
+            'order-bottom, a fixed point and the only one by the class fields of AbstractSelfApp), in the '
+            'computability face by a Kleene code, a term of another type. This document asks where the role is filled by a Lawvere fixed point, '
+            'across three categories ("faces"): refuted in '
+            '<b>Set</b> on every carrier except a one-element one (Cantor), in the '
+            '<b>monotone / domain</b> regime (a genuine reflexive object there is the business of Scott\'s '
+            'D<sub>&#8734;</sub> and its generalizations) free of a monotone obstruction on complete lattices '
+            '(Knaster&#8211;Tarski), with no reflexive object built here and no map from the two-element '
+            'chain onto its monotone self-maps (the first finite stage of Soto-Andrade and Varela\'s '
+            'two-element example; Trimble; Bergman), and realized in the <b>computability</b> face '
+            '(Rogers / Kleene). Every theorem used is classical. Each result box (R1&#8211;R4) and each '
+            'F1 property is backed by a machine-checked Lean 4 theorem, except one marked cited: that '
+            'the computability fixed point is an instance of Lawvere\'s theorem. The rest is cited '
+            'background or marked Reading. The contribution is the per-face placement of the '
+            'framework\'s self-application role and the scope result. How the faces formalized here '
+            'relate to Lawvere\'s theorem is collected in Section III, in the box "Lawvere\'s theorem, '
+            'face by face"; ZP-R conjectures nothing global.</i>',
             S['note']),
         sp(10),
         hr(),
@@ -50,24 +51,35 @@ def build():
     ]
 
     E.append(body(
-        'A recurring object in this framework is a bottom element &#8869; that is a fixed point of '
-        'self-application &#8212; "self-referential" in the sense of being defined by pointing at '
-        'itself: a self-containing set (&#8869; = {&#8869;}), a self-reproducing program, the bottom of '
-        'a monotone operator\'s fixed-point lattice. This document asks one checkable question: is that '
-        'fixed point an instance of <b>Lawvere\'s fixed-point theorem</b> (Lawvere 1969) &#8212; the '
-        'categorical statement behind the diagonal arguments of Cantor, Russell, G&#246;del, Turing and '
-        'Tarski, unified by Yanofsky (2003) &#8212; and if so, in which category? Lawvere\'s theorem is '
-        'category-relative: it holds wherever a suitable <i>reflexive object</i> exists. So the honest '
+        'A recurring role in this framework is a fixed point of self-application &#8212; '
+        '"self-referential" in the sense of being defined by pointing at itself. Its occupants differ '
+        'by face: a self-containing set (&#8869; of an AFA lattice, &#8869; = {&#8869;}) and a '
+        'program equal to its own transform up to evaluation (a Kleene code). This document asks one checkable question: is a fixed point in that role an '
+        'instance of <b>Lawvere\'s fixed-point theorem</b> (Lawvere 1969) &#8212; the '
+        'categorical statement behind the diagonal arguments of Cantor, Russell, G&#246;del and Tarski, '
+        'carried to the halting problem and the recursion theorem by Yanofsky (2003) &#8212; and if so, '
+        'in which category? Lawvere states the theorem for cartesian closed categories (Theorem 1.1) '
+        'and notes that it holds in any category with finite products (&#167;2, Theorem 2.2), with '
+        'weak point-surjectivity phrased as a map A &#215; A &#8594; B that represents every map '
+        'A &#8594; B. It yields a fixed point only where such a map exists (in the closed case, a '
+        'weakly point-surjective A &#8594; B<sup>A</sup>; the reflexive case is B = A). So the honest '
         'form of the question is not "is it Lawvere" but "<b>where</b> is it Lawvere."'))
     E.append(body(
         'The answer is: <b>yes in one adequate category, and not globally.</b> We locate precisely '
-        'where the realization fails and where it succeeds, organized by a single discriminator &#8212; '
-        'the presence of a fixed-point-free endomap. The mathematics is classical and is invoked, not '
-        'extended; the contribution is (i) the placement of <i>this framework\'s own</i> &#8869; within '
-        'the Lawvere fixed point (the general link between self-reference and Lawvere is Yanofsky\'s, '
-        'not ours), (ii) the cross-face location of where realization fails and succeeds, and (iii) a '
+        'where the realization fails and where it succeeds. The mathematics is classical and is invoked, not '
+        'extended; the contribution is (i) the per-face placement of <i>this framework\'s own</i> '
+        'self-application role relative to the Lawvere fixed point &#8212; its Lawvere realization '
+        'refuted in Set on every carrier except a one-element one, the monotone obstruction absent on complete lattices in the monotone / domain face, with no reflexive object '
+        'built there, the realization achieved in the computability face &#8212; and (ii) a '
         'scope result: the realization is category-relative &#8212; an existence statement in one face '
-        'rather than a global identification.'))
+        'rather than a global identification. The general link between self-reference and Lawvere\'s '
+        'theorem is Lawvere\'s (1969) and Yanofsky\'s (2003), not ours, and so is the obstruction the '
+        'placement uses: that a fixed-point-free endomap of an object Y rules out, for every A, a '
+        'point-surjection A &#8594; Y<sup>A</sup> is Lawvere\'s Corollary 1.2 (p. 5 of the 2006 TAC '
+        'reprint). Of the suggestion of Soto-Andrade and Varela (1984, pp. 1 and 18) '
+        'that every structure with the fixed point property is a retract of a reflexive '
+        'domain, ZP-R answers the question only in Set, where it holds trivially (Section II), and '
+        'makes no claim about the categories they intend.'))
     E.append(hr())
 
     # -- Section I: The Fork and the Engine -------------------------------------------
@@ -106,32 +118,35 @@ def build():
         'Lawvere\'s theorem, in curried form, says: if a map e : A &#8594; (A &#8594; B) is '
         '<i>point-surjective</i> (every g : A &#8594; B equals e a for some a), then every f : B &#8594; '
         'B has a fixed point. The fixed point it produces has a specific shape &#8212; it is e a a, the '
-        'value of e at a diagonal point applied to that same point: <b>self-application</b>. The '
-        'framework\'s selfApp is the abstract form of exactly this operation.'))
+        'value of e at a diagonal point applied to that same point: <b>self-application</b>. Reading: '
+        'the framework\'s selfApp names this operation abstractly; no declaration connects Lawvere\'s e '
+        'to selfApp.'))
 
     E.append(result_box(
-        'R2a &#8212; Lawvere\'s engine yields its fixed point as a self-application',
+        'R2a &#8212; Lawvere\'s engine yields its fixed point in the shape e a a',
         [
-            'Lawvere\'s theorem produces its fixed point in the form e a a &#8212; e applied to a '
-            'diagonal point, at that same point.',
-            'The abstract shadow of e a a is the framework\'s selfApp; its fixed point &#8869; is '
-            'exactly a self-application fixed point.',
+            'Given a surjection e : A &#8594; (A &#8594; B), every f : B &#8594; B has a fixed point of '
+            'the form e a a &#8212; e applied to a diagonal point, at that same point. The statement '
+            'mentions no ZPSemilattice, no selfApp and no &#8869;: it is a claim about shape only.',
             'Witness: lawvere_fixedpoint_selfApp (LawvereBridge.lean). Lean purity: choice-free. ✓',
         ]
     ))
     E.append(sp(4))
 
     E.append(result_box(
-        'R2b &#8212; existence is not uniqueness; the framework\'s pinning is extra',
+        'R2b &#8212; in the fork / AFA face, existence and uniqueness are class fields, not engine output',
         [
-            'Lawvere\'s theorem gives <i>existence</i> of a fixed point; it does not give uniqueness. '
-            'Existence never forces uniqueness &#8212; the identity map has a fixed point but not a '
-            'unique one.',
-            'So selfApp\'s &#8869; = Lawvere-existence + the framework\'s pinning (uniqueness). The '
-            'pinning is the fork-collapse condition of R1, genuinely additional content on top of the '
-            'engine.',
-            'Witnesses: selfApp_pinnable, existence_without_uniqueness (LawvereBridge.lean). Lean '
-            'purity: choice-free. ✓',
+            'In the fork / AFA face, that &#8869; of the ZPSemilattice is a fixed point of selfApp is '
+            'the class field fixed_bot of AbstractSelfApp, and that it is the only one is the class '
+            'field unique_fp. Both are commitments of the class; neither is supplied by Lawvere\'s '
+            'engine. selfApp_pinnable packages the two fields as &#8707;! x, selfApp x = x.',
+            'On a ZPSemilattice with two or more points, some map has a fixed point and not a unique '
+            'one (existence_without_uniqueness). On a ZPSemilattice with a point '
+            'other than &#8869;, the engine\'s hypothesis fails outright: no surjection A &#8594; '
+            '(A &#8594; L) exists (nontrivial_lattice_no_witness).',
+            'Witnesses: selfApp_pinnable, existence_without_uniqueness (LawvereBridge.lean); '
+            'nontrivial_lattice_no_witness (Lawvere.lean). Lean purity: choice-free (selfApp_pinnable, '
+            'existence_without_uniqueness). ✓',
         ]
     ))
     E.append(sp(6))
@@ -145,51 +160,105 @@ def build():
     ]
 
     E.append(body(
-        'To realize &#8869; <i>as</i> a Lawvere fixed point &#8212; to source it from the engine '
-        'rather than posit it &#8212; one needs a reflexive object: a point-surjection onto a function '
-        'space. Whether one exists is the entire question, and it has a clean discriminator: the '
+        'To fill the self-application role with a Lawvere fixed point in a given face &#8212; to '
+        'source the occupant from the engine rather than posit it &#8212; one needs Lawvere\'s '
+        'hypothesis there: a weakly point-surjective map onto a function space (Theorem 1.1; the '
+        'reflexive case is a map A &#8594; A<sup>A</sup>). Whether one exists is the entire question, '
+        'and one condition rules it out cleanly: the '
         '<b>presence of a fixed-point-free endomap</b>.'))
 
     E.append(result_box(
-        'R3-neg &#8212; in Set, no reflexive object (Cantor); the obstruction is non-monotone',
+        'R3-neg &#8212; in Set, no reflexive object on a carrier with a fixed-point-free endomap (Cantor); '
+        'on a complete lattice every fixed-point-free endomap is non-monotone; on the empty set, which '
+        'is not a complete lattice, the identity is fixed-point-free and monotone',
         [
             'A point-surjection e : A &#8594; (A &#8594; B) would, by Lawvere, force <i>every</i> '
             'f : B &#8594; B to have a fixed point. For B two-valued, negation is fixed-point-free '
             '&#8212; a contradiction. This is Cantor\'s theorem, read as the contrapositive of '
             'Lawvere\'s own engine.',
             'The obstruction witness &#8212; negation &#8212; has a structural property worth '
-            'isolating: it is <i>not monotone</i> (it reverses the order False &#8804; True). This is '
-            'what separates the faces.',
-            'Witnesses: reflexive_object_refuted, not_monotone_not (LawvereBridge.lean). Lean purity: '
-            'choice-free. ✓',
+            'isolating: it is <i>not monotone</i> (it reverses the order False &#8804; True). What '
+            'separates the Set face from the monotone face is the class of maps, and what makes that '
+            'restriction remove the obstruction is completeness: on a complete lattice every monotone '
+            'self-map has a fixed point (Knaster&#8211;Tarski), so there every fixed-point-free endomap '
+            'is non-monotone. Neither condition suffices alone: Bool with false &#8804; true is a '
+            'complete lattice on which negation is fixed-point-free, and Nat.succ is monotone and has '
+            'no fixed point, on a carrier that is not a complete lattice. The empty set is not a complete '
+            'lattice; its identity is monotone and fixed-point-free, and no map from it is onto its '
+            'one-element function space (the LawvereBridge.lean &#167; VII examples).',
+            'Witnesses: reflexive_object_refuted, not_monotone_not, and the anonymous examples after '
+            'not_monotone_not in LawvereBridge.lean &#167; VII, which back the Bool, Nat.succ and '
+            'empty-set sentences. Lean purity: reflexive_object_refuted: no axioms; not_monotone_not: '
+            '[propext]; the LawvereBridge.lean &#167; VII examples are choice-free except the two that '
+            'use Bool\'s complete-lattice instance (the instance example and the two-element-chain '
+            'example), which carry Classical.choice from Mathlib\'s instance. The '
+            'backing table\'s scoped Set statement also rests on the anonymous example after '
+            'no_reflexive_object_bool in LawvereBridge.lean &#167; VI and on fixedPointFree_of_nontrivial, '
+            'and both carry Classical.choice. ✓',
         ]
     ))
     E.append(sp(6))
 
     E.append(body(
         'Absence of a fixed-point-free endomap is <i>necessary</i> for a reflexive object &#8212; it '
-        'removes Lawvere\'s contradiction &#8212; but not by itself <i>sufficient</i>. Two categories '
-        'are free of the obstruction, and the framework\'s &#8869; lives in both; but only one of '
-        'them furnishes a genuine reflexive object. The reasons are <i>not</i> the same, and the '
-        'difference is the point: the monotone regime is free of it <i>literally</i> &#8212; on a '
+        'removes Lawvere\'s contradiction (his Corollary 1.2). Whether it is also sufficient depends on '
+        'the face. In Set it is: a set with no fixed-point-free endomap has exactly one element and '
+        'carries a surjection onto its endomaps, so it is a reflexive object. In the monotone face it '
+        'is not: on the two-element chain false &#8804; true every monotone self-map has a fixed point '
+        '(Knaster&#8211;Tarski), yet no map from its two points onto its monotone self-maps is '
+        'surjective. Both statements are anonymous Lean examples in '
+        'ZeroParadox/Settheory/LawvereBridge.lean. The second is not new: it is the first finite stage '
+        'of Soto-Andrade and Varela\'s two-element example (1984, &#167;2.5, pp. 15&#8211;16), which '
+        'follows their remark that the converse of Lawvere\'s theorem fails for lattices with '
+        'monotone maps; it is the case Y = 2 of Trimble\'s Cantor theorem for posets, that no poset '
+        'map Y &#8594; 2<sup>Y</sup> is surjective, and the case P = 2 of Bergman\'s Corollary 7 '
+        '(2008), that no isotone map from a poset to its lattice of downsets is surjective (both '
+        'there for order-preserving maps; the Lean example allows any map, by counting two points '
+        'against three monotone self-maps). A related question, about retracts rather than '
+        'reflexive objects, is the suggestion of Soto-Andrade and Varela (1984, pp. 1 and 18) '
+        'that every structure with the fixed point property is a retract of a reflexive '
+        'domain. In any category a reflexive object is a retract of itself, so wherever every '
+        'structure with the fixed point property is a reflexive object, each is also a retract of '
+        'one. In Set the first of the two Lean examples above answers the retract question: a set '
+        'with the fixed point property has exactly one element and carries a '
+        'surjection onto its endomaps, so it is a reflexive object and trivially a retract of '
+        'itself; being one-element, it is also in bijection with its own function space. The '
+        'converse implication, from "every such structure is a retract of a reflexive '
+        'object" to "every such structure is a reflexive object", is not shown here outside Set. ZP-R does '
+        'not address the retract question in any other category; Bj&#246;rner (1985, Corollary, p. 100) '
+        'shows that a finite poset which is a retract in Po of a reflexive domain is dismantlable and, '
+        'citing finite non-dismantlable posets with the fixed point property, concludes that the '
+        'suggestion has counterexamples in the category Po of partially ordered '
+        'sets and monotone maps. Two categories '
+        'are free of a restricted form of the obstruction, and only one of '
+        'them is shown here to furnish a reflexive object. The reasons are <i>not</i> the same, and the '
+        'difference is the point: the monotone regime is free of its monotone form <i>literally</i> &#8212; on a '
         '<i>complete lattice</i>, Knaster&#8211;Tarski bans a fixed-point-free monotone endomap, and the '
         'completeness hypothesis is load-bearing, since Nat.succ is a monotone endomap with no fixed '
-        'point at all &#8212; while the computable regime is free of it only '
+        'point at all, and by Davis (1955, Theorem 2, p. 313) a lattice on which every increasing function has a '
+        'fixpoint is complete &#8212; while the computable regime is free of it only '
         '<i>up to eval</i> &#8212; literally fixed-point-free total computable endomaps do exist.'))
 
     E.append(result_box(
-        'R3-pos (monotone / domain) &#8212; obstruction absent, but no reflexive object here',
+        'R3-pos (monotone / domain) &#8212; no monotone obstruction on complete lattices; no reflexive object built here; no map from the two-element chain onto its monotone self-maps',
         [
             'On a complete lattice every monotone self-map has least and greatest fixed points '
             '(Knaster&#8211;Tarski), so fixed-point-free monotone endomaps are structurally banned '
-            '&#8212; the obstruction is absent. Existence is thereby guaranteed; uniqueness is not '
+            '&#8212; the monotone obstruction is absent. Existence is thereby guaranteed; uniqueness is not '
             '(the interval [lfp, gfp] need not collapse).',
-            'This face does <i>not</i> itself furnish a reflexive object: obtaining one in the '
+            'No reflexive object is built in this face here: obtaining one in the '
             'order / domain world is the business of Scott\'s D<sub>&#8734;</sub> (Scott-continuous '
             'maps on a directed-complete order, by inverse limits) &#8212; a construction we do not '
             'carry out and do not need, since the computability face below already realizes the '
-            'crossing. What this face provides is the <i>fork</i>, not a reflexive object.',
-            'Witness: monotone_regime_derives_pinned (LawvereBridge.lean). Lean purity: choice-free. ✓',
+            'crossing. What this face provides here is the <i>fork</i>.',
+            'Witnesses: monotone_regime_derives_pinned (LawvereBridge.lean), for the fork; the last '
+            'anonymous example of LawvereBridge.lean &#167; VII, for the two-element chain (the first '
+            'finite stage of Soto-Andrade and Varela\'s two-element example, 1984, &#167;2.5, '
+            'pp. 15&#8211;16; Trimble, "No surjective map Y &#8594; 2<sup>Y</sup>"; Bergman 2008, '
+            'Corollary 7). Lean purity: monotone_regime_derives_pinned choice-free; in the '
+            'two-element-chain example the no-surjection half is [propext], and Classical.choice enters '
+            'through the Knaster&#8211;Tarski half (OrderHom.lfp on Mathlib\'s complete-lattice instance '
+            'on Bool). ✓',
         ]
     ))
     E.append(sp(4))
@@ -198,20 +267,22 @@ def build():
         'R3-pos (computability) &#8212; the reflexive object is realized: the crossing',
         [
             'The category of numbered sets carries a canonical reflexive object: the universal '
-            'machine. The evaluation map eval is point-surjective onto the computable functions &#8212; '
-            'every computable function has an index (Rogers 1967). And Rogers\' fixed-point theorem '
+            'machine. The evaluation map eval is point-surjective onto the partial computable functions '
+            '&#8212; every partial computable function has an index (Rogers 1967). And Rogers\' fixed-point theorem '
             'gives every total computable endomap of codes a fixed point <i>up to eval</i> &#8212; two '
             'codes computing the same function.',
             'That is weaker than "no fixed-point-free endomap", and the strong form is false: '
-            'c &#8614; pair(c, c) is total, computable, and returns its own input for no c. The '
+            'c &#8614; pair(c, c) is total and computable and returns its own input for no c (stated '
+            'in the Lean docstrings, not formalized as a declaration). The '
             'obstruction is absent at the level of <i>eval</i>, which is where the reflexive object '
             'lives &#8212; and the reason is that the effective category admits fewer <i>maps</i>, '
             'not that eval lands in a different type: no computable self-map on codes is '
             'eval-fixed-point-free, so the diagonal the Set refutation runs has no computable '
             'representative.',
-            'So the reflexive object is present and the self-referential '
-            'fixed point exists there &#8212; Kleene\'s second recursion theorem: for a computable map '
-            'f, a code c with eval c = f c.',
+            'So the reflexive structure is present and the self-referential fixed point exists there: '
+            'in Rogers\' form, for computable g : Code &#8594; Code a code c with eval (g c) = eval c; '
+            'and in Kleene\'s two-place form (the second recursion theorem), for partial computable F a '
+            'code c with eval c = F c.',
             'Witnesses: eval_point_surjective, computable_fixedpoint_up_to_eval, '
             'selfref_fixedpoint_exists_computable (ComputableCrossing.lean). Lean purity: '
             'choice-carrying (Mathlib computability). ✓',
@@ -220,27 +291,37 @@ def build():
     E.append(sp(6))
 
     E.append(body(
-        'That Kleene\'s recursion theorem is an instance of Lawvere\'s theorem is standard: the '
-        'derivation is Yanofsky (2003) Theorem 5, p. 18, within his unified treatment. Lawvere '
-        '(1969) supplies the engine and raises the recursive case as an open question rather '
-        'than deriving it (his &#167;2, p. 9); the '
+        'That the recursion theorem, in Rogers\' form (a total computable h has an n with '
+        '&#966;<sub>h(n)</sub> = &#966;<sub>n</sub>), is an instance of Lawvere\'s scheme is standard: '
+        'the derivation is Yanofsky (2003) Theorem 5 (p. 18 of arXiv:math/0305282v1), within his '
+        'unified treatment. Bauer (2017) proves a version of Lawvere\'s theorem for multi-valued maps, '
+        'in synthetic computability, and derives the Kleene&#8211;Rogers theorem from it (Theorem 5.2, '
+        'Corollary 5.3). The Lean here checks the classical fixed point and the point-surjectivity of '
+        'eval; the Lawvere-form derivation is cited, and this is the citation the later sections point '
+        'to. Lawvere (1969) supplies the engine and raises the recursive case as an open question '
+        'rather than deriving it (his &#167;2, p. 9 of the 2006 TAC reprint); the '
         'reflexive structure of the computable category is the subject of the Turing-category / '
-        'partial-combinatory-algebra literature (Cockett&#8211;Hofstra 2008; Longley). Collecting the '
+        'partial-combinatory-algebra literature (Cockett&#8211;Hofstra 2008; Longley 1994). Collecting the '
         'three faces:'))
 
     E.append(data_table(
         headers=['Face', 'Reflexive object', 'Mechanism', 'Status'],
         rows_data=[
             ['Set',
-             'refuted',
-             'a fixed-point-free map (negation) blocks it &#8212; Cantor; the obstruction is '
-             'non-monotone',
+             'refuted on every carrier except a one-element one, the empty set included (a '
+             'one-element set is reflexive)',
+             'a fixed-point-free map blocks it (Cantor): on two or more points, the map the proof of '
+             'fixedPointFree_of_nontrivial constructs, one point b<sub>0</sub> sent to a second point '
+             'b<sub>1</sub> and every other point to b<sub>0</sub> (a swap when there are exactly two '
+             'points, negation in the two-valued case); on the empty set the identity. On a complete '
+             'lattice the blocking map is non-monotone; on the empty set, not a complete lattice, the '
+             'identity is monotone',
              'the wall'],
             ['Monotone / domain',
              'not furnished here (route: Scott D<sub>&#8734;</sub>, unbuilt)',
-             'obstruction absent (Knaster&#8211;Tarski); existence via the fork, uniqueness = fork '
+             'monotone obstruction absent on complete lattices (Knaster&#8211;Tarski); existence via the fork, uniqueness = fork '
              'collapse',
-             'fork story, not a Lawvere realization'],
+             'fork story; no Lawvere realization built here'],
             ['Computability',
              'realized',
              'universal machine point-surjective; Rogers / Kleene',
@@ -251,17 +332,22 @@ def build():
     E.append(sp(6))
 
     E.append(result_box(
-        'R4 &#8212; the framework\'s fixed point is a Lawvere fixed point, in the computability face',
+        'R4 &#8212; in the computability face, the self-application role is filled by a Lawvere fixed point (cited)',
         [
-            'The framework\'s self-reference fixed point <b>is</b> a Lawvere fixed point, realized in '
-            'the computability face &#8212; a complete proof of that existential statement, Lawvere\'s '
-            'theorem being category-independent, with no obligation to Set or to a Scott domain.',
-            'The framework\'s two structural regimes &#8212; the well-founded "wall" and the '
-            'non-well-founded "self-referential object" &#8212; are the two regimes of Lawvere\'s '
-            'engine: a fixed point refuted versus realized, discriminated by the self-loop.',
-            'Witnesses: the computability realization is proved in R3-pos above '
-            '(selfref_fixedpoint_exists_computable, ComputableCrossing.lean; choice-carrying); the '
-            '&#956;/&#957; discrimination is mu_nu_branch_exclusion (LawvereBridge.lean; '
+            'In the computability face the self-application fixed-point role is filled by a Kleene '
+            'code, and that fixed point is a Lawvere fixed point (cited). The code is a term of another '
+            'type than &#8869; of the ZPSemilattice. Existence is '
+            'machine-checked in Rogers\' form, eval (g c) = eval c for computable g : Code &#8594; Code '
+            '(computable_fixedpoint_up_to_eval), which is the form Yanofsky and Bauer state, and in the '
+            'two-place form, eval c = F c for partial computable F (selfref_fixedpoint_exists_computable). '
+            'That it is an instance of Lawvere\'s theorem is cited (Section II). Since Lawvere\'s theorem '
+            'holds in any category with finite products (his &#167;2), nothing obliges the realization '
+            'to be in Set or in a Scott domain.',
+            'What is proved about the framework\'s two structural regimes is that a self-loop rules out '
+            'well-foundedness (mu_nu_branch_exclusion).',
+            'Witnesses: the computability fixed point is proved in R3-pos above '
+            '(computable_fixedpoint_up_to_eval, selfref_fixedpoint_exists_computable, '
+            'ComputableCrossing.lean; choice-carrying); mu_nu_branch_exclusion (LawvereBridge.lean; '
             'choice-free). ✓',
         ]
     ))
@@ -281,56 +367,81 @@ def build():
         'carries which property</i>.'))
 
     E.append(def_box(
-        'F1 &#8212; existence, uniqueness, and location are each proved, but no single face carries all three',
+        'F1 &#8212; what is measured, per face',
         [
-            'Three properties are in play, and it is tempting to read them as one package on a single '
-            'object. They are not. Each is established, and each in a <i>different</i> face:',
-            '&#8226; <b>Existence as a Lawvere fixed point</b> &#8212; the computability face: Kleene\'s '
-            'recursion theorem produces a code c with eval c = f c, genuinely sourced from the '
-            'reflexive object (the crossing).',
-            '&#8226; <b>Uniqueness</b> (&#8869; is the <i>only</i> fixed point of selfApp) &#8212; the '
-            'fork / AFA face: AbstractSelfApp.unique_fp; quine_atom_unique; equivalently the '
-            'fork-collapse lfp = gfp of R1.',
-            '&#8226; <b>Location</b> (the fixed point is the order-bottom &#8869;) &#8212; also the '
-            'fork / AFA face: every Quine atom <i>is</i> &#8869; (T-EXEC, t_exec / t_exec_iff: '
-            'IsQuineAtom q &#8596; q = &#8869;), a statement that only has meaning where there is a '
-            'canonical bottom to locate it at.',
-            'The three do not compose, and the reason is exact: the computability face &#8212; the one '
-            'place existence-as-Lawvere is genuinely realized &#8212; is <i>precisely</i> where '
-            'uniqueness fails. Kleene\'s theorem gives there not one fixed point but infinitely many '
-            '(infinite_quine_family). And "location at &#8869;" is not even <i>expressible</i> in that '
-            'face: the category of numbered sets carries no canonical order-bottom.',
-            'This is not a gap in the result. The honest statement is not "the framework lacks location '
-            'and uniqueness," but "the framework has all three, proved, and no single category can '
-            'carry them together." It is the same phenomenon as F2, one level up.',
+            '&#8226; <b>Set / fork face.</b> On a ZPSemilattice L with a point a &#8800; &#8869;, no '
+            'surjection A &#8594; (A &#8594; L) exists (nontrivial_lattice_no_witness : a &#8800; '
+            '&#8869; &#8594; &#172;HasLawvereWitness L). That &#8869; of the ZPSemilattice is the '
+            'unique fixed point of selfApp follows from the class fields fixed_bot and unique_fp '
+            '(selfApp_pinnable); every Quine atom equals it (t_exec, from the AFAStructure class '
+            'fields).',
+            '&#8226; <b>Computability face.</b> For computable g : Code &#8594; Code, some code c has '
+            'eval (g c) = eval c (computable_fixedpoint_up_to_eval). For partial computable F, the '
+            'codes c with eval c = F c form an infinite set (fixed_points_infinite). This does not '
+            'exclude a selfApp on Code with a literally unique fixed point.',
+            '&#8226; <b>Monotone / domain face.</b> No occupant of the self-application role is '
+            'claimed here; what is measured for this face is in Section II (R3-pos).',
         ]
     ))
     E.append(sp(6))
 
     E.append(def_box(
-        'F2 &#8212; representation is not transfer; &#8869; carries its face',
+        'F2 &#8212; representation is not transfer; the self-application role carries its face',
         [
-            'The crossing is face-local. Realizing &#8869; as a Lawvere fixed point in the '
-            'computability face does not make it available in Set, where the same construction remains '
-            'a contradiction (Cantor). Consequently &#8869; cannot be <i>globally</i> defined over '
-            'standard set-theoretic foundations; it must carry its categorical context &#8212; the face '
-            'it lives in &#8212; as part of its definition.',
-            'This is not an external limitation imposed on the framework; it is the reason the framework '
-            'is stated over a non-well-founded foundation (ZF + AFA rather than ZFC) and treats &#8869; '
-            'apophatically &#8212; characterized by its role rather than constructed as a set (Aczel '
-            '1988; Barwise &amp; Moss 1996). A face-independent theorem can be <i>witnessed</i> in '
-            'whichever category has the reflexive object; the <i>object</i> it produces is defined only '
-            'relative to that category.',
+            'The crossing is face-local. That a Kleene code fills the self-application role as a '
+            'Lawvere fixed point in the computability face does not make a Lawvere fixed point '
+            'available in Set on the same carrier, which has two or more elements and where the same '
+            'construction remains a contradiction (Cantor; '
+            'reflexive_object_refuted). What does not transfer is the Lawvere realization, not '
+            'definability: the least fixed point of a monotone map on a powerset lattice, for '
+            'instance, is definable in ZFC.',
+            'Reading: the framework treats the self-application fixed point as a role carried with its '
+            'face, characterized rather than constructed as one global object. Its choice of a '
+            'non-well-founded foundation (ZF + AFA rather than ZFC; Aczel 1988; Barwise &amp; Moss 1996) '
+            'is a separate commitment, which this face-locality does not by itself require. A theorem stated for every suitable category can be '
+            '<i>witnessed</i> in whichever category has Lawvere\'s hypothesis; the <i>occupant</i> it '
+            'produces is defined only relative to that category.',
         ]
     ))
     E.append(sp(6))
 
     E.append(callout(
-        'The fences are not hedging. Each per-face result &#8212; the Set wall, the fork, the '
-        'computability crossing &#8212; is a full theorem on its own side of them. What the fences '
-        'scope is only the global identification: that the keystone is Lawvere across all its '
-        'faces. That remains a conjecture; ZP-R is the first concrete progress on it (one face '
-        'realized, the obstruction located), not its proof.',
+        '<b>Lawvere\'s theorem, face by face.</b><br/>'
+        'The fences F1 and F2 are not hedging: they mark the face each result belongs to. Each '
+        'per-face result &#8212; the Set wall, the fork, the computability crossing &#8212; is a full '
+        'theorem within its own face. '
+        '<b>Lawvere\'s theorem is the translation key between the faces formalized here, not a '
+        'mechanism every face instantiates:</b> each face is read against its one arrow, a '
+        'point-surjection onto a function space implies that every endomap has a fixed point, and the '
+        'faces differ in which way, if either, they run it. A <b>wall</b> face runs it by the '
+        'contrapositive, which is Lawvere\'s own reading ("The famed &#8216;diagonal argument&#8217; '
+        'is of course just the contrapositive of our theorem," p. 5 of the 2006 TAC reprint): a '
+        'fixed-point-free endomap of an object Y rules out every point-surjection A &#8594; '
+        'Y<sup>A</sup> (his Corollary 1.2), and Cantor is '
+        'the two-valued case. In Set every carrier except a one-element one has such an endomap, the '
+        'empty set included, where the identity is fixed-point-free because the set has no elements; a one-element set has '
+        'none and is the trivial forward case (Section II). The '
+        '<b>computability</b> face runs it forward, up to eval: eval is point-surjective onto the '
+        'partial computable functions, and every total computable endomap of codes has a fixed point '
+        'up to eval (the R3-pos computability box, Section II); that this is a Lawvere instance is cited (Yanofsky 2003; Bauer 2017). In '
+        'the <b>fork / AFA</b> face the self-application fixed point, &#8869; of the ZPSemilattice, is '
+        'supplied by the class fields fixed_bot and unique_fp (selfApp_pinnable), not by the engine, '
+        'whose hypothesis fails on every ZPSemilattice with an element other than &#8869; '
+        '(nontrivial_lattice_no_witness). On every ZPSemilattice with an element other than &#8869;, '
+        'that face\'s only link to the computability face is the KleeneStructure commitment: it '
+        'nominates a code meeting a periodicity condition (one that constant codes also meet) as the '
+        'computational witness of the bottom role, a commitment of the class and not a theorem '
+        '(ZeroParadox/Computability/Kleene.lean &#167;II). On the one-element ZPSemilattice, as for '
+        'the one-element set, the forward case holds trivially. The '
+        '<b>monotone</b> face, in posets with monotone maps, runs it in neither direction on the two-element chain: on a complete lattice no monotone '
+        'endomap is fixed-point-free (Knaster&#8211;Tarski), so the contrapositive has no monotone '
+        'input, and on the two-element chain no map onto the monotone endomaps is surjective (Section '
+        'II). In chain-complete posets, Soto-Andrade and Varela (1984, pp. 15&#8211;16) construct a '
+        'larger poset isomorphic to its maps into the two-element chain; ZP-R reads that construction '
+        'with continuous maps, their category CCPo (&#167;2.2, p. 9), since with all monotone maps '
+        'Trimble\'s theorem excludes it. So the domain half differs: there the two-element chain is '
+        'labelled by a larger object, not by itself. No occupant is identified with another: an equation between an element of a '
+        'ZPSemilattice and a code is ill-typed (MC-1). ZP-R conjectures nothing global.',
         bg=BLUE_LITE, border=BLUE
     ))
     E.append(sp(6))
@@ -346,20 +457,48 @@ def build():
     E.append(body(
         'The mathematics used here is classical and is invoked, not extended. Lawvere\'s fixed-point '
         'theorem and the unification of the diagonal arguments: Lawvere, "Diagonal Arguments and '
-        'Cartesian Closed Categories," LNM 92 (1969); Yanofsky, Bull. Symbolic Logic 9(3) (2003). '
-        'Lattice fixed points: Tarski, "A lattice-theoretical fixpoint theorem," Pacific J. Math 5 '
-        '(1955). The computability fixed points: Rogers, <i>Theory of Recursive Functions and '
-        'Effective Computability</i> (1967); Kleene\'s second recursion theorem. The reflexive '
+        'Cartesian Closed Categories," LNM 92 (1969) 134&#8211;145, cited by page in its reprint, '
+        'Reprints in Theory and Applications of Categories 15 (2006); Yanofsky, Bull. Symbolic Logic '
+        '9(3) (2003), cited by page in arXiv:math/0305282v1. '
+        'Lattice fixed points: Tarski, "A lattice-theoretical fixpoint theorem and its applications," '
+        'Pacific J. Math. 5(2) (1955) 285&#8211;309; Davis, "A characterization of complete lattices," '
+        'Pacific J. Math. 5(2) (1955) 311&#8211;319. The computability fixed points: Rogers, <i>Theory of Recursive Functions and '
+        'Effective Computability</i> (1967); Kleene\'s second recursion theorem; a version of '
+        'Lawvere\'s theorem for multi-valued maps, in synthetic computability, from which the '
+        'recursion theorem follows: Bauer, "On fixed-point theorems in synthetic computability," '
+        'Tbilisi Math. J. 10(3) (2017). The reflexive '
         'structure of the computable category: Cockett &amp; Hofstra, "Introduction to Turing '
-        'categories," APAL 156 (2008); Longley (partial combinatory algebras / realizability). The '
+        'categories," Annals of Pure and Applied Logic 156 (2008) 183&#8211;209; Longley, <i>Realizability Toposes and Language Semantics</i>, PhD '
+        'thesis, University of Edinburgh, 1994 (issued as LFCS report ECS-LFCS-95-332). '
+        'Fixed points and reflexive domains: Soto-Andrade and Varela, "Self-reference and fixed '
+        'points: a discussion and an extension of Lawvere\'s theorem," Acta Applicandae Mathematicae '
+        '2(1) (1984) 1&#8211;19, doi:10.1007/BF01405490, which notes that the converse of Lawvere\'s '
+        'theorem fails for lattices with monotone maps (&#167;2.5, p. 15) and conjectures that every '
+        'structure with the fixed point property is a retract of a higher reflexive domain from which '
+        'it inherits that property (pp. 1 and 18), proving it for chain-complete posets with '
+        'continuous morphisms; Bj&#246;rner, "Reflexive domains and fixed points," Acta '
+        'Applicandae Mathematicae 4(1) (1985) 99&#8211;100, doi:10.1007/BF02293493, which shows that if R '
+        'is a retract of a reflexive domain then R<sup>R</sup> has the fixed point property '
+        '(Proposition, p. 99) and derives counterexamples to the conjecture in Po (Corollary, p. 100); '
+        'Trimble, "Cantor\'s theorem for posets," nLab personal web (ncatlab.org/toddtrimble), '
+        'revised 5 October 2016, which proves that no poset map Y &#8594; 2<sup>Y</sup> is surjective, '
+        'so Knaster&#8211;Tarski is not a corollary of Lawvere\'s theorem through a surjection onto a '
+        'function space in posets; and Bergman, "On lattices and their ideal lattices, and posets and '
+        'their ideal posets," Tbilisi Math. J. 1 (2008) 89&#8211;103 (arXiv:0801.0751), whose Corollary 7 '
+        'states that no isotone map from a subset of a poset P to the lattice of all downsets of P is '
+        'surjective. The '
         'apophatic, characterize-not-construct treatment of self-referential objects: Aczel, '
         '<i>Non-Well-Founded Sets</i> (1988); Barwise &amp; Moss, <i>Vicious Circles</i> (1996).'))
     E.append(body(
         'Against this, the contribution of ZP-R is not a theorem but a <i>placement</i>: the '
-        'identification of the framework\'s &#8869; with the Lawvere fixed point, the cross-face '
-        'location of where that realization fails and succeeds under a single discriminator, and the '
-        'scope result of Section III. That Kleene\'s recursion theorem is a Lawvere instance is due to '
-        'the sources above, not to this document.'))
+        'per-face placement of the framework\'s self-application role relative to the Lawvere fixed '
+        'point (its Lawvere realization refuted in Set on every carrier except a one-element one, the '
+        'monotone obstruction absent on complete lattices in the monotone / domain '
+        'face, with no reflexive object built there, the realization achieved in the computability face), and the scope result of Section '
+        'III. That Kleene\'s recursion theorem is a Lawvere instance is due to the sources above, not '
+        'to this document, and so is the obstruction the placement uses (Lawvere\'s Corollary 1.2). '
+        'The retract question, Soto-Andrade and Varela\'s suggestion, sits '
+        'beside the placement; ZP-R answers it only in Set (Section II).'))
 
     # -- What Remains Open ------------------------------------------------------------
     E += [
@@ -371,17 +510,16 @@ def build():
     E.append(remark_box(
         'Open items',
         [
-            'The <b>global identification</b> &#8212; that the framework\'s keystone <i>is</i> Lawvere '
-            'across all its faces &#8212; remains a conjecture, not resolved here. ZP-R is the first '
-            'concrete progress on it (one face realized, the obstruction located), not its proof.',
+            'ZP-R holds <b>no global conjecture</b>: how the faces formalized here relate to '
+            'Lawvere\'s theorem is collected in Section III, in the box "Lawvere\'s theorem, face by '
+            'face".',
             'The <b>domain-face route</b> &#8212; a Scott D<sub>&#8734;</sub> reflexive object &#8212; '
             'is not carried out; the computability face suffices for the existence claim, so it is not '
             'needed, but it would be a second realization.',
-            '<b>Location and uniqueness</b> (that the fixed point is &#8869;, and unique) are '
-            '<i>proved</i> &#8212; in the fork / AFA face (T-EXEC; unique_fp) &#8212; not open. What is '
-            'structural is that they are not composable with existence-as-Lawvere, which lives in the '
-            'computability face where the fixed point is non-unique (infinite_quine_family). That '
-            'non-composability is the F1 / F2 result, not a missing piece.',
+            '<b>Location and uniqueness</b> (that selfApp\'s fixed point is &#8869; of the '
+            'ZPSemilattice, and unique) are '
+            'established &#8212; in the fork / AFA face, from class fields (fixed_bot; unique_fp) &#8212; '
+            'not open.',
         ]
     ))
     E.append(sp(6))
@@ -395,8 +533,14 @@ def build():
     ]
 
     E.append(body(
-        'Every claim above is backed by a compiling Lean 4 (+ Mathlib) theorem, sorry-free. The order / '
-        'fork material is constructively choice-free; the computability material inherits '
+        'Each result box (R1&#8211;R4) and each F1 property is backed by a compiling Lean 4 (+ Mathlib) '
+        'theorem, sorry-free, except the one marked cited: that the computability fixed point is an '
+        'instance of Lawvere\'s theorem (Section II). F2\'s first mathematical sentence rests on '
+        'reflexive_object_refuted (the R3-neg row), and its second, on the least fixed point of a '
+        'monotone map, on Knaster&#8211;Tarski (Tarski 1955, cited); sentences marked Reading are interpretation and '
+        'have no row. The fork schema (R1, monotone_regime_derives_pinned) is choice-free; the anonymous '
+        'example after no_reflexive_object_bool in LawvereBridge.lean &#167; VI, fixedPointFree_of_nontrivial and '
+        'nontrivial_lattice_no_witness (both in ZeroParadox/Category/Lawvere.lean), and the examples using Bool\'s complete-lattice instance carry Classical.choice; the computability material inherits '
         'Classical.choice from Mathlib\'s computability library (Kleene\'s and Rogers\' theorems use '
         'it), which is disclosed and not claimed otherwise.'))
 
@@ -406,25 +550,34 @@ def build():
             ['R1 (the fork)',
              'instance_pinnable_iff_fork_collapse (ZeroParadox/Settheory/RequirementsGap.lean); '
              'instance_always_exists (ZeroParadox/Settheory/MetaFork.lean)'],
-            ['R2a / R2b (existence as self-application; uniqueness extra)',
+            ['R2a / R2b (the shape e a a; existence and uniqueness as class fields)',
              'lawvere_fixedpoint_selfApp, selfApp_pinnable, existence_without_uniqueness '
-             '(ZeroParadox/Settheory/LawvereBridge.lean)'],
-            ['R3-neg (Set refuted; obstruction non-monotone)',
-             'reflexive_object_refuted, not_monotone_not (ZeroParadox/Settheory/LawvereBridge.lean)'],
+             '(ZeroParadox/Settheory/LawvereBridge.lean); nontrivial_lattice_no_witness '
+             '(ZeroParadox/Category/Lawvere.lean)'],
+            ['R3-neg (Set, every carrier except a one-element one: refuted; every fixed-point-free '
+             'endomap of a complete lattice is non-monotone; on the empty set, not a complete lattice, '
+             'the identity is fixed-point-free and monotone)',
+             'reflexive_object_refuted, not_monotone_not, the anonymous example after '
+             'no_reflexive_object_bool (&#167; VI) and the anonymous examples after not_monotone_not '
+             '(&#167; VII) (ZeroParadox/Settheory/LawvereBridge.lean); fixedPointFree_of_nontrivial, which supplies '
+             'the fixed-point-free map on two or more points (ZeroParadox/Category/Lawvere.lean)'],
             ['R3-pos monotone',
-             'monotone_regime_derives_pinned (ZeroParadox/Settheory/LawvereBridge.lean)'],
+             'monotone_regime_derives_pinned and the last anonymous example of &#167; VII, the '
+             'two-element chain (ZeroParadox/Settheory/LawvereBridge.lean)'],
             ['R3-pos computability (the crossing)',
              'eval_point_surjective, computable_fixedpoint_up_to_eval, '
              'selfref_fixedpoint_exists_computable (ZeroParadox/Computability/ComputableCrossing.lean)'],
-            ['R4 (&#956;/&#957; = Lawvere regimes)',
+            ['R4 (a self-loop rules out well-foundedness)',
              'mu_nu_branch_exclusion (ZeroParadox/Settheory/LawvereBridge.lean)'],
-            ['F1 location (fixed point = &#8869;)',
+            ['F1 location (fixed point = &#8869; of the ZPSemilattice)',
              't_exec, t_exec_iff (ZeroParadox/Settheory/SetTheoryAFA.lean)'],
-            ['F1 uniqueness (&#8869; the only fixed point)',
+            ['F1 uniqueness (&#8869; of the ZPSemilattice the only fixed point)',
              'quine_atom_unique (ZeroParadox/Settheory/SetTheoryAFA.lean); '
              'AbstractSelfApp.unique_fp (ZeroParadox/Computability/SelfApp.lean)'],
-            ['F1 non-uniqueness in the computability face',
-             'infinite_quine_family (ZeroParadox/Computability/Kleene.lean)'],
+            ['F1 computability face (infinitely many eval-fixed points of F)',
+             'fixed_points_infinite (ZeroParadox/Computability/Kleene.lean)'],
+            ['F1 Set / fork face (no surjection onto L&#8594;L when a &#8800; &#8869;)',
+             'nontrivial_lattice_no_witness (ZeroParadox/Category/Lawvere.lean)'],
         ],
         col_widths=[TW * 0.34, TW * 0.66],
     ))
@@ -433,15 +586,20 @@ def build():
     E.append(axiom_box(
         'Axiom Purity',
         [
-            'Order / fork spine (RequirementsGap, MetaFork, LawvereBridge order results): choice-free '
-            '&#8212; [propext, Quot.sound]. The engine and the fork need no Axiom of Choice.',
+            'Order / fork spine: choice-free. instance_pinnable_iff_fork_collapse, '
+            'instance_always_exists, monotone_regime_derives_pinned: [propext, Quot.sound]; '
+            'not_monotone_not: [propext]; lawvere_fixedpoint_selfApp, selfApp_pinnable, '
+            'existence_without_uniqueness, reflexive_object_refuted, mu_nu_branch_exclusion: no axioms.',
             'Set-theoretic location / uniqueness (SetTheoryAFA: t_exec, quine_atom_unique): choice-free '
             '&#8212; derived from the ZPSemilattice / AFAStructure class fields alone.',
+            'nontrivial_lattice_no_witness and fixedPointFree_of_nontrivial (Lawvere.lean) carry '
+            '[propext, Classical.choice, Quot.sound], from the classical construction of a '
+            'fixed-point-free map.',
             'Computability face (ComputableCrossing, Kleene): [propext, Classical.choice, Quot.sound] '
             '&#8212; Classical.choice inherited from Mathlib\'s classical recursion theory (Kleene / '
             'Rogers), disclosed and not claimed otherwise.',
             'Core choice-free, realization choice-carrying &#8212; the framework\'s standing pattern. '
-            'Zero sorry. Verified: lake build, July 2026.',
+            'Zero sorry. Verified: lake build, October 2026.',
         ]
     ))
     E.append(sp(6))
@@ -450,10 +608,11 @@ def build():
         hr(),
         Paragraph(
             '<i>End of ZP-R | A Cross-Category Account of the Self-Referential Fixed Point | '
-            'the fork (choice-free) | Set refuted (Cantor) | monotone / domain: fork, not a reflexive '
-            'object (Scott D<sub>&#8734;</sub> unbuilt) | computability: crossed (Rogers / Kleene) | '
-            'F1: existence, uniqueness, location each proved, none composable | F2: &#8869; carries its '
-            'face | global identification held as a fenced conjecture.</i>',
+            'the fork (choice-free) | Set, every carrier except a one-element one: refuted (Cantor) | monotone / domain: '
+            'fork, no reflexive object built, no map from the two-element chain onto its monotone self-maps (Scott D<sub>&#8734;</sub> unbuilt) | computability: crossed '
+            '(Rogers / Kleene) | F1: per face, what is measured | F2: the self-application role carries '
+            'its face | Lawvere the translation key between the faces (Section III) | no global '
+            'conjecture.</i>',
             S['endnote']),
     ]
 

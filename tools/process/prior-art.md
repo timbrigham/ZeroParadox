@@ -296,7 +296,7 @@ the standard name cited instead.
 2. **A synthesis layer's central/distinctive claim is revised or strengthened** — re-run for that claim.
 3. **A layer is prepared for outreach or arXiv** — prior-art search is part of the pre-flight, beside the adversary pre-flight.
 4. **Reactive:** an external reviewer asks "have you seen X?" — search, then add the result to the CLAIMS "Convergence with established work" table with attribution.
-5. **A new `.lean` file, or a large net addition to one** (≥50 net `.lean` lines) — a substantial original *construction* is in-scope even if it is not a cross-field synthesis claim. This is the mechanical complement to synthesis-detection, and what would have caught ZP-D's `T` (the van der Put / Kozyrev ball-indicator ONB).
+5. **A new `.lean` file, or a large net addition to one** (≥50 net `.lean` lines) — a substantial original *construction* is in-scope even if it is not a cross-field synthesis claim. This is the mechanical complement to synthesis-detection, and what would have caught ZP-D's `T` (orthonormal vectors for the disjoint balls of one level; Kozyrev's p-adic wavelet basis).
 
 **`/prior-art-review` is the deep gate**, a fresh-agent scout — same-session self-review does not
 satisfy it. It records its verdict in the verdictLedger under step `prior_art`. **The record:** the CLAIMS "Convergence
@@ -339,4 +339,4 @@ material already cited (the sweep false-flagged ZP-B's Bruhat–Tits, cited in
 `ZeroParadox/Valuation/PadicTree.lean`).
 And the trigger is **construction size**, not only cross-field synthesis: a new `.lean` file or a
 large net addition fires it too, which is what catches the ZP-D class whose `T: Q₂ → H` is the
-standard van der Put / Kozyrev ball-indicator orthonormal basis.
+standard p-adic construction (disjoint balls of one level as orthonormal vectors; Kozyrev's wavelets).

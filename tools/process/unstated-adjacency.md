@@ -68,7 +68,8 @@ stopping point"*, and four retraction commits were written against it as their a
 rewrite of the docstring **falsified four of them immediately**. Ledger: `BLAST-1`, `OCC-2`.
 
 ⚠ **A canonical statement can have a copy that can NEVER be updated, and that must be recorded rather
-than discovered.** `scripts/build_zpc.py:142` reproduces this docstring's closing paragraph, rendered
+than discovered.** `scripts/build_zpc.py` restates this docstring's closing paragraph (the string beginning
+*"Note: L-INF supplies unbounded surprisal"*), rendered
 into **ZP-C v1.21 — already deposited with a Zenodo DOI.** The build script can be converted so future
 rebuilds point rather than copy; **the deposited PDF is frozen and always will be.** That is correct
 behaviour for a snapshot, and it means *"one canonical definition everywhere"* has permanent

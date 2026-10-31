@@ -6,7 +6,7 @@ import Mathlib.Analysis.SpecificLimits.Normed
 # P8 re-attempt: ε₀ → 0 in ℤ₂ via a tower-rank 2-adic encoding
 
 The parked "ZP-B route" (zpl_cantor_zp2_bridge): encode ordinals < ε₀ into ℤ₂ so the ω-tower's
-encodings converge to 0 = ⊥, giving ε₀ ↦ ⊥ without Gentzen. Genuine 20-iteration re-attempt.
+encodings converge to ℤ_[2]'s 0, without Gentzen. ε₀ gets no encoding: the domain is `{α // α < ε₀}`.
 
 Strategy (stub-first): (1) the 2-adic limit core — powers of 2 shrink to 0 in ℤ₂; (2) the tower-rank
 encoding `α ↦ 2 ^ (rank α)` where `rank α` is the least tower stage above α (`lt_epsilon_zero`);
@@ -27,7 +27,7 @@ instance : Fact (Nat.Prime 2) := ⟨Nat.prime_two⟩
 open Filter Topology
 
 /-- **The 2-adic limit core.** The powers of 2 shrink to 0 in ℤ₂ — the geometric heart of "the tower's
-    encoding converges to the bottom 0" (`v₂(2ⁿ) = n → ∞`, so `2ⁿ → 0`). -/
+    encoding converges to ℤ_[2]'s 0" (`v₂(2ⁿ) = n → ∞`, so `2ⁿ → 0`). -/
 theorem two_pow_tendsto_zero :
     Tendsto (fun n : ℕ => (2 : ℤ_[2]) ^ n) atTop (𝓝 0) := by
   apply tendsto_pow_atTop_nhds_zero_of_norm_lt_one
@@ -55,7 +55,7 @@ noncomputable def cnfRank (α : {α : Ordinal // α < ε₀}) : ℕ :=
   Nat.find (lt_epsilon_zero.mp α.2)
 
 /-- **The tower-rank 2-adic encoding** `α ↦ 2 ^ (rank α) : ℤ₂`. Higher tower depth ↦ higher 2-adic
-    valuation ↦ closer to the bottom 0. -/
+    valuation ↦ closer to ℤ_[2]'s 0 in the 2-adic norm. -/
 noncomputable def cnf_encode (α : {α : Ordinal // α < ε₀}) : ℤ_[2] :=
   (2 : ℤ_[2]) ^ cnfRank α
 
@@ -70,25 +70,29 @@ theorem k_le_cnfRank_towerOrd (k : ℕ) : k ≤ cnfRank (towerOrd k) := by
   intro m hm hlt
   exact absurd (tower_monotone hm.le) (not_le.2 hlt)
 
-/-- **The ε₀ → ⊥ bridge (P8 core).** The tower-rank 2-adic encodings of the ω-tower converge to 0 in
-    ℤ₂: as the ordinals climb the tower toward ε₀, their encodings shrink to the bottom 0 = ⊥. -/
+/-- **The tower-to-0 limit (P8 core).** The tower-rank 2-adic encodings of the ω-tower converge to
+    ℤ_[2]'s 0. The stages climb toward ε₀, their supremum (`epsilonZero_eq_iSup`), which has no
+    encoding (the `example` below). -/
 theorem cnf_encode_tower_tendsto_zero :
     Tendsto (fun k => cnf_encode (towerOrd k)) atTop (𝓝 0) := by
   have hrank : Tendsto (fun k => cnfRank (towerOrd k)) atTop atTop :=
     tendsto_atTop_mono k_le_cnfRank_towerOrd tendsto_id
   exact two_pow_tendsto_zero.comp hrank
 
+-- Statement: no argument of `cnf_encode` is ε₀, so ε₀ has no encoding.
+example (α : {α : Ordinal // α < ε₀}) : α.1 ≠ ε₀ := α.2.ne
+
 end ZeroParadox
 
 /-! ## Honest scope
 The encoding here is the **tower-rank** map `α ↦ 2 ^ (least tower stage above α)`, not the canonical
-Cantor-Normal-Form binary encoding the parked note envisioned. It genuinely realizes the *geometric*
-goal — ε₀ is the ordinal supremum of the ω-tower, whose encodings 2-adically converge to 0 = ⊥ (`cnf_encode_tower_tendsto_zero`), so ε₀ ↦ 0 = ⊥ — but
-because the rank is *defined via* the tower, the valuation growth is built in: this is a constructed
-witness of the limit, not a strongly *independent* ordinal↔2-adic structural identity. The canonical-CNF
-version (revealing genuine binary structure, a stronger independent route) remains the harder open piece.
-What changed vs. the earlier (invalid) deferral: the note's stated goal — a map `{α<ε₀}→ℤ₂` whose tower
-images converge to 0 — is now a proven theorem, built in 4 iterations. -/
+Cantor-Normal-Form binary encoding the parked note envisioned. The tower's encodings converge to
+ℤ_[2]'s 0 (`cnf_encode_tower_tendsto_zero`), least under the 2-adic norm and greatest under the 2-adic
+valuation (`addVal_bot`); ε₀ itself has no encoding and no equation with that 0
+(`ZeroParadox/Ordinal/Epsilon0CannotBe.lean` § I-b). Because the rank is *defined via* the tower, the
+valuation growth is built in: this is a constructed witness of the limit, not a strongly *independent*
+ordinal↔2-adic structural identity. The canonical-CNF version (revealing genuine binary structure, a
+stronger independent route) remains the harder open piece. -/
 
 section PurityCheck
 open ZeroParadox

@@ -1,4 +1,5 @@
 import ZeroParadox.Category.Lawvere
+import ZeroParadox.Category.DiagonalWitness
 import Mathlib.Computability.Halting
 import Mathlib.Tactic
 
@@ -14,9 +15,9 @@ everything else in the family.
 ---
 
 ## Formal Overview
-Rice is **Mathlib's** (`ComputablePred.rice₂`) and is cited, not re-proved. The content here is the
-pairing: one recursion-theorem fixed point gives the quine (ν-existence) and Rice undecidability at
-once. Why that is the price of ν-existence: `ZeroParadox/Computability/Rice.md`.
+Rice (1953) states his theorem for classes of r.e. sets; cited, not re-proved, is Mathlib's program-code
+form `ComputablePred.rice₂` (sets of codes closed under equal `eval`). The content here is the pairing:
+the quine (ν-existence) and Rice undecidability as two conjuncts, each from its own use of the recursion theorem. Placement: `ZeroParadox/Computability/Rice.md`.
 -/
 
 set_option maxHeartbeats 400000
@@ -31,7 +32,7 @@ open Nat.Partrec.Code
 /-- **Rice (framework restatement).** A non-trivial extensional semantic property of programs is
     undecidable: if `C : Set Code` is extensional (`Hext`: depends only on `eval`) and non-trivial
     (`C ≠ ∅` and `C ≠ univ`), then membership in `C` is not a `ComputablePred`. Cites Mathlib's
-    `ComputablePred.rice₂` (whose proof is Kleene's recursion theorem, `fixed_point₂`). -/
+    `ComputablePred.rice₂` (proved from `ComputablePred.rice`, which uses `fixed_point₂`). -/
 theorem rice_face (C : Set Code)
     (Hext : ∀ cf cg, eval cf = eval cg → (cf ∈ C ↔ cg ∈ C))
     (hne : C ≠ ∅) (huniv : C ≠ Set.univ) :
@@ -49,14 +50,14 @@ theorem rice_face (C : Set Code)
 theorem halting_undecidable (n : ℕ) : ¬ ComputablePred (fun c => (eval c n).Dom) :=
   ComputablePred.halting_problem n
 
-/-! ## § III. The pairing — ν-existence and Rice undecidability, one fixed point -/
+/-! ## § III. The pairing — ν-existence and Rice undecidability, two conjuncts -/
 
-/-- **The exists-but-undecidable signature.** In the computability setting the recursion theorem gives
-    *both*: every computable self-map on codes has a fixed point **up to `eval`** (the Kleene quine
+/-- **The exists-but-undecidable signature.** In the computability setting the recursion theorem, used
+    twice, gives *both*: every computable self-map on codes has a fixed point **up to `eval`** (the Kleene quine
     exists — ν, via `computability_face_fixedPoint`; NOT a literal fixed point — `fun c => Code.pair c c`
     has none), *and* every non-trivial extensional property is undecidable (Rice).
-    The quine's existence and its undecidability are two faces of one recursion-theorem fixed point — the
-    computability floor stated as a single conjunction. -/
+    The second conjunct does not mention `f`: the undecidability is of `C` over all codes, and nothing
+    is stated about membership at `f`'s fixed point (gloss: `ZeroParadox/Computability/ComputationCannotBe.lean` § V). -/
 theorem quine_exists_yet_rice (C : Set Code)
     (Hext : ∀ cf cg, eval cf = eval cg → (cf ∈ C ↔ cg ∈ C))
     (hne : C ≠ ∅) (huniv : C ≠ Set.univ)
@@ -64,19 +65,70 @@ theorem quine_exists_yet_rice (C : Set Code)
     (∃ c, eval (f c) = eval c) ∧ ¬ ComputablePred (fun c => c ∈ C) :=
   ⟨computability_face_fixedPoint hf, rice_face C Hext hne huniv⟩
 
-/-! ## § IV. The bottom-element relationship — the floor (ν): the bottom exists -/
+/-! ## § IV. The bottom-element relationship — the floor (ν): a fixed point up to `eval` exists -/
 
-/-- **Rice on the family's μ/ν fork: the computability face has a fixed point (Rogers); reading it as the face's bottom is the family's criterion, not this theorem.** Unlike the truth /
-    comprehension walls (Tarski, Curry — μ, no floor), computation reaches a floor: every computable
-    self-map on codes has a fixed point **up to `eval`** (`computability_face_fixedPoint` — Rogers';
-    while `rice_face`, via `ComputablePred.rice₂`, is the one that genuinely routes through
-    Kleene's second recursion theorem, `fixed_point₂`),
-    the Kleene quine, a program computing its own code (verb = noun). So on the one-over-infinity-to-bottom
-    map, the computability face is the ν side, where self-reference DOES close on a bottom — and Rice
-    (above) is the price paid for it: the floor exists, but membership at it is undecidable. -/
+/-- **Rice on the family's μ/ν fork: the computability face has a fixed point (Rogers); reading it as the face's bottom is the family's criterion, not this theorem.** Despite the
+    declaration's name, the statement is a fixed point up to `eval` and names no bottom.
+    Unlike the truth / comprehension walls (Tarski, Curry — μ, no floor), computation reaches a floor in
+    the family's sense: every computable
+    self-map on codes has a fixed point **up to `eval`** (`computability_face_fixedPoint` — Rogers',
+    Mathlib's `fixed_point`; `rice_face` also rests on it, through `ComputablePred.rice₂`,
+    `ComputablePred.rice` and Kleene's second recursion theorem `fixed_point₂`, which Mathlib derives
+    from `fixed_point`),
+    read as the Kleene quine (a program printing its own code needs one further s-m-n step). So on the
+    one-over-infinity-to-bottom map, the computability face is the ν side, where self-reference
+    closes on a Kleene code filling the self-application fixed-point role — and Rice (above) sits beside it: a non-trivial extensional `C` is undecidable
+    over all codes, a conjunct that does not mention `f` (`quine_exists_yet_rice`). -/
 theorem rice_face_has_bottom {f : Code → Code} (hf : Computable f) :
     ∃ c, eval (f c) = eval c :=
   computability_face_fixedPoint hf
+
+/-! ## § V. Rice through the witness on `EvalClass`, in the die's motion -/
+
+-- Reading (cited, not claimed): Yanofsky 2003, p. 19, "Application: Rice's Theorem", with the same
+-- `h`: it outputs `a` on inputs off the set and `b` on inputs in it; here routed through
+-- `hasWitnessRel_evalClass`.
+/-- `Statement:` if `C` respects `eval`, `a ∈ C` and `b ∉ C`, then membership in `C` is not a
+    `ComputablePred`. The proof calls `hasWitnessRel_evalClass`
+    (`ZeroParadox/Category/DiagonalWitness.lean`), not `fixed_point` directly: a decider would give a
+    computable `eval`-respecting map whose motion `Motion.ofFun` on `EvalClass` steps elsewhere at
+    every class, against `selfOnlyAt_of_witnessRel`. -/
+theorem rice_of_evalClassWitness (C : Set Code)
+    (Hext : ∀ cf cg, eval cf = eval cg → (cf ∈ C ↔ cg ∈ C))
+    {a b : Code} (ha : a ∈ C) (hb : b ∉ C) : ¬ ComputablePred (fun c => c ∈ C) := by
+  rintro ⟨D, hD⟩
+  let h : Code → Code := fun c => cond (@decide (c ∈ C) (D c)) b a
+  have hcomp : Computable h := Computable.cond hD (Computable.const b) (Computable.const a)
+  have hval : ∀ c, (c ∈ C → h c = b) ∧ (c ∉ C → h c = a) := fun c =>
+    ⟨fun hc => by simp only [h, @decide_eq_true _ (D c) hc, cond_true],
+     fun hc => by simp only [h, @decide_eq_false _ (D c) hc, cond_false]⟩
+  have hext : EvalRespecting h := fun x y e => by
+    by_cases hx : x ∈ C
+    · rw [(hval x).1 hx, (hval y).1 ((Hext x y e).1 hx)]
+    · rw [(hval x).2 hx, (hval y).2 (fun hy => hx ((Hext x y e).2 hy))]
+  have hleave : ∀ y, (Motion.ofFun (liftEval h hext)).LeavesAt y := by
+    intro y
+    induction y using Quotient.ind with
+    | _ x =>
+      refine (Motion.leavesAt_ofFun_iff _ _).2 fun e => ?_
+      have e' : eval (h x) = eval x := Quotient.exact e
+      by_cases hx : x ∈ C
+      · have := (Hext (h x) x e').2 hx
+        rw [(hval x).1 hx] at this
+        exact hb this
+      · have hin : h x ∈ C := by rw [(hval x).2 hx]; exact ha
+        exact hx ((Hext (h x) x e').1 hin)
+  obtain ⟨y, hy⟩ := selfOnlyAt_of_witnessRel hasWitnessRel_evalClass ⟨h, hcomp, hext, rfl⟩
+  exact Motion.not_selfOnlyAt_and_leavesAt _ y ⟨hy, hleave y⟩
+
+-- Statement: the halting problem at `n`, as an instance: `Code.zero` halts, a nowhere-defined code
+-- does not, and halting at `n` respects `eval` (`halting_undecidable` cites Mathlib instead).
+example (n : ℕ) : ¬ ComputablePred (fun c : Code => (eval c n).Dom) := by
+  obtain ⟨cn, hcn⟩ := Nat.Partrec.Code.exists_code.1 Nat.Partrec.none
+  exact rice_of_evalClassWitness {c | (eval c n).Dom}
+    (fun x y e => by simp only [Set.mem_setOf_eq, e])
+    (a := Code.zero) (b := cn) (trivial : (Part.some 0).Dom)
+    (by show ¬ (eval cn n).Dom; rw [hcn]; exact Part.not_none_dom)
 
 end ZeroParadox
 
@@ -87,4 +139,6 @@ open ZeroParadox
 #print axioms halting_undecidable
 #print axioms quine_exists_yet_rice
 #print axioms rice_face_has_bottom
+#print axioms rice_of_evalClassWitness
+
 end PurityCheck

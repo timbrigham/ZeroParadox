@@ -19,7 +19,7 @@ This is a **mathematical publication repository** first. It is no longer true th
 
 - PDF documents (the formal mathematical framework and illustrated companions)
 - The Lean 4 corpus under `ZeroParadox/`, with `MANIFEST.md` as its by-folder index
-- Markdown documentation (README.md, ABOUTME.md, this file)
+- Markdown documentation (README.md, GUIDE.md, the files under `tools/process/`)
 - (superseded document versions are preserved in git history and per-release Zenodo snapshots; the `historical/` folder was retired in v3.0)
 - `scripts/` — the PDF build tooling. Their only home since 2026-08-15, not a transparency mirror
 - `tools/verify/` — the checkers, pipeline and baselines that gate every commit and push

@@ -1,52 +1,22 @@
 import ZeroParadox.Category.Lawvere
+import ZeroParadox.Die
 import Mathlib.Order.UpperLower.Basic
 
 /-!
 # The minimum requirements to be a diagonal fixed point — the relativized Lawvere witness
-
-`DiagonalFixedPoint.lean` *collects* the faces of self-reference; this file asks what they **minimally
-have in common**, one level beneath the μ/ν fork. The engine is the diagonal argument of **Lawvere
-(1969)**, restated by **Yanofsky (2003)**; that whether the witness exists is *category-relative* is the
-recognized effective-topos / Turing-category observation (**Hyland 1982; Cockett–Hofstra 2008; van
-Oosten**). This file only *packages* those — `HasWitnessRel` is a formalization lever, not a new theorem,
-and its level sets are the per-face verdicts already proven in `Category/Lawvere.lean` §V–VI. There the
-bare `HasLawvereWitness β` (a point-surjection `α → (α → β)`) is FALSE for every nontrivial type in
-**Set** (Cantor), so the lattice and 2-adic faces are *posited* fixed points, while the computability
-(Kleene) face is *genuine* — in the **effective** category.
-
-## The underlying level: the witness relative to an admissible endomap class
-
-`HasWitnessRel β M` relativizes the diagonal hypothesis to a class `M` of admissible endomaps: a
-self-application `e : α → (α → β)` whose range contains the diagonal `fun x => g (e x x)` for every
-`g ∈ M`. This is the minimal requirement — the witness only has to dodge the diagonals of the maps `M`
-that "count" in the ambient category. The face table becomes level sets of ONE predicate:
-- **M coarse (all endomaps), β nontrivial** — a fixed-point-free swap is admissible ⇒ no witness. Set
-  floor faces are *posited*, wall faces *refuted*.
-- **M fine (computable endomaps)** — the fixed-point-free diagonal is **not** admissible, which
-  **removes** the § III obstruction. It does not by itself supply the witness: the implication runs one
-  way, and **no `HasWitnessRel` theorem for the computable class is proved in this file.** The genuine
-  diagonal fixed point on this side is **Rogers' fixed-point theorem**, cited rather than derived here
-  (`Nat.Partrec.Code.fixed_point`, aliased below as `computability_face_fixedPoint`; Mathlib reserves
-  *Kleene's second recursion theorem* for `fixed_point₂`). *(Corrected 2026-08-02: this said "Kleene's
-  recursion theorem" — the same-file sibling of the `:157` fix, left standing 123 lines above it in the
-  same commit.)*
-  *(Corrected 2026-08-01: previously written "not admissible ⇒ the witness holds ⇒ a genuine diagonal
-  fixed point", which does not follow — an absent obstruction is not a witness.)*
-
-## The topology (why "underlying level" makes it obvious)
-
-`HasWitnessRel β ·` is **antitone** in `M`: shrinking the admissible class can only help the witness. So
-`{M | HasWitnessRel β M}` is downward-closed in `⊆` — a lower set on the lattice of admissible-map-classes,
-i.e. a **closed set in the Alexandrov topology** on that lattice. The wall/floor/posited trichotomy is the
-level structure of one monotone predicate over that space; the floor "switches on" exactly as `M` drops
-below the fixed-point-free diagonal. That lattice-of-map-classes, with the witness as an Alexandrov-closed
-set, is the topology the collection carries.
 
 ## Engineer's Take
 
 Definition of a minimal set of criteria across the faces, including Cantor, Russell, Turing, Kleene,
 Tarski, Curry, Löb, Gödel, and Rice. We focused our work around behavior at bottom, and have been able
 to build a topological map.
+
+---
+
+## Formal Overview (AI-assisted)
+A diagonal witness relative to a class of admissible endomaps (`HasWitnessRel`), its engine and wall,
+the topology of the witness set, and the floor in the effective category. Argument, level sets,
+topology and prior art: `ZeroParadox/Category/DiagonalWitness.md`.
 -/
 
 namespace ZeroParadox
@@ -79,6 +49,13 @@ theorem no_witnessRel_of_admissible_fpf {β : Type*} {M : (β → β) → Prop}
   obtain ⟨b, hb⟩ := fixedPoint_of_witnessRel h hg
   exact hgf b hb
 
+-- Statement: with literal equality the computable endomaps of codes carry no relativized witness:
+--   `fun c => Code.pair c c` is computable and fixes no code.
+example : ¬ HasWitnessRel Nat.Partrec.Code Computable :=
+  no_witnessRel_of_admissible_fpf (g := fun c => Nat.Partrec.Code.pair c c)
+    (Nat.Partrec.Code.primrec₂_pair.comp Primrec.id Primrec.id).to_comp
+    (fun c h => by have := congrArg sizeOf h; simp at this)
+
 /-- **Antitone in the admissible class (the topology spine).** Shrinking the admissible endomap class
     can only help the witness. So `{M | HasWitnessRel β M}` is downward-closed in `⊆` — a lower set /
     Alexandrov-closed set on the lattice of admissible-map-classes. -/
@@ -107,15 +84,12 @@ theorem no_witnessRel_top_of_nontrivial {β : Type u} [DecidableEq β] [Nontrivi
   -- Choice-free: with `DecidableEq β` the swap needs no classical decision (constructive-footprint audit,
   -- 2026-07-18). This is the base-level, choice-free form; the `DecidableEq` restriction is what buys
   -- the purity. The construction inlined below is the one that
-  -- `ZeroParadox/Category/Lawvere.lean`'s `fixedPointFree_of_nontrivial` produces, and THAT theorem is
-  -- essentially classical — `ZeroParadox/Category/LawvereTaboo.lean`'s `wem_of_fixedPointFree` reduces
-  -- weak excluded middle from it. **That is a fact about that theorem, not about this one:
+  -- `ZeroParadox/Category/Lawvere.lean`'s `fixedPointFree_of_nontrivial` produces, and THAT theorem's
+  -- `classical` is essential in the sense, and on the premise, of
+  -- `ZeroParadox/Category/ChoiceCannotBe.lean` § IV (`wem_of_fixedPointFree` derives weak excluded
+  -- middle from its ∀-closure). **That is a fact about that theorem, not about this one:
   -- essentiality does not transfer, and there is no dependency here — the swap is inlined, and this
   -- statement measures `[propext]`, which is what proves the independence.**
-  -- (Corrected 2026-08-01, found independently by all three round-4 gates: an earlier revision called
-  -- this "the theorem this MIRRORS (`:96`)". Line 96 mirrors `no_witness_of_nontrivial`, a DIFFERENT
-  -- declaration; the relation to `fixedPointFree_of_nontrivial` is inlining, not mirroring. That
-  -- revision had itself corrected the word "SUPPLIER" while carrying the wrong theorem name along.)
   obtain ⟨b₀, b₁, hne⟩ := exists_pair_ne β
   refine no_witnessRel_of_admissible_fpf (g := fun x => if x = b₀ then b₁ else b₀) trivial (fun x => ?_)
   by_cases hx : x = b₀
@@ -125,7 +99,7 @@ theorem no_witnessRel_top_of_nontrivial {β : Type u} [DecidableEq β] [Nontrivi
 /-- **The fine end is inhabited (non-degeneracy).** A one-element carrier has a witness for *every*
     admissible class — there is no fixed-point-free endomap to obstruct it, so the diagonal always
     closes. This is the trivial genuine floor; it keeps the witness set (hence the topology) from being
-    empty. The nontrivial genuine floor is the computability face (see below). -/
+    empty. The nontrivial genuine floor is the computability face, up to `eval` (§ Axis 2). -/
 theorem hasWitnessRel_of_subsingleton {β : Type u} [Nonempty β] [Subsingleton β]
     (M : (β → β) → Prop) : HasWitnessRel β M := by
   obtain ⟨b₀⟩ := ‹Nonempty β›
@@ -162,8 +136,7 @@ NOT claimed — the framework joins that program. -/
     for `fixed_point₂`, and literally derives `fixed_point₂` from `fixed_point`, so the two are
     inter-derivable. `ZeroParadox/Category/Lawvere.lean` attaches **both** names to `fixed_point` as a
     slash-alias ("Rogers / Kleene's recursion theorem") rather than making this split — compatible, but
-    not the same convention. The fine end of axis 2.
-    *(Corrected 2026-08-02: this claimed `Lawvere.lean` "words it the same way", which it does not.)* -/
+    not the same convention. The fine end of axis 2. -/
 theorem effective_floor_fixedPoint {g : Nat.Partrec.Code → Nat.Partrec.Code} (hg : Computable g) :
     ∃ c, Nat.Partrec.Code.eval (g c) = Nat.Partrec.Code.eval c :=
   computability_face_fixedPoint hg
@@ -171,13 +144,122 @@ theorem effective_floor_fixedPoint {g : Nat.Partrec.Code → Nat.Partrec.Code} (
 /-- **Why the wall lifts in the effective category (the axis-2 mechanism).** There is no *computable*
     self-map on codes that is eval-fixed-point-free: the recursion theorem forces a fixed point. So the
     diagonal swap that refutes the witness at the Set level (`no_witnessRel_of_admissible_fpf`) has NO
-    computable representative — it is not admissible effectively, and the obstruction cannot fire. This
-    is exactly why the floor switches on along axis 2. -/
+    computable representative up to `eval`; with literal equality one exists (the `example` after
+    `no_witnessRel_of_admissible_fpf`). This is why the floor can switch on along axis 2. -/
 theorem no_computable_evalFixedPointFree {g : Nat.Partrec.Code → Nat.Partrec.Code} (hg : Computable g) :
     ¬ (∀ c, Nat.Partrec.Code.eval (g c) ≠ Nat.Partrec.Code.eval c) := by
   intro hfpf
   obtain ⟨c, hc⟩ := effective_floor_fixedPoint hg
   exact hfpf c hc
+
+/-! ## § Axis 2, on the quotient — a witness relative to the computable maps that respect `eval` -/
+
+section EvalQuotient
+
+open Nat.Partrec
+
+/-- `Statement:` codes identified when `Code.eval` agrees (`Setoid.ker Code.eval`). -/
+def evalSetoid : Setoid Code := Setoid.ker Code.eval
+
+/-- `Statement:` the classes of codes under equal `Code.eval`. -/
+abbrev EvalClass : Type := Quotient evalSetoid
+
+/-- `Statement:` `g` sends codes with equal `Code.eval` to codes with equal `Code.eval`. -/
+def EvalRespecting (g : Code → Code) : Prop :=
+  ∀ a b, Code.eval a = Code.eval b → Code.eval (g a) = Code.eval (g b)
+
+/-- `Statement:` an `eval`-respecting map of codes, induced on the classes. -/
+def liftEval (g : Code → Code) (hg : EvalRespecting g) : EvalClass → EvalClass :=
+  Quotient.map g (fun a b h => hg a b h)
+
+/-- `Statement:` the admissible class: maps on `EvalClass` induced by a computable `eval`-respecting
+    map of codes. -/
+def ComputableOnEval (G : EvalClass → EvalClass) : Prop :=
+  ∃ g, Computable g ∧ ∃ hg : EvalRespecting g, G = liftEval g hg
+
+/-- `Statement:` if `g` is computable, some code `a` has, at every `x`, the `Code.eval` of
+    `curry a ⌜x⌝` equal to that of `g (curry x ⌜x⌝)`, where `⌜x⌝` is `x`'s Gödel number. -/
+theorem exists_code_diagonal (g : Code → Code) (hc : Computable g) :
+    ∃ a : Code, ∀ x, Code.eval (Code.curry a (Encodable.encode x)) =
+      Code.eval (g (Code.curry x (Encodable.encode x))) := by
+  let G : Code × ℕ →. ℕ := fun p => Code.eval (g (Code.curry p.1 (Encodable.encode p.1))) p.2
+  have hcode : Computable fun p : Code × ℕ => g (Code.curry p.1 (Encodable.encode p.1)) :=
+    hc.comp (Code.primrec₂_curry.comp Primrec.fst (Primrec.encode.comp Primrec.fst)).to_comp
+  have hG : Partrec G := Code.eval_part.comp hcode Computable.snd
+  have hG' : Partrec fun m : ℕ => G (Denumerable.ofNat Code m.unpair.1, m.unpair.2) :=
+    hG.comp (Computable.pair ((Computable.ofNat Code).comp (Computable.fst.comp Computable.unpair))
+      (Computable.snd.comp Computable.unpair))
+  obtain ⟨a, ha⟩ := Code.exists_code.1 (Partrec.nat_iff.1 hG')
+  refine ⟨a, fun x => ?_⟩
+  funext n
+  rw [Code.eval_curry, ha]
+  simp only [G, Nat.unpair_pair, Denumerable.ofNat_encode]
+
+-- Reading (cited, not claimed): this is the square of Yanofsky 2003, Theorem 5 (p. 18), on the unary
+-- computable functions, with his Remark 5 (p. 15): only the constructed maps need be representable,
+-- the relativization `HasWitnessRel` makes. The curried self-application `e` below is ours, not his `f`.
+-- Reading (ours): `EvalRespecting` is the condition under which a map of codes induces a map on
+-- functions, φ_n ↦ φ_{h(n)}.
+/-- `Statement:` `EvalClass` carries a diagonal witness relative to `ComputableOnEval`, with
+    `e a x` the class of `curry a ⌜x⌝`. -/
+theorem hasWitnessRel_evalClass : HasWitnessRel EvalClass ComputableOnEval := by
+  refine ⟨Code, fun a x => ⟦Code.curry a (Encodable.encode x)⟧, ?_⟩
+  rintro G ⟨g, hc, hg, rfl⟩
+  obtain ⟨a, ha⟩ := exists_code_diagonal g hc
+  exact ⟨a, funext fun x => Quotient.sound (ha x).symm⟩
+
+-- Statement: Rogers' fixed-point theorem for computable `eval`-respecting maps, from the witness
+-- (`Nat.Partrec.Code.fixed_point` is the general form, with no `eval`-respecting hypothesis).
+-- Reading (cited, not claimed): an instance of Ershov's recursion theorem for precomplete numberings
+-- (Ershov 1975, Z. Math. Logik Grundlagen Math. 21, 473–584; as stated in Barendregt and Terwijn 2018,
+-- arXiv:1809.06233, Theorem 3.1, p. 4, where n ↦ φ_n is "the prime example", p. 2).
+example (g : Code → Code) (hc : Computable g) (hg : EvalRespecting g) :
+    ∃ c, Code.eval (g c) = Code.eval c := by
+  obtain ⟨b, hb⟩ := fixedPoint_of_witnessRel hasWitnessRel_evalClass ⟨g, hc, hg, rfl⟩
+  induction b using Quotient.ind with
+  | _ c => exact ⟨c, Quotient.exact hb⟩
+
+/-- `Statement:` CONTROL: relative to the class of all maps on `EvalClass` there is no witness: the
+    map sending the class of `Code.zero` to that of a nowhere-defined code, and every other class to
+    the class of `Code.zero`, fixes no class. -/
+theorem no_witnessRel_evalClass_top : ¬ HasWitnessRel EvalClass (fun _ => True) := by
+  classical
+  obtain ⟨cn, hcn⟩ := Code.exists_code.1 Nat.Partrec.none
+  have hne : (⟦Code.zero⟧ : EvalClass) ≠ ⟦cn⟧ := fun h => by
+    have e := congrFun (Quotient.exact h : Code.eval Code.zero = Code.eval cn) 0
+    have hd : (Code.eval Code.zero 0).Dom := (trivial : (Part.some 0).Dom)
+    rw [e, hcn] at hd
+    exact (hd : False)
+  refine no_witnessRel_of_admissible_fpf
+    (g := fun y => if y = ⟦Code.zero⟧ then ⟦cn⟧ else ⟦Code.zero⟧) trivial (fun y hy => ?_)
+  dsimp only at hy
+  by_cases h : y = ⟦Code.zero⟧
+  · rw [if_pos h] at hy; exact hne (h ▸ hy.symm)
+  · rw [if_neg h] at hy; exact h hy.symm
+
+end EvalQuotient
+
+/-! ## § The engine in the die's motion (`ZeroParadox/Die.lean` § XI) -/
+
+/-- `Statement:` if `β` has a witness relative to `M` and `M g`, then the motion `Motion.ofFun g`
+    (UP the identity, OVER the graph of `g`) has a point that steps to itself only; one way. -/
+theorem selfOnlyAt_of_witnessRel {β : Type u} {M : (β → β) → Prop} (h : HasWitnessRel β M)
+    {g : β → β} (hg : M g) : ∃ y, (Motion.ofFun g).SelfOnlyAt y := by
+  obtain ⟨b, hb⟩ := fixedPoint_of_witnessRel h hg
+  exact ⟨b, (Motion.selfOnlyAt_ofFun_iff g b).2 hb⟩
+
+/-- `Statement:` under the same hypotheses, `Motion.ofFixedPoints g` (UP the partial identity on the
+    fixed points of `g`) has a landing; one way. -/
+theorem hasLanding_ofFixedPoints_of_witnessRel {β : Type u} {M : (β → β) → Prop}
+    (h : HasWitnessRel β M) {g : β → β} (hg : M g) : (Motion.ofFixedPoints g).HasLanding := by
+  obtain ⟨b, hb⟩ := fixedPoint_of_witnessRel h hg
+  exact ⟨b, (Motion.isLanding_ofFixedPoints_iff g b).2 hb⟩
+
+/-- `Statement:` if `M g` and `Motion.ofFun g` steps elsewhere at every point, `β` has no witness
+    relative to `M`; one way (Cantor's form). -/
+theorem no_witnessRel_of_leavesAt {β : Type u} {M : (β → β) → Prop} {g : β → β} (hg : M g)
+    (hl : ∀ y, (Motion.ofFun g).LeavesAt y) : ¬ HasWitnessRel β M :=
+  no_witnessRel_of_admissible_fpf hg fun x => (Motion.leavesAt_ofFun_iff g x).1 (hl x)
 
 end ZeroParadox
 
@@ -194,4 +276,16 @@ open ZeroParadox
 #print axioms witnessSet_isLowerSet
 #print axioms effective_floor_fixedPoint
 #print axioms no_computable_evalFixedPointFree
+#print axioms evalSetoid
+#print axioms EvalClass
+#print axioms EvalRespecting
+#print axioms liftEval
+#print axioms ComputableOnEval
+#print axioms exists_code_diagonal
+#print axioms hasWitnessRel_evalClass
+#print axioms no_witnessRel_evalClass_top
+#print axioms selfOnlyAt_of_witnessRel
+#print axioms hasLanding_ofFixedPoints_of_witnessRel
+#print axioms no_witnessRel_of_leavesAt
+
 end PurityCheck

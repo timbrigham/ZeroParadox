@@ -25,7 +25,7 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 The framework keeps hitting a pattern: a structure provably meets a general schema's criteria, but we
 may only say "it is *one witness* of [any object meeting the criteria]," never "it *is* the object."
-(QuineHost: AFA is a witness, not the forced theory. MC-1: a family, not one object. ⊥ itself:
+(QuineAtomHost: AFA's pattern is a witness, not the forced theory. MC-1: a family, not one object. ⊥ itself:
 apophatic, never canonical.) The conjecture being probed is that the gap between *this one instance*
 and *any object meeting the requirements* is the same self-referential 0↔∞ gap as everywhere else —
 the diagonal fixed point.
@@ -64,8 +64,8 @@ variable {α : Type*} [CompleteLattice α]
 
 /-- **The gap is the fork.** For a fixed-point characterization `f x = x`, "the requirements pin a
 unique instance" (`∃! x`) holds *iff* the fork collapses (`lfp = gfp`). This is `fork_collapse_iff`
-renamed in the instance-vs-requirements language: uniqueness (the recurring `(Z)` requirement, e.g.
-QuineHost `selfMem_unique`) is exactly the collapse condition, and its failure is exactly the gap. -/
+renamed in the instance-vs-requirements language: uniqueness of the fixed point is exactly the
+collapse condition, and its failure is exactly the gap. -/
 theorem instance_pinnable_iff_fork_collapse (f : α →o α) :
     (∃! x, f x = x) ↔ f.lfp = f.gfp :=
   (fork_collapse_iff f).symm

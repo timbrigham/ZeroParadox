@@ -318,10 +318,9 @@ To add a legitimate palette exception, append a `# ZP-OVERRIDE: <reason>` commen
 AMBER = colors.HexColor('#B07800')  # ZP-OVERRIDE: ZP-G import_box label uses darker amber
 ```
 
-Currently approved overrides (3 scripts):
+Currently approved overrides (2 scripts):
 - `build_zpg.py` — `AMBER` override for darker import_box label colour
 - `build_tools.py` — `GREEN` (GREEN_DARK value) and `GREY` (darker for captions)
-- `build_zp_philosophical_question.py` — `AMBER` brighter accent for essay style
 
 ### Standard neutral colours (use these — not raw HexColor)
 

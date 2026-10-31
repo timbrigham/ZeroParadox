@@ -15,8 +15,8 @@ it, aren't actually missing: both fall out of Bourbaki–Witt, which Mathlib alr
 file is the adapter that shows it works in Lean. It uses choice, in Mathlib's Bourbaki-Witt proof
 and in the adapter's own step from chains to directed sets, and that is a fact about this route,
 not about the theorem. Pataraia's own proof needs neither choice nor excluded middle, and Escardó
-and de Jong formalized a version of it in Agda. We finally got a port of theirs working in Lean, in
-PataraiaChoiceFree.lean, with no axioms at all. I defer to my AI assistant regarding the specifics
+and de Jong formalized a version of it in Agda. We finally got a Lean proof following theirs working,
+in PataraiaChoiceFree.lean, with no axioms at all. I defer to my AI assistant regarding the specifics
 of how the internals work.
 
 ---
@@ -24,7 +24,7 @@ of how the internals work.
 Monotone `f` on a Mathlib `CompletePartialOrder` (directed-complete, least element `⊥`) has a least
 fixed point (Taylor Thm 118), in every set holding `⊥` and closed under `f` and directed joins
 (Pataraia induction, Cor. 119). Bourbaki–Witt plus classical logic ⇒ both STATEMENTS here; the
-no-axiom proof is `ZeroParadox/Order/PataraiaChoiceFree.lean`; prior art in the ride-along `.md`.
+no-axiom proof is `ZeroParadox/Order/PataraiaChoiceFree.lean`, an independent Lean rendering, under this repository's Apache License, Version 2.0, of the argument TypeTopology (Agda, GPL-3.0) formalizes; prior art in the ride-along `.md`.
 -/
 
 namespace ZeroParadox

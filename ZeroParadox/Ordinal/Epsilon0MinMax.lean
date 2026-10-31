@@ -4,7 +4,7 @@ import ZeroParadox.Ordinal.Epsilon0LeastFP
 set_option maxHeartbeats 400000
 
 /-!
-# ε₀ is min ≡ max: the snap ⊥ → ε₀ is one Kleene chain (seed → closure)
+# ε₀ is min ≡ max: the snap from ⊥ of `Ordinal` to ε₀ is one Kleene chain (seed → closure)
 
 ## Engineer's Take
 
@@ -15,7 +15,7 @@ redundant and believed to be stronger representation.
 ---
 
 ## Formal Overview
-Minimum and maximum are the two faces of a **least fixed point** (Knaster–Tarski / Kleene), so ε₀
+Minimum and maximum are the two faces of a **least fixed point**, so ε₀
 carrying both is a signature rather than a tension. Why, and the two fences on reading ⊥ as *the*
 seed: `ZeroParadox/Ordinal/Epsilon0MinMax.md`.
 -/
@@ -49,8 +49,10 @@ the ω-tower. -/
 
 /-- **The min ≡ max capstone.** One theorem, one object: ε₀ (`epsilonZero`) is simultaneously the
     **supremum** of the ω-tower (the *max* reading) and the **least** fixed point of `α ↦ ω^α` (the
-    *min* reading). That an object is both at once is the defining signature of a least fixed point:
-    the least fixed point reached from a seed *is* the supremum of the ascending iterates. Bundles
+    *min* reading). That an object is both at once is the signature of a least fixed point reached
+    by iterating a normal map: the least fixed point at or above a seed *is* the supremum of the
+    ascending iterates (the `example` after `isLeastFixedPointFrom_nfp`,
+    `ZeroParadox/Order/LeastFixedPoint.lean`). Bundles
     `epsilonZero_eq_iSup` (max, `Gentzen.lean`) with `epsilonZero_fixedPoint` and
     `epsilon0_least_fixedpoint` (min, `Epsilon0LeastFP.lean`) — previously an impression spread across
     two files, here one statement.
@@ -90,12 +92,11 @@ end ZeroParadox
 /-! ## Axiom Purity Check
 
 Both results are corollaries of Mathlib's `Ordinal` fixed-point theory (`nfp`, `epsilon`), which is
-classically built, so `Classical.choice` is expected here. **Status: UNCLASSIFIED** — calling it
-"representational, not intrinsic" (as an earlier version of this note did) is an *eliminability* claim,
-and no choice-free re-proof of these results was located as of 2026-08-02. Note also that the choice is NOT in the `Ordinal`
-type, which measures `[propext, Quot.sound]`; it enters through the order instance and the operations.
-ZP-N's choice-free snap-from-below on `ONote` is suggestive for these results without being a re-proof of
-them (cf. `ZeroParadox/Ordinal/ConstructiveOrdinals.lean`). Recorded honestly below. -/
+classically built. **Status: STATEMENT-CARRIED** (`ZeroParadox/Category/ChoiceCannotBe.md`): both
+statements, only assumed, already report `Classical.choice` (statement control, measured 2026-10-08).
+The choice is NOT in the `Ordinal` type (`[propext, Quot.sound]`); it enters through the order instance
+and the operations. The open question is a restatement on a choice-free carrier: ZP-N's snap-from-below
+on `ONote` (`ZeroParadox/Ordinal/ConstructiveOrdinals.lean`) is evidence for it, not a re-proof. -/
 
 section PurityCheck
 open ZeroParadox

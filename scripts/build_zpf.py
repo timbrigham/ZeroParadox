@@ -1,29 +1,11 @@
 """
-Build ZP-F: The Counterexamples (v1.10)
-v1.9: DEAD LINK AND STALE ABSENCE CLAIM (Tim ruling, 2026-10-01): the Dual Limit Condition remark said no type bridge between the ordinal and p-adic types is established in ZP-L and pointed at "ZP-L §V, Remaining Gap", a heading ZP-L no longer has. cnfToZp2 maps the omega-tower into Z2 (ZeroParadox/Ordinal/CnfBridge.lean); the sentence now reads that the identification is a co-witness, not an identity, that the literal eps0 = 0 is ill-typed (cnf_bridge_type_boundary), and points at ZP-L's "The Bridge: What Is Formal and What Is Assumed".
-v1.8: DECISION BATCH REMEDIATION AFTER GATE ROUND 2 (2026-09-15): the opening's 'so that it is taken follows from the occurrence commitment together with DA-1' was a non sequitur (the NO-GO gauge does not give occurrence) and sat in the ordered-field setting where the snap is proved impossible; the clause is removed and the sentence ends at the gauge.
-v1.7: DECISION BATCH REMEDIATION ROUND 2 (Tim rulings, 2026-09-15): the opening said occurrence 'is a commitment of the framework rather than one of its theorems'; now the Snap occurring follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2).
-v1.6: FORCING OVERCLAIM RETRACTED. The document described the snap as a forced transition without ever hedging occurrence. T-SNAP fixes the transition's SHAPE; Order/Snap.lean's tsnap_holds_but_nothing_moves proves it holds in a model where nothing moves, so occurrence is a framework commitment. Prose only.
-v1.4: Vocabulary fix — "departure from the null state" → "departure from ⊥" in preamble. Palette rebuild.
-v1.3: K-16 vocabulary fix — "topological isolation of zero" → "valuative gap at zero
-(v_p(0) = +∞)" in §VI body prose.
-v1.0: Initial release. Establishes formally that any linearly ordered field —
-      notably ℝ and ℚ — is structurally incapable of hosting the Binary Snap.
-      General case ([Field F] [LinearOrder F] [IsStrictOrderedRing F]) proved
-      first; ℝ given as the canonical instance.
-v1.1: Added §VI — philosophical note on why ℝ is the wrong setting: the
-      inversion of richness, the Ostrowski forcing argument, and zero as limit
-      point versus structural origin.
-v1.2: §VI Remark: Dual Limit Condition extended — squeeze as structurally
-      necessary (recurrence across ZPL/ZPM); surreal numbers as boundary test
-      case; theorem development pathway noted. Vocabulary fix: 'topologically
-      isolated' → 'valuatively distinguished' in §VI body.
+Build ZP-F: The Counterexamples (v1.20)
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.10'
+VERSION = '1.20'
 FIRST_RELEASED = 'April 2026'
 
 def build():
@@ -64,11 +46,25 @@ def build():
     E.append(body(
         'This result contextualises the choice of Q&#8322; in ZP-B. Among all completions '
         'of &#8474;, Ostrowski\'s theorem identifies exactly two kinds: Archimedean completions '
-        '(such as &#8477;, where zero is a limit point and density excludes any floor) and '
-        'non-Archimedean completions (&#8474;<sub>p</sub>, where zero is valuatively distinguished '
-        '(v<sub>p</sub>(0) = +&#8734;) from all nonzero elements). Q&#8322; is the non-Archimedean completion at p&#160;=&#160;2 — '
-        'the minimum prime compatible with binary existence (AX-B1). '
-        'The valuative gap at zero is not imposed from outside; it follows from the completion.'))
+        '(&#8477;, a densely ordered field, so no element has a first step) and '
+        'non-Archimedean completions (Q<sub>p</sub>, where v<sub>p</sub>(0) = +&#8734; while '
+        'every nonzero element has a finite valuation). Q&#8322; is the non-Archimedean completion at p&#160;=&#160;2, '
+        'the prime fixed by ZP-B Theorem T0 from binary existence (AX-B1) together with the minimality '
+        'principle MP-1, a design commitment (T0 in Lean: t0_mp1_faithful_nonredundant and '
+        't0_mp1_least_prime_unique in ZeroParadox/Valuation/Padic.lean take MP-1 as hypotheses, in two readings). '
+        'In both kinds zero is a metric limit of nonzero elements (for Q&#8322;, '
+        'floor_reach_separates_mu_nu), so being a limit point does not separate them. The '
+        'topology does: Q&#8322; is totally disconnected (ZP-B, t5_totallyDisconnected), while '
+        '&#8477; is connected (place_topological_signature), so not totally disconnected '
+        '(real_no_snap). The order separates '
+        'them globally, not at zero: at 0 neither has a first step (&#8477; in its field order, '
+        'Q&#8322; in its norm preorder), and globally &#8477; is '
+        'densely ordered (axb1_fails_everywhere_iff_dense), in its norm preorder as in its field '
+        'order, while Q&#8322;\'s norm preorder is not dense (the &#167; ROLE examples in '
+        'ZeroParadox/BottomCannotBe.lean). '
+        'That zero has valuation +&#8734; is set by definition, not produced by the completion: '
+        'Mathlib\'s Padic.addValuationDef assigns &#8868; to 0 by an explicit case. What holds in '
+        'Q&#8322; is that only 0 has infinite valuation (padic_addVal_eq_top_iff).'))
     E.append(sp(4))
 
     # ── II. The General Result ────────────────────────────────────────────────
@@ -168,13 +164,19 @@ def build():
     E.append(body(
         'ZP-F is self-contained and does not feed formally into any other layer. '
         'It is the negative complement to ZP-B: where ZP-B establishes that Q&#8322; '
-        'can host the snap (via the 2-adic valuation and clopen ball structure), '
-        'ZP-F establishes that &#8477; — and any linearly ordered field — cannot.'))
+        'removes the topological obstruction to the snap (its 2-adic topology is totally '
+        'disconnected, t5_totallyDisconnected, with clopen balls), ZP-F establishes that &#8477; — and any linearly ordered field — '
+        'cannot host it. Neither supplies the first step AX-B1 commits to, a cover of &#8869; on '
+        'the state carrier, the set of states a run S moves through, ordered as in ZP-A '
+        '(HasFirstStep). t_snap_given_cover assumes the run\'s first step is a cover (hcov); '
+        'with CC-1, the commitment that the run starts at &#8869; (S 0 = &#8869;), that step is '
+        'a cover of &#8869;. MachinePhase meets the commitment: its state c&#8321; covers its '
+        '&#8869;, c&#8320;.'))
     E.append(body(
         'The dependency order of the framework places ZP-F as independent:'))
     E.append(data_table(
         ['Layer', 'Role', 'Dependency'],
-        [['ZP-B', 'p-Adic topology — Q&#8322; hosts the snap', 'ZP-A'],
+        [['ZP-B', 'p-Adic topology — Q&#8322; removes the topological obstruction', 'ZP-A'],
          ['ZP-F', 'Counterexample — &#8477; and ordered fields cannot host the snap', 'None (self-contained)'],
          ['ZP-G', 'Category theory', 'Self-contained; ZP-E conceptually']],
         [0.8*inch, 3.5*inch, 2.2*inch]
@@ -197,21 +199,58 @@ def build():
         'The exclusion of &#8477; is not an isolated fact about one number system. '
         'F-SNAP-IMPOSSIBLE applies to any linearly ordered field. By Ostrowski\'s theorem, '
         'every completion of &#8474; falls into exactly one of two classes: Archimedean '
-        '(including &#8477;) or non-Archimedean (the p-adic fields &#8474;<sub>p</sub>). '
+        '(including &#8477;) or non-Archimedean (the p-adic fields Q<sub>p</sub>). '
         'The theorems of this document eliminate the entire Archimedean class. '
-        'What remains is the non-Archimedean class. The framework\'s binary existence '
-        'constraint (AX-B1) then selects p&#160;=&#160;2 as the minimum prime. '
-        'Q&#8322; is not chosen against &#8477;; it is what remains after &#8477; — '
-        'and every Archimedean completion — has been ruled out.'))
+        'What remains is the non-Archimedean class, every Q<sub>p</sub>, not Q&#8322; alone. '
+        'Among these, ZP-B Theorem T0 fixes p&#160;=&#160;2 from binary existence (AX-B1) together '
+        'with the minimality principle MP-1, a design commitment. So Q&#8322; is not chosen against '
+        '&#8477;: ruling out &#8477; and every Archimedean completion leaves the p-adic fields, and '
+        'T0, under MP-1, then selects Q&#8322; among them.'))
     E.append(body(
-        'The structural difference that the Ostrowski classification makes precise can be '
-        'stated directly. In any Archimedean completion, zero is a limit point: every '
-        'neighbourhood of zero contains a smaller positive element. The snap requires zero '
-        'to be something different — a structural origin from which the first departure is '
-        'forced, with no smaller departure possible. In Q&#8322;, zero carries the infinite '
-        '2-adic valuation; it is valuatively distinguished from every nonzero element. That removes the density obstruction; it does not by itself supply a first step, since the 2-adic norm values accumulate at 0 and Q&#8322; has no closest nonzero element either. The first step is AX-B1. '
-        'The snap does not fail in &#8477; by accident. It fails because &#8477; and the '
-        'snap require incompatible roles for zero: limit point versus structural origin.'))
+        'The structural difference can be stated directly. It has two fences, the order and the '
+        'topology, and the order separates &#8477; from Q&#8322; globally, not at zero. '
+        'AX-B1 commits the point the snap leaves to having a first step: an element directly above '
+        'it with nothing strictly between, a cover (HasFirstStep). A cover of a least '
+        'element is what order theory calls an atom (Mathlib bot_covBy_iff). An ordered field has no '
+        'bottom element; its 0, which plays that role here, has no first step '
+        '(axb1_fails_in_ordered_field). That is one instance of a stronger fact: an order is '
+        'dense if and only if no element at all has a first step '
+        '(axb1_fails_everywhere_iff_dense). The equivalence quantifies over every element, so '
+        'density rules out a first step at 0, and one element without a first step does not '
+        'make an order dense. In the metric chart zero is a limit point of the nonzero elements, '
+        'in &#8477; and equally in Q&#8322;; so being a limit point does not decide the snap. '
+        'Q&#8322;\'s zero is a floor of the limit kind: the doubling orbit of a nonzero element '
+        'converges to 0 and does not reach it in finite time, while counting down in &#8469; '
+        'reaches 0 in finitely many steps (floor_reach_separates_mu_nu). In the valuation chart '
+        'zero sits at the other end: v(0) = +&#8734;, the greatest value, and no nonzero element '
+        'shares it (padic_addVal_eq_top_iff). Neither fact is a first step. No order instance '
+        'on Q&#8322; synthesizes in Mathlib (LT &#8474;_[2] does not). Take instead the norm '
+        'preorder of the &#167; ROLE examples in ZeroParadox/BottomCannotBe.lean '
+        '(Preorder.lift of the norm). At zero the order does not separate the two: 0 is least and '
+        'has no first step, as in &#8477;\'s field order, since between 0 and any nonzero a lies an '
+        'element of strictly smaller nonzero norm; that holds in every nontrivially normed field, '
+        '&#8477;\'s norm preorder included (the &#167; ROLE example stating it for every such field). '
+        'Globally the order does: Q&#8322;\'s norm preorder is not dense, since every nonzero norm is '
+        'an integer power of 2 (Padic.padicNormE.image) and so 2 is covered by 1, its norms being '
+        '1/2 and 1 (the &#167; ROLE example stating that cover), while &#8477; is densely ordered in '
+        'its field order and in its norm preorder alike (the &#167; ROLE example stating both). In '
+        'the standard terms this is a discrete group of norm values against a dense one; Mathlib\'s '
+        'name for the dense side is DenselyNormedField, &#8477; is an instance '
+        '(Real.denselyNormedField), and its density lemma is NormedField.exists_lt_norm_lt. In the '
+        'valuation order 0 is greatest, v(0) = &#8868; (addVal_bot). '
+        'The first step AX-B1 commits to is a cover of &#8869; on the state carrier, in ZP-A\'s '
+        'induced order (HasFirstStep), a commitment. t_snap_given_cover '
+        '(ZeroParadox/Order/Snap.lean) assumes the run\'s first step is a cover (hcov); with '
+        'CC-1, the run\'s start at &#8869;, that step is a cover of &#8869;. The converse fails: a '
+        'run can start at a &#8869; that has a cover while its own first step is not one '
+        '(ZeroParadox/Order/SnapCannotBe.lean). MachinePhase meets the commitment (the '
+        'MachinePhase example in ZeroParadox/Order/Snap.lean stating that c&#8321; covers its '
+        '&#8869;). In neither ordering of Q&#8322; does its 0 have a first step: in the norm '
+        'preorder it has none, and in the valuation order nothing lies above it. '
+        'The snap does not fail in &#8477; by accident. In the order it fails because &#8477; '
+        'is densely ordered, and in a dense order no element has a first step, 0 included; in '
+        'the topology &#8477; is connected (place_topological_signature), so not totally '
+        'disconnected (real_no_snap), a second and separate fence.'))
     E.append(sp(4))
 
     E.append(remark_box(
@@ -221,15 +260,16 @@ def build():
             'structural account of why the snap is domain-specific.',
             'In any dense ordered field, 0 has no nearest neighbour from above: for any '
             '&#949; > 0 there exists &#948; with 0 < &#948; < &#949; (F-DENSITY). Zero is '
-            'a topological limit point from above with no minimum positive element. The snap '
-            'requires a discrete first step above 0; density forbids it. This is the blocking '
-            'condition established in this document.',
-            '&#949;&#8320; (the snap threshold, established in ZP-L) is the least fixed '
+            'a topological limit point from above with no minimum positive element. AX-B1 '
+            'commits the point the snap leaves to a first step (HasFirstStep); density forbids '
+            'a first step at every element, 0 included (axb1_fails_everywhere_iff_dense), so '
+            'the block is global, not located at 0. This is the blocking condition established '
+            'in this document.',
+            '&#949;&#8320; of Ordinal (the snap threshold in the ordinal chart, ZP-L) is the least fixed '
             'point of &#945; &#8614; &#969;^&#945;: it is not reachable by any finite '
             'iteration of the &#969;^(&#183;) operation, only by the limit of the tower '
-            '&#969;, &#969;^&#969;, &#969;^&#969;^&#969;, &#8230; The snap is possible '
-            'at &#949;&#8320; precisely because it has no predecessor in the ordinal '
-            'hierarchy: no ordinal &#945; satisfies &#945; + 1 = &#949;&#8320;.',
+            '&#969;, &#969;^&#969;, &#969;^&#969;^&#969;, &#8230; It has no predecessor in '
+            'the ordinal hierarchy: no ordinal &#945; satisfies &#945; + 1 = &#949;&#8320;.',
             'Both cases are limit-type conditions: the field case is a topological limit '
             'point with no minimum positive neighbour above 0; the ordinal case is a limit '
             'ordinal (specifically, the least fixed point of &#945; &#8614; &#969;^&#945;) '
@@ -237,26 +277,42 @@ def build():
             'both describe a boundary approached but not reachable by finite steps on one '
             'side &#8212; but it is not a proved identification. The two structures live in '
             'different mathematical categories.',
-            'A domain that can host the snap must satisfy two conditions simultaneously: '
-            '(1) the boundary is a genuine limit (no nearest neighbour &#8212; what makes '
-            'the threshold non-arbitrary) and (2) the crossing is discrete (a step, not a '
-            'continuous transition). Dense ordered fields have condition (1) but density '
-            'makes condition (2) impossible. In the non-standard naturals *&#8469; with '
+            'In the ordinal chart the snap meets two conditions at once, at '
+            'opposite ends of the crossing: (1) below the landing, the boundary is a limit with '
+            'no immediate predecessor (as &#949;&#8320; is approached by the tower and no '
+            '&#945; has &#945; + 1 = &#949;&#8320; &#8212; what makes the threshold '
+            'non-arbitrary) and (2) above the point left, the crossing is discrete: that point '
+            'has a first step, a cover (HasFirstStep). Condition (1) is not required of every '
+            'host: in the two-state carrier MachinePhase, where T-SNAP holds (t_snap_derived), '
+            'the landing c&#8321; covers the bottom c&#8320; (the MachinePhase example in '
+            'ZeroParadox/Order/Snap.lean stating that c&#8321; covers &#8869;), so it has an immediate '
+            'predecessor. Dense ordered fields fail condition (2) '
+            'at every element (axb1_fails_everywhere_iff_dense). Their 0 also lacks an immediate '
+            'predecessor, for the same reason, and without (2) that does not help. '
+            'In the non-standard naturals *&#8469; with '
             'the order topology, every element has an immediate predecessor, so there is '
             'no limit point at infinity in the order-topology sense; condition (1) fails '
             'informally. (This *&#8469; observation is informal &#8212; not a proved result '
             'of this document or ZP-L.)',
-            'The tower encodings cnfToZp2(towerNONote n) converge to 0 in &#8484;&#8322; '
+            'The tower images cnfToZp2(towerNONote n) converge to 0 in &#8484;&#8322; '
             'as n &#8594; &#8734; (proved in ZP-L), and &#949;&#8320; is the minimal '
-            'snap threshold in the ordinal setting (proved in ZP-L). The structural '
-            'identification of these two results &#8212; that &#8484;&#8322;\'s limit at 0 '
-            'and the ordinal threshold at &#949;&#8320; reflect the same boundary &#8212; '
-            'is a co-witness, not an identity (cnf_bridge_type_boundary, '
-            'ZeroParadox/Ordinal/CnfBridge.lean): cnfToZp2 maps the &#969;-tower into '
-            '&#8484;&#8322;, and the literal &#949;&#8320; = 0 is ill-typed with 0 the 2-adic zero, '
-            'failing to elaborate (see ZP-L, '
-            'The Bridge: What Is Formal and What Is Assumed), and well-typed and false with 0 the '
-            'ordinal zero (epsilon0_ne_zero).',
+            'snap threshold in the ordinal setting (proved in ZP-L). cnf_bridge_type_boundary '
+            '(ZeroParadox/Ordinal/CnfBridge.lean) states these as co-witnesses, and not as an identity, '
+            'in three conjuncts: &#949;&#8320; is the least fixed point of &#945; &#8614; '
+            '&#969;^&#945; at or above the bottom of the ordinals; the images cnfToZp2(towerNONote n) '
+            'converge to the 2-adic 0; and each towerNONote n represents the n-th stage of the '
+            '&#969;-tower (towerNONote_repr). cnfToZp2 maps the &#969;-tower into &#8484;&#8322;. '
+            '&#949;&#8320; &#8800; 0, with 0 the ordinal zero, is a theorem in the '
+            'ordinals (epsilon0_ne_zero). An equation between &#949;&#8320; and the 2-adic 0 does '
+            'not type-check, with no coercion between the ordinals and &#8484;&#8322; in either '
+            'direction; a Lean guard in that file detects the failure (MC-1 / ZP-P). Under cnfToZp2 the 2-adic 0 is '
+            'the image of the seed stage towerNONote 0, whose ordinal value is the bottom of the '
+            'ordinals, and the limit of the stages\' images; &#949;&#8320; has no image there, since '
+            'every ordinal notation in the map\'s domain denotes an ordinal below &#949;&#8320; '
+            '(repr_lt_epsilon0, ZeroParadox/Ordinal/PricedInterface.lean). Through another map &#949;&#8320; does land on that 0: the canonical threshold map sends '
+            '&#949;&#8320; to c&#8321; and snapEmbed sends c&#8321; to 0 (snap_state_zp2_is_zero, '
+            'ZP-M), a map value, not an identity (see ZP-L, The Bridge: What Is Formal and What Is '
+            'Assumed).',
             'This is an observation, not a proved theorem. The blocking result '
             '(F-SNAP-IMPOSSIBLE) is proved here; the threshold and convergence results '
             'are proved in ZP-L. The claim that both conditions reflect a common structural '
@@ -279,8 +335,9 @@ def build():
             'is required to exclude them, has not been determined. '
             '(Informal &#8212; not a result of this document.)',
             'Development path toward a formal theorem: prove the two conditions as '
-            'independent Lean results (density impossibility established here; limit ordinal '
-            'necessity established in ZP-L), then prove they agree on the same structural '
+            'independent Lean results (density impossibility established here; &#949;&#8320; '
+            'a limit ordinal, the Order.IsSuccLimit example in '
+            'ZeroParadox/Order/SnapCannotBe.lean), then prove they agree on the same structural '
             'point. The surreal case is the critical test of whether two conditions are '
             'jointly sufficient.',
         ]

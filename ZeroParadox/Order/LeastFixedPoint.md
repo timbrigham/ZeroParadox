@@ -66,19 +66,25 @@ of two `Ordinal.nfp_le_fp` applications, where the schema section abstracts the 
 own seed-parametric general statement is one section up:** `isLeastFixedPointFrom_nfp` — with
 `IsLeastFixedPointFrom.unique` the ε₀ result is its instantiation, needing no separate proof idea.
 
-The classical form is Veblen 1908 — **Corollary 1 clause (A)** (*"`f'(1)` is the least upper bound of
+The classical form is Veblen 1908 — **Corollary 1 to Theorem 4, clause (A)** (*"`f'(1)` is the least upper bound of
 `f(1), f[f(1)], ⋯`"*) is the **seed-`1`** case — Veblen indexes from 1, so seed `0` lies outside his
-range and Mathlib's `epsilon_zero_eq_nfp` is its home — **Corollary 1 clause (B)** the
-between-consecutive-rungs case, and **Corollary 4** names the ω-power instance (*"the first derived
+range and Mathlib's `epsilon_zero_eq_nfp` is its home — **clause (B) of the same corollary** the
+between-consecutive-rungs case (the clause labels are editorial; Veblen's text has none), and
+**Corollary 4 to Theorem 4** names the ω-power instance (*"the first derived
 function of ωˣ is the function ε"*); the underlying properties are credited by Veblen to Cantor. See
-`ZeroParadox/Ordinal/Epsilon0LeastFP.lean` for the full quotation of Corollary 1 and the residual delta
+`ZeroParadox/Ordinal/Epsilon0LeastFP.md` for the full quotation of that corollary and the residual delta
 against it. Mathlib carries the same shape for `+` and `*` (`Ordinal.nfp_add_eq_mul_omega0`,
 `Ordinal.nfp_mul_eq_opow_omega0`), the seed-ranged ω-power entry being the one not located in the pin.
 
+`Statement:` each ε-number rung is ⊥ of `Set.Ici rung` and **never ⊥ of `Ordinal`**
+(`Ordinal.epsilon_pos`); the iteration that re-seeds just above a rung starts at succ(rung), the least
+element of `Set.Ioi rung`, and closes at the next ε-number: `ε_(succ o) = nfp (ω^·) (succ ε_o)`
+(`epsilon_succ_eq_nfp`; `ZeroParadox/Ordinal/Epsilon0CannotBe.lean` § I-b).
+
 `Reading:` **INVARIANT** (conjectural) — read the seed as a **role**, not an origin: the ratified
-*"iterative bottoms"* picture, in which the rungs are bottoms relative to their iteration and **never ⊥
-itself**. The same **shape** is a theorem in another carrier: `every_node_is_a_floor`
-(`ZeroParadox/Valuation/LocalFloor.lean`).
+*"iterative bottoms"* picture, in which a rung is the base the next iteration re-seeds just above
+and, in that next iteration, the ε₀ role, the closure, is filled by the next ε-number. The same **shape** is a theorem in
+another carrier: `every_node_is_a_floor` (`ZeroParadox/Valuation/LocalFloor.lean`).
 
 ⚠ **SHAPE, never instance-of** — different carriers, different mechanisms, and different conclusions.
 ⚠ `ε₀ ≠ ⊥` is untouched bedrock (`epsilon0_ne_bot`); nothing here identifies a rung with ⊥. ⚠ The

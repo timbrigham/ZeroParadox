@@ -1,24 +1,5 @@
 """
-Build ZP-D Illustrated Companion (v1.13)
-v1.11: vocab fix: null state → ⊥.
-v1.10: K-12 vocab fix — "topological isolation" -> "clopen separation" in DP-1 body text.
-v1.9: Strip version number from companion footer.
-v1.7: Disclaimer updated — "formal ontology" replaced with "formal document"; "proven" → "proved".
-Changes from v1.5:
-- t_map_diagram: dh increased (2.2 → 2.8 in), cy changed to fixed value 108 so bottom
-  labels (cy - r_outer - 30 = 8) no longer overflow below y=0; internal title string removed
-  (redundant with caption); "isolation → orthogonality" label corrected to
-  "clopen separation → orthogonality".
-Changes from v1.4:
-- "topologically isolated in ℚ₂" replaced with "clopen-separated in ℚ₂" in body text and
-  diagram caption — 0 is not a topologically isolated point in ℚ₂; the correct property is
-  clopen-ball separation (total disconnectedness). DP-1 formal name references unchanged.
-Changes from v1.3:
-- T5-b added: every genuine state transition produces an orthogonal shift
-  (not just the Binary Snap). Key result box added after T4.
-Changes from v1.2:
-- n=2 foundational minimum explained in "What Is ZP-D Doing?"
-- R3 (T locally constant and continuous) noted near the T operator key results
+Build ZP-D Illustrated Companion (v1.18)
 """
 
 import os
@@ -107,7 +88,7 @@ def t_map_diagram():
 
     return d
 
-VERSION = '1.13'
+VERSION = '1.18'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -178,10 +159,12 @@ def build():
         'orthogonal — they have nothing in common.'))
     E.append(example_box('Real-world example — Compass directions', [
         'North and East are orthogonal — perpendicular, sharing nothing. If you know how far '
-        'north something is, that tells you nothing about how far east it is. ZP-D says: states '
-        'that are clopen-separated in ℚ₂ (placed in different open-and-closed sets, with no '
-        'continuous path between them) should be represented as orthogonal vectors in H '
-        '(no shared component). Geometric independence matches clopen separation.',
+        'north something is, that tells you nothing about how far east it is. ZP-D fixes a level and '
+        'cuts ℚ₂ into finitely many open-and-closed cells, with no continuous path between '
+        'cells. Points in different cells are represented as orthogonal vectors in H (no shared '
+        'component); points in the same cell share one vector. Every two distinct points of ℚ₂ are '
+        'separated by some open-and-closed set, so asking this of all of them at once would need '
+        'infinitely many directions, which H does not have.',
     ]))
     E.append(sp(4))
 
@@ -198,31 +181,35 @@ def build():
     E.append(cbody(
         'ZP-D constructs an explicit map T: ℚ₂ → H that carries the topological structure of '
         'ℚ₂ into the state geometry of H. The central insight: clopen separation in ℚ₂ '
-        'corresponds to orthogonality in H. States with no continuous path between them are '
-        'represented as perpendicular vectors.'))
+        'corresponds to orthogonality in H, at a chosen level. Points in different cells of '
+        'that level are represented as perpendicular vectors; points in one cell share a vector.'))
     E.append(cbody(
-        'ZP-D works with exactly two foundational states: ⊥ (non-existence) '
-        'and the minimum nonzero state (ε₀, existence). This is not a simplifying assumption — '
+        'ZP-D works with exactly two foundational states: ⊥ of OntologicalStates (non-existence) '
+        'and ε₀, the state off ⊥ of OntologicalStates (existence). This is not a simplifying assumption — '
         'it is the irreducible minimum. The core question is whether any transition from ⊥ to '
         'a first state is possible, and for that question n=2 is the smallest meaningful case. '
-        'No claim in ZP-D requires n > 2. Binary is the logical ground floor, not a placeholder '
+        'The right angle between e₀ and e₁ already exists at n=2; the map T from ℚ₂ reaches it at n=2 only '
+        'when ε₀ lies outside ℤ₂, and otherwise uses a finer level and more dimensions. '
+        'Binary is the logical ground floor, not a placeholder '
         'for a more general construction.'))
 
     # ── Page 2: T operator ─────────────────────────────────────────────────────
     E.append(Paragraph('The Transition Operator T', CS['h1']))
     E.append(cbody(
-        'T is constructed by <b>basis assignment</b>: the clopen ball partition of ℚ₂ maps to '
-        'an orthonormal basis of H. An <b>orthonormal basis</b> is a set of vectors that are '
+        'T is constructed by <b>basis assignment</b>: at a chosen level k, ℚ₂ is cut into 2<super>k</super> + 1 '
+        'clopen cells (the 2<super>k</super> small balls that make up the 2-adic integers ℤ₂, plus '
+        'everything outside ℤ₂ as one cell), and the cells map to an orthonormal basis of H. An <b>orthonormal basis</b> is a set of vectors that are '
         'mutually orthogonal (all inner products equal zero) and each have length exactly 1. '
         'Think of it as a coordinate system where every axis is perpendicular to every other '
         'and all axes are the same length.'))
     E.append(cbody(
-        'The element 0 maps to e₀; the first non-zero state ε₀ maps to e₁; and so on. Because '
-        'clopen balls are completely separated (ZP-B), their images under T are orthogonal in H.'))
+        'The element 0 maps to e₀; a nonzero point ε₀ of ℚ₂, fixed at the chosen finest rung, maps to e₁; and so on. Because '
+        'the cells are clopen and completely separated (ZP-B), their images under T are orthogonal in H. '
+        'The level k is chosen fine enough that 0 and ε₀ fall in different cells.'))
     E.append(t_map_diagram())
     E.append(ccaption(
         'T maps clopen separation (left, ℚ₂) to orthogonality (right, H = ℂⁿ). '
-        '0 (amber) maps to e₀. Non-zero point x maps to e₁. Clopen separation '
+        '0 (amber) maps to e₀. A point x in the cell of ε₀ maps to e₁. Clopen separation '
         'becomes orthogonality: ⟨e₀, e₁⟩ = 0.'))
     E.append(sp(6))
 
@@ -239,13 +226,13 @@ def build():
     E.append(sp(6))
 
     # ── Key results ────────────────────────────────────────────────────────────
-    E.append(key_result_box('Key Result: T Exists and is Unique up to Rotation (T2, T3)',
-        'T can be explicitly constructed by basis assignment (T2). It is unique up to a '
-        'rotation of the basis (T3) — meaning any two valid T operators differ only in which '
-        'direction they label as "e₀" vs. "e₁" vs. "e₂" etc. This is called unitary '
-        'equivalence: like choosing different compass orientations for a map, the underlying '
-        'geometry is the same. Two maps that agree on distances but point north differently '
-        'are equivalent in all the ways that matter.'))
+    E.append(key_result_box('Key Result: T Exists and is Unique up to Unitary Equivalence (T2, T3)',
+        'T can be explicitly constructed by basis assignment (T2). At one level k it is unique up to a '
+        'unitary transformation of H (T3). Every valid T sends 0 to e₀ and the fixed ε₀ to e₁, because '
+        'D2(i) and D2(ii) require it, so the unitary relating two valid T operators at the same level '
+        'leaves e₀ and e₁ where they are and can only rotate the remaining directions. This is called '
+        'unitary equivalence: like a wheel turned on a fixed axle, the axle stays put and only the rest '
+        'turns, and every distance and angle is unchanged.'))
     E.append(sp(4))
     E.append(cbody(
         '<b>R3 — T respects the topology:</b> A map between topological spaces can introduce '
@@ -261,10 +248,11 @@ def build():
     E.append(sp(4))
     E.append(key_result_box('Key Result: Every Genuine Transition Produces an Orthogonal Shift (T5-b)',
         'The Snap is not a special case. For any state sequence, whenever two consecutive '
-        'states are distinct — meaning the sequence actually moved — their T-images in H '
-        'are orthogonal. Each genuine transition opens a new direction. The whole ascending '
-        'chain, not just the first step, unfolds through orthogonal shifts. '
-        'Lean: t5_strict_orthogonal (axiom-free, via DP-1).'))
+        'states sit in different cells of ℚ₂ — meaning the sequence actually moved between cells — '
+        'their T-images in H are orthogonal. Each genuine transition is a right-angle turn away from '
+        'the state just before it. The result compares each state with the next one only: a later '
+        'state can return to a cell visited earlier, and then its image is that earlier vector again. '
+        'Lean: t5_strict_orthogonal (via DP-1).'))
     E.append(sp(8))
 
     E.append(cbody(

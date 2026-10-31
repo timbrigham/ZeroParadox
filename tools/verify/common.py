@@ -123,7 +123,10 @@ SKIP_NAMES = frozenset({'CLAUDE.md', 'RELEASES.md'})
 # The glob patterns. `.claude-local/build_*.py` was a fourth until the build scripts stopped being
 # mirrored: `scripts/` is now their only home, so the third pattern already covers them and a fourth
 # would have been a second copy of the same coverage claim.
-GLOBS = ('ZeroParadox/**/*.lean', 'scripts/*.py', 'tools/**/*.py')
+#
+# `*.lean` is the repository ROOT: the root module `ZeroParadox.lean` sits beside the corpus folder,
+# where `ZeroParadox/**/*.lean` cannot reach it (`RLY23-3`). `universe_gap()` is what notices.
+GLOBS = ('ZeroParadox/**/*.lean', '*.lean', 'scripts/*.py', 'tools/**/*.py')
 
 # The reviewed scan scope, pinned. `selftest()` asserts the live set is a SUPERSET of it, so any
 # narrowing of GLOBS, SKIP_DIRS, SKIP_NAMES or a per-checker skip fires — see SCOPE-1 there.
@@ -493,13 +496,14 @@ def tracked_md():
 # have the keys" with a tree walk instead of reading and hashing every subject — which is the whole
 # point of moving the cross-check server-side (§12-0-alpha).
 #
-# ⚠ IT IS NOT `sha1(file_bytes)`. A blob id is `sha1("blob " + bytelength + "\0" + content)`; no
-# standard hash tool produces one, which is exactly why it is read from git rather than computed.
+# ⚠ IT IS NOT `sha1(file_bytes)`. A blob id is `sha1("blob " + bytelength + "\0" + content)` after
+# git's clean filters, which is why `observe_blobs` asks `git hash-object` rather than hashing.
 #
-# ⚠⚠ AND IT NAMES THE STAGED OBJECT, NOT WHAT A CHECKER READ OFF DISK. That is the trap: a checker
-# scanning the working tree while recording a blob id would attest to bytes nobody examined. Until
-# the checkers read from the index, `unstaged_modified()` below is the fence — a file whose worktree
-# differs from its index is EXCLUDED from the record rather than recorded on the wrong bytes.
+# ⚠⚠ THE SUBJECT IS WHAT WAS READ, VERIFIED BY THE SERVICE THAT OWNS THE RULE. A checker reads the
+# WORKING TREE, so `observe_blobs` takes the blob id of those bytes and gitRobot's `ledger_subjects`
+# checks that reading against the basis: a path whose bytes are not the basis's comes back SKIPPED
+# with both blob ids, never recorded on bytes nobody examined. Nothing in this file decides which
+# paths may be subjects (`SUBJ-1`, `D1-1`).
 
 
 INDEX = 'INDEX'   # the staged content — see `ledger_subjects`
@@ -537,20 +541,20 @@ def index_blobs():
     return blobs
 
 
-def worktree_modified():
-    """Paths whose WORKING TREE differs from the index — not safe to record against a staged blob."""
-    out = subprocess.run(['git', 'ls-files', '-m'], cwd=str(REPO), capture_output=True,
-                         text=True, encoding='utf-8', errors='replace').stdout
-    return {p.strip().replace('\\', '/') for p in out.splitlines() if p.strip()}
-
-
 def ref_blobs(ref='HEAD'):
     """`{repo-relative path: blob id}` at `ref`. ONE git call, whatever the subject count.
 
     ⚠ This is the cheap half of the design. `inventory(ref)` answers "does this commit have the
-    keys" from a tree the caller already has, instead of reading and hashing every subject."""
-    out = subprocess.run(['git', 'ls-tree', '-r', ref], cwd=str(REPO), capture_output=True,
-                         text=True, encoding='utf-8', errors='replace').stdout
+    keys" from a tree the caller already has, instead of reading and hashing every subject.
+
+    ⚠ A FAILED LISTING RAISES `BasisUnresolved` rather than returning `{}`, which is also what an
+    empty tree returns (`R-ZERONULL`, `REL19-1`)."""
+    r = subprocess.run(['git', 'ls-tree', '-r', ref], cwd=str(REPO), capture_output=True,
+                       text=True, encoding='utf-8', errors='replace')
+    if r.returncode != 0:
+        raise BasisUnresolved('ls-tree %s exit %s, stderr %r'
+                              % (ref, r.returncode, (r.stderr or '').strip()[:200]))
+    out = r.stdout
     blobs = {}
     for line in out.splitlines():
         # `<mode> blob <id>\t<path>`
@@ -561,16 +565,72 @@ def ref_blobs(ref='HEAD'):
     return blobs
 
 
-def differs_from(ref='HEAD'):
-    """Paths whose worktree OR index differs from `ref` — never safe to record against its blobs."""
-    out = subprocess.run(['git', 'diff', '--name-only', 'HEAD'], cwd=str(REPO),
-                         capture_output=True, text=True, encoding='utf-8',
-                         errors='replace').stdout if ref == 'HEAD' else ''
-    return {p.strip().replace('\\', '/') for p in out.splitlines() if p.strip()}
+# ⚠⚠ BASIS-EMPTY-1. The hook runs eleven legs over ONE checkout, and each leg used to run its own
+# `write-tree`. A leg that lost `.git/index.lock` got EMPTY stdout, never checked the return code, and
+# sent `basis.value = ""`; only the ledger's refusal caught it, as an exit-2 leg nobody could explain.
+# Two changes, both needed: the hook parent resolves the tree ONCE and pins it here for every leg, so
+# legs never contend and cannot disagree; and an unresolved basis RAISES, so it is never sent.
+INDEX_TREE_ENV = 'ZPLEDGER_INDEX_TREE'
+_SHA40 = re.compile(r'^[0-9a-f]{40}$')
+_BASIS_ATTEMPTS = 5
+_BASIS_BACKOFF = 0.15          # seconds, doubled per retry: 0.15 + 0.3 + 0.6 + 1.2 at most
+
+
+class BasisUnresolved(RuntimeError):
+    """No basis could be resolved. A DIFFERENT OUTCOME, not a different message: a caller that
+    records must refuse to send, and `emit_verdict` turns this into exit 2 (`R-ZERONULL`)."""
+
+
+class SubjectsUnverified(BasisUnresolved):
+    """No verified subject set exists: the reading could not be taken, or gitRobot's
+    `ledger_subjects` could not be asked or did not answer this question. A subclass of
+    `BasisUnresolved` so every caller already refusing on an unresolved basis refuses here too —
+    "nothing could be verified" must never read as "nothing was recordable"."""
+
+
+def _git_write_tree():
+    """`(returncode, stdout, stderr)` of one `write-tree`. A seam, so controls can make it fail."""
+    r = subprocess.run(['git', 'write-tree'], cwd=str(REPO), capture_output=True,
+                       text=True, encoding='utf-8', errors='replace')
+    return r.returncode, r.stdout or '', r.stderr or ''
+
+
+def resolve_index_tree(attempts=None, backoff=None):
+    """`(tree, None)` or `(None, why)`. Retries a failed or malformed `write-tree` with backoff,
+    because the observed failure is lock contention and is transient."""
+    import time
+    attempts = _BASIS_ATTEMPTS if attempts is None else attempts
+    delay = _BASIS_BACKOFF if backoff is None else backoff
+    why = 'write-tree never ran'
+    for i in range(max(1, attempts)):
+        rc, out, err = _git_write_tree()
+        tree = out.strip()
+        if rc == 0 and _SHA40.match(tree):
+            return tree, None
+        why = 'write-tree exit %s, stdout %r, stderr %r' % (rc, tree[:60], err.strip()[:200])
+        if i + 1 < attempts:
+            time.sleep(delay)
+            delay *= 2
+    return None, '%s (after %d attempt(s))' % (why, max(1, attempts))
+
+
+def pin_index_tree():
+    """Resolve the INDEX tree once and pin it in the environment every leg inherits.
+
+    Returns `(tree, None)` or `(None, why)`. ⚠ ASSIGNMENT, AND A FAILURE CLEARS THE PIN: a value
+    inherited from the caller describes some other index, so it must never survive into the legs.
+    Unpinned legs resolve for themselves and fail loud (exit 2) if they cannot."""
+    tree, why = resolve_index_tree()
+    if tree:
+        os.environ[INDEX_TREE_ENV] = tree
+    else:
+        os.environ.pop(INDEX_TREE_ENV, None)
+    return tree, why
 
 
 def ledger_basis(ref='HEAD'):
-    """The `basis` block for a record: a resolved ref, never a symbolic name.
+    """The `basis` block for a record: a resolved ref, never a symbolic name. RAISES
+    `BasisUnresolved` rather than returning an empty or malformed value.
 
     ⚠ `kind` is one of ('range', 'ref', 'scope', 'tree') — the ledger rejects anything else, which
     is how `'index'` was caught on the first wiring attempt.
@@ -578,15 +638,29 @@ def ledger_basis(ref='HEAD'):
     ⚠ INDEX MODE RESOLVES TO THE TREE THE COMMIT WILL CARRY. `write-tree` turns the index into a
     real tree object, which is exactly what the pending commit will point at — so the basis names
     the content being committed rather than the parent it is being committed onto. It writes an
-    object and changes no ref, so it is safe to run before a commit."""
+    object and changes no ref, so it is safe to run before a commit. When the parent pinned the tree
+    (`INDEX_TREE_ENV`) that value is used, so every leg of one run names the SAME basis;
+    `emit_verdict` checks that the pinned tree carries the blobs being recorded."""
     if ref == INDEX:
-        tree = subprocess.run(['git', 'write-tree'], cwd=str(REPO), capture_output=True,
-                              text=True, encoding='utf-8', errors='replace').stdout.strip()
+        pinned = os.environ.get(INDEX_TREE_ENV)
+        if pinned:
+            if not _SHA40.match(pinned):
+                raise BasisUnresolved('basis unresolved (%s=%r is not a tree id)'
+                                      % (INDEX_TREE_ENV, pinned[:60]))
+            tree = pinned
+        else:
+            tree, why = resolve_index_tree()
+            if tree is None:
+                raise BasisUnresolved('basis unresolved (%s)' % why)
         # `resolved_from` is V1's enum ('explicit' | 'upstream' | 'FALLBACK'), not free text — it
         # records HOW the basis was determined, and this one was asked for by name.
         return {'kind': 'tree', 'resolved_from': 'explicit', 'value': tree}
-    sha = subprocess.run(['git', 'rev-parse', ref], cwd=str(REPO), capture_output=True,
-                         text=True, encoding='utf-8', errors='replace').stdout.strip()
+    r = subprocess.run(['git', 'rev-parse', ref], cwd=str(REPO), capture_output=True,
+                       text=True, encoding='utf-8', errors='replace')
+    sha = (r.stdout or '').strip()
+    if r.returncode != 0 or not _SHA40.match(sha):
+        raise BasisUnresolved('basis unresolved (rev-parse %s exit %s, stdout %r, stderr %r)'
+                              % (ref, r.returncode, sha[:60], (r.stderr or '').strip()[:200]))
     return {'kind': 'ref', 'resolved_from': 'explicit', 'value': sha}
 
 
@@ -628,15 +702,52 @@ def session_state():
     return _SESSION_STATE_CACHE
 
 
-def ledger_subjects(rels, ref='HEAD'):
-    """`([{path, git_blob_id}], skipped)` — subjects safe to record, and the paths left out.
+def observe_blobs(rels):
+    """`({rel: blob id}, unreadable)` — the git blob id of the bytes ON DISK for each path.
 
-    ⚠⚠ FAIL CLOSED, AND REPORT THE SKIPS. A path absent from `ref`, or differing from it in the
-    worktree or the index, is DROPPED rather than recorded — because recording it would attest to
-    bytes the checker did not read, which is the one thing this identity scheme exists to prevent
-    (`gitRobot.md` §12-0-quater). The caller MUST print what was dropped: a record covering fewer
-    subjects than the checker examined is a coverage gap, and a silent one is the defect this whole
-    layer exists to end."""
+    This is the READING a checker took: it scanned the working tree, so these are the bytes it
+    examined. One `git hash-object --stdin-paths` call, which applies the same clean filters git
+    applies when it stages, so an unchanged file yields exactly its index blob. A path that is not a
+    plain repo-relative file (absent, a directory, absolute, `..`, a pseudo-path like `(roster)`)
+    has no reading and is returned in `unreadable`. RAISES `SubjectsUnverified` when the hashing
+    itself fails, so a broken git never reads as "nothing to record" (`R-ZERONULL`, `REL19-1`)."""
+    readable, unreadable = [], []
+    for rel in sorted(set(r.replace('\\', '/') for r in rels)):
+        parts = rel.split('/')
+        if (not rel or os.path.isabs(rel) or rel.startswith('/') or ':' in parts[0]
+                or '..' in parts or not (REPO / rel).is_file()):
+            unreadable.append(rel)
+        else:
+            readable.append(rel)
+    if not readable:
+        return {}, unreadable
+    rc, out, err = _git_hash_object(readable)
+    ids = out.split()
+    if rc != 0 or len(ids) != len(readable) or not all(_SHA40.match(i) for i in ids):
+        raise SubjectsUnverified('subjects unverified: hash-object exit %s, %d id(s) for %d path(s),'
+                                 ' stderr %r' % (rc, len(ids), len(readable), err.strip()[:200]))
+    return dict(zip(readable, ids)), unreadable
+
+
+def _git_hash_object(paths):
+    """`(returncode, stdout, stderr)` of one `hash-object --stdin-paths`. A seam, so controls can
+    make it fail."""
+    r = subprocess.run(['git', 'hash-object', '--stdin-paths'], cwd=str(REPO),
+                       input=''.join(p + '\n' for p in paths), capture_output=True,
+                       text=True, encoding='utf-8', errors='replace')
+    return r.returncode, r.stdout or '', r.stderr or ''
+
+
+def ledger_subjects(rels, ref='HEAD', observed=None):
+    """`([{path, git_blob_id}], skipped)` — the verified subjects, and the paths left out.
+
+    The reading is `observed` when the caller supplies one (`{path: blob id it read}`), else the
+    working-tree bytes (`observe_blobs`). gitRobot's `ledger_subjects` verifies it against the
+    resolved basis and answers which paths are subjects; a path it skips comes back with its reason
+    and is never recorded. The caller MUST print what was skipped: a record covering fewer subjects
+    than the checker examined is a coverage gap, and a silent one is the defect this layer exists to
+    end. RAISES `BasisUnresolved` (or its subclass `SubjectsUnverified`) when there is no verified
+    answer to give."""
     rels = [r.replace('\\', '/') for r in rels]
     # ⚠⚠ SESSION STATE IS DROPPED BEFORE THE FENCE, AND UNCONDITIONALLY — dirty or clean. A path
     # that is legitimately modified in one checkout and pristine in another otherwise produces TWO
@@ -661,36 +772,28 @@ def ledger_subjects(rels, ref='HEAD'):
     # keyed to HEAD would cover the wrong content entirely. But the staged blobs ARE the new
     # commit's blobs, and coverage is content-addressed, so recording the INDEX covers a commit that
     # has not happened yet. That is the whole reason a blob id beats a commit id here.
-    if ref == INDEX:
-        blobs = index_blobs()
-        moved = worktree_modified()
-        why_moved = 'modified in the worktree since it was staged'
-    elif ref == 'HEAD':
-        blobs = ref_blobs(ref)
-        moved = differs_from(ref)
-        why_moved = 'differs from HEAD in the worktree or index'
+    # ⚠ THE REF IS SENT RESOLVED — the tree `ledger_basis` names, or the commit id — because gitRobot
+    # acts on ONE checkout and the symbolic `INDEX`/`HEAD` would be resolved in ITS checkout, not
+    # this one. A worktree's `write-tree` lands in the shared object store, so the id resolves there.
+    basis = ledger_basis(ref)
+    rels = sorted(set(rels))
+    if observed is None:
+        observed, unread = observe_blobs(rels)
+        why_unread = 'not a readable repo-relative file in this working tree, so there is no reading'
     else:
-        # ⚠⚠ FAIL CLOSED ON A REF WE CANNOT FENCE. `differs_from` diffs against HEAD and returns an
-        # EMPTY set for any other ref, so an arbitrary basis silently disabled the fence: every path
-        # recorded cleanly against that ref's blobs while the checker had read today's disk.
-        # Measured 2026-08-23 by a reliability trial: `ZPLEDGER_BASIS=<older sha> check_encoding
-        # --record` printed `recorded PASS 425 subject(s)`, exit 0, keyed to an older commit's
-        # blobs, with no warning. The record is internally consistent, so the server cannot detect
-        # it — this is the mechanism for manufacturing keys for content nobody opened, and
-        # `can_push` gates every commit in a range.
-        # A checker reads the WORKING TREE. Only HEAD (clean) or the INDEX can correspond to what it
-        # read, so any other basis is refused rather than fenced.
-        blobs, moved = {}, set(rels)
-        why_moved = ('basis %r cannot be fenced - a checker reads the worktree, so only HEAD or '
-                     'INDEX can correspond to what it read' % ref)
-    subjects, skipped = [], []
-    for rel in sorted(set(rels)):
-        if rel in moved:
-            skipped.append((rel, why_moved))
-        elif rel not in blobs:
-            skipped.append((rel, 'not staged' if ref == INDEX else 'not present at %s' % ref))
-        else:
-            subjects.append({'path': rel, 'git_blob_id': blobs[rel]})
+        # A reading the CALLER took (a review gate hashes what it read, when it read it). Paths it
+        # did not supply have no reading, and nothing here invents one for them.
+        observed = {k.replace('\\', '/'): v for k, v in observed.items()}
+        unread = [r for r in rels if r not in observed]
+        observed = {r: observed[r] for r in rels if r in observed}
+        why_unread = 'no blob was supplied for it in the reading (--observed-file)'
+    skipped = [(r, why_unread) for r in unread]
+    subjects = []
+    if observed:
+        import record
+        subjects, fenced = record.verify_subjects(observed, basis['value'])
+        skipped += fenced
+    skipped.sort()
     # ⚠ Session-state paths ride in `skipped` so the caller still PRINTS them — nothing is silently
     # dropped. Their reason names the declaration file rather than a fence, because they are not a
     # coverage GAP: a fenced path is one the checker read and cannot attest to, which is debt; this
@@ -778,8 +881,9 @@ def record_if_asked(step, scanned, bad, reason, argv=None, tier='M', ref='HEAD',
     # baseline is exactly the file whose edit MUST re-arm its checker.
     #
     # THE RULE: a subject set is everything the verdict DEPENDS ON, not merely everything it read.
-    scanned = list(scanned) + [s for s in switches if s not in set(scanned)]
-    bad = set(bad)
+    scanned = [s.replace('\\', '/') for s in list(scanned) + list(switches)]
+    scanned = list(dict.fromkeys(scanned))
+    bad = {b.replace('\\', '/') for b in bad}
     return emit_verdict(step, ok_rels=[r for r in scanned if r not in bad],
                         bad_rels=sorted(bad), reason=reason, tier=tier, ref=ref,
                         module=module)
@@ -810,11 +914,12 @@ def emit_verdict(step, ok_rels=(), bad_rels=(), reason=None, tier='M', ref='HEAD
     gate consumes that, whatever it asks of the step. Measured (`LED-10`): this function's FAIL
     for ONE orphan checker took ownership of 23 shared content keys and condemned a commit that
     predated the offending file, with no re-run able to clear it.
-    ⚠ `failing` is passed UNFENCED, deliberately: `ledger_subjects` drops paths absent from the
-    ref because coverage must not overstate what was read, but an INDICTMENT is a record of what
-    was judged and includes findings that are not files at all — `check_checkers` indicts a
+    ⚠ `failing` is not verified against the ref: `ledger_subjects` drops paths whose reading does
+    not hold there because coverage must not overstate what was read, but an INDICTMENT is a record
+    of what was judged and includes findings that are not files at all — `check_checkers` indicts a
     `(roster)` pseudo-path. Nothing resolves it to content, so naming it is inert; omitting it
-    would understate the indictment to keep a data structure tidy.
+    would understate the indictment to keep a data structure tidy. The one fence on it is session
+    state, which is never a subject in any checkout (`ARC-2b` F1, below).
 
     ⚠⚠ **A VERDICT IS ALWAYS A PROPERTY VERIFIED AGAINST A FILE SET** (Tim, 2026-08-23). There is no
     second kind of checker. A scanner's subjects are the files it scanned; a PROPERTY checker's
@@ -832,9 +937,25 @@ def emit_verdict(step, ok_rels=(), bad_rels=(), reason=None, tier='M', ref='HEAD
     facts and only one is about the corpus. Collapsing them lets an outage read as a finding, or a
     finding read as an outage and get retried away."""
     import record
-    bad = sorted(set(bad_rels))
+    # ⚠ ONE SPELLING FOR A PATH ON EVERY FIELD (`RLY49-1`). `ledger_subjects` normalises separators
+    # on the subjects; `failing` went to the ledger raw, so a native `tools\verify\x.py` entry was
+    # carried as examined and indicted by nothing — inert for resolution beside one that resolves.
+    ok_rels = [r.replace('\\', '/') for r in ok_rels]
+    bad = sorted({r.replace('\\', '/') for r in bad_rels})
+    # ⚠⚠ SESSION STATE IS FENCED OUT OF THE INDICTMENT TOO (`ARC-2b` F1). It is never a subject, so
+    # a finding about it changed `verdict`, `failing` and `reason` while leaving `subjects` identical
+    # — two checkouts writing two payloads at one basis, `V11`'s refusal reached through a different
+    # field. The checker still SEES the finding and still exits on it; only the record is not about it.
+    _session = session_state()
+    for rel in [b for b in bad if b in _session]:
+        print('  not indicted: %-52s session state, never a verdict subject' % rel)
+    bad = [b for b in bad if b not in _session]
     verdict = 'FAIL' if bad else 'PASS'
-    subjects, skipped = ledger_subjects(sorted(set(ok_rels) | set(bad)), ref)
+    try:
+        subjects, skipped = ledger_subjects(sorted(set(ok_rels) | set(bad)), ref)
+    except BasisUnresolved as e:
+        print('UNDECIDED: %s ran but its %s verdict was NOT SENT: %s' % (step, verdict, e))
+        return 2
     for rel, why in skipped:
         print('  not recorded: %-52s %s' % (rel, why))
     if not subjects:
@@ -871,8 +992,37 @@ def emit_verdict(step, ok_rels=(), bad_rels=(), reason=None, tier='M', ref='HEAD
     # a verdict produced under a different `common.py` was produced by different code and should not
     # inherit the old one's key. The cost is real: editing this file stales EVERY mechanical step at
     # once. That is the honest bill, and it is why this file should change rarely.
+    # ⚠⚠ BASIS-EMPTY-1: AN UNRESOLVED BASIS IS NEVER SENT. It used to reach the ledger as "" and
+    # come back refused; now it stops here, as exit 2 with the cause named.
+    try:
+        basis = ledger_basis(ref)
+    except BasisUnresolved as e:
+        print('UNDECIDED: %s ran but its %s verdict was NOT SENT: %s' % (step, verdict, e))
+        return 2
+    # ⚠ A tree basis must CARRY the bytes recorded under it. A pin inherited from a parent that
+    # read a different index (or an index restaged after `ledger_subjects`) would otherwise label
+    # these blobs with a tree that does not contain them. One `ls-tree`, no index lock.
+    if basis['kind'] == 'tree':
+        try:
+            held = ref_blobs(basis['value'])
+        except BasisUnresolved as e:
+            print('UNDECIDED: %s ran but its %s verdict was NOT SENT: %s' % (step, verdict, e))
+            return 2
+        off = [s['path'] for s in subjects if held.get(s['path']) != s['git_blob_id']]
+        if off:
+            print('UNDECIDED: %s ran but its %s verdict was NOT SENT: basis tree %s does not carry '
+                  '%d recorded blob(s), e.g. %s' % (step, verdict, basis['value'][:12], len(off),
+                                                    ', '.join(off[:3])))
+            return 2
+    # ⚠ V9 REFUSES A RECORD WITH NO RUN ID (`V9-1`). `batch.py` and `hooks.py` export
+    # `ZPLEDGER_RUN` for their legs; a checker run directly with `--record` has no parent to inherit
+    # one from, and its PASS was unrecordable. The direct invocation IS a run, so it is named as
+    # one — `direct-` says no pipeline was involved, and an inherited id is never overwritten.
+    if not os.environ.get('ZPLEDGER_RUN'):
+        import uuid
+        os.environ['ZPLEDGER_RUN'] = 'direct-%s-%s' % (step, uuid.uuid4().hex[:12])
     rid = record.emit(step=step, tier=tier, verdict=verdict, subjects=subjects,
-                      basis=ledger_basis(ref), reason=why, failing=bad,
+                      basis=basis, reason=why, failing=bad,
                       evidence=record.module_evidence(*_producer_modules(module)))
     if rid is None:
         print('UNDECIDED: %s ran but its %s verdict was not recorded' % (step, verdict))
@@ -901,6 +1051,28 @@ def targets(skip_names=(), is_vendored=None):
         if is_vendored is not None and is_vendored(p, rel):
             continue
         yield p, rel
+
+
+def universe_gap():
+    """Tracked files the `targets()` family is meant to scan and does not — sorted, `[]` when none.
+
+    ⚠ COMPUTED FROM THE INDEX, NEVER RECORDED, AND THAT IS THE WHOLE POINT (`RLY23-3`). The scope
+    pin is a superset test over RECORDED paths, so a file the enumerator never reached was never
+    recorded and the pin can never notice it. The universe here is stated by KIND — every tracked
+    `.lean`, every tracked `.py` under `scripts/` or `tools/`, every tracked `.md` — minus the shared
+    skips, and is deliberately not derived from `GLOBS`, or it would agree with whatever `GLOBS`
+    says. ⛔ Do not narrow this definition to make it pass; that silences the control."""
+    live = {rel for _p, rel in targets()}
+    gap = []
+    for rel in index_blobs():
+        parts = rel.split('/')
+        if parts[-1] in SKIP_NAMES or any(d in parts[:-1] for d in SKIP_DIRS):
+            continue
+        if (rel.endswith('.lean') or rel.endswith('.md')
+                or (rel.endswith('.py') and parts[0] in ('scripts', 'tools'))):
+            if rel not in live:
+                gap.append(rel)
+    return sorted(gap)
 
 
 # --------------------------------------------------------------------------- baselines
@@ -1295,17 +1467,192 @@ def selftest():
         _why = '' if _ok else ('  NAME MISSING' if not _named else '  both sides render %r' % _l)
         print('  %-40s %s%s' % (_label, 'ok' if _ok else '*** ILLEGIBLE ***', _why))
 
+    # ⚠ THE UNIVERSE, COMPUTED (`RLY23-3`). The scope pin above cannot see a file that was never
+    # enumerated; this compares the enumerator against the tracked files of the kinds it is for.
+    print('UNIVERSE (every tracked file of a scanned kind is enumerated)')
+    _gap = universe_gap()
+    print('  %-40s %s' % ('targets() covers its tracked universe',
+                          'ok' if not _gap else '*** %d UNREACHED: %s ***'
+                          % (len(_gap), ', '.join(_gap[:4]))))
+    bad += 0 if not _gap else 1
+    with _swapped('GLOBS', tuple(g for g in GLOBS if g != '*.lean')):
+        _caught = 'ZeroParadox.lean' in universe_gap()
+    print('  %-40s %s' % ('a root module the globs miss is caught',
+                          'ok' if _caught else '*** NOT CAUGHT ***'))
+    bad += 0 if _caught else 1
+
+    bad += _subject_controls()
     print('\nselftest: %s' % ('PASS' if not bad else 'FAIL (%d)' % bad))
     return 1 if bad else 0
+
+
+def _subject_controls():
+    """Controls for the recording path: subjects are gitRobot's verified answer about the bytes
+    READ, and every way that answer can be missing refuses to send. Returns the failure count.
+
+    Every server answer comes through `record._GITROBOT_SEAM` and every append through a stand-in
+    for `record.emit`, so nothing here reaches either service or writes a record."""
+    import hashlib
+    import urllib.error
+    import common as C
+    import record
+    bad = 0
+    print('SUBJECTS (gitRobot verifies the reading; nothing local decides)')
+    P, Q = 'README.md', 'tools/verify/report.py'
+    disk = {}
+    for rel in (P, Q):
+        data = (REPO / rel).read_bytes()
+        disk[rel] = hashlib.sha1(b'blob %d\0' % len(data) + data).hexdigest()
+    sent = []
+
+    def echo(tool, args):
+        sent.append((tool, args))
+        obs = args['observed']
+        return {'ok': True, 'subjects': [{'path': p, 'git_blob_id': b} for p, b in obs.items()],
+                'skipped': [], 'basis': {'kind': 'tree', 'value': args['ref']}}
+
+    def drift(tool, args):
+        obs = dict(args['observed'])
+        b = obs.pop(Q)
+        return {'ok': True, 'subjects': [{'path': p, 'git_blob_id': v} for p, v in obs.items()],
+                'skipped': [{'path': Q, 'observed': b, 'at_ref': 'e' * 40,
+                             'why': 'DRIFTED SINCE YOU READ IT'}]}
+
+    def drop(tool, args):
+        obs = dict(args['observed'])
+        obs.pop(Q)
+        return {'ok': True, 'subjects': [{'path': p, 'git_blob_id': v} for p, v in obs.items()],
+                'skipped': []}
+
+    def other(tool, args):
+        return {'ok': True, 'subjects': [{'path': p, 'git_blob_id': 'f' * 40}
+                                         for p in args['observed']], 'skipped': []}
+
+    def down(tool, args):
+        raise urllib.error.URLError('connection refused (control)')
+
+    def refuse(tool, args):
+        return {'ok': False, 'error': 'refused (control)', '_transport_is_error': True}
+
+    def ask(seam, rels=(P, Q, 'gate_round.json', '(roster)'), ref='HEAD', observed=None):
+        """`(subjects, skipped, raised)` with `seam` answering."""
+        saved = record._GITROBOT_SEAM
+        record._GITROBOT_SEAM = seam
+        try:
+            s, k = C.ledger_subjects(list(rels), ref, observed=observed)
+            return s, k, None
+        except C.BasisUnresolved as e:
+            return None, None, e
+        finally:
+            record._GITROBOT_SEAM = saved
+
+    rows = []
+    del sent[:]
+    # ⚠ THE INDEX IS POISONED for this ask, so a reading derived from the index instead of the disk
+    # sends `e`*40 and the first row goes red — in a clean checkout too, where the two agree.
+    saved_ib = C.index_blobs
+    C.index_blobs = lambda: {P: 'e' * 40, Q: 'e' * 40}
+    try:
+        s, k, e = ask(echo)
+    finally:
+        C.index_blobs = saved_ib
+    tool, args = sent[0] if sent else (None, {})
+    rows.append(('the reading sent is the DISK bytes',
+                 e is None and args.get('observed', {}).get(P) == disk[P]
+                 and args.get('observed', {}).get(Q) == disk[Q]))
+    rows.append(('the ref sent is resolved, never symbolic',
+                 bool(C._SHA40.match(str(args.get('ref', ''))))))
+    rows.append(('session state and pseudo-paths are never sent',
+                 e is None and set(args.get('observed', {})) == {P, Q}
+                 and {p for p, _w in k} == {'gate_round.json', '(roster)'}))
+    rows.append(('an echoed reading records every path',
+                 e is None and [x['path'] for x in s] == [P, Q]))
+    s, k, e = ask(drift)
+    rows.append(('a DRIFTED path is skipped, never a subject',
+                 e is None and [x['path'] for x in s] == [P]
+                 and any(p == Q and 'DRIFTED' in w for p, w in k)))
+    for label, seam in (('an unreachable gitRobot RAISES', down),
+                        ('a refusal RAISES', refuse),
+                        ('an answer that drops a path RAISES', drop),
+                        ('an answer naming other bytes RAISES', other)):
+        s, k, e = ask(seam)
+        rows.append((label, isinstance(e, C.SubjectsUnverified)))
+    s, k, e = ask(echo, rels=(P, Q), observed={P: disk[P]})
+    rows.append(('a supplied reading is the one sent',
+                 e is None and [x['path'] for x in s] == [P]
+                 and any(p == Q and 'no blob was supplied' in w for p, w in k)))
+    saved_hash = C._git_hash_object
+    C._git_hash_object = lambda paths: (128, '', 'fatal: control')
+    try:
+        s, k, e = ask(echo)
+    finally:
+        C._git_hash_object = saved_hash
+    rows.append(('a failed hash-object RAISES (REL19-1)', isinstance(e, C.SubjectsUnverified)))
+
+    # ⚠ THE EMIT PATH, through a stand-in for `record.emit` so nothing is appended.
+    got = []
+    saved_emit, saved_seam = record.emit, record._GITROBOT_SEAM
+    saved_run = os.environ.get('ZPLEDGER_RUN')
+    record.emit = lambda **kw: (got.append(kw), 'rec-ctl')[1]
+    import io as _io
+
+    def leg(**kw):
+        del got[:]
+        buf, real = _io.StringIO(), sys.stdout
+        sys.stdout = buf
+        try:
+            rc = C.emit_verdict('ctl_step', ref='HEAD', **kw)
+        finally:
+            sys.stdout = real
+        return rc, buf.getvalue()
+    try:
+        record._GITROBOT_SEAM = echo
+        os.environ.pop('ZPLEDGER_RUN', None)
+        rc, out = leg(ok_rels=[P], bad_rels=['tools\\verify\\report.py'])
+        rows.append(('failing is slash-normalised (RLY49-1)',
+                     rc == 0 and got and got[0].get('failing') == [Q]))
+        rows.append(('a direct run mints its run id (V9-1)',
+                     str(os.environ.get('ZPLEDGER_RUN', '')).startswith('direct-ctl_step-')))
+        os.environ['ZPLEDGER_RUN'] = 'inherited-ctl'
+        rc, out = leg(ok_rels=[P], bad_rels=['gate_round.json'])
+        rows.append(('an inherited run id is kept',
+                     os.environ.get('ZPLEDGER_RUN') == 'inherited-ctl'))
+        rows.append(('session state is never indicted (ARC-2b F1)',
+                     rc == 0 and got and got[0].get('verdict') == 'PASS'
+                     and not got[0].get('failing')))
+        record._GITROBOT_SEAM = down
+        rc, out = leg(ok_rels=[P, Q])
+        rows.append(('unverified subjects: NOT SENT, exit 2',
+                     rc == 2 and not got and 'NOT SENT' in out))
+    finally:
+        record.emit, record._GITROBOT_SEAM = saved_emit, saved_seam
+        if saved_run is None:
+            os.environ.pop('ZPLEDGER_RUN', None)
+        else:
+            os.environ['ZPLEDGER_RUN'] = saved_run
+    for label, ok in rows:
+        print('  %-48s %s' % (label, 'ok' if ok else '*** FAILED ***'))
+        bad += 0 if ok else 1
+    return bad
 
 
 if __name__ == '__main__':
     utf8_stdout()
     if '--selftest' in sys.argv:
         sys.exit(selftest())
+    # ⚠ THE GENERATOR FOR `[common.targets]` (`RLY-R2-1`). It PRINTS the live scan set in the pin's
+    # format and writes nothing: re-pinning is a reviewed edit to `scope_baseline.txt`, and a removal
+    # there is a narrowing someone has to look at. Diff this against the section to see what is
+    # live and pinned by nothing.
+    if '--print-scope' in sys.argv:
+        print('[common.targets]')
+        for _rel in sorted({rel for _p, rel in targets()}):
+            print(_rel)
+        sys.exit(0)
     print('%s — shared definitions for the verification bundle. Nothing to run.' % SELF)
     print('  REPO %s' % REPO)
     print('  HERE %s' % HERE)
     print('  PRIV %s%s' % (PRIV, '' if PRIV.is_dir() else '   (absent — public clone)'))
     print('  scan scope: %d files' % len(list(targets())))
-    print('\n  --selftest   run this module\'s own controls')
+    print('\n  --selftest      run this module\'s own controls')
+    print('  --print-scope   print the live [common.targets] scan set in the pin\'s format')

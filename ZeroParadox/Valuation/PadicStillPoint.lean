@@ -84,6 +84,37 @@ theorem stillPoint_vladimirov_zero (α : ℝ) (n : ℕ) (x : ℤ_[p]) :
   rw [paChar_trivial]
   exact vladimirov_const α 1 x
 
+-- Statement: at every prime, the level-0 ball indicator (`ballIndicatorL2`, the parent in
+-- `ZeroParadox/Valuation/PadicVladimirov.lean` § VIII) equals the trivial character almost everywhere.
+example (n : ℕ) :
+    (ballIndicatorL2 (p := p) 0 : ℤ_[p] → ℂ) =ᵐ[haarZp (p := p)] paChar (p := p) n 0 := by
+  -- `(p := 2)` here is the Lp exponent of L², not the prime.
+  filter_upwards [indicatorConstLp_coeFn (p := 2) (μ := haarZp (p := p))
+    (hs := ball_measurableSet (p := p) 0) (hμs := measure_ne_top _ _) (c := (1 : ℂ))]
+    with x hx
+  rw [ballIndicatorL2, hx, Set.indicator_of_mem, paChar_trivial]
+  simp only [Set.mem_setOf_eq, Nat.cast_zero, neg_zero, zpow_zero]
+  exact PadicInt.norm_le_one x
+
+-- Statement: at every prime, the level-0 shell indicator plus the level-1 ball indicator equals the
+-- trivial character almost everywhere, and the two summands are orthogonal (`ballIndicatorL2_eq_shell_add`,
+-- `inner_shellIndicatorL2_ballIndicatorL2` in `ZeroParadox/Valuation/PadicVladimirov.lean`).
+example (n : ℕ) :
+    ((shellIndicatorL2 (p := p) 0 + ballIndicatorL2 (p := p) 1 : Lp ℂ 2 (haarZp (p := p))) :
+        ℤ_[p] → ℂ) =ᵐ[haarZp (p := p)] paChar (p := p) n 0 ∧
+      inner ℂ (shellIndicatorL2 (p := p) 0) (ballIndicatorL2 (p := p) 1) = 0 := by
+  refine ⟨?_, inner_shellIndicatorL2_ballIndicatorL2 0⟩
+  have hsplit := ballIndicatorL2_eq_shell_add (p := p) 0
+  rw [zero_add] at hsplit
+  rw [← hsplit]
+  -- `(p := 2)` here is the Lp exponent of L², not the prime.
+  filter_upwards [indicatorConstLp_coeFn (p := 2) (μ := haarZp (p := p))
+    (hs := ball_measurableSet (p := p) 0) (hμs := measure_ne_top _ _) (c := (1 : ℂ))]
+    with x hx
+  rw [ballIndicatorL2, hx, Set.indicator_of_mem, paChar_trivial]
+  simp only [Set.mem_setOf_eq, Nat.cast_zero, neg_zero, zpow_zero]
+  exact PadicInt.norm_le_one x
+
 /-! ## § III — Positivity of the primitive eigenvalue `λ_n` -/
 
 /-- The primitive `D^α` eigenvalue

@@ -69,9 +69,22 @@ def run(*cmd):
     """Run a child, streaming its output, and return its exit code.
 
     ⚠ Never captures. The whole point of a gate is that the operator SEES why it fired, and a
-    captured-then-reprinted stream loses interleaving with anything else that writes."""
+    captured-then-reprinted stream loses interleaving with anything else that writes.
+
+    ⚠ CONCURRENT MODE KEEPS THAT PROPERTY RATHER THAN BREAKING IT (`ZP_HOOK_JOBS`, 2026-10-04). A
+    leg launched ahead of its turn writes stdout+stderr to its OWN file, and the file is replayed
+    WHOLE, byte for byte, HERE — at the moment this sequential call site is reached, in manifest
+    order. Nothing else writes into a leg's file, so there is no interleaving to lose; and because
+    the replay happens where the stream would have been, the hook's own lines land between legs
+    exactly where they land today. Partial output of a leg that died, timed out or crashed is
+    replayed too. See `_Scheduler`."""
+    sched = _SCHED
+    if sched is not None:
+        job = sched.take(cmd)
+        if job is not None:
+            return _consume(cmd, job)
     try:
-        rc = subprocess.call(list(cmd), cwd=REPO)
+        rc = _child(cmd)
     except OSError as e:
         print("  hook: could not run %s (%s)" % (" ".join(cmd), e))
         return 1
@@ -159,13 +172,26 @@ def reconcile(phase, expected, refs=(), skipped=None):
             continue
         _inv, rc = hit
         if ok_codes is not None and rc not in ok_codes:
-            bad.append("%s (exit %d)" % (label, rc))
+            # ⚠ `LED-8`: this line is what the operator reads at commit — the loop's own list never
+            #   prints once a bad exit lands here — so a RECORDING failure must not read as a finding.
+            #   2 and 4 are the fleet vocabulary's could-not-ask / asked-and-refused.
+            bad.append("%s (exit %d%s)" % (label, rc, _RC_NOTE.get(rc, "")))
 
     named = sum(1 for _l, argv, _o in expected if argv)
     print("")
     print("  manifest reconciliation: %d of %d advertised check(s) launched; %d bad exit(s)%s"
           % (named - len(missing), named, len(bad),
              ("; %d inline row(s): %s" % (len(inline), ", ".join(inline))) if inline else ""))
+    # ⚠⚠ `HOOK-R5-3`: AN EMPTY EXPECTATION SET IS NOT A CLEAN ONE. `PRE_COMMIT_CHECKS = []` was one
+    #   edit, and this loop then expected nothing, found nothing missing and nothing bad, and the hook
+    #   exited 0 printing `plan 0 check(s)` — vacuous truth, the failure mode of every "for each
+    #   expected thing, check it ran" design. "0 of 0" gets its own refusal (`R-ZERONULL`).
+    if not expected:
+        print("")
+        print("%s BLOCKED — the manifest advertises NO check at all (0 of 0)." % phase.upper())
+        print("An empty expectation set certifies nothing; it is a gate with its table deleted, not a")
+        print("clean run. Restore the table — never read 0 of 0 as a pass.")
+        return 1
 
     # ⚠ R4-2: `quarantine` was the only push row with NO observer — deleting its inline branch let
     #   a `private/*` ref push green while the manifest printed the row's name. Re-tested here
@@ -227,6 +253,16 @@ def reconcile(phase, expected, refs=(), skipped=None):
     return 0
 
 
+# ⚠⚠ EXIT 2 DOES NOT SAY WHICH (`G1-2`). Every gating checker records through `common.emit_verdict`
+#   -> `record.emit`, which returns None for a ledger REFUSAL and for an OUTAGE alike, so both arrive
+#   here as 2. Exit 2's text therefore names BOTH and sends the reader to the checker's own output;
+#   a remedy for one ("fix the connection") is wrong for the other (a refusal is terminal). Only a
+#   child that splits them itself (record.py, check_briefs) emits 4.
+_RC_NOTE = {2: " — verdict NOT RECORDED: the ledger refused it or could not be reached; read the "
+               "checker's own output above; not a finding",
+            4: " — the ledger REFUSED the record: terminal, read the rule it named; not a finding"}
+
+
 def recorded(script, *args):
     """Run a push-time checker WITH `--record`, and keep exit 2 distinct from exit 1.
 
@@ -243,11 +279,25 @@ def recorded(script, *args):
     """
     rc = py(script, *(args + ("--record",)))
     if rc == 2:
-        print("\n⚠ %s ran but its verdict was NOT RECORDED." % script)
-        print("  The ledger will report this step MISSING and refuse the push. This is a RECORDING")
-        print("  failure, not a check failure — the check itself may have passed. Fix the ledger")
-        print("  connection; do not go looking for a defect in the corpus.")
+        print("\n⚠ %s ran but its verdict was NOT RECORDED (exit 2)." % script)
+        print("  The ledger REFUSED the record or could NOT BE REACHED — exit 2 carries both (see")
+        print("  `_RC_NOTE`). Read the checker's own output above: a refusal names a rule (V11, V16c,")
+        print("  ...) and is TERMINAL — fix the record, the staging or the registry, do not retry; an")
+        print("  outage names the connection and is retryable. Either way this is a RECORDING failure,")
+        print("  not a check failure — do not go looking for a defect in the corpus.")
+    elif rc == 4:
+        # ⚠ 4 IS "ASKED AND REFUSED" in the fleet vocabulary (`verdictLedger vocabulary(name=
+        #   'exit_code')`), TERMINAL where 2 is retryable — so it gets its own remedy, never 2's.
+        print("\n⚠ %s ran but the ledger REFUSED its record (exit 4: asked and refused)." % script)
+        print("  This is a RECORDING failure, not a check failure. It is TERMINAL: do not retry. Read")
+        print("  the rule the ledger named in the output above (e.g. an unapproved build of the")
+        print("  checker) and fix the record or the registry; do not look for a defect in the corpus.")
     return rc
+
+
+# The exit codes `recorded` explains as RECORDING failures. A caller tests this BEFORE printing its
+# own finding-specific message, so a refusal is never re-described as a finding (`BLOCKMSG-1`).
+NOT_RECORDED = (2, 4)
 
 
 def git_out(*args):
@@ -257,6 +307,424 @@ def git_out(*args):
         return r.returncode, (r.stdout or "")
     except OSError:
         return 1, ""
+
+
+# ------------------------------------------------------------------ concurrent legs
+#
+# ⭐ TIM, 2026-10-04: *"Tooling speed concurrent checks."* Measured that day, a pre-push ran its legs
+# strictly one after another for 842.9 s, of which the routing control alone was 595.4 s.
+#
+# ⚠⚠ THE DECISION CODE IS UNCHANGED, AND THAT IS THE DESIGN. `pre_push` / `pre_commit` still run top
+# to bottom, call `py()` / `run()` in manifest order and decide from each exit code exactly as before.
+# The scheduler only LAUNCHES legs early; `run()` then waits for the leg it was going to start,
+# replays its output whole and returns its exit code. So every exit code, every `EXECUTED` entry (it
+# is appended at CONSUMPTION, after the child finished — R3-1 unchanged), every BLOCK message and the
+# reconcile result come from the same statements as at `ZP_HOOK_JOBS=1`, which does not create a
+# scheduler at all and is today's code path byte for byte.
+#
+# ⚠⚠ THE DEPENDENCY GRAPH (derived from the legs' source 2026-10-04; each edge names its evidence).
+#   MUTATORS — they rewrite shared files in THIS checkout and restore them, so nothing that reads
+#   the tree may overlap them, and they may not overlap each other:
+#     guards           appends to / rewrites ZeroParadox/Order/Snap.lean, vendored_files.txt,
+#                      pov_baseline.txt, prose_baseline.txt, gate_round.json, a probe under
+#                      ZeroParadox/Order/Vendored/, .claude/commands/tag-review.md, and
+#                      tools/verify/record.py + check_briefs.py themselves (guards.py:83-136,
+#                      1589-1905, 2232-2293, 2345-2378). record.py is imported by every --record leg.
+#     check_checkers   runs EVERY checker's --selftest with cwd=REPO (check_checkers.py:118-128, 267),
+#                      among them `guards.py --selftest`, which appends to Snap.lean
+#                      (guards.py:2665-2690), and check_claude_md's, which creates
+#                      tools/verify/check_synthetic_withdrawn.py (check_claude_md.py:329-335).
+#   ORDER  guards -> check_checkers: guards runs before the checkers it protects (the false-zero
+#          argument at its call site below), and check_checkers records a checker verdict.
+#   ORDER  the receipt key (`push_key`: tools/verify bytes + HEAD tree, push_key/tools_digest above)
+#          is computed BEFORE any mutator launches — it reads the files guards rewrites.
+#   PURE   `hooks.py selftest` reads this file, batch.py and required.v2.json (none of which a
+#          mutator writes) plus temp dirs, so it may overlap the mutators. Its verdict still gates
+#          the skip decision, which stays where it is in `pre_push`.
+#   READERS every other leg reads the tree and records a DISTINCT ledger step at the same basis
+#          (no two legs record one step), so they run together once the mutators and the pure legs
+#          are done.
+#   batch prepush  needs the skip decision (receipt consulted after the selftest passed; its
+#          env switch, `pre_push` below), and reads the tree (agent gate re-runs three checkers):
+#          submitted at the decision point, after the mutators. Its verdict reads only the review
+#          steps, rely and prior_art (batch.py:2483-2583, 1947), which no leg records.
+#   PRE-COMMIT  the eleven legs are all readers recording distinct steps, with no mutator: all run
+#          together.
+#
+# ⚠ R-ZERONULL: a leg that could not start, raised inside the scheduler, or timed out is its own
+#   OUTCOME and is never read as a pass — see `_consume`.
+
+JOBS_ENV = "ZP_HOOK_JOBS"
+LEG_TIMEOUT_ENV = "ZP_HOOK_LEG_TIMEOUT"
+DEFAULT_JOBS = 8
+TIMEOUT_RC = 124
+
+LEG_EXITED = "EXITED"
+LEG_NOSTART = "NOSTART"
+LEG_TIMEOUT = "TIMEOUT"
+LEG_ERROR = "ERROR"
+
+_QUEUED, _RUNNING, _DONE, _CANCELLED = "QUEUED", "RUNNING", "DONE", "CANCELLED"
+
+# The ledger environment each phase gives its recording legs. ONE definition: `pre_push` /
+# `pre_commit` assign it and the scheduler launches with it, and `_consume` refuses any leg whose
+# launch environment differs from the one the sequential call would have passed.
+_PUSH_LEDGER_ENV = {"ZPLEDGER_BASIS": "HEAD", "ZPLEDGER_RUN": "pre-push"}
+_COMMIT_LEDGER_ENV = {"ZPLEDGER_BASIS": "INDEX", "ZPLEDGER_RUN": "pre-commit"}
+
+# Push rows by role, in the order they must run. See the graph above for the evidence.
+_PUSH_PURE = ("advisory-skip controls",)
+_PUSH_MUTATORS = ("guards", "check_checkers")
+_PUSH_FIRST = ("batch prepush",)      # longest legs launch first among readers
+
+_SCHED = None
+
+
+class _LegTimeout(Exception):
+    pass
+
+
+def hook_jobs(environ=None):
+    """(jobs, note). 1 means sequential: no scheduler, today's path. `note` is None when there is
+    nothing to say; an unreadable value falls back to the sequential path and SAYS so."""
+    env = os.environ if environ is None else environ
+    raw = env.get(JOBS_ENV)
+    if raw is None or not raw.strip():
+        return DEFAULT_JOBS, None
+    try:
+        n = int(raw.strip())
+    except ValueError:
+        return 1, "%s=%r is not an integer; running SEQUENTIALLY" % (JOBS_ENV, raw)
+    if n < 1:
+        return 1, "%s=%r is below 1; running SEQUENTIALLY" % (JOBS_ENV, raw)
+    return n, None
+
+
+def leg_timeout(environ=None):
+    """(seconds or None, note). Unset means no timeout, as in the sequential path."""
+    env = os.environ if environ is None else environ
+    raw = env.get(LEG_TIMEOUT_ENV)
+    if raw is None or not raw.strip():
+        return None, None
+    try:
+        t = float(raw.strip())
+    except ValueError:
+        return None, "%s=%r is not a number; no per-leg timeout" % (LEG_TIMEOUT_ENV, raw)
+    if t <= 0:
+        return None, "%s=%r is not positive; no per-leg timeout" % (LEG_TIMEOUT_ENV, raw)
+    return t, None
+
+
+def _kill_tree(p):
+    """Kill a timed-out leg AND its children (a leg may spawn nested runs)."""
+    if os.name == "nt":
+        subprocess.run(["taskkill", "/T", "/F", "/PID", str(p.pid)], capture_output=True)
+    try:
+        p.kill()
+    except OSError:
+        pass
+
+
+def _child(cmd, env=None, out=None, timeout=None):
+    """THE one process launch. Returns the exit code; raises OSError when it cannot start and
+    `_LegTimeout` when it outlives `timeout` (the tree is killed first).
+
+    With no `env`, `out` or `timeout` this is exactly the sequential call: the child inherits this
+    process's environment and streams to its stdout."""
+    if env is None and out is None and timeout is None:
+        return subprocess.call(list(cmd), cwd=REPO)
+    p = subprocess.Popen(list(cmd), cwd=REPO, env=env, stdout=out,
+                         stderr=subprocess.STDOUT if out is not None else None)
+    try:
+        return p.wait(timeout=timeout)
+    except subprocess.TimeoutExpired:
+        _kill_tree(p)
+        p.wait()
+        raise _LegTimeout(timeout)
+
+
+def _leg_cmd(argv):
+    """The exact argv `py()` / `run()` passes for a manifest row's argv."""
+    script = argv[0]
+    path = os.path.join(BASE, script)
+    if not os.path.exists(path) and os.path.exists(os.path.join(REPO, "scripts", script)):
+        path = os.path.join(REPO, "scripts", script)
+    return (sys.executable, path) + tuple(argv[1:])
+
+
+class _Job(object):
+    def __init__(self, cmd, env, label, pos, ok_codes, after, prio):
+        self.cmd, self.env, self.label, self.pos = tuple(cmd), env, label, pos
+        self.ok_codes, self.after, self.prio = ok_codes, tuple(after), prio
+        self.state, self.outcome, self.rc, self.error = _QUEUED, None, None, None
+        self.out_path, self.started, self.finished = None, None, None
+        self.consumed = self.replayed = self.lost = False
+
+
+class _Scheduler(object):
+    """Launches submitted legs once their dependencies are DONE, at most `n` at a time.
+
+    `stop_on_red`: a leg is not LAUNCHED once a leg earlier in manifest order finished red, because
+    the sequential path would have returned before reaching it. That only saves work — a leg the
+    decision code still reaches is then run inline, sequentially, by `run()`."""
+
+    def __init__(self, phase, n, timeout, stop_on_red):
+        import tempfile
+        import threading
+        self.phase, self.n, self.timeout, self.stop_on_red = phase, n, timeout, stop_on_red
+        self.cv = threading.Condition()
+        self.by_cmd, self.by_label, self.all = {}, {}, []
+        self.running = 0
+        self.early_key = None
+        self.t0 = _clock()
+        self.tmp = tempfile.mkdtemp(prefix="zp_hooks_legs_")
+
+    def submit(self, cmd, env, label, pos, ok_codes=(0,), after=(), prio=1):
+        with self.cv:
+            cmd = tuple(cmd)
+            if cmd in self.by_cmd or label in self.by_label:
+                raise ValueError("leg %r submitted twice" % (label,))
+            missing = [a for a in after if a not in self.by_label]
+            if missing:
+                # A dependency must be submitted first, which also makes a cycle impossible.
+                raise ValueError("leg %r depends on unsubmitted %s" % (label, missing))
+            job = _Job(cmd, dict(env), label, pos, ok_codes, after, prio)
+            job.out_path = os.path.join(self.tmp, "%02d.out" % len(self.all))
+            self.by_cmd[cmd] = job
+            self.by_label[label] = job
+            self.all.append(job)
+            self._pump()
+
+    def _red(self, job):
+        if job.state == _CANCELLED:
+            return True
+        if job.state != _DONE:
+            return False
+        if job.outcome != LEG_EXITED:
+            return True
+        return job.ok_codes is not None and job.rc not in job.ok_codes
+
+    def _pump(self):
+        """Launch every ready leg. Called with `cv` held, on every submit and every completion."""
+        import threading
+        changed = True
+        while changed:
+            changed = False
+            for job in sorted((j for j in self.all if j.state == _QUEUED),
+                              key=lambda j: (j.prio, j.pos)):
+                deps = [self.by_label[a] for a in job.after]
+                if any(d.state == _CANCELLED for d in deps) or (
+                        self.stop_on_red
+                        and any(self._red(o) for o in self.all if o.pos < job.pos)):
+                    job.state = _CANCELLED
+                    changed = True
+                    continue
+                if any(d.state != _DONE for d in deps) or self.running >= self.n:
+                    continue
+                job.state = _RUNNING
+                self.running += 1
+                job.started = _clock()
+                threading.Thread(target=self._work, args=(job,), daemon=True).start()
+        self.cv.notify_all()
+
+    def _work(self, job):
+        fh = None
+        try:
+            try:
+                fh = open(job.out_path, "wb")
+            except OSError as e:
+                raise RuntimeError("the leg's capture file could not be opened: %s" % (e,))
+            rc = _child(job.cmd, job.env, fh, self.timeout)
+            job.rc = rc
+            job.outcome = LEG_EXITED
+        except _LegTimeout:
+            job.outcome, job.rc, job.error = LEG_TIMEOUT, TIMEOUT_RC, self.timeout
+        except OSError as e:
+            job.outcome, job.error = LEG_NOSTART, e
+        except BaseException as e:                          # noqa: BLE001 — never a pass
+            job.outcome, job.error = LEG_ERROR, e
+        finally:
+            if fh is not None:
+                fh.close()
+            with self.cv:
+                job.finished = _clock()
+                job.state = _DONE
+                self.running -= 1
+                self._pump()
+
+    def take(self, cmd):
+        """The leg this exact argv names, once it has finished; None to run it inline instead."""
+        with self.cv:
+            job = self.by_cmd.get(tuple(cmd))
+            if job is None or job.consumed:
+                return None
+            job.consumed = True
+            while job.state in (_QUEUED, _RUNNING):
+                self.cv.wait(5.0)
+            return None if job.state == _CANCELLED else job
+
+    def finish(self, rc):
+        """End of the run: launch nothing more, wait for every running leg, replay WHOLE the output
+        of every leg the decision code never reached, and refuse a green run that launched one."""
+        import shutil
+        with self.cv:
+            for job in self.all:
+                if job.state == _QUEUED:
+                    job.state = _CANCELLED
+            while self.running:
+                self.cv.wait(5.0)
+        try:
+            unread = [j for j in sorted(self.all, key=lambda j: j.pos) if not j.consumed]
+            ran = [j for j in unread if j.state == _DONE]
+            if ran:
+                print("\n=== concurrent leg(s) this run did not reach — output replayed whole, "
+                      "NOT scored (the run had already decided) ===")
+                for job in ran:
+                    print("--- %s: %s%s ---" % (job.label, job.outcome,
+                                               "" if job.rc is None else " exit %d" % job.rc))
+                    _replay_job(job)
+            never = [j.label for j in unread if j.state == _CANCELLED]
+            if never:
+                print("  concurrency: not launched (an earlier leg was red, or the run had "
+                      "decided): %s" % ", ".join(never))
+            if rc == 0 and unread:
+                print("\n%s BLOCKED — %d concurrent leg(s) were launched or queued that the "
+                      "sequential path never consumed: %s" % (self.phase.upper(), len(unread),
+                                                              ", ".join(j.label for j in unread)))
+                print("The prefetch list and the decision code disagree. That is a wiring defect;")
+                print("it fails CLOSED, because a green run must have read every leg it launched.")
+                rc = 1
+            print("  concurrency: %d leg(s), %d slot(s), wall %.1fs"
+                  % (len(self.all), self.n, _clock() - self.t0))
+        finally:
+            shutil.rmtree(self.tmp, ignore_errors=True)
+        return rc
+
+
+def _clock():
+    import time
+    return time.perf_counter()
+
+
+def _replay_job(job):
+    """Write the leg's captured stdout+stderr to this process's stdout, WHOLE and once."""
+    if job.replayed:
+        return
+    job.replayed = True
+    try:
+        with open(job.out_path, "rb") as fh:
+            data = fh.read()
+    except OSError as e:
+        job.lost = True
+        print("  hook: the captured output of %s could not be read back (%s); the leg is "
+              "counted as FAILED, never a pass." % (job.label, e))
+        return
+    sys.stdout.flush()
+    buf = getattr(sys.stdout, "buffer", None)
+    if buf is not None:
+        buf.write(data)
+        buf.flush()
+    else:
+        sys.stdout.write(data.decode("utf-8", "replace"))
+
+
+def _consume(cmd, job):
+    """The sequential call site's result for a leg that ran early. Every non-EXITED outcome is a
+    failure with its own message, never a pass (R-ZERONULL)."""
+    _replay_job(job)
+    if job.env != dict(os.environ):
+        diff = sorted(k for k in set(job.env) | set(os.environ)
+                      if job.env.get(k) != os.environ.get(k))
+        print("  hook: concurrent leg %s ran with an environment that differs from the one the "
+              "sequential call passes (keys: %s); its result is REFUSED — counted as FAILED."
+              % (job.label, ", ".join(diff)))
+        return 1
+    if job.lost:
+        return 1
+    if job.outcome == LEG_NOSTART:
+        print("  hook: could not run %s (%s)" % (" ".join(cmd), job.error))
+        return 1
+    if job.outcome == LEG_ERROR:
+        print("  hook: concurrent leg %s failed inside the scheduler (%r); counted as FAILED, "
+              "never a pass." % (job.label, job.error))
+        return 1
+    if job.outcome == LEG_TIMEOUT:
+        print("  hook: %s TIMED OUT after %ss and was killed; the output above is all it wrote. "
+              "Counted as exit %d — a failure, never a pass." % (job.label, job.error, TIMEOUT_RC))
+        EXECUTED.append((_invocation(cmd), TIMEOUT_RC))
+        return TIMEOUT_RC
+    EXECUTED.append((_invocation(cmd), job.rc))
+    return job.rc
+
+
+def _start_prefetch(phase, n, timeout, timeout_note):
+    global _SCHED
+    _SCHED = _Scheduler(phase, n, timeout, stop_on_red=(phase == "push"))
+    print("  concurrency: %s=%d — legs run in parallel, output replayed whole in manifest order; "
+          "per-leg timeout %s%s" % (JOBS_ENV, n, "%ss" % timeout if timeout else "none",
+                                    (" (%s)" % timeout_note) if timeout_note else ""))
+    return _SCHED
+
+
+def _start_push_prefetch(n, timeout, timeout_note):
+    """Submit every push leg except `batch prepush` (that one waits for the skip decision)."""
+    sched = _start_prefetch("push", n, timeout, timeout_note)
+    # The receipt key reads tools/verify, which guards rewrites: computed BEFORE anything launches.
+    sched.early_key = push_key(REF_TUPLES)
+    base_env = dict(os.environ)
+    led_env = dict(base_env)
+    led_env.update(_PUSH_LEDGER_ENV)
+    rows = [(i, label, argv, ok) for i, (label, argv, ok) in enumerate(PRE_PUSH_EXPECT)
+            if argv and label != "batch prepush"]
+    for i, label, argv, ok in rows:
+        if label in _PUSH_PURE:
+            sched.submit(_leg_cmd(argv), base_env, label, i, ok, after=(), prio=0)
+    for i, label, argv, ok in rows:
+        if label in _PUSH_MUTATORS:
+            chain = _PUSH_MUTATORS[:_PUSH_MUTATORS.index(label)]
+            sched.submit(_leg_cmd(argv), led_env, label, i, ok, after=chain, prio=0)
+    for i, label, argv, ok in rows:
+        if label not in _PUSH_PURE and label not in _PUSH_MUTATORS:
+            readers_after = _PUSH_MUTATORS + _PUSH_PURE
+            sched.submit(_leg_cmd(argv), led_env, label, i, ok, after=readers_after,
+                         prio=0 if label in _PUSH_FIRST else 1)
+
+
+def _submit_batch_prepush(ranges, skip):
+    """Launch `batch prepush` the moment the skip decision exists, with the environment its
+    sequential call site will give it: the push ledger env plus the skip's own switches."""
+    env = dict(os.environ)
+    env.update(_PUSH_LEDGER_ENV)
+    for leg in skip:
+        var, val = SKIP_SWITCHES[leg]
+        env[var] = val
+    pos = [label for label, _a, _o in PRE_PUSH_EXPECT].index("batch prepush")
+    bp_after = _PUSH_MUTATORS + _PUSH_PURE
+    _SCHED.submit((sys.executable, os.path.join(BASE, "batch.py"), "prepush", "--ranges",
+                   ",".join(ranges)), env, "batch prepush", pos, (0,), after=bp_after, prio=0)
+
+
+def _start_commit_prefetch(n, timeout, timeout_note):
+    sched = _start_prefetch("commit", n, timeout, timeout_note)
+    env = dict(os.environ)
+    for i, (label, argv, ok, _d) in enumerate(PRE_COMMIT_CHECKS):
+        sched.submit(_leg_cmd(tuple(argv) + ("--block", "--record")), env, label, i, ok)
+
+
+def _with_scheduler(body, *args):
+    """Run a phase body; whatever it returns or raises, close the scheduler it may have started."""
+    global _SCHED
+    try:
+        rc = body(*args)
+    except BaseException:
+        sched, _SCHED = _SCHED, None
+        if sched is not None:
+            sched.finish(1)
+        raise
+    sched, _SCHED = _SCHED, None
+    if sched is not None:
+        rc = sched.finish(rc)
+    return rc
 
 
 # ------------------------------------------------------------------ advisory skip
@@ -269,7 +737,7 @@ def git_out(*args):
 # WHAT IT IS: `preflight()` runs this hook to green and `push()` then runs it again on the same
 # HEAD and refs. The second run may skip ONLY the legs `advisory_skip_set()` derives as advisory —
 # WARN mode AND an emitter that records no gating step. Today that is `agent gate`, the leg that
-# makes paid model calls. Every BLOCK leg, the routing probe included, runs on every push.
+# makes paid model calls. Every BLOCK leg runs on every push.
 #
 # ⛔ WHAT IT IS NOT: a ledger lookup standing in for a check (fence 2), or trust in a caller's
 # claim about scope (fence 1). The match key is the tuple set THIS process read from git's stdin,
@@ -485,6 +953,193 @@ def write_green_receipt(key, skipped, child_off):
                           % (RECEIPT_NAME, run_id or "no gitRobot provenance"))
 
 
+# ------------------------------------------------------------------ pre-commit pass-cache
+#
+# ⭐ TIM'S RULING R10, 2026-10-03 (ticket `tooling-precommit-pass-cache-attestation`): gitRobot keeps
+# an in-memory attestation of the pre-commit gate it just ran; the hook asks `attest()`; a single-use
+# yes skips the hook's pre-commit legs; ANYTHING ELSE runs the full pipeline. Measured before
+# building: gitRobot commit run 3ce8b497bf7a (2026-10-04) took 400.4s end to end, of which its own
+# gate phase was 212.2s — the hook's second run inside `git commit` was the other ~188s.
+#
+# ⛔ WHAT IT IS NOT: trust in a caller's claim (ticket fence). `GITROBOT_RUN_ID` only says WHICH
+# attestation to ask about; anyone can export it, and a forged one is answered `attested: false` by
+# gitRobot, which alone decides — keyed on the tree the HOOK computes, never one it was handed. That
+# holds only because the answerer's address is a constant (`ATTEST_URL`), never the environment's.
+# ⚠ `attest()` IS NOT READ-ONLY: a yes CONSUMES the attestation and every answer is audited, so it
+#   is called at most once per hook run, never without a run id, and never from a control.
+#
+# `R-ZERONULL`: one VALUE per state, and only ATTEST_YES skips. "Nobody answered" (UNREACHABLE),
+# "answered too slowly" (TIMEOUT), "answered no" (DENIED), "answered with an error" (REFUSED /
+# NOT_OK), "answered something unreadable" (MALFORMED) and "answered yes about a different tree"
+# (TREE_ECHO_MISMATCH) are different answers, and none of them shares a value with the match.
+ATTEST_YES = "ATTESTED"
+ATTEST_NO_RUN_ID = "NO_RUN_ID"
+ATTEST_NO_TREE = "NO_TREE"
+ATTEST_DENIED = "DENIED"
+ATTEST_REFUSED = "REFUSED"
+ATTEST_NOT_OK = "NOT_OK"
+ATTEST_MALFORMED = "MALFORMED"
+ATTEST_TREE_ECHO = "TREE_ECHO_MISMATCH"
+ATTEST_UNREACHABLE = "UNREACHABLE"
+ATTEST_TIMEOUT = "TIMEOUT"
+ATTEST_ERROR = "ERROR"
+ATTEST_RPC_ID = "RPC_ID_MISMATCH"
+ATTEST_RUN_ECHO = "RUN_ID_ECHO_MISMATCH"
+ATTEST_STATUSES = (ATTEST_YES, ATTEST_NO_RUN_ID, ATTEST_NO_TREE, ATTEST_DENIED, ATTEST_REFUSED,
+                   ATTEST_NOT_OK, ATTEST_MALFORMED, ATTEST_TREE_ECHO, ATTEST_UNREACHABLE,
+                   ATTEST_TIMEOUT, ATTEST_ERROR, ATTEST_RPC_ID, ATTEST_RUN_ECHO)
+
+# Transport, from the served readme (`GITROBOT_HOST` / `GITROBOT_PORT` = 127.0.0.1 / 8010, "No key,
+# no token, no shared secret") and a parent-session probe 2026-10-04: streamable-HTTP MCP at /mcp,
+# the same handshake `record.py` uses for the ledger. Not imported from `record.py`: that module
+# binds its URL and reconfigures stdout at import, and the hook needs neither.
+# ⛔ THE ADDRESS IS A CONSTANT. No environment variable and no argv can choose who answers: an
+#   env override let anyone who runs `git commit` point the hook at a stub that says yes, which
+#   skipped every BLOCK leg and printed a gitRobot provenance it never had (`/rely` 2026-10-03,
+#   BLOCKING-1). The selftest substitutes the transport through `_ATTEST_URL_SEAM`, a module
+#   attribute only in-process code can set.
+ATTEST_URL = "http://127.0.0.1:8010/mcp"
+ATTEST_TIMEOUT_S = 4.0            # per request; an answer slower than this is TIMEOUT -> full run
+_ATTEST_TIMEOUT_OVERRIDE = None   # controls only
+_ATTEST_URL_SEAM = None           # controls only; in-process, never read from the environment
+
+
+def _attest_url():
+    return _ATTEST_URL_SEAM or ATTEST_URL
+
+
+def index_tree():
+    """The tree the pending commit will carry: `git write-tree` over the index git prepared.
+
+    Runs with cwd=REPO, which `common` derives from THIS file's location; the installed shim runs
+    the committing checkout's own copy, so in a worktree commit this is that worktree's index
+    (git's exported GIT_INDEX_FILE is inherited too). Never resolved against the main checkout."""
+    rc, out = git_out("write-tree")
+    tree = out.strip()
+    return tree if rc == 0 and tree else None
+
+
+def _sse_json(body):
+    """The JSON-RPC message in a response body, SSE-framed (`data:` line) or bare."""
+    import json
+    for line in body.splitlines():
+        if line.startswith("data:"):
+            return json.loads(line[5:].strip())
+    return json.loads(body)
+
+
+def _attest_call(run_id, tree):
+    """One MCP round trip to gitRobot's `attest`. Returns `(request_id, parsed JSON-RPC response)`;
+    RAISES on any transport or parse failure, which `consult_attest` classifies. No proxy: loopback
+    only. The request id travels back so the judge can refuse an answer to some other request."""
+    import json
+    import urllib.request
+    import uuid
+    url = _attest_url()
+    timeout = _ATTEST_TIMEOUT_OVERRIDE or ATTEST_TIMEOUT_S
+    opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))
+    headers = {"Content-Type": "application/json",
+               "Accept": "application/json, text/event-stream"}
+
+    def post(payload, session=None):
+        h = dict(headers)
+        if session:
+            h["Mcp-Session-Id"] = session
+        req = urllib.request.Request(url, data=json.dumps(payload).encode("utf-8"),
+                                     headers=h, method="POST")
+        with opener.open(req, timeout=timeout) as resp:
+            return resp.headers.get("Mcp-Session-Id"), resp.read().decode("utf-8")
+
+    sid, _body = post({"jsonrpc": "2.0", "id": str(uuid.uuid4()), "method": "initialize",
+                       "params": {"protocolVersion": "2025-06-18", "capabilities": {},
+                                  "clientInfo": {"name": "zp-hooks-attest", "version": "1"}}})
+    post({"jsonrpc": "2.0", "method": "notifications/initialized"}, session=sid)
+    call_id = str(uuid.uuid4())
+    _sid, body = post({"jsonrpc": "2.0", "id": call_id, "method": "tools/call",
+                       "params": {"name": "attest",
+                                  "arguments": {"run_id": run_id, "tree": tree}}}, session=sid)
+    return call_id, _sse_json(body)
+
+
+def _classify_attest_exception(e):
+    """Exception -> status. Timeout is told apart from refusal-to-connect; neither is ever a yes."""
+    import socket
+    import urllib.error
+    if isinstance(e, (socket.timeout, TimeoutError)):
+        return ATTEST_TIMEOUT
+    if isinstance(e, urllib.error.HTTPError):
+        return ATTEST_REFUSED
+    if isinstance(e, urllib.error.URLError):
+        if isinstance(e.reason, (socket.timeout, TimeoutError)):
+            return ATTEST_TIMEOUT
+        return ATTEST_UNREACHABLE
+    if isinstance(e, ValueError):
+        return ATTEST_MALFORMED
+    if isinstance(e, (ConnectionError, OSError)):
+        return ATTEST_UNREACHABLE
+    return ATTEST_ERROR
+
+
+def _judge_attest(res, tree, run_id, call_id):
+    """(status, detail) from a parsed JSON-RPC response. ATTEST_YES only when ALL hold: the
+    response `id` is the request id this hook sent; it carries no `error`; `isError` is absent or
+    the boolean False; `ok` is exactly True; `attested` is exactly True; and the echoed `run_id`
+    and `tree` both equal the ones this hook sent."""
+    if not isinstance(res, dict):
+        return ATTEST_MALFORMED, "the response is not a JSON object"
+    if res.get("id") != call_id:
+        return ATTEST_RPC_ID, "the response id %r is not this hook's request id %r" % (
+            res.get("id"), call_id)
+    if "error" in res:
+        return ATTEST_REFUSED, "JSON-RPC error (a result beside it is ignored): %s" % (
+            res.get("error"),)
+    if "result" not in res:
+        return ATTEST_MALFORMED, "the response carries no result"
+    result = res["result"]
+    if not isinstance(result, dict):
+        return ATTEST_MALFORMED, "the result is not an object"
+    if "isError" in result and result["isError"] is not False:
+        content = result.get("content") or [{}]
+        text = content[0].get("text") if isinstance(content[0], dict) else content[0]
+        return ATTEST_REFUSED, "the server answered isError: %s" % (text,)
+    sc = result.get("structuredContent")
+    if not isinstance(sc, dict):
+        return ATTEST_MALFORMED, "no structuredContent object in the result"
+    if sc.get("ok") is not True:
+        return ATTEST_NOT_OK, "ok=%r, why=%r" % (sc.get("ok"), sc.get("why"))
+    if sc.get("attested") is False:
+        return ATTEST_DENIED, "attested: false, why: %s" % (sc.get("why"),)
+    if sc.get("attested") is not True:
+        return ATTEST_MALFORMED, "attested=%r is not the boolean true" % (sc.get("attested"),)
+    if sc.get("tree") != tree:
+        return ATTEST_TREE_ECHO, "attested a tree %r, but this hook asked about %r" % (
+            sc.get("tree"), tree)
+    if sc.get("run_id") != run_id:
+        return ATTEST_RUN_ECHO, "attested run %r, but this hook asked about run %r" % (
+            sc.get("run_id"), run_id)
+    return ATTEST_YES, "attested"
+
+
+def consult_attest():
+    """(status, run_id, tree, detail). Every path but a full yes returns a status other than
+    ATTEST_YES, and the caller then runs every leg."""
+    run_id, _op = _provenance()
+    if not run_id:
+        return ATTEST_NO_RUN_ID, None, None, "no %s in the environment (a hand-run commit)" % ENV_RUN_ID
+    tree = index_tree()
+    if not tree:
+        return ATTEST_NO_TREE, run_id, None, "git write-tree failed, so there is no tree to ask about"
+    try:
+        call_id, res = _attest_call(run_id, tree)
+    except Exception as e:                       # noqa: BLE001 — every failure is a full run
+        return _classify_attest_exception(e), run_id, tree, "%s: %s" % (type(e).__name__, e)
+    try:
+        status, detail = _judge_attest(res, tree, run_id, call_id)
+    except Exception as e:                       # noqa: BLE001 — a judge that crashes is no yes
+        return ATTEST_ERROR, run_id, tree, "judging the answer raised %s: %s" % (type(e).__name__, e)
+    return status, run_id, tree, detail
+
+
 def _emitter_of(argv):
     """Repo-relative module a push row's child records from, or None for an inline row."""
     if not argv:
@@ -687,7 +1342,8 @@ PRE_COMMIT_CHECKS = [
     ("check_encoding", ("check_encoding.py",), (0,),
      "BOM + undecodable BLOCK; suspected double-encoding WARNS"),
     # ⚠⚠ THE SIX BELOW WERE PUSH-ONLY UNTIL 2026-08-30, AND THAT WAS A HOLE, NOT A SAVING.
-    # gitRobot admits 20 keys for a push and 18 for a commit; this hook emits 11. The other six ran
+    # The commit admission set (`gitRobot admission(action='commit')`, read live — never a count
+    # written here) names more steps than this table produces. The six ran
     # only in `pre_push`, against the TIP -- so a second commit silently invalidated the first, and
     # no intermediate commit could EVER reach the bar through ordinary work. Measured: a 2-commit
     # range read 11/19 with both commits made through the full pipeline, hook green each time.
@@ -695,9 +1351,9 @@ PRE_COMMIT_CHECKS = [
     # that exists BECAUSE intermediate commits are fetchable, bisectable and citable forever.
     # ⚠ They already BLOCK at push, so this adds NO new failure class -- same argument
     # `pre_commit` makes for the original five, one paragraph down. Cost 16.1s (~5.9s -> ~22s).
-    # ⚠ NOT the whole gap: `build`, `check_checkers`, `check_claude_md`, `check_hashes`,
-    # `claim_review`, `guards` and `pdf_coupling` still have no pre-commit producer. Narrowed, not
-    # closed (RLY27-5).
+    # ⚠ NOT the whole gap (RLY27-5): the commit-admitted steps with no label in this table still have
+    # no pre-commit producer. Which ones is the difference between `gitRobot admission(action='commit')`
+    # and the labels below, computed when asked; a list written here goes stale.
     #
     # ⚠⚠ EXIT 3 IS "SKIPPED PART OF MY SCOPE", NOT A FINDING -- `check_paths.EXIT_SKIPPED`, and
     # `pre_push` has always allowed it (see the File-reference check below). When these six were
@@ -749,13 +1405,6 @@ PRE_PUSH_PLAN = [
                                         "run against a mutant per control, in a child, before any "
                                         "receipt is read; its own output prints the count"),
     ("guards", "BLOCK", "every enumerated ROUTE to a guarded property still behaves"),
-    ("routing control", "BLOCK", "the behavioural mutation probe: 17 mutations of the routing and "
-                                 "enforcement routes, each required to turn its named ROW red or to "
-                                 "move the prepush EXIT CODE (~225s; fails CLOSED on a moved anchor). "
-                                 "RLY28-1 IS covered — the debt this line used to record was paid, "
-                                 "and the line said otherwise for as long as it took a /rely round "
-                                 "to read it. It does NOT cover the recorded VALUE of the six "
-                                 "non-routing legs (RLYB4-1)"),
     ("check_paths", "BLOCK", "every repo-relative reference in tracked markdown resolves"),
     ("check_claude_md", "BLOCK", "CLAUDE.md shape contract: rooted paths resolve, named checkers exist "
                                  "(3 legs still PENDING — it says so on every run)"),
@@ -791,12 +1440,34 @@ PRE_PUSH_PLAN = [
     # can block a push on its own. Calling it "report" while it did exactly that is a
     # manifest that lies, which is worse than no manifest (/rely pass 3 and 4).
     ("scan_pdfs", "BLOCK", "PDF asset scan — its exit code becomes the hook's"),
-    # ⚠ "/rely routing" is no longer one mode: the logic and exemption-switch legs BLOCK, the
-    # routed-prose leg WARNS (downgraded 2026-08-21, rung 5). Said here too, because a manifest that
+    # ⚠ `/rely` is NOT a push leg: its obligation is the ledger's, at TAG
+    # (`coverage_gap(step='rely', action='tag')`). Said here too, because a manifest that
     # over-states at ONE entry point is the same defect as over-stating at all four.
-    ("batch prepush", "BLOCK", "trigger 5, the three review signals, and /rely routing — logic and "
-                               "exemption switches BLOCK, routed prose WARNS"),
+    ("batch prepush", "BLOCK", "purity, ssot, pdf coupling, prior-art attribution and the review "
+                               "signals (/rely is owed at TAG in the ledger, not here)"),
 ]
+
+
+def push_table_problems(plan, expect):
+    """Every way the push MANIFEST and the push EXPECTATION table disagree on LABELS. [] when total.
+
+    ⚠ `HOOK-R5-2`: `_bind_push_modes` invented `(0,)` — a BLOCK mode — for a plan row with no
+    expectation row, and `reconcile` iterates the expectation table only, so such a row was
+    ADVERTISED as blocking and NEVER CHECKED. Measured: dropping `guards` from `PRE_PUSH_EXPECT` plus
+    its call site printed `guards BLOCK`, reconciled `19 of 19`, exited 0, and never launched
+    `guards.py`. A join between two hand-maintained lists needs the join asserted total; `pre_push`
+    refuses on any problem named here, before the manifest prints."""
+    p = [label for label, _m, _d in plan]
+    e = [label for label, _a, _o in expect]
+    out = []
+    for label in sorted(set(p) - set(e)):
+        out.append("%s is in the manifest with NO expectation row — it would be advertised and "
+                   "never checked" % label)
+    for label in sorted(set(e) - set(p)):
+        out.append("%s has an expectation row but is NOT in the manifest" % label)
+    for label in sorted({x for x in p if p.count(x) > 1} | {x for x in e if e.count(x) > 1}):
+        out.append("%s appears more than once in a table" % label)
+    return out
 
 
 def _bind_push_modes(plan, expect):
@@ -857,7 +1528,6 @@ PRE_PUSH_EXPECT = [
     ("quarantine", None, None),
     ("advisory-skip controls", ("hooks.py", "selftest"), (0,)),
     ("guards", ("guards.py", "--record"), (0,)),
-    ("routing control", ("probe_routing_behavioural.py",), (0,)),
     # ⚠ 3 = scope skipped for want of a built .lake, tolerated at both phases (RLY27-7).
     ("check_paths", ("check_paths.py", "--all", "--warn-private", "--record"), (0, 3)),
     ("check_claude_md", ("check_claude_md.py", "--record"), (0,)),
@@ -884,6 +1554,11 @@ PRE_PUSH_EXPECT = [
 
 
 def pre_commit():
+    """The pre-commit phase. The body is `_pre_commit`; this closes any scheduler it started."""
+    return _with_scheduler(_pre_commit)
+
+
+def _pre_commit():
     """The eleven checkers BLOCK; nothing here warns.
 
     The stub-first protocol commits `sorry`-stubbed files on purpose, so BUILD state must never
@@ -905,6 +1580,21 @@ def pre_commit():
     ])
     report.plan(PRE_COMMIT_PLAN)
 
+    # ⚠⚠ THE PASS-CACHE. The ONLY branch that skips is an exact `ATTEST_YES`; every other status —
+    #   no run id, no tree, denied, refused, not ok, malformed, echoed tree or run id differs,
+    #   response id differs, unreachable, timeout, error — falls through to the full pipeline below. The skip records nothing and
+    #   writes nothing: gitRobot's gate already ran THIS function on THIS tree and recorded its
+    #   verdicts. `R-NOCONV`: what still BLOCKS is printed on every run, matched or not.
+    status, run_id, tree, detail = consult_attest()
+    if status == ATTEST_YES:
+        print("SKIPPED pre-commit: gitRobot gate %s passed for tree %s" % (run_id, tree))
+        print("  (single-use attestation; that gate ran these %d legs on this exact tree in this run)"
+              % len(PRE_COMMIT_CHECKS))
+        print("  BLOCK rows launched: 0 of %d; skipped on attestation %s"
+              % (len(PRE_COMMIT_CHECKS), ATTEST_YES))
+        return 0
+    print("  pass-cache: none — %s: %s; every leg runs." % (status, detail))
+
     failed = []
     # ⚠⚠ RECORDING BELONGS HERE, NOT IN `batch.py precommit` — measured 2026-08-23 and it was a
     # silent miss. `batch.py precommit` is a MANUAL command; the path that actually fires on every
@@ -921,8 +1611,23 @@ def pre_commit():
     # and, under `HEAD`, makes `ledger_subjects` drop exactly the paths just staged — the ledger
     # then reports narrowed coverage WITHOUT blocking. `pre_push` has always used assignment, for
     # the reason stated at its own call site: the environment here could only ever be wrong.
-    os.environ["ZPLEDGER_BASIS"] = "INDEX"
-    os.environ["ZPLEDGER_RUN"] = "pre-commit"
+    os.environ.update(_COMMIT_LEDGER_ENV)
+    # ⚠⚠ BASIS-EMPTY-1: ONE `write-tree`, HERE, BEFORE ANY LEG STARTS. Eleven legs each running
+    #   their own lost `.git/index.lock` to one another and sent an empty basis. Pinned, every leg
+    #   names the same tree; unpinned (this failed), each leg retries and fails loud as exit 2.
+    _tree, _why = common.pin_index_tree()
+    print("  basis: %s" % (("index tree %s, pinned for every leg" % _tree) if _tree else
+                           ("NOT PINNED — %s; each leg resolves its own and will report exit 2 "
+                            "if it cannot" % _why)))
+    # ⚠ CONCURRENT LAUNCH, SEQUENTIAL DECISION. Every leg here only READS the tree and records its
+    #   own distinct step, so all eleven may start now; the loop below still consumes them one by
+    #   one, in this order, through `py()`. `ZP_HOOK_JOBS=1` creates no scheduler at all.
+    _jobs, _note = hook_jobs()
+    if _note:
+        print("  concurrency: %s" % _note)
+    if _jobs > 1:
+        _t, _tnote = leg_timeout()
+        _start_commit_prefetch(_jobs, _t, _tnote)
     for label, argv, ok_codes, _desc in PRE_COMMIT_CHECKS:
         rc = py(*argv, "--block", "--record")
         # ⚠ EXIT 2 IS "COULD NOT BE RECORDED", NOT "FAILED". A checker that ran and could not reach
@@ -930,9 +1635,15 @@ def pre_commit():
         # reader needs the outage named, not a phantom finding.
         # ⚠ A checker MISSING FROM DISK also surfaces as 2 today and is reported with the same
         #   wording, which fails closed but diagnoses wrong (RLY27-6, ledgered, not fixed here).
+        # ⚠ `LED-8`'s wording, corrected here too: the old line said "no key exists for this
+        #   content", which a V11 refusal proves FALSE (a key at that basis exists). The child's own
+        #   reason is on screen above; this line names only which recording failure it was.
         if rc == 2:
-            failed.append("%s (ran; verdict NOT RECORDED — no key exists for this content)"
-                          % label)
+            failed.append("%s (exit 2: ran; verdict NOT RECORDED — the ledger refused it or could "
+                          "not be reached; its reason is printed above)" % label)
+        elif rc == 4:
+            failed.append("%s (exit 4: ran; the ledger REFUSED the record — terminal, read the "
+                          "rule it named above; do not retry)" % label)
         elif rc not in ok_codes:
             failed.append("%s (exit %d)" % (label, rc))
 
@@ -1014,6 +1725,11 @@ def parse_refs(stream):
 
 
 def pre_push(stream):
+    """The pre-push phase. The body is `_pre_push`; this closes any scheduler it started."""
+    return _with_scheduler(_pre_push, stream)
+
+
+def _pre_push(stream):
     ranges, quarantined = parse_refs(stream)
     if quarantined:
         for m in quarantined:
@@ -1032,7 +1748,24 @@ def pre_push(stream):
                    + " + anything under Vendored/"),
         ("not run", "lake build — CI at the PR owns build state (stub-first pushes stubs)"),
     ])
+    _tbl = push_table_problems(PRE_PUSH_PLAN, PRE_PUSH_EXPECT)
+    if _tbl:
+        print("\nPush blocked: the push manifest and its expectation table disagree (HOOK-R5-2):")
+        for _p in _tbl:
+            print("  - %s" % _p)
+        print("A row advertised without an expectation is never checked. Fix the tables.")
+        return 1
     report.plan(_bind_push_modes(PRE_PUSH_PLAN, PRE_PUSH_EXPECT))
+
+    # ⚠ CONCURRENT LAUNCH, SEQUENTIAL DECISION — see the dependency graph above `JOBS_ENV`. Every leg
+    #   below is still consumed at its own call site, in this order; `ZP_HOOK_JOBS=1` creates no
+    #   scheduler and is today's path.
+    _jobs, _note = hook_jobs()
+    if _note:
+        print("  concurrency: %s" % _note)
+    if _jobs > 1:
+        _t, _tnote = leg_timeout()
+        _start_push_prefetch(_jobs, _t, _tnote)
 
     # ⚠⚠ THE SKIP'S OWN CONTROLS RUN FIRST, IN A CHILD, BEFORE ANY RECEIPT IS READ. A child, so no
     #   control's stubbing can leak into this process; first, so a skip is never decided by
@@ -1048,7 +1781,9 @@ def pre_push(stream):
     # every BLOCK leg below runs whatever the receipt says. Only the derived advisory set can shrink.
     skip = []
     skippable = advisory_skip_set()
-    key, _why = push_key(REF_TUPLES)
+    # ⚠ In concurrent mode the key was taken before any leg launched, because guards rewrites files
+    #   under tools/verify and the key hashes them; sequentially nothing has run yet at this point.
+    key, _why = _SCHED.early_key if _SCHED is not None else push_key(REF_TUPLES)
     if not skippable:
         print("  advisory skip: none — %s; every leg runs."
               % ("the skippable set could not be derived" if skippable is None
@@ -1078,6 +1813,10 @@ def pre_push(stream):
             print("  note: %s=%s was inherited from the caller, so `%s` will not run — a "
                   "pre-existing opt-out, not a receipt match; this run writes no green receipt."
                   % (var, os.environ.get(var), leg))
+    # The skip decision now exists, so `batch prepush` can launch; it is still READ at its own call
+    # site at the end, where `_consume` refuses it unless its launch env equals the one passed there.
+    if _SCHED is not None:
+        _submit_batch_prepush(ranges, skip)
 
     # ⚠ `gatelock` RETIRED 2026-08-23 — deliberately, not dropped. It froze reviewed paths with the
     # read-only bit while a gate round ran. Three reasons it went: the worktree rule makes the
@@ -1099,47 +1838,15 @@ def pre_push(stream):
     # both and pre_push set neither, so every push-time record was refused with
     # "run.id is required ... not the caller's imagination" and the whole point of wiring
     # `--record` here was lost at the first checker.
-    os.environ["ZPLEDGER_BASIS"] = "HEAD"
-    os.environ["ZPLEDGER_RUN"] = "pre-push"
+    os.environ.update(_PUSH_LEDGER_ENV)
 
     print("\n=== Property guards (exemption surface) ===")
     _rc_guards = recorded("guards.py")
-    if _rc_guards == 2:
+    if _rc_guards in NOT_RECORDED:
         return 1                      # `recorded` already said why; do not also blame the guard
     if _rc_guards != 0:
         print("\nPush blocked: a guarded property can be walked, or a guard left files mutated.")
         print("Read the FAIL lines above — each names the ROUTE. Fix the route, do not skip the run.")
-        return 1
-
-    # ⚠⚠ THE CONTROL FOR THE TWO ROUTES ABOVE, AND UNTIL NOW NOTHING RAN IT. `guards.py` green is
-    # not evidence: ROUTE 3 and ROUTE 5 have been defeated FOUR times (whole-file substring →
-    # windowed substring → AST shape → AST name), and each repair moved the hole rather than
-    # closing it, because every attempt asked "does the consumer's SOURCE look like it honours the
-    # flag?" — a static approximation with an escape every time. `probe_routing_behavioural.py`
-    # asks the behavioural question instead: it drives the consumer with synthetic rows in its own
-    # detached worktree and requires the named ROW to go red. It was written, it works, and it had
-    # ZERO automatic callers — so the one artifact that can falsify the guard ran only when a human
-    # remembered. Measured 2026-08-24 by `/rely`: 9 of 9, 225s, and it was the only thing in the
-    # layer that reacted to a live neuter of `cmd_prepush`.
-    #
-    # ⚠ IT ASSERTS THE ROW, NOT THE EXIT CODE, and it fails CLOSED — a mutation whose anchor has
-    # moved reports `MUTATION DID NOT APPLY` rather than passing, so a refactor that slides the
-    # anchor blocks the push instead of silently retiring the control.
-    #
-    # ⚠ `RLY28-1` IS CLOSED AT THE SHAPE, NOT HERE. The router's producer now records its own count
-    # in `batch`'s verdict registry and the push verdict is read from that, so multiplying the
-    # returned count by zero at the call site — the neuter that took the gate from exit 1 to exit 0
-    # on 2026-08-23 while three FAIL rows sat on screen — is now INERT rather than merely
-    # detectable. Two mutations here pin both directions: annihilating the return must stay GREEN,
-    # and deleting the producer's record must go RED. What THIS wiring closes is `RLY29-1`: the
-    # control had no caller, so nothing ever ran the one artifact that can falsify the guard.
-    print("\n=== Routing control (behavioural mutation probe) ===")
-    _rc_probe = py("probe_routing_behavioural.py")
-    if _rc_probe != 0:
-        print("\nPush blocked: the routing control did not behave as required.")
-        print("Each row above names the mutation and the ROW that had to go red. A row reading")
-        print("MUTATION DID NOT APPLY means the anchor moved — the control is no longer testing")
-        print("what it claims, which is a fail-open in the making. Fix the control, never skip it.")
         return 1
 
     print("\n=== File-reference check ===")
@@ -1147,6 +1854,8 @@ def pre_push(stream):
     # Locally the pinned Mathlib checkout is present, so this is normally 0; the branch
     # exists so a developer without a built .lake is not blocked by an unrunnable check.
     _rc_paths = recorded("check_paths.py", "--all", "--warn-private")
+    if _rc_paths in NOT_RECORDED:
+        return 1
     if _rc_paths not in (0, 3):
         print("\nPush blocked: a repo-relative reference in TRACKED markdown does not resolve.")
         print("Fix the path, or word the line so the resolver skips it (e.g. 'no longer exists').")
@@ -1219,14 +1928,20 @@ def pre_push(stream):
         print("Run: python tools/verify/install_hooks.py --force")
         return 1
 
-    if recorded("check_moved.py", "--block") != 0:
+    _rc_moved = recorded("check_moved.py", "--block")
+    if _rc_moved in NOT_RECORDED:
+        return 1
+    if _rc_moved != 0:
         print("\nPush blocked: something still points at a relocated path.")
         print("Update the reference, or record the file as a dated record in check_moved.py.")
         print("⚠ Writing it into .claude-local/DEFECTS.md does NOT clear this gate: nothing reads")
         print("  that file, and this leg recomputes from the checker on every run.")
         return 1
 
-    if recorded("check_negatives.py", "--block") != 0:
+    _rc_neg = recorded("check_negatives.py", "--block")
+    if _rc_neg in NOT_RECORDED:
+        return 1
+    if _rc_neg != 0:
         print("\nPush blocked: an undated universal negative.")
         print("Write 'none located as of <date>, searched as follows' — a universal negative")
         print("is falsified by any single future commit and nothing mechanical notices.")
@@ -1234,7 +1949,10 @@ def pre_push(stream):
         print("  that file, and this leg recomputes from the checker on every run.")
         return 1
 
-    if recorded("check_figures.py", "--block") != 0:
+    _rc_fig = recorded("check_figures.py", "--block")
+    if _rc_fig in NOT_RECORDED:
+        return 1
+    if _rc_fig != 0:
         print("\nPush blocked: an artifact count recorded in prose with no date.")
         print("Prefer measuring on demand. If it must be written down, date it -")
         print("the papers count went stale by 15 in a day, and nothing noticed.")
@@ -1256,7 +1974,10 @@ def pre_push(stream):
     print("  check_frozen: WARN-only (retired 2026-08-23, dead topology). Ran and recorded;")
     print("  claim_review emitted. A finding here is a reading list, not a block.")
 
-    if recorded("check_checkers.py", "--block") != 0:
+    _rc_cc = recorded("check_checkers.py", "--block")
+    if _rc_cc in NOT_RECORDED:
+        return 1
+    if _rc_cc != 0:
         print("\nPush blocked: a checker cannot fail, or nothing runs it.")
         print("This suite's characteristic defect is a check that could not have failed;")
         print("every instance so far was found by probing, never by reading.")
@@ -1287,7 +2008,13 @@ def pre_push(stream):
               % os.path.dirname(SELF))
         return 1
 
-    if recorded("check_hashes.py") != 0:
+    _rc_hashes = recorded("check_hashes.py")
+    # ⚠ `BLOCKMSG-1`: a RECORDING refusal (exit 2/4 — e.g. V16c, an unapproved build of the
+    #   checker) printed the HASH-MISMATCH remedy below, sending the reader to register.md,
+    #   where every hash was OK. `recorded` has already named the recording failure.
+    if _rc_hashes in NOT_RECORDED:
+        return 1
+    if _rc_hashes != 0:
         print("\nPush blocked: build-script hash mismatch vs register.md.")
         print("A script changed without completing the four-step workflow")
         print("(change + version bump + PDF rebuild + hash update).")
@@ -1336,7 +2063,7 @@ def pre_push(stream):
         # (`batch.pdf_coupling_accepts`, step `pdf_coupling_in_push`). `check_paths`, `check_moved`,
         # `check_negatives` and `check_hashes` are registered and admitted and still recompute from
         # their checker every run, so a signature against them changes nothing at this gate.
-        # `purity`, `ssot`, `routing` and `prior_art_attrib` are not registered steps at all.
+        # `purity`, `ssot` and `prior_art_attrib` are not registered steps at all.
         print("The ONLY leg here with a human-accept route is `pdf coupling`: an accepted FAIL")
         print("recorded as `pdf_coupling_in_push` over those exact (path, blob) pairs is not a")
         print("block. Every other leg above must be FIXED — a signature does not reach them, and")
@@ -1372,7 +2099,7 @@ def pre_push(stream):
 # FAIL. A control that also passes on its mutant cannot fail, which is a check in name only. A
 # mutant whose anchor is missing is reported `MUTATION DID NOT APPLY` and fails the suite — fail
 # CLOSED, so a refactor that slides an anchor blocks the push instead of retiring the control
-# silently (the `probe_routing_behavioural.py` precedent).
+# silently.
 #
 # Simulated runs drive `pre_push` in-process with every child process stubbed: `run` records the
 # launch and returns a scripted exit code, `tools_digest` / `head_tree` return fixed values, and the
@@ -1407,8 +2134,10 @@ def _good_receipt(**over):
 
 
 def _simulate(m, stdin=_REFS, receipt=None, raw=None, env=None, red=(), digest=_DIGEST,
-              keep_dir=None):
-    """Run `m.pre_push` with every child stubbed. Returns a dict describing what happened."""
+              keep_dir=None, codes=None):
+    """Run `m.pre_push` with every child stubbed. Returns a dict describing what happened.
+
+    `red` legs exit 1; `codes` maps an argv prefix to any other exit code (2, 4, ...)."""
     import io as _io
     import json
     import shutil
@@ -1424,13 +2153,16 @@ def _simulate(m, stdin=_REFS, receipt=None, raw=None, env=None, red=(), digest=_
     names = ("run", "tools_digest", "head_tree", "git_out", "_RECEIPT_PATH_OVERRIDE")
     saved = {n: getattr(m, n) for n in names}
     switch_vars = sorted({var for var, _val in SKIP_SWITCHES.values()})
-    env_keys = (ENV_RUN_ID, ENV_OP, "ZPLEDGER_BASIS", "ZPLEDGER_RUN") + tuple(switch_vars)
+    env_keys = (ENV_RUN_ID, ENV_OP, "ZPLEDGER_BASIS", "ZPLEDGER_RUN", JOBS_ENV) + tuple(switch_vars)
     saved_env = {k: os.environ.get(k) for k in env_keys}
     launched, child_env = [], {}
 
     def fake_run(*cmd):
         inv = m._invocation(cmd)
         rc = 1 if any(tuple(inv[:len(r)]) == tuple(r) for r in red) else 0
+        for pre, code in (codes or {}).items():
+            if tuple(inv[:len(pre)]) == tuple(pre):
+                rc = code
         launched.append(inv)
         if tuple(inv[:2]) == ("batch.py", "prepush"):
             # What the CHILD would have seen: the switch values at the moment of launch.
@@ -1445,6 +2177,9 @@ def _simulate(m, stdin=_REFS, receipt=None, raw=None, env=None, red=(), digest=_
     m._RECEIPT_PATH_OVERRIDE = path
     for k in (ENV_RUN_ID, ENV_OP) + tuple(switch_vars):
         os.environ.pop(k, None)
+    # ⚠ SEQUENTIAL, ALWAYS: these controls stub `run`, and only the sequential path goes through
+    #   it for every launch. The concurrent path has its own simulator (`_simulate_conc`).
+    os.environ[JOBS_ENV] = "1"
     for k, v in (env or {}).items():
         os.environ[k] = v
     del m.EXECUTED[:], m.REFS_SEEN[:], m.REF_TUPLES[:]
@@ -1774,9 +2509,1050 @@ def _ctl_literal(m):
         sorted(s or ()), sorted(_EXPECTED_SKIPPABLE))
 
 
+# ------------------------------------------------------------------ pass-cache controls
+#
+# `R-NOCONV`: the guard asserting what still BLOCKS lands with the skip. Each control drives the REAL
+# `pre_commit` with every child stubbed and the attest transport STUBBED — never the live gitRobot,
+# whose `attest()` consumes and audits. Only an exact yes about the hook's own tree may skip; every
+# other answer must launch all eleven legs. The `_StubGitRobot` rows run the REAL `_attest_call`
+# against a throwaway loopback server, so a mutation inside the transport is visible too.
+
+_RUN = "ctl-run-attest"
+
+
+_ECHO = object()      # echo exactly what the hook asked
+_ABSENT = object()    # leave the key out of the answer altogether
+_CTL_ID = "ctl"       # the request id the stubbed transport reports having sent
+_FORGE_VAR = "GITROBOT_URL"   # the env override `/rely` forged with; it must reach nothing now
+
+
+def _attest_answer(attested=True, tree=_ECHO, ok=True, why=None, is_error=False, structured=True,
+                   run_id=_ECHO, rpc_id=_ECHO, error=None):
+    """A JSON-RPC response shaped like gitRobot's AttestResult. `_ECHO` (the default) echoes what was
+    asked, `_ABSENT` omits the key, any other value is sent as given — so a control can build a yes
+    with NO tree or run id echo, which the earlier `tree=None`-means-echo helper could not."""
+    def answer(asked_run, asked_tree, call_id=_CTL_ID):
+        import json
+        sc = {"ok": ok, "op": "attest", "attested": attested, "why": why}
+        for key, val, asked in (("run_id", run_id, asked_run), ("tree", tree, asked_tree)):
+            if val is _ECHO:
+                sc[key] = asked
+            elif val is not _ABSENT:
+                sc[key] = val
+        result = {"content": [{"type": "text", "text": json.dumps(sc)}]}
+        if is_error is not _ABSENT:
+            result["isError"] = is_error
+        if structured:
+            result["structuredContent"] = sc
+        resp = {"jsonrpc": "2.0", "id": call_id if rpc_id is _ECHO else rpc_id, "result": result}
+        if error is not None:
+            resp["error"] = error
+        return resp
+    return answer
+
+
+def _dead_url():
+    """A loopback URL nothing listens on."""
+    import socket
+    sock = socket.socket()
+    sock.bind(("127.0.0.1", 0))
+    port = sock.getsockname()[1]
+    sock.close()
+    return "http://127.0.0.1:%d/mcp" % port
+
+
+def _simulate_commit(m, env=None, answer=None, raises=None, tree=_TREE, real=False, url=None):
+    """Run `m.pre_commit` with every child stubbed. `answer(run_id, tree)` or `raises` stands in for
+    the transport unless `real`; then `m._attest_call` runs against `url`, set through the
+    in-process seam `m._ATTEST_URL_SEAM`. A real run with no `url` is refused: it would reach the
+    live gitRobot, whose `attest()` consumes and audits."""
+    import io as _io
+    if real and not url:
+        raise ValueError("a real-transport control must name its loopback url")
+    names = ("run", "index_tree", "_attest_call", "_ATTEST_URL_SEAM")
+    saved = {n: getattr(m, n) for n in names}
+    env_keys = (ENV_RUN_ID, ENV_OP, _FORGE_VAR, "ZPLEDGER_BASIS", "ZPLEDGER_RUN", JOBS_ENV,
+                common.INDEX_TREE_ENV)
+    saved_env = {k: os.environ.get(k) for k in env_keys}
+    launched, calls = [], []
+
+    def fake_run(*cmd):
+        inv = m._invocation(cmd)
+        launched.append(inv)
+        m.EXECUTED.append((inv, 0))
+        return 0
+
+    def fake_call(run_id, asked_tree):
+        calls.append((run_id, asked_tree))
+        if raises is not None:
+            raise raises
+        return _CTL_ID, answer(run_id, asked_tree)
+
+    m.run = fake_run
+    m.index_tree = lambda: tree
+    if real:
+        m._ATTEST_URL_SEAM = url
+    else:
+        m._attest_call = fake_call
+    for k in (ENV_RUN_ID, ENV_OP, _FORGE_VAR):
+        os.environ.pop(k, None)
+    os.environ[JOBS_ENV] = "1"          # sequential, always: see `_simulate`
+    for k, v in (env or {}).items():
+        os.environ[k] = v
+    del m.EXECUTED[:]
+    buf, real_out = _io.StringIO(), sys.stdout
+    try:
+        sys.stdout = buf
+        rc = m.pre_commit()
+    finally:
+        sys.stdout = real_out
+        for n, v in saved.items():
+            setattr(m, n, v)
+        for k, v in saved_env.items():
+            if v is None:
+                os.environ.pop(k, None)
+            else:
+                os.environ[k] = v
+        del m.EXECUTED[:]
+    return {"rc": rc, "out": buf.getvalue(), "launched": launched, "calls": calls}
+
+
+def _full(m, r, status):
+    """True when the run launched every leg, exited 0 and reported exactly `status`."""
+    return (r["rc"] == 0 and len(r["launched"]) == len(m.PRE_COMMIT_CHECKS)
+            and "pass-cache: none — %s:" % status in r["out"] and "SKIPPED" not in r["out"])
+
+
+def _say(r, status):
+    return "rc=%s, %d of %d leg(s) launched, %s reported=%s, attest calls=%d" % (
+        r["rc"], len(r["launched"]), len(PRE_COMMIT_CHECKS), status,
+        "none — %s:" % status in r["out"], len(r["calls"]))
+
+
+def _ctl_attest_yes(m):
+    r = _simulate_commit(m, env={ENV_RUN_ID: _RUN, ENV_OP: "commit"}, answer=_attest_answer())
+    ok = (r["rc"] == 0 and r["launched"] == [] and r["calls"] == [(_RUN, _TREE)]
+          and "SKIPPED pre-commit: gitRobot gate %s passed for tree %s" % (_RUN, _TREE)
+          in r["out"] and "BLOCK rows launched: 0 of 11" in r["out"])
+    return ok, "stubbed attested:true for this tree -> rc=%s, %d leg(s) launched, calls=%s" % (
+        r["rc"], len(r["launched"]), r["calls"])
+
+
+def _ctl_attest_denied(m):
+    r = _simulate_commit(m, env={ENV_RUN_ID: _RUN},
+                         answer=_attest_answer(attested=False, why="ctl-why: tree differs"))
+    ok = _full(m, r, ATTEST_DENIED) and "ctl-why: tree differs" in r["out"]
+    return ok, "attested:false -> " + _say(r, ATTEST_DENIED) + ", why printed=%s" % (
+        "ctl-why" in r["out"])
+
+
+def _ctl_attest_unreachable(m):
+    import urllib.error
+    r = _simulate_commit(m, env={ENV_RUN_ID: _RUN},
+                         raises=urllib.error.URLError(ConnectionRefusedError(10061, "refused")))
+    return _full(m, r, ATTEST_UNREACHABLE), "connection refused -> " + _say(r, ATTEST_UNREACHABLE)
+
+
+def _ctl_attest_timeout(m):
+    import socket
+    r = _simulate_commit(m, env={ENV_RUN_ID: _RUN}, raises=socket.timeout("timed out"))
+    distinct = len(set(m.ATTEST_STATUSES)) == len(m.ATTEST_STATUSES)
+    return (_full(m, r, ATTEST_TIMEOUT) and distinct,
+            "socket timeout -> " + _say(r, ATTEST_TIMEOUT) + ", every status distinct=%s" % distinct)
+
+
+def _ctl_attest_no_env(m):
+    r = _simulate_commit(m, answer=_attest_answer())
+    ok = _full(m, r, ATTEST_NO_RUN_ID) and r["calls"] == []
+    return ok, "no GITROBOT_RUN_ID (stub would say yes) -> " + _say(r, ATTEST_NO_RUN_ID)
+
+
+def _ctl_attest_no_tree(m):
+    r = _simulate_commit(m, env={ENV_RUN_ID: _RUN}, answer=_attest_answer(), tree=None)
+    ok = _full(m, r, ATTEST_NO_TREE) and r["calls"] == []
+    return ok, "write-tree failed (stub would say yes) -> " + _say(r, ATTEST_NO_TREE)
+
+
+def _ctl_attest_bad_json(m):
+    import json
+    try:
+        json.loads("{ not json")
+        return False, "the malformed-JSON input parsed"
+    except ValueError as e:
+        err = e
+    r = _simulate_commit(m, env={ENV_RUN_ID: _RUN}, raises=err)
+    return _full(m, r, ATTEST_MALFORMED), "unparsable body -> " + _say(r, ATTEST_MALFORMED)
+
+
+def _ctl_attest_not_bool(m):
+    r = _simulate_commit(m, env={ENV_RUN_ID: _RUN}, answer=_attest_answer(attested="true"))
+    return _full(m, r, ATTEST_MALFORMED), 'attested:"true" (a string) -> ' + _say(r, ATTEST_MALFORMED)
+
+
+def _ctl_attest_no_structured(m):
+    r = _simulate_commit(m, env={ENV_RUN_ID: _RUN}, answer=_attest_answer(structured=False))
+    return (_full(m, r, ATTEST_MALFORMED),
+            "yes in the text content only, no structuredContent -> " + _say(r, ATTEST_MALFORMED))
+
+
+def _ctl_attest_is_error(m):
+    r = _simulate_commit(m, env={ENV_RUN_ID: _RUN}, answer=_attest_answer(is_error=True))
+    return _full(m, r, ATTEST_REFUSED), "isError:true (body says yes) -> " + _say(r, ATTEST_REFUSED)
+
+
+def _ctl_attest_not_ok(m):
+    r = _simulate_commit(m, env={ENV_RUN_ID: _RUN}, answer=_attest_answer(ok=False))
+    return _full(m, r, ATTEST_NOT_OK), "ok:false (attested says yes) -> " + _say(r, ATTEST_NOT_OK)
+
+
+def _ctl_attest_tree_echo(m):
+    r = _simulate_commit(m, env={ENV_RUN_ID: _RUN}, answer=_attest_answer(tree="f" * 40))
+    return (_full(m, r, ATTEST_TREE_ECHO) and r["calls"] == [(_RUN, _TREE)],
+            "yes about a different tree -> " + _say(r, ATTEST_TREE_ECHO))
+
+
+def _ctl_attest_error(m):
+    r = _simulate_commit(m, env={ENV_RUN_ID: _RUN}, raises=RuntimeError("ctl boom"))
+    return _full(m, r, ATTEST_ERROR), "an unclassified exception -> " + _say(r, ATTEST_ERROR)
+
+
+class _ExplodingResponse(dict):
+    """A response the judge cannot read: it raises the moment its keys are inspected."""
+
+    def __contains__(self, key):
+        raise RuntimeError("ctl: unreadable response")
+
+    def get(self, *a):
+        raise RuntimeError("ctl: unreadable response")
+
+    def __getitem__(self, key):
+        raise RuntimeError("ctl: unreadable response")
+
+
+def _ctl_attest_judge_raises(m):
+    r = _simulate_commit(m, env={ENV_RUN_ID: _RUN}, answer=lambda run_id, t: _ExplodingResponse())
+    return _full(m, r, ATTEST_ERROR), "the judge raised -> " + _say(r, ATTEST_ERROR)
+
+
+# ⚠ The eight below close the 2026-10-03 `/rely` round (BLOCKING-1, ORDINARY-1, ORDINARY-2): the
+#   env-chosen answerer, and the protections that had no control firing when they were removed.
+
+def _ctl_attest_no_tree_echo(m):
+    r = _simulate_commit(m, env={ENV_RUN_ID: _RUN}, answer=_attest_answer(tree=_ABSENT))
+    return (_full(m, r, ATTEST_TREE_ECHO),
+            "a yes with NO tree echo -> " + _say(r, ATTEST_TREE_ECHO))
+
+
+def _ctl_attest_ok_truthy(m):
+    r = _simulate_commit(m, env={ENV_RUN_ID: _RUN}, answer=_attest_answer(ok="yes"))
+    return _full(m, r, ATTEST_NOT_OK), 'ok:"yes" (truthy, not the boolean) -> ' + _say(r, ATTEST_NOT_OK)
+
+
+def _ctl_attest_is_error_truthy(m):
+    r = _simulate_commit(m, env={ENV_RUN_ID: _RUN}, answer=_attest_answer(is_error="false"))
+    return (_full(m, r, ATTEST_REFUSED),
+            'isError:"false" (a truthy string) -> ' + _say(r, ATTEST_REFUSED))
+
+
+def _ctl_attest_timeout_constant(m):
+    """Tests the PRODUCTION constant, which the real-transport timeout control overrides."""
+    t = m.ATTEST_TIMEOUT_S
+    ok = (isinstance(t, (int, float)) and not isinstance(t, bool) and 0 < t <= 10
+          and m._ATTEST_TIMEOUT_OVERRIDE is None)
+    return ok, "ATTEST_TIMEOUT_S=%r (bound 10s), override at rest=%r" % (t, m._ATTEST_TIMEOUT_OVERRIDE)
+
+
+def _ctl_attest_run_echo(m):
+    r1 = _simulate_commit(m, env={ENV_RUN_ID: _RUN}, answer=_attest_answer(run_id="someone-else"))
+    r2 = _simulate_commit(m, env={ENV_RUN_ID: _RUN}, answer=_attest_answer(run_id=_ABSENT))
+    return (_full(m, r1, ATTEST_RUN_ECHO) and _full(m, r2, ATTEST_RUN_ECHO),
+            "a yes for another run -> " + _say(r1, ATTEST_RUN_ECHO)
+            + "; a yes with no run echo -> " + _say(r2, ATTEST_RUN_ECHO))
+
+
+def _ctl_attest_error_and_result(m):
+    r = _simulate_commit(m, env={ENV_RUN_ID: _RUN},
+                         answer=_attest_answer(error={"code": -32000, "message": "ctl"}))
+    return (_full(m, r, ATTEST_REFUSED),
+            "error AND a yes result -> " + _say(r, ATTEST_REFUSED))
+
+
+def _ctl_attest_rpc_id(m):
+    r = _simulate_commit(m, env={ENV_RUN_ID: _RUN}, answer=_attest_answer(rpc_id="replayed"))
+    return (_full(m, r, ATTEST_RPC_ID),
+            "a yes answering some other request id -> " + _say(r, ATTEST_RPC_ID))
+
+
+# ⚠ The eight below close the 2026-10-04 `/rely` round 2 (ORDINARY-1, now a CLASS: a fail-closed
+#   protection in the attest transport/judge with no control that fails when it is removed; and
+#   ORDINARY-2, `isError` falsy-but-not-False). `_sweep_attest` below is the class's detector.
+
+def _ctl_attest_http_error(m):
+    import io as _io
+    import urllib.error
+    e = urllib.error.HTTPError("http://ctl/mcp", 500, "ctl", {}, _io.BytesIO(b""))
+    r = _simulate_commit(m, env={ENV_RUN_ID: _RUN}, raises=e)
+    return _full(m, r, ATTEST_REFUSED), "HTTP 500 from the transport -> " + _say(r, ATTEST_REFUSED)
+
+
+def _ctl_attest_urlerror_timeout(m):
+    import socket
+    import urllib.error
+    r = _simulate_commit(m, env={ENV_RUN_ID: _RUN},
+                         raises=urllib.error.URLError(socket.timeout("timed out")))
+    return (_full(m, r, ATTEST_TIMEOUT),
+            "URLError wrapping a timeout -> " + _say(r, ATTEST_TIMEOUT))
+
+
+def _ctl_attest_bare_oserror(m):
+    r1 = _simulate_commit(m, env={ENV_RUN_ID: _RUN},
+                          raises=ConnectionResetError(10054, "ctl: reset"))
+    r2 = _simulate_commit(m, env={ENV_RUN_ID: _RUN}, raises=OSError(5, "ctl: io"))
+    return (_full(m, r1, ATTEST_UNREACHABLE) and _full(m, r2, ATTEST_UNREACHABLE),
+            "bare ConnectionResetError -> " + _say(r1, ATTEST_UNREACHABLE)
+            + "; bare OSError -> " + _say(r2, ATTEST_UNREACHABLE))
+
+
+def _ctl_attest_non_dict(m):
+    r = _simulate_commit(m, env={ENV_RUN_ID: _RUN}, answer=lambda run_id, t: [1])
+    return _full(m, r, ATTEST_MALFORMED), "a JSON array, not an object -> " + _say(r, ATTEST_MALFORMED)
+
+
+def _ctl_attest_no_result(m):
+    r = _simulate_commit(m, env={ENV_RUN_ID: _RUN},
+                         answer=lambda run_id, t: {"jsonrpc": "2.0", "id": _CTL_ID})
+    return _full(m, r, ATTEST_MALFORMED), "no `result`, no `error` -> " + _say(r, ATTEST_MALFORMED)
+
+
+def _ctl_attest_result_not_object(m):
+    r = _simulate_commit(m, env={ENV_RUN_ID: _RUN},
+                         answer=lambda run_id, t: {"jsonrpc": "2.0", "id": _CTL_ID, "result": []})
+    return _full(m, r, ATTEST_MALFORMED), "`result` is a list -> " + _say(r, ATTEST_MALFORMED)
+
+
+def _ctl_attest_is_error_falsy(m):
+    """Only an ABSENT `isError` or the boolean False may pass; None, 0, "", [] and {} are refused."""
+    outs = []
+    for v in (None, 0, "", [], {}):
+        r = _simulate_commit(m, env={ENV_RUN_ID: _RUN}, answer=_attest_answer(is_error=v))
+        outs.append((v, _full(m, r, ATTEST_REFUSED)))
+    r_absent = _simulate_commit(m, env={ENV_RUN_ID: _RUN}, answer=_attest_answer(is_error=_ABSENT))
+    absent_skips = r_absent["launched"] == [] and "SKIPPED pre-commit" in r_absent["out"]
+    ok = all(o for _v, o in outs) and absent_skips
+    return ok, "isError %s refused; isError absent still skips=%s" % (
+        ", ".join("%r:%s" % (v, "yes" if o else "NO") for v, o in outs), absent_skips)
+
+
+_PROXY_VARS = ("HTTP_PROXY", "http_proxy", "HTTPS_PROXY", "https_proxy", "ALL_PROXY", "all_proxy",
+               "NO_PROXY", "no_proxy")
+
+
+def _ctl_attest_proxy_env(m):
+    """`/rely` round 2's forge by a second variable: HTTP_PROXY / ALL_PROXY name a loopback stub that
+    says yes. The REAL transport, its seam aimed at a dead port, must not route through the proxy:
+    every leg runs, UNREACHABLE, and the stub sees nothing. NO_PROXY is cleared so the bypass list
+    cannot mask a removed `ProxyHandler({})`."""
+    saved = {k: os.environ.get(k) for k in _PROXY_VARS}
+    try:
+        with _StubGitRobot() as s:
+            for k in _PROXY_VARS:
+                os.environ.pop(k, None)
+            for k in ("HTTP_PROXY", "http_proxy", "ALL_PROXY", "all_proxy"):
+                os.environ[k] = s.url.rsplit("/mcp", 1)[0]
+            r = _simulate_commit(m, env={ENV_RUN_ID: "forged-by-anyone"}, real=True, url=_dead_url())
+            calls = list(s.calls)
+    finally:
+        for k, v in saved.items():
+            if v is None:
+                os.environ.pop(k, None)
+            else:
+                os.environ[k] = v
+    return (_full(m, r, ATTEST_UNREACHABLE) and calls == [],
+            "HTTP_PROXY/ALL_PROXY=<yes stub> -> " + _say(r, ATTEST_UNREACHABLE) + ", stub saw %s" % calls)
+
+
+def _ctl_attest_index_tree(m):
+    with _ScratchRepo(m) as s:
+        s.put("tools/verify/a.py", b"print(1)\n")
+        s.track("tools/verify")
+        t1 = m.index_tree()
+        s.put("tools/verify/a.py", b"print(2)\n")
+        s.track("tools/verify")
+        t2 = m.index_tree()
+        want = s._git("write-tree")
+    ok = bool(t1) and t1 != t2 and t2 == want
+    return ok, "REAL index_tree, scratch repo: follows the staged index=%s" % (
+        bool(t1) and t1 != t2 and t2 == want)
+
+
+class _StubGitRobot(object):
+    """A throwaway loopback streamable-HTTP MCP server answering `attest` yes for whatever it is
+    asked, SSE-framed, refusing any request after `initialize` that lacks its session id. Never the
+    real gitRobot: the real `attest()` consumes and audits."""
+
+    def __init__(self, delay=0.0):
+        self.delay = delay
+        self.calls = []
+
+    def __enter__(self):
+        import http.server
+        import json
+        import threading
+        import time
+        outer = self
+
+        class Handler(http.server.BaseHTTPRequestHandler):
+            def log_message(self, *a):
+                pass
+
+            def _send(self, code, obj, sid=None):
+                try:
+                    body = b"" if obj is None else (
+                        "event: message\ndata: %s\n\n" % json.dumps(obj)).encode("utf-8")
+                    self.send_response(code)
+                    self.send_header("Content-Type", "text/event-stream")
+                    if sid:
+                        self.send_header("Mcp-Session-Id", sid)
+                    self.send_header("Content-Length", str(len(body)))
+                    self.end_headers()
+                    self.wfile.write(body)
+                except OSError:
+                    pass
+
+            def do_POST(self):
+                n = int(self.headers.get("Content-Length") or 0)
+                msg = json.loads(self.rfile.read(n).decode("utf-8"))
+                method = msg.get("method")
+                if method == "initialize":
+                    return self._send(200, {"jsonrpc": "2.0", "id": msg.get("id"), "result": {
+                        "protocolVersion": "2025-06-18", "capabilities": {},
+                        "serverInfo": {"name": "ctl-stub", "version": "0"}}}, sid="ctl-session")
+                if self.headers.get("Mcp-Session-Id") != "ctl-session":
+                    return self._send(400, None)
+                if method == "notifications/initialized":
+                    return self._send(202, None)
+                args = (msg.get("params") or {}).get("arguments") or {}
+                outer.calls.append((args.get("run_id"), args.get("tree")))
+                if outer.delay:
+                    time.sleep(outer.delay)
+                return self._send(200, _attest_answer()(args.get("run_id"), args.get("tree"),
+                                                        msg.get("id")))
+
+        self.server = http.server.ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+        self.server.daemon_threads = True
+        self.server.block_on_close = False
+        self.server.handle_error = lambda *a: None
+        self.url = "http://127.0.0.1:%d/mcp" % self.server.server_address[1]
+        self.thread = threading.Thread(target=self.server.serve_forever, daemon=True)
+        self.thread.start()
+        return self
+
+    def __exit__(self, *exc):
+        self.server.shutdown()
+        self.server.server_close()
+        return False
+
+
+def _ctl_attest_real_yes(m):
+    with _StubGitRobot() as s:
+        r = _simulate_commit(m, env={ENV_RUN_ID: _RUN}, real=True, url=s.url)
+    ok = r["rc"] == 0 and r["launched"] == [] and s.calls == [(_RUN, _TREE)]
+    return ok, "REAL transport, SSE-framed yes from a loopback stub -> rc=%s, %d leg(s) launched, " \
+               "stub saw %s" % (r["rc"], len(r["launched"]), s.calls)
+
+
+def _ctl_attest_real_timeout(m):
+    saved = m._ATTEST_TIMEOUT_OVERRIDE
+    m._ATTEST_TIMEOUT_OVERRIDE = 0.3
+    try:
+        with _StubGitRobot(delay=1.5) as s:
+            r = _simulate_commit(m, env={ENV_RUN_ID: _RUN}, real=True, url=s.url)
+    finally:
+        m._ATTEST_TIMEOUT_OVERRIDE = saved
+    return (_full(m, r, ATTEST_TIMEOUT),
+            "REAL transport, stub answers yes after 1.5s, timeout 0.3s -> " + _say(r, ATTEST_TIMEOUT))
+
+
+def _ctl_attest_real_refused(m):
+    r = _simulate_commit(m, env={ENV_RUN_ID: _RUN}, real=True, url=_dead_url())
+    return (_full(m, r, ATTEST_UNREACHABLE),
+            "REAL transport, closed loopback port -> " + _say(r, ATTEST_UNREACHABLE))
+
+
+def _ctl_attest_env_forge(m):
+    """The `/rely` forge: GITROBOT_URL in the environment names a loopback stub that says yes. The
+    answerer must stay the constant. Two legs, neither touching the live gitRobot: (1) with the
+    seam at rest `_attest_url()` returns the literal production address despite the variable;
+    (2) the whole REAL hook, its seam aimed at a dead port, runs every leg and the stub named in
+    the environment is never called."""
+    with _StubGitRobot() as s:
+        saved = os.environ.get(_FORGE_VAR)
+        os.environ[_FORGE_VAR] = s.url
+        try:
+            seam_at_rest = m._ATTEST_URL_SEAM
+            chosen = m._attest_url()
+        finally:
+            if saved is None:
+                os.environ.pop(_FORGE_VAR, None)
+            else:
+                os.environ[_FORGE_VAR] = saved
+        r = _simulate_commit(m, env={ENV_RUN_ID: "forged-by-anyone", _FORGE_VAR: s.url},
+                             real=True, url=_dead_url())
+    ok = (seam_at_rest is None and chosen == "http://127.0.0.1:8010/mcp"
+          and _full(m, r, ATTEST_UNREACHABLE) and s.calls == [])
+    return ok, "%s=<yes stub>: answerer=%s; hook -> %s, stub saw %s" % (
+        _FORGE_VAR, chosen, _say(r, ATTEST_UNREACHABLE), s.calls)
+
+
+# ------------------------------------------------------------------ concurrency (cc) controls
+#
+# Each drives the REAL `pre_push` / `pre_commit`, the REAL `run()` and the REAL scheduler, with only
+# the process seam `_child` stubbed — so what is tested is the decision code consuming legs that ran
+# early, exactly as production does. Nothing here launches a checker. Event order is read from a log
+# appended under a lock, never from clocks, so no control depends on timer resolution.
+
+def _cc_label(inv, phase):
+    rows = ([(label, tuple(argv)) for label, argv, _ok in PRE_PUSH_EXPECT if argv]
+            if phase == "push" else
+            [(label, tuple(argv) + ("--block", "--record")) for label, argv, _ok, _d
+             in PRE_COMMIT_CHECKS])
+    for label, argv in rows:
+        if tuple(inv[:len(argv)]) == argv:
+            return label
+    return inv[0] if inv else "?"
+
+
+def _cc_script(red=(), raises=(), partial=(), error=(), sleeps=None):
+    """A stub leg: `(rc, text, sleep)` per label. `error` legs write and then RAISE (a scheduler-side
+    failure), `partial` legs write a line with no newline and die with a crash code."""
+    def script(lab):
+        sl = (sleeps or {}).get(lab, 0)
+        if lab in raises:
+            raise OSError(2, "ctl: cannot start %s" % lab)
+        if lab in error:
+            return "RAISE", "PARTIAL-ERROR-%s" % lab, sl
+        if lab in partial:
+            return 3221225477, "PARTIAL-OUTPUT-%s" % lab, sl
+        return (1 if lab in red else 0), "OUT %s\n  detail of %s\n" % (lab, lab), sl
+    return script
+
+
+def _simulate_conc(m, jobs, phase="push", script=None, stdin=_REFS, receipt=None, digest_seq=None):
+    """Run `m.pre_push` / `m.pre_commit` with `ZP_HOOK_JOBS=jobs` and only `_child` stubbed.
+    `receipt` is written where the hook reads it; `digest_seq(n)` is the tools/verify digest the
+    n-th read returns (default: always `_DIGEST`)."""
+    import io as _io
+    import json
+    import shutil
+    import tempfile
+    import threading
+    import time
+    script = script or _cc_script()
+    tmp = tempfile.mkdtemp(prefix="zp_hooks_cc_")
+    names = ("_child", "tools_digest", "head_tree", "git_out", "_RECEIPT_PATH_OVERRIDE")
+    saved = {n: getattr(m, n) for n in names}
+    switch_vars = sorted({var for var, _val in SKIP_SWITCHES.values()})
+    env_keys = (ENV_RUN_ID, ENV_OP, "ZPLEDGER_BASIS", "ZPLEDGER_RUN", JOBS_ENV,
+                LEG_TIMEOUT_ENV, common.INDEX_TREE_ENV) + tuple(switch_vars)
+    saved_env = {k: os.environ.get(k) for k in env_keys}
+    events, streamed, sched_seen = [], [], []
+    lock = threading.Lock()
+
+    def fake_child(cmd, env=None, out=None, timeout=None):
+        lab = _cc_label(m._invocation(cmd), phase)
+        with lock:
+            events.append(("start", lab))
+            streamed.append(out is None)
+            sched_seen.append(m._SCHED is not None)
+        try:
+            rc, text, sl = script(lab)
+            if sl:
+                time.sleep(sl)
+            if out is None:
+                sys.stdout.write(text)
+            else:
+                out.write(text.encode("utf-8"))
+                out.flush()
+            if rc == "RAISE":
+                raise RuntimeError("ctl: the leg's worker raised after writing")
+            return rc
+        finally:
+            with lock:
+                events.append(("end", lab))
+
+    def digest():
+        with lock:
+            events.append(("digest", None))
+            n = sum(1 for kind, _l in events if kind == "digest")
+        return digest_seq(n) if digest_seq else _DIGEST
+
+    m._child = fake_child
+    m.tools_digest = digest
+    m.head_tree = lambda: _TREE
+    m.git_out = lambda *a: (0, "illustrated\n")
+    m._RECEIPT_PATH_OVERRIDE = os.path.join(tmp, m.RECEIPT_NAME)
+    if receipt is not None:
+        with open(m._RECEIPT_PATH_OVERRIDE, "w", encoding="utf-8") as fh:
+            json.dump(receipt, fh)
+    for k in env_keys:
+        os.environ.pop(k, None)
+    os.environ[JOBS_ENV] = str(jobs)
+    del m.EXECUTED[:], m.REFS_SEEN[:], m.REF_TUPLES[:]
+    buf, real = _io.StringIO(), sys.stdout
+    try:
+        sys.stdout = buf
+        rc = m.pre_push(_io.StringIO(stdin)) if phase == "push" else m.pre_commit()
+        executed = list(m.EXECUTED)
+        leaked = m._SCHED is not None
+    finally:
+        sys.stdout = real
+        for n, v in saved.items():
+            setattr(m, n, v)
+        for k, v in saved_env.items():
+            if v is None:
+                os.environ.pop(k, None)
+            else:
+                os.environ[k] = v
+        del m.EXECUTED[:], m.REFS_SEEN[:], m.REF_TUPLES[:]
+        m._SCHED = None
+        shutil.rmtree(tmp, ignore_errors=True)
+    return {"rc": rc, "out": buf.getvalue(), "executed": executed, "events": events,
+            "streamed": streamed, "sched_seen": sched_seen, "leaked": leaked}
+
+
+_CC_DRAIN = "=== concurrent leg(s) this run did not reach"
+
+
+def _cc_lines(out):
+    """The output as the operator reads it, minus the scheduler's own `concurrency:` lines and minus
+    the drained-leg block that only a concurrent RED run can print after its decision."""
+    lines = out.splitlines()
+    for i, line in enumerate(lines):
+        if line.startswith(_CC_DRAIN):
+            lines = lines[:i]
+            break
+    lines = [ln for ln in lines if not ln.startswith("  concurrency:")]
+    while lines and not lines[-1].strip():
+        lines.pop()
+    return lines
+
+
+def _cc_fixtures():
+    return [("push green", "push", _cc_script()),
+            ("push one BLOCK red", "push", _cc_script(red=("check_pov",))),
+            ("push one leg cannot start", "push", _cc_script(raises=("check_moved",))),
+            ("commit green", "commit", _cc_script()),
+            ("commit one BLOCK red", "commit", _cc_script(red=("check_pov",))),
+            ("commit one leg cannot start", "commit", _cc_script(raises=("check_modal",)))]
+
+
+def _ctl_cc_equivalence(m):
+    """jobs=4 must equal jobs=1: exit code, EXECUTED (what reconcile reads), and every line printed
+    up to the decision, on green, one-red-BLOCK and one-leg-cannot-start, at both phases."""
+    bad = []
+    for name, phase, script in _cc_fixtures():
+        s = _simulate_conc(m, 1, phase, script)
+        c = _simulate_conc(m, 4, phase, script)
+        same = (s["rc"] == c["rc"] and s["executed"] == c["executed"]
+                and _cc_lines(s["out"]) == _cc_lines(c["out"]) and not c["leaked"]
+                and all(s["streamed"]) and not all(c["streamed"]))
+        if not same:
+            bad.append("%s (rc %s vs %s, executed equal=%s, output equal=%s)" % (
+                name, s["rc"], c["rc"], s["executed"] == c["executed"],
+                _cc_lines(s["out"]) == _cc_lines(c["out"])))
+    return not bad, "%d fixture(s); differing: %s" % (len(_cc_fixtures()), "; ".join(bad) or "none")
+
+
+def _ctl_cc_order(m):
+    """Legs that FINISH in reverse body order are still printed in body order."""
+    body = [label for label, argv, _o in PRE_PUSH_EXPECT if argv and label not in
+            _PUSH_PURE + _PUSH_MUTATORS + ("batch prepush",)]
+    sleeps = {label: 0.004 * (len(body) - i) for i, label in enumerate(body)}
+    s = _simulate_conc(m, 1, "push", _cc_script(sleeps=sleeps))
+    c = _simulate_conc(m, 32, "push", _cc_script(sleeps=sleeps))
+    ends = [lab for kind, lab in c["events"] if kind == "end" and lab in body]
+    reversed_finish = ends != [lab for lab in body if lab in ends]
+    marks = lambda out: [ln[4:] for ln in out.splitlines() if ln.startswith("OUT ")]
+    ok = reversed_finish and marks(c["out"]) == marks(s["out"]) and c["rc"] == s["rc"] == 0
+    return ok, "legs finished out of body order=%s; printed order equals jobs=1=%s" % (
+        reversed_finish, marks(c["out"]) == marks(s["out"]))
+
+
+def _ctl_cc_dependency(m):
+    """No reader (batch prepush included) starts before the mutators and the selftest END; the
+    second mutator starts after the first ends; the receipt key is taken before any mutator."""
+    sleeps = {"advisory-skip controls": 0.03, "guards": 0.05, "check_checkers": 0.15}
+    c = _simulate_conc(m, 32, "push", _cc_script(sleeps=sleeps))
+    ev = c["events"]
+    idx = lambda kind, lab: ev.index((kind, lab)) if (kind, lab) in ev else None
+    viol = []
+    prereq = _PUSH_PURE + _PUSH_MUTATORS
+    for kind, lab in ev:
+        if kind != "start" or lab in prereq:
+            continue
+        for p in prereq:
+            if idx("end", p) is None or idx("end", p) > idx("start", lab):
+                viol.append("%s started before %s ended" % (lab, p))
+    if idx("end", "guards") is None or idx("end", "guards") > idx("start", "check_checkers"):
+        viol.append("check_checkers started before guards ended")
+    d = idx("digest", None)
+    if d is None or d > idx("start", "guards"):
+        viol.append("the receipt key was not taken before guards started")
+    started = sum(1 for kind, _l in ev if kind == "start")
+    return (not viol and c["rc"] == 0 and started == len([a for _l, a, _o in PRE_PUSH_EXPECT if a]),
+            "%d leg(s) launched, rc=%s; edge violations: %s" % (started, c["rc"],
+                                                                  "; ".join(viol[:3]) or "none"))
+
+
+def _ctl_cc_fail(m):
+    """A red BLOCK leg that ran concurrently still exits 1 — a reader, a mutator, and at commit."""
+    r1 = _simulate_conc(m, 8, "push", _cc_script(red=("check_pov",)))
+    r2 = _simulate_conc(m, 8, "push", _cc_script(red=("guards",)))
+    r3 = _simulate_conc(m, 8, "commit", _cc_script(red=("check_pov",)))
+    ok = r1["rc"] == 1 and r2["rc"] == 1 and r3["rc"] == 1
+    return ok, "check_pov red at push -> rc=%s; guards red -> rc=%s; check_pov red at commit -> rc=%s" % (
+        r1["rc"], r2["rc"], r3["rc"])
+
+
+def _ctl_cc_no_loss(m):
+    """A leg that dies mid-output, one whose worker raises, and every leg launched past an early
+    return all have their output on screen; the dying and raising legs count as failed."""
+    r1 = _simulate_conc(m, 8, "push", _cc_script(partial=("check_pov",)))
+    r2 = _simulate_conc(m, 8, "commit", _cc_script(error=("check_modal",)))
+    r3 = _simulate_conc(m, 32, "push", _cc_script(red=("check_paths",)))
+    started = sorted({lab for kind, lab in r3["events"] if kind == "start"})
+    lost = [lab for lab in started if "OUT %s" % lab not in r3["out"]]
+    # ⚠ AND `_consume` ITSELF, not only the run's exit code: `reconcile` also blocks a leg that never
+    #   reached EXECUTED, so a run-level check alone cannot see this first protection removed.
+    import io as _io
+    import shutil
+    import tempfile
+    d = tempfile.mkdtemp(prefix="zp_hooks_cc_")
+    path = os.path.join(d, "leg.out")
+    with open(path, "wb") as fh:
+        fh.write(b"PARTIAL-ERROR-unit")
+    job = m._Job(("x.py",), dict(os.environ), "ctl-leg", 0, (0,), (), 1)
+    job.state, job.outcome, job.error, job.out_path = _DONE, LEG_ERROR, RuntimeError("ctl"), path
+    saved_exec = list(m.EXECUTED)
+    buf, real = _io.StringIO(), sys.stdout
+    try:
+        sys.stdout = buf
+        unit_rc = m._consume(("x.py",), job)
+        unit_rec = m.EXECUTED[len(saved_exec):]
+    finally:
+        sys.stdout = real
+        m.EXECUTED[:] = saved_exec
+        shutil.rmtree(d, ignore_errors=True)
+    unit_ok = unit_rc == 1 and not unit_rec and "PARTIAL-ERROR-unit" in buf.getvalue()
+    ok = (r1["rc"] == 1 and "PARTIAL-OUTPUT-check_pov" in r1["out"]
+          and r2["rc"] == 1 and "PARTIAL-ERROR-check_modal" in r2["out"]
+          and r3["rc"] == 1 and not lost and len(started) > 6 and unit_ok)
+    return ok, ("crash mid-line -> rc=%s, partial shown=%s; worker raised -> rc=%s, partial shown=%s; "
+                "red at check_paths: %d launched, output missing for %s; _consume(ERROR) -> rc=%s, "
+                "recorded as launched=%s" % (
+                    r1["rc"], "PARTIAL-OUTPUT-check_pov" in r1["out"], r2["rc"],
+                    "PARTIAL-ERROR-check_modal" in r2["out"], len(started), lost or "none",
+                    unit_rc, bool(unit_rec)))
+
+
+def _ctl_cc_timeout(m):
+    """The REAL `_child` kills a leg that outlives its timeout, keeps what it wrote, and `_consume`
+    turns that into exit 124 — recorded as launched, never a pass."""
+    import io as _io
+    import shutil
+    import tempfile
+    import time
+    d = tempfile.mkdtemp(prefix="zp_hooks_cc_")
+    path = os.path.join(d, "leg.out")
+    cmd = [sys.executable, "-c", "import sys,time; sys.stdout.write('TIMEOUT-PARTIAL'); "
+           "sys.stdout.flush(); time.sleep(2.5)"]
+    t0 = time.time()
+    raised = False
+    try:
+        with open(path, "wb") as fh:
+            try:
+                m._child(cmd, None, fh, 0.4)
+            except m._LegTimeout:
+                raised = True
+        elapsed = time.time() - t0
+        with open(path, "rb") as fh:
+            kept = b"TIMEOUT-PARTIAL" in fh.read()
+        job = m._Job(cmd, dict(os.environ), "ctl-leg", 0, (0,), (), 1)
+        job.state, job.outcome, job.rc, job.error, job.out_path = (
+            _DONE, LEG_TIMEOUT, TIMEOUT_RC, 0.4, path)
+        saved_exec = list(m.EXECUTED)
+        buf, real = _io.StringIO(), sys.stdout
+        try:
+            sys.stdout = buf
+            rc = m._consume(tuple(cmd), job)
+            recorded = m.EXECUTED[len(saved_exec):]
+        finally:
+            sys.stdout = real
+            m.EXECUTED[:] = saved_exec
+    finally:
+        shutil.rmtree(d, ignore_errors=True)
+    ok = raised and elapsed < 2.2 and kept and rc == TIMEOUT_RC and recorded and \
+        recorded[0][1] == TIMEOUT_RC and "TIMEOUT-PARTIAL" in buf.getvalue()
+    return ok, "killed after %.1fs=%s, partial kept=%s; consumed -> rc=%s, recorded=%s" % (
+        elapsed, raised, kept, rc, recorded)
+
+
+def _ctl_cc_env_refused(m):
+    """A leg whose launch environment differs from the sequential call's is refused, not read."""
+    import io as _io
+    import shutil
+    import tempfile
+    d = tempfile.mkdtemp(prefix="zp_hooks_cc_")
+    path = os.path.join(d, "leg.out")
+    with open(path, "wb") as fh:
+        fh.write(b"ctl output\n")
+    env = dict(os.environ)
+    env["ZPLEDGER_BASIS"] = "ctl-a-basis-nobody-set"
+    job = m._Job(("x.py",), env, "ctl-leg", 0, (0,), (), 1)
+    job.state, job.outcome, job.rc, job.out_path = _DONE, LEG_EXITED, 0, path
+    saved_exec = list(m.EXECUTED)
+    buf, real = _io.StringIO(), sys.stdout
+    try:
+        sys.stdout = buf
+        rc = m._consume(("x.py",), job)
+    finally:
+        sys.stdout = real
+        m.EXECUTED[:] = saved_exec
+        shutil.rmtree(d, ignore_errors=True)
+    ok = rc == 1 and "REFUSED" in buf.getvalue() and "ctl output" in buf.getvalue()
+    return ok, "a green leg launched under another ZPLEDGER_BASIS -> rc=%s, refused=%s" % (
+        rc, "REFUSED" in buf.getvalue())
+
+
+def _ctl_cc_unread(m):
+    """A green run that launched a leg its decision code never read is refused."""
+    import io as _io
+    saved = m._child
+    m._child = lambda cmd, env=None, out=None, timeout=None: 0
+    buf, real = _io.StringIO(), sys.stdout
+    try:
+        sys.stdout = buf
+        s = m._Scheduler("push", 2, None, stop_on_red=True)
+        s.submit(("ctl-orphan.py",), dict(os.environ), "ctl orphan", 0)
+        rc = s.finish(0)
+    finally:
+        sys.stdout = real
+        m._child = saved
+    return rc == 1, "green body, one launched leg never consumed -> rc=%s" % rc
+
+
+def _ctl_cc_jobs_one(m):
+    """ZP_HOOK_JOBS=1 creates no scheduler and streams every leg — today's path — at both phases;
+    an unreadable value falls back to it."""
+    p = _simulate_conc(m, 1, "push")
+    c = _simulate_conc(m, 1, "commit")
+    seq = all(p["streamed"] + c["streamed"]) and not any(p["sched_seen"] + c["sched_seen"])
+    parse = (m.hook_jobs({JOBS_ENV: "many"})[0] == 1 and m.hook_jobs({JOBS_ENV: "0"})[0] == 1
+             and m.hook_jobs({JOBS_ENV: "1"})[0] == 1 and m.hook_jobs({})[0] == m.DEFAULT_JOBS)
+    return seq and parse and p["rc"] == c["rc"] == 0, (
+        "jobs=1: %d+%d launch(es), all streamed with no scheduler=%s; unreadable/0 -> 1=%s" % (
+            len(p["streamed"]), len(c["streamed"]), seq, parse))
+
+
+def _ctl_cc_lost(m):
+    """RELY-CC-3 M3: a leg whose captured output cannot be read back is FAILED even though it exited
+    0, and is NOT recorded as launched — its output is missing, so its exit code proves nothing."""
+    import io as _io
+    import shutil
+    import tempfile
+    d = tempfile.mkdtemp(prefix="zp_hooks_cc_")
+    job = m._Job(("x.py",), dict(os.environ), "ctl-leg", 0, (0,), (), 1)
+    job.state, job.outcome, job.rc = _DONE, LEG_EXITED, 0
+    job.out_path = os.path.join(d, "never-written", "leg.out")
+    saved_exec = list(m.EXECUTED)
+    buf, real = _io.StringIO(), sys.stdout
+    try:
+        sys.stdout = buf
+        rc = m._consume(("x.py",), job)
+        rec = m.EXECUTED[len(saved_exec):]
+    finally:
+        sys.stdout = real
+        m.EXECUTED[:] = saved_exec
+        shutil.rmtree(d, ignore_errors=True)
+    ok = rc == 1 and not rec and job.lost and "could not be read back" in buf.getvalue()
+    return ok, "exit 0, capture unreadable -> rc=%s, lost=%s, recorded as launched=%s" % (
+        rc, job.lost, bool(rec))
+
+
+def _ctl_cc_early_key_used(m):
+    """RELY-CC-3 M6: the skip decision USES the key taken before any leg launched. The tools/verify
+    digest moves after its first read (guards rewrites files there), so a receipt matching the EARLY
+    digest matches only if the early key is the one consulted — the key USED, not merely the first
+    digest call, which `_ctl_cc_dependency` already pins."""
+    c = _simulate_conc(m, 8, "push", receipt=_good_receipt(),
+                       digest_seq=lambda n: _DIGEST if n == 1 else "f" * 64)
+    reads = sum(1 for kind, _l in c["events"] if kind == "digest")
+    ok = c["rc"] == 0 and "SKIPPED agent gate: matched green run ctl-preflight-1" in c["out"]
+    return ok, "digest moved after read 1 of %d; receipt for the early key -> rc=%s, matched=%s" % (
+        reads, c["rc"], "SKIPPED agent gate" in c["out"])
+
+
+def _ctl_blockmsg(m):
+    """`BLOCKMSG-1`: a RECORDING refusal on check_hashes (exit 4) blocks and names the refusal, and
+    does NOT print the hash-mismatch remedy; a real mismatch (exit 1) still prints it. Both
+    directions, read from the guard's own message, because both exit 1."""
+    r4 = _simulate(m, codes={("check_hashes.py",): 4})
+    r1 = _simulate(m, red=(("check_hashes.py",),))
+    mism = "build-script hash mismatch vs register.md"
+    ok4 = r4["rc"] == 1 and "REFUSED its record" in r4["out"] and mism not in r4["out"]
+    ok1 = r1["rc"] == 1 and mism in r1["out"] and "REFUSED its record" not in r1["out"]
+    return ok4 and ok1, ("exit 4 -> rc=%s, refusal named=%s, mismatch remedy printed=%s; exit 1 -> "
+                         "rc=%s, mismatch remedy printed=%s" % (
+                             r4["rc"], "REFUSED its record" in r4["out"], mism in r4["out"],
+                             r1["rc"], mism in r1["out"]))
+
+
+def _ctl_exit2_both(m):
+    """`G1-2`: a push-time checker exiting 2 (refusal OR outage — `record.emit` cannot tell them
+    apart) blocks, and its text names BOTH and points at the checker's output, never a
+    connection-only remedy; a clean run prints neither."""
+    r2 = _simulate(m, codes={("check_moved.py",): 2})
+    r0 = _simulate(m)
+    both = "REFUSED the record or could NOT BE REACHED" in r2["out"]
+    ok = (r2["rc"] == 1 and both and "Fix the ledger connection" not in r2["out"]
+          and r0["rc"] == 0 and "NOT BE REACHED" not in r0["out"])
+    return ok, "check_moved exit 2 -> rc=%s, both named=%s; clean -> rc=%s" % (
+        r2["rc"], both, r0["rc"])
+
+
+def _ctl_push_tables(m):
+    """`HOOK-R5-2`: the live tables join totally, and a push whose expectation table lost a row
+    (`guards`, with its launch still present) is REFUSED rather than reconciled green."""
+    live = m.push_table_problems(m.PRE_PUSH_PLAN, m.PRE_PUSH_EXPECT)
+    saved = m.PRE_PUSH_EXPECT
+    try:
+        m.PRE_PUSH_EXPECT = [row for row in saved if row[0] != "guards"]
+        r = _simulate(m)
+    finally:
+        m.PRE_PUSH_EXPECT = saved
+    ok = (not live and r["rc"] == 1
+          and "push manifest and its expectation table disagree" in r["out"])
+    return ok, "live problems=%s; expectation row for guards dropped -> rc=%s, refused=%s" % (
+        live or "none", r["rc"], "expectation table disagree" in r["out"])
+
+
+def _ctl_empty_expect(m):
+    """`HOOK-R5-3`: an EMPTY expectation set is refused (0 of 0 is not a pass), while a non-empty
+    fully-launched one still reconciles 0."""
+    import io as _io
+    saved = list(m.EXECUTED)
+    buf, real = _io.StringIO(), sys.stdout
+    try:
+        sys.stdout = buf
+        del m.EXECUTED[:]
+        rc_empty = m.reconcile("commit", [])
+        m.EXECUTED.append((("ctl.py", "--block"), 0))
+        rc_full = m.reconcile("commit", [("ctl", ("ctl.py", "--block"), (0,))])
+    finally:
+        sys.stdout = real
+        m.EXECUTED[:] = saved
+    ok = rc_empty == 1 and rc_full == 0 and "0 of 0" in buf.getvalue()
+    return ok, "empty table -> rc=%s; one launched row -> rc=%s" % (rc_empty, rc_full)
+
+
+def _ctl_commit_refused_line(m):
+    """`LED-8` at the commit hook: an exit-4 leg is reported as a REFUSED record and never as
+    "no key exists for this content", which a V11 refusal proves false."""
+    def script(lab):
+        return (4 if lab == "check_pov" else 0), "OUT %s\n" % lab, 0
+    c = _simulate_conc(m, 1, "commit", script)
+    named = "check_pov (exit 4 — the ledger REFUSED the record" in c["out"]
+    ok = c["rc"] == 1 and named and "no key exists" not in c["out"]
+    return ok, "check_pov exit 4 at commit -> rc=%s, refusal named=%s, 'no key exists'=%s" % (
+        c["rc"], named, "no key exists" in c["out"])
+
+
 # (label, control, anchor, replacement). The replacement removes exactly the protection the
 # control exists for; the control must PASS on the real module and FAIL on the mutant.
 _CONTROLS = [
+    # ⚠ CONCURRENT LEGS (`ZP_HOOK_JOBS`, 2026-10-04). Each mutant removes one property of the
+    #   scheduler: an equivalence, the replay order, a dependency edge, failure propagation, an
+    #   output path, the timeout, the env fence, the unread-leg refusal, the jobs=1 switch.
+    ("cc  equivalence: NOSTART read as a pass", _ctl_cc_equivalence,
+     '        print("  hook: could not run %s (%s)" % (" ".join(cmd), job.error))\n        return 1',
+     '        print("  hook: could not run %s (%s)" % (" ".join(cmd), job.error))\n        return 0'),
+    ("cc  equivalence: consumed leg never recorded", _ctl_cc_equivalence,
+     "    EXECUTED.append((_invocation(cmd), job.rc))\n    return job.rc",
+     "    return job.rc"),
+    ("cc  order: replayed at completion, not at turn", _ctl_cc_order,
+     "                job.state = _DONE\n",
+     "                job.state = _DONE\n                _replay_job(job)\n"),
+    ("cc  dependency: reader edges dropped", _ctl_cc_dependency,
+     "            readers_after = _PUSH_MUTATORS + _PUSH_PURE",
+     "            readers_after = ()"),
+    ("cc  dependency: batch prepush edges dropped", _ctl_cc_dependency,
+     "    bp_after = _PUSH_MUTATORS + _PUSH_PURE",
+     "    bp_after = ()"),
+    ("cc  dependency: mutator chain dropped", _ctl_cc_dependency,
+     "            chain = _PUSH_MUTATORS[:_PUSH_MUTATORS.index(label)]",
+     "            chain = ()"),
+    ("cc  dependency: receipt key taken after launch", _ctl_cc_dependency,
+     "    sched.early_key = push_key(REF_TUPLES)",
+     "    sched.early_key = (None, \"ctl: deferred\")"),
+    ("cc  fail: a red leg's exit code lost", _ctl_cc_fail,
+     "            job.rc = rc\n",
+     "            job.rc = 0\n"),
+    ("cc  no loss: captured output not replayed", _ctl_cc_no_loss,
+     "            data = fh.read()",
+     '            data = b""'),
+    ("cc  no loss: a raising worker read as a pass", _ctl_cc_no_loss,
+     '              "never a pass." % (job.label, job.error))\n        return 1',
+     '              "never a pass." % (job.label, job.error))\n        return 0'),
+    ("cc  no loss: legs past an early return dropped", _ctl_cc_no_loss,
+     "                    _replay_job(job)\n            never =",
+     "                    pass\n            never ="),
+    ("cc  timeout: the wait has no timeout", _ctl_cc_timeout,
+     "        return p.wait(timeout=timeout)",
+     "        return p.wait()"),
+    ("cc  timeout: a timed-out leg read as a pass", _ctl_cc_timeout,
+     "        return TIMEOUT_RC",
+     "        return 0"),
+    ("cc  env: a leg launched under another env is read", _ctl_cc_env_refused,
+     "    if job.env != dict(os.environ):",
+     "    if False:"),
+    ("cc  unread: a green run that launched an unread leg", _ctl_cc_unread,
+     "            if rc == 0 and unread:",
+     "            if False:"),
+    # ⚠ RELY-CC-3 (2026-10-04): the two scheduler properties no cc control observed (M3, M6).
+    ("cc  lost: an unreadable capture read as its exit code", _ctl_cc_lost,
+     "    if job.lost:\n        return 1",
+     "    if job.lost:\n        pass"),
+    ("cc  key: the decision recomputes the receipt key", _ctl_cc_early_key_used,
+     "    key, _why = _SCHED.early_key if _SCHED is not None else push_key(REF_TUPLES)",
+     "    key, _why = push_key(REF_TUPLES)"),
+    # ⚠ BLOCKMSG-1 / HOOK-R5-2 / HOOK-R5-3 / LED-8 (2026-10-14): each mutant removes the one fix.
+    ("msg  a recording refusal is not a hash mismatch", _ctl_blockmsg,
+     "    if _rc_hashes in NOT_RECORDED:\n        return 1\n    if _rc_hashes != 0:",
+     "    if _rc_hashes != 0:"),
+    ("msg  exit 4 is explained as a REFUSAL", _ctl_blockmsg,
+     "    elif rc == 4:\n        # ⚠ 4 IS",
+     "    elif False:\n        # ⚠ 4 IS"),
+    ("msg  exit 2 names refusal AND outage", _ctl_exit2_both,
+     '        print("  The ledger REFUSED the record or could NOT BE REACHED — exit 2 carries both (see")',
+     '        print("  Fix the ledger connection.")'),
+    ("tables  a manifest row with no expectation refuses", _ctl_push_tables,
+     "    if _tbl:\n        print(\"\\nPush blocked: the push manifest",
+     "    if False:\n        print(\"\\nPush blocked: the push manifest"),
+    ("tables  0 of 0 is not a pass", _ctl_empty_expect,
+     "    if not expected:\n        print(\"\")",
+     "    if False:\n        print(\"\")"),
+    ("msg  commit exit 4 is a REFUSAL, not 'no key'", _ctl_commit_refused_line,
+     '            bad.append("%s (exit %d%s)" % (label, rc, _RC_NOTE.get(rc, "")))',
+     '            bad.append("%s (exit %d%s)" % (label, rc, ""))'),
+    ("cc  jobs=1 (push) still schedules", _ctl_cc_jobs_one,
+     "    if _jobs > 1:\n        _t, _tnote = leg_timeout()\n        _start_push_prefetch",
+     "    if _jobs >= 1:\n        _t, _tnote = leg_timeout()\n        _start_push_prefetch"),
+    ("cc  jobs=1 (commit) still schedules", _ctl_cc_jobs_one,
+     "    if _jobs > 1:\n        _t, _tnote = leg_timeout()\n        _start_commit_prefetch",
+     "    if _jobs >= 1:\n        _t, _tnote = leg_timeout()\n        _start_commit_prefetch"),
+    ("cc  an unreadable ZP_HOOK_JOBS is not the default", _ctl_cc_jobs_one,
+     '        return 1, "%s=%r is not an integer; running SEQUENTIALLY" % (JOBS_ENV, raw)',
+     '        return DEFAULT_JOBS, "%s=%r is not an integer; running SEQUENTIALLY" % (JOBS_ENV, raw)'),
     ("positive  a matching receipt skips agent gate", _ctl_positive,
      "        os.environ[var] = val",
      "        pass"),
@@ -1853,7 +3629,266 @@ _CONTROLS = [
     ("literal  a batch.py-computed row stays unskippable", _ctl_literal,
      '        rows.append((label, mode, emitter or "tools/verify/batch.py"))',
      '        rows.append((label, mode, emitter or "tools/verify/report.py"))'),
+    # ⚠ PRE-COMMIT PASS-CACHE (Tim's R10, 2026-10-03). MUST SKIP on a stubbed yes for this tree;
+    #   MUST RUN ALL ELEVEN LEGS on every other answer. Each mutant turns one non-yes into a skip.
+    ("pc  attested:true for this tree skips", _ctl_attest_yes,
+     '    if status == ATTEST_YES:\n        print("SKIPPED pre-commit',
+     '    if False:\n        print("SKIPPED pre-commit'),
+    # mcp-mayhem's two named mutants: (1) skip on an exception from the transport/parse path,
+    # (2) skip without checking `attested` (on any ok:true response, or on any response at all).
+    ("pc  M-gr1 skip on a transport exception", _ctl_attest_error,
+     "        return _classify_attest_exception(e), run_id, tree,",
+     "        return ATTEST_YES, run_id, tree,"),
+    ("pc  M-gr1 skip on an exception while judging", _ctl_attest_judge_raises,
+     '        return ATTEST_ERROR, run_id, tree, "judging',
+     '        return ATTEST_YES, run_id, tree, "judging'),
+    ("pc  M-gr2 skip on ok:true without `attested`", _ctl_attest_denied,
+     '    if sc.get("attested") is False:\n'
+     '        return ATTEST_DENIED, "attested: false, why: %s" % (sc.get("why"),)\n'
+     '    if sc.get("attested") is not True:\n'
+     '        return ATTEST_MALFORMED, "attested=%r is not the boolean true" % '
+     '(sc.get("attested"),)\n',
+     ''),
+    ("pc  M-gr2 skip on any response at all", _ctl_attest_denied,
+     "        status, detail = _judge_attest(res, tree, run_id, call_id)",
+     '        status, detail = ATTEST_YES, "any response"'),
+    ("pc  worktree: write-tree follows the invoking checkout", _ctl_attest_index_tree,
+     '    rc, out = git_out("write-tree")',
+     '    rc, out = git_out("-C", os.path.dirname(REPO), "write-tree")'),
+    ("pc  attested:false runs in full, prints why", _ctl_attest_denied,
+     '        return ATTEST_DENIED, "attested: false',
+     '        return ATTEST_YES, "attested: false'),
+    ("pc  unreachable runs in full", _ctl_attest_unreachable,
+     "        return ATTEST_UNREACHABLE\n    if isinstance(e, ValueError):",
+     "        return ATTEST_YES\n    if isinstance(e, ValueError):"),
+    ("pc  timeout runs in full", _ctl_attest_timeout,
+     "    if isinstance(e, (socket.timeout, TimeoutError)):\n        return ATTEST_TIMEOUT",
+     "    if isinstance(e, (socket.timeout, TimeoutError)):\n        return ATTEST_YES"),
+    ("pc  R-ZERONULL timeout is not UNREACHABLE", _ctl_attest_timeout,
+     'ATTEST_TIMEOUT = "TIMEOUT"',
+     'ATTEST_TIMEOUT = "UNREACHABLE"'),
+    ("pc  no GITROBOT_RUN_ID runs in full, no call", _ctl_attest_no_env,
+     "    if not run_id:\n        return ATTEST_NO_RUN_ID",
+     "    if False:\n        return ATTEST_NO_RUN_ID"),
+    ("pc  no write-tree runs in full, no call", _ctl_attest_no_tree,
+     "    if not tree:\n        return ATTEST_NO_TREE",
+     "    if False:\n        return ATTEST_NO_TREE"),
+    ("pc  malformed JSON runs in full", _ctl_attest_bad_json,
+     "    if isinstance(e, ValueError):\n        return ATTEST_MALFORMED",
+     "    if isinstance(e, ValueError):\n        return ATTEST_YES"),
+    ("pc  attested not the boolean true runs in full", _ctl_attest_not_bool,
+     '    if sc.get("attested") is not True:',
+     '    if not sc.get("attested"):'),
+    ("pc  no structuredContent runs in full", _ctl_attest_no_structured,
+     '    sc = result.get("structuredContent")',
+     '    sc = result.get("structuredContent") or '
+     '__import__("json").loads(result["content"][0]["text"])'),
+    ("pc  isError:true runs in full", _ctl_attest_is_error,
+     '    if "isError" in result and result["isError"] is not False:',
+     '    if False:'),
+    ("pc  ok:false runs in full", _ctl_attest_not_ok,
+     '    if sc.get("ok") is not True:',
+     '    if False:'),
+    ("pc  a yes about another tree runs in full", _ctl_attest_tree_echo,
+     '    if sc.get("tree") != tree:',
+     '    if False:'),
+    ("pc  any other exception runs in full", _ctl_attest_error,
+     "    return ATTEST_ERROR\n\n\ndef _judge_attest",
+     "    return ATTEST_YES\n\n\ndef _judge_attest"),
+    ("pc  REAL index_tree follows the staged index", _ctl_attest_index_tree,
+     "    return tree if rc == 0 and tree else None",
+     '    return "e" * 40'),
+    ("pc  REAL transport parses an SSE yes", _ctl_attest_real_yes,
+     '        if line.startswith("data:"):',
+     '        if False:'),
+    ("pc  REAL transport times out short", _ctl_attest_real_timeout,
+     "        with opener.open(req, timeout=timeout) as resp:",
+     "        with opener.open(req) as resp:"),
+    ("pc  REAL transport, closed port runs in full", _ctl_attest_real_refused,
+     "        return ATTEST_UNREACHABLE\n    if isinstance(e, ValueError):",
+     "        return ATTEST_YES\n    if isinstance(e, ValueError):"),
+    # ⚠ `/rely` 2026-10-03. (i) is BLOCKING-1's forge; (ii)-(v) are ORDINARY-1's four uncontrolled
+    #   mutants, verbatim; (vi)-(viii) are ORDINARY-2 and the unchecked response id.
+    ("pc  (i) GITROBOT_URL in the env chooses nothing", _ctl_attest_env_forge,
+     "    return _ATTEST_URL_SEAM or ATTEST_URL",
+     '    return os.environ.get("GITROBOT_URL") or _ATTEST_URL_SEAM or ATTEST_URL'),
+    ("pc  (ii) a yes with no tree echo runs in full", _ctl_attest_no_tree_echo,
+     '    if sc.get("tree") != tree:',
+     '    if sc.get("tree") is not None and sc.get("tree") != tree:'),
+    ("pc  (iii) ok truthy but not True runs in full", _ctl_attest_ok_truthy,
+     '    if sc.get("ok") is not True:',
+     '    if not sc.get("ok"):'),
+    ("pc  (iv) isError any truthy value runs in full", _ctl_attest_is_error_truthy,
+     '    if "isError" in result and result["isError"] is not False:',
+     '    if result.get("isError") is True:'),
+    ("pc  (v) production timeout constant <= 10s", _ctl_attest_timeout_constant,
+     "ATTEST_TIMEOUT_S = 4.0",
+     "ATTEST_TIMEOUT_S = 600.0"),
+    ("pc  (vi) run_id echo mismatch runs in full", _ctl_attest_run_echo,
+     '    if sc.get("run_id") != run_id:',
+     '    if False:'),
+    ("pc  (vii) error beside a result runs in full", _ctl_attest_error_and_result,
+     '    if "error" in res:\n        return ATTEST_REFUSED',
+     '    if "error" in res and "result" not in res:\n        return ATTEST_REFUSED'),
+    ("pc  (viii) response id mismatch runs in full", _ctl_attest_rpc_id,
+     "    if res.get(\"id\") != call_id:",
+     "    if False:"),
+    # ⚠ `/rely` 2026-10-04 round 2: ORDINARY-1's seven uncontrolled mutants, verbatim from the
+    #   reviewer's probe_mut.py, then ORDINARY-2 (isError falsy-but-not-False).
+    ("pc  (ix) HTTP_PROXY/ALL_PROXY choose nothing", _ctl_attest_proxy_env,
+     "    opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))",
+     "    opener = urllib.request.build_opener()"),
+    ("pc  (x) an HTTPError runs in full", _ctl_attest_http_error,
+     "    if isinstance(e, urllib.error.HTTPError):\n        return ATTEST_REFUSED",
+     "    if isinstance(e, urllib.error.HTTPError):\n        return ATTEST_YES"),
+    ("pc  (xi) a URLError wrapping a timeout runs in full", _ctl_attest_urlerror_timeout,
+     "        if isinstance(e.reason, (socket.timeout, TimeoutError)):\n            return ATTEST_TIMEOUT",
+     "        if isinstance(e.reason, (socket.timeout, TimeoutError)):\n            return ATTEST_YES"),
+    ("pc  (xii) a bare OSError runs in full", _ctl_attest_bare_oserror,
+     "    if isinstance(e, (ConnectionError, OSError)):\n        return ATTEST_UNREACHABLE",
+     "    if isinstance(e, (ConnectionError, OSError)):\n        return ATTEST_YES"),
+    ("pc  (xiii) a non-object response runs in full", _ctl_attest_non_dict,
+     "    if not isinstance(res, dict):\n        return ATTEST_MALFORMED",
+     "    if not isinstance(res, dict):\n        return ATTEST_YES"),
+    ("pc  (xiv) a response with no result runs in full", _ctl_attest_no_result,
+     '        return ATTEST_MALFORMED, "the response carries no result"',
+     '        return ATTEST_YES, "the response carries no result"'),
+    ("pc  (xv) a non-object result runs in full", _ctl_attest_result_not_object,
+     '        return ATTEST_MALFORMED, "the result is not an object"',
+     '        return ATTEST_YES, "the result is not an object"'),
+    ("pc  (xvi) isError None/0/\"\"/[]/{} runs in full", _ctl_attest_is_error_falsy,
+     '    if "isError" in result and result["isError"] is not False:',
+     '    if result.get("isError"):'),
 ]
+
+
+# ------------------------------------------------------------------ class detector (DC: uncontrolled
+# fail-closed protection in the attest path). Its verb is RUN: it mutates every protection and asks
+# whether ANY `pc` control fails, so a protection added later without a control is caught here even
+# though no row above names it.
+#
+#   GENERIC  every `return ATTEST_<anything but YES>` inside the functions in `_SWEEP_FUNCS` is
+#            turned, one at a time, into `return ATTEST_YES`. A new fail-closed return lands in the
+#            sweep with no edit to this table.
+#   EXPLICIT protections that are not a non-yes return (a handler, a keyword argument, a stricter
+#            comparison), as a table; a NEW protection of that shape still needs a row here, which
+#            is the sweep's stated limit.
+_SWEEP_FUNCS = ("_attest_url", "_attest_call", "_classify_attest_exception", "_judge_attest",
+                "consult_attest")
+_SWEEP_EXPLICIT = [
+    ("ProxyHandler({}) removed",
+     "    opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))",
+     "    opener = urllib.request.build_opener()"),
+    ("request timeout dropped",
+     "        with opener.open(req, timeout=timeout) as resp:",
+     "        with opener.open(req) as resp:"),
+    ("production timeout constant raised",
+     "ATTEST_TIMEOUT_S = 4.0", "ATTEST_TIMEOUT_S = 600.0"),
+    ("answerer read from the environment",
+     "    return _ATTEST_URL_SEAM or ATTEST_URL",
+     '    return os.environ.get("GITROBOT_URL") or os.environ.get("HTTP_PROXY") '
+     'or _ATTEST_URL_SEAM or ATTEST_URL'),
+    ("transport exception classified as a yes",
+     "        return _classify_attest_exception(e), run_id, tree,",
+     "        return ATTEST_YES, run_id, tree,"),
+    ("isError: falsy accepted",
+     '    if "isError" in result and result["isError"] is not False:',
+     '    if result.get("isError"):'),
+    ("isError: only True refused",
+     '    if "isError" in result and result["isError"] is not False:',
+     '    if result.get("isError") is True:'),
+    ("ok: truthy accepted",
+     '    if sc.get("ok") is not True:', '    if not sc.get("ok"):'),
+    ("attested: truthy accepted",
+     '    if sc.get("attested") is not True:', '    if not sc.get("attested"):'),
+    ("tree echo: absent accepted",
+     '    if sc.get("tree") != tree:', '    if sc.get("tree") is not None and sc.get("tree") != tree:'),
+    ("run echo: absent accepted",
+     '    if sc.get("run_id") != run_id:',
+     '    if sc.get("run_id") is not None and sc.get("run_id") != run_id:'),
+    ("error beside a result accepted",
+     '    if "error" in res:\n        return ATTEST_REFUSED',
+     '    if "error" in res and "result" not in res:\n        return ATTEST_REFUSED'),
+]
+
+
+def _sweep_mutants():
+    """[(name, mutated source or None, why)] — every protection mutant the class detector runs."""
+    import ast
+    import re
+    src_path = os.path.abspath(__file__)
+    if src_path.endswith(".pyc"):
+        src_path = src_path[:-1]
+    with open(src_path, encoding="utf-8") as fh:
+        src = fh.read()
+    head, sep, tail = src.partition(_CONTROLS_MARK)
+    out = []
+    spans = {n.name: (n.lineno, n.end_lineno) for n in ast.parse(head).body
+             if isinstance(n, ast.FunctionDef) and n.name in _SWEEP_FUNCS}
+    for fn in _SWEEP_FUNCS:
+        if fn not in spans:
+            out.append(("%s: function not found" % fn, None, "SWEEP SCOPE MISSING"))
+    lines = head.split("\n")
+    pat = re.compile(r"^(\s*return\s+)(ATTEST_(?!YES\b)[A-Z_]+)\b")
+    for fn, (lo, hi) in sorted(spans.items(), key=lambda kv: kv[1]):
+        for i in range(lo - 1, hi):
+            mt = pat.match(lines[i])
+            if mt:
+                new = lines[:i] + [pat.sub(r"\1ATTEST_YES", lines[i], count=1)] + lines[i + 1:]
+                out.append(("%s:%d %s -> ATTEST_YES" % (fn, i + 1, mt.group(2)),
+                            "\n".join(new) + sep + tail, None))
+    for name, anchor, repl in _SWEEP_EXPLICIT:
+        if head.count(anchor) != 1:
+            out.append((name, None, "MUTATION DID NOT APPLY — anchor found %d time(s)"
+                        % head.count(anchor)))
+        else:
+            out.append((name, head.replace(anchor, repl, 1) + sep + tail, None))
+    return out
+
+
+_SLOW = ("_real_", "index_tree", "env_forge", "proxy_env")   # loopback servers, scratch repos
+
+
+def _pc_controls(exclude=()):
+    """The distinct `pc` controls, cheap stubbed ones first, so a sweep stops early."""
+    out = []
+    for label, ctl, _a, _r in _CONTROLS:
+        if label.startswith("pc") and ctl not in out and ctl not in exclude:
+            out.append(ctl)
+    return sorted(out, key=lambda c: any(s in c.__name__ for s in _SLOW))
+
+
+def _sweep_attest(controls=None, verbose=True, only=None):
+    """Run every protection mutant (or those whose name contains `only`) against the `pc`
+    controls. Returns (mutants, survivors): a survivor is a mutant on which NO control failed (or
+    one that did not apply). A control that raises on a mutant is not counted as catching it, as
+    in `selftest`."""
+    if controls is None:
+        controls = _pc_controls()
+    mutants = [mu for mu in _sweep_mutants() if only is None or only in mu[0]]
+    survivors = []
+    for name, msrc, err in mutants:
+        if msrc is None:
+            survivors.append((name, err))
+            continue
+        mod, merr = _mutant_from_source(msrc)
+        if mod is None:
+            survivors.append((name, merr))
+            continue
+        caught = None
+        for ctl in controls:
+            try:
+                ok, _why = ctl(mod)
+            except Exception:                               # noqa: BLE001 — a crash is not a catch
+                continue
+            if not ok:
+                caught = ctl.__name__
+                break
+        if caught is None:
+            survivors.append((name, "no pc control failed"))
+        if verbose:
+            print("       sweep %-58s %s" % (name, ("caught by " + caught) if caught else "SURVIVED"))
+    return len(mutants), survivors
 
 
 def _mutant(anchor, repl):
@@ -1875,6 +3910,15 @@ def _mutant(anchor, repl):
     mutated = head.replace(anchor, repl, 1) + sep + tail
     if mutated == src:
         return None, "MUTATION DID NOT APPLY — text unchanged"
+    return _mutant_from_source(mutated)
+
+
+def _mutant_from_source(mutated):
+    """(module, None) compiled from a mutated copy of this file's source, or (None, why)."""
+    import types
+    src_path = os.path.abspath(__file__)
+    if src_path.endswith(".pyc"):
+        src_path = src_path[:-1]
     try:
         code = compile(mutated, src_path + ".mutant", "exec")
     except SyntaxError as e:
@@ -1888,7 +3932,8 @@ def _mutant(anchor, repl):
 def selftest():
     """Every advisory-skip control, each seen to pass on this module and to FAIL on its mutant."""
     me = sys.modules[__name__]
-    print("advisory-skip controls (each: MUST PASS on the live code, MUST FIRE on its mutant)")
+    print("advisory-skip and pre-commit pass-cache (pc) controls "
+          "(each: MUST PASS on the live code, MUST FIRE on its mutant)")
     total = bad = 0
     for label, ctl, anchor, repl in _CONTROLS:
         total += 1
@@ -1908,6 +3953,24 @@ def selftest():
         bad += 0 if good else 1
         print("  %-4s %-46s live: %s" % ("ok" if good else "FAIL", label, why_live))
         print("       %-46s mutant fired: %s — %s" % ("", "yes" if not ok_mut else "NO", why_mut))
+    # The class detector: every attest-path protection mutant must be caught by SOME pc control.
+    print("\nclass detector: attest-path protection sweep (each mutant MUST be caught by a pc control)")
+    n_mut, survivors = _sweep_attest()
+    total += 1
+    sweep_ok = n_mut > 0 and not survivors
+    bad += 0 if sweep_ok else 1
+    print("  %-4s sweep: %d mutant(s), %d survived%s" % (
+        "ok" if sweep_ok else "FAIL", n_mut, len(survivors),
+        "".join("\n         SURVIVOR %s — %s" % s for s in survivors)))
+    # ...and the detector's own control: with the one control for the response-id check withheld,
+    # the sweep MUST report that check's mutant as a survivor. A sweep that cannot fail is no detector.
+    n2, surv2 = _sweep_attest(controls=_pc_controls(exclude=(_ctl_attest_rpc_id,)), verbose=False,
+                              only="ATTEST_RPC_ID")
+    total += 1
+    det_ok = n2 == 1 and any("RPC_ID" in name for name, _w in surv2)
+    bad += 0 if det_ok else 1
+    print("  %-4s detector control: _ctl_attest_rpc_id withheld -> survivors %s"
+          % ("ok" if det_ok else "FAIL", [name for name, _w in surv2]))
     print("\nhooks advisory-skip selftest: %s (%d/%d control(s))"
           % ("PASS" if not bad else "FAIL", total - bad, total))
     return 1 if bad else 0

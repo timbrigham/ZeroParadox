@@ -7,89 +7,6 @@ set_option maxHeartbeats 400000
 /-!
 # The diagonal engine's supplier is a constructive taboo
 
-`ZeroParadox/Category/Lawvere.lean` proves `fixedPointFree_of_nontrivial`: **any type with two
-distinct elements admits a fixed-point-free endofunction.** It is the *supplier* of Lawvere's engine
-— every "no Lawvere witness" result in the framework (`no_witness_of_nontrivial`,
-`nontrivial_lattice_no_witness`, `q2_no_witness`) consumes it, and the consumer
-`no_witness_of_fixedPointFree` is axiom-free. The supplier measures
-`[propext, Classical.choice, Quot.sound]`, and a single `classical` tactic is its entire classical
-footprint.
-
-`ZeroParadox/Category/LawvereDecidable.lean` prices that footprint: with `[DecidableEq β]` the same
-proof body measures `[propext]`. It closes with the correct fence — *"It does not show the general
-version's choice is necessary. `classical` is how the proof was written, and a footprint never
-reports necessity."*
-
-**This file answers that open question, and the answer is that the choice is NOT removable.**
-
-## The result
-
-`wem_of_fixedPointFree` — the ∀-closed general statement
-
-```
-∀ (β : Type) (b₀ b₁ : β), b₀ ≠ b₁ → ∃ g : β → β, ∀ x, g x ≠ x
-```
-
-implies **weak excluded middle** (`¬p ∨ ¬¬p` for every proposition `p`, equivalently De Morgan's
-law), proved with **no `Classical.choice`**. The classical content is entirely in the hypothesis,
-which is what makes this an implication rather than a restatement — the same shape as
-`ZeroParadox/Ordinal/OrdinalChoiceEssential.lean`'s `em_of_wellOrder_comparable`, and this file is
-modelled on it.
-
-So `fixedPointFree_of_nontrivial`'s `classical` is **essential**, not accidental: no rewriting of
-that proof removes it, because a choice-free proof of the general statement would be a choice-free
-proof of weak excluded middle. This is the framework's second located essential case, and unlike the
-first it sits on the keystone (the diagonal engine) rather than on an imported order instance.
-
-## What is NOT claimed
-
-* **Not full excluded middle.** The taboo landed on is weak excluded middle, which is strictly
-  weaker than `ExcludedMiddle` in intuitionistic logic. No attempt was made here to strengthen it,
-  and the reader should not assume it can be strengthened.
-* **The converse is not proved.** In topos logic weak excluded middle would give the general
-  statement back — the two mutually exclusive subobjects `¬(x = b₀)` and `¬¬(x = b₀)` cover, so a
-  map can be glued from them. That argument is **ours, sketched, and not machine-checked**; it does
-  not go through in Lean for the same reason recorded in
-  `ZeroParadox/Category/ExcludedMiddleBridge.lean` — `Or` in `Prop` does not eliminate into data, so
-  a `Prop`-level disjunction cannot construct the function `g`. Whether the two statements are
-  equivalent **in Lean** is left open, and a failed elaboration would not settle it either way.
-* **No priority claim.** See the prior-art section; a search was run and is reported as a search.
-* **It does not deprecate `ZeroParadox/Category/Lawvere.lean`.** The general statement stays general
-  and stays the keystone. What changes is only its ledger classification: its `Classical.choice` is
-  no longer unclassified or presumed accidental.
-
-## Prior art
-
-The mathematics of this genre is not new and is not claimed as new.
-
-* **M. Escardó, TypeTopology, `Taboos.Decomposability`.** A type `X` is *decomposable* when there is
-  `f : X → 𝟚` hitting both values; the module proves
-  `Ordinal-decomposition-iff-WEM : decomposition (Ordinal 𝓤) ↔ typal-WEM 𝓤`, glossed there as *"the
-  type of ordinals has no non-trivial decidable property unless weak excluded middle holds."* Read
-  from source. **This is the closest located neighbour, and it is a different statement.**
-  Decomposability is strictly stronger than what is used below: a decomposition `f : X → 𝟚` with
-  witnesses `x₀ x₁` yields the fixed-point-free endomap `x ↦ if f x = 0 then x₁ else x₀` (it changes
-  the value of `f`, so it cannot fix anything). So a fixed-point-free endomap is the *weaker*
-  conclusion, which makes the implication to weak excluded middle below formally the stronger one.
-  That derivation is elementary and is ours, not Escardó's. No source stating the fixed-point-free
-  form was located.
-* **T. de Jong and M. Escardó, "Examples and counterexamples of injective types"**
-  (arXiv:2601.12536, 18 January 2026). **Only the abstract was read**; nothing about its proofs is
-  asserted here. From the abstract verbatim: *"any type with an apartness relation and two points
-  apart cannot be injective unless weak excluded middle holds"*, and *"injective types have no
-  non-trivial decidable properties, unless weak excluded middle holds, which amounts to a Rice-like
-  theorem for injective types."* Same genre and same landing principle — a hypothesis about a type
-  with two separated points forcing weak excluded middle — about a different property (injectivity,
-  not the existence of a fixed-point-free endomap).
-* **Lawvere (1969)**; the diagonal-across-domains reading is **Yanofsky (2003)**. Both already cited
-  in `ZeroParadox/Category/Lawvere.lean`; neither concerns the constructive strength of the
-  supplier.
-* Weak excluded middle, and the taboo methodology generally: **constructive reverse mathematics**
-  (Ishihara; Diener-Ishihara). Cited, not claimed.
-
-**Searched, none found** for the exact statement below — that is a report of one search, not a
-priority claim.
-
 ## Engineer's Take
 
 We could only say the framework essentially never introduces choice. I wanted to know whether there
@@ -105,12 +22,10 @@ I am leaving the design question open. The answer is the Lean itself.
 
 ---
 
-## Structure
-
-- § I   Weak excluded middle, as a hypothesis
-- § II  The witness: three tokens glued by `p` on one side and by `¬p` on the other
-- § III The taboo: the general fixed-point-free statement implies weak excluded middle
-- § IV  Non-vacuity, and the ledger consequence for `Lawvere.lean`
+`wem_of_fixedPointFree`: the ∀-closed general form of `fixedPointFree_of_nontrivial`
+(`ZeroParadox/Category/Lawvere.lean`) implies weak excluded middle, with no `Classical.choice`; its
+consequence is stated in `ZeroParadox/Category/ChoiceCannotBe.lean` § IV. The result, what is not
+claimed, the prior art and the section map are in `ZeroParadox/Category/LawvereTaboo.md`, beside this file.
 -/
 
 namespace ZeroParadox
@@ -233,6 +148,27 @@ Both branches are informative, which is the same design requirement as in
 `ZeroParadox/Ordinal/OrdinalChoiceEssential.lean` and the reason the witness is glued on both
 sides. -/
 
+-- Prior art, cited not claimed, all read from source.
+-- Bauer, "On fixed-point theorems in synthetic computability", Tbilisi Math. J. 10(3) (2017), Cor 4.3,
+-- p. 175: every endomap on a countably generated ωcppo has a fixed point, and after it, "Because Σ has
+-- the fixed point property but 2 and Ω do not (consider negation), there is a chain of proper
+-- inclusions 2 ⊊ Σ ⊊ Ω." Σ contains 2's two distinct truth values, so in synthetic computability the
+-- hypothesis below fails at Σ: a counter-model for the hypothesis, not for the implication, which runs
+-- from the hypothesis to weak excluded middle.
+-- de Jong–Escardó, arXiv:2102.08812, Cor 39(iii)-(iv), p. 11: a nontrivial locally small sup-lattice
+-- (or bounded complete poset, or dcpo) with decidable equality exists iff weak excluded middle holds,
+-- and a positive one iff excluded middle holds. The same landing principle for a different hypothesis.
+-- Booij–Escardó–Lumsdaine–Shulman, "Parametricity, automorphisms of the universe, and excluded middle",
+-- arXiv:1701.05617, Thm 3, p. 4: a function `f : ∏ X : U, X → X`, natural under equivalence, with
+-- `f_X(x) ≠ x` for some isolated point `x : X`, gives excluded middle. A different statement: one
+-- uniform natural family moving one isolated point lands on full excluded middle, while the
+-- hypothesis below asks for one fixed-point-free map per type with two distinct points, with no
+-- naturality, and lands on weak excluded middle. Their Thm 5 (Simpson), p. 5: assuming function
+-- extensionality for 0-valued functions, an extensional, strongly non-constant `f : U → 2` exists iff
+-- weak excluded middle holds. The proof technique below is Simpson's (pp. 5-6): build a type from a
+-- proposition, "Z = ¬A × X + ¬¬A × Y", and case-split a value computed on it, "If it is tt, then it
+-- is not ff, and so ¬A; while if it is ff, then it is not tt, and so ¬¬A." The witness here differs:
+-- a quotient glued under `p` and under `¬p` (§ II), not a sum over `¬A` and `¬¬A`.
 /-- **The general fixed-point-free statement implies weak excluded middle.**
 
 The hypothesis is the ∀-closure of `fixedPointFree_of_nontrivial`
@@ -269,9 +205,11 @@ theorem fixedPointFree_of_classical :
 statement is available in Lean, and it is available only at the price § III names.
 
 This is the ledger entry. `ZeroParadox/Category/LawvereDecidable.lean` shows the `Classical.choice`
-on `fixedPointFree_of_nontrivial` **disappears** under `[DecidableEq β]`; this file shows it
-**cannot** disappear without it. The two together locate the cost exactly: not in the diagonal, and
-not in the two-point swap, but in stating the swap over types where it is not computable. -/
+on `fixedPointFree_of_nontrivial` **disappears** under `[DecidableEq β]`; this file shows that removing
+it without that instance would prove weak excluded middle without choice, a non-removability result on
+the premise stated in `ZeroParadox/Category/ChoiceCannotBe.lean` § IV. The two together locate the
+cost exactly: not in the diagonal, and not in the two-point swap, but in stating the swap over types
+where it is not computable. -/
 theorem wem_of_classical_supplier
     (H : ∀ (β : Type) (b₀ b₁ : β), b₀ ≠ b₁ → ∃ g : β → β, ∀ x, g x ≠ x) :
     ∀ p : Prop, ¬p ∨ ¬¬p :=
@@ -292,6 +230,97 @@ the statement. It is left unsuppressed here exactly as
 theorem decidable_route_unaffected {β : Type} [DecidableEq β] {b₀ b₁ : β} (hne : b₀ ≠ b₁) :
     ∃ g : β → β, ∀ x, g x ≠ x :=
   fixedPointFree_of_nontrivial_decidable hne
+
+/-! ## § V — The omniscience principles on bit sequences
+
+Forms, for sequences `ℕ → Bool`, of the principles Ishihara states over `ℕ^ℕ` as instances of
+excluded middle, weak excluded middle, De Morgan's law and double negation elimination (§§ 2–4,
+pp. 47–50); `LLPO` here is Diener's at-most-once form. All are in the same hypothesis form as § I:
+never an `axiom`, always discharged by the caller. Each arrow runs from the stronger principle to
+the weaker one. The equivalence
+`LPO ↔ WLPO ∧ MP` in its ⊥-of-`ℕ → Bool` form is the `example` in
+`ZeroParadox/Category/ChoiceCannotBe.lean` § II. -/
+
+-- Reading (cited, not claimed): the `LPO` and `WLPO` forms over `ℕ → Bool` are Escardó, "Infinite
+-- sets that satisfy the principle of omniscience in any variety of constructive mathematics",
+-- JSL 78(3) (2013), § 3, p. 4 of the preprint, with `true` and `false` exchanged ("Clearly LPO ⟺ WLPO ∧ MP"); preprint p. 1:
+-- "For X finite this is trivial, and for X = ℕ, this is LPO". Ishihara, "Reverse mathematics in
+-- Bishop's constructive mathematics", Philosophia Scientiae CS 6 (2006), §§ 2–4, pp. 47–50, states
+-- LPO, WLPO, LLPO and MP over `ℕ^ℕ` as instances of excluded middle, weak excluded middle, De Morgan's law and double
+-- negation elimination, and Prop 10, p. 53, gives `LPO ↔ WLPO + MP` and `WLPO → LLPO`. The LLPO form
+-- below is Diener, "Constructive Reverse Mathematics", arXiv:1804.05495v3, § 1.4, p. 25, indexed
+-- from 0.
+
+/-- **LPO.** `Statement:` every `r : ℕ → Bool` is `true` somewhere or `false` everywhere. -/
+def LPO : Prop := ∀ r : ℕ → Bool, (∃ n, r n = true) ∨ ∀ n, r n = false
+
+/-- **WLPO.** `Statement:` every `r : ℕ → Bool` is `false` everywhere or is not. -/
+def WLPO : Prop := ∀ r : ℕ → Bool, (∀ n, r n = false) ∨ ¬ ∀ n, r n = false
+
+/-- **The lesser limited principle of omniscience.** `Statement:` if `r : ℕ → Bool` takes the value
+`true` at most once, it is `false` at every even index or at every odd index. -/
+def LLPO : Prop := ∀ r : ℕ → Bool, (∀ m n, r m = true → r n = true → m = n) →
+    (∀ n, r (2 * n) = false) ∨ (∀ n, r (2 * n + 1) = false)
+
+/-- **Markov's principle.** `Statement:` if `r : ℕ → Bool` is not never `true`, some `r n` is. -/
+def MarkovPrinciple : Prop := ∀ r : ℕ → Bool, ¬ ¬ (∃ n, r n = true) → ∃ n, r n = true
+
+/-- `Statement:` excluded middle implies the limited principle of omniscience. -/
+theorem lpo_of_excludedMiddle (h : ExcludedMiddle) : LPO := fun r =>
+  (h (∃ n, r n = true)).imp id fun hn n => by
+    cases hr : r n
+    · rfl
+    · exact absurd ⟨n, hr⟩ hn
+
+/-- `Statement:` weak excluded middle implies the weak limited principle of omniscience. -/
+theorem wlpo_of_weakExcludedMiddle (h : WeakExcludedMiddle) : WLPO := fun r =>
+  (h (∃ n, r n = true)).imp
+    (fun hn n => by
+      cases hr : r n
+      · rfl
+      · exact absurd ⟨n, hr⟩ hn)
+    (fun hnn hall => hnn fun ⟨n, hn⟩ => by rw [hall n] at hn; cases hn)
+
+/-- `Statement:` the limited principle of omniscience implies the weak one. -/
+theorem wlpo_of_lpo (h : LPO) : WLPO := fun r =>
+  (h r).elim (fun ⟨n, hn⟩ => Or.inr fun hall => by rw [hall n] at hn; cases hn) Or.inl
+
+/-- `Statement:` the limited principle of omniscience implies Markov's principle. -/
+theorem markovPrinciple_of_lpo (h : LPO) : MarkovPrinciple := fun r hnn =>
+  (h r).elim id fun hall => absurd (fun ⟨n, hn⟩ => by rw [hall n] at hn; cases hn) hnn
+
+/-- `Statement:` the weak limited principle of omniscience and Markov's principle together imply the
+limited principle of omniscience. -/
+theorem lpo_of_wlpo_of_markovPrinciple (hw : WLPO) (hm : MarkovPrinciple) : LPO := fun r =>
+  (hw r).elim Or.inr fun hn => Or.inl (hm r fun hne => hn fun n => by
+    cases hr : r n
+    · rfl
+    · exact absurd ⟨n, hr⟩ hne)
+
+/-- `Statement:` the weak limited principle of omniscience implies the lesser one: decide whether
+the even-indexed values are all `false`; if not, the odd-indexed ones are. -/
+theorem llpo_of_wlpo (h : WLPO) : LLPO := by
+  intro r hone
+  rcases h (fun n => r (2 * n)) with he | hne
+  · exact Or.inl he
+  · refine Or.inr fun n => ?_
+    cases hodd : r (2 * n + 1)
+    · rfl
+    · exfalso; apply hne; intro m
+      cases hev : r (2 * m)
+      · rfl
+      · have := hone _ _ hev hodd; omega
+
+-- Reading (cited, not claimed): none of the converses is proved here, and Lean cannot prove a
+-- non-implication between these principles, each of which holds classically. Separations by
+-- topological models, Diener (above), § 7.2, read for these entries: the model over ℝ does not
+-- validate weak excluded middle (Prop 7.2.2, p. 102; a weak counterexample in Diener's sense, p. 102)
+-- and validates the sequence form of LPO (pp. 106–107), so LPO does not imply weak
+-- excluded middle; the Sierpinski space validates weak excluded middle and not excluded middle
+-- (p. 102; Remark 7.2.9, p. 107); the space `X_U` validates weak excluded middle and does not
+-- validate the REAL-number form of MP (Prop 7.2.12, p. 110), which by itself does not separate weak
+-- excluded middle from the sequence form of MP used here. Ishihara, pp. 47–50: LPO, WLPO and LLPO are
+-- false in INT and in RUSS, and MP is accepted in RUSS.
 
 end ZeroParadox
 
@@ -330,5 +359,17 @@ open ZeroParadox
 -- together they localize the cost.
 #print axioms decidable_route_unaffected
 #print axioms fixedPointFree_of_nontrivial
+
+-- § V — the omniscience principles and the arrows between them.
+#print axioms LPO
+#print axioms WLPO
+#print axioms LLPO
+#print axioms MarkovPrinciple
+#print axioms lpo_of_excludedMiddle
+#print axioms wlpo_of_weakExcludedMiddle
+#print axioms wlpo_of_lpo
+#print axioms markovPrinciple_of_lpo
+#print axioms lpo_of_wlpo_of_markovPrinciple
+#print axioms llpo_of_wlpo
 
 end PurityCheck

@@ -135,4 +135,8 @@ formalizes the labeled tree theorem on Mathlib's WQO machinery. Two threads must
   about Seisenberger's INFORMAL proof, not a measurement of this file.** Lean has a single
   `Classical.choice` axiom and nothing here separates dependent choice from full choice, so no
   footprint in this corpus can witness the difference; and the other two routes are not the minimal
-  bad sequence argument at all. Open induction (Berger) is second-hand and not held.
+  bad sequence argument at all. Open induction is Raoult's (1988), discussed intuitionistically by
+  Coquand (1991), both as cited in Berger, *A Computational Interpretation of Open Induction*
+  (LICS 2004), p. 326, whose contribution is its computational interpretation; Berger's
+  Proposition 3.4 (p. 329) proves it classically equivalent to dependent choice, and p. 326 calls it
+  a classical reformulation of the minimal bad sequence argument.

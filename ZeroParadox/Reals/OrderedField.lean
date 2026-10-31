@@ -127,6 +127,61 @@ example : ¬ ∀ a : Bool, HasFirstStep a := by
   obtain ⟨c, hc⟩ := h true
   exact absurd hc.1 (by cases c <;> decide)
 
+-- `Statement:` in any partial order, if `a < b` and every `c` in `[a, b]` is `a` or `b`, then `a ⋖ b`.
+-- This is the partial-order case of Mathlib's `covBy_of_eq_or_eq`, which is stated over any preorder.
+example {α : Type*} [PartialOrder α] {a b : α} (hab : a < b)
+    (h : ∀ c, a ≤ c → c ≤ b → c = a ∨ c = b) : a ⋖ b :=
+  covBy_of_eq_or_eq hab h
+-- `Statement:` conversely, given decidable equality, `a ⋖ b` makes every `c` in `[a, b]` equal to `a`
+-- or to `b`.
+example {α : Type*} [PartialOrder α] [DecidableEq α] {a b : α} (h : a ⋖ b) :
+    ∀ c, a ≤ c → c ≤ b → c = a ∨ c = b := fun c hac hcb =>
+  if hca : c = a then Or.inl hca else if hcb' : c = b then Or.inr hcb' else
+    absurd (lt_of_le_of_ne hcb hcb') (h.2 (lt_of_le_of_ne hac (Ne.symm hca)))
+-- `Statement:` with no decidability, only the negative form: `a ⋖ b` leaves no `c` in `[a, b]` that is
+-- neither `a` nor `b`.
+example {α : Type*} [PartialOrder α] {a b : α} (h : a ⋖ b) :
+    ∀ c, a ≤ c → c ≤ b → ¬ (c ≠ a ∧ c ≠ b) := fun _ hac hcb ⟨hca, hcb'⟩ =>
+  h.2 (lt_of_le_of_ne hac (Ne.symm hca)) (lt_of_le_of_ne hcb hcb')
+-- `Statement:` Mathlib's homes are `CovBy.Ioo_eq` (nothing strictly between), measured `[propext,
+-- Quot.sound]`, and `CovBy.Icc_eq` (`Icc a b = {a, b}`), measured `[propext, Classical.choice,
+-- Quot.sound]`: the second carries `Classical.choice` and the first does not.
+-- `Statement:` control, the truth values `Prop` ordered by implication: `False`, ⊥ of `Prop`, is
+-- covered by `True`, and "every `c` in `[False, True]` is `False` or `True`" is equivalent to excluded
+-- middle. Prior art: Bauer, "On fixed-point theorems in synthetic computability", Tbilisi Math. J.
+-- 10(3) (2017), Prop 3.4, p. 173, "Excluded middle states that 2 = Ω"; for one element, de
+-- Jong–Escardó arXiv:2102.08812, Examples 28(i), p. 9: "The pair (0_V, P) witnesses nontriviality of
+-- Ω_V if and only if ¬¬P holds, while it witnesses positivity if and only if P holds."
+example : (False : Prop) ⋖ True ∧
+    ((∀ c : Prop, False ≤ c → c ≤ True → c = False ∨ c = True) ↔ ∀ p : Prop, p ∨ ¬ p) := by
+  refine ⟨⟨⟨fun h => h.elim, fun h => h trivial⟩, fun c h1 h2 => h1.2 fun hc => h2.2 fun _ => hc⟩,
+    ⟨fun h p => ?_, fun h c _ _ => ?_⟩⟩
+  · rcases h p (fun h => h.elim) (fun _ => trivial) with h0 | h1
+    · exact Or.inr fun hp => h0 ▸ hp
+    · exact Or.inl (h1 ▸ trivial)
+  · rcases h c with hp | hn
+    · exact Or.inr (propext ⟨fun _ => trivial, fun _ => hp⟩)
+    · exact Or.inl (propext ⟨hn, False.elim⟩)
+-- `Reading:` AX-B1 includes that `bot` be covered (`HasFirstStep bot`) and that `[bot, a]` hold exactly
+-- `bot` and its cover `a`. With decidable equality the second follows from the first (above); on
+-- `Prop` the two differ only in cost: the cover is free, the two-element interval costs excluded
+-- middle, and classically both hold.
+
+/-- `Statement:` if every cover in every partial order on a `Type` has a two-point closed interval
+    (`Set.Icc a b = {a, b}`, the statement of Mathlib's `CovBy.Icc_eq`), excluded middle holds; the
+    reduction is the `Prop` control above, at `False ⋖ True`. -/
+theorem em_of_covBy_Icc_eq
+    (h : ∀ (α : Type) [PartialOrder α] (a b : α), a ⋖ b → Set.Icc a b = {a, b}) :
+    ∀ p : Prop, p ∨ ¬ p := by
+  intro p
+  have hcov : (False : Prop) ⋖ True :=
+    ⟨⟨fun h => h.elim, fun h => h trivial⟩, fun c h1 h2 => h1.2 fun hc => h2.2 fun _ => hc⟩
+  have hp : p ∈ Set.Icc (False : Prop) True := ⟨fun h => h.elim, fun _ => trivial⟩
+  rw [h Prop False True hcov] at hp
+  rcases hp with h0 | h1
+  · exact Or.inr fun hp' => h0 ▸ hp'
+  · exact Or.inl (h1 ▸ trivial)
+
 /-- **The first step is unique.** This is Mathlib's `CovBy.unique_right`, and it is cited as
     such — proved here by hand only to keep the footprint at `[propext]`. Mathlib's version
     routes through `LinearOrder` machinery that pulls in `Classical.choice`, and the framework
@@ -165,15 +220,43 @@ example {α : Type*} [PartialOrder α] (bot a : α) (h : IsLeast {x | bot < x} a
 example {α : Type*} [LinearOrder α] (bot a : α) (h : bot ⋖ a) : IsLeast {x | bot < x} a :=
   ⟨h.1, fun _ hx => h.ge_of_gt hx⟩
 
-/-- **AX-B1 fails exactly where the order is dense — a BICONDITIONAL, and it is Mathlib's.**
+/-- **An order is dense iff AX-B1 fails at EVERY element — a BICONDITIONAL over the whole order,
+    and it is Mathlib's** `denselyOrdered_iff_forall_not_covBy`.
 
-    `denselyOrdered_iff_forall_not_covBy`. This is stronger than the framework's own statement:
-    ZP-F shows the snap fails in the reals, and this shows that failing *is* density. The two
-    are the same condition, not two facts that happen to coincide. -/
+    The right-hand side quantifies over all elements. Density rules out a first step at each one,
+    `0` of an ordered field included (`axb1_fails_in_ordered_field`); one element without a first
+    step does not make an order dense (the two controls below). -/
 theorem axb1_fails_everywhere_iff_dense {α : Type*} [Preorder α] :
     DenselyOrdered α ↔ ∀ bot : α, ¬ HasFirstStep bot := by
   rw [denselyOrdered_iff_forall_not_covBy]
   exact ⟨fun h bot ⟨a, hcov⟩ => h bot a hcov, fun h a b hcov => h a ⟨b, hcov⟩⟩
+
+-- `Statement:` control, the iff does not hold at one element: in `Bool`, `true` has no first step,
+-- and `Bool` is not dense (`false ⋖ true`).
+example : ¬ HasFirstStep true ∧ ¬ DenselyOrdered Bool := by
+  refine ⟨fun ⟨c, hc⟩ => absurd hc.1 (by cases c <;> decide), fun hd => ?_⟩
+  exact axb1_fails_everywhere_iff_dense.mp hd false
+    ⟨true, by decide, fun c h1 h2 => by cases c <;> simp_all⟩
+-- `Statement:` control, with something above the element: in `WithTop (WithTop ℚ)`, `0` has no first
+-- step, and the order is not dense (the inner `⊤` is covered by the outer `⊤`).
+example : ¬ HasFirstStep (((0 : ℚ) : WithTop ℚ) : WithTop (WithTop ℚ)) ∧
+    ¬ DenselyOrdered (WithTop (WithTop ℚ)) := by
+  refine ⟨fun ⟨a, h0a, hc⟩ => ?_, fun hd => ?_⟩
+  · induction a using WithTop.recTopCoe with
+    | top => exact hc (c := ((1 : ℚ) : WithTop ℚ)) (by simp) (WithTop.coe_lt_top _)
+    | coe b =>
+      induction b using WithTop.recTopCoe with
+      | top => exact hc (c := (((1 : ℚ) : WithTop ℚ) : WithTop (WithTop ℚ)))
+                (by simp) (WithTop.coe_lt_coe.2 (WithTop.coe_lt_top _))
+      | coe r =>
+        have hr : (0 : ℚ) < r := by simpa using h0a
+        exact hc (c := (((r / 2 : ℚ) : WithTop ℚ) : WithTop (WithTop ℚ)))
+          (by simpa using half_pos hr) (by simpa using half_lt_self hr)
+  · refine axb1_fails_everywhere_iff_dense.mp hd ((⊤ : WithTop ℚ) : WithTop (WithTop ℚ))
+      ⟨⊤, WithTop.coe_lt_top _, fun c h1 h2 => ?_⟩
+    induction c using WithTop.recTopCoe with
+    | top => exact lt_irrefl _ h2
+    | coe b => exact (not_top_lt (WithTop.coe_lt_coe.1 h1))
 
 end AxB1
 
@@ -290,9 +373,9 @@ completion of ℚ — the first bullet is therefore wider than Ostrowski and res
 clopen (`t3_isolation`) and the return across it admits no continuous path (`c3_irreversible`,
 via `t5_totallyDisconnected`). Neither yields a first step, and no metric result could: the
 2-adic norm values accumulate at 0 (‖2ⁿ‖₂ = 2⁻ⁿ), so ℚ₂ has no closest non-zero element either
-— ZP-B's own `eps0 k = 2 ^ k` is parameterized by a chosen maximum accessible valuation and its
-definition records the value as contingent. **The first step is AX-B1**, the commitment stated
-in § 0 above, not a consequence of the 2-adic structure.
+— ZP-B's own `eps0 k = 2 ^ k` reads as a 2-adic norm: a nonzero `x : ℚ₂` of valuation `v` has
+`‖x‖ = 2 ^ (-v)` (Mathlib `Padic.norm_eq_zpow_neg_valuation`), so at the chosen finest valuation `v`
+the exponent is `k = -v`, a contingent value. **The first step is AX-B1** (§ 0), not a 2-adic consequence.
 
 So the classification is a statement about where the snap is RULED OUT. Ostrowski's theorem
 (see `ZeroParadox/Valuation/Ostrowski.lean` for the framework's own statement of it) separates
@@ -313,6 +396,7 @@ See `ZeroParadox/Valuation/Padic.lean` (`c3_irreversible`, `t5_totallyDisconnect
 section PurityCheck
 #print axioms firstStep_unique
 #print axioms axb1_gives_unique_target
+#print axioms em_of_covBy_Icc_eq
 #print axioms axb1_fails_in_ordered_field
 #print axioms axb1_fails_everywhere_iff_dense
 #print axioms f_density

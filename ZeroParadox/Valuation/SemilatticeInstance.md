@@ -63,7 +63,8 @@ framework's own `InfinitudeFloor` declares `floor : α` and `member : ℕ → α
 defines the floor's complexity as the supremum of the climbers'. `tower_height_floor_reconciliation`
 (`ZeroParadox/Valuation/TowerHeightFloor.lean`) carries the account this folder uses: two
 carrier-specific closures — ε₀ in `Ordinal`, 0 in `ℤ_[2]` — co-witnessed by one construction and
-held apart by the antitone map `cnfToZp2`, never identified.
+held apart by the map `cnfToZp2` (its order behaviour along the tower: the docstring of
+`tower_height_floor_reconciliation`), never identified.
 
 **The chain approaches the 2-adic depth of zero by its own forward motion, not by reversing
 direction.** No inverse operation is used, and none is available in the lattice — the signature has
@@ -90,20 +91,24 @@ further one (C-DA2).
 
 - **§ I** Cauchy convergence — the topological core (inherits `Classical.choice` from Mathlib analysis)
 - **§ Ib** `h_strict` from `IsDepthChain` + `IsStrictStateSequence` — closes R-IZ-A (proved)
-- **§ II** Valuation-complexity bridge — SUPERSEDED by the AFA path (see § III-B)
-- **§ III** The T-IZ theorem, the successor-null reading, and framework closure (proved)
+- **§ II** Valuation-complexity bridge — refuted (counterexample Sₙ = 2ⁿ, ZP-I § II.B); T-IZ never
+  depended on it (it goes through `t_iz_cauchy`)
+- **§ III** The T-IZ theorem and the ⊥ role, role half only (`t_iz_limit_is_new_null`), proved; that
+  the return is to a NEW bottom is C-DA2, a commitment
 - **§ III-B** `t_iz_complete` — the four steps via the AFA/Kleene path (proved)
 - **§ III-C** `t_iz_complete_from_axioms` — the depth-chain bridge (proved). Its hypotheses are
   NOT all ZP-A conditions: only `IsStrictStateSequence` is, and it constrains the depth index.
   `hS` (nowhere zero) and `IsDepthChain` live in ℚ_[2], and `IsDepthChain` binds no semilattice.
   ⚠ It still carries `h_role` explicitly, which is the one hypothesis nothing here grounds.
 
-## The Kolmogorov bridge is bypassed, not closed
+## The Kolmogorov bridge is refuted, and T-IZ never used it
 
-Steps 2–6 are formalized without it: DA-1 fires at any element identified as ⊥′ by DA-2, and step 4
-discharges from `AFAStructure` fields alone, so no Kolmogorov complexity is computed. **Step 2's K
-bridge is bypassed, not shown closed** — a fact about this proof route, not a demonstration that the
-two paths are one property.
+**Refuted (counterexample Sₙ = 2ⁿ, ZP-I § II.B); T-IZ never depended on it (it goes through
+`t_iz_cauchy`).** `t_iz_complete` computes no Kolmogorov complexity either: its step 4 is
+`IsQuineAtom (bot : L')`, discharged from class fields alone. That is a fact about this proof route,
+not a demonstration that the AFA/Kleene path and the K/AIT path are one property:
+`da1_paths_unified` is a *conjunction* of two witnesses, and ZP-K states that the two sides cannot
+be equated in Lean (different types). Its step 6 is the role half only (`t_iz_limit_is_new_null`).
 
 ## Dependencies
 

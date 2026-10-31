@@ -1,31 +1,13 @@
 """
 Zero Paradox — ZP-H Addendum: The Snap Floor in Native Categories
-Version 1.6 | September 2026
-v1.6: MC-1 PREMISE (claim-review gate round 4 bedrock, Tim confirmed, 2026-09-15): both seam_unique_among_named pointers now carry the theorem's premise, reading 'for the named bottoms, in a lattice with no top'; its ZP-A conjunct binds HasNoTop.
-v1.5: ADVERSARY GATE ROUND 3 (bedrock, D1): the MC-1 section body still said the four bottoms being numerically one object 'is a modeling commitment' and 'an interpretive commitment', contradicting the retirement stated on page 1; it now states the same retirement, with the property clause for the named bottoms.
-v1.4: DECISION BATCH REMEDIATION AFTER GATE ROUND 2 (Tim ruling, 2026-09-15): MC-1's retired identity is stated as: object equality across categories does not typecheck and is not invariant under equivalence; what separates the members is proved property by property (seam_unique_among_named, for the named bottoms). It replaces 'neither x = y nor x != y is well-formed across categories; the members differ by property'.
-v1.3: DECISION BATCH REMEDIATION ROUND 2 (Tim rulings, 2026-09-15): the honesty-boundaries paragraph said the four bottoms being numerically one object 'remains a modeling commitment, not a theorem'; now the MC-1 identity retired as ill-typed (neither x = y nor x != y is well-formed across categories); the members differ by property, each in its own category (seam_unique_among_named).
-v1.2: rendered Lean-file citations synced to post-reorg basenames (namespace de-scar); docstring changelog above kept as the historical record.
-v1.0: Initial release. Realizes the snap floor ⊥ inside each framework's own
-      Mathlib category as a genuine CategoryTheory.Functor, replacing the ℕ-indexed
-      depth-proxy categories of the main ZP-H document:
-        F_B  fB_functor : ℕᵒᵖ ⥤ TopCat        — ⊥ = inverse limit ⋂ B(0,2⁻ⁿ) = {0}
-        F_D  fD_functor : ℕ ⥤ ModuleCat ℂ      — ⊥ = StateSpace 0, the initial zero object
-        F_C  fC_functor : ℕ ⥤ KleisliCat PMF    — ⊥ = Fin 0 initial; fC_no_return = AX-G2 as theorem
-      Bundled witness: mc1_correspondence (ZPH_MC1.lean). Settles MC-1's correspondence
-      half (each bottom is its category's categorical bottom, agreeing on the snap); the
-      identity half (the four are numerically one object) remains a modeling commitment.
-      Lean sources: ZPH_TopFunctor.lean, ZPH_HilbFunctor.lean, ZPH_InfoFunctor.lean, ZPH_MC1.lean.
-      Axiom footprint: [propext, Classical.choice, Quot.sound] — Classical.choice inherited
-      from Mathlib's topology / inner-product / PMF libraries (a library inheritance, not a
-      new commitment).
+Version 1.7 | October 2026
 Reads after ZP-H Categorical Bridge.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.6'
+VERSION = '1.7'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard: route all bare Paragraph() text through Unicode-to-entity conversion ──
@@ -115,8 +97,11 @@ def build():
         'The native categories are not built for the purpose, and that is the point '
         '&#8212; they also do not satisfy the ZP categorical axioms. A ZPCategory (ZP-G) '
         'requires that no terminal object exist (AX-G1): the snap has nowhere higher to go. '
-        'TopCat and ModuleCat &#8450; both <i>have</i> a terminal object (the one-point '
-        'space; the zero module). So the snap floor cannot be "the initial object of a '
+        'TopCat, ModuleCat &#8450; and the Kleisli category all <i>have</i> a terminal object (the '
+        'one-point space; the zero module; the one-point type, on which the only distribution is the '
+        'point mass &#8212; the example after kleisli_bottom_not_terminal in '
+        'ZeroParadox/Category/TreeSeam.lean). Of the categories on this page, AX-G1 holds only in the three '
+        'depth-proxy categories, where the depth index has no maximum. So the snap floor cannot be "the initial object of a '
         'ZPCategory" here. The honest statement is the one each category supports natively: '
         'in TopCat the floor is the limit of the shrinking system, and in ModuleCat &#8450; '
         'and the Kleisli category it is the genuine initial object. Each is stated below.'))
@@ -154,7 +139,9 @@ def build():
     E.append(sp(4))
     E.append(body(
         'TopCat has both a terminal object (the one-point space) and an initial object (the '
-        'empty space); the snap floor is neither. It is the <i>limit</i> of the ball tower '
+        'empty space). The snap floor {0} is a one-point space, so it is terminal (the first example after '
+        'padic_bottom_not_initial in ZeroParadox/Multihomed/TreeObstructions.lean) and not initial '
+        '(padic_bottom_not_initial). It is also the <i>limit</i> of the ball tower '
         '&#8212; the categorical expression a topologist would expect for "the point '
         'everything converges to." This is the honest realization in a category that is not '
         'a ZPCategory: not an initial object, but a limit.'))
