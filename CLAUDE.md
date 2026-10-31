@@ -134,8 +134,8 @@ TRIGGER  you found a defect, you are choosing what to work on next, or you are a
 RULE     record it in `.claude-local/DEFECTS.md` — never a note, a gate-findings archive,
          or a handoff line, and never a second copy. Verify every entry AT THE ARTIFACT
          before recording it open or closed. GREP LOOSELY. Burn down in FILE-SIZED
-         BATCHES. NO RELEASE IS CUT WHILE THE LEDGER IS NON-EMPTY; release pressure never
-         defers a finding to next-touch debt. The target is ZERO KNOWN defects, not zero.
+         BATCHES. A RELEASE BLOCKS ONLY ON OPEN CONTENT BEDROCK (`check_release_ready.py`);
+         ORDINARY ships as a public erratum issue. Never lower a grade to release.
 COST     a DOI is permanent and four releases already carry latent flaws — a defect fixed
          before a release costs one gate round, one shipped inside a PDF is forever.
 READ     tools/process/defect-ledger.md
@@ -636,12 +636,12 @@ RULE     `python tools/verify/check_release_ready.py <tag>` must EXIT 0 and its 
          deterministic preconditions — Engineer's Takes filled (recursive glob over
          `ZeroParadox/**/*.lean`), build-script hashes against `register.md`, the
          `LEAN_CUSTOM_REGISTRY` invariant, `.zenodo.json` valid and its description current,
-         no conflict markers, a `## <tag>` entry in `RELEASES.md`, every linked PDF present.
-         **NO RELEASE WHILE `DEFECTS.md` IS NON-EMPTY.** Then STOP: creating the release is
-         Tim's command, never an agent's. Major = a new formal layer or a theorem status
-         change; minor = a substantive feedback round or accumulated updates. Never release
-         per-PR. A Lean-only milestone is an explicit QUESTION for Tim, not an automatic
-         trigger either way.
+         no conflict markers, a `## <tag>` entry in `RELEASES.md`, every linked PDF present,
+         **NO OPEN CONTENT BEDROCK IN `DEFECTS.md`** (ordinary ships as erratum issues). Then
+         STOP: creating the release is Tim's command, never an agent's. Major = a new formal
+         layer or a theorem status change; minor = a substantive feedback round or
+         accumulated updates. Never release per-PR. A Lean-only milestone is an explicit
+         QUESTION for Tim, not an automatic trigger either way.
 COST     a release mints a PERMANENT Zenodo DOI and four already carry latent flaws that
          cannot be withdrawn. Deposited FILES are frozen; record METADATA can still be
          corrected in the Zenodo UI, so a wrong release description is fixable and a flaw
