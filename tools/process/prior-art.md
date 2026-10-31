@@ -50,9 +50,9 @@ statement of what the theorem obstructs.** Purity was checked before swapping, p
 precedent: no regression.
 
 **3. One literature search** if the object has a name (Glauber dynamics, coalgebra, covering
-relation). **Run the LADDER in § 2a** — it has four rungs and the last one is not optional.
+relation). **Run the LADDER in § 2a** — it has five rungs and the last one is not optional.
 
-## 2a. The literature-search LADDER — four rungs, and a citation is not confirmed until rung 4
+## 2a. The literature-search LADDER — papers → theoremsearch (one formal phrasing) → Lean libraries → open web → retrieve; a citation is not confirmed until rung 5
 
 **Adopted 2026-08-23, after calibrating `theoremsearch` (an MCP theorem-statement search over the
 arXiv-era literature) against cases where this project already knew the answer. The measurements are
@@ -63,7 +63,7 @@ once declared Aczel unobtainable while it sat on disk. **Grep loosely** — scan
 intra-word spaces, so a tight-pattern miss is not evidence of absence.
 
 **Rung 2 — `theoremsearch`.** Claim-shaped rather than file-shaped: it matches on *statement*, which is
-the thing a title search cannot reach. Three standing rules, each measured:
+the thing a title search cannot reach. Four standing rules, each measured:
 - **THREE PHRASINGS MINIMUM**, along the four axes in § `R-NOTINLIB` (body:
   `tools/process/not-in-the-library.md`) — POLARITY, PART OF SPEECH, VOCABULARY, DISPLAY. Measured: the
   noun form put the right theorem at rank 1 and the **verb** form dropped it out of the top 5 entirely,
@@ -77,20 +77,36 @@ the thing a title search cannot reach. Three standing rules, each measured:
   API's confidence.
 - **A NULL RESULT IS UNINFORMATIVE.** The index is coverage-bounded and the bound is invisible from the
   result. Never write "no prior art exists" from a rung-2 null; it does not even license
-  "none located as of &lt;date&gt;" on its own, because rung 3 has not run yet.
+  "none located as of &lt;date&gt;" on its own, because rungs 3 and 4 have not run yet.
+- **ONE PHRASING RUNS WITH `formality: "formal"`; `"both"` does not count.** The default is
+  `"informal"`, so without it no Lean library is searched, and under `"both"` informal hits crowd the
+  capped list (2026-10-31: a Carleson query returned 6 carleson-repo hits under `"formal"`, 0 under
+  `"both"`). Coverage, a dated sample (2026-10-31): hits in Mathlib, pfr, carleson, FLT,
+  HarderNarasimhan; misses on the probes run, teorth/equational_theories and this repository. A formal
+  null is coverage-bounded.
 
-**Rung 3 — the open web.** Runs when rung 2 returns no good match, **and also when it returns a
+**Rung 3 — Lean libraries, always run.** LeanExplore (Justin Asher, arXiv:2506.11085): `search_summary`,
+two phrasings minimum, then `get_source_code` on any candidate plus its elaborated type from `#check`
+(the only route; `get_dependencies` returns names only), because the returned text can omit section
+binders (2026-10-31: `OrderHom.lfp` lost `[CompleteLattice α]`). Then GitHub code search with
+`extension:lean`, not `language:Lean` (2026-10-31: 9 files against 0), for the Reservoir long tail
+(about 920 packages, 2026-10-31). The LeanExplore half may be recorded NOT RUN if the tools are
+unavailable; the code search is always required. Its null is uninformative too; both services are
+rate-limited. Full rules: `.claude/commands/prior-art-review.md`, rung B2.
+
+**Rung 4 — the open web.** Runs when rung 2 returns no good match, **and also when it returns a
 neighbourhood hit whose actual source needs identifying**. This is where everything pre-arXiv lives —
 Lawvere 1969, Aczel 1988, Ostrowski, Gentzen, Carlström — and `theoremsearch` structurally cannot return
-those as sources, only as things other people cite. Skipping rung 3 on a rung-2 null is how a coverage
+those as sources, only as things other people cite. Skipping rung 4 on a rung-2 null is how a coverage
 gap becomes a recorded novelty claim.
 
-**Rung 4 — RETRIEVE AND READ THE FULL DOCUMENT.** File it in `papers/` as `author_topic_year[_id].pdf`,
+**Rung 5 — RETRIEVE AND READ THE FULL DOCUMENT.** File it in `papers/` as `author_topic_year[_id].pdf`,
 **validating before filing** (a tiny PDF is an error page, not a paper). **A citation is not confirmed
 until this rung.** Draft-from-source is unchanged by any of the above: existence may be cited freely; a
 source's *content* may not be asserted without the passage in hand.
 
-⚠ **RUNGS 1-3 ARE DISCOVERY. ONLY RUNG 4 IS VERIFICATION.** The ladder makes finding candidates
+⚠ **RUNGS 1-4 ARE DISCOVERY. ONLY RUNG 5 IS VERIFICATION.** For a Lean declaration, rung 5's
+retrieval is its source text plus its elaborated type. The ladder makes finding candidates
 cheaper; it does not make any of them citable. See § 2b for the measurement that settles this.
 
 ## 2b. Why the ladder is shaped this way — the calibration, 2026-08-23
@@ -105,8 +121,8 @@ content-exact statements. Veltri, Ahrens–Capriotti–Spadotti and Yanofsky wer
 
 **Coverage is real and provable.** arXiv:2104.02549 is **verifiably absent** from the index while sitting
 in `papers/`. So a gate blocking on "no prior art found" would have returned clear for a claim whose prior
-art this project is physically holding. ⚠ `paper_filter` takes a **TITLE, not an arXiv id** — passing an
-id returns empty, which reads exactly like absence. Verify the filter before believing its zero.
+art this project is physically holding. `paper_filter` matches arXiv ids as a prefix and other tokens as
+title substrings (the tool's schema; 2026-10-31). Verify the filter before believing its zero.
 
 **Precision: one correct abstention, and one control that was itself wrong.** The two-forks universal
 negative (`ZeroParadox/Algebra/WheelFrac.md`) drew only unrelated combinatorics — correct abstention.
@@ -131,8 +147,8 @@ which is precisely the AMM Thm 8.1 trap this project already records (those cond
 
 ⚠ **WHY THIS IS NOT A GATE, and the reasoning transfers to the next such tool.** A gate must be able to
 fail informatively. Here a null is uninformative (coverage) and a hit is a candidate, not a finding — so
-enforcement would manufacture the appearance of coverage, which is `RLY25-1` exactly. This is the rung-5
-shape from § *WHEN A FAILURE RECURS*: **the screen may replace the ENUMERATION, never the VERDICT.**
+enforcement would manufacture the appearance of coverage, which is `RLY25-1` exactly. This is rung 5 of
+the recurrence escalation ladder (`R-NOCONV`), not of the literature ladder above: **the screen may replace the ENUMERATION, never the VERDICT.**
 
 ⚠ **ITS CONTROLS SHIP WITH IT**, per the `check_checkers.py` move — the control is the deliverable. The
 two standing controls are the WheelFrac two-forks negative (must return nothing usable) and a Lawvere /
@@ -268,9 +284,10 @@ free analyticity lemmas, and the standard NAME for a thing described longhand.
    name you would never have guessed, and it reaches the attribute-generated siblings (`@[to_dual]`,
    `@[simps]`) that have **no source line to grep**.
 3. **One literature search** if the object has a name — **run the LADDER in order: `.claude-local/papers/`
-   → `theoremsearch` → the open web → RETRIEVE THE FULL DOCUMENT.** Three phrasings minimum at
-   `theoremsearch`; ignore its similarity score; **its null is UNINFORMATIVE** (coverage-bounded).
-   **Rungs 1–3 are DISCOVERY, only rung 4 is VERIFICATION** — a returned body is not a passage in hand.
+   → `theoremsearch` (one phrasing `formality: "formal"`) → Lean libraries (LeanExplore, GitHub
+   `extension:lean`) → the open web → RETRIEVE THE FULL DOCUMENT.** Three phrasings minimum at
+   `theoremsearch`; ignore its similarity score; **every null is UNINFORMATIVE** (coverage-bounded).
+   **Rungs 1–4 are DISCOVERY, only rung 5 is VERIFICATION** — a returned body is not a passage in hand.
    📖 `tools/process/prior-art.md` §§ 2a–2b.
 
 **⚠ AND WHEN YOU FETCH A SOURCE, FILE IT** — `.claude-local/papers/`, named
