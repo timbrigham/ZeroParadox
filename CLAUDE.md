@@ -598,7 +598,7 @@ RULE     three steps, ~10 minutes, BEFORE building. (1) grep our own corpus. (2)
          pinned Mathlib for the CONCEPT — and if the claim is a Lean statement, RUN `exact?`;
          it searches statement SHAPE, not names, and reaches attribute-generated siblings
          that have no source line. (3) one literature search, run as the LADDER: papers →
-         `theoremsearch` (one phrasing `formality: "both"`) → Lean libraries (LeanExplore,
+         `theoremsearch` (one phrasing `formality: "formal"`) → Lean libraries (LeanExplore,
          GitHub `language:Lean`) → open web → RETRIEVE. Three phrasings at `theoremsearch`;
          ignore its score; every null is UNINFORMATIVE. Only RETRIEVAL is VERIFICATION — a
          theorem body is not a passage in hand. Standard framing, once found, is ADOPTED, not
