@@ -10,6 +10,11 @@ Exit 0 = all BLOCKING (mechanical) checks pass -> GO, pending the printed
 Exit 1 = one or more blocking checks failed -> NO-GO.
 Exit 2 = usage error.
 
+    python check_release_ready.py --ledger-only [--defects PATH]
+runs only the defect-ledger leg (the release rule: no open content BEDROCK / BEDROCK-CANDIDATE
+unit and no untagged open unit in DEFECTS.md): exit 0 CLEAR, 1 BLOCKED, 3 UNREADABLE. `--defects`
+overrides the ledger path in either mode; by default it is the MAIN checkout's .claude-local.
+
 Design: the deterministic checks are auto-verified and split into
   [FAIL]  blocking, high-confidence, unambiguous;
   [WARN]  best-effort / fragile-to-parse / hygiene -> surfaced, not blocking;
@@ -408,6 +413,179 @@ def c_untracked_pdfs():
     return not pdfs
 
 
+# --------------------------------------------------------------------------- the defect ledger
+#
+# The release rule (Tim, 2026-10-08, made permanent 2026-10-30): a release blocks only on OPEN
+# `DEFECTS.md` units tagged CONTENT and BEDROCK (BEDROCK-CANDIDATE included, until graded). Content
+# is what ships: the root PDFs and the prose of `scripts/build_*.py`, `ZeroParadox/**`, root `.md`,
+# `.zenodo.json`, the HTML pages. ORDINARY content findings ship as public erratum issues; tooling,
+# published-process (`.claude/commands/**`) entries and Tim-gated questions do not block.
+#
+# The open-unit test is the one printed in DEFECTS.md's own header, applied verbatim: a heading
+# (`##` to `#####`) is open if it carries the word OPEN and none of the closing words, or says
+# PARTLY CLOSED / still OPEN; a table row whose first cell is a bold or backticked id is judged by the
+# same test over its first two cells. An open unit whose tag cannot be read cannot be graded, so it
+# FAILS CLOSED rather than being folded into a bucket.
+
+DEFECTS_REL = os.path.join('.claude-local', 'DEFECTS.md')
+CLOSING_WORDS = ('CLOSED', 'WITHDRAWN', 'RESOLVED', 'RETRACTED', 'SUPERSEDED', 'DISCHARGED', 'ACCEPTED')
+_HEADING = re.compile(r'^(#{2,5})\s+(.*)$')
+_ROW = re.compile(r'^\|\s*(\*\*[^*|]+\*\*|`[^`|]+`)\s*\|([^|]*)\|')
+_TAG = re.compile(r'\[([a-z][a-z+-]*)\s*·\s*([^\]]+)\]')
+_SEVERITIES = ('BEDROCK', 'BEDROCK-CANDIDATE', 'ORDINARY')
+_KINDS = ('content', 'tooling', 'published-process')
+
+# R-ZERONULL: three distinct VALUES, never one value with three messages.
+LEDGER_CLEAR = 'CLEAR'          # read, and no open content bedrock / untagged unit
+LEDGER_BLOCKED = 'BLOCKED'      # read, and at least one blocking unit
+LEDGER_UNREADABLE = 'UNREADABLE'  # not read at all; NOT evidence of a clear ledger
+
+
+def defects_path():
+    """(path, how) - DEFECTS.md in the MAIN checkout's `.claude-local`.
+
+    `.claude-local` is its own gitignored repository, so a worktree does not carry it; the main
+    checkout is the parent of the shared git directory, which is the same answer from either. `None`
+    for the path means the location could not be derived, and the caller reports it as UNREADABLE."""
+    rc, out = git('rev-parse', '--path-format=absolute', '--git-common-dir')
+    if rc == 0 and out.strip():
+        main_root = os.path.dirname(os.path.normpath(out.strip()))
+        return os.path.join(main_root, DEFECTS_REL), 'main checkout (from the shared git dir)'
+    return None, 'main checkout could not be derived (rev-parse exit %s)' % rc
+
+
+def _is_open(text):
+    if 'PARTLY CLOSED' in text or re.search(r'\bstill OPEN\b', text):
+        return True
+    if not re.search(r'\bOPEN\b', text):
+        return False
+    return not any(re.search(r'\b%s\b' % w, text) for w in CLOSING_WORDS)
+
+
+def _grade(tag_kind, tag_sev):
+    """(kind, severity) for one tag, or None if either half is unreadable.
+
+    Kind: anything naming `content` (`content+tooling` included) is content, because content is what
+    ships and the worse reading wins; `published-process` is itself; `tooling` and the bare `process`
+    are tooling (the ruling: tooling is everything else). Severity: any BEDROCK-prefixed grade is
+    bedrock (`BEDROCK-class` included), CANDIDATE kept apart; any ORDINARY-prefixed grade is ordinary
+    (`ORDINARY (recorded BLOCKING)` included - the audit's scale has no BLOCKING grade)."""
+    k = tag_kind.strip()
+    if 'content' in k.split('+'):
+        kind = 'content'
+    elif k == 'published-process':
+        kind = 'published-process'
+    elif k in ('tooling', 'process'):
+        kind = 'tooling'
+    else:
+        return None
+    s = tag_sev.strip().upper()
+    if s.startswith('BEDROCK'):
+        sev = 'BEDROCK-CANDIDATE' if s.startswith('BEDROCK-CANDIDATE') or s.startswith('BEDROCK CANDIDATE') \
+            else 'BEDROCK'
+    elif s.startswith('ORDINARY'):
+        sev = 'ORDINARY'
+    else:
+        return None
+    return kind, sev
+
+
+def _rank(g):
+    """Lower is more blocking: a release-blocking grade first, then by severity, content first."""
+    blocks = g[0] == 'content' and g[1] != 'ORDINARY'
+    return (not blocks, _SEVERITIES.index(g[1]), g[0] != 'content')
+
+
+def _unit_grade(text):
+    """The most blocking readable tag in `text`, or None when no tag reads."""
+    grades = [g for g in (_grade(m.group(1), m.group(2)) for m in _TAG.finditer(text)) if g]
+    return min(grades, key=_rank) if grades else None
+
+
+def scan_defects(text):
+    """{'units': [(line_no, kind, sev, label)], 'untagged': [(line_no, label)]} over open units."""
+    units, untagged = [], []
+    fence = False
+    for n, raw in enumerate(text.splitlines(), 1):
+        ln = raw.rstrip()
+        if ln.lstrip().startswith('```'):
+            fence = not fence
+            continue
+        if fence:
+            continue
+        m = _HEADING.match(ln)
+        if m:
+            judged, label = m.group(2), m.group(2)
+        else:
+            r = _ROW.match(ln)
+            if not r:
+                continue
+            judged, label = r.group(1) + ' | ' + r.group(2), r.group(1)
+        if not _is_open(judged):
+            continue
+        label = label.strip()[:90]
+        g = _unit_grade(ln)
+        if g is None:
+            untagged.append((n, label))
+        else:
+            units.append((n, g[0], g[1], label))
+    return {'units': units, 'untagged': untagged}
+
+
+def c_defects_ledger(path=None):
+    """The release rule, mechanically. Returns (status, detail, counts, path_read).
+
+    `status` is one of LEDGER_CLEAR / LEDGER_BLOCKED / LEDGER_UNREADABLE. A missing or unreadable
+    ledger is UNREADABLE - a distinct value from CLEAR, failing the gate with its own message,
+    because an absent list of defects is not a list with no defects in it."""
+    how = 'given on the command line'
+    if path is None:
+        path, how = defects_path()
+    if path is None:
+        fail('Defect ledger UNREADABLE - %s; a release cannot be graded without it' % how)
+        return LEDGER_UNREADABLE, how, None, None
+    try:
+        text = read(path)
+    except (OSError, UnicodeDecodeError) as exc:
+        fail('Defect ledger UNREADABLE - %s (%s): %s. This is NOT a clear ledger'
+             % (path, how, exc.__class__.__name__))
+        return LEDGER_UNREADABLE, str(exc), None, path
+    res = scan_defects(text)
+    counts = {(k, s): 0 for k in _KINDS for s in _SEVERITIES}
+    for _, k, s, _ in res['units']:
+        counts[(k, s)] += 1
+    counts['untagged'] = len(res['untagged'])
+    blocking = [u for u in res['units'] if u[1] == 'content' and u[2] in ('BEDROCK', 'BEDROCK-CANDIDATE')]
+    for n, k, s, label in blocking:
+        fail('Open content %s defect (DEFECTS.md:%d) - %s' % (s, n, label))
+    for n, label in res['untagged']:
+        fail('Open defect with no readable [kind · SEVERITY] tag (DEFECTS.md:%d) - cannot be graded, '
+             'so it blocks - %s' % (n, label))
+    for n, k, s, label in res['units']:
+        if k != 'content' and s != 'ORDINARY':
+            warn('Open %s %s defect (DEFECTS.md:%d, does not block a release) - %s' % (k, s, n, label))
+    ordc = counts[('content', 'ORDINARY')]
+    if ordc:
+        warn('%d open ORDINARY content defect(s) - owed as public erratum issues (or fixes), not a '
+             'release blocker' % ordc)
+    status = LEDGER_BLOCKED if (blocking or res['untagged']) else LEDGER_CLEAR
+    detail = '%d blocking (content bedrock %d, untagged %d)' % (
+        len(blocking) + len(res['untagged']), len(blocking), len(res['untagged']))
+    return status, detail, counts, path
+
+
+def print_defect_counts(counts):
+    print('    open units by kind x severity (the rule in DEFECTS.md\'s header):')
+    print('      %-18s %8s %18s %9s %6s' % ('kind', 'BEDROCK', 'BEDROCK-CANDIDATE', 'ORDINARY', 'total'))
+    grand = 0
+    for k in _KINDS:
+        row = [counts[(k, s)] for s in _SEVERITIES]
+        grand += sum(row)
+        print('      %-18s %8d %18d %9d %6d' % (k, row[0], row[1], row[2], sum(row)))
+    print('      %-18s %8s %18s %9s %6d' % ('untagged', '', '', '', counts['untagged']))
+    print('      %-18s %8s %18s %9s %6d' % ('all open units', '', '', '', grand + counts['untagged']))
+
+
 # --------------------------------------------------------------------------- runner
 
 def line(status, name, detail=''):
@@ -483,6 +661,35 @@ def selftest():
         git = real_git
         fails[:], warns[:] = saved
 
+    # The release rule's open-unit and grade reading, over in-memory ledgers.
+    print('  DEFECT LEDGER (MUST FIRE on content bedrock / untagged, MUST SUPPRESS the rest)')
+
+    def _blocks(text):
+        r = scan_defects(text)
+        return bool(r['untagged']) or any(k == 'content' and s != 'ORDINARY' for _, k, s, _ in r['units'])
+    for label, text, want in (
+            ('open content BEDROCK blocks', '## X-1 - **OPEN** `[content · BEDROCK]`\n', True),
+            ('open BEDROCK-class blocks', '#### X-2 OPEN `[content · BEDROCK-class]`\n', True),
+            ('open content CANDIDATE blocks', '## X-3 OPEN [content · BEDROCK-CANDIDATE]\n', True),
+            ('open untagged heading blocks', '## X-4 - **OPEN 2026-10-31**\n', True),
+            ('open bedrock table row blocks', '| **X-5** | OPEN | f `[content · BEDROCK]` |\n', True),
+            ('PARTLY CLOSED bedrock blocks', '## X-6 PARTLY CLOSED [content · BEDROCK]\n', True),
+            ('closed content BEDROCK passes', '## X-7 **CLOSED** (was OPEN) [content · BEDROCK]\n', False),
+            ('open content ORDINARY passes', '## X-8 OPEN [content · ORDINARY]\n', False),
+            ('open tooling BEDROCK passes', '## X-9 OPEN [tooling · BEDROCK]\n', False),
+            ('fenced heading is not a unit', '```\n## X-10 OPEN\n```\n', False)):
+        ok = _blocks(text) is want
+        bad += 0 if ok else 1
+        print('    %-34s %s' % (label, 'ok' if ok else '*** WRONG ***'))
+    saved = (fails[:], warns[:])
+    try:
+        st = c_defects_ledger(os.path.join(HERE, 'no-such-dir', 'DEFECTS.md'))[0]
+    finally:
+        fails[:], warns[:] = saved
+    ok = st == LEDGER_UNREADABLE and st != LEDGER_CLEAR
+    bad += 0 if ok else 1
+    print('    %-34s %s' % ('missing ledger is UNREADABLE', 'ok' if ok else '*** got %s ***' % st))
+
     print('\n  selftest: %s' % ('PASS' if not bad else 'FAIL (%d)' % bad))
     return 1 if bad else 0
 
@@ -493,8 +700,31 @@ def main():
         print('ZP Release-Readiness Gate - CONTROLS')
         print('=' * 64)
         return selftest()
+    defects_override = None
+    if '--defects' in args:
+        i = args.index('--defects')
+        if i + 1 >= len(args):
+            print('usage: --defects needs a path')
+            return 2
+        defects_override = args[i + 1]
+        del args[i:i + 2]
+    if args and args[0] == '--ledger-only':
+        # The defect-ledger leg alone. Exit 0 CLEAR, 1 BLOCKED, 3 UNREADABLE - three values, so a
+        # caller branching on the code cannot read an unread ledger as a clear one.
+        st, detail, counts, path = c_defects_ledger(defects_override)
+        print('defect ledger: %s - %s' % (st, detail))
+        print('    %s: %s' % ('COULD NOT READ' if st == LEDGER_UNREADABLE else 'read',
+                                path or '(no path derived)'))
+        if counts is not None:
+            print_defect_counts(counts)
+        for w in warns:
+            print('  ! %s' % w)
+        for f in fails:
+            print('  X %s' % f)
+        return {LEDGER_CLEAR: 0, LEDGER_BLOCKED: 1, LEDGER_UNREADABLE: 3}[st]
     if not args or args[0].startswith('-'):
-        print('usage: python %s <tag>   (e.g. v2.7)' % SELF)
+        print('usage: python %s <tag> [--defects PATH]   (e.g. v2.7)' % SELF)
+        print('       python %s --ledger-only [--defects PATH]' % SELF)
         return 2
     tag = args[0]
 
@@ -511,6 +741,14 @@ def main():
     line('PASS' if c_conflict_markers() else 'FAIL', 'No conflict markers (tracked files)')
     line('PASS' if c_releases_entry(tag) else 'FAIL', f'RELEASES.md has "## {tag}" entry')
     line('PASS' if c_doc_links() else 'FAIL', 'README/GUIDE linked PDFs exist')
+    d_status, d_detail, d_counts, d_path = c_defects_ledger(defects_override)
+    line({LEDGER_CLEAR: 'PASS', LEDGER_BLOCKED: 'FAIL', LEDGER_UNREADABLE: 'FAIL'}[d_status],
+         'No open content BEDROCK / BEDROCK-CANDIDATE or untagged defect',
+         '%s: %s' % (d_status, d_detail))
+    print('    %s: %s' % ('COULD NOT READ' if d_status == LEDGER_UNREADABLE else 'read',
+                            d_path or '(no path derived - see the failure below)'))
+    if d_counts is not None:
+        print_defect_counts(d_counts)
 
     print('BEST-EFFORT / HYGIENE (warn-only):')
     line('PASS' if c_register_vs_script_version() else 'WARN', 'register <-> script VERSION')
@@ -537,6 +775,9 @@ def main():
         'Companion synced for every formal doc whose version bumped.',
         'Major-vs-minor version decision is correct; Lean-only-change release question raised if applicable.',
         '.zenodo.json description reflects this release (cannot be updated retroactively).',
+        'Every open ORDINARY content finding in DEFECTS.md is fixed or on a public erratum issue '
+        '(labels erratum, open question), its issue number beside the ledger row. No bedrock item '
+        'is filed as an erratum, and no grade was lowered to make this release.',
         'Release body drafted and Tim approved it BEFORE `gh release create`.',
         'Post-release: confirm the Zenodo snapshot minted. README badge is the CONCEPT DOI '
         '(auto-resolves to latest) - NO per-release badge edit needed.',
