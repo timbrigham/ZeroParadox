@@ -4222,13 +4222,32 @@ example : (∀ (r : Option ℕ → Option ℕ → Bool) (y : Option ℕ),
 -- (`t b = true ↔ b = ∞`; equivalently `t` is `false` at every `n̲` and `true` at `∞`,
 -- `NInf.isolating_infty_iff`, `basic-discontinuity` in TypeTopology `Taboos.BasicDiscontinuity`),
 -- gives WLPO.
--- Reading: "isolating" is meant logically, as decidable membership in `{∞}`; that decision is the
--- whole content of the hypothesis.
+-- Reading (cited, not claimed): "isolating" is Escardó's isolatedness (arXiv:2609.10447v3, 2026,
+-- Def. 3.2, p. 14) and TypeTopology `is-isolated` in `UF.DiscreteAndSeparated`, whose
+-- `is-isolated'` is the `b = ∞` orientation. Compare his Examples
+-- 3.3(4) with `isAt_iff`, 3.3(5) with `wlpo_of_isolating_infty` and the `Nonempty` `example` below,
+-- and 3.3(3) with `decEq_of_wlpoData` and `wlpoData_of_decEq`; `isolating_infty_of_decEq` is the
+-- step "If ℕ∞ is discrete then in particular ∞ is isolated" of his proof (p. 14).
 #check @ZeroParadox.NInf.isAt_iff              -- Statement: `isAt m b = true ↔ b = NInf.ofNat m`
 #check @ZeroParadox.NInf.wlpo_of_isolating_infty -- Statement: a `Bool` test true exactly at `∞` gives WLPO
+-- Statement: such a test is a decision of `b = ∞` at every `b`, as data.
+example : {t : ZeroParadox.NInf → Bool // ∀ b, t b = true ↔ b = ZeroParadox.NInf.infty} ≃
+    ∀ b : ZeroParadox.NInf, Decidable (b = ZeroParadox.NInf.infty) where
+  toFun t b := decidable_of_iff _ (t.2 b)
+  invFun _ := ⟨fun b => decide (b = ZeroParadox.NInf.infty), fun _ => decide_eq_true_iff⟩
+  left_inv t := Subtype.ext (funext fun b =>
+    Bool.eq_iff_iff.2 ((@decide_eq_true_iff _ (decidable_of_iff _ (t.2 b))).trans (t.2 b).symm))
+  right_inv _ := funext fun _ => Subsingleton.elim _ _
 #check @ZeroParadox.NInf.isolating_infty_iff   -- Statement: a `Bool` test isolates `∞` iff it is `false` at every `NInf.ofNat n` and `true` at `∞`
 #check @ZeroParadox.NInf.decEq_of_isolating_infty -- Statement: such a test gives `DecidableEq NInf`
 #check @ZeroParadox.NInf.isolating_infty_of_decEq -- Statement: and `DecidableEq NInf` gives such a test
+-- Statement: such a test exists iff `WLPOData` does; both directions.
+example : Nonempty {t : ZeroParadox.NInf → Bool // ∀ b, t b = true ↔ b = ZeroParadox.NInf.infty} ↔
+    Nonempty ZeroParadox.WLPOData :=
+  ⟨fun ⟨t⟩ => ⟨ZeroParadox.NInf.wlpoData_of_decEq
+      (ZeroParadox.NInf.decEq_of_isolating_infty t.1 t.2)⟩,
+    fun ⟨d⟩ => (ZeroParadox.NInf.isolating_infty_of_decEq
+      (ZeroParadox.NInf.decEq_of_wlpoData d)).elim fun t ht => ⟨⟨t, ht⟩⟩⟩
 #check @ZeroParadox.Motion.overTrichotomy_ninf_of_isolating -- Statement: a test isolating `y` gives the trichotomy at `y`
 #check @ZeroParadox.Motion.wlpo_of_selfOnlyAt_infty -- Statement: a `Bool`-valued step on `NInf` stepping from `∞` to `∞` only gives WLPO
 #check @ZeroParadox.Motion.wlpo_or_leavesAt_infty -- Statement: if `p ∞ = true`, WLPO or `p` is `true` at some point other than `∞`

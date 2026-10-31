@@ -3659,7 +3659,7 @@ end NInf
 namespace Motion
 
 /-- `Statement:` if a `Bool` test `t` isolates `y` (`t b = true ↔ b = y`), every `Bool`-valued step
-    on `NInf` meets the trichotomy at `y`. -/
+    on `NInf` meets the trichotomy at `y`. `Reading:` "isolates": arXiv:2609.10447v3, Def. 3.2. -/
 theorem overTrichotomy_ninf_of_isolating (y : NInf) (t : NInf → Bool)
     (ht : ∀ b, t b = true ↔ b = y) (r : NInf → NInf → Bool) :
     (ofTotal id (fun _ => rfl) (fun a b => r a b = true)).OverTrichotomy y := by
@@ -3838,13 +3838,13 @@ end Motion
 
 namespace NInf
 
-/-- `Statement:` if a `Bool` test `t` isolates `∞`, deciding membership in `{∞}`, the weak limited
-    principle of omniscience (WLPO) holds. `Reading:` "isolates" is meant logically, as that
-    decision; `t` is `false` at every `n̲` and `true` at `∞` (`isolating_infty_iff`), and the
-    choice-free reduction is Escardó's WLPO row with Lemma 3.3 (p. 4), formalized, concluding the
-    `ℕ∞`-indexed `WLPO`, as `basic-discontinuity-taboo` in his TypeTopology module
-    `Taboos.BasicDiscontinuity` (retrieved 2026-10-29). His Theorem 7.1(1) (p. 13) is the
-    weaker-hypothesis form, any discontinuous map `ℕ∞ → 2`, and assumes countable choice. -/
+/-- `Statement:` if a `Bool` test `t` isolates `∞`, the weak limited principle of omniscience
+    (WLPO) holds. `Reading:` "isolated": Escardó, arXiv:2609.10447v3, Def. 3.2 (p. 14), as data
+    (`ZeroParadox/DieCannotBe.lean` § XXVII); compare his Examples 3.3(5). `t` is `false` at every
+    `n̲`, `true` at `∞` (`isolating_infty_iff`); the choice-free reduction is his 2013 preprint's
+    WLPO row with Lemma 3.3 (p. 4), formalized, concluding the `ℕ∞`-indexed `WLPO`, as TypeTopology
+    `basic-discontinuity-taboo` (`Taboos.BasicDiscontinuity`, retrieved 2026-10-29); the preprint's
+    Theorem 7.1(1) (p. 13) takes any discontinuous `ℕ∞ → 2` and assumes countable choice. -/
 theorem wlpo_of_isolating_infty (t : NInf → Bool) (ht : ∀ b, t b = true ↔ b = infty) :
     ∀ r : ℕ → Bool, (∀ n, r n = false) ∨ ¬ ∀ n, r n = false := fun r => by
   cases h : t (det r) with
