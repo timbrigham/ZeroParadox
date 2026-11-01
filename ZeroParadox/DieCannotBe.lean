@@ -1313,6 +1313,11 @@ example {α : Type} : ∀ s : α → α → Prop, (ZeroParadox.Motion.ofTotal id
 -- section and § XXVII). With a `Prop`-valued step, the instances above share one hypothesis shape and
 -- one conclusion; whether a selector for every `Prop`-valued step on any of them gives more than weak
 -- excluded middle is not established here.
+-- Reading (cited, not claimed): Bell, J. Phil. Logic 22 (1993), as corrected in Baaz and Zach,
+-- arXiv:1907.04477, § 5, p. 13 and fn. 5: intuitionistic ε-calculus with identity derives
+-- ¬(B ∧ C) → ¬B ∨ ¬C from ∀x(x = a ∨ ¬x = a) and a ≠ b. Here the ε-term is the selector's value at
+-- `u`, the decidable identity is the test `t`, and that De Morgan law is weak excluded middle; an
+-- instance of that derivation.
 
 /-! ### § XI. The OVER leg's WHETHER — what OVER does at a point -/
 #check @ZeroParadox.Motion.NoStepAt              -- Statement: no step leaves `y`
@@ -4379,10 +4384,18 @@ example : Function.Surjective ZeroParadox.NInf.toRos ↔ ZeroParadox.LPO :=
 #check @ZeroParadox.NInf.allRosolini_of_em     -- Statement: excluded middle gives `AllRosolini`; one way
 #check @ZeroParadox.NInf.em_of_allRosolini_lpo -- Statement: `AllRosolini` and LPO together give excluded middle
 -- Reading: whether `AllRosolini` alone gives excluded middle, or any taboo, is not established here.
+-- Reading (cited, not claimed): `AllRosolini` is Kripke's schema, "all propositions are Rosolini"
+-- (Knapp, arXiv:2011.00272, § 5.12, p. 108, with "Kripke's Schema and Markov's Principle together
+-- imply excluded middle"), and `BKS⁺` in TypeTopology `NotionsOfDecidability.SemiDecidable` (de Jong,
+-- retrieved 2026-11-01), which has `EM→BKS⁺`, `BKS⁺→LPO→EM`, and for `Ω` the analogues of
+-- `rosIncl_surjective_iff` (`BKS⁺-in-terms-of-Ωˢᵈ-and-Ω`) and of `toRos_surjective_iff`
+-- (`LPO-in-terms-of-𝟚-and-Ωˢᵈ`).
 -- Statement: backward, each exact map gives a taboo.
 #check @ZeroParadox.NInf.lpo_of_exactTag       -- Statement: `NInf → Option ℕ` with `g x = some n ↔ x = NInf.ofNat n` gives LPO
 #check @ZeroParadox.NInf.wlpo_of_tag           -- Statement: `NInf → Option ℕ` with `g x = none ↔ x = ∞` gives WLPO
 #check @ZeroParadox.NInf.wlpo_of_discrete_tag  -- Statement: `g : NInf → D`, `D` with decidable equality, with `g x = g ∞ ↔ x = ∞` at every `x`, gives WLPO (`[propext, Quot.sound]`)
+-- Reading (cited, not claimed): compare `disagreement-taboo'` (discrete `D`) and
+-- `basic-discontinuity-taboo`, TypeTopology `Taboos.BasicDiscontinuity` (retrieved 2026-10-29).
 -- Statement: `wlpo_of_tag`'s conclusion follows from it at `D = Option ℕ`.
 example (g : ZeroParadox.NInf → Option ℕ) (hg : ∀ x, g x = none ↔ x = ZeroParadox.NInf.infty) :
     ZeroParadox.WLPO :=
@@ -4576,9 +4589,9 @@ example (L : ZeroParadox.NInf → Ordinal.{0})
 -- as in `wlpo_of_tag` by `Option ℕ`'s; `L` is not claimed to be computable or choice-free.
 -- Reading (cited, not claimed): Escardó, preprint of JSL 78(3) (2013), § 11, p. 19, citing Coquand,
 -- Hancock and Setzer's limit structures: they reach `γ`-transfinite iteration for `γ < ε₀` with
--- simple types, and "it is not possible to embed ε₀ in 2^ℕ using limit structures"; he neither
--- conjectures nor refutes embedding `[0, ε₀]` in `2^ℕ` within HA^ω. `L` is not such an embedding:
--- its target is `Ordinal`, not `2^ℕ`, and (vi) uses `classical`.
+-- simple types, and "it is not possible to embed ε₀ in 2^ℕ using limit structures"; of embedding
+-- `[0, ε₀]` in `2^ℕ` within HA^ω: "We do not dare to conjecture this or its negation". `L` is not
+-- such an embedding: its target is `Ordinal`, not `2^ℕ`, and (vi) uses `classical`.
 -- Reading (cited, not claimed): Escardó, preprint of JSL 78(3) (2013): `NInf` is his `ℕ∞` (p. 1),
 -- `eps` his selection function (Theorem 3.5, p. 5), `exists_ne_infty_eq_false_or` his Lemma 8.1 by his
 -- proof (p. 14), `wlpo_of_eqOr_infty` the right-to-left half of his WLPO row (p. 4) and
@@ -4605,8 +4618,10 @@ example (L : ZeroParadox.NInf → Ordinal.{0})
 -- as `Σ α, isProp ⟨α⟩` (p. 21:7); that presentation is not formalized here. Their Rosolini
 -- propositions (§ 2.4, p. 21:5) are the definedness of `RosPart`, and `toRos_surjective_iff` relates
 -- `NInf` to them: `toRos` is onto iff LPO; compare the quoted sentence. There a proposition `A` is
--- Rosolini when `∃ α, isProp⟨α⟩ × (A = ⟨α⟩)` with `⟨α⟩ = Σ n, α n = 1`; in `RosPart` the
--- existential is a `Prop` and definedness is `↔`, not `=`. The trichotomy route through
+-- Rosolini when `∃ α, isProp⟨α⟩ × (A = ⟨α⟩)` with `⟨α⟩ = Σ n, α n = 1` (p. 21:4); in `RosPart` the
+-- existential is a `Prop`, definedness is `↔`, not `=`, and `isProp⟨α⟩` (`α` true at most once) is
+-- dropped, as in TypeTopology `NotionsOfDecidability.SemiDecidable`, whose `is-semidecidable` "is
+-- called isRosolini in [EK2017]" (retrieved 2026-11-01). The trichotomy route through
 -- `hmap` is constructed here, not from a source.
 -- `ofOption` is `ι𝟙 : ℕ + 𝟙 → ℕ∞` in TypeTopology's module
 -- `TypeTopology.GenericConvergentSequence` (retrieved 2026-10-29), which also holds `ℕ∞-density`,
