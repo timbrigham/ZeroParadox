@@ -145,7 +145,7 @@ not establish it. The form for carrying a commitment as an explicit hypothesis: 
     it:** that `botCode` is ⊥'s computational witness — "botCode is the code that IS its own
     program, the universal Turing machine in ground state, and this is the computational
     expression of `bot_self_mem`". Nothing in this file derives that reading. What the AFA
-    Quine atom and the Kleene computational quine share is stated as a role, not an identity:
+    Quine atom and the Kleene computational quine are compared through is a role, not an identity:
     the die's `Motion.SelfOnlyAt`, occupied or provably empty per chart (§ IX).
     For a generic `L` no Lean `=` between `botCode` (a `Code`) and `bot` (an element of `L`)
     typechecks; at `L := Code` one does: the `example`s after `KleeneStructure.botCode_is_quine`
@@ -162,7 +162,7 @@ not establish it. The form for carrying a commitment as an explicit hypothesis: 
       computational side has infinitely many fixed points (`infinite_quine_family`).
       The commitment relates a unique element to a family, and § VI says what that
       family is. -/
--- [ZP-CUSTOM] no Mathlib analog | reason: Bridges AFAStructure (set-theoretic self-containment) with Mathlib's computability library (Nat.Partrec.Code). No Mathlib typeclass connects AFA and Code. KleeneStructure is built for the reading that botCode is ⊥'s computational witness — a commitment, not a derived theorem, and no field asserts it; what the AFA Quine atom and the Kleene computational Quine (∃ c, eval c = f c) share is the die's Quine-atom role (§ IX), not an identity.
+-- [ZP-CUSTOM] no Mathlib analog | reason: Bridges AFAStructure (set-theoretic self-containment) with Mathlib's computability library (Nat.Partrec.Code). No Mathlib typeclass connects AFA and Code. KleeneStructure is built for the reading that botCode is ⊥'s computational witness — a commitment, not a derived theorem, and no field asserts it; the AFA Quine atom and the Kleene computational Quine (∃ c, eval c = f c) are compared through the die's Quine-atom role (§ IX), which no single code occupies, not through an identity.
 class KleeneStructure (L : Type*) [ZPSemilattice L] extends AFAStructure L where
   /-- The code the framework nominates as ⊥'s computational witness. Nothing here
       distinguishes it: it is whatever code the instance supplies. -/
@@ -222,7 +222,7 @@ theorem t_comp {L : Type*} [ZPSemilattice L] [KleeneStructure L] (q : L) :
     the axiom footprint, which follows the statement (see the footprint note in
     `ZeroParadox/Computability/Kleene.md`). That `botCode` names this element is the
     KleeneStructure commitment (header, § II), not what this theorem shows; what the two
-    sides share is the die role of § IX, not an element. -/
+    sides are compared through is the die role of § IX, not an element. -/
 theorem kleene_quine_is_bot {L : Type*} [ZPSemilattice L] [KleeneStructure L]
     (q : L) (hq : IsQuineAtom q) : q = bot :=
   t_exec q hq

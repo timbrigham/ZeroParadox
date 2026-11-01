@@ -45,7 +45,7 @@ exist; its ×2/0 fixed point is proved only as a standalone parallel. The tree b
 fixed-point fact is a **genuine instance**. Self-reference closing at the floor is not merely analogous to
 the Quine atom's **structural** fixed point here — it is one, by the framework's own definition. (`⊥ = {⊥}` of this floor
 is ill-typed and not asserted; `selfApp_quine_role_iff` (`ZeroParadox/Settheory/QuineDichotomy.lean`) at `instAbstractSelfAppEnd`
-makes the floor the die Quine-atom role's only occupant here: the structural face, the axiom-free `t_exec` half.)
+makes the floor the die Quine-atom role's only occupant here (`propext` only); the axiom-free half is `t_exec`.)
 
 **Honest fence.** The tree↔ℚ₂ digit isomorphism is not formalized in this file, so the mirror to `q2SelfApp`
 is a proved PARALLEL (same map, same unique fixed point), never a Lean `=`; and the "both children at once

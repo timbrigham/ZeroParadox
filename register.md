@@ -4,7 +4,7 @@ Update this file first on any version bump. README.md Framework table is verifie
 
 | Document | Formal Version | Filename | Companion Version | Comp AR | Notes |
 |----------|---------------|----------|-------------------|---------|-------|
-| ZP-A Lattice Algebra | v1.34 | ZP-A_Lattice_Algebra.pdf | v1.13 | N/— | formal:f05cb67e comp:22b29604 |
+| ZP-A Lattice Algebra | v1.34 | ZP-A_Lattice_Algebra.pdf | v1.13 | N/— | formal:27caced4 comp:e6c6889c |
 | ZP-B p-Adic Topology | v1.30 | ZP-B_pAdic_Topology.pdf | v1.21 | N/— | formal:6080b209 comp:4d3ce35e |
 | ZP-F The Counterexamples | v1.20 | ZP-F_The_Counterexamples.pdf | v1.19 | N/— | formal:b99fbdbb comp:dee59dce |
 | ZP-C Information Theory | v1.33 | ZP-C_Information_Theory.pdf | v2.12 | N/— | formal:d6fe6c3f comp:9f80c438 |
@@ -19,10 +19,10 @@ Update this file first on any version bump. README.md Framework table is verifie
 | ZP-J Wheel Addendum | v1.9 | ZP-J_Wheel_Addendum.pdf | v1.7 | N/— | formal:56bdf47c comp:7d7af230 |
 | ZP-J Keystone Addendum | v1.27 | ZP-J_Keystone_Addendum.pdf | N/A | N/— | formal:4d81f4c4 |
 | ZP-K Computational Grounding | v1.31 | ZP-K_Computational_Grounding.pdf | v1.26 | N/— | formal:439071fb comp:a5f421ad |
-| ZP-L Incomputability Convergence | v1.32 | ZP-L_Incomputability_Convergence.pdf | v1.19 | N/— | formal:fbfd9fa3 comp:59b7ba9a |
+| ZP-L Incomputability Convergence | v1.32 | ZP-L_Incomputability_Convergence.pdf | v1.19 | N/— | formal:fbfd9fa3 comp:ae29d0b5 |
 | ZP-M Kleene-Ordinal Bridge | v1.18 | ZP-M_Kleene_Ordinal_Bridge.pdf | v1.13 | N/— | formal:3750c9b6 comp:79fea5a7 |
 | ZP-N The Constructive Snap | v2.7 | ZP-N_The_Constructive_Snap.pdf | N/A | N/— | formal:a2a2e5ed |
-| ZP-P The Fixed-Point Fork | v1.28 | ZP-P_The_Fixed_Point_Fork.pdf | N/A | N/— | formal:c89e28c4 |
+| ZP-P The Fixed-Point Fork | v1.28 | ZP-P_The_Fixed_Point_Fork.pdf | N/A | N/— | formal:a74203db |
 | ZP-R Cross-Category Fixed Point | v1.22 | ZP-R_Cross_Category_Fixed_Point.pdf | N/A | N/— | formal:f2804409 |
 | ZP-R Diagonal Family Addendum | v1.22 | ZP-R_Diagonal_Family_Addendum.pdf | N/A | N/— | formal:f8542abc |
 | ZP-Q The Frame-Change | v1.14 | ZP-Q_The_Frame_Change.pdf | N/A | N/— | formal:b988c043 |
