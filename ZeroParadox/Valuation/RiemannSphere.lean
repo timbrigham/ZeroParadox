@@ -26,8 +26,8 @@ This file builds the **topological Riemann sphere over ℚ₂** — the one-poin
 result `rInvHomeo` is that this map is a **homeomorphism** of the sphere, and `rInv_swaps` is that it
 **swaps the floor `0` with the point at infinity `∞`** (the 0=∞ antipodality, made literal).
 
-Mathlib's field inversion uses `0⁻¹ = 0` and is *discontinuous at 0* (beside `Sphere` and a wheel: the
-`example` after `rInv_swaps`); adjoining `∞` and sending `0 ↦ ∞` *repairs* that discontinuity.
+Mathlib's field inversion uses `0⁻¹ = 0` and is *discontinuous at 0* (`example`s after `rInv_swaps`,
+beside `Sphere` and a wheel); adjoining `∞` and sending `0 ↦ ∞` *repairs* that discontinuity.
 The real work is the two continuity proofs at the special points (as `x → 0`, `x⁻¹ → ∞`; symmetrically at
 `∞`), which go through `OnePoint`'s neighborhood-of-∞ API (`nhds_infty_eq`, the cocompact filter) and the
 fact that `ℚ_[2]` is a `ProperSpace` (closed balls compact, so leaving every compact ⟺ norm → ∞).
@@ -153,18 +153,41 @@ theorem rInv_swaps :
     rInvHomeo (OnePoint.some (0 : ℚ_[2])) = ∞ ∧ rInvHomeo ∞ = OnePoint.some (0 : ℚ_[2]) :=
   ⟨rInv_zero, rInv_infty⟩
 
--- Statement: `(0 : ℚ_[2])⁻¹ = 0` (Mathlib's junk value), `rInv` sends `0` of `ℚ_[2]` to `∞` of `Sphere`
--- (`rInv_zero`), and in the wheel of fractions over `ℚ_[2]` at the trivial submonoid `wheelInf` differs
--- from both `Wheel.wzero` (`wheelFrac_fork_open`) and `wheelBot` (`inf_ne_bot`).
+-- Statement: Mathlib's field inversion on `ℚ_[2]` is not continuous at `0`
+-- (`NormedField.continuousAt_inv` at `x = 0`).
+example : ¬ ContinuousAt (Inv.inv : ℚ_[2] → ℚ_[2]) 0 :=
+  fun h => NormedField.continuousAt_inv.mp h rfl
+
+-- Statement: `(0 : ℚ_[2])⁻¹ = 0` (Mathlib's junk value); `rInv` sends `0` of `ℚ_[2]` to `∞` of `Sphere`
+-- (`rInv_zero`); and in the wheel of fractions over `ℚ_[2]` at its nonzero elements
+-- (`nonZeroDivisors ℚ_[2]`), the wheel's `1/0`, that is `1·/0`, is `wheelInf`, `2/0` is the same class,
+-- and `wheelInf` differs from `Wheel.wzero` (`wheelFrac_fork_open`) and from `wheelBot`
+-- (`inf_ne_bot`).
 -- Reading: CARRIER — "what is 1/0" has three answers in three carriers: `0` in the field `ℚ_[2]`, `∞`
--- of `Sphere`, and in `WheelFrac` a `wheelInf` plus a distinct `wheelBot` (0·/0) that `Sphere` lacks.
+-- of `Sphere`, and `wheelInf` in `WheelFrac`. `wheelBot` (`0·/0`) answers `0/0`, not `1/0`; the wheel
+-- has it and `Sphere` has no such element.
 example :
     (0 : ℚ_[2])⁻¹ = 0 ∧ rInv (OnePoint.some (0 : ℚ_[2])) = ∞ ∧
-    (wheelInf : WheelFrac (⊥ : Submonoid ℚ_[2])) ≠ Wheel.wzero ∧
-    (wheelInf : WheelFrac (⊥ : Submonoid ℚ_[2])) ≠ wheelBot := by
-  have h0 : (0 : ℚ_[2]) ∉ (⊥ : Submonoid ℚ_[2]) := by
-    rw [Submonoid.mem_bot]; exact zero_ne_one
-  exact ⟨inv_zero, rInv_zero, (wheelFrac_fork_open _ h0).symm, inf_ne_bot _ h0⟩
+    Wheel.wmul Wheel.wone (Wheel.winv Wheel.wzero) = (wheelInf : WheelFrac (nonZeroDivisors ℚ_[2])) ∧
+    mk (nonZeroDivisors ℚ_[2]) (2, 0) = wheelInf ∧
+    (wheelInf : WheelFrac (nonZeroDivisors ℚ_[2])) ≠ Wheel.wzero ∧
+    (wheelInf : WheelFrac (nonZeroDivisors ℚ_[2])) ≠ wheelBot := by
+  refine ⟨inv_zero, rInv_zero, by rw [Wheel.wmul_comm, Wheel.wmul_one]; rfl, ?_,
+    (wheelFrac_fork_open _ zero_notMem_nonZeroDivisors).symm,
+    inf_ne_bot _ zero_notMem_nonZeroDivisors⟩
+  refine Quotient.sound ⟨1, one_mem _, 2, mem_nonZeroDivisors_of_ne_zero (by norm_num), ?_, ?_⟩
+  · show (1 : ℚ_[2]) * 2 = 2 * 1; ring
+  · show (1 : ℚ_[2]) * 0 = 2 * 0; ring
+
+-- Statement: control, at the trivial submonoid `⊥` of `ℚ_[2]`, `2/0` and `1/0` (`wheelInf`) stay
+-- distinct classes.
+example : mk (⊥ : Submonoid ℚ_[2]) (2, 0) ≠ wheelInf := by
+  intro h
+  obtain ⟨s, hs, s', hs', e1, _⟩ := Quotient.exact h
+  rw [Submonoid.mem_bot] at hs hs'
+  subst hs; subst hs'
+  have : (1 : ℚ_[2]) * 2 = 1 * 1 := e1
+  norm_num at this
 
 /-! ### § V. The maps that FIX the pole-pair, and why that makes it an AXIS
 
@@ -172,7 +195,7 @@ example :
 pole-pair additively in `n`, which is what makes it an *axis* rather than a bare pair.
 
 ⭐ **PRIOR ART — these declarations INSTANTIATE `OnePoint.instGLAction`, they do not extend it.** The
-two `example`s closing this section are the identification, elaborated rather than asserted. What is
+three `example`s closing this section are the identification, elaborated rather than asserted. What is
 ours is the TOPOLOGY, not the algebra. Prior art, the loxodromic vocabulary and the stabiliser fence
 are in `ZeroParadox/Valuation/RiemannSphere.md`, beside this file. -/
 
@@ -372,9 +395,9 @@ valuation shells (`unitDouble_mutual_iff`), ordered one way by valuation (`unitD
 every move fixes `0` of `ℚ_[2]`, its own one-point class (`unitDouble_zero_own_class`). Doubling raises
 valuation and halves the norm: down toward `0` of `ℚ_[2]` in the `sNorm` preorder (§ VII).
 
-Standard frame, on nonzero points only: the value group of the valuation ring `ℤ_[2]` (Mathlib
-`ValuationRing.ValueGroup`; Stacks 00ID); at `0` of `ℚ_[2]` the orders part. `example`s after
-`unitDouble_zero_own_class`. -/
+Standard frame, on nonzero points only: the value group `ℚ_[2]ˣ / ℤ_[2]ˣ`. Reaching `y` from `x` is
+`[y] ≤ [x]` in Mathlib's `ValuationRing.ValueGroup` (OPPOSITE) and `[y] ≥ [x]` in Stacks 00ID (`y / x`
+from `ℤ_[2]`, SAME). At `0` of `ℚ_[2]` the orders part. `example`s after `unitDouble_zero_own_class`. -/
 
 /-- `Statement:` one move multiplies by a unit (norm `1`) or by `2`. -/
 def unitDoubleStep (x y : ℚ_[2]) : Prop := (∃ u : ℚ_[2], ‖u‖ = 1 ∧ y = u * x) ∨ y = 2 * x
@@ -443,12 +466,33 @@ theorem unitDouble_zero_own_class (x : ℚ_[2]) :
     subst ih
     rcases hm with ⟨u, _, rfl⟩ | rfl <;> simp
 
--- Statement: on nonzero points `x` reaches `y` iff `‖y / x‖ ≤ 1`, i.e. `y ∈ x · ℤ_[2]`: the order of
--- `ValuationRing.ValueGroup`, whose unit orbits are the cells of `unitDouble_mutual_iff`.
+-- Statement: on nonzero points `x` reaches `y` iff `‖y / x‖ ≤ 1`, i.e. `y ∈ x · ℤ_[2]`.
 example {x y : ℚ_[2]} (hx : x ≠ 0) (hy : y ≠ 0) :
     Relation.ReflTransGen unitDoubleStep x y ↔ ‖y / x‖ ≤ 1 := by
   rw [unitDouble_reach_iff hx hy, Padic.norm_le_one_iff_val_nonneg, div_eq_mul_inv,
     Padic.valuation_mul hy (inv_ne_zero hx), Padic.valuation_inv]; omega
+
+-- Statement: on nonzero points `x` reaches `y` iff `[y] ≤ [x]` in Mathlib's
+-- `ValuationRing.ValueGroup ℤ_[2] ℚ_[2]`: Mathlib's order runs opposite to reachability. Its unit
+-- orbits are the cells of `unitDouble_mutual_iff`.
+example {x y : ℚ_[2]} (hx : x ≠ 0) (hy : y ≠ 0) :
+    Relation.ReflTransGen unitDoubleStep x y ↔
+      @LE.le (ValuationRing.ValueGroup ℤ_[2] ℚ_[2]) _ (Quotient.mk'' y) (Quotient.mk'' x) := by
+  show _ ↔ ∃ c : ℤ_[2], c • x = y
+  rw [unitDouble_reach_iff hx hy]
+  constructor
+  · intro h
+    have hn : ‖y / x‖ ≤ 1 := by
+      rw [Padic.norm_le_one_iff_val_nonneg, div_eq_mul_inv,
+        Padic.valuation_mul hy (inv_ne_zero hx), Padic.valuation_inv]; omega
+    exact ⟨⟨y / x, hn⟩, by rw [Algebra.smul_def]; simp [div_mul_cancel₀ y hx]⟩
+  · rintro ⟨c, rfl⟩
+    rw [Algebra.smul_def] at hy ⊢
+    have hc : (algebraMap ℤ_[2] ℚ_[2] c) ≠ 0 := left_ne_zero_of_mul hy
+    have hc1 : ‖algebraMap ℤ_[2] ℚ_[2] c‖ ≤ 1 := c.2
+    rw [Padic.valuation_mul hc hx]
+    have := (Padic.norm_le_one_iff_val_nonneg _).1 hc1
+    omega
 
 -- Statement: control, at `0` of `ℚ_[2]` the orders part: `1` divides `0` in `ℤ_[2]` and `0 / 1` is a
 -- 2-adic integer, yet `1` does not reach `0`: divisibility puts `0` on top, reachability in its own
@@ -457,7 +501,9 @@ example :
     (1 : ℤ_[2]) ∣ 0 ∧ ‖(0 : ℚ_[2]) / 1‖ ≤ 1 ∧ ¬ Relation.ReflTransGen unitDoubleStep 1 0 :=
   ⟨dvd_zero 1, by simp, (unitDouble_zero_own_class 1).1 one_ne_zero⟩
 
--- Statement: control, `x = 0`: `‖1 / 0‖ ≤ 1` (`1 / 0 = 0`, after `rInv_swaps`) yet `0 ∤ 1`, no reach.
+-- Statement: control, `x = 0`: `‖1 / 0‖ ≤ 1` yet `0 ∤ 1` in `ℤ_[2]`, and `0` does not reach `1`. The
+-- first conjunct holds only by Mathlib's junk value `1 / 0 = 0` in `ℚ_[2]` (`div_zero`); `rInv` on
+-- `Sphere` sends `0` to `∞` instead (`rInv_zero`).
 example :
     ‖(1 : ℚ_[2]) / 0‖ ≤ 1 ∧ ¬ (0 : ℤ_[2]) ∣ 1 ∧ ¬ Relation.ReflTransGen unitDoubleStep 0 1 :=
   ⟨by simp, by rw [zero_dvd_iff]; exact one_ne_zero,
@@ -578,15 +624,8 @@ example (z : Sphere) : upV z = z ↔
 example {x : ℚ_[2]} (hx : x ≠ 0) :
     ((2 : ℚ_[2]) ^ (x.valuation % 2) * x).valuation = 2 * ⌈(x.valuation : ℚ) / 2⌉ := by
   rw [rScale_valuation _ hx]
-  have : ⌈(x.valuation : ℚ) / 2⌉ = (x.valuation + 1) / 2 := by
-    rw [Int.ceil_eq_iff]
-    constructor
-    · rw [lt_div_iff₀ (by norm_num)]
-      have : (((x.valuation + 1) / 2 : ℤ) - 1) * 2 < x.valuation := by omega
-      exact_mod_cast this
-    · rw [div_le_iff₀ (by norm_num)]
-      have : x.valuation ≤ ((x.valuation + 1) / 2 : ℤ) * 2 := by omega
-      exact_mod_cast this
+  have := Rat.ceil_intCast_div_natCast x.valuation 2
+  push_cast at this
   rw [this]; omega
 
 -- Statement: on nonzero `x`, DOWN sends the valuation `v` to `2 * ⌊v / 2⌋`, the floor onto the even
@@ -594,15 +633,8 @@ example {x : ℚ_[2]} (hx : x ≠ 0) :
 example {x : ℚ_[2]} (hx : x ≠ 0) :
     ((2 : ℚ_[2]) ^ (-(x.valuation % 2)) * x).valuation = 2 * ⌊(x.valuation : ℚ) / 2⌋ := by
   rw [rScale_valuation _ hx]
-  have : ⌊(x.valuation : ℚ) / 2⌋ = x.valuation / 2 := by
-    rw [Int.floor_eq_iff]
-    constructor
-    · rw [le_div_iff₀ (by norm_num)]
-      have : ((x.valuation / 2 : ℤ)) * 2 ≤ x.valuation := by omega
-      exact_mod_cast this
-    · rw [div_lt_iff₀ (by norm_num)]
-      have : x.valuation < ((x.valuation / 2 : ℤ) + 1) * 2 := by omega
-      exact_mod_cast this
+  have := Rat.floor_intCast_div_natCast x.valuation 2
+  push_cast at this
   rw [this]; omega
 
 -- Statement: for every integer `v`, `2 * ⌈-v / 2⌉ = -(2 * ⌊v / 2⌋)`: rounding up after negating is
@@ -686,12 +718,15 @@ theorem sNorm_coe_le_iff {x y : ℚ_[2]} (hx : x ≠ 0) (hy : y ≠ 0) :
 
 /-- `Statement:` UP as a Mathlib `ClosureOperator` (monotone, extensive, idempotent) on the reverse
     of § VII's `sNorm` preorder, where `0` of `ℚ_[2]` is top and `∞` of `Sphere` bottom. On
-    valuations it is the closure of the ceiling Galois connection (`Int.gc_ceil_coe`) onto the even
-    integers; compare the ceiling `ClosureOperator ℝ` in `ZeroParadox/Order/UpAndOver.lean`. `Sphere`
-    is no `UpAndOver` member: that structure takes `[PartialOrder α]` and this is a preorder.
+    valuations it is `v ↦ 2 * ⌈v / 2⌉` (`example` after `downV`): the closure of the ceiling Galois
+    connection (`Int.gc_ceil_coe`), which lands on `ℤ`, rescaled by `2` onto the even integers;
+    compare the ceiling `ClosureOperator ℝ` in `ZeroParadox/Order/UpAndOver.lean`. That `UpAndOver`
+    structure takes `[PartialOrder α]`, and this preorder is not antisymmetric (`1` and `-1` of
+    `ℚ_[2]`, the first `example` after this definition), so `upClosure` is not an `UpAndOver` instance as it
+    stands.
     `Reading:` **INVERSION** — `rInv` is an order isomorphism to the order dual, and `conjBy` along
     it carries `upClosure` to `downV`, the corpus's kernel form (`keepAboveKernel`, `pruneKernel`):
-    the `example` after this definition. -/
+    the second `example` after this definition. -/
 noncomputable def upClosure :
     @ClosureOperator Sphere (Preorder.lift (fun s => OrderDual.toDual (sNorm s))) :=
   letI : Preorder Sphere := Preorder.lift (fun s => OrderDual.toDual (sNorm s))
@@ -734,6 +769,21 @@ noncomputable def upClosure :
     idempotent' := fun a => by
       show upV (upV a) = upV a
       rw [← downV_upV a, upV_downV] }
+
+-- Statement: the reverse `sNorm` preorder is not antisymmetric: `1` and `-1` of `ℚ_[2]` lie below each
+-- other and are distinct points of `Sphere`.
+example :
+    letI : Preorder Sphere := Preorder.lift (fun s => OrderDual.toDual (sNorm s))
+    (OnePoint.some (1 : ℚ_[2]) : Sphere) ≤ OnePoint.some (-1) ∧
+      (OnePoint.some (-1 : ℚ_[2]) : Sphere) ≤ OnePoint.some 1 ∧
+      (OnePoint.some (1 : ℚ_[2]) : Sphere) ≠ OnePoint.some (-1) := by
+  letI : Preorder Sphere := Preorder.lift (fun s => OrderDual.toDual (sNorm s))
+  refine ⟨?_, ?_, fun h => ?_⟩
+  · show sNorm (OnePoint.some (-1)) ≤ sNorm (OnePoint.some 1); simp [sNorm]
+  · show sNorm (OnePoint.some 1) ≤ sNorm (OnePoint.some (-1)); simp [sNorm]
+  · have h1 : (1 : ℚ_[2]) = -1 := OnePoint.coe_injective h
+    have h2 : (2 : ℚ_[2]) = 0 := by linear_combination h1
+    exact two_ne_zero h2
 
 -- Statement: on the reverse `sNorm` preorder, `rInv` is an order isomorphism `Sphere ≃o Sphereᵒᵈ`, and
 -- `upClosure.conjBy` along it is `downV` at every point of `Sphere`.

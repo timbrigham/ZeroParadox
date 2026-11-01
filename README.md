@@ -90,10 +90,10 @@ An independent re-check is three commands: `git clone https://github.com/timbrig
 | [Categorical Bridge](ZP-H_Categorical_Bridge.pdf) | ZP-H | v1.27 | The categorical bridge: the snap holding under all four domain functors. |
 | [Native Categories Addendum](ZP-H_Native_Categories_Addendum.pdf) | ZP-H Native Categories Addendum | v1.7 | The snap floor realized inside each framework's native Mathlib category (TopCat, ModuleCat ℂ, KleisliCat PMF). Reads after ZP-H. |
 | [Inside Zero](ZP-I_Inside_Zero.pdf) | ZP-I | v1.28 | Inside zero: each nowhere-zero 2-adic sequence whose valuation equals a depth index in ℕ that climbs at every step converges to 0 in the 2-adics; reading that limit as an occupant of the ⊥ role, and then as a successor ⊥′, are two further commitments. |
-| [Self-Reference](ZP-J_Self_Reference.pdf) | ZP-J | v2.13 | Self-reference: ⊥ as the Quine atom, and the AFA structure it requires. |
+| [Self-Reference](ZP-J_Self_Reference.pdf) | ZP-J | v2.14 | Self-reference: ⊥ as the Quine atom, and the AFA structure it requires. |
 | [AFA Addendum](ZP-J_AFA_Addendum.pdf) | ZP-J AFA Addendum | v1.19 | Decoration uniqueness for finite graphs from the valuation structure alone. Reads after ZP-J. |
-| [Wheel Addendum](ZP-J_Wheel_Addendum.pdf) | ZP-J Wheel Addendum | v1.8 | The wheel of fractions as a wheel: division by zero made total. Reads after ZP-J. |
-| [Keystone Addendum](ZP-J_Keystone_Addendum.pdf) | ZP-J Keystone Addendum | v1.26 | The diagonal-fixed-point keystone: the Lawvere face-split (Set face machine-checked, computability face cited) and the snap as a well-foundedness boundary crossing. Reads after ZP-J. |
+| [Wheel Addendum](ZP-J_Wheel_Addendum.pdf) | ZP-J Wheel Addendum | v1.9 | The wheel of fractions as a wheel: division by zero made total. Reads after ZP-J. |
+| [Keystone Addendum](ZP-J_Keystone_Addendum.pdf) | ZP-J Keystone Addendum | v1.27 | The diagonal-fixed-point keystone: the Lawvere face-split (Set face machine-checked, computability face cited) and the snap as a well-foundedness boundary crossing. Reads after ZP-J. |
 | [Computational Grounding](ZP-K_Computational_Grounding.pdf) | ZP-K | v1.27 | Computational grounding: the bottom's structural self-containment, with the computational reading carried as a commitment. |
 | [Incomputability Convergence](ZP-L_Incomputability_Convergence.pdf) | ZP-L | v1.30 | ε₀ as the exact ordinal threshold the snap is keyed to. (That the snap occurs follows from the occurrence commitment together with DA-1, closed given DP-2.) |
 | [Kleene-Ordinal Bridge](ZP-M_Kleene_Ordinal_Bridge.pdf) | ZP-M | v1.13 | The bridge between the Kleene quine and the ε₀ fixed point. |

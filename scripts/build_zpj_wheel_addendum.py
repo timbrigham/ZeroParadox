@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-J Wheel Addendum: The Wheel of Fractions is a Wheel
-Version 1.8 | September 2026
+Version 1.9 | October 2026
 Reads after ZP-J Self-Reference.
 """
 
@@ -8,7 +8,7 @@ import os
 from zp_utils import *
 from reportlab.platypus import KeepTogether
 
-VERSION = '1.8'
+VERSION = '1.9'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard: route all bare Paragraph() text through Unicode-to-entity conversion ──
@@ -69,7 +69,7 @@ def build():
         '&amp; Tucker), which adjoins nothing at all and instead declares 0<sup>&#8722;1</sup> = 0, '
         'staying inside the original number system. This addendum settles that question.'))
     E.append(body(
-        'The main result is WheelFrac.instWheel (WheelFrac.lean): for any commutative '
+        'The main result is WheelFrac.instWheel (ZeroParadox/Algebra/WheelFrac.lean): for any commutative '
         'ring A and any multiplicative submonoid S, the wheel of fractions '
         '&#8857;<sub>S</sub> A = (A &#215; A)/&#8801;<sub>S</sub> satisfies every axiom of '
         'Carlström\'s Definition 1.1. The companion result WheelFrac.inf_ne_bot shows that, '
@@ -95,7 +95,7 @@ def build():
         'eight. The unbundling is bookkeeping only &#8212; no axiom is added, removed, or '
         'weakened.'))
     E.append(def_box(
-        'Typeclass: Wheel (Wheel.lean)',
+        'Typeclass: Wheel (ZeroParadox/Algebra/Wheel.lean)',
         [
             'class Wheel (W : Type*) where',
             '  wadd, wmul : W &#8594; W &#8594; W      -- + and &#183;',
@@ -184,7 +184,7 @@ def build():
         'definitionally because pair-swap is its own inverse and commutes with the '
         'componentwise product.'))
     E.append(result_box(
-        'Theorem: WheelFrac.instWheel (WheelFrac.lean)',
+        'Theorem: WheelFrac.instWheel (ZeroParadox/Algebra/WheelFrac.lean)',
         [
             '&#8704; {A : Type*} [CommRing A] (S : Submonoid A),',
             '  Wheel (&#8857;<sub>S</sub> A)',
@@ -215,7 +215,7 @@ def build():
         '&#8857;<sub>S</sub> A is trivial (p. 5). The natural hypothesis 0 &#8713; S holds '
         'whenever S is the complement of a prime ideal, the usual case.'))
     E.append(result_box(
-        'Proposition: WheelFrac.inf_ne_bot (WheelFrac.lean)',
+        'Proposition: WheelFrac.inf_ne_bot (ZeroParadox/Algebra/WheelFrac.lean)',
         [
             '&#8704; {A : Type*} [CommRing A] (S : Submonoid A),',
             '  (0 : A) &#8713; S  &#8594;  &#8734; &#8800; &#8869;     in &#8857;<sub>S</sub> A',
@@ -280,7 +280,7 @@ def build():
             '2-adic valuation (v&#8322;(0) = &#8734;) and in ZF+AFA (the Quine atom). The '
             'wheel of fractions is the algebraic face of that point: /0 is defined and '
             'distinct from the absorbing &#8869;, exactly the behaviour the porthole '
-            'predicts. The concrete carrier ZPWheelElem (Wheel.lean §III&#8211;VI) '
+            'predicts. The concrete carrier ZPWheelElem (ZeroParadox/Algebra/Wheel.lean §III&#8211;VI) '
             'makes this explicit on the rationals extended with &#8734; and &#8869;, where '
             'val(x) = &#8734; &#8660; /x = &#8734; is proved directly '
             '(zpw_top_val_iff_inv_is_inf). This addendum\'s headline result is the general '
@@ -305,19 +305,19 @@ def build():
         'context. <b>Ring structure is an input, not a conclusion.</b> The construction '
         'starts from a commutative ring and a submonoid; it does not derive wheel structure '
         'from the ZP lattice axioms alone. The bridge typeclass that would state such a '
-        'derivation, WheelValuationStructure (Wheel.lean §VII), is defined but its '
+        'derivation, WheelValuationStructure (ZeroParadox/Algebra/Wheel.lean §VII), is defined but its '
         'porthole condition val(0) = &#8868; is an assumed axiom, motivated by the ZP '
         'argument rather than type-checked as necessary.'))
     E.append(label_box(
         'Lean Source Files',
         [
-            'WheelFrac.lean &#8212; rel, srel, the five quotient operations '
+            'ZeroParadox/Algebra/WheelFrac.lean &#8212; rel, srel, the five quotient operations '
             '(waddF, wmulF, winvF), instWheel, inf_ne_bot. The headline results of this '
             'addendum.',
-            'Wheel.lean     &#8212; the Wheel typeclass (Carlström Def 1.1, 14 fields), '
+            'ZeroParadox/Algebra/Wheel.lean &#8212; the Wheel typeclass (Carlström Def 1.1, 14 fields), '
             'the derived elements wheelInf / wheelBot, the concrete carrier ZPWheelElem, '
             'and the porthole correspondence zpw_top_val_iff_inv_is_inf.',
-            'Both files in ZeroParadox/ in the public repository.',
+            'Both files are in the public repository.',
         ]
     ))
     E.append(sp(4))
@@ -346,7 +346,8 @@ def build():
             'called \'wheels\' (the term inspired by the topological picture &#8857; of the '
             'projective line together with an extra point 0/0) by Setzer [Set97], who showed '
             'how to modify the construction of fields of fractions from integral domains so '
-            'that wheels are obtained instead of fields."',
+            'that wheels are obtained instead of fields." ([Set97] is Carlström\'s key for '
+            'A. Setzer, Wheels (draft), 1997.)',
             'Carlström is the <b>generalizer</b>: "in this paper, we generalize Setzer\'s '
             'construction, so that it applies not only to integral domains, but to any '
             'commutative semiring." That is Wheels &#8212; On Division by Zero (Research '
@@ -366,7 +367,7 @@ def build():
             'and can read the axiom footprint to confirm the choice-free claim. Whether '
             'the porthole condition val(0) = &#8868; can be derived &#8212; rather than '
             'assumed &#8212; from upstream ZP structure remains the open question flagged '
-            'in Wheel.lean §VII&#8211;VIII.',
+            'in ZeroParadox/Algebra/Wheel.lean §VII&#8211;VIII.',
         ]
     ))
     E.append(sp(6))
