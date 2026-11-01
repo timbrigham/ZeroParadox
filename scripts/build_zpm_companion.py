@@ -1,6 +1,6 @@
 """
 Build ZP-M Illustrated Companion
-Version 1.12 | November 2026
+Version 1.13 | November 2026
 """
 
 import os
@@ -8,7 +8,7 @@ from zp_utils import *
 from reportlab.graphics.shapes import Drawing, Line, String, Rect, Circle, Polygon
 from reportlab.graphics import renderPDF
 
-VERSION = '1.12'
+VERSION = '1.13'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -311,9 +311,10 @@ def build():
         'surprisal grows without bound with depth in the ball hierarchy, each value finite '
         '(l_inf). Point chart: at 0 of ℚ₂, the one point in every ball of the chain centred at 0, the 2-adic '
         'additive valuation is ⊤ (padic_addVal_bot), the point to which ZP-C has c₀, ⊥ of the machine-state type, '
-        'correspond. (A Lean map carrying that correspondence was not located as of 2026-11-01, searched as '
-        'follows: the corpus\'s Lean files for a map from the machine-state type to the 2-adic integers or numbers, '
-        'which finds only snapEmbed and a negative example, and for a definition sending c₀ to 0, which finds none. '
+        'correspond. (As of 2026-11-01 no single declared map from the machine-state type into the 2-adic integers '
+        'or numbers sends c₀ to 0: a search of the corpus\'s Lean files for both type names finds snapEmbed and two '
+        'negative examples. A composite of two maps the corpus has does send c₀ to 0 of ℚ₂: an order isomorphism '
+        'onto a two-point type, read there as order shape only, then poleToSphere; that composite is not declared. '
         'snapEmbed, above, is a different map, sending '
         'c₀ to 1, and the two are not composed.) '
         'This is structurally analogous to the Kleene fixed point, but the analogy has not been '

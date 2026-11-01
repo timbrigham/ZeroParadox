@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-M: Kleene-Ordinal Bridge PDF Builder
-Version 1.17 | November 2026
+Version 1.18 | November 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.17'
+VERSION = '1.18'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -307,8 +307,9 @@ def build():
         'supremum (&#949;&#8320; = nfp (&#969;^&#183;) 0, epsilonZero_eq_nfp in ZeroParadox/Ordinal/Gentzen.lean), the '
         'fixed-point lemma for normal functions rather than a diagonal argument. The two domains share no '
         'mathematical machinery. The theorem below records the ordinal fixed point and, on the computability side, '
-        'the computability fixed point the recursion theorem yields (IsComputationalQuine), a condition '
-        'constant codes also meet, so it does not pin self-reference (Remark R-M.1).'))
+        'the computability fixed point the recursion theorem yields: a code c with eval c = selfApply c '
+        '(IsComputationalQuine), a predicate constant codes also satisfy, so it does not pin self-reference '
+        '(Remark R-M.1).'))
 
     E.append(data_table(
         headers=['Domain', 'Operation', 'Fixed point'],
@@ -357,11 +358,14 @@ def build():
             'The informational argument has two charts. Depth chart, ZP-C L-INF: surprisal is unbounded above in the '
             'ball-hierarchy depth, each value finite (l_inf). Point chart: at 0 of Q<sub>2</sub>, the one point in every '
             'ball of the chain centred at 0, the 2-adic additive valuation is &#8868; (padic_addVal_bot), the point to '
-            'which c&#8320;, &#8869; of MachinePhase, corresponds in ZP-C. A Lean map carrying that correspondence was '
-            'not located as of 2026-11-01, searched as follows: the .lean files under ZeroParadox/ for a map whose '
-            'domain is MachinePhase and whose codomain is &#8484;<sub>2</sub> or &#8474;<sub>2</sub> (only snapEmbed, and '
-            'a negative example in ZeroParadox/Ordinal/Gentzen.lean), for a definition sending c&#8320; to 0 (none), and '
-            'for any declaration naming both MachinePhase and a 2-adic type (those two files only). '
+            'which c&#8320;, &#8869; of MachinePhase, corresponds in ZP-C. As of 2026-11-01 no single declared map from '
+            'MachinePhase into &#8484;<sub>2</sub> or &#8474;<sub>2</sub> sends c&#8320; to 0: searching the .lean files under '
+            'ZeroParadox/ for both type names finds snapEmbed (ZeroParadox/Ordinal/Incompleteness.lean) and two negative '
+            'examples (ZeroParadox/Ordinal/Gentzen.lean, ZeroParadox/Valuation/SemilatticeInstance.lean). A composite does: '
+            'the order isomorphism from MachinePhase onto the two-point Pole (c&#8320; to zero), exhibited in an anonymous '
+            'example in ZeroParadox/DieCannotBe.lean and read there as order shape only, followed by poleToSphere '
+            '(ZeroParadox/Valuation/PoleCornersBridge.lean), which sends zero to 0 of &#8474;<sub>2</sub> in its one-point '
+            'compactification; that composite is not declared. '
             '&#167; I&#8217;s snapEmbed is a different map, sending c&#8320; to 1 and c&#8321; to 0; the two are not '
             'composed. L-INF is structurally analogous to the Kleene fixed point. Whether it '
             'fits Kleene&#8217;s diagonalization schema formally is the open question this remark tracks.',

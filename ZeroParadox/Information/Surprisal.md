@@ -57,7 +57,7 @@ this object both readings do hold at once. Whether a boundary of this kind *cann
 would be a no-go theorem, and this file does not attempt it. A theorem proving or refuting it was not
 located as of 2026-11-01 in `ZeroParadox/`, searched as follows: three phrasings over its `.lean` and
 `.md` files, root `.md` files not included ("one direction only" / "cannot run one direction";
-"one-directional" / "runs one way"; "both readings hold" / "concurrent"), 18 files matching. The hits
+"one-directional" / "runs one way"; "both readings hold" / "concurrent"). The hits
 on this question are this paragraph, the fence in `Surprisal.lean`, and the same fence at
 `repr_spread_source_certain_target` (`ZeroParadox/Ordinal/PricedInterface.lean`); other hits, among
 them `occurrence_semidecidable_nonoccurrence_not`, `four_corners_exhaustive` and `InfinitudeFloor.lean`

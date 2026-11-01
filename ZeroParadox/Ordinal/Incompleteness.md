@@ -43,7 +43,7 @@ global instance), floor 0, complexity `towerCx` (⊤ at 0, the 2-adic valuation 
 global instance is `q2InfinitudeFloor`, floor 0. `Statement:` **CARRIER** — the point-chart measure
 `cxQ2` (`ZeroParadox/Valuation/InfinitudeFloor.lean`) is ⊤ at 0 and elsewhere the 2-adic valuation
 truncated at 0; on the members it is the valuation (`cxQ2_two_pow`), and Mathlib's `Padic.valuation`
-returns 0 at 0. It is not `surprisal`, and the two agree along the members: `info_valuation_eq_surprisal`
+returns 0 at 0 (`Padic.valuation_zero`). It is not `surprisal`, and the two agree along the members: `info_valuation_eq_surprisal`
 (`ZeroParadox/Multihomed/TopNumEdge.lean`) says the 2-adic valuation of 2ⁿ ∈ ℚ_[2] equals I(n), and
 the members of `q2InfinitudeFloor` are the points 2ⁿ⁺¹. That equation is indexed by depth n and stops
 at the floor 0, which sits at no finite depth: there the complexity `cxQ2` is ⊤ and `surprisal`, a

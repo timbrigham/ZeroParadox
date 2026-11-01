@@ -7,7 +7,7 @@ Update this file first on any version bump. README.md Framework table is verifie
 | ZP-A Lattice Algebra | v1.33 | ZP-A_Lattice_Algebra.pdf | v1.12 | N/— | formal:f6478f2b comp:aa71c65d |
 | ZP-B p-Adic Topology | v1.30 | ZP-B_pAdic_Topology.pdf | v1.21 | N/— | formal:6080b209 comp:4d3ce35e |
 | ZP-F The Counterexamples | v1.20 | ZP-F_The_Counterexamples.pdf | v1.19 | N/— | formal:b99fbdbb comp:dee59dce |
-| ZP-C Information Theory | v1.32 | ZP-C_Information_Theory.pdf | v2.12 | N/— | formal:452db62c comp:9f80c438 |
+| ZP-C Information Theory | v1.33 | ZP-C_Information_Theory.pdf | v2.12 | N/— | formal:d6fe6c3f comp:9f80c438 |
 | ZP-D State Layer | v1.19 | ZP-D_State_Layer.pdf | v1.18 | N/— | formal:339590dd comp:6be72c57 |
 | ZP-E Bridge Document | v3.68 | ZP-E_Bridge_Document.pdf | v1.33 | Y/Y | formal:b7f4c8c3 comp:1ced0b1e |
 | ZP-G Category Theory | v1.25 | ZP-G_Category_Theory.pdf | v1.14 | N/— | formal:d84c3ca4 comp:c39d201c |
@@ -20,7 +20,7 @@ Update this file first on any version bump. README.md Framework table is verifie
 | ZP-J Keystone Addendum | v1.27 | ZP-J_Keystone_Addendum.pdf | N/A | N/— | formal:4d81f4c4 |
 | ZP-K Computational Grounding | v1.31 | ZP-K_Computational_Grounding.pdf | v1.26 | N/— | formal:439071fb comp:a5f421ad |
 | ZP-L Incomputability Convergence | v1.32 | ZP-L_Incomputability_Convergence.pdf | v1.18 | N/— | formal:fbfd9fa3 comp:6475cf68 |
-| ZP-M Kleene-Ordinal Bridge | v1.17 | ZP-M_Kleene_Ordinal_Bridge.pdf | v1.12 | N/— | formal:67e863f4 comp:88b166d8 |
+| ZP-M Kleene-Ordinal Bridge | v1.18 | ZP-M_Kleene_Ordinal_Bridge.pdf | v1.13 | N/— | formal:3750c9b6 comp:79fea5a7 |
 | ZP-N The Constructive Snap | v2.7 | ZP-N_The_Constructive_Snap.pdf | N/A | N/— | formal:a2a2e5ed |
 | ZP-P The Fixed-Point Fork | v1.27 | ZP-P_The_Fixed_Point_Fork.pdf | N/A | N/— | formal:b66d81be |
 | ZP-R Cross-Category Fixed Point | v1.22 | ZP-R_Cross_Category_Fixed_Point.pdf | N/A | N/— | formal:f2804409 |

@@ -1,11 +1,11 @@
 """
-Build ZP-C: Information Theory (v1.32)
+Build ZP-C: Information Theory (v1.33)
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.32'
+VERSION = '1.33'
 FIRST_RELEASED = 'April 2026'
 
 def build():
@@ -17,7 +17,7 @@ def build():
           Paragraph(version_line(FIRST_RELEASED, VERSION), S['subtitle']),
           sp(10),
           body('This document is self-contained within information theory and discrete analysis on Q<sub>2</sub>, with two named cross-layer dependencies. The topological structure of Q<sub>2</sub> — total disconnectedness (ZP-B T5), the clopen ball hierarchy, and the binary existence axiom (AX-B1) — is imported from ZP-B. The Candidate Theorem T-BUF (Section V) additionally invokes ZP-A&#8217;s state-transition definition D2 (f(x) = x &#8744; &#945;) to identify the resulting state as the Binary Snap. T-BUF is conditional on execution: its Step 2, that the configuration at P<sub>0</sub> is executing, is not derived here or in ZP-E; it is the occurrence commitment (ZP-E, DA-1 insert &#167; IV), which DA-1 consumes and does not supply. Every claim is marked as Derived, Axiomatic, Defined, or Candidate.'),
-          body('<b>Encoding commitment.</b> The two ontological states of AX-B1 are represented here as point-mass (Dirac) distributions over {0, 1} — the minimum-sufficient probabilistic encoding (RP-1, Section II). Under this encoding, the information-theoretic separation between &#8869; and the minimum non-bottom state (&#949;<sub>0</sub>) is exactly 1 bit (T1b). The 1-bit result is conditional on this encoding; RP-1 declares and justifies the commitment. Separately, the primary descriptive tool of information theory, surprisal, is unbounded above in the depth of the ball hierarchy, each value finite (L-INF, Section III), and c<sub>0</sub>, &#8869; of MachinePhase, corresponds to that hierarchy&#8217;s limit point 0 &#8712; Q<sub>2</sub>, where the 2-adic additive valuation is &#8868; (R-BRIDGE); from these the framework argues that no finite external description can contain c<sub>0</sub>. These two results — the 1-bit cost of the transition and the infinite descriptive cost of the origin — are the information-theoretic expression of the same structural constraint on &#8869;.'),
+          body('<b>Encoding commitment.</b> The two ontological states of AX-B1 are represented here as point-mass (Dirac) distributions over {0, 1} — the minimum-sufficient probabilistic encoding (RP-1, Section II). Under this encoding, the information-theoretic separation between &#8869; and the minimum non-bottom state (&#949;<sub>0</sub>) is exactly 1 bit (T1b). The 1-bit result is conditional on this encoding; RP-1 declares and justifies the commitment. Separately, the primary descriptive tool of information theory, surprisal, is unbounded above in the depth of the ball hierarchy, each value finite (L-INF, Section III), and c<sub>0</sub>, &#8869; of MachinePhase, corresponds to that hierarchy&#8217;s limit point 0 &#8712; Q<sub>2</sub>, where the 2-adic additive valuation is &#8868; (R-BRIDGE); from these the framework argues that no finite external description can contain c<sub>0</sub>. These two results — the 1-bit cost of the transition and the infinite descriptive cost of the origin — are the information-theoretic expression of the same structural constraint, read on two bottoms: &#8869; of the two-state encoding of AX-B1, and c<sub>0</sub>, &#8869; of MachinePhase.'),
           body('<i>Illustrated Companion: A paired ZP-C Illustrated Companion provides concrete examples and visual intuitions for the results here. Examples are kept separate from the formal layers to distinguish illustrative material from proofs.</i>'),
           sp()]
 
@@ -114,7 +114,7 @@ def build():
         'c<sub>0</sub>, &#8869; of MachinePhase, corresponds to the limit point 0 &#8712; Q<sub>2</sub> — the limit of the binary ball hierarchy at infinite depth. The binary branching measure assigns equal probability mass at each branch level (D4), and the surprisal diverges without bound as depth increases (T2), each value finite. Surprisal is defined at each depth, not at the limit point itself.',
         'Proof: Let M &#8712; &#8477;. By the Archimedean property, &#8707; n &#8712; &#8469; with n > M. Then I(n) = n > M. Since M was arbitrary, surprisal is unbounded above. <font name="DV">&#10003;</font>',
         'Formal content: surprisal is not bounded above by any real M.',
-        'Semantic content: c<sub>0</sub>, &#8869; of MachinePhase, corresponds to the limit point 0 of the binary ball hierarchy under the 2-adic metric, approached by sequences of increasing depth along which surprisal exceeds every finite bound; at that point the 2-adic additive valuation is &#8868; (R-BRIDGE). From these two charts the framework argues that no finite external interpreter can hold &#8869; as a static description. This is one argument for DA-1&#8217;s precondition (ZP-E, DA-1 insert &#167; IV, Path 2), and it does not derive it. ZP-A CC-2 (&#8869; = {&#8869;}), itself a commitment, gives a second, structural argument for the same conclusion: a self-containing object has no external interpreter by structure (ZP-A R3). The informational argument from the ball hierarchy and the structural argument from self-containment are independent; neither makes the configuration at P<sub>0</sub> executing.',
+        'Semantic content: c<sub>0</sub>, &#8869; of MachinePhase, corresponds to the limit point 0 of the binary ball hierarchy under the 2-adic metric, approached by sequences of increasing depth along which surprisal exceeds every finite bound; at that point the 2-adic additive valuation is &#8868; (R-BRIDGE). From these two charts the framework argues that no finite external interpreter can hold c<sub>0</sub> as a static description. This is one argument for DA-1&#8217;s precondition (ZP-E, DA-1 insert &#167; IV, Path 2), and it does not derive it. ZP-A CC-2 (&#8869; = {&#8869;}), itself a commitment, gives a second, structural argument for the same conclusion: a self-containing object has no external interpreter by structure (ZP-A R3). The informational argument from the ball hierarchy and the structural argument from self-containment are independent; neither makes the configuration at P<sub>0</sub> executing.',
         'Note: L-INF supplies unbounded surprisal; the step from there to executing is not a consequence of L-INF and is not DA-1. It is a bridge principle of its own (ZP-E, DA-1 insert &#167; IV, Path 2), which the framework does not adopt, which is not the occurrence commitment, and which is not a premise of the Snap.',
         'Status: DERIVED from D4 and T2. Structural corroboration: ZP-A CC-2 (&#8869; = {&#8869;}) and R3. Lean: l_inf (purity check: no non-Mathlib axioms).',
     ]))
@@ -141,7 +141,7 @@ def build():
         'in every ball B(0, 2<super>&#8722;n</super>) of the chain centred at 0 (fB_bottom_is_limit), the 2-adic additive valuation is &#8868; '
         '(padic_addVal_bot; the floor-and-&#8868; coincidence is infinitude_forces_infinite_complexity at q2InfinitudeFloor); c<sub>0</sub>, &#8869; of '
         'MachinePhase, corresponds to that point. From these the framework argues that no finite interpreter can hold '
-        '&#8869;. DA-1 Path 3 (ZP-E) is the '
+        'c<sub>0</sub>. DA-1 Path 3 (ZP-E) is the '
         'K-incompressibility argument: K(x|n) &#8805; |x| rules out a shorter external generator, not an inert string, '
         'so it does not derive executing from incompressibility. Neither derives '
         'DA-1&#8217;s precondition.',

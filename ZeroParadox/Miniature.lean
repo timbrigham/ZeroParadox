@@ -72,11 +72,11 @@ same role, without asserting an identity across types, not derived (`Computabili
 **That fourth commitment is where time can enter — and it is the easiest thing here to walk past.** The other
 three faces are *static*: order-bottom, self-membered set, algebraic identity are timeless facts that simply
 hold, and nothing about them ever *happens*. The Kleene quine is the only one that *runs*, and running is a
-before and an after. `KleeneStructure` names who would run `bot` of the `ZPSemilattice`: `bot` itself, its own
-executor if it executes at all (`Computability/Kleene.lean` `da1_computational`). That it runs is the occurrence
-commitment, and **time enters the framework as a state change** with it (`Order/Snap.lean` `t_snap_given`:
-hypotheses CC-1 and `hocc`, no `KleeneStructure`); nothing static occurs on its own, so without it `bot` would
-rest as a fixed point forever and the snap would never happen. Stated as what they are —
+before and an after. The `KleeneStructure` commitment reads `bot` of the `ZPSemilattice` as its own executor if it
+executes at all; no class field asserts it, and `da1_computational` proves only `IsQuineAtom bot` (`Computability/Kleene.lean`).
+That it runs is the occurrence commitment, and with CC-1 it lets **time enter the framework as a state change**
+(`Order/Snap.lean` `t_snap_given`: hypotheses `hcc1` and `hocc`, no `KleeneStructure`); nothing static occurs on its own,
+so without them `bot` would rest as a fixed point forever and the snap would never happen. Stated as what they are —
 *commitments*, never theorems — which is exactly why the computational face is joined by hand rather than
 derived from the static three. The wall's seed here, `negation_no_fp` (`¬(p ↔ ¬p)`), is that same self-reference *failing to close* (Cantor, Turing, Tarski); the floor is it
 *closing* — landing on the thing that is its own answer.

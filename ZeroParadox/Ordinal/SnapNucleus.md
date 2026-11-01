@@ -102,7 +102,7 @@ part (measured 2026-10-08):
   `theories/ordinals/Schutte/AP.v`, which imports `Coq.Logic.Epsilon`. Outside `Schutte`,
   `epsilon0_as_lub` in `theories/ordinals/Gamma0/Gamma0.v` is a least-strict-upper-bound statement over
   the terms below ε₀: every normal-form strict upper bound of them is at least ε₀. It is not the
-  ω-tower supremum, which this corpus states in Lean as `epsilonZero_eq_iSup`
+  ω-tower-supremum statement, which this corpus states in Lean as `epsilonZero_eq_iSup`
   (`ZeroParadox/Ordinal/Gentzen.lean`).
 * **The defined reading, in Lean: `E0Note`.** `ZeroParadox/Ordinal/PricedInterface.lean` adjoins one
   point ⊤ above the notations (`E0Note := WithTop SynONote`), and `e0Repr` sends ⊤, and only ⊤, to ε₀
