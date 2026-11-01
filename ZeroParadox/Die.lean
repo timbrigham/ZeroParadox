@@ -3891,11 +3891,11 @@ namespace NInf
 
 /-- `Statement:` if a `Bool` test `t` isolates `∞`, deciding membership in `{∞}`, the weak limited
     principle of omniscience (WLPO) holds. `Reading:` "isolates": `∞` is isolated (Escardó,
-    arXiv:2609.10447v3, Def. 3.2, p. 14), as data; compare his Examples 3.3(5) with the `Nonempty` iff
-    example, whose forward direction this is at the `Prop` level (`ZeroParadox/DieCannotBe.lean`
-    § XXVII). By `isolating_infty_iff`, `t` satisfies TypeTopology's `basic-discontinuity`, whose
-    taboo (`Taboos.BasicDiscontinuity`, retrieved 2026-10-29) is his WLPO row with Lemma 3.3 (p. 4,
-    preprint of JSL 78(3) (2013)). -/
+    arXiv:2609.10447v3, Def. 3.2, p. 14), as data; compare his Examples 3.3(5) with the `Nonempty`
+    iff example (`ZeroParadox/DieCannotBe.lean` § XXVII), of which this is the forward direction at
+    the `Prop` level. By `isolating_infty_iff`, `t` satisfies TypeTopology's `basic-discontinuity`;
+    its `basic-discontinuity-taboo` (`Taboos.BasicDiscontinuity`, retrieved 2026-10-29, for the
+    `ℕ∞`-indexed `WLPO`) is Escardó's WLPO row with Lemma 3.3 (JSL 78(3) (2013), preprint p. 4). -/
 theorem wlpo_of_isolating_infty (t : NInf → Bool) (ht : ∀ b, t b = true ↔ b = infty) :
     ∀ r : ℕ → Bool, (∀ n, r n = false) ∨ ¬ ∀ n, r n = false := fun r => by
   cases h : t (det r) with
