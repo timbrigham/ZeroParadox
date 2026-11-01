@@ -40,7 +40,7 @@ qualification to live in **Set**; stated unqualified it is loose.)
 ## Fences
 
 - **Hard fence (permanent):** no equation across instances is stated or committed to (it is ill-typed);
-  the instances share the die role, not an identity. Each framework forks at *its own* contact point;
+  the instances are measured against one die role, not an identity. Each framework forks at *its own* contact point;
   that is all that is claimed formally.
 - **Soft fence (conjecture):** that *every* domain fork is an instance of this μ/ν schema. The
   schema is a theorem here and for canonical functors; "every fork is μ/ν" is the open

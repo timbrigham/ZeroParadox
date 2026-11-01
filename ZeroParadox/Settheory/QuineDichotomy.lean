@@ -89,6 +89,13 @@ theorem quineAtomHost_quine_role_iff {L : Type*} [QuineAtomHost L] (y : L) :
   · rintro rfl
     exact ⟨(QuineAtomHost.bot_mem_iff _).2 rfl, fun b hb => (QuineAtomHost.bot_mem_iff b).1 hb⟩
 
+-- Statement: `ZFSet` has no Lawvere witness, since ∅ ≠ {∅} (`no_witness_of_nontrivial`).
+example : ¬ HasLawvereWitness ZFSet :=
+  no_witness_of_nontrivial (b₀ := (∅ : ZFSet)) (b₁ := ({∅} : ZFSet)) fun h => by
+    have : (∅ : ZFSet) ∈ ({∅} : ZFSet) := ZFSet.mem_singleton.2 rfl
+    rw [← h] at this
+    exact ZFSet.notMem_empty _ this
+
 -- Statement: CONTROL: under `trivialSelfApp`, the constant map to ⊥, the same occupancy holds; the
 -- class fields alone give it, whatever the map is.
 example {L : Type*} [ZPSemilattice L] (y : L) :

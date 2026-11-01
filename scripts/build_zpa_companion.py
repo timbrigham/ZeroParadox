@@ -256,7 +256,8 @@ def build():
         'that role is filled by a set that equals its own singleton.'))
     E.append(cbody(
         'Formally, the role is stated in each setting on its own terms rather than as one '
-        'equation. In the lattice, with its self-application map as the step, &#8869; is the only '
+        'equation. In a lattice given a self-application map whose only fixed point is &#8869; (even '
+        'the constant map to &#8869; qualifies), with that map as the step, &#8869; is the only '
         'point filling it. With membership as the step, in a host whose bottom is its own only '
         'member and where no other element is its own only member, that host&#8217;s bottom is the '
         'only point filling it. No ordinary, well-founded set fills '

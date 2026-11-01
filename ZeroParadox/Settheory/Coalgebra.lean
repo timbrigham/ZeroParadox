@@ -36,7 +36,7 @@ unoccupied in the well-founded set chart (`zfset_quine_role_unoccupied`,
 `ZeroParadox/Settheory/Wall.lean`). The diagonal fixed points of the other layers are each stated as
 occupants of the role in their own chart (indexed in `ZeroParadox/DieCannotBe.lean` § XV); no equation
 across charts is stated (one would be ill-typed) and none is committed to. What relates the charts is the
-role they share, which is the die's definition, not an identity (ZP-P hard fence).
+one role each chart is measured against, which is the die's definition, not an identity (ZP-P hard fence).
 
 ## Status
 

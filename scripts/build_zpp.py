@@ -418,7 +418,8 @@ def build():
             '<i>End of ZP-P | The Fixed-Point Fork | fork_collapse_iff (choice-free spine) | '
             'Ostrowski number-system instance | categorical &#956;/&#957; instance '
             '(Fix empty / Cofix inhabited) | hard fence: cross-instance identity is a type '
-            'boundary; what is shared is a role occupied chart by chart | soft fence: not every fork '
+            'boundary; what relates them is one role, which each chart occupies or provably does not | '
+            'soft fence: not every fork '
             'is &#956;/&#957; | '
             'All FixedPointFork.lean / Ostrowski.lean / Coalgebra.lean theorems verified; the role '
             'occupancies of Section III are verified in the Lean files they name.</i>',

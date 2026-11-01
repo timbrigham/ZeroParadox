@@ -28,7 +28,8 @@ lives in.
 
 The test is **category-relative**. In **Set** — raw types, all endofunctions — **no** face is a
 Lawvere fixed point: Cantor forbids the witness for every nontrivial total type (lattice and 2-adic
-proven; for set theory `no_witness_of_nontrivial` applies to `ZFSet` directly, since ∅ ≠ {∅}; no
+proven; for set theory `no_witness_of_nontrivial` applies to `ZFSet` directly, since ∅ ≠ {∅} (the
+`example` after `quineAtomHost_quine_role_iff` in `ZeroParadox/Settheory/QuineDichotomy.lean`); no
 equation between a lattice element and a set is stated; the charts are compared through the die's
 Quine-atom role, occupied or not chart by chart,
 `ZeroParadox/Settheory/QuineDichotomy.lean`).
