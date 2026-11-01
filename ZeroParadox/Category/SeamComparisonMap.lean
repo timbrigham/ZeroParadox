@@ -5,8 +5,7 @@ import ZeroParadox.Category.RootCutDegeneracy
 import ZeroParadox.Category.SeamArrowLevel
 
 /-!
-# The canonical μ→ν comparison map at the root seam, and the honest
-fence on "root-seam ≅ node-seam"
+# The canonical μ→ν comparison map at the root seam, and the root seam beside the node seam
 
 ## Engineer's Take
 
@@ -26,7 +25,7 @@ equivalence (it factors through `A` on both sides). It does **not** identify the
 **μ→ν comparison map** — the map that recursion theory actually means by "the comparison from the
 initial algebra to the final coalgebra" — nor prove that *that* map is the iso.
 
-This file closes that gap and then fences the keystone honestly.
+This file closes that gap and then sets the root seam beside the node seam, each under its own condition.
 
 **GO (the genuinely new edge).** For any QPF `F`, the canonical comparison `Fix F → Cofix F` is the
 unique initial-algebra homomorphism into `Cofix F` regarded as an `F`-algebra via the inverse of
@@ -258,8 +257,11 @@ example (M : Motion (fC_functor.obj 0)) : ¬ ∃ y, M.SelfOnlyAt y := by
 
 -- Statement: the other variant, carrier the endomorphisms `fC_functor.obj 0 ⟶ fC_functor.obj 0`:
 -- every self-map of it has exactly one point stepping to itself only. Reading: on endomorphisms the
--- role is occupied off the seam (`collapse_fires_off_seam`), so the element chart above is the one
--- that separates node #4 from node #5.
+-- carrier has one point at node #4 (initial) as at node #5 (zero), so the role is occupied at both and
+-- restates that the hom-set is a singleton (`collapse_fires_off_seam`). On elements the carrier is
+-- empty at node #4 (an object of `KleisliCat PMF`, not a module) and has one point at node #5, so the
+-- element carriers separate the two nodes by cardinality alone; `moduleCat_seam_role_unique_iff_isZero`
+-- applies at node #5 only.
 example (g : (fC_functor.obj 0 ⟶ fC_functor.obj 0) → (fC_functor.obj 0 ⟶ fC_functor.obj 0)) :
     ∃! y, (Motion.ofFun g).SelfOnlyAt y := by
   haveI : Subsingleton (fC_functor.obj 0 ⟶ fC_functor.obj 0) :=

@@ -46,9 +46,9 @@ because `PEmpty → X` is a singleton. Composing the unfold equivalence with thi
 `fixEquiv` and `cofixEquiv`, and `root_seam := fixEquiv.trans cofixEquiv.symm`. The strict side is
 imported verbatim from `ZeroParadox.categorical_fork_strict`.
 
-What is PROVED is exactly the equivalences and the dichotomy bundle below. `Reading:` CARRIER — the seam
-is a die role (`ZeroParadox/Die.lean`), occupied per chart with no equation across: here § The seam role
-in the die; every chart in `ZeroParadox/DieCannotBe.lean`.
+`Reading:` CARRIER — the seam is the die role `∃! y, SelfOnlyAt y` (`ZeroParadox/Die.lean`), occupied per
+chart with no equation across: § The seam role in the die; charts indexed in `ZeroParadox/DieCannotBe.lean`.
+The diagonal fixed point is not indexed as a chart of this role; whether it occupies it is not stated.
 
 ## Engineer's Take
 
@@ -214,7 +214,8 @@ theorem constPF_nextTime (S : Set (Cofix (constPF A).Obj)) :
   intro b
   exact b.elim
 
-/-- `Statement:` on `Cofix (constPF A).Obj`, exactly one set steps to itself only. -/
+/-- `Statement:` on `Cofix (constPF A).Obj`, exactly one set steps to itself only. `Reading:` for `A`
+    empty the chart has one point and this restates it. -/
 theorem constPF_seam_role_unique (A : Type u) :
     ∃! S, (Motion.ofFun (nextTime (P := constPF A)
       (Cofix.dest : Cofix (constPF A).Obj → _))).SelfOnlyAt S :=
@@ -274,7 +275,7 @@ example :
   exact this
 
 -- Statement: CONTROL: OVER always true on `Unit` has exactly one point stepping to itself only, and
--- on `Bool` OVER the identity has two.
+-- on `Bool` OVER the identity does not have exactly one (both points step to themselves only).
 example : (∃! y, (Motion.ofTotal (id : Unit → Unit) (fun _ => rfl) (fun _ _ => True)).SelfOnlyAt y) ∧
     ¬ ∃! y, (Motion.ofFun (id : Bool → Bool)).SelfOnlyAt y := by
   refine ⟨⟨(), ⟨trivial, fun _ _ => rfl⟩, fun _ _ => rfl⟩, ?_⟩

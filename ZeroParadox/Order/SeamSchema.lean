@@ -8,7 +8,7 @@ import ZeroParadox.Computability.SelfApp
 
 /-!
 # A shared "seam schema" for the QPF root-seam and the lattice selfApp seam,
-with the cross-setting fence IN the statement.
+with no map across the two settings exhibited, stated in Lean.
 
 ## Engineer's Take
 

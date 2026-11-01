@@ -2538,7 +2538,7 @@ example {L : Type} [ZeroParadox.QuineAtomHost L] :
 -- Reading: CARRIER — the seam role is exactly one point stepping to itself only (on a complete lattice,
 -- `lfp = gfp`, the `fork_collapse_iff` entry above); each chart below occupies it or not by its own
 -- theorem, and no equation across the charts is stated.
-#check @ZeroParadox.selfApp_seam_role_unique              -- Statement: `ofFun selfApp` on a `ZPSemilattice`: exactly one point steps to itself only
+#check @ZeroParadox.selfApp_seam_role_unique              -- Statement: `ofFun selfApp` on a `ZPSemilattice` with `AbstractSelfApp`: exactly one point steps to itself only, the bottom of the `ZPSemilattice`, from the class fields `fixed_bot` and `unique_fp`
 #check @ZeroParadox.seam_role_unique_iff_wellFounded      -- Statement: `ofFun (nextTime α)` on `Set X`: exactly one set steps to itself only iff `α` is well-founded (`IsWellFoundedCoalg`); both directions
 #check @ZeroParadox.constPF_seam_role_unique              -- Statement: so on `Cofix (constPF A).Obj` (no recursive position) exactly one does
 #check @ZeroParadox.idPF_seam_role_not_unique             -- Statement: and on `Cofix idPF_Coalgebra.Obj` (one recursive position) not exactly one does
