@@ -617,6 +617,28 @@ theorem selectedTotal_of_option (f : α → Option α) (h : ∀ a b, M.step a b 
   rw [hb']
   rfl
 
+/-- `Statement:` if `α` has points `u ≠ v` and a `Bool` test `t` with `t b = true ↔ b = u`, and every
+    `Prop`-valued step on `α` has a total selector, weak excluded middle holds; the reduction reads
+    the selector at `u` of the step to `u` when `p` and to `v` when `¬ p`. -/
+theorem wem_of_selectedTotal_propStep (u v : α) (huv : u ≠ v) (t : α → Bool)
+    (ht : ∀ b, t b = true ↔ b = u)
+    (H : ∀ s : α → α → Prop, (ofTotal id (fun _ => rfl) s).SelectedTotal) :
+    ∀ p : Prop, ¬ p ∨ ¬ ¬ p := by
+  intro p
+  obtain ⟨f, hf⟩ := H (fun _ b => (b = u ∧ p) ∨ (b = v ∧ ¬ p))
+  cases hfu : t (f u) with
+  | true =>
+    have e := (ht _).1 hfu
+    refine Or.inr fun hnp => ?_
+    rcases hf u ⟨v, Or.inr ⟨rfl, hnp⟩⟩ with ⟨_, hp⟩ | ⟨hv, _⟩
+    · exact hnp hp
+    · exact huv (e.symm.trans hv)
+  | false =>
+    refine Or.inl fun hp => ?_
+    rcases hf u ⟨u, Or.inl ⟨rfl, hp⟩⟩ with ⟨hu, _⟩ | ⟨_, hnp⟩
+    · rw [(ht _).2 hu] at hfu; cases hfu
+    · exact hnp hp
+
 /-! ### § IX. The OVER leg's WHETHER: what OVER does at a point -/
 
 variable (M)
@@ -667,6 +689,32 @@ theorem lpo_of_trichotomy_nat_boolStep
       · exact absurd hn (h n)
   · exact Or.inl ⟨0, hs⟩
   · exact Or.inl ⟨b, hb⟩
+
+/-- `Statement:` if, at a point `y` of `α`, the trichotomy holds for every `Prop`-valued step on `α`,
+    excluded middle holds; the reduction reads the step `a ↦ {b | p ∧ b = y}` at `y`. -/
+theorem em_of_trichotomy_propStep (y : α)
+    (H : ∀ s : α → α → Prop, (ofTotal id (fun _ => rfl) s).OverTrichotomy y) :
+    ∀ p : Prop, p ∨ ¬ p := by
+  intro p
+  rcases H (fun _ b => p ∧ b = y) with h | ⟨⟨hp, _⟩, _⟩ | ⟨b, ⟨_, hb⟩, hne⟩
+  · exact Or.inr fun hp => h y ⟨hp, rfl⟩
+  · exact Or.inl hp
+  · exact absurd hb hne
+
+/-- `Statement:` if excluded middle holds, every motion meets the trichotomy at every point. -/
+theorem trichotomy_of_em (em : ∀ p : Prop, p ∨ ¬ p) (M : Motion α) (y : α) :
+    M.OverTrichotomy y := by
+  rcases em (∃ b, M.step y b ∧ b ≠ y) with h1 | h1
+  · exact Or.inr (Or.inr h1)
+  · rcases em (M.step y y) with h2 | h2
+    · refine Or.inr (Or.inl ⟨h2, fun b hb => ?_⟩)
+      rcases em (b = y) with e | e
+      · exact e
+      · exact absurd ⟨b, hb, e⟩ h1
+    · refine Or.inl fun b hb => ?_
+      rcases em (b = y) with e | e
+      · exact h2 (e ▸ hb)
+      · exact h1 ⟨b, hb, e⟩
 
 /-- `Statement:` if `y` has at most one successor and steps to itself, `y` steps to itself only; no
     order is used. `Reading:` the order-free trap beside § XII's order traps. -/
@@ -3971,6 +4019,19 @@ theorem wlpo_of_tag (g : NInf → Option ℕ) (hg : ∀ x, g x = none ↔ x = in
       have := (hg b).2 e
       rw [hb] at this; cases this
 
+-- The `DecidableEq` binder is kept in the type on purpose: the proof cases on it, and the
+-- PurityCheck prints the footprint that binder buys.
+set_option linter.unusedDecidableInType false in
+/-- `Statement:` if `D` has decidable equality and a map `g : NInf → D` has `g x = g ∞ ↔ x = ∞` at
+    every `x`, WLPO holds. `wlpo_of_tag` has the hypotheses of the case `D = Option ℕ`, there with
+    `g ∞ = none` (`ZeroParadox/DieCannotBe.lean` § XXVII). -/
+theorem wlpo_of_discrete_tag {D : Type*} [DecidableEq D] (g : NInf → D)
+    (hg : ∀ x, g x = g infty ↔ x = infty) :
+    ∀ r : ℕ → Bool, (∀ n, r n = false) ∨ ¬ ∀ n, r n = false := fun r => by
+  by_cases h : g (det r) = g infty
+  · exact Or.inl ((det_eq_infty_iff r).1 ((hg _).1 h))
+  · exact Or.inr fun hall => h (by rw [(det_eq_infty_iff r).2 hall])
+
 /-- `Statement:` `toPart x` is defined iff `x n = false` for some `n`, with value the least such `n`. -/
 def toPart (x : NInf) : Part ℕ := ⟨∃ n, x.1 n = false, fun h => Nat.find h⟩
 
@@ -4031,6 +4092,90 @@ theorem toPart_ofOption (o : Option ℕ) : toPart (ofOption o) = Part.ofOption o
       simp [ofOption, ofNat] at this h2
       exact congrArg some (by omega)
     · intro h; cases h; rfl
+
+/-- `Statement:` partial elements of `ℕ` defined iff `∃ n, α n = true`, for some `α`. -/
+def RosPart : Type := {o : Part ℕ // ∃ α : ℕ → Bool, (o.Dom ↔ ∃ n, α n = true)}
+
+/-- `Statement:` `toPart x` with the witness `α = fun n => !x n` for its definedness. -/
+def toRos (x : NInf) : RosPart := ⟨toPart x, ⟨fun n => !x.1 n,
+  ⟨fun ⟨n, h⟩ => ⟨n, by simp [h]⟩, fun ⟨n, h⟩ => ⟨n, by simpa using h⟩⟩⟩⟩
+
+/-- `Statement:` if `toRos` is onto, LPO holds; the proof reads the preimage of the element with
+    value `0` defined iff `∃ n, α n = true` at bit `0`. -/
+theorem lpo_of_toRos_surjective (h : Function.Surjective toRos) :
+    ∀ α : ℕ → Bool, (∃ n, α n = true) ∨ ∀ n, α n = false := by
+  intro α
+  obtain ⟨x, hx⟩ := h ⟨⟨∃ n, α n = true, fun _ => 0⟩, ⟨α, Iff.rfl⟩⟩
+  have hx' : toPart x = ⟨∃ n, α n = true, fun _ => 0⟩ := congrArg Subtype.val hx
+  cases h0 : x.1 0 with
+  | false =>
+    left
+    have hd : (toPart x).Dom := ⟨0, h0⟩
+    rw [hx'] at hd; exact hd
+  | true =>
+    right
+    intro n
+    cases hn : α n with
+    | false => rfl
+    | true =>
+      have hm : (0 : ℕ) ∈ toPart x := by rw [hx']; exact ⟨⟨n, hn⟩, rfl⟩
+      rw [(mem_toPart_iff x 0).1 hm] at h0
+      exact absurd h0 (by decide)
+
+/-- `Statement:` if LPO holds, `toRos` is onto. -/
+theorem toRos_surjective_of_lpo (h : ∀ α : ℕ → Bool, (∃ n, α n = true) ∨ ∀ n, α n = false) :
+    Function.Surjective toRos := by
+  rintro ⟨o, α, hα⟩
+  rcases h α with hex | hall
+  · have hd : o.Dom := hα.2 hex
+    refine ⟨ofNat (o.get hd), Subtype.ext (Part.ext fun n => ?_)⟩
+    show n ∈ toPart (ofOption (some (o.get hd))) ↔ n ∈ o
+    rw [toPart_ofOption, Part.mem_ofOption]
+    exact ⟨fun e => (Option.some_injective _ e) ▸ Part.get_mem hd,
+      fun hn => congrArg some (Part.mem_unique (Part.get_mem hd) hn)⟩
+  · refine ⟨infty, Subtype.ext (Part.ext fun n => ?_)⟩
+    show n ∈ toPart infty ↔ n ∈ o
+    constructor
+    · rintro ⟨⟨m, hm⟩, _⟩; cases hm
+    · rintro ⟨hd, _⟩
+      obtain ⟨m, hm⟩ := hα.1 hd
+      rw [hall m] at hm; cases hm
+
+/-- `Statement:` `toRos` is onto iff LPO; both directions. `Reading:` compare Escardó and Knapp,
+    CSL 2017, § 2.8, p. 21:6: "the decidability of Rosolini propositions is known as LPO". -/
+theorem toRos_surjective_iff :
+    Function.Surjective toRos ↔ ∀ α : ℕ → Bool, (∃ n, α n = true) ∨ ∀ n, α n = false :=
+  ⟨lpo_of_toRos_surjective, toRos_surjective_of_lpo⟩
+
+/-- `Statement:` every proposition `p` has some `α : ℕ → Bool` with `p ↔ ∃ n, α n = true`. -/
+def AllRosolini : Prop := ∀ p : Prop, ∃ α : ℕ → Bool, (p ↔ ∃ n, α n = true)
+
+/-- `Statement:` if excluded middle holds, `AllRosolini` holds. -/
+theorem allRosolini_of_em (em : ∀ p : Prop, p ∨ ¬ p) : AllRosolini := fun p =>
+  (em p).elim (fun hp => ⟨fun _ => true, ⟨fun _ => ⟨0, rfl⟩, fun _ => hp⟩⟩)
+    (fun hn => ⟨fun _ => false, ⟨fun hp => absurd hp hn, fun ⟨_, h⟩ => by cases h⟩⟩)
+
+/-- `Statement:` if `AllRosolini` and LPO hold, excluded middle holds. -/
+theorem em_of_allRosolini_lpo (hr : AllRosolini)
+    (hl : ∀ α : ℕ → Bool, (∃ n, α n = true) ∨ ∀ n, α n = false) : ∀ p : Prop, p ∨ ¬ p := fun p => by
+  obtain ⟨α, hα⟩ := hr p
+  rcases hl α with h | h
+  · exact Or.inl (hα.2 h)
+  · exact Or.inr fun hp => by obtain ⟨n, hn⟩ := hα.1 hp; rw [h n] at hn; cases hn
+
+/-- `Statement:` the inclusion `RosPart → Part ℕ` is onto iff `AllRosolini`; both directions. -/
+theorem rosIncl_surjective_iff :
+    Function.Surjective (Subtype.val : RosPart → Part ℕ) ↔ AllRosolini := by
+  constructor
+  · intro h p
+    obtain ⟨⟨o, hro⟩, ho⟩ := h ⟨p, fun _ => 0⟩
+    obtain ⟨α, hα⟩ := hro
+    refine ⟨α, ?_⟩
+    have ho' : o = ⟨p, fun _ => 0⟩ := ho
+    subst ho'
+    exact hα
+  · intro h o
+    exact ⟨⟨o, h o.Dom⟩, rfl⟩
 
 /-- `Statement:` a map `g : NInf → Option ℕ` with `g x = some n ↔ x = n̲` gives LPO (Escardó, p. 4,
     the LPO row `ℕ∞ = ℕ ∪ {∞}`, right to left; compare his Corollary 3.7, p. 5). -/
@@ -4734,5 +4879,18 @@ open ZeroParadox
 #print axioms Motion.loopAt_image_iff_leftInverse
 #print axioms Motion.loopAt_image_iff_loopAt_all
 #print axioms Motion.lpo_of_loopAt_image
+#print axioms NInf.wlpo_of_discrete_tag
+#print axioms NInf.RosPart
+#print axioms NInf.toRos
+#print axioms NInf.lpo_of_toRos_surjective
+#print axioms NInf.toRos_surjective_of_lpo
+#print axioms NInf.toRos_surjective_iff
+#print axioms NInf.AllRosolini
+#print axioms NInf.allRosolini_of_em
+#print axioms NInf.em_of_allRosolini_lpo
+#print axioms NInf.rosIncl_surjective_iff
+#print axioms Motion.wem_of_selectedTotal_propStep
+#print axioms Motion.em_of_trichotomy_propStep
+#print axioms Motion.trichotomy_of_em
 
 end PurityCheck

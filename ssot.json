@@ -652,7 +652,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 2985,
+        "declarations": 2998,
         "files": 184
       },
       "entries": [
@@ -15234,6 +15234,41 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "21ccce92-2ea2-4f67-ab09-7a52dca2de3a",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.trichotomy_of_em",
+            "short": "trichotomy_of_em"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.trichotomy_of_em",
+            "short": "trichotomy_of_em",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-tagged-1101: Prop-step trichotomy/selector reductions (EM, WEM), Rosolini lifting RosPart with toRos onto iff LPO, wlpo_of_discrete_tag (Die §§ VIII, IX, XXIII); Tim authorised 2026-11-01",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "21f5c341-c029-426b-ac74-e5e553646350",
           "new": {
@@ -22100,6 +22135,41 @@
             ]
           },
           "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "315618e8-20e3-424e-9f90-2dfbcd89ec27",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.em_of_allRosolini_lpo",
+            "short": "em_of_allRosolini_lpo"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.em_of_allRosolini_lpo",
+            "short": "em_of_allRosolini_lpo",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-tagged-1101: Prop-step trichotomy/selector reductions (EM, WEM), Rosolini lifting RosPart with toRos onto iff LPO, wlpo_of_discrete_tag (Die §§ VIII, IX, XXIII); Tim authorised 2026-11-01",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -29700,6 +29770,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "44fff6aa-7e0b-4ade-a56d-ec04fde6b4cc",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.rosIncl_surjective_iff",
+            "short": "rosIncl_surjective_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.rosIncl_surjective_iff",
+            "short": "rosIncl_surjective_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-tagged-1101: Prop-step trichotomy/selector reductions (EM, WEM), Rosolini lifting RosPart with toRos onto iff LPO, wlpo_of_discrete_tag (Die §§ VIII, IX, XXIII); Tim authorised 2026-11-01",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "450d77fb-ee84-4191-ae1e-3d1a86f3fbcd",
           "new": {
             "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
@@ -35543,6 +35648,41 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "51b8af1d-49b5-4afb-bf50-df1fc4bb5f5d",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.lpo_of_toRos_surjective",
+            "short": "lpo_of_toRos_surjective"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.lpo_of_toRos_surjective",
+            "short": "lpo_of_toRos_surjective",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-tagged-1101: Prop-step trichotomy/selector reductions (EM, WEM), Rosolini lifting RosPart with toRos onto iff LPO, wlpo_of_discrete_tag (Die §§ VIII, IX, XXIII); Tim authorised 2026-11-01",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -44005,6 +44145,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "67285818-6942-4377-b3ce-aa836d29e620",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.allRosolini_of_em",
+            "short": "allRosolini_of_em"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.allRosolini_of_em",
+            "short": "allRosolini_of_em",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-tagged-1101: Prop-step trichotomy/selector reductions (EM, WEM), Rosolini lifting RosPart with toRos onto iff LPO, wlpo_of_discrete_tag (Die §§ VIII, IX, XXIII); Tim authorised 2026-11-01",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "67306680-8aae-4b0b-9d33-0cc68d3ea101",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -45921,6 +46096,41 @@
             ]
           },
           "reason": "Section V of GroundZero: the well-founded coalgebra predicate applied to step functions = halting",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "6b606b15-ca57-4bf0-8ac2-c9d16753b7a3",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.toRos_surjective_iff",
+            "short": "toRos_surjective_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.toRos_surjective_iff",
+            "short": "toRos_surjective_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-tagged-1101: Prop-step trichotomy/selector reductions (EM, WEM), Rosolini lifting RosPart with toRos onto iff LPO, wlpo_of_discrete_tag (Die §§ VIII, IX, XXIII); Tim authorised 2026-11-01",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -48558,6 +48768,41 @@
             ]
           },
           "reason": "phase-order arc r2 fixes: rename F3, extremal-placement characterization (P2), floor-above epsilon0 landing (P3)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "70b603f4-5e2a-4350-9129-3713153be5bf",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.em_of_trichotomy_propStep",
+            "short": "em_of_trichotomy_propStep"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.em_of_trichotomy_propStep",
+            "short": "em_of_trichotomy_propStep",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-tagged-1101: Prop-step trichotomy/selector reductions (EM, WEM), Rosolini lifting RosPart with toRos onto iff LPO, wlpo_of_discrete_tag (Die §§ VIII, IX, XXIII); Tim authorised 2026-11-01",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -63879,6 +64124,41 @@
         {
           "claims": {
             "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "95a74722-5848-42b3-9dc2-77470033b22d",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.wem_of_selectedTotal_propStep",
+            "short": "wem_of_selectedTotal_propStep"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.wem_of_selectedTotal_propStep",
+            "short": "wem_of_selectedTotal_propStep",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-tagged-1101: Prop-step trichotomy/selector reductions (EM, WEM), Rosolini lifting RosPart with toRos onto iff LPO, wlpo_of_discrete_tag (Die §§ VIII, IX, XXIII); Tim authorised 2026-11-01",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
             "witness_of": [
               "node-computability"
             ]
@@ -67872,6 +68152,41 @@
             ]
           },
           "reason": "Die computability face (halting as arrival, clock machine), quotients of a motion (drawing vs set: hypersets, codes), carrier-changing steps (wrap, Option), PoleEnds with inhabitation",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "9e24c8a9-061b-4780-affa-d6b49fd77cd2",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.wlpo_of_discrete_tag",
+            "short": "wlpo_of_discrete_tag"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.wlpo_of_discrete_tag",
+            "short": "wlpo_of_discrete_tag",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-tagged-1101: Prop-step trichotomy/selector reductions (EM, WEM), Rosolini lifting RosPart with toRos onto iff LPO, wlpo_of_discrete_tag (Die §§ VIII, IX, XXIII); Tim authorised 2026-11-01",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -75641,6 +75956,41 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "b0f3c48b-7942-4a9f-9b85-7d4502053359",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.toRos",
+            "short": "toRos"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.toRos",
+            "short": "toRos",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-tagged-1101: Prop-step trichotomy/selector reductions (EM, WEM), Rosolini lifting RosPart with toRos onto iff LPO, wlpo_of_discrete_tag (Die §§ VIII, IX, XXIII); Tim authorised 2026-11-01",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "b0f58c82-4175-4dab-a1e3-3234bdbdf57b",
           "new": {
@@ -78284,6 +78634,41 @@
             "role": []
           },
           "reason": "ExcludedMiddleBridge: choice fragment -> EM -> Prop nucleus trivial, plus the Fin 3 non-Boolean fence",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b6d4a38a-db88-4336-9566-b013f01013c4",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.toRos_surjective_of_lpo",
+            "short": "toRos_surjective_of_lpo"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.toRos_surjective_of_lpo",
+            "short": "toRos_surjective_of_lpo",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-tagged-1101: Prop-step trichotomy/selector reductions (EM, WEM), Rosolini lifting RosPart with toRos onto iff LPO, wlpo_of_discrete_tag (Die §§ VIII, IX, XXIII); Tim authorised 2026-11-01",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -99464,6 +99849,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "e74ba681-7dac-48b5-91e2-36f0d4d7bba0",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.AllRosolini",
+            "short": "AllRosolini"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.AllRosolini",
+            "short": "AllRosolini",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-tagged-1101: Prop-step trichotomy/selector reductions (EM, WEM), Rosolini lifting RosPart with toRos onto iff LPO, wlpo_of_discrete_tag (Die §§ VIII, IX, XXIII); Tim authorised 2026-11-01",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "e7944d4d-c229-4987-ac80-6d2a6c3e9abb",
           "new": {
             "file": "ZeroParadox/Computability/OutputSeparates.lean",
@@ -109117,6 +109537,41 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "fd634896-8f91-4cf6-ba58-d784cc24cd48",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.RosPart",
+            "short": "RosPart"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.RosPart",
+            "short": "RosPart",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-tagged-1101: Prop-step trichotomy/selector reductions (EM, WEM), Rosolini lifting RosPart with toRos onto iff LPO, wlpo_of_discrete_tag (Die §§ VIII, IX, XXIII); Tim authorised 2026-11-01",
           "verify": {
             "axioms": null,
             "sorry_free": true
