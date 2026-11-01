@@ -109,7 +109,7 @@ example (x : ZFSet) : x ≠ {x} := by
 
 /-- `Statement:` in the die motion on `ZFSet` with UP the identity and OVER `a ⟶ b` when `b ∈ a`
     (a set steps to its members), `x` steps to itself and to nothing else (`Motion.SelfOnlyAt`) iff
-    `x = {x}`; both directions, the backward one by extensionality. `Reading:` the Quine-atom role
+    `x = {x}`; both directions, the forward one by extensionality. `Reading:` the Quine-atom role
     stated in the die. -/
 theorem zfset_selfOnlyAt_mem_iff (x : ZFSet) :
     (Motion.ofTotal id (fun _ => rfl) (fun a b : ZFSet => b ∈ a)).SelfOnlyAt x ↔ x = {x} := by
@@ -126,7 +126,8 @@ theorem zfset_quine_role_unoccupied :
   fun ⟨x, h⟩ => no_quine_atom x h.1
 
 -- Statement: with OVER reversed (`a ⟶ b` when `a ∈ b`), `SelfOnlyAt x` is `x ∈ x` and `x` belongs
--- to no other set, a different predicate from `x = {x}`.
+-- to no other set, a different formula from `x = {x}`; on `ZFSet` neither holds of any set
+-- (`no_quine_atom`), so this orientation does not separate them there.
 example (x : ZFSet) :
     (Motion.ofTotal id (fun _ => rfl) (fun a b : ZFSet => a ∈ b)).SelfOnlyAt x ↔
       (x ∈ x ∧ ∀ b, x ∈ b → b = x) := Iff.rfl

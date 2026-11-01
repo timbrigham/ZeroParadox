@@ -37428,6 +37428,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "567cbd95-f84f-489d-a5f6-40c52dced0ab",
+          "new": {
+            "file": "ZeroParadox/Settheory/Coalgebra.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cofix_subsingleton",
+            "short": "cofix_subsingleton"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/Coalgebra.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cofix_subsingleton",
+            "short": "cofix_subsingleton",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Lane Q 2026-11-01 round 1 fix: the Cofix idPF_Coalgebra chart has one point",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "5686441f-9e1e-4ebc-b98e-518d7ee0619e",
           "new": {
             "file": "ZeroParadox/Die.lean",

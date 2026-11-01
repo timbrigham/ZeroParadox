@@ -23,8 +23,8 @@ comprehension / a reflexive object is inconsistent (the type-level cousin is `re
 Curry is a **wall / μ** face — self-reference that cannot be internalized — and the most violent form:
 not "no truth value" but "every value at once". Its floor dual (ν) is the Quine-atom role in the
 die, `SelfOnlyAt`, a point stepping to itself and to nothing else: occupied in the coalgebra chart
-(`cofix_quine_role_occupied`, `ZeroParadox/Settheory/Coalgebra.lean`), where self-reference closes
-without exploding, and unoccupied in `ZFSet` (`zfset_quine_role_unoccupied`,
+(`cofix_quine_role_occupied`, `ZeroParadox/Settheory/Coalgebra.lean`; a one-point chart,
+`cofix_subsingleton`), where self-reference closes without exploding, and unoccupied in `ZFSet` (`zfset_quine_role_unoccupied`,
 `ZeroParadox/Settheory/Wall.lean`).
 
 ## Honest delta
