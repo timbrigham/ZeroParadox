@@ -63,7 +63,7 @@ once declared Aczel unobtainable while it sat on disk. **Grep loosely** — scan
 intra-word spaces, so a tight-pattern miss is not evidence of absence.
 
 **Rung 2 — `theoremsearch`.** Claim-shaped rather than file-shaped: it matches on *statement*, which is
-the thing a title search cannot reach. Four standing rules, each measured:
+the thing a title search cannot reach. Five standing rules, each measured:
 - **THREE PHRASINGS MINIMUM**, along the four axes in § `R-NOTINLIB` (body:
   `tools/process/not-in-the-library.md`) — POLARITY, PART OF SPEECH, VOCABULARY, DISPLAY. Measured: the
   noun form put the right theorem at rank 1 and the **verb** form dropped it out of the top 5 entirely,
@@ -84,15 +84,26 @@ the thing a title search cannot reach. Four standing rules, each measured:
   `"both"`). Coverage, a dated sample (2026-10-31): hits in Mathlib, pfr, carleson, FLT,
   HarderNarasimhan; misses on the probes run, teorth/equational_theories and this repository. A formal
   null is coverage-bounded.
+- **A TOOL PRESENT BUT REFUSED IS NOT RUN, NEVER A NULL** — by the permission mode, or by an error that
+  is not a rate limit. Record the refusal message verbatim (2026-10-31: every rung-2 call of one review
+  was refused by the permission mode).
 
 **Rung 3 — Lean libraries, always run.** LeanExplore (Justin Asher, arXiv:2506.11085): `search_summary`,
-two phrasings minimum, then `get_source_code` on any candidate plus its elaborated type from `#check`
-(the only route; `get_dependencies` returns names only), because the returned text can omit section
-binders (2026-10-31: `OrderHom.lfp` lost `[CompleteLattice α]`). Then GitHub code search with
-`extension:lean`, not `language:Lean` (2026-10-31: 9 files against 0), for the Reservoir long tail
-(about 920 packages, 2026-10-31). The LeanExplore half may be recorded NOT RUN if the tools are
-unavailable; the code search is always required. Its null is uninformative too; both services are
-rate-limited. Full rules: `.claude/commands/prior-art-review.md`, rung B2.
+two phrasings minimum (`packages=[...]` narrows to named packages), then `get_source_code` on any
+candidate plus its elaborated type, because the returned text can omit section binders (2026-10-31:
+`OrderHom.lfp` lost `[CompleteLattice α]`). Inside this project's dependency closure, running it is the
+only route: `#check` and `exact?` in a scratchpad `.lean`, run with `lake env lean <absolute path>` from
+the repo root. Outside it (FLT, carleson, pfr), Tim ruled 2026-10-31 that the source file read via
+`get_source_link`, section `variable` lines included, is cited **PARTLY VERIFIED: source read, type not
+elaborated**. `get_dependencies` returns a partial list as a JSON-encoded string (2026-10-31: for
+`Nat.Partrec.Code.fixed_point₂`, some statement constants, but not `Partrec₂` from its hypothesis, nor
+the proof's constants), and LeanExplore's snapshot is not the pinned Mathlib, so confirm a hit at the pin.
+Then GitHub code search with `extension:lean`, not `language:Lean` (2026-10-31: 9 files against 0),
+`perPage` ≤ 10 and `-repo:timbrigham/ZeroParadox`, for the Reservoir long tail (about 920 packages,
+2026-10-31). The LeanExplore half may be recorded NOT RUN if the tools are unavailable or refused; the
+code search is always required. Its null is uninformative too; both services are rate-limited, and only
+a rate-limit response is a wait. A Lean-only prior art is cited by repository, declaration name and
+commit read, plus that verification status. Full rules: `.claude/commands/prior-art-review.md`, rung B2.
 
 **Rung 4 — the open web.** Runs when rung 2 returns no good match, **and also when it returns a
 neighbourhood hit whose actual source needs identifying**. This is where everything pre-arXiv lives —
@@ -106,7 +117,8 @@ until this rung.** Draft-from-source is unchanged by any of the above: existence
 source's *content* may not be asserted without the passage in hand.
 
 ⚠ **RUNGS 1-4 ARE DISCOVERY. ONLY RUNG 5 IS VERIFICATION.** For a Lean declaration, rung 5's
-retrieval is its source text plus its elaborated type. The ladder makes finding candidates
+retrieval is its source text plus its elaborated type; outside the dependency closure it reaches only
+PARTLY VERIFIED. The ladder makes finding candidates
 cheaper; it does not make any of them citable. See § 2b for the measurement that settles this.
 
 ## 2b. Why the ladder is shaped this way — the calibration, 2026-08-23
@@ -121,8 +133,8 @@ content-exact statements. Veltri, Ahrens–Capriotti–Spadotti and Yanofsky wer
 
 **Coverage is real and provable.** arXiv:2104.02549 is **verifiably absent** from the index while sitting
 in `papers/`. So a gate blocking on "no prior art found" would have returned clear for a claim whose prior
-art this project is physically holding. `paper_filter` matches arXiv ids as a prefix and other tokens as
-title substrings (the tool's schema; 2026-10-31). Verify the filter before believing its zero.
+art this project is physically holding. `paper_filter` needs a FULL arXiv id, despite the schema's "prefix":
+on 2026-10-31 `0801.209` returned empty and `0801.2097` hit. Verify the filter before believing its zero.
 
 **Precision: one correct abstention, and one control that was itself wrong.** The two-forks universal
 negative (`ZeroParadox/Algebra/WheelFrac.md`) drew only unrelated combinatorics — correct abstention.
@@ -138,8 +150,10 @@ arXiv:2104.02549 — *"≤ is connex, `(X≤Y) ⊎ (X≥Y)`"* ⟹ LEM. **From th
 as Thm 38(d) renumbered for the journal version. Opening the PDF on disk shows they are different
 statements** — connexity versus splitting. Trusting the body would have produced a wrong citation.
 
-Three reasons the body is not a passage, all observed: `label` and `link` come back **null**, so there is
-no in-paper locator and numbering shifts between versions of one work; the `slogan` field is an **LLM
+Three reasons the body is not a passage, all observed: the `name` field carries the in-paper label on
+arXiv hits (2026-10-31, `paper_filter="0801.2097"`: Miller's own labels, two distinct statements both
+"Theorem 2" because an appendix restarts the numbering), but numbering is version-specific and
+unverified until the source is open, and `link` is **null** on Lean Repo hits; the `slogan` field is an **LLM
 paraphrase** sitting beside the body and is the most quotable thing on the screen; and ambient hypotheses
 are inconsistently present — sometimes in the body (*"If H preserves monomorphisms…"*), sometimes not,
 which is precisely the AMM Thm 8.1 trap this project already records (those conditions are the
