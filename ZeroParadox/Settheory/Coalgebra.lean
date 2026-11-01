@@ -1,5 +1,6 @@
 import Mathlib.Data.QPF.Univariate.Basic
 import ZeroParadox.Settheory.FixedPointFork
+import ZeroParadox.Die
 
 /-!
 # ZP-P instance: the categorical parent (initial algebra vs final coalgebra)
@@ -87,6 +88,55 @@ theorem categorical_fork_strict :
     IsEmpty (Fix idPF_Coalgebra.Obj) ∧ Nonempty (Cofix idPF_Coalgebra.Obj) :=
   ⟨fix_isEmpty, cofix_nonempty⟩
 
+/-! ### The Quine-atom role in the die
+Beside the FENCE above: in the die (`ZeroParadox/Die.lean`) the Quine atom is a ROLE, `Motion.SelfOnlyAt`
+(a point stepping to itself and to nothing else). `Reading:` CARRIER — of the two charts here, this one occupies it
+(`cofix_quine_role_occupied`) and `ZFSet` provably does not (`zfset_quine_role_unoccupied`,
+`ZeroParadox/Settheory/Wall.lean`). No equation is stated across them: an equation between a
+`Cofix idPF_Coalgebra.Obj` point and a `ZFSet` is ill-typed. This chart has one point
+(`cofix_subsingleton`; the final system of the identity functor is a one-element set, Rutten, TCS 249
+(2000), Example 10.2(1), p. 44), so its occupancy is the one-node loop and carries no contrast inside the
+chart; the contrast it carries is `categorical_fork_strict`. -/
+
+/-- `Statement:` the element `cofix_nonempty` builds: the corecursion from the one-point coalgebra. -/
+noncomputable def cofixSelf : Cofix idPF_Coalgebra.Obj :=
+  Cofix.corec (fun _ : PUnit => (⟨PUnit.unit, fun _ => PUnit.unit⟩ : idPF_Coalgebra.Obj PUnit)) PUnit.unit
+
+/-- `Statement:` `Cofix.dest cofixSelf` is the one-slot node whose only child is `cofixSelf`. -/
+theorem dest_cofixSelf :
+    Cofix.dest cofixSelf = (⟨PUnit.unit, fun _ => cofixSelf⟩ : idPF_Coalgebra.Obj _) := by
+  rw [cofixSelf, Cofix.dest_corec]; rfl
+
+/-- `Statement:` in the die motion on `Cofix idPF_Coalgebra.Obj` with UP the identity and OVER
+    `x ⟶ y` when `y` is a child of `x` under `Cofix.dest`, `cofixSelf` steps to itself and to nothing
+    else (`Motion.SelfOnlyAt`). -/
+theorem cofixSelf_selfOnlyAt :
+    (Motion.ofTotal (id : Cofix idPF_Coalgebra.Obj → _) (fun _ => rfl)
+      (fun x y => ∃ b, (Cofix.dest x).2 b = y)).SelfOnlyAt cofixSelf := by
+  refine ⟨⟨PUnit.unit, by rw [dest_cofixSelf]⟩, fun b ⟨i, hi⟩ => ?_⟩
+  rw [dest_cofixSelf] at hi
+  exact hi.symm
+
+/-- `Statement:` so in that motion some point steps to itself and to nothing else. -/
+theorem cofix_quine_role_occupied :
+    ∃ x, (Motion.ofTotal (id : Cofix idPF_Coalgebra.Obj → _) (fun _ => rfl)
+      (fun x y => ∃ b, (Cofix.dest x).2 b = y)).SelfOnlyAt x :=
+  ⟨cofixSelf, cofixSelf_selfOnlyAt⟩
+
+/-- `Statement:` `Cofix idPF_Coalgebra.Obj` has at most one point (bisimulation by the
+    always-true relation). -/
+theorem cofix_subsingleton : ∀ x y : Cofix idPF_Coalgebra.Obj, x = y := by
+  intro x y
+  apply Cofix.bisim_rel (fun _ _ => True) _ x y trivial
+  intro a b _
+  rcases ha : Cofix.dest a with ⟨u, f⟩
+  rcases hb : Cofix.dest b with ⟨v, g⟩
+  cases u; cases v
+  show (⟨PUnit.unit, Quot.mk _ ∘ f⟩ : idPF_Coalgebra.Obj _) = ⟨PUnit.unit, Quot.mk _ ∘ g⟩
+  congr 1
+  funext i
+  exact Quot.sound trivial
+
 /-! ## Engineer's Take
 
 These files sit at the boundary of where choice lives within the framework. There is a distinct boundary
@@ -146,6 +196,11 @@ section PurityCheck
 #print axioms fix_isEmpty
 #print axioms cofix_nonempty
 #print axioms categorical_fork_strict
+#print axioms cofixSelf
+#print axioms dest_cofixSelf
+#print axioms cofixSelf_selfOnlyAt
+#print axioms cofix_quine_role_occupied
+#print axioms cofix_subsingleton
 
 /- **M3 metric — the fork choice discriminator (lake build, 2026-06-27).** The per-side footprint is
    a genuine SPLIT, and that split is the measured invariant of the fork: the μ (initial-algebra,

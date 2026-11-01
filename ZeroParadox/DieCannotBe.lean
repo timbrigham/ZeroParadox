@@ -2495,17 +2495,18 @@ example : let M := (ZeroParadox.Motion.ofTotal (id : Fin 3 → Fin 3) (fun _ => 
 -- form, for well-founded relations in general, is not built here. A rank dropping along every step is
 -- a well-foundedness argument, the kind a liveness proof rests on (Alpern and Schneider, IPL 21 (1985),
 -- p. 181).
--- Statement: `ZFSet` with OVER `a → b` when `b ∈ a`: `x` steps to itself only iff `x = {x}`; both
--- directions. No `ZFSet` does (`no_quine_atom`).
-example (x : ZFSet) :
-    ((ZeroParadox.Motion.ofTotal id (fun _ => rfl) (fun a b : ZFSet => b ∈ a)).SelfOnlyAt x ↔ x = {x}) ∧
-      ¬ (ZeroParadox.Motion.ofTotal id (fun _ => rfl) (fun a b : ZFSet => b ∈ a)).SelfOnlyAt x := by
-  refine ⟨⟨fun ⟨hx, hu⟩ => ZFSet.ext fun z => ?_, fun h => ⟨?_, fun b hb => ?_⟩⟩,
-    fun h => ZeroParadox.no_quine_atom x h.1⟩
-  · rw [ZFSet.mem_singleton]; exact ⟨hu z, fun h => h ▸ hx⟩
-  · have hs : x ∈ ({x} : ZFSet) := ZFSet.mem_singleton.2 rfl
-    rw [← h] at hs; exact hs
-  · rw [h] at hb; exact ZFSet.mem_singleton.1 hb
+-- Reading: CARRIER — the Quine-atom role is `SelfOnlyAt`; of the two charts below one occupies it and one
+-- provably does not, and no equation across the two carriers is stated.
+#check @ZeroParadox.zfset_selfOnlyAt_mem_iff     -- Statement: `ZFSet` with OVER `a → b` when `b ∈ a`: `x` steps to itself only iff `x = {x}`; both directions
+#check @ZeroParadox.zfset_quine_role_unoccupied  -- Statement: and no `ZFSet` does (`no_quine_atom`)
+#check @ZeroParadox.cofix_quine_role_occupied    -- Statement: `Cofix idPF_Coalgebra.Obj` with OVER `x → y` when `y` is a child of `x` under `Cofix.dest`: some point steps to itself only
+#check @ZeroParadox.dest_cofixSelf               -- Statement: that point, `cofixSelf`, unfolds to the one-slot node whose only child is itself
+#check @ZeroParadox.cofix_subsingleton           -- Statement: and `Cofix idPF_Coalgebra.Obj` has at most one point
+-- Statement: CONTROL: OVER always true on `Unit` has a point stepping to itself only, and OVER empty
+-- has none. Reading: occupancy alone discriminates nothing until OVER is the chart's own relation.
+example : (ZeroParadox.Motion.ofTotal (id : Unit → Unit) (fun _ => rfl) (fun _ _ => True)).SelfOnlyAt () ∧
+    ¬ ∃ y, (ZeroParadox.Motion.ofTotal (id : Unit → Unit) (fun _ => rfl) (fun _ _ => False)).SelfOnlyAt y :=
+  ⟨⟨trivial, fun _ _ => rfl⟩, fun ⟨_, h⟩ => h.1⟩
 -- Statement: `QuineHost`'s two fields give a self-step at ⊥ of the host and do not give `SelfOnlyAt`:
 -- on `Bool` with `mem x y := y = false` (the control in `ZeroParadox/Settheory/QuineHost.lean`), OVER
 -- `a → b` when `b` is a member of `a` steps `false` to itself and to `true`.

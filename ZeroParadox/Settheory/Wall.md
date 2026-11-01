@@ -14,10 +14,19 @@ Across five separate pushes (fork unification, the Quine atom CC-2, MC-1, "reali
 the faithfulness criterion) the framework keeps landing on the SAME boundary: a structural shadow (a
 function fixed point, below) that Lean hosts, plus a metatheoretic residue, a statement about the system
 rather than a Lean proposition (see the fences). The literal is refuted in the well-founded `ZFSet`
-chart (`no_quine_atom` and the `example` after it in the Lean file); what the coalgebra chart hosts is a
-non-well-founded fixed point of a functor, its categorical analog, not the set equation x = {x}
-(`categorical_fork_strict`), and identifying the two is a modelling commitment
-(`ZeroParadox/Settheory/Coalgebra.lean`, FENCE). The Lean file represents that boundary as an **object-level theorem**, the
+chart (`no_quine_atom` and the `x ≠ {x}` `example` after it in the Lean file). Stated in the die
+(`ZeroParadox/Die.lean`), the Quine atom is a ROLE, `SelfOnlyAt`: a point that steps to itself and to
+nothing else; in Aczel's terms, the one-node graph with a single self-loop, which pictures Ω = {Ω}
+(Aczel 1988, Ex. 1.3, p. 6), and a set stepping to its members is his system V (p. 13). The graph chart
+places it too (`ZeroParadox/Settheory/HypersetOrder.lean` § VII: `omegaLoop_selfOnlyAt`, and
+`wrapMotion_quot_selfOnlyAt_iff` up to bisimulation). `Reading:` CARRIER — of the two charts below, one occupies the role and
+one provably does not. In `ZFSet`, where a
+set steps to its members, a set occupies it iff x = {x} (`zfset_selfOnlyAt_mem_iff`) and none does
+(`zfset_quine_role_unoccupied`); in the coalgebra chart `Cofix idPF_Coalgebra.Obj`, where a point steps
+to its children, `cofixSelf` occupies it (`cofix_quine_role_occupied`,
+`ZeroParadox/Settheory/Coalgebra.lean`). That chart has one point (`cofix_subsingleton`), so its
+occupancy is the one-node loop; the contrast it carries is `categorical_fork_strict`. No equation across
+the two carriers is stated. The Lean file represents that boundary as an **object-level theorem**, the
 honest in-kernel face of it.
 
 ## What the wall reduces to (the provable core)
