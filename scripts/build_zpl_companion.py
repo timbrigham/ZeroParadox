@@ -1,6 +1,6 @@
 """
 Build ZP-L Illustrated Companion
-Version 1.18 | October 2026
+Version 1.19 | November 2026
 Citation fence (Gentzen): the Convergence section's credits follow CLAIMS.md's Gentzen rows and are
 taken from the primary papers, never from a secondary source's labels. Provability of transfinite
 induction below epsilon-0 is what Gentzen 1943 (p. 140 and its footnote 3) reports, crediting
@@ -219,7 +219,7 @@ def dual_convergence_diagram():
     return d
 
 
-VERSION = '1.18'
+VERSION = '1.19'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -404,9 +404,14 @@ def build():
         'for every n, so the code\'s own G&#246;del number is a period of it. Kleene\'s second '
         'recursion theorem guarantees such a code exists. The condition does not by itself pin '
         'self-reference: the constant codes satisfy it, and they are what witnesses '
-        'infinite_quine_family (ZP-K &#167;VI). That the program and the bottom are one object '
-        'is the framework\'s reading rather than a Lean equation &#8212; a program code and the '
-        'lattice carrier are different types. ZP-L identifies '
+        'infinite_quine_family (ZP-K &#167;VI). What a program and the bottom share is stated '
+        'as a role rather than an identity: the Quine-atom role, a point that steps to itself '
+        'and to nothing else (Motion.SelfOnlyAt), occupied chart by chart. On codes, stepping '
+        'from a code to the codes whose output is what a map assigns it, no single code occupies '
+        'it (evalStepMotion_not_selfOnlyAt), and for a computable map respecting equal output '
+        'some class of codes up to equal output does (codes_vs_classes, '
+        'ZeroParadox/Computability/Kleene.lean). No equation across a program code and the '
+        'lattice carrier is stated; they are different types. ZP-L identifies '
         '&#949;&#8320; as an ordinal fixed point: the first ordinal satisfying &#969;^&#945; = &#945;, '
         'guaranteed to exist by the fixed-point theorem for normal functions. Both fixed-point '
         'proofs carry Classical.choice in their Lean formalizations; ZP-K Section IV '

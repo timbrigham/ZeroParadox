@@ -27,10 +27,16 @@ fork is exactly the self-referential element that ν admits and μ forbids — t
 ZFC+Foundation (no ⊥={⊥}) vs ZFC+AFA (⊥={⊥}) (set theory: ZP-J).
 
 **FENCE.** This is the genuine μ/ν instance of the schema (unlike the Ostrowski number-system instance,
-which is theorem-backed but not a μ/ν instance). What is claimed here is exactly the two Lean theorems
-below: `Fix` empty, `Cofix` inhabited, for this functor. The identification of this categorical contact
-point with the diagonal fixed point of the other layers is the cross-instance identity — a modeling
-commitment, not a theorem (ZP-P hard fence).
+which is theorem-backed but not a μ/ν instance). For this functor the least fixed point is empty and the
+greatest is inhabited (`categorical_fork_strict`), with exactly one point (`cofixSelf` for existence,
+`cofix_subsingleton` for at most one). In die terms that point occupies the Quine-atom role, a point that
+steps to itself and to nothing else (`Motion.SelfOnlyAt`, `cofix_quine_role_occupied`); because the chart
+has a single point, that occupancy restates the fork and adds no further content. The same role is
+unoccupied in the well-founded set chart (`zfset_quine_role_unoccupied`,
+`ZeroParadox/Settheory/Wall.lean`). The diagonal fixed points of the other layers are each stated as
+occupants of the role in their own chart (indexed in `ZeroParadox/DieCannotBe.lean` § XV); no equation
+across charts is stated (one would be ill-typed) and none is committed to. What relates the charts is the
+role they share, which is the die's definition, not an identity (ZP-P hard fence).
 
 ## Status
 
@@ -40,14 +46,8 @@ M-type / corecursion machinery. **That choice sits in `QPF.Cofix` itself** (meas
 type reports `[propext, Classical.choice, Quot.sound]`), so it is not removable by any proof of this
 statement — but it IS attributable to the QPF quotient layer rather than to the mathematics, because
 `PFunctor.M`'s former and constructors are axiom-free (its DESTRUCTOR is not) and
-`strict_cofix_nonempty` proves the same inhabitation over it with no
-axioms. Ahrens et al. agree from the other side: for a polynomial
-functor the final coalgebra is constructible choice-free (their construction needs
-only function extensionality, which Lean has; only their uniqueness half uses univalence, see the
-prior-art list in `ZeroParadox/Computability/ChoicePurityInvariant.md`. Veltri is CONTRAST, not support: for the
-non-polynomial finite-powerset functor his results run the other way — certain constructions
-there are obtained ASSUMING choice principles rather than shown to need them, and his own
-preferred coinductive construction needs neither choice nor LLPO). See PurityCheck.
+`strict_cofix_nonempty` proves the same inhabitation over it with no axioms. Prior art (Ahrens et al.;
+Veltri as contrast): the PurityCheck note below and `ZeroParadox/Computability/ChoicePurityInvariant.md`.
 -/
 
 namespace ZeroParadox
@@ -90,13 +90,14 @@ theorem categorical_fork_strict :
 
 /-! ### The Quine-atom role in the die
 Beside the FENCE above: in the die (`ZeroParadox/Die.lean`) the Quine atom is a ROLE, `Motion.SelfOnlyAt`
-(a point stepping to itself and to nothing else). `Reading:` CARRIER — of the two charts here, this one occupies it
-(`cofix_quine_role_occupied`) and `ZFSet` provably does not (`zfset_quine_role_unoccupied`,
-`ZeroParadox/Settheory/Wall.lean`). No equation is stated across them: an equation between a
-`Cofix idPF_Coalgebra.Obj` point and a `ZFSet` is ill-typed. This chart has one point
-(`cofix_subsingleton`; the final system of the identity functor is a one-element set, Rutten, TCS 249
-(2000), Example 10.2(1), p. 44), so its occupancy is the one-node loop and carries no contrast inside the
-chart; the contrast it carries is `categorical_fork_strict`. -/
+(a point stepping to itself and to nothing else). `Reading:` CARRIER — of two charts, the one in this file
+occupies it (`cofix_quine_role_occupied`) and `ZFSet`, whose chart is in `ZeroParadox/Settheory/Wall.lean`,
+provably does not (`zfset_quine_role_unoccupied`). No equation is stated across them: an equation between a
+`Cofix idPF_Coalgebra.Obj` point and a `ZFSet` is ill-typed. This chart has one point (`cofixSelf` exists,
+and `cofix_subsingleton` allows at most one). Rutten's example is the identity functor on sets, whose final
+system is a one-element set (TCS 249 (2000), Example 10.2(1), p. 44); `idPF_Coalgebra.Obj` is isomorphic
+to that functor (`idPF_Coalgebra.Obj α ≅ α`). So this chart's occupancy is the one-node loop and carries no
+contrast inside the chart; the contrast it carries is `categorical_fork_strict`. -/
 
 /-- `Statement:` the element `cofix_nonempty` builds: the corecursion from the one-point coalgebra. -/
 noncomputable def cofixSelf : Cofix idPF_Coalgebra.Obj :=
@@ -124,7 +125,8 @@ theorem cofix_quine_role_occupied :
   ⟨cofixSelf, cofixSelf_selfOnlyAt⟩
 
 /-- `Statement:` `Cofix idPF_Coalgebra.Obj` has at most one point (bisimulation by the
-    always-true relation). -/
+    always-true relation). The same argument over `PFunctor.M idPF_Coalgebra` is the `heq` step of
+    the leaf-free M-type `example` in `ZeroParadox/DieCannotBe.lean` § XI. -/
 theorem cofix_subsingleton : ∀ x y : Cofix idPF_Coalgebra.Obj, x = y := by
   intro x y
   apply Cofix.bisim_rel (fun _ _ => True) _ x y trivial

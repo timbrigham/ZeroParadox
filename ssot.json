@@ -95577,6 +95577,46 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "dca660f7-b430-477a-a88a-e943eafedc02",
+          "new": {
+            "file": "ZeroParadox/Settheory/QuineDichotomy.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.quineAtomHost_quine_role_iff",
+            "short": "quineAtomHost_quine_role_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/QuineDichotomy.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.quineAtomHost_quine_role_iff",
+            "short": "quineAtomHost_quine_role_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom",
+              "wall-selfapp"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Die arc 1 2026-11-01: CC-2 restated as the Quine-atom role (SelfOnlyAt); bot is the only occupant under selfApp and in a QuineAtomHost",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "dccf472a-1dc2-4f67-b3e5-a88735ddda76",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -101126,6 +101166,46 @@
             ]
           },
           "reason": "New file GraphBisim.lean: finite membership graphs, Aczel bisimulation, dropLoops (control) vs wfPart (bisimulation-invariant), Omega/empty/zero-star/one/two-cycle examples",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e8d0c139-317b-47be-8265-6544e01fa9d4",
+          "new": {
+            "file": "ZeroParadox/Settheory/QuineDichotomy.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.selfApp_quine_role_iff",
+            "short": "selfApp_quine_role_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/QuineDichotomy.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.selfApp_quine_role_iff",
+            "short": "selfApp_quine_role_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom",
+              "wall-selfapp"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Die arc 1 2026-11-01: CC-2 restated as the Quine-atom role (SelfOnlyAt); bot is the only occupant under selfApp and in a QuineAtomHost",
           "verify": {
             "axioms": null,
             "sorry_free": true

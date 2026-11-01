@@ -78,8 +78,8 @@ not used here). The three universal-property-flavoured facts (`fix_isFixedPoint`
 `cofix_corec_commutes`) are *generic* QPF facts — true of every QPF, re-exported from Mathlib — not
 ZP-specific content; the only ZP-specific non-trivial content is `ZeroParadox/Settheory/Coalgebra.lean`'s strict
 empty/inhabited fork on `idPF_Coalgebra`, bundled in at the end. Naming this the "μ/ν root" of the framework's
-bottom diagram, and identifying it with the diagonal fixed point of the other layers, is the
-cross-instance modeling commitment (ZP-P hard fence), not a theorem.
+bottom diagram is a reading; it relates to the other layers' diagonal fixed points by a role, not an identity
+(`cofix_quine_role_occupied`, `ZeroParadox/Settheory/Coalgebra.lean`; no cross-chart equation, ZP-P hard fence).
 -/
 
 namespace ZeroParadox

@@ -85,8 +85,8 @@ We show the *limited* version deliberately. The **shape** — self-reference for
 self-referential floor — is what the minimal core exhibits, and a bare fixed point is enough to carry it. The
 full Quine atom needs a non-well-founded set theory (ZF+AFA) to host `⊥ = {⊥}` literally; that host is the
 *flesh*, cited to its home, not rebuilt here. Honest split: the *structural* self-application fixed point is
-Lean-proved and axiom-free (`t_exec`); the *literal* set-membership `⊥ = {⊥}` is a metatheoretic modeling
-commitment (ZF+AFA), a theorem nowhere — the framework's own fence, kept here.
+Lean-proved and axiom-free (`t_exec`); `⊥ = {⊥}` of a lattice's ⊥ is ill-typed and not asserted: the die's Quine-atom
+role is occupied chart by chart (`ZeroParadox/Settheory/QuineDichotomy.lean`); hosting x = {x} in ZF+AFA is the commitment.
 
 **Honest status.** The *content* is re-derived, not new: the engine is **Lawvere (1969) / Yanofsky (2003)**
 (`Settheory/Wall.lean`); the classifier is `Category/DiagonalWitness.lean`; the four corners are

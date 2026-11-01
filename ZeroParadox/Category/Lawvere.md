@@ -8,7 +8,7 @@ the declarations, the Engineer's Take and the per-declaration glosses.
 | Face | self-map | In **Set** (all endos) | Status |
 |---|---|---|---|
 | lattice / abstract (`selfApp`) | `selfApp` | NO witness — posited | `nontrivial_lattice_no_witness` ✓ |
-| set theory (Quine atom) | `x ↦ {x}` | (= lattice; metatheoretic literal) | via the lattice ✓ |
+| set theory (Quine atom) | `x ↦ {x}` | checked through the lattice row; no equation between a lattice element and a set is stated | via the lattice ✓ |
 | 2-adic (`×2` in ℚ₂) | `x ↦ 2x` | NO witness — posited | `q2_no_witness` ✓ |
 | computability (Kleene quine) | computable endo | **NO witness — same as the others** | `computability_face_fixedPoint` ✓ (genuine, in the effective category) |
 
@@ -28,7 +28,9 @@ lives in.
 
 The test is **category-relative**. In **Set** — raw types, all endofunctions — **no** face is a
 Lawvere fixed point: Cantor forbids the witness for every nontrivial total type (lattice and 2-adic
-proven; set theory is the lattice case, its literal ⊥ = {⊥} metatheoretic).
+proven; set theory is checked through the lattice case, and no equation between a lattice element and
+a set is stated; what the charts share is the die's Quine-atom role, occupied chart by chart,
+`ZeroParadox/Settheory/QuineDichotomy.lean`).
 
 The computability face is a **genuine** Lawvere/recursion fixed point in the **effective** category,
 where the fixed-point-free **diagonal** `fun x => g (e x x)` is not ADMISSIBLE.

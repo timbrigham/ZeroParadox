@@ -1,5 +1,5 @@
 """
-Build ZP-A Illustrated Companion (v1.12)
+Build ZP-A Illustrated Companion (v1.13)
 Covers: join-semilattice, partial order, Hasse diagram, one-directional transitions,
 monotonicity (T3), bottom-as-constituent (T2), four concrete examples, and CC-2.
 """
@@ -89,7 +89,7 @@ def transition_diagram():
                  fontName='DV-B', fillColor=RED))
     return d
 
-VERSION = '1.12'
+VERSION = '1.13'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -251,13 +251,17 @@ def build():
     E.append(cbody(
         'Every state sits above &#8869;. But what exactly <i>is</i> &#8869;? The standard '
         'answer: the additive identity, the algebraic zero, the starting point. ZP-A '
-        'adds a sharper answer: &#8869; is a <b>Quine atom</b> — a set that equals its '
-        'own singleton.'))
+        'adds a sharper answer: &#8869; fills the role of a <b>Quine atom</b> — a point that '
+        'steps to itself and to nothing else. In set theory, where a set steps to its members, '
+        'that role is filled by a set that equals its own singleton.'))
     E.append(cbody(
-        'Formally: &#8869; = {&#8869;}. The collection of all objects bearing the structural '
-        'property of &#8869; is &#8869; itself. There is no multiplicity. Infinitely many '
-        'indistinguishable &#8869; instances collapse, by set extensionality, into the '
-        'single object &#8869;.'))
+        'Formally, the role is stated in each setting on its own terms rather than as one '
+        'equation. In the lattice, with its self-application map as the step, &#8869; is the only '
+        'point filling it. With membership as the step, a host whose bottom is its own only '
+        'member has that bottom as the only point filling it. No ordinary, well-founded set fills '
+        'it at all. No equation between &#8869; and a set is stated, since the two live in '
+        'different types. Where the role is filled here it is filled once, so there is no '
+        'multiplicity.'))
     E.append(example_box('Why this matters', [
         'Can there be two "copies" of &#8869; that are somehow different? A Quine atom '
         'says no. Any object identical to &#8869; in all structural respects IS &#8869;. '

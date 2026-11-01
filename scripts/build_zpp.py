@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-P: The Fixed-Point Fork PDF Builder
-Version 1.27 | October 2026
+Version 1.28 | November 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.27'
+VERSION = '1.28'
 FIRST_RELEASED = 'June 2026'
 
 
@@ -54,9 +54,9 @@ def build():
         'three tiers held to three different standards of proof. Tier 1 (Section I) is the '
         'abstract schema, proved in Lean over a complete lattice. Tier 2 (Section II) is the '
         'instance catalogue: each framework forks at its own contact point, and the instances are '
-        'theorems in their home layers. Tier 3 (Section III) is the unification &#8212; that the '
-        'contact points are faces of one object &#8212; which is a fenced conjecture, never a '
-        'formal claim. The fences in Section III are load-bearing: keeping the tiers separate is '
+        'theorems in their home layers. Tier 3 (Section III) is the unification, stated as a role '
+        'rather than an identity: the contact points occupy one role, each in its own chart, and '
+        'no equation across charts is claimed. The fences in Section III are load-bearing: keeping the tiers separate is '
         'what makes the formal content honest.'))
     E.append(hr())
 
@@ -310,8 +310,17 @@ def build():
         'The tempting claim is that the contact points of all the instances &#8212; the Quine '
         'atom, the 2-adic 0, the Kleene quine, the self-referential element of the final '
         'coalgebra &#8212; are faces '
-        'of one object, the diagonal fixed point. ZP-P states this as a conjecture and fences it '
-        'precisely. The fences are not hedging; they mark a genuine boundary, and per-instance '
+        'of one object, the diagonal fixed point. ZP-P does not state that identity. It states '
+        'what the contact points share as a role, defined once in the die (ZeroParadox/Die.lean): '
+        'the Quine-atom role, a point that steps to itself and to nothing else (Motion.SelfOnlyAt). '
+        'Each chart either has an occupant or provably has none, and each is a theorem: the '
+        'self-referential element of the final coalgebra occupies it (cofix_quine_role_occupied), '
+        'no well-founded set does (zfset_quine_role_unoccupied), 0 of the 2-adic integers does under '
+        'doubling (z2_two_views), &#8869; is the only occupant under a semilattice\'s '
+        'self-application map (selfApp_quine_role_iff), and on Kleene\'s codes no single code '
+        'occupies it while some class of codes up to equal output does (codes_vs_classes). The '
+        'final-coalgebra chart has one point, so its occupancy restates its fork and adds nothing '
+        'further. The fences are not hedging; they mark a genuine boundary, and per-instance '
         'forks remain full theorems on either side of them.'))
 
     E.append(def_box(
@@ -322,8 +331,10 @@ def build():
             'Kleene quine (a code), and an element of a final coalgebra (an object up to '
             'isomorphism) are terms of different types in different categories. The proposition '
             '"x = y" across them is not false &#8212; it is not well-formed. So this is a type '
-            'boundary, not a missing proof. What is claimed formally is only that each framework '
-            'forks at its own contact point.',
+            'boundary, not a missing proof, and no such identity is committed to either. What '
+            'relates the instances is the role they share, which is the die\'s definition. What is '
+            'claimed formally is that each framework forks at its own contact point, and which '
+            'charts occupy the role.',
         ]
     ))
     E.append(sp(6))
@@ -401,7 +412,8 @@ def build():
             '<i>End of ZP-P | The Fixed-Point Fork | fork_collapse_iff (choice-free spine) | '
             'Ostrowski number-system instance | categorical &#956;/&#957; instance '
             '(Fix empty / Cofix inhabited) | hard fence: cross-instance identity is a type '
-            'boundary | soft fence: not every fork is &#956;/&#957; | '
+            'boundary; what is shared is a role occupied chart by chart | soft fence: not every fork '
+            'is &#956;/&#957; | '
             'All FixedPointFork.lean / Ostrowski.lean / Coalgebra.lean theorems verified.</i>',
             S['endnote']),
     ]

@@ -1,6 +1,7 @@
 import ZeroParadox.Settheory.Coalgebra
 import ZeroParadox.Computability.SelfApp
 import ZeroParadox.Category.Lawvere
+import ZeroParadox.Settheory.QuineHost
 
 /-!
 # ZPJ — the Quine-atom dichotomy
@@ -31,9 +32,9 @@ The snap's classifier (Ostrowski) is a theorem INSIDE one foundation, so "snap �
 machine-checkable. The Quine atom's classifier (Foundation vs AFA) is a choice of METATHEORY, which Lean cannot
 adjudicate from inside. `Statement:` **CARRIER** — no `ZFSet` is its own member (`no_quine_atom`) and no `T ≃ Set T` exists (Cantor, above), while the coalgebra chart hosts a self-unfolding element (`Cofix`, the existence fork above).
 So what is PROVED here is the STRUCTURAL dichotomy (the self-referential fixed point exists on the ν side,
-not the μ side, and where it exists it is the unique bottom). The SET-THEORETIC reading — "the Quine atom
-exists ⟺ AFA" — stays a metatheoretic commitment (the FMC / CC-2, fenced in ZP-E R-AFA). This file makes NO
-claim that AFA is machine-checked.
+not the μ side, and where it exists it is the unique bottom). The Quine atom (CC-2) is the die role `Motion.SelfOnlyAt`, occupied
+chart by chart (`selfApp_quine_role_iff`, `quineAtomHost_quine_role_iff`, `zfset_quine_role_unoccupied`), no cross-chart equation.
+"Quine atom ⟺ AFA" concerns the set chart's host: Foundation-freeness is forced (`quineAtomHost_not_wellFounded`), adopting AFA stays the FMC / CC-2 (ZP-E R-AFA); AFA is not machine-checked here.
 
 ## Symbol map (component → existing lemma)
 - existence fork        → `ZeroParadox.categorical_fork_strict`  (`idPF_Coalgebra`, `Fix`, `Cofix` from ZP-P)
@@ -68,6 +69,32 @@ theorem quine_self_members_eq_bot {L : Type*} [ZPSemilattice L] [AbstractSelfApp
 theorem quine_no_literal {L : Type*} [ZPSemilattice L] (a : L) (ha : a ≠ bot) :
     ¬ HasLawvereWitness L := nontrivial_lattice_no_witness a ha
 
+/-- `Statement:` in a `ZPSemilattice` with `AbstractSelfApp`, with OVER the self-application map
+    (`Motion.ofFun selfApp`), `y` steps to itself and to nothing else iff `y` is ⊥ of `L`; both
+    directions, from the class fields `fixed_bot` and `unique_fp`. -/
+theorem selfApp_quine_role_iff {L : Type*} [ZPSemilattice L] [AbstractSelfApp L] (y : L) :
+    (Motion.ofFun (AbstractSelfApp.selfApp (L := L))).SelfOnlyAt y ↔ y = bot :=
+  (Motion.selfOnlyAt_ofFun_iff _ y).trans
+    ⟨AbstractSelfApp.unique_fp y, fun h => h ▸ AbstractSelfApp.fixed_bot⟩
+
+/-- `Statement:` in a `QuineAtomHost`, with OVER `a ⟶ b` when `b` is a member of `a`, `y` steps to
+    itself and to nothing else iff `y` is the host's `bot`; both directions, from (Y') `bot_mem_iff`
+    and (Z') `reflexive_unique`. -/
+theorem quineAtomHost_quine_role_iff {L : Type*} [QuineAtomHost L] (y : L) :
+    (Motion.ofTotal (id : L → L) (fun _ => rfl)
+      (fun a b => QuineAtomHost.mem b a)).SelfOnlyAt y ↔ y = QuineAtomHost.bot := by
+  constructor
+  · rintro ⟨hy, hu⟩
+    exact QuineAtomHost.reflexive_unique y fun z => ⟨hu z, fun h => h ▸ hy⟩
+  · rintro rfl
+    exact ⟨(QuineAtomHost.bot_mem_iff _).2 rfl, fun b hb => (QuineAtomHost.bot_mem_iff b).1 hb⟩
+
+-- Statement: CONTROL: under `trivialSelfApp`, the constant map to ⊥, the same occupancy holds; the
+-- class fields alone give it, whatever the map is.
+example {L : Type*} [ZPSemilattice L] (y : L) :
+    (Motion.ofFun (@AbstractSelfApp.selfApp L _ (trivialSelfApp L))).SelfOnlyAt y ↔ y = bot :=
+  @selfApp_quine_role_iff L _ (trivialSelfApp L) y
+
 end ZeroParadox
 
 section PurityCheck
@@ -75,4 +102,6 @@ open ZeroParadox
 #print axioms quine_dichotomy
 #print axioms quine_self_members_eq_bot
 #print axioms quine_no_literal
+#print axioms selfApp_quine_role_iff
+#print axioms quineAtomHost_quine_role_iff
 end PurityCheck
