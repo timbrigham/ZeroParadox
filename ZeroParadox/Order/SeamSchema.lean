@@ -7,8 +7,7 @@ import ZeroParadox.Multihomed.SelfAppSeam
 import ZeroParadox.Computability.SelfApp
 
 /-!
-# A shared "seam schema" for the QPF root-seam and the lattice selfApp seam,
-with no map across the two settings exhibited, stated in Lean.
+# A shared "seam schema" for the QPF root-seam and the lattice selfApp seam; this file exhibits no map between the two settings
 
 ## Engineer's Take
 

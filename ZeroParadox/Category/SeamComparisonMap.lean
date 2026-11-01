@@ -257,11 +257,11 @@ example (M : Motion (fC_functor.obj 0)) : ¬ ∃ y, M.SelfOnlyAt y := by
 
 -- Statement: the other variant, carrier the endomorphisms `fC_functor.obj 0 ⟶ fC_functor.obj 0`:
 -- every self-map of it has exactly one point stepping to itself only. Reading: on endomorphisms the
--- carrier has one point at node #4 (initial) as at node #5 (zero), so the role is occupied at both and
--- restates that the hom-set is a singleton (`collapse_fires_off_seam`). On elements the carrier is
+-- carrier has one point at node #4 (`fC_zero_isInitial`) and at node #5 (`hilbert_bottom_isZero`), so
+-- the role is occupied at both and restates that each hom-set is a singleton. On elements the carrier is
 -- empty at node #4 (an object of `KleisliCat PMF`, not a module) and has one point at node #5, so the
--- element carriers separate the two nodes by cardinality alone; `moduleCat_seam_role_unique_iff_isZero`
--- applies at node #5 only.
+-- element carriers separate the two nodes by cardinality alone; of the two,
+-- `moduleCat_seam_role_unique_iff_isZero` applies at node #5.
 example (g : (fC_functor.obj 0 ⟶ fC_functor.obj 0) → (fC_functor.obj 0 ⟶ fC_functor.obj 0)) :
     ∃! y, (Motion.ofFun g).SelfOnlyAt y := by
   haveI : Subsingleton (fC_functor.obj 0 ⟶ fC_functor.obj 0) :=
