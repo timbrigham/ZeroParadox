@@ -21,13 +21,16 @@ comprehension / a reflexive object is inconsistent (the type-level cousin is `re
 ## Placement
 
 Curry is a **wall / μ** face — self-reference that cannot be internalized — and the most violent form:
-not "no truth value" but "every value at once". Its floor dual is again the Quine atom (ν), where
-self-reference closes harmlessly instead of exploding.
+not "no truth value" but "every value at once". Its floor dual (ν) is the Quine-atom role in the
+die, `SelfOnlyAt`, a point stepping to itself and to nothing else: occupied in the coalgebra chart
+(`cofix_quine_role_occupied`, `ZeroParadox/Settheory/Coalgebra.lean`), where self-reference closes
+without exploding, and unoccupied in `ZFSet` (`zfset_quine_role_unoccupied`,
+`ZeroParadox/Settheory/Wall.lean`).
 
 ## Honest delta
 
 `curry_paradox` is a real generalization of the repo's engine (arbitrary conclusion `C`);
-`curry_from_naming` routes it through the existing Lawvere naming. Attribution: Curry (1942). In the
+`curry_from_naming` routes it through the existing Lawvere naming. Attribution: conventionally credited to Curry (1942; not consulted here). In the
 diagonal family, Yanofsky (2003, arXiv:math/0305282v1, p. 18) applies the diagonalization lemma to get,
 for an arbitrary sentence A, a sentence C with ⊢ C ↔ (C ⇒ A); with his C read as `p` and his A as
 `C`, that has the shape of `curry_paradox`'s hypothesis `p ↔ (p → C)`, and he derives A from it. He names it "Löb's Paradox" and remarks that it

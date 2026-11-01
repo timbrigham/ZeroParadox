@@ -1,4 +1,5 @@
 import Mathlib.SetTheory.ZFC.Basic
+import ZeroParadox.Die
 
 /-!
 # Zero as a Wall — the self-loop refutation and the diagonal engine (formal object)
@@ -106,6 +107,30 @@ example (x : ZFSet) : x ≠ {x} := by
   rw [← h] at hx
   exact no_quine_atom x hx
 
+/-- `Statement:` in the die motion on `ZFSet` with UP the identity and OVER `a ⟶ b` when `b ∈ a`
+    (a set steps to its members), `x` steps to itself and to nothing else (`Motion.SelfOnlyAt`) iff
+    `x = {x}`; both directions, the backward one by extensionality. `Reading:` the Quine-atom role
+    stated in the die. -/
+theorem zfset_selfOnlyAt_mem_iff (x : ZFSet) :
+    (Motion.ofTotal id (fun _ => rfl) (fun a b : ZFSet => b ∈ a)).SelfOnlyAt x ↔ x = {x} := by
+  refine ⟨fun ⟨hx, hu⟩ => ZFSet.ext fun z => ?_, fun h => ⟨?_, fun b hb => ?_⟩⟩
+  · rw [ZFSet.mem_singleton]; exact ⟨hu z, fun h => h ▸ hx⟩
+  · have hs : x ∈ ({x} : ZFSet) := ZFSet.mem_singleton.2 rfl
+    rw [← h] at hs; exact hs
+  · rw [h] at hb; exact ZFSet.mem_singleton.1 hb
+
+/-- `Statement:` in that motion no `ZFSet` steps to itself and to nothing else, since none steps to
+    itself (`no_quine_atom`). -/
+theorem zfset_quine_role_unoccupied :
+    ¬ ∃ x : ZFSet, (Motion.ofTotal id (fun _ => rfl) (fun a b : ZFSet => b ∈ a)).SelfOnlyAt x :=
+  fun ⟨x, h⟩ => no_quine_atom x h.1
+
+-- Statement: with OVER reversed (`a ⟶ b` when `a ∈ b`), `SelfOnlyAt x` is `x ∈ x` and `x` belongs
+-- to no other set, a different predicate from `x = {x}`.
+example (x : ZFSet) :
+    (Motion.ofTotal id (fun _ => rfl) (fun a b : ZFSet => a ∈ b)).SelfOnlyAt x ↔
+      (x ∈ x ∧ ∀ b, x ∈ b → b = x) := Iff.rfl
+
 /-- **The wall, full strength.** A well-founded relation has no cycle of ANY length: no `x` is reachable
     from itself by one-or-more `r`-steps (`Relation.TransGen r x x`). `wf_no_selfloop` is the n=1 case;
     this also rules out 2-cycles, n-cycles — every cyclic self-reference. Proof: the transitive closure of
@@ -131,6 +156,8 @@ open ZeroParadox
 #print axioms no_self_decider
 #print axioms wf_no_selfloop
 #print axioms no_quine_atom
+#print axioms zfset_selfOnlyAt_mem_iff
+#print axioms zfset_quine_role_unoccupied
 #print axioms wf_no_cycle
 #print axioms no_membership_cycle
 end PurityCheck

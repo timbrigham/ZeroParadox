@@ -76,7 +76,7 @@ from a purely structural eliminator AND the ν-inhabitant is a concrete corecurs
 statement. The *content* that is genuinely new is `w_isEmpty` / `fix_isEmpty_constructive`: a μ-witness
 inhabiting the constructive namespace — both recorded with no axioms at all, not even `propext` or
 `Quot.sound` (`ZeroParadox/Computability/ChoicePurityInvariant.lean`, `PurityCheck`) — derived without any
-choice-dependent or quotient-quotient-collapse lemma.
+choice-dependent or quotient-collapse lemma.
 
 ## Formal Overview
 
