@@ -3018,8 +3018,8 @@ example :
 -- `f ↦ (x ↦ (V ↦ x (V ∘ f)))` fails `PreservesWeakPullbacksElementwise`, at `f : Bool → Bool`
 -- constant `false` and `g : Unit → Bool` constant `true`, whose pullback is empty. Reading: the
 -- functor is the contravariant powerset composed with itself, the neighbourhood functor with `Prop`
--- for `2`, which Gumm and Freese (arXiv:2103.09566, p. 1) name as an exception to weak preservation
--- of pullbacks.
+-- in place of `2` (the two agree only classically); Gumm and Freese (arXiv:2103.09566, p. 1) name the
+-- neighbourhood functor as an exception to weak preservation of pullbacks.
 example : ¬ PreservesWeakPullbacksElementwise
     { obj := fun S : Type => (S → Prop) → Prop
       map := fun f => TypeCat.ofHom fun x V => x fun a => V (f a) } := by
@@ -3191,7 +3191,9 @@ theorem isBisim_comp {M : Motion α} {N : Motion β} {P : Motion γ} {R : α →
 def Bisimilar (M : Motion α) (N : Motion β) (a : α) (b : β) : Prop := ∃ R, IsBisim M N R ∧ R a b
 
 /-- `Statement:` `Bisimilar M M` is an equivalence relation (Mathlib `Equivalence`). `Reading:` the
-    last clause of Rutten's Corollary 5.6 (p. 33); transitivity here uses `isBisim_comp`. -/
+    equivalence half of the last clause of Rutten's Corollary 5.6 (p. 33), that the greatest
+    bisimulation on one system is a bisimulation equivalence; the bisimulation half is
+    `isBisim_bisimilar` at `N := M`. Transitivity here uses `isBisim_comp`. -/
 theorem bisimilar_equivalence (M : Motion α) : Equivalence (Bisimilar M M) :=
   ⟨fun _ => ⟨Eq, isBisim_eq M, rfl⟩,
    fun ⟨R, hR, r⟩ => ⟨flip R, isBisim_flip hR, r⟩,
@@ -3255,7 +3257,7 @@ theorem isBisim_ker_coalgHom {α β : Type u} {M : Motion α} {N : Motion β}
 
 /-- `Statement:` if `f` carries steps to steps and has `StepBack` and `UpStrict`, and `Q` is a
     bisimulation from `N` to itself, `fun a a' => Q (f a) (f a')` is one from `M` to itself.
-    `Reading:` Rutten's Proposition* 5.9(2) (p. 34). -/
+    `Reading:` for carriers in one universe, Rutten's Proposition* 5.9(2) (p. 34). -/
 theorem isBisim_preimage {M : Motion α} {N : Motion β} {f : α → β}
     (hf : ∀ a b, M.step a b → N.step (f a) (f b)) (hb : StepBack M N f) (hu : UpStrict M N f)
     {Q : β → β → Prop} (hQ : IsBisim N N Q) : IsBisim M M (fun a a' => Q (f a) (f a')) := by
@@ -3840,12 +3842,12 @@ end Motion
 namespace NInf
 
 /-- `Statement:` if a `Bool` test `t` isolates `∞`, deciding membership in `{∞}`, the weak limited
-    principle of omniscience (WLPO) holds. `Reading:` "isolated": Escardó, arXiv:2609.10447v3, Def.
-    3.2 (p. 14), as data; compare his Examples 3.3(5) with the `Nonempty` iff example, whose forward
-    direction this is at the `Prop` level (`ZeroParadox/DieCannotBe.lean` § XXVII). Via
-    `isolating_infty_iff`, the choice-free reduction is the WLPO row with Lemma 3.3 (p. 4) of his
-    preprint of JSL 78(3) (2013), formalized for the `ℕ∞`-indexed `WLPO` as TypeTopology
-    `basic-discontinuity-taboo` (`Taboos.BasicDiscontinuity`, retrieved 2026-10-29). -/
+    principle of omniscience (WLPO) holds. `Reading:` "isolates": `∞` is isolated (Escardó,
+    arXiv:2609.10447v3, Def. 3.2, p. 14), as data; compare his Examples 3.3(5) with the `Nonempty` iff
+    example, whose forward direction this is at the `Prop` level (`ZeroParadox/DieCannotBe.lean`
+    § XXVII). By `isolating_infty_iff`, `t` is TypeTopology's `basic-discontinuity`; the reduction is
+    his WLPO row with Lemma 3.3 (p. 4) of the preprint of JSL 78(3) (2013), formalized for the
+    `ℕ∞`-indexed `WLPO` as `basic-discontinuity-taboo` (`Taboos.BasicDiscontinuity`, 2026-10-29). -/
 theorem wlpo_of_isolating_infty (t : NInf → Bool) (ht : ∀ b, t b = true ↔ b = infty) :
     ∀ r : ℕ → Bool, (∀ n, r n = false) ∨ ¬ ∀ n, r n = false := fun r => by
   cases h : t (det r) with
@@ -3950,7 +3952,8 @@ def decEq_of_isolating_infty (t : NInf → Bool) (ht : ∀ b, t b = true ↔ b =
     DecidableEq NInf := decEq_of_wlpoData fun r =>
   @decidable_of_iff _ _ ((ht (det r)).trans (det_eq_infty_iff r)) (instDecidableEqBool (t (det r)) true)
 
-/-- `Statement:` and back: decidable equality on `NInf` gives a `Bool` test isolating `∞`. -/
+/-- `Statement:` and back: decidable equality on `NInf` gives that a `Bool` test isolating `∞`
+    exists. -/
 theorem isolating_infty_of_decEq (d : DecidableEq NInf) :
     ∃ t : NInf → Bool, ∀ b, t b = true ↔ b = infty :=
   ⟨fun b => @decide _ (d b infty), fun b => @decide_eq_true_iff _ (d b infty)⟩

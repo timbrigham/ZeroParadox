@@ -369,8 +369,11 @@ is essential. -/
 -- for every `c` in D, hence `c = False ∨ c ≠ False` (next `example`); an instance of theirs, not a
 -- generalization.
 -- Statement: the piece at ⊥ of `Prop` gives some `a ≠ False` on whose down-set `{c | c → a}` every
--- `c = False` is decided (`[propext]`).
-example (h : ZeroParadox.BotIntervalTwo Prop) :
+-- `c = False` is decided (`[propext]`); ⊥ of `Prop` is pinned to `Prop.instHeytingAlgebra` (§ III's
+-- instance hazard), since under this file's imports an unpinned `OrderBot Prop` resolves through
+-- `Prop.instCompleteLattice` and the statement then measures `[propext, Quot.sound]`.
+example (h : @ZeroParadox.BotIntervalTwo Prop _
+    (@HeytingAlgebra.toOrderBot Prop Prop.instHeytingAlgebra)) :
     ∃ a : Prop, a ≠ False ∧ ∀ c : {c : Prop // c → a}, c.1 = False ∨ c.1 ≠ False := by
   obtain ⟨a, hlt, h2⟩ := h
   exact ⟨a, hlt.ne', fun c => (h2 c.1 c.2).imp id
@@ -430,7 +433,9 @@ example : ∀ (β : Type) (M : ZeroParadox.Motion β), M.RegisteredDecidable :=
 -- 3's, that theorem is a class-level witness no other framework proof names. Neither hypothesis form
 -- measures any axiom alone (statement control, 2026-10-18).
 -- Reading (cited, not claimed): PRIOR ART, Diaconescu's argument as in the Rocq standard library,
--- `theories/Logic/Diaconescu.v` Part A (`pred_ext_and_rel_choice_imp_EM`), on the same two classes
+-- `theories/Logic/Diaconescu.v` Part A, section `PredExt_RelChoice_imp_EM`, which the file marks "kept
+-- for backwards compatibility" (`pred_ext_and_rel_choice_imp_EM`; the current Part A theorem
+-- `prop_ext_and_rel_choice_imp_EM` uses other classes), on that section's two classes
 -- `b = true ∨ p`, `b = false ∨ p`, with a selector given as data; an instance of theirs, not a
 -- generalization (`ZeroParadox/DieCannotBe.lean` § X).
 #check @ZeroParadox.Motion.em_of_selectedData
