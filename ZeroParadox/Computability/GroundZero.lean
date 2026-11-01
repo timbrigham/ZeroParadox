@@ -34,7 +34,7 @@ variable {σ : Type} (f : σ → Option σ)
 
 /-- The step function read as a coalgebra for `X ↦ 1 + X`: halted is a leaf, stepping is a
     successor whose unique child is the next configuration. -/
--- [ZP-CUSTOM] no Mathlib analog | reason: the connector between Mathlib's `StateTransition`-style step function `σ → Option σ` and the framework's own `natPF_NatListRegime` presentation of the `1 + X` functor. Mathlib carries both sides and no map between them; this is the bridge, and it is where the framework's operational and coalgebraic faces meet.
+-- [ZP-CUSTOM] no Mathlib analog | reason: the connector between Mathlib's `StateTransition`-style step function `σ → Option σ` and the framework's own `natPF_NatListRegime` presentation of the `1 + X` functor. Mathlib carries both sides, and a map between them was not located in the pinned Mathlib (`5450b53`) as of 2026-10-31 (searched: Mathlib files mentioning `StateTransition` together with `PFunctor`, `QPF` or `Coalgebra`, none; `Option` under `Data/PFunctor` and `Data/QPF`, none; one LeanExplore query; nearest neighbour `Computation.corec`, into `Computation α` rather than the QPF `Cofix`); this is the bridge, and it is where the framework's operational and coalgebraic faces meet.
 def stepCoalg : σ → natPF_NatListRegime.Obj σ :=
   fun s => match f s with
            | none    => ⟨false, fun e => e.elim⟩

@@ -82,12 +82,13 @@ element of `Set.Ioi rung`, and closes at the next ε-number: `ε_(succ o) = nfp 
 (`epsilon_succ_eq_nfp`; `ZeroParadox/Ordinal/Epsilon0CannotBe.lean` § I-b).
 
 `Reading:` **INVARIANT** (conjectural) — read the seed as a **role**, not an origin: the ratified
-*"iterative bottoms"* picture, in which a rung is the base the next iteration re-seeds just above
+*"iterative bottoms"* picture, in which a rung is the floor the next iteration re-seeds just above
 and, in that next iteration, the ε₀ role, the closure, is filled by the next ε-number. The same **shape** is a theorem in
 another carrier: `every_node_is_a_floor` (`ZeroParadox/Valuation/LocalFloor.lean`).
 
 ⚠ **SHAPE, never instance-of** — different carriers, different mechanisms, and different conclusions.
-⚠ `ε₀ ≠ ⊥` is untouched bedrock (`epsilon0_ne_bot`); nothing here identifies a rung with ⊥. ⚠ The
+⚠ `ε₀ ≠ ⊥` in `Ordinal` is untouched bedrock (`epsilon0_ne_bot`); nothing here identifies a rung
+with ⊥ of `Ordinal` (a rung is ⊥ of the different carrier `Set.Ici rung`, as stated above). ⚠ The
 ratified term for the iteration sense is **iterative bottom**; do not substitute "local bottom" *there*
 — that phrase is taken for the per-domain MC-1 family (`ZeroParadox/Category/GlobalZero.lean`).
 (`ZeroParadox/Valuation/LocalFloor.lean` uses it for a third, subtree-local sense; that is that file's

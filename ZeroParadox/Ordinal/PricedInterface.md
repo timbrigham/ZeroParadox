@@ -22,12 +22,13 @@ is no choice in the type. And the conclusion overreaches its evidence by one ste
 choice-free (`ZeroParadox/Ordinal/ConstructiveOrdinals.lean`) is a fact about the *ascent*, while ε₀ is
 past what the notation system can name (`tower_cofinal`,
 `ZeroParadox/Ordinal/SnapNucleusConstructive.lean`). What can be said instead: the ε₀ results, as stated, are
-**STATEMENT-CARRIED** (statement control, measured 2026-10-08; `ZeroParadox/Category/ChoiceCannotBe.md`),
+**STATEMENT-CARRIED** (the statement controls printed in `ZeroParadox/Ordinal/Epsilon0MinMax.lean`;
+`ZeroParadox/Category/ChoiceCannotBe.md`),
 and a restatement on a choice-free carrier has two readings. The defined one is `E0Note`: a choice-free
 Lean restatement where uniqueness of the fixed point is proved and its existence is set by definition, on
 an order that is not well-founded (§ *The carrier, and what it actually is* and § *The closure at the top is STIPULATED, not
-discovered* below). The derived one, a well-founded Lean carrier on which the fixed point is derived,
-leastness included, was not located as of 2026-10-13 (`ZeroParadox/Ordinal/SnapNucleus.md`
+discovered* below). The derived one, a well-founded Lean carrier whose statements are choice-free and on
+which the fixed point is derived, leastness included, was not located as of 2026-10-13 (`ZeroParadox/Ordinal/SnapNucleus.md`
 § "Axiom footprint"); and the crossing into `Ordinal`, `e0Repr`, carries choice (the purity block).
 
 Worse, the claim was **not measurable by the instrument used to support it.** `Classical.choice` sits in
@@ -79,9 +80,10 @@ crossing is one named map rather than a diffuse correspondence.
 
 **What that measurement does and does not license.** It locates where the classical assumption is paid
 on this pair of carriers. It does **not** show that Mathlib's ε₀ results are eliminable: as stated they
-are STATEMENT-CARRIED, so no proof of them can drop the choice, and the open question is a restatement
-on a choice-free carrier, with the two readings of § *Why this file exists — a correction of record*:
-the defined one on `E0Note`, and the derived one, not located in Lean. Its state is in `ZeroParadox/Ordinal/SnapNucleus.md` § "Axiom footprint".
+are STATEMENT-CARRIED, so no proof of them can drop the choice. The remaining question is a restatement
+on a carrier whose statements are choice-free, with the two readings of § *Why this file exists — a
+correction of record*: the defined one, in Lean on `E0Note`, and the derived one, not located as of
+2026-10-13. Both, with the search record, are in `ZeroParadox/Ordinal/SnapNucleus.md` § "Axiom footprint".
 This is the same limit `ZeroParadox/Ordinal/SyntacticCollapse.md` records. Scoped to
 what is measured: *the ascent below ε₀ borrows a tool far stronger than it needs*, because its
 counterpart on notations measures `[propext]`. Note also the standing caveat from

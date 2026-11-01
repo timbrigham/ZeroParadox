@@ -54,7 +54,14 @@ this object it is checkable rather than a framing.
 
 ⚠ **The necessity half — *"it has to"* — is NOT proved and is not claimed.** What is proved is that on
 this object both readings do hold at once. Whether a boundary of this kind *cannot* run one direction only
-is an open no-go, recorded in `.claude-local/notes/future-research/concurrent_poles_2026-08-06.md`.
+would be a no-go theorem, and this file does not attempt it. A theorem proving or refuting it was not
+located as of 2026-11-01 in `ZeroParadox/`, searched as follows: three phrasings over its `.lean` and
+`.md` files, root `.md` files not included ("one direction only" / "cannot run one direction";
+"one-directional" / "runs one way"; "both readings hold" / "concurrent"), 18 files matching. The hits
+on this question are this paragraph, the fence in `Surprisal.lean`, and the same fence at
+`repr_spread_source_certain_target` (`ZeroParadox/Ordinal/PricedInterface.lean`); other hits, among
+them `occurrence_semidecidable_nonoccurrence_not`, `four_corners_exhaustive` and `InfinitudeFloor.lean`
+§ VI, concern other one-way questions and neither prove nor refute this one.
 
 **Prior art.** Mathlib's `PMF.map_const : p.map (Function.const α b) = pure b`
 (`Mathlib/Probability/ProbabilityMassFunction/Constructions.lean`) is the **globally constant** case. One
@@ -162,7 +169,8 @@ fails, and `f_snap_impossible` carries no Archimedean hypothesis). Both are true
 wanted.
 
 ⚠ **FENCE 5 — the p-adic route is a DIFFERENT non-Archimedean-ness and is not this one.** Khrennikov's
-ℚ_p-valued probability (survey: `.claude-local/papers/dragovich_padic_physics_2009_0904.4205.pdf` § 10,
+ℚ_p-valued probability (survey: Dragovich, Khrennikov, Kozyrev and Volovich, *On p-Adic Mathematical
+Physics*, arXiv:0904.4205, § 10,
 "Q_p-valued Probability") replaces the **topology** of frequency stabilisation, not the **order**. `ℚ_[p]`
 is not an ordered field and its absolute value is real-valued with an Archimedean value group, so
 "infinitely slim but non-zero" is not expressible there at all. The corpus's home for the Ostrowski sense
@@ -190,7 +198,7 @@ So the capsule's content is **the geometric series test holds in an ordered fiel
 Archimedean.** Bibliographic data is confirmed twice over — the reference lists of *Completeness of
 Ordered Fields and a Trio of Classical Series Tests* (Abstr. Appl. Anal. 2016, art. 6023273) and *Normed
 Algebras and the Geometric Series Test* (Surveys in Math. and its Appl. **12** (2017), 203-217, ref.
-[10]), both in `.claude-local/papers/`, agree on volume 46, 2015, pp. 139-141, MR3361762.
+[10]), agree on volume 46, 2015, pp. 139-141 (the 2017 list adds MR3361762).
 
 **The delta, stated exactly.** Theirs is the **series** form (∑ rⁿ converges for `0 < r < 1`); this file's
 is the **sequence** form (`rⁿ → 0`, with `r = 1 - p`). In an ordered field the two are linked by the

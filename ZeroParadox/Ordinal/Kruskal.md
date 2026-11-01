@@ -5,7 +5,8 @@ declarations, the Engineer's Take and the per-declaration glosses, and its `Puri
 EMITS the axiom footprints this document reasons about, so no footprint below is asserted here.
 ⚠ **What a footprint reports is what a route CONSUMES, never what it REACHES** — so the separate
 question of which routes pass through the minimal bad sequence construction is NOT settled by the
-block, and is settled below by Mathlib's import graph instead.
+block, and is settled below instead, by Mathlib's import graph and, for the third route, by
+declaration order within a module.
 
 ## The proof
 
@@ -21,7 +22,11 @@ re-proves):
 - `Set.PartiallyWellOrderedOn.IsBadSeq` / `exists_min_bad_of_exists_bad` — the Nash-Williams minimal
   bad sequence construction.
 - `Set.PartiallyWellOrderedOn.partiallyWellOrderedOn_sublistForall₂` — **Higman's lemma** (lists under
-  `List.SublistForall₂` are WQO when the alphabet is).
+  `List.SublistForall₂` are WQO when the alphabet is). Mathlib proves it through the minimal bad
+  sequence construction too: its proof rewrites with `iff_not_exists_isMinBadSeq`, whose forward
+  direction is proved by applying `exists_min_bad_of_exists_bad` (both in
+  `Mathlib/Order/WellFoundedSet.lean`). So this file reaches that construction twice, in its own
+  minimal bad sequence of trees and inside Higman's lemma.
 
 Kruskal's tree theorem is **not formalized in the pinned Mathlib, and Mathlib records that
 itself**: its machine-readable theorem index lists `Q3527100`, *"Kruskal's tree theorem"*, **with
@@ -53,8 +58,9 @@ formalizes the labeled tree theorem on Mathlib's WQO machinery. Two threads must
   construction. Measured: `exists_min_bad_of_exists_bad`, `exists_monotone_subseq` and `Nat.sInf_le`
   all report the IDENTICAL `[propext, Classical.choice, Quot.sound]`, and `Classical.choose` differs
   only by being smaller. What separates them is **where each route is DECLARED**, which is read
-  rather than emitted. Lean gives two independent bounds and **the three routes need both** — a
-  declaration can reach only its own module's earlier lines, plus that module's import closure.
+  rather than emitted. Lean gives two independent bounds; each of the three routes is settled by
+  one of them, and **between them the three routes need both**: a declaration can reach only its own module's
+  earlier lines, plus that module's import closure.
 
   ⚠ **Two of the three are settled by the IMPORT CLOSURE.** `Nat.sInf_le` is declared in
   `Mathlib.Data.Nat.Lattice` and `Classical.choose` in core's `Init.Classical`; measured over the
@@ -70,10 +76,19 @@ formalizes the labeled tree theorem on Mathlib's WQO machinery. Two threads must
   and `exists_min_bad_of_exists_bad` (:795). Its own module therefore contains the machinery and the
   import closure excludes nothing for it. What excludes it is that Lean has **no forward references
   within a file**: `:366` is proved four hundred lines before either exists. (Its body delegates
-  into `Mathlib.Order.WellQuasiOrder`, which is upstream — but a delegate's closure bounds the
-  delegate, never the caller.) **On both legs together, three of the four routes cannot reach the
-  machinery**, and a choice-free minimal bad sequence would leave them standing. Sternagel's
-  Isabelle/HOL *Certified Kruskal's Tree Theorem* takes this route.
+  into `Mathlib.Order.WellQuasiOrder`, which is upstream — but a walk of the delegate's closure
+  alone does not bound the caller.) **On both legs together, three of the four routes cannot reach
+  the machinery**, and a choice-free minimal bad sequence would leave them standing.
+  Sternagel's Isabelle/HOL *Certified Kruskal's Tree Theorem* (J. Formalized Reasoning 7(1), 2014)
+  takes the same Nash-Williams route as this file, and its minimal bad sequence is not choice-free:
+  it picks minimal elements with Hilbert's choice operator (§ 5, p. 51). An earlier Lean 3
+  formalization, for unlabeled finite trees, is Minchao Wu's `minchaowu/Kruskal.lean3` (GitHub; last commit 2017-06-20,
+  `a14516f`): its `theorem.lean` builds a minimal bad sequence of finite trees
+  (`mbs_of_finite_tree := minimal_bad_seq size H`), derives `Kruskal's_contradiction : false`, and
+  defines `wqo_finite_tree : wqo finite_tree`, under `open classical` and `noncomputable theory`.
+  It predates this file and takes the same Nash-Williams route, with its own Higman-type lemma in a
+  finite-subset form (`wqo_finite_subsets`, `higman.lean`), not Mathlib's list form; this file proves
+  the labeled form on Mathlib's Higman.
 - **The constructive route, and why its HYPOTHESIS side does not transfer to this statement.**
   Kruskal's theorem and Higman's lemma have choice-free proofs built on the inductively defined
   **almost-full** predicate `af`. Bar induction is not a rival CHARACTERISATION but an

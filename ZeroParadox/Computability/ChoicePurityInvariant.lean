@@ -56,8 +56,9 @@ M-type machinery — recorded in PurityCheck, NOT asserted as a necessity. Measu
 FORMER and constructors are axiom-free while its DESTRUCTOR (`M.children`/`M.dest`) is NOT — that is
 where the axiom originates, and `Cofix` inherits it through the congruence it quotients by. What makes
 the footprint a *quotient-layer* artifact is that `strict_cofix_nonempty` witnesses the same
-inhabitation with no axioms, by only BUILDING and never destructing (see the header for why Veltri is
-background, not support). -/
+inhabitation with no axioms, by only BUILDING and never destructing (see
+`ZeroParadox/Computability/ChoicePurityInvariant.md`, the Veltri entry under Prior art, for why Veltri
+is background, not support). -/
 theorem cofix_nonempty' : Nonempty (Cofix ZeroParadox.idPF_Coalgebra.Obj) :=
   ZeroParadox.cofix_nonempty
 

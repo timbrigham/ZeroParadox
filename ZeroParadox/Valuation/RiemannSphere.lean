@@ -34,9 +34,9 @@ fact that `ℚ_[2]` is a `ProperSpace` (closed balls compact, so leaving every c
 
 **Honest scope.** This is a TOPOLOGICAL homeomorphism — the p-adic Riemann sphere, the framework's
 originating intuition (0 and ∞ antipodal under `z ↦ 1/z`). It is a standalone result. It is **NOT** the
-cross-construction "inversion = passing to Cᵒᵖ" unification, which a prior-art check
-(`.claude-local/notes/inv_cop_prior_art_2026-06-30.md`) recorded as non-buildable (no common type; the
-abstract ⊥↔⊤ swap is already Mathlib's `compl_bot`/`compl_top`). Do not read this as that.
+cross-construction "inversion = passing to Cᵒᵖ" unification, which is not built (no common type; the
+abstract ⊥↔⊤ swap is already Mathlib's `compl_bot`/`compl_top`; the prior-art record in
+`ZeroParadox/BottomCannotBe.lean` § INVERSION). Do not read this as that.
 
 ## Structure
 - Opening (unheaded) `rInv`, `continuous_rInv`, `rInvHomeo`, `rInv_swaps` — inversion, the 0↔∞ swap.

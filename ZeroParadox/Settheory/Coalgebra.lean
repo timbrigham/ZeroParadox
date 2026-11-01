@@ -42,8 +42,8 @@ statement — but it IS attributable to the QPF quotient layer rather than to th
 `strict_cofix_nonempty` proves the same inhabitation over it with no
 axioms. Ahrens et al. agree from the other side: for a polynomial
 functor the final coalgebra is constructible choice-free (their construction needs
-only function extensionality, which Lean has; only their uniqueness half uses univalence, see
-`ZeroParadox/Computability/ChoicePurityInvariant.lean`. Veltri is CONTRAST, not support: for the
+only function extensionality, which Lean has; only their uniqueness half uses univalence, see the
+prior-art list in `ZeroParadox/Computability/ChoicePurityInvariant.md`. Veltri is CONTRAST, not support: for the
 non-polynomial finite-powerset functor his results run the other way — certain constructions
 there are obtained ASSUMING choice principles rather than shown to need them, and his own
 preferred coinductive construction needs neither choice nor LLPO). See PurityCheck.
@@ -135,7 +135,7 @@ section PurityCheck
 -- only at their uniqueness result; Lean has funext). For Lean's Axiom-K setting the closer
 -- citation is **Altenkirch–Ghani–Hancock–McBride–Morris, *Indexed Containers* (JFP 25, 2015)**,
 -- which ACS themselves point at (§1.1) and generalize "to the whole of HoTT". **The full
--- three-way setting comparison is in `ZeroParadox/Computability/ChoicePurityInvariant.lean` —
+-- three-way setting comparison is in `ZeroParadox/Computability/ChoicePurityInvariant.md` —
 -- read it there, not here.** In the finite-powerset case — the non-polynomial one — the literature
 -- pins each presentation: full AC for the set-quotient, countable choice together with LLPO for
 -- Worrell's limit. The CHOICE half is a fact about those constructions, not a necessity: two of

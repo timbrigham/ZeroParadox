@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-N: The Constructive Snap PDF Builder
-Version 2.5 | October 2026
+Version 2.7 | November 2026
 
 Lean: ConstructiveOrdinals.lean, SnapNucleusConstructive.lean, OrdinalChoiceEssential.lean,
 PricedInterface.lean. Follows all rules in scripts/PDF_Rendering_Standards.md.
@@ -9,7 +9,7 @@ PricedInterface.lean. Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '2.5'
+VERSION = '2.7'
 FIRST_RELEASED = 'July 2026'
 
 
@@ -48,13 +48,15 @@ def build():
         'with no Axiom of Choice. But the machinery ZP-L reaches for to state that structure '
         'semantically is not: comparing arbitrary well-orders implies excluded middle. So the choice '
         'is not a mere artifact of how a proof was written. ZP-L&#8217;s &#949;<sub>0</sub> results, '
-        'as stated, already carry Classical.choice in their statements (the statement control, '
-        'measured 2026-10-08), so no proof of those statements can drop it. For the ascent below '
+        'as stated, already carry Classical.choice in their statements (the statement controls, '
+        'printed in ZeroParadox/Ordinal/Epsilon0MinMax.lean), so no proof of those statements can '
+        'drop it. For the ascent below '
         '&#949;<sub>0</sub> it is the price of a tool stronger than the job requires: the ascent is '
         'restated choice-free here, on notations. For &#949;<sub>0</sub> itself, a choice-free Lean '
         'restatement of the fixed-point equation and its uniqueness on E0Note exists, with existence '
         'set by definition (E0Note, below); a choice-free derivation in Lean of the fixed point on a '
-        'well-founded carrier, leastness included, was not located as of 2026-10-08 '
+        'well-founded carrier whose statements are choice-free, leastness included, was not located '
+        'as of 2026-10-08, searched again 2026-10-13 '
         '(ZeroParadox/Ordinal/SnapNucleus.md, section Axiom footprint, records the search).'))
     E.append(body(
         'So this layer does two things. It rebuilds the ascent syntactically, where it is choice-free. '
@@ -202,9 +204,13 @@ def build():
             'predicate is defined through repr into Ordinal. The snap facts (Section II) do not depend '
             'on NF, so they stay choice-free; but even &#8220;this notation is well-formed&#8221; '
             'inherits choice, through NF&#8217;s definition. That is one site where choice enters, not '
-            'the only one: ZP-L&#8217;s least-fixed-point results are not routed through tower_NF, and '
-            'their choice is carried by their own statements, through Ordinal&#8217;s order instance '
-            'and operations (ZeroParadox/Ordinal/SnapNucleus.md &#167; Axiom footprint).',
+            'the only one: ZP-L&#8217;s least-fixed-point results (epsilon0_min_eq_max and '
+            'epsilon0_eq_nfp_bot, ZeroParadox/Ordinal/Epsilon0MinMax.lean) are not routed through '
+            'tower_NF (their files do not import ZeroParadox/Ordinal/ConstructiveOrdinals.lean, where '
+            'tower_NF is declared), and their choice is carried by their own statements, through '
+            'Ordinal&#8217;s order instance and operations (the statement controls '
+            'epsilon0MinMaxStatement and epsilon0EqNfpBotStatement, printed in that file; where the '
+            'choice enters: ZeroParadox/Ordinal/SnapNucleus.md &#167; Axiom footprint).',
         ]
     ))
     E.append(sp(6))
@@ -264,7 +270,9 @@ def build():
             'limit, which no notation names (tower_no_upper_bound; across the crossing, '
             'repr_lt_epsilon0), so it cannot be stated purely syntactically on ONote. '
             'Leastness is proved on Ordinal (epsilon0_min_eq_max, with choice); a choice-free proof of '
-            'it on a well-founded carrier was not located as of 2026-10-08. What is proved here is the '
+            'it in Lean on a well-founded carrier whose statements are choice-free was not located as '
+            'of 2026-10-08, searched again 2026-10-13 (ZeroParadox/Ordinal/SnapNucleus.md, section Axiom footprint, records the '
+            'search and the defined reading on E0Note). What is proved here is the '
             'from-below half, choice-free.',
             'Prior art for leastness, classical: hydra-battles (Coq) proves epsilon0_lfp, that '
             '&#949;<sub>0</sub> is the least fixed point of phi0, its name for x &#8614; &#969;<sup>x</sup> '
@@ -327,9 +335,11 @@ def build():
             'results, as stated, are <b>statement-carried</b> (their statements carry choice); for '
             '&#949;<sub>0</sub> itself, a choice-free Lean restatement of the fixed-point equation and '
             'its uniqueness on E0Note sets existence by definition, and a choice-free derivation in '
-            'Lean of the fixed point on a well-founded carrier, leastness included, was not '
-            'located as of 2026-10-08 (ZeroParadox/Ordinal/SnapNucleus.md, section Axiom footprint). '
-            'Zero sorry. Verified: lake build, October 2026.',
+            'Lean of the fixed point on a well-founded carrier whose statements are choice-free, '
+            'leastness included, was not located as of 2026-10-08, searched again 2026-10-13 '
+            '(ZeroParadox/Ordinal/SnapNucleus.md, section Axiom footprint).',
+            'The footprints listed here are copies; the live record is the #print axioms output of '
+            'each named .lean file.',
         ]
     ))
     E.append(sp(6))
@@ -344,7 +354,9 @@ def build():
             'a carrier of notations denoting the ordinals up to &#949;<sub>0</sub>, with the crossing '
             'priced at one named map | '
             'leastness of &#949;<sub>0</sub> is proved on Ordinal (epsilon0_min_eq_max, with choice); '
-            'a choice-free proof of it on a well-founded carrier was not located as of 2026-10-08.</i>',
+            'a choice-free proof of it in Lean on a well-founded carrier whose statements are '
+            'choice-free was not located as of 2026-10-08, searched again 2026-10-13 (ZeroParadox/Ordinal/SnapNucleus.md, '
+            'section Axiom footprint).</i>',
             S['endnote']),
     ]
 

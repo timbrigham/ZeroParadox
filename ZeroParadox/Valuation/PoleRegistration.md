@@ -15,9 +15,10 @@ the two `example`s in § II prove that, both directions:
   in § II. So § II's hypothesis and the one already in
   `ZeroParadox/Category/ExcludedMiddleBridge.lean` are **inter-derivable**, not two principles.
 
-**The return leg runs on the chooser's DATA, and uses no excluded middle at all.** The two predicates of
-`em_of_choiceFragment` are each constructively inhabited, so `decide (ch A = ch B)` is already data.
-`em_of_choiceFragment` plays no part: it runs `ChoiceFragment → ExcludedMiddle`, forward, and
+**The return leg runs on the chooser's DATA, and uses no excluded middle at all.** `decide (ch A = ch B)`
+is data because `Bool` has decidable equality; the chooser supplies `ch A` and `ch B` on two inhabited
+predicates, `b = true ∨ x.Dom` and `b = false ∨ x.Dom`, the same pair `em_of_choiceFragment`'s proof
+forms internally. The theorem `em_of_choiceFragment` itself plays no part: it runs `ChoiceFragment → ExcludedMiddle`, forward, and
 composing it with the first bullet would run forward twice and never return.
 
 **What the two legs establish is COST, not the arrows.** Both sides are theorems of the ambient
@@ -28,8 +29,7 @@ measured 2026-09-17 by naming the anonymous `example`s: forward `[propext]`, ret
 `[propext, Quot.sound]`, and the inert-packaging leg at no axioms at all — and that
 `PoleDiscriminator` is the pole vocabulary for `ChoiceFragment` —
 the relationship `uniformChartSelection_iff_choiceFragment` already records for chart selection, and
-already stated in prose at `ExcludedMiddleBridge.lean` and `ChoiceCannotBe.lean`. Witnessed here,
-not discovered here.
+`ZeroParadox/Category/ChoiceCannotBe.lean` § III already indexes. Witnessed here, not discovered here.
 
 ⚠ **A failed elaboration measures a CONSTRUCTION, never a route** — and it is the axiom budget, never
 the arrow, that is ever in question here. The natural construction of a discriminator from excluded
@@ -47,7 +47,7 @@ strength.
 ## Sources, read at rung D
 
 **T. de Jong, "Apartness, sharp elements, and the Scott topology of domains," MSCS 2023**
-(arXiv:2106.05064v5), filed in `.claude-local/papers/`. Page 7, § 2.3, verbatim: *"decidable equality
+(arXiv:2106.05064v5). Page 7, § 2.3, verbatim: *"decidable equality
 on all of S is equivalent to excluded middle"*.
 
 ⚠ **Every result number below is the arXiv v5 numbering**, which is the edition read. The MSCS
@@ -80,8 +80,11 @@ known properties of decidable objects, see Acuña-Linton"* — **O. Acuña-Orteg
 of an Elephant* A4.5.22; that is **not read here and not corroborated by the source that is**.
 
 ⚠ **In a topos those four are EQUIVALENT; this file proves one direction.** The converse is exactly
-what §§ above leave open, and the reason is the `Prop`/`Type` stratification — a `Bool`-valued
-decider is data, `ExcludedMiddle` is `Prop`-valued, and a topos has no such split. The canonical
+what §§ above leave open, and a candidate reason is the `Prop`/`Type` stratification — a `Bool`-valued
+decider is data, `ExcludedMiddle` is `Prop`-valued, and `Or` in `Prop` does not eliminate into `Bool`.
+In a topos a decided proposition determines an element of 1 + 1
+(`ZeroParadox/Category/ChoiceCannotBe.md`, § "The headline fence"), while Ω ≅ 1 + 1 is condition (4)
+of the lemma above and holds exactly in the Boolean toposes. The canonical
 statement of that fence is `ZeroParadox/Category/ExcludedMiddleBridge.lean`'s `ChoiceFragment`
 docstring; it is not restated here.
 
@@ -101,9 +104,9 @@ is `Decidable`. **Credit runs one way: an instance of theirs, never a generaliza
 
 **T. de Jong and M. H. Escardó, "Predicative Aspects of Order Theory in Univalent Foundations,"
 FSCD 2021** (arXiv:2102.08812v5) and *"On Small Types in Univalent Foundations"* (arXiv:2111.00482v5,
-LMCS 2023), both filed. Same neighbourhood, and **this file makes no claim about what either proves**
-— a previous version characterised their Corollary 39 / Theorem 42 and that characterisation was
-withdrawn as unverified. Read them before citing them.
+LMCS 2023), both filed. Same neighbourhood. **This file cites neither for any result of its own.** The
+first is cited, read from source, at `ZeroParadox/Category/LawvereTaboo.lean` (Corollary 39(iii)-(iv),
+p. 11, in the comment above `wem_of_fixedPointFree`) and `ZeroParadox/Category/BottomUndecidable.lean` § II.
 
 **C. Knapp, "Partial Functions and Recursion in Univalent Type Theory," 2020** (arXiv:2011.00272),
 filed. **Definition 5.17** (p. 92): a *dominance* is a **set of propositions** `d : U → U` closed
@@ -169,9 +172,10 @@ value, no novelty claim. Three things are genuinely here:
 2. **A modesty result, WITNESSED here and stated in prose elsewhere already.** `PoleDiscriminator`
    and the corpus's own `ChoiceFragment` are inter-derivable, both legs now `example`s in § II, and
    both choice-free. So § II introduces **no new principle** — it is the pole vocabulary for a
-   hypothesis the corpus already had. ⚠ Not a discovery: `ExcludedMiddleBridge.lean` and
-   `ChoiceCannotBe.lean` already say in prose that `ChoiceFragment` is really `∀ p, Decidable p`.
-   What is added is the machine-checked witness, not the observation.
+   hypothesis the corpus already had. ⚠ Not a discovery: `ExcludedMiddleBridge.lean` relates
+   `ChoiceFragment` to data-valued decidability directly (the `example` after its definition,
+   `ChoiceFragment ↔ Nonempty (∀ p, Decidable p)`). What is added here is the witness through
+   `PoleDiscriminator`, not the observation.
 3. **The consequence at the computational floor**, § III: what § II costs constructively, ZP-K's floor
    cannot buy at any price — no *computable* discriminator decides self-application, by reduction to
    `self_halting_undecidable`.

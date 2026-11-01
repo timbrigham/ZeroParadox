@@ -28,8 +28,8 @@ Assembled from pieces already proved across the ZPJ family + ZP-P's coalgebra:
 
 ## FENCE (crucial — unlike the snap dichotomy)
 The snap's classifier (Ostrowski) is a theorem INSIDE one foundation, so "snap ⟺ non-Archimedean" is fully
-machine-checkable. The Quine atom's classifier (Foundation vs AFA) is a choice of METATHEORY, which Lean's
-well-founded kernel cannot adjudicate from inside (it cannot host `x = {x}`; that is the Cantor wall above).
+machine-checkable. The Quine atom's classifier (Foundation vs AFA) is a choice of METATHEORY, which Lean cannot
+adjudicate from inside. `Statement:` **CARRIER** — no `ZFSet` is its own member (`no_quine_atom`) and no `T ≃ Set T` exists (Cantor, above), while the coalgebra chart hosts a self-unfolding element (`Cofix`, the existence fork above).
 So what is PROVED here is the STRUCTURAL dichotomy (the self-referential fixed point exists on the ν side,
 not the μ side, and where it exists it is the unique bottom). The SET-THEORETIC reading — "the Quine atom
 exists ⟺ AFA" — stays a metatheoretic commitment (the FMC / CC-2, fenced in ZP-E R-AFA). This file makes NO
@@ -38,7 +38,7 @@ claim that AFA is machine-checked.
 ## Symbol map (component → existing lemma)
 - existence fork        → `ZeroParadox.categorical_fork_strict`  (`idPF_Coalgebra`, `Fix`, `Cofix` from ZP-P)
 - self-members = {⊥}    → `ZeroParadox.selfMem_eq_singleton_bot`  (`selfMemDerived`, `bot`)
-- no literal (Cantor)   → `ZeroParadox.nontrivial_lattice_no_witness` (lattice face, `HasLawvereWitness`); `ZeroParadox.cantor_via_engine` (`T ≃ Set T`, `ZeroParadox/Settheory/Wall.lean`, not imported)
+- no literal (Cantor)   → `ZeroParadox.nontrivial_lattice_no_witness` (lattice face, `HasLawvereWitness`); `ZeroParadox.cantor_via_engine` (no surjection `A → (A → Prop)`, which excludes `T ≃ Set T`; `ZeroParadox/Settheory/Wall.lean`, not imported)
 
 STATUS: PROVED, sorry-free. Pure assembly of ZP-P coalgebra (`categorical_fork_strict`) +
 ZeroParadox/Computability/SelfApp.lean (`selfMem_eq_singleton_bot`) + ZeroParadox/Category/Lawvere.lean (`nontrivial_lattice_no_witness`); Cantor is cited from ZeroParadox/Settheory/Wall.lean (`cantor_via_engine`).

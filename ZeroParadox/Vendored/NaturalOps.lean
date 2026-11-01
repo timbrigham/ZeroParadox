@@ -32,7 +32,6 @@ CHANGES FROM THE UPSTREAM v4.28.0 SOURCE (kept minimal, mechanical, NON-semantic
   v4.28.0 and v4.30.0-rc2 and are marked inline with `-- [ZP port]`.
 
 This is library code, not Zero Paradox original work. Credit is upstream Mathlib.
-See `.claude-local/notes/kirby_paris_nadd_absent_2026-06-29.md` for the full account.
 ================================================================================
 -/
 

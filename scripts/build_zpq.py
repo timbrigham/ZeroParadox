@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-Q: The Frame-Change PDF Builder
-Version 1.13 | October 2026
+Version 1.14 | October 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.13'
+VERSION = '1.14'
 FIRST_RELEASED = 'July 2026'
 
 from reportlab.graphics.shapes import Drawing, Circle, Ellipse, PolyLine, String, Polygon
@@ -476,7 +476,9 @@ def build():
             '(Kleene\'s recursion theorem) carry Classical.choice; the abstract witness machinery '
             '(fixedPoint_of_witness, no_witness_of_fixedPointFree) is axiom-free.',
             'Core choice-free, realisation choice-carrying &#8212; the framework&#8217;s standing '
-            'pattern. Zero sorry. Verified: lake build, July 2026.',
+            'pattern.',
+            'The footprints listed here are copies; the live record is the #print axioms output of '
+            'each named .lean file.',
         ]
     ))
     E.append(sp(6))

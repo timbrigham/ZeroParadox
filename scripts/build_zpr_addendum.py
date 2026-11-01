@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-R Addendum: The Diagonal Family — PDF Builder
-Version 1.18 | October 2026
+Version 1.22 | November 2026
 Follows scripts/PDF_Rendering_Standards.md.
 Search record behind § IV's Gödel-first sentence (2026-10-06, ripgrep over ZeroParadox/**/*.lean):
   (a) godel_?(one|1|first)|first_?incompleteness|incompleteness_?(one|1|first)|godel_?sentence|true_?but_?unprovable  -> 0 hits
@@ -10,8 +10,9 @@ Search record behind § IV's Gödel-first sentence (2026-10-06, ripgrep over Zer
 
 import os
 from zp_utils import *
+from reportlab.platypus import KeepTogether
 
-VERSION = '1.18'
+VERSION = '1.22'
 FIRST_RELEASED = 'July 2026'
 
 
@@ -64,7 +65,8 @@ def build():
         'that one fact into the wall faces. One direction is proved about the fork\'s two regimes: a '
         'self-loop rules out well-foundedness (mu_nu_branch_exclusion). The <b>wall</b> (&#956;) faces '
         'are Cantor, Russell, Turing, Tarski and Curry; the <b>floor</b> (&#957;) faces are the Quine '
-        'atom, the Kleene quine, the L&#246;b sentence, and (with a twist) Rice. '
+        'atom, the Kleene quine, the L&#246;b sentence (from a hypothesized L&#246;b diagonal), and '
+        '(with a twist) Rice. '
         'Most of the engine and the classical faces are already formalized in the framework\'s Wall '
         'module; this addendum adds the four faces formalized in the diagonal-family build (Tarski, '
         'Curry, Rice, L&#246;b).'))
@@ -176,7 +178,8 @@ def build():
         'At each floor face a fixed point is supplied, and the supplier differs by face. In the fork / '
         'AFA face it is &#8869; of the ZPSemilattice, by the class fields (a commitment, not engine '
         'output). In the computability face it is a Kleene code (Rogers\' fixed point). In the L&#246;b '
-        'face it is given by a hypothesized L&#246;b diagonal.'))
+        'face it is given by a hypothesized L&#246;b diagonal: the Lean takes it as the hypotheses hfix1, '
+        'hfix2, and in arithmetic the diagonal lemma supplies it (ZeroParadox/Settheory/Loeb.md).'))
 
     E.append(result_box(
         'The Quine atom (SetTheoryAFA.lean) &#8212; the set-theoretic floor',
@@ -207,7 +210,8 @@ def build():
     ))
     E.append(sp(4))
 
-    E.append(result_box(
+    # KeepTogether: the box split across pages 3-4 with only its last two rows under a repeated title.
+    E.append(KeepTogether(result_box(
         'L&#246;b (Loeb.lean) &#8212; the provability floor, given a L&#246;b diagonal; and G&#246;del\'s second incompleteness',
         [
             'loeb: given a L&#246;b diagonal (&#968; &#8596; (&#9633;&#968; &#8594; A)), &#8866; '
@@ -215,12 +219,25 @@ def build():
             'provability (loeb_sentence_is_fixedpoint).',
             'godel_two: given a L&#246;b diagonal for falsum, a consistent system does not prove '
             '&#9633;falsum &#8594; falsum &#8212; its own '
-            'consistency (G&#246;del\'s second incompleteness, the A = &#8869; corollary). Built from '
-            'scratch (no modal logic in Mathlib): an abstract ProvabilityLogic typeclass with the '
+            'consistency (G&#246;del\'s second incompleteness, the A = falsum corollary). The consistency '
+            'reading is G&#246;del\'s second theorem when the class is instantiated at a theory of arithmetic '
+            'and falsum is its falsum; in '
+            'the class, godel_two binds '
+            'falsum as an arbitrary sentence (ProvabilityLogic has no falsum constant and no ex-falso), so it '
+            'covers any unprovable sentence with a L&#246;b diagonal.',
+            'Two readings of the face: it is filed with the floors because the diagonal closes; the '
+            'unprovability of consistency is a limitation, which ZeroParadox/Settheory/Loeb.lean calls the '
+            'wall on the provability axis, in another sense than the &#956; wall faces of Section II.',
+            'Built from scratch (no modal or provability logic located in the pinned Mathlib, searched '
+            '2026-08-30 on three axes; ZeroParadox/Settheory/Loeb.lean; prior art for abstract provability: '
+            'Popescu &amp; Traytel, CADE-27 (2019), and their Archive of Formal Proofs entry "An Abstract '
+            'Formalization of G&#246;del\'s Incompleteness Theorems", in Isabelle; Saitou &amp; Noguchi, '
+            '"Mechanizing G&#246;del\'s Incompleteness Theorems and Provability Logic", arXiv:2609.13780, in '
+            'Lean 4): an abstract ProvabilityLogic typeclass with the '
             'Hilbert&#8211;Bernays&#8211;L&#246;b derivability conditions.',
             'Lean purity: choice-free. ✓',
         ]
-    ))
+    )))
     E.append(sp(4))
 
     E.append(result_box(
@@ -287,8 +304,10 @@ def build():
              'computability_face_fixedPoint (Lawvere.lean)'],
             ['L&#246;b / G&#246;del 2nd', '&#957;', 'the provability diagonal closes given a L&#246;b diagonal &#968; '
              '(hypotheses hfix1, hfix2); consistency unprovable, for a consistent system given a L&#246;b '
-             'diagonal for falsum',
-             'loeb, godel_two (Loeb.lean)'],
+             'diagonal for falsum (G&#246;del\'s second theorem when the class is instantiated at a theory of '
+             'arithmetic and falsum is its falsum; in the class, '
+             'falsum may be any sentence)',
+             'loeb, loeb_sentence_is_fixedpoint, godel_two (ZeroParadox/Settheory/Loeb.lean)'],
             ['Rice', '&#957;', 'a fixed point exists; every non-trivial semantic property is '
              'undecidable over all codes',
              'rice_face_has_bottom, quine_exists_yet_rice, halting_undecidable (Rice.lean)'],
@@ -356,13 +375,12 @@ def build():
         'this addendum is the formalization of the faces formalized here (the engine, the wall faces, and the Quine-atom and '
         'L&#246;b / G&#246;del 2nd floor faces choice-free; the computability floor faces choice-carrying) and its tie to the self-application role &#8212; a placement, not an extension.'))
 
-    E += [
+    # KeepTogether: heading and box on one page (the box had split pp. 6-7).
+    E.append(KeepTogether([
         hr(),
         Paragraph('Axiom Purity', S['h1']),
         hr(),
-    ]
-
-    E.append(axiom_box(
+        axiom_box(
         'Axiom Purity',
         [
             'The engine and the wall faces (negation_no_fixedpoint, lawvere_fixedpoint, '
@@ -375,9 +393,9 @@ def build():
             'inherited from Mathlib\'s classical recursion theory &#8212; disclosed, not claimed '
             'otherwise.',
             'Core choice-free, computability realization choice-carrying &#8212; the framework\'s '
-            'standing pattern. Zero sorry. Verified: lake build, October 2026.',
+            'standing pattern. Zero sorry. Verified: lake build, November 2026.',
         ]
-    ))
+    )]))
     E.append(sp(6))
 
     E += [
@@ -385,7 +403,8 @@ def build():
         Paragraph(
             '<i>End of ZP-R Addendum | The Diagonal Family | wall faces &#956; (Cantor, Russell, '
             'Turing, Tarski, Curry), each the contrapositive of one engine (negation has no fixed '
-            'point) | floor faces &#957; (Quine atom, Kleene, L&#246;b / G&#246;del 2nd, Rice), each '
+            'point) | floor faces &#957; (Quine atom, Kleene, L&#246;b / G&#246;del 2nd from a hypothesized '
+            'L&#246;b diagonal, Rice), each '
             'fixed point supplied per face | the faces formalized here, Lean-witnessed '
             'except G&#246;del 1st | cross-face identity a type boundary | the map is a placement, not a new '
             'theorem.</i>',

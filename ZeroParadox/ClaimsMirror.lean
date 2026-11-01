@@ -74,8 +74,8 @@ theorem claim_node_order {L : Type*} [ZPSemilattice L] (x : L) : le bot x :=
   bot_le x
 
 /-- Claim `node-set-theory` (proved). Statement: "In set theory, ⊥ is realized as the Quine atom
-    ⊥ = {⊥}, the self-membered singleton (ZF+AFA)." Exact representation: ⊥ is the unique self-membered
-    element, i.e. a Quine atom. Backing: `bot_is_quine_atom`. -/
+    ⊥ = {⊥}, the self-membered singleton (ZF+AFA)." Exact representation: ⊥ alone satisfies `selfMem`
+    (`IsQuineAtom`), read in ZF+AFA as x = {x}, not bare x ∈ x (`selfMem`'s note). Backing: `bot_is_quine_atom`. -/
 theorem claim_node_set_theory {L : Type*} [ZPSemilattice L] [AFAStructure L] :
     IsQuineAtom (bot : L) :=
   bot_is_quine_atom

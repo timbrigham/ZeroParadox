@@ -18,7 +18,7 @@ what bounds the hydra's regrowth (a finite natural sum of `ω^β` terms) below t
 
 Provenance: the proof structure (the `wpow_mul_natCast_add_of_lt_aux` induction, `termination_by
 (x,n,y)`) is Violeta Hernández's, from `vihdzp/combinatorial-games`. Port changes are marked `-- [ZP]`.
-See `.claude-local/notes/kirby_paris_nadd_absent_2026-06-29.md`.
+Why the natural-sum API is vendored at all: the header of `ZeroParadox/Vendored/NaturalOps.lean`.
 -/
 
 namespace ZeroParadox.NaturalOpsPow

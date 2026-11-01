@@ -538,6 +538,7 @@ open ZeroParadox
 
 -- § III: fully proved
 #print axioms epsilonZero_fixedPoint
+#print axioms epsilonZero_eq_nfp
 #print axioms epsilonZero_eq_iSup
 #print axioms epsilonZero_tower_lt
 #print axioms epsilonZero_le_fixedPoint

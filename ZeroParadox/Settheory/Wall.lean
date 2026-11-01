@@ -81,8 +81,9 @@ theorem no_self_decider {A : Type*} (g : A → (A → Bool)) : ¬ Function.Surje
   exact bool_not_no_fixedpoint b hb
 
 /-- **THE WALL (general).** A well-founded relation admits no self-loop: no `x` with `r x x`. This is the
-    object-level core the metatheoretic boundary reduces to — the literal self-referential fixed point
-    (`x ∈ x`) cannot exist where the relation is well-founded. -/
+    object-level core the metatheoretic boundary reduces to — no self-loop (`x ∈ x`) exists where the
+    relation is well-founded, and the literal self-referential fixed point `x = {x}` implies `x ∈ x`, so
+    it cannot exist there either. The implication cited runs from `x = {x}` to `x ∈ x`. -/
 theorem wf_no_selfloop {α : Type*} {r : α → α → Prop} (h : WellFounded r) (x : α) : ¬ r x x := by
   have key : ∀ a, Acc r a → ¬ r a a := by
     intro a acc
@@ -90,11 +91,20 @@ theorem wf_no_selfloop {α : Type*} {r : α → α → Prop} (h : WellFounded r)
     | intro y _ ih => exact fun hy => ih y hy hy
   exact key x (h.apply x)
 
-/-- **Set-theoretic face.** Under Foundation (`∈` well-founded on `ZFSet`), no set is self-membered: the
-    literal Quine atom `⊥ = {⊥}` (`x ∈ x`) is refuted in-kernel. The structural shadow of the same object
-    IS realizable choice-free (`AbstractSelfApp`); only the literal membership self-loop is walled off. -/
+/-- **Set-theoretic face.** Under Foundation (`∈` well-founded on `ZFSet`), no set is self-membered
+    (`x ∉ x`). The literal Quine atom `⊥ = {⊥}` (`x = {x}`) would be self-membered, so it is refuted
+    in-kernel too (the `example` below); the implication runs from `x = {x}` to `x ∈ x`; for the converse
+    see `ZeroParadox/Settheory/Wall.md`. The structural shadow of the same object IS realizable choice-free (`AbstractSelfApp`);
+    only the literal membership self-loop is walled off. -/
 theorem no_quine_atom (x : ZFSet) : x ∉ x :=
   wf_no_selfloop ZFSet.mem_wf x
+
+-- Statement: no `ZFSet` is its own singleton, from `no_quine_atom`.
+example (x : ZFSet) : x ≠ {x} := by
+  intro h
+  have hx : x ∈ ({x} : ZFSet) := ZFSet.mem_singleton.2 rfl
+  rw [← h] at hx
+  exact no_quine_atom x hx
 
 /-- **The wall, full strength.** A well-founded relation has no cycle of ANY length: no `x` is reachable
     from itself by one-or-more `r`-steps (`Relation.TransGen r x x`). `wf_no_selfloop` is the n=1 case;

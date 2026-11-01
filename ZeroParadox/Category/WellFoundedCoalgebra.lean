@@ -49,12 +49,12 @@ Recursive Coalgebras*, § 4. They credit the characterization to **Taylor** and 
 
 ⚠ **Where to verify the Taylor credit.** AMM cite it as their ref [28, Exercise VI.17], and their [28]
 is **Taylor, *Practical Foundations of Mathematics* (CUP 1999)** — which this project does **not**
-hold. The Taylor PDF that *is* in `.claude-local/papers/` is his *Well founded coalgebras and
-recursion*, a **different document, which does not contain Exercise VI.17**; do not send a reader
-there for it.
+hold. The Taylor document this project does hold is Paul Taylor, *Well founded coalgebras and
+recursion* (a preprint; the copy consulted carries no publication details), a **different document,
+which does not contain Exercise VI.17**; do not send a reader there for it.
 
-Source PDF for every quotation below:
-`.claude-local/papers/adamek_milius_moss_wellfounded_recursive_coalgebras.pdf`. Their statements —
+Source for every quotation below: Adámek, Milius, Moss, *On Well-Founded and Recursive Coalgebras*,
+arXiv:1910.09401v2 (16 Feb 2020). Their statements —
 the bulleted ones in quote marks are verbatim; Def 4.1 is their notation transcribed:
 
 * **Def 4.1** — every coalgebra `α : A → F A` induces `⃝ : Sub(A) → Sub(A)`, `⃝(s) = α⁻¹(F s)`.
@@ -75,8 +75,7 @@ Thm 7.6, their coreflection, or recursive coalgebras.**
 This paragraph previously also said *"no claim is made that the framework's categories satisfy their
 hypotheses"*, which § V made false and which sat here contradicting it. **Scope the two apart:** § V
 covers `Type u` with `ofTypeFunctor P.Obj` only, and **says nothing about the MC-1 carriers**
-(`TopCat`, `ModuleCat ℂ`, `KleisliCat PMF`) — those remain unchecked, and that is what
-`.claude-local/notes/future-research/amm_coreflection_requirements_gap_2026-08-04.md` tracks.
+(`TopCat`, `ModuleCat ℂ`, `KleisliCat PMF`) — those remain unchecked.
 
 **What this file adds over restating the definitions:** the two `Statement:` results in § III/§ IV
 place the corpus's own W- and M-types on the fork **intrinsically**, so the μ/ν split stops depending
@@ -265,8 +264,7 @@ monomorphisms" as a single proposition — the paragraph above is the argument t
 written in prose and checkable by reading, not a theorem.
 
 **(2)** The whole table is about **`Type u` with `ofTypeFunctor P.Obj`** and says nothing
-about the MC-1 carriers (`TopCat`, `ModuleCat ℂ`, `KleisliCat PMF`), which remain unchecked — see
-`.claude-local/notes/future-research/amm_coreflection_requirements_gap_2026-08-04.md`. Both smoothness
+about the MC-1 carriers (`TopCat`, `ModuleCat ℂ`, `KleisliCat PMF`), which remain unchecked. Both smoothness
 theorems also take `{J : Type u}`, so they reach λ-chains for `Type u`-small λ; AMM quantify over every
 ordinal.
 
@@ -333,8 +331,7 @@ was an unverified negative**: `WellPowered (Type 0)` fails on an unimported name
 universe parameter; `PreservesMonomorphisms` "does not synthesize" is true of the *instance database*
 and false of the *fact*; and smooth monomorphisms is **assembled from** pieces in the pin though no
 declaration bears the name. A failed `#synth` is evidence about the probe. See `CLAUDE.md`
-§ *"NOT IN THE LIBRARY" IS A CLAIM*, and
-`.claude-local/notes/future-research/amm_coreflection_requirements_gap_2026-08-04.md` § 4b. -/
+§ *"NOT IN THE LIBRARY" IS A CLAIM*. -/
 theorem fork_is_intrinsic :
     IsWellFoundedCoalg (P := idPF_Coalgebra) W.dest ∧
       ¬ IsWellFoundedCoalg (P := idPF_Coalgebra) M.dest :=
@@ -501,8 +498,8 @@ end ZeroParadox
 
 /-! ## Axiom Purity Check
 
-**Measured 2026-08-04, not inferred.** `#print axioms` follows the STATEMENT, so read the split by
-what each statement mentions:
+**Measured 2026-08-04, not inferred.** `#print axioms` follows the statement and the proof: read the
+split first by what each statement mentions, which a proof can add to and never remove:
 
 ```
 nextTime                            no axioms          -- the operator itself

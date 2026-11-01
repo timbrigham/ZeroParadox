@@ -69,16 +69,16 @@ the fourth, the Kleene quine (a program that prints itself, computability), is *
 structural commitment — the `KleeneStructure` typeclass carries the computational fixed point as filling the
 same role, without asserting an identity across types, not derived (`Computability/Kleene.lean`).
 
-**That fourth commitment is where time enters — and it is the easiest thing here to walk past.** The other
+**That fourth commitment is where time can enter — and it is the easiest thing here to walk past.** The other
 three faces are *static*: order-bottom, self-membered set, algebraic identity are timeless facts that simply
 hold, and nothing about them ever *happens*. The Kleene quine is the only one that *runs*, and running is a
-before and an after. So committing that the self-contained bottom is the self-executing bottom (⊥ is the
-machine in its ground state, which must execute itself) is committing that **time enters the framework as a
-state change**. It is what makes the framework dynamic at all: nothing static occurs on its own, so without
-it ⊥ would rest as a fixed point forever and the snap would never happen. Stated as what it is — a
-*commitment*, never a theorem — which is exactly why the computational face is joined by hand rather than
-derived from the static three. The wall's seed here, `negation_no_fp`
-(`¬(p ↔ ¬p)`), is that same self-reference *failing to close* (Cantor, Turing, Tarski); the floor is it
+before and an after. `KleeneStructure` names who would run `bot` of the `ZPSemilattice`: `bot` itself, its own
+executor if it executes at all (`Computability/Kleene.lean` `da1_computational`). That it runs is the occurrence
+commitment, and **time enters the framework as a state change** with it (`Order/Snap.lean` `t_snap_given`:
+hypotheses CC-1 and `hocc`, no `KleeneStructure`); nothing static occurs on its own, so without it `bot` would
+rest as a fixed point forever and the snap would never happen. Stated as what they are —
+*commitments*, never theorems — which is exactly why the computational face is joined by hand rather than
+derived from the static three. The wall's seed here, `negation_no_fp` (`¬(p ↔ ¬p)`), is that same self-reference *failing to close* (Cantor, Turing, Tarski); the floor is it
 *closing* — landing on the thing that is its own answer.
 
 We show the *limited* version deliberately. The **shape** — self-reference forced either to a wall or to a

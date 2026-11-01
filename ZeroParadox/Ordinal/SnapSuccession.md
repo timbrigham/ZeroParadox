@@ -6,12 +6,15 @@ Ride-along companion to `ZeroParadox/Ordinal/SnapSuccession.lean`.
 sending ⊥ to ε₀. The snap does not stop there: it re-seeds above where it landed and runs again.
 That file makes the succession precise.
 
-## The rungs are targets, never ⊥
+## The rungs are targets, never ⊥ of `Ordinal`
 
 **Read this distinction before anything else; an earlier draft of the header got it wrong.** The
 ε-numbers are the ordinals the snap runs **to** — its successive closed points, the targets. They
-are **not** ⊥. `ε₀ ≠ ⊥` is a bedrock invariant (`epsilon0_ne_bot`): ⊥ is the base fed in, ε₀ the
-closure that comes out, and **the base is never its own closure**.
+are **not** ⊥ of `Ordinal`. `ε₀ ≠ ⊥` in `Ordinal` is a bedrock invariant (`epsilon0_ne_bot`): ⊥ of
+`Ordinal` is the seed fed in, ε₀ the closure that comes out, and **this seed is not its own
+closure**, because ω^0 ≠ 0 (`bot_is_not_a_step`). A seed that is itself a fixed point of ω^· is its
+own closure (`ZeroParadox/Ordinal/Epsilon0CannotBe.lean` § I-b), which is why each next rung is
+seeded strictly above the last.
 
 **The standard term for a rung is an ITERATIVE BOTTOM** (ratified 2026-07-19). One carrier in which
 a rung IS a bottom is its up-set `Set.Ici rung`: the rung is ⊥ of `Set.Ici rung`, and never ⊥ of `Ordinal`
@@ -27,7 +30,7 @@ collides with the locale vocabulary this file's neighbours use.
 
 This is the role/identity distinction, the same shape as the family-versus-instance reading: the
 rungs are all *of the same kind*, and they are *provably distinct* members (`succession_lt_succ`), so
-no two of them — and none of them and ⊥ — may be identified.
+no two of them — and none of them and ⊥ of `Ordinal` — may be identified.
 
 ## The other succession, and why the two readings must not merge
 
@@ -53,8 +56,8 @@ So the succession of snap targets is the **ε-hierarchy** `ε₀ < ε₁ < ε₂
 - it climbs **strictly** — each target is genuinely above the last (`succession_lt_succ`), never the
   same one;
 - its first rung is ε₀ (`succession_zero`) — the target of the snap seeded at ⊥, not the ordinals'
-  bottom (`ε₀ ≠ ⊥` in `Ordinal`, `epsilon0_ne_bot`): ⊥ = 0 is the base the tower is seeded at, and ε₀
-  is its closure.
+  bottom (`ε₀ ≠ ⊥` in `Ordinal`, `epsilon0_ne_bot`): ⊥ = 0 of `Ordinal` is the seed of the tower,
+  and ε₀ is its closure.
 
 This is Tim's "when one instance ends, another begins" as a strictly increasing chain of closed
 points.

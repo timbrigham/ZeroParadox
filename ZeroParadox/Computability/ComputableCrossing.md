@@ -14,7 +14,7 @@ function space — and Set refutes it (`reflexive_object_refuted`,
 complete lattices the monotone/domain regime has no fixed-point-free MONOTONE endomap
 (Knaster–Tarski), which removes the monotone witness only. This records a regime where the
 obstruction is absent up to `eval`, which the framework already contains: the **computable** regime
-(literally fixed-point-free computable maps still exist, `Code.pair c c` below).
+(literally fixed-point-free computable maps still exist, `Code.pair c c` below, `code_pair_diag_fixedPointFree`).
 
 ## Why the computable regime crosses it
 
@@ -25,7 +25,8 @@ The universal machine `eval : Code → (ℕ →. ℕ)` is point-surjective onto 
 
 ⚠ **THAT IS WEAKER THAN "no fixed-point-free total computable endomap", AND THE STRONG FORM IS FALSE.**
 `fun c => Code.pair c c` is total, computable, and has no fixed point anywhere — pairing a code with
-itself always makes it structurally larger. Rogers is an equality **under the `eval` quotient**: two
+itself always makes it structurally larger (`code_pair_diag_fixedPointFree`,
+`ZeroParadox/Category/Lawvere.lean`). Rogers is an equality **under the `eval` quotient**: two
 different programs computing the same function.
 
 ⚠ **So this is NOT the exact dual of `reflexive_object_refuted`**, which consumes *literal* `f x ≠ x` —

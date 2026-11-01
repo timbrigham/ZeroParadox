@@ -16,7 +16,7 @@ Bottom is not ever epsilon zero. Always next to, but never the same as.
 ---
 
 The snap re-seeds above where it landed and runs again; the ε-numbers are the targets it runs TO,
-never ⊥ itself (`epsilon0_ne_bot`). The overview, the iterative-bottom vocabulary ruling and every
+never ⊥ of `Ordinal` (`epsilon0_ne_bot`). The overview, the iterative-bottom vocabulary ruling and every
 fence live in the ride-along `SnapSuccession.md`; each result is stated again at its own declaration.
 -/
 

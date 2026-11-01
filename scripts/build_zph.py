@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-H: Categorical Bridge PDF Builder
-Version 1.27 | October 2026
+Version 1.29 | November 2026
 v1.23: DECISION BATCH REMEDIATION ROUND 2 (Tim rulings, 2026-09-15): the T-H3 status said 'That the transition is taken remains a framework commitment, not a consequence of any of the four'; now the Snap occurring follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2), not from any of the four.
 v1.22: OCCURRENCE COMMITMENT DEFINED, T5 RESTATED, T-SNAP RESIDUE (Tim decision batch, 2026-09-14): the occurrence commitment is instantiation occurs, and that the Snap occurs follows from it together with DA-1 (closed given DP-2). The ZP-E import line, the Open Items AX-1 row (whose status cell now reads 'the snap occurs given the occurrence commitment and DA-1'), the IR-ZP and IR-2 validation rows and the AX-1 validation row replace 'stated separately, as the occurrence commitment' / 'which ZP-E's DA-1 argues for' / 'occurrence is the occurrence commitment' with that sentence. The Open Items row says 'with no Lean kernel axioms' where it said 'with no axioms' (A4 and AX-B1 are called axioms on the same pages). T-SNAP's readable name 'Binary Snap Causality' is glossed once, at its first use in T-H3: 'Causality' refers to the shape of the step, not to its occurrence.
 v1.21: AX-1 SPLIT (Tim, 2026-09-14): AX-1 bundled the SHAPE of the Snap with its OCCURRENCE. The shape half is Theorem T-SNAP; the occurrence half was never retired and is a framework commitment (tsnap_holds_but_nothing_moves). These sites said AX-1 whole was derived or no longer an axiom: the ZP-E import line, the Open Items AX-1 row ("Derived as Theorem T-SNAP ... No longer an axiom"), the IR-ZP and IR-2 validation rows, and the AX-1 validation row. Each now scopes the derivation to the shape half and names the occurrence half as a commitment. T-H3's own row, which says T-SNAP is inherited as a derived theorem, is unchanged: T-SNAP is the shape theorem. AX-1 WORDING CORRECTED (Tim, 2026-09-14): retired, split into T-SNAP (shape, proved) and the occurrence commitment (stated separately); the earlier 'occurrence half was never retired' was a paraphrase error. ROUND 2 GATES (Tim rulings: title, ZP-C label, DA-1 credit): the Open Items AX-1 row credited the shape to 'the P0 / L-RUN / TQ-IH / DA-1 chain'; DA-1 argues for occurrence, not the shape, so the row now carries Tim's sentence: the shape is proved as T-SNAP from L-RUN, TQ-IH and the bottom law with no axioms, and occurrence is the occurrence commitment, which ZP-E's DA-1 argues for.
@@ -35,7 +35,7 @@ v1.0: Initial release.
 import os
 from zp_utils import *
 
-VERSION = '1.27'
+VERSION = '1.29'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -439,11 +439,13 @@ def build():
             'from 0 irreversible (it does not supply the departure &#8212; ZP-B cannot force the snap, and '
             'the first step is AX-B1); F<sub>C</sub> shows the information-theoretic transition costs exactly 1 bit; '
             'F<sub>D</sub> shows the Hilbert space snap is an orthogonal shift.',
-            'That the same structural singularity appears across four independently grounded domain categories '
-            '— each confirmed sorry-free in Lean 4 (fb_snap_q2_grounded, fc_snap_info_grounded, '
-            'fd_snap_hilb_grounded) — is not re-description. It is the theorem: the phenomenon\'s '
-            '<i>shape</i> is structurally constrained across all four canonical mathematical languages for '
-            'state description. That the transition is taken follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2), not from '
+            'That a transition of the snap\'s shape appears in each of the four domain categories, with the '
+            'groundings sorry-free in Lean 4 (the lattice conjunct join c<sub>0</sub> c<sub>1</sub> = c<sub>1</sub> of '
+            'th3_snap_all_functors for F<sub>A</sub>; fb_snap_q2_grounded, fc_snap_info_grounded and '
+            'fd_snap_hilb_grounded for F<sub>B</sub>, F<sub>C</sub> and F<sub>D</sub>), '
+            'is more than re-description: in each of the four canonical mathematical languages for state '
+            'description, the phenomenon\'s <i>shape</i> is constrained by that domain\'s own structure. That the '
+            'four are one structural singularity is the framework\'s reading, not a theorem. That the transition is taken follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2), not from '
             'any of the four.',
         ]
     ))

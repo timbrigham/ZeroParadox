@@ -1,6 +1,6 @@
 """
 Build ZP-J Illustrated Companion
-Version 1.34 | October 2026
+Version 1.35 | November 2026
 v1.33: ROUND-6 OUTSTANDING CLOSEOUT, items 3a, 3b, 3d, 6 (corpus-zpj-v2.8-round6-outstanding.md
 EXECUTION SPEC 2026-09-28). 3a (CC-2 proved half): the Foundation-freeness sentence cited no
 identifier; it now cites wf_no_selfloop (ZeroParadox/Settheory/Wall.lean - fully general, no
@@ -210,7 +210,7 @@ def abstraction_chain_table():
     t.setStyle(ts); return t
 
 
-VERSION = '1.34'
+VERSION = '1.35'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -262,8 +262,9 @@ def build():
         'identifies the bottom element &#8869; with it. That identification is a statement about '
         'sets; a lattice cannot state it directly, because it would compare an element with a set '
         'of elements. ZP-E argues, informally, that '
-        'nothing external to &#8869; can execute &#8869;, so &#8869; must execute itself, and '
-        'reads that as &#8869; = {&#8869;} (see ZP-E for the full three-path argument).'))
+        'nothing external to &#8869; can execute &#8869;, so if &#8869; executes at all, the executor is '
+        '&#8869; itself, and reads that as &#8869; = {&#8869;}. That rules out an external executor, not an '
+        'inert &#8869; (see ZP-E for the full three-path argument).'))
     E.append(cbody(
         'ZP-J formalises the structural part of that picture. The Quine atom becomes a ROLE, not a '
         'fixed value: the AFAStructure typeclass describes it, and its field bot_self_mem places '

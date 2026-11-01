@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-R: A Cross-Category Account of the Self-Referential Fixed Point — PDF Builder
-Version 1.20 | October 2026
+Version 1.22 | November 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.20'
+VERSION = '1.22'
 FIRST_RELEASED = 'July 2026'
 
 
@@ -598,8 +598,9 @@ def build():
             'Computability face (ComputableCrossing, Kleene): [propext, Classical.choice, Quot.sound] '
             '&#8212; Classical.choice inherited from Mathlib\'s classical recursion theory (Kleene / '
             'Rogers), disclosed and not claimed otherwise.',
-            'Core choice-free, realization choice-carrying &#8212; the framework\'s standing pattern. '
-            'Zero sorry. Verified: lake build, October 2026.',
+            'Core choice-free, realization choice-carrying &#8212; the framework\'s standing pattern.',
+            'The footprints listed here are copies; to re-measure one, run #print axioms on the named '
+            'declaration.',
         ]
     ))
     E.append(sp(6))

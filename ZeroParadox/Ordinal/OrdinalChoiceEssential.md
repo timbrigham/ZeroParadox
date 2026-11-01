@@ -25,11 +25,10 @@ the second carries choice in its statement. The principle, comparability of well
 choice-free is the classification below.
 Mathlib's `Ordinal` order is
 built with choice, and the statement as written carries it, so `le_total` on `Ordinal.{0}`, as Mathlib
-spells it, is STATEMENT-CARRIED (its bare-relation respelling is not; see the classification below): a
-theorem that takes
-`∀ a b : Ordinal.{0}, a ≤ b ∨ b ≤ a` as a hypothesis and proves `True` by `trivial` reports
-`[propext, Classical.choice, Quot.sound]` (measured 2026-10-08; the instance-term trace is the Lean
-file's § III).
+spells it, is STATEMENT-CARRIED (its bare-relation respelling is not; see the classification below):
+the statement alone, `ordTotalAsWritten`, carries `Classical.choice`, and its respelling
+`ordTotalRespelled` does not (both printed in the Lean file's purity block; the instance-term trace is
+the Lean file's § III).
 
 ## PRIOR ART — the mathematics here is KNOWN and is NOT claimed as new
 
@@ -105,7 +104,8 @@ So the classification splits, and the split is the point:
   Mathlib spells it, through the order instance, it is STATEMENT-CARRIED (the Lean file's § III); its
   respelling over the bare `le` relation is, by `rfl`, the same proposition, its own statement is
   choice-free, and it implies excluded middle choice-free, so that respelling is ESSENTIAL on the same
-  premise (the last two `example`s of the Lean file's § III);
+  premise (`ordTotalRespelled` and `em_of_ordTotalRespelled`, the Lean file's § III, footprints in its
+  purity block);
 * **the ε₀ results — STATEMENT-CARRIED** (`ε₀ ≠ 0` as a hypothesis already reports the choice,
   measured 2026-10-08). They inherit choice from Mathlib's `Ordinal` machinery:
   `Ordinal.instLinearOrder`, `nfp`, `omega0` and `epsilon` (each measured with `Classical.choice`,

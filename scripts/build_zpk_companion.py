@@ -1,6 +1,6 @@
 """
 Build ZP-K Illustrated Companion
-Version 1.25 | October 2026
+Version 1.26 | November 2026
 """
 
 import os
@@ -107,7 +107,7 @@ def four_way_table():
     t = Table(data, colWidths=[TW*0.22, TW*0.30, TW*0.48])
     t.setStyle(ts); return t
 
-VERSION = '1.25'
+VERSION = '1.26'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -330,8 +330,10 @@ def build():
         'states them, already carry Classical.choice (measured 2026-10-04), so every proof of '
         'them as stated carries it too: the STATEMENT-CARRIED class of '
         'ZeroParadox/Category/ChoiceCannotBe.md. That footprint is inherited from Mathlib rather '
-        'than a Zero Paradox commitment. Whether a restated, choice-free statement has a '
-        'choice-free proof is unclassified in that document\'s sense. ZP-K Section IV tabulates the measured axiom footprints. '
+        'than a Zero Paradox commitment. Kleene\'s theorem restated with the transformation given '
+        'as a code has a statement and a proof free of choice (kleene_cf, '
+        'ZeroParadox/Computability/KleeneChoiceFree.lean); Rogers\' form has no such restatement '
+        'in this corpus. ZP-K Section IV tabulates the measured axiom footprints. '
         'What is free of Classical.choice is the choice-free CORE, and that is narrower than any layer '
         'name: ZeroParadox/AxiomProfile.lean &#167;I is where the core is listed and each '
         'footprint measured &#8212; T-SNAP, the lattice, the Quine atom. Results elsewhere '
@@ -412,10 +414,12 @@ def build():
         'simple counting tape in the style of Champernowne is disjunctive and computable. The '
         'framework holds, as a commitment, that the occupant of its ⊥ role, ⊥ of a ZPSemilattice, '
         'read as a tape, is maximally complex; that commitment is about that occupant, not about '
-        'the all-false tape below. Standard theory, not proved in Lean: a sequence whose every '
+        'the all-false tape below. Standard theory, not proved in this corpus: a sequence whose every '
         'prefix is incompressible up to a constant in the prefix-free sense of Kolmogorov '
         'complexity is exactly a Martin-Löf random one (the Levin–Schnorr theorem; Franklin and '
-        'Porter, arXiv:2004.02851, Theorem 2.5), and such a sequence is disjunctive. The '
+        'Porter, arXiv:2004.02851, Theorem 2.5; proved in Lean outside Mathlib in a development '
+        'that the ZPSurprisal entry of LEAN_CUSTOM_REGISTRY.md names), and such a sequence is '
+        'disjunctive. The '
         'prefix-free sense matters: with plain complexity every infinite sequence has infinitely '
         'many prefixes of length n compressible to at most n − log n bits (Franklin and Porter, '
         'arXiv:2004.02851, § 2.2, p. 15, crediting Martin-Löf; Martin-Löf 1971, Theorem 1, proves '
@@ -442,9 +446,11 @@ def build():
         'a theorem about programs: building a program is a computation, and choosing a program by '
         'what it does is where choice would do its work. In Lean the footprint does not draw that '
         'line: the existence theorem\'s statement carries Classical.choice (STATEMENT-CARRIED in '
-        'the sense of ZeroParadox/Category/ChoiceCannotBe.md), and whether a restated, '
-        'choice-free statement has a choice-free proof is unclassified in that sense '
-        '(ZeroParadox/Computability/Kleene.md § VIII).'))
+        'the sense of ZeroParadox/Category/ChoiceCannotBe.md), while a restated statement, with '
+        'the Gödel number and the channels spelled without Mathlib\'s numbering of programs, is '
+        'free of choice and has a proof free of choice (selfref_universal_exists_enc, '
+        'ZeroParadox/Computability/UniversalChoiceFree.lean; the record is '
+        'ZeroParadox/Computability/Kleene.md § VIII).'))
     E.append(cbody(
         '<b>The zero tape.</b> The all-false tape is ⊥ of the bit-by-bit tape order, carries no '
         'program\'s code except the empty one, and is what any tape becomes when compared with '

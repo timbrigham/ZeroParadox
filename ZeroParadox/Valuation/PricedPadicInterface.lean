@@ -116,8 +116,10 @@ theorem v2_scale_nat (n : ℕ) (hn : n ≠ 0) : v2 (2 * n) = ((v2nat n n + 1 : �
 /-- **The `ℕ∞` numerals `0` and `1` carry `Classical.choice` — the localization instrument,
 corrected twice.** ⚠⚠ EVERY FOOTPRINT HERE IS PIN-RELATIVE, NOT STRUCTURAL, and this one is known
 to have moved: Brasca and Clemente (*Synthetic Differential Geometry in Lean*, arXiv:2603.17457,
-§2.2) report that writing `(2 : R)` for a ring `R` USED to require choice through this same
-`instOfNatAtLeastTwo` route, and that it was subsequently fixed in Mathlib. Their constraint forces
+§2.2, pp. 7-8) report that writing `(2 : R)` for a ring `R` USED to require choice: the `OfNat R 2`
+instance needs `Nat.AtLeastTwo`, whose proof used the `lia` tactic, which depends on choice; they
+report this fixed in Mathlib. At the pin, numerals ≥ 2 on ℕ∞ resolve through `instOfNatAtLeastTwo`
+and are clean (below). Their constraint forces
 the audit ours only benefits from — the Kock–Lawvere axiom is inconsistent with excluded middle, so
 for them a stray `Classical.choice` is a contradiction rather than a blemish. Read every claim below
 as "measured at the pinned Mathlib, 2026-08-30", never as a fact about the library.

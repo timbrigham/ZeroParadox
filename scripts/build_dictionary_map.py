@@ -693,7 +693,7 @@ DIAGONAL_FAMILY = [
     ("the wall",     "μ",       "no well-founded relation admits a self-loop (a host verdict, not an engine face)", "wf_no_selfloop", "(none)"),
     ("Quine atom",   "ν floor", "⊥ = {⊥}: ⊥ of a ZPSemilattice in the Quine-atom role, from the class fields", "t_exec", "(none)"),
     ("Löb",          "ν floor", "given a Löb diagonal ψ (hypotheses hfix1, hfix2), ⊢ □A → A yields ⊢ A", "loeb", "(none)"),
-    ("Gödel 2nd",    "ν floor", "given a Löb diagonal for falsum, a consistent system does not prove □falsum → falsum", "godel_two", "(none)"),
+    ("Gödel 2nd",    "ν floor", "given a Löb diagonal for falsum, a consistent system does not prove □falsum → falsum (Gödel's second theorem when the class is instantiated at a theory of arithmetic and falsum is its falsum; in the class, falsum may be any sentence)", "godel_two", "(none)"),
     ("Kleene quine", "ν floor", "every computable self-map on codes has a fixed point up to eval (Rogers' form of the recursion theorem)", "computability_face_fixedPoint", "`[propext, Classical.choice, Quot.sound]`"),
     ("Rice",         "ν floor", "a fixed point up to eval exists; every non-trivial semantic property is undecidable over all codes", "rice_face_has_bottom, quine_exists_yet_rice","`[propext, Classical.choice, Quot.sound]`"),
 ]

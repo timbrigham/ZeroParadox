@@ -49,7 +49,8 @@ section ComputationCannotBeIndex
 
 -- Statement: no computable map is EVAL-fixed-point-free — `eval (g c) ≠ eval c` cannot hold for
 -- every c. ⚠ LITERAL fixed-point-freeness is a different property and DOES occur on codes:
--- `fun c => Code.pair c c` fixes nothing. The qualifier is in the declaration's own name.
+-- `fun c => Code.pair c c` fixes nothing (`code_pair_diag_fixedPointFree`,
+-- `ZeroParadox/Category/Lawvere.lean`). The qualifier is in the declaration's own name.
 #check @ZeroParadox.no_computable_evalFixedPointFree
 
 -- Statement: on `List Bool`, `partialAddOne w = w ↔ w = []` (`ZeroParadox/Category/LawvereTwoAdic.lean`);
@@ -159,14 +160,36 @@ example (k : ℕ) : ZeroParadox.IsComputationalQuine (Nat.Partrec.Code.const k) 
 --   No `Code` and no Kleene clause appear; the `[KleeneStructure]` hypothesis is inert on the proof
 --   route — though NOT absent from the axiom footprint, since `#print axioms` follows the statement.
 -- Reading: the tie of the Kleene quine to `bot` of `L` is the `KleeneStructure` commitment, and not
---   a Lean `=` (`Code` versus `L`).
+--   a Lean `=` (`Code` versus `L` for a generic `L`; the `example`s after `botCode_is_quine`).
 #check @ZeroParadox.kleene_quine_is_bot
 
 -- Statement: the class field — the instance's `botCode` satisfies `IsComputationalQuine`, which the
 --   constant codes also satisfy (§ III). No field of `KleeneStructure` relates `botCode` to `bot`.
 -- Reading: that `botCode` is the computational face of `bot` is the `KleeneStructure` commitment. No
---   theorem states it, and no `=` can: `botCode` is a `Code` and `bot` an element of `L`.
+--   theorem states it. For a generic carrier `L` no `=` can: `botCode` is a `Code` and `bot` an
+--   element of `L` (the first `example` below). At `L := Code`, under an assumed instance (none is
+--   declared in this corpus), the `=` typechecks (the second).
 #check @ZeroParadox.KleeneStructure.botCode_is_quine
+
+-- Statement: for a generic `L`, `botCode = bot` is a type mismatch; this fails to compile if it elaborates.
+/--
+error: Type mismatch
+  bot
+has type
+  L
+but is expected to have type
+  Nat.Partrec.Code
+-/
+#guard_msgs in
+open ZeroParadox ZeroParadox.ZPSemilattice in
+example (L : Type) [ZPSemilattice L] [KleeneStructure L] : Prop :=
+  KleeneStructure.botCode (L := L) = (bot : L)
+
+-- Statement: at `L := Nat.Partrec.Code`, given `ZPSemilattice` and `KleeneStructure` instances on `Code`
+--   as hypotheses, the same `=` is a well-typed proposition.
+open ZeroParadox ZeroParadox.ZPSemilattice in
+example [ZPSemilattice Nat.Partrec.Code] [KleeneStructure Nat.Partrec.Code] : Prop :=
+  KleeneStructure.botCode (L := Nat.Partrec.Code) = (bot : Nat.Partrec.Code)
 
 -- Statement: `IsQuineAtom (bot : MachinePhase)` — c₀, ⊥ of `MachinePhase`, is its unique
 --   self-containing state. Mentions no `Code` and no execution. `machinePhaseAFA` defines

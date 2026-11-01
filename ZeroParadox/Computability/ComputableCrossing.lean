@@ -31,7 +31,7 @@ open Nat.Partrec Nat.Partrec.Code
 /-! ## § I. The obstruction is absent in the computable world -/
 
 /-- `Statement:` a fixed point **up to `eval`** — `∃ c, eval (f c) = eval c` (Rogers).
-    ⚠ NOT literal: `fun c => Code.pair c c` fixes nothing, so this is not the dual of
+    ⚠ NOT literal: `Code.pair c c` fixes nothing (`code_pair_diag_fixedPointFree`), so this is not the dual of
     `reflexive_object_refuted`. Argument: `ZeroParadox/Computability/ComputableCrossing.md`. -/
 theorem computable_fixedpoint_up_to_eval {f : Code → Code} (hf : Computable f) :
     ∃ c : Code, eval (f c) = eval c :=

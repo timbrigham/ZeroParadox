@@ -22,8 +22,9 @@ that "count" in the ambient category. The face table becomes level sets of ONE p
 - **M coarse (all endomaps), β nontrivial** — a fixed-point-free swap is admissible ⇒ no witness. Set
   floor faces are *posited*, wall faces *refuted*.
 - **M fine (computable endomaps)** — with `HasWitnessRel`'s literal equality the obstruction stays:
-  `fun c => Code.pair c c` is computable and fixes no code (the `example` after
-  `no_witnessRel_of_admissible_fpf` in the Lean file). It is removed only up to `eval` (the Lean
+  `fun c => Code.pair c c` is computable and fixes no code (`code_pair_diag_fixedPointFree`,
+  `ZeroParadox/Category/Lawvere.lean`; the `example` after `no_witnessRel_of_admissible_fpf` in the Lean
+  file draws the consequence). It is removed only up to `eval` (the Lean
   file's § Axis 2, `no_computable_evalFixedPointFree`), and even there its absence does not by itself
   supply the witness: `fixedPoint_of_witnessRel` runs from a witness to fixed points, one way. The
   witness itself is built on the quotient of codes by equal `eval`, relative to the maps induced by

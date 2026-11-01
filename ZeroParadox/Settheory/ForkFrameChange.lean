@@ -48,8 +48,15 @@ theorem gfp_dual_eq_lfp : (OrderHom.dual f).gfp = f.lfp := rfl
     matches its statement: duality genuinely does exchange the fork's two ends. The other two overclaim and
     carry corrections in their own docstrings — `snap_is_frameflip` proves the tower limit's two
     chart-readings (**no snap appears in it**), and `catseam_is_frameflip` proves the seam is a **fixed
-    point** of the flip, not a flip. **What all three establish is the exchange of the two poles and the
-    point where they coincide. That the snap IS an instance of that exchange is ZP-Q's conjecture, not
+    point** of the flip, not a flip. **Taken together, the three establish the exchange of the two poles
+    and the point where they coincide; `catseam_is_frameflip` gives both, this theorem gives the
+    exchange and the condition under which the two closures coincide ((iii), `fork_collapse_iff`), and
+    `snap_is_frameflip` gives only the exchange.** `Statement:` **INVERSION** — the exchange: (i)-(ii)
+    here, `catseam_is_frameflip` (iii)-(iv) (`op` swaps initial and terminal), and `snap_is_frameflip`'s
+    `rInv` swap of `0` and `∞`. `Statement:` **COINCIDENCE** — the condition for it, (iii) here
+    (`fork_collapse_iff`), and a coincidence point in `catseam_is_frameflip` (i)-(ii), the
+    seam initial and terminal at once; on the valuation side the
+    coincidence witness is `infinitude_forces_infinite_complexity`. **That the snap IS an instance of that exchange is ZP-Q's conjecture, not
     established by these theorems.** The snap is one covering step
     off the zero face (`bot ⋖ a`, AX-B1), a separate object and a commitment. The cross-domain claim that
     the snap *is* the frame change remains this layer's open conjecture, as its file header states.

@@ -1,6 +1,6 @@
 """
 Build ZP-E Illustrated Companion
-Version 1.27 | October 2026
+Version 1.33 | November 2026
 """
 
 import os
@@ -171,7 +171,7 @@ def axioms_table():
     t = Table(data, colWidths=[TW*0.18, TW*0.82])
     t.setStyle(ts); return t
 
-VERSION = '1.27'
+VERSION = '1.33'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -316,19 +316,23 @@ def build():
         'running rather than inert? That precondition is what the occurrence commitment asserts. Three '
         'arguments bear on it, and none derives it.'))
     E.append(cbody(
-        '<b>Three arguments for the precondition:</b> '
+        '<b>Three arguments for the precondition (ZP-E&#8217;s Paths 1, 2 and 3):</b> '
         '(1) CC-2/R3 (ZP-A): ⊥ = {⊥} is a Quine atom — it interprets itself, leaving no '
         'external position from which it could be read as a static description. As shown above, '
         'that rules out an external executor, not an inert ⊥. '
-        '(2) L-INF (ZP-C): the surprisal of ⊥ diverges to infinity — no finite static '
-        'distribution can represent ⊥. That rules out a finite static description; the step from '
+        '(2) Informational, in two charts: surprisal grows without bound with depth in the ball hierarchy, '
+        'each value finite (ZP-C L-INF, l_inf); and at 0 of ℚ₂, the one point in every ball of the chain centred '
+        'at 0, the 2-adic additive valuation is ⊤ (padic_addVal_bot). ⊥ of the machine-state type, c₀, corresponds to '
+        'that point. From this the framework argues that no finite static distribution can represent ⊥. That '
+        'rules out a finite static description; the step from '
         'there to executing is a bridge principle of its own, a missing principle and not a missing proof, '
         'which the framework does not adopt and which is separate from the occurrence commitment. '
         '(3) Computational (incompressibility as self-description): at the incompressibility threshold P₀, the configuration c₁ '
-        'is maximally incompressible — K(c₁|n)/|c₁| = 1 — so no shorter external program generates it. '
+        'is incompressible (K(c₁|n) ≥ |c₁|, the ratio K(c₁|n)/|c₁| being 1 up to an additive constant in K), '
+        'so no shorter external program generates it. '
         'That rules out a shorter external generator, not an inert string: an incompressible string '
-        'written down and never run has no shorter generator and is still not executing. So executing '
-        'is not derivable from incompressibility; that the configuration reaching P₀ '
+        'written down and never run has no shorter generator and is still not executing. So Path 3 does not derive executing '
+        'from incompressibility; that the configuration reaching P₀ '
         'is running, not inert, is what the occurrence commitment asserts. '
         'All three share D7\'s static/executing dichotomy as background and none is circular '
         'with DP-2.'))
@@ -341,8 +345,8 @@ def build():
         'carried together by da1_paths_unified as a conjunction; that they name one structural fact is the '
         'framework&#8217;s reading. Neither Path 2 (unbounded surprisal) nor Path 3 (incompressibility) derives '
         'executing: the step from unbounded surprisal to executing is a bridge principle of its own, a missing principle that the '
-        'framework does not adopt and that is separate from the occurrence commitment, and Path 3 shows that '
-        'executing is not derivable from incompressibility. '
+        'framework does not adopt and that is separate from the occurrence commitment; for Path 3 the reason is '
+        'item (3) above, a fact of algorithmic information theory and not among what Lean checks. '
         'The formal grounding of DA-1 is therefore DP-2, through da1_minimal_path.'))
     # The caption is kept on the same page as its diagram (it was orphaned onto the next page).
     E.append(KeepTogether([tsnap_chain_diagram(), ccaption(

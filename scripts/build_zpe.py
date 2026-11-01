@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-E: Bridge Document PDF Builder
-Version 3.61 | October 2026
+Version 3.68 | November 2026
 Follows all rules in pdf rendering standards:
   - DejaVu fonts only
   - Checkmark always wrapped in <font name="DV">
@@ -12,7 +12,7 @@ Follows all rules in pdf rendering standards:
 import os
 from zp_utils import *
 
-VERSION = '3.61'
+VERSION = '3.68'
 FIRST_RELEASED = 'April 2026'
 
 # ── Local overrides: ZP-E uses justified body text ────────────────────────────
@@ -73,8 +73,8 @@ def build():
         'and in Q<sub>2</sub> the norm value 0 is least on the image of the 2-adic norm in the reals (q2_norm_floor_isLeast), not as an order-bottom of Q<sub>2</sub> itself, and {0} is the intersection of the nested clopen balls (fB_bottom_is_limit): ZP-A identifies &#8869;, the bottom of the ZP-A semilattice, as the global minimum, below which the lattice\'s ordering '
         'relation cannot descend; ZP-B finds the 2-adic valuation undefined (or +&#8734;) at 0 in Q<sub>2</sub>, where '
         'clopen separation is total — 0 and every nonzero element lie in disjoint clopen classes; '
-        'ZP-C finds surprisal unbounded above at the limit point 0 &#8712; Q<sub>2</sub> of its binary ball hierarchy, to which the initial configuration c<sub>0</sub> corresponds (L-INF), so no finite '
-        'external description can contain it; ZP-D maps the state 0 of its state layer to a basis vector e<sub>0</sub> orthogonal to '
+        'ZP-C finds surprisal unbounded in the depth of its binary ball hierarchy, each value finite (L-INF), and has the initial configuration c<sub>0</sub> correspond to that hierarchy&#8217;s limit point 0 &#8712; Q<sub>2</sub>; from the unbounded surprisal and that correspondence together, the framework argues that no finite '
+        'external description can contain c<sub>0</sub>; ZP-D maps the state 0 of its state layer to a basis vector e<sub>0</sub> orthogonal to '
         'every other basis vector (dp1_orthogonality), so the snap is an orthogonal shift (t4_snap_orthogonal); '
         'orthogonality is symmetric and does not make the shift one-way, which comes from ZP-A and ZP-B '
         '(T-SNAP Step 7). '
@@ -111,9 +111,15 @@ def build():
     E.append(body(
         'T-BUF was labelled Candidate because Step 2 asserts that a configuration at P<sub>0</sub> is a '
         'live machine state — that instantiation at P<sub>0</sub> constitutes an execution event, not a static '
-        'description. ZP-C L-INF supplies one mathematical premise: surprisal is unbounded at &#8869;, the '
-        'limit point 0 of the binary ball hierarchy, and not at P<sub>0</sub> (the valuation-complexity bridge is '
-        'refuted, ZP-I &#167; II.B); no finite external interpreter can hold &#8869; as a static description. ZP-A CC-2 '
+        'description. The premise is stated in two charts. In the depth chart, ZP-C L-INF: '
+        'surprisal I(n) = n is unbounded in the ball-hierarchy depth n while each value is finite (l_inf). In the '
+        'point chart, at 0 of Q<sub>2</sub>, the one point in every ball B(0, 2<super>&#8722;n</super>) of the chain centred at 0 (fB_bottom_is_limit), '
+        'the 2-adic additive valuation is &#8868; (padic_addVal_bot, and only there, padic_addVal_eq_top_iff); the coincidence '
+        'of floor and &#8868; at one point is infinitude_forces_infinite_complexity, at the Q<sub>2</sub> instance '
+        'q2InfinitudeFloor. &#8869; of MachinePhase, c<sub>0</sub>, corresponds to that '
+        'point (ZP-C L-INF). Neither chart locates the unboundedness at P<sub>0</sub> (the valuation-complexity bridge is '
+        'refuted, ZP-I &#167; II.B). From this premise the framework argues that no finite external interpreter can hold '
+        '&#8869; as a static description. ZP-A CC-2 '
         'supplies a second, structural basis: &#8869; = {&#8869;} is a self-containing object with no external '
         'interpreter by structure. Neither derives T-BUF Step 2: it is DP-2&#8217;s precondition, and it is what the '
         'occurrence commitment asserts (&#167; IV). DA-1 (&#167; IV below) consumes it and does not supply it: given it, '
@@ -193,7 +199,9 @@ def build():
             'Structural motivation (Paths 1 and 2 below): ZP-A CC-2 (⊥ = {⊥}) is a commitment: ZP-J t_exec_iff proves '
             '⊥ is the only occupant of the Quine-atom role, and that ⊥ of a ZPSemilattice is the AFA set Q = {Q}, its own singleton, is argued (R-AFA). '
             'ZP-A R3 reads off that a self-containing object admits no external interpreter position; that rules out an '
-            'external executor, not an inert ⊥. ZP-C L-INF gives ⊥ unbounded surprisal, exceeding the capacity of any '
+            'external executor, not an inert ⊥. Path 2 rests on two charts: ZP-C L-INF, surprisal unbounded in the ball-hierarchy depth with each value finite (l_inf), and '
+            'the 2-adic additive valuation &#8868; at 0 of Q<sub>2</sub> (padic_addVal_bot), the point to which c<sub>0</sub>, ⊥ of MachinePhase, corresponds. '
+            'The framework argues from it that ⊥ exceeds the capacity of any '
             'finite interpreter, and the step from there to executing is a bridge principle of its own (Path 2), which the '
             'framework does not adopt and which is not the occurrence commitment. Neither derives the precondition.',
         ]
@@ -206,7 +214,7 @@ def build():
              'MachinePhase) has fetched its first instruction. None derives it: '
              'Path 1 rules out an external executor, not an inert &#8869;; Path 2 does not derive it: the step from unbounded surprisal to executing is a bridge '
              'principle of its own, which the framework does not adopt and which '
-             'is not the occurrence commitment; and Path 3 shows that executing is not derivable from incompressibility. '
+             'is not the occurrence commitment; and Path 3 rules out a shorter external generator, not an inert string. '
              'Given that precondition, the step c<sub>0</sub> &#8594; c<sub>1</sub> is D7&#8217;s (T-SNAP Step 3), and '
              'DP-2 + da1_minimal_path (axiom-free) show the two configurations distinct while returning the same output value.'),
         body('Path 1 — Structural (Self-Execution, ZP-J T-EXEC): Nothing exists outside the null space. '
@@ -224,9 +232,10 @@ def build():
              'ZP-A CC-2 (&#8869; = {&#8869;}) is a Forced Metatheoretic Commitment: on a lattice, T-EXEC proves that '
              'whatever fills the Quine-atom role is &#8869; (axiom-free, given the field bot_self_mem); in AFA set theory Q = {Q} is a theorem (Aczel 1988, Example 1.3), and that the occupant of the framework&#8217;s &#8869; role, &#8869; of a ZPSemilattice, is that set Q is the argued metatheoretic step (see Remark R-AFA).'),
         body('Path 2 — Informational (ZP-C L-INF): The surprisal I(n) = n at ball-hierarchy '
-             'depth n is unbounded — for any finite M, ∃ depth n with I(n) > M. ⊥ corresponds '
-             'to the limit point 0 ∈ Q<sub>2</sub>; its informational content exceeds every finite bound. '
-             'Any finite external interpreter can hold only a finite informational bound; ⊥ exceeds every '
+             'depth n is unbounded — for any finite M, ∃ depth n with I(n) > M — while each value is finite (l_inf). '
+             'c<sub>0</sub>, ⊥ of MachinePhase, corresponds to the limit point 0 ∈ Q<sub>2</sub>, where the 2-adic additive '
+             'valuation is &#8868; (padic_addVal_bot). From these two charts the framework argues that '
+             'any finite external interpreter can hold only a finite informational bound and ⊥ exceeds every '
              'such bound. '
              'Note: Path 2 is motivational context, not a formal path to the conclusion. The step '
              '"exceeds every finite bound → therefore executing" is a bridge principle of its own, '
@@ -241,7 +250,8 @@ def build():
              'not claimed. This document states the question in the state chart, where a configuration is one '
              'fact and its running is a further fact; ZP-K Section III.II states it in two charts, the history '
              'chart reading a complete description of a run as the run, and denies neither.'),
-        body('Path 3 — Computational: Incompressibility as Self-Description (ZP-C D1 + standard AIT): '
+        body('Path 3 — Computational: Incompressibility as Self-Description (ZP-C D1 + standard AIT; the two bounds used, '
+             'and their sources, are at T-SNAP Step 1): '
              'The preceding paths argue that ⊥ admits no external interpreter. This path argues from '
              'incompressibility toward the positive claim (executing). '
              'In the standard Turing model (D7), a machine configuration x is either executing or not executing, '
@@ -251,13 +261,15 @@ def build():
              'external program p (|p| &lt; |x|) generates x when run, so x is a description awaiting a '
              'separate execution event by an external generator. '
              '(A) and (B) are not exhaustive: (A) bundles not executing with having a shorter external generator. '
-             'At P<sub>0</sub>, read at the length n of c<sub>1</sub> as in Step 1, K(c<sub>1</sub>|n)/|c<sub>1</sub>| = 1: c<sub>1</sub> is algorithmically incompressible. '
+             'At P<sub>0</sub>, read at the length n of c<sub>1</sub> as in Step 1, K(c<sub>1</sub>|n) &#8805; |c<sub>1</sub>|: c<sub>1</sub> is algorithmically incompressible, '
+             'and the ratio K(c<sub>1</sub>|n)/|c<sub>1</sub>| is 1 up to an additive constant in K (Step 1). '
              'No external program p exists with |p| &lt; |c<sub>1</sub>| such that U(p, n) = c<sub>1</sub>. '
              'State (A) requires such a p, so state (A) is eliminated by the Kolmogorov condition. '
              'That rules out a shorter external generator, not an inert string: an incompressible string '
-             'written down and never run has no shorter generator and is not executing. So incompressibility '
-             'does not decide executing for configurations in general. '
-             'Note: so Path 3 shows that executing is not derivable from incompressibility. What it bears on is one event, not '
+             'written down and never run has no shorter generator and is not executing. So, for strings, '
+             'being incompressible does not imply executing: that string is a counterexample. The converse, '
+             'from executing to incompressible, is not claimed in this document. '
+             'Path 3 therefore does not derive executing from incompressibility. What it bears on is one event, not '
              'configurations in general: that the configuration reaching P<sub>0</sub> is there in Sense B (&#167; II) '
              'and not in Sense A. That is the precondition DP-2 takes, and it is what the occurrence commitment asserts '
              '(instantiation occurs), not a further premise. DA-1 does '
@@ -295,7 +307,7 @@ def build():
                 'Path 1 (structural, ZP-J T-EXEC + ZP-K): rules out an external executor, not an inert &#8869;. Its Lean counterpart is da1_closed_concrete : IsQuineAtom(&#8869; : MachinePhase), proved in Kleene.lean, which proves nothing computational. '
                 '(Under MachinePhase\'s selfMem x := x = &#8869;, this reduces to (&#8869; = &#8869;) &#8743; (&#8704; x, x = &#8869; &#8658; x = &#8869;) — structural closure enforced by typeclass design, not a set-theoretic derivation from ZF+AFA. See R-K.0.) '
                 'Path 2 (informational, L-INF): UNADOPTED BRIDGE PRINCIPLE — a missing principle, not a missing proof, distinct from the occurrence commitment and not a premise of the Snap; Path 2 does not derive the precondition. '
-                'Path 3 (computational, ZP-C D1 + AIT): bears on the precondition and shows that executing is not derivable from incompressibility — incompressibility rules out a shorter external generator, not an inert string; that the configuration reaching P<sub>0</sub> is in Sense B and not Sense A is DP-2&#8217;s precondition, what the occurrence commitment asserts, which DA-1 consumes and does not derive. Its Lean counterpart (ZP-K) is the machinePhaseKleene instance&#8217;s botCode_is_quine field — a KleeneStructure requirement that constant codes also meet, not a witness of execution and not a second independent proof; da1_paths_unified carries it with Path 1 as a conjunction. '
+                'Path 3 (computational, ZP-C D1 + AIT): bears on the precondition and does not derive executing from incompressibility — incompressibility rules out a shorter external generator, not an inert string; that the configuration reaching P<sub>0</sub> is in Sense B and not Sense A is DP-2&#8217;s precondition, what the occurrence commitment asserts, which DA-1 consumes and does not derive. Its Lean counterpart (ZP-K) is the machinePhaseKleene instance&#8217;s botCode_is_quine field — a KleeneStructure requirement that constant codes also meet, not a witness of execution and not a second independent proof; da1_paths_unified carries it with Path 1 as a conjunction. '
                 'CC-1 (S<sub>0</sub> = &#8869;): restated — ZP-J cc1_derived with t_exec_iff makes a Quine-atom start and a &#8869; start the same condition (axiom-free, Lean) — and not forced: on a carrier with a second point a valid sequence starts elsewhere (ZeroParadox/Settheory/OntBridge.lean). '
                 'CC-2 (&#8869; = {&#8869;}): ZP-J t_exec_iff proves &#8869; is the only occupant of the Quine-atom role (axiom-free); that &#8869; of a ZPSemilattice is the AFA set Q = {Q} is an argued metatheoretic commitment (see R-AFA). '
                 'DP-2 (&#167;III) — explicit. '
@@ -353,8 +365,8 @@ def build():
              'What follows is the informal motivation for the modelling choices that let that term '
              'be read as a statement about the framework&#8217;s own state sequence.</i>'),
         sp(4),
-        li('Step 1 — P<sub>0</sub> identifies the incompressibility threshold. ZP-C &#167; I takes x to be a binary string of length n, so n = |x| and K(x|n)/n = K(x|n)/|x|. ZP-C D1 defines P<sub>0</sub> as the limit of K(x|n)/n as n grows, the algorithmic entropy rate of x, and the threshold is that rate at its maximum, 1. The steps below use the finite-string form ZP-C also uses (&#167; I), not the limit: K(x|n)/|x| = 1 for one configuration string x of length n, so x is algorithmically incompressible at its length. (ZP-C &#167; I, D1)'),
-        li('Step 2 — The configuration reaching P<sub>0</sub> is in Sense B, not Sense A (the occurrence commitment): At P<sub>0</sub>, K(c<sub>1</sub>|n)/|c<sub>1</sub>| = 1 (Step 1 at x = c<sub>1</sub>) — c<sub>1</sub> is incompressible, so no shorter external generator exists. That rules out a shorter external generator, not an inert string; that the configuration reaching P<sub>0</sub> is a running machine&#8217;s current configuration (Sense B) and not an inert string (Sense A) is what the occurrence commitment asserts, not a derived step. Arguments for it, none deriving it: ⊥ = {&#8869;} (ZP-A CC-2/R3); unbounded surprisal (ZP-C L-INF); DA-1 Path 3. (The occurrence commitment, whose content is DP-2&#8217;s precondition. DA-1, closed given DP-2, consumes this step and does not supply it)'),
+        li('Step 1 — P<sub>0</sub> identifies the incompressibility threshold. ZP-C &#167; I takes x to be a binary string of length n, so n = |x| and K(x|n)/n = K(x|n)/|x|. ZP-C D1 defines P<sub>0</sub> as the limit of K(x|n)/n as n grows, the algorithmic entropy rate of x, and the threshold is that rate at its maximum, 1. The steps below use the finite-string form ZP-C also uses (ZP-C Remark R-BRIDGE and T-BUF Step 1), not the limit: one configuration string x of length n with K(x|n) &#8805; |x|, so x is algorithmically incompressible at its length. Since K(x|n) &#8804; |x| + c for every x, with c depending only on the universal machine U, the ratio K(x|n)/|x| is then 1 up to an additive constant in K, not necessarily exactly 1. K here is plain conditional complexity, which the sources below write C. That some x of each length n has K(x|n) &#8805; n is a counting argument (Buhrman, Jiang, Li and Vit&#225;nyi 1998, arXiv:cs/9809060, &#167; 3); the upper bound K(x) &#8804; |x| + O(1) is Shen 2015 (arXiv:1504.04955, Theorem 2(a)), and it holds given n by the same paper&#8217;s Theorem 10(a), C(x|y) &#8804; C(x) + O(1). (ZP-C &#167; I, D1)'),
+        li('Step 2 — The configuration reaching P<sub>0</sub> is in Sense B, not Sense A (the occurrence commitment): At P<sub>0</sub>, K(c<sub>1</sub>|n) &#8805; |c<sub>1</sub>| (Step 1 at x = c<sub>1</sub>) — c<sub>1</sub> is incompressible, so no shorter external generator exists. That rules out a shorter external generator, not an inert string; that the configuration reaching P<sub>0</sub> is a running machine&#8217;s current configuration (Sense B) and not an inert string (Sense A) is what the occurrence commitment asserts, not a derived step. Arguments for it, none deriving it: ⊥ = {&#8869;} (ZP-A CC-2/R3); unbounded surprisal (ZP-C L-INF); DA-1 Path 3. (The occurrence commitment, whose content is DP-2&#8217;s precondition. DA-1, closed given DP-2, consumes this step and does not supply it)'),
         li('Step 3 — Any instantiated execution passes through c<sub>1</sub>. (ZP-C D7 — definitional; c<sub>1</sub> is the first running configuration)'),
         li('Step 4 — c<sub>1</sub> ≠ ⊥. (ZP-C L-RUN — Derived; c<sub>1</sub> has gained execution context not present in c<sub>0</sub> = ⊥; by AX-B1 this is a distinct, non-bottom state)'),
         li('Step 5 — No program that executes produces only ⊥ configuration states. (ZP-C TQ-IH — Derived; execution trace τ(p) contains c<sub>1</sub> for any executing program p)'),
@@ -399,7 +411,7 @@ def build():
                 'ordinal ε₀ is therefore the minimum threshold at which finite arithmetic exhausts its own '
                 'generative capacity.',
                 '<b>The structural analogy.</b> ZP\'s ε₀ occupies an analogous position in the state '
-                'lattice. At P₀, c₁ satisfies K(c₁|n)/|c₁| = 1, the finite-string form of T-SNAP Step 1: it is algorithmically '
+                'lattice. At P₀, c₁ satisfies K(c₁|n) ≥ |c₁|, the finite-string form of T-SNAP Step 1: it is algorithmically '
                 'incompressible. Just as the '
                 'Cantor ε₀ cannot be reached from 0 by any finite ω-tower, ZP\'s ε₀ is reached from ⊥ '
                 'by the snap, and no program shorter than c₁ outputs c₁ given its length n. Both name a structurally analogous object: a '
@@ -959,7 +971,7 @@ def build():
          'are provably distinct even when both produce &#8869;. ✓ '
          'ZP-K: da1_closed_concrete : IsQuineAtom(&#8869; : MachinePhase) proved in Kleene.lean. '
          'Path 1&#8217;s Lean counterpart is da1_closed_concrete, which proves nothing computational; Path 1 rules out an external executor, not an inert &#8869;. '
-         'Path 3 (computational, ZP-C D1 + AIT): bears on the precondition and shows that executing is not derivable from incompressibility — incompressibility rules out a shorter external generator, not an inert string; that '
+         'Path 3 (computational, ZP-C D1 + AIT): bears on the precondition and does not derive executing from incompressibility — incompressibility rules out a shorter external generator, not an inert string; that '
          'the configuration reaching P<sub>0</sub> is in Sense B and not Sense A is DP-2&#8217;s precondition, what the occurrence commitment asserts. Its Lean counterpart is the '
          'machinePhaseKleene instance&#8217;s botCode_is_quine field, a KleeneStructure requirement that constant codes also meet, not a witness of '
          'execution and not a second independent proof. '
@@ -1020,8 +1032,8 @@ def build():
             'computational; Path 3&#8217;s Lean counterpart is the machinePhaseKleene instance&#8217;s botCode_is_quine field, a KleeneStructure '
             'requirement, not a witness of execution; and '
             'the step from Path 2 to executing is a bridge principle of its own (a missing principle, not a missing proof), which the '
-            'framework does not adopt and which is distinct from the occurrence commitment; and Path 3 bears on the precondition and shows that '
-            'executing is not derivable from incompressibility: that the configuration reaching P<sub>0</sub> is in Sense B is what the occurrence '
+            'framework does not adopt and which is distinct from the occurrence commitment; and Path 3 bears on the precondition and does not derive '
+            'executing from incompressibility: that the configuration reaching P<sub>0</sub> is in Sense B is what the occurrence '
             'commitment asserts, and DA-1 consumes it. Remark '
             'R-&#949;<sub>0</sub> justifies the &#949;<sub>0</sub> symbol as a structural analogy. Remark '
             'R-AFA rules Foundation out by the self-membership of &#8869; = {&#8869;} (Regularity, '

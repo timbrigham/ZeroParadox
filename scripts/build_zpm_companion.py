@@ -1,6 +1,6 @@
 """
 Build ZP-M Illustrated Companion
-Version 1.8 | October 2026
+Version 1.12 | November 2026
 """
 
 import os
@@ -8,7 +8,7 @@ from zp_utils import *
 from reportlab.graphics.shapes import Drawing, Line, String, Rect, Circle, Polygon
 from reportlab.graphics import renderPDF
 
-VERSION = '1.8'
+VERSION = '1.12'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -91,7 +91,7 @@ def diag_pattern_diagram():
                  'Domain: codes + Gödel numbers',
                  fontSize=8, fontName='DV', fillColor=GREY_TEXT))
     d.add(String(10 + 8, box_y + box_h - 92,
-                 'Forced by: second recursion theorem',
+                 'From: second recursion theorem',
                  fontSize=8, fontName='DV', fillColor=GREY_TEXT))
 
     # Right box: ordinal
@@ -110,13 +110,8 @@ def diag_pattern_diagram():
                  'Domain: ordinals + ω-tower iteration',
                  fontSize=8, fontName='DV', fillColor=GREY_TEXT))
     d.add(String(mid + 18, box_y + box_h - 92,
-                 'Forced by: least fixed-point theorem',
+                 'From: iterating ω^· from 0 to a supremum',
                  fontSize=8, fontName='DV', fillColor=GREY_TEXT))
-
-    # Caption at bottom
-    d.add(String(14, 10,
-                 'Same schema, different domains — no shared machinery between the two.',
-                 fontSize=7.5, fontName='DV-I', fillColor=GREY_TEXT))
 
     return validate_drawing(d, dh, 'diag_pattern_diagram')
 
@@ -274,28 +269,30 @@ def build():
 
     # ── §5: The Diagonalization Pattern ───────────────────────────────────────
     print('[build_zpm_companion] Building §5...')
-    E += [hr(), Paragraph('5. One Pattern, Two Domains', CS['h1']), sp(4)]
+    E += [hr(), Paragraph('5. Two Fixed Points, Two Domains', CS['h1']), sp(4)]
 
     E.append(cbody(
-        'The deepest result in ZP-M is not a new theorem but a recognition: Kleene\'s '
-        'second recursion theorem (computability) and the construction of ε₀ '
-        '(ordinal theory) are the same argument running in different mathematical worlds.'))
+        'ZP-M closes by putting two fixed points side by side: the one Kleene\'s '
+        'second recursion theorem gives (computability) and ε₀ (ordinal theory). '
+        'Reading them as one argument running in two mathematical worlds is the framework\'s '
+        'interpretation; the theorem proves less, as below.'))
 
     E.append(diag_pattern_diagram())
-    E.append(ccaption('The diagonalization schema in two domains: same structure, no shared machinery.'))
+    E.append(ccaption('Two fixed points in two domains, by two constructions, with no shared machinery.'))
     E.append(sp(8))
 
     E.append(cbody(
-        'In each case: you define an operation that refers to itself, and the framework '
-        'forces a fixed point to exist. In computability theory, the operation refers to '
-        'a program\'s own Gödel number (its address in the code space). In ordinal theory, '
-        'the operation is ω-exponentiation, and the fixed point is the first ordinal that '
-        'the tower cannot exceed. The mechanisms are entirely different. The schema is identical.'))
+        'In computability theory, a diagonal argument over a program\'s own Gödel number (its '
+        'address in the code space) gives a code fixed up to evaluation. In ordinal theory, '
+        'iterating ω-exponentiation from 0 and taking the supremum gives ε₀, the first ordinal '
+        'the tower cannot exceed: the fixed-point lemma for normal functions, not a diagonal '
+        'argument. The mechanisms are entirely different.'))
     E.append(cbody(
-        'The theorem both_fixed_points_exist states this directly: both fixed points '
-        'exist, and their proofs live in the same Lean context. This is not a coincidence '
-        'that requires explanation — it is the recognition that diagonalization is a '
-        'structural fact that transcends any particular domain.'))
+        'The theorem both_fixed_points_exist records the ordinal fixed point and, on the computability '
+        'side, a code periodic with period its own Gödel number (constant codes also meet that condition, so '
+        'it does not by itself pin self-reference), and the proofs live in the same Lean context. It is a conjunction of two existence proofs over '
+        'different types, a Code and an Ordinal, so it does not show they are one pattern; no '
+        'equation between the two is even well-formed.'))
 
     E.append(sp(6))
 
@@ -304,31 +301,39 @@ def build():
     E += [hr(), Paragraph('6. Remark R-M.1: Where the Frame Ends', CS['h1']), sp(4)]
 
     E.append(cbody(
-        'ZP-M establishes the diagonalization frame for two of the three threads in '
-        'the DA-1 argument. Path 1 (AFA structural) and Path 3 (Kleene computational) '
-        'are both diagonalization instances — they were carried together in ZP-K as a conjunction '
-        'of witnesses (da1_paths_unified); that they are one structural fact is the framework\'s '
-        'reading. Now both share '
-        'the frame with the ordinal result.'))
+        'ZP-M sets two of the three threads in the DA-1 argument beside the ordinal result. '
+        'Path 1 (AFA structural) and Path 3 (incompressibility, whose Lean counterpart is a Kleene field) had their Lean counterparts '
+        'carried together in ZP-K as a conjunction (da1_paths_unified), and Path 3\'s counterpart '
+        'is not a witness of execution; that they are one structural fact, and that they share a '
+        'frame with the ordinal result, is the framework\'s reading.'))
     E.append(cbody(
-        'Path 2 (informational) remains outside this frame. L-INF (ZP-C) says that '
-        '⊥ has unbounded information content — no finite description can '
-        'capture it. This is structurally analogous to the diagonalization pattern, '
-        'but the analogy has not been made formal.'))
+        'Path 2 (informational) remains outside this frame. It has two charts. Depth chart, ZP-C L-INF: '
+        'surprisal grows without bound with depth in the ball hierarchy, each value finite '
+        '(l_inf). Point chart: at 0 of ℚ₂, the one point in every ball of the chain centred at 0, the 2-adic '
+        'additive valuation is ⊤ (padic_addVal_bot), the point to which ZP-C has c₀, ⊥ of the machine-state type, '
+        'correspond. (A Lean map carrying that correspondence was not located as of 2026-11-01, searched as '
+        'follows: the corpus\'s Lean files for a map from the machine-state type to the 2-adic integers or numbers, '
+        'which finds only snapEmbed and a negative example, and for a definition sending c₀ to 0, which finds none. '
+        'snapEmbed, above, is a different map, sending '
+        'c₀ to 1, and the two are not composed.) '
+        'This is structurally analogous to the Kleene fixed point, but the analogy has not been '
+        'made formal.'))
     E.append(cbody(
         'The reason, visible from ZP-M, is a framework separation: L-INF is a '
         'measure-theoretic result (about probability distributions and Shannon entropy), '
         'while Kleene\'s theorem is a computability-theoretic result (about codes and '
-        'recursive functions). The two use no shared mathematical machinery. The concept '
-        'that bridges them — Kolmogorov complexity, which is simultaneously an '
-        'information-theoretic and computability-theoretic notion — is not yet formalized '
-        'in Mathlib.'))
+        'recursive functions). The two use no shared mathematical machinery, and ZP-C keeps '
+        'surprisal and Kolmogorov complexity as two separate arguments (ZP-C Remark R-BRIDGE). Kolmogorov '
+        'complexity is itself both an information-theoretic and a computability-theoretic notion; it was not '
+        'located in the pinned Mathlib as of 2026-10-04, searched as recorded in '
+        'ZeroParadox/Information/Disjunctive.md.'))
 
     E.append(callout(
         'DA-1 Path 2 is not a missing proof step — it is a genuine framework boundary. '
-        'ZP-M makes the boundary precise: on one side, diagonalization over codes and '
-        'ordinals (in Lean scope). On the other side, the AIT bridge between '
-        'incompressibility and self-execution (outside current Lean scope).',
+        'ZP-M makes the boundary precise: on one side, the fixed points over codes and '
+        'ordinals (in Lean scope). On the other side, L-INF, which neither R-M.1 nor '
+        'both_fixed_points_exist links to the Kleene quine, and the step from unbounded surprisal to executing: a bridge '
+        'principle of its own, which the framework does not adopt (ZP-E, DA-1 Path 2).',
         bg=AMBER_LITE, border=AMBER
     ))
     E.append(sp(8))
@@ -345,8 +350,9 @@ def build():
             'type bridge. ✓',
             'both_fixed_points_exist: Kleene and ordinal fixed points co-witnessed '
             'in one formal context. ✓',
-            'R-M.1: DA-1 Path 2 boundary made precise — AIT bridge is outside current '
-            'Lean scope; gap is framework separation, not missing proof.',
+            'R-M.1: DA-1 Path 2 boundary made precise — it does not link L-INF to the '
+            'Kleene quine, and the step from unbounded surprisal to executing is an unadopted bridge '
+            'principle, not a missing proof.',
             'All 9 theorems proved sorry-free. '
             'Axiom footprint: [propext, Classical.choice, Quot.sound].',
         ]

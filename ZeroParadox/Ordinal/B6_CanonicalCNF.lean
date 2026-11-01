@@ -5,8 +5,8 @@ set_option maxHeartbeats 800000
 /-!
 # B6 (pipeline): canonical (CNF / log-ω) ordinal → 2-adic, valuation growth NOT tower-defined
 
-P8 built `α ↦ 2 ^ (least tower stage above α)`: a real ε₀→0 limit, but the rank is defined *via the
-tower*, so the valuation growth is built into the encoding — a constructed witness, not an independent
+P8 built `α ↦ 2 ^ (least tower stage above α)`: the tower's encodings tend to 0, but the rank is
+defined *via the tower*, so the valuation growth is built into the encoding — a constructed witness, not an independent
 ordinal↔2-adic identity. B6 closes that gap with a measure read from the ordinal's **own** Cantor-normal
 structure: `cnfLogDepth α` = the number of times you can apply `log ω` before reaching 0. `log ω α` is
 the leading CNF exponent of `α`; iterating it walks down the CNF tree. The tower appears **only in the

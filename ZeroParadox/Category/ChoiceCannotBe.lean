@@ -214,16 +214,23 @@ proved about where choice does work. -/
 -- opposite behaviour AT the seed: `dnegNucleus` fixes ⊥ of the Heyting algebra (⊥ is always regular),
 -- `snapNucleus` provably moves ⊥ of `Ordinal` (`snapNucleus_bot_ne_bot`). On the footprint difference:
 -- `snapNucleus` is STATEMENT-CARRIED (`ZeroParadox/Category/ChoiceCannotBe.md`): `Nonempty (Nucleus
--- Ordinal.{0})` and `snapNucleus ⊥ ≠ ⊥`, each only assumed, already report the choice (statement control,
--- measured 2026-10-08), so no proof of these statements can drop it. What ZP-N re-proved is the ordinal
+-- Ordinal.{0})` and `snapNucleus ⊥ ≠ ⊥`, with no proof attached, already carry the choice (their statement
+-- controls, `#check`ed below and printed in `ZeroParadox/Ordinal/SnapNucleus.lean`'s purity block), so no
+-- proof of these statements can drop it. What ZP-N re-proved is the ordinal
 -- *ascent* (`exp_lt_term`, `omegaPow_no_fixedpoint`, `tower_strictMono` on `ONote`), which is suggestive
 -- for the nucleus and is not the nucleus. Choice is NOT in the `Ordinal` type: `Ordinal` measures
 -- `[propext, Quot.sound]`. The choice
 -- enters through the order instance and the operations (`Ordinal.instLinearOrder`, `nfp`, `omega0`,
--- `epsilon`, each `[propext, Classical.choice, Quot.sound]`). The open question is a restatement on a
--- notation carrier whose statements are choice-free; its current state is the entry below.
+-- `epsilon`, each `[propext, Classical.choice, Quot.sound]`). The remaining question is a restatement on
+-- a carrier whose statements are choice-free, with two readings: a defined one, in Lean on `E0Note`, and
+-- a derived one, on a well-founded carrier, not located as of 2026-10-13; both, with the search record,
+-- are in `ZeroParadox/Ordinal/SnapNucleus.md` § "Axiom footprint".
 #check @ZeroParadox.snapNucleus
 #check @ZeroParadox.snapNucleus_bot_ne_bot
+-- Statement: the two statements above as bare propositions, the statement controls.
+#check @ZeroParadox.snapNucleusNonemptyStatement
+-- Statement: `snapNucleus ⊥ ≠ ⊥` at universe 0, bare.
+#check @ZeroParadox.snapNucleusBotStatement
 
 -- THE SAME LOCATION FOR `Code`, measured 2026-09-19:
 -- `Nat.Partrec.Code` is axiom-free and so is `Nat.Partrec.Code.eval`, so the choice is not "in
