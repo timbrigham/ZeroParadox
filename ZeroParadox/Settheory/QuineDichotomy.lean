@@ -89,6 +89,14 @@ theorem quineAtomHost_quine_role_iff {L : Type*} [QuineAtomHost L] (y : L) :
   · rintro rfl
     exact ⟨(QuineAtomHost.bot_mem_iff _).2 rfl, fun b hb => (QuineAtomHost.bot_mem_iff b).1 hb⟩
 
+-- Statement: which point occupies the membership chart is the host's `bot` field: the host built
+-- from an `AFAStructure` on `L` has ⊥ of `L` there, and on a carrier with a second point `a` the host
+-- `trivialQuineAtomHost a` has `a` there instead.
+example (L : Type) [ZPSemilattice L] [AFAStructure L] :
+    (afaStructure_isQuineAtomHost L).bot = bot := rfl
+example (L : Type) [ZPSemilattice L] (a : L) (ha : a ≠ bot) :
+    (trivialQuineAtomHost a).bot ≠ bot := ha
+
 -- Statement: `ZFSet` has no Lawvere witness, since ∅ ≠ {∅} (`no_witness_of_nontrivial`).
 example : ¬ HasLawvereWitness ZFSet :=
   no_witness_of_nontrivial (b₀ := (∅ : ZFSet)) (b₁ := ({∅} : ZFSet)) fun h => by

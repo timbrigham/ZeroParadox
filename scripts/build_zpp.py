@@ -422,7 +422,7 @@ def build():
             'soft fence: not every fork '
             'is &#956;/&#957; | '
             'All FixedPointFork.lean / Ostrowski.lean / Coalgebra.lean theorems verified; the role '
-            'occupancies of Section III are verified in the Lean files they name.</i>',
+            'occupancies of Section III are verified at the declarations Section III names.</i>',
             S['endnote']),
     ]
 

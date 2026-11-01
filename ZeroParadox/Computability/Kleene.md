@@ -56,8 +56,8 @@ computable transformation. The AFA Quine atom (⊥ = {⊥}) and the Kleene compu
 `Motion.SelfOnlyAt` (`ZeroParadox/Die.lean`), a point that steps to itself and to nothing else,
 occupied or provably empty chart by chart. On codes, with OVER `a → b` when `eval b = F a`, no
 code occupies it for any `F : Code → ℕ →. ℕ` (`evalStepMotion_not_selfOnlyAt`); on classes of
-codes up to equal `eval`, with the step `eval ∘ G`, some class does for computable `eval`-respecting
-`G : Code → Code` (`codes_vs_classes`); restricted to
+codes up to equal `eval`, in the quotient of `evalStepMotion (eval ∘ G)`, some class does for
+computable `eval`-respecting `G : Code → Code` (`codes_vs_classes`); restricted to
 self-printing codes, with `F` the map `selfPrintOrDelegate`, some self-printing universal code does
 (`exists_selfPrintsStepMotion_selfOnlyAt`).
 The set-side charts are in `ZeroParadox/Settheory/Wall.lean` (no `ZFSet` occupies it) and
