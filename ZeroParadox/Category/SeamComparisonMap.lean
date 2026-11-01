@@ -260,8 +260,8 @@ example (M : Motion (fC_functor.obj 0)) : ¬ ∃ y, M.SelfOnlyAt y := by
 -- carrier has one point at node #4 (`fC_zero_isInitial`) and at node #5 (`hilbert_bottom_isZero`), so
 -- the role is occupied at both and restates that each hom-set is a singleton. On elements the carrier is
 -- empty at node #4 (an object of `KleisliCat PMF`, not a module) and has one point at node #5, so the
--- element carriers separate the two nodes by cardinality alone; of the two,
--- `moduleCat_seam_role_unique_iff_isZero` applies at node #5.
+-- element carriers separate the two nodes by cardinality alone; `moduleCat_seam_role_unique_iff_isZero`
+-- applies at node #5, whose object is a module; node #4's is not.
 example (g : (fC_functor.obj 0 ⟶ fC_functor.obj 0) → (fC_functor.obj 0 ⟶ fC_functor.obj 0)) :
     ∃! y, (Motion.ofFun g).SelfOnlyAt y := by
   haveI : Subsingleton (fC_functor.obj 0 ⟶ fC_functor.obj 0) :=

@@ -83,8 +83,8 @@ die role is occupied per chart (`selfApp_seam_role_unique`, `constPF_seam_role_u
 nodes provably instantiate, with the QPF instance's bijective canonical comparison and the lattice
 instance's nonempty singleton f.p. set both witnessed in-statement. What is fenced (and stated as a
 theorem about the construction itself) is that the lattice instance is forced through `Equiv.refl` on a
-collapsed carrier, the QPF instance relates distinct types, and no cross-setting map exists — so the
-schema unifies the *shape*, not the seams. This is the DECORATIVE-vs-real test resolved honestly: the
+collapsed carrier and the QPF instance relates distinct types; this file exhibits no cross-setting map,
+so the schema unifies the *shape*, not the seams. This is the DECORATIVE-vs-real test resolved honestly: the
 shared schema is real and both-instantiated, but it is loose enough to be vacuous on the lattice side,
 and that looseness is itself proved.
 -/
@@ -173,7 +173,7 @@ theorem both_satisfy_seam_schema :
         ∧ (bot : L) ∈ {x : L | AbstractSelfApp.selfApp x = x}) :=
   ⟨qpfSeam_cmp_is_canonical Unit, latticeSeam_carrier_nonempty_singleton⟩
 
-/-! ## NO-GO fence: the schema is loose on the lattice side, and no cross-setting map exists -/
+/-! ## NO-GO fence: the schema is loose on the lattice side, and this file exhibits no cross-setting map -/
 
 /-- **The lattice seam fits the schema only via `Equiv.refl` on a collapsed carrier.** In-statement:
 the `cmp` of `latticeSeam` is literally `Equiv.refl (FpSub L)` — the trivial identity equivalence. The
@@ -192,9 +192,9 @@ theorem qpf_seam_not_automatic :
     IsEmpty (Fix ZeroParadox.idPF_Coalgebra.Obj ≃ Cofix ZeroParadox.idPF_Coalgebra.Obj) :=
   idPF_no_seam
 
-/-- **No cross-setting map (the capstone fence, content IN the statement).** The two `SeamSchema`
-instances are recorded side by side as living over UNRELATED carrier settings, with no transport
-between them:
+/-- **No cross-setting map exhibited (the capstone fence).** The two `SeamSchema`
+instances are recorded side by side over two carrier settings, with no transport between them given
+in this file:
 
 * QPF: a type equivalence `Fix (constPF Unit).Obj ≃ Cofix (constPF Unit).Obj` whose witness is the
   canonical bijective comparison (distinct carriers; the equivalence FAILS for the recursive functor
