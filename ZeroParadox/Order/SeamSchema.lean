@@ -21,11 +21,11 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 ## Formal Overview (AI-assisted)
 
-`ZeroParadox/Category/SeamComparisonMap.lean` fenced the **root-seam** (the QPF `constPF` seam, `Fix ≃ Cofix`) against the **node-seam** (the
+`ZeroParadox/Category/SeamComparisonMap.lean` set the **root-seam** (the QPF `constPF` seam, `Fix ≃ Cofix`) against the **node-seam** (the
 #5 Hilbert zero object). This file tests a *different* pairing: the root-seam against the
 **lattice / selfApp seam** of `ZeroParadox/Multihomed/SelfAppSeam.lean` (`{x | selfApp x = x} = {⊥}`, ⊥ both least and greatest fixed
 point). The pre-registered question: do these two seams share a common Lean-statable schema, or is any
-"shared schema" merely a prose juxtaposition (a modeling commitment)?
+"shared schema" merely a prose juxtaposition?
 
 **The schema.** Both seams are, abstractly, the claim "the least-fixed-point carrier and the
 greatest-fixed-point carrier are connected by a canonical iso/equality." We capture that as a record
@@ -77,9 +77,8 @@ schema is satisfied by both, but the *only* common content is "there is some equ
 single type. `no_cross_setting_map` records that there is NO map exhibited between the QPF setting
 (a type equivalence `Fix ≃ Cofix`) and the lattice setting (a set equality `{x | selfApp x = x} = {⊥}`):
 the two `SeamSchema` instances live over unrelated carrier types and nothing in this file transports one
-to the other. Therefore the unification "the QPF root-seam IS the lattice selfApp seam" is a
-cross-setting modeling commitment / fenced analogy, NOT a theorem. The schema is a common *shape*; it is
-not a common *map*.
+to the other. The schema is a common *shape*; it is not a common *map*. `Reading:` CARRIER — the shared
+die role is occupied per chart (`selfApp_seam_role_unique`, `constPF_seam_role_unique`), no equation across.
 
 **Honest verdict.** The genuine new Lean content is: a single explicit `SeamSchema` record that both
 nodes provably instantiate, with the QPF instance's bijective canonical comparison and the lattice
@@ -207,9 +206,9 @@ between them:
 Both are true; neither is derived from the other in this file, and there is NO function exhibited
 between the QPF carrier setting and the lattice carrier setting. The `SeamSchema` record unifies the
 *shape* "least-fp carrier ≃ greatest-fp carrier", but it is loose enough to be satisfied by `refl` on
-the lattice side and is satisfied non-trivially only on the QPF side. Therefore "the QPF root-seam IS
-the lattice selfApp seam" is a cross-setting modeling commitment / fenced analogy, NOT a Lean theorem.
-The shared schema is a common shape, not a common map. -/
+the lattice side and is satisfied non-trivially only on the QPF side. The shared schema is a common
+shape, not a common map; the shared die role is occupied per chart (`selfApp_seam_role_unique`,
+`constPF_seam_role_unique`). -/
 theorem no_cross_setting_map :
     -- QPF side: genuine equivalence (canonical, bijective) between distinct carriers ...
     (((qpfSeam Unit).cmp : Fix (constPF Unit).Obj → Cofix (constPF Unit).Obj) = canonicalCmp
@@ -222,6 +221,13 @@ theorem no_cross_setting_map :
       ({x : L | AbstractSelfApp.selfApp x = x} = ({bot} : Set L)) :=
   ⟨qpfSeam_cmp_is_canonical Unit, idPF_no_seam, rfl, selfApp_fp_set_eq_singleton_bot⟩
 
+/-- `Statement:` in the die motion `ofFun selfApp` on a `ZPSemilattice` with `AbstractSelfApp`, exactly
+    one point steps to itself only (it is `bot`, from the class fields `fixed_bot` and `unique_fp`). -/
+theorem selfApp_seam_role_unique :
+    ∃! y, (Motion.ofFun (AbstractSelfApp.selfApp (L := L))).SelfOnlyAt y :=
+  ⟨bot, (Motion.selfOnlyAt_ofFun_iff _ _).2 AbstractSelfApp.fixed_bot,
+    fun y hy => AbstractSelfApp.unique_fp y ((Motion.selfOnlyAt_ofFun_iff _ _).1 hy)⟩
+
 section PurityCheck
 #print axioms qpfSeam_cmp_is_canonical
 #print axioms latticeSeam_carrier_nonempty_singleton
@@ -229,6 +235,7 @@ section PurityCheck
 #print axioms seam_schema_is_degenerate_for_lattice
 #print axioms qpf_seam_not_automatic
 #print axioms no_cross_setting_map
+#print axioms selfApp_seam_role_unique
 end PurityCheck
 
 end ZeroParadox

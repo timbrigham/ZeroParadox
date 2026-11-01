@@ -48,6 +48,7 @@ import ZeroParadox.Order.LeastFixedPoint
 import ZeroParadox.Valuation.SemilatticeInstance
 import ZeroParadox.Settheory.OntBridge
 import ZeroParadox.Settheory.Model
+import ZeroParadox.Order.SeamSchema
 
 set_option maxHeartbeats 400000
 
@@ -2534,6 +2535,16 @@ example {L : Type} [ZeroParadox.QuineAtomHost L] :
       (fun a b => ZeroParadox.QuineAtomHost.mem b a)).SelfOnlyAt ZeroParadox.QuineAtomHost.bot :=
   ⟨(ZeroParadox.QuineAtomHost.bot_mem_iff _).2 rfl,
     fun b hb => (ZeroParadox.QuineAtomHost.bot_mem_iff b).1 hb⟩
+-- Reading: CARRIER — the seam role is exactly one point stepping to itself only (on a complete lattice,
+-- `lfp = gfp`, the `fork_collapse_iff` entry above); each chart below occupies it or not by its own
+-- theorem, and no equation across the charts is stated.
+#check @ZeroParadox.selfApp_seam_role_unique              -- Statement: `ofFun selfApp` on a `ZPSemilattice`: exactly one point steps to itself only
+#check @ZeroParadox.seam_role_unique_iff_wellFounded      -- Statement: `ofFun (nextTime α)` on `Set X`: exactly one set steps to itself only iff `α` is well-founded (`IsWellFoundedCoalg`); both directions
+#check @ZeroParadox.constPF_seam_role_unique              -- Statement: so on `Cofix (constPF A).Obj` (no recursive position) exactly one does
+#check @ZeroParadox.idPF_seam_role_not_unique             -- Statement: and on `Cofix idPF_Coalgebra.Obj` (one recursive position) not exactly one does
+#check @ZeroParadox.not_seam_role_unique_of_step_self     -- Statement: a point that is its own child rules uniqueness out; one way (converse-fails control in `ZeroParadox/Category/RootCutDegeneracy.lean`)
+#check @ZeroParadox.moduleCat_seam_role_unique_iff_isZero -- Statement: elements of a module, OVER an endomorphism: every endomorphism has exactly one point stepping to itself only iff the module is a zero object; both directions
+#check @ZeroParadox.hilbert_zero_seam_role_unique         -- Statement: so at the Hilbert zero object `fD_functor.obj 0` every endomorphism does. Reading: that carrier has one point, so the occupancy restates `IsZero`
 #check @ZeroParadox.Motion.ofPartialFun          -- Statement: a partial self-map `g : β → Option β`: UP the identity, OVER `g x = some y`
 #check @ZeroParadox.Motion.noStepAt_ofPartialFun_iff -- Statement: no step at `y` iff `g y = none`; both directions
 #check @ZeroParadox.Motion.selfOnlyAt_ofPartialFun_iff -- Statement: a step to itself only iff `g y = some y`; both directions
