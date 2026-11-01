@@ -8,8 +8,8 @@ set_option maxHeartbeats 400000
 
 `ZeroParadox/Category/LawvereTaboo.lean` proves `wem_of_fixedPointFree`: the general form of the
 diagonal engine's supplier (*every type with two distinct points admits a fixed-point-free endomap*)
-implies **weak excluded middle**, choice-free. The reading recorded alongside it
-(`.claude-local/notes/ambiguity_is_what_choice_buys_2026-07-20.md`) is that the cost is located at
+implies **weak excluded middle**, choice-free. The framework's reading of that result is that the
+cost is located at
 **unresolved identity** — the one step that must decide whether two things are the same.
 
 This file tests a sharpening of that reading: **is the framework's ⊥ (the self-containing Quine atom)

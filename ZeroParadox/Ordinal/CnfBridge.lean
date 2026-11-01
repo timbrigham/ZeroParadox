@@ -12,7 +12,9 @@ One sequence `towerNONote` has two realizations, connected by maps and never by 
 into `Ordinal`, closing at the least fixed point ε₀, and `cnfToZp2` into `ℤ_[2]`, with norm-limit 0
 (`mu_construction_correspondence`). The *identification of these two limits* — ε₀ (∈ `Ordinal`)
 with 0 (∈ `ℤ_[2]`) — is not a well-formed statement: it fails to elaborate (a type mismatch between
-`Ordinal` and `ℤ_[2]`). `cnf_bridge_type_boundary` co-witnesses the two limits instead.
+`Ordinal` and `ℤ_[2]`). `cnf_bridge_type_boundary` co-witnesses ε₀'s least-fixed-point face with
+the images' limit 0 instead (its statement line: `ZeroParadox/Ordinal/Epsilon0CannotBe.lean` § V);
+ε₀'s supremum face is a conjunct of `mu_construction_correspondence`.
 Long form: `ZeroParadox/Ordinal/CnfBridge.md`.
 
 ## Engineer's Take
@@ -56,20 +58,22 @@ theorem tower_orders_agree (m n : ℕ) :
       ↔ (cnfToZp2 (towerNONote m)).valuation < (cnfToZp2 (towerNONote n)).valuation :=
   (tower_repr_orderEmbedding m n).symm.trans (tower_valuation_orderEmbedding m n)
 
-/-! ## § II. The shared seed maps to ⊥ on both sides -/
+/-! ## § II. The shared seed maps to each carrier's floor: ⊥ of `Ordinal`, and ℤ_[2]'s 0 -/
 
-/-- **Shared seed → both bottoms.** The NONote seed `towerNONote 0` (the NONote bottom `0`) maps to
-    the `Ordinal` bottom ⊥ under `NONote.repr`, and to the `ℤ_[2]` bottom 0 under `cnfToZp2`. -/
+/-- **Shared seed → both floors.** The NONote seed `towerNONote 0` (the NONote `0`) maps to
+    ⊥ of `Ordinal` under `NONote.repr`, and to ℤ_[2]'s 0 under `cnfToZp2` — least in ℤ_[2] under
+    the 2-adic norm and greatest under the valuation preorder (`z2_two_views`, indexed in
+    `ZeroParadox/BottomCannotBe.lean`). -/
 theorem seed_maps_to_bot_both :
     NONote.repr (towerNONote 0) = (⊥ : Ordinal) ∧ cnfToZp2 (towerNONote 0) = (0 : ℤ_[2]) :=
   ⟨by rw [towerNONote_repr, tower_stage_zero]; exact Ordinal.bot_eq_zero.symm,
    cnfToZp2_zero⟩
 
-/-! ## § III. The 2-adic realization loops through ⊥ (the diagonal fixed point, concretely) -/
+/-! ## § III. The 2-adic realization loops through ℤ_[2]'s 0 (the diagonal fixed point, concretely) -/
 
-/-- **Loop through ⊥.** Under `cnfToZp2` the seed's image and the limit of the stages' images are both the
-    *value* 0 in `ℤ_[2]`. So the ordinal ascent ⊥ → ε₀ realizes as a `ℤ_[2]` path departing 0 and
-    whose norm returns to 0. This is a value coincidence at 0, NOT an identity: ⊥ is never ε₀ (ε₀ is the least fixed
+/-- **Loop through ℤ_[2]'s 0.** Under `cnfToZp2` the seed's image and the limit of the stages' images are both the
+    *value* 0 in `ℤ_[2]`. So the ordinal ascent from ⊥ of `Ordinal` to ε₀ realizes as a `ℤ_[2]` path departing 0 and
+    whose norm returns to 0. This is a value coincidence at 0, NOT an identity: ⊥ of `Ordinal` is never ε₀ (ε₀ is the least fixed
     point of `α ↦ ω^α`, never the same as ⊥ — and **not** order-adjacent to it, see
     `epsilonZero_tower_lt`), and the images of the finite stages n ≥ 1 are all ≠ 0 (next to the floor, never it; `snap_arc_z2_loop`). `ε₀ = 0` with 0 the 2-adic zero stays ill-typed: it fails to elaborate. -/
 theorem tower_image_loops_to_seed :
@@ -87,7 +91,7 @@ theorem tower_image_loops_to_seed :
     * in `Ordinal` via `NONote.repr`: as `fundamentalSeq`, closing at the **least fixed point** ε₀ of
       `α ↦ ω^α` from ⊥ (`epsilon0_isLeastFixedPointFrom`);
     * in `ℤ_[2]` via `cnfToZp2`: as a norm-limit to **0**;
-    sharing the seed ⊥ (§II). The object realized is the construction, not a value: ε₀ and 0 are its
+    sharing the seed, which lands on ⊥ of `Ordinal` and on ℤ_[2]'s 0 (§II). The object realized is the construction, not a value: ε₀ and 0 are its
     two carrier-specific closures. -/
 theorem mu_construction_correspondence :
     -- ordinal realization of the shared tower
@@ -121,12 +125,13 @@ example : epsilonZero ≠ (0 : Ordinal) := epsilon0_ne_zero
 -- (`Ordinal` against `ℤ_[2]`, with no coercion between them).
 #check_failure (epsilonZero = (0 : ℤ_[2]))
 
-/-! ## § VI. The snap arc as one object — the ℤ_[2] loop through ⊥ -/
+/-! ## § VI. The snap arc as one object — the ℤ_[2] loop through 0 -/
 
-/-- **The snap arc, as one `ℤ_[2]` loop through ⊥.** The ordinal ascent ⊥ → ε₀ realizes, through
-    `cnfToZp2`, as a single arc in `ℤ_[2]` with three phases:
+/-- **The snap arc, as one `ℤ_[2]` loop through 0.** The ordinal ascent from ⊥ of `Ordinal` to ε₀
+    realizes, through `cnfToZp2`, as a single arc in `ℤ_[2]` with three phases:
 
-    1. **START at the floor** — `cnfToZp2 (towerNONote 0) = 0`: the arc begins at ⊥.
+    1. **START at the floor** — `cnfToZp2 (towerNONote 0) = 0`: the arc begins at ℤ_[2]'s 0, least
+       in ℤ_[2] under the 2-adic norm (and greatest under the valuation preorder).
     2. **DEPARTURE by a discrete jump** — `∀ n ≥ 1, cnfToZp2 (towerNONote n) ≠ 0`: the trajectory
        genuinely leaves 0. The image of the first stage has 2-adic valuation 1 (`cnfToZp2_tower_valuation`), hence
        norm 1/2, so the norm jumps 0 → 1/2 with no intermediate stage — there is no continuous path
@@ -137,7 +142,7 @@ example : epsilonZero ≠ (0 : Ordinal) := epsilon0_ne_zero
     The loop closes because the images reapproach 0 in `ℤ_[2]` (equivalently, their 2-adic norms tend
     to 0 in `ℝ`: the equivalence is Mathlib's `tendsto_zero_iff_norm_tendsto_zero`, and the `example`
     below applies its forward direction `.1`), landing back on the floor — NOT
-    because ⊥ and ε₀ are one point: **⊥ is never ε₀** (ε₀ is the least fixed point of `α ↦ ω^α`), never identical — and **not** order-adjacent, see
+    because ⊥ of `Ordinal` and ε₀ are one point: **⊥ of `Ordinal` is never ε₀** (ε₀ is the least fixed point of `α ↦ ω^α`), never identical — and **not** order-adjacent, see
     `epsilonZero_tower_lt` — and
     the images of the finite stages n ≥ 1 never even reach 0 (always next to, never the same). Honest fence: this is the
     `ℤ_[2]` realization *via the map*, NOT a proof of `ε₀ = 0` with 0 the 2-adic zero, which stays ill-typed: it fails

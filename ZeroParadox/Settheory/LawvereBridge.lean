@@ -65,12 +65,13 @@ theorem existence_without_uniqueness [Nontrivial L] :
   obtain ⟨a, b, hab⟩ := exists_pair_ne L
   exact hab ((hx a rfl).trans (hx b rfl).symm)
 
-/-! ## § IV. The wall regime — the engine's trigger is refuted in well-founded Set -/
+/-! ## § IV. The wall regime — the engine's trigger at `B = Prop` is refuted for every type -/
 
-/-- **The engine cannot fire in Set.** Lawvere's trigger — a reflexive point-surjection
-`e : A → (A → Prop)` — does not exist (Cantor, `cantor_via_engine`). So the ν-regime fixed point the
-framework assumes (`fixed_bot`) cannot be produced in well-founded Set; assuming it is the commitment to
-the non-well-founded (AFA) regime — the `QuineAtomHost` requirement, one level down. -/
+/-- **The engine cannot fire at `B = Prop`.** Lawvere's trigger there — a point-surjection
+`e : A → (A → Prop)` — does not exist, for every type `A` (Cantor, `cantor_via_engine`). Separately, on a
+`ZPSemilattice` with a point other than ⊥, Lawvere's hypothesis at `B = L` fails too
+(`nontrivial_lattice_no_witness`), so there Lawvere's route does not produce the ν-regime fixed point the
+framework assumes, and `fixed_bot` assumes it instead — the `QuineAtomHost` requirement, one level down. -/
 theorem lawvere_trigger_refuted {A : Type*} (e : A → (A → Prop)) :
     ¬ Function.Surjective e :=
   cantor_via_engine e
@@ -78,11 +79,12 @@ theorem lawvere_trigger_refuted {A : Type*} (e : A → (A → Prop)) :
 /-! ## § V. The μ/ν branches unified — the diagonal fixed point is the discriminator -/
 
 /-- **The branch discriminator (the unification).** A self-reference relation cannot be both
-well-founded (the **μ** branch — the wall: Foundation, Cantor, `wf_no_selfloop`) and carry a diagonal
+well-founded (the **μ** branch — the wall: Foundation, `wf_no_selfloop`) and carry a diagonal
 fixed point / self-loop (the **ν** branch — the self-referential object: the Quine atom, `selfApp`'s
 `fixed_bot`). The diagonal fixed point is exactly what discriminates the two branches of the fork: it
 lands on ν and is refuted on μ. Together with `selfApp_pinnable` (ν: the fixed point exists, uniquely)
-and `lawvere_trigger_refuted` (μ: the engine's trigger is Cantor-blocked), this is the μ/ν picture
+and `lawvere_trigger_refuted` (regime-independent: the engine's trigger at `B = Prop` is Cantor-blocked
+for every type), this is the μ/ν picture
 in Lawvere terms, discriminated by the self-loop; the ν fixed point is supplied by the class fields
 `fixed_bot` / `unique_fp`, not by the engine (§ II, § IV). (The fork's own μ↔ν duality
 is `fork_is_frameflip`; the concrete ν non-well-foundedness of `selfApp` is `floor_not_wellFounded`.) -/
@@ -189,7 +191,8 @@ example : (∀ b : Bool, (!b) ≠ b) ∧ ¬ Monotone (fun b : Bool => !b) :=
 --   first conjunct is Knaster–Tarski, `OrderHom.lfp`), and no map from its two points onto its monotone
 --   self-maps is surjective.
 -- Reading: so in the monotone face the absence of a fixed-point-free monotone endomap does not suffice
---   for a reflexive object.
+--   for a reflexive object. Not new: credited in `ZeroParadox/Settheory/LawvereBridge.md`, § "The hard
+--   bridge" (Soto-Andrade and Varela 1984, Trimble, Bergman).
 example : (∀ f : Bool →o Bool, ∃ b, f b = b) ∧
     ¬ ∃ e : Bool → (Bool →o Bool), Function.Surjective e := by
   refine ⟨fun f => ⟨OrderHom.lfp f, OrderHom.map_lfp f⟩, ?_⟩

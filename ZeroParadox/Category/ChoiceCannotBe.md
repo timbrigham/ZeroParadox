@@ -25,8 +25,8 @@ framework's standing temptation. The literature that separates them:
 
 > **Diaconescu (1975)**: in a topos, the axiom of choice implies excluded middle. **Goodman–Myhill
 > (1978, p. 461)** give the analogue in intuitionistic set theory. Diaconescu's theorem is stated as an
-> **equivalence** — a coequalizer of two nonintersecting monomorphisms has a section *iff* subobjects have complements (p. 176); "AC implies complemented
-> subobjects" is the corollary (p. 178). The theorem already concerns a two-point shape, since such a
+> **equivalence** — a coequalizer of two nonintersecting monomorphisms has a section *iff* subobjects have complements (p. 176); the choice direction is
+> the corollary, "AC implies that every subobject has a complement" (p. 178). The theorem already concerns a two-point shape, since such a
 > coequalizer has fibres of at most two points; Goodman–Myhill state the restriction explicitly, choice
 > "for sets B, C of at most two elements". With unique choice into `Bool`, `ChoiceFragment` and excluded
 > middle are inter-derivable (the `example` after `em_of_choiceFragment` in
@@ -38,11 +38,13 @@ framework's standing temptation. The literature that separates them:
 So *full* choice is strictly stronger than excluded middle, which is in turn strictly stronger than the
 constructive base. **The restricted fragment is a different matter, and the distinction matters here.**
 `ZeroParadox/Category/ExcludedMiddleBridge.lean`'s `ChoiceFragment` is a choice principle into the two-element `Bool` — a
-chooser on every inhabited predicate on `Bool` — so in a topos, which always has unique choice, it is *equivalent* to excluded middle (the standard
-Diaconescu–Goodman–Myhill theorem); in Lean the equivalence holds with unique choice into `Bool` as a
-hypothesis (the `example` after `em_of_choiceFragment`). In Lean, the natural construction of the
-fragment from excluded middle fails to elaborate, dying at `Decidable (S true)`, and closes only under
-`classical`. **That failure measures that construction, not the fragment** — a failed elaboration is not
+chooser on every inhabited predicate on `Bool` — so in a topos, which always has unique choice, it is *equivalent* to excluded middle (by the
+Diaconescu–Goodman–Myhill argument); in Lean the equivalence holds with unique choice into `Bool` as a
+hypothesis (the `example` after `em_of_choiceFragment`; the type-theoretic form is the Rocq standard
+library's `theories/Logic/ChoiceFacts.v`, `constructive_definite_descr_excluded_middle`, cited in
+`ZeroParadox/Category/ExcludedMiddleBridge.md`). In Lean without unique choice, the natural
+construction of the fragment from excluded middle alone fails to elaborate, dying at
+`Decidable (S true)`, and closes only under `classical`. **That failure measures that construction, not the fragment** — a failed elaboration is not
 a negative result, and a formal independence claim would
 need a metatheoretic argument outside Lean (the home file
 `ZeroParadox/Category/ExcludedMiddleBridge.lean` states this limit explicitly). `Reading:` a candidate
@@ -52,8 +54,9 @@ returns data, a `Bool` (`ChoiceFragment`), while `ExcludedMiddle` is `Prop`-valu
 stratification does not let `Or` in `Prop` eliminate into `Bool`. A topos also distinguishes its
 truth-value object from 1 + 1 (they coincide exactly when it is Boolean); there unique choice holds, so
 a decided proposition determines an element of 1 + 1, and without unique choice the equivalence need not carry over to Lean. Whether the fragment is derivable from `ExcludedMiddle` in
-Lean is not established here, so this explanation is a candidate, not a finding; the topos theorem is
-Diaconescu's. Every evocative reading in the framework's prose — "choice is which way you view the
+Lean is not established here, so this explanation is a candidate, not a finding. The topos-side
+equivalence of the fragment with excluded middle, earlier in this paragraph, is Diaconescu's argument;
+nothing in it is claimed here. Every evocative reading in the framework's prose — "choice is which way you view the
 self-dual split", "reading the pole as the floor is an act of choice" — is a **model** of the
 choice-versus-no-choice distinction, never the axiom itself. Where such a reading has been made precise
 (`ZeroParadox/Valuation/PoleChartSelection.lean`), the honest result was that the built object **refutes** the naive
@@ -183,6 +186,8 @@ The same split between a statement's and a proof's reach of `Classical.choice` i
 by V. Gonzalez, "Where Formal Libraries Spend Their Axioms", Zenodo 2026, doi:10.5281/zenodo.21769846
 (page numbers from v1.0.3, doi:10.5281/zenodo.21866855), § 4 (p. 8) and § 8 (p. 14): a theorem whose
 statement mentions something choice-dependent "cannot be made choice-free however it is proved" (cited, not claimed).
+This long form states the same split for its own statements in its own voice: STATEMENT-CARRIED
+above ("No proof can remove it").
 
 Prior art for the distinction and its methods: constructive reverse mathematics, which classifies
 theorems ("to classify [over intuitionistic logic] various theorems … by logical principles") and whose

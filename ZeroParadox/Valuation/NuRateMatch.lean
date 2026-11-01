@@ -19,10 +19,11 @@ defer to my AI assistant regarding the specifics of how the internals work.
 ---
 ## Formal Overview (AI-assisted)
 At `a = 1/4` the kernel of `ZeroParadox/Order/MarkovContractionDual.lean` scales the imbalance by
-`1 - 2a = 1/2` (`step_imb`), the p-adic doubling rate. The match is `padic_markov_shared_rate_envelope`;
-the `example` after `padic_markov_no_orbit_correspondence` states that match step by step, for every
-start. Both sides are real numbers: no category, inverse limit or map between `Fin 2 → ℝ` and `Q₂` is
-built. -/
+`1 - 2a = 1/2` (`step_imb`), the p-adic doubling rate. The match is `padic_markov_shared_rate_envelope`.
+The first `example` after `padic_markov_no_orbit_correspondence` is the cross-multiplied identity
+`‖2ⁿx‖ · imb v₀ = imb (Pⁿ v₀) · ‖x‖`, which holds at every start; it is a step-by-step proportionality
+only for `x ≠ 0` and `imb v₀ ≠ 0` (the next two `example`s). Both sides are real numbers: no category,
+inverse limit or map between `Fin 2 → ℝ` and `Q₂` is built. -/
 
 namespace ZeroParadox
 
@@ -56,7 +57,8 @@ theorem padic_orbit_half (x : Q₂) (n : ℕ) :
     ‖(2 : Q₂) ^ n * x‖ = ((1 : ℝ) / 2) ^ n * ‖x‖ := by
   rw [padic_orbit_norm x n, padic_env_eq]
 
-/-- **GO capstone (witness, not narration).** Both ν-attractor distance sequences are exactly the
+/-- **GO capstone (witness, not narration).** The p-adic orbit norm and the Markov signed imbalance
+    (`imb`, which can be negative) are both exactly the
     single shared envelope `(1/2)ⁿ` scaled by a per-orbit constant (Markov: `imb v₀`; p-adic: `‖x‖`),
     and that envelope `→ 0`. The shared rate **constant** `1/2` is exhibited in-statement — an envelope
     match across the two ν-attractors #2 and #3, NOT an orbit isomorphism. Rate-level complement to
@@ -64,7 +66,7 @@ theorem padic_orbit_half (x : Q₂) (n : ℕ) :
 theorem padic_markov_shared_rate_envelope (x : Q₂) (v₀ : Fin 2 → ℝ) :
     -- the shared envelope tends to 0
     Tendsto (fun n : ℕ => ((1 : ℝ) / 2) ^ n) atTop (𝓝 0) ∧
-    -- #2 (Markov, a = 1/4): imbalance distance is exactly the envelope · (imb v₀)
+    -- #2 (Markov, a = 1/4): the signed imbalance is exactly the envelope · (imb v₀)
     (∀ k : ℕ, imb ((markovStep (1/4))^[k] v₀) = ((1 : ℝ) / 2) ^ k * imb v₀) ∧
     -- #3 (p-adic doubling): orbit distance is exactly the envelope · ‖x‖
     (∀ n : ℕ, ‖(2 : Q₂) ^ n * x‖ = ((1 : ℝ) / 2) ^ n * ‖x‖) :=
@@ -72,10 +74,11 @@ theorem padic_markov_shared_rate_envelope (x : Q₂) (v₀ : Fin 2 → ℝ) :
 
 /-! ### The balanced start -/
 
-/-- At a balanced start (`hbal`) and `x ≠ 0`: the p-adic orbit distance stays positive while the
-    `markovStep (1/4)` imbalance is `0` at every step. The start, not the rate, sets the Markov
-    constant to `0`; the `example` below holds for every start, so the name's "no correspondence"
-    is this balanced start only. -/
+/-- At a balanced start (`hbal`: any `v₀` on the line `imb v₀ = 0`) and `x ≠ 0`: the p-adic orbit
+    norm stays positive while the `markovStep (1/4)` imbalance is `0` at every step. The start, not
+    the rate, sets the Markov constant to `0`. The cross-multiplied identity below holds at every
+    start, and divides out to a proportionality only when `x ≠ 0` and `imb v₀ ≠ 0`; on the balanced
+    line it reads `0 = 0`. So the name's "no correspondence" is that line only. -/
 theorem padic_markov_no_orbit_correspondence (x : Q₂) (hx : x ≠ 0)
     {v₀ : Fin 2 → ℝ} (hbal : imb v₀ = 0) :
     (∀ n, 0 < ‖(2 : Q₂) ^ n * x‖) ∧
@@ -89,6 +92,19 @@ theorem padic_markov_no_orbit_correspondence (x : Q₂) (hx : x ≠ 0)
 example (x : Q₂) (v₀ : Fin 2 → ℝ) (n : ℕ) :
     ‖(2 : Q₂) ^ n * x‖ * imb v₀ = imb ((markovStep (1/4))^[n] v₀) * ‖x‖ := by
   rw [padic_orbit_half, markov_imbalance_quarter]; ring
+
+-- Statement: for `x ≠ 0` and `imb v₀ ≠ 0` the identity divides out: the two ratios to the start agree
+-- at every step.
+example (x : Q₂) (hx : x ≠ 0) (v₀ : Fin 2 → ℝ) (hv : imb v₀ ≠ 0) (n : ℕ) :
+    ‖(2 : Q₂) ^ n * x‖ / ‖x‖ = imb ((markovStep (1/4))^[n] v₀) / imb v₀ := by
+  have hx' : ‖x‖ ≠ 0 := norm_ne_zero_iff.mpr hx
+  rw [padic_orbit_half, markov_imbalance_quarter, mul_div_assoc, mul_div_assoc, div_self hx',
+    div_self hv]
+
+-- Statement: at a balanced start both sides of the identity are `0`, whatever `x` is.
+example (x : Q₂) (v₀ : Fin 2 → ℝ) (hbal : imb v₀ = 0) (n : ℕ) :
+    ‖(2 : Q₂) ^ n * x‖ * imb v₀ = 0 ∧ imb ((markovStep (1/4))^[n] v₀) * ‖x‖ = 0 := by
+  rw [markov_imbalance_quarter, hbal]; simp
 
 /-- The uniform vector `unif = ![1/2,1/2]` is balanced (`imb unif = 0`), so it meets the hypothesis
     `hbal` of `padic_markov_no_orbit_correspondence`. -/

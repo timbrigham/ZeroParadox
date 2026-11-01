@@ -274,10 +274,10 @@ variable {L : Type*} [ZPSemilattice L]
 
 #check @HasNoTop
 #check @IsStrictStateSequence
-#print axioms le_refl
-#print axioms le_antisymm
-#print axioms le_trans
-#print axioms bot_le
+#print axioms ZeroParadox.ZPSemilattice.le_refl
+#print axioms ZeroParadox.ZPSemilattice.le_antisymm
+#print axioms ZeroParadox.ZPSemilattice.le_trans
+#print axioms ZeroParadox.ZPSemilattice.bot_le
 #print axioms state_transition_iff
 #print axioms state_sequence_monotone
 #print axioms cc1

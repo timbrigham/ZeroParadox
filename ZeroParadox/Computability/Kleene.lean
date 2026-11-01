@@ -145,9 +145,10 @@ not establish it. The form for carrying a commitment as an explicit hypothesis: 
     asserts it:** that the AFA Quine atom and the Kleene computational quine name the same
     structural property — the reading "botCode is the code that IS its own program,
     the universal Turing machine in ground state, and this is the computational
-    expression of `bot_self_mem`". Nothing in this file derives that identification,
-    and nothing could state it as an equation: `botCode` is a `Code` and `bot` is an
-    element of `L`, so no `=` exists between them.
+    expression of `bot_self_mem`". Nothing in this file derives that identification.
+    For a generic `L` no Lean `=` between `botCode` (a `Code`) and `bot` (an element of `L`)
+    typechecks; at `L := Code` one does: the `example`s after `KleeneStructure.botCode_is_quine`
+    in `ZeroParadox/Computability/ComputationCannotBe.lean` § IV.
 
     Three things to keep in view when relying on this class:
     * `botCode_is_quine` requires only `IsComputationalQuine`, a *periodicity*
@@ -175,8 +176,8 @@ class KleeneStructure (L : Type*) [ZPSemilattice L] extends AFAStructure L where
       supplies.
       The intended reading — ⊥ = {⊥} in set theory alongside
       eval botCode = selfApply botCode in computation — is the commitment. The two are
-      not equated and cannot be: one is about an element of `L`, the other about a
-      `Code`. -/
+      not equated: one is about an element of `L`, the other about a `Code` (when an `=`
+      between them typechecks: `ZeroParadox/Computability/ComputationCannotBe.lean` § IV). -/
   bot_self_mem_from_kleene : AFAStructure.selfMem (bot : L)
 
 /-! ## § III. T-COMP — the three-way equivalence, and where the fourth face sits -/
@@ -1102,6 +1103,14 @@ theorem constEnc_two_successors :
     Quotient.mk _ (constEnc (padId Code.zero)),
     ⟨Code.zero, _, rfl, rfl, rfl⟩, ⟨padId Code.zero, _, rfl, Quotient.sound haa, rfl⟩,
     fun h => eval_const_ne hne (Quotient.exact h)⟩
+
+-- `Statement:` instance search's `Primcodable (Code × ℕ)` is `Primcodable.prod` over
+-- `Primcodable.ofDenumerable Code`, whose `Denumerable` argument is `Nat.Partrec.Code.instDenumerable`
+-- (by `rfl`): the route `ZeroParadox/Computability/Kleene.md` § VIII describes. The footprints of
+-- both are printed below.
+example : (inferInstance : Primcodable (Nat.Partrec.Code × ℕ)) =
+    @Primcodable.prod Nat.Partrec.Code ℕ
+      (@Primcodable.ofDenumerable Nat.Partrec.Code Nat.Partrec.Code.instDenumerable) _ := rfl
 
 end ZeroParadox
 

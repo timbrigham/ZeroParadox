@@ -149,8 +149,9 @@ suffices for the tower (where the coefficient is pinned at 1) and nowhere else.
 `ONote` / `NONote` and `ONote.cmp` are Mathlib (`Mathlib.SetTheory.Ordinal.Notation`). The technique
 of working on the syntactic substrate to avoid the choice inherited from Mathlib's `Ordinal` is not
 new here either. ZP-N (`ZeroParadox/Ordinal/ConstructiveOrdinals.lean`) used it for the ordinal *ascent*
-(`exp_lt_term`, `omegaPow_no_fixedpoint`, `tower_strictMono`), and outside this corpus Castéran and
-Contejean's *hydra-battles* (Coq, `theories/ordinals/Epsilon0/T1.v`) works on the same raw-syntax
-substrate, as `ZeroParadox/Ordinal/SnapNucleusConstructive.md` records. The Lean file
+(`exp_lt_term`, `omegaPow_no_fixedpoint`, `tower_strictMono`), and outside this corpus the
+Coq library *hydra-battles* (`theories/ordinals/Epsilon0/T1.v`; credited as in
+`ZeroParadox/Ordinal/SnapNucleusConstructive.md`) works on the same raw-syntax
+substrate. The Lean file
 extends that same technique to the valuation/metric side. The contribution is the instance, not the
 method.

@@ -31,10 +31,14 @@ Lawvere's theorem is an implication: **if** a point-surjection `e : A → (A →
   existence result supplies (`existence_without_uniqueness`), and it is the fork collapse of
   `RequirementsGap` / `fork_collapse_iff`.
 - **The engine yields the WALL faces, by contrapositive.** Run at a fixed-point-*free* map (negation),
-  the implication refutes the point-surjection: Cantor / Russell / Turing (`cantor_via_engine`). Its
-  hypothesis, a reflexive point-surjection, is refuted in well-founded Set (`lawvere_trigger_refuted`).
-  So the ν fixed point the framework assumes is not produced in well-founded Set; `fixed_bot` is the
-  commitment to the non-well-founded (AFA) regime — the same `QuineAtomHost` commitment, one level down.
+  the implication refutes the point-surjection: Russell / Turing (`russell_via_engine`, `no_self_decider`;
+  `ZeroParadox/Settheory/Wall.lean`). Cantor is the same contrapositive at `B = Prop`, a corollary of
+  `lawvere_fixedpoint` at `Not`; the Lean proof (`cantor_via_engine`, same file) inlines that step, calling
+  the engine `negation_no_fixedpoint` directly. Lawvere's hypothesis at `B = Prop`, a point-surjection
+  `A → (A → Prop)`, is refuted for every type `A` (`lawvere_trigger_refuted`). Separately, on a
+  `ZPSemilattice` with a point other than ⊥, Lawvere's hypothesis at `B = L` fails too
+  (`nontrivial_lattice_no_witness`), so there Lawvere's route does not produce the ν fixed point the
+  framework assumes, and `fixed_bot` assumes it instead: the same `QuineAtomHost` commitment, one level down.
 - **In the computability chart the hypothesis holds.** The universal machine `eval` is point-surjective
   onto the partial computable functions (`eval_point_surjective`,
   `ZeroParadox/Computability/ComputableCrossing.lean`), and the recursion theorem gives a fixed point
@@ -52,8 +56,9 @@ the translation key between the faces; ZP-R conjectures nothing global.
 
 What is proved: Lawvere's fixed point has the shape of a self-application (`lawvere_fixedpoint_selfApp`);
 the framework's self-application fixed point is `∃!` by its class fields (`selfApp_pinnable`); existence
-does not force uniqueness (`existence_without_uniqueness`); the engine's hypothesis is refuted in Set
-(`lawvere_trigger_refuted`) and on every nontrivial `ZPSemilattice` (`nontrivial_lattice_no_witness`).
+does not force uniqueness (`existence_without_uniqueness`); the engine's hypothesis is refuted at `B = Prop`
+for every type (`lawvere_trigger_refuted`), and at `B = L` on every nontrivial `ZPSemilattice`
+(`nontrivial_lattice_no_witness`).
 `AbstractSelfApp.fixed_bot` / `unique_fp` remain assumed class fields, not derived from a reflexive
 object.
 
@@ -80,8 +85,8 @@ endomap does not suffice for one: the two-element chain is the witness (the last
 in `ZeroParadox/Settheory/LawvereBridge.lean`). That example is not new: it is the first finite stage of
 Soto-Andrade and Varela's two-element example ("Self-reference and fixed points", Acta Applicandae
 Mathematicae 2(1), 1984, §2.5, pp. 15–16), the case Y = 2 of Trimble's "Cantor's theorem for posets"
-(nLab personal web, ncatlab.org/toddtrimble), and the case P = 2 of Bergman 2008, Corollary 7 (Tbilisi
-Math. J. 1, 89–103; arXiv:0801.0751). Trimble and Bergman state it for order-preserving maps; the Lean
+(nLab personal web, ncatlab.org/toddtrimble), and the case P = 2 of Bergman's Corollary 7 of arXiv:0801.0751
+(Corollary 3.2 in the journal version, Tbilisi Math. J. 1 (2008), 89–103). Trimble and Bergman state it for order-preserving maps; the Lean
 example allows any map, by counting two points against three monotone self-maps. On uniqueness,
 `monotone_regime_derives_pinned` takes the fork collapse `lfp f = gfp f` as a hypothesis, which by
 `fork_collapse_iff` is equivalent to `∃! x, f x = x`: uniqueness is restated, not derived, and `id` on a

@@ -140,6 +140,10 @@ example : letI : Preorder ℚ_[2] := Preorder.lift (‖·‖); (2 : ℚ_[2]) ⋖
 example : @DenselyOrdered ℝ (Preorder.lift (‖·‖ : ℝ → ℝ)).toLT ∧ DenselyOrdered ℝ :=
   ⟨@DenselyOrdered.mk ℝ (Preorder.lift (‖·‖ : ℝ → ℝ)).toLT fun a _ h =>
     NormedField.exists_lt_norm_lt ℝ (norm_nonneg a) h, inferInstance⟩
+-- Statement: ℝ has no least element, so a dense case WITH one is the non-negative reals: there `0`
+-- is ⊥ of `NNReal` and has no first step (no atom above it).
+example : (⊥ : NNReal) = 0 ∧ ¬ ZeroParadox.HasFirstStep (0 : NNReal) :=
+  ⟨rfl, ZeroParadox.axb1_fails_everywhere_iff_dense.mp inferInstance 0⟩
 -- Reading: other chart, the valuation order, stated on ℤ_[2] (the next two lines; `addVal_bot`,
 -- § POSITIVE, is `v 0 = ⊤` for an additive valuation).
 -- Statement: on ℤ_[2], ℤ_[2]'s 0 included, `q2Val x ≤ q2Val y ↔ ‖y‖ ≤ ‖x‖`.
@@ -271,7 +275,7 @@ example : letI := ZeroParadox.trivialZPSemilattice
 -- Statement: `fixToCofix` is not surjective.
 #check @ZeroParadox.fixToCofix_not_surjective
 
-/-! ### orbits: ℚ₂ unit multipliers, the swap chain, balanced starts -/
+/-! ### orbits: ℚ₂ norm-one multipliers, the swap chain, balanced Markov starts -/
 
 -- Statement: in ℚ₂, for `‖u‖ = 1` and `x ≠ 0`, the orbit `uⁿ * x` does not converge to 0.
 #check @ZeroParadox.unit_orbit_not_tendsto_zero
@@ -405,9 +409,11 @@ example : (fun x : ℤ => -x) (0 : ℤ) = 0 := rfl
 -- Statement: Mathlib's `hasZeroObject_op` — a zero object stays a zero object in the opposite.
 -- Reading: the seam is self-dual under `op`, the fixed centre of the inversion.
 #check @CategoryTheory.Limits.hasZeroObject_op
--- Reading: PRIOR-ART RECORD, do NOT rebuild. "Order-reversal swaps ⊥ and ⊤" is Mathlib's
--- `OrderIso.map_bot` below, applied to an order isomorphism into an order dual. The three inversions
--- share no single buildable type, so their "unification" is a schema, not a theorem.
+-- Reading: PRIOR-ART RECORD, do NOT rebuild. "Order-reversal swaps ⊥ and ⊤" is two Mathlib facts,
+-- applied to an order isomorphism `α ≃o βᵒᵈ` into an order dual: `OrderIso.map_bot` sends ⊥ of `α` to
+-- ⊤ of `β`, and `OrderIso.map_top` sends ⊤ of `α` to ⊥ of `β` (both below, with the Boolean-algebra
+-- complement as the instance). The three inversions share no single buildable type, so their
+-- "unification" is a schema, not a theorem.
 -- Statement: Mathlib's `OrderIso.map_bot`: for `[LE α]`, `[PartialOrder β]`, `[OrderBot α]` and
 -- `[OrderBot β]`, an order isomorphism `α ≃o β` sends ⊥ of `α` to ⊥ of `β`.
 #check @OrderIso.map_bot
@@ -415,6 +421,12 @@ example : (fun x : ℤ => -x) (0 : ℤ) = 0 := rfl
 -- `OrderIso.compl α : α ≃o αᵒᵈ`.
 example {α : Type*} [BooleanAlgebra α] : (⊥ : α)ᶜ = ⊤ :=
   congrArg OrderDual.ofDual ((OrderIso.compl α).map_bot)
+-- Statement: Mathlib's `OrderIso.map_top`: an order isomorphism `α ≃o β` between orders with a
+-- greatest element sends ⊤ of `α` to ⊤ of `β`.
+#check @OrderIso.map_top
+-- Statement: the other half, `⊤ᶜ = ⊥`, as `OrderIso.map_top` applied to `OrderIso.compl α`.
+example {α : Type*} [BooleanAlgebra α] : (⊤ : α)ᶜ = ⊥ :=
+  congrArg OrderDual.ofDual ((OrderIso.compl α).map_top)
 -- Statement: Mathlib's `compl_bot`: `⊥ᶜ = ⊤` in any Heyting algebra, the general home of that fact.
 #check @compl_bot
 
@@ -438,8 +450,15 @@ The cross-field routing, and its Lawvere / Yanofsky attribution, live in
 -- period, so this does not tie index to function. A periodicity fact, not a diagonal identity.
 #check @ZeroParadox.quine_period_is_goedel
 -- Statement: a Kleene-periodic code exists AND a least ordinal with `ω^α = α` exists.
--- Reading: the two diagonalization fixed points coexist; the conjunction is not an identification.
+-- Reading: the ordinal conjunct is a least fixed point. The code conjunct is witnessed in the proof
+-- by a computational quine (`quine_period_is_goedel`), but as stated every constant code meets it
+-- (the `example` below), so the statement carries no diagonal content on the code side. The
+-- conjunction is not an identification.
 #check @ZeroParadox.both_fixed_points_exist
+-- Statement: every constant code `Code.const k` satisfies `both_fixed_points_exist`'s code conjunct.
+example (k : ℕ) : ∀ n, Nat.Partrec.Code.eval (Nat.Partrec.Code.const k) n =
+    Nat.Partrec.Code.eval (Nat.Partrec.Code.const k) (Encodable.encode (Nat.Partrec.Code.const k) + n) :=
+  fun _ => by simp [Nat.Partrec.Code.eval_const]
 -- Statement: a finite-dimensional `X : ModuleCat ℂ` with `X ≅ X ⊞ X` is the zero object.
 -- Reading: the OTHER sub-sense of self — self-similarity under the biproduct diagonal, as opposed to
 -- the Kleene sense of a code applied to its own index.

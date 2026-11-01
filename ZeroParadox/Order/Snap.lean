@@ -346,9 +346,9 @@ post-execution null and the pre-execution null are different instances.
 This separates two things the narrative might conflate: the *value* a machine produces
 (which can be ⊥ in both cases) and the *machine state* (c₀ before execution, c₁ after).
 
-Given DP-2, DA-1 (instantiation = execution) is Lean-formalizable at the minimal-path
-level: the act of instantiating ⊥ moves the machine from c₀ to c₁, regardless of what
-value the operation returns. The "return to null" is a new null — not a return to c₀. -/
+DA-1's minimal-path form is `da1_minimal_path` below: it takes no hypothesis and does not
+carry that the step is taken; given DA-1's precondition, c₀ → c₁ is D7's (ZP-E, T-SNAP
+Step 3). Reading the returned null as a NEW null is C-DA2, a commitment (SnapCannotBe § IV). -/
 
 /-! ### NO-GO gauge — `TrackedOutput` is a RECORD, not a requirements class. Two `MachinePhase`
 fields and no laws, so any pair inhabits it and nothing can fail to be one. Its content is the

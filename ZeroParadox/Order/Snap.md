@@ -18,13 +18,19 @@ Cross-framework synthesis of ZP-A through ZP-D. Provides three formal inserts:
     requirement, not a theorem. That rules out an external executor, not an inert ⊥. Its Lean
     counterpart is `da1_closed_concrete`, which proves IsQuineAtom (bot : MachinePhase) and nothing
     computational; the self-executing reading is carried by the KleeneStructure commitment.
-  - Path 2 (informational, ZP-C L-INF): surprisal at ⊥ is unbounded, so no finite interpreter holds
-    ⊥ as a static description. The step from there to executing is a bridge principle of its own,
+  - Path 2 (informational), in two charts; the point chart's `Statement:` COINCIDENCE is named below. Depth chart, ZP-C L-INF: surprisal is unbounded in the
+    ball-hierarchy depth n while each value is finite (`l_inf`, `ZeroParadox/Information/Surprisal.lean`).
+    Point chart: at 0 of ℚ₂, the one point in every ball B(0, 2⁻ⁿ) of the chain centred at 0
+    (`fB_bottom_is_limit`), the 2-adic additive valuation is ⊤ (`padic_addVal_bot`,
+    `ZeroParadox/Valuation/ValuationAFA_Padic.lean`); `Statement:` COINCIDENCE, the floor carrying ⊤ at
+    one point, is `infinitude_forces_infinite_complexity` at `q2InfinitudeFloor`. ⊥ of `MachinePhase`, c₀,
+    corresponds to that point (the `l_inf` docstring). From this the framework argues that no finite
+    interpreter holds ⊥ as a static description. The step from there to executing is a bridge principle of its own,
     which the framework does not adopt, which is not the occurrence commitment, and which is not a
     premise of the Snap.
   - Path 3 (computational, ZP-C D1 + AIT): incompressibility rules out a shorter external
-    generator, not an inert string, so executing is not derivable from incompressibility. Its Lean
-    counterpart is the machinePhaseKleene instance's botCode_is_quine field, a KleeneStructure
+    generator, not an inert string, so this path does not derive executing from incompressibility.
+    Its Lean counterpart is the machinePhaseKleene instance's botCode_is_quine field, a KleeneStructure
     requirement that constant codes also meet, not a witness of execution and not a second
     independent proof.
 

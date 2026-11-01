@@ -96,9 +96,14 @@ side needs a **reduction**. So the reductions are the evidence on the necessity 
 becomes "not removable" only on § IV's premise. Provenance ("not inherited") is a separate question,
 settled by the footprint table above read against the source.
 
-For the statement-carried rows no proof can drop the choice (`ZeroParadox/Category/ChoiceCannotBe.md`,
+For the statement-carried row no proof can drop the choice (`ZeroParadox/Category/ChoiceCannotBe.md`,
 STATEMENT-CARRIED); the open question there is a restatement on a carrier whose statements are
-choice-free. Whether the *remaining* analytic-layer dependence is removable is genuinely open — see the README
+choice-free. The ε₀ results of `ZeroParadox/Ordinal/Epsilon0MinMax.lean` and
+`ZeroParadox/Ordinal/SnapNucleus.lean` are statement-carried too, though not rows of the table (their
+statement controls, `epsilon0EqNfpBotStatement`, `epsilon0MinMaxStatement`,
+`snapNucleusNonemptyStatement` and `snapNucleusBotStatement`, are printed in those files); for them
+the restatement's two readings and the search record are in `ZeroParadox/Ordinal/SnapNucleus.md`
+§ "Axiom footprint". Whether the *remaining* analytic-layer dependence is removable is an open question (UNCLASSIFIED) — see the README
 Question Register and the `choice-probe` experiment, which found it mostly incidental in the one layer
 classified so far. None of it is load-bearing for the core claims: those (`ZeroParadox/AxiomProfile.lean`
 § I) are proved without choice.

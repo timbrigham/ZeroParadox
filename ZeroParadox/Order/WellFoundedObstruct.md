@@ -7,7 +7,10 @@ described at each declaration, not listed again here.
 ## The question, and the complementary test it forms
 
 This is the **complementary test to `ZeroParadox/Valuation/PadicAttractor.lean`**, refining **Axis I**
-of the bottom-diagram tree (`.claude-local/notes/thread_obstruction_table_2026-06-29.md`).
+of the bottom-diagram tree, the split between well-founded and non-well-founded floors (here, the
+well-founded floor against the contraction / attractor floors)
+(node numbers `#2` to `#5` are those of the reading key in `BOTTOMELEMENT.md`; node #1, the floor 0 of
+ℕ, is an instance of that key's unnumbered `Lat ⊥` row).
 `PadicAttractor.lean` gave node #3 (the p-adic floor `{0} ⊆ Q₂`) a genuine **dynamical attractor**
 character: `0` is the global attractor of the doubling map `x ↦ 2·x`, because `‖2‖₂ = ½ < 1` makes the
 map a strict contraction, so every orbit `2ⁿ·x` is an **infinite, non-terminating** sequence converging

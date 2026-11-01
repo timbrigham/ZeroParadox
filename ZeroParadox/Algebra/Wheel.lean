@@ -52,7 +52,7 @@ making wheel theory the algebraic representation of the porthole rather than a c
 **Structural alignment (not proof):**
 - In ZFC+Foundation: division by zero is undefined; the Axiom of Regularity prohibits
   x ∈ x for all sets x, ruling out self-containing elements
-- In ZF+AFA: `⊥ = {⊥}` (the Quine atom) is admitted as the unique self-containing set
+- In ZF+AFA: the Quine atom `⊥ = {⊥}` is admitted as the unique x with x = {x} (Aczel 1988, p. 19)
 - In wheel theory: /0 is a first-class defined element — the porthole is structurally open
 
 **The gap:** Derivation requires ring structure not present in the current ZP typeclasses.
@@ -221,7 +221,9 @@ end WheelBasic
 
     - `bot`:    0 · /0 — the absorbing undefined element (ZP: the porthole; the algebraic counterpart
                 of the Quine-atom role, not an identity with it — different types)
-    - `fin q`:  a finite rational (ZP: nonzero states for q ≠ 0; q = 0 is the semilattice ⊥)
+    - `fin q`:  a finite rational (ZP: nonzero states for q ≠ 0; q = 0 is ℚ's zero, least under |·|
+                and under the 2-adic norm, greatest under the 2-adic valuation preorder, and not
+                least in ℚ's field order; `z2_two_views` states the two 2-adic readings on ℤ_[2])
     - `inf`:    /0 = ∞ — the infinite element (ZP: v₂(0) = ∞)
 
     The porthole is the identification fin(0) ↔ inf via winv:
@@ -464,7 +466,7 @@ example : ¬ (∀ x y z : ZPWheelElem,
   norm_num [zpwAdd, zpwMul] at hx
   exact zpw_inf_ne_bot hx
 
-/-- fin(0) ≠ ⊥ₗ: the semilattice ⊥ is distinct from the wheel's absorbing element.
+/-- fin(0) ≠ ⊥ₗ: `fin 0`, ℚ's zero, is distinct from the wheel's absorbing element ⊥ₗ.
     Algebraically: the porthole contact point (fin 0 ↔ inf) is not confusion with ⊥ₗ. -/
 theorem zpw_zero_ne_bot : ZPWheelElem.fin 0 ≠ .bot := by
   simp

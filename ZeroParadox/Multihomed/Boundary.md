@@ -7,9 +7,9 @@ holds the declarations, the Engineer's Take and the per-declaration commentary.
 
 **CORE (promoted 2026-07-29, Tim's call).** Formerly a probe; promoted because its results are cited
 from `ZeroParadox/Settheory/Wall.md` as the adoption site for the descending-chain characterization,
-and the infinite-pole declarations are machine-verified with measured footprints. Rung A of the
-iterative A→B plan (`.claude-local/notes/wellfounded_coalgebra_foray_2026-06-23.md`) — Rung C, the full
-Taylor coalgebraic statement, remains open and is **not** claimed.
+and the infinite-pole declarations are machine-verified with measured footprints. The file carries Rung A
+(the relation level, below) and Rung B (the single carrier, § "Rung B") of a three-rung plan; Rung C,
+the full Taylor coalgebraic statement, remains open and is **not** claimed.
 
 Conjecture (Taylor/AMM framing): the snap ⊥→ε₀ crosses the **well-foundedness boundary** — from the
 non-well-founded floor (⊥ is the self-loop / back edge, where recursion cannot reach, Taylor Prop 111)
@@ -174,11 +174,13 @@ itself in both of its extreme orderings, floor below as `WithBot Ordinal`
 (`phase_epsilon0_isLeast_landing_above_floor`) and floor above as `WithTop Ordinal`
 (`phaseTop_epsilon0_isLeast_landing_above_snap`) (`ZeroParadox/Multihomed/BoundaryOrder.lean`), so no
 cross-type identity is involved). In the carrier `Ordinal` the bottom role is filled by 0. The value
-`Ordinal.epsilon 0`, lifted as `↑ε₀`, fills the ε₀ role, the first landing (a fixed point of the
-closure) strictly above a floor: in `WithBot Ordinal`, above the boundary model's floor placed at the
+`Ordinal.epsilon 0`, lifted as `↑ε₀`, fills the ε₀ role, the first landing (a fixed point of
+the lift of `nfp (ω ^ ·)` to each order: `phaseUpAndOver.up` on `WithBot Ordinal`, `snapNucleusTop` on
+`WithTop Ordinal`) strictly above a floor: in `WithBot Ordinal`, above the boundary model's floor placed at the
 bottom (`phase_epsilon0_isLeast_landing_above_floor`), and in `WithTop Ordinal`, where that floor is
-placed at the top, the first landing strictly above that order's least element, the snap `↑0` (`phaseTop_epsilon0_isLeast_landing_above_snap`; both
-`ZeroParadox/Multihomed/BoundaryOrder.lean`). In `Ordinal` that value differs from the bottom role's
+placed at the top, the first landing strictly above that order's least element, the snap `↑0` (`phaseTop_epsilon0_isLeast_landing_above_snap`; the two landing theorems and
+`phaseUpAndOver` are in `ZeroParadox/Multihomed/BoundaryOrder.lean`, `snapNucleusTop` is in
+`ZeroParadox/Ordinal/SnapMetaLattice.lean`). In `Ordinal` that value differs from the bottom role's
 occupant 0 (`epsilon0_ne_bot`, `epsilon0_ne_zero`). The floor endpoint is
 tied to the lattice chart's ⊥ (`floor_not_wellFounded`, axiom-free); the
 abstract `Phase` carrier is the illustrative toy form, with non-well-foundedness localized at the floor

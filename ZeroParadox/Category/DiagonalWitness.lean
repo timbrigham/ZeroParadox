@@ -50,11 +50,11 @@ theorem no_witnessRel_of_admissible_fpf {β : Type*} {M : (β → β) → Prop}
   exact hgf b hb
 
 -- Statement: with literal equality the computable endomaps of codes carry no relativized witness:
---   `fun c => Code.pair c c` is computable and fixes no code.
+--   `fun c => Code.pair c c` is computable and fixes no code (`code_pair_diag_fixedPointFree`,
+--   `ZeroParadox/Category/Lawvere.lean`).
 example : ¬ HasWitnessRel Nat.Partrec.Code Computable :=
   no_witnessRel_of_admissible_fpf (g := fun c => Nat.Partrec.Code.pair c c)
-    (Nat.Partrec.Code.primrec₂_pair.comp Primrec.id Primrec.id).to_comp
-    (fun c h => by have := congrArg sizeOf h; simp at this)
+    code_pair_diag_fixedPointFree.1 code_pair_diag_fixedPointFree.2
 
 /-- **Antitone in the admissible class (the topology spine).** Shrinking the admissible endomap class
     can only help the witness. So `{M | HasWitnessRel β M}` is downward-closed in `⊆` — a lower set /

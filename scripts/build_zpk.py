@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-K: Computational Grounding of Self-Reference PDF Builder
-Version 1.27 | October 2026
+Version 1.31 | November 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.27'
+VERSION = '1.31'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -433,7 +433,9 @@ def build():
     E.append(body(
         'The Kleene.lean § VIII and Disjunctive.lean declarations cited in Section I.III and '
         'Section VI are not in that table. Their #print axioms lines are in those two files\' '
-        'PurityCheck sections, and where Classical.choice enters selfref_universal_exists is recorded in '
+        'PurityCheck sections; those of kleene_cf and selfref_universal_exists_enc are in the '
+        'PurityCheck sections of ZeroParadox/Computability/KleeneChoiceFree.lean and '
+        'ZeroParadox/Computability/UniversalChoiceFree.lean. Where Classical.choice enters selfref_universal_exists is recorded in '
         'ZeroParadox/Computability/Kleene.md § VIII, measured 2026-10-04.'))
     E.append(body(
         'ZP-J T-EXEC and all its corollaries remain axiom-free. Classical.choice is not '
@@ -450,8 +452,11 @@ def build():
             'propext, Classical.choice and Quot.sound (2026-10-04), and so does the statement of '
             'Rogers\' theorem, ∀ f, Computable f → ∃ c, eval (f c) = eval c. So every proof of '
             'either, as stated, carries the triple. Where it enters each statement is recorded in '
-            'ZeroParadox/Computability/Kleene.md § VIII. Whether a restated, choice-free statement '
-            'has a choice-free proof is UNCLASSIFIED (Section VI.IV).',
+            'ZeroParadox/Computability/Kleene.md § VIII. A restatement of Kleene\'s form whose '
+            'statement and proof are both choice-free, for a transformation given as a code rather '
+            'than as a Partrec₂ function, is kleene_cf (ZeroParadox/Computability/KleeneChoiceFree.lean, '
+            'propext and Quot.sound only; the Open Items Register below); Rogers\' form has no such '
+            'restatement in this corpus.',
             'The MachinePhase instance (§ V) picks botCode with Classical.choose from '
             'computational_quine_exists, which is what makes machinePhaseKleene noncomputable. A '
             'computable instance with the constant code Code.const 0 also exists (the example after '
@@ -543,7 +548,11 @@ def build():
     E.append(body(
         'ZP-E\'s DA-1 section previously carried the designation "Outside Lean Scope" with '
         'three justifications: Path 1 requires ZF+AFA, which ZP-E held incompatible with Lean\'s CIC/MLTT; '
-        'Path 3 requires Kolmogorov complexity (uncomputable, absent from Mathlib); Path 2 '
+        'Path 3 requires Kolmogorov complexity (it is uncomputable, and that alone does not keep it '
+        'out of Lean, where a noncomputable definition is allowed; no formalization of it was located in '
+        'the pinned Mathlib as of 2026-10-04, searched as recorded in '
+        'ZeroParadox/Information/Disjunctive.md, and Lean developments outside Mathlib that define it '
+        'are named at the ZPSurprisal entry of LEAN_CUSTOM_REGISTRY.md); Path 2 '
         'requires a step from unbounded surprisal to executing, which ZP-E names a bridge '
         'principle of its own, a missing principle and not a missing proof.'))
     E.append(body(
@@ -559,8 +568,8 @@ def build():
         'supplied at instantiation, not a second independent proof — and the condition it '
         'requires, IsComputationalQuine, is a periodicity condition that a constant code '
         'satisfies trivially. The Kolmogorov reading ("no shorter program is prior to ⊥") has '
-        'no formal content in ZP-K: Kolmogorov complexity is uncomputable and absent from the '
-        'development. Path 3 therefore derives nothing here: in ZP-E it bears on DA-1\'s '
+        'no formal content in ZP-K: Kolmogorov complexity is not formalized in this corpus (a scope '
+        'decision, recorded at the ZPSurprisal entry of LEAN_CUSTOM_REGISTRY.md). Path 3 therefore derives nothing here: in ZP-E it bears on DA-1\'s '
         'precondition and does not derive executing from incompressibility, and that '
         'precondition is what the occurrence commitment asserts.'))
     E.append(body(
@@ -656,7 +665,9 @@ def build():
             'universal code on a channel e + 1.',
             'Reading: replicas share everything but the address. Incompressibility is a property of '
             'each instance, and the next instance adds only its address. That is a claim about '
-            'relative complexity, and it stays a reading while Kolmogorov complexity is not in Lean.',
+            'relative complexity, and it stays a reading while Kolmogorov complexity is not formalized '
+            'in this corpus (a scope decision, recorded at the ZPSurprisal entry of '
+            'LEAN_CUSTOM_REGISTRY.md, which also names Lean developments outside Mathlib that define it).',
             'Lean: ZeroParadox.selfPrints_universal_address. '
             'Purity: propext, Classical.choice, Quot.sound (measured 2026-10-04).',
         ]
@@ -697,11 +708,10 @@ def build():
         'measured: selfref_universal_exists carries Classical.choice, and so does its statement, '
         'through Mathlib\'s numbering of codes (Denumerable Code, reached through ofNatCode); '
         'restated with encodeCode for the Gödel number and the channel of code d written '
-        'Nat.pair (encodeCode d + 1) n, the statement is axiom-free, and no proof of the restated form '
-        'without choice was found. ZeroParadox/Computability/Kleene.md § VIII records the '
-        'measurement (2026-10-04) and what the route lacked as located then. Every proof of the '
-        'statement as written carries choice; whether the restated statement has a choice-free '
-        'proof is UNCLASSIFIED.'))
+        'Nat.pair (encodeCode d + 1) n, the statement is axiom-free, and it has a proof at '
+        'propext and Quot.sound only, selfref_universal_exists_enc '
+        '(ZeroParadox/Computability/UniversalChoiceFree.lean). ZeroParadox/Computability/Kleene.md '
+        '§ VIII records the measurements. Every proof of the statement as written carries choice.'))
 
     E.append(Paragraph('V. The Zero Tape: Reference and Self', S['h2']))
     E.append(body(
@@ -782,7 +792,7 @@ def build():
         ['selfref_universal_exists, selfref_universal_infinite',
          'fixed_point₂ (Mathlib) + selfPrintOrDelegate_partrec; fixed_points_infinite',
          'propext, Classical.choice, Quot.sound (measured 2026-10-04), carried by the statement; '
-         'restated form UNCLASSIFIED, Kleene.md § VIII',
+         'restated form proved without choice, selfref_universal_exists_enc (ZeroParadox/Computability/Kleene.md § VIII)',
          'Lean ✓ — existence of self-printing universal codes; nothing says a code is run'],
         ['selfprints_behaviour_injective',
          'SelfPrints at channel 0 + Encodable.encode_injective',
@@ -868,16 +878,19 @@ def build():
          'The 2-adic model from ZP-B (Q₂ structure) has not been given a KleeneStructure '
          'instance. This is a natural extension but not required for T-SNAP or DA-1.'],
         ['Choice-free recursion theorem',
-         'OPEN — measured negative, 2026-10-04',
+         'CLOSED for Kleene\'s form (kleene_cf) and the channel restatement '
+         '(selfref_universal_exists_enc); Rogers\' form not restated',
          'The statement of selfref_universal_exists carries Classical.choice through Mathlib\'s '
-         'numbering of codes (Denumerable Code); restated with encodeCode for the Gödel number and '
-         'the channel of code d written Nat.pair (encodeCode d + 1) n, it is axiom-free, and no '
-         'proof of the restated form without choice was found. What the route lacked, as located '
-         'then, is recorded in ZeroParadox/Computability/Kleene.md § VIII. Every proof of the '
-         'statement as written carries choice; whether the restated form has a choice-free proof '
-         'is UNCLASSIFIED.'],
+         'numbering of codes (Denumerable Code), so every proof of it as written carries choice. '
+         'Restated with encodeCode for the Gödel number and the channel of code d written '
+         'Nat.pair (encodeCode d + 1) n, it is axiom-free, and selfref_universal_exists_enc '
+         '(ZeroParadox/Computability/UniversalChoiceFree.lean) proves it at propext and Quot.sound '
+         'only. The recursion theorem itself, for a transformation given as a code, is kleene_cf '
+         '(ZeroParadox/Computability/KleeneChoiceFree.lean), at the same footprint. Rogers\' form, '
+         '∀ f, Computable f → ∃ c, eval (f c) = eval c, has no choice-free restatement in this '
+         'corpus. The record is ZeroParadox/Computability/Kleene.md § VIII.'],
         ['Martin-Löf randomness ⇒ disjunctive',
-         'OPEN — not in Lean',
+         'OPEN — not formalized in this corpus',
          'Standard theory: a Martin-Löf random sequence is disjunctive, and by the Levin–Schnorr '
          'theorem Martin-Löf randomness is incompressibility of every prefix, K(first n bits of x) ≥ '
          'n − c for some constant c and every n, with K the prefix-free complexity (Franklin and '
@@ -886,7 +899,10 @@ def build():
          'p. 15, crediting Martin-Löf; Martin-Löf 1971, Theorem 1, proves the form conditional on '
          'the length n). Martin-Löf randomness and '
          'Kolmogorov complexity are not located in the Mathlib pin as of 2026-10-04 (search record '
-         'in Disjunctive.md). Until this bridge is formalised, the framework\'s commitment that the '
+         'in ZeroParadox/Information/Disjunctive.md). Outside Mathlib, one development named at the '
+         'ZPSurprisal entry of LEAN_CUSTOM_REGISTRY.md defines Martin-Löf randomness and proves the '
+         'Levin–Schnorr theorem; a proof there that a Martin-Löf random sequence is disjunctive was '
+         'not located as of 2026-11-01 (the search is recorded at that entry). Until this bridge is formalised, the framework\'s commitment that the '
          'occupant of its ⊥ role, ⊥ of a ZPSemilattice, read as a tape, is maximally complex reaches '
          'Disjunctive (Section VI.I) only as a reading.'],
     ]

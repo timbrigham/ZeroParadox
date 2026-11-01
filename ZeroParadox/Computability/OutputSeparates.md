@@ -11,8 +11,7 @@ the declarations, the Engineer's Take and the per-declaration glosses.
 the corpus already had.
 
 **The governing result — Rutten, *Universal coalgebra: a theory of systems*, TCS 249 (2000), Example
-10.2(5), printed p. 44** (`.claude-local/papers/rutten_universal_coalgebra_2000.pdf`; Rutten credits it
-to his [52], Manes & Arbib 1986): for `F(S) = A × S^B` the final system is `A^{B*}`. A polynomial
+10.2(5), printed p. 44** (Rutten credits it to his [52], Manes & Arbib 1986): for `F(S) = A × S^B` the final system is `A^{B*}`. A polynomial
 functor `⟨A, fun _ => B⟩` is exactly that `F`, so its final coalgebra has `|A|^{|B*|}` elements — **a
 single point iff `|A| = 1`, for every `B` whatsoever.** The head type decides; the arity `B` is
 irrelevant to whether the final coalgebra is a single point.

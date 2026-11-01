@@ -121,12 +121,13 @@ ZPC characterizes it as infinite accumulation: ∑ I(X_k → X_{k+1}) diverges a
 sequence approaching 0 (t2_diverges). These are compatible: domain-absence is strictly
 stronger than divergence — if infinite accumulation is required to reach 0, no finite
 morphism can accomplish it, which is exactly hom(X, 0) = ∅. Both sides are independently
-derived. Their joint derivability closes OQ-G4. -/
+derived. That both hold together (a conjunction, not a derivation of one from the other) closes OQ-G4. -/
 
-/-- T-H2: Both singularity characterizations are jointly derivable.
+/-- T-H2: Both singularity characterizations hold together.
     Part I (ZPG side): hom(X, 0) = ∅ for any X not isomorphic to 0 — domain-absent.
     Part II (ZPC side): accumulated surprisal along sequences approaching 0 diverges.
-    The conjunction establishes compatibility: same structural obstruction, two vantages. -/
+    `Statement:` a pair `⟨t3_unreachability X hne, t2_diverges⟩`, not a joint derivation: Part II
+    mentions none of `C`, `X` or the initial object, so neither conjunct is derived from the other. -/
 theorem th2_singularity_compatibility {C : Type*} [Category C] [zpcat : ZPCategory C]
     (X : C) (hne : IsEmpty (X ≅ zpcat.zpInitial)) :
     IsEmpty (X ⟶ zpcat.zpInitial) ∧

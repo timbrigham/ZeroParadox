@@ -1,18 +1,18 @@
 # ChoicePurityInvariant — ride-along documentation
 
-Moved from `ZeroParadox/Computability/ChoicePurityInvariant.lean`. ⚠ **This content was GRANDFATHERED — it was carried in an accepted-defect baseline, which means it was let through UNEXAMINED. Moving it changes that by exactly nothing.** Its claims are unverified until a claim review says otherwise.
+Moved from `ZeroParadox/Computability/ChoicePurityInvariant.lean` on 2026-10-13. ⚠ **At the move this content was GRANDFATHERED — it was carried in an accepted-defect baseline, which means it was let through UNEXAMINED, and moving it changed that by exactly nothing.** The text has been edited since the move; this banner records its state on 2026-10-13 and does not record whether any review has taken place since.
 
 In the sections below, "this file" and "here" refer to
 `ZeroParadox/Computability/ChoicePurityInvariant.lean`.
 
 ## The honest answer, and what the Lean witnesses
 
-A proposition about a proof cannot see that proof's axiom footprint: a predicate on the proofs of one
-proposition takes the same value at every proof (proof irrelevance; measured 2026-10-14 by the `example`
-just before this file's `PurityCheck` section, which closes by `Iff.rfl`), so no proposition about the
-proof can say "this proof term omits `Classical.choice`"; so "μ is choice-free" cannot be made
-*directly* load-bearing in a statement; the footprint is read at the meta level (`#print axioms`), not
-by a proposition about the proof. The only way to put constructive content IN the statement is to
+A proposition about a proof cannot see that proof's axiom footprint. Two facts combine here. First, a
+predicate on the proofs of one proposition takes the same value at every proof (proof irrelevance;
+measured 2026-10-14 by the `example` just before this file's `PurityCheck` section, which closes by
+`Iff.rfl`), so no such predicate separates a proof that uses `Classical.choice` from one that does not.
+Second, the footprint is computed at the meta level, by `#print axioms`, outside the statement
+language. Together they are why no statement here carries "μ is choice-free" *directly*. The only way to put constructive content IN the statement is to
 exhibit the μ-witness through a genuinely constructive proxy. That is what this file does, and it is the load-bearing new
 content over `fix_isEmpty`:
 
@@ -74,7 +74,8 @@ content over `fix_isEmpty`:
 The bundle `root_purity_split` packages both honest halves: the μ-witness is propositionally derivable
 from a purely structural eliminator AND the ν-inhabitant is a concrete corecursion term, in one
 statement. The *content* that is genuinely new is `w_isEmpty` / `fix_isEmpty_constructive`: a μ-witness
-inhabiting the constructive (choice-and-propext-free, then choice-free) namespace, derived without any
+inhabiting the constructive namespace — both recorded with no axioms at all, not even `propext` or
+`Quot.sound` (`ZeroParadox/Computability/ChoicePurityInvariant.lean`, `PurityCheck`) — derived without any
 choice-dependent or quotient-quotient-collapse lemma.
 
 ## Formal Overview

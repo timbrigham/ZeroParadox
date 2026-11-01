@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-L: Incomputability Convergence PDF Builder
-Version 1.30 | October 2026
+Version 1.32 | November 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.30'
+VERSION = '1.32'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -690,7 +690,9 @@ def build():
             'program codes (the Denumerable Code instance; ZeroParadox/Computability/Kleene.md '
             '§ VIII). ZP-K\'s machinePhaseKleene also picks botCode with Classical.choose, which is '
             'what makes that instance noncomputable.',
-            'Zero sorry in Gentzen.lean.',
+            'The footprints listed here are copies; to re-measure one, run #print axioms on the named '
+            'declaration. ZeroParadox/Ordinal/Gentzen.lean, this document\'s own Lean file, prints '
+            'those of the results it holds.',
         ]
     ))
     E.append(sp(6))

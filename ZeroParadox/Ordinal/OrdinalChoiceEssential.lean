@@ -193,25 +193,30 @@ example (H : ∀ (α β : Type) (r : α → α → Prop) (s : β → β → Prop
       · exact Or.inl (Ordinal.type_le_iff.mpr h)
       · exact Or.inr (Ordinal.type_le_iff.mpr h)
 
--- `Statement:` the same totality respelled over the bare `le` relation of `Ordinal.partialOrder`
--- (no instance term) is, by `rfl`, the proposition `∀ a b : Ordinal.{0}, a ≤ b ∨ b ≤ a`.
--- Reading: "written through that instance term" above is about the TERM AS WRITTEN;
--- this respelling's own statement measures `[propext, Quot.sound]` (statement control, 2026-10-08).
-example : let ordLe : Ordinal.{0} → Ordinal.{0} → Prop := fun a b =>
-      (Quotient.liftOn₂ a b (fun ⟨_, r, _⟩ ⟨_, s, _⟩ => Nonempty (r ≼i s))
-        fun _ _ _ _ ⟨f⟩ ⟨g⟩ => propext
-          ⟨fun ⟨h⟩ => ⟨f.symm.toInitialSeg.trans <| h.trans g.toInitialSeg⟩, fun ⟨h⟩ =>
-            ⟨f.toInitialSeg.trans <| h.trans g.symm.toInitialSeg⟩⟩)
-    (∀ a b, ordLe a b ∨ ordLe b a) = (∀ a b : Ordinal.{0}, a ≤ b ∨ b ≤ a) := rfl
+/-- `Statement:` totality of `≤` on `Ordinal.{0}` as Mathlib spells it; the statement control. -/
+def ordTotalAsWritten : Prop := ∀ a b : Ordinal.{0}, a ≤ b ∨ b ≤ a
 
--- `Statement:` and that respelled totality implies excluded middle, by `em_of_wellOrder_comparable`.
-example : let ordLe : Ordinal.{0} → Ordinal.{0} → Prop := fun a b =>
+/-- `Statement:` totality of `≤` on `Ordinal.{0}`, respelled over the bare `le` relation of
+`Ordinal.partialOrder` (the `Quotient.liftOn₂` of `Nonempty (r ≼i s)`), with no instance term.
+Named so that its own footprint can be printed: the purity block below measures this statement,
+where an anonymous `example` has no name for `#print axioms` to take. -/
+def ordTotalRespelled : Prop :=
+  let ordLe : Ordinal.{0} → Ordinal.{0} → Prop := fun a b =>
       (Quotient.liftOn₂ a b (fun ⟨_, r, _⟩ ⟨_, s, _⟩ => Nonempty (r ≼i s))
         fun _ _ _ _ ⟨f⟩ ⟨g⟩ => propext
           ⟨fun ⟨h⟩ => ⟨f.symm.toInitialSeg.trans <| h.trans g.toInitialSeg⟩, fun ⟨h⟩ =>
             ⟨f.toInitialSeg.trans <| h.trans g.symm.toInitialSeg⟩⟩)
-    (∀ a b, ordLe a b ∨ ordLe b a) → ExcludedMiddle :=
-  fun h => em_of_wellOrder_comparable fun _ _ r s _ _ => h (Ordinal.type r) (Ordinal.type s)
+  ∀ a b, ordLe a b ∨ ordLe b a
+
+-- `Statement:` the respelling is, by `rfl`, the proposition `∀ a b : Ordinal.{0}, a ≤ b ∨ b ≤ a`.
+-- Reading: "written through that instance term" above is about the TERM AS WRITTEN; the two
+-- spellings are one proposition, and only the first mentions the instance.
+example : ordTotalRespelled = ordTotalAsWritten := rfl
+
+/-- `Statement:` the respelled totality implies excluded middle, by `em_of_wellOrder_comparable`.
+Its footprint, and that of `ordTotalRespelled`, are printed in the purity block below. -/
+theorem em_of_ordTotalRespelled (h : ordTotalRespelled) : ExcludedMiddle :=
+  em_of_wellOrder_comparable fun _ _ r s _ _ => h (Ordinal.type r) (Ordinal.type s)
 
 end ZeroParadox
 
@@ -237,6 +242,12 @@ open ZeroParadox
 -- § III, the contrast. Same element; only the second mentions the order instance.
 #print axioms order_footprint_eq
 #print axioms order_footprint_le
+
+-- § III, the statement control: the same proposition in its two spellings, statements alone, then
+-- the respelling's implication to excluded middle.
+#print axioms ordTotalAsWritten
+#print axioms ordTotalRespelled
+#print axioms em_of_ordTotalRespelled
 
 -- The § III trace, measured rather than asserted.
 -- FIRST: the type itself, which carries NO choice. This one line is the load-bearing measurement

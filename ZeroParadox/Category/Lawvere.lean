@@ -113,12 +113,23 @@ theorem q2_no_witness : ¬ HasLawvereWitness ℚ_[2] :=
     "endomap" means *computable*, and `Nat.Partrec.Code.fixed_point` gives every such map a fixed
     point **up to `eval`**.
     ⚠ The qualifier is load-bearing: the literal claim is FALSE here too, since
-    `fun c => Code.pair c c` is total, computable, and returns its own input for no `c`. The escape
+    `fun c => Code.pair c c` is total, computable, and returns its own input for no `c`
+    (`code_pair_diag_fixedPointFree`, below). The escape
     restricts which MORPHISMS exist, not which codomain `eval` lands in
     (`no_computable_evalFixedPointFree`). Argument: `ZeroParadox/Category/Lawvere.md`. -/
 
+/-- `Statement:` the diagonal pairing `fun c => Code.pair c c` is computable, and fixes no code
+    (`Code.pair c c` is strictly larger than `c` in `sizeOf`; in Gödel numbers the same gap is
+    Mathlib's `Nat.Partrec.Code.encode_lt_pair`). The named witness that a literal
+    fixed point fails in the effective category; cited by name from the sites that state it. -/
+theorem code_pair_diag_fixedPointFree :
+    Computable (fun c : Nat.Partrec.Code => Nat.Partrec.Code.pair c c) ∧
+      ∀ c : Nat.Partrec.Code, Nat.Partrec.Code.pair c c ≠ c :=
+  ⟨(Nat.Partrec.Code.primrec₂_pair.comp Primrec.id Primrec.id).to_comp,
+   fun c h => by have := congrArg sizeOf h; simp at this⟩
+
 /-- `Statement:` a fixed point **up to `eval`**, not a literal one (Rogers / Kleene).
-    ⚠ `fun c => Code.pair c c` is a total computable endomap fixing no `c`; the escape is fewer
+    ⚠ No literal one in general (`code_pair_diag_fixedPointFree`); the escape is fewer
     MORPHISMS, not a different codomain (`no_computable_evalFixedPointFree`, § V). -/
 theorem computability_face_fixedPoint {f : Nat.Partrec.Code → Nat.Partrec.Code} (hf : Computable f) :
     ∃ c, Nat.Partrec.Code.eval (f c) = Nat.Partrec.Code.eval c :=
@@ -142,5 +153,6 @@ open ZeroParadox
 #print axioms no_witness_of_nontrivial
 #print axioms nontrivial_lattice_no_witness
 #print axioms q2_no_witness
+#print axioms code_pair_diag_fixedPointFree
 #print axioms computability_face_fixedPoint
 end PurityCheck

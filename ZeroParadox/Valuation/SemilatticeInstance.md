@@ -4,8 +4,15 @@ Ride-along companion to `ZeroParadox/Valuation/SemilatticeInstance.lean`.
 
 ## Theorem T-IZ, stated exactly
 
-Every maximal ascending chain in the Zero Paradox framework is a Cauchy sequence that
-**converges to 0 in Q₂**. That is the whole of what is proved about the chain.
+A sequence `S : ℕ → Q₂` with `‖Sₙ‖ ≤ 2⁻ⁿ` **converges to 0 in Q₂** (`t_iz_cauchy`, whose
+conclusion is the convergence; Cauchy follows from it; `t_inside_zero` is the same with an unused
+guard `S 0 ≠ 0`). That convergence is the whole of what `t_iz_cauchy` states; it is the first conjunct of
+`t_iz_complete`, the T-IZ that `CLAIMS.md` ratifies. In this file `S` is linked to a
+depth index `depths : ℕ → ℕ` (a strict state sequence in `ℕ`, in `h_strict_from_r1_t3`) only by the
+modelling hypothesis `IsDepthChain`, or its weaker form `TracksDepth`; no theorem in this file takes a
+chain in any other `ZPSemilattice`. `ZeroParadox/Valuation/ScaleRealization.lean` reaches strict
+valuation ascent along a realized orbit `n ↦ ρ (scale^[n] x)` from equivariance and a nonzero start
+`ρ x ≠ 0` (`realized_strict`).
 
 ⚠ **Two further readings, both commitments, neither part of the statement:**
 

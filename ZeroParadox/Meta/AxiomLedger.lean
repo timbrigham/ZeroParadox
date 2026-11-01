@@ -13,8 +13,8 @@ This file is a gate on what we claim about which axioms our proofs use. We make 
 
 `Statement:` elaborating this file fails unless every row below holds when recomputed by the
 auditor of `GuardianEngineAI/corpus` (vendored in `ZeroParadox/Vendored/CorpusAudit/`), and unless
-every theorem of `ZeroParadox/Computability/KleeneChoiceFree.lean`, of
-`ZeroParadox/Computability/UniversalChoiceFree.lean` and of this file has a row.
+every non-auxiliary theorem (`Corpus.Audit.isAux` exempts by spelling) of
+`ZeroParadox/Computability/KleeneChoiceFree.lean`, `UniversalChoiceFree.lean` and this file has a row.
 -/
 
 open Lean
@@ -110,8 +110,9 @@ def replacements : List Corpus.Audit.Row :=
 -- Reading: a row compares two supplied proofs of one statement. It does not show that our
 -- profile is the least possible, nor that the predecessor's statement needs `Classical.choice`.
 
-/-- `Statement:` declared profiles for `fpCF`, every other theorem of `KleeneChoiceFree.lean`
-that replaces no Mathlib lemma, and every theorem of `UniversalChoiceFree.lean`. -/
+/-- `Statement:` declared profiles for every non-auxiliary theorem of `KleeneChoiceFree.lean` that
+replaces no Mathlib lemma, every non-auxiliary theorem of `UniversalChoiceFree.lean`, and the `def`s `fpCF`, `ofNatCodeCF` and
+`cfFinBound`, which coverage (theorems only) does not require. -/
 def profiles : List Corpus.Audit.ProfileRow :=
   let ours := ["Quot.sound", "propext"]
   [ ⟨`ZeroParadox.fpCF, []⟩,
@@ -303,6 +304,7 @@ def profiles : List Corpus.Audit.ProfileRow :=
     ⟨`ZeroParadox.encodeCode_lt_pair_left, ours⟩,
     ⟨`ZeroParadox.lt_encodeCode_selfUniv, ours⟩,
     ⟨`ZeroParadox.selfref_universal_unbounded_cf, ours⟩,
+    ⟨`ZeroParadox.cfFinBound, ["propext"]⟩,
     ⟨`ZeroParadox.cf_le_finBound, ["propext"]⟩,
     ⟨`ZeroParadox.selfref_universal_infinite_cf, ours⟩,
     ⟨`ZeroParadox.zero_selfPrints_not_universal, ours⟩,

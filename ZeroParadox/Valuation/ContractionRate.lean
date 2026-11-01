@@ -131,7 +131,7 @@ theorem contraction_orbit_tendsto_zero {c : Q₂} (hc : ‖c‖ < 1) (x : Q₂) 
     tendsto_pow_atTop_nhds_zero_of_lt_one (norm_nonneg _) hc
   simpa using hbase.mul_const ‖x‖
 
-/-! ### Non-attractor half (GO): unit multipliers preserve norm, so they are NOT attractors -/
+/-! ### Non-attractor half (GO): norm-one multipliers preserve norm, so they are NOT attractors -/
 
 /-- Non-attractor for units (routine normed-multiplicativity). For a 2-adic unit `u` (`‖u‖ = 1`)
     and any starting point `x`, the orbit's norm is constant: `‖uⁿ·x‖ = ‖x‖` for all `n`. Used

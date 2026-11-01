@@ -65,8 +65,8 @@ theorem registered_discriminator_exists {α : Type*} :
 (de Jong 2023, Def. 15) — the type of truth values, so `PoleDiscriminator` is not about partiality;
 it says a `Bool` test decides EVERY proposition. Principle: the inert-packaging `example` below is,
 in topos vocabulary, **the subobject classifier Ω is decidable** (`Ω ≅ 1 + 1`). ⚠ There that is
-EQUIVALENT to excluded middle; here only the forward leg is proved, because a `Bool` decider is DATA
-— the `Prop`/`Type` fence, stated in `ZeroParadox/Category/ExcludedMiddleBridge.lean`.
+EQUIVALENT to excluded middle; here only the forward leg is proved, and a candidate reason is that a
+`Bool` decider is DATA — the `Prop`/`Type` fence, stated in `ZeroParadox/Category/ExcludedMiddleBridge.lean`.
 `Option`/`Part` are LIFTINGS of dominances, not dominances. Sources, attribution and scope in the
 ride-along `ZeroParadox/Valuation/PoleRegistration.md`. -/
 
@@ -99,8 +99,8 @@ example : PoleDiscriminator → ChoiceFragment := by
 -- Statement: and back again, so the two hypotheses are inter-derivable.
 -- The content is not the inter-derivability — both sides are theorems here — it is that BOTH LEGS
 -- ARE CHOICE-FREE: this one measures `[propext, Quot.sound]`, and it uses no excluded middle at
--- all. The two predicates of `em_of_choiceFragment` are each constructively inhabited, so `decide (ch A = ch B)`
--- is already data and the chooser alone supplies it.
+-- all. `decide (ch A = ch B)` is data because `Bool` has decidable equality; the chooser supplies
+-- `ch A` and `ch B` on the predicates `b = true ∨ x.Dom` and `b = false ∨ x.Dom`, each inhabited.
 example : ChoiceFragment → PoleDiscriminator := by
   intro h
   obtain ⟨ch, hch⟩ := h
@@ -127,8 +127,8 @@ example : ChoiceFragment → PoleDiscriminator := by
 theorem dom_mk (p : Prop) (f : p → Unit) : (Part.mk p f).Dom = p := rfl
 
 /-- `Statement:` a uniform discriminator on the Sierpiński domain yields excluded middle.
-    `Reading:` CITED, not claimed — de Jong 2023 § 2.3, and Proposition 63 with Proposition 62,
-    which state this taboo at S itself. Local only in not routing through
+    `Reading:` CITED, not claimed — de Jong 2023 § 2.3, and Proposition 63 with Proposition 62
+    (arXiv v5 numbering), which state this taboo at S itself. Local only in not routing through
     Diaconescu, a fact about proof STRUCTURE: the `example`s above show the hypothesis
     inter-derivable with `ChoiceFragment`.
     ⚠ The conclusion is `Prop`-valued, NOT `∀ p, Decidable p` — `Prop`/`Type` stratification. -/
@@ -149,9 +149,9 @@ theorem poleDiscriminator_of_classical : PoleDiscriminator := by
 
 de Jong 2023 § 2.3 has § II's taboo. That which END the discriminator sits on decides which taboo you
 get is prior art in constructive/predicative domain theory, NOT this framework's; § II proves one
-instance of the top-end half. Closest: **Proposition 63** with 62 — since `⊤ ⊑ x` IS `x.Dom` in
-`Part Unit`, they state exactly `em_of_poleDiscriminator`'s taboo; Proposition 22 is the BOTTOM end,
-yielding only the WEAK form. ⚠ That the ends are therefore DIFFERENT conditions does NOT follow from
+instance of the top-end half. Closest (arXiv v5 numbering): **Proposition 63** with 62 — since
+`⊤ ⊑ x` IS `x.Dom` in `Part Unit`, they state exactly `em_of_poleDiscriminator`'s taboo;
+Proposition 22 is the BOTTOM end, yielding the WEAK form. ⚠ That the ends are therefore DIFFERENT conditions does NOT follow from
 those results — the ride-along says why. Knapp 2020 supplies the `Option`/`Part` vocabulary; the
 weak-versus-full distinction is fenced in `ZeroParadox/Category/LawvereTaboo.lean`. Details:
 `ZeroParadox/Valuation/PoleRegistration.md`. -/

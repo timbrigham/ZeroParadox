@@ -27,13 +27,13 @@ stationary distribution in the probability simplex) in the bottom-diagram μ/ν 
 is a coordinate-order antichain (`simplex_antichain`), so the stationary
 point is neither order-least (μ) nor order-greatest (ν). This file asks whether *changing the ambient*
 from the order to the **dynamics** rescues a universal property: the stationary distribution is a
-*fixed point* of the Kleisli transfer action `μ ↦ μ.bind f`, and a **unique** fixed point of an
-endomorphism is a terminal-flavoured (ν / final-coalgebra) universal object. The GO conjecture was
+*fixed point* of the Kleisli transfer action `μ ↦ μ.bind f`; `Reading:` (no theorem or source) a
+**unique** fixed point is read as a terminal-flavoured (ν) universal object. The GO conjecture was
 that the fixed-point predicate is a *subsingleton* (unique) under the doubly-stochastic hypothesis
 already in scope (`MeanErgodic.DoublyStochastic`); the NO-GO obstruction was that doubly-stochastic
 is **not enough** for uniqueness — a **reducible** chain has a whole simplex of stationary
-distributions (one per communicating class), so #2 is a fixed *set*, not a fixed *point*, and resists
-any μ/ν placement.
+distributions (one vertex per essential (closed) communicating class: Levin–Peres 2nd ed., Ex. 1.14, Prop.
+1.29), so #2 is a fixed *set*, not a fixed *point*, and resists any μ/ν placement.
 
 **What the Lean decides: the NO-GO is the truth, sharply — witnessed by a genuinely reducible chain.**
 The load-bearing theorem `markov_node_no_universal_property` exhibits a *concrete* doubly-stochastic

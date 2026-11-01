@@ -39,8 +39,8 @@ and is not invariant under equivalence); what separates the members is proved pr
 domain bottom is the categorical bottom of its own real Mathlib category. Cite the fields, never the bundle's existence. -/
 
 /-- The MC-1 correspondence over the real domain categories: the snap floor is the categorical
-    bottom (initial object / inverse limit) of each domain's genuine Mathlib category, and the
-    information bottom admits no return morphism. Bundles the three real-category realizations.
+    bottom (the initial object) of F_D's and F_C's genuine Mathlib categories; F_B's floor is pinned by
+    a set equation in ℚ₂ (`top_limit`, not a limit in `TopCat`); and the information bottom admits no return morphism. Bundles the three real-category realizations.
     This is the correspondence half of MC-1; the literal cross-category identity is not asserted. -/
 structure MC1Correspondence : Type _ where
   /-- F_D: in `ModuleCat ℂ`, the snap floor `StateSpace 0` is the genuine initial (zero) object. -/
@@ -49,7 +49,8 @@ structure MC1Correspondence : Type _ where
   info_initial : Limits.IsInitial (fC_functor.obj 0)
   /-- F_C: AX-G2 realized — no stochastic map returns into the snap floor from a nonempty object. -/
   info_no_return : ∀ {n : ℕ}, 0 < n → IsEmpty (fC_functor.obj n ⟶ fC_functor.obj 0)
-  /-- F_B: in `TopCat`, the snap floor is the inverse limit of the clopen-ball system. -/
+  /-- F_B: the clopen balls `q2Ball n` of ℚ₂ intersect exactly in `{0}`. A set equation, not a limit
+      cone in `TopCat`. -/
   top_limit : (⋂ n, q2Ball n) = {(0 : Q₂)}
 
 /-- The witness: all three real-category realizations hold simultaneously. -/

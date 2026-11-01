@@ -338,7 +338,8 @@ theorem t_inside_zero
     (h_bound : ∀ n : ℕ, ‖S n‖ ≤ (2⁻¹ : ℝ) ^ n) :
     Filter.Tendsto S Filter.atTop (nhds 0) :=
   -- _h_start: semantic guard — chain begins away from 0 (unused in convergence proof)
-  -- h_bound: v₂(Sₙ) ≥ n — the ascending chain has unbounded valuation
+  -- h_bound: ‖Sₙ‖ ≤ 2⁻ⁿ, i.e. v₂(Sₙ) ≥ n — along the ℚ₂ sequence S the valuation climbs while the
+  -- norm falls; S is linked to a chain's depths only by IsDepthChain / TracksDepth
   -- Conjunction form: t_iz_complete (§ III-B); it does not link the limit to the ⊥ role.
   t_iz_cauchy S h_bound
 

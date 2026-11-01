@@ -67,16 +67,27 @@ theorem snapNucleus_epsilon0 : snapNucleus epsilonZero = epsilonZero :=
 theorem snapNucleus_bot_ne_bot : snapNucleus (⊥ : Ordinal) ≠ (⊥ : Ordinal) := by
   rw [snapNucleus_bot]; exact epsilon0_ne_bot
 
+/-- `Statement:` a nucleus on `Ordinal.{0}` exists, as a bare proposition (statement control). -/
+def snapNucleusNonemptyStatement : Prop := Nonempty (Nucleus Ordinal.{0})
+
+/-- `Statement:` `snapNucleus_bot_ne_bot`'s statement at universe 0, bare (statement control). -/
+def snapNucleusBotStatement : Prop := snapNucleus.{0} (⊥ : Ordinal.{0}) ≠ (⊥ : Ordinal.{0})
+
+example : snapNucleusNonemptyStatement := ⟨snapNucleus⟩
+example : snapNucleusBotStatement := snapNucleus_bot_ne_bot
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check
 
 The results inherit `Classical.choice` from Mathlib's `Ordinal` fixed-point theory (`nfp`, `epsilon`).
-**Status: STATEMENT-CARRIED** (`ZeroParadox/Category/ChoiceCannotBe.md`): each statement below, only
-assumed, already reports the choice (statement control, measured 2026-10-08), so no proof of these
-statements as written can drop it. The open question is a restatement on a notation carrier whose
-statements are choice-free; where the choice enters, and that question's current state, are in
-`ZeroParadox/Ordinal/SnapNucleus.md` § "Axiom footprint". -/
+**Status: STATEMENT-CARRIED** (`ZeroParadox/Category/ChoiceCannotBe.md`): the statements, with no proof
+attached, already carry the choice (the statement controls `snapNucleusNonemptyStatement` and
+`snapNucleusBotStatement`, printed below), so no proof of these statements as written can drop it. The
+remaining question is a restatement on a carrier whose statements are choice-free, with two readings: a
+defined one, in Lean on `E0Note`, and a derived one, on a well-founded
+carrier, not located as of 2026-10-13. Where the choice enters, both readings
+and the search record are in `ZeroParadox/Ordinal/SnapNucleus.md` § "Axiom footprint". -/
 
 section PurityCheck
 open ZeroParadox
@@ -84,4 +95,7 @@ open ZeroParadox
 #print axioms snapNucleus_bot
 #print axioms snapNucleus_epsilon0
 #print axioms snapNucleus_bot_ne_bot
+-- The statement controls: the statements alone.
+#print axioms snapNucleusNonemptyStatement
+#print axioms snapNucleusBotStatement
 end PurityCheck

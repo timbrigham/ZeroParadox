@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-P: The Fixed-Point Fork PDF Builder
-Version 1.26 | October 2026
+Version 1.27 | October 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.26'
+VERSION = '1.27'
 FIRST_RELEASED = 'June 2026'
 
 
@@ -388,7 +388,9 @@ def build():
             'is choice-free [propext, Quot.sound]; cofix_nonempty (&#957; inhabited) carries '
             'Classical.choice from the QPF corecursion machinery (the quotient layer).',
             'Core choice-free, realisation choice-carrying &#8212; the framework\'s standing '
-            'pattern. Zero sorry. Verified: lake build, August 2026.',
+            'pattern.',
+            'The footprints listed here are copies; the live record is the #print axioms output of '
+            'each named .lean file.',
         ]
     ))
     E.append(sp(6))

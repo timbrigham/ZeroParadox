@@ -104,16 +104,18 @@ on its own. Below ε₀ it is constantly ε₀; `epsilon_succ_eq_nfp` gives `nfp
 * **Normality is essential**: the implication fails for a non-normal operator.
 
 `Reading:` **INVARIANT** (conjectural) — the framework reads this as the ratified **"iterative bottoms"**
-picture: the rungs of the succession are bottoms *relative to their iteration*, **never ⊥ itself**, and
-⊥ sits at the base of the interval without being distinguished within it. The same **shape** is a
+picture: the rungs of the succession are bottoms *relative to their iteration*, **never ⊥ of
+`Ordinal`**, and ⊥ of `Ordinal` sits at the low end of `[0, ε₀]` without being distinguished
+within it. The same **shape** is a
 theorem in another carrier, `every_node_is_a_floor` (`ZeroParadox/Valuation/LocalFloor.lean`).
 
 ⚠ **SHAPE, never instance-of.** Different carriers, different mechanisms — self-similarity there, the
 absence of fixed points strictly below ε₀ here — and the two theorems conclude **different
 propositions**. `ℕ → Fin 2` is not `Ordinal`; only the moral is shared.
 
-⚠ **`ε₀ ≠ ⊥` is untouched bedrock** (`epsilon0_ne_bot`), and the ratified vocabulary exists precisely
-because the rungs are **not** ⊥. **Nothing here identifies any rung with ⊥.**
+⚠ **`ε₀ ≠ ⊥` in `Ordinal` is untouched bedrock** (`epsilon0_ne_bot`), and the ratified vocabulary
+exists precisely because the rungs are **not** ⊥ of `Ordinal`. **Nothing here identifies any rung
+with ⊥ of `Ordinal`**; a rung is ⊥ of its own up-set `Set.Ici rung`, which is a different carrier.
 
 ⚠ **"Iterative bottom" is the ratified term for the ITERATION sense.** Do not substitute "local bottom"
 *there* — that phrase is taken for the per-domain MC-1 family

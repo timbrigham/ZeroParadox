@@ -21,7 +21,13 @@ The central result (T-COMP) establishes (1) ↔ (2) ↔ (3) via T-EXEC. Its proo
 element those three pick out. **(4) is not a clause of that theorem** — it is present
 by typeclass requirement, as the class field `botCode_is_quine`. Reading (1)–(4)
 as naming the same structural role in four formal languages is the motivating commitment
-of the KleeneStructure typeclass; no field asserts it, and no theorem derives it. Note the two
+of the KleeneStructure typeclass; no field asserts it, and no theorem in this corpus derives it (not
+located as of 2026-11-01, searched as follows: `ZeroParadox/**/*.lean` for `botCode`, for
+`KleeneStructure`, and for "computational face" / "same structural"; no hit states a relation
+between `botCode` and `bot`). For a generic carrier `L` no Lean `=` between them typechecks, since
+`botCode` is a `Code` and `bot` an element of `L`; at `L := Code`, under an assumed instance (none is
+declared in this corpus), one does
+(`ZeroParadox/Computability/ComputationCannotBe.lean` § IV, the two `example`s). Note the two
 sides also differ in shape: (1)–(3) pick out a unique element, while the computational
 fixed points form an infinite family (§ VI).
 
@@ -57,7 +63,10 @@ ZP-J (T-EXEC: IsQuineAtom q ↔ q = ⊥, bot_self_mem).
 Mathlib: Nat.Partrec.Code.fixed_point₂ (Kleene's second recursion theorem).
 Mathlib: Nat.Partrec.Code.fixed_point (Rogers' fixed-point theorem).
 
-## Axiom footprint (measured 2026-10-09)
+## Axiom footprint
+
+This section's footprints were measured 2026-10-09 (§ VIII dates its own, 2026-10-04); the live record is
+the `PurityCheck` section of `ZeroParadox/Computability/Kleene.lean`.
 
 Not every proved theorem here carries `Classical.choice`: `encodeCode_self` has no axioms.
 A carried footprint is a fact about the statement or proof as written, never evidence that
@@ -196,7 +205,8 @@ importing this one.
   triple. Its instance `Primcodable (Code × ℕ)` is `Primcodable.prod` over
   `Primcodable.ofDenumerable Code`, and both `Primcodable.prod` and that instance's
   `Denumerable Code` argument, `Nat.Partrec.Code.instDenumerable`, measure the triple (the
-  `PurityCheck` section of `ZeroParadox/Computability/Kleene.lean`), while `Partrec` measures
+  `example` before the `PurityCheck` section of `ZeroParadox/Computability/Kleene.lean` checks the
+  route by `rfl`; that section prints the footprints), while `Partrec` measures
   `[propext]` and `Nat.Partrec` none. `exists_code`, `eval_part`,
   `eval_curry`, `primrec₂_curry` and `evaln` each carry it. Mathlib's other recursion theorem,
   `fixed_point : Computable f → ∃ c, eval (f c) = eval c` for `f : Code → Code`, avoids
@@ -274,8 +284,9 @@ control beside it shows that `Universal` carries the first half: `Code.zero` is 
 and not universal, and it disagrees with a self-printing universal code on a channel `e + 1`.
 `Reading:` replicas share everything but the address; the next instance adds only the address.
 That is a claim about relative complexity, and it stays a reading while Kolmogorov complexity is
-not in Lean (not located in the Mathlib pin as of 2026-10-04; search record in
-`ZeroParadox/Information/Disjunctive.md`).
+not formalized in this corpus, a scope decision (not located in the Mathlib pin as of 2026-10-04,
+search record in `ZeroParadox/Information/Disjunctive.md`; Lean developments outside Mathlib define
+it, named in the `ZPSurprisal` entry of `LEAN_CUSTOM_REGISTRY.md`).
 
 **Occurrence controls.** `Occurs` (`ZeroParadox/Computability/Occurrence.lean`) is
 `(eval c n).Dom` by `occurs_iff_halts`. `selfprints_occurs` and `zero_occurs` show it holding

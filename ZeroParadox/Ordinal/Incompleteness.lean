@@ -209,18 +209,18 @@ ZP-K established: ⊥ = c₀ is the unique Quine atom of MachinePhase
 and no execution. Reading c₀ as *the Kleene quine* is ZP-K's `KleeneStructure`
 commitment, not a theorem, and it is not a Lean `=`: a quine is a `Code` and c₀ is a
 `MachinePhase`, so no equation between them is well-formed. See ZP-K § II / § III.
-ZP-L established: **given** that the snap happens at ε₀, it happens **nowhere below** it. The
-same caution as the ZP-K sentence above applies here: `snap_unconditional` is named for its lack
-of a fixed-point hypothesis, not for lacking hypotheses — it takes `hε₀ : φ epsilonZero = c₁` as
-an argument, so the snap is assumed and its *minimality* is what is derived. ZP-L does not force
-the snap. (Corrected 2026-07-31; this line read "ε₀ forces the snap from c₀ to c₁".)
+ZP-L established, under `hmono`, `h0` (every tower stage sent to c₀) and `hε₀` (φ ε₀ = c₁), that φ
+sends nothing below ε₀ to c₁ (`snap_unconditional`, § II). The ZP-K caution applies here too:
+`snap_unconditional` is named for its lack of a fixed-point hypothesis, not for lacking hypotheses;
+it takes `hε₀` as an argument, so the snap is assumed and its *minimality* is derived. ZP-L does
+not force the snap.
 
 The triangle (the top node read under that commitment):
     c₀ = ⊥ (the Quine atom; read as the Kleene quine, ZP-K)
          ↕ snap at ε₀
     c₁     (snap state, ZP-L)
          ↕ snapEmbed
-    0 ∈ ℤ_[2] (2-adic limit of tower, ZP-L)
+    0 ∈ ℤ_[2] (limit of the tower's `cnfToZp2` images, ZP-L; the tower's supremum is ε₀)
 
 This section makes the full triangle formal.
 -/
@@ -249,18 +249,17 @@ theorem zpm_triangle :
    tower_converges_to_zero,
    snap_state_zp2_is_zero⟩
 
-/-! ## §IV. Shared Diagonalization Pattern
+/-! ## §IV. Two Fixed-Point Existentials
 
-Both the Kleene recursion theorem (ZP-K) and ε₀'s fixed-point property (ZP-L) follow
-the same diagonalization pattern: a self-referential operation has a fixed point.
+`both_fixed_points_exist` conjoins one existential over codes and one over ordinals. The code
+conjunct is a periodicity with period the code's Gödel number, met by any code that ignores its
+input (`Code.zero`, the `example` in `ZeroParadox/Ordinal/Epsilon0CannotBe.lean` § IV), so it is
+not diagonal content by itself; the ordinal conjunct is ε₀'s least-fixed-point face. Long form:
+`ZeroParadox/Ordinal/Incompleteness.md` § Remark R-M.1. -/
 
-  Kleene: ∃ c, ∀ n, eval c n = eval c (encode c + n)   [diagonal on codes]
-  ε₀:     ∃ α, ω^α = α ∧ (∀ β, ω^β = β → α ≤ β)       [diagonal on ordinals]
-
-This section records that both fixed points exist in the same formal context. -/
-
-/-- Both diagonalization patterns produce fixed points in their respective domains.
-    Kleene: periodic code (period = Gödel number). Ordinal: ε₀ = ω^ε₀, least such. -/
+/-- A conjunction of two fixed-point existentials, one over codes and one over ordinals.
+    Codes: some code is periodic with period its own Gödel number, a condition constant codes also
+    meet (§ IV). Ordinals: ε₀ = ω^ε₀, least such. -/
 theorem both_fixed_points_exist :
     (∃ c : Code, ∀ n, eval c n = eval c (Encodable.encode c + n)) ∧
     (∃ α : Ordinal, omega0 ^ α = α ∧
@@ -272,8 +271,7 @@ theorem both_fixed_points_exist :
 
 /-! ### Remark R-M.1: DA-1 Path 2 and the Limits of the Diagonalization Frame
 
-`both_fixed_points_exist` is a conjunction of two existentials: each diagonalization yields a
-fixed point in its own domain, and no equation between a `Code` and an `Ordinal` is well-formed.
+`both_fixed_points_exist` is a conjunction of two existentials, one per domain (§ IV), and no equation between a `Code` and an `Ordinal` is well-formed.
 Where L-INF stands relative to that schema, and how that differs from DA-1 Path 2:
 `ZeroParadox/Ordinal/Incompleteness.md` § Remark R-M.1. -/
 
@@ -283,6 +281,10 @@ end ZeroParadox
 section PurityCheck
 open ZeroParadox
 
+#print axioms snapEmbed_c0
+#print axioms snapEmbed_c1
+#print axioms snapEmbed_c0_val
+#print axioms snapEmbed_c1_dvd
 #print axioms snapEmbed_injective
 #print axioms snapEmbed_mul_morphism
 #print axioms hfp_from_epsilon_zero

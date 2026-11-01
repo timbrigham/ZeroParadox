@@ -76,8 +76,9 @@ end
 /-! ### § The canonical predicated difference — double negation generates the classical (Boolean) core
 
 The `example`s below: double negation `a ↦ aᶜᶜ` on a Heyting algebra is a closure whose fixed points,
-the regular elements, form a `BooleanAlgebra` (`Heyting.Regular`), so it generates classical logic, not
-choice. The Glivenko credit and the logic-versus-choice fence:
+the regular elements, form a `BooleanAlgebra` (`Heyting.Regular`): it generates classical logic. That
+it does not generate choice is a separate fence, not a consequence of these examples. The Glivenko
+credit and that fence:
 `ZeroParadox/Category/DifferenceGeneratesSystem.md`. No new declarations. -/
 
 section

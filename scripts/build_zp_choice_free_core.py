@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP Addendum: The Choice-Free Core
-Version 1.13 | October 2026
+Version 1.14 | October 2026
 Framework-wide note; reads after the Foreword.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.13'
+VERSION = '1.14'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard ──
@@ -75,7 +75,7 @@ def build():
         'used by the core results above. <b>And dependence is not necessity:</b> that those '
         'realizations <i>use</i> choice as written does not show the mathematics <i>requires</i> it. '
         'Several of their statements carry it as written (Section III), so no proof of those '
-        'statements can drop it; whether a restatement on a choice-free carrier holds is a '
+        'statements can drop it; whether a restatement on a carrier whose statements are choice-free holds is a '
         'separate question.'))
     E.append(hr())
 
@@ -250,15 +250,17 @@ def build():
             'that the whole framework is choice-free (it is not), nor that the analytic-layer choice '
             'is removable or necessary. Where a statement carries it as written (Section III), no '
             'proof of that statement can drop it and the open question is a restatement on a '
-            'choice-free carrier; elsewhere necessity is open. The fact surfaced here is the '
+            'carrier whose statements are choice-free (for the &#949;<sub>0</sub> results, its two '
+            'readings and the search record are in ZeroParadox/Ordinal/SnapNucleus.md, section Axiom '
+            'footprint); elsewhere necessity is open. The fact surfaced here is the '
             'verified one.',
         ]
     ))
     E.append(sp(6))
 
     E.append(Paragraph(
-        'Endnote: This is a framework-wide note, machine-verified as of October 2026 (lake build; '
-        'statement control measured 2026-10-08). The central '
+        'Endnote: This is a framework-wide note; the footprints it cites are copies, and the live '
+        'record is the #print axioms output of the files it names. The central '
         'theorem T-SNAP depends on no axioms; the conceptual core is free of the Axiom of Choice; '
         '`Classical.choice` appears mostly where the framework builds on Mathlib\'s classical analysis, '
         'order, and computability libraries, where several statements carry it as written (for '

@@ -19,10 +19,12 @@ defer to my AI assistant regarding the specifics of how the internals work.
 ---
 ## Formal Overview (AI-assisted)
 The Markov analog, on `Fin 2 → ℝ`, of `ZeroParadox/Valuation/ContractionRate.lean`'s p-adic contraction
-dichotomy; both halves are `markov_contraction_dichotomy`. Convergence covers `0 < a < 1`, starts on the
-probability line; the non-convergence half is one orbit of `swap = markovStep 1`, and the `example`
-after it is the other endpoint `a = 0`, where every orbit is constant. Prior art: Levin–Peres,
-*Markov Chains and Mixing Times*. -/
+dichotomy; both halves are `markov_contraction_dichotomy`. The convergence half covers `0 < a < 1` and
+starts on the probability line `v₀ 0 + v₀ 1 = 1` (the hypothesis `hv` of `markov_contraction_tendsto`).
+The non-convergence half is one orbit of `swap`, which is `markovStep 1`. The control `example` after
+`swap_orbit_not_convergent` is the other endpoint `a = 0`, where every orbit is constant. Prior art:
+Levin and Peres, *Markov Chains and Mixing Times*, 2nd ed., with contributions by E. L. Wilmer; the
+two-state chain is their Example 1.1, p. 3. -/
 
 namespace ZeroParadox
 
@@ -81,8 +83,10 @@ theorem coord_from_imb {v : Fin 2 → ℝ} {s : ℝ} (hs : v 0 + v 1 = s) :
 /-- **GO — the geometric Markov attractor.** For `0 < a < 1` (so `|1 - 2a| < 1`) and any
     start `v₀` on the probability line `v₀ 0 + v₀ 1 = 1`, the iteration `P_aᵏ v₀` converges to the
     uniform stationary vector `unif = ![1/2,1/2]`. The convergence is at the explicit geometric rate
-    `|1 - 2a|ᵏ` (carried by `markov_imbalance_pow` + `tendsto_pow…of_abs_lt_one`), so #2 is
-    a genuine geometric ν-attractor, structurally matching `ZeroParadox/Valuation/ContractionRate.lean`'s p-adic `c`-contraction. -/
+    `|1 - 2a|ᵏ` (carried by `markov_imbalance_pow` + `tendsto_pow…of_abs_lt_one`), so the uniform
+    vector is a geometric ν-attractor. `Reading:` its shape (a geometric rate toward one point) is
+    that of `ZeroParadox/Valuation/ContractionRate.lean`'s p-adic `c`-contraction; no map between the
+    two carriers is built here. -/
 theorem markov_contraction_tendsto {a : ℝ} (ha0 : 0 < a) (ha1 : a < 1)
     {v₀ : Fin 2 → ℝ} (hv : v₀ 0 + v₀ 1 = 1) :
     Tendsto (fun k => (markovStep a)^[k] v₀) atTop (nhds unif) := by
@@ -129,7 +133,8 @@ example : swap = markovStep 1 := by
 noncomputable def e0vec : Fin 2 → ℝ := ![1, 0]
 
 /-- The swap orbit is **periodic with period 2**: even iterates are `![1,0]`, odd are `![0,1]`.
-    This is the periodic structure at the spectral boundary `|λ₂| = 1`. -/
+    This is the swap kernel `a = 1`, where `λ₂ = 1 - 2a = -1`: zero absolute spectral gap, in the
+    sense of Levin and Peres, 2nd ed., § 12.2, p. 163, eq. (12.6). -/
 theorem swap_orbit_eq (k : ℕ) :
     swap^[k] e0vec = if Even k then (![1, 0] : Fin 2 → ℝ) else (![0, 1] : Fin 2 → ℝ) := by
   induction k with
@@ -151,7 +156,7 @@ theorem swap_orbit_coord0 (k : ℕ) :
 /-- **NO-GO — non-convergence under the swap kernel.** The swap orbit started at `![1,0]` does NOT
     converge: its coordinate-0 sequence is `1, 0, 1, 0, …`, whose even-indexed subsequence is constant
     `1` and odd-indexed is constant `0`. A convergent limit would force `1 = 0`. So under the swap
-    kernel #2 is not a single attractor; the `example` below is the other endpoint `a = 0`. -/
+    kernel the chain has no single attractor; the `example` below is the other endpoint `a = 0`. -/
 theorem swap_orbit_not_convergent :
     ¬ ∃ w : Fin 2 → ℝ, Tendsto (fun k => swap^[k] e0vec) atTop (nhds w) := by
   rintro ⟨w, hw⟩
@@ -195,11 +200,11 @@ example (v₀ : Fin 2 → ℝ) (k : ℕ) : (markovStep 0)^[k] v₀ = v₀ := by
 
 /-! ### Dichotomy capstone -/
 
-/-- **The sharp contraction dichotomy for node #2 (spectral).** Both halves, with the spectral
-    reading: `|λ₂| < 1` (here `0 < a < 1`) ⇒ geometric attractor at the uniform vector;
-    spectral boundary `|λ₂| = 1` (the swap kernel) ⇒ no single attractor (periodic orbit). This
-    mirrors `ZeroParadox/Valuation/ContractionRate.lean`'s valuation dichotomy for #3 (`‖c‖₂ < 1` attractor / `‖c‖₂ = 1` non-attractor) in a
-    second ambient — the within-ν rate structure `ZeroParadox/Computability/StationaryUnique.lean` and `ZeroParadox/Valuation/NuRateEdge.lean` left unbuilt. -/
+/-- **The Markov contraction dichotomy.** For `0 < a < 1` (`|λ₂| = |1 - 2a| < 1`, `step_imb`) every
+    start on the probability line converges to `unif`; at `a = 1`, the swap (`λ₂ = -1`, zero absolute
+    spectral gap), the orbit from `e0vec` has no limit. `|λ₂| = 1` also at `a = 0`, where every orbit
+    converges (control `example` above). `Reading:` the shape of `ContractionRate.lean`'s p-adic
+    dichotomy, in another carrier; no map between the two is built. -/
 theorem markov_contraction_dichotomy :
     (∀ (a : ℝ), 0 < a → a < 1 → ∀ (v₀ : Fin 2 → ℝ), v₀ 0 + v₀ 1 = 1 →
         Tendsto (fun k => (markovStep a)^[k] v₀) atTop (nhds unif)) ∧
@@ -218,7 +223,11 @@ section PurityCheck
 open ZeroParadox
 
 #print axioms markovStep
+#print axioms step_sum
 #print axioms step_imb
+#print axioms coord_from_imb
+#print axioms swap_orbit_eq
+#print axioms swap_orbit_coord0
 #print axioms markov_imbalance_pow
 #print axioms markov_sum_pow
 #print axioms markov_contraction_tendsto

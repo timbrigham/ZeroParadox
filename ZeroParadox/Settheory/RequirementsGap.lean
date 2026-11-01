@@ -106,7 +106,7 @@ theorem id_gfp_top : (OrderHom.id : α →o α).gfp = ⊤ := by
 
 /-- **The maximal gap.** In any nontrivial complete lattice the identity's fork is flung fully open:
 `lfp = ⊥ ≠ ⊤ = gfp`. Every element is a fixed point, so *every object is a witness* and the
-requirement is vacuous — no instance is pinnable. This is the fork image of "self-membership without
+requirement is satisfied by every element (uninformative as a condition) — no instance is pinnable. This is the fork image of "self-membership without
 a uniqueness clause admits everything" (the Boffa shape: `boffa_fails_unique`). -/
 theorem id_fork_open [Nontrivial α] :
     (OrderHom.id : α →o α).lfp ≠ (OrderHom.id : α →o α).gfp := by
@@ -161,7 +161,7 @@ self-referential object is *characterized, not constructed*, known only by how i
 final-coalgebra / coinductive picture of Aczel (*Non-Well-Founded Sets*, 1988) and Barwise-Moss
 (*Vicious Circles*, 1996). All of that machinery is standard and owned by those sources; the only part
 original here is the *reading* that ties it to the apophatic-⊥ / 0↔∞ keystone, which stays a
-conjecture. See `.claude-local/notes/instance_vs_requirements_gap_2026-07-15.md`.
+conjecture.
 
 ## Axiom Purity Check -/
 section PurityCheck

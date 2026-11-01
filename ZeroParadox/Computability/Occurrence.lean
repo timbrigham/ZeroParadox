@@ -353,8 +353,9 @@ theorem occurs_iff_halts (c : Code) (n : ℕ) : Occurs c n ↔ (eval c n).Dom :=
     exact ⟨k, by intro hnone; rw [hnone] at hk; exact absurd hk (by simp)⟩
 
 /-- **Whether the snap occurs is undecidable.** No algorithm decides, of an arbitrary
-    computation, whether it ever changes observable state. Turing (1936), via Mathlib's
-    `ComputablePred.halting_problem`; the reduction is the identification above. -/
+    computation, whether it ever changes observable state. The undecidability of halting is
+    conventionally credited to Turing (1936; that paper was not consulted here); the proof uses
+    Mathlib's `ComputablePred.halting_problem`, and the reduction is the identification above. -/
 theorem occurrence_undecidable (n : ℕ) :
     ¬ ComputablePred (fun c : Code => Occurs c n) := by
   intro h

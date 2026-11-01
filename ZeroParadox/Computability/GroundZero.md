@@ -35,8 +35,11 @@ itself and hence never terminates"*; Ex. 10.2(4) p. 44 for `(ℕ̄, pred)` final
 **bisimulation technique on that carrier** at §12 pp. 51–52, where it is applied to arithmetic laws
 (addition of naturals and its commutativity), *not* to this uniqueness statement. (Corrected
 2026-07-29: an earlier revision said §12 ran "this exact bisimulation on this exact carrier" — the
-technique and carrier are his, the application is not.) Mathlib itself has no `Conat` and no such
-lemma, so the Lean formalization is a genuine small addition — the mathematics is not.
+technique and carrier are his, the application is not.) No `Conat` type and no such uniqueness
+lemma on one were located in the pinned Mathlib (`5450b53`) as of 2026-10-31, searched as follows: grep
+of Mathlib for `Conat`, `CoNat` and `coNat` (none), and one LeanExplore query for coinductive naturals
+with infinity as the successor's fixed point (none). So the Lean formalization is a small addition; the
+mathematics is not new.
 
 **And the framework already had it, in another dress:** `Miniature.lean`'s
 `enat_fp_iff : x + 1 = x ↔ x = ⊤` is this same fact in the `ℕ∞ = WithTop ℕ` presentation.
@@ -65,3 +68,4 @@ coalgebra.
 - § II  The apophatic characterization, and its UNIQUENESS
 - § III The bridge: a self-looping configuration unfolds to `natInfinity`
 - § IV  NO-GO gauge: the forcing needs the binary split (a three-valued counter-model)
+- § V   The well-founded coalgebra is the halting condition

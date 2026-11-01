@@ -21,8 +21,9 @@ The **correspondence half, over the real domain categories**. Earlier, ZP-H exhi
 categories (`Q₂BallDepth`, `InfoDepth`, `HilbDimDepth`). Here the snap floor is realized inside the genuine Mathlib
 categories:
 
-* **F_B / `TopCat`** (`fB_functor`): ⊥ is the inverse limit of the clopen-ball system,
-  `⋂ n, B(0,2⁻ⁿ) = {0}` (`fB_bottom_is_limit`). `TopCat` has a terminal object, so the honest statement is "limit",
+* **F_B / `TopCat`** (`fB_functor`): ⊥ is the inverse limit of the clopen-ball system, as a limit cone
+  in `TopCat` (`floorConeIsLimit`, `ZeroParadox/Order/PadicLimitCone.lean`); the set equation beneath it
+  is `⋂ n, B(0,2⁻ⁿ) = {0}` (`fB_bottom_is_limit`). `TopCat` has a terminal object, so the honest statement is "limit",
   not "initial".
 * **F_D / `ModuleCat ℂ`** (`fD_functor`): ⊥ = `StateSpace 0` is the genuine initial (zero) object (`fD_zero_isInitial`),
   and the embeddings are isometric (`fD_embed_inner`).
@@ -42,7 +43,9 @@ None of the categorical structure here is new.
 - A *strict* initial object is one where every morphism into it is an isomorphism; nLab cites Carboni–Lack–Walters
   1993, Def. 2.7, for strict initial objects. `fC_no_return` is scoped to the functor's image: it states
   `IsEmpty (fC_functor.obj n ⟶ fC_functor.obj 0)` for `0 < n`, not strict initiality in the whole category.
-- F_B's `⋂ B(0,2⁻ⁿ) = {0}` is the standard 2-adic inverse limit (ℤ₂ = lim ℤ/2ⁿ).
+- F_B's `⋂ B(0,2⁻ⁿ) = {0}` is the standard fact that nested closed balls about a point with radii
+  tending to 0 meet in that point; the inverse system here is of subspace inclusions, not the
+  quotient system of the presentation ℤ₂ = lim ℤ/2ⁿ.
 - F_D's zero module is the zero/initial object of an abelian category.
 
 ZP-H's contribution is not new category theory but the cross-domain *assembly*: each ZP bottom realized as its own real

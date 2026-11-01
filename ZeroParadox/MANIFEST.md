@@ -16,7 +16,9 @@ cites; it is a curated map of what is established, not a source of new claims.
 **On the central claim (read this first).** The organizing thesis is that the bottom element recurs in the
 same structural role across several domains. What is **proved** is the *membership* and the *recurrence of
 the slot structure*. The reading that the various bottoms are *one object* is retired as ill-typed (object
-equality across categories does not typecheck and is not invariant under equivalence); what separates the members
+equality across categories does not typecheck and is not invariant under equivalence; for the equivalence
+principle see Ahrens and North, "Univalent foundations and the equivalence principle", arXiv:2202.01892,
+§ 2, as `CLAIMS.md` cites it); what separates the members
 is proved property by property (seam_unique_among_named, for the named bottoms, in a lattice with no top).
 The index above is where the precise line between proved and conjectural is kept.
 
@@ -206,7 +208,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Ordinal/NaturalOpsPow.lean` - Natural sum on powers of ω — the deferred CNF characterization (ported)
 - `ZeroParadox/Ordinal/OrdinalChoiceEssential.lean` - Comparability of well-orders is a constructive taboo
   - ride-along docs: `ZeroParadox/Ordinal/OrdinalChoiceEssential.md` - Comparability of well-orders is a constructive taboo: result, prior art and fences
-- `ZeroParadox/Ordinal/P8.lean` - P8 re-attempt: ε₀ → 0 in ℤ₂ via a tower-rank 2-adic encoding
+- `ZeroParadox/Ordinal/P8.lean` - P8 re-attempt: the ω-tower's encodings → 0 in ℤ₂ via a tower-rank 2-adic encoding
 - `ZeroParadox/Ordinal/PricedInterface.lean` - A priced interface: notations denoting the ordinals up to ε₀, a map into `Ordinal`, and both sides' axiom footprints
   - ride-along docs: `ZeroParadox/Ordinal/PricedInterface.md` - PricedInterface — ride-along documentation
 - `ZeroParadox/Ordinal/SnapMetaLattice.lean` - The lattice of systems: adjoining the point at infinity makes the ordinals a frame
@@ -392,7 +394,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 
 - `ZeroParadox/Computability/ChoicePurityInvariant.lean` - Is choice-purity an IN-STATEMENT μ/ν separating invariant?
   - ride-along docs: `ZeroParadox/Computability/ChoicePurityInvariant.md` - ChoicePurityInvariant — ride-along documentation
-- `ZeroParadox/Computability/CodeDataFrameChange.lean` - The frame-change in the computability frame: the code↔data involution and the quine on its fixed locus
+- `ZeroParadox/Computability/CodeDataFrameChange.lean` - The frame-change in the computability frame: the code↔data involution, whose fixed locus holds every code's self-application
 - `ZeroParadox/Computability/ComputableCrossing.lean` - The Lawvere bridge, crossed in the computability face (probe)
   - ride-along docs: `ZeroParadox/Computability/ComputableCrossing.md` - Where the obstruction is absent: the universal machine as a reflexive object
 - `ZeroParadox/Computability/MarkovNuUniversal.lean` - Does the Markov node (#2) get a ν (terminal/unique-fixed-point) universal property?

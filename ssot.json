@@ -652,8 +652,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 2998,
-        "files": 184
+        "declarations": 3008,
+        "files": 188
       },
       "entries": [
         {
@@ -2823,6 +2823,41 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "04eae2ca-a667-41d6-bacf-b917b1d432f9",
+          "new": {
+            "file": "ZeroParadox/Ordinal/Epsilon0MinMax.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.epsilon0EqNfpBotStatement",
+            "short": "epsilon0EqNfpBotStatement"
+          },
+          "old": {
+            "file": "ZeroParadox/Ordinal/Epsilon0MinMax.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.epsilon0EqNfpBotStatement",
+            "short": "epsilon0EqNfpBotStatement",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "errata lane A 2026-10-31: named witnesses and statement controls replacing prose measurements (CARRYW4-C8L-12, CARRY1008-32, CARRY1009-28)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -5144,6 +5179,41 @@
             ]
           },
           "reason": "New file ZeroParadox/Category/WellFoundedCoalgebra.lean: AMM next-time operator + intrinsic well-foundedness for PFunctor coalgebras",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0985988b-2ba1-4558-994b-2e304085bcef",
+          "new": {
+            "file": "ZeroParadox/Category/Lawvere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.code_pair_diag_fixedPointFree",
+            "short": "code_pair_diag_fixedPointFree"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/Lawvere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.code_pair_diag_fixedPointFree",
+            "short": "code_pair_diag_fixedPointFree",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "errata lane A 2026-10-31: named witnesses and statement controls replacing prose measurements (CARRYW4-C8L-12, CARRY1008-32, CARRY1009-28)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -42393,6 +42463,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "6234570b-77e8-4008-b49a-c7beab1975f1",
+          "new": {
+            "file": "ZeroParadox/Settheory/Loeb.lean",
+            "namespace": "ZeroParadox.ProvabilityLogic",
+            "qualified": "ZeroParadox.ProvabilityLogic.loeb_diagonal_of_loeb_axiom",
+            "short": "loeb_diagonal_of_loeb_axiom"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/Loeb.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.ProvabilityLogic",
+            "qualified": "ZeroParadox.ProvabilityLogic.loeb_diagonal_of_loeb_axiom",
+            "short": "loeb_diagonal_of_loeb_axiom",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "logic"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "Lane B2 errata 2026-11-01: reverse arrow of Löb in the abstract ProvabilityLogic class (Löb's principle at A as an explicit hypothesis gives □A → A as a Löb diagonal).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "6241bf47-c575-4e2f-9b77-a5e78119cce2",
           "new": {
             "file": "ZeroParadox/Valuation/PadicVladimirov.lean",
@@ -43319,6 +43428,41 @@
             ]
           },
           "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "64aab034-fea6-4296-a669-04f718746747",
+          "new": {
+            "file": "ZeroParadox/Ordinal/Epsilon0MinMax.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.epsilon0MinMaxStatement",
+            "short": "epsilon0MinMaxStatement"
+          },
+          "old": {
+            "file": "ZeroParadox/Ordinal/Epsilon0MinMax.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.epsilon0MinMaxStatement",
+            "short": "epsilon0MinMaxStatement",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "errata lane A 2026-10-31: named witnesses and statement controls replacing prose measurements (CARRYW4-C8L-12, CARRY1008-32, CARRY1009-28)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -52041,6 +52185,41 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "788a14b4-6f0b-405a-874b-920b80f86953",
+          "new": {
+            "file": "ZeroParadox/Ordinal/OrdinalChoiceEssential.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ordTotalAsWritten",
+            "short": "ordTotalAsWritten"
+          },
+          "old": {
+            "file": "ZeroParadox/Ordinal/OrdinalChoiceEssential.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ordTotalAsWritten",
+            "short": "ordTotalAsWritten",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "errata lane A 2026-10-31: named witnesses and statement controls replacing prose measurements (CARRYW4-C8L-12, CARRY1008-32, CARRY1009-28)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -82511,6 +82690,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "bf408bc4-a1f9-4d1b-bc2b-7dc05d774969",
+          "new": {
+            "file": "ZeroParadox/Settheory/Loeb.lean",
+            "namespace": "ZeroParadox.ProvabilityLogic",
+            "qualified": "ZeroParadox.ProvabilityLogic.loeb_axiom_of_loeb_diagonal",
+            "short": "loeb_axiom_of_loeb_diagonal"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/Loeb.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.ProvabilityLogic",
+            "qualified": "ZeroParadox.ProvabilityLogic.loeb_axiom_of_loeb_diagonal",
+            "short": "loeb_axiom_of_loeb_diagonal",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "logic"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "Lane B2 errata 2026-11-01 round 2: converse of loeb_diagonal_of_loeb_axiom (a Löb diagonal for A gives Löb's principle at A), from the adversary gate's probe.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "bf458d0d-29f7-42ee-bc81-046b0f77acf3",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -87379,6 +87597,41 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "cb6805f1-7df4-49ed-b1ed-2deac154e9ca",
+          "new": {
+            "file": "ZeroParadox/Ordinal/SnapNucleus.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.snapNucleusBotStatement",
+            "short": "snapNucleusBotStatement"
+          },
+          "old": {
+            "file": "ZeroParadox/Ordinal/SnapNucleus.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.snapNucleusBotStatement",
+            "short": "snapNucleusBotStatement",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "errata lane A 2026-10-31: named witnesses and statement controls replacing prose measurements (CARRYW4-C8L-12, CARRY1008-32, CARRY1009-28)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "cb7737ef-bfc6-4355-9916-99629a22237f",
           "new": {
@@ -88282,6 +88535,41 @@
             "role": []
           },
           "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "cd0c608b-7a8a-428e-b19a-780aac8b7c8d",
+          "new": {
+            "file": "ZeroParadox/Ordinal/OrdinalChoiceEssential.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.em_of_ordTotalRespelled",
+            "short": "em_of_ordTotalRespelled"
+          },
+          "old": {
+            "file": "ZeroParadox/Ordinal/OrdinalChoiceEssential.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.em_of_ordTotalRespelled",
+            "short": "em_of_ordTotalRespelled",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "errata lane A 2026-10-31: named witnesses and statement controls replacing prose measurements (CARRYW4-C8L-12, CARRY1008-32, CARRY1009-28)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -100944,6 +101232,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "e9655c7d-3efe-48c1-ba9e-1df815256b5d",
+          "new": {
+            "file": "ZeroParadox/Ordinal/SnapNucleus.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.snapNucleusNonemptyStatement",
+            "short": "snapNucleusNonemptyStatement"
+          },
+          "old": {
+            "file": "ZeroParadox/Ordinal/SnapNucleus.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.snapNucleusNonemptyStatement",
+            "short": "snapNucleusNonemptyStatement",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "errata lane A 2026-10-31: named witnesses and statement controls replacing prose measurements (CARRYW4-C8L-12, CARRY1008-32, CARRY1009-28)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "e9725ba7-e311-44b8-9c59-988314f9f910",
           "new": {
             "file": "ZeroParadox/Valuation/PoleCorners.lean",
@@ -106667,6 +106990,41 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f73cd106-0142-4175-bb1d-4adca25a0e42",
+          "new": {
+            "file": "ZeroParadox/Ordinal/OrdinalChoiceEssential.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ordTotalRespelled",
+            "short": "ordTotalRespelled"
+          },
+          "old": {
+            "file": "ZeroParadox/Ordinal/OrdinalChoiceEssential.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ordTotalRespelled",
+            "short": "ordTotalRespelled",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "errata lane A 2026-10-31: named witnesses and statement controls replacing prose measurements (CARRYW4-C8L-12, CARRY1008-32, CARRY1009-28)",
           "verify": {
             "axioms": null,
             "sorry_free": true

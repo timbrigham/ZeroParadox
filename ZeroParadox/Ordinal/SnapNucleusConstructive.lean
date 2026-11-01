@@ -275,11 +275,13 @@ end ZeroParadox
 /-! ## Axiom Purity Check
 
 Target: `[propext]` or cleaner on everything, including the `LinearOrder`/`SemilatticeInf` structure.
-Contrast the measured `[propext, Classical.choice, Quot.sound]` on `snapNucleus` in
-`ZeroParadox/Ordinal/SnapNucleus.lean`. That footprint is STATEMENT-CARRIED (statement control, measured
-2026-10-08; `ZeroParadox/Category/ChoiceCannotBe.md`), though the choice is not in the `Ordinal` type
-(`[propext, Quot.sound]`): it enters via `Ordinal.instLinearOrder`, `nfp`, `omega0` and `epsilon`. The
-open question is a restatement on a choice-free carrier; on this one it is blocked by naming (above). -/
+Contrast `snapNucleus` (`ZeroParadox/Ordinal/SnapNucleus.lean`), STATEMENT-CARRIED (the statement controls
+in that file's purity block; `ZeroParadox/Category/ChoiceCannotBe.md`); the choice is not in the `Ordinal`
+type but enters via `Ordinal.instLinearOrder`, `nfp`, `omega0` and `epsilon`. The remaining question is a
+restatement on a carrier whose statements are choice-free, with two readings: a defined one, in Lean on
+`E0Note`, and a derived one, on a well-founded carrier, not located as of 2026-10-13 (both, with the search
+record: `ZeroParadox/Ordinal/SnapNucleus.md` § "Axiom footprint"); on this carrier, `ONote`, it is blocked
+by naming (above). -/
 
 section PurityCheck
 open ZeroParadox

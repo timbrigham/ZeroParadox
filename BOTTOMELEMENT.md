@@ -326,7 +326,7 @@ The classical self-reference arguments are not separate theorems that happen to 
 | the wall | μ | no well-founded relation admits a self-loop (a host verdict, not an engine face) | [`wf_no_selfloop`](ZeroParadox/Settheory/Wall.lean) | (none) |
 | Quine atom | ν floor | ⊥ = {⊥}: ⊥ of a ZPSemilattice in the Quine-atom role, from the class fields | [`t_exec`](ZeroParadox/Settheory/SetTheoryAFA.lean) | (none) |
 | Löb | ν floor | given a Löb diagonal ψ (hypotheses hfix1, hfix2), ⊢ □A → A yields ⊢ A | [`loeb`](ZeroParadox/Settheory/Loeb.lean) | (none) |
-| Gödel 2nd | ν floor | given a Löb diagonal for falsum, a consistent system does not prove □falsum → falsum | [`godel_two`](ZeroParadox/Settheory/Loeb.lean) | (none) |
+| Gödel 2nd | ν floor | given a Löb diagonal for falsum, a consistent system does not prove □falsum → falsum (Gödel's second theorem when the class is instantiated at a theory of arithmetic and falsum is its falsum; in the class, falsum may be any sentence) | [`godel_two`](ZeroParadox/Settheory/Loeb.lean) | (none) |
 | Kleene quine | ν floor | every computable self-map on codes has a fixed point up to eval (Rogers' form of the recursion theorem) | [`computability_face_fixedPoint`](ZeroParadox/Category/Lawvere.lean) | `[propext, Classical.choice, Quot.sound]` |
 | Rice | ν floor | a fixed point up to eval exists; every non-trivial semantic property is undecidable over all codes | [`rice_face_has_bottom`](ZeroParadox/Computability/Rice.lean), [`quine_exists_yet_rice`](ZeroParadox/Computability/Rice.lean) | `[propext, Classical.choice, Quot.sound]` |
 

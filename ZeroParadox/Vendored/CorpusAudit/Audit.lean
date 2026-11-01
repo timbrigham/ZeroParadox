@@ -26,7 +26,7 @@ WHY THIS FILE IS VENDORED
 
 CHANGES FROM UPSTREAM (port-probe numbering; marked inline with `-- [ZP port Pn]`)
   1. Relation.lean gains the Apache-2.0 header its siblings carry. (local edit; candidate to offer upstream)
-  2. Data split from machinery: no `import Corpus`, no hard-coded `ledger`, no `#eval audit`. (local edit; candidate to offer upstream)
+  2. Data split from machinery: no `import Corpus`, no hard-coded `ledger`, no `#eval audit`; `stock`'s docstring re-pointed to the consumer's ledger accordingly. (local edit; candidate to offer upstream)
   3. Coverage scope is an argument (`inScope`, `inModulesOrMain`), not the `Corpus` prefix. (local edit; candidate to offer upstream)
   4. `ProfileRow`: a declared profile for a definition or a theorem that replaces nothing. (local edit; candidate to offer upstream)
   5. `coverageModules`: coverage over named modules' constants, 12 ms against 121 s for the whole-environment walk under Mathlib. (local edit; candidate to offer upstream)
@@ -34,10 +34,9 @@ CHANGES FROM UPSTREAM (port-probe numbering; marked inline with `-- [ZP port Pn]
   6. Declared profiles compare as ordered lists: the right set in the wrong order fails.
   7. A failed relation check throws, so it hides every later row's findings.
   8. `isAux` exempts by spelling, so a hand-written `foo.proof_1` escapes coverage; upstream
-     PR #7 replaces it.
+     PR #7 proposes replacing it (open, not merged, as of 2026-11-01).
   Local only, not for upstream: import paths renamed to this folder (`-- [ZP port]`).
   Upstream's v4.28.0 sources compiled and ran unchanged on v4.30.0-rc2 (probe, 2026-10-23).
-  Full account: `.claude-local/notes/auditor_port_probe_2026-10-23.md` (private).
 ================================================================================
 -/
 
@@ -92,7 +91,9 @@ structure Row where
   predecessor : Name
   predecessorProfile : List String
 
-/-- The stock profile shared by every predecessor below. -/
+-- [ZP port P2] docstring re-pointed: the predecessors are now in the consumer's ledger.
+/-- The stock profile shared by every predecessor in the consumer's ledger
+(`ZeroParadox/Meta/AxiomLedger.lean`). -/
 def stock : List String := ["Classical.choice", "Quot.sound", "propext"]
 
 -- [ZP port P2] upstream's hard-coded `ledger` stood here; the consumer supplies it.

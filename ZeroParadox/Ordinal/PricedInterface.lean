@@ -251,8 +251,9 @@ forms is the standard fix."* It characterizes exactly when injectivity is **rest
 
 `Reading:` (conjectural) the framework reads the fiber as an instance of the **shape** that statistics
 calls *identifiability* — the parameter-to-observable map failing to be injective. ⚠ **Do not write
-"structural identifiability" for this.** Both sources on disk (Villaverde 2016; Castro & de Boer 2020,
-`.claude-local/papers/`) scope that term to **parametrized dynamic models**, where "structural"
+"structural identifiability" for this.** Both sources read (Villaverde, Barreiro and Papachristodoulou,
+PLOS Comput. Biol. 2016, doi:10.1371/journal.pcbi.1005153; Castro and de Boer, PLOS Comput. Biol. 2020,
+doi:10.1371/journal.pcbi.1008248) scope that term to **parametrized dynamic models**, where "structural"
 contrasts with *practical* identifiability limited by data. `e0Repr` has no data, no dynamics and no
 such contrast, so the modifier does no work here. `CLAIMS.md`'s use of the term (the Buckingham row)
 is scoped to **ZP-B's real-valued threshold** `2^k`, a different object, and that row states the
@@ -267,8 +268,7 @@ pointer to the precedent, not a POV claim about `e0Repr`.
 `Reading:` (conjectural) the framework reads this as where statistics enters, under Tim's framing that
 **succession is a state of representation**: what is uncertain is *which representation*, never *what
 happened*. ⚠ **Nothing here posits that anything moved** — the no-traversal commitment is untouched, and
-the distribution below is over notations, not over histories. Long form:
-`.claude-local/notes/future-research/offset_from_the_origin_2026-08-05.md`. -/
+the distribution below is over notations, not over histories. -/
 theorem e0Repr_not_injective : ¬ Function.Injective e0Repr := by
   intro hinj
   obtain ⟨x, y, hne, hrepr⟩ := mathlib_ONote_order_not_antisymm

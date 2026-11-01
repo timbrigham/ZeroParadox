@@ -48,6 +48,3 @@ point is the error CLAUDE.md's determinism section names. Already-proved neighbo
 new mathematics: `ZeroParadox/Ordinal/SnapNucleus.lean`'s `snapNucleus_bot_ne_bot` (*"it does not fix
 the floor"* — in a file that imports the Lean file) and the choice-free
 `ZeroParadox/Ordinal/ConstructiveOrdinals.lean`'s `omegaPow_no_fixedpoint`.
-
-Long form: `.claude-local/notes/future-research/tower_seed_is_not_load_bearing_2026-07-31.md`,
-`.claude-local/notes/future-research/forced_movement_two_operators_2026-07-31.md`.

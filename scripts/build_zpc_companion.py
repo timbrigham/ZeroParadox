@@ -1,5 +1,5 @@
 """
-Build ZP-C Illustrated Companion (v2.11)
+Build ZP-C Illustrated Companion (v2.12)
 """
 
 import os
@@ -177,7 +177,7 @@ def lrun_diagram():
                strokeColor=COMP_BLUE, strokeWidth=1, strokeDashArray=[4, 3]))
     return d
 
-VERSION = '2.11'
+VERSION = '2.12'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -297,8 +297,11 @@ def build():
         'not about the incompressibility threshold P₀; the bridge between the two is refuted '
         '(ZP-I &#167; II.B).'))
     E.append(cbody(
-        'This matters because unbounded surprisal means no finite external interpreter can hold ⊥ '
-        'as a static description. It does not show that anything is running. The step from '
+        'That is the depth chart: each depth has a finite surprisal, and there is no largest. The point chart '
+        'is the limit itself: 0 in ℚ₂, the one point in every ball of the chain centred at 0, where the 2-adic '
+        'additive valuation is infinite (padic_addVal_bot). The initial machine state c₀, ⊥ of the machine-state '
+        'type, corresponds to that point. From the two charts together the framework argues that no finite '
+        'external interpreter can hold ⊥ as a static description. That argument does not show that anything is running. The step from '
         'unbounded surprisal to executing is a bridge principle of its own, which the framework does '
         'not adopt (ZP-E, DA-1 Path 2). That the configuration reaching P₀ is a running machine\'s '
         'current configuration, and not an inert string, is what the framework\'s occurrence '

@@ -10,11 +10,14 @@ Two prior results meet here.
 
 **P8** (`ZeroParadox/Ordinal/P8.lean`) built the tower-rank encoding `cnf_encode : {α < ε₀} → ℤ₂`
 and proved that the ω-tower's encodings converge to `0` (`cnf_encode_tower_tendsto_zero`): the
-tower climbing to `ε₀` has stage-encodings that land on the 2-adic floor `0 = ⊥`, so in this
-**encoding chart** the ascent to `ε₀` resolves onto the bottom.
+tower climbing to `ε₀` has stage-encodings that land on ℤ_[2]'s `0`, so in this **encoding
+chart** the ascent to `ε₀` resolves onto that `0`. Name the order before calling it a bottom: `0` is
+least under the 2-adic norm preorder and greatest under the valuation preorder (`z2_two_views`).
 
-⚠ The encodings **converge to** ⊥; `ε₀` is not ⊥ (`ε₀ ≠ ⊥`). And reading that floor as a **NEW**
-bottom ⊥ₙ₊₁ is **C-DA2, a commitment** — no theorem here carries it, and in this very chart
+⚠ The encodings **converge to** ℤ_[2]'s `0`; `ε₀` has no encoding and no equation with that `0`
+(different carriers); and `ε₀` is not ⊥ of `Ordinal` (`epsilon0_ne_bot`). And reading ℤ_[2]'s `0` as a
+**NEW** bottom ⊥ₙ₊₁ of the norm preorder (it is the greatest element under the valuation preorder,
+`z2_two_views`) is **C-DA2, a commitment** — no theorem here carries it, and in this very chart
 `snap_arc_z2_loop` has the arc returning to the **same** `0`. `t_iz_limit_is_new_null` proves the
 ROLE half only and must never be cited as a novelty witness (the `t_iz_limit_is_new_null` gloss in `Order/SnapCannotBe.lean`).
 
@@ -37,7 +40,7 @@ encoding chart and rises to the antipode `∞` in the `rInv` chart, and `rInv` i
 them.
 
 `Statement:` **INVERSION** — `snap_is_frameflip` bundles both limits with the `0 ↔ ∞` swap: the
-descent to ⊥ and the ascent to ∞ are the *same* tower-encodings under the frame-change.
+descent to `0` and the ascent to ∞ are the *same* tower-encodings under the frame-change.
 
 ## Fences
 

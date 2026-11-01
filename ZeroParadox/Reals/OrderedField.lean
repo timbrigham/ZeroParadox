@@ -143,9 +143,8 @@ example {α : Type*} [PartialOrder α] [DecidableEq α] {a b : α} (h : a ⋖ b)
 example {α : Type*} [PartialOrder α] {a b : α} (h : a ⋖ b) :
     ∀ c, a ≤ c → c ≤ b → ¬ (c ≠ a ∧ c ≠ b) := fun _ hac hcb ⟨hca, hcb'⟩ =>
   h.2 (lt_of_le_of_ne hac (Ne.symm hca)) (lt_of_le_of_ne hcb hcb')
--- `Statement:` Mathlib's homes are `CovBy.Ioo_eq` (nothing strictly between), measured `[propext,
--- Quot.sound]`, and `CovBy.Icc_eq` (`Icc a b = {a, b}`), measured `[propext, Classical.choice,
--- Quot.sound]`: the second carries `Classical.choice` and the first does not.
+-- `Statement:` Mathlib's homes are `CovBy.Ioo_eq` (nothing strictly between) and `CovBy.Icc_eq`
+-- (`Icc a b = {a, b}`); their footprints are printed in this file's purity block.
 -- `Statement:` control, the truth values `Prop` ordered by implication: `False`, ⊥ of `Prop`, is
 -- covered by `True`, and "every `c` in `[False, True]` is `False` or `True`" is equivalent to excluded
 -- middle. Prior art: Bauer, "On fixed-point theorems in synthetic computability", Tbilisi Math. J.
@@ -407,6 +406,9 @@ section PurityCheck
 #print axioms r_no_minimal_positive
 #print axioms r_snap_blocked
 #print axioms r_snap_impossible
+-- Mathlib's covering lemmas cited by the `CovBy` statements above: printed, not asserted.
+#print axioms CovBy.Ioo_eq
+#print axioms CovBy.Icc_eq
 end PurityCheck
 
 end ZeroParadox

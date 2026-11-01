@@ -109,7 +109,7 @@ example (α : Type) [Preorder α] (h : ∀ x : α, ∃ y, x < y) : ∀ t : α, I
 
 /-! ## II. ZPSurprisal — I-KC Import (D7') -/
 
--- [ZP-CUSTOM] no Mathlib analog | reason: Mathlib has no formalization of Kolmogorov complexity. ZPSurprisal is an import stub for the I-KC axiom (D7'): it models conditional K-complexity as an abstract ℕ-valued morphism assignment. The one field (surp_id: identity morphisms have zero surprisal) is the only structurally usable I-KC axiom in the ZP-G theorems; the rest of K-complexity is outside Lean scope.
+-- [ZP-CUSTOM] no Mathlib analog | reason: No formalization of Kolmogorov complexity was located in the pinned Mathlib (`5450b53`) as of 2026-10-04; the search is recorded in `ZeroParadox/Information/Disjunctive.md`. Outside Mathlib, Lean developments define it: AlexeyMilovanov/kolmogorov-complexity-lean (`condK`, `plainK`, commit 28da5139) and facebookresearch/atlas-lean (`K`, commit acf9c1f8), read at their source by a prior-art gate on 2026-10-31 and not elaborated here. Uncomputability does not keep K out of Lean (an uncomputable function can be defined noncomputably); leaving it unformalized is this corpus's scope decision. ZPSurprisal is an import stub for the I-KC axiom (D7'): it models conditional K-complexity as an abstract ℕ-valued morphism assignment. The one field (surp_id: identity morphisms have zero surprisal) is the only structurally usable I-KC axiom in the ZP-G theorems; the rest of K-complexity is outside this corpus's Lean scope.
 /-- ZPSurprisal models the I-KC import: conditional Kolmogorov complexity K(x_B | x_A).
     D7' assigns surprisal I(f) = K(x_B | x_A) to each morphism f: A → B.
     K is well-defined up to additive constant c; structural claims (zero/undefined/finite)

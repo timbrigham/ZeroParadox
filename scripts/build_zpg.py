@@ -1,12 +1,12 @@
 """
 Zero Paradox — ZP-G: Category Theory PDF Builder
-Version 1.23 | October 2026
+Version 1.25 | November 2026
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.23'
+VERSION = '1.25'
 FIRST_RELEASED = 'April 2026'
 
 # ZP-G uses a slightly different amber shade; override zp_utils default
@@ -454,7 +454,10 @@ def build():
             '(2) T6-c subadditivity — K(x<sub>n</sub>|x<sub>0</sub>) &#8804; '
             '&#8721; K(x<sub>k+1</sub>|x<sub>k</sub>) + O(n&#183;c) (total surprisal along a chain). '
             'These are standard and correct results from algorithmic information theory, but they require '
-            'a K-formalization that does not exist in Lean 4 / Mathlib.',
+            'a K-formalization this corpus does not have: none was located in the pinned Mathlib as of '
+            '2026-10-04 (search record in ZeroParadox/Information/Disjunctive.md), Lean developments '
+            'outside Mathlib that define K are named at the ZPSurprisal entry of LEAN_CUSTOM_REGISTRY.md, '
+            'and leaving K unformalized here is a scope decision recorded there.',
             'What IS Lean-verified: T6-a (identity morphism has zero surprisal — from surp_id), '
             'T6 Part II (inward surprisal is undefined — from AX-G2 and the absence of morphisms to 0), '
             'and T7 insofar as it depends on Parts II, III, V, VI. T6 Part I (outward accumulation) '
@@ -653,7 +656,9 @@ def build():
         ['Proposition T6-c: Surprisal accumulates along chains',
          'Valid (PDF-level) — Derived from D5, T6-b, subadditivity of K. '
          'NOT Lean-verified: Lean proof reduces to Nat.zero_le _. '
-         'Subadditivity of K is a standard AIT result but requires K-formalization absent from Mathlib.'],
+         'Subadditivity of K is a standard AIT result but requires a formalization of K, none located '
+         'in the pinned Mathlib as of 2026-10-04 (the search is recorded in '
+         'ZeroParadox/Information/Disjunctive.md).'],
         ['Theorem T6: Informational singularity',
          'Valid — Derived. Does not depend on BA-G1. '
          'Part II: undefined domain (AX-G2) — fully Lean-verified. '

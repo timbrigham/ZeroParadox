@@ -6,7 +6,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# The frame-change in the computability frame: the code↔data involution and the quine on its fixed locus
+# The frame-change in the computability frame: the code↔data involution, whose fixed locus holds every code's self-application
 
 Experimental probe in the bottom-diagram mapping campaign — not a finalized layer. Curated results
 are indexed in ZeroParadox/MANIFEST.md.
@@ -31,34 +31,27 @@ object — its **fixed locus is the self-application diagonal**: `codeDataSwap p
 (`codeDataSwap_fixed_iff`), i.e. the configurations where a program's code equals its datum, a program
 run on its own code.
 
-The Kleene/Rogers quine lives on that fixed locus. Every code's self-application configuration
-`(encode c, encode c)` is swap-fixed (`selfConfig_on_fixedLocus`), and Rogers' fixed-point theorem
-(`roger_fixed_point_exists`, Mathlib `Nat.Partrec.Code.fixed_point`) supplies, for any computable
-transformation `f`, a fixed-point code `c` with `eval (f c) = eval c` whose self-configuration sits on
-the diagonal. `codedata_is_frameflip` bundles the three faces: the frame-change is an involution, its
-fixed locus is exactly the self-application diagonal, and the self-reproducing quine lies on it — the
-computability realization of the POLE EXCHANGE.
-
 `Statement:` INVERSION — the code/data involution exchanges the two roles, and its fixed locus is the
-self-application diagonal (`codedata_is_frameflip`).
+self-application diagonal (`codedata_is_frameflip`). Every code's self-configuration lies on it
+(`selfConfig_on_fixedLocus`, for every `c : Code`), so face (iii) adds the existence of a Rogers
+fixed-point code (`roger_fixed_point_exists`), not its position.
 `Reading:` INVERSION — the framework reads the snap as an instance of this exchange. Conjectural: no snap
 transition appears in these statements. See `Multihomed/SnapFrameChange.lean`'s declaration docstring.
 
-Content: a bundling of Mathlib's `Prod.swap` involution with Rogers' fixed-point theorem and the
-`quine_period_is_goedel` / `IsComputationalQuine` infrastructure of ZP-K; no mathematical novelty. The
-pure swap facts are choice-free — `codeDataSwap_involutive` is axiom-free and `codeDataSwap_fixed_iff` is
-`propext`-only; the faces that mention codes and the quine (`selfConfig_on_fixedLocus`,
-`codedata_is_frameflip`) carry `Classical.choice`, inherited from the Mathlib `Code` / Rogers fixed-point
-infrastructure, as documented in `Computability/Kleene.lean`. (Axiom footprints only — the KIND and
-status of the claim itself are the `Statement:` / `Reading:` INVERSION labels above.)
+Content: a bundling of Mathlib's `Prod.swap` involution with Rogers' fixed-point theorem; no
+mathematical novelty.
+Footprints: `codeDataSwap_involutive` axiom-free, `codeDataSwap_fixed_iff` `propext`-only; the two
+results whose statements mention `Encodable.encode` on `Code` carry `Classical.choice`, which enters
+through `Nat.Partrec.Code.instDenumerable` (`ZeroParadox/Category/ChoiceCannotBe.lean` § III; printed in
+`ZeroParadox/Computability/Kleene.lean`'s `PurityCheck`). The bundle's proof also calls Rogers' theorem,
+not separated here.
 
 **Fences.** Computability point-of-view's shape of the frame-change; the abstract cross-domain
-"snap = frame-change" stays conjectural (type boundary; see
-`.claude-local/notes/frame_change_across_domains_2026-07-11.md`).
+"snap = frame-change" stays conjectural (type boundary).
 
 ## Structure
 - § I  The code↔data involution: `codeDataSwap`, involutive, fixed locus = the self-application diagonal
-- § II The quine on the fixed locus: `selfConfig_on_fixedLocus`, `codedata_is_frameflip`
+- § II Self-application configurations, and the bundled three-face result
 -/
 
 namespace ZeroParadox
@@ -86,7 +79,7 @@ theorem codeDataSwap_fixed_iff (p : ℕ × ℕ) : codeDataSwap p = p ↔ p.1 = p
   simp only [Prod.fst_swap, Prod.snd_swap]
   exact ⟨fun h => h.2, fun h => ⟨h.symm, h⟩⟩
 
-/-! ## § II — The quine on the fixed locus -/
+/-! ## § II — Every code's self-configuration on the fixed locus -/
 
 /-- Every code's **self-application configuration** `(encode c, encode c)` lies on the fixed locus
     (the diagonal) of the frame-change. -/
@@ -95,13 +88,12 @@ theorem selfConfig_on_fixedLocus (c : Code) :
       = (Encodable.encode c, Encodable.encode c) :=
   (codeDataSwap_fixed_iff (Encodable.encode c, Encodable.encode c)).mpr rfl
 
-/-- **The code↔data frame-flip (computability frame).** The frame-change is (i) an involution
-    (self-inverse, like `rInv`/`op`); (ii) its fixed locus is exactly the self-application diagonal
-    (code = datum); and (iii) the Rogers/Kleene quine — the self-reproducing fixed point — lives on that
-    locus: for any computable transformation `f` there is a fixed-point code `c` (`eval (f c) = eval c`)
-    whose self-application configuration is swap-fixed. The computability realization of the POLE EXCHANGE;
-    the snap-as-instance reading is ZP-Q's conjecture, not established here (no snap transition appears in
-    this statement). -/
+/-- `Statement:` INVERSION — the code↔data frame-change is (i) an involution; (ii) its fixed locus is
+    exactly the self-application diagonal; (iii) for any computable `f` some code `c` has
+    `eval (f c) = eval c` and a swap-fixed self-configuration, as every code's is
+    (`selfConfig_on_fixedLocus`): (iii)'s content is the existence of `c`, not its position.
+    `Reading:` INVERSION — the computability realization of the POLE EXCHANGE; the snap-as-instance
+    reading is ZP-Q's conjecture, not established here (no snap transition appears in this statement). -/
 theorem codedata_is_frameflip :
     Function.Involutive codeDataSwap
       ∧ (∀ p : ℕ × ℕ, codeDataSwap p = p ↔ p.1 = p.2)

@@ -87,19 +87,43 @@ theorem epsilon0_min_eq_max :
   refine ⟨epsilonZero_eq_iSup, epsilonZero_fixedPoint, fun o ho => ?_⟩
   exact epsilon0_least_fixedpoint o ho
 
+/-! ### Statement controls
+
+Each statement below, written as a `Prop` with no proof attached, so that the purity block prints the
+footprint the STATEMENT carries by itself (the statement control of
+`ZeroParadox/Category/ChoiceCannotBe.md`). The `example`s tie each control to its theorem: they stop
+compiling if the theorem's statement changes. -/
+
+/-- `Statement:` the statement of `epsilon0_eq_nfp_bot`, at universe 0, as a bare proposition. -/
+def epsilon0EqNfpBotStatement : Prop :=
+  epsilonZero = Ordinal.nfp (fun α : Ordinal.{0} => Ordinal.omega0 ^ α) (⊥ : Ordinal.{0})
+
+/-- `Statement:` the statement of `epsilon0_min_eq_max`, at universe 0, as a bare proposition. -/
+def epsilon0MinMaxStatement : Prop :=
+  epsilonZero.{0} = ⨆ n : ℕ, fundamentalSeq.{0} n
+    ∧ IsLeast {o : Ordinal.{0} | Ordinal.omega0 ^ o = o} epsilonZero
+
+example : epsilon0EqNfpBotStatement := epsilon0_eq_nfp_bot
+example : epsilon0MinMaxStatement := epsilon0_min_eq_max
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check
 
-Both results are corollaries of Mathlib's `Ordinal` fixed-point theory (`nfp`, `epsilon`), which is
-classically built. **Status: STATEMENT-CARRIED** (`ZeroParadox/Category/ChoiceCannotBe.md`): both
-statements, only assumed, already report `Classical.choice` (statement control, measured 2026-10-08).
-The choice is NOT in the `Ordinal` type (`[propext, Quot.sound]`); it enters through the order instance
-and the operations. The open question is a restatement on a choice-free carrier: ZP-N's snap-from-below
-on `ONote` (`ZeroParadox/Ordinal/ConstructiveOrdinals.lean`) is evidence for it, not a re-proof. -/
+Both results are corollaries of Mathlib's classically built `Ordinal` fixed-point theory (`nfp`,
+`epsilon`). **Status: STATEMENT-CARRIED** (`ZeroParadox/Category/ChoiceCannotBe.md`): both statements,
+with no proof attached, carry `Classical.choice` (the statement controls `epsilon0EqNfpBotStatement` and
+`epsilon0MinMaxStatement`, printed below). The choice is NOT in the `Ordinal` type; it enters through the
+order instance and the operations. The remaining question is a restatement on a carrier whose statements
+are choice-free, with two readings: a defined one, in Lean on `E0Note`, and a derived one, on a well-founded
+carrier, not located as of 2026-10-13; both, with the search record: `ZeroParadox/Ordinal/SnapNucleus.md` § "Axiom footprint". ZP-N's ascent on
+`ONote` (`ZeroParadox/Ordinal/ConstructiveOrdinals.lean`) is evidence for it, not a re-proof. -/
 
 section PurityCheck
 open ZeroParadox
 #print axioms epsilon0_eq_nfp_bot
 #print axioms epsilon0_min_eq_max
+-- The statement controls: the statements alone.
+#print axioms epsilon0EqNfpBotStatement
+#print axioms epsilon0MinMaxStatement
 end PurityCheck

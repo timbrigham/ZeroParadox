@@ -201,10 +201,14 @@ theorem q2Val_unique (x : ℤ_[2]) (h : q2Val x = ⊤) : x = 0 := by
 /-- scale = ×2 fixes 0. -/
 theorem q2Scale_bot : (2 : ℤ_[2]) * 0 = 0 := by ring
 
+-- Statement: at the pinned Mathlib, `PadicInt.valuation_p` closes the numeral goal with no rewrite.
+example : (2 : ℤ_[2]).valuation = 1 := PadicInt.valuation_p
+
 /-- v₂(2x) = v₂(x) + 1 for x ≠ 0 in ℤ_[2].
     Proof: valuation_mul gives v(2x) = v(2) + v(x); valuation_p gives v(2) = 1.
-    Note: valuation_p expects the cast form ((2:ℕ) : ℤ_[2]), so we rewrite the
-    numeral (2 : ℤ_[2]) via Nat.cast_ofNat.symm before applying valuation_p. -/
+    valuation_p is stated over the cast form ((2:ℕ) : ℤ_[2]); the proof rewrites the
+    numeral (2 : ℤ_[2]) via Nat.cast_ofNat.symm first, a rewrite the pinned Mathlib does
+    not need (the `example` before this docstring). -/
 theorem q2Val_scale (x : ℤ_[2]) (hx : x ≠ 0) :
     q2Val (2 * x) = q2Val x + 1 := by
   have h2x : 2 * x ≠ 0 := mul_ne_zero two_ne_zero hx

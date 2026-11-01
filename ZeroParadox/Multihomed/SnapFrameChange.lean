@@ -1,4 +1,4 @@
--- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the valuation-frame realization of the POLE EXCHANGE (the snap-as-instance reading is ZP-Q's conjecture, not established here - see the declaration docstring) — P8's tower encoding sends the ω-tower (climbing to ε₀) to the 2-adic floor 0 = ⊥: its stage-encodings converge to 0 in the encoding chart (reading that floor as a NEW bottom ⊥ₙ₊₁ is C-DA2, a commitment no theorem here carries), while the SAME encodings, viewed through the Riemann-sphere frame-change rInv (0↔∞), diverge to the antipode ∞. rInv is the passage between the two charts. (The encodings converge to ⊥; ε₀, the ordinal sup of the stages, is never ⊥ — ε₀ ≠ ⊥.) Conjectural synthesis at the operator/space level; the abstract cross-domain "snap = frame-change" stays open. Curated results indexed in ZeroParadox/MANIFEST.md.
+-- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the valuation-frame realization of the POLE EXCHANGE (the snap-as-instance reading is ZP-Q's conjecture, not established here - see the declaration docstring) — P8's tower encoding sends the ω-tower (climbing to ε₀) to ℤ_[2]'s 0, least under the 2-adic norm preorder and greatest under the valuation preorder (z2_two_views): its stage-encodings converge to 0 in the encoding chart (reading that floor as a NEW bottom ⊥ₙ₊₁ is C-DA2, a commitment no theorem here carries), while the SAME encodings, viewed through the Riemann-sphere frame-change rInv (0↔∞), diverge to the antipode ∞. rInv is the passage between the two charts. (The encodings converge to ℤ_[2]'s 0; ε₀, the ordinal sup of the stages, has no encoding and no equation with that 0 (different carriers), and in Ordinal ε₀ ≠ ⊥ of Ordinal, epsilon0_ne_bot.) Conjectural synthesis at the operator/space level; the abstract cross-domain "snap = frame-change" stays open. Curated results indexed in ZeroParadox/MANIFEST.md.
 import ZeroParadox.Ordinal.P8
 import ZeroParadox.Valuation.RiemannSphere
 import Mathlib.Tactic
@@ -61,7 +61,7 @@ theorem snap_frameflip_tower_tendsto_infty :
     is the authority. THE SNAP DOES NOT APPEAR IN THIS STATEMENT.** There is no `c₀ → c₁`, no `bot ⋖ a`,
     no `⊥ → ε₀` here.
 
-    `Statement:` a three-part conjunction about ONE sequence — the ω-tower's encodings converge to `0` in
+    `Statement:` **INVERSION** — a three-part conjunction about ONE sequence — the ω-tower's encodings converge to `0` in
     the encoding chart; the SAME encodings diverge to `∞` under `rInv`; and `rInv` exchanges the two poles.
     So: one object, two chart-readings, and a chart map swapping them.
 
@@ -71,7 +71,8 @@ theorem snap_frameflip_tower_tendsto_infty :
     the layer's older framing did, and it is what produced the standing puzzle that a frame flip is an
     involution (reversible) while the snap is one-way. That mismatch is what an identification would have to
     resolve; ZP-Q holds it open rather than settling it either way.
-    (ε₀ ≠ ⊥: the encodings converge to ⊥, they do not realize ε₀ as ⊥.) -/
+    `Statement:` **CARRIER** — the encodings converge to ℤ_[2]'s `0`; they do not realize ε₀ there, and
+    ε₀ ≠ ⊥ of `Ordinal` (`epsilon0_ne_bot`). -/
 theorem snap_is_frameflip :
     Tendsto (fun k => cnf_encode (towerOrd k)) atTop (𝓝 (0 : ℤ_[2]))
       ∧ Tendsto (fun k => rInv (OnePoint.some (((cnf_encode (towerOrd k)) : ℤ_[2]) : ℚ_[2])))

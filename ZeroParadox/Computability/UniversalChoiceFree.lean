@@ -44,8 +44,8 @@ a one-step machine instead of `evaln`. -/
 -- iterated and searched) is F. J. Balbach, "Some classical results in inductive inference of
 -- recursive functions", Archive of Formal Proofs (2020), entry `Inductive_Inference`
 -- (https://www.isa-afp.org/entries/Inductive_Inference.html), theory `Universal`, § 1.5, in
--- classical Isabelle/HOL. Constructive universal functions exist in Coq, where no global choice
--- operator (no classical axiom) is available unless one is declared: Forster and Kunze, "A
+-- classical Isabelle/HOL. Constructive universal functions exist in Coq, where neither a global
+-- choice operator nor a classical axiom is available unless one is declared: Forster and Kunze, "A
 -- certifying extraction with time bounds from Coq to call-by-value λ-calculus", arXiv 1904.11818,
 -- a universal L-term extracted from a step-indexed self-interpreter. Carneiro, p. 12:15, on
 -- Mathlib's development: "there was no particular reason to assume LEM except in Theorem 5".
@@ -1099,9 +1099,20 @@ theorem zero_not_universal :
 and `ofNatCodeCF`, the bridges to them, and a code meeting both: Kleene's ψ-form (`kleene_cf`)
 applied to a total dispatcher followed by `universal_code_cf'`.
 
-Reading (cited, not claimed): the textbook ψ-form corollary of the recursion theorem; in the framing
-of Bonfante, Kaczmarek, Marion, "On abstract computer virology from a recursion-theoretic
-perspective", J. Computer Virology 1(3-4), 2006, Def. 2 and Thm 3, such a code is a virus. -/
+Reading (cited, not claimed): the textbook ψ-form corollary of the recursion theorem; the
+computer-virology framing is glossed at the `example` below. -/
+
+-- Reading (cited, not claimed): Bonfante, Kaczmarek, Marion, "On abstract computer virology from a
+-- recursion-theoretic perspective" (Def. 2, Thm 3 numbered as in the authors' preprint held here;
+-- the locator J. Computer Virology 1(3-4), 2006, not checked against the publisher's record), call
+-- `v` a virus w.r.t. a computable `B` when `φ_v(p, x) = φ_{B(v,p)}(x)` (Def. 2). With `B` the s-m-n
+-- map their iteration property (1) makes every program a virus, as their Thm 20 itself records
+-- (a `B` built from s-m-n with `V_B = D`), so the label does not single out the code built here;
+-- shared with their Thm 3 is only the shape, a recursion-theorem fixed point `v` with
+-- `φ_v(p, x) = f(v, p, x)`.
+-- Statement: `curry` is computable and every code `v` meets Def. 2 with `B v p = curry v p`.
+example : Primrec₂ curry ∧ ∀ (v : Code) (p x : ℕ), eval v (Nat.pair p x) = eval (curry v p) x :=
+  ⟨primrec₂_curry, fun v p x => (cf_eval_curry v p x).symm⟩
 
 /-- `Statement:` `SelfPrints` with `encodeCode`: channel `0` returns the code's own number. -/
 def SelfPrintsCF (c : Code) : Prop :=
@@ -1514,8 +1525,9 @@ open ZeroParadox
 #print axioms zero_selfPrints_not_universal
 #print axioms universal_not_selfPrints_cf
 #print axioms unshifted_incompatible
--- Mathlib constants that entries above share a type with, then the corpus original
--- `selfref_universal_exists`.
+-- Mathlib constants that entries above share a type with (for the biconditional
+-- `Nat.Partrec.Code.exists_code`, its forward direction only: `cf_exists_code_mp`), then the corpus
+-- original `selfref_universal_exists`.
 #print axioms Nat.Primrec.casesOn'
 #print axioms Nat.Partrec.Code.exists_code
 #print axioms Nat.left_le_pair
