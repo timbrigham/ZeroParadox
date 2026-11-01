@@ -435,7 +435,7 @@ example : ∀ (β : Type) (M : ZeroParadox.Motion β), M.RegisteredDecidable :=
 -- Reading (cited, not claimed): PRIOR ART, Diaconescu's argument as in the Rocq standard library,
 -- `theories/Logic/Diaconescu.v` Part A, section `PredExt_RelChoice_imp_EM`, which the file marks "kept
 -- for backwards compatibility" (`pred_ext_and_rel_choice_imp_EM`; the current Part A theorem
--- `prop_ext_and_rel_choice_imp_EM` uses other classes), on that section's two classes
+-- `prop_ext_and_rel_choice_imp_EM` uses the pairs `(True, P)`, `(P, True)`), on that section's two classes
 -- `b = true ∨ p`, `b = false ∨ p`, with a selector given as data; an instance of theirs, not a
 -- generalization (`ZeroParadox/DieCannotBe.lean` § X).
 #check @ZeroParadox.Motion.em_of_selectedData

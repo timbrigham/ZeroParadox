@@ -103,16 +103,16 @@ example {α : Type} (f : α → α) : IsIdempotentElem (show Function.End α fro
 -- (p. 26). Neither is imposed here. No counterpart of the switches was located in these two sources
 -- as of 2026-10-18 (UP is total in both; their text, searched for "partial", "loop" and "cycle", has
 -- no hit bearing on a switch); the dated search for the pair is in `LEAN_CUSTOM_REGISTRY.md`. The
--- loop/climb split as a named pair, not located closer than Meseguer and R. Diaconescu as of
--- 2026-10-31, searched as follows: theoremsearch only (its null is uninformative on its own), three
--- phrasings varied by axis, verbatim: "a rewrite step from a normal form followed by normalization
+-- loop/climb split has a standard name on transitions: within a corner, labelling each point by its UP
+-- value, a loop step is a stutter step (Sharma, arXiv:1210.0408, Def. 5, p. 4: "Transition s → s′ ...
+-- is a stutter step if L(s) = L(s′)"), and a climb step is one that is not; UP is partial here, where a
+-- Kripke labelling is total. Located 2026-10-31 by theoremsearch only (its null is uninformative on
+-- its own), three phrasings varied by axis, verbatim: "a rewrite step from a normal form followed by normalization
 -- returns to the same normal form or reaches a different one" (rewriting vocabulary); "after one
 -- rule application and renormalization the normal form never returns to the original normal form"
 -- (polarity: the wording if the split were refused); "stuttering steps versus visible steps of a
--- transition system on equivalence classes of states" (concurrency vocabulary). The third returned
--- stutter-step and stuttering-equivalence definitions (a transition whose two ends carry one label),
--- the nearest vocabulary located for the loop read on transitions between landings; none was
--- retrieved, so none is cited. No web search is recorded for this survey.
+-- transition system on equivalence classes of states" (concurrency vocabulary); the third returned
+-- Sharma's definition, retrieved and read at the page cited. No web search is recorded.
 -- Reading: the adjoined-points switch is a CHOICE OF CARRIER: `Option σ` adjoins one point and
 -- `Option (Option σ)` two (the `TriStep` example below). `Pointed` and `Bipointed` carry
 -- distinguished points, not adjoined ones, and `Bipointed`'s two may coincide.
@@ -221,9 +221,10 @@ example : ∃ M : ZeroParadox.Motion (Fin 4),
 -- no loop (`not_loop_of_agree`), and the legs of `UpAndOver.toMotion`, whose OVER is every cover of the
 -- carrier (one chosen wiring, § XIX `cover_overs_differ`), agree (`toMotion_agree`), so that motion climbs
 -- and never loops (`toMotion_climb`, `toMotion_not_loop`). `phaseBelowCoverMotion` climbs
--- (§ XXIII). On the ℕ∞ model both wirings below loop: wiring one (UP the join with `c`, OVER the scale step) if
--- `c ≠ ⊤` of `ℕ∞`; wiring two (UP constant ⊤ of `ℕ∞`, OVER the join step) with no use of the join,
--- since the always-true step loops there too (the CONTROL after the wirings). In each wiring, in ℕ∞'s
+-- (§ XXIII). On the ℕ∞ model both wirings below loop: wiring one (UP the join with `c`, OVER the
+-- scale step) if `c ≠ ⊤` of `ℕ∞`; wiring two (UP constant ⊤ of `ℕ∞`, OVER the join step) loops, and
+-- the loop owes nothing specific to the join: with UP constant ⊤ the always-true step loops too (the
+-- last CONTROL of this group, after the crossing-with-no-switch `example`). In each wiring, in ℕ∞'s
 -- own order and in ZP-A's induced order alike, one leg raises and the other lowers (the `example`
 -- after them).
 -- Reading: by the ruling above both kinds are legal up-and-over shapes, and the crossing of the joint
@@ -238,7 +239,7 @@ example : ∃ M : ZeroParadox.Motion (Fin 4),
 -- the crossing; that the joint might fill both roles stays Tim's read. Not claimed here: that the two
 -- roles coincide in general. And not every crossing is a switch of order: the die motion of any
 -- `UpAndOver` fires the corner while its legs agree and oppose in neither the carrier's order nor its
--- dual (the `example` after that CONTROL).
+-- dual (the `example` after that CONTROL), and `UpAndOver` is inhabited (`ordinalUpAndOver`, § V).
 -- Reading: Q1: in the second wiring the loop's landing is the pole, ⊤ of `ℕ∞` (⊥ of the ZP order), which
 -- steps off the landings and is sent back to itself. Q2: run backwards (`reverse`, which keeps UP), a
 -- loop is a point `b ≠ y` from which OVER and UP both reach the landing `y`, and a climb one from which
@@ -1240,7 +1241,7 @@ example (h : ∀ (α : Type) (M : ZeroParadox.Motion α), M.SelectedData) :
 -- `PredExt_RelChoice_imp_EM`, which the file marks "kept for backwards compatibility"
 -- (`pred_ext_and_rel_choice_imp_EM`, through `AC_bool_subset_to_bool`, a functional relation choosing
 -- in every inhabited subset of `bool`); the current Part A theorem, `prop_ext_and_rel_choice_imp_EM`,
--- uses the classes `(True, P)` and `(P, True)` instead. The file credits Diaconescu 1975 and Lacas and
+-- uses the pairs `(True, P)` and `(P, True)` instead. The file credits Diaconescu 1975 and Lacas and
 -- Werner 1999. Run on the data side: there relational choice, a `Prop`, gives excluded middle; here a
 -- selector given as data gives the fragment (the `example` above) and excluded middle directly
 -- (`Motion.em_of_selectedData`, next line), the latter on that section's own two classes
@@ -1766,9 +1767,8 @@ example (h : ∀ (β : Type) [PartialOrder β] [OrderBot β], ZeroParadox.BotCov
 -- same principle by the set searched, "For X finite this is trivial, and for X = ℕ, this is LPO",
 -- and exhibits infinite sets on which it holds, the first being ℕ∞ (`NInf.omniscient`, § XXVII).
 -- LPO and weak excluded middle are not shown comparable here: the model over ℝ shows that LPO does
--- not imply weak excluded middle (`ZeroParadox/Category/LawvereTaboo.lean` § V, last Reading), and the
--- converse was not
--- settled from the sources read.
+-- not imply weak excluded middle (`ZeroParadox/Category/LawvereTaboo.lean` § V, last Reading), and
+-- the converse was not settled from the sources read.
 -- Statement: `Prop`, UP double negation `p ↦ ¬¬p` (total, so registration is free,
 -- `registeredDecidable_of_upTotal`), OVER negation `p → ¬p`: a decidable proposition is a landing.
 example (p : Prop) [Decidable p] :
@@ -3576,7 +3576,9 @@ example : (∀ a b, (ZeroParadox.Motion.ofFun (fun y : ℤ_[2] => 2 * y)).revers
       (FiniteMultiplicity.of_prime_left hp hp.ne_zero).emultiplicity_self, add_comm]
   exact ⟨hd, ZeroParadox.Motion.rank_eq_top_of_cycle _ hd
     (Relation.TransGen.single (show (0 : ℤ_[2]) = 2 * 0 by rw [mul_zero]))⟩
--- Statement: and it drops by exactly one along each such step, by the same rewrite.
+-- Statement: and `emultiplicity 2 b + 1 = emultiplicity 2 a` along each such step, by the same
+-- rewrite: off ℤ_[2]'s 0 a drop of exactly one; on the self-step at 0, whose order is ⊤ of `ℕ∞`,
+-- the equation holds as `⊤ + 1 = ⊤` and nothing drops.
 example : ∀ a b, (ZeroParadox.Motion.ofFun (fun y : ℤ_[2] => 2 * y)).reverse.step a b →
     emultiplicity (2 : ℤ_[2]) b + 1 = emultiplicity (2 : ℤ_[2]) a := by
   have hp : Prime (2 : ℤ_[2]) := by
