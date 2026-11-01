@@ -105,7 +105,8 @@ open ZeroParadox
     the construction of fields of fractions from integral domains so that wheels are obtained
     instead of fields"*; and *"In this paper, we generalize Setzer's construction, so that it
     applies not only to integral domains, but to any commutative semiring."* This file follows
-    Carlström's Definition 1.1, which is the general one.
+    Carlström's Definition 1.1, which is the general one. (`[Set97]` is Carlström's key for
+    A. Setzer, *Wheels* (draft), 1997, in his bibliography.)
 
     The axiom fields below are exactly Carlström's eight Definition 1.1 axioms, with his two
     "commutative monoid" axioms unbundled into their separate equational laws:
@@ -652,8 +653,9 @@ class WheelValuationStructure (L : Type*) extends CommRing L where
 **Nothing depends on this class.** Outside this gauge no theorem takes `[WheelValuationStructure L]`
 and no instance is registered; the wheel is carried by `Algebra/WheelFrac.lean`'s `instWheel` over
 `[CommRing A]` plus a submonoid. So the defect below is preventive, not propagating, and the
-published ZP-J addendum already says so — *"Ring structure is an input, not a conclusion"*,
-`scripts/build_zpj_wheel_addendum.py:264`, the tracked script `register.md` fingerprints.
+published ZP-J addendum already says so — *"Ring structure is an input, not a conclusion"*
+(`ZP-J_Wheel_Addendum.pdf`, Section V, built by `scripts/build_zpj_wheel_addendum.py`, the tracked
+script `register.md` fingerprints).
 Mirrors `Computability/SelfApp.lean`'s `trivialSelfApp`: a warning comment is not checkable,
 an inhabiting term is. -/
 

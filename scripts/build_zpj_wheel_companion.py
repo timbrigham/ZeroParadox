@@ -1,13 +1,13 @@
 """
 Build ZP-J Wheel Illustrated Companion
-Version 1.6 | September 2026
+Version 1.7 | October 2026
 """
 
 import os
 from zp_utils import *
 from reportlab.graphics.shapes import Drawing, Line, String, Circle, Ellipse
 
-VERSION = '1.6'
+VERSION = '1.7'
 FIRST_RELEASED = 'June 2026'
 
 
@@ -107,9 +107,9 @@ def build():
               'algebraic structure (Carlstr&#246;m, 2001) in which dividing by zero is a '
               'defined operation rather than an error. Every formal claim here restates a '
               'theorem already proved in the technical document and its Lean source '
-              '(Wheel.lean, WheelFrac.lean). Analogies are included to build '
-              'intuition, not as proof claims. Consult the addendum for the authoritative '
-              'mathematics.', CS['disc'])]
+              '(ZeroParadox/Algebra/Wheel.lean, ZeroParadox/Algebra/WheelFrac.lean). Analogies are '
+              'included to build intuition, not as proof claims. Consult the addendum for the '
+              'authoritative mathematics.', CS['disc'])]
 
     # ── The Problem With Dividing by Zero ────────────────────────────────────
     E.append(Paragraph('The Problem With Dividing by Zero', CS['h1']))

@@ -152,9 +152,9 @@ theorem inf_ne_bot (h0 : (0 : A) ∉ S) : wheelInf (W := WheelFrac S) ≠ wheelB
 /-! ## § The involutive fork, and why it does NOT unify with the ordered μ/ν fork
 
 `fixed_pole_forces_collapse` below witnesses the involutive-fork-with-a-fixed-pole row of the wall
-taxonomy: **if the involution fixes the pole, the two poles coincide.** ⚠ That is a much SMALLER
-statement than Carlström Prop. 4.4 off the same antecedent — do not present the collapse as a framework
-finding. Why the two forks are different species, the prior art and the standard names: `ZeroParadox/Algebra/WheelFrac.md`. -/
+taxonomy (`ZeroParadox/Settheory/Wall.md`): **if the involution fixes the pole, the two poles
+coincide.** ⚠ That is a much SMALLER statement than Carlström Prop. 4.4 off the same antecedent — do
+not present the collapse as a framework finding. Why the two forks are different species, the prior art and the standard names: `ZeroParadox/Algebra/WheelFrac.md`. -/
 
 /-- An **involutive fork**: an involution `dual` together with two poles it swaps. The wheel / Riemann
     fork (`z ↦ 1/z` swapping `0 ↔ ∞`) is the motivating instance.
@@ -212,12 +212,21 @@ theorem wheelFrac_fork_open (h0 : (0 : A) ∉ S) :
   have hs'0 : s' = 0 := by simpa using e1.symm
   exact h0 (hs'0 ▸ hs')
 
-/-- Restated through the abstraction: the wheel-of-fractions `InvolutiveFork` is NOT collapsed. So
-    `InvolutiveFork` is a non-vacuous abstraction with a concrete, provably-open, choice-free
-    instance — it is not a gauge that everything satisfies. -/
+/-- Restated through the abstraction: the wheel-of-fractions `InvolutiveFork` is NOT collapsed, so
+    `Collapsed` is not a property every `InvolutiveFork` has: this instance is provably open and
+    choice-free. `InvolutiveFork α` itself is inhabited on every inhabited `α` and on no empty one
+    (the two `example`s after this theorem). -/
 theorem wheelFork_not_collapsed (h0 : (0 : A) ∉ S) :
     ¬ (wheelFork (WheelFrac S)).Collapsed :=
   wheelFrac_fork_open S h0
+
+-- Statement: every inhabited type carries an `InvolutiveFork` (the identity, both poles at one point).
+example {α : Type*} (a : α) : InvolutiveFork α :=
+  ⟨id, fun _ => rfl, a, a, rfl⟩
+
+-- Statement: control, no empty type carries one.
+example {α : Type*} [IsEmpty α] : IsEmpty (InvolutiveFork α) :=
+  ⟨fun F => IsEmpty.false F.pole₀⟩
 
 /-- **The obstruction, Lean-witnessed.** An involutive fork whose pole is a FIXED point of the
     involution — the ordered-fork condition — is necessarily COLLAPSED. Hence the involutive and

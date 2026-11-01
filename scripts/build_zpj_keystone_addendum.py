@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-J Keystone Addendum: The Diagonal Fixed Point, the Lawvere Face-Split, and the Well-Foundedness Boundary
-Version 1.26 | October 2026
+Version 1.27 | October 2026
 Taylor (Well-founded coalgebras and recursion) is cited without year or venue: the copy on file
 carries neither. The gap stays open until a verified bibliographic record supplies them.
 Reads after ZP-J Self-Reference.
@@ -10,7 +10,7 @@ import os
 from zp_utils import *
 from reportlab.platypus import KeepTogether
 
-VERSION = '1.26'
+VERSION = '1.27'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard: route all bare Paragraph() text through Unicode-to-entity conversion ──
@@ -145,7 +145,7 @@ def build():
         'fixed point); Lawvere\'s are <i>derived</i> from a surjection. So the question is '
         'whether each face supplies that surjection. The verdict is face-dependent.'))
     E.append(KeepTogether(result_box(
-        'In Set: no face is a Lawvere instance (Lawvere.lean)',
+        'In Set: no face is a Lawvere instance (ZeroParadox/Category/Lawvere.lean)',
         [
             'For any nontrivial type, a Lawvere witness cannot exist: it would force every '
             'endofunction to have a fixed point, impossible once there are two distinct '
@@ -228,7 +228,7 @@ def build():
         'self-loop, where recursion cannot reach) to the well-founded ascent (the &#949;<sub>0</sub> '
         'ordinal tower, recursively generated). The Zero Paradox formalizes this at two levels.'))
     E.append(KeepTogether(result_box(
-        'Relation level (Boundary.lean)',
+        'Relation level (ZeroParadox/Multihomed/Boundary.lean)',
         [
             'floor_not_wellFounded &#8212; the self-application floor is non-well-founded '
             '(&#8869; self-loops under selfApp). Fully axiom-free.',
@@ -240,7 +240,7 @@ def build():
     )))
     E.append(sp(4))
     E.append(KeepTogether(result_box(
-        'Both levels at once (BoundaryBridge.lean)',
+        'Both levels at once (ZeroParadox/Multihomed/BoundaryBridge.lean)',
         [
             'snap_boundary_two_registers &#8212; the crossing witnessed in two registers at '
             'once: the relation/carrier level above, and ZP-P\'s categorical &#956;/&#957; '
