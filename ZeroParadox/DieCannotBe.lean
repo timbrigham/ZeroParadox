@@ -4611,17 +4611,32 @@ example (L : ZeroParadox.NInf → Ordinal.{0})
     | some k => exact h1 k
   · intro d
     exact @ZeroParadox.NInf.wlpo_of_discrete_tag Ordinal.{0} d L fun x => by rw [h2]; exact h3 x
--- Statement: CONTROL: under `classical`, WLPO holds with no `L` at all, so (vi) is stated with its
--- decidable equality as a hypothesis.
+-- Statement: CONTROL: under `classical`, WLPO holds with no `L` at all.
 example : ZeroParadox.WLPO := by
   classical
   exact fun r => em _
+-- Statement: CONTROL: a decidable equality on `Ordinal.{0}` gives weak excluded middle with no `L`,
+-- deciding `⨆ _ : p, 1 = 0`; so (vi) also holds with no `L`, and its content is its hypothesis.
+example (d : DecidableEq Ordinal.{0}) : ZeroParadox.WeakExcludedMiddle := by
+  intro p
+  let o : Ordinal.{0} := ⨆ _ : p, (1 : Ordinal.{0})
+  have hb : BddAbove (Set.range fun _ : p => (1 : Ordinal.{0})) := Ordinal.bddAbove_of_small
+  rcases d o 0 with h | h
+  · refine Or.inr fun hnp => h ?_
+    have : IsEmpty p := ⟨hnp⟩
+    simp [o]
+  · refine Or.inl fun hp => ?_
+    have h1 : (1 : Ordinal.{0}) ≤ o := le_ciSup hb hp
+    rw [h] at h1
+    exact absurd h1 (by simp)
 -- Statement: `epsilonZero` and `fundamentalSeq`, named in `hL` and in (i), (iii), (iv) and (v), each
 -- depend on `Classical.choice`; their footprints are printed next.
 #print axioms ZeroParadox.epsilonZero
 #print axioms ZeroParadox.fundamentalSeq
 -- Reading: in (vi) `L` tags `NInf.infty` through a decidable equality on `Ordinal.{0}`, as
--- `wlpo_of_tag` tags it through `Option ℕ`'s; `L` is not claimed to be computable or choice-free.
+-- `wlpo_of_tag` tags it through `Option ℕ`'s; unlike `Option ℕ`'s, that decidable equality gives
+-- weak excluded middle by itself (the CONTROL above), so (vi) holds with no `L`. `L` is not claimed
+-- to be computable or choice-free.
 -- Reading (cited, not claimed): Escardó, preprint of JSL 78(3) (2013), § 11, p. 19: Coquand,
 -- Hancock and Setzer's limit structures reach `γ`-transfinite iteration for any `γ < ε₀` in the
 -- presence of simple types, and Escardó infers from that ("The argument of the first paragraph
