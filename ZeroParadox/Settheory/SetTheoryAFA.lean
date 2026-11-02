@@ -22,7 +22,9 @@ such bottom elements across instantiations is addressed in ZPI.
 `Statement:` in a ZP-A lattice with `AFAStructure`, any Quine atom (self-containing, and the only such) is ⊥ (`t_exec`,
 from `bot_self_mem`; no axioms), and CC-1 is restated: `cc1_derived` with `t_exec_iff` makes a Quine-atom start and a ⊥
 start one condition. On a carrier with a second point it is not forced (`ZeroParadox/Settheory/OntBridge.lean`).
-`Reading:` the role encodes the ZF+AFA set Q = {Q}; that ⊥ is that set is CC-2's commitment. (NO-GO gauge below.)
+`Reading:` the role encodes the ZF+AFA set Q = {Q}; no equation of ⊥ with that set is stated (it would be ill-typed).
+In the die the Quine atom (CC-2) is the role `Motion.SelfOnlyAt`, occupied chart by chart
+(`ZeroParadox/Settheory/QuineDichotomy.lean`). (NO-GO gauge below.)
 -/
 
 namespace ZeroParadox

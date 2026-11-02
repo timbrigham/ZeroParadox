@@ -29,8 +29,10 @@ why I keep coming back to it.
 ## Formal Overview
 For `q` in a `ZPSemilattice L` with `KleeneStructure L`, T-COMP (`t_comp`, proof term `t_exec_triple_iff`):
 Quine atom ↔ (`q = bot` ∧ join identity); `da2_bottom_characterization` makes the last two equivalent.
-`botCode_is_quine` is a requirement; reading `botCode` as the computational face of ⊥ of `L` is the
-commitment. Footprints: `ZeroParadox/Computability/Kleene.md`.
+`botCode_is_quine` is a requirement. No code is equated with ⊥ of `L`: under the `eval` step no
+single code occupies the die's Quine-atom role, and for computable `eval`-respecting maps a class of
+codes up to equal `eval` does (§ IX-b); that ⊥ executes is the
+occurrence commitment. Footprints: `ZeroParadox/Computability/Kleene.md`.
 -/
 
 namespace ZeroParadox
@@ -123,9 +125,10 @@ theorem computational_quine_exists : ∃ c : Code, IsComputationalQuine c :=
     identification unstatable.
     Uniqueness in ZP-K is inherited from ZP-J (set-theoretic side via T-EXEC):
     any element satisfying IsQuineAtom equals ⊥ — this is kleene_quine_is_bot.
-    The framework reads the computational witnesses (botCode) as naming ⊥. That reading
-    is the KleeneStructure commitment; it is not established by behavioral equality of
-    codes, and it is not a Lean identity — see the type-boundary note above. -/
+    No code (botCode included) is read as naming ⊥: each code chart has its own
+    occupancy of the die's Quine-atom role, step by step (§ IX, § IX-b), and no Lean identity between a code and
+    ⊥ is stated — see the type-boundary note above. That ⊥ executes is the occurrence
+    commitment, not established by behavioral equality of codes. -/
 
 /-! ## § II. KleeneStructure — Bridging Computation and AFA -/
 
@@ -133,19 +136,23 @@ theorem computational_quine_exists : ∃ c : Code, IsComputationalQuine c :=
 
 What the class's fields assert, and that none relates `botCode` to `bot`: the
 `KleeneStructure.botCode_is_quine` entry of `ZeroParadox/Computability/ComputationCannotBe.lean` § IV.
-The `example` after `machinePhaseKleene` (§ V) is an instance with `botCode := Code.const 0`. So the
-identification is the KleeneStructure commitment, not data the class carries, and
-`da1_closed_concrete`, which proves `IsQuineAtom (bot : MachinePhase)` and nothing computational, does
-not establish it. The form for carrying a commitment as an explicit hypothesis: `CLAUDE.md` § R-COMMIT. -/
+The `example` after `machinePhaseKleene` (§ V) is an instance with `botCode := Code.const 0`. So the class carries no
+identification, and none is committed to: the identity reading is retired in favour of per-chart
+occupancy (§ IX), and `da1_closed_concrete`, which proves `IsQuineAtom (bot : MachinePhase)` and nothing
+computational, does not supply one. The form for carrying a commitment as an explicit hypothesis:
+`CLAUDE.md` § R-COMMIT. -/
 
 /-- A ZP-A semilattice has KleeneStructure if it carries an AFAStructure and
     additionally names a `Code` satisfying `IsComputationalQuine`.
 
-    **The identification it is built for is the framework's COMMITMENT, and no field
-    asserts it:** that the AFA Quine atom and the Kleene computational quine name the same
-    structural property — the reading "botCode is the code that IS its own program,
-    the universal Turing machine in ground state, and this is the computational
-    expression of `bot_self_mem`". Nothing in this file derives that identification.
+    **The reading it was built for splits in two, and no field asserts either half:** that
+    `botCode` is ⊥'s computational witness — "botCode is the code that IS its own program, the
+    universal Turing machine in ground state, and this is the computational expression of
+    `bot_self_mem`". Its IDENTITY half is retired: no code is equated with ⊥, and each code chart
+    has its own occupancy of the die's Quine-atom role `Motion.SelfOnlyAt`, step by step — no single
+    code under `evalStepMotion F` for any `F` (`evalStepMotion_not_selfOnlyAt`), a class of codes up
+    to equal `eval` in the quotient, for computable `eval`-respecting maps (`codes_vs_classes`). Its RUNNING
+    half stays a commitment: that ⊥ actually executes is the occurrence commitment.
     For a generic `L` no Lean `=` between `botCode` (a `Code`) and `bot` (an element of `L`)
     typechecks; at `L := Code` one does: the `example`s after `KleeneStructure.botCode_is_quine`
     in `ZeroParadox/Computability/ComputationCannotBe.lean` § IV.
@@ -159,24 +166,23 @@ not establish it. The form for carrying a commitment as an explicit hypothesis: 
       no content beyond the inherited field.
     * The AFA side has exactly one self-containing element (`quine_unique`); the
       computational side has infinitely many fixed points (`infinite_quine_family`).
-      The commitment relates a unique element to a family, and § VI says what that
-      family is. -/
--- [ZP-CUSTOM] no Mathlib analog | reason: Bridges AFAStructure (set-theoretic self-containment) with Mathlib's computability library (Nat.Partrec.Code). No Mathlib typeclass connects AFA and Code. KleeneStructure is built for the reading that the AFA Quine atom and the Kleene computational Quine (∃ c, eval c = f c) name the same structural property — this identification is the motivating commitment, not a derived theorem, and no field asserts it.
+      No identity relates the unique element to the family; § VI says what that family
+      is. -/
+-- [ZP-CUSTOM] no Mathlib analog | reason: Bridges AFAStructure (set-theoretic self-containment) with Mathlib's computability library (Nat.Partrec.Code). No Mathlib typeclass connects AFA and Code. KleeneStructure was built for the reading that botCode is ⊥'s computational witness; no field asserts it, its identity half is retired (no code is equated with ⊥), and its running half, that ⊥ executes, is the occurrence commitment. The AFA Quine atom and the Kleene computational Quine (∃ c, eval c = f c) are compared through the die's Quine-atom role (§ IX), not through an identity: no single code occupies it under `evalStepMotion F` for any F (`evalStepMotion_not_selfOnlyAt`); a class of codes up to equal eval does, for computable eval-respecting maps (`codes_vs_classes`); and a self-printing universal code does under `selfPrintsStepMotion selfPrintOrDelegate` (`exists_selfPrintsStepMotion_selfOnlyAt`).
 class KleeneStructure (L : Type*) [ZPSemilattice L] extends AFAStructure L where
-  /-- The code the framework nominates as ⊥'s computational witness. Nothing here
-      distinguishes it: it is whatever code the instance supplies. -/
+  /-- A code the instance supplies. Nothing here distinguishes it, and no equation relates it
+      to ⊥ of `L` (the identity reading is retired, class docstring). -/
   botCode : Code
   /-- botCode satisfies `IsComputationalQuine` — a periodicity condition, which constant
       codes also satisfy (`hconst_quine`, a `have` inside `infinite_quine_family`, § VI). Reading it as "the computational
-      expression of bot_self_mem" is the KleeneStructure commitment, not a consequence of this
-      field. -/
+      expression of bot_self_mem" is not a consequence of this field, and the identity half of
+      that reading is retired (class docstring). -/
   botCode_is_quine : IsComputationalQuine botCode
   /-- Restates the inherited `AFAStructure` field `bot_self_mem`; it records the intent
       of the bridge and adds no content beyond what `extends AFAStructure L` already
       supplies.
-      The intended reading — ⊥ = {⊥} in set theory alongside
-      eval botCode = selfApply botCode in computation — is the commitment. The two are
-      not equated: one is about an element of `L`, the other about a `Code` (when an `=`
+      The intended reading set `selfMem bot` beside `eval botCode = selfApply botCode`;
+      the two are not equated: one is about an element of `L`, the other about a `Code` (when an `=`
       between them typechecks: `ZeroParadox/Computability/ComputationCannotBe.lean` § IV). -/
   bot_self_mem_from_kleene : AFAStructure.selfMem (bot : L)
 
@@ -219,9 +225,10 @@ theorem t_comp {L : Type*} [ZPSemilattice L] [KleeneStructure L] (q : L) :
     `KleeneStructure` hypothesis is inert *on this proof route* — it supplies the
     `AFAStructure` this inherits from, and nothing else is used. It is not absent from
     the axiom footprint, which follows the statement (see the footprint note in
-    `ZeroParadox/Computability/Kleene.md`). That the Kleene fixed point and the AFA Quine atom
-    "identify the same element" is the class's motivating commitment (header, § II),
-    not what this theorem shows. -/
+    `ZeroParadox/Computability/Kleene.md`). No equation relates `botCode` to this
+    element (the identity reading is retired, § II); under the `eval` step no single code
+    occupies the die's Quine-atom role, and for computable `eval`-respecting maps a class of
+    codes does (`codes_vs_classes`, § IX-b). -/
 theorem kleene_quine_is_bot {L : Type*} [ZPSemilattice L] [KleeneStructure L]
     (q : L) (hq : IsQuineAtom q) : q = bot :=
   t_exec q hq
@@ -245,7 +252,7 @@ theorem roger_fixed_point_exists (f : Code → Code) (hf : Computable f) :
     them. Nothing computational appears in the statement or the proof.
 
     The reading "if ⊥ executes at all, it is its own executor" (ZP-E, DA-1 Path 1) is the
-    framework's interpretation of `bot_self_mem` under the KleeneStructure commitment.
+    framework's interpretation of `bot_self_mem`.
     That the configuration reaching P₀ is running is the occurrence commitment, which
     DA-1 consumes (ZP-E). Neither is a separate Lean theorem. -/
 theorem da1_computational {L : Type*} [ZPSemilattice L] [KleeneStructure L] :
@@ -318,8 +325,8 @@ instance machinePhaseAFA : AFAStructure MachinePhase where
     `kleene_fixed_point_exists` (Kleene's second recursion theorem). It is not a
     distinguished code, and the predicate it satisfies is a periodicity condition that
     constant codes also meet (§ VI). Reading it as "the code that IS its own program,
-    the computational expression of ⊥ = {⊥}" is the KleeneStructure commitment, which no
-    field asserts, not a property this instance establishes. -/
+    the computational expression of `bot_self_mem`" is not a property this instance
+    establishes, and that reading's identity half is retired (§ II). -/
 -- [ZP-CUSTOM] instance: KleeneStructure MachinePhase (noncomputable) | reason: botCode chosen via Classical.choose — it names SOME computational quine and not a distinguished one. isComputationalQuine_undecidable says the MEMBERSHIP PREDICATE is not a ComputablePred, which is why nothing can pin down which code was chosen — it does NOT say no algorithm names a witness, and the constant codes are witnesses. The noncomputable marker comes from this instance's choice of botCode; a computable instance with a constant code also satisfies the class, so the noncomputable marker belongs to the instance, not to DA-1's computational path.
 noncomputable instance machinePhaseKleene : KleeneStructure MachinePhase where
   botCode               := Classical.choose computational_quine_exists

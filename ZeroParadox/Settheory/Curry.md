@@ -23,8 +23,8 @@ comprehension / a reflexive object is inconsistent (the type-level cousin is `re
 Curry is a **wall / μ** face — self-reference that cannot be internalized — and the most violent form:
 not "no truth value" but "every value at once". Its floor dual (ν) is the Quine-atom role in the
 die, `SelfOnlyAt`, a point stepping to itself and to nothing else: occupied in the coalgebra chart
-(`cofix_quine_role_occupied`, `ZeroParadox/Settheory/Coalgebra.lean`; a one-point chart,
-`cofix_subsingleton`), where self-reference closes without exploding, and unoccupied in `ZFSet` (`zfset_quine_role_unoccupied`,
+(`cofix_quine_role_occupied`, `ZeroParadox/Settheory/Coalgebra.lean`; a one-point chart: `cofixSelf`
+exists and `cofix_subsingleton` allows at most one), where self-reference closes without exploding, and unoccupied in `ZFSet` (`zfset_quine_role_unoccupied`,
 `ZeroParadox/Settheory/Wall.lean`).
 
 ## Honest delta
@@ -36,4 +36,6 @@ for an arbitrary sentence A, a sentence C with ⊢ C ↔ (C ⇒ A); with his C r
 `C`, that has the shape of `curry_paradox`'s hypothesis `p ↔ (p → C)`, and he derives A from it. He names it "Löb's Paradox" and remarks that it
 "is related to Curry's paradox", the only mention of Curry in that copy (text search, 2026-11-01).
 Lawvere (1969) treats Cantor, Russell, Tarski and an incompleteness theorem; Curry was not located in our
-copy of his paper (text search of the TAC reprint, 2026-11-01). Axiom-free.
+copy of his paper (text search of the TAC reprint, 2026-11-01). The four declarations of
+`ZeroParadox/Settheory/Curry.lean` (`curry_paradox`, `liar_is_curry_at_false`, `curry_from_naming`,
+`curry_no_bottom`) are axiom-free.

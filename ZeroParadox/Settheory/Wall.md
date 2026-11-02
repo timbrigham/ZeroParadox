@@ -14,19 +14,21 @@ Across five separate pushes (fork unification, the Quine atom CC-2, MC-1, "reali
 the faithfulness criterion) the framework keeps landing on the SAME boundary: a structural shadow (a
 function fixed point, below) that Lean hosts, plus a metatheoretic residue, a statement about the system
 rather than a Lean proposition (see the fences). The literal is refuted in the well-founded `ZFSet`
-chart (`no_quine_atom` and the `x ≠ {x}` `example` after it in the Lean file). Stated in the die
-(`ZeroParadox/Die.lean`), the Quine atom is a ROLE, `SelfOnlyAt`: a point that steps to itself and to
-nothing else; in Aczel's terms, the one-node graph with a single self-loop, which pictures Ω = {Ω}
-(Aczel 1988, Ex. 1.3, p. 6), and a set stepping to its members is his system V (p. 13). The graph chart
-places it too (`ZeroParadox/Settheory/HypersetOrder.lean` § VII: `omegaLoop_selfOnlyAt`, and
-`wrapMotion_quot_selfOnlyAt_iff` up to bisimulation). `Reading:` CARRIER — of the two charts below, one occupies the role and
-one provably does not. In `ZFSet`, where a
+chart (`no_quine_atom` and the `x ≠ {x}` `example` after it in the Lean file). The die
+(`ZeroParadox/Die.lean`) defines the predicate `SelfOnlyAt`, a point that steps to itself and to nothing
+else; the corpus reads the Quine atom as that ROLE, and which charts occupy it are the theorems below. In
+Aczel's terms it is the one-node graph with a single self-loop, which under AFA pictures Ω = {Ω}
+(Aczel 1988, Ex. 1.3, p. 6); a set stepping to its members is his system V (p. 13), whose sets are those
+of his own set theory, not Mathlib's well-founded `ZFSet`. The graph chart places it too
+(`ZeroParadox/Settheory/HypersetOrder.lean` § VII: `omegaLoop_selfOnlyAt`, and, up to bisimulation,
+`wrapMotion_omegaLoop_selfOnlyAt`, an instance of `wrapMotion_quot_selfOnlyAt_iff`). `Reading:` CARRIER —
+of the two charts below, one occupies the role and one provably does not. In `ZFSet`, where a
 set steps to its members, a set occupies it iff x = {x} (`zfset_selfOnlyAt_mem_iff`) and none does
 (`zfset_quine_role_unoccupied`); in the coalgebra chart `Cofix idPF_Coalgebra.Obj`, where a point steps
 to its children, `cofixSelf` occupies it (`cofix_quine_role_occupied`,
-`ZeroParadox/Settheory/Coalgebra.lean`). That chart has one point (`cofix_subsingleton`), so its
-occupancy is the one-node loop; the contrast it carries is `categorical_fork_strict`. No equation across
-the two carriers is stated. The Lean file represents that boundary as an **object-level theorem**, the
+`ZeroParadox/Settheory/Coalgebra.lean`). That chart has one point (`cofixSelf` exists, and
+`cofix_subsingleton` allows at most one), so its occupancy is the one-node loop; the contrast it carries
+is `categorical_fork_strict`. No equation across the two carriers is stated. The Lean file represents that boundary as an **object-level theorem**, the
 honest in-kernel face of it.
 
 ## What the wall reduces to (the provable core)
@@ -224,8 +226,10 @@ by accessibility, not by the engine (`selfloop_permitted` / `engine_is_wf_free` 
 
 The failure SIGNATURE changes with the conditions — distinct ways the one self-reference resists
 internalization, not one failure repeated. The formal/metatheoretic frontier is itself part of the map:
-`x∉x`, ε₀∉ONote, no-self-loop are in-kernel; the cross-category identity (MC-1's identity half) and the
-literal AFA universe are metatheoretic-only.
+`x∉x`, ε₀∉ONote, no-self-loop are in-kernel; the cross-category identity (MC-1's identity half) is
+retired as ill-typed, and what relates the charts is stated instead as one die role, which a point of
+each chart occupies or provably none does
+(the Quine-atom role above); the literal AFA universe is metatheoretic-only.
 
 **The computability row is the pivot (2026-06-27).** It is the ONLY framework where the fixed point is
 NOT refuted/unreachable but provably EXISTS — `infinite_quine_family` gives infinitely many. ⚠ **Carry

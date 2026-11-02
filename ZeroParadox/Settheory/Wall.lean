@@ -125,12 +125,16 @@ theorem zfset_quine_role_unoccupied :
     ¬ ∃ x : ZFSet, (Motion.ofTotal id (fun _ => rfl) (fun a b : ZFSet => b ∈ a)).SelfOnlyAt x :=
   fun ⟨x, h⟩ => no_quine_atom x h.1
 
--- Statement: with OVER reversed (`a ⟶ b` when `a ∈ b`), `SelfOnlyAt x` is `x ∈ x` and `x` belongs
--- to no other set, a different formula from `x = {x}`; on `ZFSet` neither holds of any set
--- (`no_quine_atom`), so this orientation does not separate them there.
+-- Statement: with OVER reversed (`a ⟶ b` when `a ∈ b`), `SelfOnlyAt x` unfolds, by definition, to
+-- `x ∈ x` and `x` belonging to no other set. Reading: a different formula from `x = {x}`.
 example (x : ZFSet) :
     (Motion.ofTotal id (fun _ => rfl) (fun a b : ZFSet => a ∈ b)).SelfOnlyAt x ↔
       (x ∈ x ∧ ∀ b, x ∈ b → b = x) := Iff.rfl
+-- Statement: and no `ZFSet` occupies it, since none is its own member (`no_quine_atom`); so on
+-- `ZFSet` this orientation does not separate the two formulas.
+example (x : ZFSet) :
+    ¬ (Motion.ofTotal id (fun _ => rfl) (fun a b : ZFSet => a ∈ b)).SelfOnlyAt x :=
+  fun h => no_quine_atom x h.1
 
 /-- **The wall, full strength.** A well-founded relation has no cycle of ANY length: no `x` is reachable
     from itself by one-or-more `r`-steps (`Relation.TransGen r x x`). `wf_no_selfloop` is the n=1 case;

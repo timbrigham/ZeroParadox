@@ -1,5 +1,5 @@
 """
-Build ZP-A Illustrated Companion (v1.12)
+Build ZP-A Illustrated Companion (v1.14)
 Covers: join-semilattice, partial order, Hasse diagram, one-directional transitions,
 monotonicity (T3), bottom-as-constituent (T2), four concrete examples, and CC-2.
 """
@@ -89,7 +89,7 @@ def transition_diagram():
                  fontName='DV-B', fillColor=RED))
     return d
 
-VERSION = '1.12'
+VERSION = '1.14'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -251,29 +251,43 @@ def build():
     E.append(cbody(
         'Every state sits above &#8869;. But what exactly <i>is</i> &#8869;? The standard '
         'answer: the additive identity, the algebraic zero, the starting point. ZP-A '
-        'adds a sharper answer: &#8869; is a <b>Quine atom</b> — a set that equals its '
-        'own singleton.'))
+        'adds a sharper answer in terms of a role, the <b>Quine atom</b> (CC-2): a point that '
+        'steps to itself and to nothing else. Which point fills it depends on the step, '
+        'as the next paragraph details: under a self-application map whose only fixed point is '
+        '&#8869;, &#8869; fills it; under membership, the host&#8217;s own bottom fills it, and that '
+        'is &#8869; of the lattice exactly when the host is built with &#8869; as its bottom, as the '
+        'host built from the lattice&#8217;s AFA structure is (the examples after '
+        'quineAtomHost_quine_role_iff, ZeroParadox/Settheory/QuineDichotomy.lean). In set theory, where a set steps to its '
+        'members, that role is filled by a set that equals its own singleton.'))
     E.append(cbody(
-        'Formally: &#8869; = {&#8869;}. The collection of all objects bearing the structural '
-        'property of &#8869; is &#8869; itself. There is no multiplicity. Infinitely many '
-        'indistinguishable &#8869; instances collapse, by set extensionality, into the '
-        'single object &#8869;.'))
+        'Formally, the role is stated in each setting on its own terms rather than as one '
+        'equation. In a lattice given a self-application map whose only fixed point is &#8869; (even '
+        'the constant map to &#8869; qualifies), with that map as the step, &#8869; is the only '
+        'point filling it. With membership as the step, in a host whose bottom is its own only '
+        'member and where no other element is its own only member, that host&#8217;s bottom is the '
+        'only point filling it. No ordinary, well-founded set fills '
+        'it at all. No equation between &#8869; and a set is stated, since the two live in '
+        'different types. Where the role is filled here it is filled once, so there is no '
+        'multiplicity.'))
     E.append(example_box('Why this matters', [
         'Can there be two "copies" of &#8869; that are somehow different? A Quine atom '
         'says no. Any object identical to &#8869; in all structural respects IS &#8869;. '
         'There is nothing external to &#8869; by which to distinguish copies.',
-        'A label requires a labeller outside it. &#8869; = {&#8869;} has no outside. '
+        'A label requires a labeller outside it. A point that steps only to itself has no '
+        'outside. '
         'That rules out an outside executor; it does not by itself make &#8869; run. '
         'That the snap at P&#8320; is an execution rather than a description being read is '
         'what the occurrence commitment asserts (ZP-E), and DA-1 consumes it.',
     ]))
     E.append(remember_box(
-        'Technical note (CC-2): the Quine atom property requires dropping the classical Axiom '
-        'of Foundation (which rules out self-containing sets); the framework replaces it with '
-        'Aczel\'s Anti-Foundation Axiom (AFA), one of several anti-foundation axioms that admit '
-        'such a set. The Axiom of Choice is not assumed. This is a framework-level commitment — A1&#8211;A4 '
-        'are unaffected, but it changes what &#8869; is allowed to be. '
-        'For a plain-language explanation of why Foundation is incompatible with &#8869; = {&#8869;}, '
+        'Technical note (CC-2): for a set to fill the Quine-atom role, the host set theory must '
+        'drop the classical Axiom of Foundation (which rules out self-containing sets, so under it '
+        'no set fills the role); the framework replaces it with Aczel\'s Anti-Foundation Axiom '
+        '(AFA), one of several anti-foundation axioms that admit such a set. The Axiom of Choice '
+        'is not assumed. This is a framework-level commitment about the host theory — A1&#8211;A4 '
+        'are unaffected, and no equation makes &#8869; of the lattice a set. '
+        'For a plain-language explanation of why Foundation is incompatible with a set that is '
+        'its own only member, '
         'see the ZP-J Illustrated Companion; for why AFA is adopted rather than forced, see ZP-E '
         'Remark R-AFA.'))
     E.append(sp(8))

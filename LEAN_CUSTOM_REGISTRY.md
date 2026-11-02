@@ -64,7 +64,7 @@ Get-ChildItem ZeroParadox -Recurse -Filter *.lean | Select-String -Pattern '\[ZP
 
 **Relationship to Mathlib:** No Mathlib analog
 
-**Reason:** Bridges `AFAStructure` (set-theoretic self-containment) with Mathlib's computability library (`Nat.Partrec.Code`). No Mathlib typeclass connects AFA and `Code`. `KleeneStructure` is built for the reading that the AFA Quine atom and the Kleene computational Quine (`∃ c, eval c = f c`) name the same structural property — this identification is the motivating commitment, not a derived theorem, and no field asserts it.
+**Reason:** Bridges `AFAStructure` (set-theoretic self-containment) with Mathlib's computability library (`Nat.Partrec.Code`). No Mathlib typeclass connects AFA and `Code`. `KleeneStructure` was built for the reading that `botCode` is ⊥'s computational witness; no field asserts it, its identity half is retired (no code is equated with ⊥), and its running half, that ⊥ executes, is the occurrence commitment. The AFA Quine atom and the Kleene computational Quine (`∃ c, eval c = f c`) are compared through the die's Quine-atom role (§ IX), not through an identity: no single code occupies it under `evalStepMotion F` for any F (`evalStepMotion_not_selfOnlyAt`); a class of codes up to equal eval does, for computable eval-respecting maps (`codes_vs_classes`); and a self-printing universal code does under `selfPrintsStepMotion selfPrintOrDelegate` (`exists_selfPrintsStepMotion_selfOnlyAt`).
 
 ---
 

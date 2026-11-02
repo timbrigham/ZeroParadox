@@ -1497,7 +1497,8 @@ example {X : Type} {P : PFunctor.{0, 0}} (α : X → P.Obj X) (hwf : ZeroParadox
     have hx : x ∈ (∅ : Set X) := by rw [hu]; trivial
     exact hx⟩
 -- Statement: on the leaf-free M-type (`idPF_Coalgebra`, not well-founded: `idPF_M_not_wellFounded`)
--- every point steps to itself only, since any two points are equal (`PFunctor.M.bisim`)
+-- every point steps to itself only, since any two points are equal (`PFunctor.M.bisim`; the same
+-- argument over `QPF.Cofix` is `cofix_subsingleton`, `ZeroParadox/Settheory/Coalgebra.lean`)
 -- (`[propext, Classical.choice, Quot.sound]`). Reading: the root cut's two sides sit at two trichotomy
 -- values, no step (which an inhabited well-founded carrier cannot lack, previous `example`) and a step
 -- to itself only (this one); the root cut's seam half is not derived from them.

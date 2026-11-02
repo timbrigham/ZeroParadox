@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-P: The Fixed-Point Fork PDF Builder
-Version 1.27 | October 2026
+Version 1.31 | November 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.27'
+VERSION = '1.31'
 FIRST_RELEASED = 'June 2026'
 
 
@@ -54,9 +54,9 @@ def build():
         'three tiers held to three different standards of proof. Tier 1 (Section I) is the '
         'abstract schema, proved in Lean over a complete lattice. Tier 2 (Section II) is the '
         'instance catalogue: each framework forks at its own contact point, and the instances are '
-        'theorems in their home layers. Tier 3 (Section III) is the unification &#8212; that the '
-        'contact points are faces of one object &#8212; which is a fenced conjecture, never a '
-        'formal claim. The fences in Section III are load-bearing: keeping the tiers separate is '
+        'theorems in their home layers. Tier 3 (Section III) is the unification, stated as a role '
+        'rather than an identity: one role, defined once, against which each chart either has an '
+        'occupant or provably has none, and no equation across charts is claimed. The fences in Section III are load-bearing: keeping the tiers separate is '
         'what makes the formal content honest.'))
     E.append(hr())
 
@@ -163,14 +163,16 @@ def build():
         'ZFC+AFA orthogonal-contact-point claim is the set-theory entry: in the standard '
         'category-theoretic characterisation (Aczel; Lambek), Foundation is the initial algebra '
         '(&#956;) and AFA the final coalgebra (&#957;) of the bounded powerset functor, and the '
-        'Quine atom &#8869; = {&#8869;} is exactly an element present in &#957; but not in &#956;.'))
+        'Quine atom (CC-2), a set equal to its own singleton, x = {x}, is exactly an element present in '
+        '&#957; but not in &#956;. No equation identifies it with &#8869; of a ZPSemilattice; the two are '
+        'measured against the Quine-atom role of Section III.'))
 
     E.append(data_table(
         headers=['Domain', 'The two closures fork into', 'Contact point / home layer'],
         rows_data=[
             ['Set theory',
              'Foundation (&#956;, well-founded) vs AFA (&#957;, non-well-founded)',
-             'Quine atom &#8869; = {&#8869;}; ZP-J / ZP-K'],
+             'Quine atom (CC-2), x = {x}; ZP-J / ZP-K'],
             ['Number systems',
              'Archimedean &#8477; vs non-Archimedean &#8474;<sub>p</sub>',
              '0 (snap fails in &#8477;, holds in &#8474;<sub>2</sub>); ZP-B / ZP-F'],
@@ -310,8 +312,24 @@ def build():
         'The tempting claim is that the contact points of all the instances &#8212; the Quine '
         'atom, the 2-adic 0, the Kleene quine, the self-referential element of the final '
         'coalgebra &#8212; are faces '
-        'of one object, the diagonal fixed point. ZP-P states this as a conjecture and fences it '
-        'precisely. The fences are not hedging; they mark a genuine boundary, and per-instance '
+        'of one object, the diagonal fixed point. ZP-P does not state that identity. It states '
+        'what the contact points are measured against as a role, defined once in the corpus&#8217;s shared '
+        'vocabulary of step relations (ZeroParadox/Die.lean, called the die; each carrier with its own '
+        'step relation is a chart): '
+        'the Quine-atom role, a point that steps to itself and to nothing else (Motion.SelfOnlyAt). '
+        'Each chart either has an occupant or provably has none, and each is a theorem: the '
+        'self-referential element of the final coalgebra occupies it (cofix_quine_role_occupied), '
+        'no well-founded set does (zfset_quine_role_unoccupied), 0 of the 2-adic integers does under '
+        'doubling (z2_two_views), &#8869; is the only occupant under a semilattice\'s '
+        'self-application map (selfApp_quine_role_iff), and on Kleene\'s codes, stepping from a code '
+        'to the codes whose output is what a map assigns it, no single code '
+        'occupies it while, for a computable map respecting equal output, some class of codes up to '
+        'equal output does (codes_vs_classes). Under a function step, occupying the role is being a '
+        'fixed point (Motion.selfOnlyAt_ofFun_iff), so the 2-adic and self-application rows restate '
+        'their fixed points; the self-application row holds by the AbstractSelfApp class fields, so the '
+        'constant map to &#8869; satisfies it too. The '
+        'final-coalgebra chart has one point, so its occupancy restates its fork and adds nothing '
+        'further. The fences are not hedging; they mark a genuine boundary, and per-instance '
         'forks remain full theorems on either side of them.'))
 
     E.append(def_box(
@@ -322,8 +340,10 @@ def build():
             'Kleene quine (a code), and an element of a final coalgebra (an object up to '
             'isomorphism) are terms of different types in different categories. The proposition '
             '"x = y" across them is not false &#8212; it is not well-formed. So this is a type '
-            'boundary, not a missing proof. What is claimed formally is only that each framework '
-            'forks at its own contact point.',
+            'boundary, not a missing proof, and no such identity is committed to either. What '
+            'relates the instances is the one role each chart is measured against. What is '
+            'claimed formally is that each framework forks at its own contact point, and which '
+            'charts have an occupant of the role.',
         ]
     ))
     E.append(sp(6))
@@ -401,8 +421,11 @@ def build():
             '<i>End of ZP-P | The Fixed-Point Fork | fork_collapse_iff (choice-free spine) | '
             'Ostrowski number-system instance | categorical &#956;/&#957; instance '
             '(Fix empty / Cofix inhabited) | hard fence: cross-instance identity is a type '
-            'boundary | soft fence: not every fork is &#956;/&#957; | '
-            'All FixedPointFork.lean / Ostrowski.lean / Coalgebra.lean theorems verified.</i>',
+            'boundary; what relates the instances is one role, which a point of each chart occupies or provably none does | '
+            'soft fence: not every fork '
+            'is &#956;/&#957; | '
+            'All FixedPointFork.lean / Ostrowski.lean / Coalgebra.lean theorems verified; the role '
+            'occupancies of Section III are verified at the declarations Section III names.</i>',
             S['endnote']),
     ]
 
