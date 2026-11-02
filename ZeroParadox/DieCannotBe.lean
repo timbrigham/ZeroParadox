@@ -4730,7 +4730,7 @@ example (d : DecidableEq Ordinal.{0}) : ZeroParadox.WeakExcludedMiddle := by
 -- statements of `density` and `rightInverse_of_leftInverse`, run against the corpus before these
 -- lemmas existed, closed neither (2026-10-30).
 
-/-! ### § XXVIII. The slot machine: possibility on the motion, certainty only under typicality -/
+/-! ### § XXVIII. The slot machine: possibility on the motion, one run's crossing under typicality -/
 -- Reading: OVER's possibility of leaving a point is a fact about the motion; whether ONE run leaves
 -- is a fact about that run. The measure sits beside the die, on the tapes that drive runs.
 -- Definitions and proofs: `ZeroParadox/Information/CrossingTrials.lean` § IV–VII.
@@ -4741,7 +4741,7 @@ example (d : DecidableEq Ordinal.{0}) : ZeroParadox.WeakExcludedMiddle := by
 #check @ZeroParadox.slotRun_isRun              -- Statement: every tape drives a run of `slotMotion`
 #check @ZeroParadox.slotRun_crosses_iff        -- Statement: the run starts at `false`, and reaches `true` iff the tape fires somewhere; both directions
 #check @ZeroParadox.exists_fires_io            -- Statement: if `0 < p ≤ 1`, SOME tape fires infinitely often (measure one is nonempty)
-#check @ZeroParadox.fires_io_of_avoids         -- Statement: if `0 < p ≤ 1` and the tape avoids a class of tests holding every zero-block test, it fires infinitely often; one way
+#check @ZeroParadox.fires_io_of_avoids         -- Statement: if `0 < p ≤ 1` and the tape avoids a class holding every zero-block test for `trials p hp`, it fires infinitely often; one way
 #check @ZeroParadox.slotRun_image_departs_of_avoids -- Statement: under the same hypotheses and a one-to-one lax map, the image run is a run that leaves its start
 -- Statement: CONTROL: with no typicality hypothesis, the all-`false` tape drives a run of
 -- `slotMotion` that is `false` at every stage, though `false` steps elsewhere.

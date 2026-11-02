@@ -11,71 +11,96 @@ two-chart reading for § IV–VII.
 - § V. If `0 < p ≤ 1`, the tapes silent from stage `N` on (`silentFrom N`) are the intersection of zero
   blocks whose measures are at most `2⁻ᵐ` (`trials_zeroBlock_le`, `silentFrom_eq_iInter`); a tape fails
   to fire infinitely often iff it is silent from some `N` (`not_mem_limsup_fires_iff`).
-- § VI. If `0 < p ≤ 1`, a class `𝒯` of tests contains every zero-block test, and the tape `w` avoids
-  `𝒯`, then `w` fires infinitely often (`fires_io_of_avoids`). The avoidance is the hypothesis `htyp`
-  on one tape; nothing in the file says any tape meets it. One way: the squares tape fires infinitely
-  often and is caught by a zero-block test; the all-`true` tape fires infinitely often and is caught by
-  one-block tests (the two `example`s).
+- § VI. If `0 < p ≤ 1`, a class `𝒯` of tests contains every zero-block test for `trials p hp`, and the
+  tape `w` avoids `𝒯`, then `w` fires infinitely often (`fires_io_of_avoids`). The avoidance is the
+  hypothesis `htyp` on one tape; nothing in the file says any tape meets it. One way: at `p = 1/2` the
+  squares tape fires infinitely often and is caught by a zero-block test; at `p = 1/2` the all-`true`
+  tape fires infinitely often and lies in every one block, each of measure at most `2⁻ᵐ` (the two
+  `example`s), so it fails to avoid any class that also holds those one-block tests.
 - § VII. In `slotMotion`, `false` steps elsewhere and to itself (`slotMotion_leavesAt_false`); `true`
   steps to itself only (`slotMotion_selfOnlyAt_true`). Every tape drives a run (`slotRun_isRun`). Along
   a one-to-one lax map, stepping elsewhere carries to the image (`Motion.LaxHom.leavesAt`, in
-  `ZeroParadox/Die.lean`), with no tape and no measure. A run of the image motion that leaves its start
-  is obtained only for a tape meeting § VI's hypotheses (`slotRun_image_departs_of_avoids`); the
-  all-`false` tape drives a run that never leaves `false` (the closing `example`).
+  `ZeroParadox/Die.lean`), with no tape and no measure. `slotRun_image_departs_of_avoids` gives an image
+  run that leaves its start for a tape meeting § VI's hypotheses. Those hypotheses are sufficient, not
+  necessary: any tape that fires once gives such a run (`slotRun_crosses_iff`; the `example` after the
+  theorem). What § VI adds is a guarantee about a tape not inspected. The all-`false` tape drives a run
+  that never leaves `false` (the closing `example`).
 
 ## Prior art
 
+- **Effective second Borel–Cantelli lemma.** G. Davie, "The Borel-Cantelli lemmas, probability laws and
+  Kolmogorov complexity", Ann. Probab. 29(4) (2001) 1426–1434. Davie's text was not retrieved; it is cited
+  as restated in P. Potgieter, arXiv:1612.09492v1, p. 2, Lemma 1.1, attributed there to [2] = Davie
+  (reference list, p. 13): for "a uniform sequence of Σ⁰₁ sets" {A_k}, "(ii) If the events {A_k} are
+  pairwise independent and ∑_k λ(A_k) = ∞, then A_k must occur infinitely often for each α ∈ KC", with λ
+  the Lebesgue (fair-coin) measure and KC the Kolmogorov–Chaitin random sequences. § VI is an instance of
+  that shape for the events `fires n`: the measure is generalised to Bernoulli(`p`) for any `0 < p ≤ 1`,
+  computable or not, and the randomness notion is weakened to a parameter class `𝒯` holding the
+  zero-block tests. The credit runs from Davie to here.
+- **Kurtz null tests.** J. Franklin and C. Porter, "Key developments in algorithmic randomness",
+  arXiv:2004.02851, p. 32, Definition 4.24 (citing Wang): "A Kurtz null test is a Martin-Löf test ⟨V_i⟩
+  such that for some computable function f : ω → (2^{<ω})^{<ω}, V_n = [f(n)] for all n"; p. 33, Theorem
+  4.26: a sequence is Kurtz random iff it passes all Kurtz null tests. Each level of a `ZeroBlockTest`
+  is a finite union of cylinders, chosen by a primitive recursive index, so at `p = 1/2` a zero-block
+  test has the shape of a Kurtz null test (open item 1).
+- **Kurtz randomness in Lean.** C. Freer, `algorithmic-randomness`
+  (github.com/cameronfreer/algorithmic-randomness, commit `863da3d`,
+  `AlgorithmicRandomness/Randomness/Kurtz.lean`, retrieved 2026-11-01): `IsKurtzRandom x := ∀ T :
+  ComputableTree, fairCoin T.paths = 0 → x ∉ T.paths`, with `IsMartinLofRandom.isKurtzRandom` and
+  `ComputableCantorPoint.not_isKurtzRandom`. Fair-coin measure only.
 - **Martin-Löf randomness in Lean.** A. Milovanov, `kolmogorov-complexity-lean`
-  (github.com/AlexeyMilovanov/kolmogorov-complexity-lean, commit `28da513`, file
-  `KolmogorovMathlib/AlgorithmicRandomness/MartinLof.lean`, retrieved 2026-11-01). Its definitions, read
-  from the retrieved file: `IsMartinLofTest μ U := IsUniformlyEffectiveOpen U ∧ ∀ n, μ (U n) ≤
-  dyadicValue 1 n`, "a uniformly effective open sequence of sets whose measures decrease as `2⁻ⁿ`";
-  `IsMartinLofRandom μ w := ∀ U, IsMartinLofTest μ U → w ∉ ⋂ n, U n`. `AvoidsTests` has the shape of
-  `IsMartinLofRandom` with the test class left as a parameter.
-- **The stronger result is there.** The same library's
-  `KolmogorovMathlib/AlgorithmicRandomness/EffectiveSLLNBernoulli.lean` (signature retrieved through
-  GitHub code search, 2026-11-01) states `tendsto_freqOne_of_isMartinLofRandom_bernoulli'`, labelled
-  "SUV Theorem 34": for `p ≤ 1` with `IsComputableReal (p : ℝ)` and `x` Martin-Löf random for its
-  `bernoulliMeasure p hp`, the frequency of ones in `x` tends to `p`. For `p > 0` that gives infinitely
-  many ones, which is § VI's conclusion under a stronger hypothesis. The library is not a dependency of
-  this corpus; its `bernoulliMeasure` was not compared with `trials`; nothing here imports or restates it.
-- **Mathlib.** The pin was searched 2026-11-01 for `Martin-L`, `MartinLof`, `algorithmic(ally)? random`
-  (case-insensitive, `.lake/packages/mathlib/Mathlib`): zero matches. Not located as of 2026-11-01,
-  searched as stated. LeanExplore (`Martin-Löf random sequence`) and theoremsearch with `formality:
-  "formal"` (one phrasing) returned no randomness definition; both nulls are uninformative.
-- Martin-Löf's 1966 paper and the effective Borel–Cantelli literature were not retrieved; nothing here
-  describes them.
+  (github.com/AlexeyMilovanov/kolmogorov-complexity-lean, commit `28da513`,
+  `KolmogorovMathlib/AlgorithmicRandomness/MartinLof.lean`, retrieved 2026-11-01):
+  `IsMartinLofTest μ U := IsUniformlyEffectiveOpen U ∧ ∀ n, μ (U n) ≤ dyadicValue 1 n`, "a uniformly
+  effective open sequence of sets whose measures decrease as `2⁻ⁿ`"; `IsMartinLofRandom μ w := ∀ U,
+  IsMartinLofTest μ U → w ∉ ⋂ n, U n`. `AvoidsTests` has the shape of `IsMartinLofRandom` with the test
+  class left as a parameter. The same library's `EffectiveSLLNBernoulli.lean` states
+  `tendsto_freqOne_of_isMartinLofRandom_bernoulli'` ("SUV Theorem 34"): for `p ≤ 1` with
+  `IsComputableReal (p : ℝ)` and `x` Martin-Löf random for its `bernoulliMeasure p hp`, the frequency of
+  ones in `x` tends to `p`; for `p > 0` that gives infinitely many ones. Its hypothesis needs a
+  computable `p`, which § VI does not; that Martin-Löf randomness meets § VI's `htyp` is open item 1, and
+  its `bernoulliMeasure` was not compared with `trials`. None of these libraries is a dependency here.
+- **Mathlib.** The pin was searched 2026-11-01 for `Martin-L`, `MartinLof`, `algorithmic(ally)? random`,
+  `Kurtz` (case-insensitive, `.lake/packages/mathlib/Mathlib`): zero matches. Not located as of
+  2026-11-01, searched as stated. theoremsearch, four phrasings (Kurtz null test; Martin-Löf random for
+  Bernoulli `p > 0` has infinitely many ones; a formal-only phrasing; effective Borel–Cantelli), found the
+  Franklin–Porter and Potgieter passages above; LeanExplore, two phrasings, returned no randomness
+  declaration (an uninformative null).
 
 ## What remains open (2026-11-01)
 
-1. **Zero-block tests are Martin-Löf tests.** Each level is a cylinder over a finite window and the window
-   is a primitive recursive function of the level, so in the standard theory every `ZeroBlockTest` is a
-   Martin-Löf test for its measure. That implication is not proved in Lean here: the corpus has no
-   effective-open-set notion and does not import the library above.
+1. **Zero-block tests and the standard test classes.** That every `ZeroBlockTest` at `p = 1/2` is a Kurtz
+   null test, hence a Martin-Löf test, is read off the definitions above and is not proved in Lean here:
+   the corpus has no effective-open-set notion and imports neither library.
 2. **Uniformity in `p`.** `exists_halving_block` gives the block length `K` by an existence proof; it is
    not computed from `p`. For one fixed `p` the test needs only the number `K`, so the primitive-recursive
    index holds for every `0 < p` (`zeroBlockTest_silentFrom`). Computability of `p` would matter for a
-   test uniform in `p`, and for the library's universal test, which assumes a computable measure.
-3. **The bridge to the framework.** No map from ⊥ of a `ZPSemilattice` to a tape is claimed (fence 1 of
-   the Lean header; `ZeroParadox/Information/Disjunctive.md` fence 3). `htyp` is a hypothesis on a tape.
+   test uniform in `p`, and for Milovanov's universal test, which assumes a computable measure.
+3. **The bridge to the framework.** No map from ⊥ of a `ZPSemilattice` to a tape is claimed
+   (`ZeroParadox/Information/Disjunctive.md` fence 3; fence 1 of the Lean header says nothing identifies ⊥
+   with the trial space). `htyp` is a hypothesis on a tape.
 
 ## Two charts
 
-`Reading:` CARRIER — Tim's sentence "the bottom is infinitely complex, and somewhere in that complexity movement is
-possible" reads here as: if a run is typical (it avoids the tests), and the per-stage chance is positive,
-that run crosses. Possibility (`LeavesAt` at `false`) is a property of the motion; crossing is a property
-of one run; typicality is a property of a run, a sequence, never of a point.
+`Reading:` CARRIER — Tim's sentence "the bottom is infinitely complex, and somewhere in that complexity
+movement is possible" reads here as: if the tape driving a run is typical (it avoids the tests), and the
+per-stage chance is positive, the run it drives crosses. Possibility (`LeavesAt` at `false`) is a property
+of the motion; crossing is a property of one run; typicality is a property of a tape, a point of
+`ℕ → Bool`, never of a state of `slotMotion`, a point of `Bool`.
 
-`Reading:` CARRIER — the tension, each step a cited declaration: in the valuation chart the proved infinite-complexity point is 0 of the
-2-adics: `infinitude_forces_infinite_complexity` (`ZeroParadox/Valuation/InfinitudeFloor.lean`) gives
-complexity ⊤ (the top of `ℕ∞`) at the floor of any `InfinitudeFloor`, and at its 2-adic instance that is
-v₂(0) = ⊤. Read as a digit tape, 0 is the all-`false` tape: that is
-`silentFrom 0`, which lies in a zero-block test for every `0 < p ≤ 1` (`zeroBlockTest_silentFrom` at
-`N = 0`), so it is the tape § VI's hypothesis excludes first. In the tape chart under the pointwise order
-the least element is the same all-`false` tape (`allFalse_not_disjunctive`,
-`ZeroParadox/Information/Disjunctive.lean`). Tim's maximally complex reading
-(`ZeroParadox/Information/Disjunctive.md` fence 3) places ⊥'s occupant among the typical tapes. The two
-readings put different tapes in the role, and nothing in Lean identifies them.
+`Reading:` CARRIER — the tension. In the valuation chart, `infinitude_forces_infinite_complexity`
+(`ZeroParadox/Valuation/InfinitudeFloor.lean`) gives complexity ⊤ (the top of `ℕ∞`) at the floor of any
+`InfinitudeFloor`; at the 2-adic instance that floor is 0, under the additive-valuation convention that
+the valuation of 0 is ⊤. Read as a digit tape (a reading; no map from the 2-adic integers to tapes is
+built here), 0 is the all-`false` tape, the sole member of `silentFrom 0`, and § VI's hypothesis
+excludes it at `N = 0` for every `0 < p ≤ 1` (`zeroBlockTest_silentFrom`). In the tape chart, under the
+pointwise order, the least element of `ℕ → Bool` is the same all-`false` tape (the `example` at
+`ZeroParadox/BottomCannotBe.lean`, `(⊥ : ℕ → Bool) = fun _ => false`), which is not disjunctive
+(`allFalse_not_disjunctive`, `ZeroParadox/Information/Disjunctive.lean`). Tim's maximally complex reading
+(`ZeroParadox/Information/Disjunctive.md` fence 3) places the occupant of ⊥ of a `ZPSemilattice`, read as
+a tape, among the Martin-Löf random tapes for the fair coin; that such tapes meet § VI's hypothesis at
+`p = 1/2` is open item 1. The two readings put different tapes in the role, and nothing in Lean
+identifies them.
 
 Not claimed: that any tape is typical, that ⊥ of any carrier is a tape, or that typicality supplies the
-occurrence commitment. The theorem moves "almost surely" to "this run crosses" only by adding `htyp`.
+occurrence commitment. The theorem moves "almost surely" to "this run crosses" by adding three premises: `0 < p`, a class `𝒯` holding the zero-block tests, and `htyp`.

@@ -97,7 +97,7 @@ formalization of a published characterization.
 
 - § I   The trial space, and that it is a probability space
 - § II  The per-stage events: measurable, independent, marginal exactly `p`
-- § III The payoff — constant positive `p` gives firing with probability one
+- § III The payoff; § IV–VII from almost surely to one run (ride-along `CrossingTrials.md`)
 -/
 
 namespace ZeroParadox
@@ -278,9 +278,9 @@ theorem zeroBlockTest_silentFrom (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p) (N : 
   exact Primrec.pair (Primrec.const N) (Primrec.nat_mul.comp (Primrec.const K) Primrec.id)
 
 /-- **`Statement:` if `p ≤ 1`, `0 < p`, the class `𝒯` contains every zero-block test for
-`trials p hp`, and `w` avoids `𝒯`, then `w` fires infinitely often.** One way: the controls below
-fire infinitely often and avoid no such class. `Reading:` `htyp` is the typicality commitment
-written as a hypothesis on one tape; the ride-along says which classes are meant. -/
+`trials p hp`, and `w` avoids `𝒯`, then `w` fires infinitely often.** One way: at `p = 1/2` the
+squares control below fires infinitely often and is caught by a zero-block test. `Reading:` `htyp`
+is the typicality commitment written as a hypothesis on one tape. -/
 theorem fires_io_of_avoids (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p)
     (𝒯 : (ℕ → Set (ℕ → Bool)) → Prop) (h𝒯 : ∀ U, ZeroBlockTest (trials p hp) U → 𝒯 U)
     (w : ℕ → Bool) (htyp : AvoidsTests 𝒯 w) :
@@ -389,8 +389,8 @@ theorem slotRun_crosses_iff (w : ℕ → Bool) :
 
 /-- **`Statement:` if `p ≤ 1`, `0 < p`, `𝒯` contains every zero-block test for `trials p hp`, `w`
 avoids `𝒯`, and `φ` is a one-to-one lax map from `slotMotion` to `N`, then `φ ∘ slotRun w` is a
-run of `N` that reaches a state other than its start.** One way, and only for this `w`: without
-`htyp` the all-`false` tape gives a run of `slotMotion` that never leaves `false`. -/
+run of `N` that reaches a state other than its start.** One way: the `example` after it gives the
+same for any tape that fires once. Without `htyp` the all-`false` tape's run never leaves `false`. -/
 theorem slotRun_image_departs_of_avoids {β : Type*} {N : Motion β}
     (φ : Motion.LaxHom slotMotion N) (hi : Function.Injective φ.toFun)
     (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p)
@@ -404,6 +404,14 @@ theorem slotRun_image_departs_of_avoids {β : Type*} {N : Motion β}
   obtain ⟨n, hn⟩ := (slotRun_crosses_iff w).2.2 ⟨k, hk⟩
   exact ⟨n, fun e => by
     have := hi e; rw [hn, (slotRun_crosses_iff w).1] at this; cases this⟩
+
+-- Statement: the converse fails: if `φ` is a one-to-one lax map and `w` fires at some stage, the image
+-- run leaves its start, with no measure and no typicality hypothesis (the squares tape is one such `w`).
+example {β : Type*} {N : Motion β} (φ : Motion.LaxHom slotMotion N)
+    (hi : Function.Injective φ.toFun) (w : ℕ → Bool) (hw : ∃ k, w k = true) :
+    ∃ n, (φ.toFun ∘ slotRun w) n ≠ (φ.toFun ∘ slotRun w) 0 := by
+  obtain ⟨n, hn⟩ := (slotRun_crosses_iff w).2.2 hw
+  exact ⟨n, fun e => by have := hi e; rw [hn, (slotRun_crosses_iff w).1] at this; cases this⟩
 
 -- Statement: CONTROL: without the typicality hypothesis, the all-`false` tape drives a run that
 -- stays at `false` at every stage.
