@@ -47,7 +47,7 @@ because `PEmpty → X` is a singleton. Composing the unfold equivalence with thi
 imported verbatim from `ZeroParadox.categorical_fork_strict`.
 
 `Reading:` CARRIER — the seam is the die role `∃! y, SelfOnlyAt y` (`ZeroParadox/Die.lean`), occupied per
-chart with no equation across: § The seam role in the die; charts indexed in `ZeroParadox/DieCannotBe.lean`. Of the diagonal fixed point's floor faces (`ZeroParadox/DiagonalFixedPoint.lean` § III), the order-floor face `selfApp_isLeastFixedPointFrom` is a chart of this role (`selfApp_seam_role_unique`, same `AbstractSelfApp.selfApp`); the other § III faces are not indexed as charts of it in `ZeroParadox/DieCannotBe.lean`.
+chart with no equation across: § The seam role in the die; charts indexed in `ZeroParadox/DieCannotBe.lean`. Of the diagonal fixed point's floor faces (`ZeroParadox/DiagonalFixedPoint.lean` § III), the order-floor face `selfApp_isLeastFixedPointFrom` is a chart of this role (`selfApp_seam_role_unique`, same `AbstractSelfApp.selfApp`); the other § III faces are indexed in `ZeroParadox/DieCannotBe.lean` § XV at most by `SelfOnlyAt` occupancy, never by this role's uniqueness.
 
 ## Engineer's Take
 

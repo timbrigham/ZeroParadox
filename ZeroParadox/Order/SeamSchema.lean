@@ -67,16 +67,15 @@ bijective comparison; the lattice instance's carrier is the *nonempty* singleton
 is non-degenerate, not the vacuous empty case). The schema instantiates at both nodes.
 
 **The NO-GO fence (the load-bearing deflation, IN the statement).** `seam_schema_is_degenerate_for_lattice`
-states the catch: the lattice instance fits `SeamSchema` ONLY because its two carriers are forced equal
-(`μ = ν` as the same subtype) so the `cmp` is `Equiv.refl` — a trivial identity equivalence — whereas
+states the catch: the lattice instance fits `SeamSchema` with its two carriers defined as one type
+(`μ = ν` as the same subtype), so its `cmp` is `Equiv.refl` — a trivial identity equivalence — whereas
 the QPF instance relates two provably DISTINCT types (`Fix` and `Cofix` are not definitionally equal,
 and for the recursive functor `idPF_Coalgebra` they are not even equivalent, `idPF_no_seam`). So the shared
 schema is satisfied by both, but the *only* common content is "there is some equivalence between the
 μ-carrier and the ν-carrier" — which is automatically true once the lattice carriers are collapsed to a
-single type. `no_cross_setting_map` records that there is NO map exhibited between the QPF setting
-(a type equivalence `Fix ≃ Cofix`) and the lattice setting (a set equality `{x | selfApp x = x} = {⊥}`):
-the two `SeamSchema` instances live over unrelated carrier types and nothing in this file transports one
-to the other. The schema is a common *shape*; it is not a common *map*. `Reading:` CARRIER — the shared
+single type. `no_cross_setting_map` records the QPF setting (a type equivalence `Fix ≃ Cofix`) and the
+lattice setting (a set equality `{x | selfApp x = x} = {⊥}`) side by side: the two `SeamSchema`
+instances live over different carrier types, and nothing in this file transports one to the other. The schema is a common *shape*; it is not a common *map*. `Reading:` CARRIER — the shared
 die role is occupied per chart (`selfApp_seam_role_unique`, `constPF_seam_role_unique`), no equation across.
 
 **Honest verdict.** The genuine new Lean content is: a single explicit `SeamSchema` record that both
