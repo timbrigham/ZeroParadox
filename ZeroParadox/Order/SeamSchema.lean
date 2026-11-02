@@ -59,9 +59,7 @@ greatest-fixed-point carrier are connected by a canonical iso/equality." We capt
   To make the lattice selfApp seam an instance of `SeamSchema` this file DEFINES the μ-carrier and
   the ν-carrier as the same object — the fixed-point subtype `{x // selfApp x = x}` — and the seam
   witness as `Equiv.refl`. That collapse is a choice of definition, not a consequence of
-  "least = greatest"; the vacuity conclusion below does not depend on it, because by
-  `AbstractSelfApp.unique_fp` every fixed point of `selfApp` is `bot`, so any carrier drawn from those
-  fixed points has at most one point.
+  "least = greatest".
 
 **The GO content (what is genuinely proved).** `both_satisfy_seam_schema`: BOTH nodes instantiate
 `SeamSchema`, with the discriminator witnessed in-statement — the QPF instance's `cmp` is the canonical
@@ -180,8 +178,7 @@ theorem both_satisfy_seam_schema :
 the `cmp` of `latticeSeam` is literally `Equiv.refl (FpSub L)` — the trivial identity equivalence. The
 lattice instance carries NO information beyond "the carrier is equivalent to itself", because
 `latticeSeam` defines the two carriers as one type. This is the degeneracy fence: on the lattice side
-the schema is vacuous, and it would stay so under any other choice of carriers drawn from the fixed points of `selfApp`, since
-by `AbstractSelfApp.unique_fp` each such carrier has at most one point. -/
+the schema is vacuous. -/
 theorem seam_schema_is_degenerate_for_lattice :
     (latticeSeam (L := L)).cmp = Equiv.refl (FpSub L) := rfl
 
@@ -225,7 +222,7 @@ theorem no_cross_setting_map :
 /-- `Statement:` in the die motion `ofFun selfApp` on a `ZPSemilattice` with `AbstractSelfApp`, exactly
     one point steps to itself only. The type names no point; the proof's witness is the least element
     `bot`, from the class fields `fixed_bot` and `unique_fp`, and `selfApp_fp_set_eq_singleton_bot`
-    states that identification. -/
+    (with `Motion.selfOnlyAt_ofFun_iff`) states that identification. -/
 theorem selfApp_seam_role_unique :
     ∃! y, (Motion.ofFun (AbstractSelfApp.selfApp (L := L))).SelfOnlyAt y :=
   ⟨bot, (Motion.selfOnlyAt_ofFun_iff _ _).2 AbstractSelfApp.fixed_bot,

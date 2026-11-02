@@ -38,7 +38,7 @@ framework's standing temptation. The literature that separates them:
 So *full* choice is strictly stronger than excluded middle, which is in turn strictly stronger than the
 constructive base. **The restricted fragment is a different matter, and the distinction matters here.**
 `ZeroParadox/Category/ExcludedMiddleBridge.lean`'s `ChoiceFragment` is a choice principle into the two-element `Bool` — a
-chooser on every inhabited predicate on `Bool` — so in a topos, which always has unique choice (interim source: I. Moerdijk and J. van Oosten, *Topos Theory*, Utrecht lecture notes, 2007, p. 58, Exercise 57(e), which states the principle of unique choice for a topos with a natural numbers object, as an exercise; textbook locator pending), it is *equivalent* to excluded middle (by the
+chooser on every inhabited predicate on `Bool` — so in a topos, which always has unique choice (E. J. Dubuc and M. Szyld, *Tannaka Theory for Topos*, arXiv:1510.01775v1, Prop. 1.24, p. 10), it is *equivalent* to excluded middle (by the
 Diaconescu–Goodman–Myhill argument); in Lean the equivalence holds with unique choice into `Bool` as a
 hypothesis (the `example` after `em_of_choiceFragment`; the type-theoretic form is the Rocq standard
 library's `theories/Logic/ChoiceFacts.v`, `constructive_definite_descr_excluded_middle`, cited in
@@ -53,9 +53,10 @@ explanation of the apparent gap between that equivalence and that failed constru
 returns data, a `Bool` (`ChoiceFragment`), while `ExcludedMiddle` is `Prop`-valued, and Lean's
 stratification does not let `Or` in `Prop` eliminate into `Bool`. A topos also distinguishes its
 truth-value object from 1 + 1 (they coincide exactly when it is Boolean); there unique choice holds
-(Moerdijk and van Oosten, cited above), so a decided proposition determines an element of 1 + 1 (this
-form is not located in a source as of 2026-11-01, searched in topos-theory lecture notes and theses,
-theorem-search engines in three phrasings, Lean libraries and the open web), and without unique choice the equivalence need not carry over to Lean. Whether the fragment is derivable from `ExcludedMiddle` in
+(Dubuc and Szyld, cited above), so a decided proposition determines an element of 1 + 1 (this form not
+located in a source as of 2026-11-01; searched in topos-theory notes and theses held locally and on the
+open web, while the theorem-search and Lean-library queries targeted unique choice, not this form), and
+without unique choice the equivalence need not carry over to Lean. Whether the fragment is derivable from `ExcludedMiddle` in
 Lean is not established here, so this explanation is a candidate, not a finding. The topos-side
 equivalence of the fragment with excluded middle, earlier in this paragraph, is Diaconescu's argument;
 nothing in it is claimed here. Every evocative reading in the framework's prose — "choice is which way you view the

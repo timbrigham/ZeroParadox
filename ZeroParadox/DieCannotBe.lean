@@ -466,8 +466,12 @@ example : Nonempty (ZeroParadox.Motion Empty) := ⟨⟨fun x => x.elim, fun x =>
 -- leaves the transitive closure unchanged, so that arc is missing from one member of the intersection;
 -- every subdigraph with the same closure keeps each arc that is not redundant, since otherwise it would
 -- contain a `(u, v)`-path avoiding `uv`. So on a finite acyclic digraph an arc is in the reduction
--- exactly when it is the only path between its endpoints. This lemma is the single-successor case of
--- that criterion; the lemma itself assumes neither finiteness nor acyclicity.
+-- if and only if it is the only path between its endpoints, and those arcs are exactly the covering
+-- pairs of the reachability order (a covering pair has no vertex strictly between, so its only path
+-- is the arc). Under this lemma's hypotheses every path from `y` to `b` begins with the arc `y → b`,
+-- so on a finite acyclic relation the lemma's `y ⋖ b` is such an arc. The lemma itself assumes
+-- neither finiteness nor acyclicity, and on the `Fin 3` cycle below `0 ⋖ 2` holds with no arc
+-- `0 → 2`: without acyclicity a covering pair need not be an arc.
 -- Statement: on `Fin 3` with steps `0 → 1`, `1 → 2`, `2 → 1` (a cycle), `unique_succ_covBy` gives
 -- `0 ⋖ 1` in the reachability preorder.
 example : let R : Fin 3 → Fin 3 → Prop := fun a b => (a = 0 ∧ b = 1) ∨ (a = 1 ∧ b = 2) ∨ (a = 2 ∧ b = 1)
@@ -2549,7 +2553,7 @@ example {L : Type} [ZeroParadox.QuineAtomHost L] :
 -- `lfp = gfp`, the `fork_collapse_iff` entry above); each chart below occupies it or not by its own
 -- theorem, and no equation across the charts is stated.
 #check @ZeroParadox.selfApp_seam_role_unique              -- Statement: `ofFun selfApp` on a `ZPSemilattice` with `AbstractSelfApp`: exactly one point steps to itself only; the type names no point, and `selfApp_fp_set_eq_singleton_bot` (with `Motion.selfOnlyAt_ofFun_iff`) identifies it as the least element `bot` of the `ZPSemilattice`
-#check @ZeroParadox.seam_role_unique_iff_wellFounded      -- Statement: `ofFun (nextTime α)` on `Set X`: exactly one set steps to itself only iff `α` is well-founded (`IsWellFoundedCoalg`); both directions. Reading (cited, not claimed): this is Adámek, Milius and Moss's definition of a well-founded coalgebra (arXiv:1910.09401v2, Def 4.3, p. 15: `id_A` is the only fixed point of the next time operator) restated in the die vocabulary, not a new result
+#check @ZeroParadox.seam_role_unique_iff_wellFounded      -- Statement: `ofFun (nextTime α)` on `Set X`: exactly one set steps to itself only iff `α` is well-founded (`IsWellFoundedCoalg`); both directions. Reading (cited, not claimed): Adámek, Milius and Moss's definition of a well-founded coalgebra (arXiv:1910.09401v2, Def 4.3, p. 15: `id_A` is the only fixed point of the next time operator; they credit the characterisation to Taylor), restated in the die vocabulary for polynomial functors on types (`isWellFoundedCoalgCat_iff` relates it to their categorical form); not a new result
 #check @ZeroParadox.constPF_seam_role_unique              -- Statement: so on `Cofix (constPF A).Obj` (no recursive position) exactly one does
 #check @ZeroParadox.idPF_seam_role_not_unique             -- Statement: and on `Cofix idPF_Coalgebra.Obj` (one recursive position) not exactly one does
 #check @ZeroParadox.not_seam_role_unique_of_step_self     -- Statement: a point that is its own child rules uniqueness out; one way (converse-fails control in `ZeroParadox/Category/RootCutDegeneracy.lean`)

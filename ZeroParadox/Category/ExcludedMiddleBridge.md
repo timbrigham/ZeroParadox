@@ -69,10 +69,8 @@ and `ExcludedMiddle` are inter-derivable (the `example` after `em_of_choiceFragm
 Second, that *full* AC is strictly stronger than excluded middle is **Cohen 1963** / Fraenkel–Mostowski
 independence, not Diaconescu.
 **This matters here because `ChoiceFragment` is a choice principle into the two-element `Bool`** — a
-chooser on every inhabited predicate on `Bool` — so in a topos, where unique choice holds (interim
-source: I. Moerdijk and J. van Oosten, *Topos Theory*, Utrecht lecture notes, 2007, p. 58, Exercise
-57(e), which states the principle of unique choice for a topos with a natural numbers object, as an
-exercise; textbook locator pending), it would be equivalent to `ExcludedMiddle`, and the
+chooser on every inhabited predicate on `Bool` — so in a topos, where unique choice holds (E. J. Dubuc
+and M. Szyld, *Tannaka Theory for Topos*, arXiv:1510.01775v1, Prop. 1.24, p. 10), it would be equivalent to `ExcludedMiddle`, and the
 faithfulness check below would have to fail. It does not fail. A candidate explanation is that Lean
 stratifies `Prop` and `Type`: `ChoiceFragment` is equivalent to `Nonempty (∀ p, Decidable p)` and
 `ExcludedMiddle` to `∀ p, Nonempty (Decidable p)` (the `example`s after `ChoiceFragment`), and `Or` in
@@ -84,12 +82,13 @@ from `Prop` to data is standard in type theory: the Rocq standard library's
 "constructive definite description transports excluded-middle from [Prop] to [Set]", crediting the
 idea of its proof to L. Chicli, L. Pottier and C. Simpson, "Mathematical Quotients and Quotient Types
 in Coq", TYPES 2002, LNCS 2646. Read in the authors' preprint (preprint page numbers): § 5, pp. 12-13,
-shows the axiom of unique choice with values in `Prop` contradicts excluded middle in `Prop` in Coq
-with an impredicative `Set`, completing the proof with the § 4.2 argument, pp. 10-11. Following the
-Rocq file, the credit is for that proof idea, not for the transport result. In a topos a decided
-proposition determines an element of 1 + 1 (this form is not located in a source as of 2026-11-01,
-searched in topos-theory lecture notes and theses, theorem-search engines in three phrasings, Lean
-libraries and the open web), while Ω itself is 1 + 1 only when the topos is Boolean
+shows the axiom of unique choice with values in `Prop` contradicts excluded middle in `Prop` in Coq,
+completing the proof with the § 4.2 argument, pp. 10-11; their § 6, p. 13, says the impredicativity
+of `Set` is essential to it. Following the Rocq file, the credit is for that proof idea, not for the
+transport result. In a topos a decided proposition determines an element of 1 + 1 (this form not
+located in a source as of 2026-11-01; searched in topos-theory notes and theses held locally and on
+the open web, while the theorem-search and Lean-library queries targeted unique choice, not this
+form), while Ω itself is 1 + 1 only when the topos is Boolean
 (`ZeroParadox/Category/ChoiceCannotBe.md`, § "The headline fence"). A failed elaboration measures one
 construction, and what is not established here is the converse: that without unique choice the
 fragment is not derivable from `ExcludedMiddle` in Lean. **So Lean's stratification is a candidate

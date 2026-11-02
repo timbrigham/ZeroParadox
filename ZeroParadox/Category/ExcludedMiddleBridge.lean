@@ -98,9 +98,8 @@ equivalent to `Nonempty (∀ p, Decidable p)`, while `ExcludedMiddle` is equival
 eliminate into data. The two differ only in whether `Nonempty` sits outside or inside `∀ p`; each
 `Decidable p` has at most one element, so moving `Nonempty` outward is an instance of unique choice.
 It is **not** a general fact about choice versus excluded middle — in a topos,
-which always has unique choice (interim source: I. Moerdijk and J. van Oosten, *Topos Theory*,
-Utrecht lecture notes, 2007, p. 58, Exercise 57(e), which states the principle of unique choice for a
-topos with a natural numbers object, as an exercise; textbook locator pending), this very fragment is *equivalent* to excluded middle (by the
+which always has unique choice (E. J. Dubuc and M. Szyld, *Tannaka Theory for Topos*,
+arXiv:1510.01775v1, Prop. 1.24, p. 10), this very fragment is *equivalent* to excluded middle (by the
 Diaconescu–Goodman–Myhill argument); in Lean the equivalence holds with unique choice into `Bool` as a
 hypothesis (the `example` after `em_of_choiceFragment`).
 On that candidate, the gap measured here is a property of the ambient type theory, not of the two
@@ -225,9 +224,9 @@ example (uc : ∀ P : Bool → Prop, (∃! b, P b) → {b : Bool // P b}) :
 -- idea of its proof to L. Chicli, L. Pottier and C. Simpson, "Mathematical Quotients and Quotient
 -- Types in Coq", TYPES 2002, LNCS 2646. Read in the authors' preprint (preprint page numbers): § 5,
 -- pp. 12-13, shows the axiom of unique choice with values in `Prop` contradicts excluded middle in
--- `Prop` in Coq with an impredicative `Set` (their § 6: essential to the inconsistency of `{P} + {~P}` for
--- every `P`), completing the proof with the § 4.2 argument, pp. 10-11 (the goal is `False`, so the
--- existence of a map `Prop → bool` can be eliminated to give `{P} + {~P}`). As in `ChoiceFacts.v`, the
+-- `Prop` in Coq, completing the proof with the § 4.2 argument, pp. 10-11 (the goal is `False`, so the
+-- existence of a map `Prop → bool` can be eliminated to give `{P} + {~P}`); their § 6, p. 13, says the
+-- impredicativity of `Set` is essential to that proof. As in `ChoiceFacts.v`, the
 -- credit is for that proof idea, not for the transport result. This example, with the one after
 -- `ChoiceFragment`, is the `Bool`-chooser instance of that transport.
 
