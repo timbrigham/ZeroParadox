@@ -105,6 +105,9 @@ example (L : Type) [ZPSemilattice L] (a : L) (ha : a ≠ bot) :
 
 -- Statement: with the AFA-built host's membership as the step, occupying the role is being a Quine atom
 -- in the `IsQuineAtom` sense, so by `t_exec_iff` its only occupant is ⊥ of `L`; both directions.
+-- Reading: that host's membership relates no element to any other (the example after
+-- `afaStructure_isQuineAtomHost` in `ZeroParadox/Settheory/QuineHost.lean`), so "and to nothing else"
+-- is automatic here; uniqueness comes from `quine_unique`.
 example (L : Type) [ZPSemilattice L] [AFAStructure L] (y : L) :
     (Motion.ofTotal (id : L → L) (fun _ => rfl)
       (fun a b => (afaStructure_isQuineAtomHost L).mem b a)).SelfOnlyAt y ↔ IsQuineAtom y :=

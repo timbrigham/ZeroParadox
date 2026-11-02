@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-P: The Fixed-Point Fork PDF Builder
-Version 1.30 | November 2026
+Version 1.31 | November 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.30'
+VERSION = '1.31'
 FIRST_RELEASED = 'June 2026'
 
 
@@ -322,7 +322,7 @@ def build():
         'no well-founded set does (zfset_quine_role_unoccupied), 0 of the 2-adic integers does under '
         'doubling (z2_two_views), &#8869; is the only occupant under a semilattice\'s '
         'self-application map (selfApp_quine_role_iff), and on Kleene\'s codes, stepping from a code '
-        'to the codes whose output a map assigns it, no single code '
+        'to the codes whose output is what a map assigns it, no single code '
         'occupies it while, for a computable map respecting equal output, some class of codes up to '
         'equal output does (codes_vs_classes). Under a function step, occupying the role is being a '
         'fixed point (Motion.selfOnlyAt_ofFun_iff), so the 2-adic and self-application rows restate '

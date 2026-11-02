@@ -159,17 +159,18 @@ example (k : ℕ) : ZeroParadox.IsComputationalQuine (Nat.Partrec.Code.const k) 
 -- Statement: under `[KleeneStructure L]`, any Quine atom `q : L` equals `bot` of the `ZPSemilattice L`.
 --   No `Code` and no Kleene clause appear; the `[KleeneStructure]` hypothesis is inert on the proof
 --   route — though NOT absent from the axiom footprint, since `#print axioms` follows the statement.
--- Reading: no tie of the Kleene quine to `bot` of `L` is asserted or committed to: the identity reading
---   is retired (`ZeroParadox/Computability/Kleene.lean` § II), and it is not a Lean `=` (`Code` versus
---   `L` for a generic `L`; the `example`s after `botCode_is_quine`).
+-- Reading: the Kleene quine and `bot` of `L` are compared through the die's Quine-atom role
+--   (`ZeroParadox/Computability/Kleene.lean` § II, § IX), and not through a Lean `=` (`Code` versus `L`
+--   for a generic `L`; the `example`s after `botCode_is_quine`).
 #check @ZeroParadox.kleene_quine_is_bot
 
 -- Statement: the class field — the instance's `botCode` satisfies `IsComputationalQuine`, which the
 --   constant codes also satisfy (§ III). No field of `KleeneStructure` relates `botCode` to `bot`.
 -- Reading: that `botCode` is the computational face of `bot` was the reading `KleeneStructure` was
 --   built for; its identity half is retired and its running half is the occurrence commitment
---   (`ZeroParadox/Computability/Kleene.lean` § II). No theorem states it. For a generic carrier `L` no `=` can: `botCode` is a `Code` and `bot` an
---   element of `L` (the first `example` below). At `L := Code`, under an assumed instance (none is
+--   (`ZeroParadox/Computability/Kleene.lean` § II). No theorem states the identity half. For a
+--   generic carrier `L` no `=` can: `botCode` is a `Code` and `bot` an element of `L` (the first
+--   `example` below). At `L := Code`, under an assumed instance (none is
 --   declared in this corpus), the `=` typechecks (the second).
 #check @ZeroParadox.KleeneStructure.botCode_is_quine
 

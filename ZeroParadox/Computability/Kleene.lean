@@ -148,10 +148,10 @@ computational, does not supply one. The form for carrying a commitment as an exp
     **The reading it was built for splits in two, and no field asserts either half:** that
     `botCode` is ⊥'s computational witness — "botCode is the code that IS its own program, the
     universal Turing machine in ground state, and this is the computational expression of
-    `bot_self_mem`". Its IDENTITY half is retired: no code is equated with ⊥, and the code chart
-    has its own occupant of the die's Quine-atom role `Motion.SelfOnlyAt` — no single code under
-    `evalStepMotion F` for any `F` (`evalStepMotion_not_selfOnlyAt`), a class of codes up to equal
-    `eval` in the quotient, for computable `eval`-respecting maps (`codes_vs_classes`). Its RUNNING
+    `bot_self_mem`". Its IDENTITY half is retired: no code is equated with ⊥, and each code chart
+    has its own occupancy of the die's Quine-atom role `Motion.SelfOnlyAt`, step by step — no single
+    code under `evalStepMotion F` for any `F` (`evalStepMotion_not_selfOnlyAt`), a class of codes up
+    to equal `eval` in the quotient, for computable `eval`-respecting maps (`codes_vs_classes`). Its RUNNING
     half stays a commitment: that ⊥ actually executes is the occurrence commitment.
     For a generic `L` no Lean `=` between `botCode` (a `Code`) and `bot` (an element of `L`)
     typechecks; at `L := Code` one does: the `example`s after `KleeneStructure.botCode_is_quine`

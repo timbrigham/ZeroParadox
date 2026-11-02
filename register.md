@@ -9,7 +9,7 @@ Update this file first on any version bump. README.md Framework table is verifie
 | ZP-F The Counterexamples | v1.20 | ZP-F_The_Counterexamples.pdf | v1.19 | N/— | formal:b99fbdbb comp:dee59dce |
 | ZP-C Information Theory | v1.33 | ZP-C_Information_Theory.pdf | v2.12 | N/— | formal:d6fe6c3f comp:9f80c438 |
 | ZP-D State Layer | v1.19 | ZP-D_State_Layer.pdf | v1.18 | N/— | formal:339590dd comp:6be72c57 |
-| ZP-E Bridge Document | v3.70 | ZP-E_Bridge_Document.pdf | v1.33 | Y/Y | formal:b3dc9144 comp:1ced0b1e |
+| ZP-E Bridge Document | v3.71 | ZP-E_Bridge_Document.pdf | v1.33 | Y/Y | formal:bcdf36db comp:1ced0b1e |
 | ZP-G Category Theory | v1.25 | ZP-G_Category_Theory.pdf | v1.14 | N/— | formal:d84c3ca4 comp:c39d201c |
 | ZP-H Categorical Bridge | v1.29 | ZP-H_Categorical_Bridge.pdf | v1.21 | N/— | formal:e3c9ad18 comp:b85ebaf7 |
 | ZP-H Native Categories Addendum | v1.7 | ZP-H_Native_Categories_Addendum.pdf | N/A | N/— | formal:6055c8d4 |
@@ -22,7 +22,7 @@ Update this file first on any version bump. README.md Framework table is verifie
 | ZP-L Incomputability Convergence | v1.32 | ZP-L_Incomputability_Convergence.pdf | v1.21 | N/— | formal:fbfd9fa3 comp:5a25d22f |
 | ZP-M Kleene-Ordinal Bridge | v1.18 | ZP-M_Kleene_Ordinal_Bridge.pdf | v1.13 | N/— | formal:3750c9b6 comp:79fea5a7 |
 | ZP-N The Constructive Snap | v2.7 | ZP-N_The_Constructive_Snap.pdf | N/A | N/— | formal:a2a2e5ed |
-| ZP-P The Fixed-Point Fork | v1.30 | ZP-P_The_Fixed_Point_Fork.pdf | N/A | N/— | formal:b485b951 |
+| ZP-P The Fixed-Point Fork | v1.31 | ZP-P_The_Fixed_Point_Fork.pdf | N/A | N/— | formal:77ae1fdb |
 | ZP-R Cross-Category Fixed Point | v1.22 | ZP-R_Cross_Category_Fixed_Point.pdf | N/A | N/— | formal:f2804409 |
 | ZP-R Diagonal Family Addendum | v1.22 | ZP-R_Diagonal_Family_Addendum.pdf | N/A | N/— | formal:f8542abc |
 | ZP-Q The Frame-Change | v1.14 | ZP-Q_The_Frame_Change.pdf | N/A | N/— | formal:b988c043 |

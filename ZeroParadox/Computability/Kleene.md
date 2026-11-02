@@ -51,8 +51,9 @@ The reading this insight recorded was that ⊥ in the computational instantiatio
 not a state OF a Turing machine but the universal Turing machine U in its ground state, and that
 U is not a description awaiting an external executor but its own executor. No theorem in this
 file establishes it, and it splits in two. Its identity half (that ⊥ IS a particular machine or
-code) is retired, below. Its running half (that ⊥ executes itself, if it executes at all) is the
-occurrence commitment.
+code) is retired, below. Its running half splits again: that ⊥ actually executes is the
+occurrence commitment; that, if it executes, nothing outside it is the executor is DA-1's Path 1
+reading (ZP-E § IV), which rules out an external executor and not an inert ⊥.
 
 What Lean supplies underneath: Kleene's second recursion theorem (Mathlib:
 Nat.Partrec.Code.fixed_point₂) guarantees a fixed point exists for any partially
