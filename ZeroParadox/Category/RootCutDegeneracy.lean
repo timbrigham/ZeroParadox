@@ -192,7 +192,12 @@ theorem nextTime_univ_eq {X : Type u} {P : PFunctor.{u, u}} (α : X → P.Obj X)
   ext x; simp [nextTime]
 
 /-- `Statement:` exactly one set steps to itself only under `nextTime α` iff `α` is well-founded
-    (`IsWellFoundedCoalg`); both directions. -/
+    (`IsWellFoundedCoalg`); both directions.
+    `Reading:` (cited, not claimed) this is Adámek, Milius and Moss's definition of a well-founded
+    coalgebra (*On Well-Founded and Recursive Coalgebras*, arXiv:1910.09401v2, Def 4.3, p. 15: "`id_A`
+    is the only fixed point of its next time operator"), which `IsWellFoundedCoalg` encodes, restated
+    in the die vocabulary through `Motion.selfOnlyAt_ofFun_iff` and `nextTime_univ_eq`; not a new
+    result. -/
 theorem seam_role_unique_iff_wellFounded {X : Type u} {P : PFunctor.{u, u}} (α : X → P.Obj X) :
     (∃! S, (Motion.ofFun (nextTime α)).SelfOnlyAt S) ↔ IsWellFoundedCoalg α := by
   constructor

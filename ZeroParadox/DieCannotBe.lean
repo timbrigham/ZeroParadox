@@ -455,10 +455,19 @@ example : Nonempty (ZeroParadox.Motion Empty) := ⟨⟨fun x => x.elim, fun x =>
 
 /-! ### § III. The smallest step is DERIVED — unique successor, no way back ⇒ cover, one way -/
 #check @ZeroParadox.unique_succ_covBy           -- Statement: if `b` is `y`'s only successor and `b` does not reach `y`, then `y ⋖ b` in the reachability preorder; one way, the converse refuted on `Fin 3` below
--- Reading: the closest classical frame is transitive reduction (Aho, Garey and Ullman, SIAM J. Comput.
--- 1(2):131–137, 1972, doi 10.1137/0201008; cited, not retrieved). On a finite acyclic relation this
--- lemma is the single-successor case of the standard criterion that an edge is in the reduction when
--- it is the only path between its endpoints; the lemma itself assumes neither finiteness nor acyclicity.
+-- Reading: the closest classical frame is transitive reduction. Source read: J. Bang-Jensen and
+-- G. Gutin, *Digraphs* (1st ed., corrected copy), § 4.3. There (p. 177) an arc `uv` is redundant if
+-- some `(u, v)`-path does not contain it, and a transitive reduction is a spanning subdigraph with no
+-- redundant arc and the same transitive closure; Theorem 4.3.2 (p. 178) says an acyclic digraph has
+-- exactly one, the intersection of all its spanning subdigraphs with the same transitive closure, and
+-- credits the proof to Aho, Garey and Ullman (SIAM J. Comput. 1(2):131–137, 1972, doi
+-- 10.1137/0201008; not retrieved; theorem as credited by Bang-Jensen and Gutin). The book does not
+-- state the criterion used here as one sentence; it follows from those two. Deleting a redundant arc
+-- leaves the transitive closure unchanged, so that arc is missing from one member of the intersection;
+-- every subdigraph with the same closure keeps each arc that is not redundant, since otherwise it would
+-- contain a `(u, v)`-path avoiding `uv`. So on a finite acyclic digraph an arc is in the reduction
+-- exactly when it is the only path between its endpoints. This lemma is the single-successor case of
+-- that criterion; the lemma itself assumes neither finiteness nor acyclicity.
 -- Statement: on `Fin 3` with steps `0 → 1`, `1 → 2`, `2 → 1` (a cycle), `unique_succ_covBy` gives
 -- `0 ⋖ 1` in the reachability preorder.
 example : let R : Fin 3 → Fin 3 → Prop := fun a b => (a = 0 ∧ b = 1) ∨ (a = 1 ∧ b = 2) ∨ (a = 2 ∧ b = 1)
@@ -2539,8 +2548,8 @@ example {L : Type} [ZeroParadox.QuineAtomHost L] :
 -- Reading: CARRIER — the seam role is exactly one point stepping to itself only (on a complete lattice,
 -- `lfp = gfp`, the `fork_collapse_iff` entry above); each chart below occupies it or not by its own
 -- theorem, and no equation across the charts is stated.
-#check @ZeroParadox.selfApp_seam_role_unique              -- Statement: `ofFun selfApp` on a `ZPSemilattice` with `AbstractSelfApp`: exactly one point steps to itself only, the bottom of the `ZPSemilattice`, from the class fields `fixed_bot` and `unique_fp`
-#check @ZeroParadox.seam_role_unique_iff_wellFounded      -- Statement: `ofFun (nextTime α)` on `Set X`: exactly one set steps to itself only iff `α` is well-founded (`IsWellFoundedCoalg`); both directions
+#check @ZeroParadox.selfApp_seam_role_unique              -- Statement: `ofFun selfApp` on a `ZPSemilattice` with `AbstractSelfApp`: exactly one point steps to itself only; the type names no point, and `selfApp_fp_set_eq_singleton_bot` (with `Motion.selfOnlyAt_ofFun_iff`) identifies it as the least element `bot` of the `ZPSemilattice`
+#check @ZeroParadox.seam_role_unique_iff_wellFounded      -- Statement: `ofFun (nextTime α)` on `Set X`: exactly one set steps to itself only iff `α` is well-founded (`IsWellFoundedCoalg`); both directions. Reading (cited, not claimed): this is Adámek, Milius and Moss's definition of a well-founded coalgebra (arXiv:1910.09401v2, Def 4.3, p. 15: `id_A` is the only fixed point of the next time operator) restated in the die vocabulary, not a new result
 #check @ZeroParadox.constPF_seam_role_unique              -- Statement: so on `Cofix (constPF A).Obj` (no recursive position) exactly one does
 #check @ZeroParadox.idPF_seam_role_not_unique             -- Statement: and on `Cofix idPF_Coalgebra.Obj` (one recursive position) not exactly one does
 #check @ZeroParadox.not_seam_role_unique_of_step_self     -- Statement: a point that is its own child rules uniqueness out; one way (converse-fails control in `ZeroParadox/Category/RootCutDegeneracy.lean`)
