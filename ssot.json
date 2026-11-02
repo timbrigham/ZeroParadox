@@ -13458,6 +13458,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "1d10a32a-14d2-4760-9b81-f9fbf6a60844",
+          "new": {
+            "file": "ZeroParadox/Category/RootCutDegeneracy.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.seam_role_unique_iff_wellFounded",
+            "short": "seam_role_unique_iff_wellFounded"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/RootCutDegeneracy.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.seam_role_unique_iff_wellFounded",
+            "short": "seam_role_unique_iff_wellFounded",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [
+              "wall-seam"
+            ],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Die arc 3 2026-11-01: the seam role (exactly one SelfOnlyAt occupant) per chart: next-time chart of QPF coalgebras, lattice selfApp, module elements / zero object",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "1d216f7e-f0be-4b69-afab-9d0a5bb3cc49",
           "new": {
             "file": "ZeroParadox/Category/LawvereTaboo.lean",
@@ -20861,6 +20900,46 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "2de01ae1-e9c1-4c02-8f55-6c8d351816c9",
+          "new": {
+            "file": "ZeroParadox/Category/SeamComparisonMap.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.hilbert_zero_seam_role_unique",
+            "short": "hilbert_zero_seam_role_unique"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/SeamComparisonMap.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.hilbert_zero_seam_role_unique",
+            "short": "hilbert_zero_seam_role_unique",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [
+              "wall-seam",
+              "bottom"
+            ],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Die arc 3 2026-11-01: the seam role (exactly one SelfOnlyAt occupant) per chart: next-time chart of QPF coalgebras, lattice selfApp, module elements / zero object",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "2de4115c-1734-4d79-9a8f-7563afbcdc18",
           "new": {
@@ -25627,6 +25706,45 @@
             ]
           },
           "reason": "New file ZeroParadox/Valuation/PricedPadicInterface.lean — p-adic Group A priced carrier (29 decls)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "3a606490-8edf-4e5d-a55f-ecc15c7234a9",
+          "new": {
+            "file": "ZeroParadox/Category/RootCutDegeneracy.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.constPF_child_noStepAt",
+            "short": "constPF_child_noStepAt"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/RootCutDegeneracy.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.constPF_child_noStepAt",
+            "short": "constPF_child_noStepAt",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [
+              "wall-seam"
+            ],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Die arc 3 2026-11-01: the seam role (exactly one SelfOnlyAt occupant) per chart: next-time chart of QPF coalgebras, lattice selfApp, module elements / zero object",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -43952,6 +44070,45 @@
             ]
           },
           "reason": "Round 22: emit the printer's own type-walk (two rfl theorems differing only in binder type) and the load-bearing addition premise that was asserted in one file and consumed in another.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "65c8f592-230a-42ef-af4e-dfcc09ce825d",
+          "new": {
+            "file": "ZeroParadox/Category/RootCutDegeneracy.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.constPF_nextTime",
+            "short": "constPF_nextTime"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/RootCutDegeneracy.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.constPF_nextTime",
+            "short": "constPF_nextTime",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [
+              "wall-seam"
+            ],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Die arc 3 2026-11-01: the seam role (exactly one SelfOnlyAt occupant) per chart: next-time chart of QPF coalgebras, lattice selfApp, module elements / zero object",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -69340,6 +69497,85 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "9f758ad4-5b86-4546-824e-2fd573238a60",
+          "new": {
+            "file": "ZeroParadox/Category/SeamComparisonMap.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.moduleCat_id_seam_role_unique_iff_isZero",
+            "short": "moduleCat_id_seam_role_unique_iff_isZero"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/SeamComparisonMap.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.moduleCat_id_seam_role_unique_iff_isZero",
+            "short": "moduleCat_id_seam_role_unique_iff_isZero",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [
+              "wall-seam",
+              "bottom"
+            ],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Die arc 3 2026-11-01: the seam role (exactly one SelfOnlyAt occupant) per chart: next-time chart of QPF coalgebras, lattice selfApp, module elements / zero object",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "9f8804ab-4687-4004-b87c-eb3181ecd70a",
+          "new": {
+            "file": "ZeroParadox/Category/RootCutDegeneracy.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.constPF_seam_role_unique",
+            "short": "constPF_seam_role_unique"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/RootCutDegeneracy.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.constPF_seam_role_unique",
+            "short": "constPF_seam_role_unique",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [
+              "wall-seam"
+            ],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Die arc 3 2026-11-01: the seam role (exactly one SelfOnlyAt occupant) per chart: next-time chart of QPF coalgebras, lattice selfApp, module elements / zero object",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "9f933a4d-7380-484d-bb31-09bb35714891",
           "new": {
             "file": "ZeroParadox/Order/UpAndOver.lean",
@@ -82442,6 +82678,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "bdc80aa3-34a6-4c4d-811a-7bb488f7ff28",
+          "new": {
+            "file": "ZeroParadox/Category/RootCutDegeneracy.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.idPF_seam_role_not_unique",
+            "short": "idPF_seam_role_not_unique"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/RootCutDegeneracy.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.idPF_seam_role_not_unique",
+            "short": "idPF_seam_role_not_unique",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [
+              "wall-seam"
+            ],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Die arc 3 2026-11-01: the seam role (exactly one SelfOnlyAt occupant) per chart: next-time chart of QPF coalgebras, lattice selfApp, module elements / zero object",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "bdd0b5e7-54e0-44c2-855a-b09ecfbdd7e3",
           "new": {
@@ -82729,6 +83004,46 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "be64b509-bd5c-4844-ac7e-f134c78fe7f2",
+          "new": {
+            "file": "ZeroParadox/Category/SeamComparisonMap.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.moduleCat_seam_role_unique_iff_isZero",
+            "short": "moduleCat_seam_role_unique_iff_isZero"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/SeamComparisonMap.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.moduleCat_seam_role_unique_iff_isZero",
+            "short": "moduleCat_seam_role_unique_iff_isZero",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [
+              "wall-seam",
+              "bottom"
+            ],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Die arc 3 2026-11-01: the seam role (exactly one SelfOnlyAt occupant) per chart: next-time chart of QPF coalgebras, lattice selfApp, module elements / zero object",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -88000,6 +88315,46 @@
             ]
           },
           "reason": "New file ZeroParadox/Valuation/PricedPadicInterface.lean — p-adic Group A priced carrier (29 decls)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "cba5aac7-24a4-4276-b31f-5408ec004658",
+          "new": {
+            "file": "ZeroParadox/Order/SeamSchema.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.selfApp_seam_role_unique",
+            "short": "selfApp_seam_role_unique"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/SeamSchema.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.selfApp_seam_role_unique",
+            "short": "selfApp_seam_role_unique",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [
+              "wall-seam",
+              "bottom"
+            ],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Die arc 3 2026-11-01: the seam role (exactly one SelfOnlyAt occupant) per chart: next-time chart of QPF coalgebras, lattice selfApp, module elements / zero object",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -96855,6 +97210,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "dfdd79ac-5810-4bb6-a293-513b42418a14",
+          "new": {
+            "file": "ZeroParadox/Category/RootCutDegeneracy.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.not_seam_role_unique_of_step_self",
+            "short": "not_seam_role_unique_of_step_self"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/RootCutDegeneracy.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.not_seam_role_unique_of_step_self",
+            "short": "not_seam_role_unique_of_step_self",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [
+              "wall-seam"
+            ],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Die arc 3 2026-11-01: the seam role (exactly one SelfOnlyAt occupant) per chart: next-time chart of QPF coalgebras, lattice selfApp, module elements / zero object",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "dff22faa-b952-4ded-839e-2261db0eb3d9",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -99672,6 +100066,45 @@
             ]
           },
           "reason": "A stuttering machine's observable is constant on its whole reachable set. Axiom-free. The general form behind Tim's objection that accumulating state escapes the self-loop trap.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e571d137-e873-4020-a3f8-76a7e81e6f41",
+          "new": {
+            "file": "ZeroParadox/Category/RootCutDegeneracy.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.nextTime_univ_eq",
+            "short": "nextTime_univ_eq"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/RootCutDegeneracy.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.nextTime_univ_eq",
+            "short": "nextTime_univ_eq",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [
+              "wall-seam"
+            ],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Die arc 3 2026-11-01: the seam role (exactly one SelfOnlyAt occupant) per chart: next-time chart of QPF coalgebras, lattice selfApp, module elements / zero object",
           "verify": {
             "axioms": null,
             "sorry_free": true

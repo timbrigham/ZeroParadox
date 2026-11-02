@@ -265,7 +265,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Order/OrbitDichotomy.lean` - The orbit dichotomy — "one or infinitely many", no finite middle (probe)
 - `ZeroParadox/Order/PadicLimitCone.lean` - The p-adic floor `{0}` is a genuine categorical limit cone
 - `ZeroParadox/Order/ProofFloorHomset.lean` - Axis III over the proof-theory floor #1 (the hom-set carrier convention)
-- `ZeroParadox/Order/SeamSchema.lean` - A shared "seam schema" for the QPF root-seam and the lattice selfApp seam, with the cross-setting fence IN the statement.
+- `ZeroParadox/Order/SeamSchema.lean` - A shared "seam schema" for the QPF root-seam and the lattice selfApp seam; this file exhibits no map between the two settings
 - `ZeroParadox/Order/WellFoundedObstruct.lean` - Well-foundedness obstructs the attractor character of the μ floor
   - ride-along docs: `ZeroParadox/Order/WellFoundedObstruct.md` - The NO-GO gauge on the attractor reading, and what the capstone does not claim
 
@@ -352,7 +352,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Category/SeamBiproductUnit.lean` - The seam #5 is the additive UNIT of the biproduct on `ModuleCat ℂ`
 - `ZeroParadox/Category/SeamBridge.lean` - Is the seam a genuine BRIDGE between the subtrees, or a coincidentally two-sided object?
 - `ZeroParadox/Category/SeamCoincidence.lean` - The seam IS the categorical μ=ν coincidence
-- `ZeroParadox/Category/SeamComparisonMap.lean` - The canonical μ→ν comparison map at the root seam, and the honest fence on "root-seam ≅ node-seam"
+- `ZeroParadox/Category/SeamComparisonMap.lean` - The canonical μ→ν comparison map at the root seam, and the root seam beside the node seam
 - `ZeroParadox/Category/SeamFrameChange.lean` - The frame-change in the category frame: `op`-duality swaps initial ↔ terminal at the seam
 - `ZeroParadox/Category/SeamGeneric.lean` - The seam as a GENERIC theorem (the μ=ν coincidence is a real categorical fact)
 - `ZeroParadox/Category/SeamLimColim.lean` - The seam diagram-level coincidence (lim = colim at the zero object)

@@ -1,6 +1,7 @@
 -- EXPERIMENTAL (branch scaffolding): bottom-diagram probe campaign, not a finalized layer. Curated/load-bearing results are indexed in ZeroParadox/BottomCannotBe.lean and classified in ZeroParadox/MANIFEST.md.
 import Mathlib.Data.QPF.Univariate.Basic
 import ZeroParadox.Settheory.Coalgebra
+import ZeroParadox.Category.WellFoundedCoalgebra
 
 /-!
 # The root-cut degeneracy dichotomy
@@ -45,9 +46,8 @@ because `PEmpty → X` is a singleton. Composing the unfold equivalence with thi
 `fixEquiv` and `cofixEquiv`, and `root_seam := fixEquiv.trans cofixEquiv.symm`. The strict side is
 imported verbatim from `ZeroParadox.categorical_fork_strict`.
 
-What is PROVED is exactly the equivalences and the dichotomy bundle below. The identification of this
-root seam with the diagonal fixed point / the node-#5 zero-object seam is the cross-instance modeling
-commitment of ZP-P, not a theorem.
+`Reading:` CARRIER — the seam is the die role `∃! y, SelfOnlyAt y` (`ZeroParadox/Die.lean`), occupied per
+chart with no equation across: § The seam role in the die; charts indexed in `ZeroParadox/DieCannotBe.lean`. Of the diagonal fixed point's floor faces (`ZeroParadox/DiagonalFixedPoint.lean` § III), the order-floor face `selfApp_isLeastFixedPointFrom` is a chart of this role (`selfApp_seam_role_unique`, same `AbstractSelfApp.selfApp`); the other § III faces are indexed in `ZeroParadox/DieCannotBe.lean` § XV at most by `SelfOnlyAt` occupancy, never by this role's uniqueness.
 
 ## Engineer's Take
 
@@ -182,6 +182,107 @@ theorem root_cut_dichotomy :
     IsEmpty (Fix ZeroParadox.idPF_Coalgebra.Obj ≃ Cofix ZeroParadox.idPF_Coalgebra.Obj) :=
   ⟨⟨(root_seam : Fix (constPF Unit).Obj ≃ _)⟩, idPF_no_seam⟩
 
+/-! ### The seam role in the die
+The chart: UP the identity on `Set X`, OVER the graph of the next-time operator `nextTime α`
+(`ZeroParadox/Category/WellFoundedCoalgebra.lean`) of the chart's own coalgebra `α`. -/
+
+/-- `Statement:` the next-time operator sends the whole carrier to itself. -/
+theorem nextTime_univ_eq {X : Type u} {P : PFunctor.{u, u}} (α : X → P.Obj X) :
+    nextTime α Set.univ = Set.univ := by
+  ext x; simp [nextTime]
+
+/-- `Statement:` exactly one set steps to itself only under `nextTime α` iff `α` is well-founded
+    (`IsWellFoundedCoalg`); both directions. -/
+theorem seam_role_unique_iff_wellFounded {X : Type u} {P : PFunctor.{u, u}} (α : X → P.Obj X) :
+    (∃! S, (Motion.ofFun (nextTime α)).SelfOnlyAt S) ↔ IsWellFoundedCoalg α := by
+  constructor
+  · rintro ⟨S₀, -, hu⟩ S hS
+    have h1 : S = S₀ := hu S ((Motion.selfOnlyAt_ofFun_iff _ _).2 hS)
+    have h2 : Set.univ = S₀ :=
+      hu Set.univ ((Motion.selfOnlyAt_ofFun_iff _ _).2 (nextTime_univ_eq α))
+    rw [h1, ← h2]
+  · intro hwf
+    exact ⟨Set.univ, (Motion.selfOnlyAt_ofFun_iff _ _).2 (nextTime_univ_eq α),
+      fun S hS => hwf S ((Motion.selfOnlyAt_ofFun_iff _ _).1 hS)⟩
+
+/-- `Statement:` on `Cofix (constPF A).Obj`, `nextTime Cofix.dest` is constantly `Set.univ`. -/
+theorem constPF_nextTime (S : Set (Cofix (constPF A).Obj)) :
+    nextTime (P := constPF A) Cofix.dest S = Set.univ := by
+  ext x
+  simp only [Set.mem_univ, iff_true]
+  intro b
+  exact b.elim
+
+/-- `Statement:` on `Cofix (constPF A).Obj`, exactly one set steps to itself only. `Reading:` for `A`
+    empty the chart has one point and this restates it. -/
+theorem constPF_seam_role_unique (A : Type u) :
+    ∃! S, (Motion.ofFun (nextTime (P := constPF A)
+      (Cofix.dest : Cofix (constPF A).Obj → _))).SelfOnlyAt S :=
+  (seam_role_unique_iff_wellFounded _).2 fun S hS => by rw [← hS, constPF_nextTime]
+
+/-- `Statement:` on `Cofix idPF_Coalgebra.Obj`, not exactly one set steps to itself only (`∅` and
+    `Set.univ` both do). -/
+theorem idPF_seam_role_not_unique :
+    ¬ ∃! S, (Motion.ofFun (nextTime (P := idPF_Coalgebra)
+      (Cofix.dest : Cofix idPF_Coalgebra.Obj → _))).SelfOnlyAt S := by
+  intro h
+  have hwf := (seam_role_unique_iff_wellFounded _).1 h
+  obtain ⟨c⟩ := cofix_nonempty
+  have h0 : nextTime (P := idPF_Coalgebra) (Cofix.dest : Cofix idPF_Coalgebra.Obj → _) ∅ = ∅ := by
+    ext x
+    simp only [Set.mem_empty_iff_false, iff_false]
+    intro hx
+    exact hx PUnit.unit
+  have hc : c ∈ (∅ : Set _) := by rw [hwf ∅ h0]; trivial
+  exact hc
+
+/-- `Statement:` the point-level chart, OVER `x → y` when `y` is a child of `x`: on
+    `Cofix (constPF A).Obj` no point has a step. -/
+theorem constPF_child_noStepAt (x : Cofix (constPF A).Obj) :
+    (Motion.ofTotal (id : Cofix (constPF A).Obj → _) (fun _ => rfl)
+      (fun x y => ∃ b, (Cofix.dest x).2 b = y)).NoStepAt x :=
+  fun _ ⟨b, _⟩ => b.elim
+
+/-- `Statement:` if some point is its own child, not exactly one set steps to itself only under
+    `nextTime α`; one way. -/
+theorem not_seam_role_unique_of_step_self {X : Type u} {P : PFunctor.{u, u}} (α : X → P.Obj X)
+    {x : X} (hx : ∃ b, (α x).2 b = x) :
+    ¬ ∃! S, (Motion.ofFun (nextTime α)).SelfOnlyAt S := by
+  intro h
+  have hl : wfPart α = Set.univ :=
+    (isWellFoundedCoalg_iff_wfPart_univ α).1 ((seam_role_unique_iff_wellFounded α).1 h)
+  have hS : nextTime α {y | ¬ ∃ b, (α y).2 b = y} ≤ {y | ¬ ∃ b, (α y).2 b = y} := by
+    intro y hy ⟨b, hb⟩
+    have := hy b
+    rw [hb] at this
+    exact this ⟨b, hb⟩
+  have hle : wfPart α ≤ {y | ¬ ∃ b, (α y).2 b = y} := OrderHom.lfp_le (nextTimeHom α) hS
+  rw [hl] at hle
+  exact hle (Set.mem_univ x) hx
+
+-- Statement: CONTROL, the converse fails: on `Bool` with each point's one child its negation, no
+-- point is its own child and not exactly one set steps to itself only.
+example :
+    let α : Bool → idPF_Coalgebra.Obj Bool := fun b => ⟨PUnit.unit, fun _ => !b⟩
+    (∀ x, ¬ ∃ b, (α x).2 b = x) ∧ ¬ ∃! S, (Motion.ofFun (nextTime α)).SelfOnlyAt S := by
+  intro α
+  refine ⟨fun x ⟨_, h⟩ => by cases x <;> simp [α] at h, fun h => ?_⟩
+  have h0 : nextTime α ∅ = ∅ := by
+    ext x; simp only [Set.mem_empty_iff_false, iff_false]; intro hx; exact hx PUnit.unit
+  have : true ∈ (∅ : Set Bool) := by
+    rw [(seam_role_unique_iff_wellFounded α).1 h ∅ h0]; trivial
+  exact this
+
+-- Statement: CONTROL: OVER always true on `Unit` has exactly one point stepping to itself only, and
+-- on `Bool` OVER the identity does not have exactly one (both points step to themselves only).
+example : (∃! y, (Motion.ofTotal (id : Unit → Unit) (fun _ => rfl) (fun _ _ => True)).SelfOnlyAt y) ∧
+    ¬ ∃! y, (Motion.ofFun (id : Bool → Bool)).SelfOnlyAt y := by
+  refine ⟨⟨(), ⟨trivial, fun _ _ => rfl⟩, fun _ _ => rfl⟩, ?_⟩
+  rintro ⟨y, -, hu⟩
+  have h1 := hu true ((Motion.selfOnlyAt_ofFun_iff _ _).2 rfl)
+  have h2 := hu false ((Motion.selfOnlyAt_ofFun_iff _ _).2 rfl)
+  exact absurd (h1.trans h2.symm) (by decide)
+
 section PurityCheck
 -- Measured footprint (lake build, v4.30.0-rc2):
 --   objEquiv             : [Quot.sound]                                — the action collapse
@@ -205,6 +306,16 @@ section PurityCheck
 #print axioms root_seam
 #print axioms idPF_no_seam
 #print axioms root_cut_dichotomy
+-- The seam role in the die (measured 2026-11-01): `nextTime_univ_eq` and
+-- `seam_role_unique_iff_wellFounded` are [propext, Quot.sound]; the rest carry Classical.choice,
+-- through `QPF.Cofix` in the statement or, for `not_seam_role_unique_of_step_self`, `OrderHom.lfp`.
+#print axioms nextTime_univ_eq
+#print axioms seam_role_unique_iff_wellFounded
+#print axioms constPF_nextTime
+#print axioms constPF_seam_role_unique
+#print axioms idPF_seam_role_not_unique
+#print axioms constPF_child_noStepAt
+#print axioms not_seam_role_unique_of_step_self
 end PurityCheck
 
 end ZeroParadox
