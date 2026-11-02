@@ -691,7 +691,7 @@ DIAGONAL_FAMILY = [
     ("Tarski",       "μ wall",  "no internal truth predicate - the liar sentence has no witness", "tarski_no_internal_truth", "(none)"),
     ("Curry",        "μ wall",  "no naming surjection - Curry's paradox forces any conclusion", "curry_no_bottom", "(none)"),
     ("the wall",     "μ",       "no well-founded relation admits a self-loop (a host verdict, not an engine face)", "wf_no_selfloop", "(none)"),
-    ("Quine atom",   "ν floor", "the Quine atom (CC-2), a role: whatever fills it in a ZPSemilattice with an AFAStructure is ⊥, from the class fields; no set is equated with ⊥", "t_exec", "(none)"),
+    ("Quine atom",   "ν floor", "the Quine atom (CC-2): every Quine atom (IsQuineAtom) of a ZPSemilattice with an AFAStructure is ⊥, from the class fields; no set is equated with ⊥", "t_exec", "(none)"),
     ("Löb",          "ν floor", "given a Löb diagonal ψ (hypotheses hfix1, hfix2), ⊢ □A → A yields ⊢ A", "loeb", "(none)"),
     ("Gödel 2nd",    "ν floor", "given a Löb diagonal for falsum, a consistent system does not prove □falsum → falsum (Gödel's second theorem when the class is instantiated at a theory of arithmetic and falsum is its falsum; in the class, falsum may be any sentence)", "godel_two", "(none)"),
     ("Kleene quine", "ν floor", "every computable self-map on codes has a fixed point up to eval (Rogers' form of the recursion theorem)", "computability_face_fixedPoint", "`[propext, Classical.choice, Quot.sound]`"),

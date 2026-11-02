@@ -1,6 +1,6 @@
 """
 Build ZP-L Illustrated Companion
-Version 1.20 | November 2026
+Version 1.21 | November 2026
 Citation fence (Gentzen): the Convergence section's credits follow CLAIMS.md's Gentzen rows and are
 taken from the primary papers, never from a secondary source's labels. Provability of transfinite
 induction below epsilon-0 is what Gentzen 1943 (p. 140 and its footnote 3) reports, crediting
@@ -219,7 +219,7 @@ def dual_convergence_diagram():
     return d
 
 
-VERSION = '1.20'
+VERSION = '1.21'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -400,7 +400,7 @@ def build():
     E.append(Paragraph('The Kleene Connection', CS['h1']))
     E.append(cbody(
         'ZP-K carries a computational counterpart of &#8869; as a requirement of its Kleene structure: '
-        'the class field botCode_is_quine, which asks the nominated code to satisfy '
+        'the class field botCode_is_quine, which asks the supplied code to satisfy '
         'IsComputationalQuine &#8212; a periodicity condition, eval c n = eval c (encode c + n) '
         'for every n, so the code\'s own G&#246;del number is a period of it. Kleene\'s second '
         'recursion theorem guarantees such a code exists. The condition does not by itself pin '
@@ -414,7 +414,7 @@ def build():
         'it (evalStepMotion_not_selfOnlyAt), and for a computable map respecting equal output '
         'some class of codes up to equal output does (codes_vs_classes, '
         'ZeroParadox/Computability/Kleene.lean). No equation across a program code and the '
-        'lattice carrier is stated; they are different types, so the nominated code is not identified with &#8869;, '
+        'lattice carrier is stated; they are different types, so the supplied code is not identified with &#8869;, '
         'and that &#8869; actually runs stays the occurrence commitment. ZP-L identifies '
         '&#949;&#8320; as an ordinal fixed point: the first ordinal satisfying &#969;^&#945; = &#945;, '
         'guaranteed to exist by the fixed-point theorem for normal functions. Both fixed-point '

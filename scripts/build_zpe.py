@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-E: Bridge Document PDF Builder
-Version 3.69 | November 2026
+Version 3.70 | November 2026
 Follows all rules in pdf rendering standards:
   - DejaVu fonts only
   - Checkmark always wrapped in <font name="DV">
@@ -12,7 +12,7 @@ Follows all rules in pdf rendering standards:
 import os
 from zp_utils import *
 
-VERSION = '3.69'
+VERSION = '3.70'
 FIRST_RELEASED = 'April 2026'
 
 # ── Local overrides: ZP-E uses justified body text ────────────────────────────
@@ -120,7 +120,7 @@ def build():
         'point (ZP-C L-INF). Neither chart locates the unboundedness at P<sub>0</sub> (the valuation-complexity bridge is '
         'refuted, ZP-I &#167; II.B). From this premise the framework argues that no finite external interpreter can hold '
         '&#8869; as a static description. ZP-A CC-2 '
-        'supplies a second, structural basis: &#8869;, the lattice&#8217;s occupant of the Quine-atom role, is a self-containing object with no external '
+        'supplies a second, structural basis: &#8869;, the lattice&#8217;s occupant of the Quine-atom role under a self-application map (selfApp_quine_role_iff), is a self-containing object with no external '
         'interpreter by structure. Neither derives T-BUF Step 2: it is DP-2&#8217;s precondition, and it is what the '
         'occurrence commitment asserts (&#167; IV). DA-1 (&#167; IV below) consumes it and does not supply it: given it, '
         'D7 puts the machine at c<sub>1</sub> (T-SNAP Step 3), and DP-2 and da1_minimal_path show that c<sub>0</sub> and c<sub>1</sub> '
@@ -196,8 +196,8 @@ def build():
             'configuration (state c<sub>1</sub>) are distinct while returning the same output value, so the output value cannot '
             'show whether the step was taken. It takes no hypothesis and does not carry that the step is taken '
             '(ZeroParadox/Order/SnapCannotBe.lean &#167; I). The returned ⊥ occupies the bottom role again; reading it as a NEW null rather than the prior c<sub>0</sub> is C-DA2, a modelling commitment. The axiom-free result is the role, not the novelty.',
-            'Structural motivation (Paths 1 and 2 below): the Quine atom (ZP-A CC-2): ZP-J t_exec_iff proves '
-            '⊥ is the only occupant of the Quine-atom role in an AFAStructure lattice; no equation makes ⊥ of a ZPSemilattice the AFA set Q = {Q}, and the commitment that remains concerns the host theory (R-AFA). '
+            'Structural motivation (Paths 1 and 2 below): the Quine atom (ZP-A CC-2): in an AFAStructure lattice ZP-J t_exec_iff proves '
+            '⊥ is the only Quine atom (IsQuineAtom), and so the only occupant of the Quine-atom role with the AFA-built host&#8217;s membership as the step; no equation makes ⊥ of a ZPSemilattice the AFA set Q = {Q}, and the commitment that remains concerns the host theory (R-AFA). '
             'ZP-A R3 reads off that a self-containing object admits no external interpreter position; that rules out an '
             'external executor, not an inert ⊥. Path 2 rests on two charts: ZP-C L-INF, surprisal unbounded in the ball-hierarchy depth with each value finite (l_inf), and '
             'the 2-adic additive valuation &#8868; at 0 of Q<sub>2</sub> (padic_addVal_bot), the point to which c<sub>0</sub>, ⊥ of MachinePhase, corresponds. '
@@ -223,7 +223,7 @@ def build():
              'executor is &#8869; itself. A thing that executes itself contains itself, and the framework reads this as the Quine-atom '
              'role (ZP-A CC-2): a point that steps to itself and to nothing else. The argument is that this is forced by the impossibility of external '
              'execution, which makes it more than a free choice and less than a theorem. ZP-A R3 states the structural consequence: a self-containing object admits no external '
-             'interpreter position. ZP-J T-EXEC proves that whatever fills the Quine-atom role in an AFAStructure lattice is &#8869;: IsQuineAtom(q) &#8596; q = &#8869;, '
+             'interpreter position. ZP-J T-EXEC proves that every Quine atom of an AFAStructure lattice is &#8869;: IsQuineAtom(q) &#8596; q = &#8869;, '
              'proved axiom-free in Lean 4 (ZeroParadox.t_exec_iff). AFA (ZF + AFA) is <i>a</i> consistent '
              'set-theoretic home for this structure, and the commitment is not the <i>adoption of AFA '
              'specifically</i>: it is a set of requirements on the host theory &#8212; that the host has a '
@@ -291,7 +291,7 @@ def build():
              '(da1_closed_concrete), and the sequence that stays at c<sub>0</sub> is a state sequence (Premises of '
              'T-SNAP). The self-executor reading argues for the Quine atom as '
              'more than a free choice and less than a theorem (ZP-A CC-2, a Forced Metatheoretic Commitment about its host theory); '
-             'ZP-J T-EXEC proves, axiom-free, that whatever fills the Quine-atom role is &#8869;. Path 2 (informational) '
+             'ZP-J T-EXEC proves, axiom-free, that every Quine atom (IsQuineAtom) of an AFAStructure lattice is &#8869;. Path 2 (informational) '
              'provides motivational context — unbounded surprisal as a pointer toward why static holding is '
              'incoherent — but the bridge from unbounded surprisal (L-INF) to execution is not a derived claim: it is a bridge principle of its own, '
              'which the framework does not adopt and which is not the occurrence commitment. Path 3 (AIT) argues that incompressibility eliminates a '
@@ -311,7 +311,7 @@ def build():
                 'Path 2 (informational, L-INF): UNADOPTED BRIDGE PRINCIPLE — a missing principle, not a missing proof, distinct from the occurrence commitment and not a premise of the Snap; Path 2 does not derive the precondition. '
                 'Path 3 (computational, ZP-C D1 + AIT): bears on the precondition and does not derive executing from incompressibility — incompressibility rules out a shorter external generator, not an inert string; that the configuration reaching P<sub>0</sub> is in Sense B and not Sense A is DP-2&#8217;s precondition, what the occurrence commitment asserts, which DA-1 consumes and does not derive. Its Lean counterpart (ZP-K) is the machinePhaseKleene instance&#8217;s botCode_is_quine field — a KleeneStructure requirement that constant codes also meet, not a witness of execution and not a second independent proof; da1_paths_unified carries it with Path 1 as a conjunction. '
                 'CC-1 (S<sub>0</sub> = &#8869;): restated — ZP-J cc1_derived with t_exec_iff makes a Quine-atom start and a &#8869; start the same condition (axiom-free, Lean) — and not forced: on a carrier with a second point a valid sequence starts elsewhere (ZeroParadox/Settheory/OntBridge.lean). '
-                'The Quine atom (CC-2): ZP-J t_exec_iff proves &#8869; is the only occupant of the Quine-atom role in an AFAStructure lattice (axiom-free); no equation makes &#8869; of a ZPSemilattice the AFA set Q = {Q}, since it would be ill-typed, and the role is occupied or provably empty chart by chart; what stays a Forced Metatheoretic Commitment is the host theory (Foundation-freeness forced, AFA adopted; see R-AFA). '
+                'The Quine atom (CC-2): ZP-J t_exec_iff proves &#8869; is the only Quine atom (IsQuineAtom) of an AFAStructure lattice (axiom-free), so the only occupant of the Quine-atom role with the AFA-built host&#8217;s membership as the step; no equation makes &#8869; of a ZPSemilattice the AFA set Q = {Q}, since it would be ill-typed, and the role is occupied or provably empty chart by chart; what stays a Forced Metatheoretic Commitment is the host theory (Foundation-freeness forced, AFA adopted; see R-AFA). '
                 'DP-2 (&#167;III) — explicit. '
                 'T-SNAP&#8217;s premises, in its Lean form and in its prose argument, are stated under Premises of T-SNAP (DA-1 insert, &#167; V). '
                 'AIT (Kolmogorov complexity) outside Lean scope; the Kleene structure is its in-scope counterpart, carried as a KleeneStructure requirement (botCode_is_quine), not a proof of the AIT claim.'),
@@ -368,7 +368,7 @@ def build():
              'be read as a statement about the framework&#8217;s own state sequence.</i>'),
         sp(4),
         li('Step 1 — P<sub>0</sub> identifies the incompressibility threshold. ZP-C &#167; I takes x to be a binary string of length n, so n = |x| and K(x|n)/n = K(x|n)/|x|. ZP-C D1 defines P<sub>0</sub> as the limit of K(x|n)/n as n grows, the algorithmic entropy rate of x, and the threshold is that rate at its maximum, 1. The steps below use the finite-string form ZP-C also uses (ZP-C Remark R-BRIDGE and T-BUF Step 1), not the limit: one configuration string x of length n with K(x|n) &#8805; |x|, so x is algorithmically incompressible at its length. Since K(x|n) &#8804; |x| + c for every x, with c depending only on the universal machine U, the ratio K(x|n)/|x| is then 1 up to an additive constant in K, not necessarily exactly 1. K here is plain conditional complexity, which the sources below write C. That some x of each length n has K(x|n) &#8805; n is a counting argument (Buhrman, Jiang, Li and Vit&#225;nyi 1998, arXiv:cs/9809060, &#167; 3); the upper bound K(x) &#8804; |x| + O(1) is Shen 2015 (arXiv:1504.04955, Theorem 2(a)), and it holds given n by the same paper&#8217;s Theorem 10(a), C(x|y) &#8804; C(x) + O(1). (ZP-C &#167; I, D1)'),
-        li('Step 2 — The configuration reaching P<sub>0</sub> is in Sense B, not Sense A (the occurrence commitment): At P<sub>0</sub>, K(c<sub>1</sub>|n) &#8805; |c<sub>1</sub>| (Step 1 at x = c<sub>1</sub>) — c<sub>1</sub> is incompressible, so no shorter external generator exists. That rules out a shorter external generator, not an inert string; that the configuration reaching P<sub>0</sub> is a running machine&#8217;s current configuration (Sense B) and not an inert string (Sense A) is what the occurrence commitment asserts, not a derived step. Arguments for it, none deriving it: ⊥ = {&#8869;} (ZP-A CC-2/R3); unbounded surprisal (ZP-C L-INF); DA-1 Path 3. (The occurrence commitment, whose content is DP-2&#8217;s precondition. DA-1, closed given DP-2, consumes this step and does not supply it)'),
+        li('Step 2 — The configuration reaching P<sub>0</sub> is in Sense B, not Sense A (the occurrence commitment): At P<sub>0</sub>, K(c<sub>1</sub>|n) &#8805; |c<sub>1</sub>| (Step 1 at x = c<sub>1</sub>) — c<sub>1</sub> is incompressible, so no shorter external generator exists. That rules out a shorter external generator, not an inert string; that the configuration reaching P<sub>0</sub> is a running machine&#8217;s current configuration (Sense B) and not an inert string (Sense A) is what the occurrence commitment asserts, not a derived step. Arguments for it, none deriving it: the Quine atom (ZP-A CC-2/R3); unbounded surprisal (ZP-C L-INF); DA-1 Path 3. (The occurrence commitment, whose content is DP-2&#8217;s precondition. DA-1, closed given DP-2, consumes this step and does not supply it)'),
         li('Step 3 — Any instantiated execution passes through c<sub>1</sub>. (ZP-C D7 — definitional; c<sub>1</sub> is the first running configuration)'),
         li('Step 4 — c<sub>1</sub> ≠ ⊥. (ZP-C L-RUN — Derived; c<sub>1</sub> has gained execution context not present in c<sub>0</sub> = ⊥; by AX-B1 this is a distinct, non-bottom state)'),
         li('Step 5 — No program that executes produces only ⊥ configuration states. (ZP-C TQ-IH — Derived; execution trace τ(p) contains c<sub>1</sub> for any executing program p)'),
@@ -384,7 +384,7 @@ def build():
                 'occurrence rest on commitments, among them those named there. '
                 'Dependencies cited in the steps: ZP-C D1, D7, L-RUN, TQ-IH; ZP-B C3; ZP-A D2, R1; ZP-E DA-1; ZP-J T-EXEC. '
                 'CC-1 (S&#8320; = &#8869;): restated — a Quine-atom start and a &#8869; start are one condition (ZP-J cc1_derived, t_exec_iff; axiom-free) — and not forced, since on a carrier with a second point a valid sequence starts elsewhere. '
-                'The Quine atom (CC-2): ZP-J t_exec_iff proves &#8869; is the only occupant of the Quine-atom role in an AFAStructure lattice (axiom-free); no equation makes &#8869; of a ZPSemilattice the AFA set Q = {Q}, since it would be ill-typed (see R-AFA). '
+                'The Quine atom (CC-2): ZP-J t_exec_iff proves &#8869; is the only Quine atom (IsQuineAtom) of an AFAStructure lattice (axiom-free); no equation makes &#8869; of a ZPSemilattice the AFA set Q = {Q}, since it would be ill-typed (see R-AFA). '
                 'Both remain commitments: CC-1 is a Conditional Claim, expressed through the Quine-atom role and not removed by it; CC-2 is a Forced Metatheoretic Commitment about the host theory. '
                 'Conceptual correspondence only: ZP-G AX-G2 (downstream of ZP-E; not a formal dependency).'),
     ]
@@ -456,21 +456,24 @@ def build():
                 'This is a theorem of ZF + Foundation, not a framework-specific stipulation; it is '
                 'machine-checked here as no_quine_atom / no_membership_cycle '
                 '(ZeroParadox/Settheory/Wall.lean, footprint [propext, Quot.sound], choice-free), and in the '
-                'die as zfset_quine_role_unoccupied. A Foundation-respecting universe therefore has no '
-                'occupant of the role at all.',
-                '<b>The framework\'s readings of &#8869; support the premise that the role is occupied; the '
+                'die as zfset_quine_role_unoccupied. With membership as the step, a Foundation-respecting '
+                'universe therefore has no occupant of the role at all (under any well-founded membership: the '
+                'well-founded example in ZeroParadox/Settheory/QuineDichotomy.lean, from wf_no_selfloop); under a '
+                'self-application step the role is occupied in every ZPSemilattice, Foundation or not '
+                '(selfApp_quine_role_iff), so the exclusion concerns the membership chart.',
+                '<b>The framework\'s readings of &#8869; support the premise that the role is occupied under membership; the '
                 'exclusion itself is a theorem.</b> R3 '
                 '(ZP-A) &#8212; an occupant of the Quine-atom role has no describer position external to itself &#8212; and '
                 'L-INF (ZP-C) &#8212; the 2-adic surprisal I(n) = n is unbounded, so no finite interpreter '
                 'can hold &#8869; &#8212; each describe an object with no external vantage and unbounded '
                 'self-referential depth. That is exactly the profile of a non-well-founded, self-membered '
-                'set: the two readings motivate why the role must be occupied, which Foundation excludes, '
+                'set: the two readings motivate why the role must be occupied under membership, which Foundation excludes, '
                 'rather than serving as independent proofs of the exclusion.',
                 '<b>Non-well-foundedness is forced; AFA is the canonical replacement.</b> An occupant under '
                 'membership lies on a membership loop '
                 '(x &#8712; x &#8712; x &#8712; &#8230;), so the role can be occupied only in a '
                 'non-well-founded '
-                'metatheory (quineAtomHost_not_wellFounded, below). <b>That much is forced; the particular axiom is not.</b> Aczel records four '
+                'metatheory (wf_no_selfloop; for a host, quineAtomHost_not_wellFounded, below). <b>That much is forced; the particular axiom is not.</b> Aczel records four '
                 'anti-foundation axioms, and AFA, FAFA and SAFA each admit exactly one '
                 'Quine atom &#8212; his own term is a <i>reflexive set</i> &#8212; while being pairwise '
                 'incompatible (Aczel 1988, Corollary 4.28; Appendix A, p. 108). Supplying exactly one '
@@ -526,9 +529,10 @@ def build():
                 'membership chains). This is a <b>Forced Metatheoretic Commitment</b> about the host theory '
                 '&#8212; stronger than a free choice, weaker than a theorem &#8212; not a Conditional Claim. '
                 'It is not an equation between &#8869; of a ZPSemilattice and a set, which would be ill-typed: '
-                'the Quine-atom role&#8217;s occupancy is machine-checked chart by chart (Path 1 above), and in an '
-                'AFAStructure lattice its occupant is &#8869; (t_exec, ZeroParadox/Settheory/SetTheoryAFA.lean, '
-                'axiom-free, given the field bot_self_mem). The named falsifier is correspondingly narrow: a differently-motivated '
+                'the Quine-atom role&#8217;s occupancy is machine-checked chart by chart (Path 1 above), and with the '
+                'membership of the host built from an AFAStructure lattice as the step its only occupant is &#8869; '
+                '(quineAtomHost_quine_role_iff at afaStructure_isQuineAtomHost; in the IsQuineAtom form, t_exec, '
+                'ZeroParadox/Settheory/SetTheoryAFA.lean, axiom-free, given the field bot_self_mem). The named falsifier is correspondingly narrow: a differently-motivated '
                 'requirement set that hosts the role without demanding a unique Quine atom would reopen this '
                 'choice &#8212; it would not touch the forcing, which is proved.',
             ]
@@ -700,7 +704,7 @@ def build():
         li('Each edge within an instantiation is a step in a monotone state sequence (ZP-A T3). Edges are irreversible (ZP-B C3).'),
         li('Branching at each node: every distinct outbound vector from the terminal state of I<sub>n</sub> is a '
            'valid ε<sub>0</sub> for a distinct I<sub>n+1</sub>. T-SNAP does not select among branches. Because ⊥, the only '
-           'occupant of the Quine-atom role in the lattice (ZP-A CC-2), has no internal differentiation, every '
+           'occupant of the Quine-atom role in the lattice under a self-application map (ZP-A CC-2; selfApp_quine_role_iff), has no internal differentiation, every '
            'ε<sub>0</sub> that represents a first differentiation in any direction is a valid outcome. '
            'The work here is done by the undifferentiated ⊥ of CC-2, not by T-SNAP: given that '
            'instantiation occurs, no direction is privileged, so the structure branches rather than '
@@ -716,7 +720,7 @@ def build():
         'NEW bottom is a further commitment (C-DA2); '
         'in the 2-adic realization the arc tends back to the same 0 of &#8484;<sub>2</sub> (snap_arc_z2_loop). Nothing '
         'here places that terminal state at P<sub>0</sub> (ZP-I &#167; II.B). No new axiom is required. The multiverse is not the claim that '
-        'T-SNAP fires in all directions simultaneously: it is the claim that ⊥, the lattice&#8217;s occupant of the Quine-atom role (ZP-A CC-2), has no '
+        'T-SNAP fires in all directions simultaneously: it is the claim that ⊥, the lattice&#8217;s occupant of the Quine-atom role under a self-application map (ZP-A CC-2), has no '
         'internal differentiation and therefore no preferred direction for ε<sub>0</sub>. The multiverse of '
         'instantiations is the full set of all minimal differentiations available from the single '
         'self-containing ⊥ — a structural consequence of CC-2 + T-SNAP + DA-2 jointly, given C-DA2.'))
@@ -987,7 +991,7 @@ def build():
          'missing proof, distinct from the occurrence commitment and not a premise of the Snap; Path 2 does not derive the precondition. No computability library closes the gap between \'system at P₀\' and \'system is '
          'running.\' '
          'DA-1&#8217;s formal grounding (DP-2, da1_minimal_path) does not depend on Path 1, Path 2 or Path 3. '
-         'CC-1 restated in ZP-J as an equivalence, and not forced (a valid sequence can start elsewhere on a carrier with a second point); CC-2 a Forced Metatheoretic Commitment about the host theory, while in an AFAStructure lattice t_exec_iff shows only &#8869; fills the Quine-atom role.'],
+         'CC-1 restated in ZP-J as an equivalence, and not forced (a valid sequence can start elsewhere on a carrier with a second point); CC-2 a Forced Metatheoretic Commitment about the host theory, while in an AFAStructure lattice t_exec_iff shows &#8869; is the only Quine atom (IsQuineAtom).'],
         ['T-SNAP: Binary Snap derived',
          'Valid — Derived, in two readings. The Lean form (t_snap_derived) fixes the SHAPE with no hypotheses and no axioms. '
          'The seven-step prose argument uses commitments, and that the transition OCCURS is not established by T-SNAP (tsnap_holds_but_nothing_moves). '

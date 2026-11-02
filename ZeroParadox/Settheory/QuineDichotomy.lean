@@ -103,8 +103,17 @@ example (L : Type) [ZPSemilattice L] [AFAStructure L] :
 example (L : Type) [ZPSemilattice L] (a : L) (ha : a ≠ bot) :
     (trivialQuineAtomHost a).bot ≠ bot := ha
 
+-- Statement: with the AFA-built host's membership as the step, occupying the role is being a Quine atom
+-- in the `IsQuineAtom` sense, so by `t_exec_iff` its only occupant is ⊥ of `L`; both directions.
+example (L : Type) [ZPSemilattice L] [AFAStructure L] (y : L) :
+    (Motion.ofTotal (id : L → L) (fun _ => rfl)
+      (fun a b => (afaStructure_isQuineAtomHost L).mem b a)).SelfOnlyAt y ↔ IsQuineAtom y :=
+  (@quineAtomHost_quine_role_iff L (afaStructure_isQuineAtomHost L) y).trans (t_exec_iff y).symm
+
 -- Statement: under any well-founded membership relation no point occupies the membership chart, since
--- an occupant steps to itself (`wf_no_selfloop`); `zfset_quine_role_unoccupied` is the `ZFSet` case.
+-- an occupant steps to itself (`wf_no_selfloop`); `zfset_quine_role_unoccupied` is the `ZFSet` case. The
+-- example after `Antitone (fun q : Prop => q → P)` in `ZeroParadox/DieCannotBe.lean` assumes the STEP
+-- relation well-founded instead; here it is membership, the step's converse, and neither implies the other.
 example {C : Type*} (mem : C → C → Prop) (h : WellFounded mem) (y : C) :
     ¬ (Motion.ofTotal (id : C → C) (fun _ => rfl) (fun a b => mem b a)).SelfOnlyAt y :=
   fun hy => wf_no_selfloop h y hy.1

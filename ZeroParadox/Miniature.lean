@@ -82,9 +82,9 @@ the static three. The wall's seed here, `negation_no_fp` (`¬(p ↔ ¬p)`), is t
 
 We show the *limited* version deliberately. The **shape** — self-reference forced either to a wall or to a
 self-referential floor — is what the minimal core exhibits, and a bare fixed point is enough to carry it. The
-full Quine atom needs a non-well-founded set theory (ZF+AFA) to host `⊥ = {⊥}` literally; that host is the
+full Quine atom needs a non-well-founded set theory (ZF+AFA) to host a set x = {x} literally; that host is the
 *flesh*, cited to its home, not rebuilt here. Honest split: the *structural* self-application fixed point is
-Lean-proved and axiom-free (`t_exec`); `⊥ = {⊥}` of a lattice's ⊥ is ill-typed and not asserted: the die's Quine-atom
+Lean-proved and axiom-free (`t_exec`); an equation between a lattice's ⊥ and a set is ill-typed and not asserted: the die's Quine-atom
 role is occupied chart by chart (`ZeroParadox/Settheory/QuineDichotomy.lean`); hosting x = {x} in ZF+AFA is the commitment.
 
 **Honest status.** The *content* is re-derived, not new: the engine is **Lawvere (1969) / Yanofsky (2003)**
@@ -130,8 +130,9 @@ def HasWitnessRel (β : Type u) (M : (β → β) → Prop) : Prop :=
   ∃ (α : Type u) (e : α → (α → β)), ∀ g : β → β, M g → ∃ a, (fun x => g (e x x)) = e a
 
 /-- **The floor condition.** A witness forces every admissible endomap to have a fixed point — self-reference
-*closes*. In the full framework that fixed point is the self-referential **Quine atom** `⊥ = {⊥}` / Kleene
-quine (`Settheory/SetTheoryAFA.lean` `t_exec`); here it is bare existence — see the docstring's
+*closes*. In the full framework that fixed point is the lattice's Quine atom, ⊥ (`Settheory/SetTheoryAFA.lean`
+`t_exec`); the Kleene quine is compared with it through the Quine-atom role, not identified
+(`Computability/Kleene.lean` § IX); here it is bare existence — see the docstring's
 "What the floor stands for". -/
 theorem floor_of_witness {β : Type*} {M : (β → β) → Prop} (h : HasWitnessRel β M)
     {g : β → β} (hg : M g) : ∃ b, g b = b := by

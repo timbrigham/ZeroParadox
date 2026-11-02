@@ -125,8 +125,8 @@ theorem computational_quine_exists : ∃ c : Code, IsComputationalQuine c :=
     identification unstatable.
     Uniqueness in ZP-K is inherited from ZP-J (set-theoretic side via T-EXEC):
     any element satisfying IsQuineAtom equals ⊥ — this is kleene_quine_is_bot.
-    No code (botCode included) is read as naming ⊥: the code chart has its own occupant
-    of the die's Quine-atom role (§ IX, § IX-b), and no Lean identity between a code and
+    No code (botCode included) is read as naming ⊥: each code chart has its own
+    occupancy of the die's Quine-atom role, step by step (§ IX, § IX-b), and no Lean identity between a code and
     ⊥ is stated — see the type-boundary note above. That ⊥ executes is the occurrence
     commitment, not established by behavioral equality of codes. -/
 

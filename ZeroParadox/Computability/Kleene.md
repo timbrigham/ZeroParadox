@@ -47,11 +47,12 @@ fixed points form an infinite family (§ VI).
 
 ## Key insight (April 26, 2026)
 
-This is the framework's reading, and no theorem in this file establishes it. Its identity half
-(⊥ IS a particular machine or code) is retired, below; its running half (⊥ executes) is the
-occurrence commitment. On that reading, ⊥ in the computational instantiation (ZP-C D7) is
-not a state OF a Turing machine: ⊥ IS the universal Turing machine in its ground state,
-and U is not a description awaiting an external executor but IS the executor.
+The reading this insight recorded was that ⊥ in the computational instantiation (ZP-C D7) is
+not a state OF a Turing machine but the universal Turing machine U in its ground state, and that
+U is not a description awaiting an external executor but its own executor. No theorem in this
+file establishes it, and it splits in two. Its identity half (that ⊥ IS a particular machine or
+code) is retired, below. Its running half (that ⊥ executes itself, if it executes at all) is the
+occurrence commitment.
 
 What Lean supplies underneath: Kleene's second recursion theorem (Mathlib:
 Nat.Partrec.Code.fixed_point₂) guarantees a fixed point exists for any partially
@@ -67,7 +68,7 @@ self-printing codes, with `F` the map `selfPrintOrDelegate`, some self-printing 
 The set-side charts are in `ZeroParadox/Settheory/Wall.lean` (no `ZFSet` occupies it) and
 `ZeroParadox/Settheory/Coalgebra.lean` (a coalgebra point does). No equation across `Code` and `L`
 is stated; one would be ill-typed. So the reading that the class's `botCode` is ⊥'s computational
-witness keeps no identity half: the code chart has its own occupant, as above. What stays a
+witness keeps no identity half: each code chart has its own occupancy, step by step, as above. What stays a
 commitment is that ⊥ actually executes, the occurrence commitment.
 
 ## Dependencies
