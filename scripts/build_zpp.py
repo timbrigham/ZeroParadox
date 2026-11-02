@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-P: The Fixed-Point Fork PDF Builder
-Version 1.28 | November 2026
+Version 1.29 | November 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.28'
+VERSION = '1.29'
 FIRST_RELEASED = 'June 2026'
 
 
@@ -163,14 +163,16 @@ def build():
         'ZFC+AFA orthogonal-contact-point claim is the set-theory entry: in the standard '
         'category-theoretic characterisation (Aczel; Lambek), Foundation is the initial algebra '
         '(&#956;) and AFA the final coalgebra (&#957;) of the bounded powerset functor, and the '
-        'Quine atom &#8869; = {&#8869;} is exactly an element present in &#957; but not in &#956;.'))
+        'Quine atom (CC-2), a set equal to its own singleton, x = {x}, is exactly an element present in '
+        '&#957; but not in &#956;. No equation identifies it with &#8869; of a ZPSemilattice; the two are '
+        'measured against the Quine-atom role of Section III.'))
 
     E.append(data_table(
         headers=['Domain', 'The two closures fork into', 'Contact point / home layer'],
         rows_data=[
             ['Set theory',
              'Foundation (&#956;, well-founded) vs AFA (&#957;, non-well-founded)',
-             'Quine atom &#8869; = {&#8869;}; ZP-J / ZP-K'],
+             'Quine atom (CC-2), x = {x}; ZP-J / ZP-K'],
             ['Number systems',
              'Archimedean &#8477; vs non-Archimedean &#8474;<sub>p</sub>',
              '0 (snap fails in &#8477;, holds in &#8474;<sub>2</sub>); ZP-B / ZP-F'],
@@ -340,7 +342,7 @@ def build():
             'boundary, not a missing proof, and no such identity is committed to either. What '
             'relates the instances is the one role each chart is measured against. What is '
             'claimed formally is that each framework forks at its own contact point, and which '
-            'charts occupy the role.',
+            'charts have an occupant of the role.',
         ]
     ))
     E.append(sp(6))
@@ -418,7 +420,7 @@ def build():
             '<i>End of ZP-P | The Fixed-Point Fork | fork_collapse_iff (choice-free spine) | '
             'Ostrowski number-system instance | categorical &#956;/&#957; instance '
             '(Fix empty / Cofix inhabited) | hard fence: cross-instance identity is a type '
-            'boundary; what relates them is one role, which each chart occupies or provably does not | '
+            'boundary; what relates the instances is one role, which a point of each chart occupies or provably none does | '
             'soft fence: not every fork '
             'is &#956;/&#957; | '
             'All FixedPointFork.lean / Ostrowski.lean / Coalgebra.lean theorems verified; the role '

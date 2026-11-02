@@ -89,13 +89,25 @@ theorem quineAtomHost_quine_role_iff {L : Type*} [QuineAtomHost L] (y : L) :
   · rintro rfl
     exact ⟨(QuineAtomHost.bot_mem_iff _).2 rfl, fun b hb => (QuineAtomHost.bot_mem_iff b).1 hb⟩
 
--- Statement: which point occupies the membership chart is the host's `bot` field: the host built
--- from an `AFAStructure` on `L` has ⊥ of `L` there, and on a carrier with a second point `a` the host
--- `trivialQuineAtomHost a` has `a` there instead.
+-- Statement: for any `QuineAtomHost` on a `ZPSemilattice` `L`, ⊥ of `L` occupies the membership
+-- chart iff the host's `bot` is ⊥ of `L`; both directions, from `quineAtomHost_quine_role_iff`.
+example (L : Type) [ZPSemilattice L] (S : QuineAtomHost L) :
+    (Motion.ofTotal (id : L → L) (fun _ => rfl) (fun a b => S.mem b a)).SelfOnlyAt bot ↔
+      S.bot = bot :=
+  (@quineAtomHost_quine_role_iff L S bot).trans eq_comm
+
+-- Statement: the host built from an `AFAStructure` on `L` has ⊥ of `L` as its `bot`, and for a point
+-- `a ≠ ⊥` of `L` the host `trivialQuineAtomHost a` does not.
 example (L : Type) [ZPSemilattice L] [AFAStructure L] :
     (afaStructure_isQuineAtomHost L).bot = bot := rfl
 example (L : Type) [ZPSemilattice L] (a : L) (ha : a ≠ bot) :
     (trivialQuineAtomHost a).bot ≠ bot := ha
+
+-- Statement: under any well-founded membership relation no point occupies the membership chart, since
+-- an occupant steps to itself (`wf_no_selfloop`); `zfset_quine_role_unoccupied` is the `ZFSet` case.
+example {C : Type*} (mem : C → C → Prop) (h : WellFounded mem) (y : C) :
+    ¬ (Motion.ofTotal (id : C → C) (fun _ => rfl) (fun a b => mem b a)).SelfOnlyAt y :=
+  fun hy => wf_no_selfloop h y hy.1
 
 -- Statement: `ZFSet` has no Lawvere witness, since ∅ ≠ {∅} (`no_witness_of_nontrivial`).
 example : ¬ HasLawvereWitness ZFSet :=

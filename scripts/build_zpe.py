@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-E: Bridge Document PDF Builder
-Version 3.68 | November 2026
+Version 3.69 | November 2026
 Follows all rules in pdf rendering standards:
   - DejaVu fonts only
   - Checkmark always wrapped in <font name="DV">
@@ -12,7 +12,7 @@ Follows all rules in pdf rendering standards:
 import os
 from zp_utils import *
 
-VERSION = '3.68'
+VERSION = '3.69'
 FIRST_RELEASED = 'April 2026'
 
 # ── Local overrides: ZP-E uses justified body text ────────────────────────────
@@ -120,7 +120,7 @@ def build():
         'point (ZP-C L-INF). Neither chart locates the unboundedness at P<sub>0</sub> (the valuation-complexity bridge is '
         'refuted, ZP-I &#167; II.B). From this premise the framework argues that no finite external interpreter can hold '
         '&#8869; as a static description. ZP-A CC-2 '
-        'supplies a second, structural basis: &#8869; = {&#8869;} is a self-containing object with no external '
+        'supplies a second, structural basis: &#8869;, the lattice&#8217;s occupant of the Quine-atom role, is a self-containing object with no external '
         'interpreter by structure. Neither derives T-BUF Step 2: it is DP-2&#8217;s precondition, and it is what the '
         'occurrence commitment asserts (&#167; IV). DA-1 (&#167; IV below) consumes it and does not supply it: given it, '
         'D7 puts the machine at c<sub>1</sub> (T-SNAP Step 3), and DP-2 and da1_minimal_path show that c<sub>0</sub> and c<sub>1</sub> '
@@ -196,8 +196,8 @@ def build():
             'configuration (state c<sub>1</sub>) are distinct while returning the same output value, so the output value cannot '
             'show whether the step was taken. It takes no hypothesis and does not carry that the step is taken '
             '(ZeroParadox/Order/SnapCannotBe.lean &#167; I). The returned ⊥ occupies the bottom role again; reading it as a NEW null rather than the prior c<sub>0</sub> is C-DA2, a modelling commitment. The axiom-free result is the role, not the novelty.',
-            'Structural motivation (Paths 1 and 2 below): ZP-A CC-2 (⊥ = {⊥}) is a commitment: ZP-J t_exec_iff proves '
-            '⊥ is the only occupant of the Quine-atom role, and that ⊥ of a ZPSemilattice is the AFA set Q = {Q}, its own singleton, is argued (R-AFA). '
+            'Structural motivation (Paths 1 and 2 below): the Quine atom (ZP-A CC-2): ZP-J t_exec_iff proves '
+            '⊥ is the only occupant of the Quine-atom role in an AFAStructure lattice; no equation makes ⊥ of a ZPSemilattice the AFA set Q = {Q}, and the commitment that remains concerns the host theory (R-AFA). '
             'ZP-A R3 reads off that a self-containing object admits no external interpreter position; that rules out an '
             'external executor, not an inert ⊥. Path 2 rests on two charts: ZP-C L-INF, surprisal unbounded in the ball-hierarchy depth with each value finite (l_inf), and '
             'the 2-adic additive valuation &#8868; at 0 of Q<sub>2</sub> (padic_addVal_bot), the point to which c<sub>0</sub>, ⊥ of MachinePhase, corresponds. '
@@ -220,17 +220,19 @@ def build():
         body('Path 1 — Structural (Self-Execution, ZP-J T-EXEC): Nothing exists outside the null space. '
              '&#8869; is prior to all differentiation — there is no external state, no prior cause, no position '
              'from which something else could execute &#8869;. If &#8869; executes at all, the only possible '
-             'executor is &#8869; itself. A thing that executes itself contains itself, and the framework reads this as its own sole member: '
-             '&#8869; = {&#8869;}, so &#8869; &#8712; &#8869;. The argument is that this is forced by the impossibility of external '
+             'executor is &#8869; itself. A thing that executes itself contains itself, and the framework reads this as the Quine-atom '
+             'role (ZP-A CC-2): a point that steps to itself and to nothing else. The argument is that this is forced by the impossibility of external '
              'execution, which makes it more than a free choice and less than a theorem. ZP-A R3 states the structural consequence: a self-containing object admits no external '
-             'interpreter position. ZP-J T-EXEC proves that whatever fills the Quine-atom role is &#8869;: IsQuineAtom(q) &#8596; q = &#8869;, '
+             'interpreter position. ZP-J T-EXEC proves that whatever fills the Quine-atom role in an AFAStructure lattice is &#8869;: IsQuineAtom(q) &#8596; q = &#8869;, '
              'proved axiom-free in Lean 4 (ZeroParadox.t_exec_iff). AFA (ZF + AFA) is <i>a</i> consistent '
              'set-theoretic home for this structure, and the commitment is not the <i>adoption of AFA '
-             'specifically</i>: it is a set of requirements on the host theory &#8212; that the bottom is a '
-             'self-containing Quine atom (&#8869; = {&#8869;}), and that this atom is unique &#8212; of '
+             'specifically</i>: it is a set of requirements on the host theory &#8212; that the host has a '
+             'bottom that is its own only member, and that it is the only such set &#8212; of '
              'which AFA is the canonical example. '
-             'ZP-A CC-2 (&#8869; = {&#8869;}) is a Forced Metatheoretic Commitment: on a lattice, T-EXEC proves that '
-             'whatever fills the Quine-atom role is &#8869; (axiom-free, given the field bot_self_mem); in AFA set theory Q = {Q} is a theorem (Aczel 1988, Example 1.3), and that the occupant of the framework&#8217;s &#8869; role, &#8869; of a ZPSemilattice, is that set Q is the argued metatheoretic step (see Remark R-AFA).'),
+             'The Quine atom (CC-2) is stated in the corpus&#8217;s shared vocabulary of step relations (ZeroParadox/Die.lean, the die; each carrier with its own step is a chart) as the role Motion.SelfOnlyAt, occupied or provably empty chart by chart: under a self-application map supplied by AbstractSelfApp, '
+             '&#8869; of the lattice is the only occupant (selfApp_quine_role_iff); in AFA set theory Q = {Q} is a theorem (Aczel 1988, Example 1.3); '
+             'with membership as the step, a host&#8217;s own bottom is the only occupant (quineAtomHost_quine_role_iff) and no well-founded set is one (zfset_quine_role_unoccupied). '
+             'No equation makes &#8869; of a ZPSemilattice the set Q, since it would be ill-typed; what stays a Forced Metatheoretic Commitment is the host theory (see Remark R-AFA).'),
         body('Path 2 — Informational (ZP-C L-INF): The surprisal I(n) = n at ball-hierarchy '
              'depth n is unbounded — for any finite M, ∃ depth n with I(n) > M — while each value is finite (l_inf). '
              'c<sub>0</sub>, ⊥ of MachinePhase, corresponds to the limit point 0 ∈ Q<sub>2</sub>, where the 2-adic additive '
@@ -287,8 +289,8 @@ def build():
              'execute &#8869;, so if &#8869; executes at all, the executor is &#8869; itself. That rules out an '
              'external executor, not an inert &#8869;: in MachinePhase the bottom c<sub>0</sub> is a Quine atom '
              '(da1_closed_concrete), and the sequence that stays at c<sub>0</sub> is a state sequence (Premises of '
-             'T-SNAP). The self-executor reading argues for &#8869; = {&#8869;} as '
-             'more than a free choice and less than a theorem (ZP-A CC-2, a Forced Metatheoretic Commitment); '
+             'T-SNAP). The self-executor reading argues for the Quine atom as '
+             'more than a free choice and less than a theorem (ZP-A CC-2, a Forced Metatheoretic Commitment about its host theory); '
              'ZP-J T-EXEC proves, axiom-free, that whatever fills the Quine-atom role is &#8869;. Path 2 (informational) '
              'provides motivational context — unbounded surprisal as a pointer toward why static holding is '
              'incoherent — but the bridge from unbounded surprisal (L-INF) to execution is not a derived claim: it is a bridge principle of its own, '
@@ -309,7 +311,7 @@ def build():
                 'Path 2 (informational, L-INF): UNADOPTED BRIDGE PRINCIPLE — a missing principle, not a missing proof, distinct from the occurrence commitment and not a premise of the Snap; Path 2 does not derive the precondition. '
                 'Path 3 (computational, ZP-C D1 + AIT): bears on the precondition and does not derive executing from incompressibility — incompressibility rules out a shorter external generator, not an inert string; that the configuration reaching P<sub>0</sub> is in Sense B and not Sense A is DP-2&#8217;s precondition, what the occurrence commitment asserts, which DA-1 consumes and does not derive. Its Lean counterpart (ZP-K) is the machinePhaseKleene instance&#8217;s botCode_is_quine field — a KleeneStructure requirement that constant codes also meet, not a witness of execution and not a second independent proof; da1_paths_unified carries it with Path 1 as a conjunction. '
                 'CC-1 (S<sub>0</sub> = &#8869;): restated — ZP-J cc1_derived with t_exec_iff makes a Quine-atom start and a &#8869; start the same condition (axiom-free, Lean) — and not forced: on a carrier with a second point a valid sequence starts elsewhere (ZeroParadox/Settheory/OntBridge.lean). '
-                'CC-2 (&#8869; = {&#8869;}): ZP-J t_exec_iff proves &#8869; is the only occupant of the Quine-atom role (axiom-free); that &#8869; of a ZPSemilattice is the AFA set Q = {Q} is an argued metatheoretic commitment (see R-AFA). '
+                'The Quine atom (CC-2): ZP-J t_exec_iff proves &#8869; is the only occupant of the Quine-atom role in an AFAStructure lattice (axiom-free); no equation makes &#8869; of a ZPSemilattice the AFA set Q = {Q}, since it would be ill-typed, and the role is occupied or provably empty chart by chart; what stays a Forced Metatheoretic Commitment is the host theory (Foundation-freeness forced, AFA adopted; see R-AFA). '
                 'DP-2 (&#167;III) — explicit. '
                 'T-SNAP&#8217;s premises, in its Lean form and in its prose argument, are stated under Premises of T-SNAP (DA-1 insert, &#167; V). '
                 'AIT (Kolmogorov complexity) outside Lean scope; the Kleene structure is its in-scope counterpart, carried as a KleeneStructure requirement (botCode_is_quine), not a proof of the AIT claim.'),
@@ -382,8 +384,8 @@ def build():
                 'occurrence rest on commitments, among them those named there. '
                 'Dependencies cited in the steps: ZP-C D1, D7, L-RUN, TQ-IH; ZP-B C3; ZP-A D2, R1; ZP-E DA-1; ZP-J T-EXEC. '
                 'CC-1 (S&#8320; = &#8869;): restated — a Quine-atom start and a &#8869; start are one condition (ZP-J cc1_derived, t_exec_iff; axiom-free) — and not forced, since on a carrier with a second point a valid sequence starts elsewhere. '
-                'CC-2 (&#8869; = {&#8869;}): ZP-J t_exec_iff proves &#8869; is the only occupant of the Quine-atom role (axiom-free); that &#8869; of a ZPSemilattice is the AFA set Q = {Q} is argued metatheoretically (see R-AFA). '
-                'Both remain commitments: CC-1 is a Conditional Claim, expressed through the Quine-atom role and not removed by it; CC-2 is a Forced Metatheoretic Commitment. '
+                'The Quine atom (CC-2): ZP-J t_exec_iff proves &#8869; is the only occupant of the Quine-atom role in an AFAStructure lattice (axiom-free); no equation makes &#8869; of a ZPSemilattice the AFA set Q = {Q}, since it would be ill-typed (see R-AFA). '
+                'Both remain commitments: CC-1 is a Conditional Claim, expressed through the Quine-atom role and not removed by it; CC-2 is a Forced Metatheoretic Commitment about the host theory. '
                 'Conceptual correspondence only: ZP-G AX-G2 (downstream of ZP-E; not a formal dependency).'),
     ]
 
@@ -437,42 +439,46 @@ def build():
         bridge_box(
             'Remark R-AFA — Why Foundation is Ruled Out; Non-Well-Foundedness Forced, AFA Adopted',
             [
-                'CC-2 &#8212; the identification of &#8869; with the Quine atom &#8869; = {&#8869;} &#8212; '
-                'is a set-theoretic step beyond ZP-A\'s algebra: it is not derived from A1&#8211;A4. What it '
-                'entails is nonetheless not arbitrary, and the two halves separate. The membership structure '
-                'the framework\'s bottom must have <i>forces</i> a non-well-founded host, which is what rules '
-                'ZF + Foundation out. <i>Which</i> non-well-founded axiom to adopt is a further step that the '
+                'The Quine atom (CC-2) is a role, a point that steps to itself and to nothing else, and no '
+                'equation identifies &#8869; of a ZPSemilattice with a set Q = {Q}: it would be ill-typed '
+                '(Path 1 above lists the occupancy theorems chart by chart). What is a set-theoretic step '
+                'beyond ZP-A\'s algebra, not derived from A1&#8211;A4, is the choice of a host theory in which '
+                'a set occupies the role under membership. That choice is nonetheless not arbitrary, and its '
+                'two halves separate. Occupying the role under membership <i>forces</i> a non-well-founded '
+                'host, which is what rules ZF + Foundation out. <i>Which</i> non-well-founded axiom to adopt is a further step that the '
                 'forcing does not take: ZF + AFA is the host this framework adopts, as the canonical theory '
                 'meeting the requirements, not the one theory the bottom selects.',
-                '<b>Foundation rules out the bottom (structural).</b> The framework\'s bottom is the Quine '
-                'atom &#8869; = {&#8869;}: it is a member of itself, &#8869; &#8712; &#8869;. ZF + Foundation '
+                '<b>Foundation leaves the role unoccupied (structural).</b> With membership as the step, a set '
+                'occupying the Quine-atom role is its own only member, x = {x} (zfset_selfOnlyAt_mem_iff), so it '
+                'is a member of itself, x &#8712; x. ZF + Foundation '
                 '(the Axiom of Regularity) forbids exactly this — under a well-founded membership relation no '
                 'set lies on a membership cycle of any length, so in particular no set is a member of itself. '
                 'This is a theorem of ZF + Foundation, not a framework-specific stipulation; it is '
                 'machine-checked here as no_quine_atom / no_membership_cycle '
-                '(ZeroParadox/Settheory/Wall.lean, footprint [propext, Quot.sound], choice-free). A '
-                'Foundation-respecting universe therefore cannot host &#8869; at all.',
-                '<b>The framework\'s readings of &#8869; support the premise that &#8869; is circular; the '
+                '(ZeroParadox/Settheory/Wall.lean, footprint [propext, Quot.sound], choice-free), and in the '
+                'die as zfset_quine_role_unoccupied. A Foundation-respecting universe therefore has no '
+                'occupant of the role at all.',
+                '<b>The framework\'s readings of &#8869; support the premise that the role is occupied; the '
                 'exclusion itself is a theorem.</b> R3 '
-                '(ZP-A) &#8212; &#8869; = {&#8869;} has no describer position external to itself &#8212; and '
+                '(ZP-A) &#8212; an occupant of the Quine-atom role has no describer position external to itself &#8212; and '
                 'L-INF (ZP-C) &#8212; the 2-adic surprisal I(n) = n is unbounded, so no finite interpreter '
                 'can hold &#8869; &#8212; each describe an object with no external vantage and unbounded '
                 'self-referential depth. That is exactly the profile of a non-well-founded, self-membered '
-                'set: the two readings motivate why &#8869; must be the circular object Foundation excludes, '
+                'set: the two readings motivate why the role must be occupied, which Foundation excludes, '
                 'rather than serving as independent proofs of the exclusion.',
-                '<b>Non-well-foundedness is forced; AFA is the canonical replacement.</b> The membership '
-                'structure of &#8869; = {&#8869;} is circular '
-                '(&#8869; &#8712; &#8869; &#8712; &#8869; &#8712; &#8230;), so &#8869; can live only in a '
+                '<b>Non-well-foundedness is forced; AFA is the canonical replacement.</b> An occupant under '
+                'membership lies on a membership loop '
+                '(x &#8712; x &#8712; x &#8712; &#8230;), so the role can be occupied only in a '
                 'non-well-founded '
-                'metatheory. <b>That much is forced; the particular axiom is not.</b> Aczel records four '
+                'metatheory (quineAtomHost_not_wellFounded, below). <b>That much is forced; the particular axiom is not.</b> Aczel records four '
                 'anti-foundation axioms, and AFA, FAFA and SAFA each admit exactly one '
                 'Quine atom &#8212; his own term is a <i>reflexive set</i> &#8212; while being pairwise '
                 'incompatible (Aczel 1988, Corollary 4.28; Appendix A, p. 108). Supplying exactly one '
                 'therefore does not single AFA out, so AFA is '
                 '<i>adopted</i> as the canonical witness rather than selected by the membership structure.',
                 '<b>What is machine-checked (the requirements framework).</b> The question of which host '
-                'theory can admit &#8869; is reduced to two requirements: <b>(Y\')</b> a Quine atom '
-                '&#8869; = {&#8869;} and <b>(Z\')</b> its uniqueness among reflexive sets, x = {x}, the '
+                'theory can admit an occupant of the role is reduced to two requirements: <b>(Y\')</b> a Quine '
+                'atom, a host bottom b = {b}, and <b>(Z\')</b> its uniqueness among reflexive sets, x = {x}, the '
                 'fields bot_mem_iff and reflexive_unique of the typeclass QuineAtomHost '
                 '(ZeroParadox/Settheory/QuineHost.lean). AFA allows at most one solution of x = {x} (Aczel '
                 '1988, p. 19), and decorates a* = {a, a*} for every set a (Examples 1.5&#8211;1.6, '
@@ -483,7 +489,7 @@ def build():
                 'The AFA and Boffa sorts are cited facts about those theories, each illustrated by a finite '
                 'toy (QuineHost.lean &#167; VII; boffa_fails_reflexive_unique). Realizability carries no '
                 'information: every inhabited carrier meets QuineAtomHost (trivialQuineAtomHost). The '
-                'typeclass QuineHost (fields bot_selfMem, &#8869; &#8712; &#8869;, and selfMem_unique, no '
+                'typeclass QuineHost (fields bot_selfMem, b &#8712; b for its bottom b, and selfMem_unique, no '
                 'other element self-membered) is a different requirement, incomparable with QuineAtomHost '
                 '(QuineHost.lean &#167; VII); AFA\'s membership fails its second field, since '
                 '0* &#8712; 0*. What stays argued is which requirements to demand, below.',
@@ -513,16 +519,17 @@ def build():
                 'Boffa\'s axiom itself.',
                 '<b>What remains &#8212; a narrow Forced Metatheoretic Commitment.</b> With the forcing '
                 'proved, one step is not a theorem: that a Quine atom and its uniqueness are '
-                'the <i>right</i> two requirements to demand &#8212; the commitment to &#8869; = {&#8869;} '
+                'the <i>right</i> two requirements to demand &#8212; the commitment to a host bottom b = {b} '
                 'as the minimal option consistent with A4\'s additive-identity role (it has exactly one '
                 'member, itself, and introduces no internal differentiation; any extension '
-                '&#8869; = {&#8869;, x} with x &#8800; &#8869; would add members carrying their own '
-                'membership chains). This is a <b>Forced Metatheoretic Commitment</b> &#8212; stronger than '
-                'a free choice, weaker than a theorem &#8212; not a Conditional Claim; the set-membership '
-                'face &#8869; &#8712; &#8869; stays metatheoretic, while the occupant of the Quine-atom role '
-                'is machine-checked to be &#8869; (t_exec, ZeroParadox/Settheory/SetTheoryAFA.lean, '
+                'b = {b, x} with x &#8800; b would add members carrying their own '
+                'membership chains). This is a <b>Forced Metatheoretic Commitment</b> about the host theory '
+                '&#8212; stronger than a free choice, weaker than a theorem &#8212; not a Conditional Claim. '
+                'It is not an equation between &#8869; of a ZPSemilattice and a set, which would be ill-typed: '
+                'the Quine-atom role&#8217;s occupancy is machine-checked chart by chart (Path 1 above), and in an '
+                'AFAStructure lattice its occupant is &#8869; (t_exec, ZeroParadox/Settheory/SetTheoryAFA.lean, '
                 'axiom-free, given the field bot_self_mem). The named falsifier is correspondingly narrow: a differently-motivated '
-                'requirement set that hosts &#8869; without demanding a unique Quine atom would reopen this '
+                'requirement set that hosts the role without demanding a unique Quine atom would reopen this '
                 'choice &#8212; it would not touch the forcing, which is proved.',
             ]
         ),
@@ -536,7 +543,7 @@ def build():
         'occurrence commitment (instantiation occurs) together with DA-1. T5 (Iterative Forcing Theorem) depended on AX-1 and is restated below. T4 (Unified Snap '
         'Description) carried AX-1 as an axiom label on the causality component — that label is upgraded '
         'to Derived — T-SNAP for the shape, with occurrence still a commitment. DA-1 is additionally upgraded from Design Principle to Derived '
-        'Proposition, closed given DP-2 (da1_minimal_path); ZP-A CC-2 (⊥ = {⊥}), R3 and ZP-C L-INF argue for its precondition, which is what the occurrence commitment asserts, and none derives it. '
+        'Proposition, closed given DP-2 (da1_minimal_path); ZP-A CC-2 (the Quine atom), R3 and ZP-C L-INF argue for its precondition, which is what the occurrence commitment asserts, and none derives it. '
         'The intentional axioms of the system are now: AX-B1 (binary existence), '
         'AX-G1 (initial object), AX-G2 (source asymmetry). AX-1 is retired: its shape is Theorem T-SNAP, and the occurrence '
         'commitment is not on this list because it is a commitment, not a named axiom. '
@@ -692,8 +699,8 @@ def build():
            'successor instantiations branching from it.'),
         li('Each edge within an instantiation is a step in a monotone state sequence (ZP-A T3). Edges are irreversible (ZP-B C3).'),
         li('Branching at each node: every distinct outbound vector from the terminal state of I<sub>n</sub> is a '
-           'valid ε<sub>0</sub> for a distinct I<sub>n+1</sub>. T-SNAP does not select among branches. Because ⊥ = {⊥} '
-           '(ZP-A CC-2) is the single self-containing ⊥ with no internal differentiation, every '
+           'valid ε<sub>0</sub> for a distinct I<sub>n+1</sub>. T-SNAP does not select among branches. Because ⊥, the only '
+           'occupant of the Quine-atom role in the lattice (ZP-A CC-2), has no internal differentiation, every '
            'ε<sub>0</sub> that represents a first differentiation in any direction is a valid outcome. '
            'The work here is done by the undifferentiated ⊥ of CC-2, not by T-SNAP: given that '
            'instantiation occurs, no direction is privileged, so the structure branches rather than '
@@ -709,7 +716,7 @@ def build():
         'NEW bottom is a further commitment (C-DA2); '
         'in the 2-adic realization the arc tends back to the same 0 of &#8484;<sub>2</sub> (snap_arc_z2_loop). Nothing '
         'here places that terminal state at P<sub>0</sub> (ZP-I &#167; II.B). No new axiom is required. The multiverse is not the claim that '
-        'T-SNAP fires in all directions simultaneously: it is the claim that ⊥ = {⊥} (ZP-A CC-2) has no '
+        'T-SNAP fires in all directions simultaneously: it is the claim that ⊥, the lattice&#8217;s occupant of the Quine-atom role (ZP-A CC-2), has no '
         'internal differentiation and therefore no preferred direction for ε<sub>0</sub>. The multiverse of '
         'instantiations is the full set of all minimal differentiations available from the single '
         'self-containing ⊥ — a structural consequence of CC-2 + T-SNAP + DA-2 jointly, given C-DA2.'))
@@ -980,7 +987,7 @@ def build():
          'missing proof, distinct from the occurrence commitment and not a premise of the Snap; Path 2 does not derive the precondition. No computability library closes the gap between \'system at P₀\' and \'system is '
          'running.\' '
          'DA-1&#8217;s formal grounding (DP-2, da1_minimal_path) does not depend on Path 1, Path 2 or Path 3. '
-         'CC-1 restated in ZP-J as an equivalence, and not forced (a valid sequence can start elsewhere on a carrier with a second point); CC-2 a Forced Metatheoretic Commitment whose Quine-atom role t_exec_iff shows only &#8869; fills.'],
+         'CC-1 restated in ZP-J as an equivalence, and not forced (a valid sequence can start elsewhere on a carrier with a second point); CC-2 a Forced Metatheoretic Commitment about the host theory, while in an AFAStructure lattice t_exec_iff shows only &#8869; fills the Quine-atom role.'],
         ['T-SNAP: Binary Snap derived',
          'Valid — Derived, in two readings. The Lean form (t_snap_derived) fixes the SHAPE with no hypotheses and no axioms. '
          'The seven-step prose argument uses commitments, and that the transition OCCURS is not established by T-SNAP (tsnap_holds_but_nothing_moves). '
@@ -1036,8 +1043,8 @@ def build():
             'executing from incompressibility: that the configuration reaching P<sub>0</sub> is in Sense B is what the occurrence '
             'commitment asserts, and DA-1 consumes it. Remark '
             'R-&#949;<sub>0</sub> justifies the &#949;<sub>0</sub> symbol as a structural analogy. Remark '
-            'R-AFA rules Foundation out by the self-membership of &#8869; = {&#8869;} (Regularity, '
-            'no_quine_atom): the forcing is machine-checked '
+            'R-AFA rules Foundation out as a host of the Quine-atom role (Regularity, '
+            'no_quine_atom; zfset_quine_role_unoccupied): the forcing is machine-checked '
             '(quineAtomHost_not_wellFounded), and a narrow Forced Metatheoretic Commitment remains. Open question: OQ-E2. '
             'Remaining axioms: AX-B1, AX-G1, AX-G2.</i>',
             S['endnote']),

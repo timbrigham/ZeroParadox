@@ -60,25 +60,24 @@ It reads top to bottom:
 
 **What the floor stands for — self-reference and the Quine atom.** This file represents the floor as bare
 fixed-point existence (`floor_of_witness`: a witness forces a fixed point; `cZero_has_fp`: the collapse fixes a
-point). In the full framework that fixed point is a *self-referential* object — **the Quine atom** (Quine;
-Aczel): the set that is its own only member, `⊥ = {⊥}`. It is one structural fact in several languages. Three
-of them — the Quine atom (set theory / ZF+AFA), the order-bottom `⊥`, and the algebraic join-identity — are
+point). In the full framework that fixed point is a *self-referential* object — **the Quine atom** (CC-2; Quine;
+Aczel), a role: a point that steps to itself and to nothing else, in set theory a set x = {x}. Three faces — the Quine atom (set theory / ZF+AFA), the order-bottom `⊥`, and the algebraic join-identity — are
 proved to be the *same* element within a single carrier, axiom-free (`Settheory/SetTheoryAFA.lean`
 `t_exec_triple_iff`; its two-face half is `t_exec`);
-the fourth, the Kleene quine (a program that prints itself, computability), is *joined* to them by an explicit
-structural commitment — the `KleeneStructure` typeclass carries the computational fixed point as filling the
-same role, without asserting an identity across types, not derived (`Computability/Kleene.lean`).
+the fourth, the Kleene quine (a program that prints itself, computability), is compared with them through that
+role, never by an identity: no code is equated with ⊥, and under the `eval` step no single code occupies the role
+while, for computable `eval`-respecting maps, a class of codes does (`codes_vs_classes`, `Computability/Kleene.lean`).
 
-**That fourth commitment is where time can enter — and it is the easiest thing here to walk past.** The other
+**That fourth face is where time can enter — and it is the easiest thing here to walk past.** The other
 three faces are *static*: order-bottom, self-membered set, algebraic identity are timeless facts that simply
 hold, and nothing about them ever *happens*. The Kleene quine is the only one that *runs*, and running is a
-before and an after. The `KleeneStructure` commitment reads `bot` of the `ZPSemilattice` as its own executor if it
-executes at all; no class field asserts it, and `da1_computational` proves only `IsQuineAtom bot` (`Computability/Kleene.lean`).
+before and an after. The framework reads `bot` of the `ZPSemilattice` as its own executor if it executes at all; no
+`KleeneStructure` field asserts it, and `da1_computational` proves only `IsQuineAtom bot` (`Computability/Kleene.lean`).
 That it runs is the occurrence commitment, and with CC-1 it lets **time enter the framework as a state change**
 (`Order/Snap.lean` `t_snap_given`: hypotheses `hcc1` and `hocc`, no `KleeneStructure`); nothing static occurs on its own,
 so without them `bot` would rest as a fixed point forever and the snap would never happen. Stated as what they are —
-*commitments*, never theorems — which is exactly why the computational face is joined by hand rather than
-derived from the static three. The wall's seed here, `negation_no_fp` (`¬(p ↔ ¬p)`), is that same self-reference *failing to close* (Cantor, Turing, Tarski); the floor is it
+*commitments*, never theorems — which is exactly why the running is committed to rather than derived from
+the static three. The wall's seed here, `negation_no_fp` (`¬(p ↔ ¬p)`), is that same self-reference *failing to close* (Cantor, Turing, Tarski); the floor is it
 *closing* — landing on the thing that is its own answer.
 
 We show the *limited* version deliberately. The **shape** — self-reference forced either to a wall or to a

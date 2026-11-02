@@ -1,6 +1,6 @@
 """
 Build ZP-L Illustrated Companion
-Version 1.19 | November 2026
+Version 1.20 | November 2026
 Citation fence (Gentzen): the Convergence section's credits follow CLAIMS.md's Gentzen rows and are
 taken from the primary papers, never from a secondary source's labels. Provability of transfinite
 induction below epsilon-0 is what Gentzen 1943 (p. 140 and its footnote 3) reports, crediting
@@ -219,7 +219,7 @@ def dual_convergence_diagram():
     return d
 
 
-VERSION = '1.19'
+VERSION = '1.20'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -272,10 +272,11 @@ def build():
     # ── What Is ZP-L Doing? ───────────────────────────────────────────────────
     E.append(Paragraph('What Is ZP-L Doing?', CS['h1']))
     E.append(cbody(
-        'ZP-K carries the computational face of the initial machine state c&#8320; as a '
+        'ZP-K carries a computational counterpart of the initial machine state c&#8320; as a '
         'KleeneStructure requirement (botCode_is_quine): a program whose behavior is determined '
         'entirely by its own index, whose existence the second recursion theorem guarantees. '
-        'Reading c&#8320; as the Kleene quine is that commitment, not a theorem. ZP-L picks up the thread from a different '
+        'No equation makes c&#8320; that program: the identity reading is retired, and what stays a '
+        'commitment is that c&#8320; actually runs, the occurrence commitment. ZP-L picks up the thread from a different '
         'direction: the ordinal direction. If a map &#981; assigns machine phases to ordinals '
         '&#8212; sending c&#8320; to everything below a certain point and c&#8321; above it '
         '&#8212; what is that threshold ordinal? ZP-L establishes the answer: &#949;&#8320;, '
@@ -398,7 +399,7 @@ def build():
     # ── The Kleene Connection ─────────────────────────────────────────────────
     E.append(Paragraph('The Kleene Connection', CS['h1']))
     E.append(cbody(
-        'ZP-K carries &#8869;\'s computational face as a requirement of its Kleene structure: '
+        'ZP-K carries a computational counterpart of &#8869; as a requirement of its Kleene structure: '
         'the class field botCode_is_quine, which asks the nominated code to satisfy '
         'IsComputationalQuine &#8212; a periodicity condition, eval c n = eval c (encode c + n) '
         'for every n, so the code\'s own G&#246;del number is a period of it. Kleene\'s second '
@@ -406,14 +407,15 @@ def build():
         'self-reference: the constant codes satisfy it, and they are what witnesses '
         'infinite_quine_family (ZP-K &#167;VI). A program and &#8869; of the lattice are compared '
         'through a role rather than an identity: the Quine-atom role, a point that steps to itself '
-        'and to nothing else (Motion.SelfOnlyAt), which each chart occupies or provably does not. '
+        'and to nothing else (Motion.SelfOnlyAt), which a point of each chart occupies or provably none does. '
         '&#8869; of the lattice is its only occupant under a self-application map supplied by '
         'AbstractSelfApp (selfApp_quine_role_iff). On codes, stepping '
         'from a code to the codes whose output is what a map assigns it, no single code occupies '
         'it (evalStepMotion_not_selfOnlyAt), and for a computable map respecting equal output '
         'some class of codes up to equal output does (codes_vs_classes, '
         'ZeroParadox/Computability/Kleene.lean). No equation across a program code and the '
-        'lattice carrier is stated; they are different types. ZP-L identifies '
+        'lattice carrier is stated; they are different types, so the nominated code is not identified with &#8869;, '
+        'and that &#8869; actually runs stays the occurrence commitment. ZP-L identifies '
         '&#949;&#8320; as an ordinal fixed point: the first ordinal satisfying &#969;^&#945; = &#945;, '
         'guaranteed to exist by the fixed-point theorem for normal functions. Both fixed-point '
         'proofs carry Classical.choice in their Lean formalizations; ZP-K Section IV '

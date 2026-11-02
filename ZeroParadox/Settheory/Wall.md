@@ -227,8 +227,8 @@ by accessibility, not by the engine (`selfloop_permitted` / `engine_is_wf_free` 
 The failure SIGNATURE changes with the conditions — distinct ways the one self-reference resists
 internalization, not one failure repeated. The formal/metatheoretic frontier is itself part of the map:
 `x∉x`, ε₀∉ONote, no-self-loop are in-kernel; the cross-category identity (MC-1's identity half) is
-retired as ill-typed, and what relates the charts is stated instead as one die role, which each chart
-occupies or provably does not
+retired as ill-typed, and what relates the charts is stated instead as one die role, which a point of
+each chart occupies or provably none does
 (the Quine-atom role above); the literal AFA universe is metatheoretic-only.
 
 **The computability row is the pivot (2026-06-27).** It is the ONLY framework where the fixed point is

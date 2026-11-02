@@ -19,11 +19,14 @@ Relates four structural roles of ⊥, of which three are proved equivalent:
 The central result (T-COMP) establishes (1) ↔ (2) ↔ (3) via T-EXEC. Its proof term is
 `t_exec_triple_iff`, a ZP-J result that does not mention computation; ⊥ is then the
 element those three pick out. **(4) is not a clause of that theorem** — it is present
-by typeclass requirement, as the class field `botCode_is_quine`. Reading (1)–(4)
-as naming the same structural role in four formal languages is the motivating commitment
-of the KleeneStructure typeclass; no field asserts it, and no theorem in this corpus derives it (not
-located as of 2026-11-01, searched as follows: `ZeroParadox/**/*.lean` for `botCode`, for
-`KleeneStructure`, and for "computational face" / "same structural"; no hit states a relation
+by typeclass requirement, as the class field `botCode_is_quine`. The KleeneStructure typeclass
+was motivated by reading (1)–(4) as naming the same structural role in four formal languages. That
+reading splits in two. Its identity half is retired: no code is equated with ⊥, and (4) is compared
+with (1)–(3) through the die's Quine-atom role, which under the `eval` step no single code occupies
+and, for computable `eval`-respecting maps, a class of codes does (Key insight, below). Its running half stays a commitment: that ⊥ actually executes is the
+occurrence commitment. No field asserts either half, and no theorem in this corpus relates `botCode`
+to `bot` (not located as of 2026-11-01, searched as follows: `ZeroParadox/**/*.lean` for `botCode`,
+for `KleeneStructure`, and for "computational face" / "same structural"; no hit states a relation
 between `botCode` and `bot`). For a generic carrier `L` no Lean `=` between them typechecks, since
 `botCode` is a `Code` and `bot` an element of `L`; at `L := Code`, under an assumed instance (none is
 declared in this corpus), one does
@@ -44,14 +47,15 @@ fixed points form an infinite family (§ VI).
 
 ## Key insight (April 26, 2026)
 
-This is the framework's reading, and it is a commitment throughout — no theorem in this
-file establishes it. On that reading, ⊥ in the computational instantiation (ZP-C D7) is
+This is the framework's reading, and no theorem in this file establishes it. Its identity half
+(⊥ IS a particular machine or code) is retired, below; its running half (⊥ executes) is the
+occurrence commitment. On that reading, ⊥ in the computational instantiation (ZP-C D7) is
 not a state OF a Turing machine: ⊥ IS the universal Turing machine in its ground state,
 and U is not a description awaiting an external executor but IS the executor.
 
 What Lean supplies underneath: Kleene's second recursion theorem (Mathlib:
 Nat.Partrec.Code.fixed_point₂) guarantees a fixed point exists for any partially
-computable transformation. The AFA Quine atom (⊥ = {⊥}) and the Kleene computational quine
+computable transformation. The AFA Quine atom (CC-2, a set x = {x}) and the Kleene computational quine
 (∃ c, eval c = f c) are compared through a role, not an identity: the die's Quine-atom role
 `Motion.SelfOnlyAt` (`ZeroParadox/Die.lean`), a point that steps to itself and to nothing else,
 occupied or provably empty chart by chart. On codes, with OVER `a → b` when `eval b = F a`, no
@@ -62,8 +66,9 @@ self-printing codes, with `F` the map `selfPrintOrDelegate`, some self-printing 
 (`exists_selfPrintsStepMotion_selfOnlyAt`).
 The set-side charts are in `ZeroParadox/Settheory/Wall.lean` (no `ZFSet` occupies it) and
 `ZeroParadox/Settheory/Coalgebra.lean` (a coalgebra point does). No equation across `Code` and `L`
-is stated; one would be ill-typed. That the class's `botCode` is ⊥'s computational witness stays
-the KleeneStructure commitment, asserted by no field of the class.
+is stated; one would be ill-typed. So the reading that the class's `botCode` is ⊥'s computational
+witness keeps no identity half: the code chart has its own occupant, as above. What stays a
+commitment is that ⊥ actually executes, the occurrence commitment.
 
 ## Dependencies
 
@@ -130,8 +135,7 @@ distinct — `infinite_quine_family` and `quine_goedel_injective` prove it — w
 set-theoretic side has exactly one self-containing element (`quine_unique`). A unique
 element and an infinite indexed family are different shapes, so the correspondence here
 is between the *succession* of instantiations and the family, not an identification of
-one element with one code. The framework's reading of that correspondence is in § II;
-no theorem in this file identifies a `Code` with an element of a lattice, and the type
+one element with one code. That identity reading is retired (§ II); no theorem in this file identifies a `Code` with an element of a lattice, and the type
 boundary makes such an identification unstatable.
 
 **Prior art, and a distinction that must not be collapsed.** That a computational object
