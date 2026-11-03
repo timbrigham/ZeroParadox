@@ -13,18 +13,21 @@ two-chart reading for § IV–VII.
   to fire infinitely often iff it is silent from some `N` (`not_mem_limsup_fires_iff`).
 - § VI. If `0 < p ≤ 1`, a class `𝒯` of tests contains every zero-block test for `trials p hp`, and the
   tape `w` avoids `𝒯`, then `w` fires infinitely often (`fires_io_of_avoids`). The avoidance is the
-  hypothesis `htyp` on one tape; nothing in the file says any tape meets it. One way: at `p = 1/2` the
-  squares tape fires infinitely often and is caught by a zero-block test; at `p = 1/2` the all-`true`
-  tape fires infinitely often and lies in every one block, each of measure at most `2⁻ᵐ` (the two
-  `example`s), so it fails to avoid any class that also holds those one-block tests.
+  hypothesis `htyp` on one tape; nothing in the file says any tape meets it. One way: the squares tape
+  fires infinitely often (the first `example`), and for every `0 < p ≤ 1` and every such `𝒯` it does
+  not avoid `𝒯` (`squaresTape_not_avoids`; the first `example` is the case `p = 1/2`); at `p = 1/2`
+  the all-`true` tape fires infinitely often and lies in every one block, each of measure at most
+  `2⁻ᵐ` (the second `example`), so it does not avoid a class that also holds those one-block tests.
 - § VII. In `slotMotion`, `false` steps elsewhere and to itself (`slotMotion_leavesAt_false`); `true`
   steps to itself only (`slotMotion_selfOnlyAt_true`). Every tape drives a run (`slotRun_isRun`). Along
   a one-to-one lax map, stepping elsewhere carries to the image (`Motion.LaxHom.leavesAt`, in
   `ZeroParadox/Die.lean`), with no tape and no measure. `slotRun_image_departs_of_avoids` gives an image
   run that leaves its start for a tape meeting § VI's hypotheses. Those hypotheses are sufficient, not
   necessary: any tape that fires once gives such a run (`slotRun_crosses_iff`; the `example` after the
-  theorem), and the squares tape gives one while failing them (the second `example`). `Reading:` what § VI adds is a guarantee about a tape whose bits are not examined. The
-  all-`false` tape drives a run that never leaves `false` (the closing `example`).
+  theorem), and the squares tape gives one while failing them at every `0 < p ≤ 1` (the second
+  `example`, from `squaresTape_not_avoids`). `Reading:` what § VI adds is a guarantee about a tape
+  whose bits are not examined. The all-`false` tape drives a run that never leaves `false` (the
+  closing `example`).
 
 ## Prior art
 
@@ -34,12 +37,22 @@ two-chart reading for § IV–VII.
   (reference list, p. 13): for "a uniform sequence of Σ⁰₁ sets" {A_k}, "(ii) If the events {A_k} are
   pairwise independent and ∑_k λ(A_k) = ∞, then A_k must occur infinitely often for each α ∈ KC", with λ
   the Lebesgue (fair-coin) measure and KC the Kolmogorov–Chaitin complex sequences (p. 1: prefixes
-  incompressible up to a constant). § VI has the shape of (ii) for the events `fires n`, with two
-  differences: the measure is Bernoulli(`p`) for any `0 < p ≤ 1`, computable or not, and the hypothesis
-  is avoidance of a parameter class `𝒯` holding the zero-block tests. At `p = 1/2` the weakest such
-  hypothesis (`𝒯` the zero-block tests) is implied by Martin-Löf randomness granted open item 1, which
-  includes that `trials (1/2)` is the fair-coin measure; a larger `𝒯` can make the hypothesis stronger
-  (no tape avoids the class of all families). The credit runs from Davie to here.
+  incompressible up to a constant, `∃k ∀n K(α(n)) ≥ n − k`). With `K` prefix-free complexity, these are
+  exactly the Martin-Löf random sequences (Levin–Schnorr: Franklin and Porter, arXiv:2004.02851, p. 16,
+  Theorem 2.5); Potgieter's p. 1 does not say whether its `K` is prefix-free. § VI has the shape of
+  (ii) for the events `fires n`, with two differences: the measure is Bernoulli(`p`) for any
+  `0 < p ≤ 1`, computable or not, and the hypothesis is avoidance of a parameter class `𝒯` holding the
+  zero-block tests. At `p = 1/2` the weakest such hypothesis (`𝒯` the zero-block tests) is implied
+  by Martin-Löf randomness granted open item 1, which includes that `trials (1/2)` is the fair-coin
+  measure; a larger `𝒯` can make the hypothesis stronger (no tape avoids the class of all families).
+  The credit runs from Davie to here.
+- **Computable non-atoms are not random.** J. Reimann and T. Slaman, "Measures and their random reals",
+  arXiv:0802.2705, p. 9, Theorem 4.4, (i) ⇒ (ii): a computable sequence that is not an atom of a
+  probability measure `µ` is not `µ`-random (Martin-Löf randomness relative to a representation of `µ`).
+  `squaresTape_not_avoids` has that shape at Bernoulli(`p`), where the squares tape is not an atom for
+  any `0 < p ≤ 1`; its test is a zero-block test needing only the integer `K`, and that zero-block tests
+  are tests in their sense is not proved here (open item 1, stated at `p = 1/2`). The credit runs from
+  Reimann and Slaman to here.
 - **Kurtz null tests.** J. Franklin and C. Porter, "Key developments in algorithmic randomness",
   arXiv:2004.02851, p. 32, Definition 4.24 (citing Wang): "A Kurtz null test is a Martin-Löf test ⟨V_i⟩
   such that for some computable function f : ω → (2^{<ω})^{<ω}, V_n = [f(n)] for all n"; p. 33, Theorem
@@ -106,15 +119,16 @@ of the motion; crossing is a property of one run; typicality is a property of a 
 complexity is `cxQ2 0 = ⊤` (`cxQ2_zero`, from the explicit `if x = 0` in the definition of `cxQ2`),
 matching the additive-valuation convention that the valuation of 0 is ⊤. Read as a digit tape (a
 reading; no map from `ℚ_[2]` to tapes is built here), 0 is the all-`false` tape, the sole member of
-`silentFrom 0`, and § VI's hypothesis excludes it at `N = 0` for every `0 < p ≤ 1` (`zeroBlockTest_silentFrom`). In the tape chart, under the
-pointwise order, the least element of `ℕ → Bool` is the same all-`false` tape (the `example` at
-`ZeroParadox/BottomCannotBe.lean`, `(⊥ : ℕ → Bool) = fun _ => false`), which is not disjunctive
-(`allFalse_not_disjunctive`, `ZeroParadox/Information/Disjunctive.lean`). Tim's maximally complex reading
+`silentFrom 0`, and § VI's hypothesis excludes it at `N = 0` for every `0 < p ≤ 1`
+(`zeroBlockTest_silentFrom`). In the tape chart, under the pointwise order, the least element of
+`ℕ → Bool` is the same all-`false` tape (the `example` at `ZeroParadox/BottomCannotBe.lean`,
+`(⊥ : ℕ → Bool) = fun _ => false`), which is not disjunctive (`allFalse_not_disjunctive`,
+`ZeroParadox/Information/Disjunctive.lean`). Tim's maximally complex reading
 (`ZeroParadox/Information/Disjunctive.md` fence 3) places the occupant of ⊥ of a `ZPSemilattice`, read as
 a tape, among the maximally complex tapes, which by standard theory (Levin–Schnorr; not proved here,
 Disjunctive.md fence 2) are Martin-Löf random for the fair coin; that such tapes meet § VI's hypothesis at
-`p = 1/2` for `𝒯` = the zero-block tests is open item 1. The two readings put different tapes in the role, and nothing in Lean
-identifies them.
+`p = 1/2` for `𝒯` = the zero-block tests is open item 1. The two readings put different tapes in the
+role, and nothing in Lean identifies them.
 
 Not claimed: that any tape is typical, that ⊥ of any carrier is a tape, or that typicality supplies the
 occurrence commitment. The theorem moves "almost surely" (`crossing_almost_surely`, which already

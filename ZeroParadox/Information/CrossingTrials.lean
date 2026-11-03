@@ -278,9 +278,10 @@ theorem zeroBlockTest_silentFrom (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p) (N : 
   exact Primrec.pair (Primrec.const N) (Primrec.nat_mul.comp (Primrec.const K) Primrec.id)
 
 /-- **`Statement:` if `p ≤ 1`, `0 < p`, the class `𝒯` contains every zero-block test for
-`trials p hp`, and `w` avoids `𝒯`, then `w` fires infinitely often.** One way: at `p = 1/2` the
-squares control below fires infinitely often and is caught by a zero-block test. `Reading:` `htyp`
-is the typicality commitment written as a hypothesis on one tape. -/
+`trials p hp`, and `w` avoids `𝒯`, then `w` fires infinitely often.** One way: the squares tape
+below fires infinitely often, and at every `0 < p ≤ 1` is caught by a zero-block test
+(`squaresTape_not_avoids`). `Reading:` `htyp` is the typicality commitment written as a hypothesis
+on one tape. -/
 theorem fires_io_of_avoids (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p)
     (𝒯 : (ℕ → Set (ℕ → Bool)) → Prop) (h𝒯 : ∀ U, ZeroBlockTest (trials p hp) U → 𝒯 U)
     (w : ℕ → Bool) (htyp : AvoidsTests 𝒯 w) :
@@ -292,6 +293,27 @@ theorem fires_io_of_avoids (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p)
 
 /-- **`Statement:` the tape that is `true` exactly at the perfect squares.** -/
 def squaresTape (k : ℕ) : Bool := decide (Nat.sqrt k * Nat.sqrt k = k)
+
+/-- **`Statement:` if `p ≤ 1`, `0 < p`, and the class `𝒯` contains every zero-block test for
+`trials p hp`, then the squares tape does not avoid `𝒯`.** Level `m` is the first `K * m`
+non-squares after `(K * m)²`, with `K` from `exists_halving_block`; `p = 1` is included. -/
+theorem squaresTape_not_avoids (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p)
+    (𝒯 : (ℕ → Set (ℕ → Bool)) → Prop) (h𝒯 : ∀ U, ZeroBlockTest (trials p hp) U → 𝒯 U) :
+    ¬ AvoidsTests 𝒯 squaresTape := by
+  obtain ⟨K, -, hK⟩ := exists_halving_block p hp0
+  intro h
+  refine h (fun m => zeroBlock (K * m * (K * m) + 1) (K * m))
+    (h𝒯 _ ⟨fun m => trials_zeroBlock_le p hp hK _ m, fun m => (K * m * (K * m) + 1, K * m), ?_,
+      fun m => rfl⟩) ?_
+  · have hKm : Primrec (fun m : ℕ => K * m) := Primrec.nat_mul.comp (Primrec.const K) Primrec.id
+    exact Primrec.pair (Primrec.succ.comp (Primrec.nat_mul.comp hKm hKm)) hKm
+  · simp only [Set.mem_iInter, zeroBlock, Set.mem_setOf_eq, Finset.mem_Ico]
+    intro m k hk
+    have hs : Nat.sqrt k = K * m := by
+      obtain ⟨j, rfl⟩ : ∃ j, k = K * m * (K * m) + j := ⟨k - K * m * (K * m), by omega⟩
+      exact Nat.sqrt_add_eq (K * m) (by omega)
+    simp only [squaresTape, hs, decide_eq_false_iff_not]
+    omega
 
 /-- **`Statement:` the tapes that fire at every stage in `[0, n)`.** -/
 def oneBlock (n : ℕ) : Set (ℕ → Bool) := {w | ∀ k ∈ Finset.range n, w k = true}
@@ -306,7 +328,7 @@ theorem trials_oneBlock (p : NNReal) (hp : p ≤ 1) (n : ℕ) :
 
 -- Statement: CONTROL, the converse of `fires_io_of_avoids` fails inside the zero-block class: at
 -- `p = 1/2` the squares tape fires infinitely often and lies in a zero-block test's intersection
--- (level `m` the `m` non-squares after `m * m`).
+-- (level `m` the first `m` non-squares after `m * m`; every `0 < p ≤ 1`: `squaresTape_not_avoids`).
 example : squaresTape ∈ Filter.limsup fires Filter.atTop ∧
     ¬ AvoidsTests (ZeroBlockTest (trials (1/2) (by norm_num))) squaresTape := by
   have half : (1 - (1/2 : NNReal) : NNReal) = 2⁻¹ := by
@@ -407,8 +429,7 @@ theorem slotRun_image_departs_of_avoids {β : Type*} {N : Motion β}
     have := hi e; rw [hn, (slotRun_crosses_iff w).1] at this; cases this⟩
 
 -- Statement: if `φ` is a one-to-one lax map and `w` fires at some stage, the image run leaves its
--- start, with no measure and no typicality hypothesis. Statement: the converse of
--- `slotRun_image_departs_of_avoids` fails (the `example` after this one).
+-- start, with no measure and no typicality hypothesis.
 example {β : Type*} {N : Motion β} (φ : Motion.LaxHom slotMotion N)
     (hi : Function.Injective φ.toFun) (w : ℕ → Bool) (hw : ∃ k, w k = true) :
     ∃ n, (φ.toFun ∘ slotRun w) n ≠ (φ.toFun ∘ slotRun w) 0 := by
@@ -416,31 +437,18 @@ example {β : Type*} {N : Motion β} (φ : Motion.LaxHom slotMotion N)
   exact ⟨n, fun e => by have := hi e; rw [hn, (slotRun_crosses_iff w).1] at this; cases this⟩
 
 -- Statement: CONTROL, the converse of `slotRun_image_departs_of_avoids` fails: for every one-to-one
--- lax map `φ` and every class `𝒯` holding the zero-block tests for `trials (1/2)`, the squares
--- tape's image run leaves its start, yet the squares tape does not avoid `𝒯`.
+-- lax map `φ`, every `0 < p ≤ 1` and every class `𝒯` holding the zero-block tests for
+-- `trials p hp`, the squares tape's image run leaves its start, yet the squares tape does not avoid
+-- `𝒯` (`squaresTape_not_avoids`).
 example {β : Type*} {N : Motion β} (φ : Motion.LaxHom slotMotion N)
-    (hi : Function.Injective φ.toFun) (𝒯 : (ℕ → Set (ℕ → Bool)) → Prop)
-    (h𝒯 : ∀ U, ZeroBlockTest (trials (1 / 2) (by norm_num)) U → 𝒯 U) :
+    (hi : Function.Injective φ.toFun) (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p)
+    (𝒯 : (ℕ → Set (ℕ → Bool)) → Prop) (h𝒯 : ∀ U, ZeroBlockTest (trials p hp) U → 𝒯 U) :
     (∃ n, (φ.toFun ∘ slotRun squaresTape) n ≠ (φ.toFun ∘ slotRun squaresTape) 0) ∧
     ¬ AvoidsTests 𝒯 squaresTape := by
-  have half : (1 - (1/2 : NNReal) : NNReal) = 2⁻¹ := by
-    rw [one_div]; exact tsub_eq_of_eq_add (by rw [← two_mul, mul_inv_cancel₀ two_ne_zero])
-  refine ⟨?_, fun h => ?_⟩
-  · obtain ⟨n, hn⟩ := (slotRun_crosses_iff squaresTape).2.2 ⟨0, by simp [squaresTape]⟩
-    exact ⟨n, fun e => by
-      have := hi e; rw [hn, (slotRun_crosses_iff squaresTape).1] at this; cases this⟩
-  · refine h (fun m => zeroBlock (m * m + 1) m)
-      (h𝒯 _ ⟨fun m => ?_, fun m => (m * m + 1, m), ?_, fun m => rfl⟩) ?_
-    · have := trials_zeroBlock_le (1/2) (by norm_num) (K := 1) (by rw [half]; simp) (m * m + 1) m
-      simpa using this
-    · exact Primrec.pair (Primrec.succ.comp (Primrec.nat_mul.comp Primrec.id Primrec.id)) Primrec.id
-    · simp only [Set.mem_iInter, zeroBlock, Set.mem_setOf_eq, Finset.mem_Ico]
-      intro m k hk
-      have hs : Nat.sqrt k = m := by
-        obtain ⟨j, rfl⟩ : ∃ j, k = m * m + j := ⟨k - m * m, by omega⟩
-        exact Nat.sqrt_add_eq m (by omega)
-      simp only [squaresTape, hs, decide_eq_false_iff_not]
-      omega
+  refine ⟨?_, squaresTape_not_avoids p hp hp0 𝒯 h𝒯⟩
+  obtain ⟨n, hn⟩ := (slotRun_crosses_iff squaresTape).2.2 ⟨0, by simp [squaresTape]⟩
+  exact ⟨n, fun e => by
+    have := hi e; rw [hn, (slotRun_crosses_iff squaresTape).1] at this; cases this⟩
 
 -- Statement: CONTROL: without the typicality hypothesis, the all-`false` tape drives a run that
 -- stays at `false` at every stage.
@@ -476,6 +484,7 @@ open ZeroParadox
 #print axioms zeroBlockTest_silentFrom
 #print axioms fires_io_of_avoids
 #print axioms squaresTape
+#print axioms squaresTape_not_avoids
 #print axioms oneBlock
 #print axioms trials_oneBlock
 #print axioms slotMotion

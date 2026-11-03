@@ -7134,6 +7134,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "0ddcd4fb-e91e-418b-98f5-72000e8aa974",
+          "new": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.squaresTape_not_avoids",
+            "short": "squaresTape_not_avoids"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.squaresTape_not_avoids",
+            "short": "squaresTape_not_avoids",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "Typicality generalisation (2026-11-03): the squares tape fails the zero-block tests for trials p at every 0 < p <= 1.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "0dde073b-2cc2-42bc-bdc6-707eea91f329",
           "new": {
             "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
