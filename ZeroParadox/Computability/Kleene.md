@@ -74,6 +74,16 @@ is stated; one would be ill-typed. So the reading that the class's `botCode` is 
 witness keeps no identity half: each code chart has its own occupancy, step by step, as above. What stays a
 commitment is that ⊥ actually executes, the occurrence commitment.
 
+**Prior art for relating hyperset fixed points to self-application** (closest located as of
+2026-11-03). Barwise & Moss 1996, *Vicious Circles*, § 3.4, pp. 42-43: they review Kleene's
+recursion theorem (Theorem 3.2, p. 43), derive from it a program of no inputs that outputs itself
+(Proposition 3.3, p. 43), and write that "there may be applications of the techniques of this book to
+the semantical issues raised by self-application" (p. 42), an invitation they leave open. Their
+footnote 5 (p. 42) holds that computability theory does not depend on set theory, except in the
+semantics of computation, where one might choose non-well-founded sets to model a phenomenon. On those
+pages they state no comparison of a set-side occupant with a code-side one, so the role comparison
+above is not credited to them.
+
 ## Dependencies
 
 ZP-J (T-EXEC, `t_exec`: IsQuineAtom q → q = ⊥, one direction; the biconditional is `t_exec_iff`,
@@ -200,7 +210,10 @@ every `n`. `SelfPrints c` says `c` returns its own Gödel number on channel `0`;
 `selfref_universal_exists` and `selfref_universal_infinite` get both at once from fixed
 points of `selfPrintOrDelegate`. These are statements about the partial function `eval c`,
 equalities of `Part ℕ` values; they state presence and existence of such codes, and nothing
-here says a code is run.
+here says a code is run. The self-printing half has a textbook form: Barwise & Moss 1996,
+Proposition 3.3, p. 43, a program of no inputs that outputs itself, obtained from the recursion
+theorem (their Theorem 3.2, Kleene's). Here the code instead returns its own Gödel number on every
+input of channel `0`, and the universal half has no counterpart there.
 
 **Where `Classical.choice` enters `selfref_universal_exists`, measured 2026-10-04.** For the
 statement of `selfref_universal_exists` as written, the choice is not removed: that statement

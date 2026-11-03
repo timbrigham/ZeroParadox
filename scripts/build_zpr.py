@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-R: A Cross-Category Account of the Self-Referential Fixed Point — PDF Builder
-Version 1.24 | November 2026
+Version 1.25 | November 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.24'
+VERSION = '1.25'
 FIRST_RELEASED = 'July 2026'
 
 
@@ -401,7 +401,8 @@ def build():
             'instance, is definable in ZFC.',
             'Reading: the framework treats the self-application fixed point as a role carried with its '
             'face, characterized rather than constructed as one global object. Its choice of a '
-            'non-well-founded foundation (ZF + AFA rather than ZFC; Aczel 1988; Barwise &amp; Moss 1996) '
+            'non-well-founded foundation (ZFC<sup>&#8722;</sup> + AFA, AFA in place of Foundation and Choice kept; Aczel 1988, '
+            'p. xviii; Barwise &amp; Moss 1996, p. 72, with the axioms of ZFC<sup>&#8722;</sup> on p. 28) '
             'is a separate commitment, which this face-locality does not by itself require. A theorem stated for every suitable category can be '
             '<i>witnessed</i> in whichever category has Lawvere\'s hypothesis; the <i>occupant</i> it '
             'produces is defined only relative to that category.',
@@ -494,9 +495,13 @@ def build():
         'function space in posets; and Bergman, "On lattices and their ideal lattices, and posets and '
         'their ideal posets," Tbilisi Math. J. 1 (2008) 89&#8211;103 (arXiv:0801.0751), whose Corollary 7 '
         'in the arXiv numbering (Corollary 3.2 in the journal) states that no isotone map from a subset of a poset P to the lattice of all downsets of P is '
-        'surjective. The '
-        'apophatic, characterize-not-construct treatment of self-referential objects: Aczel, '
-        '<i>Non-Well-Founded Sets</i> (1988); Barwise &amp; Moss, <i>Vicious Circles</i> (1996).'))
+        'surjective. Non-well-founded sets characterized by unique solutions and by corecursion: Aczel, '
+        '<i>Non-Well-Founded Sets</i> (1988); Barwise &amp; Moss, <i>Vicious Circles</i> (1996), where AFA '
+        'is stated as the Solution Lemma (p. 72) and the Corecursion Theorem (p. 250) is given as their '
+        'version of Aczel\'s Special Final Coalgebra Theorem (p. 264). Both books also construct: Aczel '
+        'builds a model of ZFC<sup>&#8722;</sup> + AFA (Theorem 3.10, p. 37) and Barwise and Moss a model '
+        'of ZFA (Chapter 9, pp. 103&#8211;115 in their index). Reading the self-referential object as '
+        'characterized rather than constructed is this document\'s reading, not theirs.'))
     E.append(body(
         'Against this, the contribution of ZP-R is not a theorem but a <i>placement</i>: the '
         'per-face placement of the framework\'s self-application role relative to the Lawvere fixed '

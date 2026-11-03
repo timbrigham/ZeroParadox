@@ -34,8 +34,8 @@ two-chart reading for § IV–VII, and § VIII's conditional below.
   `false` to ⊥ of `L` and `true` to a point other than ⊥ of `L`, then `φ` applied to the run with the
   stages before the first firing dropped is a state sequence meeting `t_snap_given`'s `hcc1` and
   `hocc` (`t_snap_of_fires_once`). It steps once, at index 1, and stays, so it is not an
-  `IsStrictStateSequence` (the file's last `example`). If `0 < p ≤ 1`, the fired-once tapes have
-  `trials p hp` measure one (`trials_fires_once`), and § VI's hypotheses give `hw`
+  `IsStrictStateSequence` (the file's last `example`). If `0 < p ≤ 1`, the tapes that fired at least
+  once have `trials p hp` measure one (`trials_fires_once`), and § VI's hypotheses give `hw`
   (`t_snap_of_avoids`). `Reading:` `hw` is the occurrence commitment in its slot chart, as one
   hypothesis on the realized tape (`ZeroParadox/Order/Snap.lean` states both charts).
 

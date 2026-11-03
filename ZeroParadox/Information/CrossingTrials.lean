@@ -474,7 +474,7 @@ example {β : Type*} {N : Motion β} (φ : Motion.LaxHom slotMotion N)
 -- stays at `false` at every stage.
 example : ∀ n, slotRun (fun _ => false) n = false := fun n => by simp [slotRun]
 
-/-! ## § VIII. Fired once gives `t_snap_given`'s hypotheses
+/-! ## § VIII. Fired at least once gives `t_snap_given`'s hypotheses
 
 Direction: a tape that has fired at least once gives a state sequence meeting `t_snap_given`'s
 `hcc1` and `hocc`; the cover `hcov` of `t_snap_given_cover` is not supplied. "Fired at least once"
@@ -522,8 +522,8 @@ theorem firedRun_isRun (w : ℕ → Bool) (hw : ∃ k, w k = true) :
 /-- **`Statement:` if `φ : Bool → L` sends `false` to ⊥ of `L` and `true` to a point other than ⊥ of
 `L`, and the tape `w` fires at some stage (`hw`), then `S := φ ∘ firedRun w hw` has `S 0 = ⊥` (CC-1,
 `t_snap_given`'s `hcc1`), `S 1 ≠ S 0` (`t_snap_given`'s `hocc`), is a state sequence (ZP-A's D3), and
-carries `t_snap_given`'s triple.** One way: fired-once gives the hypotheses; the converse is not
-claimed. Every firing tape gives the same `firedRun w hw`, `false` at stage 0 and `true` after
+carries `t_snap_given`'s triple.** One way: having fired at least once gives the hypotheses; the
+converse is not claimed. Every firing tape gives the same `firedRun w hw`, `false` at stage 0 and `true` after
 (`firedRun_spec`): the tape contributes one bit, that it fired. `S` steps once, at index 1, and
 stays, so it is not an `IsStrictStateSequence` (the last `example` of the file). Without `hw` the
 all-`false` tape's run `φ ∘ slotRun` stays at ⊥ of `L` at every stage (the first `example` below).
@@ -598,15 +598,16 @@ example : Nonempty (ZPSemilattice Unit) :=
   ⟨⟨fun _ _ => (), (), fun _ _ _ => rfl, fun _ _ => rfl, fun _ => rfl, fun _ => rfl⟩⟩
 example [ZPSemilattice Unit] (φ : Bool → Unit) : ¬ φ true ≠ ZPSemilattice.bot := fun h => h rfl
 
--- Statement: CONTROL, fired once does not imply typical: for every `0 < p ≤ 1` and every class `𝒯`
--- holding the zero-block tests for `trials p hp`, the squares tape fires at stage 0 and does not avoid `𝒯`.
+-- Statement: CONTROL, fired at least once does not imply typical: for every `0 < p ≤ 1` and every
+-- class `𝒯` holding the zero-block tests for `trials p hp`, the squares tape fires at stage 0 and
+-- does not avoid `𝒯`.
 example (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p)
     (𝒯 : (ℕ → Set (ℕ → Bool)) → Prop) (h𝒯 : ∀ U, ZeroBlockTest (trials p hp) U → 𝒯 U) :
     (∃ k, squaresTape k = true) ∧ ¬ AvoidsTests 𝒯 squaresTape :=
   ⟨⟨0, by simp [squaresTape]⟩, squaresTape_not_avoids p hp hp0 𝒯 h𝒯⟩
 
--- Statement: CONTROL, measure one is not every tape: if `0 < p ≤ 1`, the fired-once set has measure
--- one and the all-`false` tape is not in it.
+-- Statement: CONTROL, measure one is not every tape: if `0 < p ≤ 1`, the set of tapes that fired at
+-- least once has measure one and the all-`false` tape is not in it.
 example (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p) :
     trials p hp {w | ∃ k, w k = true} = 1 ∧ ¬ ∀ w : ℕ → Bool, ∃ k, w k = true :=
   ⟨trials_fires_once p hp hp0, fun h => by obtain ⟨k, hk⟩ := h (fun _ => false); simp at hk⟩

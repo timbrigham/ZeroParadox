@@ -25,8 +25,10 @@ framework's standing temptation. The literature that separates them:
 
 > **Diaconescu (1975)**: in a topos, the axiom of choice implies excluded middle. **Goodman–Myhill
 > (1978, p. 461)** give the analogue in intuitionistic set theory. Diaconescu's theorem is stated as an
-> **equivalence** — a coequalizer of two nonintersecting monomorphisms has a section *iff* subobjects have complements (p. 176); the choice direction is
-> the corollary, "AC implies that every subobject has a complement" (p. 178). The theorem already concerns a two-point shape, since such a
+> **equivalence** — a coequalizer of two nonintersecting monomorphisms has a section *iff* subobjects
+> have complements (p. 176); the choice direction is
+> the corollary, "AC implies that every subobject has a complement" (p. 178). The theorem already
+> concerns a two-point shape, since such a
 > coequalizer has fibres of at most two points; Goodman–Myhill state the restriction explicitly, choice
 > "for sets B, C of at most two elements". With unique choice into `Bool`, `ChoiceFragment` and excluded
 > middle are inter-derivable (the `example` after `em_of_choiceFragment` in
@@ -81,7 +83,8 @@ every Heyting algebra Boolean; the scope is `Prop`).
 
 ### No count is recorded here, deliberately
 
-**`ChoiceCannotBe.lean` and this long form state no figure for how many declarations carry `Classical.choice`, and none should be added
+**`ChoiceCannotBe.lean` and this long form state no figure for how many declarations carry
+`Classical.choice`, and none should be added
 to it.** Three reasons, in order of importance.
 
 **A count mostly measures Mathlib, not this framework.** Most choice footprints traced so far come from a
@@ -90,7 +93,8 @@ Mathlib construction — the `Ordinal` order instance and operations (`Ordinal.i
 `compl_sup_distrib`, arbitrary-type decidability, a `ℚ` division-ring instance, in one case a single
 tactic call. **Not all: `ZeroParadox/Category/Lawvere.lean`'s bare `classical` in
 `fixedPointFree_of_nontrivial` is the framework's own, and § IV classifies it ESSENTIAL, on the
-premise stated there** — the cost is in stating the swap over types **whose equality is not decidable** (the swap is `if x = b₀ then b₁ else b₀`;
+premise stated there** — the cost is in stating the swap over types **whose equality is not decidable**
+(the swap is `if x = b₀ then b₁ else b₀`;
 decidable equality is exactly what the § IV escape restores), which is the framework's chosen
 generality, not Mathlib's. `ZeroParadox/Die.lean`'s bare `classical`s in
 `botCovered_botIntervalTwo_classical`, `Motion.registeredDecidable_of_classical` and
@@ -182,13 +186,18 @@ fraction either**; it moves with every commit.
   fragment is not plain intuitionistic logic, so the § IV premise is what carries that non-provability
   over to it. Reaching a weaker taboo is a weaker implication and needs a stronger premise. **The
   located cases, and the premise, are in § IV** (`em_of_wellOrder_comparable`, `wem_of_fixedPointFree`,
-  `wem_of_botCovered_botIntervalTwo`, `Motion.em_of_registeredDecidable`, `Motion.em_of_selectedData`). Detected by *reducing* — deriving a taboo from the
+  `wem_of_botCovered_botIntervalTwo`, `Motion.em_of_registeredDecidable`, `Motion.em_of_selectedData`).
+  Detected by *reducing* — deriving a taboo from the
   principle — which is the mirror image of the accidental test: accidental is shown by re-proving
   without choice, essential by showing that re-proving without choice would prove a taboo. Note this is
   a statement about the PRINCIPLE, not about any one proof of it: `#print axioms` on a proof reports that
   proof's footprint and can never witness the principle's necessity, which is exactly why the essential
   side needs a reduction instead of a measurement.
-* **STATEMENT-CARRIED** — the statement's own type carries `Classical.choice`: a theorem that only assumes the statement and proves `True` already reports it (the statement control). No proof can remove it, so neither ACCIDENTAL nor ESSENTIAL can be asked of it. What can be asked is whether a restatement, on a carrier whose statements are choice-free, holds without choice. Detected by the statement control; members are listed in § I/§ III where measured.
+* **STATEMENT-CARRIED** — the statement's own type carries `Classical.choice`: a theorem that only
+  assumes the statement and proves `True` already reports it (the statement control). No proof can
+  remove it, so neither ACCIDENTAL nor ESSENTIAL can be asked of it. What can be asked is whether a
+  restatement, on a carrier whose statements are choice-free, holds without choice. Detected by the
+  statement control; members are listed in § I/§ III where measured.
 
 "The statement" in STATEMENT-CARRIED is the term as written, which is what the statement control
 measures; a definitionally equal respelling whose own statement is choice-free is a restatement in

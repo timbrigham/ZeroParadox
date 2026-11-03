@@ -4,7 +4,7 @@ Update this file first on any version bump. README.md Framework table is verifie
 
 | Document | Formal Version | Filename | Companion Version | Comp AR | Notes |
 |----------|---------------|----------|-------------------|---------|-------|
-| ZP-A Lattice Algebra | v1.35 | ZP-A_Lattice_Algebra.pdf | v1.16 | N/— | formal:c5e0f124 comp:f0beb797 |
+| ZP-A Lattice Algebra | v1.36 | ZP-A_Lattice_Algebra.pdf | v1.17 | N/— | formal:bed08a29 comp:6a0621ef |
 | ZP-B p-Adic Topology | v1.32 | ZP-B_pAdic_Topology.pdf | v1.21 | N/— | formal:5ccc5dd3 comp:4d3ce35e |
 | ZP-F The Counterexamples | v1.20 | ZP-F_The_Counterexamples.pdf | v1.19 | N/— | formal:b99fbdbb comp:dee59dce |
 | ZP-C Information Theory | v1.35 | ZP-C_Information_Theory.pdf | v2.14 | N/— | formal:0de1df70 comp:10cbc861 |
@@ -13,7 +13,7 @@ Update this file first on any version bump. README.md Framework table is verifie
 | ZP-G Category Theory | v1.27 | ZP-G_Category_Theory.pdf | v1.16 | N/— | formal:e901301e comp:668a9008 |
 | ZP-H Categorical Bridge | v1.30 | ZP-H_Categorical_Bridge.pdf | v1.22 | N/— | formal:08338469 comp:efcb14ba |
 | ZP-H Native Categories Addendum | v1.7 | ZP-H_Native_Categories_Addendum.pdf | N/A | N/— | formal:6055c8d4 |
-| ZP-I Inside Zero | v1.31 | ZP-I_Inside_Zero.pdf | v1.35 | N/— | formal:28410b6e comp:c88806be |
+| ZP-I Inside Zero | v1.32 | ZP-I_Inside_Zero.pdf | v1.35 | N/— | formal:6c9cd151 comp:c88806be |
 | ZP-J Self-Reference | v2.17 | ZP-J_Self_Reference.pdf | v1.38 | N/— | formal:d486cc53 comp:c499ea26 |
 | ZP-J AFA Addendum | v1.20 | ZP-J_AFA_Addendum.pdf | N/A | N/— | formal:8327eacf |
 | ZP-J Wheel Addendum | v1.10 | ZP-J_Wheel_Addendum.pdf | v1.9 | N/— | formal:3b8c71b6 comp:e63f0549 |
@@ -22,8 +22,8 @@ Update this file first on any version bump. README.md Framework table is verifie
 | ZP-L Incomputability Convergence | v1.34 | ZP-L_Incomputability_Convergence.pdf | v1.22 | N/— | formal:23d995c1 comp:66d5f4ec |
 | ZP-M Kleene-Ordinal Bridge | v1.19 | ZP-M_Kleene_Ordinal_Bridge.pdf | v1.14 | N/— | formal:ec671c9d comp:9888babd |
 | ZP-N The Constructive Snap | v2.8 | ZP-N_The_Constructive_Snap.pdf | N/A | N/— | formal:aba9b464 |
-| ZP-P The Fixed-Point Fork | v1.31 | ZP-P_The_Fixed_Point_Fork.pdf | N/A | N/— | formal:77ae1fdb |
-| ZP-R Cross-Category Fixed Point | v1.24 | ZP-R_Cross_Category_Fixed_Point.pdf | N/A | N/— | formal:8735dc0f |
+| ZP-P The Fixed-Point Fork | v1.32 | ZP-P_The_Fixed_Point_Fork.pdf | N/A | N/— | formal:59b2c96d |
+| ZP-R Cross-Category Fixed Point | v1.25 | ZP-R_Cross_Category_Fixed_Point.pdf | N/A | N/— | formal:dc54b6ec |
 | ZP-R Diagonal Family Addendum | v1.24 | ZP-R_Diagonal_Family_Addendum.pdf | N/A | N/— | formal:6144f567 |
 | ZP-Q The Frame-Change | v1.17 | ZP-Q_The_Frame_Change.pdf | N/A | N/— | formal:30ba6f1e |
 | Zero Paradox Foreword | v2.36 | Zero_Paradox_Foreword.pdf | N/A | N/A | formal:ce7e929a |
