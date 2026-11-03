@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-Q: The Frame-Change PDF Builder
-Version 1.16 | November 2026
+Version 1.17 | November 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.16'
+VERSION = '1.17'
 FIRST_RELEASED = 'July 2026'
 
 from reportlab.graphics.shapes import Drawing, Circle, Ellipse, PolyLine, String, Polygon
@@ -135,11 +135,11 @@ def build():
             'whole of it. &#8869; is the seam the frame-change joins, or the tear it leaves, a '
             'boundary of measure zero, all edge and no inside (read flat, this is the Quine atom (CC-2) '
             'from without, the occupant of the role "steps to itself and to nothing else" '
-            '(selfApp_quine_role_iff) &#8212; a single node, not a region &#8212; and the '
+            'under a self-application map supplied by AbstractSelfApp (selfApp_quine_role_iff) &#8212; a single node, not a region &#8212; and the '
             'tear on the sphere &#8212; a discontinuity, not a region).',
             'Seen from &#8869;&#8217;s own frame &#8212; inside the self-reference &#8212; the same '
             'point is the opposite: infinite depth. v<sub>2</sub>(0) = &#8734;; the endless regress '
-            'Q &#8712; Q &#8712; Q &#8230; of the AFA set that plays the role; unbounded surprisal. No-interior and '
+            'Q &#8712; Q &#8712; Q &#8230; of the AFA set Q = {Q} that plays the role; unbounded surprisal. No-interior and '
             'infinite-interior are the 0 &#8596; &#8734; poles of one coin, swapped by the '
             'frame-change: what has no thickness from without has nothing but depth from within. So '
             'the bottom is not an object behind the boundary &#8212; it is the boundary, whose own '
@@ -352,8 +352,10 @@ def build():
         'The remaining realizations are referenced, not re-proved here. Set theory: the Quine atom '
         '(CC-2) is the collapse of the Foundation / AFA fork (ZP-J, ZP-P; fork_collapse_iff, '
         'selfMem_eq_singleton_bot), stated as a role, a point that steps to itself and to nothing '
-        'else, occupied chart by chart with no equation across charts: by &#8869; in the lattice chart '
-        '(selfApp_quine_role_iff, quineAtomHost_quine_role_iff), by no set in Mathlib\'s ZFSet '
+        'else, occupied chart by chart with no equation across charts: by &#8869; in the lattice chart, '
+        'under a self-application map supplied by AbstractSelfApp (selfApp_quine_role_iff) and in the '
+        'QuineAtomHost an AFAStructure on L builds (quineAtomHost_quine_role_iff with '
+        'afaStructure_isQuineAtomHost), by no set in Mathlib\'s ZFSet '
         '(zfset_quine_role_unoccupied). Computability: ZP-K\'s class KleeneStructure requires a code '
         'meeting a periodicity condition (botCode_is_quine) and equates it with nothing. The reading '
         'that this code is the bottom\'s computational witness splits: its identity half is retired '

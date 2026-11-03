@@ -1,12 +1,12 @@
 """
 Zero Paradox — ZP-I: Inside Zero PDF Builder
-Version 1.30 | November 2026
+Version 1.31 | November 2026
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.30'
+VERSION = '1.31'
 FIRST_RELEASED = 'April 2026'
 
 # ZP-I uses justified body text; override the left-aligned zp_utils defaults
@@ -399,9 +399,11 @@ def build():
            '&#8704; x, S &#8744; x = x IS the &#8869; of its own lattice. '
            'That the Cauchy limit 0 &#8712; Q<sub>2</sub> satisfies that condition is a HYPOTHESIS, never a result: '
            't_iz_complete takes it as the argument h_role, about a terminal in a separate semilattice L&#8242;, '
-           'and does not identify that terminal with the limit. Q<sub>2</sub>&#8217;s field structure supplies no join, and the corpus defines none on Q<sub>2</sub> &#8212; '
-           'and for the 2-adic integers &#8484;<sub>2</sub> one with 0 as bottom is built but not registered '
-           '(ZeroParadox/Valuation/Scale.lean) &#8212; so on Q<sub>2</sub> the condition is not statable. '
+           'and does not identify that terminal with the limit. Q<sub>2</sub>&#8217;s field structure supplies no join, and the corpus defines none on Q<sub>2</sub>. '
+           'For the 2-adic integers &#8484;<sub>2</sub> one with 0 as bottom is built but not registered, '
+           'where 0 meets the condition because it was chosen as the bottom '
+           '(ZeroParadox/Valuation/Scale.lean &#167; V); on Q<sub>2</sub> the condition is stated of no '
+           'structure the corpus defines (one could be built the same way). '
            'Lean: t_iz_limit_is_new_null, proved directly from da2_bottom_characterization. ✓ &#8212; '
            'the checkmark covers the ROLE identification only, and only inside L&#8242;. It is NOT a novelty witness and must not be cited as one; reading the occupant as the &#8869; of a SUCCESSOR instantiation is C-DA2.'),
         sp(4),

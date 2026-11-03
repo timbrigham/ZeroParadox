@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-R Addendum: The Diagonal Family — PDF Builder
-Version 1.23 | November 2026
+Version 1.24 | November 2026
 Follows scripts/PDF_Rendering_Standards.md.
 Search record behind § IV's Gödel-first sentence (2026-10-06, ripgrep over ZeroParadox/**/*.lean):
   (a) godel_?(one|1|first)|first_?incompleteness|incompleteness_?(one|1|first)|godel_?sentence|true_?but_?unprovable  -> 0 hits
@@ -12,7 +12,7 @@ import os
 from zp_utils import *
 from reportlab.platypus import KeepTogether
 
-VERSION = '1.23'
+VERSION = '1.24'
 FIRST_RELEASED = 'July 2026'
 
 
@@ -187,8 +187,10 @@ def build():
         [
             'The Quine atom (CC-2) is a role: a point that steps to itself and to nothing else '
             '(Motion.SelfOnlyAt, ZeroParadox/Die.lean), occupied chart by chart, with no equation across '
-            'charts. In the lattice chart its occupant is &#8869; of the ZPSemilattice '
-            '(selfApp_quine_role_iff, quineAtomHost_quine_role_iff); t_exec / T-EXEC (t_exec_iff): every '
+            'charts. In the lattice chart its occupant is &#8869; of the ZPSemilattice, under a '
+            'self-application map supplied by AbstractSelfApp (selfApp_quine_role_iff) and in the '
+            'QuineAtomHost an AFAStructure on L builds (quineAtomHost_quine_role_iff with '
+            'afaStructure_isQuineAtomHost); t_exec / T-EXEC (t_exec_iff): every '
             'Quine atom equals &#8869; of the ZPSemilattice (IsQuineAtom q &#8596; q = &#8869;), derived '
             'from the ZPSemilattice / AFAStructure class fields &#8212; location and uniqueness of the '
             'floor in this face. In Mathlib\'s ZFSet, where the role reads x = {x} '

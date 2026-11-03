@@ -1,6 +1,6 @@
 """
 Build ZP-J Illustrated Companion
-Version 1.37 | November 2026
+Version 1.38 | November 2026
 v1.33: ROUND-6 OUTSTANDING CLOSEOUT, items 3a, 3b, 3d, 6 (corpus-zpj-v2.8-round6-outstanding.md
 EXECUTION SPEC 2026-09-28). 3a (CC-2 proved half): the Foundation-freeness sentence cited no
 identifier; it now cites wf_no_selfloop (ZeroParadox/Settheory/Wall.lean - fully general, no
@@ -148,9 +148,10 @@ def three_way_table():
            Paragraph('What ⊥ satisfies', CS['tbl_hdr']),
            Paragraph('Plain meaning', CS['tbl_hdr'])]
     rows = [
-        ['Membership host (QuineAtomHost on L)',
-         'is the lattice occupant of the Quine-atom role, which the set Q = {Q} plays in AFA set '
-         'theory (quineAtomHost_quine_role_iff)',
+        ['Membership host (the QuineAtomHost an AFAStructure on L builds)',
+         'is the occupant of the Quine-atom role in that host, '
+         'the role the set Q = {Q} plays in AFA set theory (quineAtomHost_quine_role_iff with '
+         'afaStructure_isQuineAtomHost)',
          'In AFA the set Q = {Q} contains exactly one element: itself. AFA allows at most one set that is its own '
          'sole member (x = {x}); bare self-membership is not unique there (see the T-EXEC box above). '
          'The Lean requirement: QuineAtomHost, ZeroParadox/Settheory/QuineHost.lean &#167; VII'],
@@ -211,7 +212,7 @@ def abstraction_chain_table():
     t.setStyle(ts); return t
 
 
-VERSION = '1.37'
+VERSION = '1.38'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -374,8 +375,8 @@ def build():
     E.append(cbody(
         'These are not three separate properties that happen to coincide. They are three '
         'descriptions of the same structural role. T-EXEC machine-checks that the three roles '
-        'have one occupant (t_exec_triple_iff); the set-theory row is the AFA reading of the '
-        'first role, not a Lean statement.'))
+        'have one occupant (t_exec_triple_iff); the membership-host row is the Lean chart whose AFA '
+        'reading is the set Q = {Q}; that reading is not a Lean statement.'))
     E.append(sp(4))
     E.append(example_box('Real-world analogy  - Zero in arithmetic (partial)', [
         '0 in arithmetic wears more than one hat at once: it is the additive identity '
