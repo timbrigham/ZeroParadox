@@ -146,6 +146,9 @@ example : ChoiceFragment ↔ Nonempty (∀ p : Prop, Decidable p) := by
       | false => exact hb
 
 -- Statement: excluded middle is equivalent to `∀ p, Nonempty (Decidable p)`, `Nonempty` inside.
+-- Credit: the forward leg is the `match` inside Lean core's `Classical.propDecidable`
+-- (`Init/Classical.lean`), with the hypothesis in place of `Classical.em`; core then applies
+-- `Classical.choice` to that `Nonempty`, a step this leg does not take.
 example : ExcludedMiddle ↔ ∀ p : Prop, Nonempty (Decidable p) :=
   ⟨fun h p => (h p).elim (fun hp => ⟨isTrue hp⟩) (fun hn => ⟨isFalse hn⟩),
    fun h p => (h p).elim fun d => match d with
@@ -218,8 +221,10 @@ example (uc : ∀ P : Bool → Prop, (∃! b, P b) → {b : Bool // P b}) :
     | true => exact absurd hb hn
     | false => exact hb
 -- Reading (cited, not claimed): the Rocq standard library's `theories/Logic/ChoiceFacts.v` proves the
--- type-theoretic form, `constructive_definite_descr_excluded_middle` (definite description, that is
--- unique choice, with excluded middle gives `forall P:Prop, {P} + {~ P}`), and states that
+-- type-theoretic form of the excluded-middle-to-data leg, `constructive_definite_descr_excluded_middle`
+-- (constructive definite description, `forall P, (exists! x, P x) -> {x | P x}` at every type, the
+-- data-valued form of unique choice that the `uc` hypothesis above takes at `Bool`, with excluded
+-- middle gives `forall P:Prop, {P} + {~ P}`), and states that
 -- "constructive definite description transports excluded-middle from [Prop] to [Set]", crediting the
 -- idea of its proof to L. Chicli, L. Pottier and C. Simpson, "Mathematical Quotients and Quotient
 -- Types in Coq", TYPES 2002, LNCS 2646. Read in the authors' preprint (preprint page numbers): § 5,

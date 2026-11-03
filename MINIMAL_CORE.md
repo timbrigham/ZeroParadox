@@ -55,8 +55,8 @@ Every step above is either something a machine already checked, or a commitment 
 | The claim | What backs it | Status |
 |---|---|---|
 | Self-reference, once it closes, forces a fixed point - the engine | `lawvere` (Lawvere 1969 / Yanofsky 2003) | proved, no axioms |
-| Three faces are one element *within one carrier*: the self-containing element, the order-bottom, the join-identity | `t_exec_triple_iff` | proved, no axioms - but read the bracket: the self-containment is a *field* of the `AFAStructure` instance, so it is supplied, not derived. The literal `⊥ = {⊥}` is proved nowhere |
-| The fourth face, the running program, does that same job - in time | the `KleeneStructure` typeclass | **a commitment, not a theorem** |
+| Three faces are one element *within one carrier*: the self-containing element, the order-bottom, the join-identity | `t_exec_triple_iff` | proved, no axioms - but read the bracket: the self-containment is a *field* of the `AFAStructure` instance, so it is supplied, not derived. The literal x = {x} is refuted in Mathlib's `ZFSet` (the `example` after `no_quine_atom` in `ZeroParadox/Settheory/Wall.lean`); `zfset_selfOnlyAt_mem_iff` makes it the die's Quine-atom role, which no set occupies (`zfset_quine_role_unoccupied`) and which is occupied in the coalgebra chart (`cofix_quine_role_occupied`), a one-point chart whose occupancy restates its own fork |
+| The fourth face, the running program, does that same job - in time | the `KleeneStructure` typeclass | its identity reading is **retired**; that ⊥ runs is the occurrence commitment, not a theorem |
 | The machine's before- and after-states are distinct (that execution *is* the state change is part of the model, not this theorem) | `l_run` (`c₀ ≠ c₁`) | proved |
 
 **If you want to disagree, the place to do it is the commitment:** that the self-contained bottom and the self-executing program do the same job, one of them in time. Everything else above is either machine-checked or follows from it. The full claim-by-claim status, with every witness and its exact axiom footprint, is in the [Claims Ledger](CLAIMS.md).

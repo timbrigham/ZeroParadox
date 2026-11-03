@@ -246,9 +246,9 @@ example (g : Fin 3 → Fin 3) : ¬ DieSelfCopyRef g :=
 
 /-! ## § IV. Fences
 
-* Proved: the AVAILABILITY of a `SelfCopyRef` map, on infinite carriers only. That the semilattice ⊥ on an
-  INFINITE carrier PERFORMS one is a commitment — see `l_inf` (`ZeroParadox/Information/Surprisal.lean`).
-  `MachinePhase`, the two-phase rounding that carries `machinePhaseKleene`, admits none
+* Proved: the AVAILABILITY of a `SelfCopyRef` map, on infinite carriers only. That ⊥ of a `ZPSemilattice`
+  whose carrier is INFINITE PERFORMS one is a commitment — see `l_inf` (`ZeroParadox/Information/Surprisal.lean`).
+  `MachinePhase`, the two-element carrier of `machinePhaseKleene`, admits none
   (`no_selfCopyRef_of_finite`; the `example` in `ZeroParadox/Computability/ComputationCannotBe.lean` § IX).
 * `#print axioms` on a proof reports that proof's footprint, never a principle's necessity; whether a
   statement as written carries choice is a separate measurement (`ZeroParadox/Category/ChoiceCannotBe.md`). -/

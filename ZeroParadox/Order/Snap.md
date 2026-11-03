@@ -17,7 +17,11 @@ Cross-framework synthesis of ZP-A through ZP-D. Provides three formal inserts:
     at all, the executor is ⊥ itself; the premise "nothing external can execute ⊥" is the framework's
     requirement, not a theorem. That rules out an external executor, not an inert ⊥. Its Lean
     counterpart is `da1_closed_concrete`, which proves IsQuineAtom (bot : MachinePhase) and nothing
-    computational; the self-executing reading is carried by the KleeneStructure commitment.
+    computational. The self-executing reading splits: its identity half is retired, no code being
+    equated with ⊥ and the code chart having its own occupant of the die's Quine-atom role, a class
+    of codes up to equal `eval` for computable `eval`-respecting maps (`codes_vs_classes`) and never a
+    single code (`evalStepMotion_not_selfOnlyAt`), both `ZeroParadox/Computability/Kleene.lean` § IX;
+    that ⊥ runs is the occurrence commitment.
   - Path 2 (informational), in two charts; the point chart's `Statement:` COINCIDENCE is named below. Depth chart, ZP-C L-INF: surprisal is unbounded in the
     ball-hierarchy depth n while each value is finite (`l_inf`, `ZeroParadox/Information/Surprisal.lean`).
     Point chart: at 0 of ℚ₂, the one point in every ball B(0, 2⁻ⁿ) of the chain centred at 0

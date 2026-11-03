@@ -152,8 +152,9 @@ theorem blockKernel_pure1_stationary : IsStationaryPMF blockKernel (PMF.pure 1) 
     `0`, `1`, `{2,3}`), whose stationary-distribution predicate is **not a subsingleton**: it has two
     *distinct* witnesses, `pure 0` and `pure 1`, one per absorbing class.
 
-    A unique fixed point of an endomorphism is a terminal (ν / final-coalgebra) universal object; a
-    *non-unique* fixed set is not. So node #2 has **no** terminal/unique-fixed-point universal
+    `Reading:` (no theorem or source, as in the header) a unique fixed point of an endomorphism is
+    read as a terminal-flavoured (ν / final-coalgebra) universal object, and a *non-unique* fixed set
+    as not one. Under that reading node #2 has **no** terminal/unique-fixed-point universal
     property in the dynamical ambient under the doubly-stochastic hypothesis. The witness is a genuine
     reducible chain with internal dynamics — the obstruction is reducibility (multiple communicating
     classes), not the degenerate "does-nothing" identity. The pre-registered GO conjecture

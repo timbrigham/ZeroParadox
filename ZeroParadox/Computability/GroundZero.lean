@@ -162,8 +162,10 @@ theorem tri_idle_never_starts (s : Unit) :
   simp [TriStepping] at hstep
 
 /-- **The gauge, both halves in one statement.** Two-valued: the unstarted state is absent from
-    the type. Three-valued: it is inhabited. So what makes execution forced is the CLEANNESS OF
-    THE SPLIT, not the dynamics. -/
+    the type. Three-valued: it is inhabited. So what removes the unstarted state is the
+    CLEANNESS OF THE SPLIT, not the dynamics. Nothing here forces execution: a configuration
+    with no unstarted state still halts or steps, and a self-loop counts as stepping while
+    changing nothing (`loop_is_a_trap`, `ZeroParadox/Computability/Occurrence.lean`). -/
 theorem forcing_needs_the_binary_split :
     (∀ (σ : Type) (f : σ → Option σ) (s : σ), ¬ (f s ≠ none ∧ ¬ ∃ s', f s = some s')) ∧
     (∃ (g : Unit → TriStep Unit) (s : Unit), ¬ TriHalted g s ∧ ¬ TriStepping g s) :=
@@ -179,7 +181,7 @@ point of the next-time operator is everything). `stepCoalg` above already reads 
 **⚠ PRIOR ART — AMM DO THIS CASE THEMSELVES. The delta here is the FORMALIZATION, not the
 specialization.** An earlier draft credited only their Ex 4.5(1) (powerset/graph) and called § V "the
 deterministic specialization of that". That understated them. **Read the paper, not a copy of it** —
-`.claude-local/papers/adamek_milius_moss_wellfounded_recursive_coalgebras.pdf`, at these locators:
+Adámek, Milius and Moss, *On Well-Founded and Recursive Coalgebras*, arXiv:1910.09401v2, at these locators:
 
 | AMM | what is there | what it covers here |
 |---|---|---|

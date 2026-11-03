@@ -36,8 +36,9 @@ section ComputationCannotBeIndex
 
 -- Statement: for any `g : A → (A → Bool)`, `¬ Function.Surjective g`. Proved from
 --   `lawvere_fixedpoint` and `bool_not_no_fixedpoint` — the Cantor/Lawvere no-surjection fact.
--- Reading: the halting wall. Turing (1936) enters at the NEXT entry,
---   `self_halting_undecidable`; this declaration mentions no machine and no halting.
+-- Reading: the halting wall. The halting problem, conventionally credited to Turing (1936; that
+--   paper was not consulted here), enters at the NEXT entry, `self_halting_undecidable`; this
+--   declaration mentions no machine and no halting.
 #check @ZeroParadox.no_self_decider
 
 -- Statement: `fun c => (eval c (encode c)).Dom` is not a ComputablePred.
@@ -158,7 +159,9 @@ example (k : ℕ) : ZeroParadox.IsComputationalQuine (Nat.Partrec.Code.const k) 
 
 -- Statement: under `[KleeneStructure L]`, any Quine atom `q : L` equals `bot` of the `ZPSemilattice L`.
 --   No `Code` and no Kleene clause appear; the `[KleeneStructure]` hypothesis is inert on the proof
---   route — though NOT absent from the axiom footprint, since `#print axioms` follows the statement.
+--   route — though NOT absent from the axiom footprint: `#print axioms` follows the statement as
+--   well as the proof, and the hypothesis reaches `Nat.Partrec.Code.instDenumerable` through
+--   `IsComputationalQuine` (`ZeroParadox/Computability/Kleene.md`, Axiom footprint).
 -- Reading: the Kleene quine and `bot` of `L` are compared through the die's Quine-atom role
 --   (`ZeroParadox/Computability/Kleene.lean` § II, § IX), and not through a Lean `=` (`Code` versus `L`
 --   for a generic `L`; the `example`s after `botCode_is_quine`).
@@ -289,7 +292,9 @@ example {σ : Type*} (f : σ → Option σ) {s t : σ} (h : f s = Option.none)
 -- Reading: `Occurs` is a static property of a (code, input) pair.
 #check @ZeroParadox.zero_occurs
 
--- Statement: `fun c => Occurs c n` is not a ComputablePred. Turing (1936) via Mathlib.
+-- Statement: `fun c => Occurs c n` is not a ComputablePred, via Mathlib's
+--   `ComputablePred.halting_problem`. The halting problem's undecidability is conventionally
+--   credited to Turing (1936; that paper was not consulted here).
 #check @ZeroParadox.occurrence_undecidable
 
 -- Statement: occurrence is an REPred; non-occurrence is not.
@@ -406,8 +411,8 @@ example {σ : Type*} (f : σ → Option σ) {s t : σ} (h : f s = Option.none)
 --   onto, with exactly one fixed point. The infinite-to-map direction is proved with
 --   `Classical.choice` and is not provable in set theory without choice (the `PurityCheck` note in
 --   `ZeroParadox/Computability/SelfCopyReference.lean`).
--- Reading: SCOPE. This is the existence of such a map, not that one is applied. That ⊥ on an
---   infinite carrier performs one is a commitment (`ZeroParadox/Computability/SelfCopyReference.lean`
+-- Reading: SCOPE. This is the existence of such a map, not that one is applied. That ⊥ of a
+--   `ZPSemilattice` whose carrier is infinite performs one is a commitment (`ZeroParadox/Computability/SelfCopyReference.lean`
 --   § IV); `MachinePhase`, which carries `machinePhaseKleene`, admits none
 --   (the `example` below).
 #check @ZeroParadox.infinite_iff_exists_selfCopyRef

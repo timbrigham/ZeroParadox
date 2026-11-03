@@ -241,8 +241,8 @@ built.** Ambient hypotheses: see the table below, all four. Subject: `wtypeFixed
 `ZeroParadox/Category/NextTimeCategorical.lean`'s `isWellFoundedCoalgCat_iff` transports the predicate.
 
 ⚠ **AND THAT IS STILL NOT A PROOF OF Thm 7.6, so read what it does license carefully.** Thm 7.6 is
-**not formalized** anywhere in this corpus, and Mathlib has no well-founded-coalgebra machinery to
-formalize it with. What is now available is its **conclusion, by citation**, for this setting — because
+**not formalized** anywhere in this corpus, and no well-founded-coalgebra machinery to formalize it
+with was located in the Mathlib pin (search record in § V). What is now available is its **conclusion, by citation**, for this setting — because
 its assumptions are discharged and its subject is connected. That is what "instance of" means here and
 it is strictly weaker than a Lean derivation. **Do not write "we proved Thm 7.6."**
 
@@ -315,8 +315,8 @@ second attempt named `IsStableUnderTransfiniteComposition` plus cofinality of th
 real route, and longer than the one actually used. **Do not restore either citation.**
 
 ⚠ **Verified hypotheses are not a formalized theorem, and what the citation buys is narrow.** AMM
-Thm 7.6 is **not** proved in Lean here, and Mathlib has no well-founded-coalgebra machinery to prove it
-with. What Thm 7.6 would deliver, given its hypotheses, is that a well-founded fixed point **is the
+Thm 7.6 is **not** proved in Lean here, and no well-founded-coalgebra machinery to prove it with was
+located in the Mathlib pin (search record in § V). What Thm 7.6 would deliver, given its hypotheses, is that a well-founded fixed point **is the
 initial algebra** — i.e. it *concludes* initiality rather than assuming it, which is why the
 `fork_is_intrinsic` fence above ("not proved: that either carrier is initial/final") is consistent with
 citing it. That conclusion is available **by citation only**. Do not upgrade this to "we proved
@@ -331,7 +331,7 @@ was an unverified negative**: `WellPowered (Type 0)` fails on an unimported name
 universe parameter; `PreservesMonomorphisms` "does not synthesize" is true of the *instance database*
 and false of the *fact*; and smooth monomorphisms is **assembled from** pieces in the pin though no
 declaration bears the name. A failed `#synth` is evidence about the probe. See `CLAUDE.md`
-§ *"NOT IN THE LIBRARY" IS A CLAIM*. -/
+§ R-NOTINLIB. -/
 theorem fork_is_intrinsic :
     IsWellFoundedCoalg (P := idPF_Coalgebra) W.dest ∧
       ¬ IsWellFoundedCoalg (P := idPF_Coalgebra) M.dest :=
@@ -357,17 +357,17 @@ theorem natPF_wtype_wellFounded_and_inhabited :
 
 /-! ### § V. AMM Thm 7.6's hypotheses, VERIFIED for this setting
 
-**What this section is for.** Thm 7.6 holds in *"a complete and well-powered category with smooth
-monomorphisms"* for *"F preserving monomorphisms."* Earlier versions of this file recorded that count
-wrong **four times, in both directions** — see the ⚠ block in the overview for the measured sequence
-and the commits. Most were unverified **negatives** (`CLAUDE.md` § *"NOT IN THE LIBRARY" IS A CLAIM*);
-one was an unverified positive. **All four are now discharged**: complete and well-powered are Mathlib instances, and the
-three theorems below supply `F`-preservation plus smoothness clauses (b) and (c) — clause (a) being
-`Types.hasColimitsOfShape`, and AMM's trailing *"every morphism from 0 is monic"* immediate in `Type u`.
+**What this section is for.** Thm 7.6 holds in *"a complete and well-powered category with smooth monomorphisms"*
+for *"F preserving monomorphisms."* Earlier versions of this file recorded that count wrong **four times, in both
+directions** (the ⚠ block in the overview); most were unverified **negatives** (`CLAUDE.md` § R-NOTINLIB), one an
+unverified positive. **All four are now discharged**: complete and well-powered are Mathlib instances, and the three
+theorems below supply `F`-preservation plus smoothness clauses (b) and (c) — clause (a) being `Types.hasColimitsOfShape`,
+and AMM's trailing *"every morphism from 0 is monic"* immediate in `Type u`.
 
-⚠ **Verifying the hypotheses is NOT proving the theorem.** AMM Thm 7.6 is **not formalized here** and
-Mathlib has no well-founded-coalgebra machinery. What § V establishes is that this setting **satisfies
-the theorem's assumptions**, so its conclusion applies *by citation* — never as a Lean derivation.
+⚠ **Verifying the hypotheses is NOT proving the theorem.** AMM Thm 7.6 is **not formalized here**, and no
+well-founded-coalgebra machinery was located in the Mathlib pin as of 2026-11-03 (grep: `Mathlib/` for `WellFounded`/"well-founded"
+within 40 characters of "coalg", "recursive coalgebra", `IsRecursive`; `Mathlib/CategoryTheory/Endofunctor/` for
+`WellFounded`, `Acc`, "recursive": no hits). Its conclusion applies here *by citation* — never as a Lean derivation.
 
 ⚠ **And satisfying the hypotheses is not, by itself, the whole instance-of claim either.** Thm 7.6 is
 about **fixed points** and **initial algebras**; connecting to that *subject* is a separate axis, closed

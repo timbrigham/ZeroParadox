@@ -8,8 +8,8 @@ the declarations, the Engineer's Take and the per-declaration glosses.
 `ZeroParadox/Valuation/Scale.lean` defines `ValuationStructure` over `[ZPSemilattice L]`, but the four
 axioms (`scale_bot`, `val_bot`, `val_unique`, `val_scale`) only ever use `bot` — the join `⊔` never
 appears. So `ZPSemilattice` is an over-strong constraint, and no `ValuationStructure` `ℤ_[2]` is
-DEFINED even though all four axioms hold (proved as standalone theorems in
-`ZeroParadox/Valuation/Scale.lean` § V).
+registered as an instance even though all four axioms hold (proved as standalone theorems in
+`ZeroParadox/Valuation/Scale.lean` § V; one is built inside an `example` there, not registered).
 
 ⚠⚠ **Not defined is not the same as not possible, and here the difference decides the answer.**
 `Nonempty (ValuationStructure ℤ_[2])` fails to elaborate only because no `ZPSemilattice ℤ_[2]`

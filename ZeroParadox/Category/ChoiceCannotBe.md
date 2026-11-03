@@ -32,21 +32,30 @@ framework's standing temptation. The literature that separates them:
 > middle are inter-derivable (the `example` after `em_of_choiceFragment` in
 > `ZeroParadox/Category/ExcludedMiddleBridge.lean`).
 >
+> **Lawvere (1964/65)**, the antecedent: his author commentary to *An Elementary Theory of the Category
+> of Sets (Long Version) with Commentary* (Reprints in TAC 11, 2005, p. 5) says that among the results
+> of the 1965 manuscript "is the fact that the axiom of choice implies classical logic", later proved by
+> Diaconescu "under the strong hypothesis that the ambient category is a topos", while the manuscript
+> derives the topos property from choice as well. Read in the reprint's commentary only; the
+> manuscript's own proof was not checked against that description here.
+>
 > **Cohen (1963)**, with Fraenkel–Mostowski: *full* AC is strictly stronger than excluded middle. This
 > is an independence result about ZF, **not** anything Diaconescu proved — do not attribute it to him.
 
 So *full* choice is strictly stronger than excluded middle, which is in turn strictly stronger than the
 constructive base. **The restricted fragment is a different matter, and the distinction matters here.**
-`ZeroParadox/Category/ExcludedMiddleBridge.lean`'s `ChoiceFragment` is a choice principle into the two-element `Bool` — a
-chooser on every inhabited predicate on `Bool` — so in a topos, which always has unique choice (E. J. Dubuc and M. Szyld, *Tannaka Theory for Topos*, arXiv:1510.01775v1, Prop. 1.24, p. 10), it is *equivalent* to excluded middle (by the
-Diaconescu–Goodman–Myhill argument); in Lean the equivalence holds with unique choice into `Bool` as a
-hypothesis (the `example` after `em_of_choiceFragment`; the type-theoretic form is the Rocq standard
-library's `theories/Logic/ChoiceFacts.v`, `constructive_definite_descr_excluded_middle`, cited in
-`ZeroParadox/Category/ExcludedMiddleBridge.md`). In Lean without unique choice, the natural
-construction of the fragment from excluded middle alone fails to elaborate, dying at
-`Decidable (S true)`, and closes only under `classical`. **That failure measures that construction, not the fragment** — a failed elaboration is not
-a negative result, and a formal independence claim would
-need a metatheoretic argument outside Lean (the home file
+`ZeroParadox/Category/ExcludedMiddleBridge.lean`'s `ChoiceFragment` is a choice principle into the
+two-element `Bool` — a chooser on every inhabited predicate on `Bool` — so in a topos, which always has
+unique choice (E. J. Dubuc and M. Szyld, *Tannaka Theory for Topos*, arXiv:1510.01775v1, Prop. 1.24,
+p. 10), it is *equivalent* to excluded middle (by the Diaconescu–Goodman–Myhill argument); in Lean the
+equivalence holds with unique choice into `Bool` as a hypothesis (the `example` after
+`em_of_choiceFragment`; the type-theoretic form of its excluded-middle-to-data leg, with description
+over every `Type`, is the Rocq standard library's `theories/Logic/ChoiceFacts.v`,
+`constructive_definite_descr_excluded_middle`, cited in `ZeroParadox/Category/ExcludedMiddleBridge.md`).
+In Lean without unique choice, the natural construction of the fragment from excluded middle alone
+fails to elaborate, dying at `Decidable (S true)`, and closes only under `classical`. **That failure
+measures that construction, not the fragment** — a failed elaboration is not a negative result, and a
+formal independence claim would need a metatheoretic argument outside Lean (the home file
 `ZeroParadox/Category/ExcludedMiddleBridge.lean` states this limit explicitly). `Reading:` a candidate
 explanation of the apparent gap between that equivalence and that failed construction is
 **Lean's `Prop`/`Type` stratification**, not anything in Diaconescu's theorem. The fragment's chooser
@@ -56,10 +65,11 @@ truth-value object from 1 + 1 (they coincide exactly when it is Boolean); there 
 (Dubuc and Szyld, cited above), so a decided proposition determines an element of 1 + 1 (this form not
 located in a source as of 2026-11-01; searched in topos-theory notes and theses held locally and on the
 open web, while the theorem-search and Lean-library queries targeted unique choice, not this form), and
-without unique choice the equivalence need not carry over to Lean. Whether the fragment is derivable from `ExcludedMiddle` in
-Lean is not established here, so this explanation is a candidate, not a finding. The topos-side
-equivalence of the fragment with excluded middle, earlier in this paragraph, is Diaconescu's argument;
-nothing in it is claimed here. Every evocative reading in the framework's prose — "choice is which way you view the
+without unique choice the equivalence need not carry over to Lean. Whether the fragment is derivable
+from `ExcludedMiddle` in Lean without `Classical.choice` and without a unique-choice hypothesis is not
+established here, so this explanation is a candidate, not a finding. The topos-side equivalence of the
+fragment with excluded middle, earlier in this paragraph, is Diaconescu's argument; nothing in it is
+claimed here. Every evocative reading in the framework's prose — "choice is which way you view the
 self-dual split", "reading the pole as the floor is an act of choice" — is a **model** of the
 choice-versus-no-choice distinction, never the axiom itself. Where such a reading has been made precise
 (`ZeroParadox/Valuation/PoleChartSelection.lean`), the honest result was that the built object **refutes** the naive

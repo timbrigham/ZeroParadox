@@ -79,10 +79,11 @@ theorem info_points_enter_every_ball (n : ℕ) :
     and information (depth points, B3) ALL enter every ball around the single floor `0 ∈ ℤ₂`, via their real
     structural encodings. With E1 (ball = valuation sublevel) and `fB_bottom_is_limit` (⋂ balls = {0}), all
     of {proof, computation, information, topology, number-theory} co-locate at the one floor — the p-adic
-    cluster as a COMPLETE correspondence subgraph (every pair meets at the floor). This is CORRESPONDENCE
-    (agreement under the shared 2-adic encoding), NOT the identity claim "they are literally one object"
-    (which stays the modeling commitment — the dotted ring on the map). The encodings are not designed to
-    hit 0; they hit it because the bottoms are genuinely floors, so the co-location has content. -/
+    cluster as a COMPLETE correspondence subgraph (every pair meets at the floor): CORRESPONDENCE inside
+    one carrier, ℤ_[2]; no identity of the domains' bottoms across their own carriers is stated (ill-typed,
+    MC-1). Separately, 0 is the only point stepping to itself only under doubling
+    (`z2_double_selfOnlyAt_iff`, `ZeroParadox/Ordinal/Incompleteness.lean`). The encodings hit 0
+    because the bottoms are floors. -/
 theorem padic_cluster_colocates_at_floor (n : ℕ) :
     (∀ᶠ k in Filter.atTop,
         ZeroParadox.cnf_encode (ZeroParadox.towerOrd k)
@@ -110,8 +111,8 @@ theorem info_valuation_eq_surprisal (n : ℕ) :
     categorical REALIZATION, and its snap bottom is a proven categorical object — the information and Hilbert
     bottoms are INITIAL objects (`fC_zero_isInitial`, `fD_zero_isInitial`), and the topology bottom is the
     inverse LIMIT of the ball system (`fB_bottom_is_limit`, `⋂ = {0}`). This is the MC-1 *correspondence*
-    half (derived, not the identity commitment): category-theory connects DIRECTLY to the three realized
-    domains, making it a second hub alongside the p-adic floor. Bundles existing witnesses. -/
+    half (derived; the identity half is retired as ill-typed): category-theory connects DIRECTLY to the
+    three realized domains, making it a second hub alongside the p-adic floor. Bundles existing witnesses. -/
 theorem category_realizes_bottoms :
     Nonempty (CategoryTheory.Limits.IsInitial (ZeroParadox.fC_functor.obj 0)) ∧
       Nonempty (CategoryTheory.Limits.IsInitial (ZeroParadox.fD_functor.obj 0)) ∧

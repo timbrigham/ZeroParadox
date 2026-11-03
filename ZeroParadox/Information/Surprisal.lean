@@ -162,18 +162,26 @@ theorem t2_diverges : ∀ M : ℝ, ∃ n : ℕ, M < circPartial n := by
 
 /-! ## Section III-B: L-INF — Unbounded Surprisal -/
 
-/-- L-INF — Unbounded Surprisal of ⊥.
+/-- L-INF — Unbounded Surprisal, in the depth chart.
 
-    The surprisal I(n) = n at ball-hierarchy depth n is unbounded: for any finite
-    bound M, there exist depths n with I(n) > M. ⊥ of `MachinePhase` (c₀) corresponds
-    to the limit point 0 ∈ Q₂ — the limit of the binary ball hierarchy at infinite
-    depth. At this limit, surprisal is not finite.
+    `Statement:` the surprisal I(n) = n at ball-hierarchy depth n is unbounded above: for any
+    real bound M, some depth n has I(n) > M.
 
-    Formal content: surprisal is unbounded above.
-    Semantic content: ⊥ has unbounded surprisal — it is the compressed limit of
-    all possible binary programs. No finite program bounds its informational content,
-    so no finite external interpreter can hold ⊥ as a static description. This is
-    one argument for DA-1's precondition (ZP-E, Path 2), and it does not derive it.
+    "Surprisal at ⊥" has two charts, and no equation joins them:
+    * Depth chart (this theorem): every depth n has a finite surprisal, I(n) = n, and no
+      finite bound holds of all of them. No depth has infinite surprisal.
+    * Point chart: at the floor 0 of Q₂ the complexity is ⊤ (`infinitude_forces_infinite_complexity`
+      at `q2InfinitudeFloor`, `ZeroParadox/Valuation/InfinitudeFloor.lean`), the supremum of the
+      climbing complexities of the members 2ⁿ⁺¹ (`infinite_complexity_is_infinitude_of_zeros`;
+      `cxQ2_two_pow`: the complexity of 2ᵏ is k).
+    ⊥ of `MachinePhase` (c₀) corresponds to that limit point 0 of Q₂, the limit of the binary
+    ball hierarchy; the correspondence is the framework's reading, not an identity (c₀ and 0
+    are elements of different carriers).
+
+    `Reading:` ⊥ is the compressed limit of all possible binary programs. No finite program
+    bounds its informational content, so no finite external interpreter can hold ⊥ as a
+    static description. This is one argument for DA-1's precondition (ZP-E, Path 2), and it
+    does not derive it.
 
     Note: the step from unbounded surprisal to executing is not a consequence of
     L-INF and is not DA-1: it is a bridge principle of its own, which the framework
@@ -225,10 +233,10 @@ mixture over both. This is the *information-theoretic* forcing of the discrete b
 mechanism from the order forcing (`t_snap_derived`), the incompressibility forcing (`l_inf`), and the
 self-execution route (ZP-K). Every route constrains the same transition — its shape, not its occurrence; none of the four makes
 the step happen, and `tsnap_holds_but_nothing_moves` (`Order/Snap.lean`) exhibits a model in which
-the order route holds and nothing moves. They also do not all rest on the same kind of ground — the README states each one's requirement alongside its witness, and the self-execution
-route's requirement is the load-bearing one: `da1_closed_concrete` proves ⊥ is the unique Quine atom of
-MachinePhase and mentions no `Code` and no execution, so "⊥ must execute itself" rests on ZP-K's
-`KleeneStructure` commitment rather than on that theorem. -/
+the order route holds and nothing moves. The routes rest on different ground (the README gives each requirement
+beside its witness), and the self-execution route's is load-bearing: `da1_closed_concrete` proves ⊥ is the unique
+Quine atom of MachinePhase and mentions no `Code` and no execution, so the retired "⊥ must execute itself" rests on
+no theorem: that ⊥ executes is the occurrence commitment; that, if it does, nothing outside it executes it is DA-1 Path 1. -/
 
 /-- No half-state: every ontological state is `null` or `exist`; there is no third, intermediate value. -/
 theorem binaryState_exhaustive (s : BinaryState) : s = nullSt ∨ s = firstSt := by

@@ -228,8 +228,7 @@ example {L : Type*} [ZPSemilattice L] :
     so there is no strict pair. In a carrier that has one, `⊥ ⋖ a` (`HasFirstStep`,
     `ZeroParadox/Reals/OrderedField.lean`) is that first inhabitant — note the order:
     `ZPSemilattice`'s `le` is a def with no `LT` instance, so `⋖` over it is stated in the order
-    `zpSemilatticeSup` builds (`t_snap_given_cover`).
-    Long form: `.claude-local/notes/no_subtraction_is_vacuous_at_bottom_2026-07-31.md`. -/
+    `zpSemilatticeSup` builds (`t_snap_given_cover`). -/
 theorem t_snap_irreversible {L : Type*} [ZPSemilattice L] {x y : L}
     (hle : le x y) (hne : x ≠ y) :
     ¬∃ z : L, join y z = x := by

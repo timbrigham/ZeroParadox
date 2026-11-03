@@ -22,10 +22,12 @@ open ZeroParadox
 
 /-! ## § I. AbstractSelfApp Typeclass -/
 
-/-- A ZPSemilattice with a self-application operation whose unique fixed point is ⊥.
-    Abstracts the shared structure between:
-      Set theory (AFA): f x = {x},  unique fixed point = Quine atom = ⊥
-      2-adic integers:  f x = 2 * x, unique fixed point = 0 (v₂ = +∞)
+/-- A ZPSemilattice with a self-application operation whose unique fixed point is ⊥ of that
+    semilattice; in any instance ⊥ is the one occupant of the die's Quine-atom role under
+    `selfApp` (`selfApp_quine_role_iff`, `ZeroParadox/Settheory/QuineDichotomy.lean`).
+    Abstracts a pattern shared by two settings, neither of which is an instance declared here:
+      Set theory (ZF + AFA): f x = {x}, unique fixed point the Quine atom (CC-2)
+      2-adic numbers ℚ_[2]:  f x = 2 * x, unique fixed point 0 (v₂ = +∞), § IV
     From these two fields, AFAStructure's two LAWS become theorems; its `selfMem` field is DATA
     and is supplied by `def selfMemDerived`, not proved. See §III. -/
 -- [ZP-CUSTOM] no Mathlib analog | reason: Abstracts the shared fixed-point pattern between AFA set theory (f x = {x}, unique fixed point = Quine atom) and 2-adic multiplication (f x = 2x, unique fixed point = 0). Mathlib has Function.IsFixedPt (a predicate) but no typeclass for "type with a self-application operation whose unique fixed point is a designated bottom element." Allows AFAStructure's two LAWS to become theorems; its selfMem field is DATA, supplied by definition.

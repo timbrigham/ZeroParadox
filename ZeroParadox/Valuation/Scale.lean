@@ -32,7 +32,8 @@ open ZeroParadox
       (3) val x = ⊤ → x = ⊥  (uniqueness of infinite valuation)
       (4) val (scale x) = val x + 1 for x ≠ ⊥  (scale strictly increases valuation)
 
-    In ℚ_[2]: scale = ×2, val = 2-adic valuation. All four hold.
+    In ℤ_[2]: scale = ×2, val = the 2-adic valuation; all four hold (§ V). In ℚ_[2] no `val` into
+    ℕ∞ meets them with scale = ×2, whatever the semilattice (the last `example` of § V).
     In ZPSemilattice: abstract encoding of the same structure. -/
 -- [ZP-CUSTOM] replaces: Valued (Mathlib/Topology/Algebra/Valued/ValuationTopology.lean) | reason: Mathlib's Valued typeclass requires ring/field structure (it formalizes algebraic valuations over rings). ZPSemilattice has join only — no ring. ValuationStructure uses val : L → ℕ∞ (not a GroupWithZero target) and four axioms (§ I lists them). The fixed-point uniqueness argument consumes TWO of them — val_unique and val_scale; scale_bot and val_bot appear in none of the three proof terms on that chain, measured 2026-08-30. ⚠ val_scale alone does NOT suffice, measured 2026-08-30: on Bool with bot = false, scale = id and val everywhere ⊤, scale_bot/val_bot/val_scale all hold and true is a fixed point of scale that is not the bottom. val_unique supplies the FINITENESS that makes val_scale bite. ⚠ THE NEARER NEIGHBOUR IS `AddValuation`, NOT `Valued`, and this reason answered the wrong one until 2026-09-01: `AddValuation R ℕ∞` targets a `LinearOrderedAddCommMonoidWithTop`, which is exactly this class's target, so "not a `GroupWithZero` target" rebuts `Valuation` and says nothing about it. The real discriminator is the CARRIER: `AddValuation` requires `[Ring R]` and a `ZPSemilattice` has only a join — the same discriminator `ZeroParadox/Algebra/Wheel.lean` recorded for `AddValuation A ℕ∞` on 2026-08-01, which this tag had not picked up. ⚠ `AddValuation.top_iff` IS NOT THE NAME FOR THE `val_bot` + `val_unique` PAIR HERE, and this tag said it was until 2026-09-01: `top_iff` is stated over a `[DivisionRing K]` (Mathlib/RingTheory/Valuation/Basic.lean:71, and its own docstring says "on a division ring"), and ℤ_[2] is a DVR, not a division ring — 2 is not invertible. On ℤ_[2] the stock route to `val_unique` is `emultiplicity_eq_top` together with `FiniteMultiplicity.of_prime_left`: x ≠ 0 with 2 prime gives finite multiplicity, hence val x ≠ ⊤. Found by both prose gates independently, one of which compiled the failure. ⚠ On a RING carrier there is no gap at all: `multiplicity_addValuation PadicInt.prime_p` discharges all four axioms on ℤ_[2] from stock API with an unguarded `val_scale` — see § V.
 class ValuationStructure (L : Type*) [ZPSemilattice L] where
@@ -335,6 +336,36 @@ example (h : ZPSemilattice ℤ_[2]) (hb : @ZPSemilattice.bot _ h = 0) :
   ⟨@ValuationStructure.mk ℤ_[2] h (fun x => 2 * x) q2Val (by rw [hb]; exact q2Scale_bot)
     (by rw [hb]; exact q2Val_bot) (fun x hx => hb ▸ q2Val_unique x hx)
     (fun x hx => q2Val_scale x (hb ▸ hx))⟩
+
+-- Statement: on ℚ_[2] no `ValuationStructure` has scale `×2`, whatever the `ZPSemilattice`:
+-- `scale_bot` forces `bot = 0`, `val_scale` along `(2 ^ n)⁻¹` gives `val 1 ≥ n` for every `n`, so
+-- `val 1 = ⊤`, and `val_unique` would make `1 = 0`.
+example (h : ZPSemilattice ℚ_[2]) (v : @ValuationStructure ℚ_[2] h)
+    (hs : v.scale = (2 * ·)) : False := by
+  have hb : @ZPSemilattice.bot _ h = 0 := by
+    have := v.scale_bot; rw [hs] at this
+    linear_combination this
+  have key : ∀ n : ℕ, v.val 1 = v.val ((2 : ℚ_[2]) ^ n)⁻¹ + n := by
+    intro n
+    induction n with
+    | zero => simp
+    | succ k ih =>
+      have hne : ((2 : ℚ_[2]) ^ (k + 1))⁻¹ ≠ @ZPSemilattice.bot _ h := by
+        rw [hb]; exact inv_ne_zero (pow_ne_zero _ two_ne_zero)
+      have hsc := v.val_scale _ hne
+      rw [hs] at hsc
+      have h2 : (2 : ℚ_[2]) * ((2 : ℚ_[2]) ^ (k + 1))⁻¹ = ((2 : ℚ_[2]) ^ k)⁻¹ := by
+        rw [pow_succ, mul_inv, ← mul_assoc, mul_comm (2 : ℚ_[2]), mul_assoc,
+          mul_inv_cancel₀ (two_ne_zero), mul_one]
+      simp only at hsc
+      rw [h2] at hsc
+      rw [ih, hsc, add_assoc]; push_cast; ring
+  have htop : v.val 1 = ⊤ := by
+    refine ENat.eq_top_iff_forall_ge.2 fun n => ?_
+    rw [key n]; exact le_add_self
+  have := v.val_unique 1 htop
+  rw [hb] at this
+  exact one_ne_zero this
 
 end PadicParallel
 

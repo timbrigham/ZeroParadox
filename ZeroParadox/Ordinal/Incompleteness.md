@@ -8,16 +8,30 @@ snapEmbed sends the snap state c₁ to 0 in ℤ_[2] (the limit of the tower stag
 images, `tower_converges_to_zero`) and the pre-snap state c₀ to 1 (a nonzero 2-adic integer). The
 tower itself, in `Ordinal`, has supremum ε₀ (`epsilonZero_eq_iSup`), a different carrier.
 
-This formalizes the embedding: c₁ maps to 0 ∈ ℤ_[2], the limit in ℤ_[2] of the tower stages'
-images. Within the ZP framework, 0 here plays the role of ⊥; in the Scale.lean chart (⊥ = 0)
-0 fills ℤ_[2]'s bottom role (a ZPSemilattice on ℤ_[2] with ⊥ = 0 is built in
-`ZeroParadox/Valuation/Scale.lean` § V), and in the multiplicative reading `snapEmbed c₀ = 1` is
-the identity, and that reading is not a ZPSemilattice, since multiplication on ℤ_[2] is not idempotent (2 · 2 ≠ 2) — the identification is a modelling commitment, not a
-ring-theoretic fact.
+No equation between a `MachinePhase` state and a point of ℤ_[2] is stated. What the two carriers
+share is a role, the die's Quine-atom role `Motion.SelfOnlyAt` (`ZeroParadox/Die.lean`, a point
+that steps to itself and to nothing else), whose occupant in each carrier depends on the step
+chosen there. On `MachinePhase` under join it is c₁ (c₀ steps to c₀ and to c₁), while under a
+self-application map supplied by `AbstractSelfApp` it is c₀, ⊥ of `MachinePhase`, by that class's
+fields (`selfApp_quine_role_iff`). § I-b of
+the `.lean` file states two pairings, each through `snapEmbed`:
 
-The morphism property: join on MachinePhase (c₁ is absorbing) corresponds to
-multiplication on ℤ_[2] (0 is absorbing). Both structures have the same absorbing
-element pattern: c₁ absorbs all joins, 0 absorbs all products.
+- **The absorbing pairing.** Under the join motion on `MachinePhase` (`a → join a z`) only c₁
+  steps to itself only (`machineJoinMotion_selfOnlyAt_iff`); under the multiplication motion on
+  ℤ_[2] (`x → x · w`) only 0 does (`z2MulMotion_selfOnlyAt_iff`). `snapEmbed` is a map of these
+  motions (`snapEmbedHom`, from `snapEmbed_mul_morphism`) and sends c₁ to 0 (`snapEmbed_c1`). It
+  has no back clause at c₀ (the `example` after `z2MulMotion_selfOnlyAt_iff`), so the general
+  transport `Motion.LaxHom.selfOnlyAt` does not apply; at c₁ the role does carry over, since 0 has
+  only itself as successor (`snapEmbed_selfOnlyAt_c1`, from `Motion.selfOnlyAt_relHom`).
+- **The doubling pairing.** Under doubling on ℤ_[2], only 0 steps to itself only
+  (`z2_double_selfOnlyAt_iff`), and 0 is divisible by every power of 2
+  (`snapEmbed_c1_dvd`). `snapEmbed` carries no motion on `MachinePhase` with a step at c₀ into
+  doubling steps (`snapEmbed_doubling_noStepAt`): the snap step c₀ → c₁ goes to 1 → 0, which is
+  not a doubling step.
+
+A third chart is a chosen one: a `ZPSemilattice` on ℤ_[2] with ⊥ = 0 is built in
+`ZeroParadox/Valuation/Scale.lean` § V from a join picked through a well-ordering, and there 0
+occupies the join-identity role by that choice.
 
 ## Remark R-M.1: DA-1 Path 2 and the Limits of the Diagonalization Frame
 

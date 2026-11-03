@@ -34,7 +34,8 @@ doing all the work and must not be dropped when the sentence is quoted.
 `injective_forces_confined_support_subsingleton` is Mathlib's `Set.Subsingleton.preimage`
 (`Mathlib/Data/Set/Image.lean`) composed with a singleton; the proof body is the same argument (composed
 with `Set.Subsingleton.anti`). It is not swapped in because the statement mentions `PMF`, and
-`#print axioms` follows the STATEMENT — both routes measure `[propext, Classical.choice, Quot.sound]`, so
+`#print axioms` follows the statement as well as the proof, so what the statement's constants carry is in
+every route's footprint — both routes measure `[propext, Classical.choice, Quot.sound]`, so
 there is no purity gain, and the hand proof reads locally. Same verdict as the `CovBy` precedent: keep the
 hand proof, cite the standard name.
 

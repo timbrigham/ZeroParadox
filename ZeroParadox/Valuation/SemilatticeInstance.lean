@@ -349,7 +349,8 @@ theorem t_inside_zero
     is the bottom element of its semilattice — the structural role of ⊥.
     ⚠ The role property is the HYPOTHESIS, never the conclusion, and this says nothing
     about Q₂: `ZPSemilattice ℚ_[2]` does not synthesize, so the join-identity is not
-    statable of `0 : ℚ₂`. Nor is novelty (this theorem's gloss in SnapCannotBe.lean). See CLAIMS.md's T-IZ row. -/
+    statable of `0 : ℚ₂` until a join is chosen (the `example`s after `c_t_iz_null_balance`).
+    Nor is novelty (this theorem's gloss in SnapCannotBe.lean). See CLAIMS.md's T-IZ row. -/
 theorem t_iz_limit_is_new_null
     {L : Type*} [ZPSemilattice L]
     (terminal : L)
@@ -359,16 +360,53 @@ theorem t_iz_limit_is_new_null
 
 /-- C-T-IZ (Null Balance). `Statement:` a non-bottom state cannot satisfy the join-identity
     role — the role is EXCLUSIVE to ⊥, one direction, inside one semilattice.
-    `Reading:` occupancy of that role by the 2-adic limit is a COMMITMENT, not a theorem —
-    `ZPSemilattice ℚ_[2]` does not synthesize, so the condition is not statable of that limit;
-    successor-hood is a further commitment (C-DA2). The additive balance is NOT carried here:
-    a `ZPSemilattice` has `join` and `bot` and no additive inverse. See `SemilatticeInstance.md`. -/
+    `Statement:` the `example`s below state: some chosen join makes any point its ⊥; under doubling
+    only 0 occupies `Motion.SelfOnlyAt`; under squaring 1 does too.
+    `Reading:` that the 2-adic limit occupies THIS role is a commitment to a particular join on ℚ₂;
+    in a fixed semilattice the occupant is its ⊥ by theorem (above); an identity with ⊥ of another
+    semilattice is ill-typed (MC-1). Successor-hood is a commitment, C-DA2.
+    No additive balance here (no inverse in a `ZPSemilattice`). See `SemilatticeInstance.md`. -/
 theorem c_t_iz_null_balance
     {L : Type*} [ZPSemilattice L]
     (S : L)
     (h_not_bot : S ≠ bot) :
     ¬(∀ x : L, join S x = x) :=
   c_da2_novelty S h_not_bot
+
+-- Statement: CONTROL: every point `p` of ℚ₂ is ⊥ of some `ZPSemilattice ℚ_[2]` (`max` in an order
+-- with `p` least, built through a well-ordering), so the join-identity role holds of any point under
+-- some chosen join.
+example (p : Q₂) : ∃ h : ZPSemilattice Q₂, ∀ x, @ZPSemilattice.join _ h p x = x := by
+  classical
+  letI : LinearOrder Q₂ := IsWellOrder.linearOrder (WellOrderingRel (α := Q₂))
+  let f : Q₂ → Lex (Bool × Q₂) := fun x => toLex (decide (x ≠ p), x)
+  have hinj : Function.Injective f := fun x y h => by
+    simpa [f] using congrArg (fun q => (ofLex q).2) h
+  obtain ⟨R, hR⟩ : ∃ R : Q₂ → Q₂ → Prop, ∀ x y, R x y ↔ f x ≤ f y := ⟨_, fun _ _ => Iff.rfl⟩
+  have hf : ∀ x, f p ≤ f x := fun x => by
+    by_cases hx : x = p
+    · rw [hx]
+    · exact Prod.Lex.toLex_le_toLex.mpr (Or.inl (by simp [hx]))
+  obtain ⟨LO, hLO⟩ : ∃ LO : LinearOrder Q₂, ∀ x y, LO.le x y ↔ R x y :=
+    ⟨LinearOrder.lift' f hinj, fun x y => (hR x y).symm⟩
+  have hbot : ∀ x, @LE.le Q₂ LO.toLE p x := fun x => (hLO p x).2 ((hR p x).2 (hf x))
+  let SL : ZPSemilattice Q₂ :=
+    { join := @max Q₂ LO.toMax, bot := p, join_assoc := @max_assoc Q₂ LO
+      join_comm := @max_comm Q₂ LO, join_idem := @max_self Q₂ LO
+      bot_join := fun x => @max_eq_right Q₂ LO _ _ (hbot x) }
+  exact ⟨SL, fun x => @max_eq_right Q₂ LO _ _ (hbot x)⟩
+-- Statement: doubling on ℚ₂: a point steps to itself and to nothing else iff it is 0; both directions
+-- (`Motion.SelfOnlyAt`; the ℤ_[2] form is `z2_double_selfOnlyAt_iff`).
+example (y : Q₂) : (Motion.ofFun (fun x : Q₂ => 2 * x)).SelfOnlyAt y ↔ y = 0 :=
+  (Motion.selfOnlyAt_ofFun_iff _ y).trans
+    ⟨fun h => by linear_combination h, fun h => by rw [h, mul_zero]⟩
+
+-- Statement: CONTROL: under squaring on ℚ₂, also ring structure, both 0 and 1 step to themselves only,
+-- so which point occupies `Motion.SelfOnlyAt` depends on the chosen step (exactly 0 and 1:
+-- `IsIdempotentElem.iff_eq_zero_or_one`).
+example : (Motion.ofFun (fun x : Q₂ => x * x)).SelfOnlyAt 0 ∧
+    (Motion.ofFun (fun x : Q₂ => x * x)).SelfOnlyAt 1 :=
+  ⟨(Motion.selfOnlyAt_ofFun_iff _ _).2 (mul_zero 0), (Motion.selfOnlyAt_ofFun_iff _ _).2 (mul_one 1)⟩
 
 /-- T-IZ (C3 compatible): Cauchy sequence convergence and continuous-path irreversibility
     are distinct structures. C3 (ZP-B) closes every continuous path from x ≠ 0 to 0.
@@ -386,11 +424,12 @@ theorem t_iz_c3_compatible :
 The § II Kolmogorov bridge is not needed here: this route discharges step 4 from
 `AFAStructure` fields and never computes K. That is a fact about this proof, not evidence
 the AFA and K/AIT paths are one property — ZP-K's `da1_paths_unified` is a conjunction of
-witnesses and fences the identity reading as a commitment.
+witnesses, and reading the two paths as one fact is the framework's reading, not proved by it.
 
 `t_iz_complete` carries the four steps as a CONJUNCTION, not a chain; its type is the step
 list. `ZPSemilattice ℚ_[2]` does not synthesize, so the role condition is not statable of the
-2-adic limit — the two are distinct MEMBERS of the bottom family, not one object (MC-1). -/
+2-adic limit until a join is chosen (§ IV); the limit and `terminal` are members of the bottom
+family, and an identity between them is ill-typed (MC-1). -/
 
 /-- T-IZ: all four formal steps in one theorem — a CONJUNCTION, not a chain.
     L' carries a KleeneStructure; the terminal element's join-identity is a HYPOTHESIS

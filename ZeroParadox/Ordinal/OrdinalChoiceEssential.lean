@@ -117,8 +117,9 @@ theorem em_of_wellOrder_comparable
   · exact Or.inl (p_of_pt_le p h)
 
 /-- **The hypothesis is not vacuous.** Mathlib's `InitialSeg.total` supplies it, so
-`em_of_wellOrder_comparable` cannot be dismissed as an implication with an unsatisfiable
-antecedent (`comparable_of_classical`). Classical by construction — that is the point: this is the source end of the arrow.
+`em_of_wellOrder_comparable` is not an implication with an unsatisfiable antecedent: this
+theorem inhabits that antecedent. Classical by construction — that is the point: this is the
+source end of the arrow.
 
 `InitialSeg.total` (`Mathlib/Order/InitialSeg.lean`) is the **data** form, and spends a literal
 `Classical.choice` application in its final branch. -/
