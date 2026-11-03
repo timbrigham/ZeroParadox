@@ -9,11 +9,11 @@ Update this file first on any version bump. README.md Framework table is verifie
 | ZP-F The Counterexamples | v1.20 | ZP-F_The_Counterexamples.pdf | v1.19 | N/— | formal:b99fbdbb comp:dee59dce |
 | ZP-C Information Theory | v1.35 | ZP-C_Information_Theory.pdf | v2.14 | N/— | formal:0de1df70 comp:10cbc861 |
 | ZP-D State Layer | v1.21 | ZP-D_State_Layer.pdf | v1.18 | N/— | formal:af01d656 comp:6be72c57 |
-| ZP-E Bridge Document | v3.74 | ZP-E_Bridge_Document.pdf | v1.34 | Y/Y | formal:8a5a14b3 comp:178e0381 |
+| ZP-E Bridge Document | v3.74 | ZP-E_Bridge_Document.pdf | v1.34 | Y/Y | formal:8a5a14b3 comp:9cd50720 |
 | ZP-G Category Theory | v1.27 | ZP-G_Category_Theory.pdf | v1.16 | N/— | formal:e901301e comp:668a9008 |
 | ZP-H Categorical Bridge | v1.30 | ZP-H_Categorical_Bridge.pdf | v1.22 | N/— | formal:08338469 comp:efcb14ba |
 | ZP-H Native Categories Addendum | v1.7 | ZP-H_Native_Categories_Addendum.pdf | N/A | N/— | formal:6055c8d4 |
-| ZP-I Inside Zero | v1.31 | ZP-I_Inside_Zero.pdf | v1.35 | N/— | formal:1b6340e7 comp:fddad2fc |
+| ZP-I Inside Zero | v1.31 | ZP-I_Inside_Zero.pdf | v1.35 | N/— | formal:28410b6e comp:c88806be |
 | ZP-J Self-Reference | v2.17 | ZP-J_Self_Reference.pdf | v1.38 | N/— | formal:d486cc53 comp:c499ea26 |
 | ZP-J AFA Addendum | v1.20 | ZP-J_AFA_Addendum.pdf | N/A | N/— | formal:8327eacf |
 | ZP-J Wheel Addendum | v1.10 | ZP-J_Wheel_Addendum.pdf | v1.9 | N/— | formal:3b8c71b6 comp:e63f0549 |

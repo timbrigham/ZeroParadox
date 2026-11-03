@@ -27,8 +27,8 @@ valuation ascent along a realized orbit `n ↦ ρ (scale^[n] x)` from equivarian
    point that steps to itself and to nothing else) has 0 as its only occupant (the `example` after
    the CONTROL); under squaring, also defined from the ring operations, 1 occupies it as well (the
    CONTROL after that), so the occupant follows the step. All three statements carry
-   `Classical.choice`, from Mathlib's ℚ₂ itself (measured 2026-11-03 on named copies; ℚ₂'s
-   multiplication alone carries it, and the first CONTROL also uses a well-ordering), so the contrast between doubling
+   `Classical.choice`, from Mathlib's ℚ₂ itself (measured 2026-11-03: any statement over ℚ_[2],
+   even `x = x`, prints `Classical.choice`; the first CONTROL also uses a well-ordering), so the contrast between doubling
    and the chosen join is one of which structure is picked, not of the axiom footprint.
 2. **Novelty** — reading that occupant as the chain's own *successor* null. This is C-DA2, and
    the `t_iz_limit_is_new_null` gloss in `Order/SnapCannotBe.lean` forbids citing that theorem as its witness.

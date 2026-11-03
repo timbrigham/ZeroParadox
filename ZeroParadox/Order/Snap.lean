@@ -25,8 +25,8 @@ AX-1 is retired: the SHAPE of the snap is proved (`t_snap_derived`, `t_snap_give
 from the occurrence commitment together with DA-1, not from T-SNAP (`tsnap_holds_but_nothing_moves`).
 `Reading:` CARRIER — the occurrence commitment, in two charts. Execution chart: instantiation occurs (Sense B, a
 running configuration). Slot chart: the realized run has fired at least once, the hypothesis `hw` of
-`t_snap_of_fires_once` (`ZeroParadox/Information/CrossingTrials.lean` § VIII), which gives `t_snap_given`'s `hcc1` and
-`hocc`; if `0 < p ≤ 1` firing has probability one (`trials_fires_once`), and a particular tape need not fire (the
+`t_snap_of_fires_once` (`ZeroParadox/Information/CrossingTrials.lean` § VIII), which, with `φ` sending `false` to ⊥ of
+`L` and `true` to a point other than ⊥ of `L`, gives `t_snap_given`'s `hcc1` and `hocc`; if `0 < p ≤ 1` firing has probability one (`trials_fires_once`), and a particular tape need not fire (the
 all-`false` tape). `Reading:` CARRIER — the two charts correspond; a firing is not proved to be an execution event.
 The inserts DA-1, DA-2, DA-3 and the cross-framework link: `ZeroParadox/Order/Snap.md`.
 -/
@@ -127,7 +127,8 @@ theorem t_snap_given {L : Type*} [ZPSemilattice L] (S : ℕ → L)
 
 -- Statement: in the occurrence commitment's slot chart, `t_snap_of_fires_once`
 -- (`ZeroParadox/Information/CrossingTrials.lean` § VIII) supplies `hcc1` and `hocc` from a tape that
--- fired at least once; its sequence steps once, at index 1, and stays, so it is not an
+-- fired at least once, with `φ` sending `false` to ⊥ of `L` and `true` to a point other than ⊥ of
+-- `L`; its sequence steps once, at index 1, and stays, so it is not an
 -- `IsStrictStateSequence` (the example in `ZeroParadox/Order/SnapCannotBe.lean` § II).
 
 -- Statement: `t_snap_derived` is the instance at the sequence `c₀, c₁, c₁, …`, chosen to move: `hcc1` is `rfl` and `hocc` is `c₁ ≠ c₀`.

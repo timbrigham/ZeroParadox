@@ -463,7 +463,7 @@ def build():
         ['2. ⊥-role identification',
          'Anything satisfying the join-identity condition IS that lattice\'s bottom. '
          'That the Cauchy limit 0 ∈ Q₂ satisfies it is the theorem\'s HYPOTHESIS, not '
-         'its conclusion, and Q₂\'s field structure supplies no join (the corpus defines none on Q₂), so the condition is not statable '
+         'its conclusion, and Q₂\'s field structure supplies no join (the corpus registers none on Q₂), so the condition is not statable '
          'there — the two are distinct members of the bottom family, not one object (MC-1). Reading the occupant as a NEW null ⊥′ is a further commitment (C-DA2).',
          'ZP-E DA-2  - proved in Lean (t_iz_limit_is_new_null, axiom-free). '
          '✓ (the role only, given the hypothesis; not the novelty)'],
@@ -604,7 +604,7 @@ def build():
     E.append(cbody(
         'Two charts, two carriers. In the 2-adic numbers, the chain converges to 2-adic zero: zero is the '
         'LIMIT, not a term, since no term of the chain is zero. The field structure of the 2-adic numbers '
-        'supplies no join, and the corpus defines none on them, so the bottom role is not statable of the limit '
+        'supplies no join, and the corpus registers none on them, so the bottom role is not statable of the limit '
         'here. (A join could be chosen, since every inhabited set admits one; on the 2-adic integers the corpus '
         'supplies one with zero as its bottom (ZeroParadox/Valuation/Scale.lean &#167; V), and zero filling that '
         'bottom is a choice of operation, not something T-IZ derives.) In a join-semilattice, the bottom ROLE is the element that '

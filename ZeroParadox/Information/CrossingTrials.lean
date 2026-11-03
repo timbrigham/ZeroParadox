@@ -364,7 +364,8 @@ example : (fun _ => true : ℕ → Bool) ∈ Filter.limsup fires Filter.atTop �
 
 -- Statement: the zero-block hypothesis is weak: for every `p ≤ 1` the all-`true` tape, a constant
 -- tape, avoids the class of zero-block tests for `trials p hp` (level 1 of a test has measure at
--- most `1/2`, so its block is nonempty, and the all-`true` tape lies in no nonempty zero block).
+-- most `1/2`, so its window has positive length, and the all-`true` tape lies in no zero block over a
+-- window of positive length).
 example (p : NNReal) (hp : p ≤ 1) :
     AvoidsTests (ZeroBlockTest (trials p hp)) (fun _ => true) := by
   rintro U ⟨hμ, f, -, hf⟩ hmem
