@@ -4743,9 +4743,11 @@ example (d : DecidableEq Ordinal.{0}) : ZeroParadox.WeakExcludedMiddle := by
 #check @ZeroParadox.exists_fires_io            -- Statement: if `0 < p ≤ 1`, SOME tape fires infinitely often (measure one is nonempty)
 #check @ZeroParadox.fires_io_of_avoids         -- Statement: if `0 < p ≤ 1` and the tape avoids a class holding every zero-block test for `trials p hp`, it fires infinitely often; one way
 #check @ZeroParadox.slotRun_image_departs_of_avoids -- Statement: under the same hypotheses and a one-to-one lax map, the image run is a run that leaves its start; one way
+#check @ZeroParadox.squaresTape_not_avoids    -- Statement: if `0 < p ≤ 1` and `𝒯` holds every zero-block test for `trials p hp`, the squares tape does not avoid `𝒯`
 -- Statement: sufficient, not necessary: the second `example` after `slotRun_image_departs_of_avoids`
--- in `ZeroParadox/Information/CrossingTrials.lean` gives the squares tape, whose image run leaves its
--- start yet which fails to avoid any class holding the zero-block tests for `trials (1/2)`.
+-- in `ZeroParadox/Information/CrossingTrials.lean` gives, for every one-to-one lax map `φ`, every
+-- `0 < p ≤ 1` and every class `𝒯` holding the zero-block tests for `trials p hp`, the squares tape,
+-- whose image run under `φ` leaves its start, yet which does not avoid `𝒯`.
 -- Statement: CONTROL: with no typicality hypothesis, the all-`false` tape drives a run of
 -- `slotMotion` that is `false` at every stage, though `false` steps elsewhere.
 example : (∀ n, ZeroParadox.slotRun (fun _ => false) n = false) ∧
