@@ -433,7 +433,7 @@ def build():
         'whose hypothesis fails on every ZPSemilattice with an element other than &#8869; '
         '(nontrivial_lattice_no_witness). On every ZPSemilattice with an element other than &#8869;, '
         'that face is linked to the computability face through the die\'s Quine-atom role, '
-        'occupied chart by chart: in the code chart no single code occupies it under the eval step '
+        'whose occupancy is settled chart by chart: in the code chart no single code occupies it under the eval step '
         '(evalStepMotion_not_selfOnlyAt), and a class of codes up to equal eval does, for computable '
         'eval-respecting maps (codes_vs_classes). KleeneStructure supplies a code meeting a periodicity '
         'condition (one that constant codes also meet) and equates it with nothing. The reading it was '

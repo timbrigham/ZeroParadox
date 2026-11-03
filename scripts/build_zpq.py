@@ -352,7 +352,7 @@ def build():
         'The remaining realizations are referenced, not re-proved here. Set theory: the Quine atom '
         '(CC-2) is the collapse of the Foundation / AFA fork (ZP-J, ZP-P; fork_collapse_iff, '
         'selfMem_eq_singleton_bot), stated as a role, a point that steps to itself and to nothing '
-        'else, occupied chart by chart with no equation across charts: by &#8869; in the lattice chart, '
+        'else, whose occupancy is settled chart by chart, with no equation across charts: occupied by &#8869; in the lattice chart, '
         'under a self-application map supplied by AbstractSelfApp (selfApp_quine_role_iff) and in the '
         'QuineAtomHost an AFAStructure on L builds (quineAtomHost_quine_role_iff with '
         'afaStructure_isQuineAtomHost), by no set in Mathlib\'s ZFSet '

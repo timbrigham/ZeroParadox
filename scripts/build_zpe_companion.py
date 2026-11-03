@@ -379,7 +379,7 @@ def build():
     E.append(cbody(
         'AX-1 is not on this list: it is retired, and its shape is Theorem T-SNAP. Further commitments are not axioms and are stated where they are used, '
         'among them the occurrence commitment (that instantiation occurs; together with DA-1 it gives that the Snap happens), CC-1 (S₀ = ⊥, a ZP-A Conditional Claim), the choice of starting point that T-SNAP is derived given, '
-        'and CC-2 (the Quine atom, a ZP-A Forced Metatheoretic Commitment: Foundation-freeness of its host is forced, while the host&#8217;s requirements are a modelling commitment, AFA being one theory that meets them), which motivates DA-1&#8217;s precondition; DA-1 itself is closed given DP-2. '
+        'and CC-2 (the Quine atom, a ZP-A Forced Metatheoretic Commitment: adopting AFA is CC-2&#8217;s commitment, the host requirements (QuineAtomHost) are its Lean abstraction, and that any such host gives up Foundation is forced (quineAtomHost_not_wellFounded)),which motivates DA-1&#8217;s precondition; DA-1 itself is closed given DP-2. '
         'The framework makes no stronger claim than it has to.'))
     E.append(sp(8))
     E.append(remember_box(

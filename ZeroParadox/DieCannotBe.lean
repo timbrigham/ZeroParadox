@@ -4698,7 +4698,7 @@ example (d : DecidableEq Ordinal.{0}) : ZeroParadox.WLPO := by
 -- CONTROL above). `L` is not claimed to be computable or choice-free.
 -- Reading (cited, not claimed): T. de Jong and M. H. Escardó, "Predicative Aspects of Order Theory
 -- in Univalent Foundations", FSCD 2021, arXiv:2102.08812, Theorem 37, p. 10: a nontrivial locally
--- small δ-complete poset with decidable equality gives weak excluded middle. The CONTROL above meets
+-- small δ-complete poset with decidable equality gives weak excluded middle. The second CONTROL above meets
 -- their hypothesis at `0 < 1` in `Ordinal.{0}`, with `⨆ _ : p, 1` their `Δ_{0,1}(p)` (Definition 29,
 -- p. 9); its proof decides only `o = 0`, equality with ⊥ of `Ordinal.{0}`, and is the proof of T. de Jong,
 -- "Apartness, sharp elements and the Scott topology of domains", MSCS (2023), arXiv:2106.05064v5,
@@ -4796,5 +4796,11 @@ example (d : DecidableEq Ordinal.{0}) : ZeroParadox.WLPO := by
 example : (∀ n, ZeroParadox.slotRun (fun _ => false) n = false) ∧
     ZeroParadox.slotMotion.LeavesAt false :=
   ⟨fun n => by simp [ZeroParadox.slotRun], ZeroParadox.slotMotion_leavesAt_false.1⟩
+-- Fired once gives T-SNAP's hypotheses: `ZeroParadox/Information/CrossingTrials.lean` § VIII.
+#check @ZeroParadox.firedRun_spec              -- Statement: if the tape fires somewhere, the shifted run is `false` at stage 0 and `true` at every later stage
+#check @ZeroParadox.t_snap_of_fires_once       -- Statement: if `φ` sends `false` to ⊥ of `L` and `true` elsewhere, and the tape fires somewhere (`hw`), `φ ∘ firedRun` meets `t_snap_given`'s `hcc1`, `hocc`; one way
+#check @ZeroParadox.trials_fires_once          -- Statement: if `0 < p ≤ 1`, the tapes that fire somewhere have `trials p hp` measure one
+#check @ZeroParadox.t_snap_of_avoids           -- Statement: § VI's hypotheses on a tape give its `hw` and `t_snap_of_fires_once`'s conclusion; one way
+-- Reading: `hw` is the occurrence commitment in its slot chart (`ZeroParadox/Order/SnapCannotBe.lean` § II).
 
 end DieCannotBeIndex

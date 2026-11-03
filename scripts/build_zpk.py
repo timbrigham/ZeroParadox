@@ -272,7 +272,7 @@ def build():
             'typeclass requirement. The philosophical claim — that Kleene computational '
             'self-reference and AFA set-theoretic self-reference are the same thing — is the '
             'motivation for the typeclass design, not a consequence derived within it. Its identity '
-            'half is retired: what the two share is the Quine-atom role, occupied chart by chart '
+            'half is retired: what the two share is the Quine-atom role, whose occupancy is settled chart by chart '
             '(Section II.I), and that ⊥ actually executes is the occurrence commitment.',
         ]
     ))
@@ -359,7 +359,7 @@ def build():
             'commitment, not this theorem. Lean witnesses ⊥ as the AFA Quine '
             'atom of MachinePhase (da1_closed_concrete) and carries the Kleene quine as a '
             'KleeneStructure requirement (botCode_is_quine); no Lean statement makes them one '
-            'object, and what they share is the Quine-atom role, occupied chart by chart '
+            'object, and what they share is the Quine-atom role, whose occupancy is settled chart by chart '
             '(Section II.I).',
             'Lean: ZeroParadox.description_instantiation_gap_closed. '
             'Purity: standard foundational axioms only. ✓',

@@ -186,7 +186,7 @@ def build():
         'The Quine atom (SetTheoryAFA.lean) &#8212; the set-theoretic floor',
         [
             'The Quine atom (CC-2) is a role: a point that steps to itself and to nothing else '
-            '(Motion.SelfOnlyAt, ZeroParadox/Die.lean), occupied chart by chart, with no equation across '
+            '(Motion.SelfOnlyAt, ZeroParadox/Die.lean), whose occupancy is settled chart by chart, with no equation across '
             'charts. In the lattice chart its occupant is &#8869; of the ZPSemilattice, under a '
             'self-application map supplied by AbstractSelfApp (selfApp_quine_role_iff) and in the '
             'QuineAtomHost an AFAStructure on L builds (quineAtomHost_quine_role_iff with '

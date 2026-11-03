@@ -375,8 +375,8 @@ def build():
     E.append(cbody(
         'These are not three separate properties that happen to coincide. They are three '
         'descriptions of the same structural role. T-EXEC machine-checks that the three roles '
-        'have one occupant (t_exec_triple_iff; for the membership-host row, quineAtomHost_quine_role_iff '
-        'at afaStructure_isQuineAtomHost); the membership-host row is the Lean chart whose AFA '
+        'have one occupant (t_exec_triple_iff), and quineAtomHost_quine_role_iff at '
+        'afaStructure_isQuineAtomHost does so for the membership-host row; that row is the Lean chart whose AFA '
         'reading is the set Q = {Q}; that reading is not a Lean statement.'))
     E.append(sp(4))
     E.append(example_box('Real-world analogy  - Zero in arithmetic (partial)', [

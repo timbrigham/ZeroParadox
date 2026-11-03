@@ -1,8 +1,8 @@
-# Crossing trials, § IV–VII: from almost surely to one run
+# Crossing trials, § IV–VIII: from almost surely to one run, and from one firing to a state sequence
 
 Ride-along for `ZeroParadox/Information/CrossingTrials.lean`. The Lean file holds the declarations, the
 Engineer's Take and the per-declaration glosses; this file holds the prior art, the open items and the
-two-chart reading for § IV–VII.
+two-chart reading for § IV–VII, and § VIII's conditional below.
 
 ## What the sections establish, as conditionals
 
@@ -13,7 +13,9 @@ two-chart reading for § IV–VII.
   to fire infinitely often iff it is silent from some `N` (`not_mem_limsup_fires_iff`).
 - § VI. If `0 < p ≤ 1`, a class `𝒯` of tests contains every zero-block test for `trials p hp`, and the
   tape `w` avoids `𝒯`, then `w` fires infinitely often (`fires_io_of_avoids`). The avoidance is the
-  hypothesis `htyp` on one tape; nothing in the file says any tape meets it. One way: the squares tape
+  hypothesis `htyp` on one tape. For `𝒯` the zero-block tests it is weak: the all-`true` tape, a
+  constant tape, meets it at every `p ≤ 1` (the third `example`); it is not Martin-Löf randomness
+  (open item 1 concerns that). One way: the squares tape
   fires infinitely often (the first `example`), and for every `0 < p ≤ 1` and every such `𝒯` it does
   not avoid `𝒯` (`squaresTape_not_avoids`; the first `example` is the case `p = 1/2`); at `p = 1/2`
   the all-`true` tape fires infinitely often and lies in every one block, each of measure at most
@@ -25,9 +27,17 @@ two-chart reading for § IV–VII.
   run that leaves its start for a tape meeting § VI's hypotheses. Those hypotheses are sufficient, not
   necessary: any tape that fires once gives such a run (`slotRun_crosses_iff`; the `example` after the
   theorem), and the squares tape gives one while failing them at every `0 < p ≤ 1` (the second
-  `example`, from `squaresTape_not_avoids`). `Reading:` what § VI adds is a guarantee about a tape
-  whose bits are not examined. The all-`false` tape drives a run that never leaves `false` (the
+  `example`, from `squaresTape_not_avoids`). `Reading:` what § VI adds is a guarantee stated through
+  test sets, naming no stage at which the tape fires. The all-`false` tape drives a run that never leaves `false` (the
   closing `example`).
+- § VIII. If a tape fires at some stage (`hw`) and `φ : Bool → L`, `L` a `ZPSemilattice`, sends
+  `false` to ⊥ of `L` and `true` to a point other than ⊥ of `L`, then `φ` applied to the run with the
+  stages before the first firing dropped is a state sequence meeting `t_snap_given`'s `hcc1` and
+  `hocc` (`t_snap_of_fires_once`). It steps once, at index 1, and stays, so it is not an
+  `IsStrictStateSequence` (the file's last `example`). If `0 < p ≤ 1`, the fired-once tapes have
+  `trials p hp` measure one (`trials_fires_once`), and § VI's hypotheses give `hw`
+  (`t_snap_of_avoids`). `Reading:` `hw` is the occurrence commitment in its slot chart, as one
+  hypothesis on the realized tape (`ZeroParadox/Order/Snap.lean` states both charts).
 
 ## Prior art
 
@@ -80,8 +90,10 @@ two-chart reading for § IV–VII.
   `bernoulliMeasure` was not compared with `trials`. For the uniform measure the same library has
   `exists_isMartinLofRandom_uniform` (a Martin-Löf random sequence exists, `EffectiveLaws.lean`) and
   `isEffectivelyNull_singleton_of_computable` (no computable sequence is, `EffectiveNull.lean`); given
-  open item 1, the first gives a tape meeting `htyp` at `p = 1/2` for `𝒯` = the zero-block tests. None
-  of these libraries is a dependency here.
+  open item 1, the first gives a Martin-Löf random tape meeting `htyp` at `p = 1/2` for `𝒯` = the
+  zero-block tests. A tape meeting that `htyp` needs no open item: the all-`true` tape meets it at every
+  `p ≤ 1` (§ VI's third `example`), so that hypothesis is weak, and Martin-Löf randomness is the
+  stronger property open item 1 is about. None of these libraries is a dependency here.
 - **Mathlib.** The pin was searched 2026-11-01 for `Martin-L`, `MartinLof`, `algorithmic(ally)? random`,
   `Kurtz` (case-insensitive, `.lake/packages/mathlib/Mathlib`): zero matches. Not located as of
   2026-11-01, searched as stated. theoremsearch, four phrasings (Kurtz null test; Martin-Löf random for
@@ -127,10 +139,11 @@ reading; no map from `ℚ_[2]` to tapes is built here), 0 is the all-`false` tap
 (`ZeroParadox/Information/Disjunctive.md` fence 3) places the occupant of ⊥ of a `ZPSemilattice`, read as
 a tape, among the maximally complex tapes, which by standard theory (Levin–Schnorr; not proved here,
 Disjunctive.md fence 2) are Martin-Löf random for the fair coin; that such tapes meet § VI's hypothesis at
-`p = 1/2` for `𝒯` = the zero-block tests is open item 1. The two readings put different tapes in the
+`p = 1/2` for `𝒯` = the zero-block tests is open item 1. That hypothesis is weak and does not single
+them out: the all-`true` tape meets it too (§ VI's third `example`). The two readings put different tapes in the
 role, and nothing in Lean identifies them.
 
-Not claimed: that any tape is typical, that ⊥ of any carrier is a tape, or that typicality supplies the
-occurrence commitment. The theorem moves "almost surely" (`crossing_almost_surely`, which already
-assumes `0 < p`) to "this run crosses" by adding two premises: a class `𝒯` holding the zero-block tests
-for `trials p hp`, and `htyp`.
+Not claimed: that the realized tape is typical or has fired, or that ⊥ of any carrier is a tape. The
+theorem moves "almost surely" (`crossing_almost_surely`, which already assumes `0 < p`) to "this run
+crosses" by adding two premises: a class `𝒯` holding the zero-block tests for `trials p hp`, and `htyp`.
+§ VIII's `t_snap_of_avoids` derives `hw` from `htyp`; neither is supplied for the realized tape.

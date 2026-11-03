@@ -19,14 +19,14 @@ slipping in.
 
 ## Formal Overview (AI-assisted)
 
-The framework's set-theoretic commitment (CC-2) is a fragment of what a host theory supplies,
-not the full Anti-Foundation Axiom (AFA, "every graph has a unique decoration"): a Quine atom
+The framework's set-theoretic commitment (CC-2) is adopting the Anti-Foundation Axiom (AFA,
+"every graph has a unique decoration"); what the Lean uses of it is a fragment: a Quine atom
 ⊥ = {⊥}, ⊥'s only member being ⊥, that is the only reflexive element (x = {x}). That is AFA's
 own profile: AFA allows at most one solution of x = {x} (Aczel 1988, p. 19), while a* = {a, a*}
 is self-membered for every a (Examples 1.5–1.6, pp. 7–8; 0* = {∅, 0*}). Two typeclasses, which
 are incomparable (§ VII):
 
-- `QuineAtomHost` — the commitment: (Y') `bot_mem_iff`, ⊥ = {⊥}; (Z') `reflexive_unique`.
+- `QuineAtomHost` — the commitment's Lean abstraction: (Y') `bot_mem_iff`, ⊥ = {⊥}; (Z') `reflexive_unique`.
 - `QuineHost` — ⊥ ∈ ⊥ and the only self-membered element is ⊥. AFA's membership fails its
   (Z), since 0* ∈ 0*; the § VI encoding, whose membership relates no element to any other, meets it.
 
@@ -36,8 +36,9 @@ are incomparable (§ VII):
 Prop. 5.1, p. 57), so fails (Z'); toy model `boffa_fails_reflexive_unique`. AFA's pattern, as a
 three-element toy with real ∈, meets `QuineAtomHost` and no `QuineHost` (§ VII); a model of the
 pattern, not of AFA. Both classes are met on every inhabited carrier (NO-GO gauges, § I, § VII), so
-realizability alone is uninformative. What remains a *modeling commitment*: that (Y') and (Z')
-are the right requirements; AFA is a theory meeting them, not the commitment. (Where
+realizability alone is uninformative. Adopting AFA is CC-2's commitment; the host requirements
+(`QuineAtomHost`) are its Lean abstraction, and that any such host gives up Foundation is forced
+(`quineAtomHost_not_wellFounded`). (Where
 AFA-specific content is used elsewhere, e.g. decoration uniqueness in
 `ZeroParadox/Settheory/APG.lean`, it is proved on its own terms.)
 

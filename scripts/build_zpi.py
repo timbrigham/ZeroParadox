@@ -399,12 +399,12 @@ def build():
            '&#8704; x, S &#8744; x = x IS the &#8869; of its own lattice. '
            'That the Cauchy limit 0 &#8712; Q<sub>2</sub> satisfies that condition is a HYPOTHESIS, never a result: '
            't_iz_complete takes it as the argument h_role, about a terminal in a separate semilattice L&#8242;, '
-           'and does not identify that terminal with the limit. Q<sub>2</sub>&#8217;s field structure supplies no join, and the corpus defines none on Q<sub>2</sub>. '
+           'and does not identify that terminal with the limit. Q<sub>2</sub>&#8217;s field structure supplies no join, and the corpus registers none on Q<sub>2</sub>. '
            'For the 2-adic integers &#8484;<sub>2</sub> one with 0 as bottom is built but not registered, '
            'where 0 meets the condition because it was chosen as the bottom '
            '(ZeroParadox/Valuation/Scale.lean &#167; V); on Q<sub>2</sub> the condition is stated of no '
-           'structure the corpus defines (that some join on Q<sub>2</sub> makes any chosen point its bottom is the '
-           'CONTROL example after c_t_iz_null_balance, ZeroParadox/Valuation/SemilatticeInstance.lean). '
+           'structure the corpus registers (that some join on Q<sub>2</sub> makes any chosen point its bottom is the '
+           'first CONTROL example after c_t_iz_null_balance, ZeroParadox/Valuation/SemilatticeInstance.lean). '
            'Lean: t_iz_limit_is_new_null, proved directly from da2_bottom_characterization. ✓ &#8212; '
            'the checkmark covers the ROLE identification only, and only inside L&#8242;. It is NOT a novelty witness and must not be cited as one; reading the occupant as the &#8869; of a SUCCESSOR instantiation is C-DA2.'),
         sp(4),
@@ -458,7 +458,7 @@ def build():
     E.append(data_table(
         ['Claim', 'Source', 'New axiom?', 'Lean status'],
         proof_rows,
-        [TW*0.26, TW*0.26, TW*0.24, TW*0.24]
+        [TW*0.20, TW*0.36, TW*0.16, TW*0.28]
     ))
     E.append(sp(6))
 
@@ -872,7 +872,7 @@ def build():
     E.append(data_table(
         ['Claim', 'Grounded In', 'Bridge Axiom?', 'Status'],
         trace_rows,
-        [TW*0.20, TW*0.32, TW*0.10, TW*0.38]
+        [TW*0.31, TW*0.30, TW*0.08, TW*0.31]
     ))
 
     # ── CLOSING ───────────────────────────────────────────────────────────────

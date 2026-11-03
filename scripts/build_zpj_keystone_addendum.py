@@ -58,7 +58,7 @@ def build():
     E.append(body(
         'The keystone of the Zero Paradox is that &#8869; plays the same self-referential '
         '(diagonal) fixed-point role in every framework, its occupant supplied per face: the Quine '
-        'atom (CC-2) in set theory, the role a set x = {x} plays, occupied chart by chart '
+        'atom (CC-2) in set theory, the role a set x = {x} plays, whose occupancy is settled chart by chart '
         '(ZeroParadox/Settheory/QuineDichotomy.lean); filled in computation by a class of codes up to '
         'equal eval, for a computable map respecting equal eval (codes_vs_classes); the point v<sub>2</sub>(0) = &#8734; in '
         'valuation; and the initial object in category theory. Their shared membership in that '

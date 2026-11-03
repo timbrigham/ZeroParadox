@@ -1037,6 +1037,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "00b26a10-904e-4518-9574-281dc651c97e",
+          "new": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.t_snap_of_avoids",
+            "short": "t_snap_of_avoids"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.t_snap_of_avoids",
+            "short": "t_snap_of_avoids",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "Occurrence link (2026-11-03): CrossingTrials § VIII — a tape that fired once gives t_snap_given's hcc1/hocc by dropping the stutter prefix; fired-once has measure one; typicality gives fired-once. hw is the occurrence commitment as an explicit hypothesis.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "00b3f961-910b-4475-b8a9-a1af62f79c6a",
           "new": {
@@ -2455,6 +2493,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "03c966b8-9db7-40e0-9b0d-a9987b1e193a",
+          "new": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.firedRun",
+            "short": "firedRun"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.firedRun",
+            "short": "firedRun",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Occurrence link (2026-11-03): CrossingTrials § VIII — a tape that fired once gives t_snap_given's hcc1/hocc by dropping the stutter prefix; fired-once has measure one; typicality gives fired-once. hw is the occurrence commitment as an explicit hypothesis.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -24155,6 +24231,43 @@
             "role": []
           },
           "reason": "die-wpb-1029: weak-pullback preservation for Part x Set (elementwise form) and, for motions, Rutten 5.1, 5.2, 5.4*, the greatest-bisimulation and equivalence clauses of 5.6, the bisimulation half of 5.7*, and 5.9*(2) (Die § XXII); Tim ruling 2026-10-29",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "35cc0a76-3bf8-4865-ba10-cde15724800d",
+          "new": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_fires_once",
+            "short": "trials_fires_once"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_fires_once",
+            "short": "trials_fires_once",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "Occurrence link (2026-11-03): CrossingTrials § VIII — a tape that fired once gives t_snap_given's hcc1/hocc by dropping the stutter prefix; fired-once has measure one; typicality gives fired-once. hw is the occurrence commitment as an explicit hypothesis.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -59714,6 +59827,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "87cbbdd5-64a1-4907-bcea-075632724470",
+          "new": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.t_snap_of_fires_once",
+            "short": "t_snap_of_fires_once"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.t_snap_of_fires_once",
+            "short": "t_snap_of_fires_once",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "Occurrence link (2026-11-03): CrossingTrials § VIII — a tape that fired once gives t_snap_given's hcc1/hocc by dropping the stutter prefix; fired-once has measure one; typicality gives fired-once. hw is the occurrence commitment as an explicit hypothesis.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "87da5875-5858-4b20-8ad8-dc66ce6f9fda",
           "new": {
             "file": "ZeroParadox/Ordinal/SnapNucleusConstructive.lean",
@@ -66201,6 +66352,44 @@
             ]
           },
           "reason": "Die views batch: views (order as data), restriction to an up-closed set, adjoined points and the empty carrier, arrival and fan-in",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "979216c2-b0ac-450d-8f24-22879f40a712",
+          "new": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.firedRun_isRun",
+            "short": "firedRun_isRun"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.firedRun_isRun",
+            "short": "firedRun_isRun",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Occurrence link (2026-11-03): CrossingTrials § VIII — a tape that fired once gives t_snap_given's hcc1/hocc by dropping the stutter prefix; fired-once has measure one; typicality gives fired-once. hw is the occurrence commitment as an explicit hypothesis.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -83457,6 +83646,44 @@
             ]
           },
           "reason": "Die v2 final batch: drawing vs set (self-steps, accessibility, forced rank), ends of a view, orders on motions, placements as views, relaxed least-fixed-point schema, UP legs as nuclei",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "bdbe6359-9313-443c-aee6-acae4ab1a27f",
+          "new": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.firedRun_spec",
+            "short": "firedRun_spec"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.firedRun_spec",
+            "short": "firedRun_spec",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Occurrence link (2026-11-03): CrossingTrials § VIII — a tape that fired once gives t_snap_given's hcc1/hocc by dropping the stutter prefix; fired-once has measure one; typicality gives fired-once. hw is the occurrence commitment as an explicit hypothesis.",
           "verify": {
             "axioms": null,
             "sorry_free": true

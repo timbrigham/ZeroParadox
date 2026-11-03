@@ -73,8 +73,8 @@ def build():
         'No equation between a MachinePhase state and a 2-adic integer is stated; they are different types. '
         'What c&#8321; and 0 share is a role, the die&#8217;s Motion.SelfOnlyAt (ZeroParadox/Die.lean): a point that '
         'steps to itself and to nothing else; in each carrier its occupant is proved for the step chosen there. '
-        'Two pairings, each through the map snapEmbed, stand in place of an identity (Incompleteness.lean &#167;I-b). Under the join step a &#8594; join a z, only '
-        'c&#8321; occupies the role (machineJoinMotion_selfOnlyAt_iff); under the multiplication step x &#8594; x&#183;w '
+        'Two pairings, each through the map snapEmbed, stand in place of an identity (Incompleteness.lean &#167;I-b). Under the join step a &#8594; join a z for some z, only '
+        'c&#8321; occupies the role (machineJoinMotion_selfOnlyAt_iff); under the multiplication step x &#8594; x&#183;w for some w '
         'on &#8484;&#8322;, only 0 does (z2MulMotion_selfOnlyAt_iff); snapEmbed is a map of these two motions '
         '(snapEmbedHom). Its back clause fails at c&#8320; (1 steps to 2, and no state maps to 2), so the general '
         'transport of the role along such maps does not apply; at c&#8321; the role does carry over, because 0 has only '
@@ -92,8 +92,8 @@ def build():
             '',
             'The morphism property: join on MachinePhase (c&#8321; is absorbing under join) '
             'corresponds to multiplication on &#8484;&#8322; (0 is absorbing under &#215;). '
-            'In the die this is a map of motions, from a &#8594; join a z on MachinePhase to '
-            'x &#8594; x&#183;w on &#8484;&#8322; (snapEmbedHom, &#167;I-b).',
+            'In the die this is a map of motions, from a &#8594; join a z for some z on MachinePhase to '
+            'x &#8594; x&#183;w for some w on &#8484;&#8322; (snapEmbedHom, &#167;I-b).',
         ]
     ))
     E.append(sp(6))
@@ -148,9 +148,9 @@ def build():
     E.append(result_box(
         'Results: snapEmbed in the die (Incompleteness.lean §I-b)',
         [
-            'machineJoinMotion_selfOnlyAt_iff: under a &#8594; join a z, y steps to itself and to nothing else iff y = c&#8321;. '
+            'machineJoinMotion_selfOnlyAt_iff: under a &#8594; join a z for some z, y steps to itself and to nothing else iff y = c&#8321;. '
             'Lean purity: [propext].',
-            'z2MulMotion_selfOnlyAt_iff: under x &#8594; x&#183;w on &#8484;&#8322;, y steps to itself and to nothing else iff y = 0. '
+            'z2MulMotion_selfOnlyAt_iff: under x &#8594; x&#183;w for some w on &#8484;&#8322;, y steps to itself and to nothing else iff y = 0. '
             'Lean purity: [propext, Classical.choice, Quot.sound].',
             'snapEmbedHom: snapEmbed is a strict map between these two motions (steps to steps, from snapEmbed_mul_morphism). '
             'An example beside it shows the back clause fails at c&#8320; (1 steps to 2, and no state maps to 2). '
