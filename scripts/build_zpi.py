@@ -1,12 +1,12 @@
 """
 Zero Paradox — ZP-I: Inside Zero PDF Builder
-Version 1.32 | November 2026
+Version 1.33 | November 2026
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.32'
+VERSION = '1.33'
 FIRST_RELEASED = 'April 2026'
 
 # ZP-I uses justified body text; override the left-aligned zp_utils defaults
@@ -97,7 +97,7 @@ def build():
         'separate fact that anything filling the bottom role IS the bottom of its own semilattice. '
         'Reading the 2-adic limit as the thing filling that role is a modelling commitment, not a '
         'theorem: the two live in different types, and Q<sub>2</sub>&#8217;s field structure supplies no join and the corpus registers none on Q<sub>2</sub>, so the role '
-        'condition is not statable of the limit in the types the corpus declares — they are distinct MEMBERS of the bottom '
+        'condition is not statable of the limit until a join on Q<sub>2</sub> is chosen — they are distinct MEMBERS of the bottom '
         'family, not one object, and that identity is retired as ill-typed (MC-1). '
         'Reading the bottom so reached as a NEW one '
         'rather than the one already there is a further commitment (C-DA2 in ZP-E), and in the 2-adic '
@@ -315,7 +315,7 @@ def build():
         'terminal in a semilattice L&#8242;, and takes the role property as its hypothesis h_role. '
         't_iz_complete conjoins them without identifying the two objects, and the identification is '
         'not merely unproved &#8212; Q<sub>2</sub>&#8217;s field structure supplies no join and the corpus registers none on Q<sub>2</sub>, so the role condition cannot be '
-        'stated of the limit in the types the corpus declares. That junction is not an open gap: the 0 of Q<sub>2</sub> and the '
+        'stated of the limit until a join on Q<sub>2</sub> is chosen. That junction is not an open gap: the 0 of Q<sub>2</sub> and the '
         'algebraic &#8869; are distinct MEMBERS of the bottom family, and the cross-category identity '
         'is retired as ill-typed rather than outstanding (MC-1, CLAIMS.md). Steps 2–5 describe the original '
         'ZP-E informational argument connecting 2-adic depth to Kolmogorov complexity and DA-1 '
