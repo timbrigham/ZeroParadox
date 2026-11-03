@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-J AFA Addendum: Decoration Uniqueness from Valuation Structure
-Version 1.19 | October 2026
+Version 1.20 | November 2026
 Reads after ZP-J Self-Reference.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.19'
+VERSION = '1.20'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -115,7 +115,7 @@ def build():
         'any x &#8800; &#8869;, that val(x) is finite &#8212; it is the contrapositive of '
         '&#8220;infinite depth identifies &#8869;&#8221; &#8212; and val_scale makes scale '
         'strictly increase it. No element of finite depth can therefore satisfy scale(x) = x. '
-        'val_bot is consumed nowhere on that chain (measured 2026-08-30); it fixes the depth '
+        'val_bot is consumed nowhere on that chain (ZeroParadox/Valuation/Scale.lean, &#167; I); it fixes the depth '
         'of &#8869; itself, which the fixed-point argument never reads.'))
 
     E.append(result_box(
@@ -177,9 +177,10 @@ def build():
 
     E.append(body(
         'AFAStructure is the lattice-level encoding of the three structural facts that '
-        'ZF+AFA provides set-theoretically: that &#8869; contains itself, that it is '
-        'the only self-containing element, and the self-membership predicate itself. '
-        'In ZF+AFA, the existence of a self-containing set follows from AFA\'s existence '
+        'ZF+AFA provides set-theoretically: that &#8869; satisfies selfMem, read in ZF+AFA as '
+        'x = {x} (bot_self_mem), that it is the only element that does (quine_unique), and the '
+        'predicate selfMem itself. '
+        'In ZF+AFA, the existence of a set x = {x} follows from AFA\'s existence '
         'clause applied to the one-node self-loop graph; uniqueness follows from AFA\'s '
         'uniqueness clause. In the ZP encoding, the existence field '
         # ⚠ "supplied" is reserved on this page for DATA. bot_self_mem is a LAW - a Prop-valued
@@ -341,7 +342,8 @@ def build():
 
     E.append(Paragraph('IV.1 — Cyclic Vertices', S['h2']))
     E.append(body(
-        'A vertex v is cyclic if there exists a directed path from v back to itself. '
+        'A vertex v is cyclic if there exists a non-empty directed path from v back to itself '
+        '(HasSelfCycle: an edge out of v followed by a path back). '
         'The valuation argument forces any valid decoration to assign &#8869; to every '
         'cyclic vertex, independent of which decoration is used. Both d&#8321; and '
         'd&#8322; must therefore assign &#8869; to every cyclic vertex, and they '
@@ -438,7 +440,7 @@ def build():
     E.append(result_box(
         'Lemma: acyclic_induction_step (ZeroParadox/Settheory/APG.lean §VIII)',
         [
-            'If d&#8321; and d&#8322; agree on every successor of an acyclic vertex v,',
+            'If d&#8321; and d&#8322; agree on every successor of a vertex v (no acyclicity hypothesis),',
             'then d&#8321; v = d&#8322; v.',
             'Proof: collect is the same operation for both; d&#8321; and d&#8322; agree '
             'pointwise on children(v) by hypothesis; therefore the assembled labels agree.',
@@ -518,7 +520,7 @@ def build():
             'ZeroParadox/Settheory/SetTheoryAFA.lean &#8212; AFAStructure typeclass '
             '(selfMem, quine_unique, bot_self_mem), IsQuineAtom',
             'ZeroParadox/Settheory/AczelConn.lean &#8212; J_self, '
-            'selfMem_determines_singleton, DC-free identification theorems',
+            'selfMem_determines_singleton, choice-free identification theorems',
             'ZeroParadox/Settheory/OntBridge.lean &#8212; OntologicalStates as '
             'AbstractSelfApp instance',
             'ZeroParadox/Settheory/Model.lean &#8212; instNatInfZPS and instNatInfVal, '
@@ -556,8 +558,8 @@ def build():
             #   it is THE route rather than one of several: respelling the successor as
             #   `((1 : ℕ) : ℕ∞)` and changing nothing else makes the class report no axioms.
             #   ⚠ WHY IT MATTERED MORE THAN A CITATION SLIP: the line below says "No ZP-specific
-            #   axioms beyond", so attributing the cost to a library turned something REMOVABLE
-            #   into something UNAVOIDABLE. `AxiomProfile.lean` § 0 warns about exactly this —
+            #   axioms beyond", so attributing the cost to a library misplaced it: the cost sits in
+            #   this framework's spelling of the numeral, not in a library it cannot avoid. `AxiomProfile.lean` § 0 warns about exactly this —
             #   *"PROVENANCE and NECESSITY are independent axes, and the first version of this
             #   heading conflated them"* — and the corrected text keeps them apart: the tainted
             #   INSTANCE is Mathlib's, the SPELLING that reaches for it is this framework's, and
@@ -572,28 +574,27 @@ def build():
             'inherited through packaging, invoked. (c) CARDINALITY: the termination measure '
             'runs on Set.ncard, and Set.ncard_lt_ncard and Set.ncard_pos are each '
             'independently choice-tainted. (d) THE CASE SPLIT: the proof&#8217;s by_cases on '
-            'HasSelfCycle u is decided by Classical.propDecidable, one of the three classical-instance '
-            'gateways through which, jointly, 55.4% of Mathlib&#8217;s choice-dependence flows '
-            '(L. J. Close, The Axiom Profile of Mathlib, Zenodo 2026, doi:10.5281/zenodo.20710921, '
-            'pp. 5&#8211;6; cited, not claimed).',
+            'HasSelfCycle u is decided by Classical.propDecidable, the one instance in the gateway '
+            'triple (with Classical.indefiniteDescription and Classical.ofNonempty) that L. J. Close '
+            'identifies in Mathlib&#8217;s choice dependence (The Axiom Profile of Mathlib, Zenodo 2026, '
+            'doi:10.5281/zenodo.20710921, pp. 5&#8211;6, measured at Mathlib 8f9d9cf on Lean v4.28.0, '
+            'not the Mathlib 5450b53 on Lean v4.30.0-rc2 this repository pins; cited, not claimed).',
             'Quot.sound       &#8212; quotient soundness (standard in Lean 4)',
-            '&#8226; A RESTATEMENT CLEARS IT FOR THE CLASS; NO PROOF CAN CLEAR IT FOR THE '
+            '&#8226; A TRANSCRIPTION CLEARS IT FOR THE CLASS; NO PROOF CAN CLEAR IT FOR THE '
             'THEOREM AS STATED &#8212; and the difference is the whole claim. '
-            'ZeroParadox/Valuation/Scale.lean transcribes the class twice, as _VSlit and '
-            '_VScast, differing only in route (a)&#8217;s numeral, which _VScast writes '
-            '((1 : &#8469;) : &#8469;&#8734;): _VSlit reports [propext, Classical.choice, '
-            'Quot.sound] and _VScast reports no axioms. The declared class still reports the '
-            'axiom; _VScast is a respelling of it, not a proof. '
-            'decoration_unique&#8217;s STATEMENT carries the axiom: a theorem that only '
-            'assumes that statement and proves True reports [propext, Classical.choice, '
-            'Quot.sound] (the statement control, measured 2026-10-09), so no proof of '
-            'decoration_unique as stated can remove it &#8212; the STATEMENT-CARRIED class of '
-            'ZeroParadox/Category/ChoiceCannotBe.md, recorded at DecorationUniverse in '
-            'ZeroParadox/Settheory/APG.lean. Routes (b), (c) and (d) lie in the proof, not the '
-            'statement. Measured 2026-10-09: the same statement restated over clean spellings of '
-            'both classes reports only [propext, Quot.sound] under the statement control, and '
-            'route (b)&#8217;s edge step, re-proved with obtain in place of .some, reports no '
-            'axioms; routes (c) and (d) were not re-proved in that measurement.',
+            'ZeroParadox/Valuation/Scale.lean transcribes ValuationStructure twice, as _VSlit and '
+            '_VScast, differing only in val_scale&#8217;s numeral `1`, which _VScast writes '
+            '((1 : &#8469;) : &#8469;&#8734;): by the #print axioms lines after them, _VSlit reports '
+            '[propext, Classical.choice, Quot.sound] and _VScast reports no axioms. '
+            'DecorationUniverse&#8217;s own `+ 1` is not transcribed there. The declared class still '
+            'reports the axiom; _VScast is a transcription of it, not a proof. '
+            'decoration_unique&#8217;s STATEMENT carries the axiom through its [ValuationStructure U] '
+            'binder, so no proof of decoration_unique as stated can remove it &#8212; the '
+            'STATEMENT-CARRIED class of ZeroParadox/Category/ChoiceCannotBe.md. The record is the '
+            'DecorationUniverse [ZP-CUSTOM] line of ZeroParadox/Settheory/APG.lean (&#8704; {U} '
+            '[ZPSemilattice U] [ValuationStructure U], True reports the three axioms; with '
+            '[ZPSemilattice U] alone, none), which calls the cost NOT REMOVABLE BY ANY PROOF of that '
+            'theorem. Routes (b), (c) and (d) lie in the proof, not the statement.',
             'No ZP-specific AXIOM is declared anywhere in this chain; the footprint above is '
             'what the Lean reports, not a commitment the framework makes.',
             'No Dependent Choice. No additional set-theoretic assumptions.',

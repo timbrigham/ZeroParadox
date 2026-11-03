@@ -4,6 +4,7 @@ import Mathlib.Probability.BorelCantelli
 import Mathlib.Probability.ProbabilityMassFunction.Constructions
 import Mathlib.Tactic
 import ZeroParadox.Die
+import ZeroParadox.Order.Snap
 
 set_option maxHeartbeats 400000
 
@@ -97,7 +98,7 @@ formalization of a published characterization.
 
 - § I   The trial space, and that it is a probability space
 - § II  The per-stage events: measurable, independent, marginal exactly `p`
-- § III The payoff; § IV–VII from almost surely to one run (ride-along `CrossingTrials.md`)
+- § III The payoff; § IV–VIII to one run and `t_snap_given`'s hypotheses (`CrossingTrials.md`)
 -/
 
 namespace ZeroParadox
@@ -361,6 +362,25 @@ example : (fun _ => true : ℕ → Bool) ∈ Filter.limsup fires Filter.atTop �
   · simp [oneBlock]
   · rw [trials_oneBlock]; simp
 
+-- Statement: the zero-block hypothesis is weak: for every `p ≤ 1` the all-`true` tape, a constant
+-- tape, avoids the class of zero-block tests for `trials p hp` (level 1 of a test has measure at
+-- most `1/2`, so its window has positive length, and the all-`true` tape lies in no zero block over a
+-- window of positive length).
+example (p : NNReal) (hp : p ≤ 1) :
+    AvoidsTests (ZeroBlockTest (trials p hp)) (fun _ => true) := by
+  rintro U ⟨hμ, f, -, hf⟩ hmem
+  have h1 := hμ 1
+  rw [hf 1] at h1
+  have hm : (fun _ => true : ℕ → Bool) ∈ zeroBlock (f 1).1 (f 1).2 := by
+    rw [← hf 1]; exact Set.mem_iInter.1 hmem 1
+  rcases Nat.eq_zero_or_pos (f 1).2 with h0 | hpos
+  · have : zeroBlock (f 1).1 (f 1).2 = Set.univ := by
+      ext w; simp [zeroBlock, h0]
+    rw [this, measure_univ] at h1
+    norm_num at h1
+  · have := hm (f 1).1 (by simp [Finset.mem_Ico]; omega)
+    simp at this
+
 /-! ## § VII. The slot machine as a die motion -/
 
 /-- **`Statement:` the motion on `Bool` with UP the identity and OVER: every point steps to itself,
@@ -454,6 +474,151 @@ example {β : Type*} {N : Motion β} (φ : Motion.LaxHom slotMotion N)
 -- stays at `false` at every stage.
 example : ∀ n, slotRun (fun _ => false) n = false := fun n => by simp [slotRun]
 
+/-! ## § VIII. Fired once gives `t_snap_given`'s hypotheses
+
+Direction: a tape that has fired at least once gives a state sequence meeting `t_snap_given`'s
+`hcc1` and `hocc`; the cover `hcov` of `t_snap_given_cover` is not supplied. "Fired at least once"
+holds on a set of `trials p hp` measure one when `0 < p ≤ 1` (`trials_fires_once`) and for every
+tape meeting § VI's hypotheses (`t_snap_of_avoids`); neither statement names a tape. -/
+
+/-- **`Statement:` `slotRun w` with the stages before the first firing dropped.** `Nat.find hw` is
+the least `k` with `w k = true`, a first hitting time (Mathlib: `MeasureTheory.hittingAfter`). -/
+def firedRun (w : ℕ → Bool) (hw : ∃ k, w k = true) (n : ℕ) : Bool :=
+  slotRun w (Nat.find hw + n)
+
+-- Statement: if `w` fires at some stage, `Nat.find hw` is Mathlib's `hittingAfter` of the coordinate
+-- process at `{true}` from time 0.
+example (w : ℕ → Bool) (hw : ∃ k, w k = true) :
+    MeasureTheory.hittingAfter (fun (j : ℕ) (x : ℕ → Bool) => x j) {true} 0 w =
+      (Nat.find hw : WithTop ℕ) := by
+  rw [MeasureTheory.hittingAfter_def]
+  have : ∃ j, 0 ≤ j ∧ w j ∈ ({true} : Set Bool) := by
+    obtain ⟨k, hk⟩ := hw; exact ⟨k, Nat.zero_le _, hk⟩
+  simp only [this, if_true]
+  congr 1
+  apply le_antisymm
+  · exact Nat.sInf_le ⟨Nat.zero_le _, Nat.find_spec hw⟩
+  · apply le_csInf
+    · obtain ⟨k, hk⟩ := hw; exact ⟨k, Nat.zero_le _, hk⟩
+    · rintro b ⟨-, hb⟩; exact Nat.find_min' hw hb
+
+/-- **`Statement:` if `w` fires at some stage, `firedRun w hw` is `false` at stage 0 and `true` at
+every later stage.** -/
+theorem firedRun_spec (w : ℕ → Bool) (hw : ∃ k, w k = true) :
+    firedRun w hw 0 = false ∧ ∀ n, firedRun w hw (n + 1) = true := by
+  refine ⟨?_, fun n => ?_⟩
+  · simp only [firedRun, slotRun, Nat.add_zero, decide_eq_false_iff_not]
+    rintro ⟨k, hk, e⟩
+    exact Nat.find_min hw hk e
+  · simp only [firedRun, slotRun, decide_eq_true_eq]
+    exact ⟨Nat.find hw, by omega, Nat.find_spec hw⟩
+
+/-- **`Statement:` if `w` fires at some stage, `firedRun w hw` is a run of `slotMotion`.** A shift of
+the run `slotRun w` (`slotRun_isRun`). -/
+theorem firedRun_isRun (w : ℕ → Bool) (hw : ∃ k, w k = true) :
+    slotMotion.IsRun (firedRun w hw) := fun n =>
+  slotRun_isRun w (Nat.find hw + n)
+
+/-- **`Statement:` if `φ : Bool → L` sends `false` to ⊥ of `L` and `true` to a point other than ⊥ of
+`L`, and the tape `w` fires at some stage (`hw`), then `S := φ ∘ firedRun w hw` has `S 0 = ⊥` (CC-1,
+`t_snap_given`'s `hcc1`), `S 1 ≠ S 0` (`t_snap_given`'s `hocc`), is a state sequence (ZP-A's D3), and
+carries `t_snap_given`'s triple.** One way: fired-once gives the hypotheses; the converse is not
+claimed. Every firing tape gives the same `firedRun w hw`, `false` at stage 0 and `true` after
+(`firedRun_spec`): the tape contributes one bit, that it fired. `S` steps once, at index 1, and
+stays, so it is not an `IsStrictStateSequence` (the last `example` of the file). Without `hw` the
+all-`false` tape's run `φ ∘ slotRun` stays at ⊥ of `L` at every stage (the first `example` below).
+`Reading:` `hw` is the occurrence commitment in its slot chart, written as one hypothesis on the
+realized tape; it is a hypothesis here, never a field of a structure. -/
+theorem t_snap_of_fires_once {L : Type*} [ZPSemilattice L] (φ : Bool → L)
+    (hφ0 : φ false = ZPSemilattice.bot) (hφ1 : φ true ≠ ZPSemilattice.bot)
+    (w : ℕ → Bool) (hw : ∃ k, w k = true) :
+    let S := φ ∘ firedRun w hw
+    S 0 = ZPSemilattice.bot ∧ S 1 ≠ S 0 ∧ ZPSemilattice.IsStateSequence S ∧
+      (S 0 ≠ S 1 ∧ S 1 ≠ S 0 ∧ ZPSemilattice.join (S 0) (S 1) = S 1) := by
+  intro S
+  obtain ⟨h0, hs⟩ := firedRun_spec w hw
+  have hS0 : S 0 = ZPSemilattice.bot := by simp [S, h0, hφ0]
+  have hS1 : S 1 ≠ S 0 := by
+    simp only [S, Function.comp, hs 0, h0, hφ0]; exact hφ1
+  refine ⟨hS0, hS1, ⟨fun _ => φ true, fun n => ?_⟩, t_snap_given S hS0 hS1⟩
+  cases n with
+  | zero => simp only [S, Function.comp, hs 0, h0, hφ0]; exact (ZPSemilattice.bot_join _).symm
+  | succ n => simp only [S, Function.comp, hs]; exact (ZPSemilattice.join_idem _).symm
+
+/-- **`Statement:` if `p ≤ 1` and `0 < p`, the tapes that fire at some stage have `trials p hp`
+measure one.** They contain the tapes that fire infinitely often, a set of measure one
+(`crossing_almost_surely`). The conclusion is about a set of tapes and names no tape. -/
+theorem trials_fires_once (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p) :
+    trials p hp {w | ∃ k, w k = true} = 1 := by
+  refine le_antisymm prob_le_one ?_
+  rw [← crossing_almost_surely p hp hp0]
+  refine measure_mono fun w hw => ?_
+  rw [mem_limsup_iff_frequently_mem] at hw
+  obtain ⟨k, -, hk⟩ := hw.forall_exists_of_atTop 0
+  exact ⟨k, hk⟩
+
+/-- **`Statement:` if `p ≤ 1`, `0 < p`, `𝒯` contains every zero-block test for `trials p hp`, `w`
+avoids `𝒯`, and `φ` is as in `t_snap_of_fires_once`, then `w` fires at some stage and
+`t_snap_of_fires_once`'s conclusion holds for it.** From `fires_io_of_avoids`. One way: the squares
+tape fires at stage 0 and does not avoid `𝒯` (the fourth CONTROL `example` below), so § VI's
+hypotheses are sufficient for `hw`, not necessary. `Reading:` `htyp`, like `hw`, is a hypothesis on
+one tape. -/
+theorem t_snap_of_avoids {L : Type*} [ZPSemilattice L] (φ : Bool → L)
+    (hφ0 : φ false = ZPSemilattice.bot) (hφ1 : φ true ≠ ZPSemilattice.bot)
+    (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p)
+    (𝒯 : (ℕ → Set (ℕ → Bool)) → Prop) (h𝒯 : ∀ U, ZeroBlockTest (trials p hp) U → 𝒯 U)
+    (w : ℕ → Bool) (htyp : AvoidsTests 𝒯 w) :
+    ∃ hw : ∃ k, w k = true,
+      let S := φ ∘ firedRun w hw
+      S 0 = ZPSemilattice.bot ∧ S 1 ≠ S 0 ∧ ZPSemilattice.IsStateSequence S ∧
+        (S 0 ≠ S 1 ∧ S 1 ≠ S 0 ∧ ZPSemilattice.join (S 0) (S 1) = S 1) := by
+  have h := fires_io_of_avoids p hp hp0 𝒯 h𝒯 w htyp
+  rw [mem_limsup_iff_frequently_mem] at h
+  obtain ⟨k, -, hk⟩ := h.forall_exists_of_atTop 0
+  exact ⟨⟨k, hk⟩, t_snap_of_fires_once φ hφ0 hφ1 w ⟨k, hk⟩⟩
+
+-- Statement: CONTROL, the tape-driven run needs `hw`: the all-`false` tape fires at no stage, and for any `φ`
+-- with `φ false = ⊥` the sequence `φ ∘ slotRun` it drives starts at ⊥ of `L` and never steps.
+example {L : Type*} [ZPSemilattice L] (φ : Bool → L) (hφ0 : φ false = ZPSemilattice.bot) :
+    (¬ ∃ k, (fun _ => false : ℕ → Bool) k = true) ∧
+    (φ ∘ slotRun (fun _ => false)) 0 = ZPSemilattice.bot ∧
+    ∀ n, (φ ∘ slotRun (fun _ => false)) n = (φ ∘ slotRun (fun _ => false)) 0 :=
+  ⟨fun ⟨_, h⟩ => Bool.false_ne_true h, by simp [slotRun, hφ0], fun n => by simp [slotRun]⟩
+
+-- Statement: CONTROL, the shift is needed for `hocc` at index 1: the tape firing only at stage 1
+-- drives `φ ∘ slotRun` with `S 1 = S 0`.
+example {L : Type*} [ZPSemilattice L] (φ : Bool → L) :
+    (φ ∘ slotRun (fun k => decide (k = 1))) 1 = (φ ∘ slotRun (fun k => decide (k = 1))) 0 := by
+  simp [slotRun]
+
+-- Statement: CONTROL, `Unit`: it carries a `ZPSemilattice` (as `trivialZPSemilattice`,
+-- `ZeroParadox/Valuation/Scale.lean`), and under any such instance no `φ : Bool → Unit` has
+-- `φ true ≠ ⊥`, so `hφ1` has no member.
+example : Nonempty (ZPSemilattice Unit) :=
+  ⟨⟨fun _ _ => (), (), fun _ _ _ => rfl, fun _ _ => rfl, fun _ => rfl, fun _ => rfl⟩⟩
+example [ZPSemilattice Unit] (φ : Bool → Unit) : ¬ φ true ≠ ZPSemilattice.bot := fun h => h rfl
+
+-- Statement: CONTROL, fired once does not imply typical: for every `0 < p ≤ 1` and every class `𝒯`
+-- holding the zero-block tests for `trials p hp`, the squares tape fires at stage 0 and does not avoid `𝒯`.
+example (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p)
+    (𝒯 : (ℕ → Set (ℕ → Bool)) → Prop) (h𝒯 : ∀ U, ZeroBlockTest (trials p hp) U → 𝒯 U) :
+    (∃ k, squaresTape k = true) ∧ ¬ AvoidsTests 𝒯 squaresTape :=
+  ⟨⟨0, by simp [squaresTape]⟩, squaresTape_not_avoids p hp hp0 𝒯 h𝒯⟩
+
+-- Statement: CONTROL, measure one is not every tape: if `0 < p ≤ 1`, the fired-once set has measure
+-- one and the all-`false` tape is not in it.
+example (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p) :
+    trials p hp {w | ∃ k, w k = true} = 1 ∧ ¬ ∀ w : ℕ → Bool, ∃ k, w k = true :=
+  ⟨trials_fires_once p hp hp0, fun h => by obtain ⟨k, hk⟩ := h (fun _ => false); simp at hk⟩
+
+-- Statement: occurrence once: under `t_snap_of_fires_once`'s hypotheses, `S := φ ∘ firedRun w hw`
+-- has `S 2 = S 1`, so `S` is not an `IsStrictStateSequence` (ZP-A's proper ascent at every step).
+example {L : Type*} [ZPSemilattice L] (φ : Bool → L) (w : ℕ → Bool) (hw : ∃ k, w k = true) :
+    ¬ ZPSemilattice.IsStrictStateSequence (φ ∘ firedRun w hw) := fun h => by
+  have a : firedRun w hw 1 = true := (firedRun_spec w hw).2 0
+  have b : firedRun w hw 2 = true := (firedRun_spec w hw).2 1
+  exact h.2 1 (show φ (firedRun w hw 1) = φ (firedRun w hw 2) by rw [a, b])
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -494,5 +659,11 @@ open ZeroParadox
 #print axioms slotMotion_selfOnlyAt_true
 #print axioms slotRun_crosses_iff
 #print axioms slotRun_image_departs_of_avoids
+#print axioms firedRun
+#print axioms firedRun_spec
+#print axioms firedRun_isRun
+#print axioms t_snap_of_fires_once
+#print axioms trials_fires_once
+#print axioms t_snap_of_avoids
 
 end PurityCheck

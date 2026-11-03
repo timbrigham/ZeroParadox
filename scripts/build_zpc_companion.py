@@ -1,5 +1,5 @@
 """
-Build ZP-C Illustrated Companion (v2.12)
+Build ZP-C Illustrated Companion (v2.14)
 """
 
 import os
@@ -177,7 +177,7 @@ def lrun_diagram():
                strokeColor=COMP_BLUE, strokeWidth=1, strokeDashArray=[4, 3]))
     return d
 
-VERSION = '2.12'
+VERSION = '2.14'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -322,8 +322,8 @@ def build():
 
     E.append(Paragraph('The Binary Snap Costs Exactly 1 Bit', CS['h1']))
     E.append(cbody(
-        'The Jensen-Shannon Divergence (JSD) between the bottom state ⊥, P = (1,0), and the minimum '
-        'non-bottom state &#949;<sub>0</sub>, Q = (0,1), is exactly 1 bit. These distributions are derived from AX-B1 - '
+        'The Jensen-Shannon Divergence (JSD) between the bottom state ⊥, P = (1,0), and &#949;<sub>0</sub>, '
+        'the atom above ⊥ of the two-state carrier, Q = (0,1), is exactly 1 bit. These distributions are derived from AX-B1 - '
         'not assumed. The Snap is the minimum informational event possible.'))
     E.append(jsd_diagram())
     E.append(Paragraph(
@@ -343,7 +343,7 @@ def build():
         'The identification of c₀ with the bottom state ⊥ is a modeling commitment (CC-2 in '
         'ZP-C) — a choice made explicit in the formal document, parallel to CC-1 in ZP-A '
         '(which identifies the initial state S₀ with ⊥). It is not derived from the machine '
-        'definition; it is chosen. Labeling it CC-2 keeps that choice visible.'))
+        'definition; it is chosen. Labeling it ZP-C CC-2 keeps that choice visible (ZP-A has its own CC-2, the Quine atom).'))
 
     # ── Page 3 ─────────────────────────────────────────────────────────────────
     E.append(lrun_diagram())
@@ -370,7 +370,7 @@ def build():
         'ZP-C adds explicit labels to two choices the framework makes. Labeling them is not '
         'a weakness — it is how the framework keeps track of what is proven versus what is chosen.'))
     E.append(cbody(
-        'CC-2 (Modeling Commitment): The Turing machine initial configuration c₀ is identified '
+        'ZP-C CC-2 (Modeling Commitment): The Turing machine initial configuration c₀ is identified '
         'with ⊥. This is the same pattern as CC-1 in ZP-A, which identifies the '
         'initial state S₀ with ⊥. Neither identification is forced by the definitions — both are '
         'deliberate choices that make the multi-layer framework cohere.'))
@@ -389,8 +389,9 @@ def build():
         'Key Result: T-SNAP — The Shape of the Binary Snap Is a Proven Theorem',
         'The derivation chain for the shape: any live computation must execute a first instruction, '
         'and that execution is a non-bottom state (L-RUN). '
-        'No Turing machine program can produce any output without passing through such a non-bottom '
-        'intermediate state. And any state change off ⊥ is precisely the '
+        'So no executing Turing machine program can produce any output, ⊥ included, without passing through such a non-bottom '
+        'intermediate state: it passes through the first running configuration by the definition of execution, '
+        'and what is proved is that this configuration differs from c₀ (TQ-IH, c₁ ≠ c₀). And any state change off ⊥ is precisely the '
         'Binary Snap (ZP-A D2). ZP-E closes the chain as Theorem T-SNAP. '
         'The shape of the Binary Snap is no longer assumed — it is derived. '
         'That the Snap happens is a separate matter. The framework commits to instantiation occurring: '

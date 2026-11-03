@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-K: Computational Grounding of Self-Reference PDF Builder
-Version 1.31 | November 2026
+Version 1.33 | November 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.31'
+VERSION = '1.33'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -34,10 +34,14 @@ def build():
         'self-reference structure. On the framework\'s reading, ⊥ in the computational '
         'instantiation is not a state of a Turing machine: it is the ground state of a universal '
         'Turing machine — the state from which no external executor is required. Kleene\'s '
-        'second recursion theorem supplies a fixed point of the self-application operator; that '
-        'this fixed point is to be read as the computational expression of ⊥ = {⊥} is the '
-        'framework\'s commitment, carried by the KleeneStructure class, not a property the '
-        'theorem establishes.'))
+        'second recursion theorem supplies a fixed point of the self-application operator. The '
+        'reading of that fixed point as ⊥\'s computational counterpart splits in two, and no field '
+        'of the KleeneStructure class asserts either half. Its identity half is retired: a code and '
+        '⊥ of a lattice are compared through the Quine-atom role (Motion.SelfOnlyAt, a point that '
+        'steps to itself and to nothing else), which under the eval step no single code occupies '
+        '(evalStepMotion_not_selfOnlyAt) and, for a computable map respecting equal output, a class '
+        'of codes up to equal output does (codes_vs_classes). Its running half, that ⊥ actually '
+        'executes, is the occurrence commitment.'))
     E.append(body(
         'The central result is a three-way equivalence within this framework, in the precise sense '
         'defined by Remark R-K.0: the structural roles of ⊥ — Quine atom (set-theoretic), bottom '
@@ -178,9 +182,15 @@ def build():
     E.append(body(
         'ZP-K\'s KleeneStructure extends AFAStructure with a computational witness: a code '
         'botCode satisfying the selfApply periodicity condition, whose existence is guaranteed '
-        'by Kleene\'s theorem. The typeclass commitment takes AFA self-containment (⊥ = {⊥}) '
-        'and the Kleene fixed point to be the same structural role stated in two formal '
-        'languages — this is the motivating claim, not a consequence derived by the theorems.'))
+        'by Kleene\'s theorem. The class was built for the reading that AFA self-containment (the '
+        'Quine atom, CC-2) and the Kleene fixed point are one structural role in two formal '
+        'languages. That role is stated once, as the Quine-atom role Motion.SelfOnlyAt (a point that '
+        'steps to itself and to nothing else), and each chart carries its own occupancy theorem: '
+        'with membership as the step, ⊥ is the only occupant in an AFAStructure lattice '
+        '(quineAtomHost_quine_role_iff, host afaStructure_isQuineAtomHost); on codes under the eval '
+        'step no single code occupies it (evalStepMotion_not_selfOnlyAt), and for a computable map '
+        'respecting equal output a class of codes up to equal output does (codes_vs_classes). No '
+        'equation across a code and ⊥ is stated, and no field of the class asserts one.'))
 
     E.append(def_box(
         'KleeneStructure Typeclass (Kleene.lean § II)',
@@ -198,18 +208,20 @@ def build():
             'Any KleeneStructure instance must supply both the AFA witness (bot_self_mem) '
             'and the computational witness (botCode with botCode_is_quine). Both are class '
             'FIELDS — assumptions discharged at instantiation, not results proved here. They are '
-            'required together because the framework READS them as one structural fact; that '
-            'reading is the motivation for the class, and it is not derived within it.',
+            'required together because the class was built for the reading that they are one '
+            'structural fact; that reading is not derived within it, and its identity half is '
+            'retired in favour of per-chart occupancy of the Quine-atom role (I above).',
         ]
     ))
     E.append(sp(6))
 
     E.append(Paragraph('II. Why Not a Bridge Axiom?', S['h2']))
     E.append(body(
-        'The identification between AFA self-containment and Kleene computational fixed points '
-        'is not asserted as a new axiom. KleeneStructure is a typeclass: any concrete type '
-        'claiming this identification must discharge it as a proof obligation. The commitment '
-        'is checked at instantiation, not accepted globally.'))
+        'No identification between AFA self-containment and Kleene computational fixed points '
+        'is asserted, as a new axiom or as a class field. KleeneStructure is a typeclass: any '
+        'concrete type must discharge its fields (among them a predicate selfMem with ⊥ its unique witness, and a '
+        'code botCode meeting the periodicity condition) as proof obligations. They are checked at instantiation, not '
+        'accepted globally.'))
     E.append(callout(
         'The distinction from ZP-J carries over: a freestanding axiom says "trust me." '
         'A typeclass field says "prove it for your specific type, or it does not compile." '
@@ -228,8 +240,9 @@ def build():
 
     E.append(body(
         'ZP-J T-EXEC established a three-way equivalence: Quine atom (set-theoretic) ↔ '
-        'bottom element (order-theoretic) ↔ join identity (algebraic). T-COMP proves exactly '
-        'those three equivalent. ZP-K bundles a fourth face — Kleene fixed point '
+        'bottom element (order-theoretic) ↔ join identity (algebraic). T-COMP, whose statement is '
+        '(1) ↔ ((2) ∧ (3)), proves those three equivalent together with da2_bottom_characterization, '
+        'which gives (2) ↔ (3). ZP-K bundles a fourth face — Kleene fixed point '
         '(computational) — as a KleeneStructure class field, so all four are present '
         'simultaneously in any KleeneStructure lattice, but the fourth is required at '
         'instantiation rather than proved equivalent to the others.'))
@@ -237,7 +250,8 @@ def build():
         'Remark R-K.0 — What T-COMP Proves, and What "Four-Way" Meant',
         [
             'The equivalence among (1)–(4) has two distinct sources:',
-            '(1)–(3) are equivalent by T-EXEC (ZP-J): any element that is a Quine atom is also '
+            '(1)–(3) are equivalent by T-EXEC (ZP-J), with da2_bottom_characterization for '
+            '(2) ↔ (3): any element that is a Quine atom is also '
             '⊥ and a join identity, and vice versa. This is a genuine logical derivation — the '
             'three properties are proved to coincide from the AFAStructure axioms.',
             '(4) is present in any KleeneStructure instance because KleeneStructure requires it '
@@ -257,7 +271,9 @@ def build():
             'instance." (1)–(3) are independently proved equivalent. (4) is bundled in by the '
             'typeclass requirement. The philosophical claim — that Kleene computational '
             'self-reference and AFA set-theoretic self-reference are the same thing — is the '
-            'motivation for the typeclass design, not a consequence derived within it.',
+            'motivation for the typeclass design, not a consequence derived within it. Its identity '
+            'half is retired: what the two share is the Quine-atom role, whose occupancy is settled chart by chart '
+            '(Section II.I), and that ⊥ actually executes is the occurrence commitment.',
         ]
     ))
     E.append(sp(6))
@@ -273,7 +289,8 @@ def build():
             'Separately, the KleeneStructure requirement: ∃ botCode : Code, IsComputationalQuine '
             'botCode (computational self-reference). It is not a clause of t_comp; it is present in '
             'any KleeneStructure instance because botCode_is_quine is a required field. The '
-            'equivalence of (1)–(3) is derived by T-EXEC.',
+            'equivalence of (1)–(3) is derived by T-EXEC, with da2_bottom_characterization for '
+            '(2) ↔ (3).',
             'Lean: ZeroParadox.t_comp. '
             'Purity: standard foundational axioms — from Mathlib computability. ✓',
         ]
@@ -292,7 +309,7 @@ def build():
         'witness of execution and not a second independent proof.'))
     E.append(body(
         'Path 1 says: nothing external to ⊥ can execute ⊥, so if ⊥ executes at all, the executor '
-        'is ⊥ itself, read as ⊥ = {⊥}; that rules out an external executor, not an inert ⊥. '
+        'is ⊥ itself, ⊥ read as the Quine atom (CC-2); that rules out an external executor, not an inert ⊥. '
         'Path 3 says: no shorter external program generates ⊥; that rules out a shorter external '
         'generator, not an inert string, so Path 3 does not derive executing from incompressibility. '
         'The framework READS these as one claim in two vocabularies. What is '
@@ -341,8 +358,9 @@ def build():
             'Lean proves only the Quine-atom statement above; that ⊥ executes is the occurrence '
             'commitment, not this theorem. Lean witnesses ⊥ as the AFA Quine '
             'atom of MachinePhase (da1_closed_concrete) and carries the Kleene quine as a '
-            'KleeneStructure requirement (botCode_is_quine); that these are one structural fact is '
-            'the framework\'s reading.',
+            'KleeneStructure requirement (botCode_is_quine); no Lean statement makes them one '
+            'object, and what they share is the Quine-atom role, whose occupancy is settled chart by chart '
+            '(Section II.I).',
             'Lean: ZeroParadox.description_instantiation_gap_closed. '
             'Purity: standard foundational axioms only. ✓',
         ]
@@ -493,8 +511,10 @@ def build():
             '  quine_unique _ _ hx hy := hx.trans hy.symm   (if x = ⊥ and y = ⊥ then x = y)',
             '  bot_self_mem   := rfl                (⊥ = ⊥, proved by reflexivity)',
             '',
-            'This is the CIC encoding of ⊥ = {⊥}: the initial machine state is self-containing '
-            'and is the unique element with this property. No ZF+AFA axiom is added — '
+            'This is the CIC-compatible stand-in for the Quine atom (CC-2): the initial machine '
+            'state is self-containing and is the unique element with this property, so with '
+            'membership as the step it is the only occupant of the Quine-atom role '
+            '(quineAtomHost_quine_role_iff, host afaStructure_isQuineAtomHost). No ZF+AFA axiom is added — '
             'the structural fact is encoded as a definition that Lean verifies.',
         ]
     ))
@@ -511,9 +531,9 @@ def build():
             'botCode is a class field supplied at instantiation; this instance supplies it as '
             'Classical.choose applied to computational_quine_exists — some witness of that '
             'existence statement, not a distinguished code. Reading it as '
-            '"the program that IS its own program" is the framework\'s commitment carried by the '
-            'class, not a property this instance establishes: IsComputationalQuine is a '
-            'periodicity condition, strictly weaker than self-reference.',
+            '"the program that IS its own program" is not a property this instance establishes, '
+            'and no field of the class asserts it (its identity half is retired, Section II.I): '
+            'IsComputationalQuine is a periodicity condition, strictly weaker than self-reference.',
         ]
     ))
     E.append(sp(6))
@@ -562,7 +582,7 @@ def build():
         '(the QuineHost instance on OneAtom, ZeroParadox/Settheory/QuineHost.lean &#167; V). '
         'The Lean counterpart of Path 1 is da1_closed_concrete, which proves '
         'IsQuineAtom (⊥ : MachinePhase) and nothing computational: in the AFAStructure '
-        'typeclass, selfMem encodes ⊥ = {⊥} in CIC-compatible form, and the proof obligation '
+        'typeclass, selfMem stands in for the Quine atom (CC-2) in CIC-compatible form, and the proof obligation '
         'is discharged by the MachinePhase instance. Path 3 (computational) is NOT resolved '
         'here. Its Lean counterpart, botCode_is_quine, is a KleeneStructure class field — an assumption '
         'supplied at instantiation, not a second independent proof — and the condition it '
@@ -774,7 +794,7 @@ def build():
         ['machinePhaseAFA (AFAStructure)',
          'selfMem := x = ⊥; quine_unique; bot_self_mem := rfl',
          'No axioms',
-         'CIC encoding of ⊥ = {⊥} for MachinePhase ✓'],
+         'CIC stand-in for the Quine atom (CC-2) on MachinePhase ✓'],
         ['machinePhaseKleene (KleeneStructure)',
          'machinePhaseAFA + Classical.choose computational_quine_exists',
          'Standard Mathlib foundational axioms',

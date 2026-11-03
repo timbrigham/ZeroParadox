@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-M: Kleene-Ordinal Bridge PDF Builder
-Version 1.18 | November 2026
+Version 1.19 | November 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.18'
+VERSION = '1.19'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -28,7 +28,7 @@ def build():
             '<i>Synthesis bridge. '
             'All theorems §I&#8211;§IV proved sorry-free in Lean 4. '
             'Closes the hfp free hypothesis (ZP-L) and the snapEmbed type bridge. '
-            'Axiom footprint: [propext, Classical.choice, Quot.sound] throughout.</i>',
+            'Axiom footprint: at most [propext, Classical.choice, Quot.sound], per declaration below.</i>',
             S['note']),
         sp(10),
         hr(),
@@ -43,7 +43,8 @@ def build():
         'alignment hypothesis plus monotonicity: hfp is not an independent condition. '
         'Second, the canonical type bridge snapEmbed : MachinePhase &#8594; &#8484;&#8322; '
         'formalizes the structural triangle connecting the pre-snap state c&#8320; '
-        '(read as the Kleene quine, a KleeneStructure requirement in ZP-K, not a theorem), the ordinal snap at &#949;&#8320; (ZP-L), and the '
+        '(&#8869; of MachinePhase; reading it as the Kleene quine is not an equation, since a Code and a MachinePhase state '
+        'are different types, and that it runs is the occurrence commitment), the ordinal snap at &#949;&#8320; (ZP-L), and the '
         '2-adic limit 0 (ZP-B).'))
     E.append(body(
         'The closing result (§IV) proves two existence statements together: a code c with eval c n = eval c (encode c + n) '
@@ -69,11 +70,18 @@ def build():
         'Under multiplication on &#8484;&#8322;, 0 is absorbing — mirroring exactly the '
         'join structure on MachinePhase, where c&#8321; is the absorbing element.'))
     E.append(body(
-        'Within the ZP framework, 0 &#8712; &#8484;&#8322; plays the role of &#8869; — '
-        'it is the 2-adic valuation limit and the fixed point of multiplication by 2. '
-        'snapEmbed makes this modelling commitment concrete: c&#8321; maps to 0 because '
-        'c&#8321; IS the object at infinite 2-adic depth. This is a modelling commitment, '
-        'not a ring-theoretic theorem.'))
+        'No equation between a MachinePhase state and a 2-adic integer is stated; they are different types. '
+        'What c&#8321; and 0 share is a role, the die&#8217;s Motion.SelfOnlyAt (ZeroParadox/Die.lean): a point that '
+        'steps to itself and to nothing else; in each carrier its occupant is proved for the step chosen there. '
+        'Two pairings, each through the map snapEmbed, stand in place of an identity (Incompleteness.lean &#167;I-b). Under the join step a &#8594; join a z for some z, only '
+        'c&#8321; occupies the role (machineJoinMotion_selfOnlyAt_iff); under the multiplication step x &#8594; x&#183;w for some w '
+        'on &#8484;&#8322;, only 0 does (z2MulMotion_selfOnlyAt_iff); snapEmbed is a map of these two motions '
+        '(snapEmbedHom). Its back clause fails at c&#8320; (1 steps to 2, and no state maps to 2), so the general '
+        'transport of the role along such maps does not apply; at c&#8321; the role does carry over, because 0 has only '
+        'itself as successor (snapEmbed_selfOnlyAt_c1, from Motion.selfOnlyAt_relHom). Under doubling on &#8484;&#8322;, '
+        'only 0 occupies the role (z2_double_selfOnlyAt_iff), and 0 is divisible by every power of 2 (snapEmbed_c1_dvd); but snapEmbed '
+        'carries no motion with a step at c&#8320; into doubling steps (snapEmbed_doubling_noStepAt): the snap '
+        'c&#8320; &#8594; c&#8321; goes to 1 &#8594; 0, which is not a doubling step.'))
 
     E.append(def_box(
         'Definition: snapEmbed (Incompleteness.lean §I)',
@@ -84,8 +92,8 @@ def build():
             '',
             'The morphism property: join on MachinePhase (c&#8321; is absorbing under join) '
             'corresponds to multiplication on &#8484;&#8322; (0 is absorbing under &#215;). '
-            'Both structures share the absorbing-element pattern — the bridge is structural, '
-            'not incidental.',
+            'In the die this is a map of motions, from a &#8594; join a z for some z on MachinePhase to '
+            'x &#8594; x&#183;w for some w on &#8484;&#8322; (snapEmbedHom, &#167;I-b).',
         ]
     ))
     E.append(sp(6))
@@ -131,9 +139,28 @@ def build():
             '&#8704; n : &#8469;,  (2 : &#8484;&#8322;)^n &#8739; snapEmbed c&#8321;',
             'c&#8321; maps to 0, which is divisible by all powers of 2.',
             '0 &#8712; &#8484;&#8322; is divisible by 2^n for every n &#8212; infinite 2-adic depth.',
-            'This is the formal signature of &#8869; = {&#8869;}: infinite 2-adic valuation.',
             'Proof: simp [snapEmbed_c1].',
             'Lean purity: [propext, Classical.choice, Quot.sound]. ✓',
+        ]
+    ))
+    E.append(sp(4))
+
+    E.append(result_box(
+        'Results: snapEmbed in the die (Incompleteness.lean §I-b)',
+        [
+            'machineJoinMotion_selfOnlyAt_iff: under a &#8594; join a z for some z, y steps to itself and to nothing else iff y = c&#8321;. '
+            'Lean purity: [propext].',
+            'z2MulMotion_selfOnlyAt_iff: under x &#8594; x&#183;w for some w on &#8484;&#8322;, y steps to itself and to nothing else iff y = 0. '
+            'Lean purity: [propext, Classical.choice, Quot.sound].',
+            'snapEmbedHom: snapEmbed is a strict map between these two motions (steps to steps, from snapEmbed_mul_morphism). '
+            'An example beside it shows the back clause fails at c&#8320; (1 steps to 2, and no state maps to 2). '
+            'Lean purity: [propext, Classical.choice, Quot.sound].',
+            'snapEmbed_selfOnlyAt_c1: the image of c&#8321; steps to itself only in the multiplication motion, carried along '
+            'snapEmbedHom&#8217;s steps by Motion.selfOnlyAt_relHom. Lean purity: [propext, Classical.choice, Quot.sound].',
+            'z2_double_selfOnlyAt_iff: under doubling on &#8484;&#8322;, y steps to itself and to nothing else iff y = 0. '
+            'Lean purity: [propext, Classical.choice, Quot.sound].',
+            'snapEmbed_doubling_noStepAt: if snapEmbed sends every step of a motion M on MachinePhase to a doubling step, '
+            'c&#8320; has no step in M. Lean purity: [propext, Classical.choice, Quot.sound]. ✓',
         ]
     ))
     E.append(sp(6))
@@ -146,8 +173,8 @@ def build():
             'occupant 0 and the &#949;&#8320; occupant differ (epsilon0_ne_bot); against the '
             '2-adic 0 an identity with &#949;&#8320; is not a well-formed statement '
             '(it fails to elaborate, Ordinal vs &#8484;&#8322;), and the link runs '
-            'through maps: snapEmbed sends c&#8321; to 0, the Scale.lean chart\'s '
-            '(&#8869; = 0) bottom-role occupant. The canonical threshold '
+            'through maps: snapEmbed sends c&#8321; to 0, the bottom-role occupant of the Scale.lean chart, '
+            'whose join with &#8869; = 0 is chosen (ZeroParadox/Valuation/Scale.lean &#167;V). The canonical threshold '
             'map Ordinal &#8594; MachinePhase is order-non-decreasing in ZP-A\'s join order '
             '(snap_map_mono), and no map Ordinal &#8594; MachinePhase is compatible with the '
             'CNF &#8594; &#8484;&#8322; map along the tower: for every g : MachinePhase &#8594; '
@@ -221,8 +248,8 @@ def build():
     E.append(callout(
         'What §II achieves: hfp is no longer a free hypothesis in the minimality theorem. '
         'Given &#981; &#949;&#8320; = c&#8321; (the alignment condition: the map snaps at '
-        '&#949;&#8320;) plus monotonicity, the full minimality result follows from the ordinal '
-        'structure alone. hfp is a derived consequence, not an additional commitment.',
+        '&#949;&#8320;) plus monotonicity and every tower stage sent to c&#8320; (h0), the full '
+        'minimality result follows (snap_unconditional). hfp is a derived consequence, not an additional commitment.',
         bg=GREEN_LITE, border=GREEN
     ))
     E.append(sp(6))
@@ -402,6 +429,12 @@ def build():
             ['snap_state_zp2_is_zero', '§III', 'Proved ✓'],
             ['zpm_triangle', '§III', 'Proved ✓'],
             ['both_fixed_points_exist', '§IV', 'Proved ✓'],
+            ['machineJoinMotion_selfOnlyAt_iff', '§I-b', 'Proved ✓'],
+            ['z2MulMotion_selfOnlyAt_iff', '§I-b', 'Proved ✓'],
+            ['snapEmbedHom', '§I-b', 'Defined ✓'],
+            ['snapEmbed_selfOnlyAt_c1', '§I-b', 'Proved ✓'],
+            ['z2_double_selfOnlyAt_iff', '§I-b', 'Proved ✓'],
+            ['snapEmbed_doubling_noStepAt', '§I-b', 'Proved ✓'],
         ],
         col_widths=[TW * 0.55, TW * 0.15, TW * 0.30],
     ))
@@ -410,7 +443,7 @@ def build():
     E.append(axiom_box(
         'Axiom Purity',
         [
-            'All theorems carry axiom footprint: [propext, Classical.choice, Quot.sound].',
+            'Axiom footprint: at most [propext, Classical.choice, Quot.sound], per declaration (machineJoinMotion and machineJoinMotion_selfOnlyAt_iff carry [propext] only).',
             'These are standard Mathlib infrastructure axioms, inherited from ordinal theory '
             '(ZP-L), 2-adic analysis (ZP-B), and computability theory (ZP-K).',
             'Classical.choice is carried by the statements of the ordinal fixed-point (nfp) results as '
@@ -431,7 +464,7 @@ def build():
             '<i>End of ZP-M | Kleene&#8211;Ordinal Bridge | '
             'snapEmbed type bridge | hfp gap closed | zpm_triangle co-proved | '
             'both_fixed_points_exist | R-M.1: DA-1 Path 2 boundary | '
-            'All Incompleteness.lean theorems verified. Axioms: [propext, Classical.choice, Quot.sound].</i>',
+            'All Incompleteness.lean theorems verified. Axioms: at most [propext, Classical.choice, Quot.sound], per declaration.</i>',
             S['endnote']),
     ]
 

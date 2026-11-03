@@ -1037,6 +1037,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "00b26a10-904e-4518-9574-281dc651c97e",
+          "new": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.t_snap_of_avoids",
+            "short": "t_snap_of_avoids"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.t_snap_of_avoids",
+            "short": "t_snap_of_avoids",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "Occurrence link (2026-11-03): CrossingTrials § VIII — a tape that fired once gives t_snap_given's hcc1/hocc by dropping the stutter prefix; fired-once has measure one; typicality gives fired-once. hw is the occurrence commitment as an explicit hypothesis.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "00b3f961-910b-4475-b8a9-a1af62f79c6a",
           "new": {
@@ -2455,6 +2493,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "03c966b8-9db7-40e0-9b0d-a9987b1e193a",
+          "new": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.firedRun",
+            "short": "firedRun"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.firedRun",
+            "short": "firedRun",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Occurrence link (2026-11-03): CrossingTrials § VIII — a tape that fired once gives t_snap_given's hcc1/hocc by dropping the stutter prefix; fired-once has measure one; typicality gives fired-once. hw is the occurrence commitment as an explicit hypothesis.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -24166,6 +24242,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "35cc0a76-3bf8-4865-ba10-cde15724800d",
+          "new": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_fires_once",
+            "short": "trials_fires_once"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_fires_once",
+            "short": "trials_fires_once",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "Occurrence link (2026-11-03): CrossingTrials § VIII — a tape that fired once gives t_snap_given's hcc1/hocc by dropping the stutter prefix; fired-once has measure one; typicality gives fired-once. hw is the occurrence commitment as an explicit hypothesis.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "35ee0576-54fb-45a7-ab51-f996bc18623c",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -42777,6 +42890,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "6163ea3e-1df7-43e1-bee4-299ad5d167e5",
+          "new": {
+            "file": "ZeroParadox/Ordinal/Incompleteness.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.snapEmbed_selfOnlyAt_c1",
+            "short": "snapEmbed_selfOnlyAt_c1"
+          },
+          "old": {
+            "file": "ZeroParadox/Ordinal/Incompleteness.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.snapEmbed_selfOnlyAt_c1",
+            "short": "snapEmbed_selfOnlyAt_c1",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "lane F arc 2 round 2: role transport at c1; doubling occupancy iff",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "6166fba3-800b-4f75-b3bf-4e12557425d5",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -56269,6 +56419,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "7f7f9880-b303-4963-8055-bb6a05604e81",
+          "new": {
+            "file": "ZeroParadox/Ordinal/Incompleteness.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.z2MulMotion_selfOnlyAt_iff",
+            "short": "z2MulMotion_selfOnlyAt_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Ordinal/Incompleteness.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.z2MulMotion_selfOnlyAt_iff",
+            "short": "z2MulMotion_selfOnlyAt_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "lane F arc 2: snapEmbed in the die (Incompleteness.lean § I-b)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "7f83f785-6e1f-4c4d-b52b-eea46eab1fa1",
           "new": {
@@ -59629,6 +59816,44 @@
             ]
           },
           "reason": "New file Multihomed/BoundaryOrder.lean — atlas slice 2: Phase ordered as WithBot Ordinal, the UpAndOver instance with corner at the floor",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "87cbbdd5-64a1-4907-bcea-075632724470",
+          "new": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.t_snap_of_fires_once",
+            "short": "t_snap_of_fires_once"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.t_snap_of_fires_once",
+            "short": "t_snap_of_fires_once",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "Occurrence link (2026-11-03): CrossingTrials § VIII — a tape that fired once gives t_snap_given's hcc1/hocc by dropping the stutter prefix; fired-once has measure one; typicality gives fired-once. hw is the occurrence commitment as an explicit hypothesis.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -64060,6 +64285,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "92ed3fbf-1e54-4cea-9880-06c6919c3c3c",
+          "new": {
+            "file": "ZeroParadox/Ordinal/Incompleteness.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.snapEmbedHom",
+            "short": "snapEmbedHom"
+          },
+          "old": {
+            "file": "ZeroParadox/Ordinal/Incompleteness.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.snapEmbedHom",
+            "short": "snapEmbedHom",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "lane F arc 2: snapEmbed in the die (Incompleteness.lean § I-b)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "92fa8ee9-8776-4d83-8194-8a4af683dda4",
           "new": {
             "file": "ZeroParadox/Valuation/PoleCornersBridge.lean",
@@ -66101,6 +66363,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "979216c2-b0ac-450d-8f24-22879f40a712",
+          "new": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.firedRun_isRun",
+            "short": "firedRun_isRun"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.firedRun_isRun",
+            "short": "firedRun_isRun",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Occurrence link (2026-11-03): CrossingTrials § VIII — a tape that fired once gives t_snap_given's hcc1/hocc by dropping the stutter prefix; fired-once has measure one; typicality gives fired-once. hw is the occurrence commitment as an explicit hypothesis.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "97ac9817-b417-477d-9efa-3ebe40a34864",
           "new": {
             "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
@@ -66491,6 +66791,43 @@
             ]
           },
           "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "988bd772-a6dd-4eda-94d0-17a11a42dd25",
+          "new": {
+            "file": "ZeroParadox/Ordinal/Incompleteness.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.machineJoinMotion_selfOnlyAt_iff",
+            "short": "machineJoinMotion_selfOnlyAt_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Ordinal/Incompleteness.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.machineJoinMotion_selfOnlyAt_iff",
+            "short": "machineJoinMotion_selfOnlyAt_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "lane F arc 2: snapEmbed in the die (Incompleteness.lean § I-b)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -77385,6 +77722,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "b1764e7d-cfb4-4cc0-a1a4-a79c8131e89f",
+          "new": {
+            "file": "ZeroParadox/Ordinal/Incompleteness.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.snapEmbed_doubling_noStepAt",
+            "short": "snapEmbed_doubling_noStepAt"
+          },
+          "old": {
+            "file": "ZeroParadox/Ordinal/Incompleteness.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.snapEmbed_doubling_noStepAt",
+            "short": "snapEmbed_doubling_noStepAt",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "lane F arc 2: snapEmbed in the die (Incompleteness.lean § I-b)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "b1cbd7f2-6c8c-4319-a2cf-ef9114edb3d4",
           "new": {
             "file": "ZeroParadox/Ordinal/SnapSuccession.lean",
@@ -83272,6 +83646,44 @@
             ]
           },
           "reason": "Die v2 final batch: drawing vs set (self-steps, accessibility, forced rank), ends of a view, orders on motions, placements as views, relaxed least-fixed-point schema, UP legs as nuclei",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "bdbe6359-9313-443c-aee6-acae4ab1a27f",
+          "new": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.firedRun_spec",
+            "short": "firedRun_spec"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.firedRun_spec",
+            "short": "firedRun_spec",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Occurrence link (2026-11-03): CrossingTrials § VIII — a tape that fired once gives t_snap_given's hcc1/hocc by dropping the stutter prefix; fired-once has measure one; typicality gives fired-once. hw is the occurrence commitment as an explicit hypothesis.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -93221,6 +93633,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "d4e62dab-357c-4ec4-95f7-3602af346ef3",
+          "new": {
+            "file": "ZeroParadox/Ordinal/Incompleteness.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.z2_double_selfOnlyAt_iff",
+            "short": "z2_double_selfOnlyAt_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Ordinal/Incompleteness.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.z2_double_selfOnlyAt_iff",
+            "short": "z2_double_selfOnlyAt_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "lane F arc 2 round 2: role transport at c1; doubling occupancy iff",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "d4f160d0-d9f7-4cfa-95e9-8d8b84953ea2",
           "new": {
@@ -96860,6 +97309,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "dcf611b5-c55d-4732-a4d0-3c554b117bfa",
+          "new": {
+            "file": "ZeroParadox/Ordinal/Incompleteness.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.z2MulMotion",
+            "short": "z2MulMotion"
+          },
+          "old": {
+            "file": "ZeroParadox/Ordinal/Incompleteness.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.z2MulMotion",
+            "short": "z2MulMotion",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "lane F arc 2: snapEmbed in the die (Incompleteness.lean § I-b)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -104076,6 +104562,43 @@
             "role": []
           },
           "reason": "ninf-retraction-1030: the round trip through ofOption: a left inverse is a right inverse (Escardó's density lemma), hence LPO; LPO data gives NInf ≃ Option ℕ; ofOption onto iff LPO; the round trip as a motion on Option ℕ ⊕ NInf (Die § XXIII); Tim ruling 2026-10-30",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ed04b42f-bd80-452a-a335-4e02558e0e74",
+          "new": {
+            "file": "ZeroParadox/Ordinal/Incompleteness.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.machineJoinMotion",
+            "short": "machineJoinMotion"
+          },
+          "old": {
+            "file": "ZeroParadox/Ordinal/Incompleteness.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.machineJoinMotion",
+            "short": "machineJoinMotion",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "lane F arc 2: snapEmbed in the die (Incompleteness.lean § I-b)",
           "verify": {
             "axioms": null,
             "sorry_free": true

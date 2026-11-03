@@ -755,7 +755,8 @@ RULE     ask: is this the CENTRAL claim of its section, or infrastructure for so
          holds only given an explicit modelling commitment. **Design Principle (DP)** — chosen,
          not derived. **Remark (R)** — context, no proof.
          Readable names are ADDITIVE, never eliminative: CC-2 is "the Quine atom (CC-2)",
-         glossed once as the self-containing bottom; MC-1 is "the bottom family" and gets NO
+         glossed once as the role of a point that steps to itself and to nothing else, whose
+         occupancy is settled chart by chart; MC-1 is "the bottom family" and gets NO
          new readable name, because its object already has one — the diagonal fixed point.
          Keep every formal handle; never rename or remove an identifier. AX-1 is retired:
          its SHAPE is Theorem T-SNAP (never an axiom); its OCCURRENCE is a separate commitment.

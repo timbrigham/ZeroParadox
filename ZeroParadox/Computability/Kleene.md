@@ -16,9 +16,11 @@ Relates four structural roles of ⊥, of which three are proved equivalent:
   (3) Join identity    — algebraic generator (ZP-A A4)
   (4) Kleene fixed point — computational self-reference (Mathlib: fixed_point₂)
 
-The central result (T-COMP) establishes (1) ↔ (2) ↔ (3) via T-EXEC. Its proof term is
-`t_exec_triple_iff`, a ZP-J result that does not mention computation; ⊥ is then the
-element those three pick out. **(4) is not a clause of that theorem** — it is present
+The central result (T-COMP) establishes (1) ↔ ((2) ∧ (3)) via T-EXEC. Its proof term is
+`t_exec_triple_iff`, a ZP-J result that does not mention computation; (3) ↔ (2) is a second
+theorem, `da2_bottom_characterization` (`ZeroParadox/Order/Snap.lean`), and the two together make
+the three pairwise equivalent (the `example` after `t_comp`); ⊥ is then the element those three
+pick out. **(4) is not a clause of that theorem** — it is present
 by typeclass requirement, as the class field `botCode_is_quine`. The KleeneStructure typeclass
 was motivated by reading (1)–(4) as naming the same structural role in four formal languages. That
 reading splits in two. Its identity half is retired: no code is equated with ⊥, and (4) is compared
@@ -74,7 +76,8 @@ commitment is that ⊥ actually executes, the occurrence commitment.
 
 ## Dependencies
 
-ZP-J (T-EXEC: IsQuineAtom q ↔ q = ⊥, bot_self_mem).
+ZP-J (T-EXEC, `t_exec`: IsQuineAtom q → q = ⊥, one direction; the biconditional is `t_exec_iff`,
+`ZeroParadox/Settheory/SetTheoryAFA.lean`; bot_self_mem).
 Mathlib: Nat.Partrec.Code.fixed_point₂ (Kleene's second recursion theorem).
 Mathlib: Nat.Partrec.Code.fixed_point (Rogers' fixed-point theorem).
 
@@ -239,8 +242,16 @@ importing this one.
   the choice enters with the pair instance (`Primcodable.prod`, `Encodable.Prod.encodable`), not
   with having two arguments (`stmtPartrec₂Hyp`, `stmtPartrecHyp`, `stmtPartrecProdHyp`, § V of
   `ZeroParadox/Computability/KleeneChoiceFree.lean`).
-  The measurements above are footprints of named Mathlib declarations; the pin was not searched
-  for a universal code whose correctness is proved without `eval_part`. One is built in this
+  The measurements above are footprints of named Mathlib declarations. A universal code whose
+  correctness is proved without `eval_part` was not located in the Mathlib pin as of 2026-11-03,
+  searched as follows: `Mathlib/Computability/` for `universal` (three hits: the `Halting.lean`
+  header, the docstring calling `eval` a universal partial recursive function in
+  `PartrecCode.lean`, and an unrelated line in `Primrec/List.lean`) and for `eval_part` and
+  `exists_code` (the codes obtained there come from `exists_code.1` applied to a `Partrec` proof
+  built with `eval_part`, as in `Halting.lean`); the nearest object located,
+  `Turing.PartrecToTM2.tr` (`Mathlib/Computability/TuringMachine/ToPartrec.lean`), is one fixed
+  `TM2` machine interpreting `Turing.ToPartrec.Code`, proved correct by `Turing.PartrecToTM2.tr_eval`
+  without `eval_part`; it is not a `Nat.Partrec.Code`. Such a universal code is built in this
   corpus, `universal_code_cf` in `ZeroParadox/Computability/UniversalChoiceFree.lean` (footprint
   in its `PurityCheck` section).
   Every proof of the statement of `selfref_universal_exists`, as written, carries choice.

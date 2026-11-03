@@ -50,11 +50,11 @@ result stated honestly is worth as much as the positive one it replaces. What is
 ## Why the ⊥-essential version cannot even be posed in Lean (the honest boundary)
 
 The non-termination Tim points at is a property of the *semantic* set-theoretic Quine atom: deciding
-`y = ⊥` unfolds `⊥ = {⊥}` and descends forever. That object is **not a Lean type** — `Set` is
-well-founded, `x = {x}` is forbidden (Cantor), which the framework already proves as
-`quine_no_literal` / `nontrivial_lattice_no_witness` (`ZeroParadox/Category/Lawvere.lean`). The Lean
-encoding `AbstractSelfApp` replaces the infinite descent with a *pinned unique* fixed point, and a
-pinned fixed point has the most decidable identity there is. So the ⊥-essential undecidability is
+`y = ⊥` unfolds `⊥ = {⊥}` (in ZF + AFA) and descends forever. In the well-founded charts that object is **not a Lean
+type**: no `ZFSet` occupies the die's Quine-atom role (`zfset_quine_role_unoccupied`), and a lattice with a second
+element has no Lawvere witness (`quine_no_literal`, `nontrivial_lattice_no_witness`). The coalgebra chart occupies the
+role (`cofix_quine_role_occupied`) at its one point (`cofix_subsingleton`), so no descent is posed there. The Lean encoding
+`AbstractSelfApp` replaces the descent with a *pinned unique* fixed point, the most decidable identity there is. So the ⊥-essential undecidability is
 **unsettled in Lean because it is unposeable in Lean**, and *inessential in the encoding we do have*.
 Reporting it as proved would repeat the MC-1 over-identification the project retracted. It stays a
 rhyme with a mechanism, not a theorem — the fence in the conjecture note, unmoved.

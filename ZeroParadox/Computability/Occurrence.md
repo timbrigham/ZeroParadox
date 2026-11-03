@@ -60,8 +60,9 @@ anything with a single-valued step function, of which Turing machines are one wi
 does **not** license "the framework's bottom is a Turing machine" — that is an identity across carriers,
 and the same type boundary as everywhere else. The requirements are Mathlib's (`StateTransition`), the
 witness is Mathlib's (`Turing.TM0`); what is the framework's own is the **reading** of the trichotomy,
-nothing more. Compare `ZeroParadox/Settheory/QuineHost.lean`: the honest form was never "we commit to
-AFA" but "here are the requirements, and AFA is a witness meeting them."
+nothing more. Compare `ZeroParadox/Settheory/QuineHost.lean`, where there is a commitment of the
+framework's own: adopting AFA is CC-2's commitment, and the host requirements (`QuineAtomHost`) are its Lean
+abstraction.
 
 ### Consequence 2 — `StateTransition`'s API is under-used; check it before hand-rolling
 

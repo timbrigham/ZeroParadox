@@ -1,6 +1,6 @@
 """
 Build ZP-I Illustrated Companion
-Version 1.34 | October 2026
+Version 1.35 | November 2026
 
 Standalone companion for ZP-I: Inside Zero.
 Accessibility target: 2 years of college math.
@@ -81,7 +81,7 @@ def depth_diagram():
     # Rightmost x = 311.1 + 8 = 319.1 ≪ dw = 468 ✓
 
     state_lbls = ['S₀', 'S₁', 'S₂', 'S₃']
-    # S0 is a nonzero 2-adic number (norm 1), not the bottom of anything in Q2: no '= ⊥' label.
+    # S0 is a nonzero 2-adic number (norm at most 1), not the bottom of anything in Q2: no '= ⊥' label.
     state_subs = ['', '',   '',   ''  ]
 
     # Connecting lines between consecutive states
@@ -103,7 +103,7 @@ def depth_diagram():
     # Norm labels: placed BELOW each circle (sy - 8 radius - 3 gap - text baseline).
     # This avoids collision with the "= ⊥" sub-label which sits to the right of the circle.
     # S2 omitted (S3 norm nearby). S3 placed above-left (limit indicator owns the right).
-    norms_below = [(0, '‖S₀‖ = 1'), (1, '‖S₁‖ ≤ 2⁻¹')]
+    norms_below = [(0, '‖S₀‖ ≤ 1'), (1, '‖S₁‖ ≤ 2⁻¹')]
     for i_s, ns in norms_below:
         sx, sy = state_xs[i_s], state_ys[i_s]
         d.add(String(sx - len(ns) * 2.4, sy - 22, ns, fontSize=8, fontName='DV-I',
@@ -276,7 +276,7 @@ def cycle_diagram():
     return d
 
 
-VERSION = '1.34'
+VERSION = '1.35'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -345,7 +345,7 @@ def build():
         'not, what comes next?'))
     E.append(cbody(
         'ZP-I answers both questions with a single theorem: <b>T-IZ (Inside Zero)</b>. '
-        'Every 2-adic depth chain S₀, S₁, S₂, ... with no zero term, satisfying the IsDepthChain and IsStrictStateSequence conditions, converges  - in the '
+        'Every 2-adic depth chain S₀, S₁, S₂, ... with no zero term, whose 2-adic valuations track a depth index (IsDepthChain) that climbs at every step (IsStrictStateSequence, a condition on that index), converges  - in the '
         '2-adic metric  - to zero, which the framework reads as the bottom role and then as a successor null. '
         'The chain does not go on forever; it reaches its limit at the ordinal limit. The '
         'convergence is proved (given the IsDepthChain modelling commitment), and so, separately, is the fact that '
@@ -463,7 +463,7 @@ def build():
         ['2. ⊥-role identification',
          'Anything satisfying the join-identity condition IS that lattice\'s bottom. '
          'That the Cauchy limit 0 ∈ Q₂ satisfies it is the theorem\'s HYPOTHESIS, not '
-         'its conclusion, and Q₂\'s field structure supplies no join (the corpus defines none on Q₂), so the condition is not statable '
+         'its conclusion, and Q₂\'s field structure supplies no join (the corpus registers none on Q₂), so the condition is not statable '
          'there — the two are distinct members of the bottom family, not one object (MC-1). Reading the occupant as a NEW null ⊥′ is a further commitment (C-DA2).',
          'ZP-E DA-2  - proved in Lean (t_iz_limit_is_new_null, axiom-free). '
          '✓ (the role only, given the hypothesis; not the novelty)'],
@@ -604,7 +604,7 @@ def build():
     E.append(cbody(
         'Two charts, two carriers. In the 2-adic numbers, the chain converges to 2-adic zero: zero is the '
         'LIMIT, not a term, since no term of the chain is zero. The field structure of the 2-adic numbers '
-        'supplies no join, and the corpus defines none on them, so the bottom role is not statable of the limit '
+        'supplies no join, and the corpus registers none on them, so the bottom role is not statable of the limit '
         'here. (A join could be chosen, since every inhabited set admits one; on the 2-adic integers the corpus '
         'supplies one with zero as its bottom (ZeroParadox/Valuation/Scale.lean &#167; V), and zero filling that '
         'bottom is a choice of operation, not something T-IZ derives.) In a join-semilattice, the bottom ROLE is the element that '

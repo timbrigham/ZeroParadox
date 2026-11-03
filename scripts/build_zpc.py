@@ -1,11 +1,11 @@
 """
-Build ZP-C: Information Theory (v1.33)
+Build ZP-C: Information Theory (v1.35)
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.33'
+VERSION = '1.35'
 FIRST_RELEASED = 'April 2026'
 
 def build():
@@ -17,7 +17,7 @@ def build():
           Paragraph(version_line(FIRST_RELEASED, VERSION), S['subtitle']),
           sp(10),
           body('This document is self-contained within information theory and discrete analysis on Q<sub>2</sub>, with two named cross-layer dependencies. The topological structure of Q<sub>2</sub> — total disconnectedness (ZP-B T5), the clopen ball hierarchy, and the binary existence axiom (AX-B1) — is imported from ZP-B. The Candidate Theorem T-BUF (Section V) additionally invokes ZP-A&#8217;s state-transition definition D2 (f(x) = x &#8744; &#945;) to identify the resulting state as the Binary Snap. T-BUF is conditional on execution: its Step 2, that the configuration at P<sub>0</sub> is executing, is not derived here or in ZP-E; it is the occurrence commitment (ZP-E, DA-1 insert &#167; IV), which DA-1 consumes and does not supply. Every claim is marked as Derived, Axiomatic, Defined, or Candidate.'),
-          body('<b>Encoding commitment.</b> The two ontological states of AX-B1 are represented here as point-mass (Dirac) distributions over {0, 1} — the minimum-sufficient probabilistic encoding (RP-1, Section II). Under this encoding, the information-theoretic separation between &#8869; and the minimum non-bottom state (&#949;<sub>0</sub>) is exactly 1 bit (T1b). The 1-bit result is conditional on this encoding; RP-1 declares and justifies the commitment. Separately, the primary descriptive tool of information theory, surprisal, is unbounded above in the depth of the ball hierarchy, each value finite (L-INF, Section III), and c<sub>0</sub>, &#8869; of MachinePhase, corresponds to that hierarchy&#8217;s limit point 0 &#8712; Q<sub>2</sub>, where the 2-adic additive valuation is &#8868; (R-BRIDGE); from these the framework argues that no finite external description can contain c<sub>0</sub>. These two results — the 1-bit cost of the transition and the infinite descriptive cost of the origin — are the information-theoretic expression of the same structural constraint, read on two bottoms: &#8869; of the two-state encoding of AX-B1, and c<sub>0</sub>, &#8869; of MachinePhase.'),
+          body('<b>Encoding commitment.</b> The two ontological states of AX-B1 are represented here as point-mass (Dirac) distributions over {0, 1} — the minimum-sufficient probabilistic encoding (RP-1, Section II). Under this encoding, the information-theoretic separation between &#8869; and &#949;<sub>0</sub>, the atom above &#8869; of the two-state carrier, is exactly 1 bit (T1b). The 1-bit result is conditional on this encoding; RP-1 declares and justifies the commitment. Separately, the primary descriptive tool of information theory, surprisal, is unbounded above in the depth of the ball hierarchy, each value finite (L-INF, Section III), and c<sub>0</sub>, &#8869; of MachinePhase, corresponds to that hierarchy&#8217;s limit point 0 &#8712; Q<sub>2</sub>, where the 2-adic additive valuation is &#8868; (R-BRIDGE); from these the framework argues that no finite external description can contain c<sub>0</sub>. These two results — the 1-bit cost of the transition and the infinite descriptive cost of the origin — are the information-theoretic expression of the same structural constraint, read on two bottoms: &#8869; of the two-state encoding of AX-B1, and c<sub>0</sub>, &#8869; of MachinePhase.'),
           body('<i>Illustrated Companion: A paired ZP-C Illustrated Companion provides concrete examples and visual intuitions for the results here. Examples are kept separate from the formal layers to distinguish illustrative material from proofs.</i>'),
           sp()]
 
@@ -47,8 +47,8 @@ def build():
     E.append(label_box('Theorem T1 — State Representations are Uniquely Derived', [
         'Given AX-B1 and RP-1, the distributions are unique:',
         'P  =  (1, 0)   (the bottom state &#8869;: all mass at 0 — non-existence)',
-        'Q  =  (0, 1)   (the minimum non-bottom state &#949;<sub>0</sub>: all mass at 1 — existence)',
-        'Proof: AX-B1 establishes two ontological states. RP-1 requires point-mass representation of each. The bottom state &#8869; occupies value 0: P = (1,0). The minimum non-bottom state &#949;<sub>0</sub> occupies value 1: Q = (0,1). No distribution (p, 1&#8722;p) with 0 < p < 1 is consistent with AX-B1. P and Q are unique. Status: DERIVED from AX-B1 and RP-1. <font name="DV">&#10003;</font>',
+        'Q  =  (0, 1)   (&#949;<sub>0</sub>, the atom above &#8869; of the two-state carrier: all mass at 1 — existence)',
+        'Proof: AX-B1 establishes two ontological states. RP-1 requires point-mass representation of each. The bottom state &#8869; occupies value 0: P = (1,0). &#949;<sub>0</sub>, the atom above &#8869; of the two-state carrier, occupies value 1: Q = (0,1). No distribution (p, 1&#8722;p) with 0 < p < 1 is consistent with AX-B1. P and Q are unique. Status: DERIVED from AX-B1 and RP-1. <font name="DV">&#10003;</font>',
     ]))
     E.append(sp(4))
     E.append(label_box('Corollary T1b — JSD = 1 bit', [
@@ -114,9 +114,9 @@ def build():
         'c<sub>0</sub>, &#8869; of MachinePhase, corresponds to the limit point 0 &#8712; Q<sub>2</sub> — the limit of the binary ball hierarchy at infinite depth. The binary branching measure assigns equal probability mass at each branch level (D4), and the surprisal diverges without bound as depth increases (T2), each value finite. Surprisal is defined at each depth, not at the limit point itself.',
         'Proof: Let M &#8712; &#8477;. By the Archimedean property, &#8707; n &#8712; &#8469; with n > M. Then I(n) = n > M. Since M was arbitrary, surprisal is unbounded above. <font name="DV">&#10003;</font>',
         'Formal content: surprisal is not bounded above by any real M.',
-        'Semantic content: c<sub>0</sub>, &#8869; of MachinePhase, corresponds to the limit point 0 of the binary ball hierarchy under the 2-adic metric, approached by sequences of increasing depth along which surprisal exceeds every finite bound; at that point the 2-adic additive valuation is &#8868; (R-BRIDGE). From these two charts the framework argues that no finite external interpreter can hold c<sub>0</sub> as a static description. This is one argument for DA-1&#8217;s precondition (ZP-E, DA-1 insert &#167; IV, Path 2), and it does not derive it. ZP-A CC-2 (&#8869; = {&#8869;}), itself a commitment, gives a second, structural argument for the same conclusion: a self-containing object has no external interpreter by structure (ZP-A R3). The informational argument from the ball hierarchy and the structural argument from self-containment are independent; neither makes the configuration at P<sub>0</sub> executing.',
+        'Semantic content: c<sub>0</sub>, &#8869; of MachinePhase, corresponds to the limit point 0 of the binary ball hierarchy under the 2-adic metric, approached by sequences of increasing depth along which surprisal exceeds every finite bound; at that point the 2-adic additive valuation is &#8868; (R-BRIDGE). From these two charts the framework argues that no finite external interpreter can hold c<sub>0</sub> as a static description. This is one argument for DA-1&#8217;s precondition (ZP-E, DA-1 insert &#167; IV, Path 2), and it does not derive it. ZP-A CC-2 (the Quine atom, a role: in a ZP-A lattice under a self-application map supplied by AbstractSelfApp, &#8869; is its only occupant, selfApp_quine_role_iff), itself a commitment, gives a second, structural argument for the same conclusion: a self-containing object has no external interpreter by structure (ZP-A R3). The informational argument from the ball hierarchy and the structural argument from self-containment are independent; neither makes the configuration at P<sub>0</sub> executing.',
         'Note: L-INF supplies unbounded surprisal; the step from there to executing is not a consequence of L-INF and is not DA-1. It is a bridge principle of its own (ZP-E, DA-1 insert &#167; IV, Path 2), which the framework does not adopt, which is not the occurrence commitment, and which is not a premise of the Snap.',
-        'Status: DERIVED from D4 and T2. Structural corroboration: ZP-A CC-2 (&#8869; = {&#8869;}) and R3. Lean: l_inf (purity check: no non-Mathlib axioms).',
+        'Status: DERIVED from D4 and T2. Structural corroboration: ZP-A CC-2 (the Quine atom, a role) and R3. Lean: l_inf (purity check: no non-Mathlib axioms).',
     ]))
     E.append(sp(4))
     E.append(label_box('Remark R-BRIDGE — On the Relationship Between K and 2-Adic Surprisal', [
@@ -162,16 +162,16 @@ def build():
         'Step 1 — c<sub>0</sub> and c<sub>1</sub> are distinct configurations by D7: the control unit is in a different state (idle vs. executing). c<sub>0</sub> &#8800; c<sub>1</sub>.',
         'Step 2 — By AX-B1, a state either exists or it does not. The machine at c<sub>1</sub> occupies a configuration distinct from c<sub>0</sub>. The transition c<sub>0</sub> &#8594; c<sub>1</sub> is a binary state change in the sense of AX-B1.',
         'Step 3 — The transition is irreducible: there is no intermediate configuration between c<sub>0</sub> and c<sub>1</sub>. The first instruction fetch is the minimal unit of execution.',
-        'Step 4 — c<sub>0</sub> is modeled as corresponding to &#8869; in the semilattice (CC-2 — see below). c<sub>1</sub> is strictly above &#8869;: the machine configuration has gained content (an active execution context) not present in c<sub>0</sub>.',
+        'Step 4 — c<sub>0</sub> is modeled as corresponding to &#8869; in the semilattice (ZP-C CC-2 — see below). c<sub>1</sub> is strictly above &#8869;: the machine configuration has gained content (an active execution context) not present in c<sub>0</sub>.',
         'Conclusion: c<sub>1</sub> &#8800; &#8869; (in Lean, l_run, with &#8869; of MachinePhase = c<sub>0</sub>). The act of execution is itself a non-bottom state, regardless of what the output tape contains. <font name="DV">&#10003;</font>',
         'Status: DERIVED from AX-B1 and D7. No Coding Theorem required. No output-tape contents required.',
     ]))
     E.append(sp(4))
-    E.append(label_box('Conditional Claim CC-2 — c₀ = ⊥ (Parallel to CC-1 in ZP-A)', [
+    E.append(label_box('Conditional Claim CC-2 (ZP-C) — c₀ = ⊥ (Parallel to CC-1 in ZP-A; not ZP-A CC-2, the Quine atom)', [
         'We model the initial machine configuration c<sub>0</sub> as corresponding to &#8869; in the semilattice (L, &#8744;, &#8869;). This is not derived from D7 or from A1&#8211;A4 — it is a modeling choice.',
         'Motivation: c<sub>0</sub> is the machine state prior to any execution: no instruction has been fetched, no content has accumulated. &#8869; is the algebraic element below all others — the state of no accumulated content. The identification is motivated by structural correspondence, not derivation.',
-        'Parallel: CC-1 in ZP-A commits to S<sub>0</sub> = &#8869; for state sequences. CC-2 makes the same commitment for machine configurations. Both are modeling choices, not derivations from the core axioms.',
-        'Effect: Step 4 of L-RUN depends on CC-2. The conclusion c<sub>1</sub> &#8800; &#8869; follows from L-RUN\'s proof; the identification of c<sub>0</sub> with &#8869; is the additional modeling commitment supplied by CC-2.',
+        'Parallel: CC-1 in ZP-A commits to S<sub>0</sub> = &#8869; for state sequences. ZP-C CC-2 makes the same commitment for machine configurations. Both are modeling choices, not derivations from the core axioms.',
+        'Effect: Step 4 of L-RUN depends on ZP-C CC-2. The conclusion c<sub>1</sub> &#8800; &#8869; follows from L-RUN\'s proof; the identification of c<sub>0</sub> with &#8869; is the additional modeling commitment supplied by ZP-C CC-2.',
         'Status: CONDITIONAL CLAIM — modeling commitment; not derived from D7 or A1&#8211;A4.',
     ]))
     E.append(sp(4))
@@ -190,7 +190,7 @@ def build():
         'Step 2 — By L-RUN, c<sub>1</sub> &#8800; &#8869;.',
         'Step 3 — Therefore the execution trace &#964;(p) = (c<sub>0</sub>, c<sub>1</sub>, &#8230;) contains c<sub>1</sub>, which is a non-bottom configuration state, regardless of what appears on the output tape at termination.',
         'Step 4 — The output of p being &#8869; does not imply that all configurations in &#964;(p) are &#8869;. Output state and configuration state are distinct (R4).',
-        'Conclusion: No program can produce &#8869; as output without passing through a non-bottom intermediate configuration state. TQ-IH answered negatively. <font name="DV">&#10003;</font>',
+        'Conclusion: No program can produce &#8869; as output without passing through a non-bottom intermediate configuration state. TQ-IH answered negatively. <font name="DV">&#10003;</font> The quantification over programs is Step 1&#8217;s, from D7; what Lean proves is the configuration fact, tq_ih: c<sub>1</sub> &#8800; c<sub>0</sub> (Ne.symm l_run).',
         'Status: DERIVED from L-RUN, D7, and R4. No Kolmogorov machinery required. TQ-IH is one of the results from which ZP-E derives the shape of the Snap as Theorem T-SNAP.',
     ]))
     E.append(sp(4))
@@ -213,7 +213,7 @@ def build():
     E.append(sp(4))
     E.append(label_box('Remark R5 — Updated Status of AX-1', [
         'AX-1 (Binary Snap Causality) was previously labeled Axiomatic in ZP-C.',
-        'AX-1 was a Candidate Theorem in ZP-C; it is now retired: its shape is proved as T-SNAP (ZP-E), and that the Snap occurs is stated separately: it follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2). The derivation pathway ZP-C gave it: P<sub>0</sub> (D1) identifies the threshold. L-RUN establishes that execution at the threshold constitutes a state change off &#8869;. TQ-IH establishes that no program avoids this. ZP-A D2 establishes that a state change off &#8869; is the Binary Snap.',
+        'AX-1 was a Candidate Theorem in ZP-C; it is now retired: its shape is proved as T-SNAP (ZP-E), and that the Snap occurs is stated separately: it follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2). The derivation pathway ZP-C gave it: P<sub>0</sub> (D1) identifies the threshold. L-RUN establishes that execution at the threshold constitutes a state change off &#8869;. TQ-IH, read with D7, establishes that no executing program avoids this. ZP-A D2 establishes that a state change off &#8869; is the Binary Snap.',
         'That a configuration at P<sub>0</sub> is an execution event (a running machine&#8217;s current configuration, not an inert string) is the occurrence commitment, DA-1&#8217;s precondition. DA-1 (ZP-E, a Derived Proposition closed given DP-2) consumes it and does not supply it: given it, c<sub>0</sub> &#8594; c<sub>1</sub> is D7&#8217;s. Both bear on whether the Snap occurs, not on its shape.',
         'Status label: RETIRED in the ZP-E DA-1 insert, as stated above. AX-1 was a Candidate Theorem in ZP-C, with its gap identified: T-BUF Step 2, which is the occurrence commitment.',
     ]))
@@ -226,10 +226,10 @@ def build():
          ['Smooth embedding, MO-1, P1', 'Retired', 'Retired. Inconsistent with ZP-B.'],
          ['RP-1: Representation principle', 'Principle — explicit', 'Bridge between AX-B1 and probabilistic tools.'],
          ['RP-2: Branching measure on Q₂ \\ {0}', 'Principle — explicit', 'Canonical branching measure; representational commitment; required by T2 and L-INF.'],
-         ['CC-2: c₀ = ⊥', 'Conditional Claim', 'Modeling commitment — c₀ identified with ⊥ in semilattice. Parallel to CC-1 in ZP-A. Required by L-RUN Step 4.'],
+         ['ZP-C CC-2: c₀ = ⊥', 'Conditional Claim', 'Modeling commitment — c₀ identified with ⊥ in semilattice. Parallel to CC-1 in ZP-A. Required by L-RUN Step 4.'],
          ['D7: Machine configuration', 'Defined', 'Foundation for L-RUN and TQ-IH.'],
          ['L-RUN: Hardware Lemma', 'Derived — Lemma', 'Execution is a state change off &#8869;. Derived from AX-B1 and D7.'],
-         ['TQ-IH: Test Question', 'Closed — Confirmed', 'No program can output &#8869; without a non-bottom intermediate configuration state. Proven by L-RUN. Externally confirmed April 2026 (R-TQ): domain-independent, requires no Turing-specific or Kolmogorov machinery.'],
+         ['TQ-IH: Test Question', 'Closed — Confirmed', 'No program can output &#8869; without a non-bottom intermediate configuration state, given D7 (every executing program passes through c<sub>1</sub>); L-RUN supplies c<sub>1</sub> &#8800; c<sub>0</sub> (Lean: tq_ih). Externally confirmed April 2026 (R-TQ): domain-independent, requires no Turing-specific or Kolmogorov machinery.'],
          ['T-BUF: Buffer Overflow Theorem', 'Candidate Theorem', 'Conditional on execution: given that the configuration at P<sub>0</sub> is executing (Step 2, the occurrence commitment), its state is non-bottom and is &#949;<sub>0</sub>. DA-1 consumes Step 2 and does not supply it.'],
          ['AX-1: Binary Snap Causality', 'Retired (was a Candidate Theorem)', 'Derivation pathway formalized. AX-1 retired in the ZP-E DA-1 insert: shape proved as T-SNAP; the snap occurs given the occurrence commitment and DA-1.']],
         [1.6*inch, 1.5*inch, 3.4*inch]
@@ -248,7 +248,7 @@ def build():
          ['R3: Smooth embedding retired', 'Valid — Retired; inconsistent with ZP-B'],
          ['D4: Discrete surprisal I(x)', 'Valid — pointwise on Q<sub>2</sub> \\ {0}; branching measure stated'],
          ['RP-2: Branching measure', 'Valid — Principle; explicit representational commitment; canonical binary branching measure'],
-         ['CC-2: c<sub>0</sub> = &#8869;', 'Valid — Conditional Claim; modeling commitment; parallel to CC-1 in ZP-A; load-bearing for L-RUN Step 4'],
+         ['ZP-C CC-2: c<sub>0</sub> = &#8869;', 'Valid — Conditional Claim; modeling commitment; parallel to CC-1 in ZP-A; load-bearing for L-RUN Step 4'],
          ['D5: Difference operator DF', 'Valid — antisymmetric; no smoothness assumed'],
          ['D6: Circulation (extended)', 'Valid — finite and infinite cases both defined; finite conservation acknowledged'],
          ['T2: Non-conservation rebuilt', 'Valid — Derived; telescoping critique addressed; divergence at &#963;&#8594;0 established'],
@@ -256,7 +256,7 @@ def build():
          ['D7: Machine configuration', 'Valid — Defined; standard Turing model; no physics imported'],
          ['L-RUN: Hardware Lemma', 'Valid — Derived from AX-B1 and D7'],
          ['R4: Configuration vs. output independence', 'Valid — load-bearing distinction for TQ-IH and T-BUF'],
-         ['TQ-IH: Test question answered', 'Valid — Derived by L-RUN; no Kolmogorov machinery required'],
+         ['TQ-IH: Test question answered', 'Valid — Derived from L-RUN and D7 (Lean: tq_ih, c<sub>1</sub> &#8800; c<sub>0</sub>); no Kolmogorov machinery required'],
          ['T-BUF: Candidate Theorem', 'Candidate — conditional on execution; Step 1 defined (D1), Steps 3 and 4 derived in ZP-C; Step 2 is the occurrence commitment (ZP-E), not closed by DA-1'],
          ['R5: AX-1 status updated', 'Valid — AX-1 was a Candidate Theorem in ZP-C (prior Axiomatic status corrected); it is now retired: shape proved as T-SNAP (ZP-E); the snap occurs given the occurrence commitment and DA-1'],
          ['R-BRIDGE: K vs. 2-adic surprisal', 'Refuted (counterexample S<sub>n</sub> = 2<super>n</super>, ZP-I &#167; II.B); T-IZ never depended on it (it goes through t_iz_cauchy)']],

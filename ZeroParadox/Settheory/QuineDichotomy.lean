@@ -32,8 +32,8 @@ The snap's classifier (Ostrowski) is a theorem INSIDE one foundation, so "snap �
 machine-checkable. The Quine atom's classifier (Foundation vs AFA) is a choice of METATHEORY, which Lean cannot
 adjudicate from inside. `Statement:` **CARRIER** — no `ZFSet` is its own member (`no_quine_atom`) and no `T ≃ Set T` exists (Cantor, above), while the coalgebra chart hosts a self-unfolding element (`Cofix`, the existence fork above).
 So what is PROVED here is the STRUCTURAL dichotomy (the self-referential fixed point exists on the ν side,
-not the μ side, and where it exists it is the unique bottom). The Quine atom (CC-2) is the die role `Motion.SelfOnlyAt`, occupied
-chart by chart (`selfApp_quine_role_iff`, `quineAtomHost_quine_role_iff`, `zfset_quine_role_unoccupied`), no cross-chart equation.
+not the μ side, and where it exists it is the unique bottom). The Quine atom (CC-2) is the die role `Motion.SelfOnlyAt`, whose occupancy
+is settled chart by chart (`selfApp_quine_role_iff`, `quineAtomHost_quine_role_iff`, `zfset_quine_role_unoccupied`), no cross-chart equation.
 "Quine atom ⟺ AFA" concerns the set chart's host: Foundation-freeness is forced (`quineAtomHost_not_wellFounded`), adopting AFA stays the FMC / CC-2 (ZP-E R-AFA); AFA is not machine-checked here.
 
 ## Symbol map (component → existing lemma)

@@ -1,6 +1,6 @@
 # GroundZero — ride-along documentation
 
-Moved from `ZeroParadox/Computability/GroundZero.lean`. ⚠ **This content was GRANDFATHERED — it was carried in an accepted-defect baseline, which means it was let through UNEXAMINED. Moving it changes that by exactly nothing.** Its claims are unverified until a claim review says otherwise.
+Moved from `ZeroParadox/Computability/GroundZero.lean` on 2026-10-13. ⚠ **At the move this content was GRANDFATHERED — it was carried in an accepted-defect baseline, which means it was let through UNEXAMINED, and moving it changed that by exactly nothing.** The text has been edited since the move; this banner records its state on 2026-10-13 and does not record whether any review has taken place since.
 
 In the sections below, "this file", "here" and every bare § number refer to
 `ZeroParadox/Computability/GroundZero.lean`.
@@ -45,10 +45,11 @@ mathematics is not new.
 `enat_fp_iff : x + 1 = x ↔ x = ⊤` is this same fact in the `ℕ∞ = WithTop ℕ` presentation.
 
 **What is NOT claimed.** That ⊥ of a `ZPSemilattice`, read as a configuration of a step function,
-*is* such a behaviour remains a modelling commitment (the reading is glossed at the
-`loop_unfolds_to_infinity` entry of `ZeroParadox/Computability/ComputationCannotBe.lean` § VIII) —
-the results here are conditional on non-termination, and say nothing about whether that ⊥
-non-terminates. Nothing here makes the snap occur: occurrence is still
+self-loops, and so unfolds to `natInfinity`, the behaviour that never reaches a leaf (§ II), remains
+a modelling commitment (glossed at the `loop_unfolds_to_infinity` entry of
+`ZeroParadox/Computability/ComputationCannotBe.lean` § VIII). The self-loop is the stronger of
+the two: a self-loop implies non-termination, not conversely. The results here are conditional
+on non-termination, and say nothing about whether that ⊥ non-terminates. Nothing here makes the snap occur: occurrence is still
 the halting problem (`occurs_iff_halts`, `occurrence_undecidable`). And the mathematics is not
 new — the final coalgebra of `X ↦ 1 + X` being `ℕ ∪ {∞}` is standard (Jacobs, *Introduction to
 Coalgebra*, Ex. 2.4.1 p. 66). **Note the scope of that citation:** Jacobs supports the *object*,

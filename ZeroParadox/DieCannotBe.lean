@@ -5,6 +5,7 @@ import ZeroParadox.Computability.GroundZero
 import ZeroParadox.Valuation.FloorWitness
 import ZeroParadox.Ordinal.Epsilon0LeastFP
 import ZeroParadox.Ordinal.Gentzen
+import ZeroParadox.Ordinal.Incompleteness
 import ZeroParadox.Computability.Occurrence
 import ZeroParadox.Valuation.PoleRegistration
 import ZeroParadox.Valuation.PoleChartSelection
@@ -1215,11 +1216,13 @@ example (uc : ∀ P : Bool → Prop, (∃! b, P b) → {b : Bool // P b}) :
 -- element is defined or else undefined is equivalent to the principle of excluded middle (every
 -- proposition is inhabited or empty)", and § 2.7, p. 21:6, "L X ≃ X + 1 iff the canonical map 2 → Ω
 -- is an equivalence iff excluded middle holds"; T. de Jong, arXiv:2407.06952, Prop. 5.7, p. 13, credits
--- the equivalence to their § 2.2. In Lean's `Prop`/`Type` split their excluded middle sits on the data
--- side, `∀ p, Decidable p`, equivalently the `Bool` choice fragment, and the PROVED legs above are
--- instances of their equivalence on that side: registration on every `α : Type` ⇔ the fragment. The
--- `Prop`-valued `ZeroParadox.ExcludedMiddle` is reached one way, and back with the unique-choice
--- hypothesis of the previous `example`; without it the converse is not established in Lean
+-- the equivalence to their § 2.2. In Lean's `Prop`/`Type` split their excluded middle sits where `Decidable`
+-- is data, under one outer `Nonempty`: `Nonempty (∀ p, Decidable p)`, equivalently the `Bool` choice
+-- fragment (the second `example` after `ChoiceFragment` in
+-- `ZeroParadox/Category/ExcludedMiddleBridge.lean`), and the PROVED legs above are instances of their
+-- equivalence there: registration on every `α : Type` ⇔ the fragment. The `Prop`-valued
+-- `ZeroParadox.ExcludedMiddle` is reached one way, and back with the unique-choice hypothesis of the
+-- previous `example`; without it the converse is not established in Lean
 -- (`ZeroParadox/Category/ChoiceCannotBe.md`). An instance of theirs, not a generalization.
 
 /-! ### § X. The OVER leg's WHICH — selection, in two variants -/
@@ -2537,6 +2540,14 @@ example (x : ℤ_[2]) : (ZeroParadox.Motion.ofFun (· + (1 : ℤ_[2]))).LeavesAt
 ,
     (ZeroParadox.Motion.selfOnlyAt_ofFun_iff _ x).trans
       ⟨fun h => by linear_combination h, fun h => by rw [h, mul_zero]⟩⟩
+-- Reading: CARRIER — two pairings through `snapEmbed` (`ZeroParadox/Ordinal/Incompleteness.lean`
+-- § I-b), each a map, no equation across `MachinePhase` and ℤ_[2].
+#check @ZeroParadox.machineJoinMotion_selfOnlyAt_iff -- Statement: `MachinePhase` with OVER `a → join a z`: only `c₁` steps to itself only
+#check @ZeroParadox.z2MulMotion_selfOnlyAt_iff       -- Statement: ℤ_[2] with OVER `x → x * w`: only `0` steps to itself only
+#check @ZeroParadox.snapEmbedHom                     -- Statement: `snapEmbed` is a strict map between those two motions (`snapEmbed_c1` sends `c₁` to `0`); it has no back clause at `c₀` (an `example` in Incompleteness.lean § I-b)
+#check @ZeroParadox.snapEmbed_selfOnlyAt_c1          -- Statement: the role carries over at `c₁`: its image steps to itself only in the multiplication motion
+#check @ZeroParadox.z2_double_selfOnlyAt_iff         -- Statement: ℤ_[2] under doubling: `y` steps to itself only iff `y = 0`; both directions
+#check @ZeroParadox.snapEmbed_doubling_noStepAt      -- Statement: a motion on `MachinePhase` whose steps `snapEmbed` sends to doubling steps has no step at `c₀`
 -- Statement: partial digit streams (`ZeroParadox/Category/LawvereTwoAdic.lean`): `partialAddOne` steps
 -- to itself only exactly at `[]`; `partialDouble` steps elsewhere at every stream.
 example (w : List Bool) : ((ZeroParadox.Motion.ofFun ZeroParadox.partialAddOne).SelfOnlyAt w ↔ w = []) ∧
@@ -4643,7 +4654,7 @@ example : ZeroParadox.WLPO := by
   classical
   exact fun r => em _
 -- Statement: CONTROL: a decidable equality on `Ordinal.{0}` gives weak excluded middle with no `L`,
--- deciding `⨆ _ : p, 1 = 0`; so (vi) also holds with no `L`, and its content is its hypothesis.
+-- deciding `⨆ _ : p, 1 = 0`.
 example (d : DecidableEq Ordinal.{0}) : ZeroParadox.WeakExcludedMiddle := by
   intro p
   let o : Ordinal.{0} := ⨆ _ : p, (1 : Ordinal.{0})
@@ -4660,10 +4671,42 @@ example (d : DecidableEq Ordinal.{0}) : ZeroParadox.WeakExcludedMiddle := by
 -- depend on `Classical.choice`; their footprints are printed next.
 #print axioms ZeroParadox.epsilonZero
 #print axioms ZeroParadox.fundamentalSeq
+-- Statement: weak excluded middle gives WLPO.
+#check @ZeroParadox.wlpo_of_weakExcludedMiddle
+-- Statement: (vi) also holds with no `L`: a decidable equality on `Ordinal.{0}` gives WLPO, by the
+-- second CONTROL above's argument composed with `wlpo_of_weakExcludedMiddle`.
+example (d : DecidableEq Ordinal.{0}) : ZeroParadox.WLPO := by
+  refine ZeroParadox.wlpo_of_weakExcludedMiddle fun p => ?_
+  let o : Ordinal.{0} := ⨆ _ : p, (1 : Ordinal.{0})
+  have hb : BddAbove (Set.range fun _ : p => (1 : Ordinal.{0})) := Ordinal.bddAbove_of_small
+  rcases d o 0 with h | h
+  · refine Or.inr fun hnp => h ?_
+    have : IsEmpty p := ⟨hnp⟩
+    simp [o]
+  · refine Or.inl fun hp => ?_
+    have h1 : (1 : Ordinal.{0}) ≤ o := le_ciSup hb hp
+    rw [h] at h1
+    exact absurd h1 (by simp)
 -- Reading: in (vi) `L` tags `NInf.infty` through a decidable equality on `Ordinal.{0}`, as
--- `wlpo_of_tag` tags it through `Option ℕ`'s; unlike `Option ℕ`'s, that decidable equality gives
--- weak excluded middle by itself (the CONTROL above), so (vi) holds with no `L`. `L` is not claimed
--- to be computable or choice-free.
+-- `wlpo_of_tag` tags it through `Option ℕ`'s. `Option ℕ`'s decidable equality is an instance; the one
+-- on `Ordinal.{0}` is a hypothesis here, and given one, weak excluded middle follows (the second
+-- CONTROL above, and the `example` after `wlpo_of_weakExcludedMiddle`; both proofs print `Classical.choice`
+-- from the ambient `Ordinal` API, so their constructive reading is not measured here). Read
+-- constructively, the content of (vi) lies in its hypothesis: by de Jong and Escardó's argument (cited
+-- next) a decidable equality gives weak excluded middle, and `wlpo_of_weakExcludedMiddle` gives WLPO;
+-- neither Lean proof measures this. Classically WLPO needs no hypothesis (the first
+-- CONTROL above). `L` is not claimed to be computable or choice-free.
+-- Reading (cited, not claimed): T. de Jong and M. H. Escardó, "Predicative Aspects of Order Theory
+-- in Univalent Foundations", FSCD 2021, arXiv:2102.08812, Theorem 37, p. 10: a nontrivial locally
+-- small δ-complete poset with decidable equality gives weak excluded middle. The second CONTROL above meets
+-- their hypothesis at `0 < 1` in `Ordinal.{0}`, with `⨆ _ : p, 1` their `Δ_{0,1}(p)` (Definition 29,
+-- p. 9); its proof decides only `o = 0`, equality with ⊥ of `Ordinal.{0}`, and is the proof of T. de Jong,
+-- "Apartness, sharp elements and the Scott topology of domains", MSCS (2023), arXiv:2106.05064v5,
+-- Prop 22, p. 7 ("¬P holds if and only if ⨆ {x | P} = ⊥").
+-- Reading (cited, not claimed): N. Kraus, F. Nordvall Forsberg and C. Xu, "Type-theoretic approaches
+-- to ordinals", TCS 957 (2023), arXiv:2208.03844, Theorem 17, p. 18: an ordinal structure with zero,
+-- successors and limits of strictly increasing sequences, and with decidable equality, gives WLPO.
+-- (vi) is a conclusion of that shape at `Ordinal.{0}`, reached here through `wlpo_of_discrete_tag`.
 -- Reading (cited, not claimed): Escardó, preprint of JSL 78(3) (2013), § 11, p. 19: Coquand,
 -- Hancock and Setzer's limit structures reach `γ`-transfinite iteration for any `γ < ε₀` in the
 -- presence of simple types, and Escardó infers from that ("The argument of the first paragraph
@@ -4753,5 +4796,11 @@ example (d : DecidableEq Ordinal.{0}) : ZeroParadox.WeakExcludedMiddle := by
 example : (∀ n, ZeroParadox.slotRun (fun _ => false) n = false) ∧
     ZeroParadox.slotMotion.LeavesAt false :=
   ⟨fun n => by simp [ZeroParadox.slotRun], ZeroParadox.slotMotion_leavesAt_false.1⟩
+-- Fired once gives T-SNAP's hypotheses: `ZeroParadox/Information/CrossingTrials.lean` § VIII.
+#check @ZeroParadox.firedRun_spec              -- Statement: if the tape fires somewhere, the shifted run is `false` at stage 0 and `true` at every later stage
+#check @ZeroParadox.t_snap_of_fires_once       -- Statement: if `φ` sends `false` to ⊥ of `L` and `true` elsewhere, and the tape fires somewhere (`hw`), `φ ∘ firedRun` meets `t_snap_given`'s `hcc1`, `hocc`; one way
+#check @ZeroParadox.trials_fires_once          -- Statement: if `0 < p ≤ 1`, the tapes that fire somewhere have `trials p hp` measure one
+#check @ZeroParadox.t_snap_of_avoids           -- Statement: § VI's hypotheses on a tape give its `hw` and `t_snap_of_fires_once`'s conclusion; one way
+-- Reading: `hw` is the occurrence commitment in its slot chart (`ZeroParadox/Order/SnapCannotBe.lean` § II).
 
 end DieCannotBeIndex

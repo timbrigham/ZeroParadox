@@ -2225,6 +2225,10 @@ example {α β : Type} (M : Motion α) (N : Motion β) (f : α → β) :
 def StepBack (M : Motion α) (N : Motion β) (f : α → β) : Prop :=
   ∀ a c, N.step (f a) c → ∃ b, M.step a b ∧ f b = c
 
+-- Reading: `StepBack` also resembles the back condition of a bounded morphism (p-morphism) of modal
+-- logic; no source for that name was retrieved as of 2026-11-03 (searched: the local papers library
+-- for Blackburn and for modal logic).
+
 -- Statement: `StepBack` is `Relation.Fibration` of the reversed steps, by `Iff.rfl`.
 example (M : Motion α) (N : Motion β) (f : α → β) :
     StepBack M N f ↔ Relation.Fibration M.reverse.step N.reverse.step f := Iff.rfl

@@ -186,18 +186,21 @@ class KleeneStructure (L : Type*) [ZPSemilattice L] extends AFAStructure L where
       between them typechecks: `ZeroParadox/Computability/ComputationCannotBe.lean` § IV). -/
   bot_self_mem_from_kleene : AFAStructure.selfMem (bot : L)
 
-/-! ## § III. T-COMP — the three-way equivalence, and where the fourth face sits -/
+/-! ## § III. T-COMP and `da2_bottom_characterization` — the three-way equivalence, and where the
+fourth face sits -/
 
 /-- T-COMP (Computational Grounding Theorem):
-    In any KleeneStructure lattice, **three** characterisations of the null ground
-    element are proved equivalent:
+    In any KleeneStructure lattice, **three** characterisations of ⊥ of `L` are proved
+    equivalent by this theorem together with `da2_bottom_characterization`:
       (1) Quine atom  — IsQuineAtom q  (AFA self-containment, set-theoretic)
       (2) Bottom      — q = ⊥          (order-theoretic minimum)
       (3) Join identity — ∀ x, q ∨ x = x  (algebraic generator)
 
-    **Honest fence.** Lean proves (1) ↔ (2) ↔ (3), and that is the whole content of
-    this statement — the proof term is literally `t_exec_triple_iff`, a ZP-J result
-    that does not mention computation. The fourth characterisation,
+    **Honest fence.** This statement is (1) ↔ ((2) ∧ (3)), and the proof term is literally
+    `t_exec_triple_iff`, a ZP-J result that does not mention computation. (2) ↔ (3) is a
+    second theorem, `da2_bottom_characterization` (`ZeroParadox/Order/Snap.lean`); the
+    three-way equivalence is the two together (the `example` after this theorem). The fourth
+    characterisation,
 
       (4) Kleene fixed point — computational self-reference,
 
@@ -218,13 +221,19 @@ theorem t_comp {L : Type*} [ZPSemilattice L] [KleeneStructure L] (q : L) :
     IsQuineAtom q ↔ q = bot ∧ ∀ x : L, join q x = x :=
   t_exec_triple_iff q
 
+-- `Statement:` the three-way equivalence, pairwise: (1) ↔ (2) is `t_exec_iff`, (3) ↔ (2) is
+-- `da2_bottom_characterization`; `t_comp` alone gives (1) ↔ ((2) ∧ (3)).
+example {L : Type*} [ZPSemilattice L] [KleeneStructure L] (q : L) :
+    (IsQuineAtom q ↔ q = bot) ∧ ((∀ x : L, join q x = x) ↔ q = bot) :=
+  ⟨t_exec_iff q, da2_bottom_characterization q⟩
+
 /-- Any element satisfying the AFA Quine-atom property equals ⊥.
 
     **Honest fence.** The statement quantifies over elements of `L` and mentions no
     computational fixed point; the proof term is `t_exec`, a pure ZP-J result. The
     `KleeneStructure` hypothesis is inert *on this proof route* — it supplies the
     `AFAStructure` this inherits from, and nothing else is used. It is not absent from
-    the axiom footprint, which follows the statement (see the footprint note in
+    the axiom footprint, which follows the statement as well as the proof (see the footprint note in
     `ZeroParadox/Computability/Kleene.md`). No equation relates `botCode` to this
     element (the identity reading is retired, § II); under the `eval` step no single code
     occupies the die's Quine-atom role, and for computable `eval`-respecting maps a class of
@@ -298,22 +307,22 @@ theorem description_instantiation_gap_closed {L : Type*} [ZPSemilattice L]
 
 /-! ## § V. MachinePhase — the Concrete Lean Counterpart of DA-1's Path 1
 
-Provides AFAStructure and KleeneStructure instances for ZP-E's MachinePhase type,
-the Lean counterpart of DA-1's Path 1 for ZP-E's MachinePhase model.
-
-selfMem is modelled as equality with bot — the CIC-compatible expression of AFA
-self-containment ⊥ = {⊥}. Anti-foundation is not required at the typeclass level:
-the relevant structural fact (bot is the unique self-containing element) is
-captured by the definition selfMem x := x = bot, proved axiom-free. -/
+AFAStructure and KleeneStructure instances for ZP-E's MachinePhase model. `Reading:` CARRIER —
+selfMem x := x = bot is the shadow of the Quine atom (CC-2) on a two-element carrier, not the
+literal x = {x}, which is refuted in Mathlib's `ZFSet` (the `example` after `no_quine_atom` in
+`ZeroParadox/Settheory/Wall.lean`; `zfset_selfOnlyAt_mem_iff` makes it the die's Quine-atom role), and
+the role's two charts are `zfset_quine_role_unoccupied` (no set occupies the role) and `cofix_quine_role_occupied` (occupied in the coalgebra chart,
+`ZeroParadox/Settheory/Coalgebra.lean`). Anti-foundation is not required at the typeclass level:
+the definition makes ⊥ of `MachinePhase` the unique element satisfying `selfMem`, axiom-free. -/
 
 open ZeroParadox ZeroParadox
 
 /-- AFAStructure instance for MachinePhase.
     selfMem x := x = bot (bot = .initial = c₀).
-    The unique self-containing element is the initial state — the bottom of the
-    semilattice. This is the CIC encoding of ⊥ = {⊥}: bot is self-containing
-    and is the only element with this property. -/
--- [ZP-CUSTOM] instance: AFAStructure MachinePhase | reason: selfMem x := x = bot is the CIC-compatible encoding of AFA self-containment (⊥ = {⊥} cannot be stated in Lean's well-founded type theory). Quine uniqueness and bot_self_mem are provable by rfl. This is the concrete Lean counterpart of Path 1 for ZP-E's machine model; DA-1 itself is closed given DP-2 (da1_minimal_path).
+    The unique element satisfying `selfMem` is the initial state, ⊥ of `MachinePhase`.
+    This is the shadow of the Quine atom (CC-2), not the literal x = {x}; the Quine-atom
+    role's two charts are in the § V header. -/
+-- [ZP-CUSTOM] instance: AFAStructure MachinePhase | reason: selfMem x := x = bot is the shadow of AFA self-containment on MachinePhase. The literal x = {x} is statable in Mathlib's well-founded ZFSet and refuted there (no set occupies the die's Quine-atom role, zfset_quine_role_unoccupied, ZeroParadox/Settheory/Wall.lean); the coalgebra chart Cofix idPF_Coalgebra.Obj occupies it (cofix_quine_role_occupied, ZeroParadox/Settheory/Coalgebra.lean). Quine uniqueness and bot_self_mem are provable by rfl. This is the concrete Lean counterpart of Path 1 for ZP-E's machine model; DA-1 itself is closed given DP-2 (da1_minimal_path).
 instance machinePhaseAFA : AFAStructure MachinePhase where
   selfMem x      := x = bot
   quine_unique _ _ hx hy := hx.trans hy.symm

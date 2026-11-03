@@ -1,6 +1,6 @@
 """
 Build ZP-E Illustrated Companion
-Version 1.33 | November 2026
+Version 1.34 | November 2026
 """
 
 import os
@@ -171,7 +171,7 @@ def axioms_table():
     t = Table(data, colWidths=[TW*0.18, TW*0.82])
     t.setStyle(ts); return t
 
-VERSION = '1.33'
+VERSION = '1.34'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -219,7 +219,7 @@ def build():
         'the Binary Snap from its own mathematical vantage point. Each description is proved within its own '
         'framework, from that framework&#8217;s own premises (ZP-D&#8217;s include its design premise DP-1). ZP-H T-H3 '
         '(th3_snap_all_functors) is their conjunction, four domain facts joined by &#8220;and&#8221;, with no functor or morphism in '
-        'its statement; ZP-H&#8217;s modelling commitment is the identification, under its functors, of the objects each framework located independently. '
+        'its statement, and ZP-H identifies none of the objects each framework located; where a shared role is checked, it is checked in one framework at a time (ZP-H Section VI). '
         'Reading the four as one event is the framework&#8217;s interpretation, not a theorem. The bottoms the four '
         'descriptions start from form a family (the bottom family, MC-1), not one object: an identity across the '
         'frameworks is retired as ill-typed, because their objects live in different mathematical types.'))
@@ -240,7 +240,8 @@ def build():
         'The symbol ε₀ has two charts, and they are not merged. In the ordinal chart, ε₀ is the '
         'proof-theoretic ordinal of Peano Arithmetic, the minimum ordinal up to which PA '
         'cannot prove transfinite induction. Goodstein\'s theorem is the standard witness: every '
-        'Goodstein sequence eventually terminates, but PA cannot prove this; the proof requires '
+        'Goodstein sequence eventually terminates, but PA cannot prove this (Kirby and Paris, 1982, as '
+        'ZeroParadox/Ordinal/Goodstein.lean records); the proof requires '
         'transfinite induction up to ε₀. That ordinal is at once the least fixed point of the map '
         'α ↦ ω^α and the supremum of the tower ω, ω^ω, ω^(ω^ω), …, and neither face replaces the other. '
         'In that chart the snap does land on it: closing ⊥ under α ↦ ω^α gives ε₀ in one step. '
@@ -295,14 +296,18 @@ def build():
     E.append(cbody(
         'DA-1 is a Derived Proposition, closed given DP-2, as the next paragraph explains. That a '
         'configuration at P₀ is executing is not part of what it derives: that is DP-2&#8217;s precondition, '
-        'and it is what the occurrence commitment asserts. ZP-A CC-2, '
-        '⊥ = {⊥}, itself a commitment (argued, not proved), motivates it. The bottom element ⊥ '
+        'and it is what the occurrence commitment asserts. ZP-A CC-2, the Quine atom, motivates it. In the die '
+        'it is a role, a point that steps to itself and to nothing else; under a self-application map supplied '
+        'by AbstractSelfApp, ⊥ of a ZP-A semilattice is its only occupant by that class&#8217;s own fields '
+        '(selfApp_quine_role_iff), which the constant map onto ⊥ also meets, so the content is in the host. That '
+        'any host of the role is not well-founded is forced (quineAtomHost_not_wellFounded); which requirements '
+        'to demand of it, and adopting AFA, stay commitments (argued, not proved). The bottom element ⊥ '
         'is a Quine atom, a self-containing object with no external position from which it '
         'could be interpreted as a static description. So if ⊥ executes at all, nothing outside '
         'it can be the executor; the executor is ⊥ itself. That rules out an external executor, '
         'not an inert ⊥: the two-state machine type in the Lean source has a Quine-atom bottom '
         'and also admits a dynamics in which nothing moves. That the configuration reaching P₀ is running is the occurrence '
-        'commitment, not a consequence of ⊥ = {⊥}.'))
+        'commitment, not a consequence of the Quine atom (CC-2).'))
     E.append(cbody(
         '<b>The two-layer structure of DA-1:</b> DA-1 rests on two explicit layers. '
         'The first is the formal conditional: DP-2 (Execution Distinguishability) establishes '
@@ -317,7 +322,7 @@ def build():
         'arguments bear on it, and none derives it.'))
     E.append(cbody(
         '<b>Three arguments for the precondition (ZP-E&#8217;s Paths 1, 2 and 3):</b> '
-        '(1) CC-2/R3 (ZP-A): ⊥ = {⊥} is a Quine atom — it interprets itself, leaving no '
+        '(1) CC-2/R3 (ZP-A): ⊥ is the Quine atom (CC-2) — it interprets itself, leaving no '
         'external position from which it could be read as a static description. As shown above, '
         'that rules out an external executor, not an inert ⊥. '
         '(2) Informational, in two charts: surprisal grows without bound with depth in the ball hierarchy, '
@@ -374,7 +379,7 @@ def build():
     E.append(cbody(
         'AX-1 is not on this list: it is retired, and its shape is Theorem T-SNAP. Further commitments are not axioms and are stated where they are used, '
         'among them the occurrence commitment (that instantiation occurs; together with DA-1 it gives that the Snap happens), CC-1 (S₀ = ⊥, a ZP-A Conditional Claim), the choice of starting point that T-SNAP is derived given, '
-        'and CC-2 (⊥ = {⊥}, a ZP-A Forced Metatheoretic Commitment), which motivates DA-1&#8217;s precondition; DA-1 itself is closed given DP-2. '
+        'and CC-2 (the Quine atom, a ZP-A Forced Metatheoretic Commitment: adopting AFA is CC-2&#8217;s commitment, the host requirements (QuineAtomHost) are its Lean abstraction, and that any such host gives up Foundation is forced (quineAtomHost_not_wellFounded)), which motivates DA-1&#8217;s precondition; DA-1 itself is closed given DP-2. '
         'The framework makes no stronger claim than it has to.'))
     E.append(sp(8))
     E.append(remember_box(

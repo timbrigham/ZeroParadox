@@ -32,7 +32,7 @@ of which each structure is a witness — the Yoneda/representability reading), b
 that both are witnesses of one interface — and the honest fence that the carriers are provably distinct
 types, so the shared shape is the interface, never a cross-type `=`. One asymmetry is kept visible: the
 ordinal implementation separates unconditionally, the Hilbert one only given a genuine-transition sequence
-(consecutive states distinct). The two sit at different universe levels of the interface; no lift is built.
+(consecutive states distinct). The two sit at different universe levels of the interface (see below).
 
 ## Engineer's Take
 
@@ -126,7 +126,9 @@ noncomputable def hilbertSuccession (n : ℕ) (S : ℕ → Fin n) (hS : ∀ k, S
 -- Statement: the ordinal implementation is a term of the interface at universe level 1.
 noncomputable example : SeparatedSuccession.{1} := ordinalSuccession
 -- Statement: the Hilbert implementation is a term of it at level 0, so the two are not terms of one
--- type and one list holds both only after a lift of a carrier (for example by `ULift`).
+-- type and one list holds both only after a lift of a carrier (for example by `ULift`). Such a lift
+-- was not located in the corpus as of 2026-11-03, searched `ZeroParadox/**/*` for the identifiers
+-- `SeparatedSuccession`, `ordinalSuccession`, `hilbertSuccession`, for `ULift`, and for "same/common universe".
 noncomputable example (n : ℕ) (S : ℕ → Fin n) (hS : ∀ k, S k ≠ S (k + 1)) : SeparatedSuccession.{0} :=
   hilbertSuccession n S hS
 

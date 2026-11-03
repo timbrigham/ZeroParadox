@@ -85,7 +85,7 @@ self-referential floor — is what the minimal core exhibits, and a bare fixed p
 full Quine atom needs a non-well-founded set theory (ZF+AFA) to host a set x = {x} literally; that host is the
 *flesh*, cited to its home, not rebuilt here. Honest split: the *structural* self-application fixed point is
 Lean-proved and axiom-free (`t_exec`); an equation between a lattice's ⊥ and a set is ill-typed and not asserted: the die's Quine-atom
-role is occupied chart by chart (`ZeroParadox/Settheory/QuineDichotomy.lean`); hosting x = {x} in ZF+AFA is the commitment.
+role has its occupancy settled chart by chart (`ZeroParadox/Settheory/QuineDichotomy.lean`); hosting x = {x} in ZF+AFA is the commitment.
 
 **Honest status.** The *content* is re-derived, not new: the engine is **Lawvere (1969) / Yanofsky (2003)**
 (`Settheory/Wall.lean`); the classifier is `Category/DiagonalWitness.lean`; the four corners are

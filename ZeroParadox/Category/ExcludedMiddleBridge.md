@@ -73,7 +73,9 @@ chooser on every inhabited predicate on `Bool` — so in a topos, where unique c
 and M. Szyld, *Tannaka Theory for Topos*, arXiv:1510.01775v1, Prop. 1.24, p. 10), it would be equivalent to `ExcludedMiddle`, and the
 faithfulness check below would have to fail. It does not fail. A candidate explanation is that Lean
 stratifies `Prop` and `Type`: `ChoiceFragment` is equivalent to `Nonempty (∀ p, Decidable p)` and
-`ExcludedMiddle` to `∀ p, Nonempty (Decidable p)` (the `example`s after `ChoiceFragment`), and `Or` in
+`ExcludedMiddle` to `∀ p, Nonempty (Decidable p)` (the `example`s after `ChoiceFragment`; the forward
+leg of the second is the `match` inside Lean core's `Classical.propDecidable`, `Init/Classical.lean`,
+before core applies `Classical.choice`), and `Or` in
 `Prop` does not eliminate into `Bool` (the `#check_failure` after `ChoiceFragment`). The two differ
 only in whether `Nonempty` sits outside or inside `∀ p`, and since each `Decidable p` has at most one
 element, moving it outward is an instance of unique choice. That unique choice carries excluded middle
@@ -90,8 +92,9 @@ located in a source as of 2026-11-01; searched in topos-theory notes and theses 
 the open web, while the theorem-search and Lean-library queries targeted unique choice, not this
 form), while Ω itself is 1 + 1 only when the topos is Boolean
 (`ZeroParadox/Category/ChoiceCannotBe.md`, § "The headline fence"). A failed elaboration measures one
-construction, and what is not established here is the converse: that without unique choice the
-fragment is not derivable from `ExcludedMiddle` in Lean. **So Lean's stratification is a candidate
+construction, and neither pole of the converse, `ExcludedMiddle → ChoiceFragment`, is established here
+for Lean without `Classical.choice` and without a unique-choice hypothesis: no derivation is given, and
+no proof that none exists. **So Lean's stratification is a candidate
 explanation of the one-way-ness observed below, not a finding — and not, as first written, a
 restatement of Diaconescu.**
 

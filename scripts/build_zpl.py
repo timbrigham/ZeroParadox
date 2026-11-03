@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-L: Incomputability Convergence PDF Builder
-Version 1.32 | November 2026
+Version 1.34 | November 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.32'
+VERSION = '1.34'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -49,8 +49,10 @@ def build():
         'Fourth, cnfToZp2 maps ordinals below &#949;&#8320; into &#8484;&#8322; by recursion '
         'on their Cantor normal form. From tower stage 1 on, the 2-adic valuation of the '
         'image climbs with ordinal height toward &#8734; while the 2-adic norm falls toward 0; '
-        'the images converge to 0 = &#8869;, the point the seed stage 0 itself maps to '
-        '(snap_arc_z2_loop, ZeroParadox/Ordinal/CnfBridge.lean).'))
+        'the images converge to 0, the point the seed stage 0 itself maps to '
+        '(snap_arc_z2_loop, ZeroParadox/Ordinal/CnfBridge.lean). That 0 is least in '
+        '&#8484;&#8322;\'s norm preorder and greatest in its valuation preorder '
+        '(z2_two_views, ZeroParadox/Valuation/Scale.lean), the two readings just given.'))
     E.append(body(
         'The central result (§VII) is the canonical snap map: '
         '&#981; &#945; = if &#945; < &#949;&#8320; then c&#8320; else c&#8321; '
@@ -75,13 +77,19 @@ def build():
         'which measures no axioms, and botCode, which carries them.'))
 
     E.append(data_table(
-        headers=['Layer', 'Formal Language', 'Expression of non-constructibility'],
+        headers=['Layer', 'Formal Language', 'Result cited, or status'],
         rows_data=[
             ['ZPB', 'Topology', 'C3: no continuous path &#8869; &#8594; x &#8800; &#8869;'],
-            ['ZPC', 'Information Theory', 'L-INF: infinite surprisal at &#8869;'],
+            ['ZPC', 'Information Theory', 'L-INF: surprisal unbounded in depth n, every value finite '
+             '(l_inf); at Q&#8322;\'s floor 0 the complexity cxQ2 is &#8868; '
+             '(infinitude_forces_infinite_complexity, instance q2InfinitudeFloor). That c&#8320; '
+             'corresponds to that floor is a reading'],
             ['ZPJ/K', 'Set Theory + Computation', 'bot_self_mem (AFA); botCode (Kleene)'],
-            ['ZPI', 'Algorithmic IT', 'K uncomputable; the K-ratio bridge is refuted, '
-             'counterexample S<sub>n</sub> = 2<sup>n</sup> (ZP-I &#167; II.B)'],
+            ['ZPI', 'Algorithmic IT', 'K uncomputable. ZP-I &#167; II.B refutes the valuation-complexity '
+             'bridge (unbounded 2-adic valuation of S<sub>n</sub> implies K(S<sub>n</sub> | n) / '
+             '|S<sub>n</sub>| &#8594; 1) with S<sub>n</sub> = 2<super>n</super>, the powers of 2 that &#167;IV\'s '
+             'tower images take; the valuation half is in '
+             'Lean, the complexity half is argued outside it'],
         ],
         col_widths=[50, 100, 280],
     ))
@@ -91,8 +99,9 @@ def build():
         'Remark: K is not computed in Lean',
         [
             'Kolmogorov complexity K is not computed in Lean in this framework. '
-            'The AFA/Kleene route reaches the same fixed-point structure via a path whose '
-            'Kleene step is a KleeneStructure requirement, without requiring K to be explicitly computed.',
+            'The AFA/Kleene route needs no K: da1_paths_unified is a conjunction of two facts, '
+            'that &#8869; of the lattice is its Quine atom (bot_is_quine_atom) and that the code '
+            'botCode is a computational quine (the KleeneStructure field botCode_is_quine).',
             'Axiom footprint evidence — the following ZP-K theorems all carry '
             '[propext, Classical.choice, Quot.sound]:',
             '  t_comp (T-COMP three-way equivalence; the computational face is an assumption, not a clause)',
@@ -373,7 +382,8 @@ def build():
         'Theorem: tower_converges_to_zero',
         [
             'Filter.Tendsto (fun n &#8614; cnfToZp2 (towerNONote n)) Filter.atTop (nhds 0)',
-            'The images of the tower stages converge to 0 = &#8869; in &#8484;&#8322;.',
+            'The images of the tower stages converge to 0 (nhds 0) in &#8484;&#8322;; the theorem '
+            'names no order.',
             'Proof: each stage&#8217;s image cnfToZp2(towerNONote (n+1)) = 2^(n+1) in &#8484;&#8322;, '
             'so its 2-adic norm is &#8214;2&#8214;^(n+1) = (1/2)^(n+1) &#8594; 0. '
             'Uses Metric.tendsto_atTop and exists_pow_lt_of_lt_one.',
@@ -682,8 +692,8 @@ def build():
             '[propext, Classical.choice, Quot.sound]. Section I\'s table and ZP-K Section IV '
             'record where the ZP layers differ &#8212; Section I\'s own ZPJ/K row names '
             'bot_self_mem, which measures no axioms.',
-            'These are standard Mathlib infrastructure axioms (ordinal theory, p-adic '
-            'analysis, computability). They are not ZP-L commitments.',
+            'These are axioms of Lean\'s core library, reached here through Mathlib\'s ordinal '
+            'theory, p-adic analysis and computability. They are not ZP-L commitments.',
             'The footprints across the ZP layers are not uniform; ZP-K Section IV tabulates the '
             'measurements. In the computability layer, Rogers\' fixed-point theorem as Mathlib '
             'states it carries Classical.choice in its statement, through Mathlib\'s numbering of '

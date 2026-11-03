@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-J Wheel Addendum: The Wheel of Fractions is a Wheel
-Version 1.9 | October 2026
+Version 1.10 | November 2026
 Reads after ZP-J Self-Reference.
 """
 
@@ -8,7 +8,7 @@ import os
 from zp_utils import *
 from reportlab.platypus import KeepTogether
 
-VERSION = '1.9'
+VERSION = '1.10'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard: route all bare Paragraph() text through Unicode-to-entity conversion ──
@@ -275,9 +275,12 @@ def build():
     E.append(remark_box(
         'Remark &#8212; The Porthole Connection',
         [
-            'In ZP-J, the porthole is the point where val(&#8869;) = &#8734; and '
-            '&#8869; = {&#8869;} coincide &#8212; the same structural fact written in the '
-            '2-adic valuation (v&#8322;(0) = &#8734;) and in ZF+AFA (the Quine atom). The '
+            'In ZP-J, the porthole is one role read in several charts, not one equation across them: '
+            'a point that steps to itself and to nothing else (Motion.SelfOnlyAt). In the 2-adic '
+            'integers its occupant under x &#8614; 2x is 0, where v&#8322;(0) = &#8734; (z2_two_views, '
+            'ZeroParadox/Valuation/Scale.lean); a valuation structure sets val(&#8869;) = &#8734; '
+            '(val_bot); in ZF+AFA the role is the Quine atom (CC-2), a set x = {x}, whose lattice-level '
+            'occupant is &#8869; (ZeroParadox/Settheory/QuineDichotomy.lean). The '
             'wheel of fractions is the algebraic face of that point: /0 is defined and '
             'distinct from the absorbing &#8869;, exactly the behaviour the porthole '
             'predicts. The concrete carrier ZPWheelElem (ZeroParadox/Algebra/Wheel.lean §III&#8211;VI) '
@@ -378,7 +381,7 @@ def build():
     # shrinks; a hard PageBreak would instead force a sixth page even once the text fits on five.
     E.append(KeepTogether(Paragraph(
         'Endnote: This document is an addendum to ZP-J Self-Reference and reads after it. '
-        'ZP-J established the porthole (val(&#8869;) = &#8734;, &#8869; = {&#8869;}); this '
+        'ZP-J established the porthole (val(&#8869;) = &#8734;, and &#8869; as the lattice-level occupant of the Quine-atom role, CC-2); this '
         'document gives its algebraic form, the wheel of fractions, and the machine-verified '
         'proof that the construction is a wheel and a non-trivial one. All results sorry-free '
         'in Lean 4 as of September 2026. Footprints are per result, and [propext, Quot.sound] is '

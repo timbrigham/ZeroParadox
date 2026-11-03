@@ -4,6 +4,7 @@ import ZeroParadox.Valuation.SemilatticeInstance
 import ZeroParadox.Valuation.SnapDichotomy
 import ZeroParadox.Reals.OrderedField
 import ZeroParadox.Multihomed.BoundaryOrder
+import ZeroParadox.Information.CrossingTrials
 
 /-!
 # Machine-checked characterization index of the snap ⊥ → ε₀ — what the snap IS and IS NOT
@@ -35,6 +36,22 @@ section SnapCannotBeIndex
 #check @ZeroParadox.t_snap_join                       -- Statement: in any `ZPSemilattice`, `join bot x = x` for every `x` (A4, `bot_join`); the binder is named ε₀. Reading: the algebraic core ⊥ ∨ ε₀ = ε₀
 #check @ZeroParadox.t_snap_machine                    -- Statement: in `MachinePhase`, `join c₀ c₁ = c₁` (initial → running)
 #check @ZeroParadox.t_snap_given                      -- Statement: over any ZPSemilattice, `S 0 = bot` (CC-1) and `S 1 ≠ S 0` (occurrence at the first step) give `t_snap_derived`'s shape at S 0, S 1; the inequalities restate `hocc`, and only the join comes from A4. No binder makes `S 1` an atom above `S 0`, and the step is assumed (`hocc`), not forced. Two commitments are the binders; `t_snap_derived` is its MachinePhase instance at a sequence chosen to move, and `MachinePhase` does not discharge `hocc`
+-- Reading: CARRIER — the occurrence commitment, in two charts. Execution chart: instantiation occurs (Sense B,
+--   a running configuration). Slot chart: the realized run has fired at least once, the hypothesis
+--   `hw` of `t_snap_of_fires_once` (`ZeroParadox/Information/CrossingTrials.lean` § VIII).
+#check @ZeroParadox.t_snap_of_fires_once             -- Statement: if `φ : Bool → L` sends `false` to ⊥ of `L` and `true` to a point other than ⊥ of `L`, and the tape `w` fires at some stage (`hw`), then `φ ∘ firedRun w hw` meets `t_snap_given`'s `hcc1` and `hocc` and is a state sequence; one way
+#check @ZeroParadox.trials_fires_once                -- Statement: if `0 < p ≤ 1`, the tapes that fire at some stage have `trials p hp` measure one; it names no tape
+-- `Statement:` CONTROL, a particular tape need not fire: the all-`false` tape fires at no stage.
+example : ¬ ∃ k, (fun _ => false : ℕ → Bool) k = true := fun ⟨_, h⟩ => Bool.false_ne_true h
+-- `Statement:` occurrence once: the slot chart's sequence steps at index 1 and stays, so it is not an
+-- `IsStrictStateSequence` (ZP-A's proper ascent at every step).
+example {L : Type*} [ZeroParadox.ZPSemilattice L] (φ : Bool → L) (w : ℕ → Bool) (hw : ∃ k, w k = true) :
+    ¬ ZeroParadox.ZPSemilattice.IsStrictStateSequence (φ ∘ ZeroParadox.firedRun w hw) := fun h => by
+  have a : ZeroParadox.firedRun w hw 1 = true := (ZeroParadox.firedRun_spec w hw).2 0
+  have b : ZeroParadox.firedRun w hw 2 = true := (ZeroParadox.firedRun_spec w hw).2 1
+  exact h.2 1 (show φ (ZeroParadox.firedRun w hw 1) = φ (ZeroParadox.firedRun w hw 2) by rw [a, b])
+-- Reading: CARRIER — the two charts correspond: a firing is read as an instantiation. That correspondence is
+--   not proved; a firing is not shown to be an execution event.
 -- Reading: CARRIER. "⊥ → ε₀" in the lines that use c₁ (`t_snap_derived`, `t_snap_machine`) is the
 --   discrete-state chart, where ε₀ names the first state above ⊥ (c₁ in `MachinePhase`), and "atom above
 --   ⊥" is a claim in that chart only. `t_snap_join`, `t_snap_irreversible` and

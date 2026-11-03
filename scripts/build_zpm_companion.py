@@ -1,6 +1,6 @@
 """
 Build ZP-M Illustrated Companion
-Version 1.13 | November 2026
+Version 1.14 | November 2026
 """
 
 import os
@@ -8,7 +8,7 @@ from zp_utils import *
 from reportlab.graphics.shapes import Drawing, Line, String, Rect, Circle, Polygon
 from reportlab.graphics import renderPDF
 
-VERSION = '1.13'
+VERSION = '1.14'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -166,13 +166,15 @@ def build():
 
     E.append(cbody(
         'ZP-M is a consolidation layer. Its job is to connect two results that were '
-        'proved separately in ZP-K and ZP-L and show that they are looking at the same '
-        'structure from different angles.'))
+        'proved separately in ZP-K and ZP-L, through maps between their types rather than an '
+        'identity across them.'))
     E.append(cbody(
-        'ZP-K carries the computational face of the initial state c₀ (⊥) as a KleeneStructure '
-        'requirement (botCode_is_quine): read as a Kleene fixed point, a program that is its own '
-        'program, with no external executor required. Reading c₀ as the Kleene quine is that '
-        'commitment, not a theorem. ZP-L proved that nothing fires below the ordinal ε₀: '
+        'ZP-K names a code beside the initial state c₀ (⊥ of MachinePhase) as a KleeneStructure '
+        'requirement (botCode_is_quine), a periodicity condition that constant codes also meet. Reading '
+        'c₀ as the Kleene quine, a program that is its own program, splits in two. It is not an equation, '
+        'since a code and a machine state are different types, so that half is retired; that ⊥ of '
+        'MachinePhase runs is the occurrence commitment, and if it runs, nothing outside it runs it (DA-1, '
+        'Path 1). ZP-L proved that nothing fires below the ordinal ε₀: '
         'the tower ω, ω^ω, ω^ω^ω, … approaches ε₀ from below, and '
         'any monotone map that sends tower stages to c₀ also sends every ordinal below ε₀ '
         'to c₀ (snap_threshold_is_epsilon_zero). Firing at ε₀ itself is not forced (the map '
@@ -208,13 +210,19 @@ def build():
     E.append(cbody(
         'The map is injective (c₀ and c₁ land in distinct places) and '
         'preserves the algebraic structure: joining c₁ with anything gives c₁, '
-        'and multiplying 0 by anything gives 0. The same absorbing-element pattern '
-        'holds in both types, under different operations.'))
+        'and multiplying 0 by anything gives 0. In the die (ZeroParadox/Die.lean), with join as the step on '
+        'the machine states and multiplication as the step on ℤ₂, each is the only point that steps to itself '
+        'and to nothing else, and snapEmbed is a map between those two motions (snapEmbedHom, '
+        'ZeroParadox/Ordinal/Incompleteness.lean §I-b). Along it the role carries over at c₁, because 0 has '
+        'only itself as a successor (snapEmbed_selfOnlyAt_c1), though the map&#8217;s back clause fails at c₀, so the general transport does not apply. That relates the two '
+        'occupants by a map; it does not make them one object. Under a self-application map supplied by AbstractSelfApp, '
+        'the occupant on the machine states is c₀, by that class&#8217;s fields: which point fills the role depends on the step.'))
     E.append(cbody(
         'The key geometric fact: 0 in ℤ₂ is divisible by every power of 2. '
-        'That is what "infinite 2-adic valuation" means. This is the same mathematical '
-        'signature as ⊥ = {⊥} — a structure that contains itself at every level of '
-        'depth, with no bottom that is not also the top.'))
+        'That is what "infinite 2-adic valuation" means, and under doubling 0 is the only point '
+        'that steps to itself and to nothing else (z2_double_selfOnlyAt_iff). The snap step itself does not '
+        'carry over to doubling: c₀ → c₁ goes to 1 → 0, and 0 is not 2 · 1 '
+        '(snapEmbed_doubling_noStepAt).'))
 
     E.append(sp(6))
 
@@ -238,8 +246,8 @@ def build():
         'in ℤ₂ converge to 0 as the ordinal stages approach ε₀.'))
     E.append(cbody(
         'All three edges are theorems, and zpm_triangle assembles them into a single '
-        'formal statement. This is the first place in the framework where the ordinal, '
-        'computational, and 2-adic threads appear in the same proof.'))
+        'formal statement. The ordinal, machine-state and 2-adic threads appear in the same proof; '
+        'it has no computational conjunct, and the Kleene reading of c₀ is not part of it.'))
 
     E.append(sp(6))
 
@@ -256,13 +264,13 @@ def build():
         'ZP-M §II closes this gap. The argument is short: if a map is monotone and '
         'sends ε₀ to c₁, then for any other fixed point α ≥ ε₀, '
         'monotonicity forces the map to agree with c₁ at α (because c₁ absorbs '
-        'every join). The minimality theorem now holds under weaker hypotheses: just '
-        'monotonicity and "snap at ε₀" together imply the full result, without hfp '
-        'as a separate commitment.'))
+        'every join). The minimality theorem now holds under weaker hypotheses: '
+        'monotonicity, every tower stage sent to c₀, and "snap at ε₀" together imply the full '
+        'result (snap_unconditional), without hfp as a separate commitment.'))
 
     E.append(callout(
-        'hfp is not an additional assumption — it is a consequence of the ordinal '
-        'structure plus the alignment condition φ(ε₀) = c₁. The gap in ZP-L is closed.',
+        'hfp is not an additional assumption — it is a consequence of monotonicity '
+        'plus the alignment condition φ(ε₀) = c₁ (hfp_from_epsilon_zero). The gap in ZP-L is closed.',
         bg=GREEN_LITE, border=GREEN
     ))
     E.append(sp(6))
@@ -354,8 +362,8 @@ def build():
             'R-M.1: DA-1 Path 2 boundary made precise — it does not link L-INF to the '
             'Kleene quine, and the step from unbounded surprisal to executing is an unadopted bridge '
             'principle, not a missing proof.',
-            'All 9 theorems proved sorry-free. '
-            'Axiom footprint: [propext, Classical.choice, Quot.sound].',
+            'Every theorem proved sorry-free. '
+            'Axiom footprint: at most [propext, Classical.choice, Quot.sound], per declaration in ZP-M.',
         ]
     ))
     E.append(sp(8))

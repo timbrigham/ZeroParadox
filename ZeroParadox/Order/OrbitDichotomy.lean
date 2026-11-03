@@ -24,15 +24,15 @@ the "one or infinitely many" shape only; for the λ-calculus see § fpp.
 -/
 
 /-! ## § fpp — the λ-calculus name for the shape, where it holds and where it fails
-Reading: there the shape is the **fixed point property (fpp)**: Manzonetto, Polonsky, Saurin & Simonsen,
-*The fixed point property and a technique to harness double fixed point combinators*, J. Logic and
-Computation (2019), doi:10.1093/logcom/exz013, Def. 2.15 (numbering as in the preprint; the journal
-version was not checked). Their Problem 2 restates TLCA #25: "Does λβ satisfy the fixed point property?".
-Holds: λβ satisfies the open fpp (their Thm 3.6); the closed question was open as of that paper (2019,
-their abstract); a later solution was not located as of 2026-10-31 (one web search; the TLCA problem
-page, last updated 2014, predates the paper and records no status).
-Fails: no sensible λ-theory satisfies the fpp (their Thm 5.4), and in each one, for every k > 0, some
-closed term has exactly k fixed points modulo that theory (their Prop. 5.6). -/
+Reading: there the shape is the **fixed point property (fpp)**: Manzonetto, Polonsky, Saurin & Simonsen, *The
+fixed point property and a technique to harness double fixed point combinators*, J. Logic and Computation (2019),
+doi:10.1093/logcom/exz013, Def. 2.15 (preprint numbering; journal version not checked). Their Problem 2 restates
+TLCA #25, "Does λβ satisfy the fixed point property?", first raised by Intrigila and Biasone, MSCS 10(5):595–615
+(2000) (their p. 1, ref. [17]; not consulted here). Holds: λβ satisfies the open fpp (their Thm 3.6); the closed
+question was open as of that paper (2019, their abstract); a later solution was not located as of 2026-10-31 (one
+web search; the TLCA problem page, last updated 2014, predates the paper and records no status). Fails: no sensible
+λ-theory satisfies the fpp (their Thm 5.4), and in each one, for every k > 0, some closed term has exactly k fixed
+points modulo that theory (their Prop. 5.6). -/
 
 namespace ZeroParadox
 

@@ -22,7 +22,12 @@ DA-1 is addressed in ZPJ and ZPK. DA-2 is addressed in ZPI.
 
 ## Formal Overview
 AX-1 is retired: the SHAPE of the snap is proved (`t_snap_derived`, `t_snap_given`), and that the snap OCCURS follows
-from the occurrence commitment (instantiation occurs) together with DA-1, not from T-SNAP (`tsnap_holds_but_nothing_moves`).
+from the occurrence commitment together with DA-1, not from T-SNAP (`tsnap_holds_but_nothing_moves`).
+`Reading:` CARRIER — the occurrence commitment, in two charts. Execution chart: instantiation occurs (Sense B, a
+running configuration). Slot chart: the realized run has fired at least once, the hypothesis `hw` of
+`t_snap_of_fires_once` (`ZeroParadox/Information/CrossingTrials.lean` § VIII), which, with `φ` sending `false` to ⊥ of
+`L` and `true` to a point other than ⊥ of `L`, gives `t_snap_given`'s `hcc1` and `hocc`; if `0 < p ≤ 1` firing has probability one (`trials_fires_once`), and a particular tape need not fire (the
+all-`false` tape). `Reading:` CARRIER — the two charts correspond; a firing is not proved to be an execution event.
 The inserts DA-1, DA-2, DA-3 and the cross-framework link: `ZeroParadox/Order/Snap.md`.
 -/
 
@@ -119,6 +124,12 @@ theorem t_snap_given {L : Type*} [ZPSemilattice L] (S : ℕ → L)
     (hcc1 : S 0 = bot) (hocc : S 1 ≠ S 0) :
     S 0 ≠ S 1 ∧ S 1 ≠ S 0 ∧ join (S 0) (S 1) = S 1 :=
   ⟨fun h => hocc h.symm, hocc, by rw [hcc1]; exact bot_join _⟩
+
+-- Statement: in the occurrence commitment's slot chart, `t_snap_of_fires_once`
+-- (`ZeroParadox/Information/CrossingTrials.lean` § VIII) supplies `hcc1` and `hocc` from a tape that
+-- fired at least once, with `φ` sending `false` to ⊥ of `L` and `true` to a point other than ⊥ of
+-- `L`; its sequence steps once, at index 1, and stays, so it is not an
+-- `IsStrictStateSequence` (the example in `ZeroParadox/Order/SnapCannotBe.lean` § II).
 
 -- Statement: `t_snap_derived` is the instance at the sequence `c₀, c₁, c₁, …`, chosen to move: `hcc1` is `rfl` and `hocc` is `c₁ ≠ c₀`.
 example : c₀ ≠ c₁ ∧ c₁ ≠ c₀ ∧ join c₀ c₁ = c₁ :=
@@ -228,8 +239,7 @@ example {L : Type*} [ZPSemilattice L] :
     so there is no strict pair. In a carrier that has one, `⊥ ⋖ a` (`HasFirstStep`,
     `ZeroParadox/Reals/OrderedField.lean`) is that first inhabitant — note the order:
     `ZPSemilattice`'s `le` is a def with no `LT` instance, so `⋖` over it is stated in the order
-    `zpSemilatticeSup` builds (`t_snap_given_cover`).
-    Long form: `.claude-local/notes/no_subtraction_is_vacuous_at_bottom_2026-07-31.md`. -/
+    `zpSemilatticeSup` builds (`t_snap_given_cover`). -/
 theorem t_snap_irreversible {L : Type*} [ZPSemilattice L] {x y : L}
     (hle : le x y) (hne : x ≠ y) :
     ¬∃ z : L, join y z = x := by

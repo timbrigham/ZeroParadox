@@ -1,12 +1,12 @@
 """
 Zero Paradox — ZP-J: Executability of Self-Reference PDF Builder
-Version 2.14 | October 2026
+Version 2.17 | November 2026
 """
 
 import os
 from zp_utils import *
 
-VERSION = '2.14'
+VERSION = '2.17'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -31,7 +31,7 @@ def build():
 
     E.append(body(
         'This document establishes Theorem T-EXEC (Executability of Self-Reference): in any '
-        'ZP-A join-semilattice carrying the AFAStructure typeclass, whatever fills the Quine-atom '
+        'ZPSemilattice (ZP-A&#8217;s join-semilattice with least element, axioms A1&#8211;A4) carrying the AFAStructure typeclass, whatever fills the Quine-atom '
         'role &#8212; the lattice-level encoding of the set Q = {Q} of ZF+AFA (Anti-Foundation '
         'Axiom) &#8212; is provably the bottom element &#8869;. This bridges the set-theoretic and '
         'order-theoretic layers of the framework at the level of that role; the set identity '
@@ -60,7 +60,7 @@ def build():
     E.append(Paragraph('I. CC-1 in ZP-A', S['h2']))
     E.append(body(
         'ZP-A Conditional Claim CC-1 states: if the state sequence is initialised at &#8869;, '
-        'then &#8869; &#8804; S(n) for all n. This follows trivially from T2 (&#8869; is the '
+        'then &#8869; &#8804; S(n) for all n. This follows trivially from ZP-A T2 (&#8869; is the '
         'global minimum), so its formal content is essentially: we are choosing &#8869; as the '
         'initial state S&#8320;.'))
     E.append(body(
@@ -80,9 +80,8 @@ def build():
 
     E.append(Paragraph('II. The Implicit Identification', S['h2']))
     E.append(body(
-        'ZP-E\'s DA-1 Path 1 already states: &#8869; = {&#8869;} (Quine atom, ZF+AFA). This '
-        'identification &#8212; the bottom element is the Quine atom, the unique solution of x = {x} under '
-        'AFA &#8212; '
+        'ZP-E\'s DA-1 Path 1 already invokes the Quine atom (CC-2): the role that, under AFA, the set '
+        'Q = {Q} plays as the unique solution of x = {x}. That the bottom element fills this role '
         'was present informally but never formally bridged to CC-1. It appeared as motivation for '
         'why &#8869; is the right starting point, not as a derivation of it.'))
     E.append(body(
@@ -97,8 +96,8 @@ def build():
         'If forced, what is the structural reason? '
         'Answer: restated (ZP-J t_exec_iff), and not forced (a countermodel). Given an AFAStructure, "starts at a Quine '
         'atom" and "starts at &#8869;" are equivalent (t_exec_iff), so the starting point is named '
-        'by its role; the choice to start there remains, since on a carrier with a second point a valid sequence starts elsewhere. The AFA identification &#8869; = {&#8869;} is the ZF+AFA reading of the '
-        'Quine-atom role the typeclass encodes; the Lean states the role, not the set identity.',
+        'by its role; the choice to start there remains, since on a carrier with a second point a valid sequence starts elsewhere. The Quine atom (CC-2) is a role, and in ZF+AFA the set Q = {Q} plays it; '
+        'the Lean states the role and its occupant chart by chart, and writes no equation between &#8869; and Q.',
         bg=AMBER_LITE, border=AMBER
     ))
     E.append(sp(6))
@@ -197,8 +196,8 @@ def build():
             '&#8212; AFA uniqueness. At most one element of L plays the self-containment role.',
             '(3) bot_self_mem : selfMem(&#8869;)  '
             '&#8212; the bridge field. The bottom element of the lattice is self-containing. '
-            'This encodes the ROLE that &#8869; = {&#8869;} describes in ZF+AFA; the set identity '
-            'itself compares an element of L with a set of elements of L, so it is not stated here.',
+            'This encodes the Quine-atom ROLE (CC-2), which in ZF+AFA the set Q = {Q} plays; an equation '
+            'between &#8869; of L and that set would compare an element of L with a set, so it is not stated here.',
         ]
     ))
     E.append(sp(6))
@@ -209,10 +208,19 @@ def build():
         '(ZP-A\'s lattice) to the set-theoretic world (AFA). It says: the bottom element &#8869; '
         'of the lattice is self-containing &#8212; it satisfies selfMem(&#8869;).'))
     E.append(body(
-        'In set-theoretic terms, within ZF+AFA: &#8869; = {&#8869;}, so in particular '
-        '&#8869; &#8712; &#8869;. This is the identification that ZP-E\'s DA-1 Path 1 invokes '
-        'informally. ZP-J encodes the role it describes as a typeclass field, so every result '
-        'that uses it states it as a hypothesis rather than leaving it as narrative motivation.'))
+        'In ZF+AFA the Quine atom (CC-2) is the set Q = {Q}, its own sole member. The lattice and the '
+        'set universe are separate charts, so no equation &#8869; = Q is written. What is shared is the '
+        'ROLE, a point that steps to itself and to nothing else (Motion.SelfOnlyAt, ZeroParadox/Die.lean), '
+        'and each chart has its own occupancy theorem (ZeroParadox/Settheory/QuineDichotomy.lean, '
+        'ZeroParadox/Settheory/Wall.lean, ZeroParadox/Settheory/Coalgebra.lean): in a lattice with '
+        'AbstractSelfApp, or with the membership host an AFAStructure builds, the only occupant is &#8869; '
+        '(selfApp_quine_role_iff, quineAtomHost_quine_role_iff); in Mathlib\'s ZFSet, which carries '
+        'Foundation, the role has no occupant (zfset_quine_role_unoccupied); in the final coalgebra of the '
+        'identity functor it is occupied (cofix_quine_role_occupied), a one-point chart '
+        '(cofix_subsingleton), where occupancy restates that chart\'s existence fork and adds nothing '
+        'beyond it. This is what ZP-E\'s DA-1 Path 1 invokes informally. ZP-J encodes the role as a '
+        'typeclass field, so every result that uses it states it as a hypothesis rather than leaving it '
+        'as narrative motivation.'))
     E.append(body(
         'Supplying the field is not a test a lattice can fail. Every ZPSemilattice carries an '
         'AFAStructure: take the constant-bottom self-application trivialSelfApp '
@@ -232,7 +240,7 @@ def build():
             '&#8869; = &#8869; holds by reflexivity.',
             'This is the CIC-compatible encoding of AFA self-containment. In Lean 4 (based on '
             'the Calculus of Inductive Constructions), the set-theoretic statement &#8869; &#8712; &#8869; '
-            '&#8212; meaning &#8869; literally contains itself as a member under ZF+AFA &#8212; is not '
+            '(ZF+AFA asserts Q &#8712; Q of the set Q = {Q}, and nothing of &#8869;) is not '
             'well-typed on a carrier: x : L is a member of a Set L, and no membership relation between '
             'two elements of L is in scope, so &#8869; &#8712; &#8869; does not elaborate. '
             'Mathlib\'s own model of ZF sets satisfies Foundation (ZFSet.mem_wf: &#8712; is well-founded, from '
@@ -241,8 +249,8 @@ def build():
             'means "equals the bottom element." The Lean proof compiles by rfl because '
             'self-containing is defined as equality with &#8869;.',
             'This is a structural analogy, not a set-theoretic derivation from ZF+AFA. The '
-            'full set-theoretic content of AFA &#8212; that &#8869; literally contains itself as a '
-            'member of the AFA universe &#8212; is not present in the Lean proof. What the typeclass '
+            'set-theoretic consequence of AFA used here, that the set Q = {Q} exists and is unique '
+            '(Aczel 1988, Example 1.3), is not present in the Lean proof, and no equation between &#8869; and Q is written. What the typeclass '
             'encodes is the structural consequence: there is a unique element playing the Quine '
             'role, and &#8869; is that element.',
         ]
@@ -264,8 +272,8 @@ def build():
     E.append(callout(
         'The distinction: a freestanding axiom says "trust me, this is true," and the purity check '
         'records it. A typeclass field says "given this structure," and every theorem is '
-        'conditional on it. ZP-J uses the second. The literal set identity (&#8869; = {&#8869;}) '
-        'stays in ZF+AFA; the Lean carries only the role it describes.',
+        'conditional on it. ZP-J uses the second. The set Q = {Q} '
+        'stays in ZF+AFA; the Lean carries only the Quine-atom role (CC-2) that set plays.',
         bg=SLATE_LITE, border=SLATE
     ))
     E.append(sp(6))
@@ -296,7 +304,7 @@ def build():
         li('hq.2 states: every self-containing element of L equals q. '
            '(This is the uniqueness half of IsQuineAtom q.)'),
         li('AFAStructure.bot_self_mem states: &#8869; is self-containing. '
-           '(This is the bridge field &#8212; the role &#8869; = {&#8869;} describes in ZF+AFA.)'),
+           '(This is the bridge field &#8212; the Quine-atom role (CC-2), played in ZF+AFA by the set Q = {Q}.)'),
         li('Applying hq.2 to &#8869; using bot_self_mem gives: &#8869; = q. '
            'By symmetry: q = &#8869;. QED.'),
         sp(4),
@@ -439,19 +447,21 @@ def build():
 
     E.append(Paragraph('II. Where the Philosophy Lives Now', S['h2']))
     E.append(body(
-        'The philosophical content of &#8869; = {&#8869;} is not in the Lean. It lives in ZP-A as '
+        'The philosophical content of the Quine atom (CC-2) is not in the Lean. It lives in ZP-A as '
         'CC-2 (Self-Containment of &#8869;), a Forced Metatheoretic Commitment with two halves: that '
         'any host of a self-membered bottom is not well-founded is proved (quineHost_not_wellFounded, '
         'zfSet_no_quine_bottom, ZeroParadox/Settheory/QuineHost.lean), and that a unique Quine atom is '
         'the right requirement is argued. It lives too in ZP-E\'s DA-1 Path 1 (one '
-        'of three informal arguments for instantiation as execution), and in ZF+AFA it remains a '
-        'set-theoretic identity. What ZP-J adds is the ROLE that identity describes, stated as the '
+        'of three informal arguments for instantiation as execution), and in ZF+AFA it is the set '
+        'Q = {Q}. What ZP-J adds is the ROLE that set plays, stated as the '
         'field bot_self_mem, and a proof (T-EXEC) that whatever fills that role is &#8869;.'))
     E.append(body(
         'Because every lattice can fill the role trivially, carrying AFAStructure is not evidence '
-        'that &#8869; = {&#8869;} holds of a lattice. In ZF+AFA the set Q = {Q} exists and is unique, '
-        'a consequence of the axiom (Aczel 1988, Example 1.3); identifying the framework\'s &#8869; with '
-        'that set is the commitment (ZP-E, Remark R-AFA). The role, stated as a hypothesis '
+        'about any particular lattice. In ZF+AFA the set Q = {Q} exists and is unique, '
+        'a consequence of the axiom (Aczel 1988, Example 1.3). No equation between the framework\'s &#8869; '
+        'and that set is written: they sit in different charts, and each chart\'s occupant of the role is a '
+        'theorem of that chart (Section III.II). Adopting AFA as the set chart\'s metatheory stays the '
+        'commitment (CC-2; ZP-E, Remark R-AFA). The role, stated as a hypothesis '
         'where any reader can see it, is what the Lean checks.'))
 
     E.append(Paragraph('III. The Formal Chain', S['h2']))
@@ -476,9 +486,17 @@ def build():
         sp(4),
     ]
     E.append(body(
-        'DA-1 Path 3 (the AIT/Kolmogorov complexity argument in ZP-E) remains outside Lean '
-        'scope for the same reason it always has: Kolmogorov complexity is uncomputable and '
-        'absent from Mathlib. ZP-J does not affect DA-1\'s status.'))
+        'DA-1 Path 3 (the AIT/Kolmogorov complexity argument in ZP-E) remains outside this corpus\'s '
+        'Lean scope. That is a statement of scope, not of possibility: uncomputability does not block '
+        'formalising Kolmogorov complexity. A definition of it was not located in the pinned Mathlib '
+        '(5450b53) as of 2026-11-03, searched for &#8220;Kolmogorov complexity&#8221;, '
+        '&#8220;KolmogorovComplexity&#8221;, &#8220;algorithmic information&#8221;, &#8220;shortest '
+        'program&#8221; and &#8220;description length&#8221; (no file), and &#8220;Kolmogorov&#8221; '
+        '(Kolmogorov spaces and the Kolmogorov quotient, Kolmogorov processes and the Kolmogorov '
+        'condition, mentions of the Kolmogorov&#8211;Chentsov theorem, the Chapman&#8211;Kolmogorov '
+        'equations, the extension theorem, the zero-one law and an author credit; none a definition '
+        'of Kolmogorov complexity). ZP-J does not affect '
+        'DA-1\'s status.'))
     E.append(sp(6))
 
     print('[build_zpj] Building Section VII...')
@@ -784,8 +802,8 @@ def build():
     E.append(callout(
         'Two concrete instances, two paths through the chain. &#8469;&#8734; takes the full '
         'ValuationStructure route. OntologicalStates bypasses ValuationStructure and connects '
-        'directly to AbstractSelfApp. Both deliver the same conclusion: the unique self-containing '
-        'element is the bottom. The architecture is sound because each type takes the path '
+        'directly to AbstractSelfApp. Both deliver the same conclusion: the unique element satisfying '
+        'selfMem (read as x = {x}) is the bottom. The architecture is sound because each type takes the path '
         'the mathematics allows.',
         bg=SLATE_LITE, border=SLATE
     ))
@@ -980,7 +998,7 @@ def build():
          '[Fintype V] &#8212; finite graph assumption',
          'Lean: decoration_unique &#8212; propext, Classical.choice, Quot.sound &#10003;'],
         ['AFAStructure.bot_self_mem',
-         'The role that the ZF+AFA identity &#8869; = {&#8869;} describes',
+         'The Quine-atom role (CC-2), played in ZF+AFA by the set Q = {Q}',
          'Typeclass field &#8212; a hypothesis; every ZPSemilattice meets it trivially',
          'Not a theorem; a hypothesis T-EXEC carries.'],
     ]
@@ -1015,8 +1033,8 @@ def build():
          'this document takes no position on whether his use of DC is essential.'],
         ['DA-1 Path 1 formalisation',
          'PARTIAL &#8212; APG case proved',
-         'DA-1 Path 1 (ZP-E) invokes &#8869; = {&#8869;} informally. ZP-J T-EXEC formalises '
-         'the role identification, not the set identity. decoration_unique (&#167; X) proves uniqueness for finite APGs '
+         'DA-1 Path 1 (ZP-E) invokes the Quine atom (CC-2) informally. ZP-J T-EXEC formalises '
+         'the role&#8217;s occupant in the lattice chart; no equation with the set Q = {Q} is stated. decoration_unique (&#167; X) proves uniqueness for finite APGs '
          'over abstract DecorationUniverses. The full ZF+AFA set-theoretic bridge '
          '&#8212; showing the ZP types literally satisfy the ZF+AFA axioms &#8212; '
          'remains outside Lean scope.'],
