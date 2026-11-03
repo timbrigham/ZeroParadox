@@ -49,6 +49,7 @@ import ZeroParadox.Valuation.SemilatticeInstance
 import ZeroParadox.Settheory.OntBridge
 import ZeroParadox.Settheory.Model
 import ZeroParadox.Order.SeamSchema
+import ZeroParadox.Information.CrossingTrials
 
 set_option maxHeartbeats 400000
 
@@ -4728,5 +4729,27 @@ example (d : DecidableEq Ordinal.{0}) : ZeroParadox.WeakExcludedMiddle := by
 -- topological analogue of `density` and does not apply to `NInf` as a bare type; `exact?` on the
 -- statements of `density` and `rightInverse_of_leftInverse`, run against the corpus before these
 -- lemmas existed, closed neither (2026-10-30).
+
+/-! ### § XXVIII. The slot machine: possibility on the motion, one run's crossing under typicality -/
+-- Reading: OVER's possibility of leaving a point is a fact about the motion; whether ONE run leaves
+-- is a fact about that run. The measure sits beside the die, on the tapes that drive runs.
+-- Definitions and proofs: `ZeroParadox/Information/CrossingTrials.lean` § IV–VII.
+#check @ZeroParadox.slotMotion                 -- Statement: on `Bool`, UP the identity; every point steps to itself, and `false` steps to `true`
+#check @ZeroParadox.slotMotion_leavesAt_false  -- Statement: `false` steps elsewhere and steps to itself
+#check @ZeroParadox.slotMotion_selfOnlyAt_true -- Statement: `true` steps to itself and to nothing else
+#check @ZeroParadox.Motion.LaxHom.leavesAt     -- Statement: along a one-to-one lax map, stepping elsewhere at `y` gives it at the image of `y`
+#check @ZeroParadox.slotRun_isRun              -- Statement: every tape drives a run of `slotMotion`
+#check @ZeroParadox.slotRun_crosses_iff        -- Statement: the run starts at `false`, and reaches `true` iff the tape fires somewhere; both directions
+#check @ZeroParadox.exists_fires_io            -- Statement: if `0 < p ≤ 1`, SOME tape fires infinitely often (measure one is nonempty)
+#check @ZeroParadox.fires_io_of_avoids         -- Statement: if `0 < p ≤ 1` and the tape avoids a class holding every zero-block test for `trials p hp`, it fires infinitely often; one way
+#check @ZeroParadox.slotRun_image_departs_of_avoids -- Statement: under the same hypotheses and a one-to-one lax map, the image run is a run that leaves its start; one way
+-- Statement: sufficient, not necessary: the second `example` after `slotRun_image_departs_of_avoids`
+-- in `ZeroParadox/Information/CrossingTrials.lean` gives the squares tape, whose image run leaves its
+-- start yet which fails to avoid any class holding the zero-block tests for `trials (1/2)`.
+-- Statement: CONTROL: with no typicality hypothesis, the all-`false` tape drives a run of
+-- `slotMotion` that is `false` at every stage, though `false` steps elsewhere.
+example : (∀ n, ZeroParadox.slotRun (fun _ => false) n = false) ∧
+    ZeroParadox.slotMotion.LeavesAt false :=
+  ⟨fun n => by simp [ZeroParadox.slotRun], ZeroParadox.slotMotion_leavesAt_false.1⟩
 
 end DieCannotBeIndex

@@ -79,6 +79,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 
 - `ZeroParadox/Information/BottomMeasure.lean` - P6: measure = +∞ at the bottom — per-domain bundle, and the type-boundary finding
 - `ZeroParadox/Information/CrossingTrials.lean` - Crossing trials: what a probability on the crossing would buy
+  - ride-along docs: `ZeroParadox/Information/CrossingTrials.md` - From almost surely to one run: typicality as a hypothesis, prior art, two charts
 - `ZeroParadox/Information/Disjunctive.lean` - Disjunctive sequences: a tape on which every finite word occurs
   - ride-along docs: `ZeroParadox/Information/Disjunctive.md` - Disjunctive sequences: prior art, footprints and fences
 - `ZeroParadox/Information/PadicSurprisal.lean` - B3 (pipeline): information surprisal ≡ 2-adic depth at the floor

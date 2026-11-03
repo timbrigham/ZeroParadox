@@ -3388,6 +3388,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "05aa1a87-7c41-4b57-bf16-fc1487be1f7f",
+          "new": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.slotRun",
+            "short": "slotRun"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.slotRun",
+            "short": "slotRun",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "Typicality bridge (2026-11-01): CrossingTrials § IV-VII — almost surely gives some run; zero-block tests; typicality as an explicit hypothesis; the slot machine as a die motion.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "05b0b667-4a74-4fa0-8ef1-ad57cd6ae48a",
           "new": {
             "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
@@ -3970,6 +4008,43 @@
             ]
           },
           "reason": "Seed-independence measured: every seed at or below epsilon-0 reaches it; iterative bottoms in the ordinal carrier",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "06ce72a0-82ab-400e-b4cd-c6d65ba87dcc",
+          "new": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.exists_halving_block",
+            "short": "exists_halving_block"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.exists_halving_block",
+            "short": "exists_halving_block",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "Typicality bridge (2026-11-01): CrossingTrials § IV-VII — almost surely gives some run; zero-block tests; typicality as an explicit hypothesis; the slot machine as a die motion.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -6100,6 +6175,43 @@
             ]
           },
           "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0bd24e0c-f8c2-46fc-9581-6d0b7c42394c",
+          "new": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.silentFrom",
+            "short": "silentFrom"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.silentFrom",
+            "short": "silentFrom",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "Typicality bridge (2026-11-01): CrossingTrials § IV-VII — almost surely gives some run; zero-block tests; typicality as an explicit hypothesis; the slot machine as a die motion.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -13834,6 +13946,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "1dd8618c-702c-4065-998a-a63ae055dd61",
+          "new": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.zeroBlock",
+            "short": "zeroBlock"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.zeroBlock",
+            "short": "zeroBlock",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "Typicality bridge (2026-11-01): CrossingTrials § IV-VII — almost surely gives some run; zero-block tests; typicality as an explicit hypothesis; the slot machine as a die motion.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "1df4ac94-e7f7-420c-9128-f9f5c6630383",
           "new": {
             "file": "ZeroParadox/Multihomed/SnapFrameChange.lean",
@@ -19148,6 +19297,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "2a5c4b35-cf78-4b09-925d-d7e90f4d43cf",
+          "new": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.slotMotion",
+            "short": "slotMotion"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.slotMotion",
+            "short": "slotMotion",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "Typicality bridge (2026-11-01): CrossingTrials § IV-VII — almost surely gives some run; zero-block tests; typicality as an explicit hypothesis; the slot machine as a die motion.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -25751,6 +25938,43 @@
             ]
           },
           "reason": "Die arc 3 2026-11-01: the seam role (exactly one SelfOnlyAt occupant) per chart: next-time chart of QPF coalgebras, lattice selfApp, module elements / zero object",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "3a6fa34b-7e26-4bde-b1d4-bf6d4d1ff066",
+          "new": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.AvoidsTests",
+            "short": "AvoidsTests"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.AvoidsTests",
+            "short": "AvoidsTests",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "Typicality bridge (2026-11-01): CrossingTrials § IV-VII — almost surely gives some run; zero-block tests; typicality as an explicit hypothesis; the slot machine as a die motion.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -49201,6 +49425,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "704852da-e2ec-4949-882f-791d3d96c3fc",
+          "new": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_zeroBlock",
+            "short": "trials_zeroBlock"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_zeroBlock",
+            "short": "trials_zeroBlock",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "Typicality bridge (2026-11-01): CrossingTrials § IV-VII — almost surely gives some run; zero-block tests; typicality as an explicit hypothesis; the slot machine as a die motion.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "706ac5f0-82e8-4457-84d9-70821fd8cc4f",
           "new": {
             "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
@@ -52575,6 +52836,43 @@
             "role": []
           },
           "reason": "errata lane A 2026-10-31: named witnesses and statement controls replacing prose measurements (CARRYW4-C8L-12, CARRY1008-32, CARRY1009-28)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "78a1974b-0019-4c87-b12a-a32d1a127d5b",
+          "new": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.squaresTape",
+            "short": "squaresTape"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.squaresTape",
+            "short": "squaresTape",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "Typicality bridge (2026-11-01): CrossingTrials § IV-VII — almost surely gives some run; zero-block tests; typicality as an explicit hypothesis; the slot machine as a die motion.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -56492,6 +56790,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "811876cb-6eda-4e8a-8034-36701cc41bba",
+          "new": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ZeroBlockTest",
+            "short": "ZeroBlockTest"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ZeroBlockTest",
+            "short": "ZeroBlockTest",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "Typicality bridge (2026-11-01): CrossingTrials § IV-VII — almost surely gives some run; zero-block tests; typicality as an explicit hypothesis; the slot machine as a die motion.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "8165386c-b329-404e-acad-bd896c860494",
           "new": {
             "file": "ZeroParadox/Valuation/PadicVladimirov.lean",
@@ -56664,6 +56999,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "818bb0fd-85d2-4815-b446-510f29a413b3",
+          "new": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.zeroBlockTest_silentFrom",
+            "short": "zeroBlockTest_silentFrom"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.zeroBlockTest_silentFrom",
+            "short": "zeroBlockTest_silentFrom",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "Typicality bridge (2026-11-01): CrossingTrials § IV-VII — almost surely gives some run; zero-block tests; typicality as an explicit hypothesis; the slot machine as a die motion.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -59373,6 +59745,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "883c8a96-c645-4fe9-bd24-b9bebc478be9",
+          "new": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.slotRun_isRun",
+            "short": "slotRun_isRun"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.slotRun_isRun",
+            "short": "slotRun_isRun",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "Typicality bridge (2026-11-01): CrossingTrials § IV-VII — almost surely gives some run; zero-block tests; typicality as an explicit hypothesis; the slot machine as a die motion.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "885e4330-71db-4a3a-b52e-ac976cf64da4",
           "new": {
@@ -60500,6 +60910,43 @@
             ]
           },
           "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "8b09fde1-f762-4080-82c9-59392dd061cb",
+          "new": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.oneBlock",
+            "short": "oneBlock"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.oneBlock",
+            "short": "oneBlock",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "Typicality bridge (2026-11-01): CrossingTrials § IV-VII — almost surely gives some run; zero-block tests; typicality as an explicit hypothesis; the slot machine as a die motion.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -66646,6 +67093,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "99dedeb1-3b20-4e6b-bc13-cd3b8b7d8060",
+          "new": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.slotMotion_leavesAt_false",
+            "short": "slotMotion_leavesAt_false"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.slotMotion_leavesAt_false",
+            "short": "slotMotion_leavesAt_false",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "Typicality bridge (2026-11-01): CrossingTrials § IV-VII — almost surely gives some run; zero-block tests; typicality as an explicit hypothesis; the slot machine as a die motion.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "99edc618-b8b9-4815-97b0-0bf8175caecd",
           "new": {
             "file": "ZeroParadox/Order/PataraiaChoiceFree.lean",
@@ -69492,6 +69977,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "9f65f02b-3477-47d5-9714-7506ba3418c1",
+          "new": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.silentFrom_eq_iInter",
+            "short": "silentFrom_eq_iInter"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.silentFrom_eq_iInter",
+            "short": "silentFrom_eq_iInter",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "Typicality bridge (2026-11-01): CrossingTrials § IV-VII — almost surely gives some run; zero-block tests; typicality as an explicit hypothesis; the slot machine as a die motion.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -78778,6 +79300,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "b57db388-d5c5-4e6d-9671-82970d49427d",
+          "new": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.slotRun_image_departs_of_avoids",
+            "short": "slotRun_image_departs_of_avoids"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.slotRun_image_departs_of_avoids",
+            "short": "slotRun_image_departs_of_avoids",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "Typicality bridge (2026-11-01): CrossingTrials § IV-VII — almost surely gives some run; zero-block tests; typicality as an explicit hypothesis; the slot machine as a die motion.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "b58c43a8-779b-4ed1-9e5b-9af65e288464",
           "new": {
             "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
@@ -79623,6 +80183,43 @@
             ]
           },
           "reason": "Die v2 final batch: the four corners as die motions and the tower as a span of motions (experimental PoleCorners / PoleCornersBridge)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b75becb3-6e87-4b28-9bbf-0b765ad2f7a5",
+          "new": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.not_mem_limsup_fires_iff",
+            "short": "not_mem_limsup_fires_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.not_mem_limsup_fires_iff",
+            "short": "not_mem_limsup_fires_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "Typicality bridge (2026-11-01): CrossingTrials § IV-VII — almost surely gives some run; zero-block tests; typicality as an explicit hypothesis; the slot machine as a die motion.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -83467,6 +84064,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "bfbf82e5-5516-4cc8-9e8e-39243462e1f8",
+          "new": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.slotRun_crosses_iff",
+            "short": "slotRun_crosses_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.slotRun_crosses_iff",
+            "short": "slotRun_crosses_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "Typicality bridge (2026-11-01): CrossingTrials § IV-VII — almost surely gives some run; zero-block tests; typicality as an explicit hypothesis; the slot machine as a die motion.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "bfd79d2c-eea9-4358-a71d-3a2c57f4c52e",
           "new": {
             "file": "ZeroParadox/Valuation/PadicTree.lean",
@@ -84582,6 +85217,43 @@
           "reason": "IgnoranceSeam.lean: fills, semiconjugacy, prepends, affine stream motions, negation, complement (2026-10-07)",
           "verify": {
             "axioms": "[propext]",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c313c29f-eb9f-4c23-98aa-7daa7d6e7d5b",
+          "new": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fires_io_of_avoids",
+            "short": "fires_io_of_avoids"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.fires_io_of_avoids",
+            "short": "fires_io_of_avoids",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "Typicality bridge (2026-11-01): CrossingTrials § IV-VII — almost surely gives some run; zero-block tests; typicality as an explicit hypothesis; the slot machine as a die motion.",
+          "verify": {
+            "axioms": null,
             "sorry_free": true
           }
         },
@@ -89685,6 +90357,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ce44c280-965f-46e7-9dfb-758e561704d8",
+          "new": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_zeroBlock_le",
+            "short": "trials_zeroBlock_le"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_zeroBlock_le",
+            "short": "trials_zeroBlock_le",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "Typicality bridge (2026-11-01): CrossingTrials § IV-VII — almost surely gives some run; zero-block tests; typicality as an explicit hypothesis; the slot machine as a die motion.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -95340,6 +96049,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "daebe949-8c12-4e11-b0d0-f8538e9bcc5b",
+          "new": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.exists_fires_io",
+            "short": "exists_fires_io"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.exists_fires_io",
+            "short": "exists_fires_io",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "Typicality bridge (2026-11-01): CrossingTrials § IV-VII — almost surely gives some run; zero-block tests; typicality as an explicit hypothesis; the slot machine as a die motion.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -107208,6 +107954,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "f66fa21e-b488-45b5-8485-efbddab438b8",
+          "new": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.slotMotion_selfOnlyAt_true",
+            "short": "slotMotion_selfOnlyAt_true"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.slotMotion_selfOnlyAt_true",
+            "short": "slotMotion_selfOnlyAt_true",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "Typicality bridge (2026-11-01): CrossingTrials § IV-VII — almost surely gives some run; zero-block tests; typicality as an explicit hypothesis; the slot machine as a die motion.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "f67c5d09-3835-41d9-8001-6cb849e96f56",
           "new": {
@@ -108183,6 +108967,80 @@
             "role": []
           },
           "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f82f4100-f2f3-451a-b57f-a72f31b533b2",
+          "new": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.zeroBlock_eq_pi",
+            "short": "zeroBlock_eq_pi"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.zeroBlock_eq_pi",
+            "short": "zeroBlock_eq_pi",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "Typicality bridge (2026-11-01): CrossingTrials § IV-VII — almost surely gives some run; zero-block tests; typicality as an explicit hypothesis; the slot machine as a die motion.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f84412b2-836b-4d44-b760-234e008c2002",
+          "new": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_oneBlock",
+            "short": "trials_oneBlock"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_oneBlock",
+            "short": "trials_oneBlock",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "Typicality bridge (2026-11-01): CrossingTrials § IV-VII — almost surely gives some run; zero-block tests; typicality as an explicit hypothesis; the slot machine as a die motion.",
           "verify": {
             "axioms": null,
             "sorry_free": true
