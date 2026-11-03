@@ -23,14 +23,15 @@ If you are primarily interested in the mathematical content, the PDF documents t
 
 Unlike everything else in this folder, these three are **primary and executed** — GitHub
 Actions runs `corpus_verification_report.py` on every build; `minimal_core_report.py` is `workflow_dispatch` so it can be fired by hand against any branch, **and also runs automatically when `Miniature.lean`, the report script, or the workflow changes**; `axiom_ledger_report.py` is the same shape for `.github/workflows/axiom_ledger.yml`, which also fires on a `lean-toolchain` or `lake-manifest.json` change. All three publish their output to the run summary, so they
-are not copies of anything and they are not PDF tooling. Each reads a Lean log plus the
-build's own exit code and reports what the machine actually checked.
+are not copies of anything and they are not PDF tooling. Each reads a Lean log plus the exit
+code of the Lean run that wrote it (`lake build` for the corpus report, `lake env lean` on one file
+for the other two) and reports what the machine actually checked.
 
 | File | Purpose |
 |------|---------|
 | [corpus_verification_report.py](corpus_verification_report.py) | Whole-corpus report: build status and the axiom footprint of every declaration recorded in the run. Exits non-zero if the build failed, anything depends on `sorryAx`, or the log carries no evidence at all |
 | [minimal_core_report.py](minimal_core_report.py) | The same for `ZeroParadox/Miniature.lean` alone, written for both a layman and a specialist — the "prove it yourself" gate |
-| [axiom_ledger_report.py](axiom_ledger_report.py) | Per-row table for `ZeroParadox/Meta/AxiomLedger.lean`: each ledgered declaration's declared and recomputed axiom profile, the predecessor's for replacement rows, and the coverage row. Exits non-zero if Lean failed, a row printed FAIL, anything uses `sorry`, or the log carries no ledger rows or no audit result |
+| [axiom_ledger_report.py](axiom_ledger_report.py) | Per-row table for `ZeroParadox/Meta/AxiomLedger.lean`: each ledgered declaration's declared and recomputed axiom profile, the predecessor's for replacement rows, and the coverage row. Exits non-zero if Lean failed, a row printed FAIL, the log carries Lean's "declaration uses `sorry`" warning, or the log carries no ledger rows or no audit result |
 
 ### Shared utilities
 

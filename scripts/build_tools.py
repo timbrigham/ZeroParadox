@@ -67,8 +67,8 @@ def key_result_box(title, body_text, bg=BLUE, hdr_bg=BLUE_DARK):
 
 def tool_stack_diagram():
     """Stacked rectangles showing tool layers."""
-    # dh = 2.2 in + 8 pt: content top = caption cap height at dh - 10.5, bottom = lowest box at 10 pt
-    dw, dh = TW, 2.2 * inch + 8
+    # dh = 2.1 in (151.2 pt): content top = first box top at 139.2 pt, bottom = lowest box at 10 pt
+    dw, dh = TW, 2.1 * inch
     d = Drawing(dw, dh)
 
     layers = [
@@ -83,14 +83,10 @@ def tool_stack_diagram():
     bw = dw - 2 * margin
     bh = (2.2*inch - 0.35*inch) / n   # fixed box height, independent of dh
     gap = 4
-
-    caption_y = dh - 18
-    d.add(String(margin, caption_y,
-                 'Claude acts as reasoning layer; all formal tools are standard open software.',
-                 fontSize=7.5, fontName='DV-I', fillColor=GREY))
+    top_y = 141.2   # fixed: top of the box stack, independent of dh (R-DIAGRAM)
 
     for i, (label, fill, text_col) in enumerate(layers):
-        by = dh - 0.35*inch - (i+1)*bh + gap/2
+        by = top_y - (i+1)*bh + gap/2
         d.add(Rect(margin, by, bw, bh - gap,
                    fillColor=fill, strokeColor=colors.HexColor('#FFFFFF'),
                    strokeWidth=1, rx=3, ry=3))
@@ -196,8 +192,11 @@ def build():
                                      'Mathlib categories TopCat, KleisliCat PMF and ModuleCat ℂ, which close OQ-G3; '
                                      'domain theorems (C3, T1b, T4) ground the snap in each stand-in category. '
                                      'ZP-E/G/H: sorry-free proofs for key results. Source on illustrated branch. '
-                                     'Note: CC-2 (&#8869; = {&#8869;}, ZF+AFA) is a metatheoretic commitment; '
-                                     'Lean\'s bot is a structural proxy, not a Quine atom in Lean\'s type theory.'],
+                                     'Note: the Quine atom (CC-2) is a role, a point that steps to itself and to '
+                                     'nothing else, which Lean measures chart by chart: bot of a ZPSemilattice '
+                                     'occupies it (selfApp_quine_role_iff), no set in Mathlib\'s ZFSet does '
+                                     '(zfset_quine_role_unoccupied). Adopting ZF+AFA as the set chart\'s host is '
+                                     'the metatheoretic commitment.'],
             ['Isabelle/HOL',  'No',  'Not used.'],
             ['Agda',          'No',  'Not used.'],
             ['Mizar',         'No',  'Not used.'],
@@ -215,24 +214,32 @@ def build():
     E.append(key_result_box(
         'Key Result: What formal verification does and does not change',
         'Formal verification in Lean 4 operates at two levels. (1) Full algebraic verification: '
-        'ZP-A\'s algebraic layer (A1-A4 and all derived results) is fully machine-checked via NatSLat; '
-        'each proof\'s axiom footprint is the #print axioms output in ZeroParadox/Order/Lattice.lean '
-        '(the A1-A4 theorems) and ZeroParadox/Multihomed/CategoricalBridge.lean (NatSLat). '
+        'ZP-A\'s algebraic layer is machine-checked: A1-A4 are the fields of the class ZPSemilattice, '
+        'the derived results are theorems over it, and NatSLat (natZPSemilattice, '
+        'ZeroParadox/Multihomed/CategoricalBridge.lean) is a concrete instance. Footprints are printed '
+        'declaration by declaration in each file\'s PurityCheck section: ZeroParadox/Order/Lattice.lean '
+        'prints the order laws, state_transition_iff, state_sequence_monotone and cc1; '
+        'ZeroParadox/Order/Snap.lean prints further derived results such as '
+        'da2_bottom_characterization; CategoricalBridge.lean\'s NatSLat block prints '
+        'natSLat_initial_grounding. '
         '(2) Functor-level verification: for ZP-B, ZP-C, and ZP-D, '
         'sorry-free Lean functors land in ℕ-indexed stand-in categories and in the standard Mathlib '
         'categories TopCat, KleisliCat PMF and ModuleCat ℂ, which close OQ-G3; the domain theorems '
         '(C3, T1b, T4) ground the snap in each stand-in category. '
-        'Neither level formalizes CC-2 (&#8869; = {&#8869;}). CC-2 is a metatheoretic commitment '
-        'over ZF + AFA. In Lean the two charts split: Mathlib\'s ZFSet, a model of ZFC, contains no '
-        'set that is a member of itself (no_quine_atom), while outside ZFSet Lean hosts a one-atom '
-        'model whose distinguished element is its own unique self-member (the QuineHost instance on '
-        'OneAtom, ZeroParadox/Settheory/QuineHost.lean &#167; V). The Lean bot is the structural proxy '
-        'for the algebraic role of &#8869;; that it is a set equal to its own singleton, CC-2\'s '
-        'set-theoretic self-containment, is a prose-level commitment. '
-        'The stated axioms (AX-B1, AX-G1, AX-G2) and modeling commitments (CC-1, CC-2) remain '
-        'as stated. The derived results are confirmed as derived. The framework\'s epistemic '
-        'status has improved — the algebraic core is machine-checked; the metatheoretic '
-        'commitment CC-2 is explicitly outside that scope.'))
+        'The Quine atom (CC-2) is a role, a point that steps to itself and to nothing else '
+        '(Motion.SelfOnlyAt, ZeroParadox/Die.lean), measured chart by chart with no equation across '
+        'charts: &#8869; of a ZPSemilattice occupies it under self-application '
+        '(selfApp_quine_role_iff); in Mathlib\'s ZFSet, a model of ZFC, where the role reads x = {x} '
+        '(zfset_selfOnlyAt_mem_iff), no set occupies it (zfset_quine_role_unoccupied, from '
+        'no_quine_atom); and outside ZFSet Lean hosts a one-atom model whose distinguished element is '
+        'its own unique self-member (the QuineHost instance on OneAtom, '
+        'ZeroParadox/Settheory/QuineHost.lean &#167; V). Wherever membership hosts the role, '
+        'Foundation fails (quineAtomHost_not_wellFounded); adopting ZF + AFA as the set chart\'s host '
+        'is the metatheoretic commitment (ZP-E, R-AFA). '
+        'The stated axioms (AX-B1, AX-G1, AX-G2) and modeling commitments (CC-1, and CC-2\'s adoption '
+        'of AFA) remain as stated. The derived results are confirmed as derived. The framework\'s '
+        'epistemic status has improved — the algebraic core is machine-checked; the metatheoretic '
+        'commitment, adopting AFA, is explicitly outside that scope.'))
     E.append(sp(8))
 
     # Section 3: Computational Tools
@@ -246,10 +253,12 @@ def build():
             ['Python 3',    'General scripting',
              'All PDF build scripts. Environment: Windows 11 with system Python.'],
             ['ReportLab',   'PDF generation',
-             'All technical PDFs (ZP-A through ZP-K plus ZP-F, companions, foreword, this document). '
+             'All technical PDFs (the formal layers listed in register.md, with their companions '
+             'and addenda, the foreword, this document). '
              'Used for Paragraph layout, Table construction, and Drawing (vector diagrams).'],
             ['Lean 4 + Mathlib', 'Formal proof verification',
-             'Machine-checked proofs for all eleven layers (ZP-A through ZP-K, plus ZP-F). '
+             'Machine-checked proofs for the formal layers\' Lean results (ZeroParadox/, indexed by '
+             'ZeroParadox/MANIFEST.md). '
              'Source on illustrated branch. Built with lake build. Purity checks via #print axioms.'],
             ['DejaVu fonts','Typography',
              'DejaVuSerif (body text) and DejaVuSans (headers, labels, diagrams). '
@@ -339,7 +348,7 @@ def build():
         'installed and the DejaVu fonts in scripts/fonts/.'))
     E.append(body(
         'The mathematical content is fully specified in the formal ontology documents '
-        '(ZP-A through ZP-K, plus ZP-F). The companion documents and foreword are narrative '
+        '(the formal layers listed in register.md). The companion documents and foreword are narrative '
         'restatements of the same content. If the formal documents change, the companions '
         'and foreword require updating to match.'))
     E.append(body(
@@ -352,10 +361,9 @@ def build():
         'The Zero Paradox is a human-originated mathematical framework, developed through '
         'iterative collaboration with an AI research assistant, documented in a rigorous '
         'ontology format, rendered as publication-quality PDFs using open-source Python '
-        'tooling, and formally verified in Lean 4 + Mathlib. All ten Lean-verified formal layers '
-        '(ZP-A, ZP-B, ZP-C, ZP-D, ZP-E, ZP-G, ZP-H, ZP-I, ZP-J, ZP-K) build clean. '
-        'ZP-F (The Counterexamples) provides a classical mathematical argument without a Lean component. '
-        'Proofs are machine-checked.',
+        'tooling, and formally verified in Lean 4 + Mathlib. The formal layers\' Lean results, ZP-F\'s '
+        'general counterexample results among them (ZP-F &#167; II), are machine-checked; Section 6 '
+        'says how to rebuild them.',
         bg=GREEN, hdr_bg=GREEN))
 
     print(f'Building: {out_path}')

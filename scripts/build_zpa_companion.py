@@ -1,5 +1,5 @@
 """
-Build ZP-A Illustrated Companion (v1.14)
+Build ZP-A Illustrated Companion (v1.15)
 Covers: join-semilattice, partial order, Hasse diagram, one-directional transitions,
 monotonicity (T3), bottom-as-constituent (T2), four concrete examples, and CC-2.
 """
@@ -89,7 +89,7 @@ def transition_diagram():
                  fontName='DV-B', fillColor=RED))
     return d
 
-VERSION = '1.14'
+VERSION = '1.15'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -234,9 +234,12 @@ def build():
         'works perfectly well as an algebraic structure here. But as a <i>metric substrate '
         'for the Binary Snap</i>, &#8477; fails — for any positive &#949;, the element '
         '&#949;/2 is always smaller, so no minimal first step can exist. This is the '
-        'subject of ZP-F (The Counterexamples), which establishes formally that no '
-        'linearly ordered field can host the snap. Q&#8322; is required precisely because '
-        'it is not a linearly ordered field in the same sense.'))
+        'subject of ZP-F (The Counterexamples), which proves that no linearly ordered field '
+        'has a least positive element (f_snap_impossible); what obstructs a first step is density '
+        '(axb1_fails_everywhere_iff_dense). Among the completions of &#8474;, Q&#8322;&#8217;s topology removes '
+        'that obstruction (padic_snaps) but supplies no first step: Mathlib gives Q&#8322; no order, and under '
+        'the norm preorder 0 has no first step there either (ZeroParadox/BottomCannotBe.lean). The first '
+        'step is supplied by AX-B1, a commitment (ZeroParadox/Order/SnapCannotBe.lean, &#167; V).'))
     E.append(sp(4))
     E.append(example_box('Example — Document edit history', [
         'Open a document and start making edits. Even hitting Backspace does not erase from the '

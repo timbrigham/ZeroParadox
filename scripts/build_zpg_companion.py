@@ -1,5 +1,5 @@
 """
-Build ZP-G Illustrated Companion (v1.14)
+Build ZP-G Illustrated Companion (v1.15)
 Standalone companion for ZP-G Category Theory only.
 ZP-H gets its own companion (build_zph_companion.py).
 
@@ -139,7 +139,7 @@ def functor_diagram():
                  fontSize=8.5, fontName='DV-I', fillColor=colors.HexColor('#555555')))
     return d
 
-VERSION = '1.14'
+VERSION = '1.15'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -258,7 +258,8 @@ def build():
     # ── What ZP-G is doing ─────────────────────────────────────────────────────
     E.append(Paragraph('What Is ZP-G Doing?', CS['h1']))
     E.append(cbody(
-        'ZP-G constructs a single abstract category C whose structure captures everything '
+        'ZP-G does not build one particular category: it axiomatises a class of abstract categories (the class '
+        'ZPCategory), and a category C in that class has a structure that captures everything '
         'essential about the Zero Paradox: there is a privileged starting point (the initial '
         'object), all structure flows forward from it, and no morphism ever returns to it. '
         'These properties are stated as two axioms within ZP-G. The initial object is grounded in structure '
@@ -282,9 +283,11 @@ def build():
         'It does not hold in every category: in ModuleCat ℂ, the category of complex vector spaces, the zero '
         'space (the zero module fD_functor.obj 0) is a zero object, and every space has an arrow into it, the zero map.'))
     E.append(cbody(
-        '<b>The connection to ⊥ = {⊥}:</b> ZP-A CC-2 characterizes ⊥ as a '
-        '<i>Quine atom</i> — ⊥ = {⊥}, meaning ⊥ is its own only member. '
-        'A self-containing object has no external interpreter: it IS its own interpretation. '
+        '<b>The connection to the Quine atom:</b> ZP-A CC-2 names a role, the '
+        '<i>Quine atom</i>: a point that steps to itself and to nothing else. Where a set steps to its '
+        'members, a set fills the role exactly when x = {x}, its own only member; in a ZP-A lattice under a '
+        'self-application map, ⊥ is the only occupant. '
+        'An occupant has no external interpreter: it IS its own interpretation. '
         'In categorical terms, this is exactly what AX-G1 and AX-G2 together express: '
         'nothing can reach inside 0 from outside (AX-G2), yet 0 constitutes every object '
         'in C through a unique outgoing morphism (T2). '

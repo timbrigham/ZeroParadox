@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP Addendum: The Choice-Free Core
-Version 1.14 | October 2026
+Version 1.15 | November 2026
 Framework-wide note; reads after the Foreword.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.14'
+VERSION = '1.15'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard ──
@@ -62,8 +62,9 @@ def build():
         '`lake build ZeroParadox.AxiomProfile` and see it.'))
     E.append(body(
         'Two boundaries are stated up front, because the claim is narrow and exact. <b>The framework '
-        'as a whole is not choice-free.</b> Most of its theorems do depend on `Classical.choice`. '
-        'Most places it appears are places where the framework builds on Mathlib\'s '
+        'as a whole is not choice-free.</b> Many of its theorems depend on `Classical.choice` (no '
+        'proportion is measured here). Many of the places it appears are places where the framework '
+        'builds on Mathlib\'s '
         'classically-built analysis, order, and computability libraries &#8212; the layers that '
         '<i>realize</i> the snap inside standard analytic structures (p-adic topology, Hilbert space, '
         'ordinals), where the dependence is inherited from those libraries. Not all of it is '
@@ -104,8 +105,8 @@ def build():
     E.append(sp(4))
     E.append(body(
         'A second tier of results is choice-free but uses propositional extensionality and quotient '
-        'soundness (`[propext, Quot.sound]`), both standard in Lean 4. These include the structural '
-        'floor (PowerSet.ps_structural_floor) and the wheel of fractions '
+        'soundness (`[propext, Quot.sound]`), both standard in Lean 4. These include the power set\'s '
+        'depth chart (ps_structural_floor, ZeroParadox/Order/PowerSet.lean) and the wheel of fractions '
         '(WheelFrac.instWheel, inf_ne_bot). No `Classical.choice`.'))
     E.append(sp(6))
 
@@ -117,9 +118,10 @@ def build():
         hr(),
     ]
     E.append(body(
-        'The honest contrast. `Classical.choice` does appear across the framework &#8212; in the '
-        'majority of its theorems &#8212; and the same `#print axioms` artifact shows exactly where. '
-        'Most occurrences are in a layer that realizes the snap floor inside a standard analytic '
+        'The honest contrast. `Classical.choice` does appear across the framework, in many of its '
+        'theorems. Each file\'s `#print axioms` block reports, declaration by declaration, which carry '
+        'it, and ZeroParadox/AxiomProfile.lean prints a selection (&#167;&#167; 0&#8211;III). Many '
+        'occurrences are in a layer that realizes the snap floor inside a standard analytic '
         'structure, inheriting choice from the Mathlib library that builds that structure '
         'classically. Not every occurrence is inherited: the framework writes bare classicals of its '
         'own, and ZeroParadox/Category/ChoiceCannotBe.lean &#167; IV collects cases among them whose '
@@ -169,7 +171,8 @@ def build():
         'principle (related prior art, cited not claimed, as recorded in '
         'ZeroParadox/Category/LawvereTaboo.lean: Bauer, "On fixed-point theorems in synthetic '
         'computability", Tbilisi Math. J. 10(3) (2017), Cor 4.3; de Jong&#8211;Escard&#243;, '
-        'arXiv:2102.08812, Cor 39(iii)-(iv); Booij&#8211;Escard&#243;&#8211;Lumsdaine&#8211;Shulman, '
+        '"Predicative Aspects of Order Theory in Univalent Foundations", arXiv:2102.08812, '
+        'Cor 39(iii)-(iv); Booij&#8211;Escard&#243;&#8211;Lumsdaine&#8211;Shulman, '
         '"Parametricity, automorphisms of the universe, and excluded middle", arXiv:1701.05617, '
         'Thm 3, and Thm 5 (Simpson), whose proof technique the reduction uses) &#8212; the latter sitting on the keystone rather than on an imported order '
         'instance; &#167; IV\'s cases 3 to 5 are reductions for principles proved with bare '

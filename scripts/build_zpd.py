@@ -1,11 +1,11 @@
 """
-Build ZP-D: State Layer (Hilbert Space) (v1.19)
+Build ZP-D: State Layer (Hilbert Space) (v1.20)
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.19'
+VERSION = '1.20'
 FIRST_RELEASED = 'April 2026'
 
 def build():
@@ -49,7 +49,7 @@ def build():
     E.append(label_box('Definition D1 — State Layer H', [
         'H = &#8450;<super>n</super> is a complex Hilbert space with orthonormal basis {e<sub>0</sub>, e<sub>1</sub>, &#8230;}.',
         'The foundational minimum is n = 2, corresponding to the two ontological states of the framework: '
-        '&#8869; of OntologicalStates (mapped to e<sub>0</sub>) and &#949;<sub>0</sub>, the state off &#8869; of OntologicalStates (mapped to e<sub>1</sub>). '
+        '&#8869; of OntologicalStates (mapped to e<sub>0</sub>) and &#949;<sub>0</sub> of OntologicalStates, the state off &#8869; there (mapped to e<sub>1</sub>; D2(ii) sends the occupant of the &#949;<sub>0</sub> role in Q<sub>2</sub> to the same e<sub>1</sub>). '
         'These two orthogonal vectors express the binary existence/non-existence distinction that is the '
         'framework\'s central object. All further states are derived from this pair as joins in (L, &#8744;, &#8869;) '
         '&#8212; they require no additional foundational dimension.',
@@ -73,7 +73,7 @@ def build():
     E.append(label_box('Design Principle DP-1 — Orthogonality as the Representation of Clopen Separation', [
         'Clopen separation in Q<sub>2</sub> (ZP-B T3: 0 is clopen-separated from all nonzero elements; clopen balls are mutually separated) is represented in H by orthogonality: at the chosen level k, points in different cells of the clopen partition P<sub>k</sub> (D1) map to orthogonal vectors in H. Any two distinct points of Q<sub>2</sub> lie in disjoint balls, so the same requirement stated over all disjoint balls would make the images of every two distinct points orthogonal; with nonzero images, as D2(v) requires, that is an orthogonal family indexed by all of Q<sub>2</sub>, which no finite-dimensional H holds (an orthonormal family in &#8450;<super>n</super> is finite; the example after dp1_orthogonality in ZeroParadox/State/StateSpace.lean). Without the nonzero premise the zero map would meet it. P<sub>k</sub> is the finite partition it is stated over.',
         'Motivation: Orthogonality in H is the natural algebraic analogue of topological separation. &#10216;e<sub>i</sub>, e<sub>j</sub>&#10217; = 0 for i &#8800; j; two clopen balls are maximally distinct in the topological sense.',
-        'Status: DESIGN PRINCIPLE — DP-1 is chosen, not derived. It is the natural and consistent choice, stated explicitly. T4 and T5 below depend on DP-1 as a premise.',
+        'Status: DESIGN PRINCIPLE — DP-1 is chosen, not derived. It is the natural and consistent choice, stated explicitly. T4 and T5-b below depend on DP-1 as a premise.',
     ]))
     E.append(sp(4))
     E.append(Paragraph('3.2  The Construction Target', S['h2']))

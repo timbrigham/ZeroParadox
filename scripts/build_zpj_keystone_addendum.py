@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-J Keystone Addendum: The Diagonal Fixed Point, the Lawvere Face-Split, and the Well-Foundedness Boundary
-Version 1.27 | October 2026
+Version 1.28 | November 2026
 Taylor (Well-founded coalgebras and recursion) is cited without year or venue: the copy on file
 carries neither. The gap stays open until a verified bibliographic record supplies them.
 Reads after ZP-J Self-Reference.
@@ -10,7 +10,7 @@ import os
 from zp_utils import *
 from reportlab.platypus import KeepTogether
 
-VERSION = '1.27'
+VERSION = '1.28'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard: route all bare Paragraph() text through Unicode-to-entity conversion ──
@@ -58,16 +58,20 @@ def build():
     E.append(body(
         'The keystone of the Zero Paradox is that &#8869; plays the same self-referential '
         '(diagonal) fixed-point role in every framework, its occupant supplied per face: the Quine '
-        'atom &#8869; = {&#8869;} in set theory; filled in computation by a Kleene code (a '
-        'commitment, not a theorem); the point v<sub>2</sub>(0) = &#8734; in '
+        'atom (CC-2) in set theory, the role a set x = {x} plays, occupied chart by chart '
+        '(ZeroParadox/Settheory/QuineDichotomy.lean); filled in computation by a class of codes up to '
+        'equal eval (codes_vs_classes); the point v<sub>2</sub>(0) = &#8734; in '
         'valuation; and the initial object in category theory. Their shared membership in that '
         'family (MC-1) is proved per domain for the Quine atom, 2-adic and categorical faces; the '
         'Kleene face is carried as a requirement: its occupant is a code from the Rogers / Kleene '
         'fixed-point theorem (for every computable transform f of codes there is a code c with '
         'eval (f c) = eval c; Rogers\' form, computability_face_fixedPoint), a term of another type '
         'than &#8869; of the ZPSemilattice; the KleeneStructure class requires a code meeting a '
-        'periodicity condition (botCode_is_quine), and reading that code as the computational face of '
-        '&#8869; is the commitment (ZeroParadox/Computability/Kleene.lean); the '
+        'periodicity condition (botCode_is_quine), and the reading of that code as the computational face '
+        'of &#8869; splits (ZeroParadox/Computability/Kleene.lean): its identity half is retired, since '
+        'the code chart has its own occupant of the Quine-atom role, a class of codes up to equal eval '
+        'and no single code (codes_vs_classes), and its running half, that &#8869; executes, is the '
+        'occurrence commitment; the '
         'choice of criteria is a design principle; and '
         'the claim that the faces are <i>numerically one object</i> is <b>retired as '
         'ill-typed</b> (object equality across categories does not typecheck and is not invariant under '
@@ -168,10 +172,12 @@ def build():
             'has a fixed point <i>up to eval</i>: two codes computing the same function. This wraps '
             'Mathlib\'s Nat.Partrec.Code.fixed_point (Rogers / Kleene\'s recursion theorem).',
             'The qualifier is load-bearing. A literal fixed point is not on offer &#8212; c &#8614; '
-            'pair(c, c) is total, computable, and returns its own input for no c. The escape from the '
+            'pair(c, c) (the map fun c => Code.pair c c, code_pair_diag_fixedPointFree) is total, computable, and returns its own input for no c. The escape from the '
             'Cantor obstruction is a restriction on which MAPS exist, not on which type eval lands in: '
             'no computable self-map on codes is eval-fixed-point-free, so the diagonal that would '
-            'refute the witness has no computable representative and the obstruction cannot fire. '
+            'refute the witness has no computable representative and the obstruction cannot fire (up to eval; '
+            'under literal equality that same map refutes the witness, the example after '
+            'no_witnessRel_of_admissible_fpf in ZeroParadox/Category/DiagonalWitness.lean). '
             'This is ZP-K\'s face (the Kleene quine).',
             'Footprint: [propext, Classical.choice, Quot.sound], inherited from Mathlib.',
             'Prior art, cited and not claimed: this is the effective-topos / Turing-category '
@@ -205,8 +211,8 @@ def build():
     E.append(body(
         'The keystone\'s structural home is well-founded coalgebra theory. A relation is '
         'encoded as a powerset coalgebra; <b>well-founded</b> means no infinite descending '
-        'chain &#8212; no cycle. The Quine atom &#8869; = {&#8869;} is exactly the minimal '
-        '<i>non</i>-well-founded coalgebra: the self-loop &#8869; &#8712; &#8869;, the back '
+        'chain &#8212; no cycle. The Quine atom (CC-2), a point x = {x}, is exactly the minimal '
+        '<i>non</i>-well-founded coalgebra: the self-loop x &#8712; x, the back '
         'edge. <b>Taylor</b> (Well-founded coalgebras and recursion) proves well-founded '
         '&#8658; recursive as his Recursion Theorem (Thm 36, p. 15), and states the converse '
         '<i>in a topos</i> &#8212; there well-foundedness is <i>necessary</i> for recursion '
@@ -337,7 +343,7 @@ def build():
 
     E.append(KeepTogether(Paragraph(
         'Endnote: This document is an addendum to ZP-J Self-Reference and reads after it. ZP-J '
-        'established the porthole (v<sub>2</sub>(&#8869;) = &#8734;, &#8869; = {&#8869;}); this '
+        'established the porthole (v<sub>2</sub>(&#8869;) = &#8734;, &#8869; as the occupant of the Quine-atom role, CC-2); this '
         'addendum records two probes into the keystone\'s structure &#8212; the '
         'Lawvere face-split and the well-foundedness boundary &#8212; machine-checked except where '
         'marked cited, each fenced as to exactly '

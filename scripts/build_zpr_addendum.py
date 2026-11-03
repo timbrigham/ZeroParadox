@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-R Addendum: The Diagonal Family — PDF Builder
-Version 1.22 | November 2026
+Version 1.23 | November 2026
 Follows scripts/PDF_Rendering_Standards.md.
 Search record behind § IV's Gödel-first sentence (2026-10-06, ripgrep over ZeroParadox/**/*.lean):
   (a) godel_?(one|1|first)|first_?incompleteness|incompleteness_?(one|1|first)|godel_?sentence|true_?but_?unprovable  -> 0 hits
@@ -12,7 +12,7 @@ import os
 from zp_utils import *
 from reportlab.platypus import KeepTogether
 
-VERSION = '1.22'
+VERSION = '1.23'
 FIRST_RELEASED = 'July 2026'
 
 
@@ -142,7 +142,8 @@ def build():
         'Tarski (Tarski.lean) &#8212; the truth face',
         [
             'tarski_no_internal_truth: no internal universal truth-naming exists &#8212; truth is not '
-            'definable inside a system that can name all its own predicates (Tarski 1936). The liar '
+            'definable inside a system that can name all its own predicates (Tarski, conventionally dated '
+            '1936). The liar '
             'sentence (tarski_liar_from_naming) is the explicit diagonal; the T-schema at the liar is '
             'absurd (tarski_Tschema_liar_absurd).',
             'The bottom relationship: no floor &#8212; tarski_no_truth_bottom (&#172; HasLawvereWitness '
@@ -184,12 +185,18 @@ def build():
     E.append(result_box(
         'The Quine atom (SetTheoryAFA.lean) &#8212; the set-theoretic floor',
         [
-            '&#8869; = {&#8869;}: the self-containing &#8869; of the ZPSemilattice. t_exec / T-EXEC '
-            '(t_exec_iff): every Quine atom equals &#8869; of the ZPSemilattice (IsQuineAtom q &#8596; '
-            'q = &#8869;), derived from the ZPSemilattice / AFAStructure class fields &#8212; location '
-            'and uniqueness of the floor in this face. Lives in ZF + AFA (walled off under Foundation, '
-            'Section II).',
-            'Lean purity: choice-free. ✓',
+            'The Quine atom (CC-2) is a role: a point that steps to itself and to nothing else '
+            '(Motion.SelfOnlyAt, ZeroParadox/Die.lean), occupied chart by chart, with no equation across '
+            'charts. In the lattice chart its occupant is &#8869; of the ZPSemilattice '
+            '(selfApp_quine_role_iff, quineAtomHost_quine_role_iff); t_exec / T-EXEC (t_exec_iff): every '
+            'Quine atom equals &#8869; of the ZPSemilattice (IsQuineAtom q &#8596; q = &#8869;), derived '
+            'from the ZPSemilattice / AFAStructure class fields &#8212; location and uniqueness of the '
+            'floor in this face. In Mathlib\'s ZFSet, where the role reads x = {x} '
+            '(zfset_selfOnlyAt_mem_iff), it has no occupant (zfset_quine_role_unoccupied; walled off '
+            'under Foundation, Section II). In the final coalgebra of the one-child polynomial functor it '
+            'is occupied (cofix_quine_role_occupied), but that chart has one point (cofix_subsingleton), '
+            'so the occupancy restates the existence fork and adds nothing further.',
+            'Lean purity: t_exec choice-free. ✓',
         ]
     ))
     E.append(sp(4))
@@ -298,8 +305,9 @@ def build():
              'curry_paradox, curry_no_bottom (Curry.lean)'],
             ['G&#246;del 1st', 'between', 'self-reference is true-but-unprovable',
              'not formalized here'],
-            ['Quine atom', '&#957;', '&#8869; = {&#8869;}: &#8869; of a ZPSemilattice, in the Quine-atom role',
-             't_exec / t_exec_iff (SetTheoryAFA.lean)'],
+            ['Quine atom', '&#957;', 'the Quine-atom role (a point that steps to itself and to nothing '
+             'else), occupied by &#8869; of a ZPSemilattice',
+             't_exec / t_exec_iff (SetTheoryAFA.lean); selfApp_quine_role_iff (QuineDichotomy.lean)'],
             ['Kleene quine', '&#957;', 'every computable self-map on codes has a fixed point up to eval',
              'computability_face_fixedPoint (Lawvere.lean)'],
             ['L&#246;b / G&#246;del 2nd', '&#957;', 'the provability diagonal closes given a L&#246;b diagonal &#968; '
@@ -369,7 +377,8 @@ def build():
         'individual faces are classical: Cantor; Russell (1901); G&#246;del (1931); Turing\'s halting '
         'problem; Tarski (1936); Curry (1942); L&#246;b (1955); Kleene\'s recursion theorem; and '
         'Rice, "Classes of recursively enumerable sets and their decision problems," Trans. Amer. '
-        'Math. Soc. 74(2) (1953) 358&#8211;366. The '
+        'Math. Soc. 74(2) (1953) 358&#8211;366. The years given for Russell and Tarski are their '
+        'conventional datings; those primary publications were not read for this addendum. The '
         'point-surjective theorem is in Mathlib (Function.exists_fixed_point_of_surjective); the '
         'framework\'s engine re-derives it axiom-free for a self-contained family. The contribution of '
         'this addendum is the formalization of the faces formalized here (the engine, the wall faces, and the Quine-atom and '
@@ -393,7 +402,8 @@ def build():
             'inherited from Mathlib\'s classical recursion theory &#8212; disclosed, not claimed '
             'otherwise.',
             'Core choice-free, computability realization choice-carrying &#8212; the framework\'s '
-            'standing pattern. Zero sorry. Verified: lake build, November 2026.',
+            'standing pattern. Each declaration\'s footprint is the #print axioms block in its file\'s '
+            'PurityCheck section (ZeroParadox/Settheory/Loeb.lean, for example).',
         ]
     )]))
     E.append(sp(6))

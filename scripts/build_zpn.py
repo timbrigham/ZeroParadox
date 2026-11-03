@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-N: The Constructive Snap PDF Builder
-Version 2.7 | November 2026
+Version 2.8 | November 2026
 
 Lean: ConstructiveOrdinals.lean, SnapNucleusConstructive.lean, OrdinalChoiceEssential.lean,
 PricedInterface.lean. Follows all rules in scripts/PDF_Rendering_Standards.md.
@@ -9,7 +9,7 @@ PricedInterface.lean. Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '2.7'
+VERSION = '2.8'
 FIRST_RELEASED = 'July 2026'
 
 
@@ -63,14 +63,18 @@ def build():
         'And it builds a carrier of notations denoting the ordinals up to &#949;<sub>0</sub> &#8212; '
         'ordinal notations with one point '
         'adjoined on top &#8212; where the crossing into Mathlib&#8217;s semantic ordinals is a single '
-        'named map whose cost can be read off directly. Staying on the notation side is free of choice; '
-        'crossing is not; and the crossing is one function rather than a diffuse dependency.'))
+        'named map whose cost can be read off directly. On the notation side the comparison, the '
+        'ascent and the carrier&#8217;s declarations are free of choice, though well-formedness through '
+        'Mathlib&#8217;s NF is not (tower_NF, Section III); crossing is not; and the crossing is one '
+        'function rather than a diffuse dependency.'))
     E.append(body(
         'The move is to work at the level of ordinal <i>notations</i> (ONote, Cantor-normal-form '
         'terms), whose comparison ONote.cmp is choice-free (propext-only) and never passes through '
         'repr into the semantic Ordinal type. &#949;<sub>0</sub> is not itself a notation: the '
         'notations name exactly the ordinals below &#949;<sub>0</sub>, and &#949;<sub>0</sub> is their '
-        'limit &#8212; the fixed point the notation system cannot reach. So the snap threshold is '
+        'limit: every notation denotes below it (repr_lt_epsilon0, '
+        'ZeroParadox/Ordinal/PricedInterface.lean), and the tower climbs past every notation '
+        '(tower_no_upper_bound, ZeroParadox/Ordinal/SnapNucleusConstructive.lean). So the snap threshold is '
         'characterised <i>from below</i>: the tower ascends, and the fixed point (&#949;<sub>0</sub>) '
         'is precisely what lies beyond every notation. This layer adds no axiom; it isolates where '
         'choice actually enters the ordinal snap.'))
@@ -197,7 +201,7 @@ def build():
         'notations (Section II) uses propext alone.'))
 
     E.append(remark_box(
-        'Remark: even well-formedness inherits choice (the bridge, made visible)',
+        'Remark: even well-formedness inherits choice (through NF&#8217;s definition)',
         [
             'tower_NF &#8212; the statement that each tower stage is in normal form &#8212; DOES carry '
             'Classical.choice ([propext, Classical.choice, Quot.sound]), because Mathlib&#8217;s NF '
@@ -216,13 +220,15 @@ def build():
     E.append(sp(6))
 
     E.append(body(
-        'That diagnosis suggests its own remedy: build a carrier of notations denoting the ordinals up '
+        'The diagnosis above, that choice enters through Ordinal&#8217;s order instance and the '
+        'operations on it, never through the notations&#8217; own comparison, suggests its own '
+        'remedy: build a carrier of notations denoting the ordinals up '
         'to &#949;<sub>0</sub>. E0Note is ordinal '
         'notations with a single point adjoined on top, that point standing for &#949;<sub>0</sub>. '
         'Below the top, comparison is the existing syntactic comparator and stays decidable; the map '
         'e0Repr sends the carrier into Mathlib&#8217;s Ordinal. Measured, the boundary is priced: the '
         'carrier side&#8217;s declarations carry no Classical.choice, and the map carries it at every '
-        'declaration. Staying constructive is free; crossing costs the classical assumption; and the '
+        'declaration. On the carrier, staying constructive is free; crossing costs the classical assumption; and the '
         'crossing is one named function.'))
 
     E.append(def_box(
@@ -251,7 +257,8 @@ def build():
             'predicate is itself defined through the representation map.',
             'The construction is <b>not new</b>. The carrier has the shape of Cast&#233;ran&#8217;s '
             'generic sum of notation systems (hydra-battles, ON_plus &#8212; that file carries his name '
-            'alone, though the library as a whole is his and Contejean&#8217;s) with a one-point right '
+            'alone, while the library as a whole is the work of the hydra-battles authors) with a '
+            'one-point right '
             'summand, and is not an instance of it: ON_plus sums well-founded notation systems, and this '
             'carrier&#8217;s order is not well-founded (the second bullet above). The map is likewise '
             'not an ON_correct member (the bullet above). What is contributed is the measurement.',
@@ -266,7 +273,7 @@ def build():
             'from within the notation system (no notation is a fixed point of '
             'x &#8614; &#969;<sup>x</sup>; the tower climbs without bound). The matching '
             '<i>minimality</i> &#8212; that &#949;<sub>0</sub> is the LEAST fixed point of '
-            'x &#8614; &#969;<sup>x</sup> &#8212; is a separate, harder target: it quantifies over the '
+            'x &#8614; &#969;<sup>x</sup> &#8212; is a separate target: it quantifies over the '
             'limit, which no notation names (tower_no_upper_bound; across the crossing, '
             'repr_lt_epsilon0), so it cannot be stated purely syntactically on ONote. '
             'Leastness is proved on Ordinal (epsilon0_min_eq_max, with choice); a choice-free proof of '
@@ -321,7 +328,9 @@ def build():
             'only &#8212; choice-free, and free even of Quot.sound. Proved by structural recursion on '
             'ONote; repr / Ordinal are never touched.',
             'Well-formedness (tower_NF): [propext, Classical.choice, Quot.sound] &#8212; Classical.choice '
-            'inherited from Mathlib&#8217;s NF / repr, which passes through the Ordinal type.',
+            'inherited through Mathlib&#8217;s NF, defined via repr into Ordinal, whose order instance '
+            'and operations carry it; the type Ordinal itself reports [propext, Quot.sound] '
+            '(Section III).',
             'The taboo (em_of_wellOrder_comparable): [propext, Quot.sound] &#8212; choice-free by '
             'design, because the classical content is the hypothesis rather than the proof. Its '
             'converse (comparable_of_classical) carries Classical.choice, as it must.',

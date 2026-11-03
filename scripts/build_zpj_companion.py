@@ -1,6 +1,6 @@
 """
 Build ZP-J Illustrated Companion
-Version 1.35 | November 2026
+Version 1.36 | November 2026
 v1.33: ROUND-6 OUTSTANDING CLOSEOUT, items 3a, 3b, 3d, 6 (corpus-zpj-v2.8-round6-outstanding.md
 EXECUTION SPEC 2026-09-28). 3a (CC-2 proved half): the Foundation-freeness sentence cited no
 identifier; it now cites wf_no_selfloop (ZeroParadox/Settheory/Wall.lean - fully general, no
@@ -82,11 +82,11 @@ def quine_atom_diagram():
     r_inner = 28
     d.add(Circle(cx, cy, r_inner, fillColor=INDIGO,
                  strokeColor=INDIGO, strokeWidth=0))
-    d.add(String(cx - 9, cy - 6, '⊥',
+    d.add(String(cx - 6, cy - 6, 'Q',
                  fontSize=16, fontName='DV-B', fillColor=WHITE))
 
-    # Label: ⊥ = {⊥}
-    d.add(String(cx - 28, cy - r_outer - 18, '⊥  =  {⊥}',
+    # Label: Q = {Q} (the AFA set; the lattice's occupant of the role is a separate theorem)
+    d.add(String(cx - 28, cy - r_outer - 18, 'Q  =  {Q}',
                  fontSize=13, fontName='DV-B', fillColor=INDIGO))
 
     # Self-membership arrow
@@ -97,8 +97,8 @@ def quine_atom_diagram():
     d.add(Line(bx + 5, by - 6, bx, by, strokeColor=INDIGO, strokeWidth=1.5))
 
     d.add(String(14, 10,
-                 'The Quine atom: ⊥ is a member of itself. '
-                 'The outer ring is the set {⊥}; the inner disk is ⊥ as an element.',
+                 'The Quine atom (CC-2) in AFA: Q is its own sole member. '
+                 'The outer ring is the set {Q}; the inner disk is Q as an element.',
                  fontSize=7.5, fontName='DV-I', fillColor=GREY_TEXT))
     return d
 
@@ -128,7 +128,7 @@ def quine_graph_diagram():
     # RIGHT — Quine atom ⊥ with a self-loop (dashed: exits right, re-enters the top)
     qx = 365
     d.add(Circle(qx, cy, 18, fillColor=INDIGO, strokeColor=INDIGO, strokeWidth=0))
-    d.add(String(qx - 9, cy - 6, '⊥', fontSize=16, fontName='DV-B', fillColor=WHITE))
+    d.add(String(qx - 6, cy - 6, 'Q', fontSize=16, fontName='DV-B', fillColor=WHITE))
     loop = Path(strokeColor=INDIGO, strokeWidth=1.4, fillColor=None,
                 strokeDashArray=[2.5, 2.5])
     loop.moveTo(qx + 18, cy)                       # exit the right edge
@@ -137,7 +137,7 @@ def quine_graph_diagram():
     # solid arrowhead at the top entry, pointing down into the ball
     d.add(Line(qx - 5, cy + 25, qx, cy + 18, strokeColor=INDIGO, strokeWidth=1.4))
     d.add(Line(qx + 5, cy + 25, qx, cy + 18, strokeColor=INDIGO, strokeWidth=1.4))
-    d.add(String(qx - 42, cy - 42, '⊥ = {⊥}: the chain loops on itself',
+    d.add(String(qx - 42, cy - 42, 'Q = {Q}: the chain loops on itself',
                  fontSize=8, fontName='DV-I', fillColor=GREY_TEXT))
     return d
 
@@ -149,8 +149,8 @@ def three_way_table():
            Paragraph('Plain meaning', CS['tbl_hdr'])]
     rows = [
         ['Set theory (AFA)',
-         '&#8869; = {&#8869;}  (so &#8869; &#8712; &#8869;)',
-         '⊥ contains exactly one element: itself. AFA allows at most one set that is its own '
+         'occupies the Quine-atom role, x = {x} (quineAtomHost_quine_role_iff)',
+         'In AFA the set Q = {Q} contains exactly one element: itself. AFA allows at most one set that is its own '
          'sole member (x = {x}); bare self-membership is not unique there (see the T-EXEC box above). '
          'The Lean requirement: QuineAtomHost, ZeroParadox/Settheory/QuineHost.lean &#167; VII'],
         ['Order theory (ZP-A)',
@@ -210,7 +210,7 @@ def abstraction_chain_table():
     t.setStyle(ts); return t
 
 
-VERSION = '1.35'
+VERSION = '1.36'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -240,11 +240,11 @@ def build():
     hdr.setStyle(hdr_ts)
     E += [hdr, sp(6),
           Paragraph('The Self-Containing Null', CS['title']),
-          Paragraph('What &#8869; = {&#8869;} Means, and Why It Matters', CS['subtitle']),
+          Paragraph('What the Quine Atom Means, and Why It Matters', CS['subtitle']),
           Paragraph('ZP Companion | The Quine Atom | ' + version_line(FIRST_RELEASED, VERSION), CS['meta']),
           Paragraph(
-              'This companion explains in plain language what &#8869; = {&#8869;} (the Quine atom '
-              'of AFA set theory) means, and the proof that whatever plays that role in a lattice '
+              'This companion explains in plain language what the Quine atom (CC-2; in AFA set theory '
+              'the set Q = {Q}) means, and the proof that whatever plays that role in a lattice '
               'is its unique bottom element. '
               'This is one result in the Zero Paradox project (ZP-J), connecting '
               'AFA set theory, p-adic topology, and lattice algebra. '
@@ -258,12 +258,16 @@ def build():
     # ── What Is ZP-J Doing? ──────────────────────────────────────────────────
     E.append(Paragraph('What Is ZP-J Doing?', CS['h1']))
     E.append(cbody(
-        'In AFA set theory the Quine atom is the set Q satisfying Q = {Q}, and the framework '
-        'identifies the bottom element &#8869; with it. That identification is a statement about '
-        'sets; a lattice cannot state it directly, because it would compare an element with a set '
-        'of elements. ZP-E argues, informally, that '
+        'In AFA set theory the Quine atom is the set Q satisfying Q = {Q}. The framework treats the '
+        'Quine atom (CC-2) as a ROLE: a point that steps to itself and to nothing else, here along '
+        'membership. Each setting has its own occupant, proved there: Q in AFA set theory; none in '
+        'Mathlib\'s sets, which obey Foundation (zfset_quine_role_unoccupied, '
+        'ZeroParadox/Settheory/Wall.lean); and &#8869; in a lattice carrying the role '
+        '(quineAtomHost_quine_role_iff, ZeroParadox/Settheory/QuineDichotomy.lean). No equation between '
+        '&#8869; and Q is written, because it would compare an element of a lattice with a set. '
+        'ZP-E argues, informally, that '
         'nothing external to &#8869; can execute &#8869;, so if &#8869; executes at all, the executor is '
-        '&#8869; itself, and reads that as &#8869; = {&#8869;}. That rules out an external executor, not an '
+        '&#8869; itself, and reads that as &#8869; occupying the Quine-atom role. That rules out an external executor, not an '
         'inert &#8869; (see ZP-E for the full three-path argument).'))
     E.append(cbody(
         'ZP-J formalises the structural part of that picture. The Quine atom becomes a ROLE, not a '
@@ -273,11 +277,11 @@ def build():
         'element  - is the bottom element &#8869;; its later sections add a valuation argument, '
         'also machine-checked for the 2-adic integers, that derives the typeclass laws in '
         'carriers that have a depth measure. '
-        'CC-2 (&#8869; = {&#8869;}) remains a commitment (ZP-A calls it a Forced Metatheoretic '
+        'CC-2, the Quine atom, remains a commitment (ZP-A calls it a Forced Metatheoretic '
         'Commitment); at the lattice level it is read as that role, and T-EXEC identifies the role\'s occupant. In AFA set theory the set '
-        'Q = {Q} exists and is unique, a consequence of the axiom (Aczel 1988, Example 1.3); that the '
-        'framework\'s &#8869; is that set is the commitment, argued rather than chosen freely, and not a '
-        'Lean theorem. CC-1 (S&#8320; = &#8869;) is restated, not forced: in any lattice carrying the '
+        'Q = {Q} exists and is unique, a consequence of the axiom (Aczel 1988, Example 1.3); adopting AFA '
+        'for the set setting is the commitment, argued rather than chosen freely, and not a '
+        'Lean theorem, and no equation between &#8869; and Q is claimed. CC-1 (S&#8320; = &#8869;) is restated, not forced: in any lattice carrying the '
         'typeclass, a state sequence starts at a Quine atom exactly when it starts at &#8869;, and on a '
         'lattice with a second point a valid sequence can start above &#8869;, at a point that is not a '
         'Quine atom, so the choice of starting point is expressed through the role rather than removed.'))
@@ -296,7 +300,7 @@ def build():
         'a measure of how deeply nested its membership is. A set like {{{&#8709;}}} has rank 3 '
         'because you have to unwrap three layers to reach the empty set. Importantly, no '
         'set under Foundation can be a member of itself: that would create an infinite '
-        'descending chain &#8869; &#8715; &#8869; &#8715; &#8869; &#8715; &#8230; with no bottom.'))
+        'descending chain x &#8715; x &#8715; x &#8715; &#8230; with no end.'))
     E.append(cbody(
         'Anti-Foundation (AFA) drops that prohibition. It allows non-well-founded sets  - '
         'sets that can be members of themselves. The simplest such object is the Quine atom: '
@@ -306,24 +310,25 @@ def build():
         'self-loop it guarantees exactly one such set exists.'))
     E.append(quine_atom_diagram())
     E.append(ccaption(
-        'The Quine atom ⊥ = {⊥}, pictured as a set in AFA set theory: ⊥ is the sole member of itself. '
-        'The outer ring is the set {⊥} and the inner disk is ⊥ as an element. '
-        'They are the same object.'))
+        'The Quine atom (CC-2), pictured as a set in AFA set theory: Q is the sole member of itself. '
+        'The outer ring is the set {Q} and the inner disk is Q as an element. '
+        'They are the same set. In a lattice the role\'s only occupant is &#8869; (T-EXEC); no equation '
+        'between &#8869; and Q is written.'))
     E.append(sp(6))
     E.append(quine_graph_diagram())
     E.append(ccaption(
         'A second way to see it - as a directed graph (an "accessible pointed graph", or APG, '
         'the structure Aczel\'s anti-foundation axiom decorates). Each arrow points from a set '
         'to one of its members. Ordinary sets are well-founded: following the arrows always ends, '
-        'here at the empty set ∅. The bottom ⊥ is the lone exception - its arrow loops straight '
-        'back to itself. That self-loop is exactly ⊥ = {⊥}, the Quine atom: a membership chain '
+        'here at the empty set ∅. The Quine atom Q is the lone exception - its arrow loops straight '
+        'back to itself. That self-loop is exactly Q = {Q}: a membership chain '
         'that never bottoms out.'))
     E.append(sp(4))
     E.append(example_box('Real-world analogy  - A mirror facing a mirror', [
         'Hold two mirrors facing each other. Each reflection contains the other mirror, '
         'which contains another reflection, which contains another mirror &#8230; infinitely. '
         'The image is self-referential: the full scene is visible inside itself at every '
-        'level. The Quine atom &#8869; = {&#8869;} has this structure  - &#8869; is inside '
+        'level. The Quine atom Q = {Q} has this structure  - Q is inside '
         'itself, not as a smaller copy, but as the same object.',
     ]))
     E.append(sp(8))
@@ -376,7 +381,7 @@ def build():
         '(x + 0 = x) and the smallest non-negative integer (0 ≤ n for all n ∈ ℕ). '
         'Those two line up cleanly with ⊥ as join identity and ⊥ as minimum. '
         'But arithmetic has no honest way to show the third hat - ⊥ as the Quine atom '
-        '(⊥ = {⊥}, "zero inside zero"): ordinary numbers simply do not contain themselves. '
+        '(the role the AFA set Q = {Q} plays, "zero inside zero"): ordinary numbers simply do not contain themselves. '
         'For that self-containing property the right pictures are the mirror-facing-a-mirror '
         'analogy and the directed graph above, not arithmetic.',
     ]))
@@ -396,7 +401,7 @@ def build():
         'that certain structural facts were assumed rather than derived. ZP-J restates both in '
         'terms of a role, and neither commitment disappears:'))
     E.append(cbody(
-        '<b>CC-2 (&#8869; = {&#8869;}):</b> In ZP-A, a Forced Metatheoretic Commitment with two '
+        '<b>CC-2 (the Quine atom):</b> In ZP-A, a Forced Metatheoretic Commitment with two '
         'halves: that any set theory hosting a self-membered bottom gives up Foundation is proved in '
         'Lean (wf_no_selfloop, ZeroParadox/Settheory/Wall.lean  - no well-founded relation admits a '
         'self-loop; the QuineHost-specific case is its corollary quineHost_not_wellFounded, and '
@@ -406,7 +411,8 @@ def build():
         'AFAStructure typeclass encodes, with its field bot_self_mem placing &#8869; in it. T-EXEC '
         'proves that whatever fills that role is &#8869;. In AFA set theory the equation Q = {Q} is '
         'itself a theorem, with exactly one solution (Aczel 1988, Example 1.3); what is not derived is '
-        'that the framework\'s &#8869; is that set, which is the commitment.'))
+        'the adoption of AFA for the set setting, which is the commitment. No equation between &#8869; '
+        'and Q is written: each setting\'s occupant of the role is that setting\'s own theorem.'))
     E.append(cbody(
         '<b>CC-1 (S&#8320; = &#8869;):</b> ZP-J proves <i>cc1_derived</i> in Lean 4: if a '
         'state sequence starts at a Quine atom, it starts at &#8869;, because T-EXEC identifies '
@@ -619,7 +625,7 @@ def build():
         'CC-1 (S&#8320; = &#8869;): a state sequence starts at a Quine atom exactly when it starts '
         'at &#8869; (cc1_derived with t_exec_iff)  - axiom-free in Lean 4; the starting point is '
         'restated through the role, not forced (on a lattice with a second point a valid sequence can start above &#8869;). '
-        'CC-2 (&#8869; = {&#8869;}): its structural content is a role, the Quine-atom role that AFAStructure encodes, and T-EXEC proves whatever fills that role is &#8869; (axiom-free); in AFA set theory Q = {Q} has exactly one solution, a theorem of that theory, and that the framework\'s &#8869; is that set is the commitment, not a Lean theorem. '
+        'CC-2 (the Quine atom): its structural content is a role, the Quine-atom role that AFAStructure encodes, and T-EXEC proves whatever fills that role is &#8869; (axiom-free); in AFA set theory Q = {Q} has exactly one solution, a theorem of that theory; adopting AFA for the set setting is the commitment, not a Lean theorem, and no equation between &#8869; and Q is written. '
         'Choice-free: the set of self-containing elements, {&#8869;}, is identified in one step '
         'with no axiom of choice; this does not address Aczel\'s question about Dependent Choice. '
         'Abstraction chain: ValuationStructure &#8594; AbstractSelfApp &#8594; AFAStructure  - '
