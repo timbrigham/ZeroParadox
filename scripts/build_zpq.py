@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-Q: The Frame-Change PDF Builder
-Version 1.15 | November 2026
+Version 1.16 | November 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.15'
+VERSION = '1.16'
 FIRST_RELEASED = 'July 2026'
 
 from reportlab.graphics.shapes import Drawing, Circle, Ellipse, PolyLine, String, Polygon
@@ -139,7 +139,7 @@ def build():
             'tear on the sphere &#8212; a discontinuity, not a region).',
             'Seen from &#8869;&#8217;s own frame &#8212; inside the self-reference &#8212; the same '
             'point is the opposite: infinite depth. v<sub>2</sub>(0) = &#8734;; the endless regress '
-            '&#8869; &#8712; &#8869; &#8712; &#8869;; unbounded surprisal. No-interior and '
+            'Q &#8712; Q &#8712; Q &#8230; of the AFA set that plays the role; unbounded surprisal. No-interior and '
             'infinite-interior are the 0 &#8596; &#8734; poles of one coin, swapped by the '
             'frame-change: what has no thickness from without has nothing but depth from within. So '
             'the bottom is not an object behind the boundary &#8212; it is the boundary, whose own '
@@ -358,8 +358,8 @@ def build():
         'meeting a periodicity condition (botCode_is_quine) and equates it with nothing. The reading '
         'that this code is the bottom\'s computational witness splits: its identity half is retired '
         '(no single code occupies the Quine-atom role under the eval step, '
-        'evalStepMotion_not_selfOnlyAt, while a class of codes up to equal eval does, '
-        'codes_vs_classes), and its running half, that the bottom executes, is the occurrence '
+        'evalStepMotion_not_selfOnlyAt, while a class of codes up to equal eval does, for a '
+        'computable map respecting equal eval, codes_vs_classes), and its running half, that the bottom executes, is the occurrence '
         'commitment. That the bottom is the unique fixed '
         'point of self-application is the AbstractSelfApp class field unique_fp (ZP-J), a requirement '
         'rather than a theorem. State / Hilbert: &#8869; is the '

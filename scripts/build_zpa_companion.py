@@ -1,5 +1,5 @@
 """
-Build ZP-A Illustrated Companion (v1.15)
+Build ZP-A Illustrated Companion (v1.16)
 Covers: join-semilattice, partial order, Hasse diagram, one-directional transitions,
 monotonicity (T3), bottom-as-constituent (T2), four concrete examples, and CC-2.
 """
@@ -89,7 +89,7 @@ def transition_diagram():
                  fontName='DV-B', fillColor=RED))
     return d
 
-VERSION = '1.15'
+VERSION = '1.16'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -237,7 +237,8 @@ def build():
         'subject of ZP-F (The Counterexamples), which proves that no linearly ordered field '
         'has a least positive element (f_snap_impossible); what obstructs a first step is density '
         '(axb1_fails_everywhere_iff_dense). Among the completions of &#8474;, Q&#8322;&#8217;s topology removes '
-        'that obstruction (padic_snaps) but supplies no first step: Mathlib gives Q&#8322; no order, and under '
+        'a separate, topological obstruction, connectedness (padic_snaps: Q&#8322; is totally '
+        'disconnected), but supplies no first step: Mathlib gives Q&#8322; no order, and under '
         'the norm preorder 0 has no first step there either (ZeroParadox/BottomCannotBe.lean). The first '
         'step is supplied by AX-B1, a commitment (ZeroParadox/Order/SnapCannotBe.lean, &#167; V).'))
     E.append(sp(4))

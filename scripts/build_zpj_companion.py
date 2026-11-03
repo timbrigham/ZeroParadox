@@ -1,6 +1,6 @@
 """
 Build ZP-J Illustrated Companion
-Version 1.36 | November 2026
+Version 1.37 | November 2026
 v1.33: ROUND-6 OUTSTANDING CLOSEOUT, items 3a, 3b, 3d, 6 (corpus-zpj-v2.8-round6-outstanding.md
 EXECUTION SPEC 2026-09-28). 3a (CC-2 proved half): the Foundation-freeness sentence cited no
 identifier; it now cites wf_no_selfloop (ZeroParadox/Settheory/Wall.lean - fully general, no
@@ -148,8 +148,9 @@ def three_way_table():
            Paragraph('What ⊥ satisfies', CS['tbl_hdr']),
            Paragraph('Plain meaning', CS['tbl_hdr'])]
     rows = [
-        ['Set theory (AFA)',
-         'occupies the Quine-atom role, x = {x} (quineAtomHost_quine_role_iff)',
+        ['Membership host (QuineAtomHost on L)',
+         'is the lattice occupant of the Quine-atom role, which the set Q = {Q} plays in AFA set '
+         'theory (quineAtomHost_quine_role_iff)',
          'In AFA the set Q = {Q} contains exactly one element: itself. AFA allows at most one set that is its own '
          'sole member (x = {x}); bare self-membership is not unique there (see the T-EXEC box above). '
          'The Lean requirement: QuineAtomHost, ZeroParadox/Settheory/QuineHost.lean &#167; VII'],
@@ -210,7 +211,7 @@ def abstraction_chain_table():
     t.setStyle(ts); return t
 
 
-VERSION = '1.36'
+VERSION = '1.37'
 FIRST_RELEASED = 'April 2026'
 
 

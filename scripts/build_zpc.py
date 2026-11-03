@@ -1,11 +1,11 @@
 """
-Build ZP-C: Information Theory (v1.34)
+Build ZP-C: Information Theory (v1.35)
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.34'
+VERSION = '1.35'
 FIRST_RELEASED = 'April 2026'
 
 def build():
@@ -114,7 +114,7 @@ def build():
         'c<sub>0</sub>, &#8869; of MachinePhase, corresponds to the limit point 0 &#8712; Q<sub>2</sub> — the limit of the binary ball hierarchy at infinite depth. The binary branching measure assigns equal probability mass at each branch level (D4), and the surprisal diverges without bound as depth increases (T2), each value finite. Surprisal is defined at each depth, not at the limit point itself.',
         'Proof: Let M &#8712; &#8477;. By the Archimedean property, &#8707; n &#8712; &#8469; with n > M. Then I(n) = n > M. Since M was arbitrary, surprisal is unbounded above. <font name="DV">&#10003;</font>',
         'Formal content: surprisal is not bounded above by any real M.',
-        'Semantic content: c<sub>0</sub>, &#8869; of MachinePhase, corresponds to the limit point 0 of the binary ball hierarchy under the 2-adic metric, approached by sequences of increasing depth along which surprisal exceeds every finite bound; at that point the 2-adic additive valuation is &#8868; (R-BRIDGE). From these two charts the framework argues that no finite external interpreter can hold c<sub>0</sub> as a static description. This is one argument for DA-1&#8217;s precondition (ZP-E, DA-1 insert &#167; IV, Path 2), and it does not derive it. ZP-A CC-2 (the Quine atom, a role: in a ZP-A lattice under a self-application map, &#8869; is its only occupant, selfApp_quine_role_iff), itself a commitment, gives a second, structural argument for the same conclusion: a self-containing object has no external interpreter by structure (ZP-A R3). The informational argument from the ball hierarchy and the structural argument from self-containment are independent; neither makes the configuration at P<sub>0</sub> executing.',
+        'Semantic content: c<sub>0</sub>, &#8869; of MachinePhase, corresponds to the limit point 0 of the binary ball hierarchy under the 2-adic metric, approached by sequences of increasing depth along which surprisal exceeds every finite bound; at that point the 2-adic additive valuation is &#8868; (R-BRIDGE). From these two charts the framework argues that no finite external interpreter can hold c<sub>0</sub> as a static description. This is one argument for DA-1&#8217;s precondition (ZP-E, DA-1 insert &#167; IV, Path 2), and it does not derive it. ZP-A CC-2 (the Quine atom, a role: in a ZP-A lattice under a self-application map supplied by AbstractSelfApp, &#8869; is its only occupant, selfApp_quine_role_iff), itself a commitment, gives a second, structural argument for the same conclusion: a self-containing object has no external interpreter by structure (ZP-A R3). The informational argument from the ball hierarchy and the structural argument from self-containment are independent; neither makes the configuration at P<sub>0</sub> executing.',
         'Note: L-INF supplies unbounded surprisal; the step from there to executing is not a consequence of L-INF and is not DA-1. It is a bridge principle of its own (ZP-E, DA-1 insert &#167; IV, Path 2), which the framework does not adopt, which is not the occurrence commitment, and which is not a premise of the Snap.',
         'Status: DERIVED from D4 and T2. Structural corroboration: ZP-A CC-2 (the Quine atom, a role) and R3. Lean: l_inf (purity check: no non-Mathlib axioms).',
     ]))

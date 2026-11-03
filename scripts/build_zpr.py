@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-R: A Cross-Category Account of the Self-Referential Fixed Point — PDF Builder
-Version 1.23 | November 2026
+Version 1.24 | November 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.23'
+VERSION = '1.24'
 FIRST_RELEASED = 'July 2026'
 
 
@@ -432,7 +432,7 @@ def build():
         'supplied by the class fields fixed_bot and unique_fp (selfApp_pinnable), not by the engine, '
         'whose hypothesis fails on every ZPSemilattice with an element other than &#8869; '
         '(nontrivial_lattice_no_witness). On every ZPSemilattice with an element other than &#8869;, '
-        'that face is linked to the computability face only through the die\'s Quine-atom role, '
+        'that face is linked to the computability face through the die\'s Quine-atom role, '
         'occupied chart by chart: in the code chart no single code occupies it under the eval step '
         '(evalStepMotion_not_selfOnlyAt), and a class of codes up to equal eval does, for computable '
         'eval-respecting maps (codes_vs_classes). KleeneStructure supplies a code meeting a periodicity '

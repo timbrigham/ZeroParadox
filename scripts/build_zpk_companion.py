@@ -1,6 +1,6 @@
 """
 Build ZP-K Illustrated Companion
-Version 1.27 | November 2026
+Version 1.28 | November 2026
 """
 
 import os
@@ -80,7 +80,7 @@ def four_way_table():
         ['Set theory (AFA)',
          'x = {x} — the Quine-atom role (CC-2); in an AFAStructure lattice &#8869; is its only '
          'occupant (quineAtomHost_quine_role_iff)',
-         '⊥ is its own sole member; no external interpreter exists'],
+         'the set Q = {Q} is its own sole member; ⊥ occupies the role in the lattice'],
         ['Order theory (ZP-A)',
          '&#8869; &#8804; x for all x — minimum',
          '⊥ is below everything; the universal starting point'],
@@ -90,8 +90,8 @@ def four_way_table():
         ['Computation (Kleene)',
          'eval botCode = selfApply botCode — fixed point',
          'a fixed point of self-application; "⊥ is its own program" is not an identity: '
-         'codes occupy the Quine-atom role in their own chart, as a class up to equal output '
-         '(codes_vs_classes)'],
+         'codes occupy the Quine-atom role in their own chart, as a class up to equal output, for a '
+         'computable map respecting equal output (codes_vs_classes)'],
     ]
     data = [hdr] + [[Paragraph(fix(r[0]), CS['kr_body']),
                      Paragraph(fix(r[1]), CS['kr_body']),
@@ -109,7 +109,7 @@ def four_way_table():
     t = Table(data, colWidths=[TW*0.22, TW*0.30, TW*0.48])
     t.setStyle(ts); return t
 
-VERSION = '1.27'
+VERSION = '1.28'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -164,7 +164,8 @@ def build():
         'equivalent. ZP-K carries c₀\'s computational face as a '
         'KleeneStructure requirement (botCode_is_quine). Reading c₀ as the Kleene quine splits in '
         'two: its identity half is retired, since codes occupy the Quine-atom role in their own '
-        'chart, as a class of codes up to equal output (codes_vs_classes); and that c₀ runs is the '
+        'chart, as a class of codes up to equal output, for a computable map respecting equal '
+        'output (codes_vs_classes); and that c₀ runs is the '
         'occurrence commitment. Neither half is a theorem.'))
     E.append(cbody(
         'On the framework\'s reading, ⊥ is not a description of a Turing machine waiting for an '
@@ -206,8 +207,8 @@ def build():
         'on the reading that the computational Quine expresses the Quine atom (CC-2) in the language '
         'of programs: c is its own program, just as ⊥ is its own member. Stated in the die, that is '
         'one role with an occupant in each chart, not an identity: ⊥ in an AFAStructure lattice '
-        '(quineAtomHost_quine_role_iff), and a class of codes up to equal output on the code side '
-        '(codes_vs_classes). No field of KleeneStructure asserts an identity.',
+        '(quineAtomHost_quine_role_iff), and a class of codes up to equal output on the code side, '
+        'for a computable map respecting equal output (codes_vs_classes). No field of KleeneStructure asserts an identity.',
     ]))
     E.append(sp(4))
     E.append(cbody(
@@ -322,7 +323,8 @@ def build():
         'given it, the machine has left c₀ for c₁, by the definition of the first running '
         'configuration (D7). ZP-K carries c₀\'s computational face as a '
         'KleeneStructure requirement (botCode_is_quine); reading c₀ as the Kleene quine is not an '
-        'identity (codes occupy the Quine-atom role in their own chart, codes_vs_classes), and that '
+        'identity (codes occupy the Quine-atom role in their own chart, as a class up to equal output, '
+        'for a computable map respecting equal output, codes_vs_classes), and that '
         'c₀ runs is the occurrence commitment. What T-COMP, with da2_bottom_characterization, proves is narrower: '
         'three of the four descriptions of ⊥ are equivalent to one another. It says nothing '
         'about external agents, and nothing about execution.'))

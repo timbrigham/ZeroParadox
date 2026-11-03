@@ -1,12 +1,12 @@
 """
 Zero Paradox — ZP-J: Executability of Self-Reference PDF Builder
-Version 2.15 | November 2026
+Version 2.16 | November 2026
 """
 
 import os
 from zp_utils import *
 
-VERSION = '2.15'
+VERSION = '2.16'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -240,7 +240,7 @@ def build():
             '&#8869; = &#8869; holds by reflexivity.',
             'This is the CIC-compatible encoding of AFA self-containment. In Lean 4 (based on '
             'the Calculus of Inductive Constructions), the set-theoretic statement &#8869; &#8712; &#8869; '
-            '&#8212; meaning &#8869; literally contains itself as a member under ZF+AFA &#8212; is not '
+            '&#8212; the membership reading that ZF+AFA gives the set Q = {Q}, not &#8869; &#8212; is not '
             'well-typed on a carrier: x : L is a member of a Set L, and no membership relation between '
             'two elements of L is in scope, so &#8869; &#8712; &#8869; does not elaborate. '
             'Mathlib\'s own model of ZF sets satisfies Foundation (ZFSet.mem_wf: &#8712; is well-founded, from '
@@ -249,8 +249,8 @@ def build():
             'means "equals the bottom element." The Lean proof compiles by rfl because '
             'self-containing is defined as equality with &#8869;.',
             'This is a structural analogy, not a set-theoretic derivation from ZF+AFA. The '
-            'full set-theoretic content of AFA &#8212; that &#8869; literally contains itself as a '
-            'member of the AFA universe &#8212; is not present in the Lean proof. What the typeclass '
+            'set-theoretic content of AFA, that the set Q = {Q} exists and is unique, is not present '
+            'in the Lean proof, and no equation between &#8869; and Q is written. What the typeclass '
             'encodes is the structural consequence: there is a unique element playing the Quine '
             'role, and &#8869; is that element.',
         ]
@@ -492,7 +492,9 @@ def build():
         '(5450b53) as of 2026-11-03, searched for &#8220;Kolmogorov complexity&#8221;, '
         '&#8220;KolmogorovComplexity&#8221;, &#8220;algorithmic information&#8221;, &#8220;shortest '
         'program&#8221; and &#8220;description length&#8221; (no file), and &#8220;Kolmogorov&#8221; '
-        '(Kolmogorov spaces, the extension theorem and the zero-one law only). ZP-J does not affect '
+        '(Kolmogorov spaces, Kolmogorov processes, the Chapman&#8211;Kolmogorov equations, the '
+        'Kolmogorov&#8211;Chentsov condition, the extension theorem, the zero-one law and an author '
+        'credit; none a definition of Kolmogorov complexity). ZP-J does not affect '
         'DA-1\'s status.'))
     E.append(sp(6))
 

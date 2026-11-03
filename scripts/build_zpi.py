@@ -1,12 +1,12 @@
 """
 Zero Paradox — ZP-I: Inside Zero PDF Builder
-Version 1.29 | November 2026
+Version 1.30 | November 2026
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.29'
+VERSION = '1.30'
 FIRST_RELEASED = 'April 2026'
 
 # ZP-I uses justified body text; override the left-aligned zp_utils defaults
@@ -400,8 +400,8 @@ def build():
            'That the Cauchy limit 0 &#8712; Q<sub>2</sub> satisfies that condition is a HYPOTHESIS, never a result: '
            't_iz_complete takes it as the argument h_role, about a terminal in a separate semilattice L&#8242;, '
            'and does not identify that terminal with the limit. Q<sub>2</sub>&#8217;s field structure supplies no join, and the corpus defines none on Q<sub>2</sub> &#8212; '
-           'and for the 2-adic integers &#8484;<sub>2</sub> no ZPSemilattice instance is registered either '
-           '(ZeroParadox/Valuation/ScaleBridge.lean) &#8212; so the condition is not statable there. '
+           'and for the 2-adic integers &#8484;<sub>2</sub> one with 0 as bottom is built but not registered '
+           '(ZeroParadox/Valuation/Scale.lean) &#8212; so on Q<sub>2</sub> the condition is not statable. '
            'Lean: t_iz_limit_is_new_null, proved directly from da2_bottom_characterization. ✓ &#8212; '
            'the checkmark covers the ROLE identification only, and only inside L&#8242;. It is NOT a novelty witness and must not be cited as one; reading the occupant as the &#8869; of a SUCCESSOR instantiation is C-DA2.'),
         sp(4),

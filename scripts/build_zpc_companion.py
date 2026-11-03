@@ -1,5 +1,5 @@
 """
-Build ZP-C Illustrated Companion (v2.13)
+Build ZP-C Illustrated Companion (v2.14)
 """
 
 import os
@@ -177,7 +177,7 @@ def lrun_diagram():
                strokeColor=COMP_BLUE, strokeWidth=1, strokeDashArray=[4, 3]))
     return d
 
-VERSION = '2.13'
+VERSION = '2.14'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -389,7 +389,7 @@ def build():
         'Key Result: T-SNAP — The Shape of the Binary Snap Is a Proven Theorem',
         'The derivation chain for the shape: any live computation must execute a first instruction, '
         'and that execution is a non-bottom state (L-RUN). '
-        'So no executing Turing machine program can output ⊥ without passing through such a non-bottom '
+        'So no executing Turing machine program can produce any output, ⊥ included, without passing through such a non-bottom '
         'intermediate state: it passes through the first running configuration by the definition of execution, '
         'and what is proved is that this configuration differs from c₀ (TQ-IH, c₁ ≠ c₀). And any state change off ⊥ is precisely the '
         'Binary Snap (ZP-A D2). ZP-E closes the chain as Theorem T-SNAP. '

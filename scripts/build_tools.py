@@ -194,7 +194,8 @@ def build():
                                      'ZP-E/G/H: sorry-free proofs for key results. Source on illustrated branch. '
                                      'Note: the Quine atom (CC-2) is a role, a point that steps to itself and to '
                                      'nothing else, which Lean measures chart by chart: bot of a ZPSemilattice '
-                                     'occupies it (selfApp_quine_role_iff), no set in Mathlib\'s ZFSet does '
+                                     'occupies it under a self-application map (AbstractSelfApp; '
+                                     'selfApp_quine_role_iff), no set in Mathlib\'s ZFSet does '
                                      '(zfset_quine_role_unoccupied). Adopting ZF+AFA as the set chart\'s host is '
                                      'the metatheoretic commitment.'],
             ['Isabelle/HOL',  'No',  'Not used.'],
@@ -234,7 +235,8 @@ def build():
         'no_quine_atom); and outside ZFSet Lean hosts a one-atom model whose distinguished element is '
         'its own unique self-member (the QuineHost instance on OneAtom, '
         'ZeroParadox/Settheory/QuineHost.lean &#167; V). Wherever membership hosts the role, '
-        'Foundation fails (quineAtomHost_not_wellFounded); adopting ZF + AFA as the set chart\'s host '
+        'Foundation fails (quineAtomHost_not_wellFounded; for any well-founded membership relation, '
+        'the example citing wf_no_selfloop in ZeroParadox/Settheory/QuineDichotomy.lean); adopting ZF + AFA as the set chart\'s host '
         'is the metatheoretic commitment (ZP-E, R-AFA). '
         'The stated axioms (AX-B1, AX-G1, AX-G2) and modeling commitments (CC-1, and CC-2\'s adoption '
         'of AFA) remain as stated. The derived results are confirmed as derived. The framework\'s '

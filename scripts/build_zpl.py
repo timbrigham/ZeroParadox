@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-L: Incomputability Convergence PDF Builder
-Version 1.33 | November 2026
+Version 1.34 | November 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.33'
+VERSION = '1.34'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -87,7 +87,7 @@ def build():
             ['ZPJ/K', 'Set Theory + Computation', 'bot_self_mem (AFA); botCode (Kleene)'],
             ['ZPI', 'Algorithmic IT', 'K uncomputable. ZP-I &#167; II.B refutes the valuation-complexity '
              'bridge (unbounded 2-adic valuation of S<sub>n</sub> implies K(S<sub>n</sub> | n) / '
-             '|S<sub>n</sub>| &#8594; 1) with S<sub>n</sub> = 2^n, the powers of 2 that &#167;IV\'s '
+             '|S<sub>n</sub>| &#8594; 1) with S<sub>n</sub> = 2<super>n</super>, the powers of 2 that &#167;IV\'s '
              'tower images take; the valuation half is in '
              'Lean, the complexity half is argued outside it'],
         ],
@@ -693,8 +693,7 @@ def build():
             'record where the ZP layers differ &#8212; Section I\'s own ZPJ/K row names '
             'bot_self_mem, which measures no axioms.',
             'These are axioms of Lean\'s core library, reached here through Mathlib\'s ordinal '
-            'theory, p-adic analysis and computability, and in one place through ZP-K\'s own '
-            'Classical.choose (machinePhaseKleene, below). They are not ZP-L commitments.',
+            'theory, p-adic analysis and computability. They are not ZP-L commitments.',
             'The footprints across the ZP layers are not uniform; ZP-K Section IV tabulates the '
             'measurements. In the computability layer, Rogers\' fixed-point theorem as Mathlib '
             'states it carries Classical.choice in its statement, through Mathlib\'s numbering of '

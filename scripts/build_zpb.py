@@ -1,5 +1,5 @@
 """
-Build ZP-B: p-Adic Topology (v1.31)
+Build ZP-B: p-Adic Topology (v1.32)
 This document makes no Planck-scale comparison for epsilon-0: an adversary review (2026-05-21)
 flagged that analogy because it makes the document read as a physics grand theory.
 """
@@ -7,7 +7,7 @@ flagged that analogy because it makes the document read as a physics grand theor
 import os
 from zp_utils import *
 
-VERSION = '1.31'
+VERSION = '1.32'
 FIRST_RELEASED = 'April 2026'
 
 def build():
@@ -27,7 +27,7 @@ def build():
     E.append(label_box('Axiom AX-B1 — Binary Existence', [
         'The foundational distinction of the Zero Paradox framework is binary: a state either exists or it does not. There is no third option at this level.',
         '0 — non-existence (&#8869; in ZP-A; in Lean, &#8869; of OntologicalStates under instOntZPS)',
-        '1 — existence (&#949;<sub>0</sub> of OntologicalStates, the state off &#8869; there; D5 below names the occupant of the &#949;<sub>0</sub> role in Q<sub>2</sub>)',
+        '1 — existence (&#949;<sub>0</sub> of OntologicalStates, the state off &#8869; there; D5 below states the &#949;<sub>0</sub> role in Q<sub>2</sub>, which any nonzero point at the chosen rung occupies)',
         'AX-B1 holds at every state with anything above it: each has a first distinct state above it, with nothing strictly between. A state with nothing above it owes no step. (In this two-state chart, 1 is the top.)',
         'Status: AXIOM. This is the only non-topological commitment in ZP-B. It precedes p-adic analysis and is the premise from which the field selection is derived.',
         'Scope: AX-B1 asserts the structure of the ontological distinction, not its physical realisation. It is invariant across all instantiations.',

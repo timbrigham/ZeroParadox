@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-K: Computational Grounding of Self-Reference PDF Builder
-Version 1.32 | November 2026
+Version 1.33 | November 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.32'
+VERSION = '1.33'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -219,8 +219,8 @@ def build():
     E.append(body(
         'No identification between AFA self-containment and Kleene computational fixed points '
         'is asserted, as a new axiom or as a class field. KleeneStructure is a typeclass: any '
-        'concrete type must discharge its fields (a self-containing ⊥, and a code botCode meeting '
-        'the periodicity condition) as proof obligations. They are checked at instantiation, not '
+        'concrete type must discharge its fields (among them a predicate selfMem with ⊥ its unique witness, and a '
+        'code botCode meeting the periodicity condition) as proof obligations. They are checked at instantiation, not '
         'accepted globally.'))
     E.append(callout(
         'The distinction from ZP-J carries over: a freestanding axiom says "trust me." '

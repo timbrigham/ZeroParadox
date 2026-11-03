@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP Addendum: The Choice-Free Core
-Version 1.15 | November 2026
+Version 1.16 | November 2026
 Framework-wide note; reads after the Foreword.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.15'
+VERSION = '1.16'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard ──
@@ -211,7 +211,7 @@ def build():
             'central results leaned on the Axiom of Choice &#8212; the canonical free, non-constructive '
             'selection. They do not. T-SNAP is axiom-free; the keystone is choice-free. The '
             '"forced, not chosen" thesis is internally consistent at the level of what the framework '
-            'actually asserts. Where choice appears it is mostly the supporting library\'s classical '
+            'actually asserts. Where choice appears it is often the supporting library\'s classical '
             'foundation showing through the realizations rather than an assumption of the argument. '
             'The reductions Section III points at are the exception on a different axis: they are about '
             '<i>necessity</i>, not provenance. Some of their principles are proved with the '
@@ -265,7 +265,7 @@ def build():
         'Endnote: This is a framework-wide note; the footprints it cites are copies, and the live '
         'record is the #print axioms output of the files it names. The central '
         'theorem T-SNAP depends on no axioms; the conceptual core is free of the Axiom of Choice; '
-        '`Classical.choice` appears mostly where the framework builds on Mathlib\'s classical analysis, '
+        '`Classical.choice` appears in many places where the framework builds on Mathlib\'s classical analysis, '
         'order, and computability libraries, where several statements carry it as written (for '
         'those, the open question is a restatement) and elsewhere whether it is necessary remains '
         'open. It is not only there: the framework carries bare classicals of its own, and the '

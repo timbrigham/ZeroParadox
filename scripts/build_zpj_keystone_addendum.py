@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-J Keystone Addendum: The Diagonal Fixed Point, the Lawvere Face-Split, and the Well-Foundedness Boundary
-Version 1.28 | November 2026
+Version 1.29 | November 2026
 Taylor (Well-founded coalgebras and recursion) is cited without year or venue: the copy on file
 carries neither. The gap stays open until a verified bibliographic record supplies them.
 Reads after ZP-J Self-Reference.
@@ -10,7 +10,7 @@ import os
 from zp_utils import *
 from reportlab.platypus import KeepTogether
 
-VERSION = '1.28'
+VERSION = '1.29'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard: route all bare Paragraph() text through Unicode-to-entity conversion ──
@@ -60,7 +60,7 @@ def build():
         '(diagonal) fixed-point role in every framework, its occupant supplied per face: the Quine '
         'atom (CC-2) in set theory, the role a set x = {x} plays, occupied chart by chart '
         '(ZeroParadox/Settheory/QuineDichotomy.lean); filled in computation by a class of codes up to '
-        'equal eval (codes_vs_classes); the point v<sub>2</sub>(0) = &#8734; in '
+        'equal eval, for a computable map respecting equal eval (codes_vs_classes); the point v<sub>2</sub>(0) = &#8734; in '
         'valuation; and the initial object in category theory. Their shared membership in that '
         'family (MC-1) is proved per domain for the Quine atom, 2-adic and categorical faces; the '
         'Kleene face is carried as a requirement: its occupant is a code from the Rogers / Kleene '
@@ -70,7 +70,7 @@ def build():
         'periodicity condition (botCode_is_quine), and the reading of that code as the computational face '
         'of &#8869; splits (ZeroParadox/Computability/Kleene.lean): its identity half is retired, since '
         'the code chart has its own occupant of the Quine-atom role, a class of codes up to equal eval '
-        'and no single code (codes_vs_classes), and its running half, that &#8869; executes, is the '
+        'and no single code, for a computable map respecting equal eval (codes_vs_classes), and its running half, that &#8869; executes, is the '
         'occurrence commitment; the '
         'choice of criteria is a design principle; and '
         'the claim that the faces are <i>numerically one object</i> is <b>retired as '

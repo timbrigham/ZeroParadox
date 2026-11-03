@@ -1,11 +1,11 @@
 """
-Build ZP-D: State Layer (Hilbert Space) (v1.20)
+Build ZP-D: State Layer (Hilbert Space) (v1.21)
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.20'
+VERSION = '1.21'
 FIRST_RELEASED = 'April 2026'
 
 def build():
@@ -49,7 +49,7 @@ def build():
     E.append(label_box('Definition D1 — State Layer H', [
         'H = &#8450;<super>n</super> is a complex Hilbert space with orthonormal basis {e<sub>0</sub>, e<sub>1</sub>, &#8230;}.',
         'The foundational minimum is n = 2, corresponding to the two ontological states of the framework: '
-        '&#8869; of OntologicalStates (mapped to e<sub>0</sub>) and &#949;<sub>0</sub> of OntologicalStates, the state off &#8869; there (mapped to e<sub>1</sub>; D2(ii) sends the occupant of the &#949;<sub>0</sub> role in Q<sub>2</sub> to the same e<sub>1</sub>). '
+        '&#8869; of OntologicalStates (mapped to e<sub>0</sub>) and &#949;<sub>0</sub> of OntologicalStates, the state off &#8869; there (mapped to e<sub>1</sub>; D2(ii) sends the point of the &#949;<sub>0</sub> role in Q<sub>2</sub> that it fixes to the same e<sub>1</sub>). '
         'These two orthogonal vectors express the binary existence/non-existence distinction that is the '
         'framework\'s central object. All further states are derived from this pair as joins in (L, &#8744;, &#8869;) '
         '&#8212; they require no additional foundational dimension.',

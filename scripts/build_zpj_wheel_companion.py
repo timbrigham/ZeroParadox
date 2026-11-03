@@ -1,13 +1,13 @@
 """
 Build ZP-J Wheel Illustrated Companion
-Version 1.8 | November 2026
+Version 1.9 | November 2026
 """
 
 import os
 from zp_utils import *
 from reportlab.graphics.shapes import Drawing, Line, String, Circle, Ellipse
 
-VERSION = '1.8'
+VERSION = '1.9'
 FIRST_RELEASED = 'June 2026'
 
 
@@ -254,7 +254,7 @@ def build():
         'The Zero Paradox studies one role, written in several mathematical languages at once, '
         'each with its own occupant and no equation across them: in the 2-adic valuation the '
         'occupant is 0, where v&#8322;(0) = &#8734;; in non-well-founded set theory it is the Quine '
-        'atom (CC-2), a set x = {x}; in a lattice it is the bottom element &#8869;. The wheel of '
+        'atom (CC-2), a set x = {x}; in a lattice under a self-application map it is the bottom element &#8869;. The wheel of '
         'fractions is the <b>algebraic</b> face of that role. Where ZP-J says "the bottom is where measure runs to infinity," the '
         'wheel says "the bottom is where division by zero lives" - and it shows that this '
         'point is a defined, well-behaved element (&#8734; = /0), distinct - in the standard '

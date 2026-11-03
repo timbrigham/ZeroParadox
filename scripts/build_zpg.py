@@ -1,12 +1,12 @@
 """
 Zero Paradox — ZP-G: Category Theory PDF Builder
-Version 1.26 | November 2026
+Version 1.27 | November 2026
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.26'
+VERSION = '1.27'
 FIRST_RELEASED = 'April 2026'
 
 # ZP-G uses a slightly different amber shade; override zp_utils default
@@ -274,7 +274,7 @@ def build():
             'R1 frames the structural inversion of 0. This remark connects that structure to ZP-A CC-2, the Quine atom: '
             'a role, a point that steps to itself and to nothing else (Motion.SelfOnlyAt, ZeroParadox/Die.lean). Where a set '
             'steps to its members, a set occupies it exactly when x = {x} (zfset_selfOnlyAt_mem_iff); in a ZP-A lattice under a '
-            'self-application map, ⊥ of L is its only occupant (selfApp_quine_role_iff). An occupant has '
+            'self-application map supplied by AbstractSelfApp, ⊥ of L is its only occupant (selfApp_quine_role_iff). An occupant has '
             'no external interpreter by structure; it IS its own interpretation.',
             'In categorical terms, this corresponds to two conditions together: (1) AX-G2: '
             'hom(X, 0) = ∅ for all X ≠ 0 — no morphism can reach inside 0 from outside; and '

@@ -1,5 +1,5 @@
 """
-Build ZP-G Illustrated Companion (v1.15)
+Build ZP-G Illustrated Companion (v1.16)
 Standalone companion for ZP-G Category Theory only.
 ZP-H gets its own companion (build_zph_companion.py).
 
@@ -139,7 +139,7 @@ def functor_diagram():
                  fontSize=8.5, fontName='DV-I', fillColor=colors.HexColor('#555555')))
     return d
 
-VERSION = '1.15'
+VERSION = '1.16'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -286,7 +286,7 @@ def build():
         '<b>The connection to the Quine atom:</b> ZP-A CC-2 names a role, the '
         '<i>Quine atom</i>: a point that steps to itself and to nothing else. Where a set steps to its '
         'members, a set fills the role exactly when x = {x}, its own only member; in a ZP-A lattice under a '
-        'self-application map, ⊥ is the only occupant. '
+        'self-application map supplied by AbstractSelfApp, ⊥ is the only occupant. '
         'An occupant has no external interpreter: it IS its own interpretation. '
         'In categorical terms, this is exactly what AX-G1 and AX-G2 together express: '
         'nothing can reach inside 0 from outside (AX-G2), yet 0 constitutes every object '

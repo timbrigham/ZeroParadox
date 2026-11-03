@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-E: Bridge Document PDF Builder
-Version 3.72 | November 2026
+Version 3.73 | November 2026
 Follows all rules in pdf rendering standards:
   - DejaVu fonts only
   - Checkmark always wrapped in <font name="DV">
@@ -12,7 +12,7 @@ Follows all rules in pdf rendering standards:
 import os
 from zp_utils import *
 
-VERSION = '3.72'
+VERSION = '3.73'
 FIRST_RELEASED = 'April 2026'
 
 # ── Local overrides: ZP-E uses justified body text ────────────────────────────
@@ -404,9 +404,10 @@ def build():
                 'with ε₀, the proof-theoretic ordinal of Peano Arithmetic.',
                 '<b>The ordinal ε₀ (Cantor 1897, Math. Ann. 49, §20, Satz B).</b> In ordinal arithmetic, ε₀ is the smallest fixed '
                 'point of the map α → ω<sup>α</sup>: equivalently, ε₀ = sup{ω, ω<sup>ω</sup>, '
-                'ω<sup>ω<sup>ω</sup></sup>, ...}. No finite ω-tower reaches it. Gentzen (1936, 1938): '
-                'primitive recursive arithmetic, PRA, proves that PRWO(ε₀), the well-foundedness of primitive recursive '
-                'descending sequences below ε₀, implies Con(PA) (as stated by Rathjen, arXiv:1405.4484, Theorem 2.8(i), p. 10). '
+                'ω<sup>ω<sup>ω</sup></sup>, ...}. No finite ω-tower reaches it. Gentzen (1936); '
+                'in the form that primitive recursive arithmetic, PRA, proves PRWO(ε₀), that no primitive recursive '
+                'sequence of ordinals below ε₀ descends forever, implies Con(PA), as stated by Rathjen '
+                '(arXiv:1405.4484, Theorem 2.8(i), p. 10). '
                 'Necessity — that no smaller ordinal would do — is the other direction, and it rests on '
                 'different ground: the provability in PA of transfinite induction at every ordinal '
                 'strictly below ε₀, which Gentzen reports as already known, crediting Hilbert-Bernays, '
