@@ -295,8 +295,8 @@ theorem fires_io_of_avoids (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p)
 def squaresTape (k : ℕ) : Bool := decide (Nat.sqrt k * Nat.sqrt k = k)
 
 /-- **`Statement:` if `p ≤ 1`, `0 < p`, and the class `𝒯` contains every zero-block test for
-`trials p hp`, then the squares tape does not avoid `𝒯`.** Level `m` is the `K * m` non-squares
-after `(K * m)²`, with `K` from `exists_halving_block`; `p = 1` is included. -/
+`trials p hp`, then the squares tape does not avoid `𝒯`.** Level `m` is the first `K * m`
+non-squares after `(K * m)²`, with `K` from `exists_halving_block`; `p = 1` is included. -/
 theorem squaresTape_not_avoids (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p)
     (𝒯 : (ℕ → Set (ℕ → Bool)) → Prop) (h𝒯 : ∀ U, ZeroBlockTest (trials p hp) U → 𝒯 U) :
     ¬ AvoidsTests 𝒯 squaresTape := by
@@ -328,7 +328,7 @@ theorem trials_oneBlock (p : NNReal) (hp : p ≤ 1) (n : ℕ) :
 
 -- Statement: CONTROL, the converse of `fires_io_of_avoids` fails inside the zero-block class: at
 -- `p = 1/2` the squares tape fires infinitely often and lies in a zero-block test's intersection
--- (level `m` the `m` non-squares after `m * m`; every `0 < p ≤ 1`: `squaresTape_not_avoids`).
+-- (level `m` the first `m` non-squares after `m * m`; every `0 < p ≤ 1`: `squaresTape_not_avoids`).
 example : squaresTape ∈ Filter.limsup fires Filter.atTop ∧
     ¬ AvoidsTests (ZeroBlockTest (trials (1/2) (by norm_num))) squaresTape := by
   have half : (1 - (1/2 : NNReal) : NNReal) = 2⁻¹ := by

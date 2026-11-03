@@ -40,11 +40,19 @@ two-chart reading for § IV–VII.
   incompressible up to a constant, `∃k ∀n K(α(n)) ≥ n − k`). With `K` prefix-free complexity, these are
   exactly the Martin-Löf random sequences (Levin–Schnorr: Franklin and Porter, arXiv:2004.02851, p. 16,
   Theorem 2.5); Potgieter's p. 1 does not say whether its `K` is prefix-free. § VI has the shape of
-  (ii) for the events `fires n`, with two differences: the measure is Bernoulli(`p`) for any `0 < p ≤ 1`, computable or not, and the hypothesis
-  is avoidance of a parameter class `𝒯` holding the zero-block tests. At `p = 1/2` the weakest such
-  hypothesis (`𝒯` the zero-block tests) is implied by Martin-Löf randomness granted open item 1, which
-  includes that `trials (1/2)` is the fair-coin measure; a larger `𝒯` can make the hypothesis stronger
-  (no tape avoids the class of all families). The credit runs from Davie to here.
+  (ii) for the events `fires n`, with two differences: the measure is Bernoulli(`p`) for any
+  `0 < p ≤ 1`, computable or not, and the hypothesis is avoidance of a parameter class `𝒯` holding the
+  zero-block tests. At `p = 1/2` the weakest such hypothesis (`𝒯` the zero-block tests) is implied
+  by Martin-Löf randomness granted open item 1, which includes that `trials (1/2)` is the fair-coin
+  measure; a larger `𝒯` can make the hypothesis stronger (no tape avoids the class of all families).
+  The credit runs from Davie to here.
+- **Computable sequences are not random.** J. Reimann and T. Slaman, "Measures and their random reals",
+  arXiv:0802.2705, p. 9, Theorem 4.4, (i) ⇒ (ii): a computable sequence that is not an atom of a
+  probability measure `µ` is not `µ`-random (Martin-Löf randomness relative to a representation of `µ`).
+  `squaresTape_not_avoids` has that shape at Bernoulli(`p`), where the squares tape is not an atom for
+  any `0 < p ≤ 1`; its test is a zero-block test needing only the integer `K`, and that zero-block tests
+  are tests in their sense is not proved here (open item 1, stated at `p = 1/2`). The credit runs from
+  Reimann and Slaman to here.
 - **Kurtz null tests.** J. Franklin and C. Porter, "Key developments in algorithmic randomness",
   arXiv:2004.02851, p. 32, Definition 4.24 (citing Wang): "A Kurtz null test is a Martin-Löf test ⟨V_i⟩
   such that for some computable function f : ω → (2^{<ω})^{<ω}, V_n = [f(n)] for all n"; p. 33, Theorem
@@ -113,8 +121,9 @@ matching the additive-valuation convention that the valuation of 0 is ⊤. Read 
 reading; no map from `ℚ_[2]` to tapes is built here), 0 is the all-`false` tape, the sole member of
 `silentFrom 0`, and § VI's hypothesis excludes it at `N = 0` for every `0 < p ≤ 1`
 (`zeroBlockTest_silentFrom`). In the tape chart, under the pointwise order, the least element of
-`ℕ → Bool` is the same all-`false` tape (the `example` at `ZeroParadox/BottomCannotBe.lean`, `(⊥ : ℕ → Bool) = fun _ => false`), which is not disjunctive
-(`allFalse_not_disjunctive`, `ZeroParadox/Information/Disjunctive.lean`). Tim's maximally complex reading
+`ℕ → Bool` is the same all-`false` tape (the `example` at `ZeroParadox/BottomCannotBe.lean`,
+`(⊥ : ℕ → Bool) = fun _ => false`), which is not disjunctive (`allFalse_not_disjunctive`,
+`ZeroParadox/Information/Disjunctive.lean`). Tim's maximally complex reading
 (`ZeroParadox/Information/Disjunctive.md` fence 3) places the occupant of ⊥ of a `ZPSemilattice`, read as
 a tape, among the maximally complex tapes, which by standard theory (Levin–Schnorr; not proved here,
 Disjunctive.md fence 2) are Martin-Löf random for the fair coin; that such tapes meet § VI's hypothesis at
