@@ -46,7 +46,7 @@ two-chart reading for § IV–VII.
   by Martin-Löf randomness granted open item 1, which includes that `trials (1/2)` is the fair-coin
   measure; a larger `𝒯` can make the hypothesis stronger (no tape avoids the class of all families).
   The credit runs from Davie to here.
-- **Computable sequences are not random.** J. Reimann and T. Slaman, "Measures and their random reals",
+- **Computable non-atoms are not random.** J. Reimann and T. Slaman, "Measures and their random reals",
   arXiv:0802.2705, p. 9, Theorem 4.4, (i) ⇒ (ii): a computable sequence that is not an atom of a
   probability measure `µ` is not `µ`-random (Martin-Löf randomness relative to a representation of `µ`).
   `squaresTape_not_avoids` has that shape at Bernoulli(`p`), where the squares tape is not an atom for
