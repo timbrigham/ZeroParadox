@@ -24,8 +24,7 @@ two-chart reading for § IV–VII.
   run that leaves its start for a tape meeting § VI's hypotheses. Those hypotheses are sufficient, not
   necessary: any tape that fires once gives such a run (`slotRun_crosses_iff`; the `example` after the
   theorem). `Reading:` what § VI adds is a guarantee about a tape whose bits are not examined. The
-  all-`false` tape drives a run
-  that never leaves `false` (the closing `example`).
+  all-`false` tape drives a run that never leaves `false` (the closing `example`).
 
 ## Prior art
 
@@ -38,14 +37,14 @@ two-chart reading for § IV–VII.
   incompressible up to a constant). § VI has the shape of (ii) for the events `fires n`, with two
   differences: the measure is Bernoulli(`p`) for any `0 < p ≤ 1`, computable or not, and the hypothesis
   is avoidance of a parameter class `𝒯` holding the zero-block tests. At `p = 1/2` the weakest such
-  hypothesis (`𝒯` the zero-block tests) is implied by Martin-Löf randomness only through open item 1; a
-  larger `𝒯` can make the hypothesis stronger (no tape avoids the class of all families). The credit
-  runs from Davie to here.
+  hypothesis (`𝒯` the zero-block tests) is implied by Martin-Löf randomness granted open item 1, which
+  includes that `trials (1/2)` is the fair-coin measure; a larger `𝒯` can make the hypothesis stronger
+  (no tape avoids the class of all families). The credit runs from Davie to here.
 - **Kurtz null tests.** J. Franklin and C. Porter, "Key developments in algorithmic randomness",
   arXiv:2004.02851, p. 32, Definition 4.24 (citing Wang): "A Kurtz null test is a Martin-Löf test ⟨V_i⟩
   such that for some computable function f : ω → (2^{<ω})^{<ω}, V_n = [f(n)] for all n"; p. 33, Theorem
-  4.26 (credited there to Wang and to Downey, Griffiths and Reid): a sequence is Kurtz random iff it passes all Kurtz null tests. Each level of a `ZeroBlockTest`
-  is a finite union of cylinders, chosen by a primitive recursive index, so at `p = 1/2` a zero-block
+  4.26 (credited there to Wang and to Downey, Griffiths and Reid): a sequence is Kurtz random iff it
+  passes all Kurtz null tests. Each level of a `ZeroBlockTest` is a finite union of cylinders, chosen by a primitive recursive index, so at `p = 1/2` a zero-block
   test has the shape of a Kurtz null test (open item 1).
 - **Kurtz randomness in Lean.** C. Freer, `algorithmic-randomness`
   (github.com/cameronfreer/algorithmic-randomness, commit `863da3d`,
@@ -63,8 +62,9 @@ two-chart reading for § IV–VII.
   `IsComputableReal (p : ℝ)` and `x` Martin-Löf random for its `bernoulliMeasure p hp`, the frequency of
   ones in `x` tends to `p`; for `p > 0` that gives infinitely many ones. Its hypothesis needs a
   computable `p`, which § VI does not; that Martin-Löf randomness meets § VI's `htyp` is open item 1 at
-  `p = 1/2` and is not stated here for other `p`, and its `bernoulliMeasure` was not compared with `trials`. For the uniform measure the same library has
-  `exists_isMartinLofRandom_uniform` (a Martin-Löf random sequence exists, `EffectiveLaws.lean`) and
+  `p = 1/2` and is not stated here for other `p`, and its `bernoulliMeasure` was not compared with
+  `trials`. For the uniform measure the same library has `exists_isMartinLofRandom_uniform` (a
+  Martin-Löf random sequence exists, `EffectiveLaws.lean`) and
   `isEffectivelyNull_singleton_of_computable` (no computable sequence is, `EffectiveNull.lean`); given
   open item 1, the first is a tape meeting `htyp` at `p = 1/2`. None of these libraries is a dependency
   here.
@@ -101,10 +101,10 @@ of the motion; crossing is a property of one run; typicality is a property of a 
 
 `Reading:` CARRIER — the tension. In the valuation chart, `infinitude_forces_infinite_complexity`
 (`ZeroParadox/Valuation/InfinitudeFloor.lean`) gives complexity ⊤ (the top of `ℕ∞`) at the floor of any
-`InfinitudeFloor`; at the 2-adic instance `q2InfinitudeFloor`, on `ℚ_[2]`, the floor is 0 and its complexity is
-`cxQ2 0 = ⊤` (`cxQ2_zero`, a case of the definition of `cxQ2`), matching the additive-valuation
-convention that the valuation of 0 is ⊤. Read as a digit tape (a reading; no map from the 2-adic integers to tapes is
-built here), 0 is the all-`false` tape, the sole member of `silentFrom 0`, and § VI's hypothesis
+`InfinitudeFloor`; at the 2-adic instance `q2InfinitudeFloor`, on `ℚ_[2]`, the floor is 0 and its
+complexity is `cxQ2 0 = ⊤` (`cxQ2_zero`, from the explicit `if x = 0` in the definition of `cxQ2`),
+matching the additive-valuation convention that the valuation of 0 is ⊤. Read as a digit tape (a
+reading; no map from the 2-adic integers to tapes is built here), 0 is the all-`false` tape, the sole member of `silentFrom 0`, and § VI's hypothesis
 excludes it at `N = 0` for every `0 < p ≤ 1` (`zeroBlockTest_silentFrom`). In the tape chart, under the
 pointwise order, the least element of `ℕ → Bool` is the same all-`false` tape (the `example` at
 `ZeroParadox/BottomCannotBe.lean`, `(⊥ : ℕ → Bool) = fun _ => false`), which is not disjunctive
