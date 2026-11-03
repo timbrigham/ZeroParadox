@@ -175,7 +175,7 @@ def three_way_table():
         ('LEFTPADDING',   (0,0),(-1,-1), 6), ('RIGHTPADDING', (0,0),(-1,-1), 6),
         ('VALIGN',        (0,0),(-1,-1), 'TOP'),
     ])
-    t = Table(data, colWidths=[TW*0.22, TW*0.28, TW*0.50])
+    t = Table(data, colWidths=[TW*0.22, TW*0.38, TW*0.40])
     t.setStyle(ts); return t
 
 
@@ -375,7 +375,8 @@ def build():
     E.append(cbody(
         'These are not three separate properties that happen to coincide. They are three '
         'descriptions of the same structural role. T-EXEC machine-checks that the three roles '
-        'have one occupant (t_exec_triple_iff); the membership-host row is the Lean chart whose AFA '
+        'have one occupant (t_exec_triple_iff; for the membership-host row, quineAtomHost_quine_role_iff '
+        'at afaStructure_isQuineAtomHost); the membership-host row is the Lean chart whose AFA '
         'reading is the set Q = {Q}; that reading is not a Lean statement.'))
     E.append(sp(4))
     E.append(example_box('Real-world analogy  - Zero in arithmetic (partial)', [

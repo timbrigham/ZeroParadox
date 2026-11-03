@@ -22,13 +22,13 @@ When assigning a label, ask: "Is this result the central claim of its section, o
 
 ### Readable Name Convention — CC-2 is "the Quine atom" (framework-wide, additive)
 
-**Standing rule (Tim, 2026-06-09).** CC-2 (⊥ = {⊥}, the self-containing bottom) is the conceptual keystone of the framework — it is what forces ZF+AFA, makes ⊥ immune to external description, and is the single contact point between ZFC+Foundation and ZF+AFA. The bare label "CC-2" undersells it on two counts: it reads as a minor sequence code, and the "CC = Conditional Claim" prefix is now **stale** — CC-2 was upgraded to a Forced Metatheoretic Commitment (closed via ZP-J T-EXEC), so it is no longer a conditional claim. This is the same situation AX-1 was in before it became T-SNAP.
+**Standing rule (Tim, 2026-06-09).** CC-2 (in ZF+AFA, ⊥ = {⊥}, the self-containing bottom) is the conceptual keystone of the framework — it is what forces ZF+AFA, makes ⊥ immune to external description, and is the single contact point between ZFC+Foundation and ZF+AFA. The bare label "CC-2" undersells it on two counts: it reads as a minor sequence code, and the "CC = Conditional Claim" prefix is now **stale** — CC-2 was upgraded to a Forced Metatheoretic Commitment (closed via ZP-J T-EXEC), so it is no longer a conditional claim. This is the same situation AX-1 was in before it became T-SNAP.
 
 **The convention — ADDITIVE, never eliminative:**
 - Present CC-2 with the readable name **"the Quine atom."** This is a recognized set-theory term (Quine, Aczel) — it carries real gravity and a literature anchor, and it is NOT ZP-invented jargon (avoid inventing a ZP-branded name — that would undo the de-jargoning work).
 - **Keep "CC-2" as the formal handle and note it alongside** — e.g., "the Quine atom (CC-2)" on first/significant mention. Do NOT remove or rename the CC-2 identifier anywhere; every existing cross-reference stays valid.
 - Gloss once per document as "the Quine atom (CC-2): the role of a point that steps to itself and to
-  nothing else, occupied chart by chart." The occupancy theorems are per chart:
+  nothing else, whose occupancy is settled chart by chart." The occupancy theorems are per chart:
   `selfApp_quine_role_iff`, `quineAtomHost_quine_role_iff`, `cofix_quine_role_occupied`,
   `zfset_quine_role_unoccupied` (unoccupied in `ZFSet`). In ZF+AFA the occupant satisfies `⊥ = {⊥}`;
   scope that equation as the next bullet says, never as the gloss.

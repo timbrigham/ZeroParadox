@@ -403,7 +403,8 @@ def build():
            'For the 2-adic integers &#8484;<sub>2</sub> one with 0 as bottom is built but not registered, '
            'where 0 meets the condition because it was chosen as the bottom '
            '(ZeroParadox/Valuation/Scale.lean &#167; V); on Q<sub>2</sub> the condition is stated of no '
-           'structure the corpus defines (one could be built the same way). '
+           'structure the corpus defines (that some join on Q<sub>2</sub> makes any chosen point its bottom is the '
+           'CONTROL example after c_t_iz_null_balance, ZeroParadox/Valuation/SemilatticeInstance.lean). '
            'Lean: t_iz_limit_is_new_null, proved directly from da2_bottom_characterization. ✓ &#8212; '
            'the checkmark covers the ROLE identification only, and only inside L&#8242;. It is NOT a novelty witness and must not be cited as one; reading the occupant as the &#8869; of a SUCCESSOR instantiation is C-DA2.'),
         sp(4),

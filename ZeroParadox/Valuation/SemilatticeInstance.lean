@@ -401,12 +401,10 @@ example (y : Q₂) : (Motion.ofFun (fun x : Q₂ => 2 * x)).SelfOnlyAt y ↔ y =
   (Motion.selfOnlyAt_ofFun_iff _ y).trans
     ⟨fun h => by linear_combination h, fun h => by rw [h, mul_zero]⟩
 
--- Statement: CONTROL: under squaring on ℚ₂, also ring structure, both 0 and 1 step to themselves only,
--- so which point occupies `Motion.SelfOnlyAt` depends on the chosen step (exactly 0 and 1:
--- `IsIdempotentElem.iff_eq_zero_or_one`).
-example : (Motion.ofFun (fun x : Q₂ => x * x)).SelfOnlyAt 0 ∧
-    (Motion.ofFun (fun x : Q₂ => x * x)).SelfOnlyAt 1 :=
-  ⟨(Motion.selfOnlyAt_ofFun_iff _ _).2 (mul_zero 0), (Motion.selfOnlyAt_ofFun_iff _ _).2 (mul_one 1)⟩
+-- Statement: CONTROL: under squaring on ℚ₂, also ring structure, a point steps to itself only iff it
+-- is 0 or 1, so which point occupies `Motion.SelfOnlyAt` depends on the chosen step.
+example (y : Q₂) : (Motion.ofFun (fun x : Q₂ => x * x)).SelfOnlyAt y ↔ y = 0 ∨ y = 1 :=
+  (Motion.selfOnlyAt_ofFun_iff _ y).trans IsIdempotentElem.iff_eq_zero_or_one
 
 /-- T-IZ (C3 compatible): Cauchy sequence convergence and continuous-path irreversibility
     are distinct structures. C3 (ZP-B) closes every continuous path from x ≠ 0 to 0.

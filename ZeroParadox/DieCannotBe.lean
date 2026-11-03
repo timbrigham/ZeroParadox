@@ -1218,11 +1218,11 @@ example (uc : ∀ P : Bool → Prop, (∃! b, P b) → {b : Bool // P b}) :
 -- is an equivalence iff excluded middle holds"; T. de Jong, arXiv:2407.06952, Prop. 5.7, p. 13, credits
 -- the equivalence to their § 2.2. In Lean's `Prop`/`Type` split their excluded middle sits where `Decidable`
 -- is data, under one outer `Nonempty`: `Nonempty (∀ p, Decidable p)`, equivalently the `Bool` choice
--- fragment (the second `example` after `ChoiceFragment` in `ZeroParadox/Category/ExcludedMiddleBridge.lean`),
--- and the PROVED legs above are instances of their equivalence there: registration on every
--- `α : Type` ⇔ the fragment. The
--- `Prop`-valued `ZeroParadox.ExcludedMiddle` is reached one way, and back with the unique-choice
--- hypothesis of the previous `example`; without it the converse is not established in Lean
+-- fragment (the second `example` after `ChoiceFragment` in
+-- `ZeroParadox/Category/ExcludedMiddleBridge.lean`), and the PROVED legs above are instances of their
+-- equivalence there: registration on every `α : Type` ⇔ the fragment. The `Prop`-valued
+-- `ZeroParadox.ExcludedMiddle` is reached one way, and back with the unique-choice hypothesis of the
+-- previous `example`; without it the converse is not established in Lean
 -- (`ZeroParadox/Category/ChoiceCannotBe.md`). An instance of theirs, not a generalization.
 
 /-! ### § X. The OVER leg's WHICH — selection, in two variants -/
@@ -4674,7 +4674,7 @@ example (d : DecidableEq Ordinal.{0}) : ZeroParadox.WeakExcludedMiddle := by
 -- Statement: weak excluded middle gives WLPO.
 #check @ZeroParadox.wlpo_of_weakExcludedMiddle
 -- Statement: (vi) also holds with no `L`: a decidable equality on `Ordinal.{0}` gives WLPO, by the
--- CONTROL above's argument composed with `wlpo_of_weakExcludedMiddle`.
+-- second CONTROL above's argument composed with `wlpo_of_weakExcludedMiddle`.
 example (d : DecidableEq Ordinal.{0}) : ZeroParadox.WLPO := by
   refine ZeroParadox.wlpo_of_weakExcludedMiddle fun p => ?_
   let o : Ordinal.{0} := ⨆ _ : p, (1 : Ordinal.{0})
@@ -4689,12 +4689,12 @@ example (d : DecidableEq Ordinal.{0}) : ZeroParadox.WLPO := by
     exact absurd h1 (by simp)
 -- Reading: in (vi) `L` tags `NInf.infty` through a decidable equality on `Ordinal.{0}`, as
 -- `wlpo_of_tag` tags it through `Option ℕ`'s. `Option ℕ`'s decidable equality is an instance; the one
--- on `Ordinal.{0}` is a hypothesis here, and given one, weak excluded middle follows (the CONTROL
--- above, and the `example` after `wlpo_of_weakExcludedMiddle`; both proofs print `Classical.choice`
+-- on `Ordinal.{0}` is a hypothesis here, and given one, weak excluded middle follows (the second
+-- CONTROL above, and the `example` after `wlpo_of_weakExcludedMiddle`; both proofs print `Classical.choice`
 -- from the ambient `Ordinal` API, so their constructive reading is not measured here). Read
 -- constructively, the content of (vi) lies in its hypothesis: by de Jong and Escardó's argument (cited
 -- next) a decidable equality gives weak excluded middle, and `wlpo_of_weakExcludedMiddle` gives WLPO;
--- the CONTROL's Lean proof does not measure this. Classically WLPO needs no hypothesis (the first
+-- neither Lean proof measures this. Classically WLPO needs no hypothesis (the first
 -- CONTROL above). `L` is not claimed to be computable or choice-free.
 -- Reading (cited, not claimed): T. de Jong and M. H. Escardó, "Predicative Aspects of Order Theory
 -- in Univalent Foundations", FSCD 2021, arXiv:2102.08812, Theorem 37, p. 10: a nontrivial locally
