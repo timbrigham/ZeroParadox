@@ -390,7 +390,8 @@ theorem slotRun_crosses_iff (w : ℕ → Bool) :
 /-- **`Statement:` if `p ≤ 1`, `0 < p`, `𝒯` contains every zero-block test for `trials p hp`, `w`
 avoids `𝒯`, and `φ` is a one-to-one lax map from `slotMotion` to `N`, then `φ ∘ slotRun w` is a
 run of `N` that reaches a state other than its start.** One way: the `example` after it gives the
-departure for any tape that fires once (the run half needs no hypothesis on the tape). Without `htyp` the all-`false` tape's run never leaves `false`. -/
+departure for any tape that fires once (the run half needs no hypothesis on the tape). Without
+`htyp` the all-`false` tape's run never leaves `false`. -/
 theorem slotRun_image_departs_of_avoids {β : Type*} {N : Motion β}
     (φ : Motion.LaxHom slotMotion N) (hi : Function.Injective φ.toFun)
     (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p)
@@ -406,14 +407,40 @@ theorem slotRun_image_departs_of_avoids {β : Type*} {N : Motion β}
     have := hi e; rw [hn, (slotRun_crosses_iff w).1] at this; cases this⟩
 
 -- Statement: if `φ` is a one-to-one lax map and `w` fires at some stage, the image run leaves its
--- start, with no measure and no typicality hypothesis. Reading: with the § VI squares control (it fires,
--- and at `p = 1/2` a zero-block test catches it), this makes the converse of
--- `slotRun_image_departs_of_avoids` fail.
+-- start, with no measure and no typicality hypothesis. Statement: the converse of
+-- `slotRun_image_departs_of_avoids` fails (the `example` after this one).
 example {β : Type*} {N : Motion β} (φ : Motion.LaxHom slotMotion N)
     (hi : Function.Injective φ.toFun) (w : ℕ → Bool) (hw : ∃ k, w k = true) :
     ∃ n, (φ.toFun ∘ slotRun w) n ≠ (φ.toFun ∘ slotRun w) 0 := by
   obtain ⟨n, hn⟩ := (slotRun_crosses_iff w).2.2 hw
   exact ⟨n, fun e => by have := hi e; rw [hn, (slotRun_crosses_iff w).1] at this; cases this⟩
+
+-- Statement: CONTROL, the converse of `slotRun_image_departs_of_avoids` fails: for every one-to-one
+-- lax map `φ` and every class `𝒯` holding the zero-block tests for `trials (1/2)`, the squares
+-- tape's image run leaves its start, yet the squares tape does not avoid `𝒯`.
+example {β : Type*} {N : Motion β} (φ : Motion.LaxHom slotMotion N)
+    (hi : Function.Injective φ.toFun) (𝒯 : (ℕ → Set (ℕ → Bool)) → Prop)
+    (h𝒯 : ∀ U, ZeroBlockTest (trials (1 / 2) (by norm_num)) U → 𝒯 U) :
+    (∃ n, (φ.toFun ∘ slotRun squaresTape) n ≠ (φ.toFun ∘ slotRun squaresTape) 0) ∧
+    ¬ AvoidsTests 𝒯 squaresTape := by
+  have half : (1 - (1/2 : NNReal) : NNReal) = 2⁻¹ := by
+    rw [one_div]; exact tsub_eq_of_eq_add (by rw [← two_mul, mul_inv_cancel₀ two_ne_zero])
+  refine ⟨?_, fun h => ?_⟩
+  · obtain ⟨n, hn⟩ := (slotRun_crosses_iff squaresTape).2.2 ⟨0, by simp [squaresTape]⟩
+    exact ⟨n, fun e => by
+      have := hi e; rw [hn, (slotRun_crosses_iff squaresTape).1] at this; cases this⟩
+  · refine h (fun m => zeroBlock (m * m + 1) m)
+      (h𝒯 _ ⟨fun m => ?_, fun m => (m * m + 1, m), ?_, fun m => rfl⟩) ?_
+    · have := trials_zeroBlock_le (1/2) (by norm_num) (K := 1) (by rw [half]; simp) (m * m + 1) m
+      simpa using this
+    · exact Primrec.pair (Primrec.succ.comp (Primrec.nat_mul.comp Primrec.id Primrec.id)) Primrec.id
+    · simp only [Set.mem_iInter, zeroBlock, Set.mem_setOf_eq, Finset.mem_Ico]
+      intro m k hk
+      have hs : Nat.sqrt k = m := by
+        obtain ⟨j, rfl⟩ : ∃ j, k = m * m + j := ⟨k - m * m, by omega⟩
+        exact Nat.sqrt_add_eq m (by omega)
+      simp only [squaresTape, hs, decide_eq_false_iff_not]
+      omega
 
 -- Statement: CONTROL: without the typicality hypothesis, the all-`false` tape drives a run that
 -- stays at `false` at every stage.
