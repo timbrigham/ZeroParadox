@@ -658,7 +658,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 3151,
+        "declarations": 3152,
         "files": 196
       },
       "entries": [
@@ -24794,6 +24794,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "353d1ed6-58d5-4dca-b48e-182a1ec066ac",
+          "new": {
+            "file": "ZeroParadox/Order/Snap.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.t_snap_derived_cover",
+            "short": "t_snap_derived_cover"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/Snap.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.t_snap_derived_cover",
+            "short": "t_snap_derived_cover",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "2026-11-04 ruling 47 follow-up: name the MachinePhase instance of t_snap_given_cover (t_snap_derived's run meets hcc1, hocc, hcov) so the Foreword can cite it",
           "verify": {
             "axioms": null,
             "sorry_free": true
