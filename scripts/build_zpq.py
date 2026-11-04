@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-Q: The Frame-Change PDF Builder
-Version 1.17 | November 2026
+Version 1.18 | November 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.17'
+VERSION = '1.18'
 FIRST_RELEASED = 'July 2026'
 
 from reportlab.graphics.shapes import Drawing, Circle, Ellipse, PolyLine, String, Polygon
@@ -105,10 +105,11 @@ def build():
         'way and reverses only under an inversion that swaps the two poles. These are not two facts. '
         'They are two faces of one self-dual object, and the inversion is the <i>frame-change</i>. '
         '<b>The frame-change is that pole exchange &#8212; &#8869; being read as both 0 and &#8734;. Whether '
-        'the snap is an instance of it is the layer&#8217;s open conjecture.</b> The snap is one '
-        'covering step off the zero face '
-        '(&#8869; &#8918; a, HasFirstStep), which is AX-B1, a modelling commitment; the frame-change is an '
-        'involution and is proved. Merging the two is what makes it look paradoxical that a frame-change '
+        'the snap is an instance of it is the layer&#8217;s open conjecture.</b> The snap, T-SNAP&#8217;s '
+        'shape, is a join step off &#8869; of the state semilattice to a different state (t_snap_given); '
+        'that the step is a cover, &#8869; &#8918; a (HasFirstStep), is AX-B1&#8217;s first-step form, a '
+        'modelling commitment and a further hypothesis (t_snap_given_cover) that MachinePhase supplies '
+        'and &#8474;&#8805;0 does not; the frame-change is an involution and is proved. Merging the two is what makes it look paradoxical that a frame-change '
         'reverses while the snap does not, and that reversibility mismatch is exactly what an '
         'identification would have to resolve. ZP-Q holds it open rather than settling it either way. '
         'Read from one frame the frame-change is a <i>bridge</i> (it joins the poles continuously); '
@@ -376,9 +377,11 @@ def build():
             'a diagnostic rather than a pattern read into every domain. &#8477; has no discrete '
             'floor to fall to (density), and its inversion is discontinuous at 0 with no repair. '
             'Both features of the bottom &#8212; the infinitude at the zero and the one-way arrow '
-            'that reverses under inversion &#8212; are absent, and the snap fails (ZP-F). The '
-            'frame-flip is present precisely where the snap lives and absent precisely where it '
-            'does not.',
+            'that reverses under inversion &#8212; are absent, and 0 has no first step above it, '
+            'AX-B1&#8217;s form (ZP-F; f_snap_impossible, which, despite its name, states that no '
+            'linearly ordered field has a least positive element). T-SNAP&#8217;s shape does not '
+            'need a first step: t_snap_given holds at a step taken in a densely ordered '
+            'join-semilattice.',
         ]
     ))
     E.append(sp(6))
