@@ -1,6 +1,8 @@
 import ZeroParadox.Category.LawvereTwoAdic
+import ZeroParadox.Die
 import Mathlib.Dynamics.FixedPoints.Basic
 import Mathlib.Data.Int.Bitwise
+import Mathlib.NumberTheory.Padics.RingHoms
 
 set_option maxHeartbeats 400000
 
@@ -425,8 +427,8 @@ example : ¬ ∃ inst : ZPSemilattice (List Bool),
   rcases hj : inst.join [false] [true] with _ | ⟨b, t⟩
   · rw [hj] at h1; simp at h1
   · rw [hj] at h1 h2
-    simp [List.cons_prefix_cons] at h1 h2
-    exact Bool.noConfusion (h1.symm.trans h2)
+    rw [List.cons_prefix_cons] at h1 h2
+    exact Bool.noConfusion (h1.1.trans h2.1.symm)
 
 /-- `Statement:` committing one digit is a cover of the empty stream in the prefix order: strictly
     above it, with nothing strictly between. -/
@@ -437,7 +439,7 @@ theorem first_digit_covers (d : Bool) :
   rcases u with _ | ⟨b, t⟩
   · exact Or.inl rfl
   · obtain ⟨s, hs⟩ := h
-    simp at hs
+    simp only [List.cons_append, List.cons.injEq, List.append_eq_nil_iff] at hs
     obtain ⟨rfl, rfl, -⟩ := hs
     exact Or.inr rfl
 
@@ -623,6 +625,172 @@ example (n : ℕ) : (List.replicate n false).dropLast = (List.replicate n false)
 -- Reading: local ignorance and local knowledge at `w` are one `w`, least in its up-set and greatest
 --   in its prefix set; `partialDouble`'s climb from `[]` run backwards is `List.tail`.
 
+/-! ## § VIII. The bend on 2-adic digit tapes is the 2-adic valuation
+`Reading:` a standard fact, the lowest nonzero 2-adic digit of `x ≠ 0` sits at its valuation, assembled
+from Mathlib's `PadicInt.appr` and `PadicInt.valuation` and read through the bend `NInf.det` and its
+section `NInf.negS` (`ZeroParadox/Die.lean` § XXV). -/
+
+namespace NInf
+
+/-- `Statement:` `ofNat n ≤ det r` iff `r` is `false` below `n`. -/
+theorem ofNat_le_det_iff (r : ℕ → Bool) (n : ℕ) : ofNat n ≤ det r ↔ ∀ k < n, r k = false := by
+  show (∀ i, decide (i < n) = true → detSeq r i = true) ↔ _
+  simp only [decide_eq_true_eq, detSeq_eq_true_iff]
+  constructor
+  · intro h k hk; exact h k hk k le_rfl
+  · intro h i hi k hk; exact h k (by omega)
+
+/-- `Statement:` bit `i` of `y : NInf` is `true` iff `ofNat (i + 1) ≤ y`. -/
+theorem apply_true_iff_ofNat_succ_le (y : NInf) (i : ℕ) : y.1 i = true ↔ ofNat (i + 1) ≤ y := by
+  constructor
+  · intro h j hj
+    simp only [ofNat, decide_eq_true_eq] at hj
+    exact true_le y h j (by omega)
+  · intro h; exact h i (decide_eq_true (Nat.lt_succ_self i))
+
+end NInf
+
+section PadicTape
+open NInf
+
+/-- `Statement:` the 2-adic digit tape: digit `k` of `x` is `true` iff `x.appr k ≠ x.appr (k + 1)`. -/
+noncomputable def padicTape (x : ℤ_[2]) : ℕ → Bool := fun k => decide (x.appr k ≠ x.appr (k + 1))
+
+/-- `Statement:` `x.appr n = 0` iff `2 ^ n ∣ x`. -/
+theorem appr_two_eq_zero_iff (x : ℤ_[2]) (n : ℕ) : x.appr n = 0 ↔ (2 : ℤ_[2]) ^ n ∣ x := by
+  have hs := PadicInt.appr_spec n x
+  rw [Ideal.mem_span_singleton] at hs
+  constructor
+  · intro h; rw [h] at hs; simpa using hs
+  · intro h
+    have h1 : (2 : ℤ_[2]) ^ n ∣ ((x.appr n : ℕ) : ℤ_[2]) := by
+      have := dvd_sub h hs; simpa using this
+    have h2 : (2 : ℤ_[2]) ^ n ∣ (((x.appr n : ℕ) : ℤ) : ℤ_[2]) := by simpa using h1
+    have h3 := (PadicInt.pow_p_dvd_int_iff (p := 2) n ((x.appr n : ℕ) : ℤ)).1 (by exact_mod_cast h2)
+    have h4 : 2 ^ n ∣ x.appr n := by exact_mod_cast h3
+    exact Nat.eq_zero_of_dvd_of_lt h4 (PadicInt.appr_lt x n)
+
+/-- `Statement:` the digits of `x` below `n` are all `false` iff `x.appr n = 0`. -/
+theorem padicTape_low_false_iff (x : ℤ_[2]) : ∀ n, (∀ k < n, padicTape x k = false) ↔ x.appr n = 0
+  | 0 => by simp [PadicInt.appr]
+  | n + 1 => by
+    have ih := padicTape_low_false_iff x n
+    constructor
+    · intro h
+      have h0 : x.appr n = 0 := ih.1 fun k hk => h k (by omega)
+      have hb := h n (by omega)
+      simp only [padicTape, decide_eq_false_iff_not, not_not] at hb
+      omega
+    · intro h k hk
+      have hn : x.appr n = 0 :=
+        Nat.eq_zero_of_le_zero (h ▸ PadicInt.appr_mono x (Nat.le_succ n))
+      rcases Nat.lt_succ_iff_lt_or_eq.1 hk with hk | rfl
+      · exact ih.2 hn k hk
+      · simp [padicTape, hn, h]
+
+/-- `Statement:` `ofNat n ≤ det (padicTape x)` iff `2 ^ n ∣ x`. -/
+theorem ofNat_le_det_padicTape (x : ℤ_[2]) (n : ℕ) :
+    ofNat n ≤ det (padicTape x) ↔ (2 : ℤ_[2]) ^ n ∣ x := by
+  rw [ofNat_le_det_iff, padicTape_low_false_iff, appr_two_eq_zero_iff]
+
+/-- `Statement:` `2 ^ n ∣ x` for every `n` iff `x = 0`. -/
+theorem two_pow_dvd_forall_iff (x : ℤ_[2]) : (∀ n, (2 : ℤ_[2]) ^ n ∣ x) ↔ x = 0 := by
+  constructor
+  · intro h
+    by_contra hx
+    have := (PadicInt.mem_span_pow_iff_le_valuation x hx (x.valuation + 1)).1
+      (Ideal.mem_span_singleton.2 (by exact_mod_cast h (x.valuation + 1)))
+    omega
+  · rintro rfl n; exact dvd_zero _
+
+/-- `Statement:` `det (padicTape x)` is ⊤ of `NInf` (`infty`) iff `x` is 2-adic `0`. -/
+theorem det_padicTape_eq_infty_iff (x : ℤ_[2]) : det (padicTape x) = infty ↔ x = 0 := by
+  rw [det_eq_infty_iff, ← two_pow_dvd_forall_iff]
+  constructor
+  · intro h n; rw [← ofNat_le_det_padicTape, ofNat_le_det_iff]; exact fun k _ => h k
+  · intro h k
+    exact (ofNat_le_det_iff _ (k + 1)).1 ((ofNat_le_det_padicTape x (k + 1)).2 (h _)) k (by omega)
+
+-- Statement: so the all-false tape, ⊥ of `ℕ → Bool`, is the digit tape of 2-adic `0` and of no other `x`.
+example (x : ℤ_[2]) : padicTape x = ⊥ ↔ x = 0 := by
+  rw [← det_padicTape_eq_infty_iff, det_eq_infty_iff, funext_iff]; rfl
+
+/-- `Statement:` for `x ≠ 0`, `det (padicTape x) = ofNat x.valuation`. -/
+theorem det_padicTape_eq_ofNat_valuation (x : ℤ_[2]) (hx : x ≠ 0) :
+    det (padicTape x) = ofNat x.valuation := by
+  apply ext; intro i
+  have key : ((det (padicTape x)).1 i = true) ↔ ((ofNat x.valuation).1 i = true) := by
+    rw [apply_true_iff_ofNat_succ_le, apply_true_iff_ofNat_succ_le, ofNat_le_det_padicTape,
+      ofNat_le_iff, ← PadicInt.mem_span_pow_iff_le_valuation x hx, Ideal.mem_span_singleton]
+    norm_num
+  cases h1 : (det (padicTape x)).1 i <;> cases h2 : (ofNat x.valuation).1 i <;> simp_all
+
+/-- `Statement:` `x.appr n` is the unique natural below `2 ^ n` congruent to `x` modulo `2 ^ n`. -/
+theorem appr_two_eq_of (x : ℤ_[2]) (n m : ℕ) (hm : m < 2 ^ n)
+    (h : (2 : ℤ_[2]) ^ n ∣ x - (m : ℤ_[2])) : x.appr n = m := by
+  have hs := Ideal.mem_span_singleton.1 (PadicInt.appr_spec n x)
+  have hd : (2 : ℤ_[2]) ^ n ∣ (((m : ℤ) - (x.appr n : ℤ) : ℤ) : ℤ_[2]) := by
+    have := dvd_sub hs h
+    push_cast
+    convert this using 1; ring
+  have hz := (PadicInt.pow_p_dvd_int_iff (p := 2) n _).1 (by exact_mod_cast hd)
+  rw [Int.subNatNat_eq_coe] at hz
+  have ha := PadicInt.appr_lt x n
+  have hm' : (m : ℤ) < ((2 : ℕ) : ℤ) ^ n := by exact_mod_cast hm
+  have ha' : (x.appr n : ℤ) < ((2 : ℕ) : ℤ) ^ n := by exact_mod_cast ha
+  have : (m : ℤ) - (x.appr n : ℤ) = 0 := by
+    apply Int.eq_zero_of_abs_lt_dvd hz
+    rw [abs_lt]; constructor <;> omega
+  omega
+
+/-- `Statement:` the approximations of `-2 ^ n` are `0` for `k ≤ n` and `2 ^ k - 2 ^ n` after. -/
+theorem appr_neg_two_pow (n k : ℕ) :
+    (-(2 : ℤ_[2]) ^ n).appr k = if k ≤ n then 0 else 2 ^ k - 2 ^ n := by
+  split_ifs with hk
+  · apply appr_two_eq_of _ _ _ (by positivity)
+    simp only [Nat.cast_zero, sub_zero, dvd_neg]
+    exact pow_dvd_pow 2 hk
+  · have hlt : 2 ^ n < 2 ^ k := Nat.pow_lt_pow_right (by norm_num) (by omega)
+    have hpos : 0 < 2 ^ n := by positivity
+    apply appr_two_eq_of _ _ _ (by omega)
+    rw [Nat.cast_sub hlt.le]; push_cast
+    exact ⟨-1, by ring⟩
+
+/-- `Statement:` the section `negS` of the bend sends `ofNat n` to the digit tape of `-2 ^ n`. -/
+theorem padicTape_neg_two_pow (n : ℕ) : padicTape (-(2 : ℤ_[2]) ^ n) = negS (ofNat n) := by
+  funext k
+  simp only [padicTape, negS, ofNat, appr_neg_two_pow]
+  by_cases hkn : k < n
+  · have : k ≤ n := hkn.le
+    have : k + 1 ≤ n := hkn
+    simp [*]
+  · have hk1 : ¬ (k + 1 ≤ n) := by omega
+    have hp : 2 ^ n < 2 ^ (k + 1) := Nat.pow_lt_pow_right (by norm_num) (by omega)
+    have hpk : 2 ^ k + 2 ^ k = 2 ^ (k + 1) := by rw [pow_succ]; ring
+    by_cases hkeq : k = n
+    · subst hkeq
+      have hne : (0 : ℕ) ≠ 2 ^ (k + 1) - 2 ^ k := by omega
+      simp [hne]
+    · have hk : ¬ k ≤ n := by omega
+      have hpn : 2 ^ n < 2 ^ k := Nat.pow_lt_pow_right (by norm_num) (by omega)
+      have hne : 2 ^ k - 2 ^ n ≠ 2 ^ (k + 1) - 2 ^ n := by
+        rw [← hpk]; generalize 2 ^ k = A at hpn ⊢; generalize 2 ^ n = B at hpn ⊢; omega
+      simp [hk, hk1, hkn, hne]
+
+/-- `Statement:` `negS` sends ⊤ of `NInf` (`infty`) to the digit tape of 2-adic `0`. -/
+theorem padicTape_zero : padicTape (0 : ℤ_[2]) = negS infty := by
+  funext k
+  have h : ∀ j, (0 : ℤ_[2]).appr j = 0 := fun j =>
+    appr_two_eq_of _ _ _ (by positivity) (by simp)
+  simp [padicTape, negS, infty, h]
+
+-- Statement: axioms, every `padicTape` result above `[propext, Classical.choice, Quot.sound]`, as are
+--   Mathlib's `PadicInt.appr` and `PadicInt.valuation` (PurityCheck); `NInf.det` carries no `Classical.choice`.
+-- Reading: one more chart in which 2-adic `0` reads as infinity; it is not the coincidence witness
+--   of the pole, `infinitude_forces_infinite_complexity`.
+
+end PadicTape
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -666,4 +834,19 @@ open ZeroParadox
 #print axioms dropLast_iterate_eq_nil
 #print axioms double_never_forgets
 #print axioms addOne_forgets_iff
+#print axioms NInf.ofNat_le_det_iff
+#print axioms NInf.apply_true_iff_ofNat_succ_le
+#print axioms padicTape
+#print axioms appr_two_eq_zero_iff
+#print axioms padicTape_low_false_iff
+#print axioms ofNat_le_det_padicTape
+#print axioms two_pow_dvd_forall_iff
+#print axioms det_padicTape_eq_infty_iff
+#print axioms det_padicTape_eq_ofNat_valuation
+#print axioms appr_two_eq_of
+#print axioms appr_neg_two_pow
+#print axioms padicTape_neg_two_pow
+#print axioms padicTape_zero
+#print axioms PadicInt.appr
+#print axioms PadicInt.valuation
 end PurityCheck
