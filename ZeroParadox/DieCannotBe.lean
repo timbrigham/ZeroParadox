@@ -4844,13 +4844,17 @@ example : (∀ n, ZeroParadox.slotRun (fun _ => false) n = false) ∧
 -- Reading: Tim's "bend" (2026-11-03): one tape, a firing record in `ℕ → Bool` (pointwise order) and a
 -- waiting time `NInf.det` in `NInf`. "Time" is his reading, not a claim. Definitions and proofs:
 -- `ZeroParadox/Die.lean` § XXV.
-#check @ZeroParadox.NInf.det_antitone          -- Statement: `det` is antitone
+#check @ZeroParadox.NInf.det_antitone          -- Statement: `det` is antitone: `r ≤ r'` gives `det r' ≤ det r`
 #check @ZeroParadox.NInf.det_poles             -- Statement: `det ⊥ = ⊤` and `det ⊤ = ⊥`, ⊥ and ⊤ of `ℕ → Bool` to ⊤ and ⊥ of `NInf`
 -- Statement: CARRIER. The all-`false` tape is ⊥ of `ℕ → Bool`; its waiting time is ⊤ of `NInf`, `∞`
 -- (`det_poles`), and that point occupies `PinnedLimitUnique succ ofNat`:
 #check @ZeroParadox.NInf.det_bot_pinnedLimitUnique
 #check @ZeroParadox.NInf.le_det_iff            -- Statement: `x ≤ det r ↔ r ≤ negS x`; both directions
 #check @ZeroParadox.NInf.det_gi                -- Statement: `det` into `NInfᵒᵈ` and `negS` form a Galois insertion (Mathlib `GaloisInsertion`)
+-- Statement: `det_gi` is Mathlib's `partialSups.gi` across bitwise complement: `(det r).1 n = !(partialSups r n)`
+-- (the `example` after `det_gi`, `ZeroParadox/Die.lean` § XXV). `(det r).1 n = true` iff `r` is `false`
+-- at every `k ≤ n` (`NInf.detSeq_eq_true_iff`): `det r` is the first hitting time of `true` in `r`, as
+-- `Nat.find` is in `firedRun` (`ZeroParadox/Information/CrossingTrials.lean`).
 #check @ZeroParadox.NInf.detHom                -- Statement: `det` as a `BoundedOrderHom` from `ℕ → Bool` into `NInfᵒᵈ`
 #check @ZeroParadox.NInf.no_lower_adjoint      -- Statement: no `g` has `g x ≤ r ↔ det r ≤ x`
 #check @ZeroParadox.NInf.det_not_injective     -- Statement: `det` is not injective
@@ -4861,12 +4865,11 @@ example : (∀ n, ZeroParadox.slotRun (fun _ => false) n = false) ∧
 #check @ZeroParadox.NInf.const0_fails          -- Statement: CONTROL: the constant `ofNat 0` is antitone and misses `det ⊥ = ⊤`
 #check @ZeroParadox.NInf.constInf_fails        -- Statement: CONTROL: the constant `∞` is antitone and misses `det ⊤ = ⊥`
 #check @ZeroParadox.NInf.no_nat_wait           -- Statement: CONTROL: no antitone `f : (ℕ → Bool) → ℕ` sends the tape firing exactly at `n` to `n`
-#check @ZeroParadox.NInf.nat_no_top            -- Statement: CONTROL: `ℕ` has no greatest element for ⊥ of `ℕ → Bool` to go to
+#check @ZeroParadox.NInf.nat_no_top            -- Statement: CONTROL: no `b : ℕ` is a top of `ℕ`
 #check @ZeroParadox.NInf.tape_bot_le           -- Statement: `⊥ ≤ r` on `ℕ → Bool` with axioms `[propext]`; Mathlib's `bot_le` there carries `Classical.choice` (`NInf.mathlib_bot_le_tape`)
 -- Reading (cited, not claimed): TypeTopology `TypeTopology.GenericConvergentSequence` has
 -- `ℕ∞-retract-of-Cantor : funext₀ → retract ℕ∞ of (ℕ → 𝟚)`, with retraction `ℕ→𝟚-to-ℕ∞` built from
--- `force-decreasing` and section `ι` (retrieved 2026-11-04). A Galois insertion onto ℕ∞ was not
--- located there as of 2026-11-04, searched by GitHub code search of `martinescardo/TypeTopology` for
--- `Galois` (five hits, none in a file on ℕ∞).
+-- `force-decreasing` and section `ι` (retrieved 2026-11-04). `det` is `ℕ→𝟚-to-ℕ∞` after bitwise
+-- complement, and `negS` is complement after `ι`.
 
 end DieCannotBeIndex

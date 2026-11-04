@@ -164,8 +164,8 @@ example : Nonempty (CategoryTheory.Limits.IsTerminal (TopCat.of (↥({(0 : ℚ_[
 -- Statement: the map carrying ⊥ of `WithBot Ordinal` to ⊤ of `WithTop Ordinal`, fixing every `↑o`, is
 -- not monotone.
 #check @ZeroParadox.phaseFloorToTop_apply
--- Statement: CARRIER. The all-`false` tape is ⊥ of `ℕ → Bool`, and its waiting time `NInf.det` is ⊤
--- of `NInf`; `det` is antitone (`ZeroParadox/Die.lean` § XXV).
+-- Statement: CARRIER. `NInf.det` sends ⊥ of `ℕ → Bool` (the all-`false` tape) to ⊤ of `NInf` and ⊤ of
+-- `ℕ → Bool` to ⊥ of `NInf` (`ZeroParadox/Die.lean` § XXV).
 #check @ZeroParadox.NInf.det_poles
 -- Statement: INVARIANT within one `ZPSemilattice` structure (carrier and join): the join-identity
 -- `∀ x, join S x = x` holds exactly of `S = bot`.

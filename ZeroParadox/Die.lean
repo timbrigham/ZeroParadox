@@ -4876,15 +4876,15 @@ theorem detSeq_eq_true_iff (r : ℕ → Bool) (n : ℕ) :
     intro h
     simp [detSeq, ih (fun k hk => h k (by omega)), h (n + 1) le_rfl]
 
-/-- `Statement:` ⊥ of `ℕ → Bool` is below every tape, with axioms `[propext]`. `Reading:` Mathlib's
-    `bot_le` at this type carries `Classical.choice` (measured in `section PurityCheck`). -/
+/-- `Statement:` ⊥ of `ℕ → Bool` is below every tape, with axioms `[propext]`. -/
 theorem tape_bot_le (r : ℕ → Bool) : (⊥ : ℕ → Bool) ≤ r :=
   (tape_le_iff _ _).2 fun _ h => Bool.noConfusion h
 
 /-- `Statement:` by Mathlib's `bot_le`, axioms `[propext, Classical.choice, Quot.sound]`. -/
 theorem mathlib_bot_le_tape (r : ℕ → Bool) : (⊥ : ℕ → Bool) ≤ r := bot_le
 
-/-- `Statement:` `det` is antitone: a tape with more `true` bits has a smaller waiting time. -/
+/-- `Statement:` `det` is antitone: if every `true` bit of `r` is a `true` bit of `r'`, then
+    `det r' ≤ det r`. -/
 theorem det_antitone : Antitone det := by
   intro r r' hle
   rw [le_def]; intro i hi
@@ -4949,6 +4949,22 @@ def det_gi : GaloisInsertion (OrderDual.toDual ∘ det) (negS ∘ OrderDual.ofDu
     show x ≤ OrderDual.toDual (det (negS (OrderDual.ofDual x)))
     rw [det_negS]; exact le_rfl
 
+-- `Statement:` `det r` is the bitwise complement of Mathlib's `partialSups r`, on `Bool` the running
+-- "or" (has `r` fired by stage `n`), so `det_gi` is Mathlib's `partialSups.gi` across the complement.
+example (r : ℕ → Bool) (n : ℕ) : (det r).1 n = !(partialSups r n) := by
+  induction n with
+  | zero => simp [det, detSeq]
+  | succ n ih =>
+    have e : partialSups r (n + 1) = (partialSups r n || r (n + 1)) := by
+      rw [← Order.succ_eq_add_one, partialSups_succ, Order.succ_eq_add_one]; rfl
+    show (detSeq r n && !r (n + 1)) = _
+    rw [show detSeq r n = (det r).1 n from rfl, ih, e]
+    cases partialSups r n <;> cases r (n + 1) <;> rfl
+
+-- `Statement:` Mathlib's `partialSups.gi`: a Galois insertion of `ℕ → Bool` onto its monotone sequences.
+noncomputable example : GaloisInsertion (partialSups : (ℕ → Bool) → ℕ →o Bool) DFunLike.coe :=
+  partialSups.gi
+
 /-- `Statement:` `det` as a bounded order homomorphism (Mathlib `BoundedOrderHom`) from `ℕ → Bool`
     into the order dual of `NInf`. -/
 def detHom : BoundedOrderHom (ℕ → Bool) NInfᵒᵈ where
@@ -4957,9 +4973,7 @@ def detHom : BoundedOrderHom (ℕ → Bool) NInfᵒᵈ where
   map_top' := congrArg OrderDual.toDual det_poles.2
   map_bot' := congrArg OrderDual.toDual det_poles.1
 
-/-- `Statement:` no adjoint on the other side: no `g` has `g x ≤ r ↔ det r ≤ x` for all `x`, `r`.
-    `Reading:` the first unjustified step is that `{r | det r ≤ ofNat 1}` has a least element: it
-    holds the tapes firing at `0` and at `1`, whose only common lower bound is ⊥ of `ℕ → Bool`. -/
+/-- `Statement:` no adjoint on the other side: no `g` has `g x ≤ r ↔ det r ≤ x` for all `x`, `r`. -/
 theorem no_lower_adjoint : ¬ ∃ g : NInf → ℕ → Bool, ∀ x r, g x ≤ r ↔ det r ≤ x := by
   rintro ⟨g, hg⟩
   have h1 : det (fun n => decide (n = 0)) ≤ ofNat 1 := by
@@ -4995,8 +5009,7 @@ theorem det_not_injective : ¬ Function.Injective det := fun h => by
   have e := h ((det_fire 0).trans det_poles.2.symm)
   have := congrFun e 1; simp at this
 
-/-- `Statement:` the tape firing exactly at the index of `x`: `true` at `n` iff `x.1 n = false` and
-    (`n = 0` or `x.1 (n - 1) = true`). -/
+/-- `Statement:` the tape `true` at `n` iff `x.1 n = false` and (`n = 0` or `x.1 (n - 1) = true`). -/
 def exactS (x : NInf) : ℕ → Bool :=
   fun n => !x.1 n && (match n with | 0 => true | m + 1 => x.1 m)
 
@@ -5067,8 +5080,8 @@ theorem head_also_poles : Antitone firstBitWait ∧ firstBitWait ⊥ = ⊤ ∧
   · have := congrArg (fun f => (f (fun n => decide (n = 1))).1 1) e
     simp [firstBitWait, det, detSeq, infty] at this
 
-/-- `Statement:` CONTROL: no `f : (ℕ → Bool) → ℕ` sends ⊥ of `ℕ → Bool` to a top of `ℕ`. -/
-theorem nat_no_top (f : (ℕ → Bool) → ℕ) : ¬ IsTop (f ⊥) := not_isTop _
+/-- `Statement:` CONTROL: no `b : ℕ` is a top of `ℕ`. -/
+theorem nat_no_top (b : ℕ) : ¬ IsTop b := not_isTop b
 
 /-- `Statement:` CONTROL: no antitone `f : (ℕ → Bool) → ℕ` sends the tape firing exactly at `n` to
     `n` for every `n`. -/
