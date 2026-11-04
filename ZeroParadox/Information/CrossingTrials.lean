@@ -680,7 +680,7 @@ theorem continuous_of_prefixDetermined (f : (ℕ → Bool) → Bool)
   exact continuous_of_discreteTopology.comp hr
 
 /-- **`Statement:` the tapes that fired at least once form an open set.** The set is
-`trials_fires_once`'s; it is not closed (the `example` after `no_continuous_test_fires_once`). -/
+`trials_fires_once`'s; it is not closed (the never-fired CONTROL `example`). -/
 theorem isOpen_fires_once : IsOpen {w : ℕ → Bool | ∃ k, w k = true} := by
   have : {w : ℕ → Bool | ∃ k, w k = true} = ⋃ k, (fun w : ℕ → Bool => w k) ⁻¹' {true} := by
     ext w; simp
@@ -709,8 +709,8 @@ theorem not_continuousAt_bot_of_decides_fires_once (f : (ℕ → Bool) → Bool)
   rw [h1] at h2; cases h2
 
 /-- **`Statement:` no continuous `f : (ℕ → Bool) → Bool` has `f w = true ↔ ∃ k, w k = true` for
-every tape `w`.** `Reading:` `hw` in `t_snap_of_fires_once` is this proposition at one tape (the
-cited computability step and the `LPO` pointer: `CrossingTrials.md` § IX). -/
+every tape `w`.** `Reading:` `hw` in `t_snap_of_fires_once` is one tape's instance of the
+predicate decided here by no continuous test (`CrossingTrials.md` § IX). -/
 theorem no_continuous_test_fires_once :
     ¬ ∃ f : (ℕ → Bool) → Bool, Continuous f ∧ ∀ w, f w = true ↔ ∃ k, w k = true :=
   fun ⟨f, hc, hf⟩ => not_continuousAt_bot_of_decides_fires_once f hf hc.continuousAt
