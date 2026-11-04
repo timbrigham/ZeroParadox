@@ -1,11 +1,11 @@
 """
-Build ZP-F: The Counterexamples (v1.20)
+Build ZP-F: The Counterexamples (v1.21)
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.20'
+VERSION = '1.21'
 FIRST_RELEASED = 'April 2026'
 
 def build():
@@ -34,15 +34,19 @@ def build():
         'What is derived is that shape, not that the departure is taken: a join-semilattice in '
         'which T-SNAP holds and nothing moves is exhibited in the Lean source '
         '(tsnap_holds_but_nothing_moves). '
-        'This document establishes the negative result: no linearly ordered field can '
-        'serve as that substrate. The real numbers &#8477; are the canonical and most '
+        'This document establishes the negative result: in no linearly ordered field does 0 '
+        'have a first step above it, AX-B1\'s form, so no such field can supply the minimal '
+        'first departure. T-SNAP\'s shape does not need a first step: t_snap_given holds at a '
+        'step taken in a densely ordered join-semilattice. The real numbers &#8477; are the canonical and most '
         'familiar instance; the theorem applies to any field carrying a compatible '
         'linear order.'))
     E.append(body(
         'The blocking mechanism is elementary: in any such field, for any positive '
         'element &#949;, the element &#949;/2 exists, is positive, and is strictly '
-        'smaller. There is no floor. The Binary Snap requires a floor. Therefore '
-        'the snap is structurally impossible in any linearly ordered field.'))
+        'smaller. There is no least positive element, so 0 has no first step above it, '
+        'AX-B1\'s form, in any linearly ordered field. That the step is a cover is a hypothesis '
+        'beyond T-SNAP\'s shape (t_snap_given_cover), and the shape itself (t_snap_given) does '
+        'not need it.'))
     E.append(body(
         'This result contextualises the choice of Q&#8322; in ZP-B. Among all completions '
         'of &#8474;, Ostrowski\'s theorem identifies exactly two kinds: Archimedean completions '
@@ -106,9 +110,12 @@ def build():
 
     E.append(label_box('Theorem F-SNAP-IMPOSSIBLE', [
         '&#172;&#8707; &#949;&#8320; : F,  0 < &#949;&#8320;  &#8743;  &#172;&#8707; &#948; : F,  0 < &#948;  &#8743;  &#948; < &#949;&#8320;',
-        'The Binary Snap cannot occur in any linearly ordered field.',
-        'A snap requires a minimal first departure from 0 with nothing below it. '
-        'F-SNAP-BLOCKED shows such a floor never exists in a linearly ordered field.',
+        'F-SNAP-IMPOSSIBLE (f_snap_impossible): no linearly ordered field has a least positive '
+        'element, so 0 has no first step above it (AX-B1\'s form). The handle keeps its name; '
+        'T-SNAP\'s shape does not need a first step (t_snap_given holds at a step taken in a '
+        'densely ordered join-semilattice).',
+        'A first step is a minimal first departure from 0 with nothing below it. '
+        'F-SNAP-BLOCKED shows such a step never exists in a linearly ordered field.',
         'Proof: Direct from F-SNAP-BLOCKED. Status: DERIVED. &#10003;',
     ]))
     E.append(sp(4))
@@ -145,7 +152,8 @@ def build():
 
     E.append(label_box('Corollary R-SNAP-IMPOSSIBLE', [
         '&#172;&#8707; &#949;&#8320; : &#8477;,  0 < &#949;&#8320;  &#8743;  &#172;&#8707; &#948; : &#8477;,  0 < &#948;  &#8743;  &#948; < &#949;&#8320;',
-        'The Binary Snap cannot occur in &#8477;. '
+        'R-SNAP-IMPOSSIBLE (r_snap_impossible): &#8477; has no least positive element, so 0 has '
+        'no first step above it in &#8477; (AX-B1\'s form). '
         'Follows from F-SNAP-IMPOSSIBLE at F = &#8477;. Status: DERIVED (corollary). &#10003;',
     ]))
     E.append(sp(4))
@@ -165,8 +173,8 @@ def build():
         'ZP-F is self-contained and does not feed formally into any other layer. '
         'It is the negative complement to ZP-B: where ZP-B establishes that Q&#8322; '
         'removes the topological obstruction to the snap (its 2-adic topology is totally '
-        'disconnected, t5_totallyDisconnected, with clopen balls), ZP-F establishes that &#8477; — and any linearly ordered field — '
-        'cannot host it. Neither supplies the first step AX-B1 commits to, a cover of &#8869; on '
+        'disconnected, t5_totallyDisconnected, with clopen balls), ZP-F establishes that in &#8477; — and any linearly ordered field — '
+        '0 has no first step above it, AX-B1\'s form. Neither supplies the first step AX-B1 commits to, a cover of &#8869; on '
         'the state carrier, the set of states a run S moves through, ordered as in ZP-A '
         '(HasFirstStep). t_snap_given_cover assumes the run\'s first step is a cover (hcov); '
         'with CC-1, the commitment that the run starts at &#8869; (S 0 = &#8869;), that step is '
@@ -177,7 +185,7 @@ def build():
     E.append(data_table(
         ['Layer', 'Role', 'Dependency'],
         [['ZP-B', 'p-Adic topology — Q&#8322; removes the topological obstruction', 'ZP-A'],
-         ['ZP-F', 'Counterexample — &#8477; and ordered fields cannot host the snap', 'None (self-contained)'],
+         ['ZP-F', 'Counterexample — in &#8477; and ordered fields 0 has no first step above it (AX-B1\'s form)', 'None (self-contained)'],
          ['ZP-G', 'Category theory', 'Self-contained; ZP-E conceptually']],
         [0.8*inch, 3.5*inch, 2.2*inch]
     ))
@@ -190,7 +198,8 @@ def build():
         'they fill every gap. Density — the property established in F-DENSITY: for any '
         '&#949; > 0 there exists &#948; with 0 < &#948; < &#949; — is not a deficiency in '
         '&#8477;; it is one of &#8477;\'s defining virtues. The counterexample above shows '
-        'that this virtue is exactly what disqualifies &#8477; as a host for the Binary Snap. '
+        'that this virtue is exactly what rules out a first step above 0 in &#8477;, AX-B1\'s form; '
+        'T-SNAP\'s shape does not need one (t_snap_given). '
         'The exclusion is not a matter of degree: density follows from the ordered field axioms, '
         'so every linearly ordered field is ruled out by exactly the same argument. '
         'Familiarity here misleads: the setting that feels most natural '
@@ -218,7 +227,7 @@ def build():
         '(axb1_fails_everywhere_iff_dense). The equivalence quantifies over every element, so '
         'density rules out a first step at 0, and one element without a first step does not '
         'make an order dense. In the metric chart zero is a limit point of the nonzero elements, '
-        'in &#8477; and equally in Q&#8322;; so being a limit point does not decide the snap. '
+        'in &#8477; and equally in Q&#8322;; so being a limit point does not decide whether 0 has a first step. '
         'Q&#8322;\'s zero is a floor of the limit kind: the doubling orbit of a nonzero element '
         'converges to 0 and does not reach it in finite time, while counting down in &#8469; '
         'reaches 0 in finitely many steps (floor_reach_separates_mu_nu). In the valuation chart '
@@ -247,7 +256,7 @@ def build():
         'MachinePhase example in ZeroParadox/Order/Snap.lean stating that c&#8321; covers its '
         '&#8869;). In neither ordering of Q&#8322; does its 0 have a first step: in the norm '
         'preorder it has none, and in the valuation order nothing lies above it. '
-        'The snap does not fail in &#8477; by accident. In the order it fails because &#8477; '
+        'The first step is not missing in &#8477; by accident. In the order it is missing because &#8477; '
         'is densely ordered, and in a dense order no element has a first step, 0 included; in '
         'the topology &#8477; is connected (place_topological_signature), so not totally '
         'disconnected (real_no_snap), a second and separate fence.'))
