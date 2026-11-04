@@ -1,8 +1,8 @@
-# Crossing trials, § IV–VIII: from almost surely to one run, and from one firing to a state sequence
+# Crossing trials, § IV–IX: from almost surely to one run, from one firing to a state sequence, and why no finite reading decides the firing
 
 Ride-along for `ZeroParadox/Information/CrossingTrials.lean`. The Lean file holds the declarations, the
 Engineer's Take and the per-declaration glosses; this file holds the prior art, the open items and the
-two-chart reading for § IV–VII, and § VIII's conditional below.
+two-chart reading for § IV–VII, and the conditionals of § VIII and § IX below.
 
 ## What the sections establish, as conditionals
 
@@ -38,6 +38,29 @@ two-chart reading for § IV–VII, and § VIII's conditional below.
   once have `trials p hp` measure one (`trials_fires_once`), and § VI's hypotheses give `hw`
   (`t_snap_of_avoids`). `Reading:` `hw` is the occurrence commitment in its slot chart, as one
   hypothesis on the realized tape (`ZeroParadox/Order/Snap.lean` states both charts).
+- § IX. Topology: the product (Cantor) topology on `ℕ → Bool`, `Bool` discrete. If a test
+  `f : (ℕ → Bool) → Bool` is continuous, one prefix length `N` fixes its value on every tape
+  (`prefixDetermined_of_continuous`, by compactness); if one `N` does, `f` is continuous
+  (`continuous_of_prefixDetermined`). The tapes that fired at least once form an open set
+  (`isOpen_fires_once`); its complement, the tapes that never fire, is closed and not open (a CONTROL
+  `example`). If `f w = true` exactly when `w` has a `true`, `f` is not continuous at ⊥ of `ℕ → Bool`
+  (`not_continuousAt_bot_of_decides_fires_once`), so no continuous test decides firing
+  (`no_continuous_test_fires_once`). Controls: `w ↦ w 0` is continuous (fired at stage 0 is read off one
+  bit); classically a Boolean function on `ℕ → Bool` that is not continuous exists, so § IX is about
+  continuity, not definability; on `ℕ → ℕ`, which is not compact, `w ↦ (w (w 0) = 0)` is continuous
+  with no single prefix length, so the uniform `N` comes from compactness. Direction: fixed by a finite
+  prefix ⇔ continuous (both proved); computable ⇒ continuous (cited below, not proved). `Reading:`
+  (cited, not claimed) since every computable function on these tapes is continuous (Weihrauch,
+  Thm 2.2.3, p. 30), no Type-2 machine computes a total test deciding firing. Asking that every tape
+  be decided, as a proposition rather than by a Boolean function, is `LPO`
+  (`ZeroParadox/Category/LawvereTaboo.lean` § V; its ⊥ form is the `example` in
+  `ZeroParadox/Category/ChoiceCannotBe.lean` § II). `Reading:` `hw` in `t_snap_of_fires_once` is the
+  proposition no continuous test decides, at one tape: the occurrence commitment's slot chart is a bit
+  that no finite reading of the tape settles at ⊥.
+  Footprints: every § IX declaration measures `[propext, Classical.choice, Quot.sound]`, and the bare
+  proposition `ContinuousTestStatement` measures the same, so these are STATEMENT-CARRIED
+  (`ZeroParadox/Category/ChoiceCannotBe.md`); `t_snap_of_fires_once` itself measures
+  `[propext, Quot.sound]`.
 
 ## Prior art
 
@@ -100,6 +123,34 @@ two-chart reading for § IV–VII, and § VIII's conditional below.
   Bernoulli `p > 0` has infinitely many ones; a formal-only phrasing; effective Borel–Cantelli), found the
   Franklin–Porter and Potgieter passages above; LeanExplore, two phrasings, returned no randomness
   declaration (an uninformative null).
+- **§ IX: computable implies continuous on Cantor space.** K. Weihrauch, *Computable Analysis: An
+  Introduction* (Springer 2000), p. 30, Theorem 2.2.3 (computable ⇒ continuous): "Every computable
+  string function f :⊆ Y₁ × … × Y_k → Y₀ is continuous", each Yᵢ being Σ* or Σ^ω with the Cantor
+  topology on Σ^ω (Def. 2.2.2, p. 29). Not formalized here. p. 32, Theorem 2.2.6: (1) "A subset
+  X ⊆ Σ^ω is clopen, iff it is decidable, iff X = AΣ^ω for some finite set A ⊆ Σ*"; (2) "A (total)
+  function f : Σ^ω → Σ* is continuous, iff it is computable, iff" it is a finite prefix-free table, by
+  compactness. `prefixDetermined_of_continuous` has the shape of (2)'s continuous-to-table direction
+  with Σ = Bool and one-letter outputs, with one prefix length in place of a prefix-free table. p. 32,
+  Exercises 2.2.2–2.2.3: "Show that the characteristic function of the set {0^ω} ⊆ Σ^ω is not
+  continuous", "Show that Σ^ω \ {0^ω} is open but not closed"; at Σ = {0, 1} with 0 read as `false`,
+  {0^ω} is {⊥ of `ℕ → Bool`} and Σ^ω \ {0^ω} is the set of tapes that fired, so
+  `not_continuousAt_bot_of_decides_fires_once` and the never-fired CONTROL `example` are those
+  exercises. The credit runs from Weihrauch to here.
+- **Mathlib, for § IX.** Used: `PiNat.cylinder`, `PiNat.isTopologicalBasis_cylinders`,
+  `PiNat.isOpen_cylinder` (`Mathlib/Topology/MetricSpace/PiNat.lean`). Neighbour, in general form:
+  `Profinite.exists_locallyConstant` (`Mathlib/Topology/Category/Profinite/CofilteredLimit.lean`), a
+  locally constant function on a cofiltered limit of profinite spaces factors through one stage; it is
+  not instantiated at `ℕ → Bool` here. The § IX statements as written were not located as of 2026-11-03,
+  searched as follows: `exact?` on the prefix form, on a `DependsOn` form and on `¬ IsClopen` of the
+  fired set (no hit, an uninformative null); LeanExplore, three phrasings (continuous map from Cantor
+  space depends on a finite prefix; locally constant map on a compact product factors through finitely
+  many coordinates; clopen subsets of Cantor space as finite unions of cylinders), which returned the
+  neighbour above and `TopologicalSpace.Clopens.surjective_finset_sup_prod`
+  (`Mathlib/Topology/ClopenBox.lean`, binary products only). Computability on tapes: Mathlib's
+  `Computable` takes `Primcodable` types and `ℕ → Bool` has none (the first § IX `example`); a grep of
+  the pinned `Mathlib/` for `Weihrauch`, `Type-2`, `TTE`, `computable analysis`, `represented space`
+  and `oracle machine` returned no match, and LeanExplore (one phrasing, type-two computability)
+  returned only `Computable` on `Primcodable` types.
 
 ## What remains open (2026-11-01)
 
