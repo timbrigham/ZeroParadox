@@ -4451,8 +4451,8 @@ end Motion
 
 /-! ### § XXIV. A limit pinned from two directions: `PinnedLimit`
 `Reading:` Tim's role (2026-11-03), "squishy" in his word: a value pinned from below as the least
-upper bound of the stages of a run it is not a stage of, and from the step map as its least fixed
-point. The run `s (n + 1) = g (s n)` is `(Motion.ofFun g).IsRun s`, stated beside the role at each
+upper bound of the stages of a climbing run it is not a stage of, and from the step map as its least
+fixed point. The run `s (n + 1) = g (s n)` is `(Motion.ofFun g).IsRun s`, stated beside the role at each
 occupant. The ε₀ occupant is `epsilon0_pinnedLimit` (`ZeroParadox/Ordinal/Epsilon0MinMax.lean` § III). -/
 
 section PinnedLimit
@@ -4460,14 +4460,15 @@ section PinnedLimit
 variable {α : Type*} [Preorder α]
 
 /-- `Statement:` `c` is the least upper bound of the stages `Set.range s`, is not a stage, and is the
-    least fixed point of `g`. `Reading:` the standard name, for a monotone `g` and the run from the
-    least element, is closure ordinal ω (`pinnedLimit_iff_closure_omega`). -/
+    least fixed point of `g`, and the run climbs (`Monotone s`). `Reading:` the standard name, for a
+    monotone `g` and the run from the least element of a partial order, is closure ordinal ω
+    (`pinnedLimit_iff_closure_omega`). -/
 -- [ZP-CUSTOM] no Mathlib analog | reason: Mathlib's Kleene theorems (`fixedPoints.lfp_eq_sSup_iterate`
 -- on a complete lattice, `OmegaCompletePartialOrder.fixedPoints.ωSup_iterate_mem_fixedPoint` on an
 -- ω-complete partial order) and `Ordinal.nfp` state the sup and leastness halves; this is the
--- three-clause predicate on a preorder, with the not-a-stage clause.
+-- four-clause predicate on a preorder, with the not-a-stage and climbing clauses.
 def PinnedLimit (g : α → α) (s : ℕ → α) (c : α) : Prop :=
-  IsLUB (Set.range s) c ∧ c ∉ Set.range s ∧ IsLeast {x | g x = x} c
+  IsLUB (Set.range s) c ∧ c ∉ Set.range s ∧ IsLeast {x | g x = x} c ∧ Monotone s
 
 /-- `Statement:` `PinnedLimit g s c`, and every fixed point of `g` is `c`. -/
 def PinnedLimitUnique (g : α → α) (s : ℕ → α) (c : α) : Prop :=
@@ -4476,20 +4477,22 @@ def PinnedLimitUnique (g : α → α) (s : ℕ → α) (c : α) : Prop :=
 /-- `Statement:` `PinnedLimit` with clause (c) relative to the first stage: `c` is the least fixed
     point of `g` at or above `s 0`. -/
 -- [ZP-CUSTOM] extends: PinnedLimit (ZeroParadox/Die.lean) | reason: the least fixed point above a
--- seed, which `PinnedLimit` (least over the whole carrier) cannot see at a seed above the least one.
+-- seed, which `PinnedLimit` (least over the whole carrier) cannot see at a seed above the least one;
+-- Mathlib's `OrderHom.nextFixed` is that fixed point on a complete lattice.
 def PinnedLimitAbove (g : α → α) (s : ℕ → α) (c : α) : Prop :=
-  IsLUB (Set.range s) c ∧ c ∉ Set.range s ∧ IsLeast {x | g x = x ∧ s 0 ≤ x} c
+  IsLUB (Set.range s) c ∧ c ∉ Set.range s ∧ IsLeast {x | g x = x ∧ s 0 ≤ x} c ∧ Monotone s
 
 /-- `Statement:` `PinnedLimit g s c → PinnedLimitAbove g s c`, for every run. -/
 theorem PinnedLimit.toAbove {g : α → α} {s : ℕ → α} {c : α} (h : PinnedLimit g s c) :
     PinnedLimitAbove g s c :=
-  ⟨h.1, h.2.1, ⟨⟨h.2.2.1, h.1.1 ⟨0, rfl⟩⟩, fun _ hx => h.2.2.2 hx.1⟩⟩
+  ⟨h.1, h.2.1, ⟨⟨h.2.2.1.1, h.1.1 ⟨0, rfl⟩⟩, fun _ hx => h.2.2.1.2 hx.1⟩, h.2.2.2⟩
 
 /-- `Statement:` when `s 0` is ⊥ of `α`, `PinnedLimitAbove g s c ↔ PinnedLimit g s c`; both
     directions. -/
 theorem pinnedLimitAbove_iff_of_bot [OrderBot α] {g : α → α} {s : ℕ → α} {c : α} (hs : s 0 = ⊥) :
     PinnedLimitAbove g s c ↔ PinnedLimit g s c :=
-  ⟨fun h => ⟨h.1, h.2.1, ⟨h.2.2.1.1, fun _ hx => h.2.2.2 ⟨hx, hs ▸ bot_le⟩⟩⟩, PinnedLimit.toAbove⟩
+  ⟨fun h => ⟨h.1, h.2.1, ⟨h.2.2.1.1.1, fun _ hx => h.2.2.1.2 ⟨hx, hs ▸ bot_le⟩⟩, h.2.2.2⟩,
+    PinnedLimit.toAbove⟩
 
 end PinnedLimit
 
@@ -4498,24 +4501,18 @@ end PinnedLimit
     fixed; both directions. `Reading:` the right side is closure ordinal ω, "we reached the (least)
     fixed point for the first time at stage ω. We say that ω is the closure ordinal of these
     operators" (A. Das and L. Melgaard, *Cyclic proofs for arithmetical inductive definitions*, FSCD
-    2023, LIPIcs 260, 23:4, Example 2.9, there on `𝒫(ℕ)`). -/
+    2023, doi:10.4230/LIPIcs.FSCD.2023.23, 23:4, Example 2.9, there on `𝒫(ℕ)`). -/
 theorem pinnedLimit_iff_closure_omega {α : Type*} [PartialOrder α] [OrderBot α] (g : α → α)
     (hg : Monotone g) (c : α) :
     PinnedLimit g (fun n => g^[n] ⊥) c ↔
       (IsLUB (Set.range fun n => g^[n] ⊥) c ∧ g c = c ∧ ∀ n, g (g^[n] ⊥) ≠ g^[n] ⊥) := by
-  have chain : Monotone (fun n => g^[n] ⊥) :=
-    monotone_nat_of_le_succ fun n => by
-      induction n with
-      | zero => exact bot_le
-      | succ k ih =>
-        simp only [Function.iterate_succ_apply'] at ih ⊢
-        exact hg ih
+  have chain : Monotone (fun n => g^[n] ⊥) := hg.monotone_iterate_of_le_map bot_le
   have below : ∀ x, g x = x → ∀ n, g^[n] ⊥ ≤ x := fun x hx n => by
     induction n with
     | zero => exact bot_le
     | succ k ih => rw [Function.iterate_succ_apply', ← hx]; exact hg ih
   constructor
-  · rintro ⟨hlub, hnot, hfix, _⟩
+  · rintro ⟨hlub, hnot, ⟨hfix, _⟩, _⟩
     refine ⟨hlub, hfix, fun k hk => hnot ⟨k, ?_⟩⟩
     have const : ∀ m, g^[k + m] ⊥ = g^[k] ⊥ := fun m => by
       induction m with
@@ -4527,23 +4524,57 @@ theorem pinnedLimit_iff_closure_omega {α : Type*} [PartialOrder α] [OrderBot �
       · obtain ⟨m, rfl⟩ := Nat.exists_eq_add_of_le h; rw [const m]
     exact le_antisymm (hlub.1 ⟨k, rfl⟩) (hlub.2 (by rintro _ ⟨n, rfl⟩; exact ub n))
   · rintro ⟨hlub, hfix, hnf⟩
-    refine ⟨hlub, fun ⟨k, hk⟩ => hnf k (by simp only at hk; rw [hk]; exact hfix), hfix,
-      fun x hx => ?_⟩
+    refine ⟨hlub, fun ⟨k, hk⟩ => hnf k (by simp only at hk; rw [hk]; exact hfix),
+      ⟨hfix, fun x hx => ?_⟩, chain⟩
     exact hlub.2 (by rintro _ ⟨n, rfl⟩; exact below x hx n)
 
--- `Statement:` CONTROL: the clauses do not force an ascent. On `Finset Bool` (four points) the step
--- swapping `{false}` and `{true}` and fixing the others has the alternating run, and `univ` occupies
--- the strong form `PinnedLimitUnique`.
+/-- `Statement:` on a finite partial order, `PinnedLimitAbove g s c` fails for every `g`, `s` and `c`:
+    a climbing run there is eventually constant (Mathlib `wellFoundedGT_iff_monotone_chain_condition`),
+    so the least upper bound of its stages is a stage. -/
+theorem not_pinnedLimitAbove_of_finite {α : Type*} [PartialOrder α] [Finite α] (g : α → α)
+    (s : ℕ → α) (c : α) : ¬ PinnedLimitAbove g s c := by
+  rintro ⟨hlub, hnot, _, hs⟩
+  obtain ⟨N, hN⟩ := wellFoundedGT_iff_monotone_chain_condition.1 inferInstance ⟨s, hs⟩
+  refine hnot ⟨N, le_antisymm (hlub.1 ⟨N, rfl⟩) (hlub.2 ?_)⟩
+  rintro _ ⟨k, rfl⟩
+  rcases le_total k N with h | h
+  · exact hs h
+  · exact (hN k h).ge
+
+/-- `Statement:` on a finite partial order, `PinnedLimit g s c` fails for every `g`, `s` and `c`. -/
+theorem not_pinnedLimit_of_finite {α : Type*} [PartialOrder α] [Finite α] (g : α → α)
+    (s : ℕ → α) (c : α) : ¬ PinnedLimit g s c :=
+  fun h => not_pinnedLimitAbove_of_finite g s c h.toAbove
+
+-- `Statement:` CONTROL: antisymmetry is a premise of the exclusion. On `Bool` preordered by `x ≤ y`
+-- for all `x`, `y` (not a partial order), the constant run at `false` climbs and `true` occupies
+-- `PinnedLimit id`.
+example : ∃ inst : Preorder Bool, @PinnedLimit Bool inst id (fun _ => false) true :=
+  ⟨{ le := fun _ _ => True, le_refl := fun _ => trivial, le_trans := fun _ _ _ _ _ => trivial,
+      lt := fun _ _ => False, lt_iff_le_not_ge := fun _ _ => by simp },
+    ⟨fun _ _ => trivial, fun _ _ => trivial⟩, fun ⟨_, h⟩ => by simp at h, ⟨rfl, fun _ _ => trivial⟩,
+    fun _ _ _ => trivial⟩
+
+-- `Statement:` CONTROL: the climbing clause is what fails on a finite carrier. On `Finset Bool` (four
+-- points) the step sending `{false}` to `{true}`, `{true}` and `∅` to `{false}`, and fixing only
+-- `univ`, has the alternating run; `univ` is the least upper bound of its stages, is not a stage, and
+-- is the least fixed point, the run does not climb, and no point occupies `PinnedLimitUnique` there
+-- (`not_pinnedLimit_of_finite`).
 example : (Motion.ofFun fun x : Finset Bool =>
       if x = Finset.univ then Finset.univ else if x = {false} then {true} else {false}).IsRun
       (fun n => if n % 2 = 0 then {false} else {true}) ∧
-    PinnedLimitUnique (fun x : Finset Bool =>
+    (IsLUB (Set.range fun n => if n % 2 = 0 then ({false} : Finset Bool) else {true}) Finset.univ ∧
+      Finset.univ ∉ Set.range (fun n => if n % 2 = 0 then ({false} : Finset Bool) else {true}) ∧
+      IsLeast {x : Finset Bool | (if x = Finset.univ then Finset.univ else
+        if x = {false} then {true} else {false}) = x} Finset.univ) ∧
+    ¬ Monotone (fun n => if n % 2 = 0 then ({false} : Finset Bool) else {true}) ∧
+    ∀ c, ¬ PinnedLimitUnique (fun x : Finset Bool =>
       if x = Finset.univ then Finset.univ else if x = {false} then {true} else {false})
-      (fun n => if n % 2 = 0 then {false} else {true}) Finset.univ := by
+      (fun n => if n % 2 = 0 then {false} else {true}) c := by
   have fix : ∀ x : Finset Bool, (if x = Finset.univ then Finset.univ else
       if x = {false} then {true} else {false}) = x ↔ x = Finset.univ := by decide
   refine ⟨fun n => ?_, ⟨⟨fun _ _ => Finset.subset_univ _, fun b hb => ?_⟩, ?_, ?_⟩,
-    fun x hx => (fix x).1 hx⟩
+    fun h => absurd (h (Nat.zero_le 1)) (by decide), fun c h => not_pinnedLimit_of_finite _ _ c h.1⟩
   · show (if (n + 1) % 2 = 0 then ({false} : Finset Bool) else {true}) =
       (fun x : Finset Bool => if x = Finset.univ then Finset.univ else
         if x = {false} then {true} else {false}) (if n % 2 = 0 then {false} else {true})
@@ -4652,7 +4683,8 @@ theorem pinnedLimitUnique_succ :
     (Motion.ofFun succ).IsRun ofNat ∧ PinnedLimitUnique succ ofNat infty :=
   ⟨fun n => (succ_ofNat n).symm,
     ⟨isLUB_range_ofNat, infty_not_mem_range_ofNat,
-      ⟨succ_infty, fun x hx => ((succ_fixed_iff x).1 hx) ▸ le_rfl⟩⟩,
+      ⟨succ_infty, fun x hx => ((succ_fixed_iff x).1 hx) ▸ le_rfl⟩,
+      fun m n h => (ofNat_le_iff m n).2 h⟩,
     fun x hx => (succ_fixed_iff x).1 hx⟩
 
 /-- `Statement:` anything between `ofNat n` and `ofNat (n + 1)` is one of them. -/
@@ -4778,7 +4810,8 @@ theorem pinnedLimitUnique_withTop :
     · rintro rfl; rfl
   refine ⟨fun n => show ((n + 1 : ℕ) : WithTop ℕ) = (n : WithTop ℕ) + 1 by simp,
     ⟨⟨fun _ _ => le_top, fun b hb => ?_⟩, fun ⟨n, hn⟩ => WithTop.coe_ne_top hn,
-    ⟨rfl, fun x hx => ((fix x).1 hx) ▸ le_rfl⟩⟩, fun x hx => (fix x).1 hx⟩
+    ⟨rfl, fun x hx => ((fix x).1 hx) ▸ le_rfl⟩, fun a b h => show (a : WithTop ℕ) ≤ b by exact_mod_cast h⟩,
+    fun x hx => (fix x).1 hx⟩
   cases b with
   | top => exact le_rfl
   | coe m =>
@@ -4788,7 +4821,7 @@ theorem pinnedLimitUnique_withTop :
 
 -- `Statement:` CONTROL: `ℕ` with `Nat.succ` has a run and no occupant (no fixed point).
 example : (Motion.ofFun Nat.succ).IsRun id ∧ ∀ c : ℕ, ¬ PinnedLimit Nat.succ id c :=
-  ⟨fun _ => rfl, fun c ⟨_, _, hfix, _⟩ => Nat.succ_ne_self c hfix⟩
+  ⟨fun _ => rfl, fun c ⟨_, _, ⟨hfix, _⟩, _⟩ => Nat.succ_ne_self c hfix⟩
 
 -- `Statement:` CONTROL: on `Fin 3` with step `![1, 2, 2]`, the top `2` is a fixed point and a stage,
 -- so there is no occupant.
@@ -4808,7 +4841,7 @@ example : (Motion.ofFun (![1, 2, 2] : Fin 3 → Fin 3)).IsRun
 -- the least upper bound `∞` of the stages, so no point occupies `PinnedLimit id NInf.ofNat`.
 example : IsLeast {x : NInf | id x = x} (NInf.ofNat 0) ∧
     ∀ c : NInf, ¬ PinnedLimit id NInf.ofNat c := by
-  refine ⟨⟨rfl, fun _ _ => bot_le⟩, fun c ⟨hlub, _, _, hleast⟩ => ?_⟩
+  refine ⟨⟨rfl, fun _ _ => bot_le⟩, fun c ⟨hlub, _, ⟨_, hleast⟩, _⟩ => ?_⟩
   have hc : c = NInf.infty := hlub.unique NInf.isLUB_range_ofNat
   have hbot : c ≤ NInf.ofNat 0 := hleast (show id (NInf.ofNat 0) = NInf.ofNat 0 from rfl)
   rw [hc] at hbot
@@ -5267,6 +5300,8 @@ open ZeroParadox
 #print axioms PinnedLimit.toAbove
 #print axioms pinnedLimitAbove_iff_of_bot
 #print axioms pinnedLimit_iff_closure_omega
+#print axioms not_pinnedLimitAbove_of_finite
+#print axioms not_pinnedLimit_of_finite
 #print axioms NInf.instPartialOrder
 #print axioms NInf.le_def
 #print axioms NInf.instOrderBot

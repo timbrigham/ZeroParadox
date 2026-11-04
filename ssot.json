@@ -658,7 +658,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 3107,
+        "declarations": 3109,
         "files": 196
       },
       "entries": [
@@ -78638,6 +78638,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "b12b2d7c-ffe5-45db-8c39-46cceb3f112e",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.not_pinnedLimitAbove_of_finite",
+            "short": "not_pinnedLimitAbove_of_finite"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.not_pinnedLimitAbove_of_finite",
+            "short": "not_pinnedLimitAbove_of_finite",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "pinned-limit-r3-1104: climbing-run clause (Tim ruling 35); no occupant of PinnedLimit / PinnedLimitAbove on a finite partial order",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "b1456d62-833a-4aa2-a8eb-adbef424b054",
           "new": {
             "file": "ZeroParadox/Computability/Occurrence.lean",
@@ -112556,6 +112591,41 @@
             ]
           },
           "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "fb8abf81-8aa8-4b51-a82c-69ea1c002ea4",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.not_pinnedLimit_of_finite",
+            "short": "not_pinnedLimit_of_finite"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.not_pinnedLimit_of_finite",
+            "short": "not_pinnedLimit_of_finite",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "pinned-limit-r3-1104: climbing-run clause (Tim ruling 35); no occupant of PinnedLimit / PinnedLimitAbove on a finite partial order",
           "verify": {
             "axioms": null,
             "sorry_free": true

@@ -108,19 +108,21 @@ example : epsilon0MinMaxStatement := epsilon0_min_eq_max
 
 /-! ### § III. ε₀ occupies the die role `PinnedLimit` (`ZeroParadox/Die.lean` § XXIV)
 
-`Statement:` COINCIDENCE, the two faces of § II as one role: the tower from ⊥ of `Ordinal` is a run
-of `α ↦ ω^α`, and ε₀ is its least upper bound, is not a stage, and is the least fixed point. Under
+`Statement:` COINCIDENCE, the two faces of § II as one role: the tower from ⊥ of `Ordinal` is a climbing
+run of `α ↦ ω^α`, and ε₀ is its least upper bound, is not a stage, and is the least fixed point. Under
 `α ↦ ω^α` every occupant of `PinnedLimit`, over any run, is ε₀ (`pinnedLimit_opow_eq_epsilon0`). -/
 
 universe u
 
 /-- `Statement:` `fundamentalSeq` is a run of `Motion.ofFun (ω^·)`, and ε₀ occupies
-    `PinnedLimit (ω^·) fundamentalSeq`, by `epsilon0_min_eq_max` and `epsilonZero_tower_lt`. -/
+    `PinnedLimit (ω^·) fundamentalSeq`, by `epsilon0_min_eq_max`, `epsilonZero_tower_lt` and
+    `fundamentalSeq_strictMono`. -/
 theorem epsilon0_pinnedLimit :
     (Motion.ofFun fun α : Ordinal => Ordinal.omega0 ^ α).IsRun fundamentalSeq ∧
     PinnedLimit (fun α : Ordinal => Ordinal.omega0 ^ α) fundamentalSeq epsilonZero := by
   obtain ⟨hsup, hleast⟩ := epsilon0_min_eq_max
-  refine ⟨fun n => ?_, ?_, fun ⟨n, hn⟩ => (epsilonZero_tower_lt n).ne hn, hleast⟩
+  refine ⟨fun n => ?_, ?_, fun ⟨n, hn⟩ => (epsilonZero_tower_lt n).ne hn, hleast,
+    (strictMono_nat_of_lt_succ fundamentalSeq_strictMono).monotone⟩
   · show fundamentalSeq (n + 1) = Ordinal.omega0 ^ fundamentalSeq n
     simp only [fundamentalSeq, Function.iterate_succ_apply']
   · rw [hsup]
@@ -137,7 +139,7 @@ theorem epsilon0_not_pinnedLimitUnique :
     clause (c) is leastness over all of `Ordinal`, and ε₀ is that least fixed point. -/
 theorem pinnedLimit_opow_eq_epsilon0 (s : ℕ → Ordinal.{u}) (c : Ordinal.{u})
     (h : PinnedLimit (fun α : Ordinal.{u} => Ordinal.omega0 ^ α) s c) : c = epsilonZero :=
-  h.2.2.unique ⟨epsilonZero_fixedPoint, fun o ho => epsilon0_least_fixedpoint o ho⟩
+  h.2.2.1.unique ⟨epsilonZero_fixedPoint, fun o ho => epsilon0_least_fixedpoint o ho⟩
 
 -- `Statement:` ε₀'s occupancy is closure ordinal ω for `α ↦ ω^α` from ⊥ of `Ordinal`: the tower's
 -- least upper bound is fixed and no stage is (`pinnedLimit_iff_closure_omega`).

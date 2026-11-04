@@ -605,8 +605,9 @@ theorem ordinalCornerStep_pinnedLimitAbove (f : Ordinal.{u}) :
   have ha : Order.succ f < Ordinal.omega0 ^ Order.succ f :=
     lt_of_le_of_ne (hn.strictMono.id_le _) (Ne.symm (omega0_opow_succ_ne f))
   refine ⟨fun n => ?_, ?_, fun ⟨n, hn'⟩ => (Ordinal.iterate_lt_nfp hn.strictMono ha n).ne hn',
-    ⟨Ordinal.nfp_fp hn _, Ordinal.le_nfp _ _⟩, fun x ⟨hx, hax⟩ =>
-      Ordinal.nfp_le_fp hn.strictMono.monotone hax hx.le⟩
+    ⟨⟨Ordinal.nfp_fp hn _, Ordinal.le_nfp _ _⟩, fun x ⟨hx, hax⟩ =>
+      Ordinal.nfp_le_fp hn.strictMono.monotone hax hx.le⟩,
+    hn.strictMono.monotone.monotone_iterate_of_le_map ha.le⟩
   · show _ = Ordinal.omega0 ^ _
     simp only [Function.iterate_succ_apply']
   · refine ⟨?_, fun b hb => Ordinal.nfp_le fun n => hb ⟨n, rfl⟩⟩

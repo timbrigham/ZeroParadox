@@ -4806,14 +4806,16 @@ example : (∀ n, ZeroParadox.slotRun (fun _ => false) n = false) ∧
 /-! ### § XXIX. A limit pinned from two directions: `PinnedLimit` -/
 -- Reading: Tim's role, "squishy" in his word: pinned from below by the stages of a run and from the
 -- step map by its fixed points. Definitions and proofs: `ZeroParadox/Die.lean` § XXIV.
-#check @ZeroParadox.PinnedLimit                -- Statement: `c` is the least upper bound of `Set.range s`, is not in it, and is the least fixed point of `g`
-#check @ZeroParadox.PinnedLimitUnique          -- Statement: `PinnedLimit g s c`, and every fixed point of `g` is `c`
+#check @ZeroParadox.PinnedLimit                -- Statement: `c` is the least upper bound of `Set.range s`, is not in it, and is the least fixed point of `g`, and the run climbs (`Monotone s`)
+#check @ZeroParadox.PinnedLimitUnique         -- Statement: `PinnedLimit g s c`, and every fixed point of `g` is `c`
 #check @ZeroParadox.PinnedLimitAbove           -- Statement: `PinnedLimit` with clause (c) relative: the least fixed point of `g` at or above `s 0`
-#check @ZeroParadox.PinnedLimit.toAbove        -- Statement: `PinnedLimit g s c → PinnedLimitAbove g s c`, for every run; the converse fails (ε₁, `ZeroParadox/Ordinal/Epsilon0MinMax.lean` § III)
+#check @ZeroParadox.PinnedLimit.toAbove        -- Statement: `PinnedLimit g s c → PinnedLimitAbove g s c`, for every run; the converse fails (ε₁, the CONTROL in `ZeroParadox/Order/UpAndOver.lean` § V)
 #check @ZeroParadox.pinnedLimitAbove_iff_of_bot -- Statement: when `s 0` is ⊥ of the carrier, the two are equivalent; both directions
-#check @ZeroParadox.pinnedLimit_iff_closure_omega -- Statement: monotone `g`, run from ⊥ of a partial order: `PinnedLimit` iff the least upper bound of the stages is fixed and no stage is; both directions
+#check @ZeroParadox.pinnedLimit_iff_closure_omega -- Statement: monotone `g`, run from ⊥ of a partial order: `PinnedLimit` at `c` iff `c` is the least upper bound of the stages, `g c = c`, and no stage is fixed; both directions
 -- Reading (cited, not claimed): the right side is closure ordinal ω (A. Das and L. Melgaard, FSCD
--- 2023, LIPIcs 260, 23:4, Example 2.9).
+-- 2023, doi:10.4230/LIPIcs.FSCD.2023.23, 23:4, Example 2.9).
+#check @ZeroParadox.not_pinnedLimitAbove_of_finite -- Statement: on a finite partial order, `PinnedLimitAbove` has no occupant, at any step and any run
+#check @ZeroParadox.not_pinnedLimit_of_finite  -- Statement: on a finite partial order, `PinnedLimit` has no occupant, at any step and any run
 #check @ZeroParadox.NInf.instPartialOrder      -- Statement: tape-wise order on `NInf`
 #check @ZeroParadox.NInf.bot_eq                -- Statement: ⊥ of `NInf` is `NInf.ofNat 0`, the all-`false` tape
 #check @ZeroParadox.NInf.top_eq                -- Statement: ⊤ of `NInf` is `NInf.infty`, the all-`true` tape
