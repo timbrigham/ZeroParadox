@@ -16,6 +16,7 @@ import ZeroParadox.Order.PataraiaFromBourbakiWitt
 import ZeroParadox.Reals.OrderedField
 import ZeroParadox.Valuation.PoleRegistration
 import ZeroParadox.Die
+import ZeroParadox.Information.CrossingTrials
 
 /-!
 # Machine-checked characterization index of the framework's relationship to `Classical.choice`
@@ -185,6 +186,15 @@ example :
   refine ⟨fun h => ⟨fun f => (h f).imp id fun ⟨n, hn⟩ heq => ?_, fun f hf => (h f).resolve_left hf⟩,
     fun ⟨hw, hm⟩ f => (hw f).imp id (hm f)⟩
   rw [heq] at hn; cases hn
+
+-- Statement: the same decision at the same ⊥ (LPO's shape), as continuity rather than logic: no continuous Boolean
+-- test on `ℕ → Bool` (product topology) is `true` exactly on the tapes with a `true`, and any such
+-- test fails to be continuous at ⊥ of `ℕ → Bool`. Home: `ZeroParadox/Information/CrossingTrials.lean`
+-- § IX, with the converse direction (a test fixed by one finite prefix is continuous).
+-- Reading: (cited, not claimed) Weihrauch, *Computable Analysis* (Springer 2000), Thm 2.2.3, p. 30:
+-- computable implies continuous, so no machine computes that total test either.
+#check @ZeroParadox.no_continuous_test_fires_once
+#check @ZeroParadox.not_continuousAt_bot_of_decides_fires_once -- Statement: discontinuous at ⊥
 
 /-! ## § III. What IS established about choice here
 

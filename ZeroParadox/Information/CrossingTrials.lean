@@ -2,6 +2,7 @@ import Mathlib.Probability.ProductMeasure
 import Mathlib.Probability.Independence.InfinitePi
 import Mathlib.Probability.BorelCantelli
 import Mathlib.Probability.ProbabilityMassFunction.Constructions
+import Mathlib.Topology.MetricSpace.PiNat
 import Mathlib.Tactic
 import ZeroParadox.Die
 import ZeroParadox.Order.Snap
@@ -98,7 +99,7 @@ formalization of a published characterization.
 
 - § I   The trial space, and that it is a probability space
 - § II  The per-stage events: measurable, independent, marginal exactly `p`
-- § III The payoff; § IV–VIII to one run and `t_snap_given`'s hypotheses (`CrossingTrials.md`)
+- § III The payoff; § IV–VIII to one run and `t_snap_given`'s hypotheses; § IX topology (`.md`)
 -/
 
 namespace ZeroParadox
@@ -620,6 +621,150 @@ example {L : Type*} [ZPSemilattice L] (φ : Bool → L) (w : ℕ → Bool) (hw :
   have b : firedRun w hw 2 = true := (firedRun_spec w hw).2 1
   exact h.2 1 (show φ (firedRun w hw 1) = φ (firedRun w hw 2) by rw [a, b])
 
+/-! ## § IX. Fired at least once is open, and no continuous test decides it
+
+Topology: the product (Cantor) topology on `ℕ → Bool`, with `Bool` discrete. Direction: a test
+`f : (ℕ → Bool) → Bool` is continuous iff one prefix length `N` fixes its value on every tape
+(both directions below); "fired at least once" is open and not closed, and no continuous test
+decides it. That computable implies continuous is cited, not proved here: Weihrauch, *Computable
+Analysis* (Springer 2000), Thm 2.2.3, p. 30. Mathlib's `Computable` takes `Primcodable` types, and
+`ℕ → Bool` carries none (the first `example` below). Prior art, the search and the footprints:
+`ZeroParadox/Information/CrossingTrials.md`. -/
+
+-- Statement: `ℕ → Bool` has no `Primcodable` instance (diagonal argument), so Mathlib's `Computable`
+-- does not apply to tests on tapes.
+example : IsEmpty (Primcodable (ℕ → Bool)) :=
+  ⟨fun h => by
+    haveI := h.toEncodable
+    obtain ⟨f, hf⟩ := exists_surjective_nat (ℕ → Bool)
+    obtain ⟨m, hm⟩ := hf fun n => !(f n n)
+    have := congrFun hm m
+    cases h' : f m m <;> simp [h'] at this⟩
+
+/-- **`Statement:` if `f : (ℕ → Bool) → Bool` is continuous, one `N` has: tapes agreeing below `N`
+get the same value.** By compactness of `ℕ → Bool`; the Baire-space `example` below shows
+continuity alone does not give the uniform `N`. -/
+theorem prefixDetermined_of_continuous (f : (ℕ → Bool) → Bool) (hf : Continuous f) :
+    ∃ N, ∀ w w' : ℕ → Bool, (∀ i < N, w i = w' i) → f w = f w' := by
+  have hn : ∀ w : ℕ → Bool, ∃ n, PiNat.cylinder w n ⊆ f ⁻¹' {f w} := by
+    intro w
+    obtain ⟨_, ⟨x, n, rfl⟩, hw, hsub⟩ :=
+      (PiNat.isTopologicalBasis_cylinders (fun _ : ℕ => Bool)).exists_subset_of_mem_open
+        (show w ∈ f ⁻¹' {f w} from rfl) ((isOpen_discrete _).preimage hf)
+    exact ⟨n, (PiNat.mem_cylinder_iff_eq.1 hw) ▸ hsub⟩
+  choose n hn using hn
+  obtain ⟨t, -, ht⟩ := isCompact_univ.elim_nhds_subcover (fun w => PiNat.cylinder w (n w))
+    (fun w _ => (PiNat.isOpen_cylinder (fun _ : ℕ => Bool) w (n w)).mem_nhds
+      (PiNat.self_mem_cylinder _ _))
+  refine ⟨t.sup n, fun w w' hww' => ?_⟩
+  obtain ⟨x, hx, hwx⟩ := Set.mem_iUnion₂.1 (ht (Set.mem_univ w))
+  have hle : n x ≤ t.sup n := Finset.le_sup hx
+  have hw'x : w' ∈ PiNat.cylinder x (n x) := fun i hi =>
+    (hww' i (hi.trans_le hle)).symm.trans (hwx i hi)
+  have e1 : f w = f x := hn x hwx
+  have e2 : f w' = f x := hn x hw'x
+  rw [e1, e2]
+
+/-- **`Statement:` the converse: if one `N` fixes `f`'s value on tapes agreeing below `N`, `f` is
+continuous.** -/
+theorem continuous_of_prefixDetermined (f : (ℕ → Bool) → Bool)
+    (h : ∃ N, ∀ w w' : ℕ → Bool, (∀ i < N, w i = w' i) → f w = f w') : Continuous f := by
+  obtain ⟨N, hN⟩ := h
+  let ext : (Fin N → Bool) → ℕ → Bool := fun v i => if hi : i < N then v ⟨i, hi⟩ else false
+  let r : (ℕ → Bool) → Fin N → Bool := fun w i => w i
+  have hr : Continuous r := continuous_pi fun i => continuous_apply _
+  have hf : f = (f ∘ ext) ∘ r := by
+    funext w
+    exact hN w _ (fun i hi => by simp [ext, r, hi])
+  rw [hf]
+  exact continuous_of_discreteTopology.comp hr
+
+/-- **`Statement:` the tapes that fired at least once form an open set.** The set is
+`trials_fires_once`'s; it is not closed (the never-fired CONTROL `example`). -/
+theorem isOpen_fires_once : IsOpen {w : ℕ → Bool | ∃ k, w k = true} := by
+  have : {w : ℕ → Bool | ∃ k, w k = true} = ⋃ k, (fun w : ℕ → Bool => w k) ⁻¹' {true} := by
+    ext w; simp
+  rw [this]
+  exact isOpen_iUnion fun k => (isOpen_discrete _).preimage (continuous_apply k)
+
+/-- **`Statement:` if `f w = true ↔ ∃ k, w k = true` for every tape `w`, then `f` is not continuous
+at ⊥ of `ℕ → Bool` (pointwise order), the all-`false` tape.** Every prefix of ⊥ is also a prefix of
+a tape that fires one stage later. -/
+theorem not_continuousAt_bot_of_decides_fires_once (f : (ℕ → Bool) → Bool)
+    (hf : ∀ w, f w = true ↔ ∃ k, w k = true) : ¬ ContinuousAt f ⊥ := by
+  intro hc
+  have hbot : f ⊥ = false := by
+    cases h : f ⊥
+    · rfl
+    · obtain ⟨k, hk⟩ := (hf _).1 h; cases hk
+  have hmem : f ⁻¹' {f ⊥} ∈ nhds (⊥ : ℕ → Bool) := hc ((isOpen_discrete _).mem_nhds rfl)
+  obtain ⟨_, ⟨x, n, rfl⟩, hb, hsub⟩ :=
+    (PiNat.isTopologicalBasis_cylinders (fun _ : ℕ => Bool)).mem_nhds_iff.1 hmem
+  have hw : (fun k => decide (k = n)) ∈ PiNat.cylinder x n := by
+    rw [← PiNat.mem_cylinder_iff_eq.1 hb]
+    intro i hi; simp [Nat.ne_of_lt hi]
+  have h1 : f (fun k => decide (k = n)) = f ⊥ := hsub hw
+  rw [hbot] at h1
+  have h2 : f (fun k => decide (k = n)) = true := (hf _).2 ⟨n, by simp⟩
+  rw [h1] at h2; cases h2
+
+/-- **`Statement:` no continuous `f : (ℕ → Bool) → Bool` has `f w = true ↔ ∃ k, w k = true` for
+every tape `w`.** `Reading:` `hw` in `t_snap_of_fires_once` is one tape's instance of the
+predicate decided here by no continuous test (`CrossingTrials.md` § IX). -/
+theorem no_continuous_test_fires_once :
+    ¬ ∃ f : (ℕ → Bool) → Bool, Continuous f ∧ ∀ w, f w = true ↔ ∃ k, w k = true :=
+  fun ⟨f, hc, hf⟩ => not_continuousAt_bot_of_decides_fires_once f hf hc.continuousAt
+
+/-- **`Statement:` "some test on `ℕ → Bool` is continuous", bare: the statement control for § IX,
+whose statements all mention `Continuous` or `IsOpen` on this space.** -/
+def ContinuousTestStatement : Prop := ∃ f : (ℕ → Bool) → Bool, Continuous f
+
+-- Statement: CONTROL, fired at stage 0 is decided by a one-bit prefix: `w ↦ w 0` is continuous.
+example : Continuous fun w : ℕ → Bool => w 0 := continuous_apply 0
+
+-- Statement: CONTROL, the complement, never fired, is closed and not open.
+example : IsClosed {w : ℕ → Bool | ∀ k, w k = false} ∧
+    ¬ IsOpen {w : ℕ → Bool | ∀ k, w k = false} := by
+  have hc : {w : ℕ → Bool | ∀ k, w k = false} = {w | ∃ k, w k = true}ᶜ := by
+    ext w; simp
+  refine ⟨hc ▸ isOpen_fires_once.isClosed_compl, fun ho => ?_⟩
+  obtain ⟨_, ⟨x, n, rfl⟩, hb, hsub⟩ :=
+    (PiNat.isTopologicalBasis_cylinders (fun _ : ℕ => Bool)).mem_nhds_iff.1
+      (ho.mem_nhds (show (⊥ : ℕ → Bool) ∈ {w : ℕ → Bool | ∀ k, w k = false} from fun _ => rfl))
+  have hw : (fun k => decide (k = n)) ∈ PiNat.cylinder x n := by
+    rw [← PiNat.mem_cylinder_iff_eq.1 hb]
+    intro i hi; simp [Nat.ne_of_lt hi]
+  have := hsub hw n
+  simp at this
+
+-- Statement: CONTROL, the theorem is about continuity, not definability: classically, a Boolean
+-- function on `ℕ → Bool` that is not continuous exists.
+example : ∃ f : (ℕ → Bool) → Bool, ¬ Continuous f := by
+  classical
+  exact ⟨fun w => decide (∃ k, w k = true), fun hc =>
+    no_continuous_test_fires_once ⟨_, hc, fun w => by simp⟩⟩
+
+-- Statement: CONTROL, continuity alone does not give the uniform `N`: on `ℕ → ℕ`, `w ↦ (w (w 0) = 0)` is
+-- continuous and no single prefix length fixes its value.
+example : ∃ f : (ℕ → ℕ) → Bool, Continuous f ∧
+    ¬ ∃ N, ∀ w w' : ℕ → ℕ, (∀ i < N, w i = w' i) → f w = f w' := by
+  refine ⟨fun w => decide (w (w 0) = 0), ?_, ?_⟩
+  · rw [continuous_iff_continuousAt]
+    intro w
+    have hmem : PiNat.cylinder w (w 0 + 1) ∈ nhds w :=
+      (PiNat.isOpen_cylinder (fun _ : ℕ => ℕ) w _).mem_nhds (PiNat.self_mem_cylinder _ _)
+    rw [ContinuousAt, nhds_discrete Bool, Filter.tendsto_pure]
+    refine Filter.mem_of_superset hmem fun y hy => ?_
+    have h0 : y 0 = w 0 := hy 0 (Nat.succ_pos _)
+    have h1 : y (w 0) = w (w 0) := hy (w 0) (Nat.lt_succ_self _)
+    show decide (y (y 0) = 0) = decide (w (w 0) = 0)
+    rw [h0, h1]
+  · rintro ⟨N, hN⟩
+    have := hN (fun i => if i = 0 then N + 1 else 0)
+      (fun i => if i = 0 then N + 1 else if i = N + 1 then 1 else 0)
+      (fun i hi => by by_cases h : i = 0 <;> simp [h]; omega)
+    simp at this
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -666,5 +811,11 @@ open ZeroParadox
 #print axioms t_snap_of_fires_once
 #print axioms trials_fires_once
 #print axioms t_snap_of_avoids
+#print axioms prefixDetermined_of_continuous
+#print axioms continuous_of_prefixDetermined
+#print axioms isOpen_fires_once
+#print axioms not_continuousAt_bot_of_decides_fires_once
+#print axioms no_continuous_test_fires_once
+#print axioms ContinuousTestStatement
 
 end PurityCheck
