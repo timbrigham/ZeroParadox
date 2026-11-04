@@ -125,6 +125,14 @@ example (o : NONote) : o.repr < Ordinal.epsilon 0 := ZeroParadox.repr_lt_epsilon
 -- Reading: the schema and the ε₀ role part exactly at the fixed points. At a fixed-point floor such
 -- as `ε_o` the schema returns that floor (§ I-b, `nfp f = f`), so the ε₀ role is taken strictly
 -- above it, at `ε_(o+1)` (`Ordinal.epsilon_succ_eq_nfp`, § I-b).
+-- Reading: INVARIANT off the fixed points; at them, the BIFURCATION (Tim's word). One carrier,
+-- `Ordinal`, two operators: the at-or-above closure `nfp (ω^·) a` and the strictly-above form
+-- `nfp (ω^·) (succ a)`. The iff runs both ways: they part only at a fixed point of `α ↦ ω^α`, and
+-- at every fixed point they part. At the seed ε₀ the first holds at ε₀ (§ I-b, the μ schema seeded
+-- at ε₀) and the second climbs to ε₁ (§ I-b, role versus value): one point, two branches, both at
+-- once. INVARIANT, not CARRIER: the carrier never changes; the Statement locates where swapping one
+-- operator for the other changes the answer. Not the dynamical-systems sense (a qualitative change
+-- as a parameter varies): no parameter varies; two operators, equal elsewhere, part at a point.
 example : (∀ a : Ordinal.{u}, Ordinal.nfp (fun α => Ordinal.omega0 ^ α) a =
       Ordinal.nfp (fun α => Ordinal.omega0 ^ α) (Order.succ a) ↔ Ordinal.omega0 ^ a ≠ a) ∧
     Ordinal.nfp (fun α => Ordinal.omega0 ^ α) (0 : Ordinal.{u}) =

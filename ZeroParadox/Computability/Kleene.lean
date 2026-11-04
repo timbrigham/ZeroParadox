@@ -877,8 +877,9 @@ theorem exists_selfPrintsStepMotion_selfOnlyAt :
   have h := selfPrints_universal_of_fixedPoint c hc
   exact ⟨⟨c, h.1⟩, selfPrintsStepMotion_selfOnlyAt_of_step _ _ hc, h.2⟩
 
--- Statement: on codes with UP the identity and OVER `a → b` when `eval a` halts at `⌜b⌝`, `b`'s
--- Gödel number, `c` steps to itself and to nothing else iff `eval c` halts exactly at `⌜c⌝`; both
+-- Statement: on codes with UP the identity and OVER `a → b` when `eval a` halts on input `⌜b⌝`, `b`'s
+-- Gödel number, `c` steps to itself and to nothing else iff `eval c` halts on input `⌜c⌝` and on
+-- no other input; both
 -- directions. Reading: OVER is the converse of Rogers' relation `E` (`m E n` iff `m ∈ W_n`) read on
 -- codes, `a → b` iff `⌜b⌝ E ⌜a⌝`, and the right side is his unit set `W_m = {m}` in Mathlib's
 -- numbering of codes (Rogers 1967, § 11.4, p. 185; prior art, cited).
