@@ -102,11 +102,12 @@ chart beside those above, with OVER `a → b` when `eval a` halts on input `⌜b
 of `E` (`a → b` iff `⌜b⌝ E ⌜a⌝`): there a code steps to itself only exactly when it is Rogers' unit
 set `W_m = {m}` (read in Mathlib's numbering of codes), and infinitely many codes
 do (the two `example`s after `exists_selfPrintsStepMotion_selfOnlyAt`). Prior art for the infinitely
-many, cited: Rogers' Theorem 11-IV (Kleene), p. 182, whose fixed-point function is one-one, the
-strengthening he lists as (3) on p. 181 ("for any `f`, an infinite set of fixed-point values can be
-recursively enumerated"); applied to the `f` of his example on p. 181, `W_{f(x)} = {x}`, it gives
-infinitely many `m` with `W_m = {m}`. That application is ours, not stated by Rogers. It is not the `eval`-step
-chart, where no single code occupies the role, nor the class chart.
+many, cited: Rogers' Theorem 11-IV (Kleene), p. 182, whose fixed-point function is one-one and
+which combines his strengthenings (1)-(3) of p. 181, the third being "for any `f`, an infinite set of
+fixed-point values can be recursively enumerated"; applied to the `f` of his example on p. 181,
+`W_{f(x)} = {x}`, it gives infinitely many `m` with `W_m = {m}`. That application is ours; we did not
+locate it in Rogers (Ch. 11 pp. 179-189, 192-196 and Exercises pp. 213-215 read, 2026-11-03). That
+chart is not the `eval`-step chart, where no single code occupies the role, nor the class chart.
 
 ## Dependencies
 

@@ -879,10 +879,9 @@ theorem exists_selfPrintsStepMotion_selfOnlyAt :
 
 -- Statement: on codes with UP the identity and OVER `a → b` when `eval a` halts on input `⌜b⌝`, `b`'s
 -- Gödel number, `c` steps to itself and to nothing else iff `eval c` halts on input `⌜c⌝` and on
--- no other input; both
--- directions. Reading: OVER is the converse of Rogers' relation `E` (`m E n` iff `m ∈ W_n`) read on
--- codes, `a → b` iff `⌜b⌝ E ⌜a⌝`, and the right side is his unit set `W_m = {m}` in Mathlib's
--- numbering of codes (Rogers 1967, § 11.4, p. 185; prior art, cited).
+-- no other input; both directions. Reading: OVER is the converse of Rogers' relation `E`
+-- (`m E n` iff `m ∈ W_n`) read on codes, `a → b` iff `⌜b⌝ E ⌜a⌝`, and the right side is his unit
+-- set `W_m = {m}` in Mathlib's numbering of codes (Rogers 1967, § 11.4, p. 185; prior art, cited).
 example (c : Code) :
     (Motion.ofTotal id (fun _ => rfl)
       (fun a b : Code => (eval a (Encodable.encode b)).Dom)).SelfOnlyAt c ↔
