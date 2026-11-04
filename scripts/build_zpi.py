@@ -1,12 +1,12 @@
 """
 Zero Paradox — ZP-I: Inside Zero PDF Builder
-Version 1.33 | November 2026
+Version 1.34 | November 2026
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.33'
+VERSION = '1.34'
 FIRST_RELEASED = 'April 2026'
 
 # ZP-I uses justified body text; override the left-aligned zp_utils defaults
@@ -501,7 +501,7 @@ def build():
     E += [
         li('t_iz_limit_is_new_null: anything satisfying the DA-2 &#8869; role IS that lattice&#8217;s &#8869; '
            '(the structural core of the snap-arc; <b>axiom-free</b>). The role property is its HYPOTHESIS; '
-           'that the Cauchy limit satisfies it is not established here, and is not statable in Q<sub>2</sub>.'),
+           'that the Cauchy limit satisfies it is not established here, and is not statable of the limit until a join on Q<sub>2</sub> is chosen.'),
         li('c_t_iz_null_balance: a non-bottom state cannot satisfy the &#8869; role (choice-free, [propext]).'),
         li('t_iz_cauchy: a sequence in Q<sub>2</sub> with &#8214;S(n)&#8214;<sub>2</sub> &#8804; 2<sup>-n</sup> converges to 0 (topological core; carries Classical.choice, '
            'as measured above; not a framework commitment).'),
@@ -689,7 +689,7 @@ def build():
         'role of a semilattice IS that semilattice&#8217;s &#8869; (t_iz_limit_is_new_null). For the cycle to '
         'begin again or close at the limit, it needs every one of the following further premises, and none is '
         'established here: (a) the reading that the limit fills the &#8869; role, a modelling commitment and a '
-        'reading across two carriers, since the role condition is not statable in Q<sub>2</sub> (MC-1); '
+        'reading across two carriers, since the role condition is not statable of the limit until a join on Q<sub>2</sub> is chosen (MC-1); '
         '(b) the limit reaching the incompressibility threshold P<sub>0</sub>, which nothing here establishes, '
         'since its only route in this document, the valuation-complexity bridge, is refuted (&#167; II.B); '
         '(c) what DA-1 needs: DP-2 and DP-2&#8217;s precondition, that the configuration reaching P<sub>0</sub> '
@@ -738,7 +738,7 @@ def build():
         'ROLE-RECOGNITION derived; OCCUPANCY and NOVELTY committed. What is proved is the 2-adic '
         'convergence (t_iz_cauchy) and, separately, that anything playing the bottom role IS the '
         'bottom (t_iz_limit_is_new_null). That the limit is a thing playing that role is a '
-        'commitment, not a theorem — the role condition is not statable in Q<sub>2</sub>; that the '
+        'commitment, not a theorem — the role condition is not statable of the limit until a join on Q<sub>2</sub> is chosen; that the '
         'bottom so reached is a NEW one is a further commitment.',
         'The cycle and its closure are a reading, not a theorem; its premises are stated in &#167; V.III. '
         'Strict valuation growth is '
@@ -771,7 +771,7 @@ def build():
          'The convergence half is derived from T-IZ: the lattice chain starts at its semilattice&#8217;s &#8869; '
          '(CC-1) and ascends under T3, and the nowhere-zero 2-adic depth chain converges to 0 &#8712; Q<sub>2</sub>. Reading that '
          'limit as an occupant of the bottom role is a COMMITMENT, not a consequence — the '
-         'join-identity is not statable in Q<sub>2</sub>. On that reading, DA-2 identifies the '
+         'join-identity is not statable of the limit until a join on Q<sub>2</sub> is chosen. On that reading, DA-2 identifies the '
          'occupant with the &#8869; already there. '
          '"&#8722;x" is not subtraction in L — it is the 2-adic approach to 0 by forward motion; reading it as a '
          'return in the cycle is the reading whose premises are stated in &#167; V.III. '

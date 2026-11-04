@@ -877,6 +877,45 @@ theorem exists_selfPrintsStepMotion_selfOnlyAt :
   have h := selfPrints_universal_of_fixedPoint c hc
   exact ⟨⟨c, h.1⟩, selfPrintsStepMotion_selfOnlyAt_of_step _ _ hc, h.2⟩
 
+-- Statement: on codes with UP the identity and OVER `a → b` when `eval a` halts at `⌜b⌝`, `b`'s
+-- Gödel number, `c` steps to itself and to nothing else iff `eval c` halts exactly at `⌜c⌝`; both
+-- directions. Reading: OVER is the converse of Rogers' relation `E` (`m E n` iff `m ∈ W_n`) read on
+-- codes, `a → b` iff `⌜b⌝ E ⌜a⌝`, and the right side is his unit set `W_m = {m}` in Mathlib's
+-- numbering of codes (Rogers 1967, § 11.4, p. 185; prior art, cited).
+example (c : Code) :
+    (Motion.ofTotal id (fun _ => rfl)
+      (fun a b : Code => (eval a (Encodable.encode b)).Dom)).SelfOnlyAt c ↔
+      ∀ n, (eval c n).Dom ↔ n = Encodable.encode c := by
+  constructor
+  · rintro ⟨hc, hu⟩ n
+    refine ⟨fun hn => ?_, fun hn => hn ▸ hc⟩
+    have hb := hu (Denumerable.ofNat Code n) (by
+      show (eval c (Encodable.encode (Denumerable.ofNat Code n))).Dom
+      rwa [Denumerable.encode_ofNat])
+    rw [← hb, Denumerable.encode_ofNat]
+  · intro h
+    exact ⟨(h _).2 rfl, fun b hb => Encodable.encode_injective ((h _).1 hb)⟩
+
+-- Statement: in that motion infinitely many codes step to themselves only (`fixed_points_infinite`).
+-- Reading: Rogers has such a code from the recursion theorem (Rogers 1967, § 11.2, p. 181). Here the
+-- occupants are many, where `zfset_quine_role_unoccupied` and `cofix_subsingleton` give none and at
+-- most one.
+example : {c : Code | (Motion.ofTotal id (fun _ => rfl)
+      (fun a b : Code => (eval a (Encodable.encode b)).Dom)).SelfOnlyAt c}.Infinite := by
+  let F : Code → ℕ →. ℕ := fun c n => cond (n == Encodable.encode c) (Part.some 0) Part.none
+  have hF : Partrec₂ F :=
+    Partrec.cond (Primrec.beq.comp Primrec.snd (Primrec.encode.comp Primrec.fst)).to_comp
+      (Partrec.const' _) Partrec.none
+  refine (fixed_points_infinite hF).mono fun c (hc : eval c = F c) => ⟨?_, fun b hb => ?_⟩
+  · show (eval c (Encodable.encode c)).Dom
+    rw [hc]; simp [F]
+  · have hb' : (eval c (Encodable.encode b)).Dom := hb
+    rw [hc] at hb'
+    by_contra hne
+    have : (Encodable.encode b == Encodable.encode c) = false := by
+      simpa using fun h => hne (Encodable.encode_injective h)
+    simp [F, this] at hb'
+
 /-- `Statement:` on inputs, UP `n ↦ n % ⌜c⌝` and OVER `n ↦ ⌜c⌝ + n`, where `⌜c⌝` is `c`'s Gödel
     number. `Reading:` OVER is the shift in `quine_period_is_goedel`; UP is a choice of this encoding,
     not forced by it. -/
