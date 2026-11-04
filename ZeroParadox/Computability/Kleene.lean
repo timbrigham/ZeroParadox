@@ -879,8 +879,9 @@ theorem exists_selfPrintsStepMotion_selfOnlyAt :
 
 -- Statement: on codes with UP the identity and OVER `a → b` when `eval a` halts at `⌜b⌝`, `b`'s
 -- Gödel number, `c` steps to itself and to nothing else iff `eval c` halts exactly at `⌜c⌝`; both
--- directions. Reading: OVER is Rogers' relation `E` (`m E n` iff `m ∈ W_n`) read on codes, and the
--- right side is his unit set `W_m = {m}` (Rogers 1967, § 11.4, p. 185; prior art, cited).
+-- directions. Reading: OVER is the converse of Rogers' relation `E` (`m E n` iff `m ∈ W_n`) read on
+-- codes, `a → b` iff `⌜b⌝ E ⌜a⌝`, and the right side is his unit set `W_m = {m}` in Mathlib's
+-- numbering of codes (Rogers 1967, § 11.4, p. 185; prior art, cited).
 example (c : Code) :
     (Motion.ofTotal id (fun _ => rfl)
       (fun a b : Code => (eval a (Encodable.encode b)).Dom)).SelfOnlyAt c ↔
@@ -896,9 +897,9 @@ example (c : Code) :
     exact ⟨(h _).2 rfl, fun b hb => Encodable.encode_injective ((h _).1 hb)⟩
 
 -- Statement: in that motion infinitely many codes step to themselves only (`fixed_points_infinite`).
--- Reading: Rogers has such a code from the recursion theorem (Rogers 1967, § 11.2, p. 181); his
--- footnote, p. 185, lists extensionality among the axioms that fail for `E`, and here the occupants
--- are many, where `zfset_quine_role_unoccupied` and `cofix_subsingleton` give none and at most one.
+-- Reading: Rogers has such a code from the recursion theorem (Rogers 1967, § 11.2, p. 181). Here the
+-- occupants are many, where `zfset_quine_role_unoccupied` and `cofix_subsingleton` give none and at
+-- most one.
 example : {c : Code | (Motion.ofTotal id (fun _ => rfl)
       (fun a b : Code => (eval a (Encodable.encode b)).Dom)).SelfOnlyAt c}.Infinite := by
   let F : Code → ℕ →. ℕ := fun c n => cond (n == Encodable.encode c) (Part.some 0) Part.none

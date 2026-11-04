@@ -90,7 +90,7 @@ index and contents, § 3.4 and Chapter 20 pp. 311-315 (scans), theoremsearch (th
 LeanExplore, GitHub code search and the open web.
 
 **Prior art for a code-side self-singleton** (cited, not claimed). Rogers 1967, § 11.4, "First
-Illustration", p. 185: with `m E n` when `m ∈ W_n` (`W_n` the set enumerated by code `n`), he notes
+Illustration", p. 185: with `m E n` when `m ∈ W_n` (`W_n` the set of inputs on which code `n` halts), he notes
 "a rough analogy" between `E` and set membership and asks whether a unit set `W_m = {m}` exists,
 answered yes from § 11.2 (the example after Corollary I, p. 181, by the recursion theorem). The same
 page builds an infinite ascending chain of unit sets; his Theorem 11-VII, p. 186, gives an infinite
@@ -98,8 +98,9 @@ descending one, distinct `m_0, m_1, ...` with `W_{m_i} = {m_{i+1}}`; and his Exe
 distinct `m`, `n` with `m ∈ W_n` and `n ∈ W_m`. His footnote, p. 185: for `E`, pairing, sum, choice
 and infinity hold, and power, extensionality and foundation fail; the non-recursive-enumerability of
 the complement of `K` "can be viewed as a counterpart to the Russell paradox". This is a further code
-chart beside those above, with OVER `a → b` when `eval a` halts at `b`'s Gödel number: there a
-code steps to itself only exactly when it is Rogers' unit set `W_m = {m}`, and infinitely many codes
+chart beside those above, with OVER `a → b` when `eval a` halts at `b`'s Gödel number, the converse
+of `E` (`a → b` iff `⌜b⌝ E ⌜a⌝`): there a code steps to itself only exactly when it is Rogers' unit
+set `W_m = {m}` (read in Mathlib's numbering of codes), and infinitely many codes
 do (the two `example`s after `exists_selfPrintsStepMotion_selfOnlyAt`). It is not the `eval`-step
 chart, where no single code occupies the role, nor the class chart.
 
