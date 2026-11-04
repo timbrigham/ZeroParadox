@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-P: The Fixed-Point Fork PDF Builder
-Version 1.33 | November 2026
+Version 1.34 | November 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.33'
+VERSION = '1.34'
 FIRST_RELEASED = 'June 2026'
 
 
@@ -47,7 +47,11 @@ def build():
         'fixed point. Read intuitively, the least fixed point is the inductive (well-founded) '
         'closure and the greatest is the coinductive (non-well-founded) closure; the collapse '
         'point is where the two closures meet. In the Zero Paradox that point is the diagonal '
-        'fixed point &#8869;, the self-containing bottom.'))
+        'fixed point, filled by &#8869; of the state semilattice in the Quine-atom role (CC-2), the '
+        'role of a point that steps to itself and to nothing else, occupied chart by chart: under a '
+        'self-application map that fixes &#8869; and nothing else it is the only occupant '
+        '(selfApp_quine_role_iff); in Mathlib\'s ZFSet no set occupies the role '
+        '(zfset_quine_role_unoccupied).'))
     E.append(body(
         'This layer is a synthesis layer, not a foundational one: it adds no axiom or primitive. '
         'It names a pattern that several existing layers already realise, and it is organised in '
@@ -175,7 +179,8 @@ def build():
              'Quine atom (CC-2), x = {x}; ZP-J / ZP-K'],
             ['Number systems',
              'Archimedean &#8477; vs non-Archimedean &#8474;<sub>p</sub>',
-             '0 (snap fails in &#8477;, holds in &#8474;<sub>2</sub>); ZP-B / ZP-F'],
+             '0: in &#8477; no first step above it (AX-B1\'s form); &#8474;<sub>2</sub> removes the '
+             'topological obstruction and supplies no first step; ZP-B / ZP-F'],
             ['Computation',
              'total (well-founded) vs partial (non-terminating)',
              'the Kleene quine / self-application; ZP-K'],
@@ -192,9 +197,16 @@ def build():
         'Ostrowski\'s theorem says the nontrivial absolute values on &#8474; are exactly the real '
         '(Archimedean) one and the p-adic (non-Archimedean) ones &#8212; the complete, '
         'pairwise-inequivalent list. The contact point is 0: in the Archimedean completion '
-        '&#8477; it is approached but never reached (density &#8212; the snap fails), while in '
-        'the 2-adic completion &#8474;<sub>2</sub> it is the unique fixed point of x &#8614; 2x '
-        'and its valuation diverges (v<sub>2</sub>(0) = &#8734; &#8212; the snap holds).'))
+        '&#8477;, a densely ordered field, 0 has no first step above it, AX-B1\'s form '
+        '(f_snap_impossible, which, despite its name, states that no linearly ordered field has a '
+        'least positive element). In the 2-adic completion &#8474;<sub>2</sub>, 0 is the unique '
+        'fixed point of x &#8614; 2x (q2_unique_fp) and the only point of infinite valuation '
+        '(v<sub>2</sub>(0) = &#8734;); &#8474;<sub>2</sub> is totally disconnected (padic_snaps), '
+        'which removes the topological obstruction and supplies no first step: under the norm '
+        'preorder 0 is least and has no first step (ZeroParadox/BottomCannotBe.lean &#167; ROLE), '
+        'and on &#8484;<sub>2</sub>, the 2-adic integers, 0 is least in the norm preorder and '
+        'greatest in the valuation order (z2_two_views). T-SNAP\'s shape needs no first step: '
+        't_snap_given holds at a step taken in a densely ordered join-semilattice.'))
 
     E.append(result_box(
         'Theorem: completions_exhaustive (Ostrowski.lean)',
