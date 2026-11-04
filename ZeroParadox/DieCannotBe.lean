@@ -4851,25 +4851,28 @@ example : (∀ n, ZeroParadox.slotRun (fun _ => false) n = false) ∧
 #check @ZeroParadox.NInf.det_bot_pinnedLimitUnique
 #check @ZeroParadox.NInf.le_det_iff            -- Statement: `x ≤ det r ↔ r ≤ negS x`; both directions
 #check @ZeroParadox.NInf.det_gi                -- Statement: `det` into `NInfᵒᵈ` and `negS` form a Galois insertion (Mathlib `GaloisInsertion`)
--- Statement: `det_gi` is Mathlib's `partialSups.gi` across bitwise complement: `(det r).1 n = !(partialSups r n)`
--- (the `example` after `det_gi`, `ZeroParadox/Die.lean` § XXV). `(det r).1 n = true` iff `r` is `false`
--- at every `k ≤ n` (`NInf.detSeq_eq_true_iff`): `det r` is the first hitting time of `true` in `r`, as
--- `Nat.find` is in `firedRun` (`ZeroParadox/Information/CrossingTrials.lean`).
+-- Statement: `(det r).1 n = !(partialSups r n)` at every `n`, pointwise against Mathlib's `partialSups`
+-- (the `example` after `det_gi`, `ZeroParadox/Die.lean` § XXV). Axioms: `det_gi` `[propext, Quot.sound]`,
+-- Mathlib's `partialSups.gi` `[propext, Classical.choice, Quot.sound]`.
+-- Statement: `det r = ofNat (Nat.find hw)` when `r` fires (the `example` in `ZeroParadox/Die.lean` § XXV)
+-- and `det r = infty` iff it never does (`NInf.det_eq_infty_iff`): `det r` is the first hitting time
+-- of `true` in `r`, as `Nat.find` is in `firedRun` (`ZeroParadox/Information/CrossingTrials.lean`).
 #check @ZeroParadox.NInf.detHom                -- Statement: `det` as a `BoundedOrderHom` from `ℕ → Bool` into `NInfᵒᵈ`
 #check @ZeroParadox.NInf.no_lower_adjoint      -- Statement: no `g` has `g x ≤ r ↔ det r ≤ x`
 #check @ZeroParadox.NInf.det_not_injective     -- Statement: `det` is not injective
-#check @ZeroParadox.NInf.det_exactS            -- Statement: `exactS` is a second section of `det`
+#check @ZeroParadox.NInf.det_exactS            -- Statement: `exactS` is a second section of `det`; `exactS (ofNat j)` fires exactly at `j`, `exactS infty` never (examples in `ZeroParadox/Die.lean` § XXV)
 #check @ZeroParadox.NInf.exactS_not_mono       -- Statement: and `exactS` is neither antitone nor monotone
 #check @ZeroParadox.NInf.naiveS_fails          -- Statement: `naiveS` is not a section: `det (naiveS (ofNat 0)) = ∞`
 #check @ZeroParadox.NInf.head_also_poles       -- Statement: CONTROL: `firstBitWait` is antitone with both poles and is not `det`
 #check @ZeroParadox.NInf.const0_fails          -- Statement: CONTROL: the constant `ofNat 0` is antitone and misses `det ⊥ = ⊤`
 #check @ZeroParadox.NInf.constInf_fails        -- Statement: CONTROL: the constant `∞` is antitone and misses `det ⊤ = ⊥`
 #check @ZeroParadox.NInf.no_nat_wait           -- Statement: CONTROL: no antitone `f : (ℕ → Bool) → ℕ` sends the tape firing exactly at `n` to `n`
-#check @ZeroParadox.NInf.nat_no_top            -- Statement: CONTROL: no `b : ℕ` is a top of `ℕ`
+#check @ZeroParadox.NInf.nat_no_top            -- Statement: CONTROL for `det_poles`: no `b : ℕ` is a top of `ℕ`, so no map into `ℕ` sends ⊥ of `ℕ → Bool` to a top
 #check @ZeroParadox.NInf.tape_bot_le           -- Statement: `⊥ ≤ r` on `ℕ → Bool` with axioms `[propext]`; Mathlib's `bot_le` there carries `Classical.choice` (`NInf.mathlib_bot_le_tape`)
--- Reading (cited, not claimed): TypeTopology `TypeTopology.GenericConvergentSequence` has
+-- Statement: TypeTopology `TypeTopology.GenericConvergentSequence` has
 -- `ℕ∞-retract-of-Cantor : funext₀ → retract ℕ∞ of (ℕ → 𝟚)`, with retraction `ℕ→𝟚-to-ℕ∞` built from
 -- `force-decreasing` and section `ι` (retrieved 2026-11-04). `det` is `ℕ→𝟚-to-ℕ∞` after bitwise
--- complement, and `negS` is complement after `ι`.
+-- complement: `det r` satisfies `force-decreasing`'s two defining equations at `β = !r` (the `example`
+-- in `ZeroParadox/Die.lean` § XXV). `negS` is complement after `ι`, by its definition.
 
 end DieCannotBeIndex

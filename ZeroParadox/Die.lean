@@ -4950,7 +4950,7 @@ def det_gi : GaloisInsertion (OrderDual.toDual ∘ det) (negS ∘ OrderDual.ofDu
     rw [det_negS]; exact le_rfl
 
 -- `Statement:` `det r` is the bitwise complement of Mathlib's `partialSups r`, on `Bool` the running
--- "or" (has `r` fired by stage `n`), so `det_gi` is Mathlib's `partialSups.gi` across the complement.
+-- "or" (has `r` fired by stage `n`), pointwise at every `n`.
 example (r : ℕ → Bool) (n : ℕ) : (det r).1 n = !(partialSups r n) := by
   induction n with
   | zero => simp [det, detSeq]
@@ -4962,8 +4962,29 @@ example (r : ℕ → Bool) (n : ℕ) : (det r).1 n = !(partialSups r n) := by
     cases partialSups r n <;> cases r (n + 1) <;> rfl
 
 -- `Statement:` Mathlib's `partialSups.gi`: a Galois insertion of `ℕ → Bool` onto its monotone sequences.
+-- Axioms: `det_gi` `[propext, Quot.sound]`; `partialSups.gi` `[propext, Classical.choice, Quot.sound]`.
 noncomputable example : GaloisInsertion (partialSups : (ℕ → Bool) → ℕ →o Bool) DFunLike.coe :=
   partialSups.gi
+
+-- `Statement:` `det r` is the first hitting time of `true` in `r`: `ofNat (Nat.find hw)` when `r` fires;
+-- when it never fires, `det r = infty` (`det_eq_infty_iff`).
+example (r : ℕ → Bool) (hw : ∃ k, r k = true) : det r = ofNat (Nat.find hw) := by
+  apply ext; intro i
+  show detSeq r i = decide (i < Nat.find hw)
+  cases hd : detSeq r i
+  · obtain ⟨k, hk, e⟩ := detSeq_false r i hd
+    have := Nat.find_min' hw e
+    exact (decide_eq_false (by omega)).symm
+  · have h := (detSeq_eq_true_iff r i).1 hd
+    symm; refine decide_eq_true ?_
+    by_contra hc
+    have := h (Nat.find hw) (by omega); rw [Nat.find_spec hw] at this; cases this
+
+-- `Statement:` `det r` satisfies TypeTopology's two `force-decreasing` equations at `β = !r`: `!r 0` at
+-- `0`, and `min₂ (β (n + 1)) (force-decreasing β n)` at `n + 1`, with `&&` for `min₂`.
+example (r : ℕ → Bool) (n : ℕ) :
+    (det r).1 0 = !r 0 ∧ (det r).1 (n + 1) = (!r (n + 1) && (det r).1 n) :=
+  ⟨rfl, Bool.and_comm _ _⟩
 
 /-- `Statement:` `det` as a bounded order homomorphism (Mathlib `BoundedOrderHom`) from `ℕ → Bool`
     into the order dual of `NInf`. -/
@@ -5009,9 +5030,27 @@ theorem det_not_injective : ¬ Function.Injective det := fun h => by
   have e := h ((det_fire 0).trans det_poles.2.symm)
   have := congrFun e 1; simp at this
 
-/-- `Statement:` the tape `true` at `n` iff `x.1 n = false` and (`n = 0` or `x.1 (n - 1) = true`). -/
+/-- `Statement:` the tape `true` at `n` iff `x.1 n = false` and (`n = 0` or `x.1 (n - 1) = true`):
+    at `ofNat j` the tape firing exactly at `j`, at `infty` the tape that never fires (examples below). -/
 def exactS (x : NInf) : ℕ → Bool :=
   fun n => !x.1 n && (match n with | 0 => true | m + 1 => x.1 m)
+
+-- `Statement:` `exactS (ofNat j)` fires exactly at `j`.
+example (j : ℕ) : exactS (ofNat j) = fun k => decide (k = j) := by
+  funext k
+  cases k with
+  | zero => cases j <;> simp [exactS, ofNat]
+  | succ m =>
+    show (!decide (m + 1 < j) && decide (m < j)) = decide (m + 1 = j)
+    by_cases h : m + 1 = j
+    · subst h; simp
+    · rw [decide_eq_false h]; by_cases h2 : m < j
+      · rw [decide_eq_true (show m + 1 < j by omega)]; rfl
+      · rw [decide_eq_false h2]; simp
+
+-- `Statement:` `exactS infty` is the all-`false` tape.
+example : exactS infty = fun _ => false := by
+  funext k; cases k <;> rfl
 
 /-- `Statement:` `det (exactS x) = x`: `exactS` is a second section of `det`. -/
 theorem det_exactS (x : NInf) : det (exactS x) = x := ext fun n => by
@@ -5080,8 +5119,12 @@ theorem head_also_poles : Antitone firstBitWait ∧ firstBitWait ⊥ = ⊤ ∧
   · have := congrArg (fun f => (f (fun n => decide (n = 1))).1 1) e
     simp [firstBitWait, det, detSeq, infty] at this
 
-/-- `Statement:` CONTROL: no `b : ℕ` is a top of `ℕ`. -/
+/-- `Statement:` CONTROL for `det_poles`: no `b : ℕ` is a top of `ℕ`, so no map `(ℕ → Bool) → ℕ` sends
+    ⊥ of `ℕ → Bool` to a top, as `det` sends it to ⊤ of `NInf` (example below). -/
 theorem nat_no_top (b : ℕ) : ¬ IsTop b := not_isTop b
+
+-- `Statement:` no `f : (ℕ → Bool) → ℕ` sends ⊥ of `ℕ → Bool` to a top of `ℕ`.
+example (f : (ℕ → Bool) → ℕ) : ¬ IsTop (f ⊥) := nat_no_top _
 
 /-- `Statement:` CONTROL: no antitone `f : (ℕ → Bool) → ℕ` sends the tape firing exactly at `n` to
     `n` for every `n`. -/
