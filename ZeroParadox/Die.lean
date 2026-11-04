@@ -4449,6 +4449,277 @@ theorem lpo_of_loopAt_image (r : NInf → Option ℕ)
 
 end Motion
 
+/-! ### § XXIV. A limit pinned from two directions: `PinnedLimit`
+`Reading:` Tim's role (2026-11-03), "squishy" in his word: a value pinned from below as the least
+upper bound of a staircase it is not a stage of, and from the step map as its least fixed point. The
+staircase `s (n + 1) = g (s n)` is `(Motion.ofFun g).IsRun s`, stated beside the role at each
+occupant. The ε₀ occupant is `epsilon0_pinnedLimit` (`ZeroParadox/Ordinal/Epsilon0MinMax.lean` § III). -/
+
+section PinnedLimit
+
+variable {α : Type*} [Preorder α]
+
+/-- `Statement:` `c` is the least upper bound of the stages `Set.range s`, is not a stage, and is the
+    least fixed point of `g`. `Reading:` (a) and (c) at a staircase from ⊥ are the conclusion of
+    Kleene's fixed-point theorem (Mathlib `fixedPoints.lfp_eq_sSup_iterate`, the `example` below);
+    (b) adds that no finite stage reaches `c`. -/
+-- [ZP-CUSTOM] no Mathlib analog | reason: Mathlib states Kleene's theorem as an equation
+-- `lfp = ⨆ n, f^[n] ⊥` on a complete lattice; this is the three-clause predicate on a preorder,
+-- with the not-a-stage clause, so carriers with no complete lattice (`Ordinal`) can occupy it.
+def PinnedLimit (g : α → α) (s : ℕ → α) (c : α) : Prop :=
+  IsLUB (Set.range s) c ∧ c ∉ Set.range s ∧ IsLeast {x | g x = x} c
+
+/-- `Statement:` `PinnedLimit g s c`, and every fixed point of `g` is `c`. -/
+def PinnedLimitUnique (g : α → α) (s : ℕ → α) (c : α) : Prop :=
+  PinnedLimit g s c ∧ ∀ x, g x = x → x = c
+
+end PinnedLimit
+
+-- `Statement:` on a complete lattice, for an ω-Scott-continuous monotone `f`, `lfp f` meets clauses
+-- (a) and (c) at the staircase from ⊥ (Kleene's fixed-point theorem).
+example {β : Type*} [CompleteLattice β] (f : β →o β)
+    (h : OmegaCompletePartialOrder.ωScottContinuous f) :
+    IsLUB (Set.range fun n => (⇑f)^[n] ⊥) f.lfp ∧ IsLeast {x | f x = x} f.lfp :=
+  ⟨by rw [fixedPoints.lfp_eq_sSup_iterate f h]; exact isLUB_iSup,
+    ⟨f.map_lfp, fun _ hx => f.lfp_le_fixed hx⟩⟩
+
+namespace NInf
+
+/-- `Statement:` tape-wise order: `x ≤ y` iff every `true` bit of `x` is a `true` bit of `y`. -/
+instance instPartialOrder : PartialOrder NInf where
+  le x y := ∀ i, x.1 i = true → y.1 i = true
+  le_refl _ _ h := h
+  le_trans _ _ _ h1 h2 i h := h2 i (h1 i h)
+  le_antisymm x y h1 h2 := ext fun i => by
+    cases hx : x.1 i <;> cases hy : y.1 i
+    · rfl
+    · exact absurd (h2 i hy) (by rw [hx]; decide)
+    · exact absurd (h1 i hx) (by rw [hy]; decide)
+    · rfl
+
+/-- `Statement:` the tape-wise order unfolded. -/
+theorem le_def (x y : NInf) : x ≤ y ↔ ∀ i, x.1 i = true → y.1 i = true := Iff.rfl
+
+-- `Statement:` it is the pointwise order of `ℕ → Bool` restricted to `NInf`.
+example (x y : NInf) : x ≤ y ↔ ∀ i, x.1 i ≤ y.1 i :=
+  forall_congr' fun i => by cases x.1 i <;> cases y.1 i <;> decide
+
+/-- `Statement:` ⊥ of `NInf` is `ofNat 0`. -/
+instance instOrderBot : OrderBot NInf where
+  bot := ofNat 0
+  bot_le _ i h := by simp [ofNat] at h
+
+/-- `Statement:` ⊤ of `NInf` is `infty`. -/
+instance instOrderTop : OrderTop NInf where
+  top := infty
+  le_top _ _ _ := rfl
+
+/-- `Statement:` ⊥ of `NInf` is `ofNat 0`. -/
+theorem bot_eq : (⊥ : NInf) = ofNat 0 := rfl
+
+/-- `Statement:` ⊤ of `NInf` is `infty`. -/
+theorem top_eq : (⊤ : NInf) = infty := rfl
+
+-- `Statement:` ⊥ of `NInf` is the all-`false` tape and ⊤ of `NInf` the all-`true` tape.
+example : (⊥ : NInf).1 = (fun _ => false) ∧ (⊤ : NInf).1 = (fun _ => true) :=
+  ⟨funext fun i => by simp [bot_eq, ofNat], rfl⟩
+
+/-- `Statement:` `ofNat m ≤ ofNat n ↔ m ≤ n`; both directions. -/
+theorem ofNat_le_iff (m n : ℕ) : ofNat m ≤ ofNat n ↔ m ≤ n := by
+  constructor
+  · intro h
+    rcases Nat.lt_or_ge n m with hc | hc
+    · have := h n (by simp [ofNat]; omega)
+      simp [ofNat] at this
+    · exact hc
+  · intro h i hi; simp [ofNat] at hi ⊢; omega
+
+/-- `Statement:` `x ≤ succ x`. -/
+theorem le_succ (x : NInf) : x ≤ succ x := fun i h => by
+  cases i with
+  | zero => rfl
+  | succ j => exact x.2 j h
+
+/-- `Statement:` if `succ x ≤ x`, then `x = ∞`. -/
+theorem eq_infty_of_succ_le (x : NInf) (h : succ x ≤ x) : x = infty := by
+  apply ext
+  intro i
+  induction i with
+  | zero => exact h 0 rfl
+  | succ j ih => exact h (j + 1) ih
+
+/-- `Statement:` `succ x = x ↔ x = ∞`; both directions. `Reading:` prior art in
+    `ZeroParadox/DieCannotBe.lean` § XXIX. -/
+theorem succ_fixed_iff (x : NInf) : succ x = x ↔ x = infty :=
+  ⟨fun h => eq_infty_of_succ_le x (le_of_eq h), fun e => e ▸ succ_infty⟩
+
+/-- `Statement:` `∞` is the least upper bound of the finite stages. -/
+theorem isLUB_range_ofNat : IsLUB (Set.range ofNat) infty :=
+  ⟨fun _ _ => le_top, fun _ hb i _ => hb ⟨i + 1, rfl⟩ i (decide_eq_true (Nat.lt_succ_self i))⟩
+
+/-- `Statement:` `∞` is not a finite stage. -/
+theorem infty_not_mem_range_ofNat : infty ∉ Set.range ofNat := fun ⟨n, hn⟩ => ofNat_ne_infty n hn
+
+/-- `Statement:` `ofNat` is a run of `Motion.ofFun succ`, and `∞` occupies `PinnedLimitUnique succ ofNat`. -/
+theorem pinnedLimitUnique_succ :
+    (Motion.ofFun succ).IsRun ofNat ∧ PinnedLimitUnique succ ofNat infty :=
+  ⟨fun n => (succ_ofNat n).symm,
+    ⟨isLUB_range_ofNat, infty_not_mem_range_ofNat,
+      ⟨succ_infty, fun x hx => ((succ_fixed_iff x).1 hx) ▸ le_rfl⟩⟩,
+    fun x hx => (succ_fixed_iff x).1 hx⟩
+
+/-- `Statement:` anything between `ofNat n` and `ofNat (n + 1)` is one of them. -/
+theorem eq_or_eq_of_between (n : ℕ) (c : NInf) (h1 : ofNat n ≤ c) (h2 : c ≤ ofNat (n + 1)) :
+    c = ofNat n ∨ c = ofNat (n + 1) := by
+  have lo : ∀ i, i < n → c.1 i = true := fun i hi => h1 i (decide_eq_true hi)
+  have hi' : ∀ i, n + 1 ≤ i → c.1 i = false := fun i hi => by
+    cases hc : c.1 i
+    · rfl
+    · have := of_decide_eq_true (h2 i hc); omega
+  cases hb : c.1 n
+  · left; exact ext fun i => by
+      show c.1 i = decide (i < n)
+      rcases Nat.lt_trichotomy i n with h | h | h
+      · rw [lo i h]; exact (decide_eq_true h).symm
+      · subst h; rw [hb]; exact (decide_eq_false (Nat.lt_irrefl _)).symm
+      · rw [hi' i h]; exact (decide_eq_false (by omega)).symm
+  · right; exact ext fun i => by
+      show c.1 i = decide (i < n + 1)
+      rcases Nat.lt_trichotomy i n with h | h | h
+      · rw [lo i h]; exact (decide_eq_true (by omega)).symm
+      · subst h; rw [hb]; exact (decide_eq_true (Nat.lt_succ_self _)).symm
+      · rw [hi' i h]; exact (decide_eq_false (by omega)).symm
+
+/-- `Statement:` `ofNat (n + 1)` covers `ofNat n`. -/
+theorem ofNat_covBy (n : ℕ) : ofNat n ⋖ ofNat (n + 1) := by
+  refine ⟨lt_of_le_of_ne ((ofNat_le_iff _ _).2 (by omega)) fun e => ?_, fun c h1 h2 => ?_⟩
+  · have := (ofNat_le_iff (n + 1) n).1 (e ▸ le_rfl); omega
+  · rcases eq_or_eq_of_between n c h1.le h2.le with e | e
+    · exact h1.ne e.symm
+    · exact h2.ne e
+
+/-- `Statement:` `EveryStepCovered NInf`, with the witness `succ x` at each non-maximal `x`. -/
+theorem everyStepCovered : EveryStepCovered NInf := by
+  intro x hx
+  have hne : x ≠ infty := fun e => hx (by rw [e]; exact fun _ _ => le_top)
+  refine ⟨succ x, lt_of_le_of_ne (le_succ x) fun e => hne (eq_infty_of_succ_le x (e ▸ le_rfl)),
+    fun c h1 h2 => ?_⟩
+  apply not_not_exists_ofNat x hne
+  rintro ⟨k, rfl⟩
+  rw [succ_ofNat] at h2
+  rcases eq_or_eq_of_between k c h1.le h2.le with e | e
+  · exact h1.ne e.symm
+  · exact h2.ne e
+
+/-- `Statement:` no point is covered by `∞`. -/
+theorem not_covBy_infty (b : NInf) : ¬ b ⋖ infty := by
+  intro h
+  apply not_not_exists_ofNat b h.lt.ne
+  rintro ⟨k, rfl⟩
+  exact h.2 (ofNat_covBy k).lt (lt_of_le_of_ne le_top (ofNat_ne_infty _))
+
+/-- `Statement:` `∞` is a successor limit of `NInf` (Mathlib `Order.IsSuccLimit`). -/
+theorem isSuccLimit_infty : Order.IsSuccLimit infty :=
+  ⟨fun h => ofNat_ne_infty 0 (le_antisymm bot_le (h (bot_le : (⊥ : NInf) ≤ infty))),
+    fun b => not_covBy_infty b⟩
+
+/-- `Statement:` every finite stage is covered by the next, `BotCovered` and `EveryStepCovered` hold,
+    `∞` is a successor limit, and `eps` is a selection function on all of `NInf` (`eps_spec`). -/
+theorem covered_limit_searchable :
+    (∀ n : ℕ, ofNat n ⋖ ofNat (n + 1)) ∧ BotCovered NInf ∧ EveryStepCovered NInf ∧
+    Order.IsSuccLimit infty ∧
+    ∃ e : (NInf → Bool) → NInf, ∀ p : NInf → Bool, p (e p) = true → ∀ x, p x = true :=
+  ⟨ofNat_covBy, ⟨ofNat 1, ofNat_covBy 0⟩, everyStepCovered, isSuccLimit_infty, ⟨eps, eps_spec⟩⟩
+
+/-- `Statement:` any order isomorphism `NInf ≃o WithTop ℕ` gives WLPO. `Reading:` by
+    `wlpo_of_discrete_tag` at `D = WithTop ℕ`, whose `DecidableEq` is an instance. -/
+theorem wlpo_of_iso (e : NInf ≃o WithTop ℕ) :
+    ∀ r : ℕ → Bool, (∀ n, r n = false) ∨ ¬ ∀ n, r n = false :=
+  wlpo_of_discrete_tag e fun _ => e.injective.eq_iff
+
+/-- `Statement:` `WithTop ℕ → NInf`, `⊤ ↦ ∞` and `n ↦ ofNat n`. -/
+def ofWithTop : WithTop ℕ → NInf
+  | ⊤ => infty
+  | (n : ℕ) => ofNat n
+
+/-- `Statement:` `ofWithTop` is strictly monotone. -/
+theorem ofWithTop_strictMono : StrictMono ofWithTop := by
+  intro a b hab
+  cases a with
+  | top => exact absurd hab not_top_lt
+  | coe m =>
+    cases b with
+    | top => exact lt_of_le_of_ne le_top (ofNat_ne_infty m)
+    | coe n =>
+      have hmn : m < n := by exact_mod_cast hab
+      refine lt_of_le_of_ne ((ofNat_le_iff _ _).2 hmn.le) fun e => ?_
+      have := (ofNat_le_iff n m).1 (le_of_eq (show ofNat n = ofNat m from e.symm)); omega
+
+/-- `Statement:` CONTROL: `NInf ≃o WithTop ℕ` from `Classical.propDecidable`, so `wlpo_of_iso`'s
+    hypothesis is inhabited classically. -/
+noncomputable def orderIsoWithTopClassical : NInf ≃o WithTop ℕ :=
+  (StrictMono.orderIsoOfSurjective ofWithTop ofWithTop_strictMono fun x => by
+    classical
+    by_cases h : ∃ k, x = ofNat k
+    · obtain ⟨k, rfl⟩ := h; exact ⟨k, rfl⟩
+    · exact ⟨⊤, (eq_infty_of_ne_ofNat x fun k e => h ⟨k, e⟩).symm⟩).symm
+
+end NInf
+
+/-- `Statement:` `WithTop ℕ`, step `· + 1`, stages the coercion: `⊤` occupies
+    `PinnedLimitUnique`. `Reading:` INVARIANT across the limit `NInf` (`NInf.pinnedLimitUnique_succ`)
+    and the tag `⊤`: order and fixed point do not separate them; WLPO does (`NInf.wlpo_of_iso`). -/
+theorem pinnedLimitUnique_withTop :
+    (Motion.ofFun fun x : WithTop ℕ => x + 1).IsRun (fun n : ℕ => (n : WithTop ℕ)) ∧
+    PinnedLimitUnique (fun x : WithTop ℕ => x + 1) (fun n : ℕ => (n : WithTop ℕ)) ⊤ := by
+  have fix : ∀ x : WithTop ℕ, x + 1 = x ↔ x = ⊤ := fun x => by
+    constructor
+    · intro h
+      cases x with
+      | top => rfl
+      | coe n =>
+        exfalso
+        rw [← WithTop.coe_one, ← WithTop.coe_add, WithTop.coe_inj] at h
+        exact Nat.succ_ne_self n h
+    · rintro rfl; rfl
+  refine ⟨fun n => show ((n + 1 : ℕ) : WithTop ℕ) = (n : WithTop ℕ) + 1 by simp,
+    ⟨⟨fun _ _ => le_top, fun b hb => ?_⟩, fun ⟨n, hn⟩ => WithTop.coe_ne_top hn,
+    ⟨rfl, fun x hx => ((fix x).1 hx) ▸ le_rfl⟩⟩, fun x hx => (fix x).1 hx⟩
+  cases b with
+  | top => exact le_rfl
+  | coe m =>
+    exfalso
+    have := hb ⟨m + 1, rfl⟩
+    exact absurd (Nat.cast_le.1 this) (by omega)
+
+-- `Statement:` CONTROL: `ℕ` with `Nat.succ` has a run and no occupant (no fixed point).
+example : (Motion.ofFun Nat.succ).IsRun id ∧ ∀ c : ℕ, ¬ PinnedLimit Nat.succ id c :=
+  ⟨fun _ => rfl, fun c ⟨_, _, hfix, _⟩ => Nat.succ_ne_self c hfix⟩
+
+-- `Statement:` CONTROL: on `Fin 3` with step `![1, 2, 2]`, the top `2` is a fixed point and a stage,
+-- so there is no occupant.
+example : (Motion.ofFun (![1, 2, 2] : Fin 3 → Fin 3)).IsRun
+      (fun n => (![1, 2, 2] : Fin 3 → Fin 3)^[n] 0) ∧
+    ∀ c : Fin 3, ¬ PinnedLimit (![1, 2, 2] : Fin 3 → Fin 3)
+      (fun n => (![1, 2, 2] : Fin 3 → Fin 3)^[n] 0) c := by
+  refine ⟨fun n => show (![1, 2, 2] : Fin 3 → Fin 3)^[n + 1] 0 = _ by
+    simp only [Function.iterate_succ_apply'], ?_⟩
+  rintro c ⟨hlub, hnot, _⟩
+  have h2 : (![1, 2, 2] : Fin 3 → Fin 3)^[2] 0 = 2 := rfl
+  have hle : (2 : Fin 3) ≤ c := h2 ▸ hlub.1 ⟨2, rfl⟩
+  have hc : c = 2 := le_antisymm (by fin_cases c <;> decide) hle
+  exact hnot ⟨2, h2.trans hc.symm⟩
+
+-- `Statement:` CONTROL: on `NInf` with `g = id`, the least fixed point is ⊥ of `NInf`, `ofNat 0`, not
+-- the least upper bound `∞` of the stages, so no point occupies `PinnedLimit id NInf.ofNat`.
+example : IsLeast {x : NInf | id x = x} (NInf.ofNat 0) ∧
+    ∀ c : NInf, ¬ PinnedLimit id NInf.ofNat c := by
+  refine ⟨⟨rfl, fun _ _ => bot_le⟩, fun c ⟨hlub, _, _, hleast⟩ => ?_⟩
+  have hc : c = NInf.infty := hlub.unique NInf.isLUB_range_ofNat
+  have hbot : c ≤ NInf.ofNat 0 := hleast (show id (NInf.ofNat 0) = NInf.ofNat 0 from rfl)
+  rw [hc] at hbot
+  exact absurd (hbot 0 rfl) (by decide)
+
 end ZeroParadox
 
 section PurityCheck
@@ -4896,5 +5167,31 @@ open ZeroParadox
 #print axioms Motion.wem_of_selectedTotal_propStep
 #print axioms Motion.em_of_trichotomy_propStep
 #print axioms Motion.trichotomy_of_em
+#print axioms PinnedLimit
+#print axioms PinnedLimitUnique
+#print axioms NInf.instPartialOrder
+#print axioms NInf.le_def
+#print axioms NInf.instOrderBot
+#print axioms NInf.instOrderTop
+#print axioms NInf.bot_eq
+#print axioms NInf.top_eq
+#print axioms NInf.ofNat_le_iff
+#print axioms NInf.le_succ
+#print axioms NInf.eq_infty_of_succ_le
+#print axioms NInf.succ_fixed_iff
+#print axioms NInf.isLUB_range_ofNat
+#print axioms NInf.infty_not_mem_range_ofNat
+#print axioms NInf.pinnedLimitUnique_succ
+#print axioms NInf.eq_or_eq_of_between
+#print axioms NInf.ofNat_covBy
+#print axioms NInf.everyStepCovered
+#print axioms NInf.not_covBy_infty
+#print axioms NInf.isSuccLimit_infty
+#print axioms NInf.covered_limit_searchable
+#print axioms NInf.wlpo_of_iso
+#print axioms NInf.ofWithTop
+#print axioms NInf.ofWithTop_strictMono
+#print axioms NInf.orderIsoWithTopClassical
+#print axioms pinnedLimitUnique_withTop
 
 end PurityCheck

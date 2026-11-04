@@ -169,6 +169,8 @@ example : (∀ a : Ordinal.{u}, Ordinal.nfp (fun α => Ordinal.omega0 ^ α) a =
 #check @ZeroParadox.epsilon0_min_eq_max       -- Statement: ε₀ is the sup of the tower ∧ the least fixed point of ω^· (`IsLeast`)
 #check @ZeroParadox.epsilon0_least_fixedpoint -- Statement: the MIN face, lower-bound half only: ε₀ ≤ every fixed point of ω^·
 #check @ZeroParadox.epsilonZero_eq_iSup       -- Statement: the MAX face: ε₀ is the supremum of the ω-tower
+#check @ZeroParadox.epsilon0_pinnedLimit      -- Statement: the tower is a run of ω^·, and ε₀ occupies the die role `PinnedLimit` (least upper bound of the stages, not a stage, least fixed point)
+#check @ZeroParadox.epsilon0_not_pinnedLimitUnique -- Statement: and not its strong form `PinnedLimitUnique`: ε₁ is another fixed point. Reading: `PinnedLimit` is not the ε₀ role of § I-b; ε₀ is one occupant (`ZeroParadox/DieCannotBe.lean` § XXIX)
 #check @ZeroParadox.nothing_between_is_a_step -- Statement: no ordinal below ε₀ is fixed by ω^·. Reading: the in-between ordinals are stages of the ascent, not landings
 #check @ZeroParadox.bot_is_not_a_step         -- Statement: ω^0 ≠ 0: ⊥ of `Ordinal` is not fixed by ω^·. Reading: with the line above, ε₀ is the first landing in the FIXED-POINT order; ⊥ ⋖ ε₀ is false and is not claimed
 -- Reading: ε₀ is the minimum step next to the pole, never the pole: "next to" in the fixed-point order

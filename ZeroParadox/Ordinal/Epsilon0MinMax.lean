@@ -106,6 +106,31 @@ def epsilon0MinMaxStatement : Prop :=
 example : epsilon0EqNfpBotStatement := epsilon0_eq_nfp_bot
 example : epsilon0MinMaxStatement := epsilon0_min_eq_max
 
+/-! ### § III. ε₀ occupies the die role `PinnedLimit` (`ZeroParadox/Die.lean` § XXIV)
+
+`Statement:` COINCIDENCE, the two faces of § II as one role: the tower from ⊥ of `Ordinal` is a run
+of `α ↦ ω^α`, and ε₀ is its least upper bound, is not a stage, and is the least fixed point. The role
+is not the ε₀ role of `ZeroParadox/Ordinal/Epsilon0CannotBe.lean` § I-b, and ε₀ is one occupant. -/
+
+/-- `Statement:` `fundamentalSeq` is a run of `Motion.ofFun (ω^·)`, and ε₀ occupies
+    `PinnedLimit (ω^·) fundamentalSeq`, by `epsilon0_min_eq_max` and `epsilonZero_tower_lt`. -/
+theorem epsilon0_pinnedLimit :
+    (Motion.ofFun fun α : Ordinal => Ordinal.omega0 ^ α).IsRun fundamentalSeq ∧
+    PinnedLimit (fun α : Ordinal => Ordinal.omega0 ^ α) fundamentalSeq epsilonZero := by
+  obtain ⟨hsup, hleast⟩ := epsilon0_min_eq_max
+  refine ⟨fun n => ?_, ?_, fun ⟨n, hn⟩ => (epsilonZero_tower_lt n).ne hn, hleast⟩
+  · show fundamentalSeq (n + 1) = Ordinal.omega0 ^ fundamentalSeq n
+    simp only [fundamentalSeq, Function.iterate_succ_apply']
+  · rw [hsup]
+    exact isLUB_ciSup ⟨epsilonZero, fun _ ⟨n, hn⟩ => hn ▸ (epsilonZero_tower_lt n).le⟩
+
+/-- `Statement:` ε₀ does not occupy `PinnedLimitUnique (ω^·) fundamentalSeq`: ε₁ is another fixed
+    point (Mathlib `Ordinal.omega0_opow_epsilon`). -/
+theorem epsilon0_not_pinnedLimitUnique :
+    ¬ PinnedLimitUnique (fun α : Ordinal => Ordinal.omega0 ^ α) fundamentalSeq epsilonZero :=
+  fun ⟨_, h⟩ => (Ordinal.veblen_right_strictMono 1 (show (0 : Ordinal) < 1 from zero_lt_one)).ne
+    (h _ (Ordinal.omega0_opow_epsilon 1)).symm
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check
@@ -126,4 +151,6 @@ open ZeroParadox
 -- The statement controls: the statements alone.
 #print axioms epsilon0EqNfpBotStatement
 #print axioms epsilon0MinMaxStatement
+#print axioms epsilon0_pinnedLimit
+#print axioms epsilon0_not_pinnedLimitUnique
 end PurityCheck

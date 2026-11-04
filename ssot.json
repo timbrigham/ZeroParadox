@@ -658,8 +658,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 3008,
-        "files": 188
+        "declarations": 3100,
+        "files": 196
       },
       "entries": [
         {
@@ -2916,6 +2916,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "04e94a4a-af12-4cb9-8f5e-6334ed3a15bb",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.orderIsoWithTopClassical",
+            "short": "orderIsoWithTopClassical"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.orderIsoWithTopClassical",
+            "short": "orderIsoWithTopClassical",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-pinnedlimit-1103: Tim's die role PinnedLimit (Die.lean § XXIV: role, NInf order + occupant, link, WLPO separation, WithTop control) and the ε₀ occupant (Epsilon0MinMax § III); Tim ruled 2026-11-03",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "04eae2ca-a667-41d6-bacf-b917b1d432f9",
           "new": {
             "file": "ZeroParadox/Ordinal/Epsilon0MinMax.lean",
@@ -4339,6 +4374,41 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0759ab64-8cf4-4ef1-9759-9ca9ce964493",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.pinnedLimitUnique_succ",
+            "short": "pinnedLimitUnique_succ"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.pinnedLimitUnique_succ",
+            "short": "pinnedLimitUnique_succ",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-pinnedlimit-1103: Tim's die role PinnedLimit (Die.lean § XXIV: role, NInf order + occupant, link, WLPO separation, WithTop control) and the ε₀ occupant (Epsilon0MinMax § III); Tim ruled 2026-11-03",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -7355,6 +7425,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "0e2b34e6-5982-4b50-b0f8-455086d1c235",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.le_succ",
+            "short": "le_succ"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.le_succ",
+            "short": "le_succ",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-pinnedlimit-1103: Tim's die role PinnedLimit (Die.lean § XXIV: role, NInf order + occupant, link, WLPO separation, WithTop control) and the ε₀ occupant (Epsilon0MinMax § III); Tim ruled 2026-11-03",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "0e572484-edbf-4bf2-bcf3-090dedba73a4",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -7852,6 +7957,41 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0f075c7c-50b1-4d1a-a0bf-66519f4c2415",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.everyStepCovered",
+            "short": "everyStepCovered"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.everyStepCovered",
+            "short": "everyStepCovered",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-pinnedlimit-1103: Tim's die role PinnedLimit (Die.lean § XXIV: role, NInf order + occupant, link, WLPO separation, WithTop control) and the ε₀ occupant (Epsilon0MinMax § III); Tim ruled 2026-11-03",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -10501,6 +10641,41 @@
             ]
           },
           "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "159d8791-cdea-4866-b364-f76e989b01f7",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.ofNat_covBy",
+            "short": "ofNat_covBy"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.ofNat_covBy",
+            "short": "ofNat_covBy",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-pinnedlimit-1103: Tim's die role PinnedLimit (Die.lean § XXIV: role, NInf order + occupant, link, WLPO separation, WithTop control) and the ε₀ occupant (Epsilon0MinMax § III); Tim ruled 2026-11-03",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -14096,6 +14271,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "1ddb1501-4fe4-447b-81e6-f039257607d5",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.instOrderBot",
+            "short": "instOrderBot"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.instOrderBot",
+            "short": "instOrderBot",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-pinnedlimit-1103: Tim's die role PinnedLimit (Die.lean § XXIV: role, NInf order + occupant, link, WLPO separation, WithTop control) and the ε₀ occupant (Epsilon0MinMax § III); Tim ruled 2026-11-03",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "1df4ac94-e7f7-420c-9128-f9f5c6630383",
           "new": {
             "file": "ZeroParadox/Multihomed/SnapFrameChange.lean",
@@ -16226,6 +16436,41 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "23192d37-2109-4c20-9bcc-ad704e3332ff",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.ofWithTop_strictMono",
+            "short": "ofWithTop_strictMono"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.ofWithTop_strictMono",
+            "short": "ofWithTop_strictMono",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-pinnedlimit-1103: Tim's die role PinnedLimit (Die.lean § XXIV: role, NInf order + occupant, link, WLPO separation, WithTop control) and the ε₀ occupant (Epsilon0MinMax § III); Tim ruled 2026-11-03",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -23870,6 +24115,41 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "34c93bb7-4a63-4166-9334-e32bb6b56f3f",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.instPartialOrder",
+            "short": "instPartialOrder"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.instPartialOrder",
+            "short": "instPartialOrder",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-pinnedlimit-1103: Tim's die role PinnedLimit (Die.lean § XXIV: role, NInf order + occupant, link, WLPO separation, WithTop control) and the ε₀ occupant (Epsilon0MinMax § III); Tim ruled 2026-11-03",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "34d59c50-8f0b-44f1-be49-526ea004bb13",
           "new": {
@@ -28055,6 +28335,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "3fa70181-49c6-4b44-9f78-e6e36fcfdfe1",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.isLUB_range_ofNat",
+            "short": "isLUB_range_ofNat"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.isLUB_range_ofNat",
+            "short": "isLUB_range_ofNat",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-pinnedlimit-1103: Tim's die role PinnedLimit (Die.lean § XXIV: role, NInf order + occupant, link, WLPO separation, WithTop control) and the ε₀ occupant (Epsilon0MinMax § III); Tim ruled 2026-11-03",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "3fb59d5b-e0ec-4d56-afe1-8a8639ea6a07",
           "new": {
             "file": "ZeroParadox/Multihomed/BoundaryOrder.lean",
@@ -28885,6 +29200,41 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "425d7e34-6b55-4d24-86ca-3a2479362269",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.bot_eq",
+            "short": "bot_eq"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.bot_eq",
+            "short": "bot_eq",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-pinnedlimit-1103: Tim's die role PinnedLimit (Die.lean § XXIV: role, NInf order + occupant, link, WLPO separation, WithTop control) and the ε₀ occupant (Epsilon0MinMax § III); Tim ruled 2026-11-03",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -40275,6 +40625,41 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "5ac35f0d-2af4-4b9c-9972-0412f063c48a",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.PinnedLimitUnique",
+            "short": "PinnedLimitUnique"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.PinnedLimitUnique",
+            "short": "PinnedLimitUnique",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-pinnedlimit-1103: Tim's die role PinnedLimit (Die.lean § XXIV: role, NInf order + occupant, link, WLPO separation, WithTop control) and the ε₀ occupant (Epsilon0MinMax § III); Tim ruled 2026-11-03",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "5ac8e4ba-e1e1-43a1-b54c-98de12febab6",
           "new": {
@@ -42250,6 +42635,41 @@
             "role": []
           },
           "reason": "die-tagged-1029: the adjoined point tagged (Option ℕ) or a limit (Escardó's ℕ∞, NInf): uniform Bool-step trichotomy and selector free on NInf, LPO on Option ℕ; WLPO at ∞; the chain Option ℕ → NInf → Part ℕ and NInf ≃ Computation Unit (Die § XXIII); Tim ruling 2026-10-29",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "5f1fb134-3478-4174-b701-7f2851c00966",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.eq_infty_of_succ_le",
+            "short": "eq_infty_of_succ_le"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.eq_infty_of_succ_le",
+            "short": "eq_infty_of_succ_le",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-pinnedlimit-1103: Tim's die role PinnedLimit (Die.lean § XXIV: role, NInf order + occupant, link, WLPO separation, WithTop control) and the ε₀ occupant (Epsilon0MinMax § III); Tim ruled 2026-11-03",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -47304,6 +47724,41 @@
             ]
           },
           "reason": "Renamed from emission_not_arity_separates after the adversary and prior-art gates: 'emission' was the wrong discriminator (natPF_NatListRegime has the same Bool head type and a one-point infinite part). Rutten TCS 249 (2000) Ex 10.2(5) p.44 gives the governing formula - for a constant-arity polynomial functor the HEAD type decides, the arity does not.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "6bd56a87-1724-48e7-bdcf-b96c1cbc1623",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.instOrderTop",
+            "short": "instOrderTop"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.instOrderTop",
+            "short": "instOrderTop",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-pinnedlimit-1103: Tim's die role PinnedLimit (Die.lean § XXIV: role, NInf order + occupant, link, WLPO separation, WithTop control) and the ε₀ occupant (Epsilon0MinMax § III); Tim ruled 2026-11-03",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -52737,6 +53192,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "78027330-5a2a-4289-b209-2dbc2d7cfbf8",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.ofWithTop",
+            "short": "ofWithTop"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.ofWithTop",
+            "short": "ofWithTop",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-pinnedlimit-1103: Tim's die role PinnedLimit (Die.lean § XXIV: role, NInf order + occupant, link, WLPO separation, WithTop control) and the ε₀ occupant (Epsilon0MinMax § III); Tim ruled 2026-11-03",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "7815675b-2cad-4a15-a4c5-8c03a814c669",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -55288,6 +55778,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "7d91ffcc-96e2-4d26-b518-fb8bb159b481",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.infty_not_mem_range_ofNat",
+            "short": "infty_not_mem_range_ofNat"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.infty_not_mem_range_ofNat",
+            "short": "infty_not_mem_range_ofNat",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-pinnedlimit-1103: Tim's die role PinnedLimit (Die.lean § XXIV: role, NInf order + occupant, link, WLPO separation, WithTop control) and the ε₀ occupant (Epsilon0MinMax § III); Tim ruled 2026-11-03",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "7d926289-3b3c-4a4c-b392-2d4c0a498598",
           "new": {
             "file": "ZeroParadox/Settheory/Loeb.lean",
@@ -57333,6 +57858,41 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "81ac3705-4bd4-4c91-b6ec-a75e86b1aa89",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.covered_limit_searchable",
+            "short": "covered_limit_searchable"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.covered_limit_searchable",
+            "short": "covered_limit_searchable",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-pinnedlimit-1103: Tim's die role PinnedLimit (Die.lean § XXIV: role, NInf order + occupant, link, WLPO separation, WithTop control) and the ε₀ occupant (Epsilon0MinMax § III); Tim ruled 2026-11-03",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -62260,6 +62820,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "8e4d0870-4726-42b6-9664-81c44f073be2",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.le_def",
+            "short": "le_def"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.le_def",
+            "short": "le_def",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-pinnedlimit-1103: Tim's die role PinnedLimit (Die.lean § XXIV: role, NInf order + occupant, link, WLPO separation, WithTop control) and the ε₀ occupant (Epsilon0MinMax § III); Tim ruled 2026-11-03",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "8e5d89b6-9622-4c34-bc55-25b9908b8597",
           "new": {
             "file": "ZeroParadox/Settheory/GraphBisim.lean",
@@ -63981,6 +64576,41 @@
             ]
           },
           "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "920d15b3-c238-450d-a20f-cca897299548",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.isSuccLimit_infty",
+            "short": "isSuccLimit_infty"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.isSuccLimit_infty",
+            "short": "isSuccLimit_infty",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-pinnedlimit-1103: Tim's die role PinnedLimit (Die.lean § XXIV: role, NInf order + occupant, link, WLPO separation, WithTop control) and the ε₀ occupant (Epsilon0MinMax § III); Tim ruled 2026-11-03",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -72355,6 +72985,41 @@
             ]
           },
           "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a3d9b9b1-22a3-4f35-be5b-45f4460d2000",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.eq_or_eq_of_between",
+            "short": "eq_or_eq_of_between"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.eq_or_eq_of_between",
+            "short": "eq_or_eq_of_between",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-pinnedlimit-1103: Tim's die role PinnedLimit (Die.lean § XXIV: role, NInf order + occupant, link, WLPO separation, WithTop control) and the ε₀ occupant (Epsilon0MinMax § III); Tim ruled 2026-11-03",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -84142,6 +84807,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "be254ee7-1348-47f8-af8b-ffcec2af6533",
+          "new": {
+            "file": "ZeroParadox/Ordinal/Epsilon0MinMax.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.epsilon0_pinnedLimit",
+            "short": "epsilon0_pinnedLimit"
+          },
+          "old": {
+            "file": "ZeroParadox/Ordinal/Epsilon0MinMax.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.epsilon0_pinnedLimit",
+            "short": "epsilon0_pinnedLimit",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [
+              "ceiling"
+            ],
+            "role": []
+          },
+          "reason": "die-pinnedlimit-1103: Tim's die role PinnedLimit (Die.lean § XXIV: role, NInf order + occupant, link, WLPO separation, WithTop control) and the ε₀ occupant (Epsilon0MinMax § III); Tim ruled 2026-11-03",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "be26f940-4d97-4605-9dec-4413c1173d28",
           "new": {
@@ -90896,6 +91598,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "ce35aa34-fdf5-4d56-a240-45aa4a4bb2b9",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.top_eq",
+            "short": "top_eq"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.top_eq",
+            "short": "top_eq",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-pinnedlimit-1103: Tim's die role PinnedLimit (Die.lean § XXIV: role, NInf order + occupant, link, WLPO separation, WithTop control) and the ε₀ occupant (Epsilon0MinMax § III); Tim ruled 2026-11-03",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "ce36d385-8fe0-48c3-9c95-79ac401e8937",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -96292,6 +97029,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "da2311b0-8bc6-4888-932c-58ece9b49aac",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.pinnedLimitUnique_withTop",
+            "short": "pinnedLimitUnique_withTop"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.pinnedLimitUnique_withTop",
+            "short": "pinnedLimitUnique_withTop",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-pinnedlimit-1103: Tim's die role PinnedLimit (Die.lean § XXIV: role, NInf order + occupant, link, WLPO separation, WithTop control) and the ε₀ occupant (Epsilon0MinMax § III); Tim ruled 2026-11-03",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "da279e79-c0b6-4b4d-830d-a2936849d384",
           "new": {
             "file": "ZeroParadox/Category/Category.lean",
@@ -97645,6 +98417,41 @@
             ]
           },
           "reason": "Die stage/closure shape and registration switch (Die.lean § VI-VII), with its two face maps in their existing homes (Epsilon0LeastFP, Occurrence)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "dd456d8b-95b2-46e2-bb0e-019711890de2",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.succ_fixed_iff",
+            "short": "succ_fixed_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.succ_fixed_iff",
+            "short": "succ_fixed_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-pinnedlimit-1103: Tim's die role PinnedLimit (Die.lean § XXIV: role, NInf order + occupant, link, WLPO separation, WithTop control) and the ε₀ occupant (Epsilon0MinMax § III); Tim ruled 2026-11-03",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -99510,6 +100317,41 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e1593a2d-318b-4a60-accf-74f39081b708",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.PinnedLimit",
+            "short": "PinnedLimit"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.PinnedLimit",
+            "short": "PinnedLimit",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-pinnedlimit-1103: Tim's die role PinnedLimit (Die.lean § XXIV: role, NInf order + occupant, link, WLPO separation, WithTop control) and the ε₀ occupant (Epsilon0MinMax § III); Tim ruled 2026-11-03",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -103584,6 +104426,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "e97eec52-eeab-4a4d-aeb2-b10a130b7b88",
+          "new": {
+            "file": "ZeroParadox/Ordinal/Epsilon0MinMax.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.epsilon0_not_pinnedLimitUnique",
+            "short": "epsilon0_not_pinnedLimitUnique"
+          },
+          "old": {
+            "file": "ZeroParadox/Ordinal/Epsilon0MinMax.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.epsilon0_not_pinnedLimitUnique",
+            "short": "epsilon0_not_pinnedLimitUnique",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [
+              "ceiling"
+            ],
+            "role": []
+          },
+          "reason": "die-pinnedlimit-1103: Tim's die role PinnedLimit (Die.lean § XXIV: role, NInf order + occupant, link, WLPO separation, WithTop control) and the ε₀ occupant (Epsilon0MinMax § III); Tim ruled 2026-11-03",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "e9980d8f-aad6-4f2c-aff4-c390f23883cb",
           "new": {
             "file": "ZeroParadox/Information/Disjunctive.lean",
@@ -106228,6 +107107,41 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f11766d4-4782-46cd-8557-54bb7a767778",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.ofNat_le_iff",
+            "short": "ofNat_le_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.ofNat_le_iff",
+            "short": "ofNat_le_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-pinnedlimit-1103: Tim's die role PinnedLimit (Die.lean § XXIV: role, NInf order + occupant, link, WLPO separation, WithTop control) and the ε₀ occupant (Epsilon0MinMax § III); Tim ruled 2026-11-03",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -110376,6 +111290,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "f9e82d28-2886-47b2-9d77-0c74ecf06112",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.wlpo_of_iso",
+            "short": "wlpo_of_iso"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.wlpo_of_iso",
+            "short": "wlpo_of_iso",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-pinnedlimit-1103: Tim's die role PinnedLimit (Die.lean § XXIV: role, NInf order + occupant, link, WLPO separation, WithTop control) and the ε₀ occupant (Epsilon0MinMax § III); Tim ruled 2026-11-03",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "f9f9d31c-13be-449e-be71-ba110078ecea",
           "new": {
             "file": "ZeroParadox/Category/NextTimeCategorical.lean",
@@ -111474,6 +112423,41 @@
             ]
           },
           "reason": "New experimental probe RequirementsGap.lean — instance-vs-requirements gap as a fork instance (object-level of Tim's conjecture)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "fbb76e8d-9bd6-4503-a873-3ce82da4f437",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.not_covBy_infty",
+            "short": "not_covBy_infty"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.not_covBy_infty",
+            "short": "not_covBy_infty",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-pinnedlimit-1103: Tim's die role PinnedLimit (Die.lean § XXIV: role, NInf order + occupant, link, WLPO separation, WithTop control) and the ε₀ occupant (Epsilon0MinMax § III); Tim ruled 2026-11-03",
           "verify": {
             "axioms": null,
             "sorry_free": true

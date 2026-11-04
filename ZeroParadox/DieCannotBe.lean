@@ -4803,4 +4803,26 @@ example : (∀ n, ZeroParadox.slotRun (fun _ => false) n = false) ∧
 #check @ZeroParadox.t_snap_of_avoids           -- Statement: § VI's hypotheses on a tape give its `hw` and `t_snap_of_fires_once`'s conclusion; one way
 -- Reading: `hw` is the occurrence commitment in its slot chart (`ZeroParadox/Order/SnapCannotBe.lean` § II).
 
+/-! ### § XXIX. A limit pinned from two directions: `PinnedLimit` -/
+-- Reading: Tim's role, "squishy" in his word: pinned from below by a staircase and from the step map
+-- by its fixed points. Definitions and proofs: `ZeroParadox/Die.lean` § XXIV.
+#check @ZeroParadox.PinnedLimit                -- Statement: `c` is the least upper bound of `Set.range s`, is not in it, and is the least fixed point of `g`
+#check @ZeroParadox.PinnedLimitUnique          -- Statement: `PinnedLimit g s c`, and every fixed point of `g` is `c`
+#check @ZeroParadox.NInf.instPartialOrder      -- Statement: tape-wise order on `NInf`, ⊥ of `NInf` the all-`false` tape `NInf.ofNat 0`, ⊤ the all-`true` tape `NInf.infty`
+#check @ZeroParadox.NInf.succ_fixed_iff        -- Statement: `succ x = x ↔ x = ∞`; both directions
+-- Reading (cited, not claimed): TypeTopology's module `TypeTopology.SquashedCantor` uses "the fact
+-- that ∞ is the unique fixed point of Succ", and `TypeTopology.GenericConvergentSequence` has the
+-- right-to-left half, `Succ-∞-is-∞` (both retrieved 2026-11-03).
+#check @ZeroParadox.NInf.pinnedLimitUnique_succ -- Statement: `NInf.ofNat` is a run of `succ`, and `∞` occupies `PinnedLimitUnique succ NInf.ofNat`
+#check @ZeroParadox.epsilon0_pinnedLimit       -- Statement: ε₀ occupies `PinnedLimit (ω^·) fundamentalSeq`, the tower from ⊥ of `Ordinal`
+#check @ZeroParadox.epsilon0_not_pinnedLimitUnique -- Statement: ε₀ does not occupy `PinnedLimitUnique`: ε₁ is another fixed point
+-- Statement: CARRIER. `NInf`'s `∞` closes the counting staircase `NInf.ofNat` and ε₀ closes the
+-- ω-tower; each occupies the role in its own carrier, and no identity between them is stated.
+#check @ZeroParadox.NInf.covered_limit_searchable -- Statement: each `NInf.ofNat n ⋖ NInf.ofNat (n + 1)`, `BotCovered` and `EveryStepCovered` hold, `∞` is a successor limit, and `eps` is a selection function on `NInf`
+-- Statement: INVARIANT across limit and tag: `WithTop ℕ` with `· + 1` also occupies the strong role
+-- at `⊤`, so order and fixed point do not separate `∞` from a tag.
+#check @ZeroParadox.pinnedLimitUnique_withTop
+#check @ZeroParadox.NInf.wlpo_of_iso           -- Statement: any order isomorphism `NInf ≃o WithTop ℕ` gives WLPO (`[propext, Quot.sound]`)
+#check @ZeroParadox.NInf.orderIsoWithTopClassical -- Statement: CONTROL: such an isomorphism from `Classical.propDecidable`, with no WLPO hypothesis
+
 end DieCannotBeIndex
