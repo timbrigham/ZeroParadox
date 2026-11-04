@@ -187,7 +187,7 @@ example :
     fun ⟨hw, hm⟩ f => (hw f).imp id (hm f)⟩
   rw [heq] at hn; cases hn
 
--- Statement: the same split at the same ⊥, as continuity rather than logic: no continuous Boolean
+-- Statement: the same decision at the same ⊥ (LPO's shape), as continuity rather than logic: no continuous Boolean
 -- test on `ℕ → Bool` (product topology) is `true` exactly on the tapes with a `true`, and any such
 -- test fails to be continuous at ⊥ of `ℕ → Bool`. Home: `ZeroParadox/Information/CrossingTrials.lean`
 -- § IX, with the converse direction (a test fixed by one finite prefix is continuous).

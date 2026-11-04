@@ -642,8 +642,8 @@ example : IsEmpty (Primcodable (ℕ → Bool)) :=
     cases h' : f m m <;> simp [h'] at this⟩
 
 /-- **`Statement:` if `f : (ℕ → Bool) → Bool` is continuous, one `N` has: tapes agreeing below `N`
-get the same value.** By compactness of `ℕ → Bool`; the Baire-space `example` below shows the
-uniform `N` needs it. -/
+get the same value.** By compactness of `ℕ → Bool`; the Baire-space `example` below shows
+continuity alone does not give the uniform `N`. -/
 theorem prefixDetermined_of_continuous (f : (ℕ → Bool) → Bool) (hf : Continuous f) :
     ∃ N, ∀ w w' : ℕ → Bool, (∀ i < N, w i = w' i) → f w = f w' := by
   have hn : ∀ w : ℕ → Bool, ∃ n, PiNat.cylinder w n ⊆ f ⁻¹' {f w} := by
@@ -744,7 +744,7 @@ example : ∃ f : (ℕ → Bool) → Bool, ¬ Continuous f := by
   exact ⟨fun w => decide (∃ k, w k = true), fun hc =>
     no_continuous_test_fires_once ⟨_, hc, fun w => by simp⟩⟩
 
--- Statement: CONTROL, the uniform `N` needs compactness: on `ℕ → ℕ`, `w ↦ (w (w 0) = 0)` is
+-- Statement: CONTROL, continuity alone does not give the uniform `N`: on `ℕ → ℕ`, `w ↦ (w (w 0) = 0)` is
 -- continuous and no single prefix length fixes its value.
 example : ∃ f : (ℕ → ℕ) → Bool, Continuous f ∧
     ¬ ∃ N, ∀ w w' : ℕ → ℕ, (∀ i < N, w i = w' i) → f w = f w' := by

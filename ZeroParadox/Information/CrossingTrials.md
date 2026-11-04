@@ -1,8 +1,8 @@
-# Crossing trials, § IV–IX: from almost surely to one run, from one firing to a state sequence, and why a finite reading can confirm a firing and never refute one
+# Crossing trials, § IV–IX: from almost surely to one run, from one firing to a state sequence, and why a finite reading can confirm a firing (`isOpen_fires_once`) and never refute one
 
 Ride-along for `ZeroParadox/Information/CrossingTrials.lean`. The Lean file holds the declarations, the
 Engineer's Take and the per-declaration glosses; this file holds the prior art, the open items and the
-two-chart reading for § IV–VII, and the conditionals of § VIII and § IX below.
+two-chart reading for § IV–VII (`Reading:` CARRIER, § Two charts below), and the conditionals of § VIII and § IX below.
 
 ## What the sections establish, as conditionals
 
@@ -52,8 +52,8 @@ two-chart reading for § IV–VII, and the conditionals of § VIII and § IX bel
   single prefix length for every tape, so the uniform `N` is not a consequence of continuity alone.
   Direction: fixed by one finite prefix length ⇔ continuous (both proved); computable ⇒ continuous
   (cited below, not proved). A Type-2 machine is Weihrauch's machine model for computing on infinite tapes;
-  the proof of his Theorem 2.2.3 (p. 30) uses only that it reads a finite prefix of each input tape
-  before producing each finite piece of output (its definition, § 2.1, was not retrieved here). `Reading:` (cited, not
+  the proof of his Theorem 2.2.3 (p. 30) rests on its reading only a finite prefix of each infinite
+  input tape before it halts or produces each finite piece of output (its definition, § 2.1, was not retrieved here). `Reading:` (cited, not
   claimed) since every computable function on these tapes is continuous (Weihrauch, Thm 2.2.3, p. 30,
   read with a Boolean answer as a one-letter word of Σ*), no Type-2 machine computes a total test
   deciding firing. Asking that every tape be decided, as a proposition rather than by a Boolean
@@ -65,9 +65,8 @@ two-chart reading for § IV–VII, and the conditionals of § VIII and § IX bel
   (`not_continuousAt_bot_of_decides_fires_once`). The occurrence commitment's slot chart is a bit that
   a finite reading can confirm and never refute.
   Footprints: every § IX declaration measures `[propext, Classical.choice, Quot.sound]`, and so does
-  `ContinuousTestStatement`, the bare proposition that some test on `ℕ → Bool` is continuous, so the
-  choice enters through the statement's `Continuous` on this space (STATEMENT-CARRIED,
-  `ZeroParadox/Category/ChoiceCannotBe.md`); a statement control for each § IX theorem is not recorded
+  `ContinuousTestStatement`, the bare proposition that some test on `ℕ → Bool` is continuous
+  (STATEMENT-CARRIED, `ZeroParadox/Category/ChoiceCannotBe.md`); a statement control for each § IX theorem is not recorded
   here. `t_snap_of_fires_once` itself measures `[propext, Quot.sound]`.
 
 ## Prior art
@@ -153,15 +152,15 @@ two-chart reading for § IV–VII, and the conditionals of § VIII and § IX bel
   Theorem 2.2.6(1) is the decidable-iff-clopen counterpart); `Profinite.exists_locallyConstant`
   (`Mathlib/Topology/Category/Profinite/CofilteredLimit.lean`), a locally constant function on a
   cofiltered limit of profinite spaces factors through one stage, which Mathlib instantiates on closed
-  subsets of `I → Bool` as `Profinite.NobelingProof.fin_comap_jointlySurjective`
-  (`Mathlib/Topology/Category/Profinite/Nobeling/Span.lean`, `ℤ`-valued, through a finite set of
-  coordinates), the closest Mathlib form of `prefixDetermined_of_continuous`, which uses one prefix
+  subsets of `I → Bool` as `Profinite.NobelingProof.fin_comap_jointlySurjective` for a linearly
+  ordered `I` (`Mathlib/Topology/Category/Profinite/Nobeling/Span.lean`, `ℤ`-valued, through a finite
+  set of coordinates), a Mathlib form near `prefixDetermined_of_continuous`, which uses one prefix
   length instead. The § IX statements as written were not located as of 2026-11-03,
   searched as follows: `exact?` on the prefix form, on a `DependsOn` form and on `¬ IsClopen` of the
   fired set (no hit, an uninformative null); LeanExplore, three phrasings (continuous map from Cantor
   space depends on a finite prefix; locally constant map on a compact product factors through finitely
-  many coordinates; clopen subsets of Cantor space as finite unions of cylinders), which returned the
-  neighbour above and `TopologicalSpace.Clopens.surjective_finset_sup_prod`
+  many coordinates; clopen subsets of Cantor space as finite unions of cylinders), which returned
+  `Profinite.exists_locallyConstant` and `TopologicalSpace.Clopens.surjective_finset_sup_prod`
   (`Mathlib/Topology/ClopenBox.lean`, binary products only). Computability on tapes: Mathlib's
   `Computable` takes `Primcodable` types and `ℕ → Bool` has none (the first § IX `example`); the nearest
   Mathlib notion, `RecursiveIn` / `ComputableIn` (`Mathlib/Computability/RecursiveIn.lean`), is
