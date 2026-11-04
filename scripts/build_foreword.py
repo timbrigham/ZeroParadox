@@ -1,5 +1,5 @@
 """
-Zero Paradox — Foreword PDF Builder (v2.36, revised October 2026)
+Zero Paradox — Foreword PDF Builder (v2.40, revised November 2026)
 Follows all rules in pdf rendering standards.md:
   - All table cells are Paragraph objects
   - No unicode subscripts — use sub/super tags
@@ -9,7 +9,7 @@ Follows all rules in pdf rendering standards.md:
 import os
 from zp_utils import *
 
-VERSION = '2.36'
+VERSION = '2.40'
 FIRST_RELEASED = 'April 2026'
 
 # ── fix() and prose_check() guard on every Paragraph ──
@@ -128,9 +128,16 @@ def commitments_table():
          'lattice a sequence starts at a Quine atom exactly when it starts at ⊥ (cc1_derived, t_exec_iff; '
          'axiom-free, Lean), so the choice of starting point is expressed through the Quine-atom role, not removed.'),
         ('CC-2',  'Forced Metatheoretic Commitment',
-         '⊥ = {⊥}. The bottom element is self-containing, read under ZF+AFA as a Quine atom. '
-         'Foundation cannot host it: ⊥ = {⊥} is a member of itself, which Foundation (the Axiom of '
-         'Regularity) forbids (no_quine_atom). That half is forced, and it runs one way: a host whose '
+         'The Quine atom, a role: a point that steps to itself and to nothing else (the die, '
+         'ZeroParadox/Die.lean; Aczel 1988, Example 1.3, pictures Ω = {Ω} as one node with a loop), whose occupancy each chart settles by its own theorem, with no equation '
+         'across charts. ⊥ of the state semilattice occupies it under a self-application map that fixes ⊥ '
+         'and nothing else (selfApp_quine_role_iff); in a membership host whose distinguished '
+         'element is its own only member and the only element so placed, the profile AFA gives, that '
+         'element occupies it (quineAtomHost_quine_role_iff). '
+         'In Lean&#8217;s model of sets with Foundation, where the role reads '
+         'x = {x}, no set occupies it, since such a set would be a member of itself, which Foundation (the '
+         'Axiom of Regularity) forbids (zfset_quine_role_unoccupied, from no_quine_atom). That half is '
+         'forced, and it runs one way: a host whose '
          'bottom is its own only member is not well-founded (quineAtomHost_not_wellFounded). Run backwards it selects no '
          'theory: which anti-foundation axiom to adopt is a further choice, and the framework adopts AFA as '
          'the canonical host (ZP-E Remark R-AFA). What remains a commitment is that a unique Quine atom is the '
@@ -218,7 +225,9 @@ def build():
     story.append(box(
         'The central claim is this: zero is not the absence of mathematical structure. It is '
         'the unique minimal element of the induced partial order — the element below which '
-        'no other state exists.'
+        'no other state exists. The central theorem built on it is the Binary Snap, T-SNAP, '
+        'proved with no Lean axioms (t_snap_derived, Section V); alongside it, the layers share one '
+        'role, each layer supplying its own occupant (Section IV).'
     ))
     story.append(sp(6))
 
@@ -361,10 +370,11 @@ def build():
             '(Zermelo–Fraenkel set theory with Aczel\'s Anti-Foundation Axiom), '
             'not standard ZFC. AFA permits self-containing sets — in particular, sets x '
             'satisfying x = {x}. This matters only for CC-2 in the table below; '
-            'every other result in this framework holds in standard ZF. Standard ZFC (with '
-            'Foundation) is incompatible with CC-2: ⊥ = {⊥} is a member of itself, which the Axiom of '
-            'Regularity forbids (no set is self-membered, no_quine_atom), so a Foundation universe '
-            'cannot host it. The Axiom of Choice is not assumed '
+            'every other result in this framework holds in standard ZF. Lean&#8217;s model of sets '
+            'with Foundation cannot host CC-2&#8217;s set chart: there the Quine-atom role reads x = {x}, such '
+            'a set would be a member of itself, which the Axiom of Regularity forbids (no set is '
+            'self-membered, no_quine_atom), so no set occupies the role (zfset_quine_role_unoccupied). '
+            'The Axiom of Choice is not assumed '
             'as a framework commitment, and the core does not use it: T-SNAP (t_snap_derived) '
             'depends on no Lean axioms at all (#print axioms is empty). Classical.choice does reach the realization '
             'layers, and not only by inheritance from Mathlib — the category-theory layer spends a '
@@ -414,8 +424,11 @@ def build():
         Paragraph(
             'There is a deeper unity here than shared position. In each layer ⊥ plays the same '
             'role, beyond being the starting element: the role of the element that refers to '
-            'itself, with its occupant supplied per layer. In set theory it is the Quine atom, the set whose only member is itself '
-            '(⊥ = {⊥}). In computation the role is filled by a code from the Rogers / Kleene '
+            'itself, with its occupant supplied per layer. In set theory under AFA it is the Quine atom, the '
+            'role a set x = {x} plays, a set whose only member is itself (in the die, a point that steps to '
+            'itself and to nothing else, Section VII); in Lean&#8217;s model of sets with Foundation, a setting that cannot host CC-2&#8217;s set chart '
+            '(Section III) and not one of the framework&#8217;s layers, the role has no occupant '
+            '(zfset_quine_role_unoccupied, Section VII). In computation the role is filled by a code from the Rogers / Kleene '
             'fixed-point theorem: for every computable transform f of codes there is a code c with '
             'eval (f c) = eval c (Rogers\' form, computability_face_fixedPoint, '
             'ZeroParadox/Category/Lawvere.lean). Such a code is a term of another type than ⊥ of the '
@@ -477,7 +490,20 @@ def build():
         Paragraph(
             'The framework lives at that boundary intentionally. '
             'Each layer arrives at the same boundary '
-            'from its own direction. That convergence is the framework\'s central result.',
+            'from its own direction. That convergence is the framework\'s central result. '
+            'Alongside that convergence, the layers share one role, each layer supplying its own '
+            'occupant (Section IV), and that sharing is not one theorem. The framework\'s central theorem is the '
+            'Binary Snap, T-SNAP: in the two-state carrier MachinePhase, the step from its bottom '
+            'element c₀ to c₁ is a valid join step to a different state, proved with no Lean axioms '
+            'at all (t_snap_derived, ZeroParadox/Order/Snap.lean; the general form, which takes the '
+            'start at ⊥ and the occurrence at the first step as hypotheses, is t_snap_given). '
+            'What density decides is whether the step can be a first step, AX-B1&#8217;s form: in MachinePhase, c₁ is a first step '
+            'above c₀ (t_snap_derived_cover, ZeroParadox/Order/Snap.lean); in an ordered field, ℝ and ℚ among '
+            'them, no first step above 0 exists (f_snap_impossible, ZeroParadox/Reals/OrderedField.lean). '
+            'T-SNAP&#8217;s shape does not need it: t_snap_given holds at a step taken in a densely ordered '
+            'join-semilattice too. That '
+            'the step occurs is the occurrence commitment (with DA-1, Section III), not something '
+            'the theorem proves (t_snap_given takes it as a hypothesis).',
             S['body']),
     ]
 
@@ -520,9 +546,75 @@ def build():
             S['body']),
     ]
 
-    # ── VII. A NOTE ON READING THE DOCUMENTS ──────────────────────────────────
+    # ── VII. HOW THE ROLE READING GREW (retrospective; Tim's ruled exception, 2026-11-01) ──
     story += [
-        Paragraph('VII. A NOTE ON READING THE DOCUMENTS', S['h1']),
+        Paragraph('VII. HOW THE ROLE READING GREW', S['h1']),
+        Paragraph(
+            'The first paragraph of this Foreword says that the word zero does not name a single '
+            'object, and that it names a role filled differently depending on the framework. That '
+            'sentence has been in the Foreword since 19 April 2026, three days after the Foreword was '
+            'first committed, and it has been in the Foreword of every release since the first, in May '
+            '2026. It is the earliest place we have found in this repository where zero itself is called '
+            'a role, and at the time it was a plain-language observation. Two days later, on 21 April '
+            '2026, the Lean for ZP-E already characterised the ⊥ role inside one semilattice: ⊥ is the '
+            'one element whose join with any element returns that other element unchanged '
+            '(da2_bottom_characterization, now in ZeroParadox/Order/Snap.lean).',
+            S['body']),
+        Paragraph(
+            'The formal corpus took up the general form of the reading later, in three steps; the third, '
+            'chart by chart, ran from October to 1 November 2026. In October 2026 the framework '
+            'stated the general form in Lean: a bottom is a position in an ordered '
+            'structure, a structure has at most one occupant of it and may have none, and one carrier '
+            'with two different orders can have two different occupants (ZeroParadox/BottomCannotBe.lean, '
+            'its ROLE section; for epsilon-zero, ε₀, ZeroParadox/Ordinal/Epsilon0CannotBe.lean, '
+            'sections I-b and I-c). Later that month the die (ZeroParadox/Die.lean), a small common '
+            'language of points and the steps between them, gave these roles one shared vocabulary. '
+            'In it the self-referential role of Section IV is a point that steps to itself and to '
+            'nothing else (in Markov-chain language, an absorbing state), and each setting, called a '
+            'chart, answers by its own theorem whether some point fills that role. Some charts had such '
+            'theorems in October; on 1 November 2026 the set-theoretic, lattice and coalgebra '
+            'charts named next gained theirs. In Lean&#8217;s model of sets, where a set steps to its members and '
+            'Foundation holds, no set occupies the role (zfset_quine_role_unoccupied, '
+            'ZeroParadox/Settheory/Wall.lean). In the final coalgebra of the identity functor, a '
+            'one-element set (Rutten 2000, Example 10.2(1)), a point does (cofix_quine_role_occupied, '
+            'ZeroParadox/Settheory/Coalgebra.lean); since the set has only one element, there the '
+            'theorem restates the carrier rather than separating anything. On a join-semilattice whose '
+            'self-application map is assumed to fix its least element ⊥ and nothing else, exactly one '
+            'point occupies the role (selfApp_seam_role_unique, ZeroParadox/Order/SeamSchema.lean), and '
+            'that point is ⊥ because the map fixes ⊥. For a coalgebra of a polynomial functor, under its '
+            'next-time operator exactly one subset of the carrier occupies the role exactly when the '
+            'coalgebra is well-founded (seam_role_unique_iff_wellFounded, '
+            'ZeroParadox/Category/RootCutDegeneracy.lean); that is how Adámek, Milius and Moss (2020, '
+            'arXiv:1910.09401v2, Definition 4.3, after Taylor) define a well-founded coalgebra, so in that chart the theorem '
+            'restates the definition.',
+            S['body']),
+        Paragraph(
+            'The project&#8217;s releases record the earlier stages of the same reading. A release of '
+            '10 June 2026 described ⊥ as the same self-referential fixed point in every layer, presented '
+            'as an identification; the next release, that same week, kept the literal cross-category identity as '
+            'a chosen commitment; a release in July 2026 fenced the cross-domain identity as a type '
+            'boundary (in ZP-Q). Each of '
+            'those statements had to be written and kept consistent by hand. Stated as a role, there is no '
+            'equation across charts left to fence: an equation between objects of different types does '
+            'not typecheck, and each chart named above answers by a theorem that Lean checks; the '
+            'computational face stays a commitment (Section IV). Each published release is a '
+            'Zenodo snapshot with a permanent DOI, so every stage stays readable as it was published, and '
+            'each correction reaches readers in a later release while the earlier statement stays on the '
+            'record. That self-correction is part of what the releases record.',
+            S['body']),
+        Paragraph(
+            'The role reading retires identity claims across charts, and only those. It does not retire '
+            'the framework&#8217;s commitments about the world. AX-B1, that existence is discrete rather '
+            'than a continuum of partial states, remains the one substantive modeling commitment, and '
+            'that the Binary Snap occurs remains the occurrence commitment (with DA-1, Section III). Whether the '
+            'bottom element of the state space that an ascending chain returns to is a new one also '
+            'remains a commitment (C-DA2, Section II).',
+            S['body']),
+    ]
+
+    # ── VIII. A NOTE ON READING THE DOCUMENTS ─────────────────────────────────
+    story += [
+        Paragraph('VIII. A NOTE ON READING THE DOCUMENTS', S['h1']),
         Paragraph(
             'The technical documents ZP-A through ZP-M are formatted as ontologies, not as '
             'discursive mathematical writing. Each claim appears in a labeled box with its '
@@ -548,7 +640,7 @@ def build():
             'category theory — these are established structures with well-understood '
             'properties. What is new is the conjunction: the claim that these structures, '
             'independently developed within their own disciplines, converge on the same '
-            'foundational point, characterise the same transition, and illuminate the same '
+            'foundational role, each with its own occupant, characterise the same transition, and illuminate the same '
             'paradox from different directions.',
             S['body']),
         Paragraph(

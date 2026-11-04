@@ -199,8 +199,10 @@ example {L : Type*} [ZPSemilattice L] (S : ℕ → L) (n : ℕ)
     letI := zpSemilatticeSup L; IsAtom (⟨S (n + 1), hcov.le⟩ : Set.Ici (S n)) := by
   letI := zpSemilatticeSup L; exact (covBy_iff_atom_Ici hcov.le).1 hcov
 
--- Statement: the binders are satisfiable: `t_snap_derived`'s run `c₀, c₁, c₁, …` meets all three.
-example : (c₀ ≠ c₁ ∧ c₁ ≠ c₀ ∧ join c₀ c₁ = c₁) ∧
+/-- Statement: in `MachinePhase`, `t_snap_derived`'s run `c₀, c₁, c₁, …` meets all three binders
+    of `t_snap_given_cover`: the T-SNAP triple holds and `c₁` covers ⊥ of `MachinePhase` (= `c₀`)
+    in ZP-A's induced order. -/
+theorem t_snap_derived_cover : (c₀ ≠ c₁ ∧ c₁ ≠ c₀ ∧ join c₀ c₁ = c₁) ∧
     letI := zpSemilatticeSup MachinePhase; (bot : MachinePhase) ⋖ c₁ := by
   refine t_snap_given_cover (fun n => if n = 0 then c₀ else c₁) rfl (by decide) ?_
   letI := zpSemilatticeSup MachinePhase
@@ -215,6 +217,22 @@ example {L : Type*} [ZPSemilattice L] :
       ¬ ((bot : L) ⋖ bot) ∧ ¬ IsAtom (bot : L) := by
   letI := zpSemilatticeSup L; letI := zpOrderBot L
   exact ⟨fun h => lt_irrefl _ h.1, fun h => h.1 rfl⟩
+
+-- Statement: `t_snap_given` needs no cover: on `ℚ≥0` under `max`, a densely ordered join-semilattice whose ⊥
+-- is 0 of `ℚ≥0`, the triple holds at the step 0 → 1/2 while nothing covers 0 (compare `t_snap_derived_cover`).
+example :
+    letI : ZPSemilattice NNRat := ⟨max, 0, max_assoc, max_comm, max_self, fun x => max_eq_right (zero_le x)⟩
+    ((0 : NNRat) ≠ 1 / 2 ∧ (1 / 2 : NNRat) ≠ 0 ∧ join (0 : NNRat) (1 / 2) = 1 / 2) ∧
+      ¬ ∃ y : NNRat, @CovBy NNRat (zpSemilatticeSup NNRat).toLT 0 y := by
+  letI : ZPSemilattice NNRat := ⟨max, 0, max_assoc, max_comm, max_self, fun x => max_eq_right (zero_le x)⟩
+  have key : ∀ a b : NNRat, @LT.lt NNRat (zpSemilatticeSup NNRat).toLT a b ↔ a < b := fun a b => by
+    show (max a b = b ∧ ¬ max b a = a) ↔ a < b
+    rw [max_eq_right_iff, max_eq_right_iff]
+    exact ⟨fun h => not_le.1 h.2, fun h => ⟨h.le, not_le.2 h⟩⟩
+  refine ⟨t_snap_given (fun n => if n = 0 then 0 else 1 / 2) rfl (by norm_num), ?_⟩
+  rintro ⟨y, h⟩
+  obtain ⟨c, h1, h2⟩ := exists_between ((key 0 y).1 h.1)
+  exact h.2 ((key 0 c).2 h1) ((key c y).2 h2)
 
 /-- T-SNAP (irreversibility): Algebraic form of ZP-A R1 (no subtraction operator).
     If x ≼ y and x ≠ y, no join from y can return to x.
@@ -419,6 +437,7 @@ open ZeroParadox ZeroParadox ZPSemilattice ZeroParadox
 #print axioms zpSemilatticeSup
 #print axioms zpOrderBot
 #print axioms t_snap_given_cover
+#print axioms t_snap_derived_cover
 #print axioms t_snap_irreversible
 #print axioms da2_bottom_characterization
 #print axioms c_da2_novelty
