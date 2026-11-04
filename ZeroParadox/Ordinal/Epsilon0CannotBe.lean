@@ -169,7 +169,7 @@ example : (∀ a : Ordinal.{u}, Ordinal.nfp (fun α => Ordinal.omega0 ^ α) a =
 #check @ZeroParadox.epsilon0_min_eq_max       -- Statement: ε₀ is the sup of the tower ∧ the least fixed point of ω^· (`IsLeast`)
 #check @ZeroParadox.epsilon0_least_fixedpoint -- Statement: the MIN face, lower-bound half only: ε₀ ≤ every fixed point of ω^·
 #check @ZeroParadox.epsilonZero_eq_iSup       -- Statement: the MAX face: ε₀ is the supremum of the ω-tower
-#check @ZeroParadox.epsilon0_pinnedLimit      -- Statement: the tower is a run of ω^·, and ε₀ occupies the die role `PinnedLimit` (least upper bound of the stages, not a stage, least fixed point, the run climbing)
+#check @ZeroParadox.epsilon0_pinnedLimit      -- Statement: the tower is a run of ω^·, and ε₀ occupies the die role `PinnedLimit` (least upper bound of the stages, not a stage, least fixed point, the run climbing: `Monotone s`, a property of the run, distinct from the motion property `Motion.Climb`)
 #check @ZeroParadox.epsilon0_not_pinnedLimitUnique -- Statement: and not its strong form `PinnedLimitUnique`: ε₁ is another fixed point
 #check @ZeroParadox.pinnedLimit_opow_eq_epsilon0 -- Statement: under ω^·, every occupant of `PinnedLimit`, over any run, is ε₀; so ε₁, the § I-b role at the floor ε₀, occupies none
 #check @ZeroParadox.ordinalCornerStep_pinnedLimitAbove -- Statement: at every floor `f`, the § I-b strict form `ordinalCornerStep f` occupies the relative form `PinnedLimitAbove (ω^·)` at the run from `succ f`

@@ -4807,7 +4807,7 @@ example : (∀ n, ZeroParadox.slotRun (fun _ => false) n = false) ∧
 -- Reading: Tim's role, "squishy" in his word: pinned from below by the stages of a run and from the
 -- step map by its fixed points. Definitions and proofs: `ZeroParadox/Die.lean` § XXIV.
 #check @ZeroParadox.PinnedLimit                -- Statement: `c` is the least upper bound of `Set.range s`, is not in it, and is the least fixed point of `g`, and the run climbs (`Monotone s`)
-#check @ZeroParadox.PinnedLimitUnique         -- Statement: `PinnedLimit g s c`, and every fixed point of `g` is `c`
+#check @ZeroParadox.PinnedLimitUnique          -- Statement: `PinnedLimit g s c`, and every fixed point of `g` is `c`
 #check @ZeroParadox.PinnedLimitAbove           -- Statement: `PinnedLimit` with clause (c) relative: the least fixed point of `g` at or above `s 0`
 #check @ZeroParadox.PinnedLimit.toAbove        -- Statement: `PinnedLimit g s c → PinnedLimitAbove g s c`, for every run; the converse fails (ε₁, the CONTROL in `ZeroParadox/Order/UpAndOver.lean` § V)
 #check @ZeroParadox.pinnedLimitAbove_iff_of_bot -- Statement: when `s 0` is ⊥ of the carrier, the two are equivalent; both directions

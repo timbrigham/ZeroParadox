@@ -4451,8 +4451,8 @@ end Motion
 
 /-! ### § XXIV. A limit pinned from two directions: `PinnedLimit`
 `Reading:` Tim's role (2026-11-03), "squishy" in his word: a value pinned from below as the least
-upper bound of the stages of a climbing run it is not a stage of, and from the step map as its least
-fixed point. The run `s (n + 1) = g (s n)` is `(Motion.ofFun g).IsRun s`, stated beside the role at each
+upper bound of the stages of a climbing run (`Monotone s`) it is not a stage of, and from the step
+map as its least fixed point. The run `s (n + 1) = g (s n)` is `(Motion.ofFun g).IsRun s`, stated beside the role at each
 occupant. The ε₀ occupant is `epsilon0_pinnedLimit` (`ZeroParadox/Ordinal/Epsilon0MinMax.lean` § III). -/
 
 section PinnedLimit
@@ -4463,9 +4463,10 @@ variable {α : Type*} [Preorder α]
     least fixed point of `g`, and the run climbs (`Monotone s`). `Reading:` the standard name, for a
     monotone `g` and the run from the least element of a partial order, is closure ordinal ω
     (`pinnedLimit_iff_closure_omega`). -/
--- [ZP-CUSTOM] no Mathlib analog | reason: Mathlib's Kleene theorems (`fixedPoints.lfp_eq_sSup_iterate`
--- on a complete lattice, `OmegaCompletePartialOrder.fixedPoints.ωSup_iterate_mem_fixedPoint` on an
--- ω-complete partial order) and `Ordinal.nfp` state the sup and leastness halves; this is the
+-- [ZP-CUSTOM] no Mathlib analog | reason: Mathlib's Kleene theorems for an ω-continuous map
+-- (`fixedPoints.lfp_eq_sSup_iterate` on a complete lattice,
+-- `OmegaCompletePartialOrder.fixedPoints.ωSup_iterate_mem_fixedPoint` on an ω-complete partial
+-- order) and `Ordinal.nfp` state the sup and leastness halves; this is the
 -- four-clause predicate on a preorder, with the not-a-stage and climbing clauses.
 def PinnedLimit (g : α → α) (s : ℕ → α) (c : α) : Prop :=
   IsLUB (Set.range s) c ∧ c ∉ Set.range s ∧ IsLeast {x | g x = x} c ∧ Monotone s
@@ -4478,7 +4479,7 @@ def PinnedLimitUnique (g : α → α) (s : ℕ → α) (c : α) : Prop :=
     point of `g` at or above `s 0`. -/
 -- [ZP-CUSTOM] extends: PinnedLimit (ZeroParadox/Die.lean) | reason: the least fixed point above a
 -- seed, which `PinnedLimit` (least over the whole carrier) cannot see at a seed above the least one;
--- Mathlib's `OrderHom.nextFixed` is that fixed point on a complete lattice.
+-- Mathlib's `OrderHom.nextFixed` is that fixed point on a complete lattice, for a seed `x ≤ f x`.
 def PinnedLimitAbove (g : α → α) (s : ℕ → α) (c : α) : Prop :=
   IsLUB (Set.range s) c ∧ c ∉ Set.range s ∧ IsLeast {x | g x = x ∧ s 0 ≤ x} c ∧ Monotone s
 
@@ -4529,8 +4530,8 @@ theorem pinnedLimit_iff_closure_omega {α : Type*} [PartialOrder α] [OrderBot �
     exact hlub.2 (by rintro _ ⟨n, rfl⟩; exact below x hx n)
 
 /-- `Statement:` on a finite partial order, `PinnedLimitAbove g s c` fails for every `g`, `s` and `c`:
-    a climbing run there is eventually constant (Mathlib `wellFoundedGT_iff_monotone_chain_condition`),
-    so the least upper bound of its stages is a stage. -/
+    a climbing run there is eventually constant (the ascending chain condition, Mathlib
+    `wellFoundedGT_iff_monotone_chain_condition`), so the least upper bound of its stages is a stage. -/
 theorem not_pinnedLimitAbove_of_finite {α : Type*} [PartialOrder α] [Finite α] (g : α → α)
     (s : ℕ → α) (c : α) : ¬ PinnedLimitAbove g s c := by
   rintro ⟨hlub, hnot, _, hs⟩
@@ -4555,11 +4556,12 @@ example : ∃ inst : Preorder Bool, @PinnedLimit Bool inst id (fun _ => false) t
     ⟨fun _ _ => trivial, fun _ _ => trivial⟩, fun ⟨_, h⟩ => by simp at h, ⟨rfl, fun _ _ => trivial⟩,
     fun _ _ _ => trivial⟩
 
--- `Statement:` CONTROL: the climbing clause is what fails on a finite carrier. On `Finset Bool` (four
--- points) the step sending `{false}` to `{true}`, `{true}` and `∅` to `{false}`, and fixing only
--- `univ`, has the alternating run; `univ` is the least upper bound of its stages, is not a stage, and
--- is the least fixed point, the run does not climb, and no point occupies `PinnedLimitUnique` there
--- (`not_pinnedLimit_of_finite`).
+-- `Statement:` CONTROL: on `Finset Bool` (four points) the step sending `{false}` to `{true}`,
+-- `{true}` and `∅` to `{false}`, and fixing only `univ`, has the alternating run; `univ` is the least
+-- upper bound of its stages, is not a stage, and is the least fixed point, the run does not climb, and
+-- no point occupies `PinnedLimitUnique` there (`not_pinnedLimit_of_finite`). The climbing clause is
+-- what fails here. The exclusion names no clause: at the `Fin 3` CONTROL below the run climbs and its
+-- least upper bound `2` is a stage.
 example : (Motion.ofFun fun x : Finset Bool =>
       if x = Finset.univ then Finset.univ else if x = {false} then {true} else {false}).IsRun
       (fun n => if n % 2 = 0 then {false} else {true}) ∧
@@ -4823,14 +4825,16 @@ theorem pinnedLimitUnique_withTop :
 example : (Motion.ofFun Nat.succ).IsRun id ∧ ∀ c : ℕ, ¬ PinnedLimit Nat.succ id c :=
   ⟨fun _ => rfl, fun c ⟨_, _, ⟨hfix, _⟩, _⟩ => Nat.succ_ne_self c hfix⟩
 
--- `Statement:` CONTROL: on `Fin 3` with step `![1, 2, 2]`, the top `2` is a fixed point and a stage,
--- so there is no occupant.
+-- `Statement:` CONTROL: on `Fin 3` with step `![1, 2, 2]`, the run from `0` climbs, and its least
+-- upper bound `2` is a fixed point and a stage, so there is no occupant.
 example : (Motion.ofFun (![1, 2, 2] : Fin 3 → Fin 3)).IsRun
       (fun n => (![1, 2, 2] : Fin 3 → Fin 3)^[n] 0) ∧
+    Monotone (fun n => (![1, 2, 2] : Fin 3 → Fin 3)^[n] 0) ∧
     ∀ c : Fin 3, ¬ PinnedLimit (![1, 2, 2] : Fin 3 → Fin 3)
       (fun n => (![1, 2, 2] : Fin 3 → Fin 3)^[n] 0) c := by
   refine ⟨fun n => show (![1, 2, 2] : Fin 3 → Fin 3)^[n + 1] 0 = _ by
-    simp only [Function.iterate_succ_apply'], ?_⟩
+    simp only [Function.iterate_succ_apply'],
+    Monotone.monotone_iterate_of_le_map (by decide) (by decide), ?_⟩
   rintro c ⟨hlub, hnot, _⟩
   have h2 : (![1, 2, 2] : Fin 3 → Fin 3)^[2] 0 = 2 := rfl
   have hle : (2 : Fin 3) ≤ c := h2 ▸ hlub.1 ⟨2, rfl⟩

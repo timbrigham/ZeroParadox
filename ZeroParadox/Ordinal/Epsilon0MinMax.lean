@@ -109,7 +109,8 @@ example : epsilon0MinMaxStatement := epsilon0_min_eq_max
 /-! ### § III. ε₀ occupies the die role `PinnedLimit` (`ZeroParadox/Die.lean` § XXIV)
 
 `Statement:` COINCIDENCE, the two faces of § II as one role: the tower from ⊥ of `Ordinal` is a climbing
-run of `α ↦ ω^α`, and ε₀ is its least upper bound, is not a stage, and is the least fixed point. Under
+run of `α ↦ ω^α` (`Monotone s`, a property of the run, distinct from the motion property
+`Motion.Climb`), and ε₀ is its least upper bound, is not a stage, and is the least fixed point. Under
 `α ↦ ω^α` every occupant of `PinnedLimit`, over any run, is ε₀ (`pinnedLimit_opow_eq_epsilon0`). -/
 
 universe u
