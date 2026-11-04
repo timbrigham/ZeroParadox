@@ -4840,4 +4840,33 @@ example : (∀ n, ZeroParadox.slotRun (fun _ => false) n = false) ∧
 #check @ZeroParadox.NInf.wlpo_of_iso           -- Statement: identifying the two carriers by an order isomorphism `NInf ≃o WithTop ℕ` gives WLPO (`[propext, Quot.sound]`)
 #check @ZeroParadox.NInf.orderIsoWithTopClassical -- Statement: CONTROL: such an isomorphism from `Classical.propDecidable`, with no WLPO hypothesis
 
+/-! ### § XXX. First-occurrence time as a Galois insertion: tapes onto `NInf`, order reversed -/
+-- Reading: Tim's "bend" (2026-11-03): one tape, a firing record in `ℕ → Bool` (pointwise order) and a
+-- waiting time `NInf.det` in `NInf`. "Time" is his reading, not a claim. Definitions and proofs:
+-- `ZeroParadox/Die.lean` § XXV.
+#check @ZeroParadox.NInf.det_antitone          -- Statement: `det` is antitone
+#check @ZeroParadox.NInf.det_poles             -- Statement: `det ⊥ = ⊤` and `det ⊤ = ⊥`, ⊥ and ⊤ of `ℕ → Bool` to ⊤ and ⊥ of `NInf`
+-- Statement: CARRIER. The all-`false` tape is ⊥ of `ℕ → Bool`; its waiting time is ⊤ of `NInf`, `∞`
+-- (`det_poles`), and that point occupies `PinnedLimitUnique succ ofNat`:
+#check @ZeroParadox.NInf.det_bot_pinnedLimitUnique
+#check @ZeroParadox.NInf.le_det_iff            -- Statement: `x ≤ det r ↔ r ≤ negS x`; both directions
+#check @ZeroParadox.NInf.det_gi                -- Statement: `det` into `NInfᵒᵈ` and `negS` form a Galois insertion (Mathlib `GaloisInsertion`)
+#check @ZeroParadox.NInf.detHom                -- Statement: `det` as a `BoundedOrderHom` from `ℕ → Bool` into `NInfᵒᵈ`
+#check @ZeroParadox.NInf.no_lower_adjoint      -- Statement: no `g` has `g x ≤ r ↔ det r ≤ x`
+#check @ZeroParadox.NInf.det_not_injective     -- Statement: `det` is not injective
+#check @ZeroParadox.NInf.det_exactS            -- Statement: `exactS` is a second section of `det`
+#check @ZeroParadox.NInf.exactS_not_mono       -- Statement: and `exactS` is neither antitone nor monotone
+#check @ZeroParadox.NInf.naiveS_fails          -- Statement: `naiveS` is not a section: `det (naiveS (ofNat 0)) = ∞`
+#check @ZeroParadox.NInf.head_also_poles       -- Statement: CONTROL: `firstBitWait` is antitone with both poles and is not `det`
+#check @ZeroParadox.NInf.const0_fails          -- Statement: CONTROL: the constant `ofNat 0` is antitone and misses `det ⊥ = ⊤`
+#check @ZeroParadox.NInf.constInf_fails        -- Statement: CONTROL: the constant `∞` is antitone and misses `det ⊤ = ⊥`
+#check @ZeroParadox.NInf.no_nat_wait           -- Statement: CONTROL: no antitone `f : (ℕ → Bool) → ℕ` sends the tape firing exactly at `n` to `n`
+#check @ZeroParadox.NInf.nat_no_top            -- Statement: CONTROL: `ℕ` has no greatest element for ⊥ of `ℕ → Bool` to go to
+#check @ZeroParadox.NInf.tape_bot_le           -- Statement: `⊥ ≤ r` on `ℕ → Bool` with axioms `[propext]`; Mathlib's `bot_le` there carries `Classical.choice` (`NInf.mathlib_bot_le_tape`)
+-- Reading (cited, not claimed): TypeTopology `TypeTopology.GenericConvergentSequence` has
+-- `ℕ∞-retract-of-Cantor : funext₀ → retract ℕ∞ of (ℕ → 𝟚)`, with retraction `ℕ→𝟚-to-ℕ∞` built from
+-- `force-decreasing` and section `ι` (retrieved 2026-11-04). A Galois insertion onto ℕ∞ was not
+-- located there as of 2026-11-04, searched by GitHub code search of `martinescardo/TypeTopology` for
+-- `Galois` (five hits, none in a file on ℕ∞).
+
 end DieCannotBeIndex
