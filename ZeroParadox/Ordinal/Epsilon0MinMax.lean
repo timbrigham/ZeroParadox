@@ -109,8 +109,10 @@ example : epsilon0MinMaxStatement := epsilon0_min_eq_max
 /-! ### § III. ε₀ occupies the die role `PinnedLimit` (`ZeroParadox/Die.lean` § XXIV)
 
 `Statement:` COINCIDENCE, the two faces of § II as one role: the tower from ⊥ of `Ordinal` is a run
-of `α ↦ ω^α`, and ε₀ is its least upper bound, is not a stage, and is the least fixed point. The role
-is not the ε₀ role of `ZeroParadox/Ordinal/Epsilon0CannotBe.lean` § I-b, and ε₀ is one occupant. -/
+of `α ↦ ω^α`, and ε₀ is its least upper bound, is not a stage, and is the least fixed point. Under
+`α ↦ ω^α` every occupant of `PinnedLimit`, over any run, is ε₀ (`pinnedLimit_opow_eq_epsilon0`). -/
+
+universe u
 
 /-- `Statement:` `fundamentalSeq` is a run of `Motion.ofFun (ω^·)`, and ε₀ occupies
     `PinnedLimit (ω^·) fundamentalSeq`, by `epsilon0_min_eq_max` and `epsilonZero_tower_lt`. -/
@@ -130,6 +132,22 @@ theorem epsilon0_not_pinnedLimitUnique :
     ¬ PinnedLimitUnique (fun α : Ordinal => Ordinal.omega0 ^ α) fundamentalSeq epsilonZero :=
   fun ⟨_, h⟩ => (Ordinal.veblen_right_strictMono 1 (show (0 : Ordinal) < 1 from zero_lt_one)).ne
     (h _ (Ordinal.omega0_opow_epsilon 1)).symm
+
+/-- `Statement:` under `α ↦ ω^α`, for every run `s`, an occupant of `PinnedLimit (ω^·) s` is ε₀:
+    clause (c) is leastness over all of `Ordinal`, and ε₀ is that least fixed point. -/
+theorem pinnedLimit_opow_eq_epsilon0 (s : ℕ → Ordinal.{u}) (c : Ordinal.{u})
+    (h : PinnedLimit (fun α : Ordinal.{u} => Ordinal.omega0 ^ α) s c) : c = epsilonZero :=
+  h.2.2.unique ⟨epsilonZero_fixedPoint, fun o ho => epsilon0_least_fixedpoint o ho⟩
+
+-- `Statement:` ε₀'s occupancy is closure ordinal ω for `α ↦ ω^α` from ⊥ of `Ordinal`: the tower's
+-- least upper bound is fixed and no stage is (`pinnedLimit_iff_closure_omega`).
+example : PinnedLimit (fun α : Ordinal.{u} => Ordinal.omega0 ^ α) fundamentalSeq.{u} epsilonZero.{u} ↔
+    (IsLUB (Set.range fundamentalSeq.{u}) epsilonZero.{u} ∧ Ordinal.omega0 ^ epsilonZero.{u} = epsilonZero ∧
+      ∀ n, Ordinal.omega0 ^ fundamentalSeq.{u} n ≠ fundamentalSeq n) := by
+  have := pinnedLimit_iff_closure_omega (fun α : Ordinal.{u} => Ordinal.omega0 ^ α)
+    (Ordinal.isNormal_opow Ordinal.one_lt_omega0).strictMono.monotone epsilonZero
+  rw [Ordinal.bot_eq_zero] at this
+  exact this
 
 end ZeroParadox
 
@@ -153,4 +171,5 @@ open ZeroParadox
 #print axioms epsilon0MinMaxStatement
 #print axioms epsilon0_pinnedLimit
 #print axioms epsilon0_not_pinnedLimitUnique
+#print axioms pinnedLimit_opow_eq_epsilon0
 end PurityCheck

@@ -658,7 +658,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 3100,
+        "declarations": 3107,
         "files": 196
       },
       "entries": [
@@ -3707,6 +3707,41 @@
             ]
           },
           "reason": "Die v2 final batch: drawing vs set (self-steps, accessibility, forced rank), ends of a view, orders on motions, placements as views, relaxed least-fixed-point schema, UP legs as nuclei",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "062b753c-63a8-4f7f-a07b-464e2c271a95",
+          "new": {
+            "file": "ZeroParadox/Order/UpAndOver.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.epsilon_succ_pinnedLimitAbove",
+            "short": "epsilon_succ_pinnedLimitAbove"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/UpAndOver.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.epsilon_succ_pinnedLimitAbove",
+            "short": "epsilon_succ_pinnedLimitAbove",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "pinned-limit-r2-1103: PinnedLimitAbove (relative least fixed point), closure-ordinal-omega equivalence (Das & Melgaard 2023 Ex. 2.9), uniqueness of the PinnedLimit occupant under omega^, and the eps_(o+1) / corner occupants of the relative form; round-2 gate fixes",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -9579,6 +9614,41 @@
             ]
           },
           "reason": "UniversalChoiceFree § IX: a self-printing universal code at [propext, Quot.sound] (restated SelfPrints ∧ Universal via encodeCode/ofNatCodeCF), faithfulness bridges, statement controls, controls zero_selfPrints_not_universal / universal_not_selfPrints_cf / unshifted_incompatible",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "12ee8209-fe80-4741-8250-934edeac0d2e",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.PinnedLimitAbove",
+            "short": "PinnedLimitAbove"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.PinnedLimitAbove",
+            "short": "PinnedLimitAbove",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "pinned-limit-r2-1103: PinnedLimitAbove (relative least fixed point), closure-ordinal-omega equivalence (Das & Melgaard 2023 Ex. 2.9), uniqueness of the PinnedLimit occupant under omega^, and the eps_(o+1) / corner occupants of the relative form; round-2 gate fixes",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -20675,6 +20745,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "2c25efc2-6dae-4261-ba8d-a892cf6a9963",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.pinnedLimitAbove_iff_of_bot",
+            "short": "pinnedLimitAbove_iff_of_bot"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.pinnedLimitAbove_iff_of_bot",
+            "short": "pinnedLimitAbove_iff_of_bot",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "pinned-limit-r2-1103: PinnedLimitAbove (relative least fixed point), closure-ordinal-omega equivalence (Das & Melgaard 2023 Ex. 2.9), uniqueness of the PinnedLimit occupant under omega^, and the eps_(o+1) / corner occupants of the relative form; round-2 gate fixes",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "2c298217-4e93-4aba-9686-b2b893e2938f",
           "new": {
             "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
@@ -24140,6 +24245,41 @@
             "role": []
           },
           "reason": "die-pinnedlimit-1103: Tim's die role PinnedLimit (Die.lean § XXIV: role, NInf order + occupant, link, WLPO separation, WithTop control) and the ε₀ occupant (Epsilon0MinMax § III); Tim ruled 2026-11-03",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "34d1b9d6-13f6-444e-a846-1911e4456bd9",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.pinnedLimit_iff_closure_omega",
+            "short": "pinnedLimit_iff_closure_omega"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.pinnedLimit_iff_closure_omega",
+            "short": "pinnedLimit_iff_closure_omega",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "pinned-limit-r2-1103: PinnedLimitAbove (relative least fixed point), closure-ordinal-omega equivalence (Das & Melgaard 2023 Ex. 2.9), uniqueness of the PinnedLimit occupant under omega^, and the eps_(o+1) / corner occupants of the relative form; round-2 gate fixes",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -60903,6 +61043,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "88ed3fd8-9ef9-4da6-b30b-60426b38eb28",
+          "new": {
+            "file": "ZeroParadox/Order/UpAndOver.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ordinalCornerStep_pinnedLimitAbove",
+            "short": "ordinalCornerStep_pinnedLimitAbove"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/UpAndOver.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ordinalCornerStep_pinnedLimitAbove",
+            "short": "ordinalCornerStep_pinnedLimitAbove",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "pinned-limit-r2-1103: PinnedLimitAbove (relative least fixed point), closure-ordinal-omega equivalence (Das & Melgaard 2023 Ex. 2.9), uniqueness of the PinnedLimit occupant under omega^, and the eps_(o+1) / corner occupants of the relative form; round-2 gate fixes",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "88f02590-6ab8-4392-bb13-ffc6adf6c8eb",
           "new": {
             "file": "ZeroParadox/Valuation/PoleChartSelection.lean",
@@ -94812,6 +94987,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "d58eedf8-b7ba-4df2-a110-2be2c3fb8a13",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox.PinnedLimit",
+            "qualified": "ZeroParadox.PinnedLimit.toAbove",
+            "short": "toAbove"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.PinnedLimit",
+            "qualified": "ZeroParadox.PinnedLimit.toAbove",
+            "short": "toAbove",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "pinned-limit-r2-1103: PinnedLimitAbove (relative least fixed point), closure-ordinal-omega equivalence (Das & Melgaard 2023 Ex. 2.9), uniqueness of the PinnedLimit occupant under omega^, and the eps_(o+1) / corner occupants of the relative form; round-2 gate fixes",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "d5a0a524-6c3f-4869-89b5-e3133a926033",
           "new": {
             "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
@@ -110374,6 +110584,41 @@
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": "[propext, Classical.choice, Quot.sound]",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f787ddd1-25d2-462a-931e-6259e52ec571",
+          "new": {
+            "file": "ZeroParadox/Ordinal/Epsilon0MinMax.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.pinnedLimit_opow_eq_epsilon0",
+            "short": "pinnedLimit_opow_eq_epsilon0"
+          },
+          "old": {
+            "file": "ZeroParadox/Ordinal/Epsilon0MinMax.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.pinnedLimit_opow_eq_epsilon0",
+            "short": "pinnedLimit_opow_eq_epsilon0",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "pinned-limit-r2-1103: PinnedLimitAbove (relative least fixed point), closure-ordinal-omega equivalence (Das & Melgaard 2023 Ex. 2.9), uniqueness of the PinnedLimit occupant under omega^, and the eps_(o+1) / corner occupants of the relative form; round-2 gate fixes",
+          "verify": {
+            "axioms": null,
             "sorry_free": true
           }
         },
