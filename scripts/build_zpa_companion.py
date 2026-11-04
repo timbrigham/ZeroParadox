@@ -1,5 +1,5 @@
 """
-Build ZP-A Illustrated Companion (v1.18)
+Build ZP-A Illustrated Companion (v1.19)
 Covers: join-semilattice, partial order, Hasse diagram, one-directional transitions,
 monotonicity (T3), bottom-as-constituent (T2), four concrete examples, and CC-2.
 """
@@ -89,7 +89,7 @@ def transition_diagram():
                  fontName='DV-B', fillColor=RED))
     return d
 
-VERSION = '1.18'
+VERSION = '1.19'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -290,7 +290,7 @@ def build():
         '(AFA), one of several anti-foundation axioms that admit such a set. Only Foundation is '
         'replaced and Choice is kept, as in Aczel\'s ZFC<sup>&#8722;</sup> + AFA (and in Barwise and Moss\'s ZFA, whose ZFC<sup>&#8722;</sup> also '
         'has urelements, a proper class of them by Strong Plenitude, p. 28). Adopting AFA is a framework-level commitment about the host theory '
-        '(CC-2\'s); dropping Foundation is forced by the role itself, whichever anti-foundation axiom fills it (quineAtomHost_not_wellFounded) — A1&#8211;A4 '
+        '(CC-2\'s); dropping Foundation is forced by the role itself, whichever anti-foundation axiom hosts it (quineAtomHost_not_wellFounded) — A1&#8211;A4 '
         'are unaffected, and no equation makes &#8869; of the lattice a set. '
         'For a plain-language explanation of why Foundation is incompatible with a set that is '
         'its own only member, '

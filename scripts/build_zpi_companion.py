@@ -1,6 +1,6 @@
 """
 Build ZP-I Illustrated Companion
-Version 1.35 | November 2026
+Version 1.36 | November 2026
 
 Standalone companion for ZP-I: Inside Zero.
 Accessibility target: 2 years of college math.
@@ -276,7 +276,7 @@ def cycle_diagram():
     return d
 
 
-VERSION = '1.35'
+VERSION = '1.36'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -392,7 +392,7 @@ def build():
     E.append(cbody(
         'In the 2-adic metric, norms decrease geometrically: ‖S(n)‖ ≤ ‖S(0)‖ · 2<sup>−n</sup>. '
         'As n → ∞, the norm → 0. The chain converges to 0 in the 2-adic sense: '
-        'the point with 2-adic valuation +∞ under the usual convention v₂(0) = ∞. Reading that structural limit as filling the bottom role is the first commitment - the role condition is not statable in Q₂ - and calling the occupant ⊥′, a successor null, is the second; in this very chart the arc returns to the same 0.'))
+        'the point with 2-adic valuation +∞ under the usual convention v₂(0) = ∞. Reading that structural limit as filling the bottom role is the first commitment - the role condition is not statable of the limit until a join on Q₂ is chosen - and calling the occupant ⊥′, a successor null, is the second; in this very chart the arc returns to the same 0.'))
 
     E.append(example_box('Real-world analogy  - The deepest point in the well', [
         'Imagine a well that has no bottom  - every level opens onto a deeper one. '
@@ -655,7 +655,7 @@ def build():
         't_iz_limit_is_new_null  - anything satisfying the DA-2 null role IS that '
         'lattice\'s bottom (⊥-role identification). The role property is the HYPOTHESIS; '
         'that the Cauchy limit satisfies it is not established here and is not statable '
-        'in Q₂. Reading that occupant as ⊥′ is C-DA2, a further commitment. '
+        'of the limit until a join on Q₂ is chosen. Reading that occupant as ⊥′ is C-DA2, a further commitment. '
         'Proved directly from da2_bottom_characterization. ✓ (axiom-free)',
         'da1_computational - proved in Lean, given the KleeneStructure instance ✓',
         't_iz_complete (§III-B)  - carries all four steps in one theorem: convergence, '

@@ -83,10 +83,25 @@ not depend on set theory "in any essential way" (p. 42), footnote 5 excepting th
 computation, where one might choose non-well-founded sets. In Chapter 20 (Proposition 20.1 and the application
 after it, pp. 313-314), in a setting that assumes a strongly inaccessible cardinal κ (p. 312), they use
 a version of the Recursion Theorem, for self-sufficient sets of formulas (their Theorem 5.1, p. 62),
-then the uniqueness part of AFA, to give every set a name. On those pages they state no comparison of a set-side occupant with a
+then the uniqueness part of AFA, to show that each set has a name, a code in the class notation
+system of a self-sufficient set of formulas (p. 313). On those pages they state no comparison of a set-side occupant with a
 code-side one, so the role comparison above is not credited to them. Searched as follows: the book's
 index and contents, § 3.4 and Chapter 20 pp. 311-315 (scans), theoremsearch (three phrasings),
 LeanExplore, GitHub code search and the open web.
+
+**Prior art for a code-side self-singleton** (cited, not claimed). Rogers 1967, § 11.4, "First
+Illustration", p. 185: with `m E n` when `m ∈ W_n` (`W_n` the set enumerated by code `n`), he notes
+"a rough analogy" between `E` and set membership and asks whether a unit set `W_m = {m}` exists,
+answered yes from § 11.2 (the example after Corollary I, p. 181, by the recursion theorem). The same
+page builds an infinite ascending chain of unit sets; his Theorem 11-VII, p. 186, gives an infinite
+descending one, distinct `m_0, m_1, ...` with `W_{m_i} = {m_{i+1}}`; and his Exercise 11-24, p. 215, asks for
+distinct `m`, `n` with `m ∈ W_n` and `n ∈ W_m`. His footnote, p. 185: for `E`, pairing, sum, choice
+and infinity hold, and power, extensionality and foundation fail; the non-recursive-enumerability of
+the complement of `K` "can be viewed as a counterpart to the Russell paradox". This is a further code
+chart beside those above, with OVER `a → b` when `eval a` halts at `b`'s Gödel number: there a
+code steps to itself only exactly when it is Rogers' unit set `W_m = {m}`, and infinitely many codes
+do (the two `example`s after `exists_selfPrintsStepMotion_selfOnlyAt`). It is not the `eval`-step
+chart, where no single code occupies the role, nor the class chart.
 
 ## Dependencies
 
@@ -162,9 +177,11 @@ is named by many indices rather than one is standard: the **Padding Lemma** — 
 partial recursive function has infinitely many indices — is its classical home, and an
 external computability reader mentioned it as possibly related when asked about ZP-K.
 It is the right reference for the direction it actually gives: **a function does not
-determine an index**, since infinitely many indices compute it. (Stated as a named lemma
-without individual attribution; it appears as a hypothesis of Rogers' isomorphism theorem
-rather than as a result of his, so do not attach a name to it.)
+determine an index**, since infinitely many indices compute it. (Rogers 1967 states it as
+Theorem 1-III, p. 22, "Each partial recursive function has ℵ₀ distinct indices", proved by
+adding to a machine instructions for states it can never enter; his Exercise 2-10(d), p. 41,
+gives it for every numbering meeting his condition 2, which by Exercise 2-10(c) is the
+condition for an s-m-n theorem. On p. 83 he calls the technique "padding".)
 It is **not** what `infinite_quine_family` proves, and the two must not be conflated:
 padding supplies infinitely many indices for the *same* function, whereas this family is
 witnessed by the constant codes, and `Code.const 0` and `Code.const 1` compute *different*

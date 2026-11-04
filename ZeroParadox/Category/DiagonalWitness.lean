@@ -134,7 +134,10 @@ NOT claimed — the framework joins that program. -/
     **Rogers' fixed-point theorem** (`computability_face_fixedPoint` = Mathlib
     `Nat.Partrec.Code.fixed_point`). Mathlib reserves the name *Kleene's second recursion theorem*
     for `fixed_point₂`, and literally derives `fixed_point₂` from `fixed_point`, so the two are
-    inter-derivable. `ZeroParadox/Category/Lawvere.lean` attaches **both** names to `fixed_point` as a
+    inter-derivable. The split is Mathlib's naming: in Rogers 1967 `fixed_point` is Theorem 11-I
+    (p. 180), a special case of Theorem 11-IV, which he notes is sometimes called the second
+    recursion theorem (p. 196), and the two-place form is "Kleene's version" (Exercise 11-4, p. 214).
+    `ZeroParadox/Category/Lawvere.lean` attaches **both** names to `fixed_point` as a
     slash-alias ("Rogers / Kleene's recursion theorem") rather than making this split — compatible, but
     not the same convention. The fine end of axis 2. -/
 theorem effective_floor_fixedPoint {g : Nat.Partrec.Code → Nat.Partrec.Code} (hg : Computable g) :
