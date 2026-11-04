@@ -658,7 +658,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 3138,
+        "declarations": 3151,
         "files": 196
       },
       "entries": [
@@ -12685,6 +12685,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "199f8462-386a-4aad-be58-47b19d68dd38",
+          "new": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.ofNat_le_det_iff",
+            "short": "ofNat_le_det_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.ofNat_le_det_iff",
+            "short": "ofNat_le_det_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ignorance-seam-viii: the bend NInf.det on 2-adic digit tapes is the 2-adic valuation (IgnoranceSeam.lean § VIII)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "19b4ab9a-48ff-46ba-868a-4660ed029290",
           "new": {
             "file": "ZeroParadox/Information/CrossingTrials.lean",
@@ -13113,6 +13150,44 @@
             ]
           },
           "reason": "RiemannSphere § IX: rounding the 2-adic valuation to an even landing (UP/DOWN), the flip conjugating one into the other, and rInv conjugating multiplication by u into multiplication by u^-1",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "1abc722d-ff21-45a4-a758-13c190533359",
+          "new": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.det_padicTape_eq_infty_iff",
+            "short": "det_padicTape_eq_infty_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.det_padicTape_eq_infty_iff",
+            "short": "det_padicTape_eq_infty_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "ignorance-seam-viii: the bend NInf.det on 2-adic digit tapes is the 2-adic valuation (IgnoranceSeam.lean § VIII)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -14878,6 +14953,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "1f546a72-154c-4656-8f6e-3a4f91d2ff73",
+          "new": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.two_pow_dvd_forall_iff",
+            "short": "two_pow_dvd_forall_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.two_pow_dvd_forall_iff",
+            "short": "two_pow_dvd_forall_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ignorance-seam-viii: the bend NInf.det on 2-adic digit tapes is the 2-adic valuation (IgnoranceSeam.lean § VIII)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -21104,6 +21216,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "2c867f68-e9bd-4987-9e91-8d9a1f3b8752",
+          "new": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.appr_neg_two_pow",
+            "short": "appr_neg_two_pow"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.appr_neg_two_pow",
+            "short": "appr_neg_two_pow",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ignorance-seam-viii: the bend NInf.det on 2-adic digit tapes is the 2-adic valuation (IgnoranceSeam.lean § VIII)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "2ca96750-44d2-44c4-a54e-2e07bf3d4022",
           "new": {
             "file": "ZeroParadox/Computability/CodeDataFrameChange.lean",
@@ -22455,6 +22604,43 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "2fc6a3aa-8404-45c1-86e8-12d37fc5b160",
+          "new": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.apply_true_iff_ofNat_succ_le",
+            "short": "apply_true_iff_ofNat_succ_le"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.apply_true_iff_ofNat_succ_le",
+            "short": "apply_true_iff_ofNat_succ_le",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ignorance-seam-viii: the bend NInf.det on 2-adic digit tapes is the 2-adic valuation (IgnoranceSeam.lean § VIII)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -33263,6 +33449,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "4915eedf-915f-4075-a3d6-84a6b719cc5d",
+          "new": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.padicTape_zero",
+            "short": "padicTape_zero"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.padicTape_zero",
+            "short": "padicTape_zero",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "ignorance-seam-viii: the bend NInf.det on 2-adic digit tapes is the 2-adic valuation (IgnoranceSeam.lean § VIII)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "49265382-4bf7-4127-9d31-aeabcd64ac8f",
           "new": {
@@ -43788,6 +44012,44 @@
             ]
           },
           "reason": "Die quotients carrying UP: UpCompat, quotUp, landing transfer, identity-UP reduction to quot",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "614759ca-f6cb-417a-ad53-6af11b79e62b",
+          "new": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.padicTape",
+            "short": "padicTape"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.padicTape",
+            "short": "padicTape",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ignorance-seam-viii: the bend NInf.det on 2-adic digit tapes is the 2-adic valuation (IgnoranceSeam.lean § VIII)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -78860,6 +79122,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "afafd7ba-4dda-45c8-bfa6-bcd5ebbba9e9",
+          "new": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.det_padicTape_eq_ofNat_valuation",
+            "short": "det_padicTape_eq_ofNat_valuation"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.det_padicTape_eq_ofNat_valuation",
+            "short": "det_padicTape_eq_ofNat_valuation",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "ignorance-seam-viii: the bend NInf.det on 2-adic digit tapes is the 2-adic valuation (IgnoranceSeam.lean § VIII)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "afe6dc0f-cffd-4d90-8a34-0a5f8abe18c1",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -92717,6 +93017,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "ce43973b-3eaf-47a7-a274-c7d575b1399d",
+          "new": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.appr_two_eq_of",
+            "short": "appr_two_eq_of"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.appr_two_eq_of",
+            "short": "appr_two_eq_of",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ignorance-seam-viii: the bend NInf.det on 2-adic digit tapes is the 2-adic valuation (IgnoranceSeam.lean § VIII)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "ce4453d8-f6f9-4d05-9892-917e5a5259a0",
           "new": {
@@ -101853,6 +102190,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "e293f2a1-2c71-4682-9c7a-b96f33cd3f5e",
+          "new": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.appr_two_eq_zero_iff",
+            "short": "appr_two_eq_zero_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.appr_two_eq_zero_iff",
+            "short": "appr_two_eq_zero_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ignorance-seam-viii: the bend NInf.det on 2-adic digit tapes is the 2-adic valuation (IgnoranceSeam.lean § VIII)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "e2a6bdbf-8e8c-42d6-b6a0-b426320896f7",
           "new": {
             "file": "ZeroParadox/Settheory/Loeb.lean",
@@ -105399,6 +105773,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "e93a5d53-00b2-4fc1-85da-68f33212447b",
+          "new": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.padicTape_neg_two_pow",
+            "short": "padicTape_neg_two_pow"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.padicTape_neg_two_pow",
+            "short": "padicTape_neg_two_pow",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "ignorance-seam-viii: the bend NInf.det on 2-adic digit tapes is the 2-adic valuation (IgnoranceSeam.lean § VIII)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "e93f1de1-6d33-462a-ba8f-ecedfb7fbeb1",
           "new": {
@@ -106783,6 +107195,43 @@
             "role": []
           },
           "reason": "ninf-retraction-1030: the round trip through ofOption: a left inverse is a right inverse (Escardó's density lemma), hence LPO; LPO data gives NInf ≃ Option ℕ; ofOption onto iff LPO; the round trip as a motion on Option ℕ ⊕ NInf (Die § XXIII); Tim ruling 2026-10-30",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ece702b0-6f67-450a-9676-f4ee7f1ea245",
+          "new": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.padicTape_low_false_iff",
+            "short": "padicTape_low_false_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.padicTape_low_false_iff",
+            "short": "padicTape_low_false_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ignorance-seam-viii: the bend NInf.det on 2-adic digit tapes is the 2-adic valuation (IgnoranceSeam.lean § VIII)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -110573,6 +111022,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f5fc878a-2f93-4dcd-ac84-f98b4534bc3b",
+          "new": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ofNat_le_det_padicTape",
+            "short": "ofNat_le_det_padicTape"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ofNat_le_det_padicTape",
+            "short": "ofNat_le_det_padicTape",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "ignorance-seam-viii: the bend NInf.det on 2-adic digit tapes is the 2-adic valuation (IgnoranceSeam.lean § VIII)",
           "verify": {
             "axioms": null,
             "sorry_free": true

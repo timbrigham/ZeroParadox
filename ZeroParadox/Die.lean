@@ -4948,6 +4948,7 @@ def det_gi : GaloisInsertion (OrderDual.toDual ∘ det) (negS ∘ OrderDual.ofDu
   det_gc.toGaloisInsertion fun x => by
     show x ≤ OrderDual.toDual (det (negS (OrderDual.ofDual x)))
     rw [det_negS]; exact le_rfl
+-- `Statement:` on 2-adic digit tapes `det` is the 2-adic valuation (`ZeroParadox/Category/IgnoranceSeam.lean` § VIII).
 
 -- `Statement:` `det r` is the bitwise complement of Mathlib's `partialSups r`, on `Bool` the running
 -- "or" (has `r` fired by stage `n`), pointwise at every `n`.
