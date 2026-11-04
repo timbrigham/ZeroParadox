@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-L: Incomputability Convergence PDF Builder
-Version 1.34 | November 2026
+Version 1.35 | November 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.34'
+VERSION = '1.35'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -276,14 +276,18 @@ def build():
             'and by Tarski\'s completeness theorem for the theory of real-closed fields, '
             'every first-order sentence in the language of ordered fields that holds in '
             '&#8477; also holds in No, and vice versa.',
-            'ZP-F (The Counterexamples) proves that the Binary Snap &#8212; the transition from &#8869; to the ordinal threshold &#949;&#8320;, the first fixed point of &#969;<super>&#183;</super> above &#8869; of Ordinal '
-            '(leastness: epsilonZero_le_fixedPoint, this section) &#8212; cannot occur in any linearly ordered '
-            'field. This result applies directly to No considered as a linearly ordered field. '
-            'Note the scope: what is derived is the transition&#8217;s SHAPE and its impossibility in an ordered field.',
+            'ZP-F (The Counterexamples) proves that in any linearly ordered field 0 has no first step '
+            'above it, AX-B1&#8217;s form (f_snap_impossible, which, despite its name, states that no '
+            'linearly ordered field has a least positive element). Its &#949;&#8320; is any positive '
+            'element of the field, a candidate first step above the field&#8217;s 0, and not the '
+            'ordinal &#949;&#8320; of this section. This result applies directly to No considered as a '
+            'linearly ordered field. Note the scope: T-SNAP&#8217;s SHAPE does not need a first step '
+            '(t_snap_given holds at a step taken in a densely ordered join-semilattice); what an ordered '
+            'field lacks is AX-B1&#8217;s first step.',
             'The surreals therefore contain &#949;&#8320; as an ordinal while simultaneously '
-            'satisfying the density condition that blocks the Binary Snap in their ordered '
+            'satisfying the density condition that rules out a first step above 0 in their ordered '
             'field structure. Both structures coexist in No: &#949;&#8320; is present as an '
-            'ordinal, and the field density that blocks the snap is present in the field '
+            'ordinal, and the field density that rules out a first step is present in the field '
             'structure. The two results apply to different structural aspects of No.',
         ]
     ))
@@ -298,14 +302,12 @@ def build():
             'full first-order theory, so any first-order property of &#8477; &#8212; '
             'including field density &#8212; transfers.',
             'Field density transfers: between any two hyperreals there is another. The '
-            'density condition that blocks the Binary Snap in &#8477; (proved in ZP-F) '
+            'density condition that rules out a first step above 0 in &#8477; (proved in ZP-F) '
             'therefore holds in *&#8477; as well.',
             'The non-standard naturals *&#8469; contain infinite elements, but every '
             'infinite H &#8712; *&#8469; has a predecessor H&#8722;1 in *&#8469;. '
             '&#949;&#8320; is a limit ordinal: it has no predecessor and is the supremum '
-            'of the tower below it. *&#8469; cannot host the Binary Snap not only because '
-            'of field density, but because its infinite elements are successor-like rather '
-            'than limit-like. The snap requires genuine limit ordinal structure.',
+            'of the tower below it.',
             'The monad of 0 in *&#8477; &#8212; the external set {&#949; : |&#949;| < 1/n '
             'for all standard n} &#8212; is external to the ultrapower. Between any two '
             'distinct elements of the monad there is another (their arithmetic mean in '
