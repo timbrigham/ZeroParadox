@@ -80,9 +80,10 @@ recursion theorem (Theorem 3.2, p. 43), derive from it a program of no inputs th
 (Proposition 3.3, p. 43), and write that "there may be applications of the techniques of this book to
 the semantical issues raised by self-application" (p. 42). They write that computability theory does
 not depend on set theory "in any essential way" (p. 42), footnote 5 excepting the semantics of
-computation, where one might choose non-well-founded sets. In Chapter 20 (Proposition 20.1, p. 314)
-they use the two together: the Recursion Theorem inside their set theory, then the uniqueness part of
-AFA, to give every set a name. On those pages they state no comparison of a set-side occupant with a
+computation, where one might choose non-well-founded sets. In Chapter 20 (Proposition 20.1 and the application
+after it, pp. 313-314), in a setting that assumes a strongly inaccessible cardinal κ (p. 312), they use
+a version of the Recursion Theorem, for self-sufficient sets of formulas (their Theorem 5.1, p. 62),
+then the uniqueness part of AFA, to give every set a name. On those pages they state no comparison of a set-side occupant with a
 code-side one, so the role comparison above is not credited to them. Searched as follows: the book's
 index and contents, § 3.4 and Chapter 20 pp. 311-315 (scans), theoremsearch (three phrasings),
 LeanExplore, GitHub code search and the open web.

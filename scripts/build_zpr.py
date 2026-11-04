@@ -402,7 +402,7 @@ def build():
             'Reading: the framework treats the self-application fixed point as a role carried with its '
             'face, characterized rather than constructed as one global object. Its choice of a '
             'non-well-founded foundation (ZFC<sup>&#8722;</sup> + AFA: Foundation replaced by AFA, Choice kept; Aczel 1988, '
-            'p. xviii; with urelements, Barwise &amp; Moss 1996, p. 72, their ZFC<sup>&#8722;</sup> on p. 28) '
+            'p. xviii; Barwise &amp; Moss 1996, p. 72, whose ZFC<sup>&#8722;</sup> on p. 28 also has urelements) '
             'is a separate commitment, which this face-locality does not by itself require. A theorem stated for every suitable category can be '
             '<i>witnessed</i> in whichever category has Lawvere\'s hypothesis; the <i>occupant</i> it '
             'produces is defined only relative to that category.',
