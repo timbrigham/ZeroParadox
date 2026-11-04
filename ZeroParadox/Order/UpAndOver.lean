@@ -592,6 +592,58 @@ theorem ordinalCornerStep_iterate_strictMono :
     simp only [Function.iterate_succ_apply']
     exact lt_ordinalCornerStep _
 
+/-- `Statement:` at every floor `f`, the run of `α ↦ ω^α` from `succ f` has `ordinalCornerStep f`, the
+    least fixed point strictly above `f`, as occupant of the die role `PinnedLimitAbove`
+    (`ZeroParadox/Die.lean` § XXIV). -/
+theorem ordinalCornerStep_pinnedLimitAbove (f : Ordinal.{u}) :
+    (Motion.ofFun fun α : Ordinal.{u} => Ordinal.omega0 ^ α).IsRun
+      (fun n => (fun α : Ordinal.{u} => Ordinal.omega0 ^ α)^[n] (Order.succ f)) ∧
+    PinnedLimitAbove (fun α : Ordinal.{u} => Ordinal.omega0 ^ α)
+      (fun n => (fun α : Ordinal.{u} => Ordinal.omega0 ^ α)^[n] (Order.succ f))
+      (ordinalCornerStep f) := by
+  have hn := Ordinal.isNormal_opow (a := Ordinal.omega0.{u}) Ordinal.one_lt_omega0
+  have ha : Order.succ f < Ordinal.omega0 ^ Order.succ f :=
+    lt_of_le_of_ne (hn.strictMono.id_le _) (Ne.symm (omega0_opow_succ_ne f))
+  refine ⟨fun n => ?_, ?_, fun ⟨n, hn'⟩ => (Ordinal.iterate_lt_nfp hn.strictMono ha n).ne hn',
+    ⟨⟨Ordinal.nfp_fp hn _, Ordinal.le_nfp _ _⟩, fun x ⟨hx, hax⟩ =>
+      Ordinal.nfp_le_fp hn.strictMono.monotone hax hx.le⟩,
+    hn.strictMono.monotone.monotone_iterate_of_le_map ha.le⟩
+  · show _ = Ordinal.omega0 ^ _
+    simp only [Function.iterate_succ_apply']
+  · refine ⟨?_, fun b hb => Ordinal.nfp_le fun n => hb ⟨n, rfl⟩⟩
+    rintro _ ⟨n, rfl⟩
+    exact (Ordinal.iterate_lt_nfp hn.strictMono ha n).le
+
+/-- `Statement:` at the floor `ε_o` that occupant is `ε_(o+1)` (Mathlib `Ordinal.epsilon_succ_eq_nfp`):
+    `ε_(o+1)` occupies `PinnedLimitAbove (ω^·)` at the run from `succ ε_o`, for every `o`. -/
+theorem epsilon_succ_pinnedLimitAbove (o : Ordinal.{u}) :
+    (Motion.ofFun fun α : Ordinal.{u} => Ordinal.omega0 ^ α).IsRun
+      (fun n => (fun α : Ordinal.{u} => Ordinal.omega0 ^ α)^[n] (Order.succ (Ordinal.epsilon o))) ∧
+    PinnedLimitAbove (fun α : Ordinal.{u} => Ordinal.omega0 ^ α)
+      (fun n => (fun α : Ordinal.{u} => Ordinal.omega0 ^ α)^[n] (Order.succ (Ordinal.epsilon o)))
+      (Ordinal.epsilon (Order.succ o)) := by
+  rw [Ordinal.epsilon_succ_eq_nfp]
+  exact ordinalCornerStep_pinnedLimitAbove _
+
+-- `Statement:` at the floor `ε_n` the occupant is the corner composite iterated `n + 2` times from 0,
+-- ⊥ of `Ordinal` (`ordinalCornerStep_iterate`).
+example (n : ℕ) : ordinalCornerStep^[n + 2] (0 : Ordinal.{u}) =
+    Ordinal.epsilon (Order.succ (n : Ordinal.{u})) := by
+  rw [ordinalCornerStep_iterate (n + 1), Nat.cast_succ, Order.succ_eq_add_one]
+
+-- `Statement:` CONTROL, the converse of `PinnedLimit.toAbove` fails: at the run from `succ ε₀`, ε₁
+-- occupies `PinnedLimitAbove (ω^·)` and not `PinnedLimit (ω^·)` (`pinnedLimit_opow_eq_epsilon0`).
+example : PinnedLimitAbove (fun α : Ordinal.{u} => Ordinal.omega0 ^ α)
+      (fun n => (fun α : Ordinal.{u} => Ordinal.omega0 ^ α)^[n] (Order.succ (Ordinal.epsilon 0)))
+      (Ordinal.epsilon 1) ∧
+    ¬ PinnedLimit (fun α : Ordinal.{u} => Ordinal.omega0 ^ α)
+      (fun n => (fun α : Ordinal.{u} => Ordinal.omega0 ^ α)^[n] (Order.succ (Ordinal.epsilon 0)))
+      (Ordinal.epsilon 1) := by
+  have h := (epsilon_succ_pinnedLimitAbove (0 : Ordinal.{u})).2
+  rw [show Order.succ (0 : Ordinal.{u}) = 1 from by rw [Order.succ_eq_add_one, zero_add]] at h
+  exact ⟨h, fun hp => (Ordinal.veblen_right_strictMono 1 zero_lt_one).ne
+    (pinnedLimit_opow_eq_epsilon0 _ _ hp).symm⟩
+
 /-- `Statement:` no ordinal steps, under `ordinalSuccMotion`, to an iterate of the corner composite
     from 0: 0 is not a successor, and `ε_n` is fixed by `ω^·` while no successor is. -/
 theorem not_step_into_ordinalCornerStep_iterate (n : ℕ) (a : Ordinal.{u}) :
@@ -799,6 +851,8 @@ open ZeroParadox
 #print axioms ordinalSuccMotion_agree
 #print axioms ordinalSuccMotion_elbow
 #print axioms ordinalCornerStep_iterate_strictMono
+#print axioms ordinalCornerStep_pinnedLimitAbove
+#print axioms epsilon_succ_pinnedLimitAbove
 #print axioms not_step_into_ordinalCornerStep_iterate
 #print axioms ordinalView
 #print axioms ordinalView_bot_isLanding
