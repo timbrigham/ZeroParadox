@@ -76,7 +76,8 @@ footprint; `[propext]` means propositional extensionality only. -/
 -- The ν-side inhabitation witnesses at the root cut: NO axioms. These matter because they REFUTE the
 -- general form of "choice enters precisely where the diagonal fixed point is asserted inhabited."
 -- Inhabiting a non-well-founded (greatest) fixed point can be entirely choice-free. FENCE: the
--- refutation is functor-specific, not universal — the QPF `Cofix` route in `ZeroParadox/Computability/ChoicePurityInvariant.lean`
+-- refutation is functor-specific, not universal — the QPF `Cofix` route in
+-- `ZeroParadox/Computability/ChoicePurityInvariant.lean`
 -- (`cofix_nonempty'`) DOES carry `Classical.choice`. Located exactly, measured 2026-08-03: the M-type
 -- FORMER and its constructors are axiom-free (`PFunctor.M`, `M.mk`, `M.corec`), its DESTRUCTOR is
 -- not
@@ -128,7 +129,8 @@ footprint; `[propext]` means propositional extensionality only. -/
 /-! ## § II. What choice is NOT to be confused with — the excluded-middle boundary
 
 The modality of §I generates classical LOGIC — excluded middle — which is strictly weaker than **full**
-choice (Cohen 1963). The RESTRICTED fragment is a different matter: see `ZeroParadox/Category/ChoiceCannotBe.md`. This section indexes
+choice (Cohen 1963). The RESTRICTED fragment is a different matter: see
+`ZeroParadox/Category/ChoiceCannotBe.md`. This section indexes
 the boundary and its scope fence. -/
 
 -- What the modality's closed points actually are: the regular elements `aᶜᶜ = a` — the Boolean core.
@@ -213,7 +215,8 @@ proved about where choice does work. -/
 -- (⊥ of `Ordinal` ↦ ε₀) inherits `Classical.choice` from Mathlib's `Ordinal` fixed-point machinery;
 -- `dnegNucleus` (§ I) is `[propext]`. Both are difference-generators seeded at their carrier's ⊥ —
 -- negation satisfies `a ⇨ ⊥ = aᶜ` (the class law `himp_bot`), and `HeytingAlgebra` extends `OrderBot`,
--- so ⊥ of the Heyting algebra is part of the structure negation lives in. Same role, different carriers, opposite footprints, and
+-- so ⊥ of the Heyting algebra is part of the structure negation lives in. Same role, different
+-- carriers, opposite footprints, and
 -- opposite behaviour AT the seed: `dnegNucleus` fixes ⊥ of the Heyting algebra (⊥ is always regular),
 -- `snapNucleus` provably moves ⊥ of `Ordinal` (`snapNucleus_bot_ne_bot`). On the footprint difference:
 -- `snapNucleus` is STATEMENT-CARRIED (`ZeroParadox/Category/ChoiceCannotBe.md`): `Nonempty (Nucleus
@@ -295,8 +298,8 @@ proved about where choice does work. -/
 -- with `Classical.em` and so carries `Classical.choice` IN ITS OWN TERM; `Prop.instHeytingAlgebra` is
 -- `[propext]`. A `Prop`-scoped statement that does not PIN its instance can silently resolve through the
 -- Boolean one and acquire choice — which would make every choice-freeness claim about `Prop` vacuous.
--- Every `Prop`-scoped statement in `ZeroParadox/Category/ExcludedMiddleBridge.lean` pins `@… Prop Prop.instHeytingAlgebra`
--- explicitly for this reason. Pin the instance, or measure nothing.
+-- Every `Prop`-scoped statement in `ZeroParadox/Category/ExcludedMiddleBridge.lean` pins
+-- `@… Prop Prop.instHeytingAlgebra` explicitly for this reason. Pin the instance, or measure nothing.
 #check @Prop.instHeytingAlgebra
 #check @Prop.instBooleanAlgebra
 
@@ -351,14 +354,16 @@ is essential. -/
 -- AND THE ESCAPE, WHICH IS THE HALF THAT MAKES CASE 2 USEFUL RATHER THAN ALARMING. "Essential" scopes
 -- to the GENERAL principle, quantified over arbitrary `Type`. Restrict the carrier to decidable
 -- equality and the same statement is choice-free — measured `[propext]`, against the general form's
--- `[propext, Classical.choice, Quot.sound]`. `ZeroParadox/Category/DiagonalWitness.lean`'s `no_witnessRel_top_of_nontrivial`
+-- `[propext, Classical.choice, Quot.sound]`. `ZeroParadox/Category/DiagonalWitness.lean`'s
+-- `no_witnessRel_top_of_nontrivial`
 -- carries the same audit for the level-set form. **Where a carrier has `DecidableEq`, the essential
 -- form is not needed** — the taboo makes the general statement non-re-provable constructively, on the
 -- premise in the header above, and the restriction says it does not have to be *there*. Together they
 -- localize the classical content rather than obstruct it: they say where it lives and how far it reaches.
 -- SCOPE: how far the escape reaches is UNSURVEYED. Which carriers in this corpus have `DecidableEq`
 -- was unmeasured as of 2026-08-02, so "the restriction covers what we need" is unverified in general — and a
--- universal over every carrier would be the sentence shape `ZeroParadox/Category/ChoiceCannotBe.md`'s § "No count" warns about.
+-- universal over every carrier would be the sentence shape
+-- `ZeroParadox/Category/ChoiceCannotBe.md`'s § "No count" warns about.
 -- The two `#check`ed declarations are what is established; the reach is not.
 #check @ZeroParadox.fixedPointFree_of_nontrivial_decidable
 
@@ -431,7 +436,8 @@ example : ∀ (α : Type) [PartialOrder α] (a b : α), a ⋖ b → Set.Icc a b 
 -- Statement: non-vacuity: the framework's classical proof supplies the hypothesis.
 example : ∀ (β : Type) (M : ZeroParadox.Motion β), M.RegisteredDecidable :=
   fun _ _ => ZeroParadox.Motion.registeredDecidable_of_classical
-#check @ZeroParadox.Motion.registeredDecidable_of_classical -- Statement: every motion has a decision of definedness, proved with `classical`
+-- Statement: every motion has a decision of definedness, proved with `classical`
+#check @ZeroParadox.Motion.registeredDecidable_of_classical
 -- Statement: the escape: an `Option`-presented UP has one with no axiom of choice (`[propext]`).
 #check @ZeroParadox.Motion.ofOption_registeredDecidable
 
@@ -453,10 +459,12 @@ example : ∀ (β : Type) (M : ZeroParadox.Motion β), M.RegisteredDecidable :=
 example : ∀ (β : Type) (M : ZeroParadox.Motion β), M.SelectedData :=
   fun _ _ => ZeroParadox.Motion.selectedData_of_selectedTotal
     ZeroParadox.Motion.selectedTotal_of_classical
-#check @ZeroParadox.Motion.selectedTotal_of_classical -- Statement: every motion has a total selector, proved with `classical`
+-- Statement: every motion has a total selector, proved with `classical`
+#check @ZeroParadox.Motion.selectedTotal_of_classical
 -- Statement: the escape: a step given by a function is selected with no axioms.
 #check @ZeroParadox.Motion.selectedTotal_of_fun
-#check @ZeroParadox.Motion.selectedTotal_of_option -- Statement: and one given by an `Option`-valued function, with `[propext]`
+-- Statement: and one given by an `Option`-valued function, with `[propext]`
+#check @ZeroParadox.Motion.selectedTotal_of_option
 
 /-! ## § V. Per instance free, uniform a taboo — pointers
 
@@ -466,15 +474,18 @@ uniform legs proved by anonymous `example` are cited by section. -/
 -- Statement: chart selection: free given a point (`chart_selection_is_freeG`, § I); uniform at the
 -- stipulated pole, the fragment (`uniformChartSelection_iff_choiceFragment`, § III).
 #check @ZeroParadox.chart_selection_is_freeG
-#check @ZeroParadox.uniformChartSelection_iff_choiceFragment -- Statement: uniform selection at the stipulated pole is the fragment, `Iff.rfl`
+-- Statement: uniform selection at the stipulated pole is the fragment, `Iff.rfl`
+#check @ZeroParadox.uniformChartSelection_iff_choiceFragment
 -- Statement: pole discrimination: an `Option` decides its own `none` (`registeredDecider`); a total
 -- test of definedness on `Part Unit` gives excluded middle (`em_of_poleDiscriminator`).
 #check @ZeroParadox.registeredDecider
-#check @ZeroParadox.em_of_poleDiscriminator       -- Statement: a total definedness test on `Part Unit` gives excluded middle
+-- Statement: a total definedness test on `Part Unit` gives excluded middle
+#check @ZeroParadox.em_of_poleDiscriminator
 -- Statement: Lawvere's fixed-point-free swap: free with `DecidableEq`; over every `Type`, weak excluded
 -- middle (case 2, § IV).
 #check @ZeroParadox.fixedPointFree_of_nontrivial_decidable
-#check @ZeroParadox.wem_of_fixedPointFree         -- Statement: the general fixed-point-free principle gives weak excluded middle
+-- Statement: the general fixed-point-free principle gives weak excluded middle
+#check @ZeroParadox.wem_of_fixedPointFree
 -- Statement: the die's piece at ⊥: free with `DecidableEq`; over every partial order with a least
 -- element on a `Type`, weak excluded middle (case 3, § IV); for every cover, Mathlib's form, excluded
 -- middle (beside case 3, § IV).

@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-P: The Fixed-Point Fork PDF Builder
-Version 1.31 | November 2026
+Version 1.33 | November 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.31'
+VERSION = '1.33'
 FIRST_RELEASED = 'June 2026'
 
 
@@ -319,9 +319,10 @@ def build():
         'the Quine-atom role, a point that steps to itself and to nothing else (Motion.SelfOnlyAt). '
         'Each chart either has an occupant or provably has none, and each is a theorem: the '
         'self-referential element of the final coalgebra occupies it (cofix_quine_role_occupied), '
-        'no well-founded set does (zfset_quine_role_unoccupied), 0 of the 2-adic integers does under '
-        'doubling (z2_two_views), &#8869; is the only occupant under a semilattice\'s '
-        'self-application map (selfApp_quine_role_iff), and on Kleene\'s codes, stepping from a code '
+        'no well-founded set does (zfset_quine_role_unoccupied), on the 2-adic integers 0 is the only '
+        'occupant under doubling (z2_double_selfOnlyAt_iff), &#8869; is the only occupant '
+        'under a self-application map on a semilattice, given as an AbstractSelfApp instance '
+        '(selfApp_quine_role_iff), and on Kleene\'s codes, stepping from a code '
         'to the codes whose output is what a map assigns it, no single code '
         'occupies it while, for a computable map respecting equal output, some class of codes up to '
         'equal output does (codes_vs_classes). Under a function step, occupying the role is being a '
