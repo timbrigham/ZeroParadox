@@ -658,7 +658,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 3109,
+        "declarations": 3138,
         "files": 196
       },
       "entries": [
@@ -14816,6 +14816,41 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "1f46bf02-1883-4b96-a2f3-ff1778b32831",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.det_gc",
+            "short": "det_gc"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.det_gc",
+            "short": "det_gc",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-bend-1104: Tim's \"bend\" (ruling 38): first-occurrence time det as a Galois insertion of tapes onto NInf, order reversed (Die.lean § XXV)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "1f4eb789-e92f-4cad-ba90-30aecd4fbac4",
           "new": {
@@ -16467,6 +16502,41 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "2298dd7c-9208-485f-8f7f-895e6d341fa2",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.det_bot_pinnedLimitUnique",
+            "short": "det_bot_pinnedLimitUnique"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.det_bot_pinnedLimitUnique",
+            "short": "det_bot_pinnedLimitUnique",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-bend-1104: Tim's \"bend\" (ruling 38): first-occurrence time det as a Galois insertion of tapes onto NInf, order reversed (Die.lean § XXV)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -19699,6 +19769,41 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "2a2f0aed-ece4-4907-b6e3-9302dbb43256",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.tape_bot_le",
+            "short": "tape_bot_le"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.tape_bot_le",
+            "short": "tape_bot_le",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-bend-1104: Tim's \"bend\" (ruling 38): first-occurrence time det as a Galois insertion of tapes onto NInf, order reversed (Die.lean § XXV)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "2a4f865e-c299-4132-bb7d-346499367389",
           "new": {
@@ -20436,6 +20541,41 @@
             ]
           },
           "reason": "New file GraphBisim.lean: finite membership graphs, Aczel bisimulation, dropLoops (control) vs wfPart (bisimulation-invariant), Omega/empty/zero-star/one/two-cycle examples",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "2b8703ca-73e5-4f1f-8d23-63fbe9fffaea",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.detHom",
+            "short": "detHom"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.detHom",
+            "short": "detHom",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-bend-1104: Tim's \"bend\" (ruling 38): first-occurrence time det as a Galois insertion of tapes onto NInf, order reversed (Die.lean § XXV)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -26291,6 +26431,41 @@
             ]
           },
           "reason": "Epsilon0LeastFP.lean (2026-10-04, lane Q): cells of nfp (omega^.) as widths — first cell = Iic eps0; successor cell (eps_o, eps_(o+1)) order-isomorphic to Iio eps_(o+1), width eps_(o+1); eps0 countable. From probes_2026-10-04/CellWidth.lean.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "39eeb7c8-19de-48e3-83c4-84a4110943ec",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.no_nat_wait",
+            "short": "no_nat_wait"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.no_nat_wait",
+            "short": "no_nat_wait",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-bend-1104: Tim's \"bend\" (ruling 38): first-occurrence time det as a Galois insertion of tapes onto NInf, order reversed (Die.lean § XXV)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -33859,6 +34034,41 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "4b72b715-74e9-4a71-bd09-71c4ba395f83",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.constInf_fails",
+            "short": "constInf_fails"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.constInf_fails",
+            "short": "constInf_fails",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-bend-1104: Tim's \"bend\" (ruling 38): first-occurrence time det as a Galois insertion of tapes onto NInf, order reversed (Die.lean § XXV)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "4b8623bb-3a19-4400-ae21-0ed4e5b02697",
           "new": {
@@ -35699,6 +35909,41 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "4fb8620d-44e6-420b-b2f9-729444096084",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.det_exactS",
+            "short": "det_exactS"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.det_exactS",
+            "short": "det_exactS",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-bend-1104: Tim's \"bend\" (ruling 38): first-occurrence time det as a Galois insertion of tapes onto NInf, order reversed (Die.lean § XXV)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "4fb8cf8e-5508-41ba-9723-66e6cc2b4a7c",
           "new": {
@@ -36126,6 +36371,41 @@
             ]
           },
           "reason": "New file GraphBisim.lean: finite membership graphs, Aczel bisimulation, dropLoops (control) vs wfPart (bisimulation-invariant), Omega/empty/zero-star/one/two-cycle examples",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "508fa57b-f6e8-4689-8715-d074865257be",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.exactS",
+            "short": "exactS"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.exactS",
+            "short": "exactS",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-bend-1104: Tim's \"bend\" (ruling 38): first-occurrence time det as a Galois insertion of tapes onto NInf, order reversed (Die.lean § XXV)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -37737,6 +38017,41 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "53d85bcc-c813-45e5-8b25-782022e44c52",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.tape_le_iff",
+            "short": "tape_le_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.tape_le_iff",
+            "short": "tape_le_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-bend-1104: Tim's \"bend\" (ruling 38): first-occurrence time det as a Galois insertion of tapes onto NInf, order reversed (Die.lean § XXV)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -42931,6 +43246,41 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "5f6829bf-faa7-4ef7-a8d2-37775c1feaef",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.instBoundedOrder",
+            "short": "instBoundedOrder"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.instBoundedOrder",
+            "short": "instBoundedOrder",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-bend-1104: Tim's \"bend\" (ruling 38): first-occurrence time det as a Galois insertion of tapes onto NInf, order reversed (Die.lean § XXV)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "5f8d8380-e535-4cc5-bf1d-ba0fc2bb752f",
           "new": {
@@ -43215,6 +43565,41 @@
             ]
           },
           "reason": "Die stage/closure shape and registration switch (Die.lean § VI-VII), with its two face maps in their existing homes (Epsilon0LeastFP, Occurrence)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "60ef057d-39a0-4e38-a203-6bf15362c187",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.det_negS",
+            "short": "det_negS"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.det_negS",
+            "short": "det_negS",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-bend-1104: Tim's \"bend\" (ruling 38): first-occurrence time det as a Galois insertion of tapes onto NInf, order reversed (Die.lean § XXV)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -44284,6 +44669,41 @@
             "role": []
           },
           "reason": "ninf-retraction-1030: the round trip through ofOption: a left inverse is a right inverse (Escardó's density lemma), hence LPO; LPO data gives NInf ≃ Option ℕ; ofOption onto iff LPO; the round trip as a motion on Option ℕ ⊕ NInf (Die § XXIII); Tim ruling 2026-10-30",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "637471da-3f10-4b7b-a4a9-ff6993403b61",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.det_fire",
+            "short": "det_fire"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.det_fire",
+            "short": "det_fire",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-bend-1104: Tim's \"bend\" (ruling 38): first-occurrence time det as a Galois insertion of tapes onto NInf, order reversed (Die.lean § XXV)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -45715,6 +46135,41 @@
             ]
           },
           "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "67531dee-271d-4d86-893c-f2660fb5b548",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.detSeq_eq_true_iff",
+            "short": "detSeq_eq_true_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.detSeq_eq_true_iff",
+            "short": "detSeq_eq_true_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-bend-1104: Tim's \"bend\" (ruling 38): first-occurrence time det as a Galois insertion of tapes onto NInf, order reversed (Die.lean § XXV)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -61512,6 +61967,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "8a16f519-12cc-4f15-8efd-6d5f0fc37ea8",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.nat_no_top",
+            "short": "nat_no_top"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.nat_no_top",
+            "short": "nat_no_top",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-bend-1104: Tim's \"bend\" (ruling 38): first-occurrence time det as a Galois insertion of tapes onto NInf, order reversed (Die.lean § XXV)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "8a3b123f-09a2-4a7f-9fbb-bc68040ee35e",
           "new": {
             "file": "ZeroParadox/Category/DieNucleus.lean",
@@ -61945,6 +62435,41 @@
             ]
           },
           "reason": "2026-07-26 ZP-K occurrence arc: NO-GO gauges (SelfApp, Snap) + new Occurrence.lean (machine model, trap, trilemma, inversion, occurrence-is-halting). ComputationCannotBe.lean is #check-only, 0 decls.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "8b02710b-0000-42e4-8d82-a77553f528db",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.negS",
+            "short": "negS"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.negS",
+            "short": "negS",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-bend-1104: Tim's \"bend\" (ruling 38): first-occurrence time det as a Galois insertion of tapes onto NInf, order reversed (Die.lean § XXV)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -67611,6 +68136,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "984b7ed8-e37b-44d1-9339-5c289fdddc32",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.det_not_injective",
+            "short": "det_not_injective"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.det_not_injective",
+            "short": "det_not_injective",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-bend-1104: Tim's \"bend\" (ruling 38): first-occurrence time det as a Galois insertion of tapes onto NInf, order reversed (Die.lean § XXV)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "985e7e22-f909-4053-a22a-d5fea5dd0e16",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -72174,6 +72734,41 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "a19c9f6f-64ef-4b54-aed5-a4080a3c69eb",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.const0_fails",
+            "short": "const0_fails"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.const0_fails",
+            "short": "const0_fails",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-bend-1104: Tim's \"bend\" (ruling 38): first-occurrence time det as a Galois insertion of tapes onto NInf, order reversed (Die.lean § XXV)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "a1acd227-2386-49ca-904c-f8f58ff50719",
           "new": {
@@ -74236,6 +74831,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "a72b859c-72bd-4dd6-9e57-c75743e5138c",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.no_lower_adjoint",
+            "short": "no_lower_adjoint"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.no_lower_adjoint",
+            "short": "no_lower_adjoint",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-bend-1104: Tim's \"bend\" (ruling 38): first-occurrence time det as a Galois insertion of tapes onto NInf, order reversed (Die.lean § XXV)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "a7379647-8be3-4cc5-a0e4-318a09a658c7",
           "new": {
             "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
@@ -76185,6 +76815,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "aba0d668-1e88-4aa0-8b88-af8e755508ce",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.naiveS_fails",
+            "short": "naiveS_fails"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.naiveS_fails",
+            "short": "naiveS_fails",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-bend-1104: Tim's \"bend\" (ruling 38): first-occurrence time det as a Galois insertion of tapes onto NInf, order reversed (Die.lean § XXV)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "aba375d7-b272-4a1f-bf57-263b10f29c28",
           "new": {
             "file": "ZeroParadox/Settheory/Tarski.lean",
@@ -78072,6 +78737,41 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "af7eb7ba-a1ec-41a3-b4b3-f47e261f6abc",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.exactS_not_mono",
+            "short": "exactS_not_mono"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.exactS_not_mono",
+            "short": "exactS_not_mono",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-bend-1104: Tim's \"bend\" (ruling 38): first-occurrence time det as a Galois insertion of tapes onto NInf, order reversed (Die.lean § XXV)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -80224,6 +80924,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "b45faaec-9af0-4b39-ae4b-39042b601410",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.firstBitWait",
+            "short": "firstBitWait"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.firstBitWait",
+            "short": "firstBitWait",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-bend-1104: Tim's \"bend\" (ruling 38): first-occurrence time det as a Galois insertion of tapes onto NInf, order reversed (Die.lean § XXV)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "b460d932-a994-4d95-8f2a-4439d3855b39",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -80289,6 +81024,41 @@
           "reason": "PricedInterface: the constructive/classical boundary with its cost measured - carrier choice-free, crossing carries Classical.choice at every declaration. The carrier has the shape of Casteran's ON_plus with a one-point right summand and is not an instance of it (its order is not well-founded); the map has two of ON_correct's three fields (into, onto) and not the comparator field. Cited; the measurement is the delta.",
           "verify": {
             "axioms": "propext, Classical.choice, Quot.sound",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b4811639-f5d0-4aab-993f-f8f590e1f616",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.mathlib_bot_le_tape",
+            "short": "mathlib_bot_le_tape"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.mathlib_bot_le_tape",
+            "short": "mathlib_bot_le_tape",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-bend-1104: Tim's \"bend\" (ruling 38): first-occurrence time det as a Galois insertion of tapes onto NInf, order reversed (Die.lean § XXV)",
+          "verify": {
+            "axioms": null,
             "sorry_free": true
           }
         },
@@ -86408,6 +87178,41 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "c2242892-f0c3-4639-96a2-6160beae41fe",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.naiveS",
+            "short": "naiveS"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.naiveS",
+            "short": "naiveS",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-bend-1104: Tim's \"bend\" (ruling 38): first-occurrence time det as a Galois insertion of tapes onto NInf, order reversed (Die.lean § XXV)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "c242edd9-4078-4aaf-884e-a40eb3227847",
           "new": {
@@ -86910,6 +87715,41 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c3595044-5cc0-42cc-9bdf-87ab0519bfcd",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.det_antitone",
+            "short": "det_antitone"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.det_antitone",
+            "short": "det_antitone",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-bend-1104: Tim's \"bend\" (ruling 38): first-occurrence time det as a Galois insertion of tapes onto NInf, order reversed (Die.lean § XXV)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -92447,6 +93287,41 @@
             "role": []
           },
           "reason": "ninf-retraction-1030: the round trip through ofOption: a left inverse is a right inverse (Escardó's density lemma), hence LPO; LPO data gives NInf ≃ Option ℕ; ofOption onto iff LPO; the round trip as a motion on Option ℕ ⊕ NInf (Die § XXIII); Tim ruling 2026-10-30",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "cf3c6dc9-be28-4b6b-9b73-51aefb885e1d",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.le_det_iff",
+            "short": "le_det_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.le_det_iff",
+            "short": "le_det_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-bend-1104: Tim's \"bend\" (ruling 38): first-occurrence time det as a Galois insertion of tapes onto NInf, order reversed (Die.lean § XXV)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -102887,6 +103762,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "e5f3cffb-06ef-4a31-b8ed-7215d03dfe5d",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.det_gi",
+            "short": "det_gi"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.det_gi",
+            "short": "det_gi",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-bend-1104: Tim's \"bend\" (ruling 38): first-occurrence time det as a Galois insertion of tapes onto NInf, order reversed (Die.lean § XXV)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "e61c0cae-0082-4b59-8dce-c42b1acf87bb",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -106326,6 +107236,41 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "edd4082f-ef9f-439a-9f86-c3a6b4c35273",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.head_also_poles",
+            "short": "head_also_poles"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.head_also_poles",
+            "short": "head_also_poles",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-bend-1104: Tim's \"bend\" (ruling 38): first-occurrence time det as a Galois insertion of tapes onto NInf, order reversed (Die.lean § XXV)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "edfca929-a117-4ef9-8ea5-753ae041cc82",
           "new": {
@@ -109189,6 +110134,41 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f547511f-cce6-4a73-924d-8cc010059841",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.negS_antitone",
+            "short": "negS_antitone"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.negS_antitone",
+            "short": "negS_antitone",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-bend-1104: Tim's \"bend\" (ruling 38): first-occurrence time det as a Galois insertion of tapes onto NInf, order reversed (Die.lean § XXV)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -112591,6 +113571,41 @@
             ]
           },
           "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "fb7da453-12a2-4a52-b6fa-8f5733d95f5c",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.det_poles",
+            "short": "det_poles"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.det_poles",
+            "short": "det_poles",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-bend-1104: Tim's \"bend\" (ruling 38): first-occurrence time det as a Galois insertion of tapes onto NInf, order reversed (Die.lean § XXV)",
           "verify": {
             "axioms": null,
             "sorry_free": true

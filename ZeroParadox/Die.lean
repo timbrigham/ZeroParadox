@@ -4851,6 +4851,253 @@ example : IsLeast {x : NInf | id x = x} (NInf.ofNat 0) ∧
   rw [hc] at hbot
   exact absurd (hbot 0 rfl) (by decide)
 
+/-! ### § XXV. First-occurrence time as a Galois insertion: tapes onto `NInf`, order reversed
+`Reading:` Tim's "bend" (2026-11-03): one tape read two ways, as a firing record in `ℕ → Bool`
+(pointwise order, Mathlib's `Pi` instance) and as its waiting time `det` in `NInf`. "Time" is his
+reading only; nothing here is a claim about physics. -/
+
+namespace NInf
+
+/-- `Statement:` ⊥ of `NInf` and ⊤ of `NInf` together, as Mathlib's `BoundedOrder`. -/
+instance instBoundedOrder : BoundedOrder NInf := { instOrderBot, instOrderTop with }
+
+/-- `Statement:` on `ℕ → Bool`, `r ≤ r'` iff every `true` bit of `r` is a `true` bit of `r'`. -/
+theorem tape_le_iff (r r' : ℕ → Bool) : r ≤ r' ↔ ∀ i, r i = true → r' i = true := by
+  refine forall_congr' fun i => ?_
+  cases r i <;> cases r' i <;> simp
+
+/-- `Statement:` `detSeq r n = true` iff `r k = false` for every `k ≤ n`; both directions. -/
+theorem detSeq_eq_true_iff (r : ℕ → Bool) (n : ℕ) :
+    detSeq r n = true ↔ ∀ k ≤ n, r k = false := by
+  refine ⟨detSeq_true r n, ?_⟩
+  induction n with
+  | zero => intro h; simp [detSeq, h 0 le_rfl]
+  | succ n ih =>
+    intro h
+    simp [detSeq, ih (fun k hk => h k (by omega)), h (n + 1) le_rfl]
+
+/-- `Statement:` ⊥ of `ℕ → Bool` is below every tape, with axioms `[propext]`. -/
+theorem tape_bot_le (r : ℕ → Bool) : (⊥ : ℕ → Bool) ≤ r :=
+  (tape_le_iff _ _).2 fun _ h => Bool.noConfusion h
+
+/-- `Statement:` by Mathlib's `bot_le`, axioms `[propext, Classical.choice, Quot.sound]`. -/
+theorem mathlib_bot_le_tape (r : ℕ → Bool) : (⊥ : ℕ → Bool) ≤ r := bot_le
+
+/-- `Statement:` `det` is antitone: if every `true` bit of `r` is a `true` bit of `r'`, then
+    `det r' ≤ det r`. -/
+theorem det_antitone : Antitone det := by
+  intro r r' hle
+  rw [le_def]; intro i hi
+  have hi' := (detSeq_eq_true_iff r' i).1 hi
+  show detSeq r i = true
+  rw [detSeq_eq_true_iff]
+  intro k hk
+  cases hr : r k
+  · rfl
+  · have := (tape_le_iff r r').1 hle k hr; rw [hi' k hk] at this; cases this
+
+/-- `Statement:` `det` sends ⊥ of `ℕ → Bool` to ⊤ of `NInf` and ⊤ of `ℕ → Bool` to ⊥ of `NInf`. -/
+theorem det_poles : det ⊥ = ⊤ ∧ det ⊤ = ⊥ := by
+  refine ⟨(det_eq_infty_iff _).2 fun _ => rfl, ext fun i => ?_⟩
+  cases i <;> simp [det, detSeq] <;> rfl
+
+/-- `Statement:` the bitwise complement of a point of `NInf`, as a tape. -/
+def negS (x : NInf) : ℕ → Bool := fun n => !x.1 n
+
+/-- `Statement:` `det (negS x) = x`: `negS` is a section of `det`. -/
+theorem det_negS (x : NInf) : det (negS x) = x := ext fun n => by
+  show detSeq (negS x) n = x.1 n
+  cases hx : x.1 n
+  · cases hd : detSeq (negS x) n
+    · rfl
+    · have := (detSeq_eq_true_iff _ n).1 hd n le_rfl; simp [negS, hx] at this
+  · rw [detSeq_eq_true_iff]; intro k hk; simp [negS, true_le x hx k hk]
+
+/-- `Statement:` `negS` is antitone. -/
+theorem negS_antitone : Antitone negS := by
+  intro x y h
+  rw [tape_le_iff]; intro i hi
+  cases hx : x.1 i
+  · simp [negS, hx]
+  · have := h i hx; simp [negS, this] at hi
+
+/-- `Statement:` `x ≤ det r ↔ r ≤ negS x`; both directions. -/
+theorem le_det_iff (r : ℕ → Bool) (x : NInf) : x ≤ det r ↔ r ≤ negS x := by
+  rw [le_def, tape_le_iff]
+  constructor
+  · intro h i hr
+    cases hx : x.1 i
+    · simp [negS, hx]
+    · have := (detSeq_eq_true_iff r i).1 (h i hx) i le_rfl; rw [hr] at this; cases this
+  · intro h i hx
+    show detSeq r i = true
+    rw [detSeq_eq_true_iff]; intro k hk
+    cases hr : r k
+    · rfl
+    · have := h k hr; simp [negS, true_le x hx k hk] at this
+
+/-- `Statement:` `det` into the order dual of `NInf` is the lower adjoint of a Galois connection
+    (Mathlib `GaloisConnection`) with upper adjoint `negS`. -/
+theorem det_gc :
+    GaloisConnection (OrderDual.toDual ∘ det) (negS ∘ OrderDual.ofDual) :=
+  fun r x => OrderDual.toDual_le.trans (le_det_iff r (OrderDual.ofDual x))
+
+/-- `Statement:` and a Galois insertion (Mathlib `GaloisInsertion`): the upper adjoint `negS` is a
+    section of `det`. `Reading:` Tim's "bend" (2026-11-03). -/
+def det_gi : GaloisInsertion (OrderDual.toDual ∘ det) (negS ∘ OrderDual.ofDual) :=
+  det_gc.toGaloisInsertion fun x => by
+    show x ≤ OrderDual.toDual (det (negS (OrderDual.ofDual x)))
+    rw [det_negS]; exact le_rfl
+
+-- `Statement:` `det r` is the bitwise complement of Mathlib's `partialSups r`, on `Bool` the running
+-- "or" (has `r` fired by stage `n`), so `det_gi` is Mathlib's `partialSups.gi` across the complement.
+example (r : ℕ → Bool) (n : ℕ) : (det r).1 n = !(partialSups r n) := by
+  induction n with
+  | zero => simp [det, detSeq]
+  | succ n ih =>
+    have e : partialSups r (n + 1) = (partialSups r n || r (n + 1)) := by
+      rw [← Order.succ_eq_add_one, partialSups_succ, Order.succ_eq_add_one]; rfl
+    show (detSeq r n && !r (n + 1)) = _
+    rw [show detSeq r n = (det r).1 n from rfl, ih, e]
+    cases partialSups r n <;> cases r (n + 1) <;> rfl
+
+-- `Statement:` Mathlib's `partialSups.gi`: a Galois insertion of `ℕ → Bool` onto its monotone sequences.
+noncomputable example : GaloisInsertion (partialSups : (ℕ → Bool) → ℕ →o Bool) DFunLike.coe :=
+  partialSups.gi
+
+/-- `Statement:` `det` as a bounded order homomorphism (Mathlib `BoundedOrderHom`) from `ℕ → Bool`
+    into the order dual of `NInf`. -/
+def detHom : BoundedOrderHom (ℕ → Bool) NInfᵒᵈ where
+  toFun r := OrderDual.toDual (det r)
+  monotone' := fun _ _ h => det_antitone h
+  map_top' := congrArg OrderDual.toDual det_poles.2
+  map_bot' := congrArg OrderDual.toDual det_poles.1
+
+/-- `Statement:` no adjoint on the other side: no `g` has `g x ≤ r ↔ det r ≤ x` for all `x`, `r`. -/
+theorem no_lower_adjoint : ¬ ∃ g : NInf → ℕ → Bool, ∀ x r, g x ≤ r ↔ det r ≤ x := by
+  rintro ⟨g, hg⟩
+  have h1 : det (fun n => decide (n = 0)) ≤ ofNat 1 := by
+    rw [le_def]; intro i hi
+    exact absurd ((detSeq_eq_true_iff _ i).1 hi 0 (Nat.zero_le _)) (by decide)
+  have h2 : det (fun n => decide (n = 1)) ≤ ofNat 1 := by
+    rw [le_def]; intro i hi
+    cases i with
+    | zero => rfl
+    | succ j => exact absurd ((detSeq_eq_true_iff _ (j + 1)).1 hi 1 (by omega)) (by decide)
+  have g1 := (tape_le_iff _ _).1 ((hg _ _).2 h1)
+  have g2 := (tape_le_iff _ _).1 ((hg _ _).2 h2)
+  have hbot : g (ofNat 1) ≤ (fun _ => false) := by
+    rw [tape_le_iff]; intro i hi
+    have a := g1 i hi; have b := g2 i hi
+    simp only [decide_eq_true_eq] at a b; subst a; cases b
+  have h3 := (hg _ _).1 hbot
+  have e := (det_eq_infty_iff (fun _ : ℕ => false)).2 fun _ => rfl
+  rw [e, le_def] at h3
+  exact absurd (h3 1 rfl) (by decide)
+
+/-- `Statement:` the tape firing exactly at `n` has waiting time `ofNat n`. -/
+theorem det_fire (n : ℕ) : det (fun k => decide (k = n)) = ofNat n := ext fun i => by
+  show detSeq _ i = decide (i < n)
+  cases hd : detSeq (fun k => decide (k = n)) i
+  · obtain ⟨k, hk, e⟩ := detSeq_false _ i hd
+    simp only [decide_eq_true_eq] at e; subst e; exact (decide_eq_false (by omega)).symm
+  · have := (detSeq_eq_true_iff _ i).1 hd
+    symm; refine decide_eq_true ?_; by_contra hc; have := this n (by omega); simp at this
+
+/-- `Statement:` `det` is not injective. -/
+theorem det_not_injective : ¬ Function.Injective det := fun h => by
+  have e := h ((det_fire 0).trans det_poles.2.symm)
+  have := congrFun e 1; simp at this
+
+/-- `Statement:` the tape `true` at `n` iff `x.1 n = false` and (`n = 0` or `x.1 (n - 1) = true`). -/
+def exactS (x : NInf) : ℕ → Bool :=
+  fun n => !x.1 n && (match n with | 0 => true | m + 1 => x.1 m)
+
+/-- `Statement:` `det (exactS x) = x`: `exactS` is a second section of `det`. -/
+theorem det_exactS (x : NInf) : det (exactS x) = x := ext fun n => by
+  show detSeq (exactS x) n = x.1 n
+  cases hx : x.1 n
+  · obtain ⟨j, hj, rfl⟩ := eq_ofNat_of_false x n hx
+    cases hd : detSeq (exactS (ofNat j)) n
+    · rfl
+    · have h := (detSeq_eq_true_iff _ n).1 hd j hj
+      cases j with
+      | zero => exact absurd h (by decide)
+      | succ m =>
+        have e1 : (ofNat (m + 1)).1 (m + 1) = false := decide_eq_false (Nat.lt_irrefl _)
+        have e2 : (ofNat (m + 1)).1 m = true := decide_eq_true (Nat.lt_succ_self m)
+        have h' : exactS (ofNat (m + 1)) (m + 1) = true := by
+          show (!(ofNat (m + 1)).1 (m + 1) && (ofNat (m + 1)).1 m) = true
+          rw [e1, e2]; rfl
+        rw [h] at h'; cases h'
+  · rw [detSeq_eq_true_iff]; intro k hk
+    cases k with
+    | zero => show (!x.1 0 && true) = false; rw [true_le x hx 0 hk]; rfl
+    | succ m => show (!x.1 (m + 1) && x.1 m) = false; rw [true_le x hx _ hk]; rfl
+
+/-- `Statement:` `exactS` is neither antitone nor monotone. -/
+theorem exactS_not_mono : ¬ Antitone exactS ∧ ¬ Monotone exactS := by
+  have h01 : ofNat 0 ≤ ofNat 1 := bot_le
+  refine ⟨fun h => ?_, fun h => ?_⟩
+  · exact absurd (h h01 1) (by decide)
+  · exact absurd (h h01 0) (by decide)
+
+/-- `Statement:` the tape `n ↦ x.1 n && !x.1 (n + 1)`. -/
+def naiveS (x : NInf) : ℕ → Bool := fun n => x.1 n && !x.1 (n + 1)
+
+/-- `Statement:` `naiveS` is not a section of `det`: `det (naiveS (ofNat 0)) = ∞ ≠ ofNat 0`. -/
+theorem naiveS_fails : det (naiveS (ofNat 0)) = infty ∧ det (naiveS (ofNat 0)) ≠ ofNat 0 := by
+  have h : det (naiveS (ofNat 0)) = infty :=
+    (det_eq_infty_iff _).2 fun n => by simp [naiveS, ofNat]
+  exact ⟨h, by rw [h]; exact (ofNat_ne_infty 0).symm⟩
+
+/-- `Statement:` CONTROL: the constant map `ofNat 0` is antitone and does not send ⊥ of `ℕ → Bool`
+    to ⊤ of `NInf`. -/
+theorem const0_fails : Antitone (fun _ : ℕ → Bool => (ofNat 0 : NInf)) ∧
+    (fun _ : ℕ → Bool => (ofNat 0 : NInf)) ⊥ ≠ ⊤ :=
+  ⟨fun _ _ _ => le_rfl, ofNat_ne_infty 0⟩
+
+/-- `Statement:` CONTROL: the constant map `∞` is antitone and does not send ⊤ of `ℕ → Bool` to ⊥
+    of `NInf`. -/
+theorem constInf_fails : Antitone (fun _ : ℕ → Bool => (infty : NInf)) ∧
+    (fun _ : ℕ → Bool => (infty : NInf)) ⊤ ≠ ⊥ :=
+  ⟨fun _ _ _ => le_rfl, fun h => ofNat_ne_infty 0 h.symm⟩
+
+/-- `Statement:` the map reading only bit `0`: `ofNat 0` if it is `true`, else `∞`. -/
+def firstBitWait (r : ℕ → Bool) : NInf := cond (r 0) (ofNat 0) infty
+
+/-- `Statement:` CONTROL: `firstBitWait` is antitone, sends ⊥ of `ℕ → Bool` to ⊤ of `NInf` and ⊤ of
+    `ℕ → Bool` to ⊥ of `NInf`, and is not `det`. -/
+theorem head_also_poles : Antitone firstBitWait ∧ firstBitWait ⊥ = ⊤ ∧
+    firstBitWait ⊤ = ⊥ ∧ firstBitWait ≠ det := by
+  refine ⟨fun r r' h => ?_, rfl, rfl, fun e => ?_⟩
+  · cases h0 : r 0
+    · show firstBitWait r' ≤ cond (r 0) (ofNat 0) infty
+      rw [h0]; exact le_top
+    · have : r' 0 = true := (tape_le_iff r r').1 h 0 h0
+      show cond (r' 0) (ofNat 0) infty ≤ _
+      rw [this]; exact bot_le
+  · have := congrArg (fun f => (f (fun n => decide (n = 1))).1 1) e
+    simp [firstBitWait, det, detSeq, infty] at this
+
+/-- `Statement:` CONTROL: no `b : ℕ` is a top of `ℕ`. -/
+theorem nat_no_top (b : ℕ) : ¬ IsTop b := not_isTop b
+
+/-- `Statement:` CONTROL: no antitone `f : (ℕ → Bool) → ℕ` sends the tape firing exactly at `n` to
+    `n` for every `n`. -/
+theorem no_nat_wait :
+    ¬ ∃ f : (ℕ → Bool) → ℕ, Antitone f ∧ ∀ n, f (fun k => decide (k = n)) = n := by
+  rintro ⟨f, hf, hn⟩
+  have := hf (tape_bot_le fun k => decide (k = f ⊥ + 1))
+  rw [hn] at this; exact Nat.not_succ_le_self _ this
+
+/-- `Statement:` `det` of ⊥ of `ℕ → Bool` occupies `PinnedLimitUnique succ ofNat`
+    (`pinnedLimitUnique_succ`, § XXIV). -/
+theorem det_bot_pinnedLimitUnique : PinnedLimitUnique succ ofNat (det ⊥) :=
+  det_poles.1 ▸ pinnedLimitUnique_succ.2
+
+end NInf
+
 end ZeroParadox
 
 section PurityCheck
@@ -5330,5 +5577,35 @@ open ZeroParadox
 #print axioms NInf.ofWithTop_strictMono
 #print axioms NInf.orderIsoWithTopClassical
 #print axioms pinnedLimitUnique_withTop
+
+#print axioms NInf.instBoundedOrder
+#print axioms NInf.tape_le_iff
+#print axioms NInf.detSeq_eq_true_iff
+#print axioms NInf.tape_bot_le
+#print axioms NInf.mathlib_bot_le_tape
+#print axioms NInf.det_antitone
+#print axioms NInf.det_poles
+#print axioms NInf.negS
+#print axioms NInf.det_negS
+#print axioms NInf.negS_antitone
+#print axioms NInf.le_det_iff
+#print axioms NInf.det_gc
+#print axioms NInf.det_gi
+#print axioms NInf.detHom
+#print axioms NInf.no_lower_adjoint
+#print axioms NInf.det_fire
+#print axioms NInf.det_not_injective
+#print axioms NInf.exactS
+#print axioms NInf.det_exactS
+#print axioms NInf.exactS_not_mono
+#print axioms NInf.naiveS
+#print axioms NInf.naiveS_fails
+#print axioms NInf.const0_fails
+#print axioms NInf.constInf_fails
+#print axioms NInf.firstBitWait
+#print axioms NInf.head_also_poles
+#print axioms NInf.nat_no_top
+#print axioms NInf.no_nat_wait
+#print axioms NInf.det_bot_pinnedLimitUnique
 
 end PurityCheck
