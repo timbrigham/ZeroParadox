@@ -1,5 +1,5 @@
 """
-Zero Paradox — Foreword PDF Builder (v2.40, revised November 2026)
+Zero Paradox — Foreword PDF Builder (v2.41, revised November 2026)
 Follows all rules in pdf rendering standards.md:
   - All table cells are Paragraph objects
   - No unicode subscripts — use sub/super tags
@@ -9,7 +9,7 @@ Follows all rules in pdf rendering standards.md:
 import os
 from zp_utils import *
 
-VERSION = '2.40'
+VERSION = '2.41'
 FIRST_RELEASED = 'April 2026'
 
 # ── fix() and prose_check() guard on every Paragraph ──
@@ -83,7 +83,9 @@ def commitments_table():
          'not a continuum of partial existence. This is the framework&#8217;s one substantive modeling '
          'commitment: the decide proof (ax_b1_distinct) verifies the two states are distinct given the '
          'two-element type, but the choice of a discrete alphabet over a continuum is the commitment '
-         'itself, not what decide checks (the snap provably fails in the reals, f_snap_impossible).'),
+         'itself, not what decide checks (in the reals 0 has no first step above it, AX-B1&#8217;s form: '
+         'f_snap_impossible, which, despite its name, states that no linearly ordered field has a least '
+         'positive element).'),
         ('AX-G1', 'Axiom',
          'Initial Object Exists, and No Terminal Object. There is a starting point that reaches every object in exactly one way, '
          'and no end point that every object reaches in exactly one way. '
@@ -111,7 +113,11 @@ def commitments_table():
         ('AX-1',  'Retired: shape → Theorem T-SNAP; the snap occurs given the occurrence commitment and DA-1',
          'Binary Snap Causality. Previously an axiom, now retired. Its content was split in two: the shape of the Snap '
          'is proved, as Theorem T-SNAP (from L-RUN, TQ-IH and the bottom law, with no Lean axioms), and that the Snap occurs '
-         'is stated separately: it follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2). '
+         'is stated separately: it follows from the occurrence commitment together with DA-1 (closed given DP-2). '
+         'The occurrence commitment is stated in two charts, execution and slot, beside t_snap_given '
+         '(ZeroParadox/Order/Snap.lean; indexed in ZeroParadox/Order/SnapCannotBe.lean &#167; II and CLAIMS.md), '
+         'the slot chart through t_snap_of_fires_once and trials_fires_once '
+         '(ZeroParadox/Information/CrossingTrials.lean &#167; VIII). '
          '(tsnap_holds_but_nothing_moves shows T-SNAP does not carry occurrence.)'),
         ('MC-1',  'The bottom family (not a commitment)',
          'The four domain bottoms (ZP-A semilattice, ZP-B p-adic topology, ZP-C information theory, '
@@ -315,11 +321,14 @@ def build():
             S['body']),
         Paragraph(
             'The counterexample layer (ZP-F) establishes the negative boundary: '
-            'the Binary Snap cannot occur in any densely ordered field — '
-            'structures where zero is a limit point of the nonzero elements. '
-            'ℝ and ℚ are canonical instances. The proof is self-contained — '
-            'no dependencies on the other layers — and answers the question of why Q₂ '
-            'is structurally necessary by showing precisely where snap-geometry fails.',
+            'in an ordered field, ℝ and ℚ among them, 0 has no first step above it, AX-B1&#8217;s form '
+            '(f_snap_impossible, which, despite its name, states that no linearly ordered field has a '
+            'least positive element). T-SNAP&#8217;s shape does not need a first step: t_snap_given '
+            'holds at a step taken in a densely ordered join-semilattice. The proof is self-contained — '
+            'no dependencies on the other layers. Q₂ does not restore the step: it is totally '
+            'disconnected (padic_snaps), which removes the topological obstruction and supplies no first '
+            'step, since under the norm preorder its 0 is least and has no first step '
+            '(ZeroParadox/BottomCannotBe.lean &#167; ROLE).',
             S['body']),
         Paragraph(
             'The self-reference layer (ZP-J) proves T-EXEC: in any ZP-A lattice carrying the '
@@ -497,9 +506,12 @@ def build():
             'element c₀ to c₁ is a valid join step to a different state, proved with no Lean axioms '
             'at all (t_snap_derived, ZeroParadox/Order/Snap.lean; the general form, which takes the '
             'start at ⊥ and the occurrence at the first step as hypotheses, is t_snap_given). '
-            'What density decides is whether the step can be a first step, AX-B1&#8217;s form: in MachinePhase, c₁ is a first step '
+            'Density rules out a first step, AX-B1&#8217;s form: an order is dense exactly when no element has '
+            'one (axb1_fails_everywhere_iff_dense, ZeroParadox/Reals/OrderedField.lean). In MachinePhase, c₁ is a first step '
             'above c₀ (t_snap_derived_cover, ZeroParadox/Order/Snap.lean); in an ordered field, ℝ and ℚ among '
-            'them, no first step above 0 exists (f_snap_impossible, ZeroParadox/Reals/OrderedField.lean). '
+            'them, no first step above 0 exists (f_snap_impossible, which, despite its name, states that no '
+            'linearly ordered field has a least positive element); one element without a first step does not '
+            'make an order dense. '
             'T-SNAP&#8217;s shape does not need it: t_snap_given holds at a step taken in a densely ordered '
             'join-semilattice too. That '
             'the step occurs is the occurrence commitment (with DA-1, Section III), not something '
@@ -541,8 +553,9 @@ def build():
             'AX-B1 — binary existence — is the framework&#8217;s one substantive modeling commitment: '
             'that existence is discrete rather than a continuum of partial states. The decide proof '
             '(ax_b1_distinct) checks only that the two states are distinct given the two-element type; '
-            'the discreteness choice itself is the commitment, and the snap provably fails on a '
-            'continuum (f_snap_impossible). The theorems stand on their own axioms regardless.',
+            'the discreteness choice itself is the commitment, and in an ordered field, ℝ among them, 0 '
+            'has no first step above it (f_snap_impossible: no linearly ordered field has a least positive '
+            'element), while T-SNAP&#8217;s shape does not need one (t_snap_given). The theorems stand on their own axioms regardless.',
             S['body']),
     ]
 
