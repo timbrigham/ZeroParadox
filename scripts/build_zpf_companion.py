@@ -1,7 +1,7 @@
 """
 Build ZP-F Illustrated Companion
-Where the Snap Fails: The Real Numbers as Counterexample
-Version 1.19 | May 2026
+Where the First Step Fails: The Real Numbers as Counterexample
+Version 1.20 | November 2026
 """
 
 import os, math
@@ -83,7 +83,9 @@ def comparison_table():
          'Metric: 0 is a limit point too — the doubling orbit 2&#8319;x tends to 0 and does not reach it in finite time'],
         ['Infinity lives in the representation (infinite decimal = finite magnitude)',
          'Valuation: infinity is the address of 0 — v&#8322;(0) = +&#8734;, the greatest value; every nonzero element has a finite valuation'],
-        ['The snap cannot occur — density blocks every candidate first step',
+        ['No first step above 0 (AX-B1\'s form): density puts a smaller positive element below '
+         'every candidate (f_snap_impossible: no linearly ordered field has a least positive '
+         'element). T-SNAP\'s shape does not need a first step (t_snap_given)',
          'The topological obstruction is removed, and no first step at 0 is supplied (AX-B1\'s first step is a cover of &#8869; on the state carrier, a commitment)'],
     ]
     data = [hdr] + [[Paragraph(fix(r[0]), CS['kr_body']),
@@ -107,7 +109,7 @@ def comparison_table():
     return t
 
 
-VERSION = '1.19'
+VERSION = '1.20'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -120,14 +122,14 @@ def build():
         canvas.setFillColor(colors.grey)
         canvas.drawCentredString(
             LETTER[0] / 2, 0.6 * inch,
-            'Zero Paradox ZP-F Companion | Where the Snap Fails: The Real Numbers as Counterexample'
+            'Zero Paradox ZP-F Companion | Where the First Step Fails: The Real Numbers as Counterexample'
             '  |  ' + version_date())
         canvas.restoreState()
 
     doc = SimpleDocTemplate(
         out_path, pagesize=LETTER,
         leftMargin=LM, rightMargin=RM, topMargin=TM, bottomMargin=BM,
-        title='Where the Snap Fails: The Real Numbers as Counterexample',
+        title='Where the First Step Fails: The Real Numbers as Counterexample',
         author='Zero Paradox Project',
         onFirstPage=footer_cb, onLaterPages=footer_cb)
     E = []
@@ -145,21 +147,24 @@ def build():
                 colWidths=[TW])
     hdr.setStyle(hdr_ts)
     E += [hdr, sp(6),
-          Paragraph('Where the Snap Fails', CS['title']),
+          Paragraph('Where the First Step Fails', CS['title']),
           Paragraph('The Real Numbers as Counterexample', CS['subtitle']),
           Paragraph('ZP-F Companion  |  ' + version_line(FIRST_RELEASED, VERSION), CS['meta']),
           Paragraph(
               'This companion document is written for general readers. It explains in plain '
-              'language why the real number line cannot serve as the mathematical substrate '
-              'for the Binary Snap, and where the 2-adic numbers Q&#8322; stand: ZP-F excludes '
+              'language why, on the real number line, 0 has no first step above it, AX-B1\'s '
+              'form, although T-SNAP\'s shape, the Binary Snap, does not need one; and where the '
+              '2-adic numbers Q&#8322; stand: ZP-F excludes '
               'ordered fields, by density; ZP-B records that Q&#8322; is totally disconnected '
               '(t5_totallyDisconnected, an instance Mathlib already supplies), which removes the '
               'topological obstruction; neither supplies the first step at &#8869; of the state '
               'carrier, the set of states a run of the framework moves through, ordered as in '
               'ZP-A (that first step is AX-B1, a commitment). '
               'The formal results are machine-verified in Lean 4 as part of ZP-F '
-              '(F-SNAP-IMPOSSIBLE and the general ordered field result); see also '
-              'ZP-B (p-adic topology) for the positive case.',
+              '(F-SNAP-IMPOSSIBLE, f_snap_impossible: no linearly ordered field has a least '
+              'positive element, so 0 has no first step above it, AX-B1\'s form); see also '
+              'ZP-B (p-adic topology), where Q&#8322; being totally disconnected removes the '
+              'topological obstruction and supplies no first step.',
               CS['disc'])]
 
     # ── I. The Natural Question ─────────────────────────────────────────────────
@@ -170,11 +175,14 @@ def build():
         'used. They seem like the natural substrate for any framework involving '
         'continuity, limits, and state transitions. This document is the answer.'))
     E.append(cbody(
-        'The answer begins with a counterexample. The real number line is not a valid '
-        'substrate for the Binary Snap — not because it is wrong, but because it is '
-        'the space where the snap is structurally impossible. Understanding why the snap '
-        'fails in &#8477; is the clearest path to seeing what Q&#8322; removes and what it '
-        'does not supply.'))
+        'The answer begins with a counterexample. The real number line lacks the first step '
+        'AX-B1 commits the framework\'s carrier to — not because it is wrong, but because in an '
+        'ordered field, &#8477; and &#8474; among them, 0 has no first step above it '
+        '(f_snap_impossible, which, despite its name, states that no linearly ordered field has '
+        'a least positive element). T-SNAP\'s shape does not need a first step: t_snap_given '
+        'holds at a step taken in a densely ordered join-semilattice. Understanding why '
+        '&#8477; has no first step above 0 is the clearest path to seeing what Q&#8322; removes '
+        'and what it does not supply.'))
     E.append(sp(4))
 
     # ── II. The Density Symmetry ────────────────────────────────────────────────
@@ -192,8 +200,10 @@ def build():
         'on a continuum that looks the same from every direction. For any candidate '
         'first step &#949;&#8320; > 0, the number &#949;&#8320; / 2 also exists, '
         'and &#949;&#8320; / 4, and &#949;&#8320; / 2&#8319; for every n. '
-        'A discrete, irreversible departure from zero — the Binary Snap — is '
-        'structurally impossible in &#8477;.'))
+        'So in &#8477; 0 has no first step above it, AX-B1\'s form (f_snap_impossible: no '
+        'linearly ordered field has a least positive element). T-SNAP\'s shape, the Binary '
+        'Snap, does not need one: t_snap_given holds at a step taken in a densely ordered '
+        'join-semilattice.'))
     E.append(sp(6))
     E.append(pi_curve_diagram())
     E.append(ccaption(
@@ -201,8 +211,10 @@ def build():
         '&#960; — at two sampling resolutions. At standard scale it appears smooth '
         'and continuous (left). At high zoom, discrete steps become visible (right). '
         'In the actual real numbers, the decimal expansion can always continue; '
-        'the smooth curve never structurally breaks down. The snap requires '
-        'a space where that breakdown is built in, not imposed.'))
+        'the smooth curve never structurally breaks down. A first step above 0, AX-B1\'s form, '
+        'needs a space where that breakdown is built in, not imposed; T-SNAP\'s shape, a join '
+        'step off &#8869; to a different state (t_snap_given), does not, and the cover is a '
+        'further hypothesis (t_snap_given_cover).'))
     E.append(sp(8))
 
     # ── III. Where the Infinity Lives ──────────────────────────────────────────
@@ -249,20 +261,23 @@ def build():
     E.append(comparison_table())
     E.append(sp(8))
 
-    # ── IV. Finite Precision Makes the Snap Possible ────────────────────────────────────
-    E.append(Paragraph('IV. Finite Precision Makes the Snap Possible', CS['h1']))
+    # ── IV. Finite Precision Supplies a First Step ────────────────────────────────────
+    E.append(Paragraph('IV. Finite Precision Supplies a First Step', CS['h1']))
     E.append(cbody(
         'Every computer already knows this. Any number system with a maximum number '
         'of decimal places — any fixed-point arithmetic system, any discretized '
         'simulation — has a smallest representable positive number — call it &#948;. '
-        'Below that, there\'s nowhere to go. The density argument fails at &#948;. The snap becomes '
-        'available: there is a genuine first step, and halving it is not possible. Whether that step '
-        'is taken is a separate question, and the framework commits to it rather than deriving it.'))
+        'Below that, there\'s nowhere to go. The density argument fails at &#948;: there is a '
+        'genuine first step above 0, AX-B1\'s form, and halving it is not possible. T-SNAP\'s '
+        'shape is a join step off &#8869; to a different state (t_snap_given) and did not need '
+        'it; that the step is a cover is a further hypothesis (t_snap_given_cover). Whether a '
+        'step is taken is a separate question, and the framework commits to it rather than '
+        'deriving it.'))
     E.append(cbody(
         'The real numbers are the idealization in which this floor is removed — the '
         'limiting case in which precision is unbounded and the minimum disappears. '
         'That is not a feature from the perspective of the Zero Paradox. It is '
-        'exactly what blocks the snap.'))
+        'exactly what rules out a first step above 0.'))
     E.append(cbody(
         'Q&#8322; is not an artificially truncated real line, and it does not restore a '
         'smallest step. Its zero is a floor of the other kind: a finite-precision system\'s '
@@ -277,7 +292,7 @@ def build():
         'first step, so the step is not a consequence of the 2-adic structure.'))
     E.append(sp(4))
     E.append(remember_box(
-        'Every finite computational system is already subject to the Binary Snap by '
+        'Every finite computational system already has a first step above 0, AX-B1\'s form, by '
         'construction. The minimum representable positive value exists; the density '
         'argument fails there. The real numbers are the most familiar example of a '
         'structure that removes this floor — but any dense ordered set has the same '
@@ -292,7 +307,7 @@ def build():
     E.append(cbody(
         'The real number line is not wrong. It is internally consistent and '
         'extraordinarily useful for calculus, analysis, and modeling continuous '
-        'change. But it cannot host the Binary Snap — not because it fails as '
+        'change. But in it 0 has no first step above it, AX-B1\'s form — not because it fails as '
         'a mathematical structure, but because of how it treats zero.'))
     E.append(cbody(
         'Consider a sports team. The coach and the players are not peers. The coach '
@@ -404,7 +419,7 @@ def build():
     E.append(Paragraph('VIII. Two Limit Conditions, Side by Side', CS['h1']))
     E.append(cbody(
         'The density argument and the ordinal threshold argument are two separate '
-        'observations &#8212; one about why the snap fails in &#8477;, one about how '
+        'observations &#8212; one about why 0 has no first step above it in &#8477;, one about how '
         '&#949;&#8320; of Ordinal is reached. Read side by side they share a shape, and the '
         'shared shape is an analogy, not a proved identification.'))
     E.append(cbody(
@@ -416,7 +431,7 @@ def build():
         'density rules out a first step at zero; one element lacking a first step would not '
         'make an order dense. Zero in &#8477; is also a limit point, a fact about the metric; '
         'so is zero in Q&#8322; (floor_reach_separates_mu_nu), so the limit point is not what '
-        'blocks the snap.'))
+        'rules out a first step.'))
     E.append(cbody(
         'From the ordinal side: &#949;&#8320; of Ordinal has no ordinal immediately below it. There is '
         'no &#945; with &#945; + 1 = &#949;&#8320;. It is the limit of the tower '
@@ -452,8 +467,10 @@ def build():
     E.append(Paragraph('What the Counterexample Shows', CS['h1']))
     E.append(cbody(
         'The real numbers are the most natural, most familiar metric space in '
-        'mathematics. They are also precisely the space where the Binary Snap '
-        'cannot occur. They are densely ordered, so no element, zero included, has a first '
+        'mathematics. They are also a space where 0 has no first step above it, AX-B1\'s form '
+        '(f_snap_impossible: no linearly ordered field has a least positive element), while '
+        'T-SNAP\'s shape does not need one (t_snap_given holds at a step taken in a densely '
+        'ordered join-semilattice). They are densely ordered, so no element, zero included, has a first '
         'step: every candidate first step admits an infinite sequence of smaller steps below '
         'it. Zero is also a limit point there, but so is the 2-adic zero, so being a limit '
         'point does not separate them. Two fences do. The order separates them globally, not '
@@ -488,10 +505,13 @@ def build():
         'frame for the &#8477; comparison. The broader phenomenon is the same.'))
     E.append(sp(6))
     E.append(key_result_box(
-        'Where the Snap Fails',
-        'The Binary Snap is impossible in &#8477;: for any &#949;&#8320; > 0, '
-        '&#949;&#8320; / 2 also exists; &#8477; is densely ordered, and in a dense order '
-        'no element has a first step. At zero Q&#8322; has none either, in its norm preorder; '
+        'Where the First Step Fails',
+        'In &#8477;, 0 has no first step above it, AX-B1\'s form (f_snap_impossible: no '
+        'linearly ordered field has a least positive element): for any &#949;&#8320; > 0, here '
+        'any positive real and not the ordinal, &#949;&#8320; / 2 also exists; &#8477; is '
+        'densely ordered, and in a dense order no element has a first step. T-SNAP\'s shape does '
+        'not need one: t_snap_given holds at a step taken in a densely ordered join-semilattice. '
+        'At zero Q&#8322; has no first step either, in its norm preorder; '
         'globally that preorder is not dense, and Q&#8322; is totally disconnected where '
         '&#8477; is connected. Its zero is '
         'distinguished in two charts: by its valuation, v&#8322;(0) = +&#8734; while every '
