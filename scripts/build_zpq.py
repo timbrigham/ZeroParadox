@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-Q: The Frame-Change PDF Builder
-Version 1.19 | November 2026
+Version 1.20 | November 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 

@@ -1,5 +1,5 @@
 """
-Zero Paradox — Foreword PDF Builder (v2.42, revised November 2026)
+Zero Paradox — Foreword PDF Builder (v2.43, revised November 2026)
 Follows all rules in pdf rendering standards.md:
   - All table cells are Paragraph objects
   - No unicode subscripts — use sub/super tags

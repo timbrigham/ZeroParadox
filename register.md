@@ -4,9 +4,9 @@ Update this file first on any version bump. README.md Framework table is verifie
 
 | Document | Formal Version | Filename | Companion Version | Comp AR | Notes |
 |----------|---------------|----------|-------------------|---------|-------|
-| ZP-A Lattice Algebra | v1.37 | ZP-A_Lattice_Algebra.pdf | v1.22 | N/— | formal:8ac90a09 comp:209bfbb5 |
+| ZP-A Lattice Algebra | v1.37 | ZP-A_Lattice_Algebra.pdf | v1.22 | N/— | formal:8ac90a09 comp:adac5e37 |
 | ZP-B p-Adic Topology | v1.32 | ZP-B_pAdic_Topology.pdf | v1.21 | N/— | formal:5ccc5dd3 comp:4d3ce35e |
-| ZP-F The Counterexamples | v1.23 | ZP-F_The_Counterexamples.pdf | v1.21 | N/— | formal:a02727ed comp:7b3edb55 |
+| ZP-F The Counterexamples | v1.23 | ZP-F_The_Counterexamples.pdf | v1.21 | N/— | formal:afc6a0a3 comp:7b3edb55 |
 | ZP-C Information Theory | v1.37 | ZP-C_Information_Theory.pdf | v2.14 | N/— | formal:cf33e56e comp:10cbc861 |
 | ZP-D State Layer | v1.21 | ZP-D_State_Layer.pdf | v1.18 | N/— | formal:af01d656 comp:6be72c57 |
 | ZP-E Bridge Document | v3.76 | ZP-E_Bridge_Document.pdf | v1.36 | Y/Y | formal:2d61a8a6 comp:9c6980c2 |
@@ -25,8 +25,8 @@ Update this file first on any version bump. README.md Framework table is verifie
 | ZP-P The Fixed-Point Fork | v1.35 | ZP-P_The_Fixed_Point_Fork.pdf | N/A | N/— | formal:ad96d8a1 |
 | ZP-R Cross-Category Fixed Point | v1.26 | ZP-R_Cross_Category_Fixed_Point.pdf | N/A | N/— | formal:d74402f0 |
 | ZP-R Diagonal Family Addendum | v1.24 | ZP-R_Diagonal_Family_Addendum.pdf | N/A | N/— | formal:6144f567 |
-| ZP-Q The Frame-Change | v1.20 | ZP-Q_The_Frame_Change.pdf | N/A | N/— | formal:29a1fd24 |
-| Zero Paradox Foreword | v2.43 | Zero_Paradox_Foreword.pdf | N/A | N/A | formal:36e150ad |
+| ZP-Q The Frame-Change | v1.20 | ZP-Q_The_Frame_Change.pdf | N/A | N/— | formal:2f23fd7a |
+| Zero Paradox Foreword | v2.43 | Zero_Paradox_Foreword.pdf | N/A | N/A | formal:67bc62f8 |
 | ZP Tools | N/A | ZP_Tools_and_Methods.pdf | N/A | N/A | formal:db9fdb1e |
 | ZP Choice-Free Core Addendum | v1.16 | ZP_Choice_Free_Core_Addendum.pdf | N/A | N/A | formal:efef9227 |
 

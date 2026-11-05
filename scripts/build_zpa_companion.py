@@ -1,5 +1,5 @@
 """
-Build ZP-A Illustrated Companion (v1.21)
+Build ZP-A Illustrated Companion (v1.22)
 Covers: join-semilattice, partial order, Hasse diagram, one-directional transitions,
 monotonicity (T3), bottom-as-constituent (T2), four concrete examples, and CC-2.
 """
