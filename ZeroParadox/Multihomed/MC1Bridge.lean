@@ -19,8 +19,8 @@ Identification with the same symbology is a commitment of this framework.
 
 ## Formal Overview
 The correspondence half of MC-1 over the real domain categories, per category: the floor is initial in `ModuleCat ℂ` and
-`KleisliCat PMF`; in `TopCat` it is the limit of the ball tower (`floorConeIsLimit`), terminal and not initial
-(`padic_bottom_not_initial`). Bundled in `mc1_correspondence`, whose `TopCat` field is the set equation. The literal cross-category
+`KleisliCat PMF`; in `TopCat` it is the limit of the ball tower (`floorConeIsLimit`), terminal
+(`padic_bottom_isTerminal`) and not initial (`padic_bottom_not_initial`). Bundled in `mc1_correspondence`, whose `TopCat` field is the set equation. The literal cross-category
 identity is retired as ill-typed. Halves, prior art and positioning: `ZeroParadox/Multihomed/MC1Bridge.md`.
 -/
 
@@ -36,7 +36,7 @@ two of its four fields are `IsInitial` **data**, which is why `MC1Correspondence
 them one object — that identity is **retired as ill-typed** (object equality across categories does not typecheck
 and is not invariant under equivalence); what separates the members is proved property by property
 (`seam_unique_among_named`, for the named bottoms, in a lattice with no top). The **correspondence** half, per category: two
-`IsInitial` fields, and for `TopCat` a set equation; that floor is terminal, not initial (`padic_bottom_not_initial`).
+`IsInitial` fields, and for `TopCat` a set equation; that floor is terminal (`padic_bottom_isTerminal`), not initial (`padic_bottom_not_initial`).
 Cite the fields, never the bundle's existence. -/
 
 /-- The MC-1 correspondence over the real domain categories: the snap floor is the categorical

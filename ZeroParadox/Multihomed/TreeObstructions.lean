@@ -121,9 +121,10 @@ theorem padic_bottom_not_initial :
   have f := hinit.to (TopCat.of Empty)
   exact (f.hom ⟨0, rfl⟩).elim
 
--- Statement: that one-point space `{0} ⊆ Q₂` IS a terminal object of `TopCat`: Mathlib's
--- `TopCat.isTerminalPUnit` transported along the homeomorphism between two one-point spaces.
-example : Nonempty (Limits.IsTerminal (TopCat.of (↥({(0 : Q₂)} : Set Q₂)))) :=
+/-- Statement: the one-point space `{0} ⊆ Q₂` is a terminal object of `TopCat` (Mathlib's
+    `TopCat.isTerminalPUnit` transported along a homeomorphism of one-point spaces). -/
+theorem padic_bottom_isTerminal :
+    Nonempty (Limits.IsTerminal (TopCat.of (↥({(0 : Q₂)} : Set Q₂)))) :=
   ⟨TopCat.isTerminalPUnit.ofIso (TopCat.isoOfHomeo (Homeomorph.homeomorphOfUnique _ _))⟩
 
 -- Statement: `TopCat`'s initial object is the empty space, and it satisfies the AX-G2 shape: a space
@@ -185,6 +186,7 @@ open ZeroParadox
 #print axioms no_strictMono_real_to_ordinal
 #print axioms simplex_antichain
 #print axioms padic_bottom_not_initial
+#print axioms padic_bottom_isTerminal
 #print axioms split_kleisli_vs_hilbert
 #print axioms split_kleisli_vs_padic
 #print axioms fD_zero_isTerminal

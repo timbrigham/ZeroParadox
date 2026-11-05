@@ -314,7 +314,15 @@
             "bottom"
           ],
           "reason": null,
-          "statement": "Each domain bottom is the categorical bottom of its own real category (MC-1, correspondence half — formally realized).",
+          "restatements": [
+            {
+              "by": "agent fix pass 2 for ZPH-NATIVE-ROLE-1 (orchestrator-briefed; wording awaits Tim's review)",
+              "date": "2026-11-05",
+              "prior_statement": "Each domain bottom is the categorical bottom of its own real category (MC-1, correspondence half — formally realized).",
+              "reason": "ZPH-NATIVE-ROLE-1 (content BEDROCK): \"the categorical bottom of its own real category\" is false for TopCat, where {0} ⊆ ℚ₂ is terminal and not initial (padic_bottom_not_initial, padic_bottom_isTerminal); the TopCat limit is floorConeIsLimit. Restated per category; backing in ClaimsMirror.claim_MC1_correspondence."
+            }
+          ],
+          "statement": "MC-1, correspondence half (formally realized), characterized per real Mathlib category and differing by category: the state floor is initial in ModuleCat ℂ; the information floor is initial in KleisliCat PMF, with no return morphism into it; the p-adic floor {0} ⊆ ℚ₂ is the limit of the ball tower in TopCat, terminal there and not initial.",
           "status": "corr",
           "to": null
         },
@@ -658,8 +666,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 3164,
-        "files": 196
+        "declarations": 3165,
+        "files": 197
       },
       "entries": [
         {
@@ -7342,6 +7350,46 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0ddadd5f-8e4b-412b-aca0-ca32a4e3769e",
+          "new": {
+            "file": "ZeroParadox/Multihomed/TreeObstructions.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.padic_bottom_isTerminal",
+            "short": "padic_bottom_isTerminal"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/TreeObstructions.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.padic_bottom_isTerminal",
+            "short": "padic_bottom_isTerminal",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "category",
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "ZPH-NATIVE-ROLE-1 pass 2: name the TopCat terminality of {0} ⊆ Q₂ (was an anonymous example)",
           "verify": {
             "axioms": null,
             "sorry_free": true

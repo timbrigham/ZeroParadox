@@ -97,9 +97,10 @@ commitment" to one object; it names the **bottom family**. The "MC = Modeling Co
 (the same arc as AX-1→T-SNAP and CC-2→FMC). The earlier "correspondence derived / identity a commitment"
 split is superseded:
 
-- **Correspondence half — now formally realized.** Each domain bottom is the categorical bottom
-  (limit or initial object) of its own *real* Mathlib category: F_B `fB_functor : ℕᵒᵖ ⥤ TopCat`
-  (⊥ = inverse limit `⋂ B(0,2⁻ⁿ) = {0}`), F_D `fD_functor : ℕ ⥤ ModuleCat ℂ` (⊥ = initial object
+- **Correspondence half — now formally realized**, differently per *real* Mathlib category:
+  F_B `fB_functor : ℕᵒᵖ ⥤ TopCat` (the floor `{0} ⊆ ℚ₂` is the limit of the ball tower,
+  `floorConeIsLimit`; terminal, `padic_bottom_isTerminal`; not initial, `padic_bottom_not_initial`;
+  the set equation `⋂ B(0,2⁻ⁿ) = {0}` is `fB_bottom_is_limit`), F_D `fD_functor : ℕ ⥤ ModuleCat ℂ` (⊥ = initial object
   `StateSpace 0`), F_C `fC_functor : ℕ ⥤ KleisliCat PMF` (⊥ = initial object `Fin 0`, with
   `fC_no_return` = AX-G2 as a theorem). Bundled witness: `mc1_correspondence` (`MC1Bridge.lean`).
   So the bare label "MC = Modeling Commitment" now **undersells** this half.

@@ -24,8 +24,8 @@ categories:
 
 * **F_B / `TopCat`** (`fB_functor`): ⊥ is the inverse limit of the clopen-ball system, as a limit cone
   in `TopCat` (`floorConeIsLimit`, `ZeroParadox/Order/PadicLimitCone.lean`); the set equation beneath it
-  is `⋂ n, B(0,2⁻ⁿ) = {0}` (`fB_bottom_is_limit`). `{0}` is terminal in `TopCat` and not initial
-  (`padic_bottom_not_initial`), so the statement is "limit", not "initial".
+  is `⋂ n, B(0,2⁻ⁿ) = {0}` (`fB_bottom_is_limit`). `{0}` is terminal in `TopCat` (`padic_bottom_isTerminal`) and not
+  initial (`padic_bottom_not_initial`), so the statement is "limit", not "initial".
 * **F_D / `ModuleCat ℂ`** (`fD_functor`): ⊥ = `StateSpace 0` is the genuine initial (zero) object (`fD_zero_isInitial`),
   and the embeddings are isometric (`fD_embed_inner`).
 * **F_C / `KleisliCat PMF`** (`fC_functor`): ⊥ = `Fin 0` is the genuine initial object (`fC_zero_isInitial`), and there

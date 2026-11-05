@@ -154,8 +154,7 @@ example : (⊥ : NNReal) = 0 ∧ ¬ ZeroParadox.HasFirstStep (0 : NNReal) :=
 -- Statement: in `TopCat` the one-point space `{0} ⊆ ℚ₂` is TERMINAL (it is not initial,
 -- `padic_bottom_not_initial`); `TopCat`'s initial object is the empty space
 -- (`ZeroParadox/Multihomed/TreeObstructions.lean`).
-example : Nonempty (CategoryTheory.Limits.IsTerminal (TopCat.of (↥({(0 : ℚ_[2])} : Set ℚ_[2])))) :=
-  ⟨TopCat.isTerminalPUnit.ofIso (TopCat.isoOfHomeo (Homeomorph.homeomorphOfUnique _ _))⟩
+#check @ZeroParadox.padic_bottom_isTerminal
 -- Reading: one point, two orders, neither THE order (the next three lines).
 -- Statement: the boundary model's floor is the least element of `WithBot Ordinal`.
 #check @ZeroParadox.phase_floor_isBot
@@ -354,6 +353,9 @@ example : (fun x : ℤ => -x) (0 : ℤ) = 0 := rfl
 #check @ZeroParadox.fB_bottom_is_limit
 -- Statement: in `TopCat`, `{0} ⊆ ℚ₂` with its inclusion cone is a limit of the ball tower `fB_functor`.
 #check @ZeroParadox.floorConeIsLimit
+-- Statement: that space is also terminal in `TopCat`; the proof uses only that it has one point, not the
+-- limit above.
+#check @ZeroParadox.padic_bottom_isTerminal
 -- Statement: the partial circulation exceeds every bound `M`. [WIDE, infinite measure]
 #check @ZeroParadox.t2_diverges
 -- Statement: surprisal exceeds every bound `M` — the same shape over a different function; this
