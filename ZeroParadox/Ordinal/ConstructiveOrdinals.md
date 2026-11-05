@@ -19,7 +19,9 @@ Key move: ω^x at the notation level is just `oadd x 1 0` (the CNF term with lea
 coefficient 1, remainder 0) — no general `opow` needed. ε₀ itself is NOT an `ONote` element (the
 notations name exactly the ordinals < ε₀); ε₀ is their limit. So the snap threshold is characterised
 *from below*: the ω-tower climbs without bound, and **no notation is a fixed point of ω^·** — the fixed
-point (ε₀) is precisely what the notation system cannot reach.
+point (ε₀) is what the notation system does not name: no notation bounds the tower
+(`tower_no_upper_bound`, `ZeroParadox/Ordinal/SnapNucleusConstructive.lean`), and across the crossing
+every notation denotes below ε₀ (`repr_lt_epsilon0`, `ZeroParadox/Ordinal/PricedInterface.lean`).
 
 ## Result (proved, this build)
 
@@ -148,7 +150,7 @@ Read from the arXiv v2 PDF:
 Two Lean carriers of MaxWellApexLab/OrdinalAnalysis, `ThetaNote` and `Gamma0Note`, are named against the open
 item under Result above.
 
-The Coq precedent on the same carrier is Castéran and Contejean's *hydra-battles*; its credit, including
+The Coq precedent on the same carrier is *hydra-battles*, by the hydra-battles authors; its credit, including
 the comparator and the order construction, is in `ZeroParadox/Ordinal/SnapNucleusConstructive.md`
 § Prior art.
 
@@ -156,7 +158,8 @@ the comparator and the order construction, is in `ZeroParadox/Ordinal/SnapNucleu
 WLPO) in homotopy type theory; ZP-N's is a `Classical.choice` footprint in Lean, measured by
 `#print axioms` against Mathlib's `Ordinal`. The instruments differ: a taboo result says a statement
 implies excluded middle or WLPO, while a footprint is about one proof, or, under the statement control,
-about one statement's type. Their `Cnf` is the binary trees cut out by a predicate `isCNF` (§ 3.1, p. 4), the same shape as
-Mathlib's `NONote`, the notations cut out by `NF`. The side finding above arises because Mathlib's `NF` is
+about one statement's type. Their `Cnf` is the binary trees cut out by a predicate `isCNF` (§ 3.1, p. 4), analogous to
+Mathlib's `NONote`, the notations cut out by `NF`; their trees are binary, while an `ONote` node
+`oadd e n a` also carries a coefficient `n`. The side finding above arises because Mathlib's `NF` is
 defined through `repr` into `Ordinal`; `isCNF` is stated with the lexicographic order on trees. What is ZP-N's is the measurement on these Lean declarations, not the
 mathematics.

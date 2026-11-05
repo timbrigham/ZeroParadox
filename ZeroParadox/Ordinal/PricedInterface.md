@@ -29,14 +29,15 @@ Lean restatement where uniqueness of the fixed point is proved and its existence
 an order that is not well-founded (§ *The carrier, and what it actually is* and § *The closure at the top is STIPULATED, not
 discovered* below). The derived one, a well-founded Lean carrier whose statements are choice-free and on
 which the fixed point is derived, leastness included, was not located as of 2026-10-13 (`ZeroParadox/Ordinal/SnapNucleus.md`
-§ "Axiom footprint"); and the crossing into `Ordinal`, `e0Repr`, carries choice (the purity block).
+§ "Axiom footprint"); and the crossing into `Ordinal`, `e0Repr`, carries choice (the purity block of `ZeroParadox/Ordinal/PricedInterface.lean`).
 
 Worse, the claim was **not measurable by the instrument used to support it.** `Classical.choice` sits in
 the `Ordinal.partialOrder` *instance term*, so every statement written through that instance inherits it,
 as written, however it is proved — `a ≤ a` carries choice while `a = a` does not (`order_footprint_le` and
 `order_footprint_eq`, `ZeroParadox/Ordinal/OrdinalChoiceEssential.lean`, stated as two theorems
 precisely so that file's purity block *prints* the contrast rather than asserting it). Axiom footprints
-on ε₀ results measure the ambient instance, not the proofs.
+on ε₀ results measure the choice-carrying constants their statements reach, the order instance and the
+operations (`Ordinal.omega0`, `Ordinal.nfp`, printed in the two purity blocks), not the proofs.
 
 This file replaces the unanswerable question with a measurable one: not *is the choice real*, but *what
 does crossing cost*.
@@ -89,7 +90,7 @@ what is measured: *the ascent below ε₀ borrows a tool far stronger than it ne
 counterpart on notations measures `[propext]`. Note also the standing caveat from
 `ZeroParadox/Ordinal/OrdinalChoiceEssential.lean` — `Classical.choice` sits in `Ordinal`'s order
 *instance term*, so a statement that reaches that instance carries the choice whatever its proof
-(`order_footprint_le` against `order_footprint_eq`, as in § *The measured price* above). The purity block is a measurement of the
+(`order_footprint_le`, as in § *The measured price* above). The purity block is a measurement of the
 interface, not a verdict on any particular proof's essential needs.
 
 ## The carrier, and what it actually is
@@ -217,7 +218,8 @@ that it is *stated as a price* on a specific named map, rather than left as a ge
 
 ## Prior art — the construction is not ours
 
-**Castéran and Contejean, *hydra-battles* (rocq-community/hydra-battles), is the source of both halves.**
+***hydra-battles* (rocq-community/hydra-battles; credited to the hydra-battles authors, as in
+`ZeroParadox/Ordinal/SnapNucleusConstructive.md` § Prior art) is the source of both halves.**
 
 * **The carrier.** `theories/ordinals/OrdinalNotations/ON_plus.v` builds the **sum of two ordinal
   notation systems** — `t := (A + B)`, everything in `A` below everything in `B`, with the comparator
@@ -225,7 +227,7 @@ that it is *stated as a price* on a specific named map, rather than left as a ge
   `ON_plus`, and crucially `lt_eq_lt_dec` proving that **decidability of comparison is preserved,
   generically**. `E0Note` has that construction's shape with a one-point right summand, and is not an instance of it:
   `ON_plus` sums two `ON`s, and `SynONote` is not one, because its order is not well-founded (above), so
-  `lt_wf` does not transfer. The decidability-preservation idea is his and is what `WithTop` repeats. The
+  `lt_wf` does not transfer. The decidability-preservation idea is `ON_plus.v`'s and is what `WithTop` repeats. The
   abstraction `ON_plus` is stated over, `Class ON` (`ON_Generic.v`) — a well-founded ordered datatype
   with a comparison function — is published. Mathlib's `WithBot`/`WithTop` decidability and lattice instances
   (`Mathlib/Order/WithBot.lean`) are the same move at instance level, and are what `PricedInterface.lean` actually

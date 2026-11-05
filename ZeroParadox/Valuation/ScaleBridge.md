@@ -71,8 +71,8 @@ membership — **do not cite membership as evidence that a witness is non-degene
 ## Prior art
 
 **In this corpus, and it is the general form:** `orbit_dichotomy`
-(`ZeroParadox/Order/OrbitDichotomy.lean`), whose file header already names the framework's scale map as
-the checkable branch of exactly this argument. Cite that for the general pattern.
+(`ZeroParadox/Order/OrbitDichotomy.lean`), whose header notes that the framework's scale map runs the
+same argument (`valBridge_forces_infinite`). Cite that for the general pattern.
 
 ⚠ **`valBridge_forces_infinite` is NOT an instance of it.** That theorem assumes `Function.Injective s`;
 `ValBridge` does not supply it: the counter-model is `valBridge_scale_not_injective`
@@ -92,8 +92,9 @@ says nothing about it. Credit points outward.
 
 For the degenerate half, the reason a non-degeneracy condition must be an inequation rather than a
 further equation is cited from Burris & Sankappanavar, *A Course in Universal Algebra*, each passage
-with its own page, in `ZeroParadox/Valuation/InfinitudeFloor.md` § *Prior art*. ⚠ Their p. 250 remark
-"trivial algebras satisfy any quasi-identity" does **not** apply here: `val_scale`'s antecedent
+with its own page, in `ZeroParadox/Valuation/InfinitudeFloor.md` § *Prior art*. ⚠ The clause
+"trivial algebras satisfy any quasi-identity", in the proof of their Thm 2.25 (p. 250), does **not**
+apply here: `val_scale`'s antecedent
 `x ≠ bot` is a negated atom, and a quasi-identity admits only positive ones.
 
 Standard names, for searching: `(L, scale)` is a **mono-unary algebra** (a **unar**), and the mechanism

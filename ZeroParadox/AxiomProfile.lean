@@ -51,7 +51,7 @@ required in places... the heart of what we're trying to prove is choice free.
 
 A **checkable artifact** (`lake build ZeroParadox.AxiomProfile`): the `#print axioms` output reports
 each result's complete axiom dependency. **The core is choice-free; T-SNAP depends on no axioms at
-all.** Choice appears mostly in the realization layers, mostly inherited from Mathlib, and in the
+all.** Choice appears mainly in the realization layers, largely inherited from Mathlib, and in the
 die (`ZeroParadox/Die.lean`), both its own and inherited; where it is essential, and on what premise:
 `ZeroParadox/Category/ChoiceCannotBe.lean` § IV, whose cases § 0 prints. -/
 

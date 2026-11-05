@@ -111,7 +111,7 @@ the occupant as a successor ⊥′ is a further commitment (C-DA2).
 
 - **§ I** Cauchy convergence — the topological core (inherits `Classical.choice` from Mathlib analysis)
 - **§ Ib** `h_strict` from `IsDepthChain` + `IsStrictStateSequence` — closes R-IZ-A (proved)
-- **§ II** Valuation-complexity bridge — refuted (counterexample Sₙ = 2ⁿ, ZP-I § II.B); T-IZ never
+- **§ II** Valuation-complexity bridge — refuted (status and counterexample: `CLAIMS.md`); T-IZ never
   depended on it (it goes through `t_iz_cauchy`)
 - **§ III** The T-IZ theorem and the ⊥ role, role half only (`t_iz_limit_is_new_null`), proved; that
   the return is to a NEW bottom is C-DA2, a commitment
@@ -123,7 +123,7 @@ the occupant as a successor ⊥′ is a further commitment (C-DA2).
 
 ## The Kolmogorov bridge is refuted, and T-IZ never used it
 
-**Refuted (counterexample Sₙ = 2ⁿ, ZP-I § II.B); T-IZ never depended on it (it goes through
+**Refuted (status and counterexample: `CLAIMS.md`); T-IZ never depended on it (it goes through
 `t_iz_cauchy`).** `t_iz_complete` computes no Kolmogorov complexity either: its step 4 is
 `IsQuineAtom (bot : L')`, discharged from class fields alone. That is a fact about this proof route,
 not a demonstration that the AFA/Kleene path and the K/AIT path are one property:

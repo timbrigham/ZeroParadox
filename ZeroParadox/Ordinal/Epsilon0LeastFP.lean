@@ -50,9 +50,10 @@ theorem bot_is_not_a_step : Ordinal.omega0 ^ (0 : Ordinal) ≠ (0 : Ordinal) := 
 
 `nothing_between_is_a_step` says no point strictly below ε₀ is a landing; the theorems below say the
 complement, that **every point at or below ε₀ reaches the SAME landing**. ⚠ The general fact is that
-`nfp (ω^·) a` is the least ε-number `≥ a`, so no ε-number can test it. The cells partition the seeds;
-the intervals `(ε_o, ε_(o+1)]` miss each limit-index ε-number (`limit_cell_eq_singleton`).
-Veblen's classical form, the three traps, and the SHAPE-never-instance-of fence: `ZeroParadox/Ordinal/Epsilon0LeastFP.md`. -/
+`nfp (ω^·) a` is the least ε-number `≥ a`, so no ε-number can test it. Every landing is some `ε_o` with a
+unique index, so the cells partition the seeds (the `example` after `limit_cell_eq_singleton`); the intervals
+`(ε_o, ε_(o+1)]` do not cover them. What they miss, Veblen's classical form, the three traps, and the
+SHAPE-never-instance-of fence: `ZeroParadox/Ordinal/Epsilon0LeastFP.md`. -/
 
 /-- **`Statement:` every seed at or below ε₀ reaches ε₀.** The least fixed point *from* `a` is ε₀ for
 every `a ≤ ε₀`, so within that range the seed carries no information: `≤` because ε₀ is itself a

@@ -319,16 +319,16 @@ example {L : Type*} [ZPSemilattice L] (x : L) :
 
 /-! ## II. Valuation-Complexity Bridge — REFUTED
 
-The informal route v₂(Sₙ) → ∞ ⟹ K(Sₙ|n)/|Sₙ| → 1 is refuted (counterexample Sₙ = 2ⁿ); T-IZ never
-depended on it (it goes through `t_iz_cauchy`). Counterexample: ZP-I § II.B; its valuation half is
-`scaleChain_isDepthChain` (`ZeroParadox/Valuation/ScaleDepthWitness.lean`); its complexity half is outside Lean scope.
+The informal route v₂(Sₙ) → ∞ ⟹ K(Sₙ|n)/|Sₙ| → 1 is refuted; its status and counterexample are
+recorded in `CLAIMS.md`. T-IZ never depended on it (it goes through `t_iz_cauchy`). The
+counterexample's valuation half is `scaleChain_isDepthChain` (`ZeroParadox/Valuation/ScaleDepthWitness.lean`).
 Why `t_iz_complete` computes no K either, and the `da1_paths_unified` fence: `SemilatticeInstance.md`. -/
 
 /-! ## III. T-IZ — Inside Zero Theorem -/
 
 /-- T-IZ (convergence): this IS `t_iz_cauchy`, with an unused start guard. Six-step outline:
-    ZP-I § III. Step 2, the valuation-complexity bridge, is refuted (counterexample Sₙ = 2ⁿ,
-    ZP-I § II.B); T-IZ never depended on it. Step 6 cites `da2_bottom_characterization` for the
+    ZP-I § III. Step 2, the valuation-complexity bridge, is refuted (status: `CLAIMS.md`);
+    T-IZ never depended on it. Step 6 cites `da2_bottom_characterization` for the
     role half only: what plays the ⊥ role of a `ZPSemilattice` is that ⊥. That the return is to a
     NEW bottom is a commitment (C-DA2), not a theorem; in ℤ_[2] the arc tends back to the same 0
     (`snap_arc_z2_loop`). Conjunction form: `t_iz_complete`. -/
