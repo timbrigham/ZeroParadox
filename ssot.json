@@ -1078,7 +1078,7 @@
               "go"
             ]
           },
-          "reason": "Occurrence link (2026-11-03): CrossingTrials § VIII — a tape that fired once gives t_snap_given's hcc1/hocc by dropping the stutter prefix; fired-once has measure one; typicality gives fired-once. hw is the occurrence commitment as an explicit hypothesis.",
+          "reason": "Occurrence link (2026-11-03): CrossingTrials § VIII — a tape that fired at least once gives t_snap_given's hcc1/hocc by dropping the stutter prefix; firing at least once has measure one; typicality gives firing at least once. hw is the occurrence commitment as an explicit hypothesis.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -2544,7 +2544,7 @@
               "infra"
             ]
           },
-          "reason": "Occurrence link (2026-11-03): CrossingTrials § VIII — a tape that fired once gives t_snap_given's hcc1/hocc by dropping the stutter prefix; fired-once has measure one; typicality gives fired-once. hw is the occurrence commitment as an explicit hypothesis.",
+          "reason": "Occurrence link (2026-11-03): CrossingTrials § VIII — a tape that fired at least once gives t_snap_given's hcc1/hocc by dropping the stutter prefix; firing at least once has measure one; typicality gives firing at least once. hw is the occurrence commitment as an explicit hypothesis.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -25144,7 +25144,7 @@
               "go"
             ]
           },
-          "reason": "Occurrence link (2026-11-03): CrossingTrials § VIII — a tape that fired once gives t_snap_given's hcc1/hocc by dropping the stutter prefix; fired-once has measure one; typicality gives fired-once. hw is the occurrence commitment as an explicit hypothesis.",
+          "reason": "Occurrence link (2026-11-03): CrossingTrials § VIII — a tape that fired at least once gives t_snap_given's hcc1/hocc by dropping the stutter prefix; firing at least once has measure one; typicality gives firing at least once. hw is the occurrence commitment as an explicit hypothesis.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -61662,7 +61662,7 @@
               "go"
             ]
           },
-          "reason": "Occurrence link (2026-11-03): CrossingTrials § VIII — a tape that fired once gives t_snap_given's hcc1/hocc by dropping the stutter prefix; fired-once has measure one; typicality gives fired-once. hw is the occurrence commitment as an explicit hypothesis.",
+          "reason": "Occurrence link (2026-11-03): CrossingTrials § VIII — a tape that fired at least once gives t_snap_given's hcc1/hocc by dropping the stutter prefix; firing at least once has measure one; typicality gives firing at least once. hw is the occurrence commitment as an explicit hypothesis.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -68448,7 +68448,7 @@
               "infra"
             ]
           },
-          "reason": "Occurrence link (2026-11-03): CrossingTrials § VIII — a tape that fired once gives t_snap_given's hcc1/hocc by dropping the stutter prefix; fired-once has measure one; typicality gives fired-once. hw is the occurrence commitment as an explicit hypothesis.",
+          "reason": "Occurrence link (2026-11-03): CrossingTrials § VIII — a tape that fired at least once gives t_snap_given's hcc1/hocc by dropping the stutter prefix; firing at least once has measure one; typicality gives firing at least once. hw is the occurrence commitment as an explicit hypothesis.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -86169,7 +86169,7 @@
               "infra"
             ]
           },
-          "reason": "Occurrence link (2026-11-03): CrossingTrials § VIII — a tape that fired once gives t_snap_given's hcc1/hocc by dropping the stutter prefix; fired-once has measure one; typicality gives fired-once. hw is the occurrence commitment as an explicit hypothesis.",
+          "reason": "Occurrence link (2026-11-03): CrossingTrials § VIII — a tape that fired at least once gives t_snap_given's hcc1/hocc by dropping the stutter prefix; firing at least once has measure one; typicality gives firing at least once. hw is the occurrence commitment as an explicit hypothesis.",
           "verify": {
             "axioms": null,
             "sorry_free": true
