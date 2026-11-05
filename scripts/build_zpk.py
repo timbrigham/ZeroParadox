@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-K: Computational Grounding of Self-Reference PDF Builder
-Version 1.33 | November 2026
+Version 1.34 | November 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.33'
+VERSION = '1.34'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -44,7 +44,9 @@ def build():
         'executes, is the occurrence commitment.'))
     E.append(body(
         'The central result is a three-way equivalence within this framework, in the precise sense '
-        'defined by Remark R-K.0: the structural roles of ⊥ — Quine atom (set-theoretic), bottom '
+        'defined by Remark R-K.0: the structural roles of ⊥ of a lattice carrying AFAStructure — '
+        'the Quine-atom role (CC-2, read in the lattice\'s AFA structure; in Mathlib\'s ZFSet no set '
+        'occupies it, zfset_quine_role_unoccupied), bottom '
         'element (order-theoretic), and join identity (algebraic) — are PROVED to coincide, while '
         'the fourth role, Kleene fixed point (computational), is required as a typeclass field '
         'rather than derived. '
@@ -239,7 +241,9 @@ def build():
     ]
 
     E.append(body(
-        'ZP-J T-EXEC established a three-way equivalence: Quine atom (set-theoretic) ↔ '
+        'ZP-J T-EXEC established a three-way equivalence in a lattice carrying AFAStructure: Quine '
+        'atom (in the lattice\'s AFA structure; in Mathlib\'s ZFSet the role is unoccupied, '
+        'zfset_quine_role_unoccupied) ↔ '
         'bottom element (order-theoretic) ↔ join identity (algebraic). T-COMP, whose statement is '
         '(1) ↔ ((2) ∧ (3)), proves those three equivalent together with da2_bottom_characterization, '
         'which gives (2) ↔ (3). ZP-K bundles a fourth face — Kleene fixed point '
