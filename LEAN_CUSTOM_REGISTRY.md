@@ -2,7 +2,7 @@
 
 This file documents the definitions, typeclasses and instances CARRYING A `[ZP-CUSTOM]` TAG, each recording what was replaced or extended and why the Mathlib version was insufficient. ⚠ It is not a completeness claim over the corpus: as of 2026-08-30 roughly twenty project-local `class` and `structure` declarations are untagged and therefore absent here (`StrippedBottom` in `ZeroParadox/Valuation/StrippedBottom.lean` among them), and the count check below is blind to that by construction — adding an untagged declaration leaves entry count and tag count equal.
 
-Every entry corresponds to a `-- [ZP-CUSTOM]` inline comment in the source. ⚠⚠ **The register is NOT generated and is NOT automatically consistent with those comments.** It is maintained by hand. `tools/verify/check_invariants.py` compares the entry COUNT against the tag COUNT and nothing finer, so WORDING drift between the two copies is mechanically invisible and must be compared by eye — several entries here carry citations, dates or prior-art blocks their tag does not, and this file records one past case where the two contradicted each other outright. To list the tags (this prints them; it does not regenerate anything):
+Every entry corresponds to a `-- [ZP-CUSTOM]` inline comment in the source. ⚠⚠ **The register is NOT generated and is NOT automatically consistent with those comments.** It is maintained by hand. `tools/verify/check_invariants.py` compares the entry COUNT against the tag COUNT and nothing finer, so WORDING drift between the two copies is mechanically invisible and must be compared by eye — several entries here carry citations, dates or prior-art blocks their tag does not. To list the tags (this prints them; it does not regenerate anything):
 
 ```powershell
 Get-ChildItem ZeroParadox -Recurse -Filter *.lean | Select-String -Pattern '\[ZP-CUSTOM\]'
@@ -16,7 +16,7 @@ Get-ChildItem ZeroParadox -Recurse -Filter *.lean | Select-String -Pattern '\[ZP
 
 **Relationship to Mathlib:** Replaces `SemilatticeSup` + `OrderBot`
 
-**Reason:** Mathlib's `SemilatticeSup` + `OrderBot` would satisfy the algebra, and using them is cheap — measured 2026-08-30 at the pinned Mathlib, both classes are axiom-free and `bot_sup_eq` and `sup_assoc` cost `[propext]` only. `ZPSemilattice` states A1–A4 as FIELDS anyway, so each theorem's footprint is fixed by the axioms it consumes rather than by whichever hierarchy lemma the elaborator reached for. ⚠⚠ This is an AUDITABILITY choice, not an axiom-avoidance one: an IMPORT never changes a footprint, only USING a proof does. (`ZeroParadox/Order/Lattice.lean` line 1 imports `Mathlib.Tactic` and the class still measures clean — this entry previously claimed the opposite.)
+**Reason:** Mathlib's `SemilatticeSup` + `OrderBot` would satisfy the algebra, and using them is cheap — measured 2026-08-30 at the pinned Mathlib, both classes are axiom-free and `bot_sup_eq` and `sup_assoc` cost `[propext]` only. `ZPSemilattice` states A1–A4 as FIELDS anyway, so each theorem's footprint is fixed by the axioms it consumes rather than by whichever hierarchy lemma the elaborator reached for. ⚠⚠ This is an AUDITABILITY choice, not an axiom-avoidance one: an IMPORT never changes a footprint, only USING a proof does. (`ZeroParadox/Order/Lattice.lean` line 1 imports `Mathlib.Tactic` and the class still measures clean.)
 
 ---
 
@@ -64,7 +64,7 @@ Get-ChildItem ZeroParadox -Recurse -Filter *.lean | Select-String -Pattern '\[ZP
 
 **Relationship to Mathlib:** No Mathlib analog
 
-**Reason:** Bridges `AFAStructure` (set-theoretic self-containment) with Mathlib's computability library (`Nat.Partrec.Code`). No Mathlib typeclass connects AFA and `Code`. `KleeneStructure` was built for the reading that `botCode` is ⊥'s computational witness; no field asserts it, its identity half is retired (no code is equated with ⊥), and its running half, that ⊥ executes, is the occurrence commitment. The AFA Quine atom and the Kleene computational Quine (`∃ c, eval c = f c`) are compared through the die's Quine-atom role (§ IX), not through an identity: no single code occupies it under `evalStepMotion F` for any F (`evalStepMotion_not_selfOnlyAt`); a class of codes up to equal eval does, for computable eval-respecting maps (`codes_vs_classes`); and a self-printing universal code does under `selfPrintsStepMotion selfPrintOrDelegate` (`exists_selfPrintsStepMotion_selfOnlyAt`).
+**Reason:** Bridges `AFAStructure` (set-theoretic self-containment) with Mathlib's computability library (`Nat.Partrec.Code`). A Mathlib typeclass connecting AFA and `Code` was not located in the pinned Mathlib (`5450b53`) as of 2026-11-05 (searched over `Mathlib/`: "AFA", "anti-foundation" / "antifoundation", "non-well-founded set"; files naming both `Partrec.Code` and `ZFSet` / `PSet`; "Quine"). `KleeneStructure` was built for the reading that `botCode` is ⊥'s computational witness; no field asserts it, its identity half is retired (no code is equated with ⊥), and its running half, that ⊥ executes, is the occurrence commitment. The AFA Quine atom and the Kleene computational Quine (`IsComputationalQuine`, `ZeroParadox/Computability/Kleene.lean`) are compared through the die's Quine-atom role (§ IX), not through an identity: no single code occupies it under `evalStepMotion F` for any F (`evalStepMotion_not_selfOnlyAt`); a class of codes up to equal eval does, for computable eval-respecting maps (`codes_vs_classes`); and a self-printing universal code does under `selfPrintsStepMotion selfPrintOrDelegate` (`exists_selfPrintsStepMotion_selfOnlyAt`).
 
 ---
 
@@ -108,7 +108,7 @@ Get-ChildItem ZeroParadox -Recurse -Filter *.lean | Select-String -Pattern '\[ZP
 
 **On the comparison, precisely:** `AddValuation.of` takes four axioms; this class supplies two, omitting `map_one'` and the ultrametric inequality (separating witness: `v n = v₂ n + v₃ n` on the integers is multiplicative and sends 0 to ⊤, yet `min (v 2) (v 3) = 1` is not at most `0 = v 5`). But `AddValuation` requires only a `Ring` while this class bundles a `CommRing`, so **neither implies the other** — the weakening holds only for the valuation conditions over a fixed commutative carrier. This entry said "strictly weaker" until 2026-08-01, which asserted an ordering that does not hold.
 
-**Corrected 2026-08-01** (this entry previously read "no Mathlib analog for the bridge", which was false). `AddValuation.of` takes **four** axioms — `map_zero'`, `map_one'`, the ultrametric `map_add_le_max'`, and `map_mul'`. This class supplies only the first and last, so it is **not** a one-axiom reduct: dropping `map_one'` is what admits the degenerate constant-`⊤` instance (§ VII-b's NO-GO gauge), and dropping the ultrametric makes the class weaker **on the valuation conditions, over a fixed commutative carrier** — `v n = v₂ n + v₃ n` on `ℤ` satisfies every field here and still fails `min (v 2) (v 3) ≤ v 5`. (That scope matters: across carriers the two are incomparable, per the paragraph above.) Adopting `AddValuation` would remove the degeneracy at the cost of also assuming the ultrametric inequality; that trade has not been made. Note also that `wvs_val 0 = ⊤` is **not** discharged by adoption — `map_zero'` is a structure field there too, so adoption relocates the assumption rather than deriving it.
+`AddValuation.of` takes **four** axioms — `map_zero'`, `map_one'`, the ultrametric `map_add_le_max'`, and `map_mul'`. This class supplies only the first and last, so it is **not** a one-axiom reduct: dropping `map_one'` is what admits the degenerate constant-`⊤` instance (§ VII-b's NO-GO gauge), and dropping the ultrametric makes the class weaker **on the valuation conditions, over a fixed commutative carrier** — `v n = v₂ n + v₃ n` on `ℤ` satisfies every field here and still fails `min (v 2) (v 3) ≤ v 5`. (That scope matters: across carriers the two are incomparable, per the paragraph above.) Adopting `AddValuation` would remove the degeneracy at the cost of also assuming the ultrametric inequality; that trade has not been made. Note also that `wvs_val 0 = ⊤` is **not** discharged by adoption — `map_zero'` is a structure field there too, so adoption relocates the assumption rather than deriving it.
 
 ---
 
@@ -140,9 +140,9 @@ Get-ChildItem ZeroParadox -Recurse -Filter *.lean | Select-String -Pattern '\[ZP
 
 ### `APG` — `ZeroParadox/Settheory/APG.lean`
 
-**Relationship to Mathlib:** Extends `Mathlib.Combinatorics.Quiver.Basic`
+**Relationship to Mathlib:** Extends `Mathlib.Combinatorics.Quiver.Basic`; its `accessible` field is Mathlib's `Quiver.RootedConnected root` (the two `example`s below the structure in `ZeroParadox/Settheory/APG.lean` go each way). The bundle is kept so the root travels with the graph as data, as in Aczel's pointed graph, where `Quiver.RootedConnected` takes the root as a parameter.
 
-**Reason:** Mathlib's `Quiver` is a bare directed graph (objects + edges) with no distinguished root. `APG` adds `root : V` and the accessibility proof (every vertex reachable from root), which is Mathlib's separate class `Quiver.RootedConnected root` (`Mathlib/Combinatorics/Quiver/Arborescence.lean`; the two `example`s below the structure in `ZeroParadox/Settheory/APG.lean`), matching Aczel's definition of Accessible Pointed Graph (1988 p. 4). ⚠ **Neither field is load-bearing for anything proved here, and no claim of necessity should be made in either direction**: `decoration_unique` binds the structure as `_G` and never uses it, so what is proved holds for every finite quiver, accessible or not — which is structurally Aczel's own generality (p. 6). Verified at the binders 2026-08-29; this entry previously claimed both fields were required, contradicting the `[ZP-CUSTOM]` comment it mirrors (`ZeroParadox/Settheory/APG.lean`, corrected 2026-08-09).
+**Reason:** Mathlib's `Quiver` is a bare directed graph (objects + edges) with no distinguished root. `APG` adds `root : V` and the accessibility proof (every vertex reachable from root), which is Mathlib's separate class `Quiver.RootedConnected root` (`Mathlib/Combinatorics/Quiver/Arborescence.lean`; the two `example`s below the structure in `ZeroParadox/Settheory/APG.lean`), matching Aczel's definition of Accessible Pointed Graph (1988 p. 4). ⚠ **Neither field is load-bearing for anything proved here, and no claim of necessity should be made in either direction**: `decoration_unique` binds the structure as `_G` and never uses it, so what is proved holds for every finite quiver, accessible or not — which is structurally Aczel's own generality (p. 6). Verified at the binders 2026-08-29.
 
 ---
 
@@ -238,7 +238,7 @@ The concrete model confirming that `ValuationStructure`'s abstract axioms have a
 
 ## Further Entries
 
-⚠ These continue the register; the sections above are not exhaustive. (A closing *"Last updated"* footer previously sat here, with further entries after it. Removed rather than re-dated: a single date on a hand-edited register goes stale silently, and each entry carries its own dates where they matter.)
+⚠ These continue the register; the sections above are not exhaustive. The register carries no file-wide date; each entry carries its own dates where they matter.
 
 ### `IsLeastFixedPointFrom` — `ZeroParadox/Order/LeastFixedPoint.lean`
 

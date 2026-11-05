@@ -413,6 +413,8 @@ Each GitHub release triggers an automatic Zenodo snapshot with a permanent DOI. 
 
 ## v5.0 - 2026-07-22
 
+This entry was written to this file but never tagged; no v5.0 release or Zenodo snapshot exists, and the latest tagged release is v4.0.
+
 **Why this release:** A new formal layer - ZP-R (Cross-Category Fixed Point), with its Diagonal Family Addendum - locating the framework's self-application fixed point ⊥ across the diagonal-family faces; together with the machine-checked claim graph (ClaimsMirror.lean), the snap-nucleus meta-lattice, and a round of bedrock corrections that struck a false premise shared by three documents.
 
 **What changed (since v4.0):**
