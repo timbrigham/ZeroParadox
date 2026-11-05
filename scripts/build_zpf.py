@@ -1,11 +1,11 @@
 """
-Build ZP-F: The Counterexamples (v1.23)
+Build ZP-F: The Counterexamples (v1.24)
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.23'
+VERSION = '1.24'
 FIRST_RELEASED = 'April 2026'
 
 def build():
@@ -31,22 +31,24 @@ def build():
     E.append(body(
         'The Zero Paradox framework separates a derived SHAPE from a committed first step. '
         'The shape, the Binary Snap, is T-SNAP: in any ZP-A join-semilattice, a run that starts '
-        'at the semilattice\'s &#8869; and takes its first step meets that shape (t_snap_given, '
-        'with both as hypotheses). What is derived is that shape, not that the step is taken: a '
+        'at the semilattice\'s &#8869; and whose first transition goes to a different state (S 1 &#8800; S 0) '
+        'meets that shape (t_snap_given, with both as hypotheses). What is derived is that shape, not that '
+        'the transition is taken: a '
         'join-semilattice in which T-SNAP holds and nothing moves is exhibited in the Lean source '
         '(tsnap_holds_but_nothing_moves). A first step above the carrier\'s &#8869;, an element '
         'covering it (HasFirstStep), is AX-B1\'s form, and it is committed, not derived. '
         'This document establishes the negative result for that commitment: in no linearly '
         'ordered field does 0 have a first step above it, AX-B1\'s form. T-SNAP\'s shape does '
         'not need a first step: t_snap_given holds at a '
-        'step taken in a densely ordered join-semilattice. The real numbers &#8477; are the canonical and most '
+        'step taken in a densely ordered join-semilattice (&#8474;&#8805;0 under max, whose &#8869; is 0; '
+        'ZeroParadox/Order/Snap.lean). The real numbers &#8477; are the canonical and most '
         'familiar instance; the theorem applies to any field carrying a compatible '
         'linear order.'))
     E.append(body(
         'The blocking mechanism is elementary: in any such field, for any positive '
         'element &#949;, the element &#949;/2 exists, is positive, and is strictly '
         'smaller. There is no least positive element, so 0 has no first step above it, '
-        'AX-B1\'s form, in any linearly ordered field. That a run\'s first step is a cover is a hypothesis '
+        'AX-B1\'s form, in any linearly ordered field. That a run\'s first transition is a cover is a hypothesis '
         'beyond T-SNAP\'s shape (t_snap_given_cover), and the shape itself (t_snap_given) does '
         'not need it.'))
     E.append(body(
@@ -175,19 +177,20 @@ def build():
     E.append(body(
         'ZP-F is self-contained and does not feed formally into any other layer. '
         'It is the negative complement to ZP-B: where ZP-B establishes that Q&#8322; '
-        'removes the topological obstruction (its 2-adic topology is totally '
+        'removes the topological obstruction to an irreversible step (c3_irreversible: no continuous path '
+        'in Q&#8322; from a nonzero point to 0, since its 2-adic topology is totally '
         'disconnected, t5_totallyDisconnected, with clopen balls), ZP-F establishes that in &#8477; — and any linearly ordered field — '
         '0 has no first step above it, AX-B1\'s form. Neither supplies the first step AX-B1 commits to, a cover of &#8869; on '
         'the state carrier, the set of states a run S moves through, ordered as in ZP-A '
-        '(HasFirstStep). t_snap_given_cover assumes the run\'s first step is a cover (hcov); '
-        'with CC-1, the commitment that the run starts at &#8869; (S 0 = &#8869;), that step is '
+        '(HasFirstStep). t_snap_given_cover assumes the run\'s first transition is a cover (hcov); '
+        'with CC-1, the commitment that the run starts at &#8869; (S 0 = &#8869;), that transition is '
         'a cover of &#8869;. MachinePhase meets the commitment: its state c&#8321; covers its '
         '&#8869;, c&#8320;.'))
     E.append(body(
         'The dependency order of the framework places ZP-F as independent:'))
     E.append(data_table(
         ['Layer', 'Role', 'Dependency'],
-        [['ZP-B', 'p-Adic topology — Q&#8322; removes the topological obstruction', 'ZP-A'],
+        [['ZP-B', 'p-Adic topology — Q&#8322; removes the topological obstruction to an irreversible step (c3_irreversible) and supplies no first step', 'ZP-A'],
          ['ZP-F', 'Counterexample — in &#8477; and ordered fields 0 has no first step above it (AX-B1\'s form)', 'None (self-contained)'],
          ['ZP-G', 'Category theory', 'Self-contained; ZP-E conceptually']],
         [0.8*inch, 3.5*inch, 2.2*inch]
@@ -253,16 +256,16 @@ def build():
         'valuation order 0 is greatest, v(0) = &#8868; (addVal_bot). '
         'The first step AX-B1 commits to is a cover of &#8869; on the state carrier, in ZP-A\'s '
         'induced order (HasFirstStep), a commitment. t_snap_given_cover '
-        '(ZeroParadox/Order/Snap.lean) assumes the run\'s first step is a cover (hcov); with '
-        'CC-1, the run\'s start at &#8869;, that step is a cover of &#8869;. The converse fails: a '
-        'run can start at a &#8869; that has a cover while its own first step is not one '
+        '(ZeroParadox/Order/Snap.lean) assumes the run\'s first transition is a cover (hcov); with '
+        'CC-1, the run\'s start at &#8869;, that transition is a cover of &#8869;. The converse fails: a '
+        'run can start at a &#8869; that has a cover while its own first transition is not one '
         '(ZeroParadox/Order/SnapCannotBe.lean). MachinePhase meets the commitment (the '
         'MachinePhase example in ZeroParadox/Order/Snap.lean stating that c&#8321; covers its '
         '&#8869;). In neither ordering of Q&#8322; does its 0 have a first step: in the norm '
         'preorder it has none, and in the valuation order nothing lies above it. '
         'The first step is not missing in &#8477; by accident. It is missing because &#8477; '
         'is densely ordered, and in a dense order no element has a first step, 0 included '
-        '(f_snap_impossible). The topological difference from Q&#8322; is that &#8477; is connected '
+        '(axb1_fails_everywhere_iff_dense; for 0 in any linearly ordered field, f_snap_impossible). The topological difference from Q&#8322; is that &#8477; is connected '
         '(place_topological_signature), so not totally disconnected (real_no_snap). That is not '
         'a separate fence: for a linear order carrying its order topology, connectedness implies '
         'density (Mathlib denselyOrdered_of_preconnectedSpace).'))
@@ -348,9 +351,7 @@ def build():
             '&#949;&#8320; among them, so they are the natural boundary test case for any '
             'duality theorem. A first step above 0 is not the open question there: No is a '
             'linearly ordered field, so 0 of No has no first step above it, AX-B1&#8217;s form '
-            '(ZP-L, Remark R-L.2), and No fails condition (2) at 0 as &#8477; does. Whether a '
-            'third structural condition is required to exclude the surreals from a duality '
-            'theorem has not been determined. '
+            '(ZP-L, Remark R-L.2), and No fails condition (2) at 0 as &#8477; does. '
             '(Informal &#8212; not a result of this document.)',
             'Development path toward a formal theorem: prove the two conditions as '
             'independent Lean results (density impossibility established here; &#949;&#8320; '

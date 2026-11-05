@@ -85,7 +85,7 @@ An independent re-check is three commands: `git clone https://github.com/timbrig
 | [Information Theory](ZP-C_Information_Theory.pdf) | ZP-C | v1.37 | The information layer: state distributions, 1-bit cost, surprisal unbounded in depth, and the 2-adic additive valuation ⊤ at the point to which c₀, ⊥ of MachinePhase, corresponds. |
 | [State Layer](ZP-D_State_Layer.pdf) | ZP-D | v1.21 | The Hilbert-space layer: the snap as an orthogonal shift between states. |
 | [Bridge Document](ZP-E_Bridge_Document.pdf) | ZP-E | v3.76 | The bridge: the snap assembled as a derived theorem across the layers. |
-| [The Counterexamples](ZP-F_The_Counterexamples.pdf) | ZP-F | v1.23 | The counterexamples: ordered fields (ℝ, ℚ), where 0 has no first step above it. |
+| [The Counterexamples](ZP-F_The_Counterexamples.pdf) | ZP-F | v1.24 | The counterexamples: ordered fields (ℝ, ℚ), where 0 has no first step above it. |
 | [Category Theory](ZP-G_Category_Theory.pdf) | ZP-G | v1.27 | The categorical layer: ⊥ as initial object, the informational singularity. |
 | [Categorical Bridge](ZP-H_Categorical_Bridge.pdf) | ZP-H | v1.32 | The categorical bridge: the snap holding under all four domain functors. |
 | [Native Categories Addendum](ZP-H_Native_Categories_Addendum.pdf) | ZP-H Native Categories Addendum | v1.9 | The snap floor realized inside each framework's native Mathlib category (TopCat, ModuleCat ℂ, KleisliCat PMF). Reads after ZP-H. |
