@@ -5,7 +5,7 @@ Build ZP-F: The Counterexamples (v1.22)
 import os
 from zp_utils import *
 
-VERSION = '1.22'
+VERSION = '1.23'
 FIRST_RELEASED = 'April 2026'
 
 def build():
@@ -29,14 +29,16 @@ def build():
     # ── I. Purpose and Scope ──────────────────────────────────────────────────
     E.append(Paragraph('I. Purpose and Scope', S['h1']))
     E.append(body(
-        'The Zero Paradox framework requires a metric space in which a minimal first '
-        'departure from &#8869; has a structurally forced SHAPE — the Binary Snap. '
-        'What is derived is that shape, not that the departure is taken: a join-semilattice in '
-        'which T-SNAP holds and nothing moves is exhibited in the Lean source '
-        '(tsnap_holds_but_nothing_moves). '
-        'This document establishes the negative result: in no linearly ordered field does 0 '
-        'have a first step above it, AX-B1\'s form, so no such field can supply the minimal '
-        'first departure. T-SNAP\'s shape does not need a first step: t_snap_given holds at a '
+        'The Zero Paradox framework separates a derived SHAPE from a committed first step. '
+        'The shape, the Binary Snap, is T-SNAP: in any ZP-A join-semilattice, a run that starts '
+        'at the semilattice\'s &#8869; and takes its first step meets that shape (t_snap_given, '
+        'with both as hypotheses). What is derived is that shape, not that the step is taken: a '
+        'join-semilattice in which T-SNAP holds and nothing moves is exhibited in the Lean source '
+        '(tsnap_holds_but_nothing_moves). A first step above the carrier\'s &#8869;, an element '
+        'covering it (HasFirstStep), is AX-B1\'s form, and it is committed, not derived. '
+        'This document establishes the negative result for that commitment: in no linearly '
+        'ordered field does 0 have a first step above it, AX-B1\'s form. T-SNAP\'s shape does '
+        'not need a first step: t_snap_given holds at a '
         'step taken in a densely ordered join-semilattice. The real numbers &#8477; are the canonical and most '
         'familiar instance; the theorem applies to any field carrying a compatible '
         'linear order.'))
@@ -270,7 +272,8 @@ def build():
         'Remark: The Dual Limit Condition',
         [
             'The results of §II–§III and ZP-L together admit an informal '
-            'structural account of why the snap is domain-specific.',
+            'structural account of why a first step above 0, AX-B1&#8217;s form, is '
+            'domain-specific.',
             'In any dense ordered field, 0 has no nearest neighbour from above: for any '
             '&#949; > 0 there exists &#948; with 0 < &#948; < &#949; (F-DENSITY). Zero is '
             'a topological limit point from above with no minimum positive element. AX-B1 '
@@ -335,17 +338,19 @@ def build():
             '&#949;&#8320; is located from above as the least fixed point of '
             '&#945; &#8614; &#969;^&#945; and from below as the limit of the CNF tower; '
             'in ZP-M, the computability and ordinal fixed points are argued to converge to the '
-            'same 2-adic limit. This recurrence is not coincidental. The snap is the point '
+            'same 2-adic limit. Reading: this recurrence is not coincidental. The snap is the point '
             'where a domain\'s own measurement framework exhausts itself; no single framework '
             'can locate it from inside because the framework runs out exactly there. '
             'This suggests a dual approach is required in each case: each framework reaches the '
             'boundary from its own direction, and the snap is the point they agree on. '
             'No general theorem to this effect is established here.',
-            'The surreal numbers (No) satisfy both conditions &#8212; non-Archimedean '
-            'structure (containing &#949;&#8320; as an ordinal) and genuine limit ordinals '
-            '&#8212; and are the natural boundary test case for any duality theorem. Whether '
-            'the surreals admit a snap-like result, or whether a third structural condition '
-            'is required to exclude them, has not been determined. '
+            'The surreal numbers (No) are non-Archimedean and contain the limit ordinals, '
+            '&#949;&#8320; among them, so they are the natural boundary test case for any '
+            'duality theorem. A first step above 0 is not the open question there: No is a '
+            'linearly ordered field, so 0 of No has no first step above it, AX-B1&#8217;s form '
+            '(ZP-L, Remark R-L.2), and No fails condition (2) at 0 as &#8477; does. Whether a '
+            'third structural condition is required to exclude the surreals from a duality '
+            'theorem has not been determined. '
             '(Informal &#8212; not a result of this document.)',
             'Development path toward a formal theorem: prove the two conditions as '
             'independent Lean results (density impossibility established here; &#949;&#8320; '
