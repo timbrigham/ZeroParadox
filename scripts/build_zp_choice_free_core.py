@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP Addendum: The Choice-Free Core
-Version 1.16 | November 2026
+Version 1.17 | November 2026
 Framework-wide note; reads after the Foreword.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.16'
+VERSION = '1.17'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard ──
@@ -189,8 +189,8 @@ def build():
         'a <i>type</i> rather than a proof, no proof of any statement mentioning that type can be '
         'clean, and removability there means changing the statement, not cleaning the argument. That '
         'case is measured: the statements of c3_irreversible, t4_snap_orthogonal, fD_functor and '
-        'fC_functor, each only assumed, already report Classical.choice (the statement control, '
-        '2026-10-08), so they are statement-carried, and the open question for them is a restatement '
+        'fC_functor, each only assumed, already report Classical.choice (the statement-carried row of '
+        'ZeroParadox/AxiomProfile.md), so they are statement-carried, and the open question for them is a restatement '
         'on a carrier whose statements are choice-free. fB_functor\'s statement is choice-free; its '
         'dependence stays open.'))
     E.append(body(

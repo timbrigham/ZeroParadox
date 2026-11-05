@@ -1,12 +1,12 @@
 """
 Zero Paradox — ZP-I: Inside Zero PDF Builder
-Version 1.38 | November 2026
+Version 1.39 | November 2026
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.38'
+VERSION = '1.39'
 FIRST_RELEASED = 'April 2026'
 
 # ZP-I uses justified body text; override the left-aligned zp_utils defaults
@@ -608,7 +608,9 @@ def build():
         'The inside approach is not a violation of irreversibility. It is the discovery of a '
         'structure that irreversibility does not reach. Three doors to zero are closed (R1, C3, '
         'AX-G2). T-IZ uses a fourth passage — Cauchy sequence convergence — that none of the '
-        'three irreversibility theorems govern.',
+        'three irreversibility theorems govern. (A picture, not a theorem: the three doors are statements about '
+        'three different objects, and the fourth passage reaches 0 &#8712; Q<sub>2</sub> only as a limit; reading that 0 '
+        'as filling the bottom role is the commitment stated above.)',
         bg=GREEN_LITE, border=GREEN_DARK
     ))
     E.append(sp(6))
@@ -850,7 +852,7 @@ def build():
         ['Valuation-complexity bridge',
          'ZP-C D1, L-INF, Remark R-BRIDGE; ZP-B T2; AIT (standard)',
          'N/A',
-         'REFUTED (&#167; II.B; counterexample S<sub>n</sub> = 2<sup>n</sup>) — not load-bearing. DA-1 is closed given DP-2 (ZP-E), with ZP-K witnessing Path 1 and carrying Path 3 as a KleeneStructure requirement. '
+         'REFUTED (&#167; II.B; counterexample S<sub>n</sub> = 2<sup>n</sup>) — not load-bearing, since the convergence T-IZ proves does not pass through it. Separately, DA-1 is closed given DP-2 (ZP-E), with ZP-K witnessing Path 1 and carrying Path 3 as a KleeneStructure requirement. '
          'The complexity half is outside Lean scope.'],
         ['t_iz_h_bound_from_depth_chain (Lean)',
          'h_strict_from_r1_t3 (&#167;Ib); t_iz_r1_t3_geometric_bound; '

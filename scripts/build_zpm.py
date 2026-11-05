@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-M: Kleene-Ordinal Bridge PDF Builder
-Version 1.19 | November 2026
+Version 1.20 | November 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.19'
+VERSION = '1.20'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -444,8 +444,8 @@ def build():
         'Axiom Purity',
         [
             'Axiom footprint: at most [propext, Classical.choice, Quot.sound], per declaration (machineJoinMotion and machineJoinMotion_selfOnlyAt_iff carry [propext] only).',
-            'These are standard Mathlib infrastructure axioms, inherited from ordinal theory '
-            '(ZP-L), 2-adic analysis (ZP-B), and computability theory (ZP-K).',
+            'propext, Classical.choice and Quot.sound are Lean&#8217;s own axioms; here they are reached through '
+            'Mathlib&#8217;s ordinal theory (ZP-L), 2-adic analysis (ZP-B), and computability theory (ZP-K).',
             'Classical.choice is carried by the statements of the ordinal fixed-point (nfp) results as '
             'written (the statement controls printed in ZeroParadox/Ordinal/Epsilon0MinMax.lean; '
             'ZeroParadox/Category/ChoiceCannotBe.md), '

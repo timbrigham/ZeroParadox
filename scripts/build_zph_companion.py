@@ -1,19 +1,5 @@
 """
 Build ZP-H Illustrated Companion (v1.26)
-v1.16: DECISION BATCH REMEDIATION (Tim, 2026-09-15): the T-H3 page said the transition 'was derived as a theorem (T-SNAP), not assumed as an axiom' and called the Binary Snap 'a structural fact that survives translation'; both are scoped to the shape with the canonical AX-1 sentence.
-v1.15: CC-1 STATUS SYNC (Tim, 2026-09-13: everything in one arc). "CC-1 derived / closed / no longer a freestanding commitment" collapsed two readings: cc1_derived proves the CONDITIONAL (a state sequence starting at a Quine atom starts at bottom), and with t_exec_iff the converse holds, so the starting-point choice is RESTATED through the Quine-atom role, not forced; every ZP-A lattice carries AFAStructure trivially. Every site now keeps both halves, matching ZP-J v2.7. Four sites; the key-result box no longer calls CC-1 'not a free commitment' (ZP-A calls it a modelling choice). ROUND 1 (editorial + claim-review + adversary FAIL-BEDROCK; prior-art PASS): the sync first gave the wrong REASON for "not forced" ("every ZP-A lattice carries AFAStructure trivially, so ..."), which does not follow; the reason is that a valid state sequence can start above bottom (T2 fixes only bottom <= S0; an example on OntologicalStates in OntBridge.lean). Also CC-1 is 'the modelling commitment CC-1', not 'the structural identification CC-1', at three sites.
-v1.13: Scope "any state change" to "transition from bottom state in this framework (ZP-C T1b)" — Category 5 precision fix.
-v1.12: T-SNAP endpoint circles — open (white fill, colored stroke) with colored text for legibility.
-v1.11: subtitle/footer 'Categorical Bridge' → 'Functor Coherence'; footer date April → May 2026.
-v1.10: CC-1 described as derived (not free commitment) throughout; 'independent' → 'distinct'; T-H2 surprisal claim descoped.
-v1.9: snap diagram — '(null)' → '(⊥)'; scope 'any sequence' to Q₂ in T-H2 prose; fix four_functor cy to constant.
-v1.8: T-SNAP diagram — ε₀ Unicode label; shorten right-side framework labels; fix cy to constant.
-v1.7: vocab fix: null state → ⊥.
-v1.6: K-15 vocabulary fix — "topological isolation" → "clopen separation" in DP-1 description.
-v1.5: Strip version number from companion footer.
-v1.4: Add structural floor section — power set lattice as primary example; bridge to ZP-specific
-      structural floor; new section placed before morphism/functor content.
-v1.3: Disclaimer updated — "formal ontology" replaced with "formal document"; "proven" → "proved".
 Standalone companion for ZP-H: Categorical Bridge only.
 ZP-G has its own companion (build_zpg_companion.py).
 

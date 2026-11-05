@@ -1,6 +1,6 @@
 """
 Build ZP-I Illustrated Companion
-Version 1.40 | November 2026
+Version 1.41 | November 2026
 
 Standalone companion for ZP-I: Inside Zero.
 Accessibility target: 2 years of college math.
@@ -276,7 +276,7 @@ def cycle_diagram():
     return d
 
 
-VERSION = '1.40'
+VERSION = '1.41'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -347,7 +347,7 @@ def build():
         'ZP-I answers both questions with a single theorem: <b>T-IZ (Inside Zero)</b>. '
         'Every 2-adic depth chain S₀, S₁, S₂, ... with no zero term, whose 2-adic valuations track a depth index (IsDepthChain) that climbs at every step (IsStrictStateSequence, a condition on that index), converges  - in the '
         '2-adic metric  - to zero, which the framework reads as the bottom role and then as a successor null. '
-        'The chain does not go on forever; it reaches its limit at the ordinal limit. The '
+        'The chain runs through every finite stage and reaches its limit at &#969;, the first ordinal limit. The '
         'convergence is proved (given the IsDepthChain modelling commitment), and so, separately, is the fact that '
         'anything filling the bottom role IS the bottom already there. That the cycle begins again at the limit '
         'is a reading, not a theorem: see the Note on closure.'))
@@ -531,7 +531,10 @@ def build():
     E.append(cbody(
         'ZP-I does not violate any of the irreversibility results already proved. '
         'The framework established three ways that return to ⊥ is blocked  - three '
-        '"closed doors." T-IZ uses a fourth passage that none of the three doors govern.'))
+        '"closed doors." T-IZ uses a fourth passage that none of the three doors govern. '
+        'The doors are a picture, not a theorem: they are statements about three different objects, and the '
+        'fourth passage reaches 0 in Q₂ only as a limit, so what it shows is that none of the three applies, '
+        'not that zero is re-entered.'))
     E.append(cbody(
         '<b>Door 1  - R1 (No subtraction):</b> In the lattice, there is no subtraction. '
         'You cannot join your way back to a smaller state. The ascending chain never '
@@ -547,7 +550,7 @@ def build():
         'continuous function on an interval. C3\'s prohibition covers continuous paths; '
         'it says nothing about Cauchy sequences. Proved in Lean: t_iz_c3_compatible.'))
     E.append(cbody(
-        '<b>Door 3  - AX-G2 (No morphism to initial object):</b> ZP-G proved that no '
+        '<b>Door 3  - AX-G2 (No morphism to initial object):</b> ZP-G&#8217;s axiom AX-G2 states that no '
         'morphism within the categorical structure C leads back to the initial object. '
         'T-IZ is not a morphism within C: it is a convergence statement about 2-adic numbers. Reading '
         'its limit as the termination of C and the opening of a new C\', with its own ⊥′, is the cycle '

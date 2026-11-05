@@ -1,11 +1,11 @@
 """
-Build ZP-F: The Counterexamples (v1.25)
+Build ZP-F: The Counterexamples (v1.26)
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.25'
+VERSION = '1.26'
 FIRST_RELEASED = 'April 2026'
 
 def build():
@@ -30,7 +30,7 @@ def build():
     E.append(Paragraph('I. Purpose and Scope', S['h1']))
     E.append(body(
         'The Zero Paradox framework separates a derived SHAPE from a committed first step. '
-        'The shape, the Binary Snap, is T-SNAP: in any ZP-A join-semilattice, a run that starts '
+        'The shape, the Binary Snap, is T-SNAP: in any ZPSemilattice (ZP-A&#8217;s join-semilattice with least element, axioms A1&#8211;A4), a run that starts '
         'at the semilattice\'s &#8869; and whose first transition goes to a different state (S 1 &#8800; S 0) '
         'meets that shape (t_snap_given, with both as hypotheses). What is derived is that shape, not that '
         'the transition is taken: a '
