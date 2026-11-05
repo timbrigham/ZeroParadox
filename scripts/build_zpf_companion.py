@@ -1,7 +1,7 @@
 """
 Build ZP-F Illustrated Companion
 Where the First Step Fails: The Real Numbers as Counterexample
-Version 1.22 | November 2026
+Version 1.23 | November 2026
 """
 
 import os, math
@@ -86,7 +86,7 @@ def comparison_table():
         ['No first step above 0 (AX-B1\'s form): density puts a smaller positive element below '
          'every candidate (f_snap_impossible: no linearly ordered field has a least positive '
          'element). T-SNAP\'s shape does not need a first step (t_snap_given)',
-         'The topological obstruction is removed, and no first step at 0 is supplied (AX-B1\'s first step is a cover of &#8869; on the state carrier, a commitment)'],
+         'The topological obstruction to an irreversible step is removed (c3_irreversible: no continuous path in Q&#8322; from a nonzero point to 0), and no first step at 0 is supplied (AX-B1\'s first step is a cover of &#8869; on the state carrier, a commitment)'],
     ]
     data = [hdr] + [[Paragraph(fix(r[0]), CS['kr_body']),
                      Paragraph(fix(r[1]), CS['kr_body'])] for r in rows]
@@ -109,7 +109,7 @@ def comparison_table():
     return t
 
 
-VERSION = '1.22'
+VERSION = '1.23'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -277,7 +277,7 @@ def build():
         'Below that, there\'s nowhere to go. The density argument fails at &#948;: there is a '
         'genuine first step above 0, AX-B1\'s form, and halving it is not possible. T-SNAP\'s '
         'shape is a join step off &#8869; of the state semilattice to a different state '
-        '(t_snap_given) and does not need it; that a run\'s first step is a cover is a further '
+        '(t_snap_given) and does not need it; that a run\'s first transition is a cover is a further '
         'hypothesis (t_snap_given_cover). Whether a '
         'step is taken is a separate question, and the framework commits to it rather than '
         'deriving it.'))
@@ -294,8 +294,8 @@ def build():
         'out by its valuation, v&#8322;(0) = +&#8734;. The first step AX-B1 commits to is a cover '
         'of &#8869; on the state carrier (a commitment): a state directly above &#8869; with '
         'nothing strictly between, which order theory calls an atom. t_snap_given_cover assumes '
-        'the run\'s first step is a cover; with CC-1, the commitment that the run starts at '
-        '&#8869;, that step is a cover of &#8869;. MachinePhase meets the commitment (its state '
+        'the run\'s first transition is a cover; with CC-1, the commitment that the run starts at '
+        '&#8869;, that transition is a cover of &#8869;. MachinePhase meets the commitment (its state '
         'c&#8321; covers its &#8869;, c&#8320;). In neither ordering of Q&#8322; does its 0 have a '
         'first step, so the step is not a consequence of the 2-adic structure.'))
     E.append(sp(4))
@@ -315,7 +315,7 @@ def build():
     E.append(cbody(
         'The real number line is not wrong. It is internally consistent and '
         'extraordinarily useful for calculus, analysis, and modeling continuous '
-        'change. But on it, 0 has no first step above it, AX-B1\'s form — not because the line fails as '
+        'change. But on the line, 0 has no first step above it, AX-B1\'s form — not because the line fails as '
         'a mathematical structure, but because of how it treats zero.'))
     E.append(cbody(
         'Consider a sports team. The coach and the players are not peers. The coach '
@@ -485,9 +485,10 @@ def build():
         'norm preorder on Q&#8322; is not; the norm-preorder facts are the &#167; ROLE examples in '
         'ZeroParadox/BottomCannotBe.lean. In the topology '
         '&#8477; is connected (place_topological_signature), so not totally disconnected '
-        '(real_no_snap), and Q&#8322; is totally disconnected (t5_totallyDisconnected). That is '
-        'not a second fence: for a linear order carrying its order topology, connectedness '
-        'implies density (Mathlib denselyOrdered_of_preconnectedSpace).'))
+        '(real_no_snap), and Q&#8322; is totally disconnected (t5_totallyDisconnected); that '
+        'difference separates them too. It is not a separate fence against a first step: for a '
+        'linear order carrying its order topology, connectedness implies density (Mathlib '
+        'denselyOrdered_of_preconnectedSpace), so it adds no reason beyond density.'))
     E.append(cbody(
         'Q&#8322; is not an exotic choice. Among all completions of the rationals, '
         'Ostrowski\'s theorem says there are exactly two kinds: Archimedean ones '
@@ -502,7 +503,8 @@ def build():
         'The framework did not choose unusual mathematics for its own sake. '
         'ZP-F shows that ordered fields are excluded, by density; ZP-B records that Q&#8322; is '
         'totally disconnected (t5_totallyDisconnected, an instance Mathlib already supplies), '
-        'which removes the topological obstruction. Neither supplies the first step at &#8869; '
+        'which removes the topological obstruction to an irreversible step (c3_irreversible: no '
+        'continuous path in Q&#8322; from a nonzero point to 0). Neither supplies the first step at &#8869; '
         'of the state carrier; that is AX-B1.'))
     E.append(cbody(
         'A note on scope: ZP-F establishes this result for linearly ordered fields — '
@@ -526,7 +528,7 @@ def build():
         'non-zero element carries a finite valuation, and as a limit the doubling orbit '
         'approaches and does not reach in finite time. Neither supplies the first step AX-B1 '
         'commits to, a cover of &#8869; on the state carrier; t_snap_given_cover assumes the '
-        'run\'s first step is a cover, and with CC-1 (the run starts at &#8869;) that step is a '
+        'run\'s first transition is a cover, and with CC-1 (the run starts at &#8869;) that transition is a '
         'cover of &#8869;. MachinePhase meets the commitment (c&#8321; covers its &#8869;, '
         'c&#8320;).'))
 
