@@ -320,9 +320,15 @@
               "date": "2026-11-05",
               "prior_statement": "Each domain bottom is the categorical bottom of its own real category (MC-1, correspondence half — formally realized).",
               "reason": "ZPH-NATIVE-ROLE-1 (content BEDROCK): \"the categorical bottom of its own real category\" is false for TopCat, where {0} ⊆ ℚ₂ is terminal and not initial (padic_bottom_not_initial, padic_bottom_isTerminal); the TopCat limit is floorConeIsLimit. Restated per category; backing in ClaimsMirror.claim_MC1_correspondence."
+            },
+            {
+              "by": "agent fix pass 3 for ZPH-NATIVE-ROLE-1 (orchestrator-briefed; wording awaits Tim's review)",
+              "date": "2026-11-05",
+              "prior_statement": "MC-1, correspondence half (formally realized), characterized per real Mathlib category and differing by category: the state floor is initial in ModuleCat ℂ; the information floor is initial in KleisliCat PMF, with no return morphism into it; the p-adic floor {0} ⊆ ℚ₂ is the limit of the ball tower in TopCat, terminal there and not initial.",
+              "reason": "ZPH-NATIVE-ROLE-1 gate round 1 (copy-editor F1 MEANING; adversary/editorial two-pole): \"no return morphism into it\" was unscoped and false as written (the identity on Fin 0); fC_no_return is scoped to stages n > 0 of fC_functor. Added the missing poles: the ModuleCat ℂ floor is also terminal (fD_zero_isTerminal), the KleisliCat PMF floor is not terminal (kleisli_bottom_not_terminal); the three-way split is fork_positions_distinct. TopCat terminality rests on one-pointedness, not the limit. Backing extended in ClaimsMirror.claim_MC1_correspondence."
             }
           ],
-          "statement": "MC-1, correspondence half (formally realized), characterized per real Mathlib category and differing by category: the state floor is initial in ModuleCat ℂ; the information floor is initial in KleisliCat PMF, with no return morphism into it; the p-adic floor {0} ⊆ ℚ₂ is the limit of the ball tower in TopCat, terminal there and not initial.",
+          "statement": "MC-1, correspondence half (formally realized), characterized per real Mathlib category and differing by category: the state floor is a zero object (initial and terminal) in ModuleCat ℂ; the information floor is initial and not terminal in KleisliCat PMF, with no morphism into it from any later stage of the functor; the p-adic floor {0} ⊆ ℚ₂ is terminal in TopCat (it has one point) and not initial, and separately the limit of the ball tower.",
           "status": "corr",
           "to": null
         },

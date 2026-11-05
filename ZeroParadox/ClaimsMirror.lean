@@ -139,17 +139,25 @@ theorem claim_node_state : Nonempty (Limits.IsInitial (fD_functor.obj 0)) :=
 /-! ## § IV. MC-1 correspondence (each domain floor characterized in its own category, differently) -/
 
 /-- Claim `MC-1-correspondence` (corr). Statement: "MC-1, correspondence half (formally realized),
-    characterized per real Mathlib category and differing by category: the state floor is initial in
-    ModuleCat ℂ; the information floor is initial in KleisliCat PMF, with no return morphism into it; the
-    p-adic floor {0} ⊆ ℚ₂ is the limit of the ball tower in TopCat, terminal there and not initial."
-    Exact representation: the bundled witness (two initial objects, no return, the set equation), the
-    `TopCat` limit cone, and terminal-not-initial for `{0}`. Backing: `mc1_correspondence`,
-    `floorConeIsLimit`, `padic_bottom_isTerminal`, `padic_bottom_not_initial`. -/
+    characterized per real Mathlib category and differing by category: the state floor is a zero object
+    (initial and terminal) in ModuleCat ℂ; the information floor is initial and not terminal in
+    KleisliCat PMF, with no morphism into it from any later stage of the functor; the p-adic floor
+    {0} ⊆ ℚ₂ is terminal in TopCat (it has one point) and not initial, and separately the limit of the
+    ball tower." Exact representation: the bundled witness (two initial objects, no morphism from a
+    stage `n > 0` into stage 0 of `fC_functor`, the set equation), the `TopCat` limit cone,
+    terminal-not-initial for `{0}`, the `ModuleCat ℂ` floor terminal, the `KleisliCat PMF` floor not
+    terminal. Backing: `mc1_correspondence`, `floorConeIsLimit`, `padic_bottom_isTerminal`,
+    `padic_bottom_not_initial`, `fD_zero_isTerminal`, `fC_no_return`; the three-way split is
+    `fork_positions_distinct` (`ZeroParadox/Category/TreeSeam.lean`). -/
 theorem claim_MC1_correspondence :
     Nonempty MC1Correspondence ∧ Nonempty (Limits.IsLimit floorCone) ∧
     Nonempty (Limits.IsTerminal (TopCat.of (↥({(0 : Q₂)} : Set Q₂)))) ∧
-    IsEmpty (Limits.IsInitial (TopCat.of (↥({(0 : Q₂)} : Set Q₂)))) :=
-  ⟨⟨mc1_correspondence⟩, ⟨floorConeIsLimit⟩, padic_bottom_isTerminal, padic_bottom_not_initial⟩
+    IsEmpty (Limits.IsInitial (TopCat.of (↥({(0 : Q₂)} : Set Q₂)))) ∧
+    Nonempty (Limits.IsTerminal (fD_functor.obj 0)) ∧
+    IsEmpty (Limits.IsTerminal (fC_functor.obj 0)) :=
+  ⟨⟨mc1_correspondence⟩, ⟨floorConeIsLimit⟩, padic_bottom_isTerminal, padic_bottom_not_initial,
+    ⟨fD_zero_isTerminal⟩,
+    ⟨fun h => (fC_no_return (by norm_num : 0 < 1)).false (h.from (fC_functor.obj 1))⟩⟩
 
 /-- Claim `MC1-cat-state` (corr). Statement: "the state/Hilbert bottom is the initial object of its real
     category (fD zero is initial)." Backing: `fD_zero_isInitial`. -/
