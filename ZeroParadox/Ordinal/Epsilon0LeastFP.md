@@ -99,8 +99,14 @@ on its own. Below ε₀ it is constantly ε₀; `epsilon_succ_eq_nfp` gives `nfp
 * **No ε-number can test it.** Every ε-number is a fixed point, so `nfp (ω^·) ε₁ = ε₁` and likewise at
   every rung — the whole family is blind to the difference between the general fact and *"above ε₀ the
   seed does all the work"*, which is false. Test above ε₀ with a **non**-fixed point such as `succ ε₀`.
-* **The rungs do NOT partition.** The intervals `(ε_o, ε_(o+1)]` miss every **limit**-index ε-number,
-  e.g. `ε_ω`.
+* **The intervals between rungs do not cover the seeds.** The intervals `(ε_o, ε_(o+1)]`
+  (`successor_cell_eq_Ioc`) miss the first cell `[0, ε₀]` (`first_cell_eq_Iic`; index 0 is neither a
+  successor nor a limit, `Order.not_isSuccLimit_bot`) and every **limit**-index ε-number, e.g. `ε_ω`,
+  which lies in no such interval (`Ordinal.veblen_right_strictMono`). The cells, as fibres of the landing
+  map, do partition the seeds: every landing is some `ε_o` with a unique index (`Ordinal.veblen_injective`;
+  the `example` after `limit_cell_eq_singleton` in `ZeroParadox/Ordinal/Epsilon0LeastFP.lean`). For any
+  normal map the landings are the values of its derivative, itself normal (`Ordinal.mem_range_deriv`,
+  `Ordinal.isNormal_deriv`).
 * **Normality is essential**: the implication fails for a non-normal operator.
 
 `Reading:` **INVARIANT** (conjectural) — the framework reads this as the ratified **"iterative bottoms"**

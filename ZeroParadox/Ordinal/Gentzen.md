@@ -63,7 +63,7 @@ proof shows dependence, not a principle's necessity.
 | ZPB   | Topology        | C3: no continuous path ⊥ → x ≠ ⊥   |
 | ZPC   | Information     | L-INF (`l_inf`): the surprisal I(n) = n is unbounded in the depth n ∈ ℕ. `Reading:` ZP-C reads depth n → ∞ as approach to the limit point 0 of ℚ₂ (ZP-I § II.B) |
 | ZPJ/K | Set + Compute  | bot_self_mem (AFA); botCode (Kleene) |
-| ZPI   | Algorithmic IT  | K uncomputable; the K-ratio (valuation-complexity) bridge — the implication that a sequence Sₙ whose 2-adic valuation tends to ∞ has K(Sₙ ∣ n)/∣Sₙ∣ → 1, K Kolmogorov complexity — is refuted by Sₙ = 2ⁿ (ZP-I § II.B): its valuation half is checked in Lean, its complexity half is outside Lean; T-IZ never depended on it (it goes through `t_iz_cauchy`) |
+| ZPI   | Algorithmic IT  | K uncomputable; the K-ratio (valuation-complexity) bridge, K Kolmogorov complexity, is refuted (status and counterexample: `CLAIMS.md`); T-IZ never depended on it (it goes through `t_iz_cauchy`) |
 
 K is not computed in Lean in this framework. The AFA/Kleene row is a conjunction, not an identity:
 `da1_paths_unified` (`ZeroParadox/Computability/Kleene.lean`) states that ⊥ of a `ZPSemilattice` is

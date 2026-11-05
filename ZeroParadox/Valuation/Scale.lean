@@ -291,15 +291,17 @@ theorem z2_two_views :
     re-founded 2-adic type would change the question is separate and not addressed. ⚠ `ZPSemilattice`
     itself is clean — it is this carrier, not that class. `PadicInt` is the evidence and
     `q2Scale_bot` is the consequence — a theorem with no ℕ∞ and no equality test in it, tainted
-    anyway. ⚠ The class's own numeral is a SEPARATE cost, and an ACCIDENTAL one in the sense
-    `ZeroParadox/Category/ChoiceCannotBe.lean` defines and sources: respelling the successor as a
-    cast from ℕ clears the class outright. ⚠ The numeral half is pin-relative; its routes, its
-    dated measurements and the Brasca–Clemente prior art are in
-    `ZeroParadox/Valuation/PricedPadicInterface.lean` § I (`enat_add_choice`). The CARRIER half is
-    not pin-relative in the same way — it follows from the printer walking the TYPE, so it holds of any statement mentioning
-    `ℤ_[2]` for as long as `PadicInt` is built with choice. ⚠ The two counterfactual PAIRS below emit exactly that — carrier,
-    then numeral. ⚠ The footprint UNIVERSAL here (ruled out for every spelling) is not emitted and
-    cannot be — a footprint list settles instances, never universals. The printer's own type-walk
+    anyway. ⚠ The class's own numeral is a SEPARATE cost, carried by the class's own type, so it
+    is STATEMENT-CARRIED in the sense `ZeroParadox/Category/ChoiceCannotBe.md` § *Accidental versus
+    essential* defines (a class has no proof to re-prove), and respelling the successor as a cast
+    from ℕ is a choice-free restatement in that bin's sense: it clears the class outright. ⚠ The
+    numeral half is pin-relative; its routes, its dated measurements and the Brasca–Clemente prior
+    art are in `ZeroParadox/Valuation/PricedPadicInterface.lean` § I (`enat_add_choice`). The
+    CARRIER half is not pin-relative in the same way — it follows from the printer walking the
+    TYPE, so it holds of any statement mentioning `ℤ_[2]` for as long as `PadicInt` is built with
+    choice. ⚠ The two counterfactual PAIRS below emit exactly that — carrier, then numeral.
+    ⚠ The footprint UNIVERSAL here (ruled out for every spelling) is not emitted and cannot be —
+    a footprint list settles instances, never universals. The printer's own type-walk
     IS emitted, by `_trivialAboutZ2` / `_trivialAboutNat` below. -/
 example : ∃ h : ZPSemilattice ℤ_[2], @ZPSemilattice.bot _ h = 0 ∧
     ∃ v : @ValuationStructure ℤ_[2] h, v.val = q2Val ∧ v.scale = (2 * ·) ∧
@@ -411,9 +413,9 @@ private theorem _trivialAboutNat : ∀ _ : ℕ, (0 : ℕ) = 0 := fun _ => rfl
 -- Carrier, not class: same class, two carriers, opposite answers.
 private def _zpsZ2 : Type := ZPSemilattice ℤ_[2]
 private def _zpsN : Type := ZPSemilattice ℕ
--- Numeral, and ACCIDENTAL: `ValuationStructure`'s six fields transcribed TWICE (§ I), differing
--- only in how the successor is spelled. Stated at the class, not at a bare ℕ∞ value, because
--- that is the level the claim is about.
+-- Numeral, STATEMENT-CARRIED with a choice-free restatement: `ValuationStructure`'s six fields
+-- transcribed TWICE (§ I), differing only in how the successor is spelled. Stated at the class,
+-- not at a bare ℕ∞ value, because that is the level the claim is about.
 private class _VSlit (L : Type*) [ZPSemilattice L] where
   scale : L → L
   val : L → ℕ∞

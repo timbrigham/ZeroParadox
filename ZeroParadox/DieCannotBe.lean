@@ -457,20 +457,21 @@ example : Nonempty (ZeroParadox.Motion Empty) := ⟨⟨fun x => x.elim, fun x =>
 
 /-! ### § III. The smallest step is DERIVED — unique successor, no way back ⇒ cover, one way -/
 #check @ZeroParadox.unique_succ_covBy           -- Statement: if `b` is `y`'s only successor and `b` does not reach `y`, then `y ⋖ b` in the reachability preorder; one way, the converse refuted on `Fin 3` below
--- Reading: the closest classical frame is transitive reduction. Source read: J. Bang-Jensen and
--- G. Gutin, *Digraphs* (1st ed., corrected copy), § 4.3. There (p. 177) an arc `uv` is redundant if
--- some `(u, v)`-path does not contain it, and a transitive reduction is a spanning subdigraph with no
--- redundant arc and the same transitive closure; Theorem 4.3.2 (p. 178) says an acyclic digraph has
--- exactly one, the intersection of all its spanning subdigraphs with the same transitive closure, and
--- credits the proof to Aho, Garey and Ullman (SIAM J. Comput. 1(2):131–137, 1972, doi
--- 10.1137/0201008; not retrieved; theorem as credited by Bang-Jensen and Gutin). The book does not
--- state the criterion used here as one sentence; it follows from those two. Deleting a redundant arc
--- leaves the transitive closure unchanged, so that arc is missing from one member of the intersection;
--- every subdigraph with the same closure keeps each arc that is not redundant, since otherwise it would
--- contain a `(u, v)`-path avoiding `uv`. So on a finite acyclic digraph an arc is in the reduction
--- if and only if it is the only path between its endpoints, and those arcs are exactly the covering
--- pairs of the reachability order (a covering pair has no vertex strictly between, so its only path
--- is the arc). Under this lemma's hypotheses every path from `y` to `b` begins with the arc `y → b`,
+-- Reading: the closest classical frame is transitive reduction. Source read: A. V. Aho, M. R. Garey
+-- and J. D. Ullman, "The transitive reduction of a directed graph", SIAM J. Comput. 1(2):131–137,
+-- 1972, doi 10.1137/0201008. Their Theorem 1 (p. 132): a finite acyclic directed graph `G` has a
+-- unique graph `Gᵗ` with the same transitive closure such that no proper subset of `Gᵗ` has that
+-- closure, namely the intersection of all graphs on its vertex set with that closure. Two of their
+-- conventions differ from ours: `Gᵗ` is not required to be a subgraph of `G` (p. 131; for acyclic
+-- `G` the two notions agree), and their "acyclic" admits loops, a cycle being required to pass
+-- through another vertex (p. 132). After the proof (p. 133) they note that `Gᵗ` is obtained by
+-- deleting, in any order, each arc `(u, v)` that is redundant: the graph has a directed path from `u`
+-- to `v` not including it (also J. Bang-Jensen and G. Gutin, *Digraphs*, § 4.3, pp. 177-178). Neither
+-- states the criterion used here as one sentence; it follows, since on an acyclic digraph without
+-- loops a path from `u` to `v` that includes the arc `(u, v)` is that arc alone. So on a finite
+-- acyclic digraph without loops an arc is in the reduction if and only if it is the only path between
+-- its endpoints, and those arcs are exactly the covering pairs of the reachability order (a covering
+-- pair has no vertex strictly between, so its only path is the arc). Under this lemma's hypotheses every path from `y` to `b` begins with the arc `y → b`,
 -- so on a finite acyclic relation the lemma's `y ⋖ b` is such an arc. The lemma itself assumes
 -- neither finiteness nor acyclicity, and on the `Fin 3` cycle below `0 ⋖ 2` holds with no arc
 -- `0 → 2`: without acyclicity a covering pair need not be an arc.
@@ -4135,7 +4136,9 @@ example : ZeroParadox.phaseBelowCoverMotion.Climb ∧ ZeroParadox.phaseBelowCove
     · exact fun e => ZeroParadox.epsilon0_ne_zero (ZeroParadox.Phase.up.inj e)
     · exact fun e => ZeroParadox.Phase.noConfusion e
   exact ⟨h, ZeroParadox.Motion.climb_corner _ h⟩
--- Reading: Q1: if `hcc1` and `hocc`, ⊥ of `L` is the source the run leaves (the constant run at ⊥ of
+-- Reading: Q1 and Q2 restate, as answers to the two-pole questions, the `Statement:` examples above
+-- and the CONTROLs below, which carry every conditional here; this gloss adds no claim of its own.
+-- Q1: if `hcc1` and `hocc`, ⊥ of `L` is the source the run leaves (the constant run at ⊥ of
 -- `L`, a CONTROL below, never leaves); if moreover `S` is a state sequence, it never re-enters, and in
 -- the two-state runs above (`c₀, c₁, c₁, …` and `null, exist, exist, …`) the other end (`c₁`, `exist`)
 -- is where the run stays, stepping to itself only.

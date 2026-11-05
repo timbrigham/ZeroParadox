@@ -15,8 +15,8 @@ redundant and believed to be stronger representation.
 ---
 
 ## Formal Overview
-Minimum and maximum are the two faces of a **least fixed point**, so ε₀
-carrying both is a signature rather than a tension. Why, and the two fences on reading ⊥ as *the*
+Minimum and maximum are the two faces of a **least fixed point** reached by iterating a normal
+map (`α ↦ ω^α` here), so ε₀ carrying both is a signature rather than a tension. Why, and the two fences on reading ⊥ as *the*
 seed: `ZeroParadox/Ordinal/Epsilon0MinMax.md`.
 -/
 

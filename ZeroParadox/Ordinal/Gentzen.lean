@@ -225,11 +225,9 @@ theorem cnfToZp2_tower_valuation (n : ℕ) : (cnfToZp2 (towerNONote n)).valuatio
     have hstep : cnfToZp2 (towerNONote (n + 1)) = (2 : ℤ_[2]) ^ (n + 1) := by
       rw [hunfold, cnfToZp2_oadd, ih, cnfToZp2_zero, hcast, mul_one, add_zero]
     rw [hstep, PadicInt.valuation_pow]
-    -- (2 : ℤ_[2]) is a numeral; valuation_p expects the cast form (↑p : ℤ_[p]).
-    -- Nat.cast_ofNat converts the numeral to cast form so valuation_p fires.
-    have hval : (2 : ℤ_[2]).valuation = 1 := by
-      rw [show (2 : ℤ_[2]) = ((2 : ℕ) : ℤ_[2]) from Nat.cast_ofNat.symm]
-      exact PadicInt.valuation_p
+    -- At the pinned Mathlib `valuation_p` closes the numeral goal directly (the `example` before
+    -- `q2Val_scale`, `ZeroParadox/Valuation/Scale.lean`).
+    have hval : (2 : ℤ_[2]).valuation = 1 := PadicInt.valuation_p
     simp [hval]
 
 /-- The 2-adic valuation of cnfToZp2 is unbounded: for every k there is an ordinal

@@ -54,13 +54,10 @@ decision of where UP is defined (`Motion.registeredDecidable_of_classical`) and 
 (`Motion.selectedTotal_of_classical`, whose proof also calls `Classical.choose` directly), all in
 `ZeroParadox/Die.lean`.
 
-**Inherited, in the die:** `Motion.RegisteredComputable` (a definition, so its statement),
-`registeredDecidable_of_registeredComputable`, `registeredComputable_of_upTotal` and
-`ofOption_registeredComputable` each measure `[propext, Classical.choice, Quot.sound]`. The choice
-enters through Mathlib's `Bool` encoding instance `Primcodable.bool`, which stating `Computable d`
-for a `Bool`-valued `d` uses; `Computable` itself is choice-free. A theorem that only assumes `M.RegisteredComputable`, or only
-`∃ d : ℕ → Bool, Computable d`, reports the same (statement control, 2026-10-18), so that variant is
-**statement-carried**.
+**Inherited, in the die:** `Motion.RegisteredComputable` and the theorems stated with it; their
+footprints are printed in the purity block of `ZeroParadox/Die.lean`. `Motion.RegisteredComputable`
+is a definition whose value is its statement, so its printed footprint is the statement's. The
+`ℕ`-valued variant and the footprint of the proof it uses are in `ZeroParadox/DieCannotBe.lean` § IX.
 
 ⚠ **Do not read `no_witness_of_fixedPointFree`'s axiom-freedom as evidence the choice is avoidable.**
 It is not a purer proof of the same statement — it *takes* a fixed-point-free map as a hypothesis,
@@ -85,7 +82,7 @@ inherited dependence can be essential**, and *inherited* is not a synonym for *r
 | | own | inherited |
 |---|---|---|
 | **essential** (on § IV's premise) | `fixedPointFree_of_nontrivial`, `botCovered_botIntervalTwo_classical`, `Motion.registeredDecidable_of_classical`, `Motion.selectedTotal_of_classical` | well-order comparability |
-| **statement-carried** (statement control, measured 2026-10-08; the die's row 2026-10-18) | — | `c3_irreversible`, `t4_snap_orthogonal`, `fD_functor`, `fC_functor`, `snap_dichotomy`, `quine_dichotomy`; in the die, `Motion.RegisteredComputable` |
+| **statement-carried** (statement control, measured 2026-10-08; for `Motion.RegisteredComputable`, its printed footprint in `ZeroParadox/Die.lean`) | — | `c3_irreversible`, `t4_snap_orthogonal`, `fD_functor`, `fC_functor`, `snap_dichotomy`, `quine_dichotomy`; in the die, `Motion.RegisteredComputable` |
 | **open** | — | the remaining analytic layers (e.g. `fB_functor`, whose statement is choice-free) |
 
 ⚠ **A proof's footprint never establishes a principle's necessity.** `#print axioms` on a proof

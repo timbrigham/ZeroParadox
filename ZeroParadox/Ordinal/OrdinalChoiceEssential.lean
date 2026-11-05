@@ -149,14 +149,14 @@ Traced to source, three independent classical entry points feed that instance:
 * `Ordinal.instLinearOrder`'s own `toDecidableLE := Classical.decRel _` — a data field, classical
   by fiat.
 
-**Consequence for the framework's ledger.** The recorded `[propext, Classical.choice, Quot.sound]`
-readings on `epsilon0_ne_zero`, `epsilon0_ne_bot`, `epsilon0_eq_nfp_bot` and their kin are
-measuring the ambient instance, not those proofs. They are **not evidence** that the ε₀
-mathematics is non-constructive, in either direction. `epsilon0_ne_zero` is the clearest case: its
-own argument is `ω^0 = 1 ≠ 0`, entirely constructive, and its whole footprint is inherited from
-the ε₀ term. Re-proving these choice-free *inside* Mathlib's `Ordinal` is not merely hard, it is
-structurally impossible; a choice-free analogue has to be built on a notation carrier, which is
-ZP-N's programme. -/
+**Consequence for the framework's ledger.** The recorded `[propext, Classical.choice, Quot.sound]` readings
+on `epsilon0_ne_zero`, `epsilon0_ne_bot`, `epsilon0_eq_nfp_bot` and their kin measure the choice-carrying
+constants their statements reach (the order instance and operations such as `Ordinal.omega0`), not those
+proofs: **not evidence** that the ε₀ mathematics is non-constructive, in either direction.
+`epsilon0_ne_zero`'s own argument is `ω^0 = 1 ≠ 0`, entirely constructive; its footprint is inherited
+from the ε₀ term. As written these statements are STATEMENT-CARRIED (`ZeroParadox/Category/ChoiceCannotBe.md`),
+so no proof inside Mathlib's `Ordinal` drops the choice; a choice-free analogue is restated on a notation
+carrier, ZP-N's programme (`ZeroParadox/Ordinal/ConstructiveOrdinals.md` § Result). -/
 
 /-! **The measurement is uninformative for `Ordinal`'s order.** The next two theorems are the
 demonstration, and they are deliberately stated **separately** rather than as one conjunction: a
@@ -260,7 +260,7 @@ open ZeroParadox
 #print axioms InitialSeg.eq_or_principal
 #print axioms InitialSeg.total
 
--- Two of the operations built on that instance. `nfp`, `deriv` and `epsilon` are named alongside
+-- Two of the choice-carrying operations. `nfp`, `deriv` and `epsilon` are named alongside
 -- these in ZP-N's prose but live in `Mathlib.SetTheory.Ordinal.FixedPoint` / `Veblen`, outside this
 -- file's deliberately minimal import closure; they are printed in
 -- `ZeroParadox/Ordinal/PricedInterface.lean`, which already imports Veblen. Between the two purity
