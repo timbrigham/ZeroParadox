@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-Q: The Frame-Change PDF Builder
-Version 1.20 | November 2026
+Version 1.21 | November 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.20'
+VERSION = '1.21'
 FIRST_RELEASED = 'July 2026'
 
 from reportlab.graphics.shapes import Drawing, Circle, Ellipse, PolyLine, String, Polygon
@@ -376,12 +376,14 @@ def build():
         [
             'Inversion does not separate &#8477; from &#8474;<sub>2</sub>. Inside each field it is '
             'discontinuous at 0. On the one-point compactification of any proper normed field it is '
-            'continuous and swaps 0 and &#8734; (continuous_onePointInv, onePointInv_swaps, '
+            'continuous and swaps 0 and &#8734;, a standard fact (Forster, Lectures on Riemann Surfaces, '
+            '&#167;&#167; 1&#8211;2, as cited by TauCeti, which formalizes it as OnePoint.invChart), proved '
+            'here with Mathlib alone (continuous_onePointInv, onePointInv_swaps, '
             'ZeroParadox/Valuation/RiemannSphere.lean), so for &#8477; as well as &#8474;<sub>2</sub> '
             '(continuous_onePointInv_real, onePointInv_swaps_real; for &#8474;<sub>2</sub>, the sphere '
             'above, continuous_rInv and rInv_swaps). What '
-            'separates the two is topology: &#8477; is connected, so not totally disconnected '
-            '(real_no_snap, which states exactly that), while &#8474;<sub>2</sub> is totally '
+            'separates the two is topology: &#8477; is connected (place_topological_signature), so not '
+            'totally disconnected (real_no_snap), while &#8474;<sub>2</sub> is totally '
             'disconnected (padic_snaps). Neither has a first step above 0, AX-B1&#8217;s form: in '
             '&#8477; because no linearly ordered field has a least positive element (ZP-F; '
             'f_snap_impossible, which, despite its name, states exactly that), and in '
@@ -412,8 +414,8 @@ def build():
         'domain. The instance table&#8217;s last row, the reals, carries the same pole exchange on its '
         'one-point compactification (onePointInv_swaps_real) and has no first step above 0 '
         '(f_snap_impossible), so the frame-flip does not separate &#8477; from &#8474;<sub>2</sub>; '
-        'total disconnectedness does (padic_snaps, real_no_snap). The fences are not hedging; they mark a genuine boundary, and '
-        'the per-domain frame-flips remain full theorems on either side of it.'))
+        'total disconnectedness does (padic_snaps, real_no_snap). The fences are not hedging: they mark '
+        'where the universal form stops, and each per-domain frame-flip remains a full theorem in its own domain.'))
 
     E.append(def_box(
         'The wall: the categorical universal is category-relative (Lawvere.lean)',
