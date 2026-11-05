@@ -7,7 +7,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.19'
+VERSION = '1.20'
 FIRST_RELEASED = 'July 2026'
 
 from reportlab.graphics.shapes import Drawing, Circle, Ellipse, PolyLine, String, Polygon
@@ -264,8 +264,9 @@ def build():
              'measure 0  &#8596;  surprisal &#8734;',
              '&#8722;log &#8212; info_bottom_diverges'],
             ['Reals',
-             '&#8212; (no first step above 0)',
-             'none witnessed (the remark below; ZP-F)'],
+             '0  &#8596;  &#8734; (no first step above 0)',
+             'x &#8614; 1/x on the one-point compactification &#8212; onePointInv_swaps_real; '
+             'holds, and is not a discriminator (the remark below)'],
         ],
         col_widths=[TW * 0.20, TW * 0.34, TW * 0.46],
     ))
@@ -374,9 +375,11 @@ def build():
         'Remark: the reals beside &#8474;<sub>2</sub> (what separates them)',
         [
             'Inversion does not separate &#8477; from &#8474;<sub>2</sub>. Inside each field it is '
-            'discontinuous at 0; on &#8474;<sub>2</sub> it is made continuous on the one-point '
-            'compactification, the sphere above (continuous_rInv, ZeroParadox/Valuation/RiemannSphere.lean), '
-            'by a proof that uses nothing specific to &#8474;<sub>2</sub> beyond properness. What '
+            'discontinuous at 0. On the one-point compactification of any proper normed field it is '
+            'continuous and swaps 0 and &#8734; (continuous_onePointInv, onePointInv_swaps, '
+            'ZeroParadox/Valuation/RiemannSphere.lean), so for &#8477; as well as &#8474;<sub>2</sub> '
+            '(continuous_onePointInv_real, onePointInv_swaps_real; for &#8474;<sub>2</sub>, the sphere '
+            'above, continuous_rInv and rInv_swaps). What '
             'separates the two is topology: &#8477; is connected, so not totally disconnected '
             '(real_no_snap, which states exactly that), while &#8474;<sub>2</sub> is totally '
             'disconnected (padic_snaps). Neither has a first step above 0, AX-B1&#8217;s form: in '
@@ -406,8 +409,10 @@ def build():
         'satisfies its hypotheses of a complete lattice and a monotone map, so none of them is an instance '
         'of it. It is universal over its own domain, not over the faces. At the categorical level the '
         'universal is a proven wall (below). What the faces share is a SHAPE realized concretely in each '
-        'domain, and the instance table&#8217;s last row, the reals, carries no frame-flip witness in '
-        'the corpus, so the shape is not shown to hold everywhere either. The fences are not hedging; they mark a genuine boundary, and '
+        'domain. The instance table&#8217;s last row, the reals, carries the same pole exchange on its '
+        'one-point compactification (onePointInv_swaps_real) and has no first step above 0 '
+        '(f_snap_impossible), so the frame-flip does not separate &#8477; from &#8474;<sub>2</sub>; '
+        'total disconnectedness does (padic_snaps, real_no_snap). The fences are not hedging; they mark a genuine boundary, and '
         'the per-domain frame-flips remain full theorems on either side of it.'))
 
     E.append(def_box(
@@ -476,6 +481,8 @@ def build():
             ['fork_collapse_iff', 'ZeroParadox/Settheory/FixedPointFork.lean', 'choice-free'],
             ['snap_is_frameflip', 'ZeroParadox/Multihomed/SnapFrameChange.lean', 'Classical.choice'],
             ['rInv_swaps', 'ZeroParadox/Valuation/RiemannSphere.lean', 'Classical.choice'],
+            ['onePointInv_swaps', 'ZeroParadox/Valuation/RiemannSphere.lean', 'Classical.choice'],
+            ['onePointInv_swaps_real', 'ZeroParadox/Valuation/RiemannSphere.lean', 'Classical.choice'],
             ['catseam_is_frameflip', 'ZeroParadox/Category/SeamFrameChange.lean', 'Classical.choice'],
             ['nontrivial_lattice_no_witness', 'ZeroParadox/Category/Lawvere.lean', 'Classical.choice'],
             ['computability_face_fixedPoint', 'ZeroParadox/Category/Lawvere.lean', 'Classical.choice'],
