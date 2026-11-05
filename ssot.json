@@ -672,8 +672,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 3165,
-        "files": 197
+        "declarations": 3166,
+        "files": 198
       },
       "entries": [
         {
@@ -109501,6 +109501,48 @@
             "role": []
           },
           "reason": "SnapNucleusConstructive: machine-checked IMPOSSIBILITY - no idempotent endomap of ONote has epsilon-number closed points; obstruction is expressive reach (the carrier cannot name the closure), NOT choice",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f18eb06b-1608-4674-810d-33e249ccf164",
+          "new": {
+            "file": "ZeroParadox/Category/TreeSeam.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.floor_positions_full",
+            "short": "floor_positions_full"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/TreeSeam.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.floor_positions_full",
+            "short": "floor_positions_full",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "category",
+              "state",
+              "information",
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "ZPH-NATIVE-ROLE-1 pass 7 (Tim ruling 87): the three full floor positions in one statement",
           "verify": {
             "axioms": null,
             "sorry_free": true

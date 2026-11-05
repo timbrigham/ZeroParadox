@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-H Addendum: The Snap Floor in Native Categories
-Version 1.13 | November 2026
+Version 1.14 | November 2026
 Reads after ZP-H Categorical Bridge.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.13'
+VERSION = '1.14'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard: route all bare Paragraph() text through Unicode-to-entity conversion ──
@@ -66,9 +66,9 @@ def build():
         'kleisli_bottom_not_terminal); in TopCat the floor {0} is terminal, since it has one point '
         '(padic_bottom_isTerminal), and not initial (padic_bottom_not_initial), and separately the '
         'inverse limit of the ball tower (floorConeIsLimit, ZeroParadox/Order/PadicLimitCone.lean). '
-        'The three floors are separated in one statement, fork_positions_distinct '
-        '(ZeroParadox/Category/TreeSeam.lean: a zero object; not terminal; not initial); the other '
-        'halves are fC_zero_isInitial and padic_bottom_isTerminal. They are members of the bottom family (MC-1), and not one '
+        'The three full positions are stated together in floor_positions_full '
+        '(ZeroParadox/Category/TreeSeam.lean: a zero object; initial and not terminal; terminal '
+        'and not initial). They are members of the bottom family (MC-1), and not one '
         'object, since an equation across categories is ill-typed. mc1_correspondence bundles the '
         'two initial objects, fC_no_return (no morphism into the floor from any later stage of the '
         'functor), and the set equation in '
@@ -163,7 +163,8 @@ def build():
         '(padic_bottom_not_initial). It is also the <i>limit</i> of the ball tower '
         '(floorConeIsLimit) &#8212; the categorical expression a topologist would expect for "the point '
         'everything converges to." This is the honest realization in a category that is not '
-        'a ZPCategory: not an initial object, but a limit.'))
+        'a ZPCategory: not an initial object: terminal, since it has one point, and separately '
+        'a limit.'))
     E.append(sp(6))
 
     # ── Section III: F_D / ModuleCat ℂ ────────────────────────────────────────────
@@ -239,7 +240,9 @@ def build():
         'for free. A stochastic map into Fin 0 would be a probability distribution on the '
         'empty type, and there is none. So while every object has a unique map <i>out</i> of '
         'Fin 0 (it is initial), no later stage Fin n with n &gt; 0 has any map <i>back</i> &#8212; AX-G2 '
-        '(source asymmetry) is not assumed but proved, as fC_no_return. Of the three native '
+        '(source asymmetry) is not assumed but proved, as fC_no_return. For the same reason Fin 0 '
+        'is not terminal: a terminal object needs a map into it from every object, and Fin 1 has '
+        'none (kleisli_bottom_not_terminal). Of the three native '
         'categories, this is the one where the framework\'s irreversibility axiom becomes a '
         'theorem of the ambient mathematics.'))
     E.append(sp(6))
@@ -307,8 +310,9 @@ def build():
             'InfoFunctor.lean &#8212; fC_functor, fC_zero_isInitial, fC_no_return '
             '(F_C into KleisliCat PMF).',
             'MC1Bridge.lean         &#8212; mc1_correspondence (the bundled witness).',
-            'TreeSeam.lean &#8212; fork_positions_distinct (the three floors separated: a zero '
-            'object; not terminal; not initial), kleisli_bottom_not_terminal; TreeObstructions.lean &#8212; padic_bottom_isTerminal, '
+            'TreeSeam.lean &#8212; floor_positions_full (the three full positions: a zero '
+            'object; initial and not terminal; terminal and not initial), fork_positions_distinct, '
+            'kleisli_bottom_not_terminal; TreeObstructions.lean &#8212; padic_bottom_isTerminal, '
             'padic_bottom_not_initial, fD_zero_isTerminal.',
             'All in ZeroParadox/ in the public repository.',
         ]
@@ -324,8 +328,8 @@ def build():
         '(padic_bottom_isTerminal, padic_bottom_not_initial), and separately the inverse limit of '
         'the ball tower (floorConeIsLimit, outside the bundle); the zero object in ModuleCat '
         '&#8450;; and an initial object that is not terminal in the Kleisli category of '
-        'distributions (fC_zero_isInitial, kleisli_bottom_not_terminal); the three are separated '
-        'in one statement, fork_positions_distinct; mc1_correspondence '
+        'distributions (fC_zero_isInitial, kleisli_bottom_not_terminal); the three full positions '
+        'are stated together in floor_positions_full; mc1_correspondence '
         'bundles the two initial objects, fC_no_return (no morphism into the floor from a later '
         'stage), and the set equation in Q<sub>2</sub> fB_bottom_is_limit; '
         'floorConeIsLimit sits outside it. The floors are not one object, since an equation across categories is ill-typed. All results sorry-free in Lean 4 as of November '

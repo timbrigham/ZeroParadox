@@ -18,8 +18,8 @@ Identification with the same symbology is a commitment of this framework.
 ---
 
 ## Formal Overview
-The correspondence half of MC-1 over the real domain categories, per category (the split is
-`fork_positions_distinct`): the floor is a zero object (`Statement:` COINCIDENCE, initial and terminal at once)
+The correspondence half of MC-1 over the real domain categories, per category (the three full positions are stated together in
+`floor_positions_full`, `ZeroParadox/Category/TreeSeam.lean`): the floor is a zero object (`Statement:` COINCIDENCE, initial and terminal at once)
 in `ModuleCat ℂ`; initial and
 not terminal in `KleisliCat PMF`; in `TopCat` terminal (it has one point; `padic_bottom_isTerminal`) and not
 initial (`padic_bottom_not_initial`), and separately the limit of the ball tower (`floorConeIsLimit`).

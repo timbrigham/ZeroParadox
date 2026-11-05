@@ -147,8 +147,8 @@ theorem claim_node_state : Nonempty (Limits.IsInitial (fD_functor.obj 0)) :=
     stage `n > 0` into stage 0 of `fC_functor`, the set equation), the `TopCat` limit cone,
     terminal-not-initial for `{0}`, the `ModuleCat ℂ` floor terminal, the `KleisliCat PMF` floor not
     terminal. Backing: `mc1_correspondence`, `floorConeIsLimit`, `padic_bottom_isTerminal`,
-    `padic_bottom_not_initial`, `fD_zero_isTerminal`, `fC_no_return`; the three-way split is
-    `fork_positions_distinct` (`ZeroParadox/Category/TreeSeam.lean`). -/
+    `padic_bottom_not_initial`, `fD_zero_isTerminal`, `fC_no_return`; the three full positions are
+    stated together in `floor_positions_full` (`ZeroParadox/Category/TreeSeam.lean`). -/
 theorem claim_MC1_correspondence :
     Nonempty MC1Correspondence ∧ Nonempty (Limits.IsLimit floorCone) ∧
     Nonempty (Limits.IsTerminal (TopCat.of (↥({(0 : Q₂)} : Set Q₂)))) ∧
