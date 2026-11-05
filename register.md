@@ -12,7 +12,7 @@ Update this file first on any version bump. README.md Framework table is verifie
 | ZP-E Bridge Document | v3.78 | ZP-E_Bridge_Document.pdf | v1.38 | Y/Y | formal:37cdfdd9 comp:ae4f6d28 |
 | ZP-G Category Theory | v1.27 | ZP-G_Category_Theory.pdf | v1.16 | N/— | formal:e901301e comp:668a9008 |
 | ZP-H Categorical Bridge | v1.35 | ZP-H_Categorical_Bridge.pdf | v1.26 | N/— | formal:aff5d535 comp:5b4b5638 |
-| ZP-H Native Categories Addendum | v1.12 | ZP-H_Native_Categories_Addendum.pdf | N/A | N/— | formal:e37097e8 |
+| ZP-H Native Categories Addendum | v1.13 | ZP-H_Native_Categories_Addendum.pdf | N/A | N/— | formal:a48104f0 |
 | ZP-I Inside Zero | v1.38 | ZP-I_Inside_Zero.pdf | v1.40 | N/— | formal:2ace4e79 comp:c0208f01 |
 | ZP-J Self-Reference | v2.17 | ZP-J_Self_Reference.pdf | v1.40 | N/— | formal:d486cc53 comp:15c5f473 |
 | ZP-J AFA Addendum | v1.20 | ZP-J_AFA_Addendum.pdf | N/A | N/— | formal:8327eacf |

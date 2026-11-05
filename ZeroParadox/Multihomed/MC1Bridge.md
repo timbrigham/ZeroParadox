@@ -9,8 +9,9 @@ MC-1 is the cross-framework claim about the four domain bottoms. It was stated i
 
 * a **correspondence** half: each domain's floor has a categorical characterization in that domain's own real
   category, and it differs by category: a zero object (`Statement:` COINCIDENCE, initial and terminal at once) in `ModuleCat ℂ`, initial and not
-  terminal in `KleisliCat PMF`, terminal and not initial in `TopCat` (`fork_positions_distinct`,
-  `ZeroParadox/Category/TreeSeam.lean`; listed below); the four agree on the snap;
+  terminal in `KleisliCat PMF`, terminal and not initial in `TopCat`, separated in one statement,
+  `fork_positions_distinct` (`ZeroParadox/Category/TreeSeam.lean`: a zero object; not terminal; not initial), the other halves
+  `fC_zero_isInitial` and `padic_bottom_isTerminal` (listed below); the four agree on the snap;
 * a **literal-identity** half: the four bottoms are numerically one object across four different categories. That
   identity is **retired as ill-typed** (object equality across categories does not typecheck and is not invariant under
   equivalence); what separates the members is proved property by property (`seam_unique_among_named`,
@@ -52,7 +53,8 @@ None of the categorical structure here is new.
   (`floorConeIsLimit`) is the standard computation of limits in `Top` on underlying sets with the initial topology
   (Mathlib `TopCat.limitCone`, `TopCat.limitConeIsLimit`); the proof here builds the cone directly rather than
   through them.
-- F_D's zero module is the zero/initial object of an abelian category.
+- F_D's zero module is the zero object (`Statement:` COINCIDENCE, initial and terminal at once) of an abelian category; Mathlib
+  `ModuleCat.isZero_of_subsingleton`.
 
 ZP-H's contribution is not new category theory but the cross-domain *assembly*: each ZP floor characterized in its own
 real category, at a different position in each (above), agreeing on the snap.

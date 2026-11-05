@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-H Addendum: The Snap Floor in Native Categories
-Version 1.12 | November 2026
+Version 1.13 | November 2026
 Reads after ZP-H Categorical Bridge.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.12'
+VERSION = '1.13'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard: route all bare Paragraph() text through Unicode-to-entity conversion ──
@@ -63,10 +63,12 @@ def build():
         'their own language, in the role that category supports: the zero object, initial and '
         'terminal, in ModuleCat &#8450; (fD_zero_isInitial, fD_zero_isTerminal); an initial object '
         'that is not terminal in the Kleisli category of PMF (fC_zero_isInitial, '
-        'kleisli_bottom_not_terminal); in TopCat the inverse limit of the ball tower (floorConeIsLimit, '
-        'ZeroParadox/Order/PadicLimitCone.lean), which is terminal there and not initial '
-        '(padic_bottom_not_initial). The three positions are stated together as '
-        'fork_positions_distinct (ZeroParadox/Category/TreeSeam.lean). They are members of the bottom family (MC-1), and not one '
+        'kleisli_bottom_not_terminal); in TopCat the floor {0} is terminal, since it has one point '
+        '(padic_bottom_isTerminal), and not initial (padic_bottom_not_initial), and separately the '
+        'inverse limit of the ball tower (floorConeIsLimit, ZeroParadox/Order/PadicLimitCone.lean). '
+        'The three floors are separated in one statement, fork_positions_distinct '
+        '(ZeroParadox/Category/TreeSeam.lean: a zero object; not terminal; not initial); the other '
+        'halves are fC_zero_isInitial and padic_bottom_isTerminal. They are members of the bottom family (MC-1), and not one '
         'object, since an equation across categories is ill-typed. mc1_correspondence bundles the '
         'two initial objects, fC_no_return (no morphism into the floor from any later stage of the '
         'functor), and the set equation in '
@@ -84,7 +86,7 @@ def build():
         'that limit (fB_bottom_is_limit).'))
     E.append(body(
         'Two honesty boundaries hold throughout. <b>The realized claim is correspondence, '
-        'not identity.</b> What is proved is, category by category, the universal property '
+        'not identity.</b> What is proved is, category by category, the characterization '
         'named above, the floors agreeing on the snap; that the four bottoms are <i>numerically '
         'one object</i> is retired as ill-typed (object equality across categories does not typecheck and is not invariant under equivalence); what separates the members is proved property by property (seam_unique_among_named, for the named bottoms, in a lattice with no top). <b>The native '
         'categories are the honest target.</b> Mathlib has no bespoke category of p-adic '
@@ -116,7 +118,8 @@ def build():
         'ZeroParadox/Category/TreeSeam.lean). Of the categories on this page, AX-G1 holds only in the three '
         'depth-proxy categories, where the depth index has no maximum. So the snap floor cannot be "the initial object of a '
         'ZPCategory" here. The honest statement is the one each category supports natively: '
-        'in TopCat the floor is the limit of the shrinking system, in ModuleCat &#8450; it is the '
+        'in TopCat the floor is terminal, since it has one point, and not initial, and separately '
+        'the limit of the shrinking system; in ModuleCat &#8450; it is the '
         'zero object (initial and terminal), and in the Kleisli category it is initial and not '
         'terminal. Each is stated below.'))
     E.append(sp(6))
@@ -270,9 +273,9 @@ def build():
     E.append(sp(4))
     E.append(body(
         'This settles the <b>correspondence</b> half of MC-1: across the native categories, '
-        'the snap floor is realized by each category\'s own universal property (the zero object in '
-        'ModuleCat &#8450;; initial and not terminal in the Kleisli category; in TopCat the inverse limit of the ball '
-        'tower, and terminal), and the four agree on the snap. The <b>identity</b> half, that the algebraic &#8869;, the 2-adic 0, the '
+        'the snap floor is realized by each category\'s own characterization (the zero object in '
+        'ModuleCat &#8450;; initial and not terminal in the Kleisli category; in TopCat terminal, since '
+        'it has one point, and not initial, and separately the inverse limit of the ball tower), and the four agree on the snap. The <b>identity</b> half, that the algebraic &#8869;, the 2-adic 0, the '
         'zero module, and the empty type are numerically one object, is retired as ill-typed '
         '(object equality across categories does not typecheck and is not invariant under '
         'equivalence); what separates the members is proved property by property '
@@ -304,8 +307,8 @@ def build():
             'InfoFunctor.lean &#8212; fC_functor, fC_zero_isInitial, fC_no_return '
             '(F_C into KleisliCat PMF).',
             'MC1Bridge.lean         &#8212; mc1_correspondence (the bundled witness).',
-            'TreeSeam.lean &#8212; fork_positions_distinct, kleisli_bottom_not_terminal (the '
-            'three positions); TreeObstructions.lean &#8212; padic_bottom_isTerminal, '
+            'TreeSeam.lean &#8212; fork_positions_distinct (the three floors separated: a zero '
+            'object; not terminal; not initial), kleisli_bottom_not_terminal; TreeObstructions.lean &#8212; padic_bottom_isTerminal, '
             'padic_bottom_not_initial, fD_zero_isTerminal.',
             'All in ZeroParadox/ in the public repository.',
         ]
@@ -316,10 +319,13 @@ def build():
         'Endnote: This document is an addendum to ZP-H Categorical Bridge and reads after '
         'it. ZP-H locates the snap floor as the categorical bottom across four frameworks '
         'using depth-index proxy categories; this addendum realizes the floor inside each '
-        'framework\'s native Mathlib category by that category\'s own universal property '
-        '&#8212; the inverse limit of the ball tower in TopCat (floorConeIsLimit, outside the '
-        'bundle), the zero object in ModuleCat &#8450;, and an initial object that is not terminal '
-        'in the Kleisli category of distributions (fork_positions_distinct); mc1_correspondence '
+        'framework\'s native Mathlib category by that category\'s own characterization '
+        '&#8212; in TopCat the floor {0}, terminal since it has one point and not initial '
+        '(padic_bottom_isTerminal, padic_bottom_not_initial), and separately the inverse limit of '
+        'the ball tower (floorConeIsLimit, outside the bundle); the zero object in ModuleCat '
+        '&#8450;; and an initial object that is not terminal in the Kleisli category of '
+        'distributions (fC_zero_isInitial, kleisli_bottom_not_terminal); the three are separated '
+        'in one statement, fork_positions_distinct; mc1_correspondence '
         'bundles the two initial objects, fC_no_return (no morphism into the floor from a later '
         'stage), and the set equation in Q<sub>2</sub> fB_bottom_is_limit; '
         'floorConeIsLimit sits outside it. The floors are not one object, since an equation across categories is ill-typed. All results sorry-free in Lean 4 as of November '
