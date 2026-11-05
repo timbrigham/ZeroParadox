@@ -3,6 +3,7 @@ import Mathlib.Topology.Compactification.OnePoint.ProjectiveLine
 import Mathlib.NumberTheory.Padics.ProperSpace
 import ZeroParadox.Die
 import ZeroParadox.Algebra.WheelFrac
+import ZeroParadox.Valuation.SnapDichotomy
 import Mathlib.Tactic
 
 set_option maxHeartbeats 400000
@@ -39,7 +40,7 @@ abstract ⊥↔⊤ swap is already Mathlib's `compl_bot`/`compl_top`; the prior-
 `ZeroParadox/BottomCannotBe.lean` § INVERSION). Do not read this as that.
 
 ## Structure
-- Opening (unheaded) `rInv`, `continuous_rInv`, `rInvHomeo`, `rInv_swaps` — inversion, the 0↔∞ swap.
+- § 0 and opening: `onePointInv` (proper normed fields), `rInv`, `rInvHomeo`, `rInv_swaps` — the 0↔∞ swap.
 - § V–VI `rScale`, `rInv_conj_rScale`, `rScale_valuation` — pole-fixing scalings, a valuation coordinate.
 - § VII–VIII `sNorm`, `rInvRelIso`, `unitDouble_reach_iff` — the norm preorder; unit and doubling moves.
 - § IX `upV`, `downV`, `upClosure`, `rInv_conj_upV` — rounding the valuation to a landing; the flip.
@@ -52,6 +53,110 @@ open OnePoint Filter Topology
 -- decidability instance. Provided locally (rather than `open Classical`, which the linter discourages).
 -- This is a topological result, not the choice-free core; the purity check notes the footprint.
 attribute [local instance] Classical.propDecidable
+
+/-! ### § 0. Inversion on the one-point compactification of any proper normed field
+
+No Mathlib analog located as of 2026-11-04, searched as follows: grep of the pinned Mathlib
+`Topology/Compactification/OnePoint/` (its `ProjectiveLine.lean` TODO asks for the homeomorphism even
+for `K = ℝ`); `exact?` on "a continuous self-map of `OnePoint ℝ` sending `0 ↦ ∞`, `∞ ↦ 0`,
+`x ↦ x⁻¹` otherwise" (no result); one LeanExplore query (nearest hits `Homeomorph.onePointCongr`,
+`OnePoint.continuous_map`, which cover maps fixing `∞`). -/
+
+section General
+
+variable {K : Type*} [NormedField K]
+
+/-- `Statement:` inversion on `OnePoint K`: `∞ ↦ 0`, `0 ↦ ∞`, and `x ↦ x⁻¹` on the nonzero points. -/
+noncomputable def onePointInv : OnePoint K → OnePoint K
+  | (∞ : OnePoint K) => OnePoint.some 0
+  | OnePoint.some x => if x = 0 then (∞ : OnePoint K) else OnePoint.some x⁻¹
+
+/-- `Statement:` `onePointInv ∞ = 0`. -/
+@[simp] theorem onePointInv_infty : onePointInv (∞ : OnePoint K) = OnePoint.some 0 := rfl
+
+/-- `Statement:` `onePointInv 0 = ∞`. -/
+@[simp] theorem onePointInv_zero : onePointInv (OnePoint.some (0 : K)) = ∞ := by
+  simp only [onePointInv, if_pos]
+
+/-- `Statement:` on a nonzero point `x`, `onePointInv x = x⁻¹`. -/
+theorem onePointInv_coe_ne {x : K} (hx : x ≠ 0) :
+    onePointInv (OnePoint.some x) = OnePoint.some x⁻¹ := by
+  simp only [onePointInv, if_neg hx]
+
+/-- `Statement:` `onePointInv` is its own inverse. -/
+theorem onePointInv_involutive : Function.Involutive (onePointInv (K := K)) := by
+  intro s
+  induction s using OnePoint.rec with
+  | infty => simp
+  | coe x =>
+    by_cases hx : x = 0
+    · subst hx; simp
+    · rw [onePointInv_coe_ne hx, onePointInv_coe_ne (inv_ne_zero hx), inv_inv]
+
+/-- `Statement:` over a proper normed field, `onePointInv` is continuous. At `0` the image leaves
+    every compact set (`tendsto_inv₀_nhdsNE_zero`, with `Metric.cobounded_eq_cocompact`, which is where
+    `ProperSpace` is consumed); at `∞` it tends to `0` (`tendsto_inv₀_cobounded`). -/
+theorem continuous_onePointInv [ProperSpace K] : Continuous (onePointInv (K := K)) := by
+  rw [OnePoint.continuous_iff]
+  refine ⟨?_, ?_⟩
+  · -- At ∞: as x leaves every compact, x⁻¹ → 0.
+    rw [onePointInv_infty, Filter.coclosedCompact_eq_cocompact, ← Metric.cobounded_eq_cocompact]
+    have hcong : (fun x : K => (OnePoint.some x⁻¹ : OnePoint K)) =ᶠ[Bornology.cobounded K]
+        (fun x : K => onePointInv (OnePoint.some x)) := by
+      filter_upwards [Bornology.isBounded_def.mp (Bornology.isBounded_singleton (x := (0 : K)))]
+        with x hx
+      have hx0 : x ≠ 0 := by simpa using hx
+      rw [onePointInv_coe_ne hx0]
+    exact ((OnePoint.continuous_coe.tendsto _).comp tendsto_inv₀_cobounded).congr' hcong
+  · rw [continuous_iff_continuousAt]
+    intro a
+    by_cases ha : a = 0
+    · -- At 0: the image tends to ∞ on the punctured neighborhood and equals ∞ at 0.
+      subst ha
+      show Tendsto (fun x : K => onePointInv (OnePoint.some x)) (𝓝 0)
+        (𝓝 (onePointInv (OnePoint.some (0 : K))))
+      rw [onePointInv_zero]
+      have hpunct : Tendsto (fun x : K => onePointInv (OnePoint.some x)) (𝓝[≠] 0)
+          (𝓝 (∞ : OnePoint K)) := by
+        have hcong : (fun x : K => (OnePoint.some x⁻¹ : OnePoint K)) =ᶠ[𝓝[≠] 0]
+            (fun x : K => onePointInv (OnePoint.some x)) := by
+          filter_upwards [self_mem_nhdsWithin] with x hx
+          rw [onePointInv_coe_ne hx]
+        have hto : Tendsto (Inv.inv : K → K) (𝓝[≠] 0) (Filter.coclosedCompact K) := by
+          rw [Filter.coclosedCompact_eq_cocompact, ← Metric.cobounded_eq_cocompact]
+          exact tendsto_inv₀_nhdsNE_zero
+        exact (OnePoint.tendsto_coe_infty.comp hto).congr' hcong
+      have hpure : Tendsto (fun x : K => onePointInv (OnePoint.some x)) (pure (0 : K))
+          (𝓝 (∞ : OnePoint K)) := by
+        rw [Filter.tendsto_pure_left]
+        intro s hs
+        simpa using mem_of_mem_nhds hs
+      rw [← nhdsNE_sup_pure (0 : K)]
+      exact hpunct.sup hpure
+    · -- Away from 0: the map agrees with `x ↦ x⁻¹` near `a` (`continuousAt_inv₀`).
+      have hcong : (fun x : K => (OnePoint.some x⁻¹ : OnePoint K)) =ᶠ[𝓝 a]
+          (fun x : K => onePointInv (OnePoint.some x)) := by
+        filter_upwards [compl_singleton_mem_nhds ha] with x hx
+        have hx0 : x ≠ 0 := by simpa using hx
+        rw [onePointInv_coe_ne hx0]
+      exact (OnePoint.continuous_coe.continuousAt.comp (continuousAt_inv₀ ha)).congr hcong
+
+/-- `Statement:` over a proper normed field, `onePointInv` as a homeomorphism of `OnePoint K`. -/
+noncomputable def onePointInvHomeo [ProperSpace K] : OnePoint K ≃ₜ OnePoint K where
+  toFun := onePointInv
+  invFun := onePointInv
+  left_inv := onePointInv_involutive
+  right_inv := onePointInv_involutive
+  continuous_toFun := continuous_onePointInv
+  continuous_invFun := continuous_onePointInv
+
+/-- `Statement:` over a proper normed field, `onePointInvHomeo` sends `0` to `∞` and `∞` to `0`. -/
+theorem onePointInv_swaps [ProperSpace K] :
+    onePointInvHomeo (OnePoint.some (0 : K)) = ∞ ∧
+      onePointInvHomeo (∞ : OnePoint K) = OnePoint.some 0 :=
+  ⟨onePointInv_zero, onePointInv_infty⟩
+
+end General
 
 /-- The 2-adic Riemann sphere: the one-point compactification of ℚ₂. -/
 abbrev Sphere : Type := OnePoint ℚ_[2]
@@ -70,6 +175,13 @@ theorem rInv_coe_ne {x : ℚ_[2]} (hx : x ≠ 0) :
     rInv (OnePoint.some x) = OnePoint.some (x⁻¹ : ℚ_[2]) := by
   simp only [rInv, if_neg hx]
 
+/-- `Statement:` `rInv` is `onePointInv` at `K = ℚ_[2]`. -/
+theorem rInv_eq_onePointInv : rInv = (onePointInv : Sphere → Sphere) := by
+  funext s
+  induction s using OnePoint.rec with
+  | infty => rfl
+  | coe x => rfl
+
 /-- Inversion is its own inverse: `rInv (rInv s) = s`. -/
 theorem rInv_involutive : Function.Involutive rInv := by
   intro s
@@ -80,62 +192,11 @@ theorem rInv_involutive : Function.Involutive rInv := by
     · subst hx; simp [rInv]
     · rw [rInv_coe_ne hx, rInv_coe_ne (inv_ne_zero hx), inv_inv]
 
-/-- Inversion is continuous on the sphere. The affine-nonzero part is `tendsto_inv₀`; the genuine work is
-    the two special points — at `0` the image leaves every compact (`‖x⁻¹‖ → ∞`), so it tends to `∞`, and
-    symmetrically at `∞`. Uses `OnePoint.nhds_infty_eq` and `ProperSpace ℚ_[2]`. -/
+/-- Inversion is continuous on the sphere: the ℚ₂ instance of `continuous_onePointInv`
+    (`ProperSpace ℚ_[2]`), through `rInv_eq_onePointInv`. -/
 theorem continuous_rInv : Continuous rInv := by
-  rw [OnePoint.continuous_iff]
-  refine ⟨?_, ?_⟩
-  · -- Tendsto at ∞: as x leaves every compact, x⁻¹ → 0, so rInv ↑x → ↑0.
-    rw [rInv_infty, Filter.coclosedCompact_eq_cocompact,
-      ← Metric.cobounded_eq_cocompact]
-    have hcong : (fun x : ℚ_[2] => (OnePoint.some (x⁻¹) : Sphere)) =ᶠ[Bornology.cobounded ℚ_[2]]
-        (fun x : ℚ_[2] => rInv ↑x) := by
-      filter_upwards [Bornology.isBounded_def.mp (Bornology.isBounded_singleton (x := (0 : ℚ_[2])))]
-        with x hx
-      have hx0 : x ≠ 0 := by simpa using hx
-      rw [rInv_coe_ne hx0]
-    refine Filter.Tendsto.congr' hcong ?_
-    exact (OnePoint.continuous_coe.tendsto _).comp tendsto_inv₀_cobounded
-  · -- Continuity of g x = rInv ↑x everywhere.
-    rw [continuous_iff_continuousAt]
-    intro a
-    by_cases ha : a = 0
-    · -- At 0: g 0 = ∞, and g → ∞ as x → 0.
-      subst ha
-      have hval : rInv (OnePoint.some (0 : ℚ_[2])) = ∞ := rInv_zero
-      show ContinuousAt (fun x : ℚ_[2] => rInv ↑x) 0
-      rw [ContinuousAt, hval]
-      -- Tendsto (fun x => rInv ↑x) (𝓝 0) (𝓝 ∞).
-      have hpunct : Filter.Tendsto (fun x : ℚ_[2] => rInv ↑x) (𝓝[≠] 0) (𝓝 (∞ : Sphere)) := by
-        have hcong : (fun x : ℚ_[2] => (OnePoint.some (x⁻¹) : Sphere)) =ᶠ[𝓝[≠] 0]
-            (fun x : ℚ_[2] => rInv ↑x) := by
-          filter_upwards [self_mem_nhdsWithin] with x hx
-          have hx0 : x ≠ 0 := hx
-          rw [rInv_coe_ne hx0]
-        refine Filter.Tendsto.congr' hcong ?_
-        have hto : Filter.Tendsto (Inv.inv : ℚ_[2] → ℚ_[2]) (𝓝[≠] 0)
-            (Filter.coclosedCompact ℚ_[2]) := by
-          rw [Filter.coclosedCompact_eq_cocompact, ← Metric.cobounded_eq_cocompact]
-          exact tendsto_inv₀_nhdsNE_zero
-        exact OnePoint.tendsto_coe_infty.comp hto
-      -- Combine punctured nhds with the point value (= ∞).
-      have hpure : Filter.Tendsto (fun x : ℚ_[2] => rInv ↑x) (pure (0 : ℚ_[2])) (𝓝 (∞ : Sphere)) := by
-        rw [Filter.tendsto_pure_left]
-        intro s hs
-        have : rInv (OnePoint.some (0 : ℚ_[2])) = ∞ := rInv_zero
-        simpa [this] using mem_of_mem_nhds hs
-      rw [← nhdsNE_sup_pure (0 : ℚ_[2])]
-      exact Filter.Tendsto.sup hpunct hpure
-    · -- Away from 0: g = ↑(·⁻¹) near a, continuous via continuousAt_inv₀.
-      have hcong : (fun x : ℚ_[2] => (OnePoint.some (x⁻¹) : Sphere)) =ᶠ[𝓝 a]
-          (fun x : ℚ_[2] => rInv ↑x) := by
-        filter_upwards [compl_singleton_mem_nhds ha] with x hx
-        have hx0 : x ≠ 0 := by simpa using hx
-        rw [rInv_coe_ne hx0]
-      have hca : ContinuousAt (fun x : ℚ_[2] => (OnePoint.some (x⁻¹) : Sphere)) a :=
-        OnePoint.continuous_coe.continuousAt.comp (continuousAt_inv₀ ha)
-      exact hca.congr hcong
+  rw [rInv_eq_onePointInv]
+  exact continuous_onePointInv
 
 /-- The p-adic Riemann-sphere inversion as a homeomorphism (a continuous involution is its own continuous
     inverse). -/
@@ -188,6 +249,32 @@ example : mk (⊥ : Submonoid ℚ_[2]) (2, 0) ≠ wheelInf := by
   subst hs; subst hs'
   have : (1 : ℚ_[2]) * 2 = 1 * 1 := e1
   norm_num at this
+
+/-- `Statement:` inversion on `OnePoint ℝ` (`∞ ↦ 0`, `0 ↦ ∞`, `x ↦ x⁻¹` otherwise) is continuous: the
+    ℝ instance of `continuous_onePointInv`. -/
+theorem continuous_onePointInv_real : Continuous (onePointInv : OnePoint ℝ → OnePoint ℝ) :=
+  continuous_onePointInv
+
+/-- `Statement:` the homeomorphism `onePointInvHomeo` of `OnePoint ℝ` sends `0` to `∞` and `∞` to `0`:
+    the ℝ instance of `onePointInv_swaps`, beside `rInv_swaps` for ℚ₂. -/
+theorem onePointInv_swaps_real :
+    onePointInvHomeo (OnePoint.some (0 : ℝ)) = ∞ ∧
+      onePointInvHomeo (∞ : OnePoint ℝ) = OnePoint.some 0 :=
+  onePointInv_swaps
+
+-- Statement: Mathlib's field inversion on `ℝ` is not continuous at `0`, as on `ℚ_[2]` above.
+example : ¬ ContinuousAt (Inv.inv : ℝ → ℝ) 0 :=
+  fun h => NormedField.continuousAt_inv.mp h rfl
+
+-- Statement: control, inversion on `OnePoint ℚ_[2]` and on `OnePoint ℝ` is continuous
+-- (`continuous_rInv`, `continuous_onePointInv_real`; both swap `0` and `∞`: `rInv_swaps`,
+-- `onePointInv_swaps_real`), `ℚ_[2]` is totally disconnected (`padic_snaps`) and `ℝ` is not
+-- (`real_no_snap`).
+-- Reading: CARRIER — the pole exchange holds in both carriers; total disconnectedness separates them.
+example :
+    (Continuous rInv ∧ Continuous (onePointInv : OnePoint ℝ → OnePoint ℝ)) ∧
+    TotallyDisconnectedSpace ℚ_[2] ∧ ¬ TotallyDisconnectedSpace ℝ :=
+  ⟨⟨continuous_rInv, continuous_onePointInv_real⟩, padic_snaps 2, real_no_snap⟩
 
 /-! ### § V. The maps that FIX the pole-pair, and why that makes it an AXIS
 
@@ -885,6 +972,18 @@ end ZeroParadox
 /-! ## Axiom Purity Check (enable per theorem once proved) -/
 section PurityCheck
 open ZeroParadox
+-- § 0: inversion on the one-point compactification of a proper normed field, and its ℝ instances.
+#print axioms onePointInv
+#print axioms onePointInv_infty
+#print axioms onePointInv_zero
+#print axioms onePointInv_coe_ne
+#print axioms onePointInv_involutive
+#print axioms continuous_onePointInv
+#print axioms onePointInvHomeo
+#print axioms onePointInv_swaps
+#print axioms rInv_eq_onePointInv
+#print axioms continuous_onePointInv_real
+#print axioms onePointInv_swaps_real
 #print axioms rInv_involutive
 #print axioms continuous_rInv
 #print axioms rInv_swaps

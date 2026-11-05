@@ -35,10 +35,11 @@ That file's own TODO, at line 21, reads:
 > Add the extension of this equivalence to a homeomorphism in the case `K = ℝ`, where `OnePoint ℝ`
 > gets the topology of one-point compactification.
 
-So the homeomorphism extension is absent from Mathlib **even for the reals**. `continuous_rInv`,
-`rInvHomeo`, `rScaleHomeo` and `continuous_rScale` are the genuine contribution of this file. The
-real work is `continuous_rInv`'s two special points: as `x → 0` the image leaves every compact set,
-which needs `ProperSpace ℚ_[2]` and `OnePoint.nhds_infty_eq`.
+So the homeomorphism extension is absent from Mathlib **even for the reals**. `continuous_onePointInv`
+and `onePointInvHomeo` (any proper normed field, ℝ included: `continuous_onePointInv_real`), their ℚ₂
+instances `continuous_rInv` and `rInvHomeo`, and `rScaleHomeo` and `continuous_rScale` are the genuine
+contribution of this file. The real work is `continuous_onePointInv`'s two special points: as `x → 0`
+the image leaves every compact set, which needs `ProperSpace K` and `Metric.cobounded_eq_cocompact`.
 
 ## The pole stabiliser is much bigger than the scalings
 
