@@ -86,8 +86,9 @@ out.append("")
 if ok:
     out.append(
         "Lean recomputed the axioms each ledgered declaration reaches and compared them with what "
-        "the ledger declares. Every row matched, every replacement has its predecessor's exact "
-        "statement and a strictly smaller axiom set, and every theorem in scope has a row.")
+        "the ledger declares. Every row matched, every replacement's statement type is definitionally "
+        "equal to its predecessor's (kernel-checked) with a strictly smaller axiom set, and every "
+        "non-auxiliary theorem in scope has a row.")
 elif lean_rc == 0 and no_evidence and not has_sorry:
     out.append(
         "**Nothing was verified here.** Lean reported no failure, and the log carries no ledger "

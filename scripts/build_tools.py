@@ -1,8 +1,5 @@
 """
 Build ZP Tools and Methods document.
-Updated May 2026 (adversary-review pass): repo URL added to reproducibility section;
-key result box updated to acknowledge ZP-F as a non-Lean-verified layer and correct layer count.
-Updated April 2026: Lean 4 formal verification now complete for all layers.
 """
 
 import os

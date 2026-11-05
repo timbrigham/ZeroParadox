@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-Q: The Frame-Change PDF Builder
-Version 1.22 | November 2026
+Version 1.23 | November 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.22'
+VERSION = '1.23'
 FIRST_RELEASED = 'July 2026'
 
 from reportlab.graphics.shapes import Drawing, Circle, Ellipse, PolyLine, String, Polygon
@@ -61,7 +61,7 @@ def sphere_figure():
     d.add(Circle(cx, cy - R, 4, fillColor=c0, strokeColor=c0))
     # labels (Unicode direct, per the diagram standards)
     d.add(String(cx, cy + R + 8, '∞', fontName='DV', fontSize=13, fillColor=cI, textAnchor='middle'))
-    d.add(String(cx, cy - R - 14, '0 = ⊥', fontName='DV', fontSize=11, fillColor=c0, textAnchor='middle'))
+    d.add(String(cx, cy - R - 14, '0 = ⊥ (2-adic norm)', fontName='DV', fontSize=11, fillColor=c0, textAnchor='middle'))
     d.add(String(cx + R + 6, cy - 2, 'seam  ‖x‖ = 1', fontName='DV', fontSize=8.5, fillColor=cmut, textAnchor='start'))
     d.add(String(cx - 14, cy - 60, 'one way ↓', fontName='DV', fontSize=8.5, fillColor=c0, textAnchor='start'))
     d.add(String(cx - 96, cy + 2, 'z → 1/z', fontName='DV', fontSize=8.5, fillColor=cI, textAnchor='start'))
@@ -84,11 +84,11 @@ def build():
         Paragraph(version_line(FIRST_RELEASED, VERSION), S['subtitle']),
         Paragraph(
             '<i>Synthesis layer, the sequel to ZP-P. The abstract frame-flip schema is proved '
-            'sorry-free and choice-free in Lean 4 (ForkFrameChange.lean); the per-domain realizations '
+            'sorry-free and choice-free in Lean 4 (ZeroParadox/Settheory/ForkFrameChange.lean); the per-domain realizations '
             'are witnessed in their home layers (the valuation instance &#8212; the Riemann sphere '
-            '&#8212; in SnapFrameChange.lean / RiemannSphere.lean; the categorical instance in '
+            '&#8212; in ZeroParadox/Multihomed/SnapFrameChange.lean / ZeroParadox/Valuation/RiemannSphere.lean; the categorical instance in '
             'SeamFrameChange.lean). The universal cross-category identity is not a theorem &#8212; it '
-            'meets a proven wall (Cantor; Lawvere.lean). Adds no axiom; the bottom itself is never '
+            'meets a proven wall (Cantor; ZeroParadox/Category/Lawvere.lean). Adds no axiom; the bottom itself is never '
             'positively represented.</i>',
             S['note']),
         sp(10),
@@ -167,7 +167,7 @@ def build():
         'z &#8614; 1/z, the categorical op-duality, lattice complementation.'))
 
     E.append(def_box(
-        'Definition: the frame-change (ForkFrameChange.lean)',
+        'Definition: the frame-change (ZeroParadox/Settheory/ForkFrameChange.lean)',
         [
             'For a complete lattice &#945; and a monotone self-map f : &#945; &#8594; &#945;:',
             '  the two charts are lfp f (&#956;, the well-founded closure) and gfp f (&#957;, the '
@@ -246,7 +246,7 @@ def build():
         headers=['Domain', 'The two poles (charts)', 'Frame-change &#8212; witness'],
         rows_data=[
             ['Valuation',
-             '0 = &#8869;  &#8596;  &#8734;',
+             '0 = &#8869; (2-adic norm)  &#8596;  &#8734;',
              'z &#8614; 1/z (rInv) &#8212; snap_is_frameflip'],
             ['Category',
              'initial (&#956;)  &#8596;  terminal (&#957;)',
@@ -274,13 +274,13 @@ def build():
 
     E.append(body(
         'The valuation realization is the originating figure of the framework: the p-adic Riemann '
-        'sphere. Under the tower-rank encoding (P8.lean) the &#969;-tower climbing to '
+        'sphere. Under the tower-rank encoding (ZeroParadox/Ordinal/P8.lean) the &#969;-tower climbing to '
         '&#949;<sub>0</sub> has stage-encodings that converge to &#8484;<sub>[2]</sub>\'s 0 '
         '(cnf_encode_tower_tendsto_zero), least under the 2-adic norm and greatest under the 2-adic '
         'valuation &#8212; so in that chart, read by the norm, the ascent toward &#949;<sub>0</sub> '
         'resolves back onto the floor (the encodings converge to 0; &#949;<sub>0</sub> has no encoding, '
         'and &#949;<sub>0</sub> &#8800; &#8869; of Ordinal, epsilon0_ne_bot). Viewed through the inversion rInv (the one-point '
-        'compactification of &#8474;<sub>2</sub>, RiemannSphere.lean), the same encodings diverge to '
+        'compactification of &#8474;<sub>2</sub>, ZeroParadox/Valuation/RiemannSphere.lean), the same encodings diverge to '
         '&#8734;. rInv is the homeomorphism that swaps the poles 0 &#8596; &#8734;.'))
 
     E.append(sp(6))
@@ -297,7 +297,7 @@ def build():
     E.append(sp(8))
 
     E.append(result_box(
-        'Theorem: snap_is_frameflip (SnapFrameChange.lean)',
+        'Theorem: snap_is_frameflip (ZeroParadox/Multihomed/SnapFrameChange.lean)',
         [
             'The one &#969;-tower&#8217;s encodings have two limits, one per chart: they fall to the '
             'floor 0 of &#8484;<sub>[2]</sub> in the encoding chart, read by the 2-adic norm '
@@ -334,14 +334,14 @@ def build():
     E.append(sp(6))
 
     E.append(result_box(
-        'Theorem: catseam_is_frameflip (SeamFrameChange.lean)',
+        'Theorem: catseam_is_frameflip (ZeroParadox/Category/SeamFrameChange.lean)',
         [
             'The zero-object seam Z = fD_functor.obj 0 is the &#956;-bottom (initial) in one chart '
             'and the &#957;-top (terminal) in the other; the op-duality frame-change swaps the two '
             '&#8212; carrying Z&#8217;s initial-ness to a terminal-ness of Z<sup>op</sup> and its '
             'terminal-ness to an initial-ness of Z<sup>op</sup> (terminalOpOfInitial / '
             'initialOpOfTerminal). The seam is the op-self-dual zero object.',
-            'Off the zero object the coincidence fails (SeamLimColim.lean: '
+            'Off the zero object the coincidence fails (ZeroParadox/Category/SeamLimColim.lean: '
             'generic_object_empty_lim_ne_colim) &#8212; as with 0 on the sphere, the frame-change '
             'fixes only the bottom.',
             'Lean purity: [propext, Classical.choice, Quot.sound] &#8212; choice-carrying '
@@ -420,7 +420,7 @@ def build():
         'where the universal form stops, and each per-domain frame-flip remains a full theorem in its own domain.'))
 
     E.append(def_box(
-        'The wall: the categorical universal is category-relative (Lawvere.lean)',
+        'The wall: the categorical universal is category-relative (ZeroParadox/Category/Lawvere.lean)',
         [
             'Lawvere&#8217;s fixed-point theorem derives a fixed point from a point-surjection '
             '&#945; &#8594; (&#945; &#8594; &#946;). ZP asks whether each bottom is such a '
@@ -498,14 +498,14 @@ def build():
     E.append(axiom_box(
         'Axiom Purity',
         [
-            'Frame-flip schema (ForkFrameChange.lean): [propext, Quot.sound] &#8212; choice-free. The '
+            'Frame-flip schema (ZeroParadox/Settheory/ForkFrameChange.lean): [propext, Quot.sound] &#8212; choice-free. The '
             'universal needs no Axiom of Choice; the duality-swap is definitional.',
-            'Valuation instance (SnapFrameChange.lean / RiemannSphere.lean): [propext, '
+            'Valuation instance (ZeroParadox/Multihomed/SnapFrameChange.lean / ZeroParadox/Valuation/RiemannSphere.lean): [propext, '
             'Classical.choice, Quot.sound] &#8212; Classical.choice inherited from the p-adic / '
             'one-point-compactification analysis.',
-            'Categorical instance (SeamFrameChange.lean): [propext, Classical.choice, Quot.sound] '
+            'Categorical instance (ZeroParadox/Category/SeamFrameChange.lean): [propext, Classical.choice, Quot.sound] '
             '&#8212; inherited from the ModuleCat / category-theory library.',
-            'The wall (Lawvere.lean): the concrete Cantor no-witness results '
+            'The wall (ZeroParadox/Category/Lawvere.lean): the concrete Cantor no-witness results '
             '(nontrivial_lattice_no_witness, q2_no_witness) and computability_face_fixedPoint '
             '(Kleene\'s recursion theorem) carry Classical.choice; the abstract witness machinery '
             '(fixedPoint_of_witness, no_witness_of_fixedPointFree) is axiom-free.',
@@ -524,7 +524,7 @@ def build():
             'universal) | the Riemann-sphere valuation face (snap_is_frameflip) and the '
             'op-duality categorical face (catseam_is_frameflip), neither an instance of it | the '
             'categorical universal is a '
-            'proven wall (Cantor; Lawvere.lean) | the fence is the bridge | the bottom is never '
+            'proven wall (Cantor; ZeroParadox/Category/Lawvere.lean) | the fence is the bridge | the bottom is never '
             'positively represented.</i>',
             S['endnote']),
     ]

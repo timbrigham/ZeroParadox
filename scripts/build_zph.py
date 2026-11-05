@@ -1,35 +1,6 @@
 """
 Zero Paradox — ZP-H: Categorical Bridge PDF Builder
 Version 1.35 | November 2026
-v1.23: DECISION BATCH REMEDIATION ROUND 2 (Tim rulings, 2026-09-15): the T-H3 status said 'That the transition is taken remains a framework commitment, not a consequence of any of the four'; now the Snap occurring follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2), not from any of the four.
-v1.22: OCCURRENCE COMMITMENT DEFINED, T5 RESTATED, T-SNAP RESIDUE (Tim decision batch, 2026-09-14): the occurrence commitment is instantiation occurs, and that the Snap occurs follows from it together with DA-1 (closed given DP-2). The ZP-E import line, the Open Items AX-1 row (whose status cell now reads 'the snap occurs given the occurrence commitment and DA-1'), the IR-ZP and IR-2 validation rows and the AX-1 validation row replace 'stated separately, as the occurrence commitment' / 'which ZP-E's DA-1 argues for' / 'occurrence is the occurrence commitment' with that sentence. The Open Items row says 'with no Lean kernel axioms' where it said 'with no axioms' (A4 and AX-B1 are called axioms on the same pages). T-SNAP's readable name 'Binary Snap Causality' is glossed once, at its first use in T-H3: 'Causality' refers to the shape of the step, not to its occurrence.
-v1.21: AX-1 SPLIT (Tim, 2026-09-14): AX-1 bundled the SHAPE of the Snap with its OCCURRENCE. The shape half is Theorem T-SNAP; the occurrence half was never retired and is a framework commitment (tsnap_holds_but_nothing_moves). These sites said AX-1 whole was derived or no longer an axiom: the ZP-E import line, the Open Items AX-1 row ("Derived as Theorem T-SNAP ... No longer an axiom"), the IR-ZP and IR-2 validation rows, and the AX-1 validation row. Each now scopes the derivation to the shape half and names the occurrence half as a commitment. T-H3's own row, which says T-SNAP is inherited as a derived theorem, is unchanged: T-SNAP is the shape theorem. AX-1 WORDING CORRECTED (Tim, 2026-09-14): retired, split into T-SNAP (shape, proved) and the occurrence commitment (stated separately); the earlier 'occurrence half was never retired' was a paraphrase error. ROUND 2 GATES (Tim rulings: title, ZP-C label, DA-1 credit): the Open Items AX-1 row credited the shape to 'the P0 / L-RUN / TQ-IH / DA-1 chain'; DA-1 argues for occurrence, not the shape, so the row now carries Tim's sentence: the shape is proved as T-SNAP from L-RUN, TQ-IH and the bottom law with no axioms, and occurrence is the occurrence commitment, which ZP-E's DA-1 argues for.
-v1.20:CC-1 STATUS SYNC (Tim, 2026-09-13: everything in one arc). "CC-1 derived / closed / no longer a freestanding commitment" collapsed two readings: cc1_derived proves the CONDITIONAL (a state sequence starting at a Quine atom starts at bottom), and with t_exec_iff the converse holds, so the starting-point choice is RESTATED through the Quine-atom role, not forced; every ZP-A lattice carries AFAStructure trivially. Every site now keeps both halves, matching ZP-J v2.7. The AX-G2 verification note no longer places a Lean result 'within the ZF+AFA setting'. ADVERSARY ROUND 1 (FAIL-BEDROCK, D1): that note's 'It remains a stated commitment, not a freestanding one' kept the retracted reading ('freestanding' is CLAIMS.md's word for a free modelling choice, which CC-1 is); it now says the check holds given CC-1.
-v1.19: AX-B1 OVERCLAIM RETRACTED (bedrock). The closing line read "No novel axioms: AX-B1 decidable, AX-G1 and AX-G2 grounded in prior layers". AX-B1 is the framework's ONE substantive modelling commitment - discrete Boolean existence rather than a continuum of partial states - and the `decide` proof only checks the two states are distinct GIVEN the two-element type; it does not verify the commitment. The Foreword retracted this exact wording at v2.12; ZP-H was the surviving twin.
-v1.18: FORCING OVERCLAIM RETRACTED (Remark R-FORCING). F_B was said to "force an irreversible jump at 0"; Valuation/Padic.lean retracts exactly that - the 2-adic topology proves irreversibility and a clopen gap, never a first step, and no metric result could. The closing "structurally forced across all four" now reads as the SHAPE being constrained; occurrence stays a framework commitment.
-v1.16: Rendered version removed from endnote (C1 sweep — no version changelogs in rendered PDF content).
-v1.15: CC-1 framing updated — CC-1 is a derived theorem in ZP-J (cc1_derived, Lean 4),
-no longer a freestanding modelling commitment.
-v1.14: K-13 vocabulary fix — "topological isolation" → "clopen separation" throughout;
-updated DP-1 and related prose to use precise vocabulary.
-v1.13: Version number removed from Open Items Register section header.
-v1.12: Scaffolding note removed from preamble — "ZP-H cannot be written until ZP-G is internally
-closed" was a development artifact not appropriate in a public document.
-v1.11: Remark R-FORCING added between Sections V and VI — addresses the "renaming" concern;
-explains that the four domain functors each independently ground the snap through their own
-domain logic, verified sorry-free in Lean 4; structural forcing, not categorical re-description.
-v1.10: fc_functor and fd_functor added — F_C and F_D now have concrete Lean Functor terms
-(InfoDepth and HilbDimDepth appendices in ZPH.lean). OQ-G3 fully closed for all four functors.
-C-H3/C-H4 status, OQ-G3 register, and Validation table updated to reflect sorry-free status.
-v1.9: C-H3 AX-G1 no-terminal argument corrected — replaced "larger alphabets" appeal with
-Lean-verified argument: ℝ≥0 has no greatest element (t + 1 > t), categorical expression of ZP-A R1.
-v1.8: C-H1 AX-G2 verification note added — ⊥-to-0 identification depends on CC-1/DA-2.
-v1.7: T-H3 consistency note strengthened — independence of null-analog discovery foregrounded.
-v1.5: fb/fc/fd shared witness consolidated into nnreal_initial_grounding.
-v1.4: OQ-G3 register updated — fb/fc/fd share proof term nnrealZPCategory.zpIsInitial.
-v1.3: T-H3 cross-framework consistency caveat expanded.
-v1.1: AX-1 updated to T-SNAP; Import Registry updated to ZP-G v1.1; OQ-G1 closed.
-v1.0: Initial release.
 """
 
 import os
