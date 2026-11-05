@@ -1,6 +1,6 @@
 """
 Build ZP-I Illustrated Companion
-Version 1.37 | November 2026
+Version 1.38 | November 2026
 
 Standalone companion for ZP-I: Inside Zero.
 Accessibility target: 2 years of college math.
@@ -276,7 +276,7 @@ def cycle_diagram():
     return d
 
 
-VERSION = '1.37'
+VERSION = '1.38'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -588,7 +588,8 @@ def build():
         '<br/>'
         '<b>Occurrence fence.</b> T-SNAP fixes the SHAPE of each step and does not establish that '
         'any step is taken; a model in which T-SNAP holds and nothing moves is exhibited in the Lean '
-        'source. Throughout this document, "fires" narrates the framework&#8217;s occurrence commitment - before this note as well as after it. The occurrence commitment is stated in two charts, execution and slot, beside t_snap_given (ZeroParadox/Order/Snap.lean; indexed in ZeroParadox/Order/SnapCannotBe.lean &#167; II and CLAIMS.md), the slot chart through t_snap_of_fires_once and trials_fires_once (ZeroParadox/Information/CrossingTrials.lean &#167; VIII). '
+        'source. Throughout this document, "fires" narrates the framework&#8217;s occurrence commitment - before this note as well as after it. The occurrence commitment is stated in two charts, execution and slot, beside t_snap_given (ZeroParadox/Order/Snap.lean; indexed in ZeroParadox/Order/SnapCannotBe.lean &#167; II and CLAIMS.md), the slot chart as the hypothesis hw of t_snap_of_fires_once, that the tape fires at some stage, beside the theorem trials_fires_once that firing has probability one, which names no tape (ZeroParadox/Information/CrossingTrials.lean &#167; VIII).'
+        '<br/>'
         '4. <b>T-IZ</b>: the chain\'s unbounded depth forces convergence to 0. That DA-1 and T-SNAP fire '
         'again there, closing the branch, is a reading: see the Note on closure.'
         '<br/>'
