@@ -1,6 +1,6 @@
 """
 Build ZP-I Illustrated Companion
-Version 1.41 | November 2026
+Version 1.42 | November 2026
 
 Standalone companion for ZP-I: Inside Zero.
 Accessibility target: 2 years of college math.
@@ -276,7 +276,7 @@ def cycle_diagram():
     return d
 
 
-VERSION = '1.41'
+VERSION = '1.42'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -533,8 +533,9 @@ def build():
         'The framework established three ways that return to ⊥ is blocked  - three '
         '"closed doors." T-IZ uses a fourth passage that none of the three doors govern. '
         'The doors are a picture, not a theorem: they are statements about three different objects, and the '
-        'fourth passage reaches 0 in Q₂ only as a limit, so what it shows is that none of the three applies, '
-        'not that zero is re-entered.'))
+        'fourth passage reaches 0 in Q₂ only as a limit: no stage of the chain is 0, and the limit is 0, so '
+        'the chain comes back to 0 without passing through any of the three doors. Reading that 0 as filling '
+        'the bottom role is a commitment, not something the doors or the limit prove.'))
     E.append(cbody(
         '<b>Door 1  - R1 (No subtraction):</b> In the lattice, there is no subtraction. '
         'You cannot join your way back to a smaller state. The ascending chain never '
