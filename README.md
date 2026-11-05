@@ -82,7 +82,7 @@ An independent re-check is three commands: `git clone https://github.com/timbrig
 |------|----------|---------|-------|
 | [Lattice Algebra](ZP-A_Lattice_Algebra.pdf) | ZP-A | v1.37 | The lattice-algebra foundation: the bottom element ⊥ and the order it induces. |
 | [p-adic Topology](ZP-B_pAdic_Topology.pdf) | ZP-B | v1.32 | The 2-adic topology: why p = 2, and why departure from ⊥ is irreversible. |
-| [Information Theory](ZP-C_Information_Theory.pdf) | ZP-C | v1.37 | The information layer: state distributions, 1-bit cost, surprisal unbounded in depth, and the 2-adic additive valuation ⊤ at the point to which c₀, ⊥ of MachinePhase, corresponds. |
+| [Information Theory](ZP-C_Information_Theory.pdf) | ZP-C | v1.38 | The information layer: state distributions, 1-bit cost, surprisal unbounded in depth, and the 2-adic additive valuation ⊤ at the point to which c₀, ⊥ of MachinePhase, corresponds. |
 | [State Layer](ZP-D_State_Layer.pdf) | ZP-D | v1.21 | The Hilbert-space layer: the snap as an orthogonal shift between states. |
 | [Bridge Document](ZP-E_Bridge_Document.pdf) | ZP-E | v3.76 | The bridge: the snap assembled as a derived theorem across the layers. |
 | [The Counterexamples](ZP-F_The_Counterexamples.pdf) | ZP-F | v1.24 | The counterexamples: ordered fields (ℝ, ℚ), where 0 has no first step above it. |

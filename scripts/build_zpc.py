@@ -1,11 +1,11 @@
 """
-Build ZP-C: Information Theory (v1.37)
+Build ZP-C: Information Theory (v1.38)
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.37'
+VERSION = '1.38'
 FIRST_RELEASED = 'April 2026'
 
 def build():
@@ -208,7 +208,7 @@ def build():
         'Step 3 — Any execution passes through c<sub>1</sub> (L-RUN). c<sub>1</sub> &#8800; &#8869; (L-RUN conclusion).',
         'Step 4 — In (L, &#8744;, &#8869;), this non-bottom configuration state is c<sub>1</sub> = &#8869; &#8744; &#949;<sub>0</sub>. By ZP-A D2, this is the Binary Snap.',
         'Conclusion: Given Step 2, execution at P<sub>0</sub> guarantees a non-bottom configuration state (L-RUN), and that state is &#949;<sub>0</sub> in the semilattice. The derivation pathway is P<sub>0</sub> + L-RUN + TQ-IH + ZP-A D2, given Step 2. <font name="DV">&#10003;</font>',
-        'Status: CANDIDATE THEOREM — conditional on execution. Step 1 is a definition (D1) and Steps 3 and 4 are derived within ZP-C; Step 2 is the occurrence commitment (ZP-E, DA-1 insert &#167; IV), not a derived step, and DA-1 does not close it. ZP-E derives the Snap&#8217;s shape as Theorem T-SNAP; that the Snap occurs follows from the occurrence commitment together with DA-1 (closed given DP-2). The occurrence commitment is stated in two charts, execution and slot, beside t_snap_given (ZeroParadox/Order/Snap.lean; indexed in ZeroParadox/Order/SnapCannotBe.lean &#167; II and CLAIMS.md), the slot chart as the hypothesis hw of t_snap_of_fires_once, that the tape fires at some stage, beside the theorem trials_fires_once that firing has probability one, which names no tape (ZeroParadox/Information/CrossingTrials.lean &#167; VIII).',
+        'Status: CANDIDATE THEOREM — conditional on execution. Step 1 is a definition (D1) and Steps 3 and 4 are derived within ZP-C; Step 2 is the occurrence commitment (ZP-E, DA-1 insert &#167; IV), not a derived step, and DA-1 does not close it. ZP-E derives the Snap&#8217;s shape as Theorem T-SNAP; that the Snap occurs follows from the occurrence commitment together with DA-1 (closed given DP-2). The occurrence commitment is stated in two charts, execution and slot, in the header of ZeroParadox/Order/Snap.lean (indexed in ZeroParadox/Order/SnapCannotBe.lean &#167; II and CLAIMS.md), the slot chart as the hypothesis hw of t_snap_of_fires_once, that the tape fires at some stage, beside the theorem trials_fires_once that, for a firing probability p with 0 &lt; p &#8804; 1, firing at some stage has probability one, which names no tape (ZeroParadox/Information/CrossingTrials.lean &#167; VIII).',
     ]))
     E.append(sp(4))
     E.append(label_box('Remark R5 — Updated Status of AX-1', [
