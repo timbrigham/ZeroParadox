@@ -658,7 +658,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 3163,
+        "declarations": 3164,
         "files": 196
       },
       "entries": [
@@ -87589,6 +87589,45 @@
             "role": []
           },
           "reason": "die-wpb-1029: weak-pullback preservation for Part x Set (elementwise form) and, for motions, Rutten 5.1, 5.2, 5.4*, the greatest-bisimulation and equivalence clauses of 5.6, the bisimulation half of 5.7*, and 5.9*(2) (Die § XXII); Tim ruling 2026-10-29",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c13eef05-44fa-43ca-a0e4-c6bfec2fb220",
+          "new": {
+            "file": "ZeroParadox/Algebra/Wheel.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.wheelBot_addSelfOnly_unique",
+            "short": "wheelBot_addSelfOnly_unique"
+          },
+          "old": {
+            "file": "ZeroParadox/Algebra/Wheel.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.wheelBot_addSelfOnly_unique",
+            "short": "wheelBot_addSelfOnly_unique",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "PDF sweep r4 item B (2026-11-05): wheel companion's 'Under addition it is the only one' landed as a corpus theorem after wheelBot_absorbs",
           "verify": {
             "axioms": null,
             "sorry_free": true

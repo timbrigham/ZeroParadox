@@ -1,11 +1,11 @@
 """
-Build ZP-F: The Counterexamples (v1.24)
+Build ZP-F: The Counterexamples (v1.25)
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.24'
+VERSION = '1.25'
 FIRST_RELEASED = 'April 2026'
 
 def build():
@@ -179,7 +179,8 @@ def build():
         'It is the negative complement to ZP-B: where ZP-B establishes that Q&#8322; '
         'removes the topological obstruction to an irreversible step (c3_irreversible: no continuous path '
         'in Q&#8322; from a nonzero point to 0, since its 2-adic topology is totally '
-        'disconnected, t5_totallyDisconnected, with clopen balls), ZP-F establishes that in &#8477; — and any linearly ordered field — '
+        'disconnected, t5_totallyDisconnected, with clopen balls; '
+        'a case of Mathlib&#8217;s TotallyDisconnectedSpace.eq_of_continuous: in Q&#8322; no continuous path joins any two distinct points, so the step out from 0 is blocked as well), ZP-F establishes that in &#8477; — and any linearly ordered field — '
         '0 has no first step above it, AX-B1\'s form. Neither supplies the first step AX-B1 commits to, a cover of &#8869; on '
         'the state carrier, the set of states a run S moves through, ordered as in ZP-A '
         '(HasFirstStep). t_snap_given_cover assumes the run\'s first transition is a cover (hcov); '
@@ -267,7 +268,7 @@ def build():
         'is densely ordered, and in a dense order no element has a first step, 0 included '
         '(axb1_fails_everywhere_iff_dense; for 0 in any linearly ordered field, f_snap_impossible). The topological difference from Q&#8322; is that &#8477; is connected '
         '(place_topological_signature), so not totally disconnected (real_no_snap). That is not '
-        'a separate fence: for a linear order carrying its order topology, connectedness implies '
+        'a separate fence against a first step: for a linear order carrying its order topology, connectedness implies '
         'density (Mathlib denselyOrdered_of_preconnectedSpace).'))
     E.append(sp(4))
 
@@ -349,7 +350,7 @@ def build():
             'No general theorem to this effect is established here.',
             'The surreal numbers (No) are non-Archimedean and contain the limit ordinals, '
             '&#949;&#8320; among them, so they are the natural boundary test case for any '
-            'duality theorem. A first step above 0 is not the open question there: No is a '
+            'duality theorem. No is a '
             'linearly ordered field, so 0 of No has no first step above it, AX-B1&#8217;s form '
             '(ZP-L, Remark R-L.2), and No fails condition (2) at 0 as &#8477; does. '
             '(Informal &#8212; not a result of this document.)',
@@ -357,8 +358,7 @@ def build():
             'independent Lean results (density impossibility established here; &#949;&#8320; '
             'a limit ordinal, the Order.IsSuccLimit example in '
             'ZeroParadox/Order/SnapCannotBe.lean), then prove they agree on the same structural '
-            'point. The surreal case is the critical test of whether two conditions are '
-            'jointly sufficient.',
+            'point.',
         ]
     ))
     E.append(sp(4))

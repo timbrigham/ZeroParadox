@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-K: Computational Grounding of Self-Reference PDF Builder
-Version 1.35 | November 2026
+Version 1.36 | November 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.35'
+VERSION = '1.36'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -45,7 +45,8 @@ def build():
     E.append(body(
         'The central result is a three-way equivalence within this framework, in the precise sense '
         'defined by Remark R-K.0: the structural roles of ⊥ of a lattice carrying AFAStructure — '
-        'the Quine-atom role (CC-2, read in the lattice\'s AFA structure, after Aczel 1988, p. 19, '
+        'the Quine-atom role (CC-2, read in the lattice\'s AFA structure, where ⊥ fills it by the '
+        'class fields bot_self_mem and quine_unique; the set-theoretic fact is Aczel 1988, p. 19, '
         'where AFA allows at most one solution of x = {x}; see ZP-J; in Mathlib\'s ZFSet no set '
         'occupies it, zfset_quine_role_unoccupied), bottom '
         'element (order-theoretic), and join identity (algebraic) — are PROVED to coincide, while '

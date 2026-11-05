@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-H Addendum: The Snap Floor in Native Categories
-Version 1.10 | November 2026
+Version 1.11 | November 2026
 Reads after ZP-H Categorical Bridge.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.10'
+VERSION = '1.11'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard: route all bare Paragraph() text through Unicode-to-entity conversion ──
@@ -66,8 +66,8 @@ def build():
         'ZeroParadox/Order/PadicLimitCone.lean), which is terminal there and not initial '
         '(padic_bottom_not_initial). They are members of the bottom family (MC-1), and not one '
         'object, since an equation across categories is ill-typed. mc1_correspondence bundles the '
-        'two initial objects with the TopCat set equation fB_bottom_is_limit; floorConeIsLimit '
-        'sits outside it.'))
+        'two initial objects, the no-return fact fC_no_return, and the set equation in '
+        'Q<sub>2</sub> fB_bottom_is_limit; floorConeIsLimit sits outside it.'))
     E.append(body(
         'Three genuine Lean functors realize the snap chain inside the standard categories: '
         'F_B into TopCat (topological spaces), F_D into ModuleCat &#8450; (&#8450;-modules), '
@@ -76,8 +76,8 @@ def build():
         '(fD_zero_isInitial, fC_zero_isInitial); for F_B the floor {0} is the inverse limit of '
         'its ball tower in TopCat (floorConeIsLimit), the limit of the functor\'s diagram rather '
         'than an object in its image. The bundled witness is mc1_correspondence '
-        '(MC1Bridge.lean); its TopCat field is the set equation beneath that limit '
-        '(fB_bottom_is_limit).'))
+        '(MC1Bridge.lean); its F_B field is the set equation in Q<sub>2</sub> beneath '
+        'that limit (fB_bottom_is_limit).'))
     E.append(body(
         'Two honesty boundaries hold throughout. <b>The realized claim is correspondence, '
         'not identity.</b> What is proved is, category by category, the universal property '
@@ -210,7 +210,7 @@ def build():
         'finite ones, the types Fin n. Mathlib supplies this category for free, since PMF '
         'is a lawful monad; it is a Markov category in the sense of Fritz (T. Fritz, A synthetic '
         'approach to Markov kernels, conditional independence and theorems on sufficient '
-        'statistics, Adv. Math. 370 (2020) 107239, Cor. 3.2 and fn. 10).'))
+        'statistics, Adv. Math. 370 (2020) 107239, arXiv:1908.07021, Cor. 3.2 and fn. 10).'))
     E.append(result_box(
         'Functor: fC_functor : ℕ → KleisliCat PMF (InfoFunctor.lean)',
         [
@@ -244,7 +244,8 @@ def build():
         hr(),
     ]
     E.append(body(
-        'The realizations below are bundled as a single witness, mc1_correspondence; F_A (the '
+        'The fields below are bundled as a single witness, mc1_correspondence; the TopCat limit '
+        'cone floorConeIsLimit is named beside them, outside the bundle, and F_A (the '
         'join-semilattice &#8469; of the main document, where 0 is already the initial object) '
         'is not a field of it.'))
     E.append(result_box(
@@ -308,8 +309,9 @@ def build():
         'framework\'s native Mathlib category by that category\'s own universal property '
         '&#8212; the inverse limit of the ball tower in TopCat (floorConeIsLimit, outside the '
         'bundle), the initial object in ModuleCat &#8450; and in the Kleisli category of '
-        'distributions; mc1_correspondence bundles the two initial objects with the TopCat set '
-        'equation fB_bottom_is_limit. The floors are not one object, since an equation across categories is ill-typed. All results sorry-free in Lean 4 as of November '
+        'distributions; mc1_correspondence bundles the two initial objects, the no-return fact '
+        'fC_no_return, and the set equation in Q<sub>2</sub> fB_bottom_is_limit; '
+        'floorConeIsLimit sits outside it. The floors are not one object, since an equation across categories is ill-typed. All results sorry-free in Lean 4 as of November '
         '2026, footprint [propext, Classical.choice, Quot.sound].',
         S['endnote']))
 

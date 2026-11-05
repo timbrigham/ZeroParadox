@@ -1,13 +1,13 @@
 """
 Build ZP-J Wheel Illustrated Companion
-Version 1.13 | November 2026
+Version 1.14 | November 2026
 """
 
 import os
 from zp_utils import *
 from reportlab.graphics.shapes import Drawing, Line, String, Circle, Ellipse
 
-VERSION = '1.13'
+VERSION = '1.14'
 FIRST_RELEASED = 'June 2026'
 
 
@@ -252,7 +252,7 @@ def build():
         'hypothesis.) Also sorry-free and choice-free: [propext, Quot.sound].'))
     E.append(sp(4))
 
-    # ── The Porthole Connection ──────────────────────────────────────────────
+    # ── Why This Belongs ──────────────────────────────────────────────
     E.append(Paragraph('Why This Belongs in the Zero Paradox', CS['h1']))
     E.append(cbody(
         'The Zero Paradox studies one role, written in several mathematical languages at once, '
@@ -263,15 +263,15 @@ def build():
         'wheel adjoins two elements at division by zero: &#8734; = /0, which inversion exchanges '
         'with 0 (/&#8734; = 0), and the absorbing &#8869; = 0&#183;/0, distinct from &#8734; in the '
         'standard case where 0 &#8713; S. Of the two, &#8869; = 0&#183;/0 is the one that steps only '
-        'to itself under inversion; &#8734; steps to 0 (see the last section). The Zero Paradox\'s '
-        'shorthand for that exchange of 0 and &#8734; is the <i>porthole</i>.'))
+        'to itself under inversion; &#8734; steps to 0 (see the last section). That exchange of 0 and '
+        '&#8734; under inversion is winv_wheelInf (/&#8734; = 0), with &#8734; = /0 by definition.'))
     E.append(cbody(
         'One honest limitation. The wheel is built <i>on top of</i> a ring you supply - the '
         'ring structure is an input, not something derived from the Zero Paradox\'s own '
-        'axioms. Whether the defining property of the porthole can be <i>derived</i> from '
+        'axioms. Whether the valuation condition val(0) = &#8868; (the wvs_val_zero '
+        'field of WheelValuationStructure) can be <i>derived</i> from '
         'upstream ZP structure, rather than assumed, is an open question flagged in the '
-        'Lean source (the bridge typeclass WheelValuationStructure states it, but its key '
-        'condition is an assumed axiom). The wheel shows the algebraic face exists and is '
+        'Lean source. The wheel shows the algebraic face exists and is '
         'consistent; it does not claim to force it into being.'))
     E.append(sp(4))
 
@@ -284,11 +284,11 @@ def build():
         'a verified axiom footprint showing it needs no axiom of choice - placed in the '
         'context of the Zero Paradox. The takeaway: division by zero is not an error to be '
         'avoided but a defined element to be understood, &#8734; = /0, which inversion exchanges '
-        'with 0 at the porthole above. The '
+        'with 0 (winv_wheelInf). The '
         'absorbing element &#8869; = 0&#183;/0 steps only to itself under inversion '
         '(wheelBot_selfOnlyAt_winv) and absorbs every point under addition (wheelBot_absorbs), '
         'so it is one occupant of the Quine-atom role in the wheel. Under addition it is the only '
-        'one, since every point steps to it; under inversion it is not the only one: 1 '
+        'one, since every point steps to it (wheelBot_addSelfOnly_unique); under inversion it is not the only one: 1 '
         'also steps only to itself under inversion (winv_one, the inverse of 1 is 1), and in any '
         'wheel with more than one element 1 and 0&#183;/0 differ (Carlstr&#246;m, Proposition '
         '4.4). Occupants in the framework\'s other carriers fill the same role and are not one '

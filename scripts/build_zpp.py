@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-P: The Fixed-Point Fork PDF Builder
-Version 1.36 | November 2026
+Version 1.37 | November 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.36'
+VERSION = '1.37'
 FIRST_RELEASED = 'June 2026'
 
 
@@ -48,7 +48,7 @@ def build():
         'closure and the greatest is the coinductive (non-well-founded) closure; the collapse '
         'point is where the two closures meet. In the Zero Paradox that point is the diagonal '
         'fixed point, filled by &#8869; of the state semilattice in the Quine-atom role (CC-2), the '
-        'role of a point that steps to itself and to nothing else, occupied chart by chart: under a '
+        'role of a point that steps to itself and to nothing else, whose occupancy is settled chart by chart: under a '
         'self-application map that fixes &#8869; and nothing else it is the only occupant '
         '(selfApp_quine_role_iff); in Mathlib\'s ZFSet no set occupies the role '
         '(zfset_quine_role_unoccupied).'))
@@ -180,7 +180,7 @@ def build():
             ['Number systems',
              'Archimedean &#8477; vs non-Archimedean &#8474;<sub>p</sub>',
              '0: in &#8477; no first step above it (AX-B1\'s form); &#8474;<sub>2</sub> removes the '
-             'topological obstruction to an irreversible step (c3_irreversible) and supplies no first step; ZP-B / ZP-F'],
+             'topological obstruction to an irreversible step (c3_irreversible, a case of Mathlib&#8217;s TotallyDisconnectedSpace.eq_of_continuous: in &#8474;<sub>2</sub> no continuous path joins any two distinct points, so the step out from 0 is blocked as well) and supplies no first step; ZP-B / ZP-F'],
             ['Computation',
              'total (well-founded) vs partial (non-terminating)',
              'the Kleene quine / self-application; ZP-K'],

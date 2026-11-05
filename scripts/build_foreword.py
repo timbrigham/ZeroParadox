@@ -1,5 +1,5 @@
 """
-Zero Paradox — Foreword PDF Builder (v2.44, revised November 2026)
+Zero Paradox — Foreword PDF Builder (v2.45, revised November 2026)
 Follows all rules in pdf rendering standards.md:
   - All table cells are Paragraph objects
   - No unicode subscripts — use sub/super tags
@@ -9,7 +9,7 @@ Follows all rules in pdf rendering standards.md:
 import os
 from zp_utils import *
 
-VERSION = '2.44'
+VERSION = '2.45'
 FIRST_RELEASED = 'April 2026'
 
 # ── fix() and prose_check() guard on every Paragraph ──
@@ -116,7 +116,7 @@ def commitments_table():
          'is stated separately: it follows from the occurrence commitment together with DA-1 (closed given DP-2). '
          'The occurrence commitment is stated in two charts, execution and slot, in the header of '
          'ZeroParadox/Order/Snap.lean (indexed in ZeroParadox/Order/SnapCannotBe.lean &#167; II and CLAIMS.md), '
-         'the slot chart as the hypothesis hw of t_snap_of_fires_once, that the tape fires at some stage, beside the theorem trials_fires_once that, for a firing probability p with 0 &lt; p &#8804; 1, firing at some stage has probability one, which names no tape '
+         'the slot chart as the hypothesis hw of t_snap_of_fires_once, that the tape fires at some stage, beside the theorem trials_fires_once that, for independent stages each firing with probability p, 0 &lt; p &#8804; 1, firing at some stage has probability one, which names no tape '
          '(ZeroParadox/Information/CrossingTrials.lean &#167; VIII). '
          '(tsnap_holds_but_nothing_moves shows T-SNAP does not carry occurrence.)'),
         ('MC-1',  'The bottom family (not a commitment)',
@@ -267,8 +267,8 @@ def build():
             'From the single axiom that the foundational distinction is binary, together with '
             'a minimality principle, it derives that the appropriate field is Q₂, the '
             '2-adic numbers. The field Q₂ forces every ball to be clopen, which forces '
-            'total disconnectedness, which makes the transition from zero to the first state '
-            'topologically irreversible. This is proven, not assumed.',
+            'total disconnectedness, which makes a return from any nonzero point to zero '
+            'impossible along a continuous path (c3_irreversible, a case of Mathlib&#8217;s TotallyDisconnectedSpace.eq_of_continuous: in Q₂ no continuous path joins any two distinct points, so the step out from 0 is blocked as well). This is proven, not assumed.',
             S['body']),
         Paragraph(
             'The information-theoretic layer (ZP-C) works within algorithmic information '

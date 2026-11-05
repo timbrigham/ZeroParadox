@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-Q: The Frame-Change PDF Builder
-Version 1.21 | November 2026
+Version 1.22 | November 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.21'
+VERSION = '1.22'
 FIRST_RELEASED = 'July 2026'
 
 from reportlab.graphics.shapes import Drawing, Circle, Ellipse, PolyLine, String, Polygon
@@ -376,8 +376,10 @@ def build():
         [
             'Inversion does not separate &#8477; from &#8474;<sub>2</sub>. Inside each field it is '
             'discontinuous at 0. On the one-point compactification of any proper normed field it is '
-            'continuous and swaps 0 and &#8734;, a standard fact (Forster, Lectures on Riemann Surfaces, '
-            '&#167;&#167; 1&#8211;2, as cited by TauCeti, which formalizes it as OnePoint.invChart), proved '
+            'continuous and swaps 0 and &#8734;, a standard fact for the Riemann sphere (Forster, Lectures '
+            'on Riemann Surfaces, GTM 81, &#167;&#167; 1&#8211;2, as cited by TauCeti; not retrieved), which '
+            'TauCeti formalizes for proper nontrivially normed fields: OnePoint.invChart (a chart) and '
+            'OnePoint.instContinuousConstSMul (the global action). It is proved '
             'here with Mathlib alone (continuous_onePointInv, onePointInv_swaps, '
             'ZeroParadox/Valuation/RiemannSphere.lean), so for &#8477; as well as &#8474;<sub>2</sub> '
             '(continuous_onePointInv_real, onePointInv_swaps_real; for &#8474;<sub>2</sub>, the sphere '
@@ -414,7 +416,7 @@ def build():
         'domain. The instance table&#8217;s last row, the reals, carries the same pole exchange on its '
         'one-point compactification (onePointInv_swaps_real) and has no first step above 0 '
         '(f_snap_impossible), so the frame-flip does not separate &#8477; from &#8474;<sub>2</sub>; '
-        'total disconnectedness does (padic_snaps, real_no_snap). The fences are not hedging: they mark '
+        'total disconnectedness does (padic_snaps, real_no_snap). The two walls are not hedging: they mark '
         'where the universal form stops, and each per-domain frame-flip remains a full theorem in its own domain.'))
 
     E.append(def_box(

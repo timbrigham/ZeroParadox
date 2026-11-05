@@ -1,7 +1,7 @@
 """
 Build ZP-F Illustrated Companion
 Where the First Step Fails: The Real Numbers as Counterexample
-Version 1.23 | November 2026
+Version 1.24 | November 2026
 """
 
 import os, math
@@ -86,7 +86,7 @@ def comparison_table():
         ['No first step above 0 (AX-B1\'s form): density puts a smaller positive element below '
          'every candidate (f_snap_impossible: no linearly ordered field has a least positive '
          'element). T-SNAP\'s shape does not need a first step (t_snap_given)',
-         'The topological obstruction to an irreversible step is removed (c3_irreversible: no continuous path in Q&#8322; from a nonzero point to 0), and no first step at 0 is supplied (AX-B1\'s first step is a cover of &#8869; on the state carrier, a commitment)'],
+         'The topological obstruction to an irreversible step is removed (c3_irreversible: no continuous path in Q&#8322; from a nonzero point to 0; a case of Mathlib&#8217;s TotallyDisconnectedSpace.eq_of_continuous: in Q&#8322; no continuous path joins any two distinct points, so the step out from 0 is blocked as well), and no first step at 0 is supplied (AX-B1\'s first step is a cover of &#8869; on the state carrier, a commitment)'],
     ]
     data = [hdr] + [[Paragraph(fix(r[0]), CS['kr_body']),
                      Paragraph(fix(r[1]), CS['kr_body'])] for r in rows]
@@ -109,7 +109,7 @@ def comparison_table():
     return t
 
 
-VERSION = '1.23'
+VERSION = '1.24'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -157,7 +157,7 @@ def build():
               '2-adic numbers Q&#8322; stand. Density is the reason &#8477; has no first step '
               'above 0 (f_snap_impossible). The topological difference from Q&#8322; is that '
               '&#8477; is connected, so not totally disconnected (real_no_snap), while Q&#8322; is '
-              'totally disconnected (padic_snaps). That is not a separate fence: for a linear order '
+              'totally disconnected (padic_snaps). That is not a separate fence against a first step: for a linear order '
               'carrying its order topology, connectedness implies density (Mathlib '
               'denselyOrdered_of_preconnectedSpace). Q&#8322;&#8217;s topology supplies no first step: '
               'Mathlib gives Q&#8322; no order, and under the norm preorder 0 has no first step '

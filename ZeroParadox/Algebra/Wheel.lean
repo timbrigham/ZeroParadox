@@ -495,6 +495,12 @@ theorem wheelBot_absorbs {W : Type*} [Wheel W] :
   rw [hz, Wheel.wadd_comm]
   exact Wheel.wadd_zeroinv_absorb z
 
+/-- `Statement:` in every wheel, under `a → a + z` only `0·/0` steps only to itself. -/
+theorem wheelBot_addSelfOnly_unique {W : Type*} [Wheel W] (y : W)
+    (hy : (Motion.ofTotal (id : W → W) (fun _ => rfl)
+      (fun a b => ∃ z, b = Wheel.wadd a z)).SelfOnlyAt y) : y = wheelBot :=
+  (hy.2 _ (wheelBot_absorbs.2 y)).symm
+
 /-- `Statement:` on `ZPWheelElem` that step goes `0 → 1` and `1 → 0`, so under no partial order
     does it raise, and under none does it lower. -/
 theorem zpw_addStep_no_polarity (o : PartialOrder ZPWheelElem) :
@@ -810,6 +816,7 @@ section PurityCheck
 #print axioms zpw_top_val_iff_inv_is_inf
 #print axioms wheelBot_selfOnlyAt_winv
 #print axioms wheelBot_absorbs
+#print axioms wheelBot_addSelfOnly_unique
 #print axioms zpw_addStep_no_polarity
 -- § VII-b NO-GO gauge. The footprint block there asserts nothing; it is checked here.
 -- Six axiom-free, and `nondegenerate_iff_map_one` is the one that is not — read the two

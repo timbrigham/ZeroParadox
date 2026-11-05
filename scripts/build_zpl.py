@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-L: Incomputability Convergence PDF Builder
-Version 1.37 | November 2026
+Version 1.38 | November 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.37'
+VERSION = '1.38'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -284,7 +284,7 @@ def build():
             'ordinal is one of them, and &#949;&#8320;/2 lies below it. This result applies directly to No considered as a '
             'linearly ordered field. Note the scope: T-SNAP&#8217;s SHAPE does not need a first step '
             '(t_snap_given holds at a step taken in a densely ordered join-semilattice, &#8474;&#8805;0 under max, '
-            'whose &#8869; is 0, ZeroParadox/Order/Snap.lean); what an ordered '
+            'whose &#8869; is 0; ZeroParadox/Order/Snap.lean); what an ordered '
             'field lacks is AX-B1&#8217;s first step.',
             'The surreals therefore contain &#949;&#8320; as an ordinal while simultaneously '
             'satisfying the density condition that rules out a first step above 0 in their ordered '

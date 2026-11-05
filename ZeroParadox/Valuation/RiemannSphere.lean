@@ -61,8 +61,8 @@ No Mathlib analog located as of 2026-11-04, searched as follows: grep of the pin
 a homeomorphism for `K = ℝ`, is not this map); `exact?` on "a continuous self-map of `OnePoint ℝ`
 sending `0 ↦ ∞`, `∞ ↦ 0`, `x ↦ x⁻¹` otherwise" (no result); one LeanExplore query (nearest hits
 `Homeomorph.onePointCongr`, `OnePoint.continuous_map`, which fix `∞`). Algebraically `onePointInv` is
-the swap-matrix case of Mathlib's `OnePoint.instGLAction`. Prior art outside Mathlib: TauCeti (commit
-1e5cb7e8, 2026-10-23), `OnePoint.invChart`; Forster, GTM 81 §§ 1–2, as cited there, not retrieved.
+the swap-matrix case of Mathlib's `OnePoint.instGLAction`. Prior art: TauCeti's `OnePoint.invChart` (c85f4fbf,
+2026-10-03), `OnePoint.instContinuousConstSMul` (1e5cb7e8, 2026-10-23); Forster, as cited there, not retrieved.
 This section adds an elementary Mathlib-only proof; credits in `ZeroParadox/Valuation/RiemannSphere.md`. -/
 
 section General
