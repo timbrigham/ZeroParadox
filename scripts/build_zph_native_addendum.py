@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-H Addendum: The Snap Floor in Native Categories
-Version 1.9 | November 2026
+Version 1.10 | November 2026
 Reads after ZP-H Categorical Bridge.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.9'
+VERSION = '1.10'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard: route all bare Paragraph() text through Unicode-to-entity conversion ──
@@ -64,17 +64,18 @@ def build():
         'ModuleCat &#8450; (fD_zero_isInitial) and in the Kleisli category of PMF '
         '(fC_zero_isInitial); in TopCat the inverse limit of the ball tower (floorConeIsLimit, '
         'ZeroParadox/Order/PadicLimitCone.lean), which is terminal there and not initial '
-        '(padic_bottom_not_initial). They are members of the bottom family (MC-1), bundled in '
-        'mc1_correspondence, and not one object, since an equation across categories is '
-        'ill-typed.'))
+        '(padic_bottom_not_initial). They are members of the bottom family (MC-1), and not one '
+        'object, since an equation across categories is ill-typed. mc1_correspondence bundles the '
+        'two initial objects with the TopCat set equation fB_bottom_is_limit; floorConeIsLimit '
+        'sits outside it.'))
     E.append(body(
         'Three genuine Lean functors realize the snap chain inside the standard categories: '
         'F_B into TopCat (topological spaces), F_D into ModuleCat &#8450; (&#8450;-modules), '
         'and F_C into the Kleisli category of the probability monad PMF (stochastic maps). '
-        'Each is sorry-free, and each carries the snap floor to an object its category '
-        'characterizes by a universal property &#8212; the inverse limit of the ball tower in '
-        'TopCat (floorConeIsLimit), an initial object in ModuleCat &#8450; '
-        'and in the Kleisli category. The bundled witness is mc1_correspondence '
+        'Each is sorry-free. F_D and F_C send depth 0 to an initial object of their categories '
+        '(fD_zero_isInitial, fC_zero_isInitial); for F_B the floor {0} is the inverse limit of '
+        'its ball tower in TopCat (floorConeIsLimit), the limit of the functor\'s diagram rather '
+        'than an object in its image. The bundled witness is mc1_correspondence '
         '(MC1Bridge.lean); its TopCat field is the set equation beneath that limit '
         '(fB_bottom_is_limit).'))
     E.append(body(
@@ -205,9 +206,11 @@ def build():
         'distributions (ZP-C, JSD = log 2). Its native category is the Kleisli category of '
         'the probability-mass-function monad PMF: its objects are types, finite or not (PMF is '
         'defined on any type), and a morphism A &#8594; B is a stochastic map (a Markov kernel), '
-        'assigning to each a &#8712; A a probability distribution on B; only the functor\'s '
-        'image, the types Fin n, is finite. Mathlib supplies this category for free, since PMF '
-        'is a lawful monad; it is a Markov category in the sense of Fritz (2020).'))
+        'assigning to each a &#8712; A a probability distribution on B; the functor uses only '
+        'finite ones, the types Fin n. Mathlib supplies this category for free, since PMF '
+        'is a lawful monad; it is a Markov category in the sense of Fritz (T. Fritz, A synthetic '
+        'approach to Markov kernels, conditional independence and theorems on sufficient '
+        'statistics, Adv. Math. 370 (2020) 107239, Cor. 3.2 and fn. 10).'))
     E.append(result_box(
         'Functor: fC_functor : ℕ → KleisliCat PMF (InfoFunctor.lean)',
         [
@@ -241,8 +244,9 @@ def build():
         hr(),
     ]
     E.append(body(
-        'The three functors, together with F_A (the join-semilattice &#8469; of the main '
-        'document, where 0 is already the initial object), are bundled as a single witness.'))
+        'The realizations below are bundled as a single witness, mc1_correspondence; F_A (the '
+        'join-semilattice &#8469; of the main document, where 0 is already the initial object) '
+        'is not a field of it.'))
     E.append(result_box(
         'Definition: mc1_correspondence : MC1Correspondence (MC1Bridge.lean)',
         [
@@ -302,9 +306,10 @@ def build():
         'it. ZP-H locates the snap floor as the categorical bottom across four frameworks '
         'using depth-index proxy categories; this addendum realizes the floor inside each '
         'framework\'s native Mathlib category by that category\'s own universal property '
-        '&#8212; the inverse limit of the ball tower in TopCat (floorConeIsLimit), the initial '
-        'object in ModuleCat &#8450; and in the Kleisli category of distributions &#8212; '
-        'bundled in mc1_correspondence; the floors are not one object, since an equation across categories is ill-typed. All results sorry-free in Lean 4 as of June '
+        '&#8212; the inverse limit of the ball tower in TopCat (floorConeIsLimit, outside the '
+        'bundle), the initial object in ModuleCat &#8450; and in the Kleisli category of '
+        'distributions; mc1_correspondence bundles the two initial objects with the TopCat set '
+        'equation fB_bottom_is_limit. The floors are not one object, since an equation across categories is ill-typed. All results sorry-free in Lean 4 as of November '
         '2026, footprint [propext, Classical.choice, Quot.sound].',
         S['endnote']))
 

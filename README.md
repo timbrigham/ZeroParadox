@@ -88,7 +88,7 @@ An independent re-check is three commands: `git clone https://github.com/timbrig
 | [The Counterexamples](ZP-F_The_Counterexamples.pdf) | ZP-F | v1.24 | The counterexamples: ordered fields (ℝ, ℚ), where 0 has no first step above it. |
 | [Category Theory](ZP-G_Category_Theory.pdf) | ZP-G | v1.27 | The categorical layer: ⊥ as initial object, the informational singularity. |
 | [Categorical Bridge](ZP-H_Categorical_Bridge.pdf) | ZP-H | v1.33 | The categorical bridge: the snap holding under all four domain functors. |
-| [Native Categories Addendum](ZP-H_Native_Categories_Addendum.pdf) | ZP-H Native Categories Addendum | v1.9 | The snap floor realized inside each framework's native Mathlib category (TopCat, ModuleCat ℂ, KleisliCat PMF). Reads after ZP-H. |
+| [Native Categories Addendum](ZP-H_Native_Categories_Addendum.pdf) | ZP-H Native Categories Addendum | v1.10 | The snap floor realized inside each framework's native Mathlib category (TopCat, ModuleCat ℂ, KleisliCat PMF). Reads after ZP-H. |
 | [Inside Zero](ZP-I_Inside_Zero.pdf) | ZP-I | v1.37 | Inside zero: each nowhere-zero 2-adic sequence whose valuation equals a depth index in ℕ that climbs at every step converges to 0 in the 2-adics; reading that limit as an occupant of the ⊥ role, and then as a successor ⊥′, are two further commitments. |
 | [Self-Reference](ZP-J_Self_Reference.pdf) | ZP-J | v2.17 | Self-reference: ⊥ as the Quine atom, and the AFA structure it requires. |
 | [AFA Addendum](ZP-J_AFA_Addendum.pdf) | ZP-J AFA Addendum | v1.20 | Decoration uniqueness for finite graphs from the valuation structure alone. Reads after ZP-J. |
