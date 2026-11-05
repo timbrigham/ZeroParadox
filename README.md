@@ -87,7 +87,7 @@ An independent re-check is three commands: `git clone https://github.com/timbrig
 | [Bridge Document](ZP-E_Bridge_Document.pdf) | ZP-E | v3.77 | The bridge: the snap assembled as a derived theorem across the layers. |
 | [The Counterexamples](ZP-F_The_Counterexamples.pdf) | ZP-F | v1.24 | The counterexamples: ordered fields (ℝ, ℚ), where 0 has no first step above it. |
 | [Category Theory](ZP-G_Category_Theory.pdf) | ZP-G | v1.27 | The categorical layer: ⊥ as initial object, the informational singularity. |
-| [Categorical Bridge](ZP-H_Categorical_Bridge.pdf) | ZP-H | v1.32 | The categorical bridge: the snap holding under all four domain functors. |
+| [Categorical Bridge](ZP-H_Categorical_Bridge.pdf) | ZP-H | v1.33 | The categorical bridge: the snap holding under all four domain functors. |
 | [Native Categories Addendum](ZP-H_Native_Categories_Addendum.pdf) | ZP-H Native Categories Addendum | v1.9 | The snap floor realized inside each framework's native Mathlib category (TopCat, ModuleCat ℂ, KleisliCat PMF). Reads after ZP-H. |
 | [Inside Zero](ZP-I_Inside_Zero.pdf) | ZP-I | v1.36 | Inside zero: each nowhere-zero 2-adic sequence whose valuation equals a depth index in ℕ that climbs at every step converges to 0 in the 2-adics; reading that limit as an occupant of the ⊥ role, and then as a successor ⊥′, are two further commitments. |
 | [Self-Reference](ZP-J_Self_Reference.pdf) | ZP-J | v2.17 | Self-reference: ⊥ as the Quine atom, and the AFA structure it requires. |
