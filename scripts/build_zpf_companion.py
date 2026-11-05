@@ -1,7 +1,7 @@
 """
 Build ZP-F Illustrated Companion
 Where the First Step Fails: The Real Numbers as Counterexample
-Version 1.20 | November 2026
+Version 1.21 | November 2026
 """
 
 import os, math
@@ -109,7 +109,7 @@ def comparison_table():
     return t
 
 
-VERSION = '1.20'
+VERSION = '1.21'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -153,7 +153,7 @@ def build():
           Paragraph(
               'This companion document is written for general readers. It explains in plain '
               'language why, on the real number line, 0 has no first step above it, AX-B1\'s '
-              'form, although T-SNAP\'s shape, the Binary Snap, does not need one; and where the '
+              'form, and why T-SNAP\'s shape, the Binary Snap, does not need one; and where the '
               '2-adic numbers Q&#8322; stand: ZP-F excludes '
               'ordered fields, by density; ZP-B records that Q&#8322; is totally disconnected '
               '(t5_totallyDisconnected, an instance Mathlib already supplies), which removes the '
@@ -176,11 +176,12 @@ def build():
         'continuity, limits, and state transitions. This document is the answer.'))
     E.append(cbody(
         'The answer begins with a counterexample. The real number line lacks the first step '
-        'AX-B1 commits the framework\'s carrier to — not because it is wrong, but because in an '
-        'ordered field, &#8477; and &#8474; among them, 0 has no first step above it '
-        '(f_snap_impossible, which, despite its name, states that no linearly ordered field has '
-        'a least positive element). T-SNAP\'s shape does not need a first step: t_snap_given '
-        'holds at a step taken in a densely ordered join-semilattice. Understanding why '
+        'AX-B1 commits the framework\'s carrier to — not because it is wrong, but because no '
+        'ordered field, &#8477; and &#8474; among them, has a least positive element '
+        '(f_snap_impossible, which, despite its name, states exactly that), so 0 has no first '
+        'step above it. T-SNAP\'s shape does not need a first step: t_snap_given '
+        'holds at a step taken in a densely ordered join-semilattice (&#8474;&#8805;0 under max, '
+        'ZeroParadox/Order/Snap.lean). Understanding why '
         '&#8477; has no first step above 0 is the clearest path to seeing what Q&#8322; removes '
         'and what it does not supply.'))
     E.append(sp(4))
@@ -213,7 +214,8 @@ def build():
         'In the actual real numbers, the decimal expansion can always continue; '
         'the smooth curve never structurally breaks down. A first step above 0, AX-B1\'s form, '
         'needs a space where that breakdown is built in, not imposed; T-SNAP\'s shape, a join '
-        'step off &#8869; to a different state (t_snap_given), does not, and the cover is a '
+        'step off &#8869; of the state semilattice to a different state (t_snap_given), does '
+        'not, and the cover is a '
         'further hypothesis (t_snap_given_cover).'))
     E.append(sp(8))
 
@@ -269,8 +271,9 @@ def build():
         'simulation — has a smallest representable positive number — call it &#948;. '
         'Below that, there\'s nowhere to go. The density argument fails at &#948;: there is a '
         'genuine first step above 0, AX-B1\'s form, and halving it is not possible. T-SNAP\'s '
-        'shape is a join step off &#8869; to a different state (t_snap_given) and did not need '
-        'it; that the step is a cover is a further hypothesis (t_snap_given_cover). Whether a '
+        'shape is a join step off &#8869; of the state semilattice to a different state '
+        '(t_snap_given) and does not need it; that a run\'s first step is a cover is a further '
+        'hypothesis (t_snap_given_cover). Whether a '
         'step is taken is a separate question, and the framework commits to it rather than '
         'deriving it.'))
     E.append(cbody(
@@ -292,8 +295,8 @@ def build():
         'first step, so the step is not a consequence of the 2-adic structure.'))
     E.append(sp(4))
     E.append(remember_box(
-        'Every finite computational system already has a first step above 0, AX-B1\'s form, by '
-        'construction. The minimum representable positive value exists; the density '
+        'Every finite-precision number system with a positive representable value already has '
+        'a first step above 0, AX-B1\'s form: its least positive value. The minimum representable positive value exists; the density '
         'argument fails there. The real numbers are the most familiar example of a '
         'structure that removes this floor — but any dense ordered set has the same '
         'property, including the rational numbers: for any &#949;&#8320; > 0, '
@@ -307,7 +310,7 @@ def build():
     E.append(cbody(
         'The real number line is not wrong. It is internally consistent and '
         'extraordinarily useful for calculus, analysis, and modeling continuous '
-        'change. But in it 0 has no first step above it, AX-B1\'s form — not because it fails as '
+        'change. But on it, 0 has no first step above it, AX-B1\'s form — not because the line fails as '
         'a mathematical structure, but because of how it treats zero.'))
     E.append(cbody(
         'Consider a sports team. The coach and the players are not peers. The coach '
@@ -322,12 +325,11 @@ def build():
         'away from, not a state it can stably occupy or return to. In &#8477;, zero '
         'has no such character: it is a regular point of a dense line, '
         'indistinguishable in structure from 1 or &#960;, with no first step above it. '
-        'In the order, density is what disqualifies it (axb1_fails_everywhere_iff_dense); in '
-        'the topology, the line is connected (place_topological_signature), so not totally '
-        'disconnected (real_no_snap). '
-        'Being approached as a limit is '
-        'not what disqualifies it, since the 2-adic 0 is approached as a limit too '
-        '(floor_reach_separates_mu_nu).'))
+        'Density is what disqualifies it (axb1_fails_everywhere_iff_dense). The line is also '
+        'connected (place_topological_signature), so not totally disconnected (real_no_snap), '
+        'which is its topological difference from Q&#8322;; for a line carrying its order '
+        'topology, connectedness implies density (Mathlib denselyOrdered_of_preconnectedSpace), '
+        'so that is not a second reason.'))
     E.append(cbody(
         'The real number line treats zero as an ordinary point — a peer of every '
         'other element, with the same local structure as 1 or &#960;. '
@@ -429,9 +431,8 @@ def build():
         'so zero has no first step. That is a fact about the order. In fact an order is dense '
         'exactly when no element at all has a first step (axb1_fails_everywhere_iff_dense), so '
         'density rules out a first step at zero; one element lacking a first step would not '
-        'make an order dense. Zero in &#8477; is also a limit point, a fact about the metric; '
-        'so is zero in Q&#8322; (floor_reach_separates_mu_nu), so the limit point is not what '
-        'rules out a first step.'))
+        'make an order dense. Zero in &#8477; is also a limit point, a fact about the metric, '
+        'and so is zero in Q&#8322; (floor_reach_separates_mu_nu).'))
     E.append(cbody(
         'From the ordinal side: &#949;&#8320; of Ordinal has no ordinal immediately below it. There is '
         'no &#945; with &#945; + 1 = &#949;&#8320;. It is the limit of the tower '
@@ -473,13 +474,15 @@ def build():
         'ordered join-semilattice). They are densely ordered, so no element, zero included, has a first '
         'step: every candidate first step admits an infinite sequence of smaller steps below '
         'it. Zero is also a limit point there, but so is the 2-adic zero, so being a limit '
-        'point does not separate them. Two fences do. The order separates them globally, not '
+        'point does not separate them. The order separates them globally, not '
         'at zero: at zero neither has a first step, and globally &#8477; is densely ordered '
         '(axb1_fails_everywhere_iff_dense), in its norm preorder as in its field order, while the '
         'norm preorder on Q&#8322; is not; the norm-preorder facts are the &#167; ROLE examples in '
-        'ZeroParadox/BottomCannotBe.lean. The topology is the second fence: '
+        'ZeroParadox/BottomCannotBe.lean. In the topology '
         '&#8477; is connected (place_topological_signature), so not totally disconnected '
-        '(real_no_snap), and Q&#8322; is totally disconnected (t5_totallyDisconnected).'))
+        '(real_no_snap), and Q&#8322; is totally disconnected (t5_totallyDisconnected). That is '
+        'not a second fence: for a linear order carrying its order topology, connectedness '
+        'implies density (Mathlib denselyOrdered_of_preconnectedSpace).'))
     E.append(cbody(
         'Q&#8322; is not an exotic choice. Among all completions of the rationals, '
         'Ostrowski\'s theorem says there are exactly two kinds: Archimedean ones '
