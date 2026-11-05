@@ -1,13 +1,13 @@
 """
 Build ZP-J Wheel Illustrated Companion
-Version 1.14 | November 2026
+Version 1.15 | November 2026
 """
 
 import os
 from zp_utils import *
 from reportlab.graphics.shapes import Drawing, Line, String, Circle, Ellipse
 
-VERSION = '1.14'
+VERSION = '1.15'
 FIRST_RELEASED = 'June 2026'
 
 
@@ -221,7 +221,7 @@ def build():
         'Carlstr&#246;m\'s Definition 1.1 (checked in Lean as 14 separate equational '
         'fields). It is a wheel, with no exceptions and no extra hypotheses.'))
     E.append(key_result_box(
-        'WheelFrac.instWheel  (machine-verified, Lean 4)',
+        'ZeroParadox.instWheel  (machine-verified, Lean 4)',
         'For every commutative ring A and every multiplicative submonoid S, the wheel of '
         'fractions &#8857;<sub>S</sub> A is a wheel - it satisfies all of Carlstr&#246;m\'s '
         'axioms. The proof is sorry-free and free of the axiom of choice: its only '
@@ -245,7 +245,7 @@ def build():
         'single element is Carlstr&#246;m\'s own observation (printed p. 5), not a result of '
         'this corpus.'))
     E.append(key_result_box(
-        'WheelFrac.inf_ne_bot  (machine-verified, Lean 4)',
+        'ZeroParadox.inf_ne_bot  (machine-verified, Lean 4)',
         'If 0 &#8713; S, then &#8734; &#8800; &#8869; in &#8857;<sub>S</sub> A. The '
         'construction is therefore a non-trivial wheel. (If &#8734; and &#8869; were equal, '
         'the witnessing elements of S would force 0 itself into S, contradicting the '
@@ -268,10 +268,11 @@ def build():
     E.append(cbody(
         'One honest limitation. The wheel is built <i>on top of</i> a ring you supply - the '
         'ring structure is an input, not something derived from the Zero Paradox\'s own '
-        'axioms. Whether the valuation condition val(0) = &#8868; (the wvs_val_zero '
-        'field of WheelValuationStructure) can be <i>derived</i> from '
-        'upstream ZP structure, rather than assumed, is an open question flagged in the '
-        'Lean source. The wheel shows the algebraic face exists and is '
+        'axioms. The valuation condition val(0) = &#8868; (the wvs_val_zero field of '
+        'WheelValuationStructure) is assumed, motivated and not forced, as the Lean source '
+        'says (ZeroParadox/Algebra/Wheel.lean &#167;VIII). Given that the valuation turns '
+        'products into sums, the condition holds exactly when the valuation is not zero '
+        'everywhere (the examples closing &#167;VII-b there). The wheel shows the algebraic face exists and is '
         'consistent; it does not claim to force it into being.'))
     E.append(sp(4))
 

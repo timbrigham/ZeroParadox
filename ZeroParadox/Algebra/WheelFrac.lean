@@ -13,7 +13,7 @@ A ZP-J wheel sub-file. See the Engineer's Take in `ZeroParadox/Algebra/Wheel.lea
 
 ## Formal Overview
 `⊙_S A = (A × A) / ≡_S`, giving `/0 = ∞` and `0·/0 = ⊥` with `∞ ≠ ⊥` — the wheel, not the meadow,
-matching the ZP porthole. **Status: complete**, `sorry`-free, every `Wheel` axiom; `instWheel` and
+with the infinite element /0 and the absorbing element 0·/0 kept apart. **Status: complete**, `sorry`-free, every `Wheel` axiom; `instWheel` and
 `inf_ne_bot` are `Classical.choice`-free (`[propext, Quot.sound]`). Construction and argument: `ZeroParadox/Algebra/WheelFrac.md`.
 -/
 
@@ -141,8 +141,8 @@ instance instWheel : Wheel (WheelFrac S) where
     induction x using Quotient.inductionOn with
     | _ a => apply Quotient.sound; refine ⟨1, S.one_mem, 1, S.one_mem, ?_, ?_⟩ <;> ring
 
-/-- Porthole: in `⊙_S A`, the infinity element `/0` and the bottom `0·/0` are distinct — the wheel
-    (not meadow) behaviour, matching the ZP porthole `∞ ≠ ⊥`. -/
+/-- In `⊙_S A`, the infinity element `/0` and the absorbing element `0·/0` are distinct — the wheel
+    (not meadow) behaviour, `∞ ≠ ⊥ₗ`. -/
 theorem inf_ne_bot (h0 : (0 : A) ∉ S) : wheelInf (W := WheelFrac S) ≠ wheelBot := by
   intro h
   obtain ⟨s, hs, s', hs', e1, _⟩ := Quotient.exact h

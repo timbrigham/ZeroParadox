@@ -1,6 +1,6 @@
 """
 Build ZP-K Illustrated Companion
-Version 1.31 | November 2026
+Version 1.32 | November 2026
 """
 
 import os
@@ -109,7 +109,7 @@ def four_way_table():
     t = Table(data, colWidths=[TW*0.22, TW*0.30, TW*0.48])
     t.setStyle(ts); return t
 
-VERSION = '1.31'
+VERSION = '1.32'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -292,8 +292,12 @@ def build():
         'content is the uniqueness rather than the membership, and the same statement has a proof '
         'from machinePhaseAFA alone (the example after da1_closed_concrete in Kleene.lean).'))
     E.append(cbody(
-        '<b>Path 2 (Informational — L-INF):</b> The surprisal of ⊥ is unbounded — no finite '
-        'interpreter can hold it as a stored description. '
+        '<b>Path 2 (Informational — L-INF):</b> Surprisal at ⊥ of MachinePhase has two charts. In the '
+        'depth chart every depth n of the binary ball hierarchy has finite surprisal n and no finite '
+        'bound holds of all of them (l_inf); in the point chart the complexity at the floor 0 of Q₂ '
+        'is ⊤ (infinitude_forces_infinite_complexity). Both, and why no equation joins them: '
+        'ZeroParadox/Information/Surprisal.lean, l_inf. Reading: no finite interpreter can hold ⊥ '
+        'as a stored description. '
         '<b>Remains outside Lean scope:</b> the step from "unbounded surprisal" to "executing" '
         'is a bridge principle of its own, which the framework does not adopt, and it is not the '
         'occurrence commitment.'))
@@ -352,7 +356,8 @@ def build():
     E.append(Paragraph('A Note on Proof Purity', CS['h1']))
     E.append(cbody(
         'The statements of Kleene\'s theorem and of Rogers\' fixed-point theorem, as Mathlib '
-        'states them, already carry Classical.choice (measured 2026-10-04), so every proof of '
+        'states them, already carry Classical.choice (where it enters is recorded in '
+        'ZeroParadox/Computability/Kleene.md § VIII), so every proof of '
         'them as stated carries it too: the STATEMENT-CARRIED class of '
         'ZeroParadox/Category/ChoiceCannotBe.md. That footprint is inherited from Mathlib rather '
         'than a Zero Paradox commitment. Kleene\'s theorem restated with the transformation given '

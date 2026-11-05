@@ -17,8 +17,8 @@ Carlström, source-verified: `⊙_S A = (A × A) / ≡_S`, where
 
 with `0 = [0,1]`, `1 = [1,1]`, `[x,y] + [x',y'] = [x·y' + x'·y, y·y']`, `[x,y]·[x',y'] = [x·x', y·y']`,
 and `/[x,y] = [y,x]`. Then `/0 = [1,0] = ∞`, `0·/0 = [0,0] = ⊥`, with `∞ ≠ ⊥` (the wheel, not the
-meadow) — matching the ZP porthole (the shorthand defined in
-`ZeroParadox/Algebra/Wheel.lean`'s Formal Overview).
+meadow): the 0/∞ exchange and the absorbing element, the objects `ZeroParadox/Algebra/Wheel.lean`'s
+Formal Overview names.
 
 **Status: complete.** Fully `sorry`-free: `≡_S` is an equivalence, the five operations are well-defined
 on the quotient, every axiom of the ZP `Wheel` typeclass holds (a faithful encoding of Carlström's
@@ -137,16 +137,19 @@ deals — the forward leg (identifying `∞` with `⊥` forces triviality) and t
 `/0 = 0` forces triviality), each with controls showing the hypotheses are load-bearing on `ZPWheelElem`.
 
 ⚠ **Not a claim that a meadow is a collapsed wheel.** A wheel with `/0 = 0` is trivial (the reverse-leg
-`example` in `ZeroParadox/Algebra/Wheel.lean` § V, Carlström's Prop. 4.4), so a meadow with more than
-one element is never one; the one-element carrier is both, and that § V states the overlap. The shared
+`example` in `ZeroParadox/Algebra/Wheel.lean` § V, Carlström's Prop. 4.4), so an involutive meadow
+(`0⁻¹ = 0`) with more than one element is never one; the one-element carrier is both, and § V states
+that overlap. The shared
 object is
 the `InvolutiveFork` abstraction, which both instantiate with opposite verdicts. Bergstra and Ponse
 (1406.6878, § 4 "Concluding Remarks", printed p. 14) write that *"we have not yet found a structural connection"* between wheels and **common** meadows — their
 own first-person hedge, not a settled negative. Common meadows are non-involutive, with `0⁻¹` a
-separate error element, so they are a different pair from the involutive meadow (`0⁻¹ = 0`,
+separate error element (in Bergstra and Ponse's fracpairs over a reduced commutative ring every `x/0` is equivalent to
+`0/0`: arXiv:1411.4410, Prop. 2.1.2, printed p. 4, so `/0` and `0·/0` are one element there, where the
+wheel keeps them apart), so they are a different pair from the involutive meadow (`0⁻¹ = 0`,
 BHT 0901.0823) this paragraph is built on. Common meadows are not the only non-involutive kind:
 Bergstra & Middelburg (arXiv:1406.2092, p. 2) study "one-based non-involutive meadows", where the
-inverse of zero is one, an element already present, so involutivity alone does not single out common
+inverse of zero is one, an element already present, so being non-involutive alone does not single out common
 meadows. Nothing here supplies a connection on either pair.
 
 ## Unstated adjacency — involution declarations not wired up as of 2026-09-25

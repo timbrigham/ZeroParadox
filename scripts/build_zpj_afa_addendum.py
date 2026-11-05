@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-J AFA Addendum: Decoration Uniqueness from Valuation Structure
-Version 1.20 | November 2026
+Version 1.21 | November 2026
 Reads after ZP-J Self-Reference.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.20'
+VERSION = '1.21'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -267,7 +267,9 @@ def build():
             '',
             # ⚠⚠ `Reachable` is NOT LOCATED in APG.lean as of 2026-10-09 (searched by identifier),
             #   and the only resolution located for that name is `SimpleGraph.Reachable`, which is
-            #   SYMMETRIC. That is
+            #   SYMMETRIC (searched 2026-11-05 for a def/abbrev/inductive/structure/class named
+            #   `Reachable` over the pinned Mathlib source and `ZeroParadox/**/*.lean`: that one
+            #   hit, `Mathlib/Combinatorics/SimpleGraph/Connectivity/Connected.lean`). That is
             #   not a naming nit: § IV.2's induction terminates ONLY because reachability here runs
             #   ONE WAY. From an acyclic v to a child w, v is not reachable back from w, so
             #   Reach(w) is a STRICT subset of Reach(v) and |Reach| decreases. Under a symmetric
@@ -568,7 +570,9 @@ def build():
             'claim. (a) THE CLASSES: the numeral `1` in val_scale needs Mathlib&#8217;s '
             'AddMonoidWithOne &#8469;&#8734; instance, choice-tainted at the INSTANCE '
             'level, so ValuationStructure carries the axiom as a bare typeclass before any '
-            'theorem; DecorationUniverse&#8217;s own `+ 1` in collect_val_ge reaches the same '
+            'theorem, and every statement that binds it is STATEMENT-CARRIED (the bins of '
+            'ZeroParadox/Category/ChoiceCannotBe.md classify statements, not classes; the '
+            'statement control is the ZeroParadox/Settheory/APG.lean record below); DecorationUniverse&#8217;s own `+ 1` in collect_val_ge reaches the same '
             'instance. (b) A DIRECT CALL: decoration_unique&#8217;s proof takes an edge out '
             'of a Nonempty via hw.some, and Nonempty.some IS Classical.choice &#8212; not '
             'inherited through packaging, invoked. (c) CARDINALITY: the termination measure '

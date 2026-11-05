@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-K: Computational Grounding of Self-Reference PDF Builder
-Version 1.36 | November 2026
+Version 1.37 | November 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.36'
+VERSION = '1.37'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -166,7 +166,8 @@ def build():
             'infinitely many self-printing codes exist, and no behaviour belongs to two of them. '
             'Contrast padding, where infinitely many codes share one behaviour.',
             'Lean: ZeroParadox.selfprints_behaviour_injective. Purity: propext, Classical.choice, '
-            'Quot.sound (measured 2026-10-04); the predicate SelfPrints itself carries the same three.',
+            'Quot.sound (#print axioms in the PurityCheck section of '
+            'ZeroParadox/Computability/Kleene.lean); the predicate SelfPrints itself carries the same three.',
         ]
     ))
     E.append(sp(6))
@@ -460,20 +461,20 @@ def build():
         'PurityCheck sections; those of kleene_cf and selfref_universal_exists_enc are in the '
         'PurityCheck sections of ZeroParadox/Computability/KleeneChoiceFree.lean and '
         'ZeroParadox/Computability/UniversalChoiceFree.lean. Where Classical.choice enters selfref_universal_exists is recorded in '
-        'ZeroParadox/Computability/Kleene.md § VIII, measured 2026-10-04.'))
+        'ZeroParadox/Computability/Kleene.md § VIII.'))
     E.append(body(
         'ZP-J T-EXEC and all its corollaries remain axiom-free. Classical.choice is not '
         'confined to the computability rows: in Disjunctive.lean, champ_disjunctive carries it, '
         'reached through disjunctive_iff_once, while the at-least-once form '
-        'champ_disjunctiveOnce measures propext and Quot.sound only (measured 2026-10-04; '
-        'ZeroParadox/Information/Disjunctive.md, Footprints).'))
+        'champ_disjunctiveOnce measures propext and Quot.sound only (#print axioms in the '
+        'PurityCheck section of ZeroParadox/Information/Disjunctive.lean).'))
 
     E.append(remark_box(
         'Remark: Classical Choice in Computability',
         [
             'Kleene\'s theorem as Mathlib states it, ∀ f, Partrec₂ f → ∃ c, eval c = f c, carries '
             'Classical.choice in its statement: that statement, measured as a proposition, reports '
-            'propext, Classical.choice and Quot.sound (2026-10-04), and so does the statement of '
+            'propext, Classical.choice and Quot.sound, and so does the statement of '
             'Rogers\' theorem, ∀ f, Computable f → ∃ c, eval (f c) = eval c. So every proof of '
             'either, as stated, carries the triple. Where it enters each statement is recorded in '
             'ZeroParadox/Computability/Kleene.md § VIII. A restatement of Kleene\'s form whose '
@@ -695,7 +696,8 @@ def build():
             'in this corpus (a scope decision, recorded at the ZPSurprisal entry of '
             'LEAN_CUSTOM_REGISTRY.md, which also names Lean developments outside Mathlib that define it).',
             'Lean: ZeroParadox.selfPrints_universal_address. '
-            'Purity: propext, Classical.choice, Quot.sound (measured 2026-10-04).',
+            'Purity: propext, Classical.choice, Quot.sound (#print axioms in the PurityCheck section '
+            'of ZeroParadox/Computability/Kleene.lean).',
         ]
     ))
     E.append(sp(6))
@@ -813,42 +815,42 @@ def build():
          'structural closure by typeclass design — see R-K.0)'],
         ['fixed_points_infinite, padding',
          'fixed_point₂_unbounded (Kleene.lean § VIII)',
-         'propext, Classical.choice, Quot.sound (measured 2026-10-04)',
+         'propext, Classical.choice, Quot.sound (#print axioms, ZeroParadox/Computability/Kleene.lean)',
          'Lean ✓ — infinitely many fixed points for every partially computable F; the Padding Lemma'],
         ['selfref_universal_exists, selfref_universal_infinite',
          'fixed_point₂ (Mathlib) + selfPrintOrDelegate_partrec; fixed_points_infinite',
-         'propext, Classical.choice, Quot.sound (measured 2026-10-04), carried by the statement; '
+         'propext, Classical.choice, Quot.sound (#print axioms, ZeroParadox/Computability/Kleene.lean), carried by the statement; '
          'restated form proved without choice, selfref_universal_exists_enc (ZeroParadox/Computability/Kleene.md § VIII)',
          'Lean ✓ — existence of self-printing universal codes; nothing says a code is run'],
         ['selfprints_behaviour_injective',
          'SelfPrints at channel 0 + Encodable.encode_injective',
-         'propext, Classical.choice, Quot.sound (measured 2026-10-04)',
+         'propext, Classical.choice, Quot.sound (#print axioms, ZeroParadox/Computability/Kleene.lean)',
          'Lean ✓ — Reading: a uniqueness at the level of behaviour'],
         ['selfPrints_universal_address',
          'SelfPrints + Universal + Encodable.encode_injective',
-         'propext, Classical.choice, Quot.sound (measured 2026-10-04)',
+         'propext, Classical.choice, Quot.sound (#print axioms, ZeroParadox/Computability/Kleene.lean)',
          'Lean ✓ — Reading: replicas share everything but the address'],
         ['code_occurs_of_disjunctive',
          'Disjunctive (Disjunctive.lean § I) at each code word',
-         'propext, Classical.choice, Quot.sound (measured 2026-10-04)',
+         'propext, Classical.choice, Quot.sound (#print axioms, ZeroParadox/Information/Disjunctive.lean)',
          'Lean ✓ — presence, Sense A; no code is read or run'],
         ['champ_disjunctive, champ_disjunctiveOnce, champ_primrec',
          'tri / untri slot layout + bitAt_ofBits; disjunctive_iff_once; Mathlib Primrec',
          'champ_disjunctive: propext, Classical.choice, Quot.sound; champ_disjunctiveOnce: '
-         'propext, Quot.sound; champ_primrec: propext, Classical.choice, Quot.sound (measured '
-         '2026-10-04)',
+         'propext, Quot.sound; champ_primrec: propext, Classical.choice, Quot.sound '
+         '(#print axioms, ZeroParadox/Information/Disjunctive.lean)',
          'Lean ✓ — disjunctive without randomness'],
         ['fairTape_disjunctive_ae',
          'second Borel–Cantelli (measure_limsup_eq_one) on disjoint aligned blocks',
-         'propext, Classical.choice, Quot.sound (measured 2026-10-04)',
+         'propext, Classical.choice, Quot.sound (#print axioms, ZeroParadox/Information/Disjunctive.lean)',
          'Lean ✓ — almost every fair-coin tape is disjunctive'],
         ['disjunctive_not_periodic',
          'not_disjunctive_of_periodic (Disjunctive.lean § V)',
-         'propext, Classical.choice, Quot.sound (measured 2026-10-04)',
+         'propext, Classical.choice, Quot.sound (#print axioms, ZeroParadox/Information/Disjunctive.lean)',
          'Lean ✓ — no full self-copy at any offset a > 0'],
         ['carry_steps_onward_forever_yet_shows_nothing',
          'stutter_obs_const + carry_stutters (Occurrence.lean § VI-c)',
-         'propext, Classical.choice, Quot.sound (measured 2026-10-04)',
+         'propext, Classical.choice, Quot.sound (#print axioms, ZeroParadox/Computability/Occurrence.lean)',
          'Lean ✓ — steps onward forever with a constant observable'],
         ['Reading: zero tape (Section VI.V)',
          'BottomCannotBe.lean, "The infinitude in two charts: content and self"',
