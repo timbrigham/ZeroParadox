@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-L: Incomputability Convergence PDF Builder
-Version 1.35 | November 2026
+Version 1.36 | November 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.35'
+VERSION = '1.36'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -278,9 +278,10 @@ def build():
             '&#8477; also holds in No, and vice versa.',
             'ZP-F (The Counterexamples) proves that in any linearly ordered field 0 has no first step '
             'above it, AX-B1&#8217;s form (f_snap_impossible, which, despite its name, states that no '
-            'linearly ordered field has a least positive element). Its &#949;&#8320; is any positive '
-            'element of the field, a candidate first step above the field&#8217;s 0, and not the '
-            'ordinal &#949;&#8320; of this section. This result applies directly to No considered as a '
+            'linearly ordered field has a least positive element). Its &#949;&#8320; is a bound variable '
+            'over the positive elements of the field, each a candidate first step above the '
+            'field&#8217;s 0, and does not name the ordinal &#949;&#8320; of this section; in No that '
+            'ordinal is one of them, and &#949;&#8320;/2 lies below it. This result applies directly to No considered as a '
             'linearly ordered field. Note the scope: T-SNAP&#8217;s SHAPE does not need a first step '
             '(t_snap_given holds at a step taken in a densely ordered join-semilattice); what an ordered '
             'field lacks is AX-B1&#8217;s first step.',
@@ -305,8 +306,8 @@ def build():
             'density condition that rules out a first step above 0 in &#8477; (proved in ZP-F) '
             'therefore holds in *&#8477; as well.',
             'The non-standard naturals *&#8469; contain infinite elements, but every '
-            'infinite H &#8712; *&#8469; has a predecessor H&#8722;1 in *&#8469;. '
-            '&#949;&#8320; is a limit ordinal: it has no predecessor and is the supremum '
+            'infinite H &#8712; *&#8469; has a predecessor H&#8722;1 in *&#8469;, so none of '
+            'them is limit-like. &#949;&#8320;, by contrast, is a limit ordinal: it has no predecessor and is the supremum '
             'of the tower below it.',
             'The monad of 0 in *&#8477; &#8212; the external set {&#949; : |&#949;| < 1/n '
             'for all standard n} &#8212; is external to the ultrapower. Between any two '
