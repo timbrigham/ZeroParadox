@@ -9,7 +9,7 @@ Follows all rules in pdf rendering standards.md:
 import os
 from zp_utils import *
 
-VERSION = '2.42'
+VERSION = '2.43'
 FIRST_RELEASED = 'April 2026'
 
 # ── fix() and prose_check() guard on every Paragraph ──
@@ -521,9 +521,9 @@ def build():
     ]
 
     story.append(box(
-        'Zero, the bottom element ⊥ of the state semilattice, remains indescribable by smooth calculus. It becomes fully '
-        'characterised by discrete calculus. The paradox is the precise boundary between '
-        'these two regimes.'
+        'In a densely ordered field such as ℝ, the field&#8217;s 0 has no first step above it '
+        '(f_snap_impossible). In a discrete carrier it does: in the two-state carrier MachinePhase, '
+        'c₁ is a first step above c₀, the ⊥ of MachinePhase (t_snap_derived_cover).'
     ))
     story.append(sp(6))
 
