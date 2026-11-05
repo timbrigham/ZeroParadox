@@ -16,7 +16,7 @@ Update this file first on any version bump. README.md Framework table is verifie
 | ZP-I Inside Zero | v1.35 | ZP-I_Inside_Zero.pdf | v1.37 | N/— | formal:a79d3040 comp:1d74038d |
 | ZP-J Self-Reference | v2.17 | ZP-J_Self_Reference.pdf | v1.39 | N/— | formal:d486cc53 comp:eef178ec |
 | ZP-J AFA Addendum | v1.20 | ZP-J_AFA_Addendum.pdf | N/A | N/— | formal:8327eacf |
-| ZP-J Wheel Addendum | v1.10 | ZP-J_Wheel_Addendum.pdf | v1.10 | N/— | formal:3b8c71b6 comp:9a5a9a4c |
+| ZP-J Wheel Addendum | v1.10 | ZP-J_Wheel_Addendum.pdf | v1.11 | N/— | formal:3b8c71b6 comp:6c76f746 |
 | ZP-J Keystone Addendum | v1.29 | ZP-J_Keystone_Addendum.pdf | N/A | N/— | formal:cc3cbdc0 |
 | ZP-K Computational Grounding | v1.34 | ZP-K_Computational_Grounding.pdf | v1.29 | N/— | formal:ef9248f5 comp:07429be8 |
 | ZP-L Incomputability Convergence | v1.35 | ZP-L_Incomputability_Convergence.pdf | v1.22 | N/— | formal:3ff8fb19 comp:66d5f4ec |

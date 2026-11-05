@@ -1,13 +1,13 @@
 """
 Build ZP-J Wheel Illustrated Companion
-Version 1.10 | November 2026
+Version 1.11 | November 2026
 """
 
 import os
 from zp_utils import *
 from reportlab.graphics.shapes import Drawing, Line, String, Circle, Ellipse
 
-VERSION = '1.10'
+VERSION = '1.11'
 FIRST_RELEASED = 'June 2026'
 
 
@@ -143,8 +143,11 @@ def build():
         'absorbing "undefined" element: combine it with anything and you get &#8869; back. '
         'It is the wheel\'s honest answer to a genuinely meaningless expression - instead of '
         'crashing, the arithmetic returns a dedicated value that means "no information." '
-        '(The wheel writes this element &#8869;, the same symbol the Zero Paradox uses for '
-        'its bottom element - see the last section for why that is not a coincidence.)'))
+        '(The wheel writes this element &#8869;. Carlstr&#246;m (p. 3) traces the pair to Edalat '
+        'and Potts, who adjoined 1/0 and 0/0 to the reals, obtaining what domain theory calls the '
+        '"lifting" of the real projective line, where the added element is a bottom. The Zero '
+        'Paradox uses the same symbol for the bottoms of its own carriers; the last section says '
+        'what the wheel\'s element shares with them and what it does not.)'))
     E.append(sp(4))
     E.append(example_box('Real-world analogy  - The calculator that never crashes', [
         'A pocket calculator shows "Error" when you divide by zero, and then you have to '
@@ -254,7 +257,7 @@ def build():
         'The Zero Paradox studies one role, written in several mathematical languages at once, '
         'each with its own occupant and no equation across them: in the 2-adic valuation the '
         'occupant is 0, where v&#8322;(0) = &#8734;; in non-well-founded set theory it is the Quine '
-        'atom (CC-2), a set x = {x}; in a lattice under a self-application map it is the bottom element &#8869;. The wheel of '
+        'atom (CC-2), a set x = {x} (Aczel 1988, Example 1.3); in a lattice under a self-application map it is &#8869; of the lattice. The wheel of '
         'fractions is the <b>algebraic</b> face of that role. Where ZP-J says "the bottom is where measure runs to infinity," the '
         'wheel says "the bottom is where division by zero lives" - and it shows that this '
         'point is a defined, well-behaved element (&#8734; = /0), distinct - in the standard '
@@ -278,10 +281,14 @@ def build():
         'not new mathematics. What the Zero Paradox adds is a faithful, machine-checked '
         'encoding - readable field by field against Carlstr&#246;m\'s Definition 1.1, with '
         'a verified axiom footprint showing it needs no axiom of choice - placed in the '
-        'context of the bottom element &#8869;. The takeaway: division by zero is not an '
-        'error to be avoided but a defined element to be understood, and that element, '
-        '&#8869; = 0&#183;/0, fills the bottom role in the wheel: a member of the bottom family '
-        '(MC-1), whose members in the framework\'s other carriers fill the same role and are not one '
+        'context of the Zero Paradox. The takeaway: division by zero is not an error to be '
+        'avoided but a defined element to be understood, &#8734; = /0, the porthole above. The '
+        'absorbing element &#8869; = 0&#183;/0 steps only to itself under inversion '
+        '(wheelBot_selfOnlyAt_winv) and absorbs every point under addition (wheelBot_absorbs), '
+        'so it is one occupant of the Quine-atom role in the wheel. It is not the only one: 1 '
+        'also steps only to itself under inversion (winv_one, the inverse of 1 is 1), and in any '
+        'wheel with more than one element 1 and 0&#183;/0 differ (Carlstr&#246;m, Proposition '
+        '4.4). Occupants in the framework\'s other carriers fill the same role and are not one '
         'object with it, since an equation across carriers is ill-typed.'))
     E.append(sp(6))
 
