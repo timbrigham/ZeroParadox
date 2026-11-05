@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-P: The Fixed-Point Fork PDF Builder
-Version 1.35 | November 2026
+Version 1.36 | November 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.35'
+VERSION = '1.36'
 FIRST_RELEASED = 'June 2026'
 
 
@@ -180,7 +180,7 @@ def build():
             ['Number systems',
              'Archimedean &#8477; vs non-Archimedean &#8474;<sub>p</sub>',
              '0: in &#8477; no first step above it (AX-B1\'s form); &#8474;<sub>2</sub> removes the '
-             'topological obstruction and supplies no first step; ZP-B / ZP-F'],
+             'topological obstruction to an irreversible step (c3_irreversible) and supplies no first step; ZP-B / ZP-F'],
             ['Computation',
              'total (well-founded) vs partial (non-terminating)',
              'the Kleene quine / self-application; ZP-K'],
@@ -201,12 +201,14 @@ def build():
         '(f_snap_impossible, which, despite its name, states that no linearly ordered field has a '
         'least positive element). In the 2-adic completion &#8474;<sub>2</sub>, 0 is the unique '
         'fixed point of x &#8614; 2x (q2_unique_fp) and the only point of infinite valuation '
-        '(v<sub>2</sub>(0) = &#8734;); &#8474;<sub>2</sub> is totally disconnected (padic_snaps, an instance Mathlib already supplies), '
-        'which removes the topological obstruction and supplies no first step: under the norm '
+        '(v<sub>2</sub>(0) = &#8734;, padic_addVal_eq_top_iff); &#8474;<sub>2</sub> is totally disconnected (padic_snaps, an instance Mathlib already supplies), '
+        'which removes the topological obstruction to an irreversible step (c3_irreversible: no continuous '
+        'path in &#8474;<sub>2</sub> from a nonzero point to 0) and supplies no first step: under the norm '
         'preorder 0 is least and has no first step (ZeroParadox/BottomCannotBe.lean &#167; ROLE), '
         'and on &#8484;<sub>2</sub>, the 2-adic integers, 0 is least in the norm preorder and '
         'greatest in the valuation order (z2_two_views). T-SNAP\'s shape needs no first step: '
-        't_snap_given holds at a step taken in a densely ordered join-semilattice.'))
+        't_snap_given holds at a step taken in a densely ordered join-semilattice (&#8474;&#8805;0 under '
+        'max, whose &#8869; is 0; ZeroParadox/Order/Snap.lean).'))
 
     E.append(result_box(
         'Theorem: completions_exhaustive (Ostrowski.lean)',
