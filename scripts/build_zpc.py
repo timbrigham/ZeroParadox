@@ -1,11 +1,11 @@
 """
-Build ZP-C: Information Theory (v1.35)
+Build ZP-C: Information Theory (v1.36)
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.35'
+VERSION = '1.36'
 FIRST_RELEASED = 'April 2026'
 
 def build():
@@ -204,16 +204,16 @@ def build():
     E.append(label_box('Candidate Theorem T-BUF — Execution at P₀ Forces a Non-Bottom State', [
         'Statement: At the incompressibility threshold P<sub>0</sub>, the Binary Snap &#8869; &#8594; &#949;<sub>0</sub> is a structural consequence of execution, not an external trigger.',
         'Step 1 — P<sub>0</sub> identifies the configuration x at which K(x|n) &#8805; n = |x|: the configuration string is incompressible, and, since K(x|n) &#8804; |x| + c for every x, K(x|n)/n is 1 up to an additive constant in K (bounds and sources: ZP-E, T-SNAP Step 1). (D1)',
-        'Step 2 — The configuration at P<sub>0</sub> is executing: it is a running machine&#8217;s current configuration (Sense B, ZP-E, DA-1 insert &#167; II), not an inert string. This step is not derived: it is the occurrence commitment (instantiation occurs), and T-BUF is conditional on it. Arguments for it, none deriving it: the 2-adic surprisal argument in its two charts (depth chart, L-INF: surprisal unbounded in the depth n with each value finite, l_inf; point chart: the 2-adic additive valuation &#8868; at 0 of Q<sub>2</sub>, the point to which c<sub>0</sub> corresponds, padic_addVal_bot; R-BRIDGE), and the step from unbounded surprisal to executing is a bridge principle of its own, which the framework does not adopt (ZP-E, DA-1 Path 2); it is incompressible (D1), which rules out a shorter external generator and not an inert string (ZP-E, DA-1 Path 3). DA-1 (ZP-E, DA-1 insert &#167; IV, closed given DP-2) consumes this step and does not supply it. In ZP-A&#8217;s order, given CC-1, its first-step form is the hypothesis hocc of t_snap_given (ZP-E, Premises of T-SNAP).',
+        'Step 2 — The configuration at P<sub>0</sub> is executing: it is a running machine&#8217;s current configuration (Sense B, ZP-E, DA-1 insert &#167; II), not an inert string. This step is not derived: it is the occurrence commitment, and T-BUF is conditional on it. Arguments for it, none deriving it: the 2-adic surprisal argument in its two charts (depth chart, L-INF: surprisal unbounded in the depth n with each value finite, l_inf; point chart: the 2-adic additive valuation &#8868; at 0 of Q<sub>2</sub>, the point to which c<sub>0</sub> corresponds, padic_addVal_bot; R-BRIDGE), and the step from unbounded surprisal to executing is a bridge principle of its own, which the framework does not adopt (ZP-E, DA-1 Path 2); it is incompressible (D1), which rules out a shorter external generator and not an inert string (ZP-E, DA-1 Path 3). DA-1 (ZP-E, DA-1 insert &#167; IV, closed given DP-2) consumes this step and does not supply it. In ZP-A&#8217;s order, given CC-1, its first-step form is the hypothesis hocc of t_snap_given (ZP-E, Premises of T-SNAP).',
         'Step 3 — Any execution passes through c<sub>1</sub> (L-RUN). c<sub>1</sub> &#8800; &#8869; (L-RUN conclusion).',
         'Step 4 — In (L, &#8744;, &#8869;), this non-bottom configuration state is c<sub>1</sub> = &#8869; &#8744; &#949;<sub>0</sub>. By ZP-A D2, this is the Binary Snap.',
         'Conclusion: Given Step 2, execution at P<sub>0</sub> guarantees a non-bottom configuration state (L-RUN), and that state is &#949;<sub>0</sub> in the semilattice. The derivation pathway is P<sub>0</sub> + L-RUN + TQ-IH + ZP-A D2, given Step 2. <font name="DV">&#10003;</font>',
-        'Status: CANDIDATE THEOREM — conditional on execution. Step 1 is a definition (D1) and Steps 3 and 4 are derived within ZP-C; Step 2 is the occurrence commitment (ZP-E, DA-1 insert &#167; IV), not a derived step, and DA-1 does not close it. ZP-E derives the Snap&#8217;s shape as Theorem T-SNAP; that the Snap occurs follows from the occurrence commitment together with DA-1 (closed given DP-2).',
+        'Status: CANDIDATE THEOREM — conditional on execution. Step 1 is a definition (D1) and Steps 3 and 4 are derived within ZP-C; Step 2 is the occurrence commitment (ZP-E, DA-1 insert &#167; IV), not a derived step, and DA-1 does not close it. ZP-E derives the Snap&#8217;s shape as Theorem T-SNAP; that the Snap occurs follows from the occurrence commitment together with DA-1 (closed given DP-2). The occurrence commitment is stated in two charts, execution and slot, beside t_snap_given (ZeroParadox/Order/Snap.lean; indexed in ZeroParadox/Order/SnapCannotBe.lean &#167; II and CLAIMS.md), the slot chart through t_snap_of_fires_once and trials_fires_once (ZeroParadox/Information/CrossingTrials.lean &#167; VIII).',
     ]))
     E.append(sp(4))
     E.append(label_box('Remark R5 — Updated Status of AX-1', [
         'AX-1 (Binary Snap Causality) was previously labeled Axiomatic in ZP-C.',
-        'AX-1 was a Candidate Theorem in ZP-C; it is now retired: its shape is proved as T-SNAP (ZP-E), and that the Snap occurs is stated separately: it follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2). The derivation pathway ZP-C gave it: P<sub>0</sub> (D1) identifies the threshold. L-RUN establishes that execution at the threshold constitutes a state change off &#8869;. TQ-IH, read with D7, establishes that no executing program avoids this. ZP-A D2 establishes that a state change off &#8869; is the Binary Snap.',
+        'AX-1 was a Candidate Theorem in ZP-C; it is now retired: its shape is proved as T-SNAP (ZP-E), and that the Snap occurs is stated separately: it follows from the occurrence commitment together with DA-1 (closed given DP-2). The derivation pathway ZP-C gave it: P<sub>0</sub> (D1) identifies the threshold. L-RUN establishes that execution at the threshold constitutes a state change off &#8869;. TQ-IH, read with D7, establishes that no executing program avoids this. ZP-A D2 establishes that a state change off &#8869; is the Binary Snap.',
         'That a configuration at P<sub>0</sub> is an execution event (a running machine&#8217;s current configuration, not an inert string) is the occurrence commitment, DA-1&#8217;s precondition. DA-1 (ZP-E, a Derived Proposition closed given DP-2) consumes it and does not supply it: given it, c<sub>0</sub> &#8594; c<sub>1</sub> is D7&#8217;s. Both bear on whether the Snap occurs, not on its shape.',
         'Status label: RETIRED in the ZP-E DA-1 insert, as stated above. AX-1 was a Candidate Theorem in ZP-C, with its gap identified: T-BUF Step 2, which is the occurrence commitment.',
     ]))

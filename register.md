@@ -7,7 +7,7 @@ Update this file first on any version bump. README.md Framework table is verifie
 | ZP-A Lattice Algebra | v1.37 | ZP-A_Lattice_Algebra.pdf | v1.20 | N/— | formal:8ac90a09 comp:0fd529fc |
 | ZP-B p-Adic Topology | v1.32 | ZP-B_pAdic_Topology.pdf | v1.21 | N/— | formal:5ccc5dd3 comp:4d3ce35e |
 | ZP-F The Counterexamples | v1.21 | ZP-F_The_Counterexamples.pdf | v1.20 | N/— | formal:b12427f0 comp:976a2e6e |
-| ZP-C Information Theory | v1.35 | ZP-C_Information_Theory.pdf | v2.14 | N/— | formal:0de1df70 comp:10cbc861 |
+| ZP-C Information Theory | v1.36 | ZP-C_Information_Theory.pdf | v2.14 | N/— | formal:9f305750 comp:10cbc861 |
 | ZP-D State Layer | v1.21 | ZP-D_State_Layer.pdf | v1.18 | N/— | formal:af01d656 comp:6be72c57 |
 | ZP-E Bridge Document | v3.74 | ZP-E_Bridge_Document.pdf | v1.35 | Y/Y | formal:8a5a14b3 comp:2b548845 |
 | ZP-G Category Theory | v1.27 | ZP-G_Category_Theory.pdf | v1.16 | N/— | formal:e901301e comp:668a9008 |
