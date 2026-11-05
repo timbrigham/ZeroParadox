@@ -1,5 +1,5 @@
 """
-Build ZP-A Illustrated Companion (v1.20)
+Build ZP-A Illustrated Companion (v1.21)
 Covers: join-semilattice, partial order, Hasse diagram, one-directional transitions,
 monotonicity (T3), bottom-as-constituent (T2), four concrete examples, and CC-2.
 """
@@ -89,7 +89,7 @@ def transition_diagram():
                  fontName='DV-B', fillColor=RED))
     return d
 
-VERSION = '1.20'
+VERSION = '1.21'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -231,14 +231,14 @@ def build():
     E.append(sp(4))
     E.append(remember_box(
         'Note: [0, &#8734;) with maximum is a valid join-semilattice, and &#8477; '
-        'works perfectly well as an algebraic structure here. But in &#8477; 0 has no first step '
-        'above it, AX-B1&#8217;s form — for any positive &#949;, the element '
-        '&#949;/2 is always smaller, so no minimal first step can exist. T-SNAP&#8217;s shape, the '
-        'Binary Snap, does not need one: t_snap_given holds at a step taken in a densely ordered '
-        'join-semilattice. This is the '
-        'subject of ZP-F (The Counterexamples), which proves that no linearly ordered field '
+        'works perfectly well as an algebraic structure here. But in &#8477;, 0 has no first step '
+        'above it, AX-B1&#8217;s form: for any positive &#949;, the element '
+        '&#949;/2 is always smaller, so no minimal first step can exist. That no first step exists '
+        'is the subject of ZP-F (The Counterexamples), which proves that no linearly ordered field '
         'has a least positive element (f_snap_impossible); what obstructs a first step is density '
-        '(axb1_fails_everywhere_iff_dense). Among the completions of &#8474;, Q&#8322;&#8217;s topology removes '
+        '(axb1_fails_everywhere_iff_dense). T-SNAP&#8217;s shape, the Binary Snap, does not need '
+        'one: t_snap_given holds at a step taken in a densely ordered join-semilattice (the '
+        '&#8474;&#8805;0 example, ZeroParadox/Order/Snap.lean). Among the completions of &#8474;, Q&#8322;&#8217;s topology removes '
         'a separate, topological obstruction, connectedness (padic_snaps: Q&#8322; is totally '
         'disconnected), but supplies no first step: Mathlib gives Q&#8322; no order, and under '
         'the norm preorder 0 has no first step there either (ZeroParadox/BottomCannotBe.lean). The first '
