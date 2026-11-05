@@ -1,6 +1,6 @@
 """
 Build ZP-K Illustrated Companion
-Version 1.29 | November 2026
+Version 1.30 | November 2026
 """
 
 import os
@@ -109,7 +109,7 @@ def four_way_table():
     t = Table(data, colWidths=[TW*0.22, TW*0.30, TW*0.48])
     t.setStyle(ts); return t
 
-VERSION = '1.29'
+VERSION = '1.30'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -235,16 +235,20 @@ def build():
     E.append(Paragraph('The Three-Way Equivalence (T-COMP with da2_bottom_characterization), and What Computation Adds', CS['h1']))
     E.append(cbody(
         'ZP-K\'s central theorem, T-COMP (Computational Grounding), with da2_bottom_characterization, proves that THREE of the '
-        'four descriptions below are equivalent - the Quine-atom role, order, and algebra all '
+        'four descriptions below are equivalent - the Quine-atom predicate (AFA), order, and algebra all '
         'identify the same element of the lattice. The fourth, the computational one, is not a clause of the '
         'theorem: it is supplied as an assumption when the structure is built. The framework '
         'holds to that distinction:'))
     E.append(four_way_diagram())
     E.append(ccaption(
         '⊥ of the lattice at the center, described in three formal languages; the fourth node, the '
-        'computational one, is a code (botCode), compared with ⊥ through the Quine-atom role and not '
-        'one object with it, since an equation between a code and a lattice element is ill-typed. '
-        'The arrows among the first three are proved equivalences. The computational description is joined to '
+        'computational one, is a condition on a code (botCode), supplied by assumption and not one '
+        'object with ⊥: for a generic lattice L an equation between a code and ⊥ of L is '
+        'ill-typed (for L the type of codes itself it typechecks, ZeroParadox/Computability/'
+        'ComputationCannotBe.lean § IV), and no theorem states one. In the code chart the '
+        'Quine-atom role is filled by a class of codes up to equal output, not by one code: under '
+        'the evaluation step no single code occupies it (evalStepMotion_not_selfOnlyAt), and a '
+        'class does (codes_vs_classes). The arrows among the first three are proved equivalences. The computational description is joined to '
         'them by assumption, not by proof.'))
     E.append(sp(4))
     E.append(four_way_table())
@@ -277,8 +281,9 @@ def build():
     E.append(cbody(
         '<b>Path 1 (Structural — AFA):</b> Nothing external to ⊥ can execute ⊥, so if ⊥ '
         'executes at all, it executes itself. That rules out an outside executor; it does not rule '
-        'out an inert ⊥. ZP-J proved axiom-free that ⊥ is the unique self-containing element (the structural fixed point). '
-        'Read in ZF+AFA, the Quine-atom role is filled by a set x with x = {x}; in Mathlib\'s ZFSet it '
+        'out an inert ⊥. ZP-J proved axiom-free that ⊥ of a lattice carrying AFAStructure is its unique self-containing element (the structural fixed point). '
+        'Read in ZF+AFA, the Quine-atom role is filled by a set x with x = {x} (Aczel 1988, '
+        'Example 1.3); in Mathlib\'s ZFSet it '
         'is unoccupied (zfset_quine_role_unoccupied). No equation across the lattice and a set '
         'chart is stated. '
         '<b>What Lean witnesses via ZP-K:</b> Path 1\'s Lean counterpart is da1_closed_concrete, which proves '
@@ -503,7 +508,7 @@ def build():
     E.append(key_result_box(
         'Key Result — ZP-K',
         'T-COMP: IsQuineAtom(q) ↔ q = &#8869; ∧ (∀ x, q &#8744; x = x). '
-        'THREE characterisations are proved equivalent - the Quine-atom role (AFA), order, and algebra '
+        'THREE characterisations are proved equivalent - the Quine-atom predicate (AFA), order, and algebra '
         '(the last two by da2_bottom_characterization). '
         'The computational face is NOT a fourth clause of this theorem: it enters as an assumption, '
         'the KleeneStructure field botCode_is_quine. '
