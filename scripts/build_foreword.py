@@ -1,5 +1,5 @@
 """
-Zero Paradox — Foreword PDF Builder (v2.41, revised November 2026)
+Zero Paradox — Foreword PDF Builder (v2.42, revised November 2026)
 Follows all rules in pdf rendering standards.md:
   - All table cells are Paragraph objects
   - No unicode subscripts — use sub/super tags
@@ -9,7 +9,7 @@ Follows all rules in pdf rendering standards.md:
 import os
 from zp_utils import *
 
-VERSION = '2.41'
+VERSION = '2.42'
 FIRST_RELEASED = 'April 2026'
 
 # ── fix() and prose_check() guard on every Paragraph ──
@@ -116,7 +116,7 @@ def commitments_table():
          'is stated separately: it follows from the occurrence commitment together with DA-1 (closed given DP-2). '
          'The occurrence commitment is stated in two charts, execution and slot, beside t_snap_given '
          '(ZeroParadox/Order/Snap.lean; indexed in ZeroParadox/Order/SnapCannotBe.lean &#167; II and CLAIMS.md), '
-         'the slot chart through t_snap_of_fires_once and trials_fires_once '
+         'the slot chart as the hypothesis hw of t_snap_of_fires_once, that the tape fires at some stage, beside the theorem trials_fires_once that firing has probability one, which names no tape '
          '(ZeroParadox/Information/CrossingTrials.lean &#167; VIII). '
          '(tsnap_holds_but_nothing_moves shows T-SNAP does not carry occurrence.)'),
         ('MC-1',  'The bottom family (not a commitment)',
@@ -324,9 +324,9 @@ def build():
             'in an ordered field, ℝ and ℚ among them, 0 has no first step above it, AX-B1&#8217;s form '
             '(f_snap_impossible, which, despite its name, states that no linearly ordered field has a '
             'least positive element). T-SNAP&#8217;s shape does not need a first step: t_snap_given '
-            'holds at a step taken in a densely ordered join-semilattice. The proof is self-contained — '
+            'holds at a step taken in a densely ordered join-semilattice. ZP-F&#8217;s proof is self-contained — '
             'no dependencies on the other layers. Q₂ does not restore the step: it is totally '
-            'disconnected (padic_snaps), which removes the topological obstruction and supplies no first '
+            'disconnected (padic_snaps, an instance Mathlib already supplies), which removes the topological obstruction and supplies no first '
             'step, since under the norm preorder its 0 is least and has no first step '
             '(ZeroParadox/BottomCannotBe.lean &#167; ROLE).',
             S['body']),
@@ -507,7 +507,8 @@ def build():
             'at all (t_snap_derived, ZeroParadox/Order/Snap.lean; the general form, which takes the '
             'start at ⊥ and the occurrence at the first step as hypotheses, is t_snap_given). '
             'Density rules out a first step, AX-B1&#8217;s form: an order is dense exactly when no element has '
-            'one (axb1_fails_everywhere_iff_dense, ZeroParadox/Reals/OrderedField.lean). In MachinePhase, c₁ is a first step '
+            'one (axb1_fails_everywhere_iff_dense, ZeroParadox/Reals/OrderedField.lean, the corpus restatement of '
+            'Mathlib&#8217;s denselyOrdered_iff_forall_not_covBy). In MachinePhase, c₁ is a first step '
             'above c₀ (t_snap_derived_cover, ZeroParadox/Order/Snap.lean); in an ordered field, ℝ and ℚ among '
             'them, no first step above 0 exists (f_snap_impossible, which, despite its name, states that no '
             'linearly ordered field has a least positive element); one element without a first step does not '
