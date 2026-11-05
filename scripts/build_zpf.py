@@ -1,11 +1,11 @@
 """
-Build ZP-F: The Counterexamples (v1.21)
+Build ZP-F: The Counterexamples (v1.22)
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.21'
+VERSION = '1.22'
 FIRST_RELEASED = 'April 2026'
 
 def build():
@@ -44,7 +44,7 @@ def build():
         'The blocking mechanism is elementary: in any such field, for any positive '
         'element &#949;, the element &#949;/2 exists, is positive, and is strictly '
         'smaller. There is no least positive element, so 0 has no first step above it, '
-        'AX-B1\'s form, in any linearly ordered field. That the step is a cover is a hypothesis '
+        'AX-B1\'s form, in any linearly ordered field. That a run\'s first step is a cover is a hypothesis '
         'beyond T-SNAP\'s shape (t_snap_given_cover), and the shape itself (t_snap_given) does '
         'not need it.'))
     E.append(body(
@@ -111,10 +111,11 @@ def build():
     E.append(label_box('Theorem F-SNAP-IMPOSSIBLE', [
         '&#172;&#8707; &#949;&#8320; : F,  0 < &#949;&#8320;  &#8743;  &#172;&#8707; &#948; : F,  0 < &#948;  &#8743;  &#948; < &#949;&#8320;',
         'F-SNAP-IMPOSSIBLE (f_snap_impossible): no linearly ordered field has a least positive '
-        'element, so 0 has no first step above it (AX-B1\'s form). The handle keeps its name; '
+        'element, so 0 has no first step above it (AX-B1\'s form). '
         'T-SNAP\'s shape does not need a first step (t_snap_given holds at a step taken in a '
-        'densely ordered join-semilattice).',
-        'A first step is a minimal first departure from 0 with nothing below it. '
+        'densely ordered join-semilattice, &#8474;&#8805;0 under max, ZeroParadox/Order/Snap.lean).',
+        'A first step is a minimal first departure from 0, with nothing strictly between it and 0 '
+        '(a cover, HasFirstStep). '
         'F-SNAP-BLOCKED shows such a step never exists in a linearly ordered field.',
         'Proof: Direct from F-SNAP-BLOCKED. Status: DERIVED. &#10003;',
     ]))
@@ -172,7 +173,7 @@ def build():
     E.append(body(
         'ZP-F is self-contained and does not feed formally into any other layer. '
         'It is the negative complement to ZP-B: where ZP-B establishes that Q&#8322; '
-        'removes the topological obstruction to the snap (its 2-adic topology is totally '
+        'removes the topological obstruction (its 2-adic topology is totally '
         'disconnected, t5_totallyDisconnected, with clopen balls), ZP-F establishes that in &#8477; — and any linearly ordered field — '
         '0 has no first step above it, AX-B1\'s form. Neither supplies the first step AX-B1 commits to, a cover of &#8869; on '
         'the state carrier, the set of states a run S moves through, ordered as in ZP-A '
@@ -216,18 +217,19 @@ def build():
         '&#8477;: ruling out &#8477; and every Archimedean completion leaves the p-adic fields, and '
         'T0, under MP-1, then selects Q&#8322; among them.'))
     E.append(body(
-        'The structural difference can be stated directly. It has two fences, the order and the '
-        'topology, and the order separates &#8477; from Q&#8322; globally, not at zero. '
+        'The structural difference can be stated directly. It has an order side and a topological '
+        'side, and the order separates &#8477; from Q&#8322; globally, not at zero. '
         'AX-B1 commits the point the snap leaves to having a first step: an element directly above '
         'it with nothing strictly between, a cover (HasFirstStep). A cover of a least '
         'element is what order theory calls an atom (Mathlib bot_covBy_iff). An ordered field has no '
         'bottom element; its 0, which plays that role here, has no first step '
         '(axb1_fails_in_ordered_field). That is one instance of a stronger fact: an order is '
         'dense if and only if no element at all has a first step '
-        '(axb1_fails_everywhere_iff_dense). The equivalence quantifies over every element, so '
+        '(axb1_fails_everywhere_iff_dense, the corpus restatement of Mathlib\'s '
+        'denselyOrdered_iff_forall_not_covBy). The equivalence quantifies over every element, so '
         'density rules out a first step at 0, and one element without a first step does not '
         'make an order dense. In the metric chart zero is a limit point of the nonzero elements, '
-        'in &#8477; and equally in Q&#8322;; so being a limit point does not decide whether 0 has a first step. '
+        'in &#8477; and equally in Q&#8322;. '
         'Q&#8322;\'s zero is a floor of the limit kind: the doubling orbit of a nonzero element '
         'converges to 0 and does not reach it in finite time, while counting down in &#8469; '
         'reaches 0 in finitely many steps (floor_reach_separates_mu_nu). In the valuation chart '
@@ -256,10 +258,12 @@ def build():
         'MachinePhase example in ZeroParadox/Order/Snap.lean stating that c&#8321; covers its '
         '&#8869;). In neither ordering of Q&#8322; does its 0 have a first step: in the norm '
         'preorder it has none, and in the valuation order nothing lies above it. '
-        'The first step is not missing in &#8477; by accident. In the order it is missing because &#8477; '
-        'is densely ordered, and in a dense order no element has a first step, 0 included; in '
-        'the topology &#8477; is connected (place_topological_signature), so not totally '
-        'disconnected (real_no_snap), a second and separate fence.'))
+        'The first step is not missing in &#8477; by accident. It is missing because &#8477; '
+        'is densely ordered, and in a dense order no element has a first step, 0 included '
+        '(f_snap_impossible). The topological difference from Q&#8322; is that &#8477; is connected '
+        '(place_topological_signature), so not totally disconnected (real_no_snap). That is not '
+        'a separate fence: for a linear order carrying its order topology, connectedness implies '
+        'density (Mathlib denselyOrdered_of_preconnectedSpace).'))
     E.append(sp(4))
 
     E.append(remark_box(
@@ -299,7 +303,7 @@ def build():
             'at every element (axb1_fails_everywhere_iff_dense). Their 0 also lacks an immediate '
             'predecessor, for the same reason, and without (2) that does not help. '
             'In the non-standard naturals *&#8469; with '
-            'the order topology, every element has an immediate predecessor, so there is '
+            'the order topology, every nonzero element has an immediate predecessor, so there is '
             'no limit point at infinity in the order-topology sense; condition (1) fails '
             'informally. (This *&#8469; observation is informal &#8212; not a proved result '
             'of this document or ZP-L.)',
