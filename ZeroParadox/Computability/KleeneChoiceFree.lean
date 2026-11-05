@@ -447,11 +447,10 @@ def stmtPartrecHyp : Prop := ∀ f : ℕ →. ℕ, Partrec f → True
 /-- `Statement:` CONTROL: a unary `Partrec` hypothesis at the pair carrier `ℕ × ℕ →. ℕ`, as a `Prop`. -/
 def stmtPartrecProdHyp : Prop := ∀ f : ℕ × ℕ →. ℕ, Partrec f → True
 
--- Statement: `stmtPartrec₂Hyp` carries `Classical.choice`, with no `Code` in it, and `stmtPartrecHyp`
--- measures `[propext, Quot.sound]` (`PurityCheck`): the choice enters with the pair, through
--- `Primcodable.prod`, before any recursion theorem is stated.
--- Statement: `stmtPartrecProdHyp` carries `Classical.choice` too (`PurityCheck`), so the choice comes
--- with the pair instance `Primcodable.prod`, not with having two arguments.
+-- Statement: `stmtPartrec₂Hyp` and `stmtPartrecProdHyp` carry `Classical.choice`, with no `Code` in
+-- either, and `stmtPartrecHyp` measures `[propext, Quot.sound]` (`PurityCheck`): the choice enters
+-- with the pair instance `Primcodable.prod`, before any recursion theorem is stated, and the unary
+-- `stmtPartrecProdHyp` shows it comes with that instance, not with having two arguments.
 
 -- Statement: each `cf_` lemma of § I and § II named after a Mathlib constant has exactly its type.
 example : type_of% @Nat.unpair_pair := @cf_unpair_pair
@@ -492,7 +491,8 @@ example : type_of% @Nat.Partrec.Code.eval_prec_succ := @cf_eval_prec_succ
 -- data); the counterpart of `diag_closure_spec`, which evaluates the code `e_f` returns, needs a
 -- universal code and is not built here. It builds no `NamingSystem` instance, and adds the measurement
 -- on `Code`, where the choice sits in the statements' packaging (`Partrec₂`, `Denumerable Code`) and in
--- the proofs of the arithmetic lemmas above, not in the construction.
+-- the proofs of Mathlib's arithmetic lemmas named above (their `cf_` re-proofs are clean), not in the
+-- construction.
 -- Statement: a universal code is built in `ZeroParadox/Computability/UniversalChoiceFree.lean`
 -- (`universal_code_cf`), which imports this file.
 -- Reading: whether selecting a code by its behaviour needs choice was not attempted as of 2026-10-22.

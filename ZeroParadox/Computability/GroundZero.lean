@@ -81,8 +81,8 @@ theorem notEL_dest {x : Cofix natPF_NatListRegime.Obj} (h : ¬ EventuallyLeaf x)
     is a Lean `=` within one type rather than a reading across types.
 
     **Prior art:** Escardó's `not-finite-is-∞'` (TypeTopology), proved there from function
-    extensionality alone; Rutten, TCS 249 (2000) §12 pp. 51–52 for the same bisimulation on the
-    same carrier. Also `Miniature.lean`'s `enat_fp_iff` in the `WithTop ℕ` presentation. Cited,
+    extensionality alone; Rutten, TCS 249 (2000), supplies the carrier and the bisimulation
+    technique (§12 pp. 51–52, applied there to arithmetic laws, not to this uniqueness). Also `Miniature.lean`'s `enat_fp_iff` in the `WithTop ℕ` presentation. Cited,
     not claimed. -/
 theorem notEL_unique (x : Cofix natPF_NatListRegime.Obj) (h : ¬ EventuallyLeaf x) :
     x = natInfinity := by

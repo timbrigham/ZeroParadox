@@ -367,6 +367,11 @@ example : (fun _ => true : ℕ → Bool) ∈ Filter.limsup fires Filter.atTop �
 -- tape, avoids the class of zero-block tests for `trials p hp` (level 1 of a test has measure at
 -- most `1/2`, so its window has positive length, and the all-`true` tape lies in no zero block over a
 -- window of positive length).
+-- Reading (cited, not claimed): so meeting this hypothesis does not give Kurtz randomness at
+-- `p = 1/2`: the all-`true` tape is computable, and no computable sequence is Kurtz random for the
+-- fair coin (Freer, `algorithmic-randomness`, `ComputableCantorPoint.not_isKurtzRandom`). Reading
+-- it as "not Martin-Löf random" needs `p < 1`, since the cited result (Reimann and Slaman, Thm 4.4)
+-- concerns non-atoms. Both sources: `ZeroParadox/Information/CrossingTrials.md`.
 example (p : NNReal) (hp : p ≤ 1) :
     AvoidsTests (ZeroBlockTest (trials p hp)) (fun _ => true) := by
   rintro U ⟨hμ, f, -, hf⟩ hmem

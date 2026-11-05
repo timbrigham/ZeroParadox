@@ -214,7 +214,7 @@ proved about where choice does work. -/
 -- Reading: the framework therefore attributes this footprint to Mathlib's QPF *quotient layer*
 -- rather than to the mathematics — escaping it means changing the carrier, not cleaning the proof.
 -- (Setting: ACS's construction needs only function extensionality, which Lean has; only its
--- uniqueness half uses univalence. See ZeroParadox/Computability/ChoicePurityInvariant.lean.)
+-- uniqueness half uses univalence. See `ZeroParadox/Computability/ChoicePurityInvariant.md`.)
 -- Contrast `strict_cofix_nonempty` (§ I, NO axioms): same phenomenon, different construction,
 -- opposite footprint. That contrast is the STATEMENT-CARRIED class in one pair: the statement carries
 -- the choice, and a restatement on a choice-free carrier holds without it

@@ -6,10 +6,10 @@ declarations, the Engineer's Take and the per-declaration glosses.
 ## The face
 
 Löb (1955): in a system with a provability predicate `□` satisfying the Hilbert–Bernays–Löb derivability
-conditions and given a Löb diagonal ψ (hypotheses hfix1, hfix2), `⊢ (□A → A)` implies `⊢ A`. In arithmetic, Löb's setting, the diagonal
-lemma supplies ψ with `⊢ ψ ↔ (□ψ → A)`; hfix1 and hfix2 are the two halves of that equivalence, which this file takes
-as hypotheses. This is the diagonal family's **provability-modal face** — the
-self-referential fixed point of the map `p ↦ (□p → A)` (the Löb sentence). It is the ONLY sibling of the
+conditions and given a Löb diagonal ψ (hypotheses hfix1, hfix2), `⊢ (□A → A)` implies `⊢ A`. In
+arithmetic, Löb's setting, the diagonal lemma supplies ψ with `⊢ ψ ↔ (□ψ → A)`; hfix1 and hfix2 are
+the two halves of that equivalence, which this file takes as hypotheses. This is the diagonal
+family's **provability-modal face** — the self-referential fixed point of the map `p ↦ (□p → A)` (the Löb sentence). It is the ONLY sibling of the
 four with no Mathlib support located as of 2026-08-17, so it is built from scratch as an abstract
 provability logic. Searched as follows: `Löb`, `GL`, `provability`, `□`/`box` as a modality, and
 `derivability` across the pinned Mathlib; `#check` on the names those would carry. No modal or
@@ -21,10 +21,11 @@ Tarski is the TRUTH face (undefinable — the wall), Gödel/Löb the PROVABILITY
 self-constrained). Löb subsumes **Gödel's second incompleteness**: at `A = falsum`, given a Löb diagonal for
 falsum, a consistent system cannot prove `□falsum → falsum` — its own consistency (`godel_two`). That reading is
 Gödel's second theorem when the class is instantiated at a theory of arithmetic and falsum is its falsum. In
-the class, `godel_two` binds falsum as an arbitrary sentence (`ProvabilityLogic` has no falsum constant and no ex-falso), so it covers any unprovable sentence
-with a Löb diagonal, including one that does not imply every sentence, and without a Löb diagonal its conclusion can
-fail (the two `example`s directly after `godel_two` in `ZeroParadox/Settheory/Loeb.lean`). The Löb sentence `ψ ↔ (□ψ → A)` is a
-diagonal fixed point up to provability (`ProvabilityLogic.loeb_sentence_is_fixedpoint`)
+the class, `godel_two` binds falsum as an arbitrary sentence (`ProvabilityLogic` has no falsum
+constant and no ex-falso), so it covers any unprovable sentence with a Löb diagonal, including one
+that does not imply every sentence, and without a Löb diagonal its conclusion can fail (the two
+`example`s directly after `godel_two` in `ZeroParadox/Settheory/Loeb.lean`). The Löb sentence
+`ψ ↔ (□ψ → A)` is a diagonal fixed point up to provability (`ProvabilityLogic.loeb_sentence_is_fixedpoint`)
 (ν: in arithmetic, by the diagonal lemma; here the hypotheses hfix1, hfix2), and Löb is what it forces
 (`ProvabilityLogic.loeb`). On the Lindenbaum quotient its class is a literal fixed point of the induced map
 (`ProvabilityLogic.selfOnlyAt_loebMapQuot_iff` and the `example` after it). The family's table files the face as a
@@ -63,8 +64,10 @@ c3eb37ae, retrieved 2026-11-01).
 
 No modal or provability logic was located in the pinned Mathlib as of 2026-08-17, searched as in § The face
 (re-run on three axes 2026-08-30, as recorded in `LEAN_CUSTOM_REGISTRY.md`).
-Attribution: Löb (1955); Hilbert–Bernays–Löb derivability conditions; diagonal-family framing Lawvere
-(1969), via Yanofsky (2003) § 1 p. 1. The classical Löb derivation is standard.
+Attribution: Löb (1955); Hilbert–Bernays–Löb derivability conditions; diagonal-family framing:
+Yanofsky (2003, arXiv:math/0305282v1, p. 18), who treats Löb's paradox in that family, extending
+Lawvere (1969), whose paper does not name Löb (TAC reprint text searched for "Löb", 2026-11-05; it
+treats Gödel's incompleteness and Tarski, § 3). The classical Löb derivation is standard.
 Prior art: Popescu & Traytel, CADE-27 (2019) and AFP Goedel_Incompleteness (abstract HBL conditions, Gödel 2
 and Löb in Isabelle); Saitou & Noguchi, arXiv:2609.13780 (Lean 4 Foundation: abstract Provability and Diagonalization
 classes). On diagonal and principle: the Stanford Encyclopedia of Philosophy entry "Provability Logic", § 2.2,

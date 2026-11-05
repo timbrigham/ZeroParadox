@@ -382,10 +382,10 @@ theorem q2Ball_antitone {n m : Q₂BallDepth} (h : n.val ≤ m.val) :
   exact zpow_le_zpow_right₀ (by norm_num : (1 : ℝ) ≤ 2)
     (by omega : -(↑m.val : ℤ) ≤ -(↑n.val : ℤ))
 
-/-- Semantic grounding of fb_functor's snap morphism 0 → ⟨1⟩:
-    For any x ∈ B(0, 2^(-1)) with x ≠ 0, C3 (ZPB) guarantees no continuous path
-    returns from x to 0 in Q₂: the topological analogue of AX-G2 in Q₂BallDepth, which `q2BallZPCat`
-    proves by antisymmetry. -/
+/-- Semantic grounding of fb_functor's snap morphism 0 → ⟨1⟩: by C3 (ZPB) no continuous path
+    returns from x ≠ 0 to 0 in Q₂, the topological analogue of AX-G2 (`q2BallZPCat`, antisymmetry).
+    `Statement:` the ball hypothesis `x ∈ q2BallAt ⟨1⟩` is unused by the proof: the content is
+    `c3_irreversible`'s, which carries no ball hypothesis. -/
 theorem fb_snap_q2_grounded :
     ∀ x : Q₂, x ∈ q2BallAt ⟨1⟩ → x ≠ 0 →
       ¬∃ γ : C(Set.Icc (0 : ℝ) 1, Q₂),
@@ -476,7 +476,9 @@ noncomputable instance infoDepthZPCat : ZPCategory InfoDepth where
 /-- Semantic grounding of fc_functor's snap morphism 0 → ⟨1⟩:
     T1b (ZPC) establishes that the P → Q snap costs exactly log 2 (1 bit of JSD).
     This is the informational analogue of AX-G2 in InfoDepth, where no morphism returns to
-    depth 0 (`infoDepthZPCat`, by antisymmetry): the snap advances from zero surprisal to one bit. -/
+    depth 0 (`infoDepthZPCat`, by antisymmetry): the snap advances from zero surprisal to one bit.
+    `Statement:` a pair `⟨morphism 0 ⟶ ⟨1⟩ in InfoDepth, t1b_jsd⟩`, not a joint derivation: the two
+    conjuncts share no variable, and neither is derived from the other. -/
 theorem fc_snap_info_grounded :
     Nonempty ((0 : InfoDepth) ⟶ ⟨1⟩) ∧ jsdPQ = Real.log 2 :=
   ⟨⟨⟨⟨Nat.zero_le 1⟩⟩⟩, t1b_jsd⟩
@@ -564,10 +566,10 @@ noncomputable instance hilbDimZPCat : ZPCategory HilbDimDepth where
     subst hn
     exact hne.elim (Iso.refl _)⟩
 
-/-- Semantic grounding of fd_functor's snap morphism 0 → ⟨1⟩:
-    T4 (ZPD) establishes that the snap produces an orthogonal shift in StateSpace n (n ≥ 2):
-    ⟪T(0), T(ε₀)⟫_ℂ = 0. The dimension advance 0 → 1 in HilbDimDepth corresponds to
-    the step from the vector `transitionOp n ⟨0⟩` = T(0) to the orthogonal `transitionOp n ⟨1⟩`. -/
+/-- Semantic grounding of fd_functor's snap morphism 0 → ⟨1⟩: T4 (ZPD) gives an orthogonal shift
+    in StateSpace n (n ≥ 2), ⟪T(0), T(ε₀)⟫_ℂ = 0, read as the dimension advance 0 → 1 here.
+    `Statement:` a pair `⟨morphism 0 ⟶ ⟨1⟩, t4_snap_orthogonal n hn⟩`, not a joint derivation: the
+    first conjunct mentions neither `n` nor `StateSpace n`; neither is derived from the other. -/
 theorem fd_snap_hilb_grounded (n : ℕ) (hn : 2 ≤ n) :
     Nonempty ((0 : HilbDimDepth) ⟶ ⟨1⟩) ∧
     @inner ℂ (StateSpace n) _

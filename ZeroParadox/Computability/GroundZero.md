@@ -15,8 +15,8 @@ which is cited there to Jacobs & Rutten (EATCS Bulletin 62, 1997).
 **What it establishes.** Reading a step function as a coalgebra, every configuration is a leaf
 (halted) or a successor (stepping) — the head is `Bool`, so "exists but has not begun" is not
 merely unproved, it is *not expressible* (§ I, axiom-free). And the behaviour that never reaches
-a leaf is **unique**: it is `natInfinity` (§ II, `notEL_unique`). So that non-terminating behaviour, `natInfinity`,
-is pinned by a purely negative description — by what it never does — with no element-hood in any
+a leaf is **unique**: it is `natInfinity` (§ II, `notEL_unique`). So that non-terminating
+behaviour is pinned by a purely negative description — by what it never does — with no element-hood in any
 machine carrier assumed. A self-looping configuration unfolds to exactly that point (§ III).
 
 **Why this shape matters.** The framework's other apophatic characterization with uniqueness is

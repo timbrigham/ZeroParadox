@@ -19,8 +19,13 @@ Two facts from different ZP layers:
   - Set theory (ZPJ / AFA): ⊥ is the unique fixed point of x ↦ {x}
   - 2-adic (ZPB): 0 is the unique fixed point of x ↦ 2x (characterised by v₂ = +∞)
 
-These are the same abstract pattern: the domain's self-application operation has a
-unique fixed point, and that fixed point is the "bottom" of the domain. Uniqueness
+These follow an analogous pattern: the domain's self-application operation has a
+unique fixed point, and that fixed point is the "bottom" of the domain. Membership in
+`AbstractSelfApp` does not discriminate: every `ZPSemilattice` carries one
+(`abstractSelfApp_always_inhabited`). Prior art for treating AFA's unique solutions and the unique
+fixed points of contracting maps on complete metric spaces uniformly, as final-coalgebra uniqueness:
+Rutten and Turi, "On the Foundations of Final Semantics: Non-Standard Sets, Metric Spaces, Partial
+Orders", REX 1992, LNCS 666 (1993) (cited, not claimed). Uniqueness
 collapses construction to identification (ZeroParadox/Settheory/AczelConn.lean). Footprints: the
 `PurityCheck` section of `ZeroParadox/Computability/SelfApp.lean`.
 
@@ -31,7 +36,7 @@ structure. Which of `AFAStructure`'s three fields it derives as theorems, and wh
 supplies as data: § III of `ZeroParadox/Computability/SelfApp.lean`.
 
 The 2-adic parallel is then proved standalone: `singleton_from_unique_witness`
-(already proved in ZeroParadox/Settheory/AczelConn.lean) closes the Q₂ case with the same proof term.
+(already proved in ZeroParadox/Settheory/AczelConn.lean) closes the Q₂ case with the same proof structure.
 Why it is standalone rather than an `AbstractSelfApp` instance: § IV of the same file.
 
 ## What the Scale files resolved
