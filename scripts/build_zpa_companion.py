@@ -1,5 +1,5 @@
 """
-Build ZP-A Illustrated Companion (v1.22)
+Build ZP-A Illustrated Companion (v1.23)
 Covers: join-semilattice, partial order, Hasse diagram, one-directional transitions,
 monotonicity (T3), bottom-as-constituent (T2), four concrete examples, and CC-2.
 """
@@ -89,7 +89,7 @@ def transition_diagram():
                  fontName='DV-B', fillColor=RED))
     return d
 
-VERSION = '1.22'
+VERSION = '1.23'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -238,9 +238,8 @@ def build():
         'has a least positive element (f_snap_impossible); what obstructs a first step is density '
         '(axb1_fails_everywhere_iff_dense). T-SNAP&#8217;s shape, the Binary Snap, does not need '
         'one: t_snap_given holds at a step taken in a densely ordered join-semilattice (the '
-        '&#8474;&#8805;0 example, ZeroParadox/Order/Snap.lean). Among the completions of &#8474;, density is the reason &#8477; '
-        'has no first step above 0 (f_snap_impossible). The topological difference from Q&#8322; is '
-        'that &#8477; is connected, so not totally disconnected (real_no_snap), while Q&#8322; is '
+        '&#8474;&#8805;0 example, ZeroParadox/Order/Snap.lean). Among the completions of &#8474;, the topological difference '
+        'between &#8477; and Q&#8322; is that &#8477; is connected, so not totally disconnected (real_no_snap), while Q&#8322; is '
         'totally disconnected (padic_snaps). That is not a separate fence: for a linear order '
         'carrying its order topology, connectedness implies density (Mathlib '
         'denselyOrdered_of_preconnectedSpace). Q&#8322;&#8217;s topology supplies no first step: '

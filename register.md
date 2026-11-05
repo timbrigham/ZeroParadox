@@ -4,7 +4,7 @@ Update this file first on any version bump. README.md Framework table is verifie
 
 | Document | Formal Version | Filename | Companion Version | Comp AR | Notes |
 |----------|---------------|----------|-------------------|---------|-------|
-| ZP-A Lattice Algebra | v1.37 | ZP-A_Lattice_Algebra.pdf | v1.22 | N/— | formal:8ac90a09 comp:adac5e37 |
+| ZP-A Lattice Algebra | v1.37 | ZP-A_Lattice_Algebra.pdf | v1.23 | N/— | formal:8ac90a09 comp:3d18bb87 |
 | ZP-B p-Adic Topology | v1.32 | ZP-B_pAdic_Topology.pdf | v1.21 | N/— | formal:5ccc5dd3 comp:4d3ce35e |
 | ZP-F The Counterexamples | v1.24 | ZP-F_The_Counterexamples.pdf | v1.23 | N/— | formal:18689eb9 comp:5ddbbab0 |
 | ZP-C Information Theory | v1.38 | ZP-C_Information_Theory.pdf | v2.14 | N/— | formal:6160b71e comp:10cbc861 |
