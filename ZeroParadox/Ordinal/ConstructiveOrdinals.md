@@ -150,9 +150,9 @@ Read from the arXiv v2 PDF:
 Two Lean carriers of MaxWellApexLab/OrdinalAnalysis, `ThetaNote` and `Gamma0Note`, are named against the open
 item under Result above.
 
-The Coq precedent on the same carrier is *hydra-battles*, by the hydra-battles authors; its credit, including
-the comparator and the order construction, is in `ZeroParadox/Ordinal/SnapNucleusConstructive.md`
-§ Prior art.
+The Coq precedent on the same carrier is *hydra-battles*, credited to the hydra-battles authors, as in
+`ZeroParadox/Ordinal/SnapNucleusConstructive.md` § Prior art, which also holds the credit for the
+comparator and the order construction.
 
 **The delta, stated narrowly.** Their split is decidability and constructive taboos (excluded middle,
 WLPO) in homotopy type theory; ZP-N's is a `Classical.choice` footprint in Lean, measured by

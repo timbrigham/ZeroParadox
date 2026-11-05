@@ -88,7 +88,7 @@ instance toAFAStructure : AFAStructure L where
 
 /-! ## § IV. The 2-Adic Parallel
 
-    The same abstract fixed-point pattern in ℚ_[2]: multiplication by 2
+    An analogous fixed-point pattern in ℚ_[2]: multiplication by 2
     has 0 as its unique fixed point, characterised by v₂(0) = +∞.
 
     Note: no ZPSemilattice ℚ_[2] is DEFINED, so no AbstractSelfApp instance for it here — not

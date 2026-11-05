@@ -1,6 +1,6 @@
 """
 Build ZP-K Illustrated Companion
-Version 1.32 | November 2026
+Version 1.33 | November 2026
 """
 
 import os
@@ -109,7 +109,7 @@ def four_way_table():
     t = Table(data, colWidths=[TW*0.22, TW*0.30, TW*0.48])
     t.setStyle(ts); return t
 
-VERSION = '1.32'
+VERSION = '1.33'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -292,10 +292,10 @@ def build():
         'content is the uniqueness rather than the membership, and the same statement has a proof '
         'from machinePhaseAFA alone (the example after da1_closed_concrete in Kleene.lean).'))
     E.append(cbody(
-        '<b>Path 2 (Informational — L-INF):</b> Surprisal at ⊥ of MachinePhase has two charts. In the '
+        '<b>Path 2 (Informational — L-INF):</b> Surprisal at ⊥ has two charts (⊥ of MachinePhase corresponds to 0 of Q₂ by the framework\'s reading, not an identity). In the '
         'depth chart every depth n of the binary ball hierarchy has finite surprisal n and no finite '
         'bound holds of all of them (l_inf); in the point chart the complexity at the floor 0 of Q₂ '
-        'is ⊤ (infinitude_forces_infinite_complexity). Both, and why no equation joins them: '
+        'is ⊤ (infinitude_forces_infinite_complexity, at the Q₂ instance q2InfinitudeFloor). Both, and why no equation joins them: '
         'ZeroParadox/Information/Surprisal.lean, l_inf. Reading: no finite interpreter can hold ⊥ '
         'as a stored description. '
         '<b>Remains outside Lean scope:</b> the step from "unbounded surprisal" to "executing" '

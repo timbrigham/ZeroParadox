@@ -9,23 +9,23 @@ Update this file first on any version bump. README.md Framework table is verifie
 | ZP-F The Counterexamples | v1.26 | ZP-F_The_Counterexamples.pdf | v1.24 | N/— | formal:ed9832ca comp:43e4294e |
 | ZP-C Information Theory | v1.39 | ZP-C_Information_Theory.pdf | v2.14 | N/— | formal:4a46b049 comp:10cbc861 |
 | ZP-D State Layer | v1.21 | ZP-D_State_Layer.pdf | v1.18 | N/— | formal:af01d656 comp:6be72c57 |
-| ZP-E Bridge Document | v3.79 | ZP-E_Bridge_Document.pdf | v1.39 | Y/Y | formal:6a1dabc9 comp:bf034571 |
+| ZP-E Bridge Document | v3.80 | ZP-E_Bridge_Document.pdf | v1.40 | Y/Y | formal:6042e5ce comp:12083932 |
 | ZP-G Category Theory | v1.27 | ZP-G_Category_Theory.pdf | v1.16 | N/— | formal:e901301e comp:668a9008 |
 | ZP-H Categorical Bridge | v1.35 | ZP-H_Categorical_Bridge.pdf | v1.26 | N/— | formal:95dad22c comp:7d801305 |
 | ZP-H Native Categories Addendum | v1.14 | ZP-H_Native_Categories_Addendum.pdf | N/A | N/— | formal:b961348b |
-| ZP-I Inside Zero | v1.39 | ZP-I_Inside_Zero.pdf | v1.42 | N/— | formal:4082ece8 comp:b5c4db81 |
+| ZP-I Inside Zero | v1.39 | ZP-I_Inside_Zero.pdf | v1.43 | N/— | formal:4082ece8 comp:b3a951f2 |
 | ZP-J Self-Reference | v2.17 | ZP-J_Self_Reference.pdf | v1.41 | N/— | formal:d486cc53 comp:676aa6d7 |
 | ZP-J AFA Addendum | v1.21 | ZP-J_AFA_Addendum.pdf | N/A | N/— | formal:bd77b297 |
 | ZP-J Wheel Addendum | v1.11 | ZP-J_Wheel_Addendum.pdf | v1.15 | N/— | formal:849e279d comp:7812acd4 |
 | ZP-J Keystone Addendum | v1.30 | ZP-J_Keystone_Addendum.pdf | N/A | N/— | formal:8c1a77c3 |
-| ZP-K Computational Grounding | v1.37 | ZP-K_Computational_Grounding.pdf | v1.32 | N/— | formal:15d32701 comp:c7dec003 |
+| ZP-K Computational Grounding | v1.37 | ZP-K_Computational_Grounding.pdf | v1.33 | N/— | formal:15d32701 comp:834b6855 |
 | ZP-L Incomputability Convergence | v1.38 | ZP-L_Incomputability_Convergence.pdf | v1.22 | N/— | formal:f9a872b7 comp:66d5f4ec |
 | ZP-M Kleene-Ordinal Bridge | v1.20 | ZP-M_Kleene_Ordinal_Bridge.pdf | v1.14 | N/— | formal:502353c3 comp:9888babd |
 | ZP-N The Constructive Snap | v2.8 | ZP-N_The_Constructive_Snap.pdf | N/A | N/— | formal:aba9b464 |
 | ZP-P The Fixed-Point Fork | v1.37 | ZP-P_The_Fixed_Point_Fork.pdf | N/A | N/— | formal:794df5a8 |
 | ZP-R Cross-Category Fixed Point | v1.26 | ZP-R_Cross_Category_Fixed_Point.pdf | N/A | N/— | formal:d74402f0 |
 | ZP-R Diagonal Family Addendum | v1.24 | ZP-R_Diagonal_Family_Addendum.pdf | N/A | N/— | formal:6144f567 |
-| ZP-Q The Frame-Change | v1.23 | ZP-Q_The_Frame_Change.pdf | N/A | N/— | formal:5f31ede4 |
+| ZP-Q The Frame-Change | v1.24 | ZP-Q_The_Frame_Change.pdf | N/A | N/— | formal:af4cad05 |
 | Zero Paradox Foreword | v2.45 | Zero_Paradox_Foreword.pdf | N/A | N/A | formal:4deba2da |
 | ZP Tools | N/A | ZP_Tools_and_Methods.pdf | N/A | N/A | formal:7d101f1d |
 | ZP Choice-Free Core Addendum | v1.17 | ZP_Choice_Free_Core_Addendum.pdf | N/A | N/A | formal:20ca995c |

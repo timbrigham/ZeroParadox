@@ -22,8 +22,8 @@ Two facts from different ZP layers:
 These follow an analogous pattern: the domain's self-application operation has a
 unique fixed point, and that fixed point is the "bottom" of the domain. Membership in
 `AbstractSelfApp` does not discriminate: every `ZPSemilattice` carries one
-(`abstractSelfApp_always_inhabited`). Prior art for treating AFA's unique solutions and the unique
-fixed points of contracting maps on complete metric spaces uniformly, as final-coalgebra uniqueness:
+(`abstractSelfApp_always_inhabited`). Prior art for treating AFA's unique solutions and final
+coalgebras of locally contracting functors on complete metric spaces uniformly, as final-coalgebra uniqueness:
 Rutten and Turi, "On the Foundations of Final Semantics: Non-Standard Sets, Metric Spaces, Partial
 Orders", REX 1992, LNCS 666 (1993) (cited, not claimed). Uniqueness
 collapses construction to identification (ZeroParadox/Settheory/AczelConn.lean). Footprints: the

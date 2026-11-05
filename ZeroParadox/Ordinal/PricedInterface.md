@@ -5,7 +5,8 @@ Long form of `ZeroParadox/Ordinal/PricedInterface.lean`.
 ## What this file is
 
 A **measurement**, not a construction. The carrier and the map out of it, declared in `ZeroParadox/Ordinal/PricedInterface.lean`, both follow
-constructions that already exist in the literature (see "Prior art" — they are Castéran's, and the
+constructions that already exist in the literature (see "Prior art" — they are *hydra-battles*', credited to the
+hydra-battles authors as in `ZeroParadox/Ordinal/SnapNucleusConstructive.md` § Prior art, and the
 citation is not a courtesy). What is being contributed here is the *price tag*: the axiom footprint of
 each side of the constructive/classical boundary, exhibited on declarations that sit on either side of a
 single named map, in a setting where the classical target is a real library type (Mathlib's `Ordinal`)
@@ -37,7 +38,9 @@ as written, however it is proved — `a ≤ a` carries choice while `a = a` does
 `order_footprint_eq`, `ZeroParadox/Ordinal/OrdinalChoiceEssential.lean`, stated as two theorems
 precisely so that file's purity block *prints* the contrast rather than asserting it). Axiom footprints
 on ε₀ results measure the choice-carrying constants their statements reach, the order instance and the
-operations (`Ordinal.omega0`, `Ordinal.nfp`, printed in the two purity blocks), not the proofs.
+operations (`Ordinal.omega0`, `Ordinal.nfp`, printed in the purity blocks of
+`ZeroParadox/Ordinal/OrdinalChoiceEssential.lean` and `ZeroParadox/Ordinal/PricedInterface.lean`
+respectively), not the proofs.
 
 This file replaces the unanswerable question with a measurable one: not *is the choice real*, but *what
 does crossing cost*.
@@ -131,7 +134,7 @@ it is stated for.
 
 ## What is NOT proved here, and must not be inferred
 
-`ON_correct` (Castéran, `ON_Generic.v`; see below) is a class stated over an `ON`, a type with a
+`ON_correct` (*hydra-battles*, `ON_Generic.v`; see below) is a class stated over an `ON`, a type with a
 comparison whose order is well-founded (`Class ON`'s field `ON_wf`), together with a target ordinal
 and a denotation map. Its three fields ask that every notation denotes below the target ordinal, that
 the map is **onto** the segment below it, and that the syntactic comparator **agrees** with the

@@ -319,9 +319,9 @@ example {L : Type*} [ZPSemilattice L] (x : L) :
 
 /-! ## II. Valuation-Complexity Bridge — REFUTED
 
-The informal route v₂(Sₙ) → ∞ ⟹ K(Sₙ|n)/|Sₙ| → 1 is refuted; its status and counterexample are
-recorded in `CLAIMS.md`. T-IZ never depended on it (it goes through `t_iz_cauchy`). The
-counterexample's valuation half is `scaleChain_isDepthChain` (`ZeroParadox/Valuation/ScaleDepthWitness.lean`).
+The informal route v₂(Sₙ) → ∞ ⟹ K(Sₙ|n)/|Sₙ| → 1 is refuted by a counterexample (Sₙ = 2ⁿ); its status,
+the counterexample and its Lean valuation half are recorded in the R-BRIDGE row of `CLAIMS.md`. T-IZ
+never depended on it (it goes through `t_iz_cauchy`).
 Why `t_iz_complete` computes no K either, and the `da1_paths_unified` fence: `SemilatticeInstance.md`. -/
 
 /-! ## III. T-IZ — Inside Zero Theorem -/
