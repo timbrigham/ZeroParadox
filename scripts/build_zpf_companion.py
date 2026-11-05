@@ -1,7 +1,7 @@
 """
 Build ZP-F Illustrated Companion
 Where the First Step Fails: The Real Numbers as Counterexample
-Version 1.21 | November 2026
+Version 1.22 | November 2026
 """
 
 import os, math
@@ -109,7 +109,7 @@ def comparison_table():
     return t
 
 
-VERSION = '1.21'
+VERSION = '1.22'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -154,17 +154,22 @@ def build():
               'This companion document is written for general readers. It explains in plain '
               'language why, on the real number line, 0 has no first step above it, AX-B1\'s '
               'form, and why T-SNAP\'s shape, the Binary Snap, does not need one; and where the '
-              '2-adic numbers Q&#8322; stand: ZP-F excludes '
-              'ordered fields, by density; ZP-B records that Q&#8322; is totally disconnected '
-              '(t5_totallyDisconnected, an instance Mathlib already supplies), which removes the '
-              'topological obstruction; neither supplies the first step at &#8869; of the state '
-              'carrier, the set of states a run of the framework moves through, ordered as in '
-              'ZP-A (that first step is AX-B1, a commitment). '
+              '2-adic numbers Q&#8322; stand. Density is the reason &#8477; has no first step '
+              'above 0 (f_snap_impossible). The topological difference from Q&#8322; is that '
+              '&#8477; is connected, so not totally disconnected (real_no_snap), while Q&#8322; is '
+              'totally disconnected (padic_snaps). That is not a separate fence: for a linear order '
+              'carrying its order topology, connectedness implies density (Mathlib '
+              'denselyOrdered_of_preconnectedSpace). Q&#8322;&#8217;s topology supplies no first step: '
+              'Mathlib gives Q&#8322; no order, and under the norm preorder 0 has no first step '
+              'there either (ZeroParadox/BottomCannotBe.lean). Neither carrier supplies the first step at '
+              '&#8869; of the state carrier, the set of states a run of the framework moves '
+              'through, ordered as in ZP-A (that first step is AX-B1, a commitment). '
               'The formal results are machine-verified in Lean 4 as part of ZP-F '
               '(F-SNAP-IMPOSSIBLE, f_snap_impossible: no linearly ordered field has a least '
               'positive element, so 0 has no first step above it, AX-B1\'s form); see also '
-              'ZP-B (p-adic topology), where Q&#8322; being totally disconnected removes the '
-              'topological obstruction and supplies no first step.',
+              'ZP-B (p-adic topology), where Q&#8322; is totally disconnected '
+              '(t5_totallyDisconnected, an instance Mathlib already supplies) and that topology '
+              'supplies no first step.',
               CS['disc'])]
 
     # ── I. The Natural Question ─────────────────────────────────────────────────
