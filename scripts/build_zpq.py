@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-Q: The Frame-Change PDF Builder
-Version 1.18 | November 2026
+Version 1.19 | November 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.18'
+VERSION = '1.19'
 FIRST_RELEASED = 'July 2026'
 
 from reportlab.graphics.shapes import Drawing, Circle, Ellipse, PolyLine, String, Polygon
@@ -264,8 +264,8 @@ def build():
              'measure 0  &#8596;  surprisal &#8734;',
              '&#8722;log &#8212; info_bottom_diverges'],
             ['Reals',
-             '&#8212; (no discrete floor)',
-             'inversion breaks at 0 &#8212; NO-GO (ZP-F)'],
+             '&#8212; (no first step above 0)',
+             'none witnessed (the remark below; ZP-F)'],
         ],
         col_widths=[TW * 0.20, TW * 0.34, TW * 0.46],
     ))
@@ -371,17 +371,21 @@ def build():
         'runs to &#8734; (ZP-C; info_bottom_diverges, addVal_bot), the two joined by &#8722;log.'))
 
     E.append(remark_box(
-        'Remark: the reals are the counterexample (the discriminator)',
+        'Remark: the reals beside &#8474;<sub>2</sub> (what separates them)',
         [
-            'The real numbers are where the frame-change fails, and that is exactly what makes this '
-            'a diagnostic rather than a pattern read into every domain. &#8477; has no discrete '
-            'floor to fall to (density), and its inversion is discontinuous at 0 with no repair. '
-            'Both features of the bottom &#8212; the infinitude at the zero and the one-way arrow '
-            'that reverses under inversion &#8212; are absent, and 0 has no first step above it, '
-            'AX-B1&#8217;s form (ZP-F; f_snap_impossible, which, despite its name, states that no '
-            'linearly ordered field has a least positive element). T-SNAP&#8217;s shape does not '
-            'need a first step: t_snap_given holds at a step taken in a densely ordered '
-            'join-semilattice.',
+            'Inversion does not separate &#8477; from &#8474;<sub>2</sub>. Inside each field it is '
+            'discontinuous at 0; on &#8474;<sub>2</sub> it is made continuous on the one-point '
+            'compactification, the sphere above (continuous_rInv, ZeroParadox/Valuation/RiemannSphere.lean), '
+            'by a proof that uses nothing specific to &#8474;<sub>2</sub> beyond properness. What '
+            'separates the two is topology: &#8477; is connected, so not totally disconnected '
+            '(real_no_snap, which states exactly that), while &#8474;<sub>2</sub> is totally '
+            'disconnected (padic_snaps). Neither has a first step above 0, AX-B1&#8217;s form: in '
+            '&#8477; because no linearly ordered field has a least positive element (ZP-F; '
+            'f_snap_impossible, which, despite its name, states exactly that), and in '
+            '&#8474;<sub>2</sub>, which carries no order of its own, under the norm preorder '
+            '(ZeroParadox/BottomCannotBe.lean &#167; ROLE). T-SNAP&#8217;s shape does not need a '
+            'first step: t_snap_given holds at a step taken in a densely ordered join-semilattice '
+            '(&#8474;&#8805;0 under max, ZeroParadox/Order/Snap.lean).',
         ]
     ))
     E.append(sp(6))
@@ -402,8 +406,8 @@ def build():
         'satisfies its hypotheses of a complete lattice and a monotone map, so none of them is an instance '
         'of it. It is universal over its own domain, not over the faces. At the categorical level the '
         'universal is a proven wall (below). What the faces share is a SHAPE realized concretely in each '
-        'domain, and the instance table&#8217;s last row &#8212; the reals, NO-GO &#8212; shows the shape '
-        'does not hold everywhere either. The fences are not hedging; they mark a genuine boundary, and '
+        'domain, and the instance table&#8217;s last row, the reals, carries no frame-flip witness in '
+        'the corpus, so the shape is not shown to hold everywhere either. The fences are not hedging; they mark a genuine boundary, and '
         'the per-domain frame-flips remain full theorems on either side of it.'))
 
     E.append(def_box(
