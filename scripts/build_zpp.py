@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-P: The Fixed-Point Fork PDF Builder
-Version 1.34 | November 2026
+Version 1.35 | November 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.34'
+VERSION = '1.35'
 FIRST_RELEASED = 'June 2026'
 
 
@@ -201,7 +201,7 @@ def build():
         '(f_snap_impossible, which, despite its name, states that no linearly ordered field has a '
         'least positive element). In the 2-adic completion &#8474;<sub>2</sub>, 0 is the unique '
         'fixed point of x &#8614; 2x (q2_unique_fp) and the only point of infinite valuation '
-        '(v<sub>2</sub>(0) = &#8734;); &#8474;<sub>2</sub> is totally disconnected (padic_snaps), '
+        '(v<sub>2</sub>(0) = &#8734;); &#8474;<sub>2</sub> is totally disconnected (padic_snaps, an instance Mathlib already supplies), '
         'which removes the topological obstruction and supplies no first step: under the norm '
         'preorder 0 is least and has no first step (ZeroParadox/BottomCannotBe.lean &#167; ROLE), '
         'and on &#8484;<sub>2</sub>, the 2-adic integers, 0 is least in the norm preorder and '

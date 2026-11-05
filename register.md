@@ -22,7 +22,7 @@ Update this file first on any version bump. README.md Framework table is verifie
 | ZP-L Incomputability Convergence | v1.36 | ZP-L_Incomputability_Convergence.pdf | v1.22 | N/— | formal:5abb30b5 comp:66d5f4ec |
 | ZP-M Kleene-Ordinal Bridge | v1.19 | ZP-M_Kleene_Ordinal_Bridge.pdf | v1.14 | N/— | formal:ec671c9d comp:9888babd |
 | ZP-N The Constructive Snap | v2.8 | ZP-N_The_Constructive_Snap.pdf | N/A | N/— | formal:aba9b464 |
-| ZP-P The Fixed-Point Fork | v1.34 | ZP-P_The_Fixed_Point_Fork.pdf | N/A | N/— | formal:e110f026 |
+| ZP-P The Fixed-Point Fork | v1.35 | ZP-P_The_Fixed_Point_Fork.pdf | N/A | N/— | formal:ad96d8a1 |
 | ZP-R Cross-Category Fixed Point | v1.26 | ZP-R_Cross_Category_Fixed_Point.pdf | N/A | N/— | formal:d74402f0 |
 | ZP-R Diagonal Family Addendum | v1.24 | ZP-R_Diagonal_Family_Addendum.pdf | N/A | N/— | formal:6144f567 |
 | ZP-Q The Frame-Change | v1.19 | ZP-Q_The_Frame_Change.pdf | N/A | N/— | formal:3e2db769 |
