@@ -57,10 +57,13 @@ attribute [local instance] Classical.propDecidable
 /-! ### § 0. Inversion on the one-point compactification of any proper normed field
 
 No Mathlib analog located as of 2026-11-04, searched as follows: grep of the pinned Mathlib
-`Topology/Compactification/OnePoint/` (its `ProjectiveLine.lean` TODO asks for the homeomorphism even
-for `K = ℝ`); `exact?` on "a continuous self-map of `OnePoint ℝ` sending `0 ↦ ∞`, `∞ ↦ 0`,
-`x ↦ x⁻¹` otherwise" (no result); one LeanExplore query (nearest hits `Homeomorph.onePointCongr`,
-`OnePoint.continuous_map`, which cover maps fixing `∞`). -/
+`Topology/Compactification/OnePoint/` (its `ProjectiveLine.lean` TODO, to make `equivProjectivization`
+a homeomorphism for `K = ℝ`, is not this map); `exact?` on "a continuous self-map of `OnePoint ℝ`
+sending `0 ↦ ∞`, `∞ ↦ 0`, `x ↦ x⁻¹` otherwise" (no result); one LeanExplore query (nearest hits
+`Homeomorph.onePointCongr`, `OnePoint.continuous_map`, which fix `∞`). Algebraically `onePointInv` is
+the swap-matrix case of Mathlib's `OnePoint.instGLAction`. Prior art outside Mathlib: TauCeti (commit
+1e5cb7e8, 2026-10-23), `OnePoint.invChart`; Forster, GTM 81 §§ 1–2, as cited there, not retrieved.
+This section adds an elementary Mathlib-only proof; credits in `ZeroParadox/Valuation/RiemannSphere.md`. -/
 
 section General
 
@@ -282,9 +285,10 @@ example :
 pole-pair additively in `n`, which is what makes it an *axis* rather than a bare pair.
 
 ⭐ **PRIOR ART — these declarations INSTANTIATE `OnePoint.instGLAction`, they do not extend it.** The
-three `example`s closing this section are the identification, elaborated rather than asserted. What is
-ours is the TOPOLOGY, not the algebra. Prior art, the loxodromic vocabulary and the stabiliser fence
-are in `ZeroParadox/Valuation/RiemannSphere.md`, beside this file. -/
+three `example`s closing this section are the identification, elaborated rather than asserted. The
+topology has prior art too (TauCeti's `OnePoint.instContinuousConstSMul` covers these scalings); this
+file adds an elementary Mathlib-only proof and the ℚ₂ application. Prior art, the loxodromic vocabulary
+and the stabiliser fence: `ZeroParadox/Valuation/RiemannSphere.md`, beside this file. -/
 
 
 /-- Scaling by `2 ^ n` on the sphere: `∞ ↦ ∞` and `x ↦ 2 ^ n * x`. -/

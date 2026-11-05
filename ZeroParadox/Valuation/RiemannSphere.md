@@ -28,18 +28,41 @@ They are `example`s deliberately: an anonymous declaration owes no `#print axiom
 `ssot.json` row, and it stops compiling if the identification ever fails. That makes the prior-art
 claim checkable rather than asserted, which is the whole point of stating it here.
 
-## What IS ours: the topology
+## The topology: prior art, and what this file adds
 
-That file's own TODO, at line 21, reads:
+That file's own TODO, at line 20, reads:
 
 > Add the extension of this equivalence to a homeomorphism in the case `K = ℝ`, where `OnePoint ℝ`
 > gets the topology of one-point compactification.
 
-So the homeomorphism extension is absent from Mathlib **even for the reals**. `continuous_onePointInv`
-and `onePointInvHomeo` (any proper normed field, ℝ included: `continuous_onePointInv_real`), their ℚ₂
-instances `continuous_rInv` and `rInvHomeo`, and `rScaleHomeo` and `continuous_rScale` are the genuine
-contribution of this file. The real work is `continuous_onePointInv`'s two special points: as `x → 0`
-the image leaves every compact set, which needs `ProperSpace K` and `Metric.cobounded_eq_cocompact`.
+The equivalence it names is `equivProjectivization : OnePoint K ≃ ℙ K (K × K)`, so the TODO asks for a
+topology on the projectivization and a homeomorphism to it. It does not ask for the inversion map, and
+`onePointInvHomeo` does not fill it: that is a self-homeomorphism of `OnePoint K`.
+
+Continuity of inversion on the one-point compactification of a proper normed field is a standard fact,
+with prior art:
+
+- **Mathlib at the pin:** not located as of 2026-11-05, searched as follows: the § 0 search record in
+  `RiemannSphere.lean` (2026-11-04), and, on 2026-11-05, `infer_instance` and `exact?` on
+  `ContinuousConstSMul (GL (Fin 2) ℝ) (OnePoint ℝ)`, both failing.
+- **TauCeti** (github.com/TauCetiProject/TauCeti, commit 1e5cb7e8, 2026-10-23) formalized it
+  independently: `OnePoint.invChart`, for proper nontrivially normed fields, and
+  `OnePoint.instContinuousConstSMul : ContinuousConstSMul (GL (Fin 2) 𝕜) (OnePoint 𝕜)`, which makes
+  every Möbius map a homeomorphism and so also covers the scaling maps (`rScaleHomeo`,
+  `continuous_rScale`) and the inversions (`onePointInvHomeo`, `rInvHomeo`). Source read by the
+  2026-11-05 prior-art gate; not elaborated here, being outside this project's dependency closure.
+- **Algebraically**, `onePointInv` is the swap-matrix case `!![0, 1; 1, 0]` of Mathlib's
+  `OnePoint.instGLAction`; the `example`s closing § V state this for `rInv`.
+- **Informal source:** Forster, *Lectures on Riemann Surfaces* (GTM 81), §§ 1–2, as cited by TauCeti;
+  not retrieved.
+
+What this file adds is narrower: an elementary proof inside Mathlib alone, with no manifold structure,
+under `[NormedField K] [ProperSpace K]` (`continuous_onePointInv`, `onePointInvHomeo`); the ℚ₂
+application (`continuous_rInv`, `rInvHomeo` on `Sphere`); and the ℝ-against-ℚ₂ comparison
+(`continuous_onePointInv_real`, `onePointInv_swaps_real`, and the `Reading: CARRIER` control after
+them: the pole exchange holds in both carriers, and total disconnectedness separates them). The proof's
+work is at the two special points: as `x → 0` the image leaves every compact set, which needs
+`ProperSpace K` and `Metric.cobounded_eq_cocompact`.
 
 ## The pole stabiliser is much bigger than the scalings
 
