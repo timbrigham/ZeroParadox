@@ -7,7 +7,7 @@ set_option maxHeartbeats 400000
 # The Kleisli snap floor is not isomorphic to any object above it
 
 **Proves.** `kleisli_obj_not_iso_bot`: in `KleisliCat PMF`, for `n > 0`, `fC_functor.obj 0` is not
-isomorphic to `fC_functor.obj n`. One-line consequence of `fC_no_return` (no morphism back into the floor):
+isomorphic to `fC_functor.obj n`. One-line consequence of `fC_no_return` (no morphism into the floor from a stage `n > 0`):
 an iso would supply one. The content is "no return ⟹ not iso to anything above it", about one domain.
 
 **Reaching for (intent, NOT proved here).** This was *aimed at* the NP-complete reframe — testing whether
@@ -33,8 +33,8 @@ namespace ZeroParadox
 open CategoryTheory ZeroParadox
 
 /-- **The MC-1 bottom is directed, not mutual (B7).** In `KleisliCat PMF` the snap floor admits no
-    return morphism from any nonempty object (`fC_no_return`), so it is not isomorphic to any such
-    object: there is no mutual/equivalence pairing with anything above it. The bottom sits strictly at
+    morphism into it from any stage `fC_functor.obj n` with `n > 0` (`fC_no_return`), so it is not
+    isomorphic to any such stage: there is no mutual/equivalence pairing with any stage above it. The bottom sits strictly at
     the source of a directed structure — the snap's irreversibility *is* the failure of mutuality, so
     MC-1's bottoms do not form a single mutual (NP-style) degree. -/
 theorem kleisli_obj_not_iso_bot {n : ℕ} (hn : 0 < n) :

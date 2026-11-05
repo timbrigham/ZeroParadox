@@ -13,10 +13,10 @@ set_option maxHeartbeats 400000
 terminal (`TopCat.isTerminalPUnit`), the Hilbert and Info components are initial (`fD_zero_isInitial`,
 `fC_zero_isInitial`). The formal content is a tuple definition plus a conjunction of prior witnesses.
 
-**Reaching for (intent, NOT proved here).** This was *meant to be* the "Global Zero as a section of the
-Grothendieck fibration over the domains" — with the discrete index collapsing the fibration to a plain
-tuple, and the mixed character (terminal in one fiber, initial in two) read as the "trenchcoat" floor of
-the construction (one object, no uniform universal property).
+**Reaching for (intent, NOT proved here).** A "Global Zero as a section of the Grothendieck
+fibration over the domains", the discrete index collapsing it to a tuple, its mixed character (Top:
+terminal; Hilbert: a zero object, `Statement:` COINCIDENCE, `hilbert_bottom_isZero`; Info: initial,
+not terminal, `kleisli_bottom_not_terminal`) read as the "trenchcoat" floor: no uniform universal property.
 
 **Gap (as far as this reaches).** There is no Grothendieck construction, no fibration, and no section in
 the Lean — only a 3-field structure. Calling `GlobalZero` "a section of the fibration / the discrete-index
