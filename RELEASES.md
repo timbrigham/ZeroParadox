@@ -93,6 +93,8 @@ Each GitHub release triggers an automatic Zenodo snapshot with a permanent DOI. 
 
 ## v2.1 - 2026-05-28
 
+This entry was written to this file but never tagged; no v2.1 release or Zenodo snapshot exists.
+
 **Why this release:** ZP-J v2.0 is a major document update (seven new sections added: Aczel DC-free connection, ValuationStructure→AbstractSelfApp→AFAStructure abstraction chain, concrete instances, APG decoration uniqueness). The ZPJ Lean sub-layer is correspondingly expanded with a complete sorry-free chain from valuation structure through APG decoration uniqueness — the most substantial new formal content since v2.0.
 
 **What changed:**
@@ -413,7 +415,7 @@ Each GitHub release triggers an automatic Zenodo snapshot with a permanent DOI. 
 
 ## v5.0 - 2026-07-22
 
-This entry was written to this file but never tagged; no v5.0 release or Zenodo snapshot exists, and the latest tagged release is v4.0.
+This entry was written to this file but never tagged; no v5.0 release or Zenodo snapshot exists, and as of 2026-11-05 the latest tagged release is v4.0.
 
 **Why this release:** A new formal layer - ZP-R (Cross-Category Fixed Point), with its Diagonal Family Addendum - locating the framework's self-application fixed point ⊥ across the diagonal-family faces; together with the machine-checked claim graph (ClaimsMirror.lean), the snap-nucleus meta-lattice, and a round of bedrock corrections that struck a false premise shared by three documents.
 

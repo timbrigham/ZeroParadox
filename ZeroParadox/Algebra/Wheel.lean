@@ -45,7 +45,7 @@ a defined first-class operation. The resulting structure has two special element
 
 **The ZP Conjecture (see §VIII — construction now formalized in `ZeroParadox/Algebra/WheelFrac.lean`):**
 The wheel axioms for /0 are derivable from ring structure rather than independently
-assumed, with the valuation condition `val(⊥) = ∞` and `⊥ = {⊥}` (ZFC⁻ + AFA) pinning the
+assumed, with the valuation condition `val(0) = ⊤` (`wvs_val_zero`) and `⊥ = {⊥}` (ZFC⁻ + AFA) pinning the
 special element — making wheel theory the algebraic representation of the 0/∞ exchange rather than a
 coincidence.
 
@@ -76,9 +76,8 @@ construction it points to is proved in `ZeroParadox/Algebra/WheelFrac.lean` — 
 the wheel of fractions `⊙_S A = (A × A)/≡_S` is a `Wheel` for any commutative ring `A` and
 multiplicative submonoid `S` (sorry-free, `Classical.choice`-free, `[propext, Quot.sound]`).
 §VII defines WheelValuationStructure — the typeclass identifying the bridge: a commutative
-ring + multiplicative valuation with val(0) = ⊤, with the ZFC⁻ + AFA Quine atom
-`⊥ = {⊥}` **motivating** val(⊥) = ∞ — see § VIII; nothing in the Lean derives it) pinning
-the special element. The construction closes the construction
+ring + multiplicative valuation, with val(0) = ⊤ pinning the special element (motivated by the
+ZFC⁻ + AFA Quine atom `⊥ = {⊥}`, see § VIII; nothing in the Lean derives it). The construction closes the construction
 gap; §VI closes the identification gap. The universality result previously scoped as Tier 3
 (a substantial, non-near-term target) is now formalized.
 See notes/wheel_conjecture_proof_gap_2026-05-31.md for the original three-tier diagnosis.
@@ -828,7 +827,8 @@ importable here without a cycle; concretely for this carrier, `zpw_top_val_iff_i
 Two gaps, and only one closes. "Infinitudes of zero" closes the IDENTIFICATION gap — which element
 carries val = ⊤ — leaving `wvs_val 0 = ⊤` an assumed class field, motivated and not forced
 (§VII), and recoverable from `wvs_val_mul` once some element has valuation other than `0` (the
-`example`s after `nondegenerate_iff_map_one`). It does not close the CONSTRUCTION gap: `scale` is unary and `wmul` binary, so ring structure
+second and third `example`s after `nondegenerate_iff_map_one`: `v 0 = ⊤ ↔ ∃ x, v x ≠ 0` for a
+multiplicative map, and its zero-map control). It does not close the CONSTRUCTION gap: `scale` is unary and `wmul` binary, so ring structure
 is the missing hypothesis (the `WithTop L` + `selfApp` route does not close). Read § VII-b first. -/
 
 -- ============================================================

@@ -1,6 +1,6 @@
 """
 Build ZP-I Illustrated Companion
-Version 1.42 | November 2026
+Version 1.43 | November 2026
 
 Standalone companion for ZP-I: Inside Zero.
 Accessibility target: 2 years of college math.
@@ -276,7 +276,7 @@ def cycle_diagram():
     return d
 
 
-VERSION = '1.42'
+VERSION = '1.43'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -347,7 +347,7 @@ def build():
         'ZP-I answers both questions with a single theorem: <b>T-IZ (Inside Zero)</b>. '
         'Every 2-adic depth chain S₀, S₁, S₂, ... with no zero term, whose 2-adic valuations track a depth index (IsDepthChain) that climbs at every step (IsStrictStateSequence, a condition on that index), converges  - in the '
         '2-adic metric  - to zero, which the framework reads as the bottom role and then as a successor null. '
-        'The chain runs through every finite stage and reaches its limit at &#969;, the first ordinal limit. The '
+        'The chain runs through every finite stage and reaches its limit at &#969;, the first limit ordinal. The '
         'convergence is proved (given the IsDepthChain modelling commitment), and so, separately, is the fact that '
         'anything filling the bottom role IS the bottom already there. That the cycle begins again at the limit '
         'is a reading, not a theorem: see the Note on closure.'))
@@ -535,7 +535,7 @@ def build():
         'The doors are a picture, not a theorem: they are statements about three different objects, and the '
         'fourth passage reaches 0 in Q₂ only as a limit: no stage of the chain is 0, and the limit is 0, so '
         'the chain comes back to 0 without passing through any of the three doors. Reading that 0 as filling '
-        'the bottom role is a commitment, not something the doors or the limit prove.'))
+        'the bottom role is a commitment, and reading it as a successor null is C-DA2, a further one.'))
     E.append(cbody(
         '<b>Door 1  - R1 (No subtraction):</b> In the lattice, there is no subtraction. '
         'You cannot join your way back to a smaller state. The ascending chain never '

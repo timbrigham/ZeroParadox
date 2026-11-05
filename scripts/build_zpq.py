@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-Q: The Frame-Change PDF Builder
-Version 1.23 | November 2026
+Version 1.24 | November 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.23'
+VERSION = '1.24'
 FIRST_RELEASED = 'July 2026'
 
 from reportlab.graphics.shapes import Drawing, Circle, Ellipse, PolyLine, String, Polygon
@@ -61,7 +61,7 @@ def sphere_figure():
     d.add(Circle(cx, cy - R, 4, fillColor=c0, strokeColor=c0))
     # labels (Unicode direct, per the diagram standards)
     d.add(String(cx, cy + R + 8, '∞', fontName='DV', fontSize=13, fillColor=cI, textAnchor='middle'))
-    d.add(String(cx, cy - R - 14, '0 = ⊥ (2-adic norm)', fontName='DV', fontSize=11, fillColor=c0, textAnchor='middle'))
+    d.add(String(cx, cy - R - 14, '0 = ⊥ of Q₂ (2-adic norm)', fontName='DV', fontSize=11, fillColor=c0, textAnchor='middle'))
     d.add(String(cx + R + 6, cy - 2, 'seam  ‖x‖ = 1', fontName='DV', fontSize=8.5, fillColor=cmut, textAnchor='start'))
     d.add(String(cx - 14, cy - 60, 'one way ↓', fontName='DV', fontSize=8.5, fillColor=c0, textAnchor='start'))
     d.add(String(cx - 96, cy + 2, 'z → 1/z', fontName='DV', fontSize=8.5, fillColor=cI, textAnchor='start'))
@@ -87,7 +87,7 @@ def build():
             'sorry-free and choice-free in Lean 4 (ZeroParadox/Settheory/ForkFrameChange.lean); the per-domain realizations '
             'are witnessed in their home layers (the valuation instance &#8212; the Riemann sphere '
             '&#8212; in ZeroParadox/Multihomed/SnapFrameChange.lean / ZeroParadox/Valuation/RiemannSphere.lean; the categorical instance in '
-            'SeamFrameChange.lean). The universal cross-category identity is not a theorem &#8212; it '
+            'ZeroParadox/Category/SeamFrameChange.lean). The universal cross-category identity is not a theorem &#8212; it '
             'meets a proven wall (Cantor; ZeroParadox/Category/Lawvere.lean). Adds no axiom; the bottom itself is never '
             'positively represented.</i>',
             S['note']),
@@ -246,7 +246,7 @@ def build():
         headers=['Domain', 'The two poles (charts)', 'Frame-change &#8212; witness'],
         rows_data=[
             ['Valuation',
-             '0 = &#8869; (2-adic norm)  &#8596;  &#8734;',
+             '0 = &#8869; of Q<sub>2</sub> (2-adic norm)  &#8596;  &#8734;',
              'z &#8614; 1/z (rInv) &#8212; snap_is_frameflip'],
             ['Category',
              'initial (&#956;)  &#8596;  terminal (&#957;)',

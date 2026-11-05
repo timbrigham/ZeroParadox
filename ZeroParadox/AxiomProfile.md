@@ -57,7 +57,12 @@ decision of where UP is defined (`Motion.registeredDecidable_of_classical`) and 
 **Inherited, in the die:** `Motion.RegisteredComputable` and the theorems stated with it; their
 footprints are printed in the purity block of `ZeroParadox/Die.lean`. `Motion.RegisteredComputable`
 is a definition whose value is its statement, so its printed footprint is the statement's. The
-`ℕ`-valued variant and the footprint of the proof it uses are in `ZeroParadox/DieCannotBe.lean` § IX.
+choice enters through `Primcodable.bool`, the encoding of the `Bool` codomain, and not through
+`Computable` itself: a statement assuming only `∃ d : ℕ → Bool, Computable d` carries
+`Classical.choice`, while one assuming `∃ d : ℕ → ℕ, Computable d` is `[propext, Quot.sound]` (the two
+statement-control `example`s after `#print axioms Computable.const` in `ZeroParadox/DieCannotBe.lean`
+§ IX, with the measurement). The `ℕ`-valued variant and the footprint of the proof it uses are there
+too.
 
 ⚠ **Do not read `no_witness_of_fixedPointFree`'s axiom-freedom as evidence the choice is avoidable.**
 It is not a purer proof of the same statement — it *takes* a fixed-point-free map as a hypothesis,

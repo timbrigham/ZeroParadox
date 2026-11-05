@@ -1,4 +1,5 @@
 import ZeroParadox.Ordinal.SnapNucleus
+import ZeroParadox.Valuation.InfinitudeFloor
 import Mathlib.Order.Sublocale
 
 set_option maxHeartbeats 400000
@@ -20,8 +21,8 @@ and the **sublocales** (the systems they generate) form a `Coframe`: the *lattic
 `ZeroParadox/Category/DieNucleus.lean` § IV); the ceiling, ⊤ of `WithTop Ordinal`, unlocks the lattice. Reading it as
 the infinite pole is a placement Reading (`ZeroParadox/Multihomed/BoundaryOrder.lean` § I): the coincidence witness
 `infinitude_forces_infinite_complexity` (`ZeroParadox/BottomCannotBe.lean` § INVERSION) takes an `InfinitudeFloor`
-carrier, every infinite carrier admits one (`infinitudeFloor_nonempty_iff_infinite`), and a permutation of the carrier
-moves its `floor` anywhere, so the class cannot single out ⊤ of `WithTop Ordinal`. The map is a theorem:
+carrier, every infinite carrier admits one (`infinitudeFloor_nonempty_iff_infinite`), and any point of it can be the
+`floor` (the `example` after `snapSublocale`), so the class cannot single out ⊤ of `WithTop Ordinal`. The map is a theorem:
 `phaseEquivWithTop` sends `Phase.floor` to the greatest element (`phaseEquivWithTop_floor_covers_nothing`, `IsTop`
 half). The NOVELTY of ⊤ of `WithTop Ordinal`, a NEXT bottom, is the framework's commitment, not a theorem
 (`ZeroParadox/Order/SnapCannotBe.lean` § IV): `phaseFloorToTop` sends ⊥ of `WithBot Ordinal` to ⊤ of `WithTop Ordinal`
@@ -95,7 +96,7 @@ noncomputable example : Nucleus Ordinal := snapNucleus
     `Reading:` adjacent prior art: Elliott, arXiv:1101.2462v1 (2011), § 4, p. 12 (closure operations on a
     poset, `⋆₁ ≤ ⋆₂` iff the fixed set of `⋆₁` contains that of `⋆₂`), Lemma 4.2, p. 13 (on a bounded
     complete poset, joins of BOUNDED families of closure operations), and Proposition 4.3, p. 13 (the same
-    for his nuclei on an ordered magma). On the chain `Ordinal` a closure operation preserves binary meets,
+    for his nuclei on an ordered magma, when it is also near residuated). On the chain `Ordinal` a closure operation preserves binary meets,
     so it is a `Nucleus`, and Lemma 4.2 bears directly: this pair is the unbounded case it excludes. -/
 example : ∃ j k : Nucleus Ordinal, ∀ m : Nucleus Ordinal, ¬ (j ≤ m ∧ k ≤ m) := by
   classical
@@ -196,6 +197,18 @@ theorem snapNucleusTop_coe_bot :
     `WithTop Ordinal`. This is "the snap generates a system," fully closed: the object exists and sits in
     the lattice. -/
 noncomputable def snapSublocale : Sublocale (WithTop Ordinal) := snapNucleusTop.toSublocale
+
+-- `Statement:` on an infinite carrier every point is the `floor` of some `InfinitudeFloor`: transport
+-- an instance along `Equiv.swap` of its floor and the chosen point.
+example {α : Type*} [Infinite α] (a : α) : ∃ I : InfinitudeFloor α, I.floor = a := by
+  classical
+  obtain ⟨I⟩ := (infinitudeFloor_nonempty_iff_infinite α).mpr ‹_›
+  refine ⟨{ floor := Equiv.swap I.floor a I.floor
+            cx := I.cx ∘ (Equiv.swap I.floor a).symm
+            member := Equiv.swap I.floor a ∘ I.member
+            cx_member_strictMono := by simpa [Function.comp_def] using I.cx_member_strictMono
+            cx_floor_eq_iSup := by simpa [Function.comp_def] using I.cx_floor_eq_iSup }, ?_⟩
+  simp
 
 end ZeroParadox
 

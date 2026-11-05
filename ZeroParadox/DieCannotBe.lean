@@ -466,8 +466,10 @@ example : Nonempty (ZeroParadox.Motion Empty) := ⟨⟨fun x => x.elim, fun x =>
 -- `G` the two notions agree), and their "acyclic" admits loops, a cycle being required to pass
 -- through another vertex (p. 132). After the proof (p. 133) they note that `Gᵗ` is obtained by
 -- deleting, in any order, each arc `(u, v)` that is redundant: the graph has a directed path from `u`
--- to `v` not including it (also J. Bang-Jensen and G. Gutin, *Digraphs*, § 4.3, pp. 177-178). Neither
--- states the criterion used here as one sentence; it follows, since on an acyclic digraph without
+-- to `v` not including it (also J. Bang-Jensen and G. Gutin, *Digraphs*, § 4.3, pp. 177-178). The
+-- closest statement is AGU's, in the proof of Theorem 3 (p. 136): "arc (u, v) is in Gᵗ if and only if
+-- (u, v) ∈ G1, and there is no path from u to v which does not include arc (u, v)"; Bang-Jensen and
+-- Gutin do not state the criterion used here as one sentence. It follows, since on an acyclic digraph without
 -- loops a path from `u` to `v` that includes the arc `(u, v)` is that arc alone. So on a finite
 -- acyclic digraph without loops an arc is in the reduction if and only if it is the only path between
 -- its endpoints, and those arcs are exactly the covering pairs of the reachability order (a covering
@@ -1129,6 +1131,14 @@ example {α : Type} [Primcodable α] (M : ZeroParadox.Motion α) (h : M.UpTotal)
 #print axioms Computable.const
 -- Reading: so this proof's footprint includes `Classical.choice`; no footprint is claimed here for
 -- the `ℕ`-valued statement itself.
+-- Statement: statement controls, one per codomain: each assumes only a computable map out of `ℕ`.
+-- Measured 2026-11-05 in this pinned Mathlib by naming each as a theorem in a scratch file and
+-- printing its axioms: the `Bool` one reports `[propext, Classical.choice, Quot.sound]` and the `ℕ`
+-- one `[propext, Quot.sound]`, so the choice enters through the `Bool` codomain's encoding
+-- (`Primcodable.bool` reports `[propext, Classical.choice, Quot.sound]`) and not through
+-- `Computable` itself (`[propext]`).
+example (_h : ∃ d : ℕ → Bool, Computable d) : True := trivial
+example (_h : ∃ d : ℕ → ℕ, Computable d) : True := trivial
 #check @ZeroParadox.no_computable_registration_at_kleene_floor -- Statement: no computable test decides self-halting on `Nat.Partrec.Code`
 -- Statement: NON-MEMBER of (a): on `Nat.Partrec.Code`, UP defined (and fixing `c`) where `c` halts on
 -- its own code.

@@ -141,7 +141,7 @@ CELLS = {
         "SELF": "na: DEGENERATE, and that is the finding. `Fin 0` is EMPTY, so the Kleisli endomorphism "
             "`Fin 0 -> PMF (Fin 0)` is the unique empty map and every diagonal/self-application "
             "statement about it holds VACUOUSLY, carrying no content about this bottom. "
-            "⚠ Not that no self-map exists, as in the TopCat cells. No ZP witness is cited because none is owed for a degeneracy",
+            "⚠ Not that no self-map exists; the TopCat cells say the same. No ZP witness is cited because none is owed for a degeneracy",
         "GEN": "node4_generates_nat",
         "DYN": "out fC_no_return (initial source; no later stage n > 0 returns to KleisliCat PMF's floor Fin 0 - μ)",
     },
