@@ -352,6 +352,8 @@ example : (fun x : ℤ => -x) (0 : ℤ) = 0 := rfl
 #check @ZeroParadox.q2_zero_is_fixed
 -- Statement: in ℚ₂, the intersection of the nested balls is exactly `{0}`. [NARROW]
 #check @ZeroParadox.fB_bottom_is_limit
+-- Statement: in `TopCat`, `{0} ⊆ ℚ₂` with its inclusion cone is a limit of the ball tower `fB_functor`.
+#check @ZeroParadox.floorConeIsLimit
 -- Statement: the partial circulation exceeds every bound `M`. [WIDE, infinite measure]
 #check @ZeroParadox.t2_diverges
 -- Statement: surprisal exceeds every bound `M` — the same shape over a different function; this

@@ -7,8 +7,9 @@ per-declaration commentary. The results are described at each declaration, not l
 
 MC-1 is the cross-framework claim about the four domain bottoms. It was stated in two halves, and the second is retired:
 
-* a **correspondence** half: each domain's bottom is the categorical bottom (initial object or inverse limit) of that
-  domain's own real structure, and the four agree on the snap;
+* a **correspondence** half: each domain's floor has a categorical characterization in that domain's own real
+  category, and it differs by category (initial in two, a limit that is terminal and not initial in `TopCat`, listed
+  below); the four agree on the snap;
 * a **literal-identity** half: the four bottoms are numerically one object across four different categories. That
   identity is **retired as ill-typed** (object equality across categories does not typecheck and is not invariant under
   equivalence); what separates the members is proved property by property (`seam_unique_among_named`,
@@ -23,8 +24,8 @@ categories:
 
 * **F_B / `TopCat`** (`fB_functor`): ⊥ is the inverse limit of the clopen-ball system, as a limit cone
   in `TopCat` (`floorConeIsLimit`, `ZeroParadox/Order/PadicLimitCone.lean`); the set equation beneath it
-  is `⋂ n, B(0,2⁻ⁿ) = {0}` (`fB_bottom_is_limit`). `TopCat` has a terminal object, so the honest statement is "limit",
-  not "initial".
+  is `⋂ n, B(0,2⁻ⁿ) = {0}` (`fB_bottom_is_limit`). `{0}` is terminal in `TopCat` and not initial
+  (`padic_bottom_not_initial`), so the statement is "limit", not "initial".
 * **F_D / `ModuleCat ℂ`** (`fD_functor`): ⊥ = `StateSpace 0` is the genuine initial (zero) object (`fD_zero_isInitial`),
   and the embeddings are isometric (`fD_embed_inner`).
 * **F_C / `KleisliCat PMF`** (`fC_functor`): ⊥ = `Fin 0` is the genuine initial object (`fC_zero_isInitial`), and there
@@ -48,14 +49,14 @@ None of the categorical structure here is new.
   quotient system of the presentation ℤ₂ = lim ℤ/2ⁿ.
 - F_D's zero module is the zero/initial object of an abelian category.
 
-ZP-H's contribution is not new category theory but the cross-domain *assembly*: each ZP bottom realized as its own real
-category's categorical bottom, agreeing on the snap.
+ZP-H's contribution is not new category theory but the cross-domain *assembly*: each ZP floor realized in its own real
+category, as an initial object or (in `TopCat`) a limit, agreeing on the snap.
 
 ## What the witness does and does not say
 
 `mc1_correspondence` bundles these into one witness. It is the **correspondence** half only. It is *not* claimed that
-the four bottoms are one object, which is retired as ill-typed; the claim is only that each is the categorical bottom of
-its own real category and that they agree on the snap. This is the same discipline the framework applies elsewhere, with one difference kept visible:
+the four bottoms are one object, which is retired as ill-typed; the claim is only the per-category characterization above
+(initial, initial, limit) and that they agree on the snap. This is the same discipline the framework applies elsewhere, with one difference kept visible:
 
 - AX-1 is retired. Its shape is proved as T-SNAP, and that the snap occurs follows from the occurrence commitment
   together with DA-1 (closed given DP-2); that commitment remains. The identity reading leaves nothing to commit to:

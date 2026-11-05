@@ -114,6 +114,14 @@ DEFERRED_TAKES = {
 }
 
 
+def take_exempt(path):
+    """True if `path` owes no take: a TAKE_EXEMPT basename, or any `Vendored` directory component
+    (Tim, ruling 81: "The "vendored" folder should be overridden as needed... None of it should
+    need a take.")."""
+    parts = path.replace('\\', '/').split('/')
+    return parts[-1] in TAKE_EXEMPT or 'Vendored' in parts[:-1]
+
+
 def c_engineers_takes():
     """Every ZP-X Lean file carries a filled Engineer's Take.
 
@@ -131,7 +139,7 @@ def c_engineers_takes():
         if '.lake' in norm:
             continue
         base = os.path.basename(norm)
-        if base in TAKE_EXEMPT:
+        if take_exempt(norm):
             continue
         txt = read(path)
         for pat in ('TODO (Tim)', 'TODO: Engineer'):
@@ -689,6 +697,31 @@ def selftest():
     ok = st == LEDGER_UNREADABLE and st != LEDGER_CLEAR
     bad += 0 if ok else 1
     print('    %-34s %s' % ('missing ledger is UNREADABLE', 'ok' if ok else '*** got %s ***' % st))
+
+    # Ruling 81: a take-less file under a `Vendored` directory passes; a take-less file elsewhere
+    # still fails. Driven through c_engineers_takes over a temp tree, so the exemption is RUN.
+    print('  ENGINEER\'S TAKE (MUST SUPPRESS Vendored/, MUST FIRE elsewhere)')
+    import tempfile
+    global LEAN_GLOB
+    real_glob = LEAN_GLOB
+    saved = (fails[:], warns[:])
+    try:
+        with tempfile.TemporaryDirectory() as td:
+            for label, rel, want in (
+                    ('take-less Vendored file passes', 'Vendored/X.lean', True),
+                    ('take-less non-vendored file fails', 'Order/X.lean', False)):
+                d = os.path.join(td, label.replace(' ', '_'))
+                os.makedirs(os.path.dirname(os.path.join(d, rel)))
+                with open(os.path.join(d, rel), 'w', encoding='utf-8') as f:
+                    f.write('theorem t : True := trivial\n')
+                LEAN_GLOB = os.path.join(d, '**', '*.lean')
+                got = c_engineers_takes()
+                ok = got is want
+                bad += 0 if ok else 1
+                print('    %-34s %s' % (label, 'ok' if ok else '*** got %s ***' % got))
+    finally:
+        LEAN_GLOB = real_glob
+        fails[:], warns[:] = saved
 
     print('\n  selftest: %s' % ('PASS' if not bad else 'FAIL (%d)' % bad))
     return 1 if bad else 0
