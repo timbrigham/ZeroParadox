@@ -1,13 +1,13 @@
 """
 Build ZP-J Wheel Illustrated Companion
-Version 1.9 | November 2026
+Version 1.10 | November 2026
 """
 
 import os
 from zp_utils import *
 from reportlab.graphics.shapes import Drawing, Line, String, Circle, Ellipse
 
-VERSION = '1.9'
+VERSION = '1.10'
 FIRST_RELEASED = 'June 2026'
 
 
@@ -279,8 +279,10 @@ def build():
         'encoding - readable field by field against Carlstr&#246;m\'s Definition 1.1, with '
         'a verified axiom footprint showing it needs no axiom of choice - placed in the '
         'context of the bottom element &#8869;. The takeaway: division by zero is not an '
-        'error to be avoided but a defined element to be understood, and at exactly the '
-        'point the rest of the framework already identifies as the bottom.'))
+        'error to be avoided but a defined element to be understood, and that element, '
+        '&#8869; = 0&#183;/0, fills the bottom role in the wheel: a member of the bottom family '
+        '(MC-1), whose members in the framework\'s other carriers fill the same role and are not one '
+        'object with it, since an equation across carriers is ill-typed.'))
     E.append(sp(6))
 
     print(f'[build_zpj_wheel_companion] Assembling document ({len(E)} elements)...')
