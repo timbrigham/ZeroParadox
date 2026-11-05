@@ -1,12 +1,12 @@
 """
 Zero Paradox — ZP-I: Inside Zero PDF Builder
-Version 1.35 | November 2026
+Version 1.36 | November 2026
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.35'
+VERSION = '1.36'
 FIRST_RELEASED = 'April 2026'
 
 # ZP-I uses justified body text; override the left-aligned zp_utils defaults
@@ -793,8 +793,8 @@ def build():
          'on the convergence theorems, &#167; III; the DA-2 step is axiom-free).'],
         ['AX-1: Binary Snap Causality',
          'RETIRED — shape proved as T-SNAP (ZP-E); the first snap occurs given the occurrence commitment and DA-1',
-         'AX-1 (Binary Snap Causality) is retired. Its content was split in two: the shape of the snap is proved, as Theorem T-SNAP, and that the first snap occurs is stated separately: it follows from the occurrence commitment together with DA-1 (closed given DP-2). The occurrence commitment is stated in two charts, execution and slot, beside t_snap_given (ZeroParadox/Order/Snap.lean; indexed in ZeroParadox/Order/SnapCannotBe.lean &#167; II and CLAIMS.md), the slot chart through t_snap_of_fires_once and trials_fires_once (ZeroParadox/Information/CrossingTrials.lean &#167; VIII). '
-         'tsnap_holds_but_nothing_moves shows T-SNAP does not carry it. T-SNAP is derived in ZP-E. '
+         'AX-1 (Binary Snap Causality) is retired. Its content was split in two: the shape of the snap is proved, as Theorem T-SNAP, and that the first snap occurs is stated separately: it follows from the occurrence commitment together with DA-1 (closed given DP-2). The occurrence commitment is stated in two charts, execution and slot, beside t_snap_given (ZeroParadox/Order/Snap.lean; indexed in ZeroParadox/Order/SnapCannotBe.lean &#167; II and CLAIMS.md), the slot chart as the hypothesis hw of t_snap_of_fires_once, that the tape fires at some stage, beside the theorem trials_fires_once that firing has probability one, which names no tape (ZeroParadox/Information/CrossingTrials.lean &#167; VIII). '
+         'tsnap_holds_but_nothing_moves shows T-SNAP does not carry that the snap occurs. T-SNAP is derived in ZP-E. '
          'A snap at the ordinal limit is the cycle reading, not a consequence of T-IZ; its premises are '
          'stated in &#167; V.III.'],
         ['Remaining axioms',
