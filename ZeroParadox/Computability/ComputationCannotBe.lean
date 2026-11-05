@@ -141,7 +141,8 @@ example (k : ℕ) : ZeroParadox.IsComputationalQuine (Nat.Partrec.Code.const k) 
 #check @ZeroParadox.selfPrints_universal_address
 
 -- Statement: a disjunctive tape `ℕ → Bool` equals its own shift by no `a > 0`: no full copy of
---   itself at any offset.
+--   itself at any offset. "Copy" here is a tape equal to its own shift, not a `SelfCopyRef`
+--   map (§ IX).
 -- Reading: the ⊥-role commitment this bears on, with both sides stated, is
 --   `ZeroParadox/Information/Disjunctive.lean` § VI.
 #check @ZeroParadox.disjunctive_not_periodic

@@ -14,8 +14,9 @@ two-chart reading for § IV–VII (`Reading:` CARRIER, § Two charts below), and
 - § VI. If `0 < p ≤ 1`, a class `𝒯` of tests contains every zero-block test for `trials p hp`, and the
   tape `w` avoids `𝒯`, then `w` fires infinitely often (`fires_io_of_avoids`). The avoidance is the
   hypothesis `htyp` on one tape. For `𝒯` the zero-block tests it is weak: the all-`true` tape, a
-  constant tape, meets it at every `p ≤ 1` (the third `example`); it is not Martin-Löf randomness
-  (open item 1 concerns that). One way: the squares tape
+  constant tape, meets it at every `p ≤ 1` (the third `example`); for `p < 1` it is not Martin-Löf
+  randomness (open item 1 concerns that), and at `p = 1/2` it does not give Kurtz randomness either,
+  since the all-`true` tape is computable (Kurtz and Reimann–Slaman entries below). One way: the squares tape
   fires infinitely often (the first `example`), and for every `0 < p ≤ 1` and every such `𝒯` it does
   not avoid `𝒯` (`squaresTape_not_avoids`; the first `example` is the case `p = 1/2`); at `p = 1/2`
   the all-`true` tape fires infinitely often and lies in every one block, each of measure at most

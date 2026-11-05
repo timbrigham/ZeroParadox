@@ -3,8 +3,8 @@
 Argument and attribution for `ZeroParadox/Category/DiagonalWitness.lean`, moved from its module
 docstring. The Lean file holds the declarations, the Engineer's Take and the per-declaration glosses.
 
-`ZeroParadox/DiagonalFixedPoint.lean` *collects* the faces of self-reference; the Lean file asks what they **minimally
-have in common**, one level beneath the μ/ν fork. The engine is the diagonal argument of **Lawvere
+`ZeroParadox/DiagonalFixedPoint.lean` *collects* the faces of self-reference; the Lean file asks what
+they **minimally have in common**, one level beneath the μ/ν fork. The engine is the diagonal argument of **Lawvere
 (1969)**, restated by **Yanofsky (2003)**; that whether the witness exists is *category-relative* is the
 recognized effective-topos / Turing-category observation (**Hyland 1982; Cockett–Hofstra 2008**).
 Section 3.7 of **van Oosten 2008** (*Realizability: An Introduction to its Categorical Side*) is a
@@ -16,7 +16,8 @@ axiom, that `Σ^N` is enumerable (p. 232), `Σ` being the r.e. subobject classif
 where `N` is projective and internally projective, every ¬¬-stable subobject of an (internally)
 projective object is (internally) projective, and Markov's Principle holds (p. 231).
 The Lean file only *packages* the Lawvere–Yanofsky diagonal and the category-relative observation —
-`HasWitnessRel` is a formalization lever, not a new theorem, and its level sets are the per-face verdicts already proven in `ZeroParadox/Category/Lawvere.lean` §V–VI.
+`HasWitnessRel` is a formalization lever, not a new theorem, and its level sets are the per-face
+verdicts already proven in `ZeroParadox/Category/Lawvere.lean` §V–VI.
 There the bare `HasLawvereWitness β` (a point-surjection `α → (α → β)`) is FALSE for every nontrivial
 type in **Set** (Cantor), so the lattice and 2-adic faces are *posited* fixed points, while the
 computability (Kleene) face is *genuine* — in the **effective** category.
@@ -40,15 +41,16 @@ that "count" in the ambient category. The face table becomes level sets of ONE p
   Theorem 5, p. 18); relative to the class of all maps on that quotient there is none
   (`no_witnessRel_evalClass_top`), and with literal equality on codes there is none either (above). The
   general diagonal fixed point on this side, with no `eval`-respecting hypothesis, is **Rogers'
-  fixed-point theorem**, cited rather than derived there (`Nat.Partrec.Code.fixed_point`, aliased as `computability_face_fixedPoint`
-  in `ZeroParadox/Category/Lawvere.lean`; Mathlib reserves *Kleene's second recursion theorem* for
-  `fixed_point₂`).
+  fixed-point theorem**, cited rather than derived there (`Nat.Partrec.Code.fixed_point`, aliased as
+  `computability_face_fixedPoint` in `ZeroParadox/Category/Lawvere.lean`; Mathlib reserves *Kleene's
+  second recursion theorem* for `fixed_point₂`).
 
 ## The topology (why "underlying level" makes it obvious)
 
 `HasWitnessRel β ·` is **antitone** in `M`: shrinking the admissible class can only help the witness. So
 `{M | HasWitnessRel β M}` is downward-closed in `⊆` — a lower set on the lattice of admissible-map-classes,
 i.e. a **closed set in the Alexandrov topology** on that lattice. The wall/floor/posited trichotomy is the
-level structure of one monotone predicate over that space; the floor can "switch on" only once `M` drops
-below every admissible fixed-point-free map (`no_witnessRel_of_admissible_fpf`). That lattice-of-map-classes, with the witness as an Alexandrov-closed
-set, is the topology the collection carries.
+level structure of one monotone predicate over that space; the floor can "switch on" only once `M`
+contains no fixed-point-free map (`no_witnessRel_of_admissible_fpf`, a necessary condition, one way).
+That lattice-of-map-classes, with the witness as an Alexandrov-closed set, is the topology the
+collection carries.

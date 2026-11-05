@@ -25,9 +25,9 @@ by typeclass requirement, as the class field `botCode_is_quine`. The KleeneStruc
 was motivated by reading (1)–(4) as naming the same structural role in four formal languages. That
 reading splits in two. Its identity half is retired: no code is equated with ⊥, and (4) is compared
 with (1)–(3) through the die's Quine-atom role, which under the `eval` step no single code occupies
-and, for computable `eval`-respecting maps, a class of codes does (Key insight, below). Its running half stays a commitment: that ⊥ actually executes is the
-occurrence commitment. No field asserts either half, and no theorem in this corpus relates `botCode`
-to `bot` (not located as of 2026-11-01, searched as follows: `ZeroParadox/**/*.lean` for `botCode`,
+and, for computable `eval`-respecting maps, a class of codes does (Key insight, below). Its running
+half stays a commitment: that ⊥ actually executes is the occurrence commitment. No field asserts
+either half, and no theorem in this corpus relates `botCode` to `bot` (not located as of 2026-11-01, searched as follows: `ZeroParadox/**/*.lean` for `botCode`,
 for `KleeneStructure`, and for "computational face" / "same structural"; no hit states a relation
 between `botCode` and `bot`). For a generic carrier `L` no Lean `=` between them typechecks, since
 `botCode` is a `Code` and `bot` an element of `L`; at `L := Code`, under an assumed instance (none is
@@ -59,9 +59,9 @@ reading (ZP-E § IV), which rules out an external executor and not an inert ⊥.
 
 What Lean supplies underneath: Kleene's second recursion theorem (Mathlib:
 Nat.Partrec.Code.fixed_point₂) guarantees a fixed point exists for any partially
-computable transformation. The AFA Quine atom (CC-2, a set x = {x}) and the Kleene computational quine
-(∃ c, eval c = f c) are compared through a role, not an identity: the die's Quine-atom role
-`Motion.SelfOnlyAt` (`ZeroParadox/Die.lean`), a point that steps to itself and to nothing else,
+computable transformation. The AFA Quine atom (CC-2, a set x = {x}) and the Kleene computational
+quine (`IsComputationalQuine c`, that is `eval c = selfApply c`) are compared through a role, not
+an identity: the die's Quine-atom role `Motion.SelfOnlyAt` (`ZeroParadox/Die.lean`), a point that steps to itself and to nothing else,
 occupied or provably empty chart by chart. On codes, with OVER `a → b` when `eval b = F a`, no
 code occupies it for any `F : Code → ℕ →. ℕ` (`evalStepMotion_not_selfOnlyAt`); on classes of
 codes up to equal `eval`, in the quotient of `evalStepMotion (eval ∘ G)`, some class does for
@@ -175,8 +175,9 @@ distinct — `infinite_quine_family` and `quine_goedel_injective` prove it — w
 set-theoretic side has exactly one self-containing element (`quine_unique`). A unique
 element and an infinite indexed family are different shapes, so the correspondence here
 is between the *succession* of instantiations and the family, not an identification of
-one element with one code. That identity reading is retired (§ II); no theorem in this file identifies a `Code` with an element of a lattice, and the type
-boundary makes such an identification unstatable.
+one element with one code. That identity reading is retired (§ II); no theorem in this file
+identifies a `Code` with an element of a lattice, and the type boundary makes such an
+identification unstatable.
 
 **Prior art, and a distinction that must not be collapsed.** That a computational object
 is named by many indices rather than one is standard: the **Padding Lemma** — every
@@ -301,9 +302,10 @@ importing this one.
   construction is Kleene's own and constructive versions are already machine-checked, in Coq and,
   over an axiomatised naming system, in Lean 4 (prior-art pointers at the end of § V of that file);
   this corpus proves the s-m-n step (`cf_eval_curry`) and the diagonal of Kleene's ψ-form
-  (`cf_eval_diag`) on Mathlib's `Code`, and adds the measurement there; Close's
-  `diag_closure_spec` presupposes a universal code, which `KleeneChoiceFree.lean` does not build;
-  one is built in `ZeroParadox/Computability/UniversalChoiceFree.lean` (`universal_code_cf`).
+  (`cf_eval_diag`) on Mathlib's `Code`, and adds the measurement there. Close's
+  `diag_closure_spec` is an assumed field; its counterpart on Mathlib's `Code`, which evaluates the
+  code `e_f` returns, needs a universal code, which `KleeneChoiceFree.lean` does not build; one is
+  built in `ZeroParadox/Computability/UniversalChoiceFree.lean` (`universal_code_cf`).
 - As of 2026-10-25, `ofNatCodeCF` and both inverse laws (`cf_encodeCode_ofNatCodeCF`,
   `cf_ofNatCodeCF_encodeCode`) carry no `Classical.choice`, and `ofNatCodeCF_eq_ofNatCode` proves
   `ofNatCodeCF = ofNatCode` (§ VI of `ZeroParadox/Computability/KleeneChoiceFree.lean`, footprints

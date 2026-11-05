@@ -295,8 +295,8 @@ example : letI := ZeroParadox.trivialZPSemilattice
 -- apex.
 #check @ZeroParadox.seam_not_mu_colimit_apex
 -- Statement: for `constPF Unit` the QPF seam `qpfSeam Unit` is the canonical bijection, no
--- `Fix ≃ Cofix` exists for the recursive `idPF_Coalgebra`, the lattice seam is the identity equivalence, and the `selfApp` fixed points
--- are `{bot}`.
+-- `Fix ≃ Cofix` exists for the recursive `idPF_Coalgebra`, the lattice seam is the identity
+-- equivalence, and the `selfApp` fixed points are `{bot}`.
 -- Reading: this records that no cross-setting map was EXHIBITED — an open "none given", not a no-go.
 -- The `IsEmpty` conjunct above is about `Fix ≃ Cofix`, not about any cross-setting map type.
 #check @ZeroParadox.no_cross_setting_map
@@ -309,8 +309,8 @@ example : letI := ZeroParadox.trivialZPSemilattice
 example : @ZeroParadox.t3_unreachability = @ZeroParadox.ZPCategory.ax_g2 := rfl
 -- Statement: rose trees over a partially-well-ordered preorder are partially well ordered.
 -- Reading: this is the labeled Kruskal tree theorem; attribution in `ZeroParadox/Ordinal/Kruskal.md`.
--- Indexed as a SCOPE FENCE — a well-quasi-order is not a descent to a bottom, so the "canonical floor 0" claim does
--- not reach here.
+-- Indexed as a SCOPE FENCE — a well-quasi-order is not a descent to a bottom, so the "canonical
+-- floor 0" claim does not reach here.
 #check @ZeroParadox.kruskal_is_wqo_not_descent
 
 /-! ### POSITIVE — ⊥ as the fixed point where operation and result coincide -/
@@ -588,8 +588,9 @@ noncomputable example : Ordinal.{0} →o Ordinal.{0} :=
 -- under the 2-adic multiplicity valuation `AddValuation ℤ_[2] ℕ∞` (`addVal_bot`, § POSITIVE).
 example (x : ℤ_[2]) : x - x = 0 ∧ multiplicity_addValuation PadicInt.prime_p (x - x) = ⊤ :=
   ⟨sub_self x, by rw [sub_self]; exact ZeroParadox.addVal_bot _⟩
--- Statement: Mathlib's `dist_eq_norm`: in a seminormed additive commutative group, `dist a b = ‖a - b‖`, so every
--- comparison of two points is the norm of their difference, measured from 0.
+-- Statement: Mathlib's `dist_eq_norm`: in a seminormed additive commutative group,
+-- `dist a b = ‖a - b‖`, so every comparison of two points is the norm of their difference, measured
+-- from 0.
 #check @dist_eq_norm
 -- Statement: a tape `ℕ → Bool` is disjunctive when every finite word occurs in it infinitely often.
 #check @ZeroParadox.Disjunctive
@@ -622,8 +623,12 @@ example : (ℕ → Bool) ↪o Set ℕ :=
 -- Statement: Mathlib's `Set.preimage_boolIndicator_true`, the inverse direction: the tape
 -- `s.boolIndicator` read back this way is `s`.
 #check @Set.preimage_boolIndicator_true
-#check @IsSimpleOrder.orderIsoBool -- Statement: Mathlib neighbour: a bounded simple order with decidable equality is order-isomorphic to `Bool`
-#check @CompleteAtomicBooleanAlgebra.toSetOfIsAtom -- Statement: Mathlib neighbour: a complete atomic Boolean algebra is order-isomorphic to the sets of its atoms
+-- Statement: Mathlib neighbour: a bounded simple order with decidable equality is
+-- order-isomorphic to `Bool`.
+#check @IsSimpleOrder.orderIsoBool
+-- Statement: Mathlib neighbour: a complete atomic Boolean algebra is order-isomorphic to the sets
+-- of its atoms.
+#check @CompleteAtomicBooleanAlgebra.toSetOfIsAtom
 -- Statement: under pointwise exclusive-or, every tape's self-difference is the all-false tape, so
 -- a tape read against itself is never disjunctive.
 example (x : ℕ → Bool) : (fun n => xor (x n) (x n)) = (fun _ => false) ∧

@@ -33,8 +33,8 @@ different programs computing the same function.
 a precondition the witness above satisfies. The conclusion (Lawvere fires in the computable category)
 still holds, for a reason about **which maps exist**, not about which types they land in:
 `no_computable_evalFixedPointFree` shows no computable self-map on codes is eval-fixed-point-free, so
-the diagonal that would refute the witness has no computable representative and the obstruction cannot
-fire. The obstruction is absent **at the level of `eval`**, which is the level the reflexive object
+up to `eval` the diagonal that would refute the witness has no computable representative and the
+obstruction cannot fire (under literal equality it fires, by `Code.pair c c` above). The obstruction is absent **at the level of `eval`**, which is the level the reflexive object
 lives at.
 
 ⚠ **NOT because `eval` lands in a different codomain.** That reading is refuted in one line —

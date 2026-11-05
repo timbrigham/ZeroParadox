@@ -13,6 +13,7 @@ while the ν side (`cofix_nonempty`, the final coalgebra / non-well-founded clos
 `Classical.choice`. The question here: can that split be lifted into a **theorem-level, in-statement
 invariant** — a witnessed result — rather than a measured comment? Long form, beside this file:
 `ZeroParadox/Computability/ChoicePurityInvariant.md`.
+
 ## Engineer's Take
 
 This file is one of a series of iterative attempts on this branch to build a map of how the various

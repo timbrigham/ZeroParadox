@@ -18,10 +18,12 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 ---
 ## Formal Overview (AI-assisted)
-The Markov analog, on `Fin 2 → ℝ`, of `ZeroParadox/Valuation/ContractionRate.lean`'s p-adic contraction
-dichotomy; both halves are `markov_contraction_dichotomy`. The convergence half covers `0 < a < 1` and
-starts on the probability line `v₀ 0 + v₀ 1 = 1` (the hypothesis `hv` of `markov_contraction_tendsto`).
-The non-convergence half is one orbit of `swap`, which is `markovStep 1`. The control `example` after
+"#2" in the title is the bottom-diagram probe campaign's label for the Markov attractor node (the
+p-adic floor is #3). The Markov analog, on `Fin 2 → ℝ`, of
+`ZeroParadox/Valuation/ContractionRate.lean`'s p-adic contraction dichotomy; both halves are
+`markov_contraction_dichotomy`. The convergence half covers `0 < a < 1` and starts on the probability
+line `v₀ 0 + v₀ 1 = 1` (the hypothesis `hv` of `markov_contraction_tendsto`). The non-convergence half
+is one orbit of `swap`, which is `markovStep 1`. The control `example` after
 `swap_orbit_not_convergent` is the other endpoint `a = 0`, where every orbit is constant. Prior art:
 Levin and Peres, *Markov Chains and Mixing Times*, 2nd ed., with contributions by E. L. Wilmer; the
 two-state chain is their Example 1.1, p. 3. -/
