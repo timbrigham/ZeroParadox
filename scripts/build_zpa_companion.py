@@ -1,5 +1,5 @@
 """
-Build ZP-A Illustrated Companion (v1.19)
+Build ZP-A Illustrated Companion (v1.23)
 Covers: join-semilattice, partial order, Hasse diagram, one-directional transitions,
 monotonicity (T3), bottom-as-constituent (T2), four concrete examples, and CC-2.
 """
@@ -89,7 +89,7 @@ def transition_diagram():
                  fontName='DV-B', fillColor=RED))
     return d
 
-VERSION = '1.19'
+VERSION = '1.23'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -231,15 +231,19 @@ def build():
     E.append(sp(4))
     E.append(remember_box(
         'Note: [0, &#8734;) with maximum is a valid join-semilattice, and &#8477; '
-        'works perfectly well as an algebraic structure here. But as a <i>metric substrate '
-        'for the Binary Snap</i>, &#8477; fails — for any positive &#949;, the element '
-        '&#949;/2 is always smaller, so no minimal first step can exist. This is the '
-        'subject of ZP-F (The Counterexamples), which proves that no linearly ordered field '
+        'works perfectly well as an algebraic structure here. But in &#8477;, 0 has no first step '
+        'above it, AX-B1&#8217;s form: for any positive &#949;, the element '
+        '&#949;/2 is always smaller, so no minimal first step can exist. That no first step exists '
+        'is the subject of ZP-F (The Counterexamples), which proves that no linearly ordered field '
         'has a least positive element (f_snap_impossible); what obstructs a first step is density '
-        '(axb1_fails_everywhere_iff_dense). Among the completions of &#8474;, Q&#8322;&#8217;s topology removes '
-        'a separate, topological obstruction, connectedness (padic_snaps: Q&#8322; is totally '
-        'disconnected), but supplies no first step: Mathlib gives Q&#8322; no order, and under '
-        'the norm preorder 0 has no first step there either (ZeroParadox/BottomCannotBe.lean). The first '
+        '(axb1_fails_everywhere_iff_dense). T-SNAP&#8217;s shape, the Binary Snap, does not need '
+        'one: t_snap_given holds at a step taken in a densely ordered join-semilattice (the '
+        '&#8474;&#8805;0 example, ZeroParadox/Order/Snap.lean). Among the completions of &#8474;, the topological difference '
+        'between &#8477; and Q&#8322; is that &#8477; is connected, so not totally disconnected (real_no_snap), while Q&#8322; is '
+        'totally disconnected (padic_snaps). That is not a separate fence: for a linear order '
+        'carrying its order topology, connectedness implies density (Mathlib '
+        'denselyOrdered_of_preconnectedSpace). Q&#8322;&#8217;s topology supplies no first step: '
+        'Mathlib gives Q&#8322; no order, and under the norm preorder 0 has no first step there either (ZeroParadox/BottomCannotBe.lean). The first '
         'step is supplied by AX-B1, a commitment (ZeroParadox/Order/SnapCannotBe.lean, &#167; V).'))
     E.append(sp(4))
     E.append(example_box('Example — Document edit history', [
@@ -251,7 +255,7 @@ def build():
     ]))
     E.append(sp(8))
     # CC-2: Self-Containment of ⊥
-    E.append(Paragraph('&#8869; Contains Itself (CC-2)', CS['h1']))
+    E.append(Paragraph('&#8869; in the Quine-Atom Role (CC-2)', CS['h1']))
     E.append(cbody(
         'Every state sits above &#8869;. But what exactly <i>is</i> &#8869;? The standard '
         'answer: the additive identity, the algebraic zero, the starting point. ZP-A '

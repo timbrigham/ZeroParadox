@@ -1,6 +1,6 @@
 """
 Build ZP-J Illustrated Companion
-Version 1.38 | November 2026
+Version 1.40 | November 2026
 v1.33: ROUND-6 OUTSTANDING CLOSEOUT, items 3a, 3b, 3d, 6 (corpus-zpj-v2.8-round6-outstanding.md
 EXECUTION SPEC 2026-09-28). 3a (CC-2 proved half): the Foundation-freeness sentence cited no
 identifier; it now cites wf_no_selfloop (ZeroParadox/Settheory/Wall.lean - fully general, no
@@ -212,7 +212,7 @@ def abstraction_chain_table():
     t.setStyle(ts); return t
 
 
-VERSION = '1.38'
+VERSION = '1.40'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -365,17 +365,19 @@ def build():
         'bottom element plays it. The two notions identify the same object.'))
     E.append(sp(8))
 
-    # ── Three Languages, One Object ──────────────────────────────────────────
-    E.append(Paragraph('Three Languages, One Object', CS['h1']))
+    # ── Three Languages, One Element of the Lattice ───────────────────────────
+    E.append(Paragraph('Three Languages, One Element of the Lattice', CS['h1']))
     E.append(cbody(
-        'T-EXEC establishes a three-way identification. &#8869; is the same object described '
-        'in three different mathematical languages:'))
+        'T-EXEC establishes a three-way identification within one lattice: in a lattice L carrying '
+        'AFAStructure, the Quine-atom predicate, the least element and the join identity pick out one '
+        'element of L, &#8869; of L (t_exec_triple_iff with da2_bottom_characterization), described in three different mathematical '
+        'languages:'))
     E.append(three_way_table())
     E.append(sp(4))
     E.append(cbody(
         'These are not three separate properties that happen to coincide. They are three '
         'descriptions of the same structural role. T-EXEC machine-checks that the three roles '
-        'have one occupant (t_exec_triple_iff), and quineAtomHost_quine_role_iff at '
+        'have one occupant (t_exec_triple_iff with da2_bottom_characterization), and quineAtomHost_quine_role_iff at '
         'afaStructure_isQuineAtomHost does so for the membership-host row; that row is the Lean chart whose AFA '
         'reading is the set Q = {Q}; that reading is not a Lean statement.'))
     E.append(sp(4))
@@ -442,8 +444,9 @@ def build():
         'Imagine every element carries a "depth"  - a value in the extended naturals '
         '{0, 1, 2, &#8230;, &#8734;} given by how many times you can descend through its '
         'structure before bottoming out. Ordinary elements bottom out '
-        'in finitely many steps, so their depth is finite; &#8869; never bottoms out  - it '
-        'contains itself  - so its depth is &#8734;. Applying scale  - the self-application '
+        'in finitely many steps, so their depth is finite; &#8869; of the lattice never bottoms '
+        'out  - its depth is &#8734;, the field val_bot (val &#8869; = &#8868;) of '
+        'ValuationStructure. Applying scale  - the self-application '
         'operation  - raises depth by exactly 1 at every non-&#8869; element. '
         'So if scale(x) = x, then depth(x) = depth(x) + 1  - an equation with no finite '
         'solution. Only &#8869;, whose depth is already &#8734; (and &#8734; + 1 = &#8734; in '
@@ -624,7 +627,8 @@ def build():
     E.append(key_result_box(
         'Key Results  - ZP-J',
         'T-EXEC (axiom-free, Lean 4): IsQuineAtom(q) &#8596; q = &#8869;. '
-        'The Quine atom, the order minimum, and the join identity are the same element. '
+        'In a lattice L carrying AFAStructure, the Quine-atom predicate, the order minimum and the '
+        'join identity pick out one element of L (t_exec_triple_iff with da2_bottom_characterization). '
         'CC-1 (S&#8320; = &#8869;): a state sequence starts at a Quine atom exactly when it starts '
         'at &#8869; (cc1_derived with t_exec_iff)  - axiom-free in Lean 4; the starting point is '
         'restated through the role, not forced (on a lattice with a second point a valid sequence can start above &#8869;). '

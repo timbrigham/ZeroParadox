@@ -1,13 +1,13 @@
 """
 Build ZP-J Wheel Illustrated Companion
-Version 1.9 | November 2026
+Version 1.14 | November 2026
 """
 
 import os
 from zp_utils import *
 from reportlab.graphics.shapes import Drawing, Line, String, Circle, Ellipse
 
-VERSION = '1.9'
+VERSION = '1.14'
 FIRST_RELEASED = 'June 2026'
 
 
@@ -143,8 +143,12 @@ def build():
         'absorbing "undefined" element: combine it with anything and you get &#8869; back. '
         'It is the wheel\'s honest answer to a genuinely meaningless expression - instead of '
         'crashing, the arithmetic returns a dedicated value that means "no information." '
-        '(The wheel writes this element &#8869;, the same symbol the Zero Paradox uses for '
-        'its bottom element - see the last section for why that is not a coincidence.)'))
+        '(The wheel writes this element &#8869;. Carlstr&#246;m (printed p. 3) traces the pair to Edalat '
+        'and Potts, who suggested adjoining 1/0 and 0/0 to the reals, obtaining what domain theory calls the '
+        '"lifting" of the real projective line: 1/0 is the projective line\'s point at infinity, and '
+        '0/0 is the bottom the lifting adds. The Zero '
+        'Paradox uses the same symbol for the bottoms of its own carriers; the last section says '
+        'what the wheel\'s element shares with them and what it does not.)'))
     E.append(sp(4))
     E.append(example_box('Real-world analogy  - The calculator that never crashes', [
         'A pocket calculator shows "Error" when you divide by zero, and then you have to '
@@ -248,26 +252,26 @@ def build():
         'hypothesis.) Also sorry-free and choice-free: [propext, Quot.sound].'))
     E.append(sp(4))
 
-    # ── The Porthole Connection ──────────────────────────────────────────────
+    # ── Why This Belongs ──────────────────────────────────────────────
     E.append(Paragraph('Why This Belongs in the Zero Paradox', CS['h1']))
     E.append(cbody(
         'The Zero Paradox studies one role, written in several mathematical languages at once, '
         'each with its own occupant and no equation across them: in the 2-adic valuation the '
         'occupant is 0, where v&#8322;(0) = &#8734;; in non-well-founded set theory it is the Quine '
-        'atom (CC-2), a set x = {x}; in a lattice under a self-application map it is the bottom element &#8869;. The wheel of '
+        'atom (CC-2), a set x = {x} (Aczel 1988, Example 1.3); in a lattice under a self-application map it is &#8869; of the lattice. The wheel of '
         'fractions is the <b>algebraic</b> face of that role. Where ZP-J says "the bottom is where measure runs to infinity," the '
-        'wheel says "the bottom is where division by zero lives" - and it shows that this '
-        'point is a defined, well-behaved element (&#8734; = /0), distinct - in the standard '
-        'case where 0 &#8713; S - from the absorbing &#8869;. Same location, different '
-        'vocabulary. The Zero Paradox\'s shorthand for that meeting point is the '
-        '<i>porthole</i>.'))
+        'wheel adjoins two elements at division by zero: &#8734; = /0, which inversion exchanges '
+        'with 0 (/&#8734; = 0), and the absorbing &#8869; = 0&#183;/0, distinct from &#8734; in the '
+        'standard case where 0 &#8713; S. Of the two, &#8869; = 0&#183;/0 is the one that steps only '
+        'to itself under inversion; &#8734; steps to 0 (see the last section). That exchange of 0 and '
+        '&#8734; under inversion is winv_wheelInf (/&#8734; = 0), with &#8734; = /0 by definition.'))
     E.append(cbody(
         'One honest limitation. The wheel is built <i>on top of</i> a ring you supply - the '
         'ring structure is an input, not something derived from the Zero Paradox\'s own '
-        'axioms. Whether the defining property of the porthole can be <i>derived</i> from '
+        'axioms. Whether the valuation condition val(0) = &#8868; (the wvs_val_zero '
+        'field of WheelValuationStructure) can be <i>derived</i> from '
         'upstream ZP structure, rather than assumed, is an open question flagged in the '
-        'Lean source (the bridge typeclass WheelValuationStructure states it, but its key '
-        'condition is an assumed axiom). The wheel shows the algebraic face exists and is '
+        'Lean source. The wheel shows the algebraic face exists and is '
         'consistent; it does not claim to force it into being.'))
     E.append(sp(4))
 
@@ -278,9 +282,17 @@ def build():
         'not new mathematics. What the Zero Paradox adds is a faithful, machine-checked '
         'encoding - readable field by field against Carlstr&#246;m\'s Definition 1.1, with '
         'a verified axiom footprint showing it needs no axiom of choice - placed in the '
-        'context of the bottom element &#8869;. The takeaway: division by zero is not an '
-        'error to be avoided but a defined element to be understood, and at exactly the '
-        'point the rest of the framework already identifies as the bottom.'))
+        'context of the Zero Paradox. The takeaway: division by zero is not an error to be '
+        'avoided but a defined element to be understood, &#8734; = /0, which inversion exchanges '
+        'with 0 (winv_wheelInf). The '
+        'absorbing element &#8869; = 0&#183;/0 steps only to itself under inversion '
+        '(wheelBot_selfOnlyAt_winv) and absorbs every point under addition (wheelBot_absorbs), '
+        'so it is one occupant of the Quine-atom role in the wheel. Under addition it is the only '
+        'one, since every point steps to it (wheelBot_addSelfOnly_unique); under inversion it is not the only one: 1 '
+        'also steps only to itself under inversion (winv_one, the inverse of 1 is 1), and in any '
+        'wheel with more than one element 1 and 0&#183;/0 differ (Carlstr&#246;m, Proposition '
+        '4.4). Occupants in the framework\'s other carriers fill the same role and are not one '
+        'object with it, since an equation across carriers is ill-typed.'))
     E.append(sp(6))
 
     print(f'[build_zpj_wheel_companion] Assembling document ({len(E)} elements)...')

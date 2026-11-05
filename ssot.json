@@ -658,7 +658,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 3152,
+        "declarations": 3164,
         "files": 196
       },
       "entries": [
@@ -5551,6 +5551,44 @@
             ]
           },
           "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "09ad6308-3b85-4bdd-8ed0-efbf3ee44edc",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.continuous_onePointInv_real",
+            "short": "continuous_onePointInv_real"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.continuous_onePointInv_real",
+            "short": "continuous_onePointInv_real",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation",
+              "reals"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "RiemannSphere § 0: inversion on OnePoint K over any proper normed field, with ℚ₂ and ℝ instances (ZPQ-REALS-NO-REPAIR-1 evidence, ruling 64)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -26234,6 +26272,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "38c8bd0d-2917-46f7-942a-775aa0696d4d",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.rInv_eq_onePointInv",
+            "short": "rInv_eq_onePointInv"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.rInv_eq_onePointInv",
+            "short": "rInv_eq_onePointInv",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "RiemannSphere § 0: inversion on OnePoint K over any proper normed field, with ℚ₂ and ℝ instances (ZPQ-REALS-NO-REPAIR-1 evidence, ruling 64)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "38cef9bb-b7bc-485c-97b4-1631ac5cfa60",
           "new": {
@@ -40095,6 +40170,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "58591904-25da-4d43-832e-bfed531a1d9a",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.onePointInv_involutive",
+            "short": "onePointInv_involutive"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.onePointInv_involutive",
+            "short": "onePointInv_involutive",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "RiemannSphere § 0: inversion on OnePoint K over any proper normed field, with ℚ₂ and ℝ instances (ZPQ-REALS-NO-REPAIR-1 evidence, ruling 64)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "5881c8a1-5519-4977-87e2-915e3d69e8c8",
           "new": {
@@ -43712,6 +43824,43 @@
             "role": []
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "5fee66e1-1948-4302-b3d5-1e221cb4db4c",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.onePointInv",
+            "short": "onePointInv"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.onePointInv",
+            "short": "onePointInv",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "RiemannSphere § 0: inversion on OnePoint K over any proper normed field, with ℚ₂ and ℝ instances (ZPQ-REALS-NO-REPAIR-1 evidence, ruling 64)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -48775,6 +48924,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "6bf6d0ac-f109-48b2-b042-8cb19635b2fe",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.onePointInv_swaps",
+            "short": "onePointInv_swaps"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.onePointInv_swaps",
+            "short": "onePointInv_swaps",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "RiemannSphere § 0: inversion on OnePoint K over any proper normed field, with ℚ₂ and ℝ instances (ZPQ-REALS-NO-REPAIR-1 evidence, ruling 64)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "6bfa4c45-b855-40ae-a8f3-171fc5baa96a",
           "new": {
@@ -52279,6 +52465,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "740a6e83-cf00-4b84-9215-a64db696747a",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.onePointInv_swaps_real",
+            "short": "onePointInv_swaps_real"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.onePointInv_swaps_real",
+            "short": "onePointInv_swaps_real",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation",
+              "reals"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "RiemannSphere § 0: inversion on OnePoint K over any proper normed field, with ℚ₂ and ℝ instances (ZPQ-REALS-NO-REPAIR-1 evidence, ruling 64)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -75977,6 +76201,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "a91f37c8-963a-4657-b27d-11b686ba7f89",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.onePointInv_infty",
+            "short": "onePointInv_infty"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.onePointInv_infty",
+            "short": "onePointInv_infty",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "RiemannSphere § 0: inversion on OnePoint K over any proper normed field, with ℚ₂ and ℝ instances (ZPQ-REALS-NO-REPAIR-1 evidence, ruling 64)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "a924df8c-828d-490a-ad63-3154f4e6c665",
           "new": {
             "file": "ZeroParadox/Valuation/PoleCornersBridge.lean",
@@ -79188,6 +79449,43 @@
             ]
           },
           "reason": "ignorance-seam-viii: the bend NInf.det on 2-adic digit tapes is the 2-adic valuation (IgnoranceSeam.lean § VIII)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "afb66614-c155-435d-8857-d0dd87c9aa71",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.continuous_onePointInv",
+            "short": "continuous_onePointInv"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.continuous_onePointInv",
+            "short": "continuous_onePointInv",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "RiemannSphere § 0: inversion on OnePoint K over any proper normed field, with ℚ₂ and ℝ instances (ZPQ-REALS-NO-REPAIR-1 evidence, ruling 64)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -87301,6 +87599,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "c13eef05-44fa-43ca-a0e4-c6bfec2fb220",
+          "new": {
+            "file": "ZeroParadox/Algebra/Wheel.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.wheelBot_addSelfOnly_unique",
+            "short": "wheelBot_addSelfOnly_unique"
+          },
+          "old": {
+            "file": "ZeroParadox/Algebra/Wheel.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.wheelBot_addSelfOnly_unique",
+            "short": "wheelBot_addSelfOnly_unique",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "PDF sweep r4 item B (2026-11-05): wheel companion's 'Under addition it is the only one' landed as a corpus theorem after wheelBot_absorbs",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "c15ef986-8229-4648-b79d-cd25ee554552",
           "new": {
@@ -92455,6 +92792,43 @@
             ]
           },
           "reason": "Epsilon0LeastFP.lean (2026-10-22, rotation landing): successor cell of nfp (omega^.) as a set = Ioc eps_o eps_(o+1); limit-index cell = {eps_o}. From probe_rotation/rotation_landing_probe.lean.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ccd4ae9f-a1b3-4d40-a1a7-5e97b519262e",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.onePointInvHomeo",
+            "short": "onePointInvHomeo"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.onePointInvHomeo",
+            "short": "onePointInvHomeo",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "RiemannSphere § 0: inversion on OnePoint K over any proper normed field, with ℚ₂ and ℝ instances (ZPQ-REALS-NO-REPAIR-1 evidence, ruling 64)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -105631,6 +106005,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "e8f04b20-7848-4fda-9a67-6188a50178a7",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.onePointInv_coe_ne",
+            "short": "onePointInv_coe_ne"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.onePointInv_coe_ne",
+            "short": "onePointInv_coe_ne",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "RiemannSphere § 0: inversion on OnePoint K over any proper normed field, with ℚ₂ and ℝ instances (ZPQ-REALS-NO-REPAIR-1 evidence, ruling 64)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "e8f0cd43-fa5b-4d17-a714-088edb9ed5f9",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -113252,6 +113663,43 @@
             ]
           },
           "reason": "New file Multihomed/BoundaryOrder.lean — atlas slice 2: Phase ordered as WithBot Ordinal, the UpAndOver instance with corner at the floor",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "fa2b9867-5215-4b1d-a343-497d1f151d1e",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.onePointInv_zero",
+            "short": "onePointInv_zero"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.onePointInv_zero",
+            "short": "onePointInv_zero",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "RiemannSphere § 0: inversion on OnePoint K over any proper normed field, with ℚ₂ and ℝ instances (ZPQ-REALS-NO-REPAIR-1 evidence, ruling 64)",
           "verify": {
             "axioms": null,
             "sorry_free": true

@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-E: Bridge Document PDF Builder
-Version 3.74 | November 2026
+Version 3.78 | November 2026
 Follows all rules in pdf rendering standards:
   - DejaVu fonts only
   - Checkmark always wrapped in <font name="DV">
@@ -12,7 +12,7 @@ Follows all rules in pdf rendering standards:
 import os
 from zp_utils import *
 
-VERSION = '3.74'
+VERSION = '3.78'
 FIRST_RELEASED = 'April 2026'
 
 # ── Local overrides: ZP-E uses justified body text ────────────────────────────
@@ -49,8 +49,8 @@ def build():
         'DA-2 (Instantiation Succession), and '
         'DA-3 (Perspective-Relative Cardinality). AX-1 (Binary Snap Causality) is retired. Its content was split in two: '
         'the shape of the snap is proved, as Theorem T-SNAP, and that the snap occurs is stated separately: it follows from '
-        'the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2). '
-        'tsnap_holds_but_nothing_moves shows T-SNAP does not carry it. With DA-2 and the commitment C-DA2, the directed instantiation tree is formally licensed. With DA-3, '
+        'the occurrence commitment together with DA-1 (closed given DP-2). The occurrence commitment is stated in two charts, execution and slot, in the header of ZeroParadox/Order/Snap.lean (indexed in ZeroParadox/Order/SnapCannotBe.lean &#167; II and CLAIMS.md), the slot chart as the hypothesis hw of t_snap_of_fires_once, that the tape fires at some stage, beside the theorem trials_fires_once that, for independent stages each firing with probability p, 0 &lt; p &#8804; 1, firing at some stage has probability one, which names no tape (ZeroParadox/Information/CrossingTrials.lean &#167; VIII). '
+        'tsnap_holds_but_nothing_moves shows T-SNAP does not carry that the snap occurs. With DA-2 and the commitment C-DA2, the directed instantiation tree is formally licensed. With DA-3, '
         'cardinality is shown to be position-dependent within the instantiation structure.'))
     E.append(body(
         'Illustrated Companion: A paired ZP-E Illustrated Companion document provides accessible '
@@ -186,8 +186,8 @@ def build():
             'c<sub>0</sub> to c<sub>1</sub>, with the same output value before and after.',
             'Scope of the claim: it holds given DP-2 and DP-2&#8217;s precondition, that the configuration reaching '
             'P<sub>0</sub> is there in Sense B (&#167; II, a running machine&#8217;s current configuration) and not in '
-            'Sense A (an inert string). That precondition is not derived: it is what the occurrence commitment asserts '
-            '(instantiation occurs), and Paths 1 to 3 below argue for it. '
+            'Sense A (an inert string). That precondition is not derived: it is what the occurrence commitment asserts, '
+            'and Paths 1 to 3 below argue for it. '
             'What follows from it is c<sub>0</sub> &#8594; c<sub>1</sub>: by D7 a running machine has left c<sub>0</sub>, and its first '
             'running configuration is c<sub>1</sub> (T-SNAP Step 3); DP-2 and da1_minimal_path (axiom-free) show that the two '
             'configurations are distinct while returning the same output value.',
@@ -274,8 +274,8 @@ def build():
              'from executing to incompressible, is not claimed in this document. '
              'Path 3 therefore does not derive executing from incompressibility. What it bears on is one event, not '
              'configurations in general: that the configuration reaching P<sub>0</sub> is there in Sense B (&#167; II) '
-             'and not in Sense A. That is the precondition DP-2 takes, and it is what the occurrence commitment asserts '
-             '(instantiation occurs), not a further premise. DA-1 does '
+             'and not in Sense A. That is the precondition DP-2 takes, and it is what the occurrence commitment asserts, '
+             'not a further premise. DA-1 does '
              'not supply it; DA-1 consumes it: given it, the step c<sub>0</sub> &#8594; c<sub>1</sub> is D7&#8217;s (T-SNAP Step 3).'),
         body('The formal grounding (DP-2, §III) and the three paths above operate at distinct levels, '
              'not as alternatives to one another. The conditional sits at the '
@@ -331,7 +331,7 @@ def build():
     E += [
         sp(4),
         body('<b>Premises of T-SNAP, in two readings.</b> Both readings are true, and neither replaces the other. '
-             'In Lean, two of the premises, CC-1 and occurrence at the first step, are the hypotheses of t_snap_given, named in (i).'),
+             'In Lean, two of the premises, CC-1 and occurrence at the first transition, are the hypotheses of t_snap_given, named in (i).'),
         li('(i) <i>Lean form: the shape.</i> t_snap_derived : c&#8320; &#8800; c&#8321; &#8743; c&#8321; &#8800; c&#8320; &#8743; '
            'join c&#8320; c&#8321; = c&#8321; (ZeroParadox/Order/Snap.lean) takes no hypotheses, and &#35;print axioms reports no axioms. '
            'It is a fact about the fixed two-state type MachinePhase, with the initial phase c&#8320; as its bottom element &#8869; and the running phase c&#8321; above it: '
@@ -339,7 +339,7 @@ def build():
            'built into the choice of that type, and the start at &#8869; into the statement&#8217;s choice of c&#8320;. It fixes the SHAPE of the transition, not that one occurs: tsnap_holds_but_nothing_moves proves '
            'the same statement in a dynamics where every phase is a fixed point. '
            'Two of the premises as hypotheses: t_snap_given (same file) holds over any join-semilattice with bottom, taking '
-           'S&#8320; = &#8869; (hcc1, CC-1) and S&#8321; &#8800; S&#8320; (hocc, occurrence at the first step: the step at index 1 is taken) '
+           'S&#8320; = &#8869; (hcc1, CC-1) and S&#8321; &#8800; S&#8320; (hocc, occurrence at the first transition: the step at index 1 is taken) '
            'and giving the same shape at S&#8320;, S&#8321;. Its two inequalities restate hocc; only the join conjunct is derived, from A4. '
            't_snap_derived&#8217;s statement is its MachinePhase instance at the sequence c&#8320;, c&#8321;, c&#8321;, &#8230;, where hcc1 holds by rfl '
            'and hocc reduces to c&#8321; &#8800; c&#8320;. MachinePhase does not discharge occurrence: the sequence that stays at c&#8320; is a '
@@ -349,7 +349,7 @@ def build():
         li('(ii) <i>Prose argument: the shape, then the occurrence.</i> The seven steps below read that shape as a statement about the '
            'framework&#8217;s own state sequence. That reading uses commitments, among them AX-B1 (binary existence, ZP-B, the framework&#8217;s one '
            'substantive modelling commitment) at Step 4, and CC-1 (S<sub>0</sub> = &#8869;, a ZP-A Conditional Claim) for the start at &#8869; in Steps 4 and 6. '
-           'That the transition OCCURS rests further on the occurrence commitment: instantiation occurs, in Sense B (&#167; II), so the configuration '
+           'That the transition OCCURS rests further on the occurrence commitment, in its execution chart: instantiation occurs, in Sense B (&#167; II), so the configuration '
            'reaching P&#8320; is a running machine&#8217;s current configuration and not an inert string. That is Step 2, and it is DP-2&#8217;s precondition. '
            'DA-1 does not supply Step 2; it consumes it. DA-1 is closed only given DP-2: once DP-2&#8217;s precondition is granted, '
            'c&#8320; &#8594; c&#8321; is D7&#8217;s (Step 3), and DP-2 with da1_minimal_path shows the two configurations distinct while returning '
@@ -379,9 +379,9 @@ def build():
         body('Conclusion: The Binary Snap is a derived consequence, given the commitments under Premises of T-SNAP. '
              'AX-1 (Binary Snap Causality) is retired. Its content was split in two: the shape of the snap is proved, '
              'as Theorem T-SNAP, and that the snap occurs is stated separately: it follows from the occurrence commitment '
-             '(instantiation occurs) together with DA-1 (closed given DP-2). tsnap_holds_but_nothing_moves shows T-SNAP does not carry it. ✓'),
+             'together with DA-1 (closed given DP-2). tsnap_holds_but_nothing_moves shows T-SNAP does not carry it. ✓'),
         derived('Status: DERIVED — Cross-Framework. Premises: in two readings, under Premises of T-SNAP above; the Lean form fixes the shape '
-                'with no hypotheses, t_snap_given takes CC-1 and occurrence at the first step as hypotheses, and the prose argument&#8217;s shape and its '
+                'with no hypotheses, t_snap_given takes CC-1 and occurrence at the first transition as hypotheses, and the prose argument&#8217;s shape and its '
                 'occurrence rest on commitments, among them those named there. '
                 'Dependencies cited in the steps: ZP-C D1, D7, L-RUN, TQ-IH; ZP-B C3; ZP-A D2, R1; ZP-E DA-1; ZP-J T-EXEC. '
                 'CC-1 (S&#8320; = &#8869;): restated — a Quine-atom start and a &#8869; start are one condition (ZP-J cc1_derived, t_exec_iff; axiom-free) — and not forced, since on a carrier with a second point a valid sequence starts elsewhere. '
@@ -547,7 +547,7 @@ def build():
     E.append(body(
         'Remark R-DA1: AX-1 is retired, and its content was split in two. Results in ZP-E that '
         'previously depended on AX-1 as an axiom now depend on T-SNAP, a derived theorem, for the shape, and, wherever they use that the Snap happens, on the '
-        'occurrence commitment (instantiation occurs) together with DA-1. T5 (Iterative Forcing Theorem) depended on AX-1 and is restated below. T4 (Unified Snap '
+        'occurrence commitment together with DA-1. T5 (Iterative Forcing Theorem) depended on AX-1 and is restated below. T4 (Unified Snap '
         'Description) carried AX-1 as an axiom label on the causality component — that label is upgraded '
         'to Derived — T-SNAP for the shape, with occurrence still a commitment. DA-1 is additionally upgraded from Design Principle to Derived '
         'Proposition, closed given DP-2 (da1_minimal_path); ZP-A CC-2 (the Quine atom), R3 and ZP-C L-INF argue for its precondition, which is what the occurrence commitment asserts, and none derives it. '
@@ -618,7 +618,7 @@ def build():
            'Q<sub>2</sub> universal; what is contingent per instantiation is the rung v of ZP-B D5 and its threshold '
            '2<super>&#8722;v</super>. R1 keeps AX-B1, whose 0 is ⊥ of OntologicalStates, a ZP-A semilattice, '
            'universal as structure.'),
-        li('<b>Occurrence fence.</b> T-SNAP fixes the SHAPE of each step. It does not establish that any step is taken: tsnap_holds_but_nothing_moves exhibits a model in which T-SNAP holds and nothing moves. Every "fires" below narrates the commitment that instantiation occurs, not a consequence of the theorem.'),
+        li('<b>Occurrence fence.</b> T-SNAP fixes the SHAPE of each step. It does not establish that any step is taken: tsnap_holds_but_nothing_moves exhibits a model in which T-SNAP holds and nothing moves. Every "fires" below narrates the occurrence commitment, not a consequence of the theorem.'),
         li('Whether T-SNAP&#8217;s shape applies at the terminal state of instantiation I<sub>n</sub>, read as the '
            'starting ⊥ of I<sub>n+1</sub>. That needs the terminal state connected to a ⊥ role-occupant. DA-2 provides '
            'the role half only: what plays the ⊥ role of a ZP-A semilattice is that ⊥ (da2_bottom_characterization). '
@@ -709,8 +709,8 @@ def build():
            'valid ε<sub>0</sub> for a distinct I<sub>n+1</sub>. T-SNAP does not select among branches. Because ⊥, the only '
            'occupant of the Quine-atom role in the lattice under a self-application map (ZP-A CC-2; selfApp_quine_role_iff), has no internal differentiation, every '
            'ε<sub>0</sub> that represents a first differentiation in any direction is a valid outcome. '
-           'The work here is done by the undifferentiated ⊥ of ZP-A CC-2, not by T-SNAP: given that '
-           'instantiation occurs, no direction is privileged, so the structure branches rather than '
+           'The work here is done by the undifferentiated ⊥ of ZP-A CC-2, not by T-SNAP: given the '
+           'occurrence commitment, no direction is privileged, so the structure branches rather than '
            'threading a line. T-SNAP fixes the shape of each step; it does not supply the occurrence.'),
         li('No back edges: C-DA2 COMMITS to no instantiation reaching the ⊥ of any ancestor. This is the commitment, not a theorem - in the 2-adic chart the arc returns to the same 0 (snap_arc_z2_loop).'),
         sp(4),
@@ -750,7 +750,7 @@ def build():
     E += [
         body('<b>Structural Implication: Branching Tree Structure.</b> T-SNAP fixes the SHAPE of the Binary Snap — '
              'that if ⊥ transitions it goes to some ε₀ > ⊥, and that the step is one-way. It does not '
-             'establish that the transition is taken: that the Snap occurs follows from the occurrence commitment (instantiation occurs) '
+             'establish that the transition is taken: that the Snap occurs follows from the occurrence commitment '
              'together with DA-1 (closed given DP-2), and the NO-GO '
              'gauge tsnap_holds_but_nothing_moves exhibits a model in which T-SNAP holds and nothing moves. '
              'DA-2 supplies the role half only: a terminal state that plays the ⊥ role in a successor '
@@ -866,7 +866,7 @@ def build():
         ['AX-1: Binary Snap Causality',
          'RETIRED — shape proved as T-SNAP; the snap occurs given the occurrence commitment and DA-1',
          'Its content was split in two: the shape of the Snap is proved, as Theorem T-SNAP (from L-RUN, TQ-IH and the bottom law, with no Lean axioms), '
-         'and that the Snap occurs is stated separately: it follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2). '
+         'and that the Snap occurs is stated separately: it follows from the occurrence commitment together with DA-1 (closed given DP-2). '
          'Premises under Premises of T-SNAP (DA-1 insert, &#167; V); given CC-1, the first-step form of the Snap occurring is the hypothesis hocc of t_snap_given.'],
         ['DA-1: Derived Proposition (DP-2 formal grounding)',
          'CLOSED given DP-2 — DP-2 (formal core); ZP-A CC-2 + L-INF + AIT argue for the precondition, none deriving it',
@@ -897,8 +897,8 @@ def build():
          'Derived from AX-B1 and RP-1.'],
         ['OQ-E1: Sequence vs. tree',
          'CLOSED given the occurrence commitment and C-DA2 — DA-2',
-         'The structure is a forward-directed tree, not a linear sequence. Given that instantiation occurs — the '
-         'occurrence commitment, not a consequence of T-SNAP — DA-2 with C-DA2 supplies the succession and the '
+         'The structure is a forward-directed tree, not a linear sequence. Given the '
+         'occurrence commitment, not a consequence of T-SNAP, DA-2 with C-DA2 supplies the succession and the '
          'branching follows. '
          'Countable vs. uncountable branching is perspective-dependent (DA-3).'],
         ['OQ-E2: Cardinality-semilattice correspondence',
@@ -955,7 +955,7 @@ def build():
         ['AX-1 retirement',
          'T-SNAP proves the shape; the snap occurs given the occurrence commitment and DA-1',
          'N/A',
-         'AX-1 is retired: T-SNAP proves the shape, and that the Snap occurs is stated separately: it follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2)'],
+         'AX-1 is retired: T-SNAP proves the shape, and that the Snap occurs is stated separately: it follows from the occurrence commitment together with DA-1 (closed given DP-2)'],
         ['Iterative Forcing T5 (restated)',
          'Selection: succession_succ, ZeroParadox/Ordinal/SnapSuccession.lean &#167; I; for a monotone map sending the tower&#8217;s stages to c<sub>0</sub>, given the alignment hypothesis h&#949;<sub>0</sub>, nothing below &#949;<sub>0</sub> fires (snap_unconditional). Iteration: T3, R1, t_snap_irreversible, tsnap_holds_but_nothing_moves',
          'None',
@@ -998,11 +998,11 @@ def build():
         ['T-SNAP: Binary Snap derived',
          'Valid — Derived, in two readings. The Lean form (t_snap_derived) fixes the SHAPE with no hypotheses and no axioms. '
          'The seven-step prose argument uses commitments, and that the transition OCCURS is not established by T-SNAP (tsnap_holds_but_nothing_moves). '
-         'Premises: DA-1 insert &#167; V, Premises of T-SNAP; two of them (CC-1 and occurrence at the first step) as hypotheses, t_snap_given. ✓'],
+         'Premises: DA-1 insert &#167; V, Premises of T-SNAP; two of them (CC-1 and occurrence at the first transition) as hypotheses, t_snap_given. ✓'],
         ['AX-1 retirement',
          'Valid — AX-1 is retired, and its content was split in two. T-SNAP proves the shape, '
          'strengthened from assumed to derived. That the Snap occurs is stated separately: it follows from the occurrence commitment '
-         '(instantiation occurs) together with DA-1 (closed given DP-2). Given CC-1, its first-step form is the hypothesis hocc in t_snap_given; '
+         'together with DA-1 (closed given DP-2). Given CC-1, its first-step form is the hypothesis hocc in t_snap_given; '
          'tsnap_holds_but_nothing_moves shows T-SNAP does not carry it.'],
         ['DA-2: Instantiation Succession',
          'Valid — Definitional Alignment. Clarification of CC-1 scope. No new axiom. A4 role of ⊥ extended across instantiation boundaries. ✓'],
@@ -1040,7 +1040,7 @@ def build():
         sp(12),
         hr(),
         Paragraph(
-            '<i>ZP-E carries three formal inserts (DA-1, DA-2, DA-3). T-SNAP is derived, with its premises stated in the DA-1 insert &#167; V and two of them (CC-1 and occurrence at the first step) as the hypotheses of t_snap_given; its irreversibility '
+            '<i>ZP-E carries three formal inserts (DA-1, DA-2, DA-3). T-SNAP is derived, with its premises stated in the DA-1 insert &#167; V and two of them (CC-1 and occurrence at the first transition) as the hypotheses of t_snap_given; its irreversibility '
             'rests on ZP-A R1 and ZP-B C3, with ZP-G downstream. DA-1 is closed given DP-2 (da1_minimal_path, axiom-free). '
             'Path 1&#8217;s Lean counterpart is da1_closed_concrete (ZP-K), which proves IsQuineAtom(&#8869; : MachinePhase) and nothing '
             'computational; Path 3&#8217;s Lean counterpart is the machinePhaseKleene instance&#8217;s botCode_is_quine field, a KleeneStructure '

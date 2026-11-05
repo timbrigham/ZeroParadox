@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-K: Computational Grounding of Self-Reference PDF Builder
-Version 1.33 | November 2026
+Version 1.36 | November 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.33'
+VERSION = '1.36'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -44,7 +44,11 @@ def build():
         'executes, is the occurrence commitment.'))
     E.append(body(
         'The central result is a three-way equivalence within this framework, in the precise sense '
-        'defined by Remark R-K.0: the structural roles of ⊥ — Quine atom (set-theoretic), bottom '
+        'defined by Remark R-K.0: the structural roles of ⊥ of a lattice carrying AFAStructure — '
+        'the Quine-atom role (CC-2, read in the lattice\'s AFA structure, where ⊥ fills it by the '
+        'class fields bot_self_mem and quine_unique; the set-theoretic fact is Aczel 1988, p. 19, '
+        'where AFA allows at most one solution of x = {x}; see ZP-J; in Mathlib\'s ZFSet no set '
+        'occupies it, zfset_quine_role_unoccupied), bottom '
         'element (order-theoretic), and join identity (algebraic) — are PROVED to coincide, while '
         'the fourth role, Kleene fixed point (computational), is required as a typeclass field '
         'rather than derived. '
@@ -239,7 +243,9 @@ def build():
     ]
 
     E.append(body(
-        'ZP-J T-EXEC established a three-way equivalence: Quine atom (set-theoretic) ↔ '
+        'ZP-J T-EXEC established a three-way equivalence in a lattice carrying AFAStructure: Quine '
+        'atom (in the lattice\'s AFA structure; in Mathlib\'s ZFSet the role is unoccupied, '
+        'zfset_quine_role_unoccupied) ↔ '
         'bottom element (order-theoretic) ↔ join identity (algebraic). T-COMP, whose statement is '
         '(1) ↔ ((2) ∧ (3)), proves those three equivalent together with da2_bottom_characterization, '
         'which gives (2) ↔ (3). ZP-K bundles a fourth face — Kleene fixed point '
@@ -282,7 +288,7 @@ def build():
         'Theorem T-COMP — Computational Grounding (Kleene.lean § III)',
         [
             'In any KleeneStructure lattice L, for any q : L, the following are equivalent:',
-            '(1) IsQuineAtom q  — set-theoretic self-reference (AFA)',
+            '(1) IsQuineAtom q  — the Quine-atom role in the lattice\'s AFA structure (CC-2)',
             '(2) q = ⊥  — order-theoretic minimum (ZP-A)',
             '(3) ∀ x : L, join q x = x  — algebraic generator (ZP-A A4)',
             '',
@@ -577,7 +583,7 @@ def build():
         'principle of its own, a missing principle and not a missing proof.'))
     E.append(body(
         'For Path 1 (AFA structural), in Lean the two charts split: Mathlib\'s ZFSet, a model of '
-        'ZFC, contains no set that is a member of itself (no_quine_atom), while outside ZFSet '
+        'ZFC, contains no set that is a member of itself (no_quine_atom; Mathlib\'s ZFSet.mem_irrefl), while outside ZFSet '
         'Lean hosts a one-atom model whose distinguished element is its own unique self-member '
         '(the QuineHost instance on OneAtom, ZeroParadox/Settheory/QuineHost.lean &#167; V). '
         'The Lean counterpart of Path 1 is da1_closed_concrete, which proves '
@@ -887,7 +893,7 @@ def build():
          'CLOSED — two predicates, two answers',
          'Codes meeting IsComputationalQuine are not unique: the constant codes alone give '
          'infinitely many (infinite_quine_family). That the Quine atom is ⊥ of the lattice, and the '
-         'only one, flows from ZP-J T-EXEC (set-theoretic side). For self-printing codes, a '
+         'only one, flows from ZP-J T-EXEC (the AFA side). For self-printing codes, a '
          'uniqueness at the level of behaviour is proved (selfprints_behaviour_injective).'],
         ['Rogers\' fixed-point theorem',
          'CLOSED — roger_fixed_point_exists',

@@ -4,29 +4,29 @@ Update this file first on any version bump. README.md Framework table is verifie
 
 | Document | Formal Version | Filename | Companion Version | Comp AR | Notes |
 |----------|---------------|----------|-------------------|---------|-------|
-| ZP-A Lattice Algebra | v1.37 | ZP-A_Lattice_Algebra.pdf | v1.19 | N/— | formal:8ac90a09 comp:8147c31f |
+| ZP-A Lattice Algebra | v1.37 | ZP-A_Lattice_Algebra.pdf | v1.23 | N/— | formal:8ac90a09 comp:3d18bb87 |
 | ZP-B p-Adic Topology | v1.32 | ZP-B_pAdic_Topology.pdf | v1.21 | N/— | formal:5ccc5dd3 comp:4d3ce35e |
-| ZP-F The Counterexamples | v1.20 | ZP-F_The_Counterexamples.pdf | v1.19 | N/— | formal:b99fbdbb comp:dee59dce |
-| ZP-C Information Theory | v1.35 | ZP-C_Information_Theory.pdf | v2.14 | N/— | formal:0de1df70 comp:10cbc861 |
+| ZP-F The Counterexamples | v1.25 | ZP-F_The_Counterexamples.pdf | v1.24 | N/— | formal:7bd01deb comp:43e4294e |
+| ZP-C Information Theory | v1.39 | ZP-C_Information_Theory.pdf | v2.14 | N/— | formal:4a46b049 comp:10cbc861 |
 | ZP-D State Layer | v1.21 | ZP-D_State_Layer.pdf | v1.18 | N/— | formal:af01d656 comp:6be72c57 |
-| ZP-E Bridge Document | v3.74 | ZP-E_Bridge_Document.pdf | v1.34 | Y/Y | formal:8a5a14b3 comp:9cd50720 |
+| ZP-E Bridge Document | v3.78 | ZP-E_Bridge_Document.pdf | v1.38 | Y/Y | formal:37cdfdd9 comp:ae4f6d28 |
 | ZP-G Category Theory | v1.27 | ZP-G_Category_Theory.pdf | v1.16 | N/— | formal:e901301e comp:668a9008 |
-| ZP-H Categorical Bridge | v1.30 | ZP-H_Categorical_Bridge.pdf | v1.22 | N/— | formal:08338469 comp:efcb14ba |
-| ZP-H Native Categories Addendum | v1.7 | ZP-H_Native_Categories_Addendum.pdf | N/A | N/— | formal:6055c8d4 |
-| ZP-I Inside Zero | v1.34 | ZP-I_Inside_Zero.pdf | v1.36 | N/— | formal:28327b30 comp:96ba9975 |
-| ZP-J Self-Reference | v2.17 | ZP-J_Self_Reference.pdf | v1.38 | N/— | formal:d486cc53 comp:c499ea26 |
+| ZP-H Categorical Bridge | v1.34 | ZP-H_Categorical_Bridge.pdf | v1.26 | N/— | formal:81649ccc comp:5b4b5638 |
+| ZP-H Native Categories Addendum | v1.11 | ZP-H_Native_Categories_Addendum.pdf | N/A | N/— | formal:cfce9a9c |
+| ZP-I Inside Zero | v1.38 | ZP-I_Inside_Zero.pdf | v1.40 | N/— | formal:2ace4e79 comp:c0208f01 |
+| ZP-J Self-Reference | v2.17 | ZP-J_Self_Reference.pdf | v1.40 | N/— | formal:d486cc53 comp:15c5f473 |
 | ZP-J AFA Addendum | v1.20 | ZP-J_AFA_Addendum.pdf | N/A | N/— | formal:8327eacf |
-| ZP-J Wheel Addendum | v1.10 | ZP-J_Wheel_Addendum.pdf | v1.9 | N/— | formal:3b8c71b6 comp:e63f0549 |
+| ZP-J Wheel Addendum | v1.10 | ZP-J_Wheel_Addendum.pdf | v1.14 | N/— | formal:3b8c71b6 comp:655835b7 |
 | ZP-J Keystone Addendum | v1.29 | ZP-J_Keystone_Addendum.pdf | N/A | N/— | formal:cc3cbdc0 |
-| ZP-K Computational Grounding | v1.33 | ZP-K_Computational_Grounding.pdf | v1.28 | N/— | formal:dd74f1f6 comp:fd83aecc |
-| ZP-L Incomputability Convergence | v1.34 | ZP-L_Incomputability_Convergence.pdf | v1.22 | N/— | formal:23d995c1 comp:66d5f4ec |
+| ZP-K Computational Grounding | v1.36 | ZP-K_Computational_Grounding.pdf | v1.31 | N/— | formal:8d7e7103 comp:0dd8e2e1 |
+| ZP-L Incomputability Convergence | v1.38 | ZP-L_Incomputability_Convergence.pdf | v1.22 | N/— | formal:f9a872b7 comp:66d5f4ec |
 | ZP-M Kleene-Ordinal Bridge | v1.19 | ZP-M_Kleene_Ordinal_Bridge.pdf | v1.14 | N/— | formal:ec671c9d comp:9888babd |
 | ZP-N The Constructive Snap | v2.8 | ZP-N_The_Constructive_Snap.pdf | N/A | N/— | formal:aba9b464 |
-| ZP-P The Fixed-Point Fork | v1.33 | ZP-P_The_Fixed_Point_Fork.pdf | N/A | N/— | formal:be98684a |
+| ZP-P The Fixed-Point Fork | v1.37 | ZP-P_The_Fixed_Point_Fork.pdf | N/A | N/— | formal:794df5a8 |
 | ZP-R Cross-Category Fixed Point | v1.26 | ZP-R_Cross_Category_Fixed_Point.pdf | N/A | N/— | formal:d74402f0 |
 | ZP-R Diagonal Family Addendum | v1.24 | ZP-R_Diagonal_Family_Addendum.pdf | N/A | N/— | formal:6144f567 |
-| ZP-Q The Frame-Change | v1.17 | ZP-Q_The_Frame_Change.pdf | N/A | N/— | formal:30ba6f1e |
-| Zero Paradox Foreword | v2.40 | Zero_Paradox_Foreword.pdf | N/A | N/A | formal:5d2ab934 |
+| ZP-Q The Frame-Change | v1.22 | ZP-Q_The_Frame_Change.pdf | N/A | N/— | formal:df5dfc56 |
+| Zero Paradox Foreword | v2.45 | Zero_Paradox_Foreword.pdf | N/A | N/A | formal:4deba2da |
 | ZP Tools | N/A | ZP_Tools_and_Methods.pdf | N/A | N/A | formal:db9fdb1e |
 | ZP Choice-Free Core Addendum | v1.16 | ZP_Choice_Free_Core_Addendum.pdf | N/A | N/A | formal:efef9227 |
 

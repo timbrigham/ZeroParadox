@@ -1,12 +1,12 @@
 """
 Zero Paradox — ZP-I: Inside Zero PDF Builder
-Version 1.34 | November 2026
+Version 1.38 | November 2026
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.34'
+VERSION = '1.38'
 FIRST_RELEASED = 'April 2026'
 
 # ZP-I uses justified body text; override the left-aligned zp_utils defaults
@@ -381,7 +381,7 @@ def build():
         li('Step 3 — P<sub>0</sub> at the limit (informational context): ZP-C D1&#8217;s threshold '
            'K(c<sub>1</sub>|n)/|c<sub>1</sub>| = 1. Step 2 is this step&#8217;s only route from the chain to that '
            'threshold, and with Step 2 refuted nothing here establishes that the limit meets the threshold.'),
-        li('<b>Occurrence fence.</b> T-SNAP fixes the SHAPE of each step. It does not establish that any step is taken: tsnap_holds_but_nothing_moves exhibits a model in which T-SNAP holds and nothing moves. Throughout this document, "fires" narrates the commitment that instantiation occurs - before this note as well as after it - not a consequence of the theorem.'),
+        li('<b>Occurrence fence.</b> T-SNAP fixes the SHAPE of each step. It does not establish that any step is taken: tsnap_holds_but_nothing_moves exhibits a model in which T-SNAP holds and nothing moves. Throughout this document, "fires" narrates the occurrence commitment - before this note as well as after it - not a consequence of the theorem.'),
         li('Step 4 — DA-1, CONDITIONALLY: DA-1 needs DP-2 and DP-2&#8217;s precondition, that the configuration '
            'reaching P<sub>0</sub> is there in Sense B (a running machine&#8217;s current configuration) and not in '
            'Sense A (an inert string); that precondition is what the occurrence commitment asserts, and DA-1 '
@@ -793,8 +793,8 @@ def build():
          'on the convergence theorems, &#167; III; the DA-2 step is axiom-free).'],
         ['AX-1: Binary Snap Causality',
          'RETIRED — shape proved as T-SNAP (ZP-E); the first snap occurs given the occurrence commitment and DA-1',
-         'AX-1 (Binary Snap Causality) is retired. Its content was split in two: the shape of the snap is proved, as Theorem T-SNAP, and that the first snap occurs is stated separately: it follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2). '
-         'tsnap_holds_but_nothing_moves shows T-SNAP does not carry it. T-SNAP is derived in ZP-E. '
+         'AX-1 (Binary Snap Causality) is retired. Its content was split in two: the shape of the snap is proved, as Theorem T-SNAP, and that the first snap occurs is stated separately: it follows from the occurrence commitment together with DA-1 (closed given DP-2). The occurrence commitment is stated in two charts, execution and slot, in the header of ZeroParadox/Order/Snap.lean (indexed in ZeroParadox/Order/SnapCannotBe.lean &#167; II and CLAIMS.md), the slot chart as the hypothesis hw of t_snap_of_fires_once, that the tape fires at some stage, beside the theorem trials_fires_once that, for independent stages each firing with probability p, 0 &lt; p &#8804; 1, firing at some stage has probability one, which names no tape (ZeroParadox/Information/CrossingTrials.lean &#167; VIII). '
+         'tsnap_holds_but_nothing_moves shows T-SNAP does not carry that the snap occurs. T-SNAP is derived in ZP-E. '
          'A snap at the ordinal limit is the cycle reading, not a consequence of T-IZ; its premises are '
          'stated in &#167; V.III.'],
         ['Remaining axioms',

@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-H: Categorical Bridge PDF Builder
-Version 1.30 | November 2026
+Version 1.34 | November 2026
 v1.23: DECISION BATCH REMEDIATION ROUND 2 (Tim rulings, 2026-09-15): the T-H3 status said 'That the transition is taken remains a framework commitment, not a consequence of any of the four'; now the Snap occurring follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2), not from any of the four.
 v1.22: OCCURRENCE COMMITMENT DEFINED, T5 RESTATED, T-SNAP RESIDUE (Tim decision batch, 2026-09-14): the occurrence commitment is instantiation occurs, and that the Snap occurs follows from it together with DA-1 (closed given DP-2). The ZP-E import line, the Open Items AX-1 row (whose status cell now reads 'the snap occurs given the occurrence commitment and DA-1'), the IR-ZP and IR-2 validation rows and the AX-1 validation row replace 'stated separately, as the occurrence commitment' / 'which ZP-E's DA-1 argues for' / 'occurrence is the occurrence commitment' with that sentence. The Open Items row says 'with no Lean kernel axioms' where it said 'with no axioms' (A4 and AX-B1 are called axioms on the same pages). T-SNAP's readable name 'Binary Snap Causality' is glossed once, at its first use in T-H3: 'Causality' refers to the shape of the step, not to its occurrence.
 v1.21: AX-1 SPLIT (Tim, 2026-09-14): AX-1 bundled the SHAPE of the Snap with its OCCURRENCE. The shape half is Theorem T-SNAP; the occurrence half was never retired and is a framework commitment (tsnap_holds_but_nothing_moves). These sites said AX-1 whole was derived or no longer an axiom: the ZP-E import line, the Open Items AX-1 row ("Derived as Theorem T-SNAP ... No longer an axiom"), the IR-ZP and IR-2 validation rows, and the AX-1 validation row. Each now scopes the derivation to the shape half and names the occurrence half as a commitment. T-H3's own row, which says T-SNAP is inherited as a derived theorem, is unchanged: T-SNAP is the shape theorem. AX-1 WORDING CORRECTED (Tim, 2026-09-14): retired, split into T-SNAP (shape, proved) and the occurrence commitment (stated separately); the earlier 'occurrence half was never retired' was a paraphrase error. ROUND 2 GATES (Tim rulings: title, ZP-C label, DA-1 credit): the Open Items AX-1 row credited the shape to 'the P0 / L-RUN / TQ-IH / DA-1 chain'; DA-1 argues for occurrence, not the shape, so the row now carries Tim's sentence: the shape is proved as T-SNAP from L-RUN, TQ-IH and the bottom law with no axioms, and occurrence is the occurrence commitment, which ZP-E's DA-1 argues for.
@@ -35,7 +35,7 @@ v1.0: Initial release.
 import os
 from zp_utils import *
 
-VERSION = '1.30'
+VERSION = '1.34'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -158,7 +158,7 @@ def build():
             'From ZP-E: Universal constituent cross-framework (T1). Hamming/JSD consistency (T2). '
             'Landauer bridge BA-1. Processing bounds T3. Unified Snap description T4. '
             'Iterative forcing T5. State representations T6. Zero Paradox T7. '
-            'T-SNAP: the shape of the Binary Snap is a derived theorem — AX-1 is retired, and that the Snap occurs is stated separately: it follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2).',
+            'T-SNAP: the shape of the Binary Snap is a derived theorem — AX-1 is retired, and that the Snap occurs is stated separately: it follows from the occurrence commitment together with DA-1 (closed given DP-2). The occurrence commitment is stated in two charts, execution and slot, in the header of ZeroParadox/Order/Snap.lean (indexed in ZeroParadox/Order/SnapCannotBe.lean &#167; II and CLAIMS.md), the slot chart as the hypothesis hw of t_snap_of_fires_once, that the tape fires at some stage, beside the theorem trials_fires_once that, for independent stages each firing with probability p, 0 &lt; p &#8804; 1, firing at some stage has probability one, which names no tape (ZeroParadox/Information/CrossingTrials.lean &#167; VIII).',
         ]
     ))
     E.append(sp(8))
@@ -445,7 +445,7 @@ def build():
             'fd_snap_hilb_grounded for F<sub>B</sub>, F<sub>C</sub> and F<sub>D</sub>), '
             'is more than re-description: in each of the four canonical mathematical languages for state '
             'description, the phenomenon\'s <i>shape</i> is constrained by that domain\'s own structure. That the '
-            'four are one structural singularity is the framework\'s reading, not a theorem. That the transition is taken follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2), not from '
+            'four are one structural singularity is the framework\'s reading, not a theorem. That the transition is taken follows from the occurrence commitment together with DA-1 (closed given DP-2), not from '
             'any of the four.',
         ]
     ))
@@ -567,7 +567,7 @@ def build():
          'Retired —\nshape: T-SNAP\n(ZP-E v2.0);\nthe snap occurs\ngiven the occurrence\ncommitment and DA-1',
          'Binary Snap Causality. AX-1 is retired. Its content was split in two: the shape of the Snap is '
          'proved, as Theorem T-SNAP (from L-RUN, TQ-IH and the bottom law, with no Lean axioms), and that the Snap '
-         'occurs is stated separately: it follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2). '
+         'occurs is stated separately: it follows from the occurrence commitment together with DA-1 (closed given DP-2). '
          '(tsnap_holds_but_nothing_moves shows T-SNAP does not carry occurrence.) T-H3 inherits T-SNAP as a derived result. Not a gap.'],
         ['AX-G1',
          'Axiom —\ninitial half\nnot novel',
@@ -655,7 +655,7 @@ def build():
         ['AX-1 (Binary Snap Causality)',
          'Retired — the shape is derived as T-SNAP in ZP-E v2.0 and is no longer an axiom; '
          'T-H3 and all downstream results inherit the derived status for the shape. '
-         'That the Snap occurs is stated separately: it follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2).'],
+         'That the Snap occurs is stated separately: it follows from the occurrence commitment together with DA-1 (closed given DP-2).'],
         ['AX-G1, AX-G2',
          'AX-G2 and the initial-object half of AX-G1 are grounded, not novel: AX-G2 by antisymmetry in categories built from a partial '
          'order with a least element, and it fails in ModuleCat &#8450; (see the Open Items register). The no-terminal half of AX-G1 is '

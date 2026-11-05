@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-Q: The Frame-Change PDF Builder
-Version 1.17 | November 2026
+Version 1.22 | November 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.17'
+VERSION = '1.22'
 FIRST_RELEASED = 'July 2026'
 
 from reportlab.graphics.shapes import Drawing, Circle, Ellipse, PolyLine, String, Polygon
@@ -105,10 +105,11 @@ def build():
         'way and reverses only under an inversion that swaps the two poles. These are not two facts. '
         'They are two faces of one self-dual object, and the inversion is the <i>frame-change</i>. '
         '<b>The frame-change is that pole exchange &#8212; &#8869; being read as both 0 and &#8734;. Whether '
-        'the snap is an instance of it is the layer&#8217;s open conjecture.</b> The snap is one '
-        'covering step off the zero face '
-        '(&#8869; &#8918; a, HasFirstStep), which is AX-B1, a modelling commitment; the frame-change is an '
-        'involution and is proved. Merging the two is what makes it look paradoxical that a frame-change '
+        'the snap is an instance of it is the layer&#8217;s open conjecture.</b> The snap, T-SNAP&#8217;s '
+        'shape, is a join step off &#8869; of the state semilattice to a different state (t_snap_given); '
+        'that the step is a cover, &#8869; &#8918; a (HasFirstStep), is AX-B1&#8217;s first-step form, a '
+        'modelling commitment and a further hypothesis (t_snap_given_cover) that MachinePhase supplies '
+        'and &#8474;&#8805;0 does not; the frame-change is an involution and is proved. Merging the two is what makes it look paradoxical that a frame-change '
         'reverses while the snap does not, and that reversibility mismatch is exactly what an '
         'identification would have to resolve. ZP-Q holds it open rather than settling it either way. '
         'Read from one frame the frame-change is a <i>bridge</i> (it joins the poles continuously); '
@@ -263,8 +264,9 @@ def build():
              'measure 0  &#8596;  surprisal &#8734;',
              '&#8722;log &#8212; info_bottom_diverges'],
             ['Reals',
-             '&#8212; (no discrete floor)',
-             'inversion breaks at 0 &#8212; NO-GO (ZP-F)'],
+             '0  &#8596;  &#8734; (no first step above 0)',
+             'x &#8614; 1/x on the one-point compactification &#8212; onePointInv_swaps_real; '
+             'holds, and is not a discriminator (the remark below)'],
         ],
         col_widths=[TW * 0.20, TW * 0.34, TW * 0.46],
     ))
@@ -370,15 +372,27 @@ def build():
         'runs to &#8734; (ZP-C; info_bottom_diverges, addVal_bot), the two joined by &#8722;log.'))
 
     E.append(remark_box(
-        'Remark: the reals are the counterexample (the discriminator)',
+        'Remark: the reals beside &#8474;<sub>2</sub> (what separates them)',
         [
-            'The real numbers are where the frame-change fails, and that is exactly what makes this '
-            'a diagnostic rather than a pattern read into every domain. &#8477; has no discrete '
-            'floor to fall to (density), and its inversion is discontinuous at 0 with no repair. '
-            'Both features of the bottom &#8212; the infinitude at the zero and the one-way arrow '
-            'that reverses under inversion &#8212; are absent, and the snap fails (ZP-F). The '
-            'frame-flip is present precisely where the snap lives and absent precisely where it '
-            'does not.',
+            'Inversion does not separate &#8477; from &#8474;<sub>2</sub>. Inside each field it is '
+            'discontinuous at 0. On the one-point compactification of any proper normed field it is '
+            'continuous and swaps 0 and &#8734;, a standard fact for the Riemann sphere (Forster, Lectures '
+            'on Riemann Surfaces, GTM 81, &#167;&#167; 1&#8211;2, as cited by TauCeti; not retrieved), which '
+            'TauCeti formalizes for proper nontrivially normed fields: OnePoint.invChart (a chart) and '
+            'OnePoint.instContinuousConstSMul (the global action). It is proved '
+            'here with Mathlib alone (continuous_onePointInv, onePointInv_swaps, '
+            'ZeroParadox/Valuation/RiemannSphere.lean), so for &#8477; as well as &#8474;<sub>2</sub> '
+            '(continuous_onePointInv_real, onePointInv_swaps_real; for &#8474;<sub>2</sub>, the sphere '
+            'above, continuous_rInv and rInv_swaps). What '
+            'separates the two is topology: &#8477; is connected (place_topological_signature), so not '
+            'totally disconnected (real_no_snap), while &#8474;<sub>2</sub> is totally '
+            'disconnected (padic_snaps). Neither has a first step above 0, AX-B1&#8217;s form: in '
+            '&#8477; because no linearly ordered field has a least positive element (ZP-F; '
+            'f_snap_impossible, which, despite its name, states exactly that), and in '
+            '&#8474;<sub>2</sub>, which carries no order of its own, under the norm preorder '
+            '(ZeroParadox/BottomCannotBe.lean &#167; ROLE). T-SNAP&#8217;s shape does not need a '
+            'first step: t_snap_given holds at a step taken in a densely ordered join-semilattice '
+            '(&#8474;&#8805;0 under max, ZeroParadox/Order/Snap.lean).',
         ]
     ))
     E.append(sp(6))
@@ -399,9 +413,11 @@ def build():
         'satisfies its hypotheses of a complete lattice and a monotone map, so none of them is an instance '
         'of it. It is universal over its own domain, not over the faces. At the categorical level the '
         'universal is a proven wall (below). What the faces share is a SHAPE realized concretely in each '
-        'domain, and the instance table&#8217;s last row &#8212; the reals, NO-GO &#8212; shows the shape '
-        'does not hold everywhere either. The fences are not hedging; they mark a genuine boundary, and '
-        'the per-domain frame-flips remain full theorems on either side of it.'))
+        'domain. The instance table&#8217;s last row, the reals, carries the same pole exchange on its '
+        'one-point compactification (onePointInv_swaps_real) and has no first step above 0 '
+        '(f_snap_impossible), so the frame-flip does not separate &#8477; from &#8474;<sub>2</sub>; '
+        'total disconnectedness does (padic_snaps, real_no_snap). The two walls are not hedging: they mark '
+        'where the universal form stops, and each per-domain frame-flip remains a full theorem in its own domain.'))
 
     E.append(def_box(
         'The wall: the categorical universal is category-relative (Lawvere.lean)',
@@ -469,6 +485,8 @@ def build():
             ['fork_collapse_iff', 'ZeroParadox/Settheory/FixedPointFork.lean', 'choice-free'],
             ['snap_is_frameflip', 'ZeroParadox/Multihomed/SnapFrameChange.lean', 'Classical.choice'],
             ['rInv_swaps', 'ZeroParadox/Valuation/RiemannSphere.lean', 'Classical.choice'],
+            ['onePointInv_swaps', 'ZeroParadox/Valuation/RiemannSphere.lean', 'Classical.choice'],
+            ['onePointInv_swaps_real', 'ZeroParadox/Valuation/RiemannSphere.lean', 'Classical.choice'],
             ['catseam_is_frameflip', 'ZeroParadox/Category/SeamFrameChange.lean', 'Classical.choice'],
             ['nontrivial_lattice_no_witness', 'ZeroParadox/Category/Lawvere.lean', 'Classical.choice'],
             ['computability_face_fixedPoint', 'ZeroParadox/Category/Lawvere.lean', 'Classical.choice'],
