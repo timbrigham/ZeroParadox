@@ -1,6 +1,6 @@
 """
 Build ZP-E Illustrated Companion
-Version 1.35 | November 2026
+Version 1.36 | November 2026
 """
 
 import os
@@ -171,7 +171,7 @@ def axioms_table():
     t = Table(data, colWidths=[TW*0.18, TW*0.82])
     t.setStyle(ts); return t
 
-VERSION = '1.35'
+VERSION = '1.36'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -279,7 +279,7 @@ def build():
         'AX-1 is now retired, and its content was split in two: T-SNAP proves the shape, and that the Snap occurs is stated separately: it follows from the occurrence commitment together with DA-1 (closed given DP-2). '
         'The occurrence commitment is stated in two charts, execution and slot, beside t_snap_given '
         '(ZeroParadox/Order/Snap.lean; indexed in ZeroParadox/Order/SnapCannotBe.lean &#167; II and CLAIMS.md), '
-        'the slot chart through t_snap_of_fires_once and trials_fires_once '
+        'the slot chart as the hypothesis hw of t_snap_of_fires_once, that the tape fires at some stage, beside the theorem trials_fires_once that firing has probability one, which names no tape '
         '(ZeroParadox/Information/CrossingTrials.lean &#167; VIII).'))
     E.append(cbody(
         'The DA-1 insert puts an argument where "Because AX-1 says so" stood, and the occurrence '
@@ -362,7 +362,7 @@ def build():
     E.append(KeepTogether([tsnap_chain_diagram(), ccaption(
         'The T-SNAP derivation chain. The chain uses commitments, '
         'among them AX-B1 and CC-1 (S₀ = ⊥), and fixes the shape of the Snap; that the Snap occurs rests further on '
-        'the occurrence commitment, whose content is DA-1&#8217;s precondition, and on DA-1 (closed given DP-2), '
+        'the occurrence commitment, whose execution chart is DA-1&#8217;s precondition, and on DA-1 (closed given DP-2), '
         'which consumes it. AX-1 is retired: its shape is now a '
         'theorem (T-SNAP, amber), and that the Snap occurs is stated separately, following from that commitment together with DA-1.')]))
     E.append(sp(4))
@@ -384,7 +384,7 @@ def build():
     E.append(cbody(
         'AX-1 is not on this list: it is retired, and its shape is Theorem T-SNAP. Further commitments are not axioms and are stated where they are used, '
         'among them the occurrence commitment (together with DA-1 it gives that the Snap happens), CC-1 (S₀ = ⊥, a ZP-A Conditional Claim), the choice of starting point that T-SNAP is derived given, '
-        'and CC-2 (the Quine atom, a ZP-A Forced Metatheoretic Commitment: adopting AFA is CC-2&#8217;s commitment, the host requirements (QuineAtomHost) are its Lean abstraction, and that any such host gives up Foundation is forced (quineAtomHost_not_wellFounded)), which motivates DA-1&#8217;s precondition; DA-1 itself is closed given DP-2. '
+        'and CC-2 (the Quine atom, a set x = {x} under AFA, Aczel 1988, Example 1.3; a ZP-A Forced Metatheoretic Commitment: adopting AFA is CC-2&#8217;s commitment, the host requirements (QuineAtomHost) are its Lean abstraction, and that any such host gives up Foundation is forced (quineAtomHost_not_wellFounded)), which motivates DA-1&#8217;s precondition; DA-1 itself is closed given DP-2. '
         'The framework makes no stronger claim than it has to.'))
     E.append(sp(8))
     E.append(remember_box(
