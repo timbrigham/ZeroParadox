@@ -9,7 +9,7 @@ Update this file first on any version bump. README.md Framework table is verifie
 | ZP-F The Counterexamples | v1.24 | ZP-F_The_Counterexamples.pdf | v1.23 | N/— | formal:18689eb9 comp:5ddbbab0 |
 | ZP-C Information Theory | v1.38 | ZP-C_Information_Theory.pdf | v2.14 | N/— | formal:6160b71e comp:10cbc861 |
 | ZP-D State Layer | v1.21 | ZP-D_State_Layer.pdf | v1.18 | N/— | formal:af01d656 comp:6be72c57 |
-| ZP-E Bridge Document | v3.77 | ZP-E_Bridge_Document.pdf | v1.36 | Y/Y | formal:471352cb comp:9c6980c2 |
+| ZP-E Bridge Document | v3.77 | ZP-E_Bridge_Document.pdf | v1.37 | Y/Y | formal:471352cb comp:b73aeedb |
 | ZP-G Category Theory | v1.27 | ZP-G_Category_Theory.pdf | v1.16 | N/— | formal:e901301e comp:668a9008 |
 | ZP-H Categorical Bridge | v1.33 | ZP-H_Categorical_Bridge.pdf | v1.24 | N/— | formal:9d4a408f comp:98091e81 |
 | ZP-H Native Categories Addendum | v1.9 | ZP-H_Native_Categories_Addendum.pdf | N/A | N/— | formal:726ea774 |
