@@ -809,8 +809,9 @@ theorem sNorm_coe_le_iff {x y : ℚ_[2]} (hx : x ≠ 0) (hy : y ≠ 0) :
 
 /-- `Statement:` UP as a Mathlib `ClosureOperator` (monotone, extensive, idempotent) on the reverse
     of § VII's `sNorm` preorder, where `0` of `ℚ_[2]` is top and `∞` of `Sphere` bottom. On
-    valuations it is `v ↦ 2 * ⌈v / 2⌉` (`example` after `downV`): the closure of the ceiling Galois
-    connection (`Int.gc_ceil_coe`), which lands on `ℤ`, rescaled by `2` onto the even integers;
+    valuations it is `v ↦ 2 * ⌈v / 2⌉` (the second `example` after `downV`): the closure of the
+    ceiling Galois connection (`Int.gc_ceil_coe`), which lands on `ℤ`, rescaled by `2` onto the even
+    integers;
     compare the ceiling `ClosureOperator ℝ` in `ZeroParadox/Order/UpAndOver.lean`. That `UpAndOver`
     structure takes `[PartialOrder α]`, and this preorder is not antisymmetric (`1` and `-1` of
     `ℚ_[2]`, the first `example` after this definition), so `upClosure` is not an `UpAndOver` instance as it

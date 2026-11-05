@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-J Keystone Addendum: The Diagonal Fixed Point, the Lawvere Face-Split, and the Well-Foundedness Boundary
-Version 1.29 | November 2026
+Version 1.30 | November 2026
 Taylor (Well-founded coalgebras and recursion) is cited without year or venue: the copy on file
 carries neither. The gap stays open until a verified bibliographic record supplies them.
 Reads after ZP-J Self-Reference.
@@ -10,7 +10,7 @@ import os
 from zp_utils import *
 from reportlab.platypus import KeepTogether
 
-VERSION = '1.29'
+VERSION = '1.30'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard: route all bare Paragraph() text through Unicode-to-entity conversion ──
@@ -231,7 +231,7 @@ def build():
     E.append(body(
         'In that language the binary snap &#8869; &#8594; &#949;<sub>0</sub> is a crossing of '
         'the well-foundedness boundary: from the non-well-founded floor (&#8869;, the '
-        'self-loop, where recursion cannot reach) to the well-founded ascent (the &#949;<sub>0</sub> '
+        'self-loop, where recursion cannot reach: floor_not_wellFounded, below) to the well-founded ascent (the &#949;<sub>0</sub> '
         'ordinal tower, recursively generated). The Zero Paradox formalizes this at two levels.'))
     E.append(KeepTogether(result_box(
         'Relation level (ZeroParadox/Multihomed/Boundary.lean)',
@@ -343,7 +343,7 @@ def build():
 
     E.append(KeepTogether(Paragraph(
         'Endnote: This document is an addendum to ZP-J Self-Reference and reads after it. ZP-J '
-        'established the porthole (v<sub>2</sub>(&#8869;) = &#8734;, &#8869; as the occupant of the Quine-atom role, CC-2); this '
+        'established the valuation condition v<sub>2</sub>(&#8869;) = &#8734; and &#8869; as the occupant of the Quine-atom role (CC-2); this '
         'addendum records two probes into the keystone\'s structure &#8212; the '
         'Lawvere face-split and the well-foundedness boundary &#8212; machine-checked except where '
         'marked cited, each fenced as to exactly '
