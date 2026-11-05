@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-H Addendum: The Snap Floor in Native Categories
-Version 1.7 | October 2026
+Version 1.8 | November 2026
 Reads after ZP-H Categorical Bridge.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.7'
+VERSION = '1.8'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard: route all bare Paragraph() text through Unicode-to-entity conversion ──
@@ -59,8 +59,10 @@ def build():
         'so that depth 0 is the initial object. This addendum does the stronger thing: it '
         'drops the snap floor into each framework\'s own category, taken directly from '
         'Mathlib, where the floor appears in that field\'s native syntax. A topologist, a '
-        'functional analyst, and a probabilist each meet the same bottom, each in their own '
-        'category and their own language.'))
+        'functional analyst, and a probabilist each meet a bottom in the same role, each in their '
+        'own category and their own language: the bottom family (MC-1), realized together in '
+        'mc1_correspondence, and not one object, since an equation across categories is '
+        'ill-typed.'))
     E.append(body(
         'Three genuine Lean functors realize the snap chain inside the standard categories: '
         'F_B into TopCat (topological spaces), F_D into ModuleCat &#8450; (&#8450;-modules), '
@@ -284,9 +286,10 @@ def build():
     E.append(Paragraph(
         'Endnote: This document is an addendum to ZP-H Categorical Bridge and reads after '
         'it. ZP-H locates the snap floor as the categorical bottom across four frameworks '
-        'using depth-index proxy categories; this addendum realizes the same floor inside '
+        'using depth-index proxy categories; this addendum realizes a floor in the same role inside '
         'each framework\'s native Mathlib category &#8212; TopCat, ModuleCat &#8450;, and '
-        'the Kleisli category of distributions. All results sorry-free in Lean 4 as of June '
+        'the Kleisli category of distributions &#8212; together in mc1_correspondence; the '
+        'floors are not one object, since an equation across categories is ill-typed. All results sorry-free in Lean 4 as of June '
         '2026, footprint [propext, Classical.choice, Quot.sound].',
         S['endnote']))
 
