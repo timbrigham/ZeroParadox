@@ -8,6 +8,8 @@ import ZeroParadox.Ordinal.ProofFloorCanonical
 import ZeroParadox.Algebra.Wheel
 import ZeroParadox.Multihomed.MC1Bridge
 import ZeroParadox.Multihomed.TopNumEdge
+import ZeroParadox.Multihomed.TreeObstructions
+import ZeroParadox.Order.PadicLimitCone
 import ZeroParadox.Category.Category
 import ZeroParadox.Category.LinFunctor
 import ZeroParadox.Reals.PerronFrobenius
@@ -134,13 +136,28 @@ theorem claim_node_algebra : zpwMul (.fin 0) .inf = .bot :=
 theorem claim_node_state : Nonempty (Limits.IsInitial (fD_functor.obj 0)) :=
   ⟨fD_zero_isInitial⟩
 
-/-! ## § IV. MC-1 correspondence (each domain bottom is its category's categorical bottom) -/
+/-! ## § IV. MC-1 correspondence (each domain floor characterized in its own category, differently) -/
 
-/-- Claim `MC-1-correspondence` (corr). Statement: "Each domain bottom is the categorical bottom of its
-    own real category (MC-1, correspondence half — formally realized)." Exact representation: the bundled
-    three-realization witness exists. Backing: `mc1_correspondence`. -/
-theorem claim_MC1_correspondence : Nonempty MC1Correspondence :=
-  ⟨mc1_correspondence⟩
+/-- Claim `MC-1-correspondence` (corr). Statement: "MC-1, correspondence half (formally realized),
+    characterized per real Mathlib category and differing by category: the state floor is a zero object
+    (initial and terminal) in ModuleCat ℂ; the information floor is initial and not terminal in
+    KleisliCat PMF, with no morphism into it from any later stage of the functor; the p-adic floor
+    {0} ⊆ ℚ₂ is terminal in TopCat (it has one point) and not initial, and separately the limit of the
+    ball tower." Exact representation: the bundled witness (two initial objects, no morphism from a
+    stage `n > 0` into stage 0 of `fC_functor`, the set equation), the `TopCat` limit cone,
+    terminal-not-initial for `{0}`, the `ModuleCat ℂ` floor terminal, the `KleisliCat PMF` floor not
+    terminal. Backing: `mc1_correspondence`, `floorConeIsLimit`, `padic_bottom_isTerminal`,
+    `padic_bottom_not_initial`, `fD_zero_isTerminal`, `fC_no_return`; the three full positions are
+    stated together in `floor_positions_full` (`ZeroParadox/Category/TreeSeam.lean`). -/
+theorem claim_MC1_correspondence :
+    Nonempty MC1Correspondence ∧ Nonempty (Limits.IsLimit floorCone) ∧
+    Nonempty (Limits.IsTerminal (TopCat.of (↥({(0 : Q₂)} : Set Q₂)))) ∧
+    IsEmpty (Limits.IsInitial (TopCat.of (↥({(0 : Q₂)} : Set Q₂)))) ∧
+    Nonempty (Limits.IsTerminal (fD_functor.obj 0)) ∧
+    IsEmpty (Limits.IsTerminal (fC_functor.obj 0)) :=
+  ⟨⟨mc1_correspondence⟩, ⟨floorConeIsLimit⟩, padic_bottom_isTerminal, padic_bottom_not_initial,
+    ⟨fD_zero_isTerminal⟩,
+    ⟨fun h => (fC_no_return (by norm_num : 0 < 1)).false (h.from (fC_functor.obj 1))⟩⟩
 
 /-- Claim `MC1-cat-state` (corr). Statement: "the state/Hilbert bottom is the initial object of its real
     category (fD zero is initial)." Backing: `fD_zero_isInitial`. -/
@@ -153,9 +170,11 @@ theorem claim_MC1_cat_information : Nonempty (Limits.IsInitial (fC_functor.obj 0
   ⟨fC_zero_isInitial⟩
 
 /-- Claim `MC1-cat-valuation` (corr). Statement: "the p-adic (valuation) bottom is the inverse limit of
-    the ball system in the category realization (⋂ balls = {0})." Backing: `fB_bottom_is_limit`. -/
-theorem claim_MC1_cat_valuation : (⋂ n, q2Ball n) = {(0 : Q₂)} :=
-  fB_bottom_is_limit
+    the ball system in the category realization (⋂ balls = {0})." Exact representation: the `TopCat` limit
+    cone over the ball tower, and the set equation. Backing: `floorConeIsLimit`, `fB_bottom_is_limit`. -/
+theorem claim_MC1_cat_valuation :
+    Nonempty (Limits.IsLimit floorCone) ∧ (⋂ n, q2Ball n) = {(0 : Q₂)} :=
+  ⟨⟨floorConeIsLimit⟩, fB_bottom_is_limit⟩
 
 /-! ## § V. Category bottom and the floor-reaching correspondence (E-series, Perron) -/
 

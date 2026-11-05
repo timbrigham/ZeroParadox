@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-H: Categorical Bridge PDF Builder
-Version 1.34 | November 2026
+Version 1.35 | November 2026
 v1.23: DECISION BATCH REMEDIATION ROUND 2 (Tim rulings, 2026-09-15): the T-H3 status said 'That the transition is taken remains a framework commitment, not a consequence of any of the four'; now the Snap occurring follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2), not from any of the four.
 v1.22: OCCURRENCE COMMITMENT DEFINED, T5 RESTATED, T-SNAP RESIDUE (Tim decision batch, 2026-09-14): the occurrence commitment is instantiation occurs, and that the Snap occurs follows from it together with DA-1 (closed given DP-2). The ZP-E import line, the Open Items AX-1 row (whose status cell now reads 'the snap occurs given the occurrence commitment and DA-1'), the IR-ZP and IR-2 validation rows and the AX-1 validation row replace 'stated separately, as the occurrence commitment' / 'which ZP-E's DA-1 argues for' / 'occurrence is the occurrence commitment' with that sentence. The Open Items row says 'with no Lean kernel axioms' where it said 'with no axioms' (A4 and AX-B1 are called axioms on the same pages). T-SNAP's readable name 'Binary Snap Causality' is glossed once, at its first use in T-H3: 'Causality' refers to the shape of the step, not to its occurrence.
 v1.21: AX-1 SPLIT (Tim, 2026-09-14): AX-1 bundled the SHAPE of the Snap with its OCCURRENCE. The shape half is Theorem T-SNAP; the occurrence half was never retired and is a framework commitment (tsnap_holds_but_nothing_moves). These sites said AX-1 whole was derived or no longer an axiom: the ZP-E import line, the Open Items AX-1 row ("Derived as Theorem T-SNAP ... No longer an axiom"), the IR-ZP and IR-2 validation rows, and the AX-1 validation row. Each now scopes the derivation to the shape half and names the occurrence half as a commitment. T-H3's own row, which says T-SNAP is inherited as a derived theorem, is unchanged: T-SNAP is the shape theorem. AX-1 WORDING CORRECTED (Tim, 2026-09-14): retired, split into T-SNAP (shape, proved) and the occurrence commitment (stated separately); the earlier 'occurrence half was never retired' was a paraphrase error. ROUND 2 GATES (Tim rulings: title, ZP-C label, DA-1 credit): the Open Items AX-1 row credited the shape to 'the P0 / L-RUN / TQ-IH / DA-1 chain'; DA-1 argues for occurrence, not the shape, so the row now carries Tim's sentence: the shape is proved as T-SNAP from L-RUN, TQ-IH and the bottom law with no axioms, and occurrence is the occurrence commitment, which ZP-E's DA-1 argues for.
@@ -35,7 +35,7 @@ v1.0: Initial release.
 import os
 from zp_utils import *
 
-VERSION = '1.34'
+VERSION = '1.35'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -262,14 +262,14 @@ def build():
             'ZeroParadox/Multihomed/CategoricalBridge.lean). <font name="DV">&#10003;</font>',
             'AX-G1 fails in TopCat: TopCat has a terminal object, the one-point space (the example after kleisli_bottom_not_terminal in '
             'ZeroParadox/Category/TreeSeam.lean). The TopCat realization fB_functor presents 0 as the limit of the shrinking balls, and that '
-            'floor {0} is itself a one-point space, terminal and not initial (padic_bottom_not_initial and the first example after it, '
+            'floor {0} is itself a one-point space, so it is terminal and not initial (padic_bottom_isTerminal and padic_bottom_not_initial, '
             'ZeroParadox/Multihomed/TreeObstructions.lean).',
             'AX-G2 respected in the stand-in category: in Q&#8322;BallDepth a morphism m &#8594; 0 means m &#8804; 0, so m = 0 by antisymmetry '
             '(q2BallZPCat). ZP-B C3, that no continuous path in Q<sub>2</sub> returns to 0 from any non-zero element, is the domain analogue of '
             'this stand-in, proved in its own layer. <font name="DV">&#10003;</font>',
             'AX-G2 in TopCat is stated at the initial object, which is not the floor {0}. TopCat\'s initial object is the empty space, and it '
-            'satisfies the AX-G2 shape: a space with a morphism into the empty space is empty, so it is isomorphic to it (the second example '
-            'after padic_bottom_not_initial in ZeroParadox/Multihomed/TreeObstructions.lean).',
+            'satisfies the AX-G2 shape: a space with a morphism into the empty space is empty, so it is isomorphic to it (the example '
+            'after padic_bottom_isTerminal in ZeroParadox/Multihomed/TreeObstructions.lean).',
         ]
     ))
     E.append(sp(6))
@@ -375,7 +375,7 @@ def build():
             'F<sub>B</sub>: F<sub>B</sub>(0) = 0 &#8712; Q<sub>2</sub>. For any x &#8712; Q<sub>2</sub>, the unique morphism 0 &#8594; x is the discrete jump from 0 to x '
             'across the clopen boundary. Uniqueness: 0 is clopen-separated from all nonzero elements (ZP-B T3); the only clopen-respecting transition from 0 to x is the direct jump. '
             'This leg holds in the stand-in Q&#8322;BallDepth (fb_preserves_initial, ZeroParadox/Multihomed/CategoricalBridge.lean). In TopCat it '
-            'does not: the floor {0} is terminal and not initial there (padic_bottom_not_initial and the first example after it, '
+            'does not: the floor {0} is a one-point space, so it is terminal and not initial there (padic_bottom_isTerminal and padic_bottom_not_initial, '
             'ZeroParadox/Multihomed/TreeObstructions.lean). <font name="DV">&#10003;</font>',
             'F<sub>C</sub>: F<sub>C</sub>(0) = P = (1, 0). For any distribution P<sub>Y</sub>, the unique morphism P &#8594; P<sub>Y</sub> is the informational '
             'transition with work E = JSD(P &#8741; P<sub>Y</sub>). Uniqueness: JSD is symmetric and uniquely determined by P '

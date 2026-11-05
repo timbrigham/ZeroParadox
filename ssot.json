@@ -314,7 +314,21 @@
             "bottom"
           ],
           "reason": null,
-          "statement": "Each domain bottom is the categorical bottom of its own real category (MC-1, correspondence half — formally realized).",
+          "restatements": [
+            {
+              "by": "agent fix pass 2 for ZPH-NATIVE-ROLE-1 (orchestrator-briefed; wording awaits Tim's review)",
+              "date": "2026-11-05",
+              "prior_statement": "Each domain bottom is the categorical bottom of its own real category (MC-1, correspondence half — formally realized).",
+              "reason": "ZPH-NATIVE-ROLE-1 (content BEDROCK): \"the categorical bottom of its own real category\" is false for TopCat, where {0} ⊆ ℚ₂ is terminal and not initial (padic_bottom_not_initial, padic_bottom_isTerminal); the TopCat limit is floorConeIsLimit. Restated per category; backing in ClaimsMirror.claim_MC1_correspondence."
+            },
+            {
+              "by": "agent fix pass 3 for ZPH-NATIVE-ROLE-1 (orchestrator-briefed; wording awaits Tim's review)",
+              "date": "2026-11-05",
+              "prior_statement": "MC-1, correspondence half (formally realized), characterized per real Mathlib category and differing by category: the state floor is initial in ModuleCat ℂ; the information floor is initial in KleisliCat PMF, with no return morphism into it; the p-adic floor {0} ⊆ ℚ₂ is the limit of the ball tower in TopCat, terminal there and not initial.",
+              "reason": "ZPH-NATIVE-ROLE-1 gate round 1 (copy-editor F1 MEANING; adversary/editorial two-pole): \"no return morphism into it\" was unscoped and false as written (the identity on Fin 0); fC_no_return is scoped to stages n > 0 of fC_functor. Added the missing poles: the ModuleCat ℂ floor is also terminal (fD_zero_isTerminal), the KleisliCat PMF floor is not terminal (kleisli_bottom_not_terminal); the three-way split is fork_positions_distinct. TopCat terminality rests on one-pointedness, not the limit. Backing extended in ClaimsMirror.claim_MC1_correspondence."
+            }
+          ],
+          "statement": "MC-1, correspondence half (formally realized), characterized per real Mathlib category and differing by category: the state floor is a zero object (initial and terminal) in ModuleCat ℂ; the information floor is initial and not terminal in KleisliCat PMF, with no morphism into it from any later stage of the functor; the p-adic floor {0} ⊆ ℚ₂ is terminal in TopCat (it has one point) and not initial, and separately the limit of the ball tower.",
           "status": "corr",
           "to": null
         },
@@ -658,8 +672,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 3164,
-        "files": 196
+        "declarations": 3166,
+        "files": 198
       },
       "entries": [
         {
@@ -7342,6 +7356,46 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0ddadd5f-8e4b-412b-aca0-ca32a4e3769e",
+          "new": {
+            "file": "ZeroParadox/Multihomed/TreeObstructions.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.padic_bottom_isTerminal",
+            "short": "padic_bottom_isTerminal"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/TreeObstructions.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.padic_bottom_isTerminal",
+            "short": "padic_bottom_isTerminal",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "category",
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "ZPH-NATIVE-ROLE-1 pass 2: name the TopCat terminality of {0} ⊆ Q₂ (was an anonymous example)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -109447,6 +109501,48 @@
             "role": []
           },
           "reason": "SnapNucleusConstructive: machine-checked IMPOSSIBILITY - no idempotent endomap of ONote has epsilon-number closed points; obstruction is expressive reach (the carrier cannot name the closure), NOT choice",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f18eb06b-1608-4674-810d-33e249ccf164",
+          "new": {
+            "file": "ZeroParadox/Category/TreeSeam.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.floor_positions_full",
+            "short": "floor_positions_full"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/TreeSeam.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.floor_positions_full",
+            "short": "floor_positions_full",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "category",
+              "state",
+              "information",
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "ZPH-NATIVE-ROLE-1 pass 7 (Tim ruling 87): the three full floor positions in one statement",
           "verify": {
             "axioms": null,
             "sorry_free": true

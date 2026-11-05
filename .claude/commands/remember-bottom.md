@@ -24,8 +24,13 @@ First, re-read the canonical sources for full context:
 **The honest relationships (keep these apart — this is the whole point):**
 - Every instance is a **MEMBER** of the family — proved per domain. The *choice of criteria* is a design
   principle; membership against them is proved.
-- The **correspondence half is formally realized** — each domain bottom is the categorical bottom (limit
-  or initial object) of its own real Mathlib category, bundled as `mc1_correspondence`.
+- The **correspondence half is formally realized**, differently per category (the three full positions
+  are stated together in `floor_positions_full`): a zero object, initial and terminal, in `ModuleCat ℂ` (`fD_zero_isInitial`,
+  `hilbert_bottom_isZero`); initial and not terminal in `KleisliCat PMF` (`fC_zero_isInitial`,
+  `kleisli_bottom_not_terminal`); in `TopCat` terminal (it has one point; `padic_bottom_isTerminal`), not
+  initial (`padic_bottom_not_initial`), and separately the limit of the ball tower (`floorConeIsLimit`).
+  `mc1_correspondence` bundles the two `IsInitial` fields, the no-return field and the `TopCat` set
+  equation; `floorConeIsLimit` sits outside it.
 - What separates the instances is proved property by property (`seam_unique_among_named`, for the named
   bottoms, in a lattice with no top); object equality across categories does not typecheck and is not invariant under equivalence.
 - The **cross-category IDENTITY half is RETIRED as ill-typed** (2026-07-15). `x = y` across distinct

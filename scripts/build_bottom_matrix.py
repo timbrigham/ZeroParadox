@@ -144,7 +144,7 @@ CELLS = {
             "⚠ Not that no self-map exists - the same correction the TopCat cells took "
             "2026-08-29. No ZP witness is cited because none is owed for a degeneracy",
         "GEN": "node4_generates_nat",
-        "DYN": "out fC_no_return (initial source; nothing returns to ⊥ - μ)",
+        "DYN": "out fC_no_return (initial source; no later stage n > 0 returns to KleisliCat PMF's floor Fin 0 - μ)",
     },
     "#5 Hilbert (zero obj/seam)": {
         "CANT": "seam_not_mu_colimit_apex",

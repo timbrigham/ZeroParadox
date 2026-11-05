@@ -31,6 +31,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Order/Lattice.lean` - ZP-A: Lattice Algebra
 - `ZeroParadox/Order/LeastFixedPoint.lean` - The μ abstraction: least fixed point reached from a seed (the ceiling analogue of `AbstractSelfApp`)
   - ride-along docs: `ZeroParadox/Order/LeastFixedPoint.md` - The schema, its three faces, and why the seed is a role rather than an origin
+- `ZeroParadox/Order/PadicLimitCone.lean` - The p-adic floor `{0}` is a genuine categorical limit cone
 - `ZeroParadox/Order/PataraiaChoiceFree.lean` - Pataraia's theorem and induction, with no axioms
 - `ZeroParadox/Order/PataraiaFromBourbakiWitt.lean` - Pataraia's statement from Bourbaki–Witt, classically
   - ride-along docs: `ZeroParadox/Order/PataraiaFromBourbakiWitt.md` - Prior art for the classical route, and where the choice-free proofs are formalized
@@ -79,7 +80,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 
 - `ZeroParadox/Information/BottomMeasure.lean` - P6: measure = +∞ at the bottom — per-domain bundle, and the type-boundary finding
 - `ZeroParadox/Information/CrossingTrials.lean` - Crossing trials: what a probability on the crossing would buy
-  - ride-along docs: `ZeroParadox/Information/CrossingTrials.md` - From almost surely to one run: typicality as a hypothesis, prior art, two charts
+  - ride-along docs: `ZeroParadox/Information/CrossingTrials.md` - Crossing trials, § IV–IX: from almost surely to one run, from one firing to a state sequence, and why a finite reading can confirm a firing (`isOpen_fires_once`) and never refute one
 - `ZeroParadox/Information/Disjunctive.lean` - Disjunctive sequences: a tape on which every finite word occurs
   - ride-along docs: `ZeroParadox/Information/Disjunctive.md` - Disjunctive sequences: prior art, footprints and fences
 - `ZeroParadox/Information/PadicSurprisal.lean` - B3 (pipeline): information surprisal ≡ 2-adic depth at the floor
@@ -123,6 +124,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Category/LawvereTaboo.lean` - The diagonal engine's supplier is a constructive taboo
   - ride-along docs: `ZeroParadox/Category/LawvereTaboo.md` - The diagonal engine's supplier is a constructive taboo: result, fences and prior art
 - `ZeroParadox/Category/LawvereTwoAdic.lean` - Add-one, doubling and the relativized Lawvere witness: on ℤ, ℤ_[2] and partial digit streams
+- `ZeroParadox/Category/TreeSeam.lean` - ZP-H tree — the #5 straddle resolved: the Hilbert bottom is the μ=ν seam
 
 ### Multi-homed bridges (ZP-H)
 
@@ -142,6 +144,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Multihomed/SelfClosureObstruction.lean` - Self-Closure Obstructions: the wall-side mirror of the diagonal fixed point (experimental probe)
 - `ZeroParadox/Multihomed/SeparatedSuccession.lean` - The type bridge: a separated succession as an interface, with two known implementations
 - `ZeroParadox/Multihomed/TopNumEdge.lean` - Web edge: topology ↔ number theory (the valuation generates the ball topology)
+- `ZeroParadox/Multihomed/TreeObstructions.lean` - ZP-H: The bottom-diagram tree — machine-checked obstruction core (E4 + SPLIT, rebuilt)
 
 ### Set theory / AFA (ZP-J)
 
@@ -264,7 +267,6 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Order/MarkovContractionDual.lean` - The dual contraction dichotomy on the Markov ν-side (#2)
 - `ZeroParadox/Order/MarkovPlacement.lean` - The unplaced node: does the Markov attractor (#2) admit ANY order-extremal or categorical placement?
 - `ZeroParadox/Order/OrbitDichotomy.lean` - The orbit dichotomy — "one or infinitely many", no finite middle (probe)
-- `ZeroParadox/Order/PadicLimitCone.lean` - The p-adic floor `{0}` is a genuine categorical limit cone
 - `ZeroParadox/Order/ProofFloorHomset.lean` - Axis III over the proof-theory floor #1 (the hom-set carrier convention)
 - `ZeroParadox/Order/SeamSchema.lean` - A shared "seam schema" for the QPF root-seam and the lattice selfApp seam; this file exhibits no map between the two settings
 - `ZeroParadox/Order/WellFoundedObstruct.lean` - Well-foundedness obstructs the attractor character of the μ floor
@@ -361,7 +363,6 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Category/SeamUniqueness.lean` - Seam uniqueness extended: is any OTHER bottom a zero object?
   - ride-along docs: `ZeroParadox/Category/SeamUniqueness.md` - Which named bottom is a zero object: the per-bottom obstructions and the fence
 - `ZeroParadox/Category/TopNoGo.lean` - In TopCat the empty space is not isomorphic to the one-point space
-- `ZeroParadox/Category/TreeSeam.lean` - ZP-H tree — the #5 straddle resolved: the Hilbert bottom is the μ=ν seam
 - `ZeroParadox/Category/WellFoundedCoalgebra.lean` - The next time operator: μ/ν as an INTRINSIC property, not a construction
 
 ### Multi-homed bridges (ZP-H)
@@ -376,7 +377,6 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Multihomed/SnapFrameChange.lean` - The tower limit's two chart-readings: ⊥ and ∞ are two charts, swapped by `rInv`
   - ride-along docs: `ZeroParadox/Multihomed/SnapFrameChange.md` - SnapFrameChange — the tower limit's two chart-readings
 - `ZeroParadox/Multihomed/SpanObstruction.lean` - The #1↔#3 cross-root obstruction under a SPAN (THIN-BUT-HONEST)
-- `ZeroParadox/Multihomed/TreeObstructions.lean` - ZP-H: The bottom-diagram tree — machine-checked obstruction core (E4 + SPLIT, rebuilt)
 - `ZeroParadox/Multihomed/TreeT1.lean` - ZP-H tree, edge T1 — the within-μ edge: proof-theory floor ↔ categorical-initial bottoms
 - `ZeroParadox/Multihomed/TreeT2.lean` - ZP-H tree, edge T2 — the within-ν edge: Markov attractor ↔ p-adic inverse-limit
 - `ZeroParadox/Multihomed/TwoFacesBot.lean` - Direction B — the two faces of ⊥ at the seam: VACUOUS (they coincide, but only as a bare singleton)
@@ -411,4 +411,4 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 
 ---
 
-*Generated by `build_manifest.py` from the Lean tree + each file's `-- EXPERIMENTAL` header. Rerun after adding, moving, or renaming a file. (134 core, 106 experimental.)*
+*Generated by `build_manifest.py` from the Lean tree + each file's `-- EXPERIMENTAL` header. Rerun after adding, moving, or renaming a file. (137 core, 103 experimental.)*
