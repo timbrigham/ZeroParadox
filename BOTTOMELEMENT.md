@@ -246,7 +246,7 @@ lemmas are the statements, the analogy is not one.)
 - `CONC` ∅ - DEGENERATE on an empty carrier - there are no points, so every endomorphism fixes every point vacuously and CONC carries no content here. ⚠ This cell previously cited `[`kleisli_bottom_not_zero`](ZeroParadox/Category/SeamUniqueness.lean)` as a refutation; that theorem proves the Kleisli bottom is not a ZERO OBJECT (not terminal), which is a mu/nu DIRECTION fact and belongs to DYN. It addresses neither of CONC's two propositions
 - `SELF` ∅ - DEGENERATE, and that is the finding. `Fin 0` is EMPTY, so the Kleisli endomorphism `Fin 0 -> PMF (Fin 0)` is the unique empty map and every diagonal/self-application statement about it holds VACUOUSLY, carrying no content about this bottom. ⚠ Not that no self-map exists - the same correction the `TopCat` cells took 2026-08-29. No ZP witness is cited because none is owed for a degeneracy
 - `GEN` ✓ - [`node4_generates_nat`](ZeroParadox/Category/Node4Generation.lean)
-- `DYN` ↑ - [`fC_no_return`](ZeroParadox/Multihomed/InfoFunctor.lean) (initial source; nothing returns to ⊥ - μ)
+- `DYN` ↑ - [`fC_no_return`](ZeroParadox/Multihomed/InfoFunctor.lean) (initial source; no later stage n > 0 returns to `KleisliCat` PMF's floor Fin 0 - μ)
 
 **#5 Hilbert (zero obj/seam)**
 - `CANT` ✓ - [`seam_not_mu_colimit_apex`](ZeroParadox/Category/SeamNotColimit.lean)
