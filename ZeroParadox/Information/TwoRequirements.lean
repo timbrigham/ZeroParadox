@@ -12,9 +12,9 @@ set_option maxHeartbeats 400000
 # Two requirements: a first step at ⊥ of `L`, and a typical tape
 
 Two HYPOTHESES, neither discharged: `BotHasFirstStep L`, a cover of ⊥ of a `ZPSemilattice L` in
-ZP-A's induced order (AX-B1's form), and a tape typical for `trials p hp`, in three strengths:
-zero-block typical, Martin-Löf random, frequency of `true` tending to `p` (law of large numbers).
-§ I–III: with `0 < p` they give `t_snap_given_cover`'s full conclusion. § IV: binary expansion
+ZP-A's induced order (AX-B1's form), and a tape typical for `trials p hp`, in three forms:
+zero-block typical, Martin-Löf random (implies the first, § II), frequency of `true` tending to
+`p`. § I–III: with `0 < p` they give `t_snap_given_cover`'s full conclusion. § IV: binary expansion
 sends a tape to a dyadic rational iff the tape is eventually constant.
 ## Engineer's Take
 
@@ -205,7 +205,8 @@ example [ZPSemilattice Unit] : ¬ BotHasFirstStep Unit := by
 Not located in the pinned Mathlib as of 2026-11-06 (grep of `.lake/packages/mathlib/Mathlib` for
 `martin.?l`, `kurtz`, case-insensitive: no hit). A test's cylinders are listed by a computable `g`
 with no access to `μ`, so for a non-computable `p` this is no stronger than randomness relative to
-`p`. Martin-Löf random implies zero-block typical; the converse fails at the all-`true` tape. -/
+`p`. Martin-Löf random implies zero-block typical; the converse fails at `p = 1/2`, at the
+all-`true` tape. -/
 
 /-- `Statement:` the tapes extending the finite word `l` (a prefix cylinder). -/
 def prefixCyl (l : List Bool) : Set (ℕ → Bool) := {x | ∀ i (h : i < l.length), x i = l[i]}
@@ -641,9 +642,20 @@ theorem not_eventuallyConst_iff_not_dyadic (w : ℕ → Bool) :
     ¬ EventuallyConstTape w ↔ ¬ IsDyadic (tapeReal w) :=
   ⟨fun h => (interior_of_not_eventuallyConst h).2.2, fun h hc => h (dyadic_of_eventuallyConst hc)⟩
 
--- Reading: CARRIER. The tapes that settle land on the dyadic grid (a quantized set of values); the
--- tapes that never settle land off it, strictly inside (0, 1) of ℝ, where no point has a first step
+-- Reading: CARRIER. The tapes that settle land on dyadic rationals, each at a finite binary level;
+-- the tapes that never settle land off them, strictly inside (0, 1). The split is finite versus
+-- infinite binary description, not stepped versus continuous: the dyadic rationals are dense (the
+-- `example` below), and in ℝ's order no point, dyadic or not, has a first step
 -- (`no_firstStep_of_preconnected`). The first step of § I is asked of `L`, never of ℝ.
+
+-- Statement: the dyadic rationals are closed under midpoints, so between two lies a third.
+example (x y : ℝ) (hx : IsDyadic x) (hy : IsDyadic y) : IsDyadic ((x + y) / 2) := by
+  obtain ⟨n, k, rfl⟩ := hx
+  obtain ⟨m, j, rfl⟩ := hy
+  refine ⟨n + m + 1, k * 2 ^ m + j * 2 ^ n, ?_⟩
+  push_cast
+  field_simp
+  ring
 
 /-- `Statement:` for `0 < p < 1`, a Martin-Löf random tape for `trials p hp` is not eventually
 constant: eventually `false` is caught by a zero-block test, eventually `true` by a one-block test. -/
