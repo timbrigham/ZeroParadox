@@ -1,12 +1,12 @@
 """
 Zero Paradox — ZP-I: Inside Zero PDF Builder
-Version 1.41 | November 2026
+Version 1.42 | November 2026
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.41'
+VERSION = '1.42'
 FIRST_RELEASED = 'April 2026'
 
 # ZP-I uses justified body text; override the left-aligned zp_utils defaults
@@ -761,7 +761,7 @@ def build():
 
     oq_rows = [
         ['T-IZ: Inside Zero Theorem',
-         'CONVERGENCE + ROLE-RECOGNITION DERIVED — occupancy and novelty COMMITTED',
+         'CONVERGENCE + ROLE-RECOGNITION DERIVED — occupancy takes a choice of join; novelty COMMITTED',
          'Every nowhere-zero 2-adic depth chain S<sub>0</sub>, S<sub>1</sub>, ... in Q<sub>2</sub> whose '
          'valuation equals a depth index in &#8469; that climbs at every step converges to 0 in '
          'Q<sub>2</sub>; reading that limit as the '
@@ -775,11 +775,11 @@ def build():
          'Internal/external perspective relativity is ordinal, not set-theoretically free. '
          'Formal connection to specific CH instances: still open — deferred to future work.'],
         ['Null balance: 0 + x + (&#8722;x) = 0',
-         'CLOSED for ROLE-RECOGNITION — occupancy and novelty COMMITTED',
+         'CLOSED for ROLE-RECOGNITION — occupancy takes a choice of join; novelty COMMITTED',
          'The convergence half is derived from T-IZ: the lattice chain starts at its semilattice&#8217;s &#8869; '
          '(CC-1) and ascends under T3, and the nowhere-zero 2-adic depth chain converges to 0 &#8712; Q<sub>2</sub>. Reading that '
-         'limit as an occupant of the bottom role is a COMMITMENT, not a consequence — the '
-         'join-identity is not statable of the limit until a join on Q<sub>2</sub> is chosen. On that reading, DA-2 identifies the '
+         'limit as an occupant of the bottom role takes a choice of join on Q<sub>2</sub> (then the role half is a '
+         'theorem, t_iz_limit_is_new_null). On that reading, DA-2 identifies the '
          'occupant with the &#8869; already there. '
          '"&#8722;x" is not subtraction in L — it is the 2-adic approach to 0 by forward motion; reading it as a '
          'return in the cycle is the reading whose premises are stated in &#167; V.III. '
