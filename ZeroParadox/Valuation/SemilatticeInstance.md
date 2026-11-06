@@ -14,14 +14,15 @@ chain in any other `ZPSemilattice`. `ZeroParadox/Valuation/ScaleRealization.lean
 valuation ascent along a realized orbit `n ↦ ρ (scale^[n] x)` from equivariance and a nonzero start
 `ρ x ≠ 0` (`realized_strict`).
 
-⚠ **Two further readings, both commitments, neither part of the statement:**
+⚠ **Two further readings, neither part of the statement: occupancy takes a choice of join, novelty is a commitment:**
 
 1. **Occupancy** — reading that limit as an OCCUPANT of the ⊥ role, the join-identity of a
    `ZPSemilattice`. This is not merely unproved. `ZPSemilattice ℚ_[2]` does not synthesize, so
    the join-identity is **not statable** of the limit: a type error, not a missing lemma. A join
    on ℚ₂ can be chosen, through a well-ordering, and then its ⊥ fills the role, and any point can
    be that ⊥ (the CONTROL `example` after `c_t_iz_null_balance`): that SOME join makes the limit
-   its ⊥ is proved, and the commitment is to a particular join. An identity between the limit and
+   its ⊥ is proved, and reading the limit as the occupant takes a choice of a particular join; which
+   point fills the role depends on the join chosen. An identity between the limit and
    ⊥ of another semilattice is ill-typed (MC-1). Under doubling, a step defined from ℚ₂'s ring
    operations with no join picked, the die's role `Motion.SelfOnlyAt` (`ZeroParadox/Die.lean`, a
    point that steps to itself and to nothing else) has 0 as its only occupant (the `example` after
@@ -34,8 +35,9 @@ valuation ascent along a realized orbit `n ↦ ρ (scale^[n] x)` from equivarian
    the `t_iz_limit_is_new_null` gloss in `Order/SnapCannotBe.lean` forbids citing that theorem as its witness.
 
 So there are three tiers, and `CLAIMS.md`'s T-IZ row is the ratified statement of them:
-**convergence PROVED · role-recognition PROVED as an implication · occupancy a COMMITMENT (of
-the join-identity role: a choice of join) · novelty a further COMMITMENT.** Beside them, the die
+**convergence PROVED · role-recognition PROVED as an implication · occupancy takes a CHOICE of
+join (which point fills the join-identity role depends on the join chosen) · novelty a COMMITMENT
+(C-DA2).** Beside them, the die
 role under doubling is occupied by 0 alone, PROVED (and occupied by 0 and 1 under squaring).
 
 ## What `t_iz_complete` is, and what it is not
@@ -104,8 +106,8 @@ It does **not** carry the additive balance `0 + x + (−x) = 0`, and that identi
 Nor does it establish that the 2-adic limit *occupies* the role. `#synth ZPSemilattice ℚ_[2]` fails
 (verified by running), so `∀ x, join S x = x` is not a well-formed proposition of that limit — a type
 error, not a missing lemma — until a join is chosen, and a chosen join makes any point its ⊥ (the
-CONTROL `example` after the theorem). Occupancy stays a commitment, the choice of a join; reading
-the occupant as a successor ⊥′ is a further commitment (C-DA2).
+CONTROL `example` after the theorem). Occupancy takes a choice of join, and which point fills the
+role depends on the join chosen; reading the occupant as a successor ⊥′ is a commitment (C-DA2).
 
 ## The layer's components
 
