@@ -672,8 +672,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 3200,
-        "files": 201
+        "declarations": 3256,
+        "files": 202
       },
       "entries": [
         {
@@ -1115,6 +1115,43 @@
             ]
           },
           "reason": "reorg reconcile TEST (deps-unreferenced decl): Op A flatten + Op B whole-file move",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "00bcca3b-259d-410b-8c8d-ea69c63fb9c3",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.exists_MLRandom",
+            "short": "exists_MLRandom"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.exists_MLRandom",
+            "short": "exists_MLRandom",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -1604,6 +1641,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "01e19772-5206-478e-9caa-42981356d114",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.blockWord",
+            "short": "blockWord"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.blockWord",
+            "short": "blockWord",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "01fd09c7-0463-408c-bbe3-e98da456a2d9",
           "new": {
             "file": "ZeroParadox/Category/IgnoranceSeam.lean",
@@ -1993,6 +2067,43 @@
             ]
           },
           "reason": "twin de-scar: <base>_<FileBasename> file-suffix rename",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "02a4e125-87f3-4b39-b247-07b878c4716d",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.trueFreq_allTrue",
+            "short": "trueFreq_allTrue"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.trueFreq_allTrue",
+            "short": "trueFreq_allTrue",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -4506,6 +4617,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "075c8798-8bf3-4ecd-b262-45583ed90401",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ZeroBlockTypical",
+            "short": "ZeroBlockTypical"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ZeroBlockTypical",
+            "short": "ZeroBlockTypical",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "0775ee33-dc3d-4c65-b15d-479ee448f170",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -5835,6 +5983,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "0a41935c-7b37-4912-99b3-63ec26b1026f",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bool_botHasFirstStep",
+            "short": "bool_botHasFirstStep"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bool_botHasFirstStep",
+            "short": "bool_botHasFirstStep",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "0a57f293-7791-4d86-b542-693071b6664f",
           "new": {
             "file": "ZeroParadox/Valuation/PoleChartSelection.lean",
@@ -6482,6 +6667,43 @@
             ]
           },
           "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0bc4b1b2-ab8b-4ef0-bb77-5d1ac0f7539e",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.nnreal_not_botHasFirstStep",
+            "short": "nnreal_not_botHasFirstStep"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.nnreal_not_botHasFirstStep",
+            "short": "nnreal_not_botHasFirstStep",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -12445,6 +12667,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "18c2c1ec-5868-4958-abe6-bddcd14579b2",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.interior_of_not_eventuallyConst",
+            "short": "interior_of_not_eventuallyConst"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.interior_of_not_eventuallyConst",
+            "short": "interior_of_not_eventuallyConst",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "18c4aeae-25ce-4e2f-986d-b5cf3682f9df",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -13293,6 +13552,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "1a7790d2-abbf-4735-8b8c-0dfe1c833d81",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.hcov_iff_phi_cover",
+            "short": "hcov_iff_phi_cover"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.hcov_iff_phi_cover",
+            "short": "hcov_iff_phi_cover",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "1a839aad-1333-4b00-be6d-c6734c0d3b42",
           "new": {
@@ -13546,6 +13842,43 @@
             ]
           },
           "reason": "New file Multihomed/BoundaryOrder.lean — atlas slice 2: Phase ordered as WithBot Ordinal, the UpAndOver instance with corner at the floor",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "1adc7a4a-5c04-48e4-ba9e-79e981a2db1c",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.allTrue_zeroBlockTypical",
+            "short": "allTrue_zeroBlockTypical"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.allTrue_zeroBlockTypical",
+            "short": "allTrue_zeroBlockTypical",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -16800,6 +17133,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "226a834d-0a42-4276-bb9b-a3136331cc4c",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.EventuallyConstTape",
+            "short": "EventuallyConstTape"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.EventuallyConstTape",
+            "short": "EventuallyConstTape",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "22782b64-9fa0-40e7-85ea-84bc67c20c2c",
           "new": {
             "file": "ZeroParadox/Settheory/LawvereBridge.lean",
@@ -18154,6 +18524,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "25ec1f64-f7fe-4d51-9396-1d1f9d559ae0",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ofDigits_two_partial_nat",
+            "short": "ofDigits_two_partial_nat"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ofDigits_two_partial_nat",
+            "short": "ofDigits_two_partial_nat",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -21524,6 +21931,43 @@
             ]
           },
           "reason": "Die stage/closure shape and registration switch (Die.lean § VI-VII), with its two face maps in their existing homes (Epsilon0LeastFP, Occurrence)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "2c82a460-8ced-42e8-aebe-0fbe2d80e498",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.botHasFirstStep_iff_exists_phi",
+            "short": "botHasFirstStep_iff_exists_phi"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.botHasFirstStep_iff_exists_phi",
+            "short": "botHasFirstStep_iff_exists_phi",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -25458,6 +25902,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "35fd7638-3cd2-4967-9780-ab529d6a36a4",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.MLRandom",
+            "short": "MLRandom"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.MLRandom",
+            "short": "MLRandom",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "3660e8e8-5a1e-4aed-b9e7-ae36d6bced2e",
           "new": {
             "file": "ZeroParadox/Valuation/PolePassage.lean",
@@ -26120,6 +26601,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "37a2defd-d1cd-426f-b756-1c73c98c3a94",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.levelOf",
+            "short": "levelOf"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.levelOf",
+            "short": "levelOf",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "37b2c119-1d6a-4081-b43c-b66e46733ce1",
           "new": {
             "file": "ZeroParadox/Category/LawvereTaboo.lean",
@@ -26509,6 +27027,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "3870a884-67e6-428c-9e48-ba2b2380ccb2",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bitDigit",
+            "short": "bitDigit"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bitDigit",
+            "short": "bitDigit",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -29307,6 +29862,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "3f90d91a-9de3-41d0-b02f-abb0770f6f59",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ofDigits_two_pos",
+            "short": "ofDigits_two_pos"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ofDigits_two_pos",
+            "short": "ofDigits_two_pos",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "3fa70181-49c6-4b44-9f78-e6e36fcfdfe1",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -29998,6 +30590,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "41dbdf20-c808-4c87-85d9-2501ec75fead",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.not_eventuallyConst_of_MLRandom",
+            "short": "not_eventuallyConst_of_MLRandom"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.not_eventuallyConst_of_MLRandom",
+            "short": "not_eventuallyConst_of_MLRandom",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "420a7ac3-bc76-4762-93c0-6fd87d6d4382",
           "new": {
             "file": "ZeroParadox/Valuation/RiemannSphere.lean",
@@ -30135,6 +30764,43 @@
             "role": []
           },
           "reason": "die-wpb-1029: weak-pullback preservation for Part x Set (elementwise form) and, for motions, Rutten 5.1, 5.2, 5.4*, the greatest-bisimulation and equivalence clauses of 5.6, the bisimulation half of 5.7*, and 5.9*(2) (Die § XXII); Tim ruling 2026-10-29",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "4237bde1-5366-4916-81f5-c419880e557d",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_constBlock",
+            "short": "trials_constBlock"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_constBlock",
+            "short": "trials_constBlock",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -34288,6 +34954,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "49e5870f-1a4a-48f6-9449-aff49e3d7801",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.constBlock_eq_iUnion",
+            "short": "constBlock_eq_iUnion"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.constBlock_eq_iUnion",
+            "short": "constBlock_eq_iUnion",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "49ec2c30-4ac0-42e6-bb80-6589a1633864",
           "new": {
             "file": "ZeroParadox/Valuation/Scale.lean",
@@ -36707,6 +37410,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "4f86dde7-90b8-4c84-ac5e-65e14c890486",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.prefixCyl",
+            "short": "prefixCyl"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.prefixCyl",
+            "short": "prefixCyl",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -40309,6 +41049,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "5783176c-649e-462e-baa6-bcde33856cc5",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.interior_of_MLRandom",
+            "short": "interior_of_MLRandom"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.interior_of_MLRandom",
+            "short": "interior_of_MLRandom",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -50103,6 +50880,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "6d11c409-7df9-4031-a4ef-159eb33a3c9c",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.not_eventuallyConst_iff_not_dyadic",
+            "short": "not_eventuallyConst_iff_not_dyadic"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.not_eventuallyConst_iff_not_dyadic",
+            "short": "not_eventuallyConst_iff_not_dyadic",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "6d19f312-4dd7-44b1-b342-f9ca5c81efc6",
           "new": {
@@ -53238,6 +54052,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "7415f416-3a2e-4bf1-aae8-08d2c8a3ee70",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.blockWord_length",
+            "short": "blockWord_length"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.blockWord_length",
+            "short": "blockWord_length",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -59655,6 +60506,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "8171b3db-6c7c-4a1f-bd30-b0edb4b320ba",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.nnrealMaxZPS",
+            "short": "nnrealMaxZPS"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.nnrealMaxZPS",
+            "short": "nnrealMaxZPS",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "81781e5d-c35b-4de9-b9d2-6f2464d813fc",
           "new": {
@@ -60388,6 +61276,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "8315444f-0577-44bd-83e5-d9f2a8e23844",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.snap_of_firstStep_MLRandom",
+            "short": "snap_of_firstStep_MLRandom"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.snap_of_firstStep_MLRandom",
+            "short": "snap_of_firstStep_MLRandom",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -64409,6 +65334,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "8c3dd89a-3d43-45ad-9b6f-a5a5eab90378",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.tapeReal",
+            "short": "tapeReal"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.tapeReal",
+            "short": "tapeReal",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "8c5f938a-8a91-4296-bca8-9a93e0e683f6",
           "new": {
             "file": "ZeroParadox/Valuation/PoleCompletion.lean",
@@ -68009,6 +68971,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "95029f86-f17f-4ebd-a01a-c50816479b17",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.zeroBlockTest_isMLTest",
+            "short": "zeroBlockTest_isMLTest"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.zeroBlockTest_isMLTest",
+            "short": "zeroBlockTest_isMLTest",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "9517c8e6-d0a0-4719-8e69-919388097c83",
           "new": {
             "file": "ZeroParadox/Valuation/PoleChartSelection.lean",
@@ -70617,6 +71616,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "9a7eec92-ae96-4c14-ab3c-c3451fe6e369",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.BotHasFirstStep",
+            "short": "BotHasFirstStep"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.BotHasFirstStep",
+            "short": "BotHasFirstStep",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "9a8927fd-fb61-4590-b972-348eb0ece7a5",
           "new": {
             "file": "ZeroParadox/Settheory/HypersetOrder.lean",
@@ -72088,6 +73124,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "9d4b8f7e-2f06-4a23-9aae-3d6d346cbeb7",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fires_io_of_freqBalanced",
+            "short": "fires_io_of_freqBalanced"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.fires_io_of_freqBalanced",
+            "short": "fires_io_of_freqBalanced",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "9d58b797-4676-46c5-9298-a295a1059225",
           "new": {
@@ -73140,6 +74213,43 @@
             ]
           },
           "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "9f04ee24-8a49-43b6-af0a-8973a7c3fd9d",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.freqBalanced_ae",
+            "short": "freqBalanced_ae"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.freqBalanced_ae",
+            "short": "freqBalanced_ae",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -76250,6 +77360,43 @@
         {
           "claims": {
             "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a6f7d418-f934-4190-a383-05295be08782",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.countable_computable_enum",
+            "short": "countable_computable_enum"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.countable_computable_enum",
+            "short": "countable_computable_enum",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
             "witness_of": [
               "node-category"
             ]
@@ -76774,6 +77921,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "a848dee1-44a7-4f6c-b211-00254d252c3b",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.mlRandom_ae",
+            "short": "mlRandom_ae"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.mlRandom_ae",
+            "short": "mlRandom_ae",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "a86c4110-95f7-4e80-95e9-7636e055ac9d",
           "new": {
             "file": "ZeroParadox/Valuation/BottomInvariant.lean",
@@ -77055,6 +78239,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a8ed0cd6-9ecc-41d0-8e3f-2a5736a8e183",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fires_once_of_mem_limsup",
+            "short": "fires_once_of_mem_limsup"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.fires_once_of_mem_limsup",
+            "short": "fires_once_of_mem_limsup",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -78578,6 +79799,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "abba11d9-7fee-41ee-a0f5-ceaf77f63e45",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.snap_of_firstStep_fires_once",
+            "short": "snap_of_firstStep_fires_once"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.snap_of_firstStep_fires_once",
+            "short": "snap_of_firstStep_fires_once",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "abd4bad3-53ec-4dc5-92fc-e1132e951276",
           "new": {
             "file": "ZeroParadox/Valuation/PadicVladimirov.lean",
@@ -78683,6 +79941,43 @@
             ]
           },
           "reason": "Die stage/closure shape and registration switch (Die.lean § VI-VII), with its two face maps in their existing homes (Epsilon0LeastFP, Occurrence)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ac12b39e-7c57-48cf-9e43-52a08c633464",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.snap_of_firstStep_freqBalanced",
+            "short": "snap_of_firstStep_freqBalanced"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.snap_of_firstStep_freqBalanced",
+            "short": "snap_of_firstStep_freqBalanced",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -79696,6 +80991,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "ae61f33f-57d3-4a8d-8fc5-14e66e9d0736",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.boolOrZPS",
+            "short": "boolOrZPS"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.boolOrZPS",
+            "short": "boolOrZPS",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "ae63f656-de3e-4f7c-a02a-f0f44eb2aa74",
           "new": {
             "file": "ZeroParadox/Valuation/PoleCompletion.lean",
@@ -79872,6 +81204,43 @@
             ]
           },
           "reason": "Die v2 final batch: drawing vs set (self-steps, accessibility, forced rank), ends of a view, orders on motions, placements as views, relaxed least-fixed-point schema, UP legs as nuclei",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "aeb3d3bc-069b-43df-b485-0c5121aff8f1",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.nnreal_zp_lt_iff",
+            "short": "nnreal_zp_lt_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.nnreal_zp_lt_iff",
+            "short": "nnreal_zp_lt_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -81090,6 +82459,43 @@
             "role": []
           },
           "reason": "pinned-limit-r3-1104: climbing-run clause (Tim ruling 35); no occupant of PinnedLimit / PinnedLimitAbove on a finite partial order",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b1390972-7f00-415f-bb15-0446ac4c7ac5",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.tapeInd_measurable",
+            "short": "tapeInd_measurable"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.tapeInd_measurable",
+            "short": "tapeInd_measurable",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -83975,6 +85381,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "b6f72311-1d21-47f6-b6cf-1a998b292d25",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.blockWord_primrec",
+            "short": "blockWord_primrec"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.blockWord_primrec",
+            "short": "blockWord_primrec",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "b7211bd9-e0f6-4600-83ac-e1422f68df70",
           "new": {
@@ -85489,6 +86932,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "ba1eaa99-8bde-4ed8-a057-1988c684876e",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.IsDyadic",
+            "short": "IsDyadic"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.IsDyadic",
+            "short": "IsDyadic",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "ba2c9116-e075-40b2-b5cc-a03e313443c6",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -85886,6 +87366,43 @@
             ]
           },
           "reason": "Die views batch: views (order as data), restriction to an up-closed set, adjoined points and the empty carrier, arrival and fan-in",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "baf447af-868a-48ef-9c37-3d71f6359e92",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.constBlock",
+            "short": "constBlock"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.constBlock",
+            "short": "constBlock",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -92866,6 +94383,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "cb0aa60a-73b7-4999-a607-6d236bcccd3a",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fin2_val_le_one",
+            "short": "fin2_val_le_one"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.fin2_val_le_one",
+            "short": "fin2_val_le_one",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "cb297a23-d8fb-41b5-ac3f-ecae7e83d522",
           "new": {
             "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
@@ -93550,6 +95104,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "cc643553-7562-4ff1-890d-af6cf6dfa2d8",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bitAt_primrec",
+            "short": "bitAt_primrec"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bitAt_primrec",
+            "short": "bitAt_primrec",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -97666,6 +99257,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "d527a6b6-f53a-4c74-b651-83c8c944d9a7",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.tapeInd",
+            "short": "tapeInd"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.tapeInd",
+            "short": "tapeInd",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "d536e0e8-576a-42d8-b26f-cfbd315a4cb3",
           "new": {
@@ -98798,6 +100426,43 @@
             "role": []
           },
           "reason": "PoleChartSelection: NEGATIVE result - chart selection at the built pole is axiom-free, refuting the naive 'choice = chart selection' reading; § II is a labelled conditional model",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d81cf498-0ffc-4f7f-9fb8-01df4d02f6a3",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.shift_of_not_eventuallyConst",
+            "short": "shift_of_not_eventuallyConst"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.shift_of_not_eventuallyConst",
+            "short": "shift_of_not_eventuallyConst",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -100164,6 +101829,43 @@
             ]
           },
           "reason": "Gate round 1 fixes: rename never_repeats to seq_ne_succ (F1 bedrock), land no_zpcat_top/no_zpcat_int (F2 bedrock) and freeNat_not_finite (F8).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "da28fc20-90ff-44af-b243-da67363f88d4",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.zeroBlockTypical_of_MLRandom",
+            "short": "zeroBlockTypical_of_MLRandom"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.zeroBlockTypical_of_MLRandom",
+            "short": "zeroBlockTypical_of_MLRandom",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -101748,6 +103450,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "de37ae01-bf55-44a9-8645-431dff6de81b",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.blockWord_getElem",
+            "short": "blockWord_getElem"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.blockWord_getElem",
+            "short": "blockWord_getElem",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -106151,6 +107890,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "e6ca907c-cc5f-4977-9dbd-3f6a02f68536",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.trueFreq",
+            "short": "trueFreq"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.trueFreq",
+            "short": "trueFreq",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "e6fc6769-bf87-4ef5-aa5c-b78f15825694",
           "new": {
@@ -106871,6 +108647,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e862204b-e9b5-4b9a-9051-6e28108b629e",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ofDigits_two_lt_one",
+            "short": "ofDigits_two_lt_one"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ofDigits_two_lt_one",
+            "short": "ofDigits_two_lt_one",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -108793,6 +110606,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "ebe2c053-7438-46ed-b071-81d355c006b7",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dyadic_of_eventuallyConst",
+            "short": "dyadic_of_eventuallyConst"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.dyadic_of_eventuallyConst",
+            "short": "dyadic_of_eventuallyConst",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "ec1e5bb5-bbec-41e3-9dfa-a7fcbd663272",
           "new": {
             "file": "ZeroParadox/Settheory/HypersetOrder.lean",
@@ -109715,6 +111565,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "ee484b5c-eb5e-40e9-9cfe-e1e8c79a77f5",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.zeroBlock_eq_constBlock",
+            "short": "zeroBlock_eq_constBlock"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.zeroBlock_eq_constBlock",
+            "short": "zeroBlock_eq_constBlock",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "ee4a6df7-1bfa-44a3-a64d-880389f443ae",
           "new": {
             "file": "ZeroParadox/Order/Snap.lean",
@@ -110186,6 +112073,43 @@
             ]
           },
           "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "efdc7fd1-6230-4920-81eb-a5f23bce006a",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.snap_of_two_requirements",
+            "short": "snap_of_two_requirements"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.snap_of_two_requirements",
+            "short": "snap_of_two_requirements",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -110698,6 +112622,43 @@
             ]
           },
           "reason": "Die computability face (halting as arrival, clock machine), quotients of a motion (drawing vs set: hypersets, codes), carrier-changing steps (wrap, Option), PoleEnds with inhabitation",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f15d5440-ae69-43c0-ac83-95a11c8631c5",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.FreqBalanced",
+            "short": "FreqBalanced"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.FreqBalanced",
+            "short": "FreqBalanced",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -113288,6 +115249,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "f694a291-06db-4196-a5e3-dfca69929aa1",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.measure_iInter_le_pow_zero",
+            "short": "measure_iInter_le_pow_zero"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.measure_iInter_le_pow_zero",
+            "short": "measure_iInter_le_pow_zero",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "f6b341eb-2efb-4b22-8f4f-9675aca2fa24",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -113935,6 +115933,43 @@
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": "[propext, Classical.choice, Quot.sound]",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f782d0a3-9f36-451f-8772-9c65a70d4418",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.MLTest",
+            "short": "MLTest"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.MLTest",
+            "short": "MLTest",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
+          "verify": {
+            "axioms": null,
             "sorry_free": true
           }
         },
@@ -115720,6 +117755,43 @@
             ]
           },
           "reason": "New experimental probe RequirementsGap.lean — instance-vs-requirements gap as a fork instance (object-level of Tim's conjecture)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "fb15a62f-f04e-45e3-aa83-56933e77eea8",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.constBlock_presented",
+            "short": "constBlock_presented"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.constBlock_presented",
+            "short": "constBlock_presented",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
           "verify": {
             "axioms": null,
             "sorry_free": true
