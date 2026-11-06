@@ -51,6 +51,7 @@ import ZeroParadox.Settheory.OntBridge
 import ZeroParadox.Settheory.Model
 import ZeroParadox.Order.SeamSchema
 import ZeroParadox.Information.CrossingTrials
+import ZeroParadox.Order.DieJoints
 
 set_option maxHeartbeats 400000
 
@@ -158,7 +159,26 @@ example : ¬ ∃ t : WithBot ℤ, IsTop t := by
   induction t using WithBot.recBotCoe with
   | bot => exact WithBot.not_coe_le_bot 0 (ht 0)
   | coe a => exact absurd (WithBot.coe_le_coe.1 (ht ((a + 1 : ℤ) : WithBot ℤ))) (by omega)
-#check @ZeroParadox.Motion.UpTotal             -- Statement: UP switch at total: `up` defined everywhere
+-- Reading: an end, adjoined or not, as a cut point approached from one side and not reached there:
+-- a joint from below, a dual joint from above (`ZeroParadox/Order/DieJoints.lean`).
+#check @ZeroParadox.IsCutPoint                   -- Statement: `A` lies below `B`, and `x` is the least upper bound of `A` and the greatest lower bound of `B`
+#check @ZeroParadox.IsJoint                      -- Statement: a cut point of `(A, B)` lying in `B`, with `A` nonempty and without a greatest element
+#check @ZeroParadox.IsDualJoint                  -- Statement: a cut point of `(A, B)` lying in `A`, with `B` nonempty and without a least element
+#check @ZeroParadox.isJoint_toDual_iff           -- Statement: a joint of `(B, A)` in `αᵒᵈ` iff a dual joint of `(A, B)` in `α`; both directions
+#check @ZeroParadox.isDualJoint_toDual_iff       -- Statement: a dual joint of `(B, A)` in `αᵒᵈ` iff a joint of `(A, B)` in `α`; both directions
+#check @ZeroParadox.not_isJoint_of_isBot         -- Statement: if `x` is least in a preorder, then `x` is a joint of no `(A, B)`
+#check @ZeroParadox.not_isDualJoint_of_isTop     -- Statement: if `x` is greatest in a preorder, then `x` is a dual joint of no `(A, B)`
+#check @ZeroParadox.not_isDualJoint_of_wellFoundedLT -- Statement: if a linear order is well-founded, then nothing in it is a dual joint; `Ordinal` is an instance, and the `Finset Bool` CONTROL in the home file makes linearity a premise
+#check @ZeroParadox.ennreal_top_isJoint          -- Statement: ⊤ of `ℝ≥0∞` is a joint of (the finite values, `{⊤}`)
+#check @ZeroParadox.ennreal_zero_isDualJoint     -- Statement: 0 of `ℝ≥0∞` is a dual joint of (`{0}`, the positive values); as ⊥ of `ℝ≥0∞` it is a joint of no `(A, B)`
+#check @ZeroParadox.ennreal_inv_exchanges        -- Statement: on `ℝ≥0∞`, `x ↦ x⁻¹` reverses the order, sends ⊤ to 0 and 0 to ⊤, and `x⁻¹` is positive iff `x ≠ ⊤`
+#check @ZeroParadox.isJoint_image_of_isDualJoint -- Statement: if `f` is onto and `f a ≤ f b ↔ b ≤ a`, then `f` sends a dual joint `x` of `(A, B)` to a joint `f x` of `(f '' B, f '' A)`
+#check @ZeroParadox.isDualJoint_image_of_isJoint -- Statement: under the same hypotheses, a joint `x` of `(A, B)` goes to a dual joint `f x` of `(f '' B, f '' A)`
+#check @ZeroParadox.q2Val_zero_isJoint           -- Statement: `q2Val` reverses the norm order on ℤ_[2], ℤ_[2]'s 0 has least norm, and its `q2Val`, ⊤ of `ℕ∞`, is a joint of (the finite values, `{⊤}`)
+-- Reading: INVERSION, no identity: 0 and ⊤ of `ℝ≥0∞` are two points (`ENNReal.zero_ne_top`) that
+-- `x ↦ x⁻¹` exchanges. At ℤ_[2]'s 0 only the valuation side is a joint here: ℤ_[2] carries no order
+-- instance, so the norm side is stated as least norm, not as a dual joint.
+#check @ZeroParadox.Motion.UpTotal            -- Statement: UP switch at total: `up` defined everywhere
 -- Statement: member and non-member: `ofTotal`; and UP undefined everywhere.
 #check @ZeroParadox.Motion.ofTotal_upTotal
 example : ∃ M : ZeroParadox.Motion ℕ, (∀ x, M.up x = Part.none) ∧ ¬ M.UpTotal :=
@@ -4363,6 +4383,10 @@ example :
 -- constructor (`Option ℕ`, tagged) or as the limit of the finite stages (`NInf`, Escardó's ℕ∞, the
 -- one-point compactification of `ℕ`; untagged); `ℕ` adjoins none. Definitions and proofs:
 -- `ZeroParadox/Die.lean` § XXIII.
+#check @ZeroParadox.enat_top_isJoint           -- Statement: TAGGED: ⊤ of `ℕ∞` (`WithTop ℕ`) is a joint of (the finite values, `{⊤}`)
+#check @ZeroParadox.NInf.infty_isJoint         -- Statement: LIMIT: `NInf.infty` is a joint of (the finite stages, `{∞}`)
+-- Reading: INVARIANT: the joint shape holds on both sides of this coordinate, so it does not separate
+-- the tagged point from the limit point; identifying the two carriers is priced in § XXIX.
 #check @ZeroParadox.NInf                       -- Statement: decreasing sequences `ℕ → Bool`; finite stages `NInf.ofNat n` and the point `NInf.infty`
 #check @ZeroParadox.NInf.omniscient            -- Statement: every `p : NInf → Bool` is `false` somewhere or `true` everywhere
 #check @ZeroParadox.NInf.eps_spec              -- Statement: `eps` is a selection function: `p (eps p) = true` gives `p` true everywhere
@@ -4850,6 +4874,8 @@ example : (∀ n, ZeroParadox.slotRun (fun _ => false) n = false) ∧
 -- Statement: INVARIANT: `PinnedLimitUnique` holds at `NInf`'s `∞` and at `WithTop ℕ`'s `⊤` with
 -- `· + 1`, so the predicate does not separate the two carriers.
 #check @ZeroParadox.pinnedLimitUnique_withTop
+#check @ZeroParadox.PinnedLimit.isJoint        -- Statement: in a partial order, if `c` occupies `PinnedLimit g s c`, then `c` is a joint of (the stages, the fixed points of `g`); one way, and the `Bool` preorder CONTROL in `ZeroParadox/Order/DieJoints.lean` makes antisymmetry a premise
+#check @ZeroParadox.epsilon0_isJoint           -- Statement: ε₀ is a joint of (the ω-tower from ⊥ of `Ordinal`, the fixed points of `ω^·`), by `epsilon0_pinnedLimit`; CONTROLs in the home file: ω is a joint too, and against the fixed points at or above ε₁ the tower has no cut point
 #check @ZeroParadox.NInf.wlpo_of_iso           -- Statement: identifying the two carriers by an order isomorphism `NInf ≃o WithTop ℕ` gives WLPO (`[propext, Quot.sound]`)
 #check @ZeroParadox.NInf.orderIsoWithTopClassical -- Statement: CONTROL: such an isomorphism from `Classical.propDecidable`, with no WLPO hypothesis
 

@@ -672,8 +672,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 3256,
-        "files": 202
+        "declarations": 3274,
+        "files": 203
       },
       "entries": [
         {
@@ -4104,6 +4104,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "066850ef-37d3-4172-8c97-957269654c0f",
+          "new": {
+            "file": "ZeroParadox/Order/DieJoints.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.infty_isJoint",
+            "short": "NInf.infty_isJoint"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/DieJoints.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInf.infty_isJoint",
+            "short": "NInf.infty_isJoint",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-joints-1106: ruling 147 (Tim, 2026-11-06), cut points / joints / dual joints of an order and their instances (ZeroParadox/Order/DieJoints.lean), indexed in DieCannotBe § I, § XXVII, § XXIX",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "0674e9e3-6463-4e77-b44b-ccaaea0563f6",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -4499,6 +4534,41 @@
             ]
           },
           "reason": "New file ZeroParadox/Information/Disjunctive.lean: disjunctive (rich) sequences; all-false control; choice-free primitive recursive Champernowne-style witness; fair-coin tape disjunctive a.s. (infinite monkey, 2nd Borel-Cantelli); hypothesis-form presence of every Code's word. PRESENCE only, no execution.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "06fb81b5-b951-4232-a830-0028641f32fc",
+          "new": {
+            "file": "ZeroParadox/Order/DieJoints.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.not_isDualJoint_of_isTop",
+            "short": "not_isDualJoint_of_isTop"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/DieJoints.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.not_isDualJoint_of_isTop",
+            "short": "not_isDualJoint_of_isTop",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-joints-1106: ruling 147 (Tim, 2026-11-06), cut points / joints / dual joints of an order and their instances (ZeroParadox/Order/DieJoints.lean), indexed in DieCannotBe § I, § XXVII, § XXIX",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -10806,6 +10876,41 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "1490a847-4a93-4e94-b3ed-5e28903e2499",
+          "new": {
+            "file": "ZeroParadox/Order/DieJoints.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.isJoint_image_of_isDualJoint",
+            "short": "isJoint_image_of_isDualJoint"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/DieJoints.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.isJoint_image_of_isDualJoint",
+            "short": "isJoint_image_of_isDualJoint",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-joints-1106: ruling 147 (Tim, 2026-11-06), cut points / joints / dual joints of an order and their instances (ZeroParadox/Order/DieJoints.lean), indexed in DieCannotBe § I, § XXVII, § XXIX",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -18891,6 +18996,41 @@
             ]
           },
           "reason": "Die computability face (halting as arrival, clock machine), quotients of a motion (drawing vs set: hypersets, codes), carrier-changing steps (wrap, Option), PoleEnds with inhabitation",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "26edfff5-79c0-4587-bda2-5cbc071e2209",
+          "new": {
+            "file": "ZeroParadox/Order/DieJoints.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.IsDualJoint",
+            "short": "IsDualJoint"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/DieJoints.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.IsDualJoint",
+            "short": "IsDualJoint",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-joints-1106: ruling 147 (Tim, 2026-11-06), cut points / joints / dual joints of an order and their instances (ZeroParadox/Order/DieJoints.lean), indexed in DieCannotBe § I, § XXVII, § XXIX",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -29270,6 +29410,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "3da299db-096a-4c2c-9eb6-03192d07f067",
+          "new": {
+            "file": "ZeroParadox/Order/DieJoints.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.not_isJoint_of_isBot",
+            "short": "not_isJoint_of_isBot"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/DieJoints.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.not_isJoint_of_isBot",
+            "short": "not_isJoint_of_isBot",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-joints-1106: ruling 147 (Tim, 2026-11-06), cut points / joints / dual joints of an order and their instances (ZeroParadox/Order/DieJoints.lean), indexed in DieCannotBe § I, § XXVII, § XXIX",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "3dae618f-d104-4f50-87d9-ff01c9d8d582",
           "new": {
             "file": "ZeroParadox/Valuation/BallLine.lean",
@@ -33106,6 +33281,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "4650681a-3d91-4e95-af9a-01511f874375",
+          "new": {
+            "file": "ZeroParadox/Order/DieJoints.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.epsilon0_isJoint",
+            "short": "epsilon0_isJoint"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/DieJoints.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.epsilon0_isJoint",
+            "short": "epsilon0_isJoint",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-joints-1106: ruling 147 (Tim, 2026-11-06), cut points / joints / dual joints of an order and their instances (ZeroParadox/Order/DieJoints.lean), indexed in DieCannotBe § I, § XXVII, § XXIX",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "46536875-484a-4c15-a7e8-145d0c2348bb",
           "new": {
             "file": "ZeroParadox/Valuation/InfinitudeFloor.lean",
@@ -34734,6 +34944,41 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "4942db16-57a4-4fd3-ab28-8aa30ea6f960",
+          "new": {
+            "file": "ZeroParadox/Order/DieJoints.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.enat_top_isJoint",
+            "short": "enat_top_isJoint"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/DieJoints.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.enat_top_isJoint",
+            "short": "enat_top_isJoint",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-joints-1106: ruling 147 (Tim, 2026-11-06), cut points / joints / dual joints of an order and their instances (ZeroParadox/Order/DieJoints.lean), indexed in DieCannotBe § I, § XXVII, § XXIX",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "496bbcec-ade8-47fa-9937-0de651b33ca1",
           "new": {
@@ -35384,6 +35629,41 @@
             ]
           },
           "reason": "Die views batch: views (order as data), restriction to an up-closed set, adjoined points and the empty carrier, arrival and fan-in",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "4b35c776-f4bc-4137-95e6-d5bb82ba2583",
+          "new": {
+            "file": "ZeroParadox/Order/DieJoints.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ennreal_top_isJoint",
+            "short": "ennreal_top_isJoint"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/DieJoints.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ennreal_top_isJoint",
+            "short": "ennreal_top_isJoint",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-joints-1106: ruling 147 (Tim, 2026-11-06), cut points / joints / dual joints of an order and their instances (ZeroParadox/Order/DieJoints.lean), indexed in DieCannotBe § I, § XXVII, § XXIX",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -39272,6 +39552,41 @@
             "role": []
           },
           "reason": "ninf-retraction-1030: the round trip through ofOption: a left inverse is a right inverse (Escardó's density lemma), hence LPO; LPO data gives NInf ≃ Option ℕ; ofOption onto iff LPO; the round trip as a motion on Option ℕ ⊕ NInf (Die § XXIII); Tim ruling 2026-10-30",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "52f49f2f-4693-40d9-b398-2162e3cd562f",
+          "new": {
+            "file": "ZeroParadox/Order/DieJoints.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.isDualJoint_toDual_iff",
+            "short": "isDualJoint_toDual_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/DieJoints.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.isDualJoint_toDual_iff",
+            "short": "isDualJoint_toDual_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-joints-1106: ruling 147 (Tim, 2026-11-06), cut points / joints / dual joints of an order and their instances (ZeroParadox/Order/DieJoints.lean), indexed in DieCannotBe § I, § XXVII, § XXIX",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -70730,6 +71045,41 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "98bde7ec-7ce1-43bd-9f38-23f0db98f840",
+          "new": {
+            "file": "ZeroParadox/Order/DieJoints.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.PinnedLimit.isJoint",
+            "short": "PinnedLimit.isJoint"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/DieJoints.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.PinnedLimit.isJoint",
+            "short": "PinnedLimit.isJoint",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-joints-1106: ruling 147 (Tim, 2026-11-06), cut points / joints / dual joints of an order and their instances (ZeroParadox/Order/DieJoints.lean), indexed in DieCannotBe § I, § XXVII, § XXIX",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "98f1beb2-9020-47ee-8c0d-11105420ffe0",
           "new": {
@@ -72129,6 +72479,41 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "9aff295b-1a06-400e-aa22-e6ae6504e4ce",
+          "new": {
+            "file": "ZeroParadox/Order/DieJoints.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ennreal_zero_isDualJoint",
+            "short": "ennreal_zero_isDualJoint"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/DieJoints.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ennreal_zero_isDualJoint",
+            "short": "ennreal_zero_isDualJoint",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-joints-1106: ruling 147 (Tim, 2026-11-06), cut points / joints / dual joints of an order and their instances (ZeroParadox/Order/DieJoints.lean), indexed in DieCannotBe § I, § XXVII, § XXIX",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "9b02c2af-8f40-4466-9cb8-8d7e75e23656",
           "new": {
@@ -72897,6 +73282,41 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "9cf0eb72-e6c2-4575-9258-18948280c687",
+          "new": {
+            "file": "ZeroParadox/Order/DieJoints.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ennreal_inv_exchanges",
+            "short": "ennreal_inv_exchanges"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/DieJoints.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ennreal_inv_exchanges",
+            "short": "ennreal_inv_exchanges",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-joints-1106: ruling 147 (Tim, 2026-11-06), cut points / joints / dual joints of an order and their instances (ZeroParadox/Order/DieJoints.lean), indexed in DieCannotBe § I, § XXVII, § XXIX",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -77808,6 +78228,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "a80207fd-0ab7-4642-b273-acdd508b1f88",
+          "new": {
+            "file": "ZeroParadox/Order/DieJoints.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.IsCutPoint",
+            "short": "IsCutPoint"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/DieJoints.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.IsCutPoint",
+            "short": "IsCutPoint",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-joints-1106: ruling 147 (Tim, 2026-11-06), cut points / joints / dual joints of an order and their instances (ZeroParadox/Order/DieJoints.lean), indexed in DieCannotBe § I, § XXVII, § XXIX",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "a81dff83-4feb-4c7f-b34e-60befea88b03",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -78058,6 +78513,41 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a89facd1-bc28-4b13-bea0-c9386b27ed90",
+          "new": {
+            "file": "ZeroParadox/Order/DieJoints.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.isDualJoint_image_of_isJoint",
+            "short": "isDualJoint_image_of_isJoint"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/DieJoints.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.isDualJoint_image_of_isJoint",
+            "short": "isDualJoint_image_of_isJoint",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-joints-1106: ruling 147 (Tim, 2026-11-06), cut points / joints / dual joints of an order and their instances (ZeroParadox/Order/DieJoints.lean), indexed in DieCannotBe § I, § XXVII, § XXIX",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -85560,6 +86050,41 @@
             ]
           },
           "reason": "Die v2 final batch: the four corners as die motions and the tower as a span of motions (experimental PoleCorners / PoleCornersBridge)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b73ffc5b-6624-442f-966e-9064ed30d6de",
+          "new": {
+            "file": "ZeroParadox/Order/DieJoints.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.q2Val_zero_isJoint",
+            "short": "q2Val_zero_isJoint"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/DieJoints.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.q2Val_zero_isJoint",
+            "short": "q2Val_zero_isJoint",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-joints-1106: ruling 147 (Tim, 2026-11-06), cut points / joints / dual joints of an order and their instances (ZeroParadox/Order/DieJoints.lean), indexed in DieCannotBe § I, § XXVII, § XXIX",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -93749,6 +94274,41 @@
             ]
           },
           "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c981a68c-9a32-470d-8763-c89b2d2638fe",
+          "new": {
+            "file": "ZeroParadox/Order/DieJoints.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.not_isDualJoint_of_wellFoundedLT",
+            "short": "not_isDualJoint_of_wellFoundedLT"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/DieJoints.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.not_isDualJoint_of_wellFoundedLT",
+            "short": "not_isDualJoint_of_wellFoundedLT",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-joints-1106: ruling 147 (Tim, 2026-11-06), cut points / joints / dual joints of an order and their instances (ZeroParadox/Order/DieJoints.lean), indexed in DieCannotBe § I, § XXVII, § XXIX",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -106319,6 +106879,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "e3ed2c73-dddb-44e8-942d-cae0d33273f2",
+          "new": {
+            "file": "ZeroParadox/Order/DieJoints.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.IsJoint",
+            "short": "IsJoint"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/DieJoints.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.IsJoint",
+            "short": "IsJoint",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-joints-1106: ruling 147 (Tim, 2026-11-06), cut points / joints / dual joints of an order and their instances (ZeroParadox/Order/DieJoints.lean), indexed in DieCannotBe § I, § XXVII, § XXIX",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "e3ef1f1b-8c7a-473f-93bd-be9eef52095a",
           "new": {
             "file": "ZeroParadox/Ordinal/SnapNucleusConstructive.lean",
@@ -117687,6 +118282,41 @@
             ]
           },
           "reason": "New file ZeroParadox/Valuation/PricedPadicInterface.lean — p-adic Group A priced carrier (29 decls)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "faea34c7-8cde-441f-a9ed-829cac0df25d",
+          "new": {
+            "file": "ZeroParadox/Order/DieJoints.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.isJoint_toDual_iff",
+            "short": "isJoint_toDual_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/DieJoints.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.isJoint_toDual_iff",
+            "short": "isJoint_toDual_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-joints-1106: ruling 147 (Tim, 2026-11-06), cut points / joints / dual joints of an order and their instances (ZeroParadox/Order/DieJoints.lean), indexed in DieCannotBe § I, § XXVII, § XXIX",
           "verify": {
             "axioms": null,
             "sorry_free": true
