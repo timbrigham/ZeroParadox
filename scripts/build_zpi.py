@@ -1,12 +1,12 @@
 """
 Zero Paradox — ZP-I: Inside Zero PDF Builder
-Version 1.42 | November 2026
+Version 1.43 | November 2026
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.42'
+VERSION = '1.43'
 FIRST_RELEASED = 'April 2026'
 
 # ZP-I uses justified body text; override the left-aligned zp_utils defaults
@@ -456,7 +456,7 @@ def build():
          'Lean: t_snap_derived ✓ (axiom-free)'],
         ['The limit occupies the ⊥ role (READING; ⊥\' a further READING)',
          'DA-2 (ZP-E)',
-         'Role-recognition: already in framework. Occupancy and novelty: COMMITMENTS',
+         'Role-recognition: already in framework. Occupancy: takes a choice of join. Novelty: COMMITMENT (C-DA2)',
          'Lean: t_iz_limit_is_new_null, c_da2_novelty ✓ — these prove role ⟹ identity with the '
          'bottom ALREADY THERE. Neither is a novelty witness and neither may be cited as one.'],
     ]
@@ -616,7 +616,7 @@ def build():
         'AX-G2). T-IZ uses a fourth passage — Cauchy sequence convergence — that none of the '
         'three irreversibility theorems govern. (A picture, not a theorem: the three doors are statements about '
         'three different objects, and the fourth passage reaches 0 &#8712; Q<sub>2</sub> only as a limit; reading that 0 '
-        'as filling the bottom role is the commitment stated above.)',
+        'as filling the bottom role takes the choice of join stated above.)',
         bg=GREEN_LITE, border=GREEN_DARK
     ))
     E.append(sp(6))
@@ -675,7 +675,7 @@ def build():
         'DISTINCT &#8869;\' rather than the &#8869; it began at is C-DA2, and in the '
         '2-adic realization the arc returns to the same 0 (snap_arc_z2_loop).'))
     E.append(callout(
-        'Null Balance (role-RECOGNITION derived; occupancy and novelty COMMITTED): For every sequence '
+        'Null Balance (role-RECOGNITION derived; occupancy takes a choice of join; novelty COMMITTED): For every sequence '
         '(S<sub>n</sub>)<sub>n&lt;&#969;</sub> in Q<sub>2</sub>, nowhere zero, with &#8214;S(n)&#8214;<sub>2</sub> &#8804; 2<sup>-n</sup> '
         '(derived via t_iz_h_bound_from_depth_chain from IsDepthChain and IsStrictStateSequence on a depth index in &#8469; — R-IZ-A closed): '
         'the sequence converges to 0 in Q<sub>2</sub>. CC-1&#8217;s start at &#8869; belongs to the semilattice chain, not to S. '
@@ -696,8 +696,8 @@ def build():
         't_iz_cauchy), together with the separate implication that anything filling the bottom '
         'role of a semilattice IS that semilattice&#8217;s &#8869; (t_iz_limit_is_new_null). For the cycle to '
         'begin again or close at the limit, it needs every one of the following further premises, and none is '
-        'established here: (a) the reading that the limit fills the &#8869; role, a modelling commitment and a '
-        'reading across two carriers, since the role condition is not statable of the limit until a join on Q<sub>2</sub> is chosen (MC-1); '
+        'established here: (a) the reading that the limit fills the &#8869; role, which takes a choice of join on '
+        'Q<sub>2</sub> (then the role half is a theorem, t_iz_limit_is_new_null), since the role condition is not statable of the limit until a join on Q<sub>2</sub> is chosen (MC-1); '
         '(b) the limit reaching the incompressibility threshold P<sub>0</sub>, which nothing here establishes, '
         'since its only route in this document, the valuation-complexity bridge, is refuted (&#167; II.B); '
         '(c) what DA-1 needs: DP-2 and DP-2&#8217;s precondition, that the configuration reaching P<sub>0</sub> '
@@ -743,10 +743,10 @@ def build():
     E.append(key_result_box([
         'T-SNAP: &#8869; &#8594; &#949;<sub>0</sub>, shape derived and occurrence committed (existence emerges from null).',
         'T-IZ: a nowhere-zero 2-adic depth chain S<sub>0</sub>, S<sub>1</sub>, S<sub>2</sub>, ... &#8594; 0 &#8712; Q<sub>2</sub> at &#969;, '
-        'ROLE-RECOGNITION derived; OCCUPANCY and NOVELTY committed. What is proved is the 2-adic '
+        'ROLE-RECOGNITION derived; OCCUPANCY takes a choice of join; NOVELTY committed. What is proved is the 2-adic '
         'convergence (t_iz_cauchy) and, separately, that anything playing the bottom role IS the '
-        'bottom (t_iz_limit_is_new_null). That the limit is a thing playing that role is a '
-        'commitment, not a theorem — the role condition is not statable of the limit until a join on Q<sub>2</sub> is chosen; that the '
+        'bottom (t_iz_limit_is_new_null). That the limit is a thing playing that role takes a choice '
+        'of join on Q<sub>2</sub> (then the role half is a theorem, t_iz_limit_is_new_null) — the role condition is not statable of the limit until a join on Q<sub>2</sub> is chosen; that the '
         'bottom so reached is a NEW one is a further commitment.',
         'The cycle and its closure are a reading, not a theorem; its premises are stated in &#167; V.III. '
         'Strict valuation growth is '
@@ -765,7 +765,8 @@ def build():
          'Every nowhere-zero 2-adic depth chain S<sub>0</sub>, S<sub>1</sub>, ... in Q<sub>2</sub> whose '
          'valuation equals a depth index in &#8469; that climbs at every step converges to 0 in '
          'Q<sub>2</sub>; reading that limit as the '
-         'occupant of the bottom role, and that occupant as a successor null, are commitments. '
+         'occupant of the bottom role takes a choice of join on Q<sub>2</sub> (then the role half is a '
+         'theorem, t_iz_limit_is_new_null), and reading that occupant as a successor null is a commitment (C-DA2). '
          'Formal spine: Step 1 (t_iz_cauchy, carries Classical.choice, &#167; III) + Step 6 '
          '(t_iz_limit_is_new_null, axiom-free via DA-2). Steps 2–5 are informational context — the ZP-E path, whose valuation-complexity bridge is refuted (&#167; II.B); '
          'DA-1 is closed given DP-2 (ZP-E), with ZP-K witnessing Path 1 and carrying Path 3 as a KleeneStructure requirement. No new axioms required.'],
