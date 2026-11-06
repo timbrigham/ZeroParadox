@@ -1,6 +1,6 @@
 """
 Build ZP-I Illustrated Companion
-Version 1.45 | November 2026
+Version 1.46 | November 2026
 
 Standalone companion for ZP-I: Inside Zero.
 Accessibility target: 2 years of college math.
@@ -276,7 +276,7 @@ def cycle_diagram():
     return d
 
 
-VERSION = '1.45'
+VERSION = '1.46'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -509,7 +509,8 @@ def build():
         'converges to zero in the 2-adic metric. Starting at ⊥ and climbing by ZP-A T3 are statements '
         'about the depth index and the lattice chain, not about the 2-adic numbers, which have no order of '
         'that kind. Reading the limit as filling the bottom '
-        'role is a commitment, and reading the occupant as ⊥′ a further one. '
+        'role takes a choice of join on Q₂ (then it is that semilattice\'s ⊥ by theorem, '
+        '<tt>t_iz_limit_is_new_null</tt>), and reading the occupant as a successor null ⊥′ is C-DA2, a commitment. '
         'On the first reading, DA-1 and then T-SNAP are CONDITIONAL on the limit reaching P₀ (which nothing '
         'here establishes) and on what DA-1 needs. DA-1 needs DP-2 and '
         'DP-2\'s precondition, that the configuration reaching the incompressibility threshold P₀ is a running '

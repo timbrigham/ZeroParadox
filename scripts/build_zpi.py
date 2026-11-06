@@ -1,12 +1,12 @@
 """
 Zero Paradox — ZP-I: Inside Zero PDF Builder
-Version 1.40 | November 2026
+Version 1.41 | November 2026
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.40'
+VERSION = '1.41'
 FIRST_RELEASED = 'April 2026'
 
 # ZP-I uses justified body text; override the left-aligned zp_utils defaults
@@ -142,8 +142,9 @@ def build():
         'section below); one label over two propositions is a citation nothing can check. What no-top '
         'supplies is ROOM: a chain never halts for want of a strictly greater element. The ascent '
         'itself is IsStrictStateSequence — see the NO-GO gauge in &#167;Ib. Reading the limit as '
-        'occupying the bottom role is a commitment, and calling the occupant a successor null is '
-        'C-DA2, a further one.'))
+        'filling the bottom role takes a choice of join on Q<sub>2</sub> (then it is that semilattice&#8217;s '
+        '&#8869; by theorem, t_iz_limit_is_new_null), and reading the occupant as a successor null is '
+        'C-DA2, a commitment.'))
     E.append(body(
         'The reasoning is direct. An ascending chain (S<sub>n</sub>)<sub>n&lt;&#969;</sub> in L '
         'is a sequence satisfying S<sub>n</sub> &#8804; S<sub>n+1</sub> for all n (ZP-A T3 — monotonicity). '
@@ -177,8 +178,9 @@ def build():
         'the direction of that index is monotonicity (ZP-A T3) and irreversibility (ZP-B C3). '
         'Neither is a clock. '
         'What the chain reaches at the limit ordinal &#969;, after &#969; state changes, is Q<sub>2</sub>&#8217;s 0, '
-        'and not at any clock time. Reading that 0 as filling the bottom role is a commitment, and reading it '
-        'as a NEW bottom rather than the same one is a further commitment (C-DA2).'))
+        'and not at any clock time. Reading that 0 as filling the bottom role takes a choice of join on '
+        'Q<sub>2</sub> (then it is that semilattice&#8217;s &#8869; by theorem, t_iz_limit_is_new_null), and '
+        'reading it as a successor null is C-DA2, a commitment.'))
     E.append(body(
         'Remark R-I.1: &#969; is the first infinite ordinal — the smallest ordinal greater than '
         'every natural number. An ascending chain indexed by &#969; is a countable sequence with '
@@ -605,8 +607,9 @@ def build():
         'algebraic subtraction, no continuous topological return, no categorical reversal. '
         'T-IZ governs what happens at the branch\'s ordinal limit: the 2-adic depth chain converges, by Cauchy '
         'convergence, to 0 &#8712; Q<sub>2</sub> — a structure that none of the irreversibility '
-        'results governs or addresses. Reading that 0 as filling the bottom role is a commitment, and '
-        'reading it as a successor null is C-DA2, a further one.'))
+        'results governs or addresses. Reading that 0 as filling the bottom role takes a choice of join on '
+        'Q<sub>2</sub> (then it is that semilattice&#8217;s &#8869; by theorem, t_iz_limit_is_new_null), and '
+        'reading it as a successor null is C-DA2, a commitment.'))
     E.append(callout(
         'The inside approach is not a violation of irreversibility. It is the discovery of a '
         'structure that irreversibility does not reach. Three doors to zero are closed (R1, C3, '
