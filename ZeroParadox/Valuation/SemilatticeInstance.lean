@@ -69,6 +69,9 @@ I defer to my AI assistant on how the internals are put together.
 
 ---
 
+`Reading:` once a join on Q₂ is chosen, the role half is a theorem (`t_iz_limit_is_new_null`); the corpus calls
+that reading a choice of join, and only the successor reading (C-DA2) a commitment.
+
 T-IZ proves convergence to 0 in Q₂; reading it as an occupant of the ⊥ role, and that occupant as
 a successor null, are further COMMITMENTS. Overview and fences: `SemilatticeInstance.md`.
 
