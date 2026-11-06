@@ -205,13 +205,13 @@ example [ZPSemilattice Unit] : ¬ BotHasFirstStep Unit := by
 /-! ## § II. Martin-Löf randomness, defined locally
 
 Not located in the pinned Mathlib as of 2026-11-06 (grep of `.lake/packages/mathlib/Mathlib` for
-`martin.?l`, `kurtz`, case-insensitive: no hit). Lean prior art outside the dependency closure:
-`ZeroParadox/Information/CrossingTrials.md`, Prior art (Freer `algorithmic-randomness`, Milovanov;
-also Reimann–Slaman, Thm 4.4). Tests list cylinders by a computable `g` with no access to `μ`: blind
-(Hippocratic) Martin-Löf randomness (Bienvenu, Hölzl, Porter, Shafer, NDJFL 58(3) 2017, arXiv:1310.5133,
-Def 2.8; Kjos-Hanssen, J. Logic & Analysis 2 (2010) no. 10, arXiv:1408.2850, Def 2.1, who proves it
-coincides with ordinary randomness for Bernoulli `μ_p`; that `trials p hp` is his `μ_p` is not proved
-here). It implies zero-block typical; the converse fails at `p = 1/2`, at the all-`true` tape. -/
+`martin.?l`, `kurtz`, case-insensitive: no hit). Prior art outside the dependency closure:
+`ZeroParadox/Information/CrossingTrials.md`, Prior art (Lean: Freer `algorithmic-randomness`,
+Milovanov; paper: Reimann–Slaman, Thm 4.4). Tests list cylinders by a computable `g` with no access
+to `μ`: blind (Hippocratic) Martin-Löf randomness (Bienvenu, Hölzl, Porter, Shafer, NDJFL 58(3) 2017,
+arXiv:1310.5133, Def 2.8; Kjos-Hanssen, arXiv:1408.2850, Def 2.1; Thm 6.2, p. 9, proves it coincides
+with ordinary randomness for Bernoulli `μ_p`; that `trials p hp` is his `μ_p` is not proved here). It
+implies zero-block typical; the converse fails at `p = 1/2`, at the all-`true` tape. -/
 
 /-- `Statement:` the tapes extending the finite word `l` (a prefix cylinder). -/
 def prefixCyl (l : List Bool) : Set (ℕ → Bool) := {x | ∀ i (h : i < l.length), x i = l[i]}
@@ -372,9 +372,11 @@ theorem measure_iInter_le_pow_zero (μ : Measure (ℕ → Bool)) (U : ℕ → Se
   exact ge_of_tendsto' ht fun m => (measure_mono (Set.iInter_subset _ m)).trans (h m)
 
 /-- `Statement:` for every measure `μ` on tapes, `μ`-almost every tape is Martin-Löf random for `μ`:
-the others lie in a countable union of null sets, one per computable listing. `Reading:` prior art,
-Martin-Löf (1966), Information and Control 9, 602–619, abstract p. 602: "the non random sequences
-form a maximal constructive null set". -/
+the others lie in a countable union of null sets, one per computable listing. `Reading:` prior art
+for the null half: Martin-Löf (1966), Information and Control 9, 602–619, abstract p. 602: "the non
+random sequences form a maximal constructive null set". Maximality (a universal test) is not claimed
+here; for blind tests it fails at non-computable `p` (Kjos-Hanssen, arXiv:1408.2850, Corollary 5.5,
+p. 9). -/
 theorem mlRandom_ae (μ : Measure (ℕ → Bool)) : ∀ᵐ w ∂μ, MLRandom μ w := by
   classical
   haveI := countable_computable_enum
@@ -403,10 +405,12 @@ theorem exists_MLRandom (p : NNReal) (hp : p ≤ 1) : ∃ w, MLRandom (trials p 
 /-! ## § III. Frequency of `true` tending to `p` (the strong law of large numbers)
 
 Per tape: the fraction of `true` among the first `n` stages tends to `p`. That a Martin-Löf random
-tape has this property is not proved here. For computable `p` it is proved outside the dependency
-closure (Milovanov's `tendsto_freqOne_of_isMartinLofRandom_bernoulli'`;
-`ZeroParadox/Information/CrossingTrials.md`, Prior art). For every `p`, Kjos-Hanssen (arXiv:1408.2850,
-Theorem 5.2, p. 8) proves it on paper for Hippocratic randomness of `μ_p`; not formalized here. -/
+tape has this property is not proved here. For computable `p` the analogue for Milovanov's
+`IsMartinLofRandom` and `bernoulliMeasure` is proved outside the dependency closure
+(`tendsto_freqOne_of_isMartinLofRandom_bernoulli'`; `ZeroParadox/Information/CrossingTrials.md`, Prior
+art); his definitions are not compared with `MLRandom` or `trials p hp` here. For every `p`,
+Kjos-Hanssen (arXiv:1408.2850, Theorem 5.2, p. 8) proves it on paper for Hippocratic randomness of
+`μ_p`; not formalized here. -/
 
 section Frequency
 
@@ -653,13 +657,16 @@ theorem not_eventuallyConst_iff_not_dyadic (w : ℕ → Bool) :
   ⟨fun h => (interior_of_not_eventuallyConst h).2.2, fun h hc => h (dyadic_of_eventuallyConst hc)⟩
 
 -- Reading: CARRIER. The tapes that settle land on dyadic rationals, each at a finite binary level;
--- the tapes that never settle land off them, strictly inside (0, 1). The split is finite versus
--- infinite binary description, not stepped versus continuous: the dyadic rationals are dense (the
--- `example` below), and in ℝ's order no point, dyadic or not, has a first step
+-- the tapes that never settle land off them, strictly inside (0, 1). The split is between values with
+-- a finite binary expansion and values with only infinite ones, not stepped versus continuous: the
+-- dyadic rationals are dense among themselves (between two distinct ones lies a third, the `example`
+-- below), and in ℝ's order no point, dyadic or not, has a first step
 -- (`no_firstStep_of_preconnected`, `ZeroParadox/Reals/ConnectedNoFirstStep.lean`). The first step of § I is asked of `L`, never of ℝ.
 
--- Statement: the dyadic rationals are closed under midpoints, so between two lies a third.
-example (x y : ℝ) (hx : IsDyadic x) (hy : IsDyadic y) : IsDyadic ((x + y) / 2) := by
+-- Statement: between two distinct dyadic rationals `x < y` lies a third, their midpoint.
+example (x y : ℝ) (hx : IsDyadic x) (hy : IsDyadic y) (hxy : x < y) :
+    ∃ z, IsDyadic z ∧ x < z ∧ z < y := by
+  refine ⟨(x + y) / 2, ?_, by linarith, by linarith⟩
   obtain ⟨n, k, rfl⟩ := hx
   obtain ⟨m, j, rfl⟩ := hy
   refine ⟨n + m + 1, k * 2 ^ m + j * 2 ^ n, ?_⟩
@@ -701,9 +708,14 @@ example : tapeReal (fun _ => false) = 0 ∧ tapeReal (fun _ => true) = 1 := by
   refine ⟨by simp [tapeReal, Real.ofDigits, Real.ofDigitsTerm, bitDigit], ?_⟩
   exact Real.ofDigits_const_last_eq_one 1
 
+-- Statement: `trials 1` is the point mass on the all-`true` tape.
+example : trials 1 le_rfl = Measure.dirac (fun _ => true) := by
+  have hb : PMF.bernoulli (1 : NNReal) le_rfl = PMF.pure true := by
+    ext b; cases b <;> simp [PMF.bernoulli_apply, PMF.pure_apply]
+  rw [trials, hb, PMF.toMeasure_pure, Measure.infinitePi_dirac]
+
 -- Statement: CONTROL, `p < 1` is needed: at `p = 1` the all-`true` tape is Martin-Löf random for
--- `trials 1`, eventually constant, and lands on 1.
--- Reading: `trials 1` is read as the point mass on the all-`true` tape; not proved here.
+-- `trials 1` (the point mass on it, previous `example`), eventually constant, and lands on 1.
 example : MLRandom (trials 1 le_rfl) (fun _ => true) ∧ EventuallyConstTape (fun _ => true) ∧
     tapeReal (fun _ => true) = 1 := by
   refine ⟨?_, ⟨0, true, fun _ _ => rfl⟩, Real.ofDigits_const_last_eq_one 1⟩
@@ -724,8 +736,6 @@ example : MLRandom (trials 1 le_rfl) (fun _ => true) ∧ EventuallyConstTape (fu
   norm_num at h2
 
 -- Statement: CONTROL, the alternating tape lands strictly inside (0, 1), at no dyadic rational.
--- Reading: the alternating tape is computable (next `example`), so landing there does not need
--- randomness.
 example : 0 < tapeReal (fun k => decide (k % 2 = 0)) ∧ tapeReal (fun k => decide (k % 2 = 0)) < 1 ∧
     ¬ IsDyadic (tapeReal (fun k => decide (k % 2 = 0))) := by
   refine interior_of_not_eventuallyConst ?_
@@ -740,6 +750,33 @@ example : 0 < tapeReal (fun k => decide (k % 2 = 0)) ∧ tapeReal (fun k => deci
 example : Computable (fun k : ℕ => decide (k % 2 = 0)) :=
   (Primrec.beq.comp (Primrec.nat_mod.comp Primrec.id (Primrec.const 2)) (Primrec.const 0)).to_comp.of_eq
     fun k => by by_cases h : k % 2 = 0 <;> simp [h]
+
+-- Statement: the alternating tape is not Martin-Löf random for `trials (1/2)` (level `m` the cylinder
+-- of its first `m` bits, measure `2⁻ᵐ`). Reading: so at `p = 1/2`, landing strictly inside (0, 1) at
+-- no dyadic rational does not need randomness.
+example : ¬ MLRandom (trials (1/2) (by norm_num)) (fun k => decide (k % 2 = 0)) := by
+  intro h
+  let a : ℕ → Bool := fun k => decide (k % 2 = 0)
+  have ha : Primrec a :=
+    (Primrec.beq.comp (Primrec.nat_mod.comp Primrec.id (Primrec.const 2)) (Primrec.const 0)).of_eq
+      fun k => by by_cases hk : k % 2 = 0 <;> simp [a, hk]
+  have hcyl : ∀ m, prefixCyl ((List.range m).map a) =
+      (↑(Finset.range m) : Set ℕ).pi (fun i => ({a i} : Set Bool)) := by
+    intro m; ext x; simp [prefixCyl]
+  refine h (fun m => prefixCyl ((List.range m).map a))
+    ⟨fun m => ?_, fun q => some ((List.range q.1).map a), ?_, fun m => ?_⟩ ?_
+  · show trials _ _ (prefixCyl ((List.range m).map a)) ≤ _
+    rw [hcyl, trials, Measure.infinitePi_pi _ (fun i _ => measurableSet_singleton _)]
+    have : ∀ i, (PMF.bernoulli (1/2) (by norm_num)).toMeasure {a i} = 2⁻¹ := by
+      intro i; cases a i <;> simp [PMF.bernoulli]
+    rw [Finset.prod_congr rfl (fun i _ => this i), Finset.prod_const, Finset.card_range]
+  · have : Primrec (fun q : ℕ × ℕ => (List.range q.1).map a) :=
+      Primrec.list_map (Primrec.list_range.comp Primrec.fst) (ha.comp Primrec.snd).to₂
+    exact (Primrec.option_some.comp this).to_comp
+  · ext x
+    simp only [Set.mem_iUnion, Option.mem_def, Option.some.injEq, exists_prop]
+    exact ⟨fun hx => ⟨0, _, rfl, hx⟩, fun ⟨_, _, hl, hx⟩ => hl ▸ hx⟩
+  · simp [prefixCyl, a]
 
 end TapeReal
 
