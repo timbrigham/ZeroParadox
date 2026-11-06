@@ -159,8 +159,14 @@ example : ¬ ∃ t : WithBot ℤ, IsTop t := by
   induction t using WithBot.recBotCoe with
   | bot => exact WithBot.not_coe_le_bot 0 (ht 0)
   | coe a => exact absurd (WithBot.coe_le_coe.1 (ht ((a + 1 : ℤ) : WithBot ℤ))) (by omega)
--- Reading: an end, adjoined or not, as a cut point approached from one side and not reached there:
--- a joint from below, a dual joint from above (`ZeroParadox/Order/DieJoints.lean`).
+-- Reading: CARRIER. An end approached from one side and not reached there is a cut point of this
+-- shape: a joint from below, a dual joint from above (`ZeroParadox/Order/DieJoints.lean`). If an end
+-- is adjoined as the limit of the finite stages, it is a joint with the stages as its lower side: ⊤ of `ℕ∞`
+-- (`enat_top_isJoint`), NInf's `∞` (`NInf.infty_isJoint`), an occupant of `PinnedLimit` in a partial
+-- order (`PinnedLimit.isJoint`). ⊥ of a well-founded linear order, ⊥ of `Ordinal` among them, is
+-- neither (`not_isJoint_of_isBot`, `not_isDualJoint_of_wellFoundedLT`). "Joint" here names the order
+-- shape only (Mathlib's successor limit at the canonical cut); it is not claimed to be the joint of
+-- Tim's 2026-10-22 read below.
 #check @ZeroParadox.IsCutPoint                   -- Statement: `A` lies below `B`, and `x` is the least upper bound of `A` and the greatest lower bound of `B`
 #check @ZeroParadox.IsJoint                      -- Statement: a cut point of `(A, B)` lying in `B`, with `A` nonempty and without a greatest element
 #check @ZeroParadox.IsDualJoint                  -- Statement: a cut point of `(A, B)` lying in `A`, with `B` nonempty and without a least element
@@ -170,7 +176,7 @@ example : ¬ ∃ t : WithBot ℤ, IsTop t := by
 #check @ZeroParadox.not_isDualJoint_of_isTop     -- Statement: if `x` is greatest in a preorder, then `x` is a dual joint of no `(A, B)`
 #check @ZeroParadox.not_isDualJoint_of_wellFoundedLT -- Statement: if a linear order is well-founded, then nothing in it is a dual joint; `Ordinal` is an instance, and the `Finset Bool` CONTROL in the home file makes linearity a premise
 #check @ZeroParadox.ennreal_top_isJoint          -- Statement: ⊤ of `ℝ≥0∞` is a joint of (the finite values, `{⊤}`)
-#check @ZeroParadox.ennreal_zero_isDualJoint     -- Statement: 0 of `ℝ≥0∞` is a dual joint of (`{0}`, the positive values); as ⊥ of `ℝ≥0∞` it is a joint of no `(A, B)`
+#check @ZeroParadox.ennreal_zero_isDualJoint     -- Statement: 0 of `ℝ≥0∞` is a dual joint of (`{0}`, the positive values); as ⊥ of `ℝ≥0∞` it is a joint of no `(A, B)` (`not_isJoint_of_isBot`)
 #check @ZeroParadox.ennreal_inv_exchanges        -- Statement: on `ℝ≥0∞`, `x ↦ x⁻¹` reverses the order, sends ⊤ to 0 and 0 to ⊤, and `x⁻¹` is positive iff `x ≠ ⊤`
 #check @ZeroParadox.isJoint_image_of_isDualJoint -- Statement: if `f` is onto and `f a ≤ f b ↔ b ≤ a`, then `f` sends a dual joint `x` of `(A, B)` to a joint `f x` of `(f '' B, f '' A)`
 #check @ZeroParadox.isDualJoint_image_of_isJoint -- Statement: under the same hypotheses, a joint `x` of `(A, B)` goes to a dual joint `f x` of `(f '' B, f '' A)`
@@ -4875,7 +4881,7 @@ example : (∀ n, ZeroParadox.slotRun (fun _ => false) n = false) ∧
 -- `· + 1`, so the predicate does not separate the two carriers.
 #check @ZeroParadox.pinnedLimitUnique_withTop
 #check @ZeroParadox.PinnedLimit.isJoint        -- Statement: in a partial order, if `c` occupies `PinnedLimit g s c`, then `c` is a joint of (the stages, the fixed points of `g`); one way, and the `Bool` preorder CONTROL in `ZeroParadox/Order/DieJoints.lean` makes antisymmetry a premise
-#check @ZeroParadox.epsilon0_isJoint           -- Statement: ε₀ is a joint of (the ω-tower from ⊥ of `Ordinal`, the fixed points of `ω^·`), by `epsilon0_pinnedLimit`; CONTROLs in the home file: ω is a joint too, and against the fixed points at or above ε₁ the tower has no cut point
+#check @ZeroParadox.epsilon0_isJoint           -- Statement: ε₀ is a joint of (the ω-tower from ⊥ of `Ordinal`, the fixed points of `ω^·`), by `epsilon0_pinnedLimit`; CONTROLs in the home file: ω is a joint too, and against the fixed points at or above ε₁ the tower has no cut point at ε₀
 #check @ZeroParadox.NInf.wlpo_of_iso           -- Statement: identifying the two carriers by an order isomorphism `NInf ≃o WithTop ℕ` gives WLPO (`[propext, Quot.sound]`)
 #check @ZeroParadox.NInf.orderIsoWithTopClassical -- Statement: CONTROL: such an isomorphism from `Classical.propDecidable`, with no WLPO hypothesis
 
