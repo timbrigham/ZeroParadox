@@ -1,3 +1,4 @@
+-- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): connectedness and the first step on a linear order with its order topology. Curated results indexed in ZeroParadox/MANIFEST.md.
 import ZeroParadox.Reals.OrderedField
 import Mathlib.Topology.Order.IntermediateValue
 import Mathlib.Topology.Instances.RatLemmas
@@ -11,7 +12,9 @@ set_option maxHeartbeats 400000
 
 A cover `a ⋖ b` (a first step, `HasFirstStep`) makes `Set.Iio b` and `Set.Ioi a` two disjoint open
 sets covering the space, so a preconnected linear order has no first step anywhere. The converse
-needs conditional completeness, and ℚ is the control.
+needs conditional completeness, and ℚ is the control. Standard form: a linearly ordered space is
+connected iff it is a linear continuum, densely ordered and Dedekind complete (Steen–Seebach,
+*Counterexamples in Topology*); connectedness also forces completeness, which this file does not use.
 
 ## Engineer's Take
 
