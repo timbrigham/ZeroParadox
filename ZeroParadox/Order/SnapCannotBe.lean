@@ -8,6 +8,7 @@ import ZeroParadox.Information.CrossingTrials
 import ZeroParadox.Valuation.PolePassage
 import ZeroParadox.Valuation.BallLine
 import ZeroParadox.Reals.ConnectedNoFirstStep
+import ZeroParadox.Information.TwoRequirements
 
 /-!
 # Machine-checked characterization index of the snap ⊥ → ε₀ — what the snap IS and IS NOT
@@ -55,6 +56,10 @@ example {L : Type*} [ZeroParadox.ZPSemilattice L] (φ : Bool → L) (w : ℕ →
   exact h.2 1 (show φ (ZeroParadox.firedRun w hw 1) = φ (ZeroParadox.firedRun w hw 2) by rw [a, b])
 -- Reading: CARRIER — the two charts correspond: a firing is read as an instantiation. That correspondence is
 --   not proved; a firing is not shown to be an execution event.
+#check @ZeroParadox.snap_of_two_requirements          -- Statement: if ⊥ of `L` has a first step in ZP-A's induced order (`BotHasFirstStep L`) and the tape `w` avoids every zero-block test for `trials p hp` with `0 < p` (`ZeroBlockTypical`), then some `φ : Bool → L` and some proof `hw` that `w` fires make `S := φ ∘ firedRun w hw` a state sequence with `S 0 = bot` and `S 1 ≠ S 0` that carries `t_snap_given_cover`'s conclusion, the triple and `bot ⋖ S 1`; one way. `φ` is built from the cover's witness; no map from ⊥ of `L` to a tape appears
+-- Reading: CARRIER — the slot chart's `hw` from typicality of one tape, the cover from AX-B1's form on `L`, each a
+--   hypothesis and neither discharged (the `NNReal` and all-`false` controls in `ZeroParadox/Information/TwoRequirements.lean`).
+#check @ZeroParadox.snap_of_firstStep_MLRandom        -- Statement: the same conclusion with `ZeroBlockTypical` replaced by Martin-Löf randomness for `trials p hp` (`MLRandom`, defined in `ZeroParadox/Information/TwoRequirements.lean`), which implies it (`zeroBlockTypical_of_MLRandom`); one way. No tape is named and ⊥ of `L` is not claimed random
 -- Reading: CARRIER. "⊥ → ε₀" in the lines that use c₁ (`t_snap_derived`, `t_snap_machine`) is the
 --   discrete-state chart, where ε₀ names the first state above ⊥ (c₁ in `MachinePhase`), and "atom above
 --   ⊥" is a claim in that chart only. `t_snap_join`, `t_snap_irreversible` and
