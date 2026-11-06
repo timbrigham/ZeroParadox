@@ -179,7 +179,8 @@ theorem end_top_covers_nothing : ¬ ∃ b : WithBot (WithTop ℤ), b ⋖ ⊤ := 
 /-! ### § IV. The radius chart: a path between the ends, no cover, collapse onto the vertices
 
 Standard object, not built here: the radius order is the union of Baker–Rumely's lines of discs
-[r, R] about 0 (arXiv:math/0407433, §1). -/
+about 0 (arXiv:math/0407433, §1 p. 8 for [r, 1], §2 p. 21 for general radii), with the end ∞ the
+point ∞ of the Berkovich projective line. -/
 
 /-- `Statement:` for `r > 0`, `closedBall 0 r = ballLine (-(Int.log 2 r))` in `ℚ_[2]`. -/
 theorem closedBall_eq_ballLine {r : ℝ} (hr : 0 < r) :
