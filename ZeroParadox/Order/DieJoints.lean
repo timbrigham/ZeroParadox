@@ -1,4 +1,4 @@
--- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): cut points of an order approached from one side and not reached there (joints and dual joints), with the ends of ℝ≥0∞ and ℕ∞, NInf's ∞, the 2-adic pole and ε₀ as instances. Curated results indexed in ZeroParadox/MANIFEST.md.
+-- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): cut points of an order approached from one side and not reached there (joints and dual joints), with ⊤ and 0 of ℝ≥0∞, ⊤ of ℕ∞, NInf's ∞, the valuation of ℤ_[2]'s 0, and ε₀ as instances. Curated results indexed in ZeroParadox/MANIFEST.md.
 
 import ZeroParadox.Die
 import ZeroParadox.Ordinal.Epsilon0MinMax
@@ -30,7 +30,9 @@ namespace ZeroParadox
 
 /-! ### § I. Cut points, joints, dual joints
 `Reading:` "joint" here names the order-theoretic shape only; whether it is the joint of Tim's
-2026-10-22 read (`ZeroParadox/DieCannotBe.lean` § I) is not claimed. -/
+2026-10-22 read (`ZeroParadox/DieCannotBe.lean` § I) is not claimed. At the canonical cut of a linear
+order, `IsJoint` is Mathlib's `Order.IsSuccLimit` and `IsDualJoint` is `Order.IsPredLimit` (the two
+`example`s after the definitions); the general form is over an arbitrary pair `(A, B)`. -/
 
 section Defs
 
@@ -45,19 +47,47 @@ def IsCutPoint (A B : Set α) (x : α) : Prop :=
 
 /-- `Statement:` a cut point of `(A, B)` lying in `B`, with `A` nonempty and without a greatest
     element. -/
--- [ZP-CUSTOM] extends: IsCutPoint (ZeroParadox/Order/DieJoints.lean) | reason: the one-sided form,
--- approached from below and not reached there.
+-- [ZP-CUSTOM] extends: IsCutPoint (ZeroParadox/Order/DieJoints.lean) | reason: the one-sided form
+-- over an arbitrary pair, approached from below and not reached there; at the canonical cut
+-- `(Set.Iio x, Set.Ici x)` of a linear order it is Mathlib's `Order.IsSuccLimit x`.
 def IsJoint (A B : Set α) (x : α) : Prop :=
   IsCutPoint A B x ∧ A.Nonempty ∧ (¬ ∃ m, IsGreatest A m) ∧ x ∈ B
 
 /-- `Statement:` a cut point of `(A, B)` lying in `A`, with `B` nonempty and without a least
     element. -/
 -- [ZP-CUSTOM] extends: IsCutPoint (ZeroParadox/Order/DieJoints.lean) | reason: the mirror of
--- `IsJoint`, approached from above and not reached there.
+-- `IsJoint`, approached from above and not reached there; at the canonical cut
+-- `(Set.Iic x, Set.Ioi x)` of a linear order it is Mathlib's `Order.IsPredLimit x`.
 def IsDualJoint (A B : Set α) (x : α) : Prop :=
   IsCutPoint A B x ∧ B.Nonempty ∧ (¬ ∃ m, IsLeast B m) ∧ x ∈ A
 
 end Defs
+
+-- `Statement:` in a linear order, `a` is a joint of (`Set.Iio a`, `Set.Ici a`) iff `a` is a
+-- successor limit (`Order.IsSuccLimit`); both directions.
+example {α : Type*} [LinearOrder α] (a : α) :
+    IsJoint (Set.Iio a) (Set.Ici a) a ↔ Order.IsSuccLimit a := by
+  constructor
+  · rintro ⟨⟨-, hl, -⟩, ⟨b, hb⟩, -, -⟩
+    exact ⟨fun h => absurd (h (le_of_lt hb)) (not_le.2 hb), Order.isLUB_Iio_iff_isSuccPrelimit.1 hl⟩
+  · intro h
+    refine ⟨⟨fun x hx y hy => (le_of_lt hx).trans hy, h.isLUB_Iio, isGLB_Ici⟩, ?_, ?_, le_refl a⟩
+    · obtain ⟨b, hb⟩ := not_isMin_iff.1 h.not_isMin; exact ⟨b, hb⟩
+    · rintro ⟨m, hm, hmax⟩
+      exact absurd (h.isLUB_Iio.2 hmax) (not_le.2 hm)
+
+-- `Statement:` in a linear order, `a` is a dual joint of (`Set.Iic a`, `Set.Ioi a`) iff `a` is a
+-- predecessor limit (`Order.IsPredLimit`); both directions.
+example {α : Type*} [LinearOrder α] (a : α) :
+    IsDualJoint (Set.Iic a) (Set.Ioi a) a ↔ Order.IsPredLimit a := by
+  constructor
+  · rintro ⟨⟨-, -, hg⟩, ⟨b, hb⟩, -, -⟩
+    exact ⟨fun h => absurd (h (le_of_lt hb)) (not_le.2 hb), Order.isGLB_Ioi_iff_isPredPrelimit.1 hg⟩
+  · intro h
+    refine ⟨⟨fun x hx y hy => hx.trans (le_of_lt hy), isLUB_Iic, h.isGLB_Ioi⟩, ?_, ?_, le_refl a⟩
+    · obtain ⟨b, hb⟩ := not_isMax_iff.1 h.not_isMax; exact ⟨b, hb⟩
+    · rintro ⟨m, hm, hmin⟩
+      exact absurd (h.isGLB_Ioi.2 hmin) (not_le.2 hm)
 
 /-! ### § II. The order dual exchanges joints and dual joints
 `Reading:` INVERSION. Q2: the arrow is the order; run backwards (`αᵒᵈ`) a joint reads as a dual
@@ -73,6 +103,7 @@ theorem isJoint_toDual_iff {α : Type*} [Preorder α] (A B : Set α) (x : α) :
     exact ⟨⟨fun a ha b hb => hAB b hb a ha, hg, hl⟩, hne, fun ⟨m, hm⟩ => hng ⟨m, hm⟩, hx⟩
   · rintro ⟨⟨hAB, hl, hg⟩, hne, hng, hx⟩
     exact ⟨⟨fun b hb a ha => hAB a ha b hb, hg, hl⟩, hne, fun ⟨m, hm⟩ => hng ⟨m, hm⟩, hx⟩
+-- `Reading:` at the canonical cut (§ I) Mathlib's form is `Order.isSuccLimit_toDual_iff`.
 
 /-- `Statement:` `x` is a dual joint of `(B, A)` in `αᵒᵈ` iff it is a joint of `(A, B)` in `α`;
     both directions. -/
@@ -92,6 +123,7 @@ theorem not_isJoint_of_isBot {α : Type*} [Preorder α] {x : α} (hx : IsBot x) 
     ¬ IsJoint A B x := by
   rintro ⟨⟨-, hl, -⟩, ⟨a, ha⟩, hng, -⟩
   exact hng ⟨a, ha, fun b hb => (hl.1 hb).trans (hx a)⟩
+-- `Reading:` at the canonical cut (§ I) Mathlib's form is `IsMin.not_isSuccLimit`.
 
 /-- `Statement:` if `x` is greatest in a preorder, then `x` is a dual joint of no `(A, B)`. -/
 theorem not_isDualJoint_of_isTop {α : Type*} [Preorder α] {x : α} (hx : IsTop x) (A B : Set α) :
@@ -287,8 +319,10 @@ theorem epsilon0_isJoint :
       epsilonZero :=
   epsilon0_pinnedLimit.{0}.2.isJoint
 
--- `Statement:` an interior point: ε₀ is not ⊤ of `Ordinal`, something lies strictly above it.
-example : epsilonZero.{0} < Order.succ epsilonZero := Order.lt_succ _
+-- `Statement:` something lies strictly above ε₀ in `Ordinal`, so it is no greatest point; and
+-- ε₀ ≠ ⊥ of `Ordinal` (`epsilon0_ne_bot`): neither end.
+example : epsilonZero.{0} < Order.succ epsilonZero ∧ epsilonZero.{0} ≠ ⊥ :=
+  ⟨Order.lt_succ _, epsilon0_ne_bot⟩
 
 -- `Statement:` CONTROL: the shape alone is not special to ε₀: ω is a joint of (the naturals, `Set.Ici ω`).
 example : IsJoint (Set.range (Nat.cast : ℕ → Ordinal.{0})) (Set.Ici Ordinal.omega0) Ordinal.omega0 := by
@@ -301,7 +335,7 @@ example : IsJoint (Set.range (Nat.cast : ℕ → Ordinal.{0})) (Set.Ici Ordinal.
     have := hm ⟨n + 1, rfl⟩
     simp at this
 
--- `Statement:` CONTROL (gap): against the fixed points at or above ε₁, the ω-tower has no cut point
+-- `Statement:` CONTROL (no cut point at ε₀): against the fixed points at or above ε₁, the ω-tower has no cut point
 -- at ε₀.
 example : ¬ IsCutPoint (Set.range fundamentalSeq.{0})
     {o : Ordinal.{0} | Ordinal.omega0 ^ o = o ∧ Ordinal.epsilon 1 ≤ o} (Ordinal.epsilon 0) := by
