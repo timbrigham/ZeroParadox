@@ -71,7 +71,7 @@ treats Gödel's incompleteness and Tarski, § 3). The classical Löb derivation 
 Prior art: Popescu & Traytel, CADE-27 (2019) and AFP Goedel_Incompleteness (abstract Hilbert–Bernays–Löb (HBL) derivability conditions, Gödel 2
 and Löb in Isabelle); Saitou & Noguchi, arXiv:2609.13780 (Lean 4 Foundation: abstract Provability and Diagonalization
 classes; more exactly, `Provability` is a structure with the derivability conditions as classes over it (`HBL2`,
-`HBL3`) and `Diagonalization` a class, § 2.4, with abstract Gödel 2 and Löb as Props. 2.8 and 2.9). On diagonal and principle: the Stanford Encyclopedia of Philosophy entry "Provability Logic", § 2.2,
+`HBL3`) and `Diagonalization` a class, § 2.4, with abstract Gödel 2 and Löb as Propositions 2.8 and 2.9). On diagonal and principle: the Stanford Encyclopedia of Philosophy entry "Provability Logic", § 2.2,
 states that in GL fixed points of formulas modalized in `p` exist and are unique up to GL-equivalence (de Jongh and
 Sambin, 1975); Litak and Visser (arXiv:1905.09450, § 1) credit uniqueness also to Bernardi (1976). In Lean 4 that
 theorem for GL is `FFL.ProvabilityLogic.Logic.GL.fixpoint_theorem` in FormalizedFormalLogic/Foundation

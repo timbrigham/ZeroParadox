@@ -11,7 +11,7 @@ The framework carries a standing conjecture: **`Classical.choice` is structurall
 collapse**, rather than merely imposed by Mathlib. Inside Mathlib that cannot be tested on
 `tower_converges_to_zero`: its statement itself carries `Classical.choice` (a theorem that takes
 `Filter.Tendsto (fun n => cnfToZp2 (towerNONote n)) Filter.atTop (nhds 0)` as a hypothesis and proves
-`True` by `trivial` reports `[propext, Classical.choice, Quot.sound]`). So the
+`True` by `trivial` reports `[propext, Classical.choice, Quot.sound]`, measured 2026-10-08). So the
 test is posed on ZP-N's `ONote`, whose statements can be choice-free, and both outcomes are evidence.
 A choice-free result on `ONote`, carried to the 2-adic valuation form along the tower by
 `synVal_tower_eq_valuation` (`ZeroParadox/Ordinal/CnfBridge.lean`, the first `example` after it), is

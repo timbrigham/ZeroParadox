@@ -63,7 +63,7 @@ does **not** prove it.
    coefficient and the remainder (fails at ω+1, the second `example`: `synVal` 2 and 2-adic valuation
    1). At the seed n = 0 the agreement holds by Mathlib's `valuation 0 = 0`; in the other charts 0 has
    norm 0, and valuation ⊤ under `Padic.addValuation` on ℚ_[2]. The statement carries `Classical.choice` (`towerNONote` and
-   `cnfToZp2` carry it in their own terms), so both declarations are
+   `cnfToZp2` carry it in their own terms, measured 2026-10-08), so both declarations are
    STATEMENT-CARRIED (`ZeroParadox/Category/ChoiceCannotBe.md` § "Accidental versus essential") and
    the bridge sits here rather than in the choice-free `ZeroParadox/Ordinal/SyntacticCollapse.lean`.
    In the restatement chart, the syntactic side has a choice-free statement: `synCollapse_epsN`

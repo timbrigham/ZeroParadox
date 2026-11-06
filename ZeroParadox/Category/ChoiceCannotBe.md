@@ -48,7 +48,7 @@ So *full* choice is strictly stronger than excluded middle, which is in turn str
 constructive base. **The restricted fragment is a different matter, and the distinction matters here.**
 `ZeroParadox/Category/ExcludedMiddleBridge.lean`'s `ChoiceFragment` is a choice principle into the
 two-element `Bool` — a chooser on every inhabited predicate on `Bool` — so in a topos, which always has
-unique choice, it is *equivalent* to excluded middle (see `ZeroParadox/Category/ExcludedMiddleBridge.lean`,
+unique choice (E. J. Dubuc and M. Szyld, Tannaka Theory for Topos, arXiv:1510.01775v1, Prop. 1.24, p. 10), it is *equivalent* to excluded middle (see `ZeroParadox/Category/ExcludedMiddleBridge.lean`,
 the `example` after `em_of_choiceFragment`).
 In Lean without unique choice, the natural construction of the fragment from excluded middle alone
 fails to elaborate, dying at `Decidable (S true)`, and closes only under `classical`. **That failure

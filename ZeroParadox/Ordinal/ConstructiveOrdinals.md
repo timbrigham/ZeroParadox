@@ -40,7 +40,7 @@ the choice, as the statement control in the next sentence shows: they are **STAT
 invariants `epsilon0_ne_zero`, `epsilon0_ne_bot`, `epsilon0_is_fixedpoint`
 (`ZeroParadox/Ordinal/Epsilon0LeastFP.lean`) and `epsilon0_eq_nfp_bot`
 (`ZeroParadox/Ordinal/Epsilon0MinMax.lean`), each only assumed in a theorem that proves `True`, already
-report `Classical.choice` (statement control; for `epsilon0_eq_nfp_bot` the
+report `Classical.choice` (statement control, measured 2026-10-08; for `epsilon0_eq_nfp_bot` the
 live record is the named statement control `epsilon0EqNfpBotStatement`, printed in that file), so no re-proof of them can drop it.
 
 A restatement cannot be had on `ONote`, which does not name ε₀: inside the carrier no notation bounds
@@ -103,7 +103,7 @@ Side finding: `tower_NF` (well-formedness) *does* carry `Classical.choice` — b
 predicate is defined through `repr` into `Ordinal`. The snap facts do not depend on `NF`, so they stay
 choice-free; but even "this notation is well-formed" inherits choice in Mathlib, through `NF`'s definition
 (`#print axioms ONote.NF` reports `[propext, Classical.choice, Quot.sound]`, while its type `ONote → Prop`
-reports none). That is one site
+reports none; measured 2026-10-09). That is one site
 where choice enters, not the only one: ε₀'s leastness is not routed through `tower_NF`, and its choice
 is carried by its own statement (`ZeroParadox/Ordinal/SnapNucleus.md` § Axiom footprint).
 
