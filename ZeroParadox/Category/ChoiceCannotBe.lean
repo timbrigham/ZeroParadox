@@ -153,7 +153,7 @@ the boundary and its scope fence. -/
 -- coequalizer has fibres of at most two points. Goodman–Myhill state the restriction explicitly,
 -- choice "for sets B, C of at most two elements" (p. 461). With unique choice into `Bool`,
 -- `ChoiceFragment` and `ExcludedMiddle` are
--- inter-derivable (the `example` after `em_of_choiceFragment` in its home file). "The converse fails"
+-- inter-derivable (see `ZeroParadox/Category/ExcludedMiddleBridge.lean`, the `example` after `em_of_choiceFragment`). "The converse fails"
 -- belongs to FULL AC and is Cohen 1963, not Diaconescu.
 -- Reading: in `ZeroParadox/Category/ExcludedMiddleBridge.lean` the natural construction of the fragment
 -- from `ExcludedMiddle` fails to elaborate without `classical`, and a candidate explanation is Lean's

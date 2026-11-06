@@ -67,8 +67,9 @@ instance of these; the doubling stages have no upper bound under `<+:` (§ II's 
 --   ω-Scott-continuous, `gfp f = ⨅ n, f^[n] ⊤`.
 #check @fixedPoints.gfp_eq_sInf_iterate
 
--- Reading: the Take's dead zero is the all-zeros tape, in either carrier. Here it is
---   `botEnd : End = ℕ → Fin 2`.
+-- Reading: the Take's dead zero is the all-zeros tape, in either carrier (`End = ℕ → Fin 2` here, and the
+--   all-false tape `ℕ → Bool` of `ZeroParadox/Category/IgnoranceSeam.lean`). Here it is
+--   `botEnd : End = ℕ → Fin 2`. `End` and `botEnd` are defined in `ZeroParadox/Valuation/PadicTree.lean`.
 -- Statement: COINCIDENCE — `botEnd` is ⊥ of `End` under pointwise max and the fixed point of boundary
 --   doubling (`boundaryDouble_botEnd`, `boundaryDouble_unique_fp`,
 --   `ZeroParadox/Valuation/PoleCompletion.lean`). The all-false tape ℕ → Bool carries the same

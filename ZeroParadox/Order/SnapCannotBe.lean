@@ -5,6 +5,9 @@ import ZeroParadox.Valuation.SnapDichotomy
 import ZeroParadox.Reals.OrderedField
 import ZeroParadox.Multihomed.BoundaryOrder
 import ZeroParadox.Information.CrossingTrials
+import ZeroParadox.Valuation.PolePassage
+import ZeroParadox.Valuation.BallLine
+import ZeroParadox.Reals.ConnectedNoFirstStep
 
 /-!
 # Machine-checked characterization index of the snap ⊥ → ε₀ — what the snap IS and IS NOT
@@ -152,6 +155,8 @@ example : ¬ @IsAtom (Set.Ici (0 : ℕ)) _ Set.Ici.orderBot ⟨2, Nat.zero_le 2�
 /-! ### § IV. The snap returns to a ⊥ (read as a successor null — a commitment); its 2-adic realization is a loop -/
 #check @ZeroParadox.c_da2_novelty                     -- Statement: contrapositive of the role fact, in one `ZPSemilattice`: a state `≠ bot` cannot satisfy the join-identity. Reading: "distinct successor instantiation" is the reading, not the statement
 #check @ZeroParadox.snap_arc_z2_loop                  -- Statement: the `cnfToZp2` image of tower stage 0 is ℤ_[2]'s 0, every stage `n ≥ 1` has a nonzero image, and the images tend to that same 0
+#check @ZeroParadox.arc_q2Val                         -- Statement: read by `q2Val`, those images are ⊤ of `ℕ∞` at stage 0, `n` at every stage `n ≥ 1`, and tend to ⊤, which is `q2Val` of ℤ_[2]'s 0 (`q2Val_bot`; `ZeroParadox/Valuation/PolePassage.lean`)
+#check @ZeroParadox.no_path_zero_infty                -- Statement: no continuous path in `Sphere` (`OnePoint ℚ_[2]`) runs from 0 of `ℚ_[2]` to ∞ of `Sphere`. Reading: the loop returns to 0 of `ℚ_[2]` without passing ∞ of `Sphere` (`arc_never_meets_infty`); its `rInv` image is the loop at ∞ (`rInv_arcS`)
 #check @ZeroParadox.t_iz_limit_is_new_null            -- Statement: role half only, in any `ZPSemilattice`: (∀ x, join terminal x = x) → terminal = bot of that semilattice. Novelty is NOT in this statement; do not cite it as the novelty witness
 
 /-! ### § V. WHERE the snap is RULED OUT — and what only removes the obstruction
@@ -168,7 +173,16 @@ owes no step. -/
 #check @ZeroParadox.f_snap_blocked                    -- Statement: over `Field + LinearOrder + IsStrictOrderedRing`, every positive ε₀ admits a smaller positive δ; the binder ε₀ is any positive element of `F`, a candidate first step above `F`'s 0, not the ordinal
 #check @ZeroParadox.f_snap_impossible                 -- Statement: hence no such field has a least positive element. No Archimedean hypothesis appears in the binders
 #check @ZeroParadox.axb1_fails_in_ordered_field       -- Statement: `¬ HasFirstStep (0 : F)`. Reading: AX-B1 is what supplies the step; an ordered field lacks it, and that the framework's carrier has it is the commitment
-#check @ZeroParadox.axb1_fails_everywhere_iff_dense   -- Statement: the obstruction CHARACTERIZED, over a bare `Preorder` with no field and no topology — `DenselyOrdered α ↔ ∀ bot, ¬ HasFirstStep bot`. `axb1_fails_in_ordered_field` directly above is an instance of its right-hand side; `f_snap_impossible` is the same fact in the halving vocabulary, not an instance of this statement. Density is what obstructs a first step — connectedness is a separate, topological fence (`real_no_snap`)
+#check @ZeroParadox.axb1_fails_everywhere_iff_dense   -- Statement: the obstruction CHARACTERIZED, over a bare `Preorder` with no field and no topology — `DenselyOrdered α ↔ ∀ bot, ¬ HasFirstStep bot`. `axb1_fails_in_ordered_field` directly above is an instance of its right-hand side; `f_snap_impossible` is the same fact in the halving vocabulary, not an instance of this statement. Density is what obstructs a first step — connectedness is a topological fence (`real_no_snap`); on a linear order with its order topology it implies this one (`no_firstStep_of_preconnected`), and not conversely
+#check @ZeroParadox.no_firstStep_of_preconnected      -- Statement: on a linear order with its order topology, preconnected gives `¬ HasFirstStep bot` at every `bot`; Mathlib's `denselyOrdered_of_preconnectedSpace` in `HasFirstStep` form, at `[propext, Quot.sound]`. Reading: on one linearly ordered carrier the topological fence implies the order fence, not conversely (the ℚ control in `ZeroParadox/Reals/ConnectedNoFirstStep.lean`)
+#check @ZeroParadox.preconnected_iff_no_firstStep     -- Statement: on a conditionally complete linear order with its order topology, `PreconnectedSpace α ↔ ∀ bot, ¬ HasFirstStep bot`; the completeness binder carries the backward direction (ℚ is dense and not preconnected)
+#check @ZeroParadox.cover_at_zero_iff_not_dense      -- Statement: at one point, in a linearly ordered additive commutative group: `HasFirstStep 0` iff the order is not dense; no Archimedean hypothesis (`ZeroParadox/Valuation/PolePassage.lean` § VI)
+#check @ZeroParadox.cover_at_zero_iff_int             -- Statement: with `[Archimedean G]` added, `HasFirstStep 0` iff `G ≃+o ℤ`
+#check @ZeroParadox.hahnArc_loop                      -- Statement: CONTROL, on `HahnSeries ℚ ℚ`, value group ℚ (no first step at 0), `addVal` of `hahnArc` is ⊤ at stage 0, finite after, and eventually above every rational. Reading: CARRIER — density refuses the value group a first step and does not refuse the valuation loop ⊤ → finite → ⊤
+#check @ZeroParadox.ballLine_covBy                    -- Statement: in `Set.range ballLine`, the closed balls of radius `2^(-n)` about 0 of `ℚ_[2]` under inclusion, `ballLine (n + 1) ⋖ ballLine n` (`ZeroParadox/Valuation/BallLine.lean`)
+#check @ZeroParadox.end_bot_no_first_step             -- Statement: in `WithBot (WithTop ℤ)`, that line with both ends adjoined, ⊥ has no first step. Reading: CARRIER — the first step lives at the vertices, not at the ends
+#check @ZeroParadox.end_top_covers_nothing            -- Statement: in `WithBot (WithTop ℤ)`, nothing is covered by ⊤
+#check @ZeroParadox.radiusPath                        -- Statement: CONTROL, a path in `ℝ≥0∞` from 0 to ⊤; `ℝ≥0∞` is densely ordered, so 0 has no first step there (`axb1_fails_everywhere_iff_dense`). Reading: CARRIER — the radius order joins the ends and has no first step; read back as balls, a positive radius lands on a vertex (`closedBall_eq_ballLine`)
 #check @ZeroParadox.real_no_snap                      -- Statement: CARRIER — ℝ is NOT totally disconnected
 #check @ZeroParadox.padic_snaps                       -- Statement: CARRIER — ℚ_p IS totally disconnected. Reading: this removes the obstruction and supplies no first step — norms accumulate at 0 in ANY non-trivially normed field (Mathlib `NormedField.exists_norm_lt`), ℝ included, so that half is not p-adic
 #check @ZeroParadox.snap_dichotomy                    -- Statement: every ℚ_p is totally disconnected and ℝ is not, and for NONTRIVIAL absolute values on ℚ, real and p-adic are exclusive and exhaustive (Ostrowski). ⚠ SCOPE: completions of ℚ only

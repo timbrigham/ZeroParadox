@@ -18,12 +18,13 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 ---
 ## Formal Overview (AI-assisted)
-At `a = 1/4` the kernel of `ZeroParadox/Order/MarkovContractionDual.lean` scales the imbalance by
-`1 - 2a = 1/2` (`step_imb`), the p-adic doubling rate. The match is `padic_markov_shared_rate_envelope`.
-The first `example` after `padic_markov_no_orbit_correspondence` is the cross-multiplied identity
-`‖2ⁿx‖ · imb v₀ = imb (Pⁿ v₀) · ‖x‖`, which holds at every start; it is a step-by-step proportionality
-only for `x ≠ 0` and `imb v₀ ≠ 0` (the next two `example`s). Both sides are real numbers: no category,
-inverse limit or map between `Fin 2 → ℝ` and `Q₂` is built. -/
+"#2" and "#3" are the bottom-diagram probe campaign's labels for the Markov attractor node and the
+p-adic floor. At `a = 1/4` the kernel of `ZeroParadox/Order/MarkovContractionDual.lean` scales the
+imbalance by `1 - 2a = 1/2` (`step_imb`), the p-adic doubling rate. The match is
+`padic_markov_shared_rate_envelope`. The first `example` after `padic_markov_no_orbit_correspondence`
+is the cross-multiplied identity `‖2ⁿx‖ · imb v₀ = imb (Pⁿ v₀) · ‖x‖`, which holds at every start; it
+is a step-by-step proportionality only for `x ≠ 0` and `imb v₀ ≠ 0` (the next two `example`s). Both
+sides are real numbers: no category, inverse limit or map between `Fin 2 → ℝ` and `Q₂` is built. -/
 
 namespace ZeroParadox
 

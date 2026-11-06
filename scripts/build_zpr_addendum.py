@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-R Addendum: The Diagonal Family — PDF Builder
-Version 1.24 | November 2026
+Version 1.25 | November 2026
 Follows scripts/PDF_Rendering_Standards.md.
 Search record behind § IV's Gödel-first sentence (2026-10-06, ripgrep over ZeroParadox/**/*.lean):
   (a) godel_?(one|1|first)|first_?incompleteness|incompleteness_?(one|1|first)|godel_?sentence|true_?but_?unprovable  -> 0 hits
@@ -12,7 +12,7 @@ import os
 from zp_utils import *
 from reportlab.platypus import KeepTogether
 
-VERSION = '1.24'
+VERSION = '1.25'
 FIRST_RELEASED = 'July 2026'
 
 
@@ -42,7 +42,7 @@ def build():
             'the G&#246;del-first row carries a machine-checked Lean 4 witness. The diagonal-family unification is '
             'Lawvere (1969) / Yanofsky (2003), cited; the contribution is the formalization '
             'and the tie to the self-application role (the engine, the wall faces, and the Quine-atom '
-            'and L&#246;b / G&#246;del 2nd floor faces choice-free; the computability floor faces choice-carrying). It supersedes the earlier private "Zero as a Wall" '
+            'and L&#246;b / G&#246;del 2nd floor faces choice-free; the computability floor faces choice-carrying); abstract L&#246;b and G&#246;del 2 are also formalized by Popescu &amp; Traytel (Isabelle, 2019) and Saitou &amp; Noguchi (Lean 4, arXiv:2609.13780). It supersedes the earlier private "Zero as a Wall" '
             'working draft.</i>',
             S['note']),
         sp(10),

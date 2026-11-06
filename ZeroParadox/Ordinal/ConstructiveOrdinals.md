@@ -33,14 +33,14 @@ notation is a fixed point of `ω^·`).
 
 **It does NOT classify ZP-L's footprint as "representational, not intrinsic"**. That is an
 *eliminability* claim, and
-it cannot be asked of those ε₀ results as stated, because their statements themselves carry the
-choice, as the statement control in the next sentence measured 2026-10-08: they are **STATEMENT-CARRIED**
+the question does not apply to those ε₀ results as stated, because their statements themselves carry
+the choice, as the statement control in the next sentence shows: they are **STATEMENT-CARRIED**
 (`ZeroParadox/Category/ChoiceCannotBe.md`). ZP-L's `epsilonZero_fixedPoint`, `epsilonZero_eq_nfp`,
 `epsilonZero_tower_lt` and `epsilonZero_le_fixedPoint` (`ZeroParadox/Ordinal/Gentzen.lean`), and the
 invariants `epsilon0_ne_zero`, `epsilon0_ne_bot`, `epsilon0_is_fixedpoint`
 (`ZeroParadox/Ordinal/Epsilon0LeastFP.lean`) and `epsilon0_eq_nfp_bot`
 (`ZeroParadox/Ordinal/Epsilon0MinMax.lean`), each only assumed in a theorem that proves `True`, already
-report `Classical.choice` (statement control, measured 2026-10-08; for `epsilon0_eq_nfp_bot` the
+report `Classical.choice` (statement control; for `epsilon0_eq_nfp_bot` the
 live record is the named statement control `epsilon0EqNfpBotStatement`, printed in that file), so no re-proof of them can drop it.
 
 A restatement cannot be had on `ONote`, which does not name ε₀: inside the carrier no notation bounds
@@ -52,7 +52,7 @@ across the crossing every notation denotes below ε₀ (`repr_lt_epsilon0`,
 `e0OmegaPow` (ω^· extended to fix ⊤ by definition) is unique by theorem (`e0OmegaPow_fixedpoint_iff`, `[propext]`) and exists by definition
 (`e0OmegaPow_top`, proved by `rfl`), on an order that is not well-founded (the `example` stating
 `¬ WellFoundedLT E0Note`). The **derived** one is open: a well-founded Lean carrier whose statements
-are choice-free, on which ε₀'s fixed point is derived rather than set by definition, leastness included,
+are choice-free, on which ε₀'s fixed point is derived, by a choice-free derivation, rather than set by definition, leastness included,
 was not located as of 2026-10-13 (the record of that search is `ZeroParadox/Ordinal/SnapNucleus.md`
 § Axiom footprint), and again as of 2026-11-01, searched as follows: `ZeroParadox/**/*.lean` for
 `WellFounded`, `IsWellOrder` and `Acc` together with ε₀ / `epsilon` / `nfp` (every ε₀ hit is on
@@ -103,7 +103,7 @@ Side finding: `tower_NF` (well-formedness) *does* carry `Classical.choice` — b
 predicate is defined through `repr` into `Ordinal`. The snap facts do not depend on `NF`, so they stay
 choice-free; but even "this notation is well-formed" inherits choice in Mathlib, through `NF`'s definition
 (`#print axioms ONote.NF` reports `[propext, Classical.choice, Quot.sound]`, while its type `ONote → Prop`
-reports none; measured 2026-10-09). That is one site
+reports none). That is one site
 where choice enters, not the only one: ε₀'s leastness is not routed through `tower_NF`, and its choice
 is carried by its own statement (`ZeroParadox/Ordinal/SnapNucleus.md` § Axiom footprint).
 

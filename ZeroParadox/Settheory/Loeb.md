@@ -9,8 +9,8 @@ Löb (1955): in a system with a provability predicate `□` satisfying the Hilbe
 conditions and given a Löb diagonal ψ (hypotheses hfix1, hfix2), `⊢ (□A → A)` implies `⊢ A`. In
 arithmetic, Löb's setting, the diagonal lemma supplies ψ with `⊢ ψ ↔ (□ψ → A)`; hfix1 and hfix2 are
 the two halves of that equivalence, which this file takes as hypotheses. This is the diagonal
-family's **provability-modal face** — the self-referential fixed point of the map `p ↦ (□p → A)` (the Löb sentence). It is the ONLY sibling of the
-four with no Mathlib support located as of 2026-08-17, so it is built from scratch as an abstract
+family's **provability-modal face** — the self-referential fixed point of the map `p ↦ (□p → A)`
+(the Löb sentence). It is the ONLY sibling of the four with no Mathlib support located as of 2026-08-17, so it is built from scratch as an abstract
 provability logic. Searched as follows: `Löb`, `GL`, `provability`, `□`/`box` as a modality, and
 `derivability` across the pinned Mathlib; `#check` on the names those would carry. No modal or
 provability logic found.
@@ -68,9 +68,10 @@ Attribution: Löb (1955); Hilbert–Bernays–Löb derivability conditions; diag
 Yanofsky (2003, arXiv:math/0305282v1, p. 18), who treats Löb's paradox in that family, extending
 Lawvere (1969), whose paper does not name Löb (TAC reprint text searched for "Löb", 2026-11-05; it
 treats Gödel's incompleteness and Tarski, § 3). The classical Löb derivation is standard.
-Prior art: Popescu & Traytel, CADE-27 (2019) and AFP Goedel_Incompleteness (abstract HBL conditions, Gödel 2
+Prior art: Popescu & Traytel, CADE-27 (2019) and AFP Goedel_Incompleteness (abstract Hilbert–Bernays–Löb (HBL) derivability conditions, Gödel 2
 and Löb in Isabelle); Saitou & Noguchi, arXiv:2609.13780 (Lean 4 Foundation: abstract Provability and Diagonalization
-classes). On diagonal and principle: the Stanford Encyclopedia of Philosophy entry "Provability Logic", § 2.2,
+classes; more exactly, `Provability` is a structure with the derivability conditions as classes over it (`HBL2`,
+`HBL3`) and `Diagonalization` a class, § 2.4, with abstract Gödel 2 and Löb as Props. 2.8 and 2.9). On diagonal and principle: the Stanford Encyclopedia of Philosophy entry "Provability Logic", § 2.2,
 states that in GL fixed points of formulas modalized in `p` exist and are unique up to GL-equivalence (de Jongh and
 Sambin, 1975); Litak and Visser (arXiv:1905.09450, § 1) credit uniqueness also to Bernardi (1976). In Lean 4 that
 theorem for GL is `FFL.ProvabilityLogic.Logic.GL.fixpoint_theorem` in FormalizedFormalLogic/Foundation

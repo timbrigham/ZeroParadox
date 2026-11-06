@@ -1,6 +1,6 @@
 """
 Build ZP-L Illustrated Companion
-Version 1.22 | November 2026
+Version 1.23 | November 2026
 Citation fence (Gentzen): the Convergence section's credits follow CLAIMS.md's Gentzen rows and are
 taken from Gentzen 1943 (Math. Ann. 119), the one primary paper filed here, never from a secondary
 source's labels. The 1936 consistency credit rests on Gentzen 1943, p. 140, footnote 2: the 1936
@@ -224,7 +224,7 @@ def dual_convergence_diagram():
     return d
 
 
-VERSION = '1.22'
+VERSION = '1.23'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -407,7 +407,7 @@ def build():
     # ── The Kleene Connection ─────────────────────────────────────────────────
     E.append(Paragraph('The Kleene Connection', CS['h1']))
     E.append(cbody(
-        'ZP-K carries a computational counterpart of &#8869; as a requirement of its Kleene structure: '
+        'ZP-K\'s Kleene structure carries a computational-quine requirement, read as &#8869;\'s counterpart: '
         'the class field botCode_is_quine, which asks the supplied code to satisfy '
         'IsComputationalQuine &#8212; a periodicity condition, eval c n = eval c (encode c + n) '
         'for every n, so the code\'s own G&#246;del number is a period of it. Kleene\'s second '

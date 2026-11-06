@@ -251,7 +251,7 @@ theorem binaryState_card_two : Fintype.card BinaryState = 2 := by decide
 theorem distP_support_singleton : distP.support = {nullSt} := by
   rw [distP, PMF.support_pure]
 
-/-- The first-atomic-state distribution is likewise a point mass, supported on the single outcome `exist`. -/
+/-- The distribution `distQ`, at the state `firstSt` (the `exist` constructor of `BinaryState`, not `null`), is likewise a point mass, supported on the single outcome `exist`. -/
 theorem distQ_support_singleton : distQ.support = {firstSt} := by
   rw [distQ, PMF.support_pure]
 

@@ -95,7 +95,7 @@ section PurityCheck
 --   (strictly tighter than the existing `fix_isEmpty`'s [propext, Quot.sound]) and witnesses Fix-emptiness
 --   through the bare inductive `WType.recOn`, not through Fix.ind/Liftp/quotient machinery. That is a real
 --   new term, not a re-export.
---   The ν side CANNOT be upgraded: Lean has no object-level proposition asserting "this term uses
+--   The ν side is not upgraded here, and choice is not claimed load-bearing: Lean has no object-level proposition asserting "this term uses
 --   Classical.choice", and the strongest honest statement (`cofix_nonempty'`) is exactly Mathlib's
 --   corecursion inhabitant. That choice is a quotient-layer artifact, MEASURED: `QPF.Cofix` carries
 --   it in the type (so no proof of a Cofix-mentioning statement is clean), inheriting it from

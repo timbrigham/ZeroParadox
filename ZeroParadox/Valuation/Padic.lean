@@ -45,7 +45,9 @@ notation "Q₂" => (ℚ_[2] : Type)
 The foundational distinction is binary: a state either exists or does not.
 Modelled as a free two-constructor inductive type with no natural-number dependency.
 AX-B1 is a modelling commitment (the choice of binary structure); distinctness of
-the two states is then verified by decidable equality, requiring no classical axioms. -/
+the two states is then verified by decidable equality, requiring no classical axioms.
+AX-B1 itself is the cover of ⊥ with a two-element first interval (`HasFirstStep`,
+`ZeroParadox/Reals/OrderedField.lean`); that this carrier has exactly two states is its own choice. -/
 
 /-- The two ontological states: non-existence (⊥ in ZP-A) and existence. -/
 -- [ZP-CUSTOM] replaces: Fin 2 | reason: Fin 2's constructors are ⟨0,_⟩ and ⟨1,_⟩ — natural numbers. nullState ≠ ℕ's 0 by convention; it is a semantic state with no numeric meaning. Free inductive eliminates the ℕ dependency and makes ⊥ ↦ null a structural fact, not a labelling choice.

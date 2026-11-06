@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-J Keystone Addendum: The Diagonal Fixed Point, the Lawvere Face-Split, and the Well-Foundedness Boundary
-Version 1.30 | November 2026
+Version 1.31 | November 2026
 Taylor (Well-founded coalgebras and recursion) is cited without year or venue: the copy on file
 carries neither. The gap stays open until a verified bibliographic record supplies them.
 Reads after ZP-J Self-Reference.
@@ -10,7 +10,7 @@ import os
 from zp_utils import *
 from reportlab.platypus import KeepTogether
 
-VERSION = '1.30'
+VERSION = '1.31'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard: route all bare Paragraph() text through Unicode-to-entity conversion ──
@@ -97,8 +97,8 @@ def build():
     E.append(body(
         'The unification of self-referential fixed points across fields is not new with the '
         'Zero Paradox. <b>Lawvere</b> (Diagonal Arguments and Cartesian Closed Categories, '
-        '1969) showed that Cantor\'s diagonal, Russell\'s paradox, G&#246;del\'s incompleteness '
-        'lemma and Tarski\'s undefinability theorem are one move; <b>Yanofsky</b> (A Universal '
+        '1969) showed that Cantor\'s diagonal, Russell\'s paradox, the fixed-point lemma at the heart of '
+        'G&#246;del\'s incompleteness and Tarski\'s undefinability theorem are one move; <b>Yanofsky</b> (A Universal '
         'Approach to Self-Referential Paradoxes, Incompleteness and Fixed Points, Bull. Symbolic '
         'Logic 9(3), 2003) restated this in plain set-and-function terms across logic and '
         'computation, adding Turing\'s halting argument and the recursion theorem. '

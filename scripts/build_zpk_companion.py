@@ -1,6 +1,6 @@
 """
 Build ZP-K Illustrated Companion
-Version 1.33 | November 2026
+Version 1.34 | November 2026
 """
 
 import os
@@ -109,7 +109,7 @@ def four_way_table():
     t = Table(data, colWidths=[TW*0.22, TW*0.30, TW*0.48])
     t.setStyle(ts); return t
 
-VERSION = '1.33'
+VERSION = '1.34'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -161,8 +161,8 @@ def build():
         'are proved equivalent: T-COMP shows that, for an element of a ZPSemilattice carrying '
         'KleeneStructure, being a Quine atom is equivalent to being the semilattice\'s least element ⊥ '
         'together with the join identity, and da2_bottom_characterization shows those two '
-        'equivalent. ZP-K carries c₀\'s computational face as a '
-        'KleeneStructure requirement (botCode_is_quine). Reading c₀ as the Kleene quine splits in '
+        'equivalent. ZP-K\'s KleeneStructure requires some code to be a computational quine '
+        '(botCode_is_quine, a periodicity condition that constant codes also meet); no field ties that code to c₀. Reading c₀ as the Kleene quine splits in '
         'two: its identity half is retired, since codes occupy the Quine-atom role in their own '
         'chart, as a class of codes up to equal output, for a computable map respecting equal '
         'output (codes_vs_classes); and that c₀ runs is the '
@@ -332,8 +332,8 @@ def build():
         'waiting for someone outside to press "run": if it runs at all, it runs itself (Path 1). '
         'That it does run is the occurrence commitment, which DA-1 uses and does not supply; '
         'given it, the machine has left c₀ for c₁, by the definition of the first running '
-        'configuration (D7). ZP-K carries c₀\'s computational face as a '
-        'KleeneStructure requirement (botCode_is_quine); reading c₀ as the Kleene quine is not an '
+        'configuration (D7). ZP-K\'s KleeneStructure requires some code to be a computational quine '
+        '(botCode_is_quine, a periodicity condition that constant codes also meet); no field ties that code to c₀; reading c₀ as the Kleene quine is not an '
         'identity (codes occupy the Quine-atom role in their own chart, as a class up to equal output, '
         'for a computable map respecting equal output, codes_vs_classes), and that '
         'c₀ runs is the occurrence commitment. What T-COMP, with da2_bottom_characterization, proves is narrower: '

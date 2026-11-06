@@ -1,6 +1,6 @@
 """
 Build ZP-E Illustrated Companion
-Version 1.40 | November 2026
+Version 1.41 | November 2026
 """
 
 import os
@@ -156,7 +156,7 @@ def axioms_table():
          'The origin is unreachable from outside. '
          'Not a novel commitment where it holds: in a category built from a partial order with a least element, '
          'such as the ZP-A semilattice order, a morphism into the least element means being below it, so antisymmetry '
-         'makes the source that element (the least element is a strict initial object, Carboni, Lack and Walters 1993; the two antisymmetry examples at the end of ZeroParadox/Category/AxG2Reduce.lean). '
+         'makes the source that element (the least element is a strict initial object, in the sense of Carboni, Lack and Walters 1993; the two antisymmetry examples at the end of ZeroParadox/Category/AxG2Reduce.lean). '
          'ZP-B C3 is the analogous fact in Q<sub>2</sub>, proved in its own layer. It does not hold in every category: '
          'ZP-H&#8217;s AX-G2 row names one where it fails.'],
     ]
@@ -175,7 +175,7 @@ def axioms_table():
     t = Table(data, colWidths=[TW*0.18, TW*0.82])
     t.setStyle(ts); return t
 
-VERSION = '1.40'
+VERSION = '1.41'
 FIRST_RELEASED = 'April 2026'
 
 

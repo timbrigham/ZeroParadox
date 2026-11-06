@@ -225,7 +225,7 @@ layer carries a distinctive construction with its own separate prior art.
 
 **Two further hydra-battles constructions are cited here because a sibling file follows their shape.**
 `ZeroParadox/Ordinal/PricedInterface.lean` adjoins a top to `SynONote` and maps the result into
-Mathlib's `Ordinal`. Both moves follow Castéran, and the credit above does not reach them:
+Mathlib's `Ordinal`. Both moves follow hydra-battles, and the credit above does not reach them:
 `theories/ordinals/OrdinalNotations/ON_plus.v` builds the **sum of two ordinal notation systems**
 generically (`compare_plus`, `plus_comp`, `lt_wf`, `ON_plus`, and `lt_eq_lt_dec` proving that
 decidability of comparison survives the adjunction). "Notations plus one adjoined point" has that

@@ -467,8 +467,8 @@ example : Nonempty (ZeroParadox.Motion Empty) := ⟨⟨fun x => x.elim, fun x =>
 -- through another vertex (p. 132). After the proof (p. 133) they note that `Gᵗ` is obtained by
 -- deleting, in any order, each arc `(u, v)` that is redundant: the graph has a directed path from `u`
 -- to `v` not including it (also J. Bang-Jensen and G. Gutin, *Digraphs*, § 4.3, pp. 177-178). The
--- closest statement is AGU's, in the proof of Theorem 3 (p. 136): "arc (u, v) is in Gᵗ if and only if
--- (u, v) ∈ G1, and there is no path from u to v which does not include arc (u, v)"; Bang-Jensen and
+-- closest statement is AGU's, in the proof of Theorem 3 (p. 136): "arc (u, v) is in G₁ᵗ if and only if
+-- (u, v) ∈ G₁, and there is no path from u to v which does not include arc (u, v)"; Bang-Jensen and
 -- Gutin do not state the criterion used here as one sentence. It follows, since on an acyclic digraph without
 -- loops a path from `u` to `v` that includes the arc `(u, v)` is that arc alone. So on a finite
 -- acyclic digraph without loops an arc is in the reduction if and only if it is the only path between

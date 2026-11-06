@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-R: A Cross-Category Account of the Self-Referential Fixed Point — PDF Builder
-Version 1.26 | November 2026
+Version 1.27 | November 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.26'
+VERSION = '1.27'
 FIRST_RELEASED = 'July 2026'
 
 
@@ -36,7 +36,7 @@ def build():
             'D<sub>&#8734;</sub> and its generalizations) free of a monotone obstruction on complete lattices '
             '(Knaster&#8211;Tarski), with no reflexive object built here and no map from the two-element '
             'chain onto its monotone self-maps (the first finite stage of Soto-Andrade and Varela\'s '
-            'two-element example; Trimble; Bergman), and realized in the <b>computability</b> face '
+            'two-element example; Trimble; Bergman; stated there for order-preserving maps, ours for any map), and realized in the <b>computability</b> face '
             '(Rogers / Kleene). Every theorem used is classical. Each result box (R1&#8211;R4) and each '
             'F1 property is backed by a machine-checked Lean 4 theorem, except one marked cited: that '
             'the computability fixed point is an instance of Lawvere\'s theorem. The rest is cited '

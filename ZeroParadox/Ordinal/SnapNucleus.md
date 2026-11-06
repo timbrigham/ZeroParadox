@@ -47,14 +47,16 @@ Completing the meta-lattice by that boundary is a separate construction, not att
 ## Axiom footprint
 
 `snapNucleus` and the results about it are STATEMENT-CARRIED (`ZeroParadox/Category/ChoiceCannotBe.md`):
-each statement, only assumed, already reports `Classical.choice` (statement control, measured 2026-10-08).
+each statement, only assumed, already reports `Classical.choice` (the statement controls
+`snapNucleusNonemptyStatement` and `snapNucleusBotStatement`, `#print axioms` in the PurityCheck section of
+`ZeroParadox/Ordinal/SnapNucleus.lean`).
 The choice is **not** in the `Ordinal` type — `#print axioms Ordinal` reports `[propext, Quot.sound]`. It
 enters through the *order instance and the operations*: `Ordinal.instLinearOrder`, `Ordinal.nfp`,
 `Ordinal.omega0` and `Ordinal.epsilon` each measure `[propext, Classical.choice, Quot.sound]`, and
 `snapNucleus` is built from `nfp` over `omega0 ^ ·` on that order.
 
 The open question is a restatement on a carrier whose statements are choice-free. Its state, part by
-part (measured 2026-10-08):
+part:
 
 * **The ascent below ε₀ is restated, choice-free.** On `ONote`, ZP-N proves the ascent (`exp_lt_term`,
   `omegaPow_no_fixedpoint`, and `tower_strictMono`, the counterpart of `fundamentalSeq_strictMono`).
@@ -113,8 +115,10 @@ part (measured 2026-10-08):
   uniqueness on `E0Note`, with existence set by definition rather than derived, on an order that is not
   well-founded (the `example` stating `¬ WellFoundedLT E0Note`). That file states no leastness
   declaration. Its crossing into `Ordinal`, `e0Repr`, carries `Classical.choice` (its purity block).
-* **Open: the derived reading.** A well-founded Lean carrier whose statements are choice-free, on which ε₀'s fixed point is derived
-  rather than set by definition, leastness included, was not located as of 2026-10-13. Searched: this
+  On `E0Note` a snap nucleus exists trivially: the constant-⊤ map is a `Nucleus` whose closed points are
+  exactly the fixed points of `e0OmegaPow` (the `example` after `e0OmegaPow_fixedpoint_iff`).
+* **Open: the derived reading.** A well-founded Lean carrier whose statements are choice-free, on which ε₀'s fixed point is derived,
+  by a choice-free derivation, rather than set by definition, leastness included, was not located as of 2026-10-13. Searched: this
   corpus, 2026-10-08 and again 2026-10-13 (`ZeroParadox/**/*.lean` for carriers built over ordinal notations; `E0Note` is the
   only one reaching ε₀); and on 2026-10-13, `theoremsearch` on "epsilon zero is the least fixed point of omega
   exponentiation on a well-founded ordinal notation system, constructive proof" (formal and
