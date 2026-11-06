@@ -162,10 +162,11 @@ example : ¬ ∃ t : WithBot ℤ, IsTop t := by
 -- Reading: CARRIER. An end approached from one side and not reached there is a cut point of this
 -- shape: a joint from below, a dual joint from above (`ZeroParadox/Order/DieJoints.lean`). If an end
 -- is adjoined as the limit of the finite stages, it is a joint with the stages as its lower side: ⊤ of `ℕ∞`
--- (`enat_top_isJoint`), NInf's `∞` (`NInf.infty_isJoint`), an occupant of `PinnedLimit` in a partial
--- order (`PinnedLimit.isJoint`). ⊥ of a well-founded linear order, ⊥ of `Ordinal` among them, is
--- neither (`not_isJoint_of_isBot`, `not_isDualJoint_of_wellFoundedLT`). "Joint" here names the order
--- shape only (Mathlib's successor limit at the canonical cut); it is not claimed to be the joint of
+-- (`enat_top_isJoint`), NInf's `∞` (`NInf.infty_isJoint`); more generally every occupant of `PinnedLimit`
+-- in a partial order is a joint (`PinnedLimit.isJoint`), ε₀ among them, which is neither end of `Ordinal`.
+-- ⊥ of a well-founded linear order, ⊥ of `Ordinal` among them, is neither (`not_isJoint_of_isBot`,
+-- `not_isDualJoint_of_wellFoundedLT`). "Joint" here names the order shape only (in a linear order,
+-- Mathlib's successor limit at the canonical cut); it is not claimed to be the joint of
 -- Tim's 2026-10-22 read below.
 #check @ZeroParadox.IsCutPoint                   -- Statement: `A` lies below `B`, and `x` is the least upper bound of `A` and the greatest lower bound of `B`
 #check @ZeroParadox.IsJoint                      -- Statement: a cut point of `(A, B)` lying in `B`, with `A` nonempty and without a greatest element
