@@ -1,4 +1,4 @@
--- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): a first step at ⊥ of a ZP-A semilattice and a typical tape, as two hypotheses giving the snap's cover and its occurrence. Curated results indexed in ZeroParadox/MANIFEST.md.
+-- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): a first step at ⊥ of a ZP-A semilattice and a typical tape, as two hypotheses giving the snap's cover and its slot-chart firing (`hw`). Curated results indexed in ZeroParadox/MANIFEST.md.
 import ZeroParadox.Information.Disjunctive
 import ZeroParadox.Reals.OrderedField
 import Mathlib.Probability.StrongLaw
@@ -165,8 +165,10 @@ example : ZeroBlockTypical (1/2) (by norm_num) (fun _ => true) ∧
 end NNRealControl
 
 -- Statement: CONTROL, drop typicality: for `0 < p ≤ 1` the all-`false` tape is not zero-block
--- typical; it never fires, so no `hw` exists for it on any carrier.
-example (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p) : ¬ ZeroBlockTypical p hp (fun _ => false) := by
+-- typical, and it never fires, so no `hw` exists for it.
+example (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p) :
+    ¬ ZeroBlockTypical p hp (fun _ => false) ∧ ¬ ∃ k, (fun _ => false : ℕ → Bool) k = true := by
+  refine ⟨?_, fun ⟨_, h⟩ => Bool.false_ne_true h⟩
   obtain ⟨U, hU, hUeq⟩ := zeroBlockTest_silentFrom p hp hp0 0
   have hmem : (fun _ => false : ℕ → Bool) ∈ ⋂ m, U m := by
     rw [hUeq]; exact fun _ _ => rfl
@@ -203,10 +205,13 @@ example [ZPSemilattice Unit] : ¬ BotHasFirstStep Unit := by
 /-! ## § II. Martin-Löf randomness, defined locally
 
 Not located in the pinned Mathlib as of 2026-11-06 (grep of `.lake/packages/mathlib/Mathlib` for
-`martin.?l`, `kurtz`, case-insensitive: no hit). A test's cylinders are listed by a computable `g`
-with no access to `μ`, so for a non-computable `p` this is no stronger than randomness relative to
-`p`. Martin-Löf random implies zero-block typical; the converse fails at `p = 1/2`, at the
-all-`true` tape. -/
+`martin.?l`, `kurtz`, case-insensitive: no hit). Lean prior art outside the dependency closure:
+`ZeroParadox/Information/CrossingTrials.md`, Prior art (Freer `algorithmic-randomness`, Milovanov;
+also Reimann–Slaman, Thm 4.4). Tests list cylinders by a computable `g` with no access to `μ`: blind
+(Hippocratic) Martin-Löf randomness (Bienvenu, Hölzl, Porter, Shafer, NDJFL 58(3) 2017, arXiv:1310.5133,
+Def 2.8; Kjos-Hanssen, J. Logic & Analysis 2 (2010) no. 10, arXiv:1408.2850, Def 2.1, who proves it
+coincides with ordinary randomness for Bernoulli `μ_p`; that `trials p hp` is his `μ_p` is not proved
+here). It implies zero-block typical; the converse fails at `p = 1/2`, at the all-`true` tape. -/
 
 /-- `Statement:` the tapes extending the finite word `l` (a prefix cylinder). -/
 def prefixCyl (l : List Bool) : Set (ℕ → Bool) := {x | ∀ i (h : i < l.length), x i = l[i]}
@@ -367,7 +372,9 @@ theorem measure_iInter_le_pow_zero (μ : Measure (ℕ → Bool)) (U : ℕ → Se
   exact ge_of_tendsto' ht fun m => (measure_mono (Set.iInter_subset _ m)).trans (h m)
 
 /-- `Statement:` for every measure `μ` on tapes, `μ`-almost every tape is Martin-Löf random for `μ`:
-the others lie in a countable union of null sets, one per computable listing. -/
+the others lie in a countable union of null sets, one per computable listing. `Reading:` prior art,
+Martin-Löf (1966), Information and Control 9, 602–619, abstract p. 602: "the non random sequences
+form a maximal constructive null set". -/
 theorem mlRandom_ae (μ : Measure (ℕ → Bool)) : ∀ᵐ w ∂μ, MLRandom μ w := by
   classical
   haveI := countable_computable_enum
@@ -396,7 +403,10 @@ theorem exists_MLRandom (p : NNReal) (hp : p ≤ 1) : ∃ w, MLRandom (trials p 
 /-! ## § III. Frequency of `true` tending to `p` (the strong law of large numbers)
 
 Per tape: the fraction of `true` among the first `n` stages tends to `p`. That a Martin-Löf random
-tape has this property is not proved here. -/
+tape has this property is not proved here. For computable `p` it is proved outside the dependency
+closure (Milovanov's `tendsto_freqOne_of_isMartinLofRandom_bernoulli'`;
+`ZeroParadox/Information/CrossingTrials.md`, Prior art). For every `p`, Kjos-Hanssen (arXiv:1408.2850,
+Theorem 5.2, p. 8) proves it on paper for Hippocratic randomness of `μ_p`; not formalized here. -/
 
 section Frequency
 
@@ -646,7 +656,7 @@ theorem not_eventuallyConst_iff_not_dyadic (w : ℕ → Bool) :
 -- the tapes that never settle land off them, strictly inside (0, 1). The split is finite versus
 -- infinite binary description, not stepped versus continuous: the dyadic rationals are dense (the
 -- `example` below), and in ℝ's order no point, dyadic or not, has a first step
--- (`no_firstStep_of_preconnected`). The first step of § I is asked of `L`, never of ℝ.
+-- (`no_firstStep_of_preconnected`, `ZeroParadox/Reals/ConnectedNoFirstStep.lean`). The first step of § I is asked of `L`, never of ℝ.
 
 -- Statement: the dyadic rationals are closed under midpoints, so between two lies a third.
 example (x y : ℝ) (hx : IsDyadic x) (hy : IsDyadic y) : IsDyadic ((x + y) / 2) := by
@@ -691,8 +701,9 @@ example : tapeReal (fun _ => false) = 0 ∧ tapeReal (fun _ => true) = 1 := by
   refine ⟨by simp [tapeReal, Real.ofDigits, Real.ofDigitsTerm, bitDigit], ?_⟩
   exact Real.ofDigits_const_last_eq_one 1
 
--- Statement: CONTROL, `p < 1` is needed: at `p = 1` (the point mass on the all-`true` tape) the
--- all-`true` tape is Martin-Löf random for `trials 1`, eventually constant, and lands on 1.
+-- Statement: CONTROL, `p < 1` is needed: at `p = 1` the all-`true` tape is Martin-Löf random for
+-- `trials 1`, eventually constant, and lands on 1.
+-- Reading: `trials 1` is read as the point mass on the all-`true` tape; not proved here.
 example : MLRandom (trials 1 le_rfl) (fun _ => true) ∧ EventuallyConstTape (fun _ => true) ∧
     tapeReal (fun _ => true) = 1 := by
   refine ⟨?_, ⟨0, true, fun _ _ => rfl⟩, Real.ofDigits_const_last_eq_one 1⟩
@@ -712,8 +723,9 @@ example : MLRandom (trials 1 le_rfl) (fun _ => true) ∧ EventuallyConstTape (fu
   rw [trials_constBlock, if_pos rfl] at h2
   norm_num at h2
 
--- Statement: CONTROL, inside (0, 1) and not dyadic does not need randomness: the computable
--- alternating tape lands there.
+-- Statement: CONTROL, the alternating tape lands strictly inside (0, 1), at no dyadic rational.
+-- Reading: the alternating tape is computable (next `example`), so landing there does not need
+-- randomness.
 example : 0 < tapeReal (fun k => decide (k % 2 = 0)) ∧ tapeReal (fun k => decide (k % 2 = 0)) < 1 ∧
     ¬ IsDyadic (tapeReal (fun k => decide (k % 2 = 0))) := by
   refine interior_of_not_eventuallyConst ?_
@@ -723,6 +735,11 @@ example : 0 < tapeReal (fun k => decide (k % 2 = 0)) ∧ tapeReal (fun k => deci
   rw [decide_eq_true (by omega : (2 * N) % 2 = 0)] at h1
   rw [decide_eq_false (by omega : ¬ (2 * N + 1) % 2 = 0)] at h2
   exact Bool.false_ne_true (h2.trans h1.symm)
+
+-- Statement: the alternating tape is computable.
+example : Computable (fun k : ℕ => decide (k % 2 = 0)) :=
+  (Primrec.beq.comp (Primrec.nat_mod.comp Primrec.id (Primrec.const 2)) (Primrec.const 0)).to_comp.of_eq
+    fun k => by by_cases h : k % 2 = 0 <;> simp [h]
 
 end TapeReal
 
