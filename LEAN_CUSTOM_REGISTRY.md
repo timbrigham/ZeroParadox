@@ -548,3 +548,21 @@ The concrete model confirming that `ValuationStructure`'s abstract axioms have a
 **Relationship to Mathlib:** Extends `PinnedLimit`. Clause (c), the least fixed point at or above a seed `x`, is `OrderHom.nextFixed` on a complete lattice when `x ≤ f x` (`OrderHom.le_nextFixed`, `OrderHom.nextFixed_le`); on an ω-complete partial order, for an ω-continuous `f` (`α →𝒄 α`), clause (c) from such a seed is `OmegaCompletePartialOrder.fixedPoints.ωSup_iterate_mem_fixedPoint` with `ωSup_iterate_le_fixedPoint` (premise `x ≤ y` for a fixed point `y`), and clause (a) there is `ωSup`'s own defining property (`OmegaCompletePartialOrder.le_ωSup`, `OmegaCompletePartialOrder.ωSup_le`); on `Ordinal`, for a normal `f`, clause (c) at the run from `x` is `Ordinal.nfp f x` (`Ordinal.nfp_fp` needs `Order.IsNormal f`, `Ordinal.nfp_le_fp` needs `Monotone f`). No Mathlib analog for the four-clause predicate.
 
 **Reason:** `PinnedLimit` with clause (c) relative to the first stage: `c` is the least fixed point of `g` at or above `s 0`. `PinnedLimit` asks for the least fixed point of the whole carrier, so under `α ↦ ω^α` its only occupant is ε₀ (`pinnedLimit_opow_eq_epsilon0`); the relative form is occupied by `ε_(o+1)` at the run from `succ ε_o`, for every `o` (`epsilon_succ_pinnedLimitAbove`). `PinnedLimit` implies it at every run (`PinnedLimit.toAbove`), the two agree when `s 0` is ⊥ of the carrier (`pinnedLimitAbove_iff_of_bot`), and ε₁ at the run from `succ ε₀` occupies it and not `PinnedLimit` (the CONTROL in `ZeroParadox/Order/UpAndOver.lean` § V). It carries the climbing clause too, and has no occupant on a finite partial order (`not_pinnedLimitAbove_of_finite`). The four-clause relative predicate was not located in the pinned Mathlib as of 2026-11-04, searched as follows: a grep of `Mathlib/` for `nextFixed` (all hits in `Mathlib/Order/FixedPoints.lean`, clause (c) alone) and for `IsLeast {` sets carrying a fixed-point conjunct (the regex `IsLeast \{[^}]*∧` has 11 hits, none of them about fixed points; `IsLeast \{.*(f x = x|fixedPoints|IsFixedPt)` has no hit); theoremsearch, "least upper bound of an increasing sequence that is not attained, which is the least fixed point above the starting point", which returned the seeded Kleene and Tarski–Kantorovitch theorems (the least fixed point above `x` is the supremum of the iterates from `x`), with no not-a-stage clause.
+
+### `IsCutPoint` — `ZeroParadox/Order/DieJoints.lean`
+
+**Relationship to Mathlib:** A conjunction of Mathlib's `IsLUB` and `IsGLB` at one point, for a pair of sets with the first below the second. Mathlib's `DedekindCut` (`Mathlib/Order/Completion.lean`) is the cut as an element of the Dedekind–MacNeille completion, a pair with `upperBounds A.left = A.right` and `lowerBounds A.right = A.left`, not a point of the carrier closing the cut.
+
+**Reason:** Tim's "squeeze" (2026-11-06): one point that is at once the least upper bound of the side below and the greatest lower bound of the side above. A point-level form of this conjunction was not located in the pinned Mathlib as of 2026-11-06, searched as follows: a grep of `Mathlib/` for `IsLUB` and `IsGLB` joined by `∧` on one line, in either order (no hit), and for `CutPoint`, `cutPoint` and `IsCut` (no hit).
+
+### `IsJoint` — `ZeroParadox/Order/DieJoints.lean`
+
+**Relationship to Mathlib:** Extends `IsCutPoint`. No Mathlib analog for the one-sided form.
+
+**Reason:** a cut point lying in the upper side, with the lower side nonempty and without a greatest element: approached from below and not reached there (ruling 147, Tim 2026-11-06). The order dual turns it into `IsDualJoint` (`isJoint_toDual_iff`), and `PinnedLimit` in a partial order gives one (`PinnedLimit.isJoint`).
+
+### `IsDualJoint` — `ZeroParadox/Order/DieJoints.lean`
+
+**Relationship to Mathlib:** Extends `IsCutPoint`. No Mathlib analog for the one-sided form.
+
+**Reason:** the mirror of `IsJoint`: a cut point lying in the lower side, with the upper side nonempty and without a least element. Stated as its own predicate so that a well-founded linear order can be shown to have none (`not_isDualJoint_of_wellFoundedLT`) without passing through the order dual.
