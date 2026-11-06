@@ -82,10 +82,6 @@ example : (⟨0, Or.inl rfl⟩ : {o : Ordinal | o = 0 ∨ Ordinal.omega0 ^ o = o
   rintro ⟨c, hc | hc⟩ h0 hε
   · exact (ne_of_gt (show (0 : Ordinal) < c from h0)) hc
   · exact ZeroParadox.nothing_between_is_a_step c hε hc
-#check @ZeroParadox.snap_of_two_requirements          -- Statement: if ⊥ of `L` has a first step in ZP-A's induced order (`BotHasFirstStep L`) and the tape `w` avoids every zero-block test for `trials p hp` with `0 < p` (`ZeroBlockTypical`), then some `φ : Bool → L` and some proof `hw` that `w` fires make `S := φ ∘ firedRun w hw` a state sequence with `S 0 = bot` and `S 1 ≠ S 0` that carries `t_snap_given_cover`'s conclusion, the triple and `bot ⋖ S 1`; one way. `φ` is built from the cover's witness; no map from ⊥ of `L` to a tape appears
--- Reading: CARRIER — the slot chart's `hw` from typicality of one tape, the cover from AX-B1's form on `L`, each a
---   hypothesis and neither discharged (the `NNReal` and all-`false` controls in `ZeroParadox/Information/TwoRequirements.lean`).
-#check @ZeroParadox.snap_of_firstStep_MLRandom        -- Statement: the same conclusion with `ZeroBlockTypical` replaced by Martin-Löf randomness for `trials p hp` (`MLRandom`, defined in `ZeroParadox/Information/TwoRequirements.lean`), which implies it (`zeroBlockTypical_of_MLRandom`); one way. No tape is named and ⊥ of `L` is not claimed random
 -- `Statement:` `t_snap_given`'s binders and AX-B1's `HasFirstStep` form do not supply the cover. On ℕ
 -- (join `max`, ⊥ = 0) the run 0, 2, 2, … meets `hcc1`, `hocc` and `HasFirstStep 0`, and `S 1` does not
 -- cover `S 0`: 1 lies between.
@@ -102,6 +98,10 @@ example : ¬ @CovBy ℕ (ZeroParadox.zpSemilatticeSup ℕ).toLT 0 2 := fun h =>
       show ¬ ZeroParadox.ZPSemilattice.join 1 0 = 0 by decide⟩
     ⟨show ZeroParadox.ZPSemilattice.join 1 2 = 2 by decide,
       show ¬ ZeroParadox.ZPSemilattice.join 2 1 = 1 by decide⟩
+#check @ZeroParadox.snap_of_two_requirements          -- Statement: if ⊥ of `L` has a first step in ZP-A's induced order (`BotHasFirstStep L`) and the tape `w` avoids every zero-block test for `trials p hp` with `0 < p` (`ZeroBlockTypical`), then some `φ : Bool → L` and some proof `hw` that `w` fires make `S := φ ∘ firedRun w hw` a state sequence with `S 0 = bot` and `S 1 ≠ S 0` that carries `t_snap_given_cover`'s conclusion, the triple and `bot ⋖ S 1`; one way. `φ` is built from the cover's witness; no map from ⊥ of `L` to a tape appears
+-- Reading: CARRIER — the slot chart's `hw` from typicality of one tape, the cover from AX-B1's form on `L`, each a
+--   hypothesis and neither discharged (the `NNReal` and all-`false` controls in `ZeroParadox/Information/TwoRequirements.lean`).
+#check @ZeroParadox.snap_of_firstStep_MLRandom        -- Statement: the same conclusion with `ZeroBlockTypical` replaced by Martin-Löf randomness for `trials p hp` (`MLRandom`, defined in `ZeroParadox/Information/TwoRequirements.lean`), which implies it (`zeroBlockTypical_of_MLRandom`); one way. No tape is named and ⊥ of `L` is not claimed random
 -- `Statement:` on `Set Bool` (join `∪`, ⊥ = ∅) `∅` has two distinct covers in that order, with join
 -- `Set.univ`, so `hcov` does not fix the target; on a carrier with its own linear order,
 -- `axb1_gives_unique_target` fixes the cover in that order. Reading: prior art, Winskel, *Event
