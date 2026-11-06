@@ -13,7 +13,7 @@ Update this file first on any version bump. README.md Framework table is verifie
 | ZP-G Category Theory | v1.27 | ZP-G_Category_Theory.pdf | v1.16 | N/— | formal:e901301e comp:668a9008 |
 | ZP-H Categorical Bridge | v1.35 | ZP-H_Categorical_Bridge.pdf | v1.26 | N/— | formal:95dad22c comp:7d801305 |
 | ZP-H Native Categories Addendum | v1.14 | ZP-H_Native_Categories_Addendum.pdf | N/A | N/— | formal:b961348b |
-| ZP-I Inside Zero | v1.42 | ZP-I_Inside_Zero.pdf | v1.46 | N/— | formal:4af6912e comp:0f55a6bb |
+| ZP-I Inside Zero | v1.43 | ZP-I_Inside_Zero.pdf | v1.47 | N/— | formal:9c915a2c comp:dabfae7c |
 | ZP-J Self-Reference | v2.18 | ZP-J_Self_Reference.pdf | v1.41 | N/— | formal:4ea67bc4 comp:676aa6d7 |
 | ZP-J AFA Addendum | v1.21 | ZP-J_AFA_Addendum.pdf | N/A | N/— | formal:bd77b297 |
 | ZP-J Wheel Addendum | v1.11 | ZP-J_Wheel_Addendum.pdf | v1.15 | N/— | formal:849e279d comp:7812acd4 |
@@ -26,7 +26,7 @@ Update this file first on any version bump. README.md Framework table is verifie
 | ZP-R Cross-Category Fixed Point | v1.27 | ZP-R_Cross_Category_Fixed_Point.pdf | N/A | N/— | formal:b2c9513f |
 | ZP-R Diagonal Family Addendum | v1.25 | ZP-R_Diagonal_Family_Addendum.pdf | N/A | N/— | formal:126a51c7 |
 | ZP-Q The Frame-Change | v1.25 | ZP-Q_The_Frame_Change.pdf | N/A | N/— | formal:355f4257 |
-| Zero Paradox Foreword | v2.45 | Zero_Paradox_Foreword.pdf | N/A | N/A | formal:4deba2da |
+| Zero Paradox Foreword | v2.46 | Zero_Paradox_Foreword.pdf | N/A | N/A | formal:0940a70b |
 | ZP Tools | N/A | ZP_Tools_and_Methods.pdf | N/A | N/A | formal:7d101f1d |
 | ZP Choice-Free Core Addendum | v1.19 | ZP_Choice_Free_Core_Addendum.pdf | N/A | N/A | formal:825920cd |
 

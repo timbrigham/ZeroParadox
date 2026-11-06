@@ -1,6 +1,6 @@
 """
 Build ZP-I Illustrated Companion
-Version 1.46 | November 2026
+Version 1.47 | November 2026
 
 Standalone companion for ZP-I: Inside Zero.
 Accessibility target: 2 years of college math.
@@ -276,7 +276,7 @@ def cycle_diagram():
     return d
 
 
-VERSION = '1.46'
+VERSION = '1.47'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -321,8 +321,9 @@ def build():
         Paragraph(
             'This companion explains in plain language how a 2-adic depth chain S₀, S₁, S₂, ... '
             'converges, in the 2-adic metric, to zero  - and why the framework READS that '
-            'limit as filling the bottom role again. Both that reading and whether the result is a '
-            'NEW bottom or the one it started from are commitments of the framework, not things the '
+            'limit as filling the bottom role again. That reading takes a choice of join on Q₂ (then '
+            'the role half is a theorem, t_iz_limit_is_new_null), and whether the result is a '
+            'NEW bottom or the one it started from is a commitment of the framework (C-DA2), not something the '
             'chain proves. This is one result in the '
             'Zero Paradox project (ZP-I), '
             'a formal framework built on lattice algebra and 2-adic topology. '
@@ -477,8 +478,9 @@ def build():
         ['4. T-SNAP fires, conditionally',
          'On the reading that the limit fills the ⊥ role, on the limit reaching P₀ (which nothing here '
          'establishes), and on what DA-1 needs (step 3), at the computational fixed point T-SNAP fires: '
-         'join ⊥ ε₀′ = ε₀′. Reading the 2-adic limit as the occupant is one commitment; '
-         'calling that occupant a NEW null ⊥′ rather than the same ⊥ is a second.',
+         'join ⊥ ε₀′ = ε₀′. Reading the 2-adic limit as the occupant takes a choice of join on Q₂ '
+         '(then the role half is a theorem, t_iz_limit_is_new_null); calling that occupant a NEW null ⊥′ '
+         'rather than the same ⊥ is a commitment (C-DA2).',
          'ZP-A bot_join  - proved in Lean. ✓ (the algebra, given the reading; '
          'neither the occupancy nor the novelty)'],
     ]
@@ -521,7 +523,8 @@ def build():
         'nothing; its DA-1 conjunct, that the semilattice\'s ⊥ is its Quine atom, is the Lean counterpart of '
         'DA-1\'s Path 1, which does not derive the precondition. '
         'The CONVERGENCE needs no new axioms (its Lean proof carries Mathlib\'s Classical.choice) and rests '
-        'on the IsDepthChain modelling commitment; the two readings are commitments rather than consequences of it. '
+        'on the IsDepthChain modelling commitment; the two readings are not consequences of it: the first takes a '
+        'choice of join and the second is a commitment. '
         'That the chain generates a genuinely NEW bottom, rather than arriving back at the '
         'one it started from, is the framework\'s commitment and not something the chain proves - '
         'in the 2-adic picture the arc comes back to the same 0.'))
@@ -628,7 +631,8 @@ def build():
         't_iz_complete is a conjunction of results, not a chain, and its role step takes its property as the '
         'hypothesis h_role, which nothing here grounds. For the cycle to begin again or close at the limit, it '
         'needs every one of the following further premises, and none is established here: (a) the reading '
-        'that the limit fills the ⊥ role, a commitment and a reading across two carriers (MC-1); (b) the limit '
+        'that the limit fills the ⊥ role, which takes a choice of join on Q₂ (then the role half is a theorem, '
+        't_iz_limit_is_new_null; MC-1); (b) the limit '
         'reaching the incompressibility threshold P₀, which nothing here establishes, since its only route in '
         'ZP-I is refuted (ZP-I &#167; II.B); (c) what DA-1 needs: DP-2 and DP-2\'s precondition, that the '
         'configuration reaching P₀ is a running machine\'s current configuration and not an inert string, which '
