@@ -1,5 +1,5 @@
 """
-Zero Paradox — Foreword PDF Builder (v2.46, revised November 2026)
+Zero Paradox — Foreword PDF Builder (v2.47, revised November 2026)
 Follows all rules in pdf rendering standards.md:
   - All table cells are Paragraph objects
   - No unicode subscripts — use sub/super tags
@@ -9,7 +9,7 @@ Follows all rules in pdf rendering standards.md:
 import os
 from zp_utils import *
 
-VERSION = '2.46'
+VERSION = '2.47'
 FIRST_RELEASED = 'April 2026'
 
 # ── fix() and prose_check() guard on every Paragraph ──
@@ -313,7 +313,8 @@ def build():
             'maximal ascending chain in the state space converges, at its limit, to zero. '
             'Reading that limit as something filling the bottom role again takes a choice of '
             'join on Q₂, and then the role half is a theorem (t_iz_limit_is_new_null): anything '
-            'filling that role IS the bottom already there. '
+            'filling that role IS the bottom already there (that semilattice&#8217;s ⊥; which point '
+            'fills the role depends on the join chosen). '
             'Read as a closed cycle, the Snap produces states, states accumulate, and the '
             'accumulation returns to the bottom. Whether the bottom it returns to is a NEW one, '
             'rather than the one it began at, is a modelling commitment (C-DA2) and not part of '

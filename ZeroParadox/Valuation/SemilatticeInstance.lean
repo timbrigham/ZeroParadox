@@ -72,8 +72,9 @@ I defer to my AI assistant on how the internals are put together.
 `Reading:` once a join on Q₂ is chosen, the role half is a theorem (`t_iz_limit_is_new_null`); the corpus calls
 that reading a choice of join, and only the successor reading (C-DA2) a commitment.
 
-T-IZ proves convergence to 0 in Q₂; reading it as an occupant of the ⊥ role, and that occupant as
-a successor null, are further COMMITMENTS. Overview and fences: `SemilatticeInstance.md`.
+T-IZ proves convergence to 0 in Q₂; reading it as an occupant of the ⊥ role takes a choice of join
+(which point fills the role depends on the join chosen), and reading that occupant as a successor
+null is a COMMITMENT (C-DA2). Overview and fences: `SemilatticeInstance.md`.
 
 Key results: t_iz_cauchy (topological core; inherits Classical.choice from Mathlib analysis), t_iz_complete (all steps formal).
 -/
@@ -365,7 +366,8 @@ theorem t_iz_limit_is_new_null
     role — the role is EXCLUSIVE to ⊥, one direction, inside one semilattice.
     `Statement:` the `example`s below state: some chosen join makes any point its ⊥; under doubling
     only 0 occupies `Motion.SelfOnlyAt`; under squaring 1 does too.
-    `Reading:` that the 2-adic limit occupies THIS role is a commitment to a particular join on ℚ₂;
+    `Reading:` that the 2-adic limit occupies THIS role takes a choice of join on ℚ₂, and which point
+    fills it depends on the join chosen (the CONTROL below);
     in a fixed semilattice the occupant is its ⊥ by theorem (above); an identity with ⊥ of another
     semilattice is ill-typed (MC-1). Successor-hood is a commitment, C-DA2.
     No additive balance here (no inverse in a `ZPSemilattice`). See `SemilatticeInstance.md`. -/

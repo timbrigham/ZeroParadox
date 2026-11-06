@@ -1,12 +1,12 @@
 """
 Zero Paradox — ZP-I: Inside Zero PDF Builder
-Version 1.43 | November 2026
+Version 1.44 | November 2026
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.43'
+VERSION = '1.44'
 FIRST_RELEASED = 'April 2026'
 
 # ZP-I uses justified body text; override the left-aligned zp_utils defaults
@@ -346,7 +346,7 @@ def build():
             'its 2-adic valuation grows without bound, is a Cauchy sequence that converges, in the 2-adic metric, to 0. '
             'Reading that limit as an OCCUPANT of the bottom role takes a choice and is not '
             'part of the statement — Q<sub>2</sub>&#8217;s field structure supplies no join and the corpus registers none on Q<sub>2</sub>, so the role condition is not '
-            'statable of it. Reading that occupant as a SUCCESSOR null is C-DA2, a further commitment.',
+            'statable of it. Reading that occupant as a SUCCESSOR null is a commitment (C-DA2).',
             'Formal hypotheses (t_iz_complete): S : &#8469; &#8594; Q<sub>2</sub> with '
             '&#8214;S(n)&#8214;<sub>2</sub> &#8804; 2<sup>-n</sup> for all n; for S(n) &#8800; 0 this is v<sub>2</sub>(S(n)) &#8805; n, and at S(n) = 0 it '
             'matches only under the convention v<sub>2</sub>(0) = &#8734; (Mathlib&#8217;s valuation of 0 is 0). '
@@ -747,7 +747,7 @@ def build():
         'convergence (t_iz_cauchy) and, separately, that anything playing the bottom role IS the '
         'bottom (t_iz_limit_is_new_null). That the limit is a thing playing that role takes a choice '
         'of join on Q<sub>2</sub> (then the role half is a theorem, t_iz_limit_is_new_null) — the role condition is not statable of the limit until a join on Q<sub>2</sub> is chosen; that the '
-        'bottom so reached is a NEW one is a further commitment.',
+        'bottom so reached is a NEW one is a commitment (C-DA2).',
         'The cycle and its closure are a reading, not a theorem; its premises are stated in &#167; V.III. '
         'Strict valuation growth is '
         'Lean-derived from IsDepthChain (a modelling commitment) + IsStrictStateSequence (h_strict_from_r1_t3). '

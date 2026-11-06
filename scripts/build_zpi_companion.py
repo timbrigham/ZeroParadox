@@ -1,6 +1,6 @@
 """
 Build ZP-I Illustrated Companion
-Version 1.47 | November 2026
+Version 1.48 | November 2026
 
 Standalone companion for ZP-I: Inside Zero.
 Accessibility target: 2 years of college math.
@@ -276,7 +276,7 @@ def cycle_diagram():
     return d
 
 
-VERSION = '1.47'
+VERSION = '1.48'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -393,7 +393,7 @@ def build():
     E.append(cbody(
         'In the 2-adic metric, norms decrease geometrically: ‖S(n)‖ ≤ ‖S(0)‖ · 2<sup>−n</sup>. '
         'As n → ∞, the norm → 0. The chain converges to 0 in the 2-adic sense: '
-        'the point with 2-adic valuation +∞ under the usual convention v₂(0) = ∞. Reading that structural limit as filling the bottom role takes a choice of join on Q₂ - the role condition is not statable of the limit until a join on Q₂ is chosen, and then it is that semilattice\'s ⊥ by theorem (<tt>t_iz_limit_is_new_null</tt>) - and calling the occupant ⊥′, a successor null, is C-DA2, a commitment; in this very chart the arc returns to the same 0.'))
+        'the point with 2-adic valuation +∞ under the usual convention v₂(0) = ∞. Reading that structural limit as filling the bottom role takes a choice of join on Q₂ - the role condition is not statable of the limit until a join on Q₂ is chosen, and in the semilattice it makes, anything filling the role is that semilattice\'s ⊥ by theorem (<tt>t_iz_limit_is_new_null</tt>) - and calling the occupant ⊥′, a successor null, is C-DA2, a commitment; in this very chart the arc returns to the same 0.'))
 
     E.append(example_box('Real-world analogy  - The deepest point in the well', [
         'Imagine a well that has no bottom  - every level opens onto a deeper one. '
@@ -465,7 +465,7 @@ def build():
          'Anything satisfying the join-identity condition IS that lattice\'s bottom. '
          'That the Cauchy limit 0 ∈ Q₂ satisfies it is the theorem\'s HYPOTHESIS, not '
          'its conclusion, and Q₂\'s field structure supplies no join (the corpus registers none on Q₂), so the condition is not statable '
-         'there — the two are distinct members of the bottom family, not one object (MC-1). Reading the occupant as a NEW null ⊥′ is a further commitment (C-DA2).',
+         'there — the two are distinct members of the bottom family, not one object (MC-1). Reading the occupant as a NEW null ⊥′ is a commitment (C-DA2).',
          'ZP-E DA-2  - proved in Lean (t_iz_limit_is_new_null, axiom-free). '
          '✓ (the role only, given the hypothesis; not the novelty)'],
         ['3. ⊥ of L′ is its Quine atom, given a KleeneStructure',
@@ -667,7 +667,7 @@ def build():
         't_iz_limit_is_new_null  - anything satisfying the DA-2 null role IS that '
         'lattice\'s bottom (⊥-role identification). The role property is the HYPOTHESIS; '
         'that the Cauchy limit satisfies it is not established here and is not statable '
-        'of the limit until a join on Q₂ is chosen. Reading that occupant as ⊥′ is C-DA2, a further commitment. '
+        'of the limit until a join on Q₂ is chosen. Reading that occupant as ⊥′ is a commitment (C-DA2).'
         'Proved directly from da2_bottom_characterization. ✓ (axiom-free)',
         'da1_computational - proved in Lean, given the KleeneStructure instance ✓',
         't_iz_complete (§III-B)  - carries all four steps in one theorem: convergence, '

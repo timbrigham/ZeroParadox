@@ -178,8 +178,8 @@ theorem end_top_covers_nothing : ¬ ∃ b : WithBot (WithTop ℤ), b ⋖ ⊤ := 
 
 /-! ### § IV. The radius chart: a path between the ends, no cover, collapse onto the vertices
 
-Standard object, not built here: the radius order is the segment from 0 to ∞ of the Berkovich
-projective line, Baker–Rumely's "line of discs" (arXiv:math/0407433). -/
+Standard object, not built here: the radius order is the union of Baker–Rumely's lines of discs
+[r, R] about 0 (arXiv:math/0407433, §1). -/
 
 /-- `Statement:` for `r > 0`, `closedBall 0 r = ballLine (-(Int.log 2 r))` in `ℚ_[2]`. -/
 theorem closedBall_eq_ballLine {r : ℝ} (hr : 0 < r) :
@@ -340,8 +340,8 @@ example : (∀ x : ENNReal, AccPt x (𝓟 ballRadii) ↔ x = 0 ∨ x = ⊤) ∧
 -- Reading: CARRIER. The radius `2 ^ (-n)` sends the `ℚ_[2]` end, ⊥ of `WithBot (WithTop ℤ)`, toward ⊤
 -- of `ℝ≥0∞`, and the `{0}` end, ⊤ there, toward 0 of `ℝ≥0∞`. The rungs are discrete away from the two
 -- ends and accumulate only at them, and those two ends are where the index order has no cover; `ℤ` in
--- `ℝ` accumulates nowhere, so the two-ended accumulation comes from the geometric spacing on both
--- sides. 0 and ⊤ of `ℝ≥0∞` are distinct (`zero_ne_top`); inversion exchanges them. No first step is
+-- `ℝ` accumulates nowhere because `ℝ` has no ends; `ENNReal.logHomeomorph` carries `ballRadii` to a
+-- copy of `ℤ` in `EReal`, so the two accumulation points are the two adjoined ends. 0 and ⊤ of `ℝ≥0∞` are distinct (`zero_ne_top`); inversion exchanges them. No first step is
 -- supplied.
 
 end RungRadii
