@@ -6,6 +6,7 @@ import ZeroParadox.Reals.OrderedField
 import Mathlib.Data.Int.Log
 import Mathlib.Data.ENNReal.Inv
 import Mathlib.Topology.Path
+import Mathlib.Topology.DerivedSet
 import Mathlib.Tactic
 
 set_option maxHeartbeats 400000
@@ -24,13 +25,17 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 ## Formal Overview (AI-assisted)
 `ballLine n`, the closed ball of radius `2^(-n)` about 0 of `ℚ_[2]`, `n : ℤ`. § I: membership is the
-valuation. § II: shells, the arc, inversion. § III: covers at vertices, none at the ends of
-`WithBot (WithTop ℤ)`. § IV: radii in `ℝ≥0∞`, a path with no cover, read back onto the vertices.
+valuation. § II: shells, the arc, inversion. § III: covers at vertices, none at the ends. § IV: radii
+in `ℝ≥0∞`, a path with no cover, read back onto vertices. § V: radii isolated, accumulating at 0, ⊤.
 -/
 
 namespace ZeroParadox
 
-/-! ### § I. The line: one closed ball per integer, membership read off the valuation -/
+/-! ### § I. The line: one closed ball per integer, membership read off the valuation
+
+Standard object, not built here: the vertices correspond to those of the apartment between the ends
+0 and ∞ of the Bruhat–Tits tree of ℚ₂ (Serre, *Trees*, II.1; Casselman, *The Bruhat–Tits tree of
+SL(2)*, §7; the rooted tree of balls of ℤ₂ is `ZeroParadox/Valuation/PadicTree.lean`). -/
 
 /-- `Statement:` vertex `n`: the closed ball of radius `2 ^ (-n)` about 0 of `ℚ_[2]`. -/
 noncomputable def ballLine (n : ℤ) : Set ℚ_[2] := Metric.closedBall (0 : ℚ_[2]) ((2 : ℝ) ^ (-n))
@@ -38,7 +43,8 @@ noncomputable def ballLine (n : ℤ) : Set ℚ_[2] := Metric.closedBall (0 : ℚ
 -- Statement: at `n : ℕ` it is the ball tower `q2Ball n` (`ZeroParadox/Valuation/TopFunctor.lean`).
 example (n : ℕ) : ballLine n = q2Ball n := rfl
 
-/-- `Statement:` a nonzero `x` lies in `ballLine n` iff `n ≤ x.valuation`. -/
+/-- `Statement:` a nonzero `x` lies in `ballLine n` iff `n ≤ x.valuation`. The `ℕ`-indexed sibling on
+    `ℤ_[2]` is Mathlib's `PadicInt.norm_le_pow_iff_le_valuation`. -/
 theorem mem_ballLine_iff_le_valuation {x : ℚ_[2]} (hx : x ≠ 0) (n : ℤ) :
     x ∈ ballLine n ↔ n ≤ x.valuation := by
   rw [ballLine, Metric.mem_closedBall, dist_zero_right, Padic.norm_eq_zpow_neg_valuation hx]
@@ -170,7 +176,10 @@ theorem end_top_covers_nothing : ¬ ∃ b : WithBot (WithTop ℤ), b ⋖ ⊤ := 
     | top => exact lt_irrefl _ hb.1
     | coe k => exact not_isMax k (WithTop.coe_covBy_top.1 (WithBot.coe_covBy_coe.1 hb))
 
-/-! ### § IV. The radius chart: a path between the ends, no cover, collapse onto the vertices -/
+/-! ### § IV. The radius chart: a path between the ends, no cover, collapse onto the vertices
+
+Standard object, not built here: the radius order is the segment from 0 to ∞ of the Berkovich
+projective line, Baker–Rumely's "line of discs" (arXiv:math/0407433). -/
 
 /-- `Statement:` for `r > 0`, `closedBall 0 r = ballLine (-(Int.log 2 r))` in `ℚ_[2]`. -/
 theorem closedBall_eq_ballLine {r : ℝ} (hr : 0 < r) :
@@ -222,6 +231,121 @@ example : (∀ n : ℤ, HasFirstStep ((n : WithTop ℤ) : WithBot (WithTop ℤ))
 -- its ends by a path and has no cover at 0; read back as balls, a positive radius lands on a vertex
 -- (`closedBall_eq_ballLine`). Neither of the two has both a passage between its ends and a first step.
 
+/-! ### § V. The radii in `ℝ≥0∞`: isolated points, accumulating only at 0 and ⊤ -/
+
+section RungRadii
+open Filter Topology
+
+/-- `Statement:` in a linear order with its order topology, a strictly monotone `g : ℤ → X` has no
+    accumulation point at any `x` with `g k ≤ x < g (k + 1)`. -/
+theorem not_accPt_range_of_strictMono {X : Type*} [LinearOrder X] [TopologicalSpace X]
+    [OrderTopology X] {g : ℤ → X} (hg : StrictMono g) {x : X} {k : ℤ}
+    (hlo : g k ≤ x) (hhi : x < g (k + 1)) : ¬ AccPt x (𝓟 (Set.range g)) := by
+  rw [accPt_iff_frequently, not_frequently]
+  have hU : ∀ᶠ z in 𝓝 x, z ∈ Set.Ioo (g (k - 1)) (g (k + 1)) :=
+    isOpen_Ioo.mem_nhds ⟨lt_of_lt_of_le (hg (by omega)) hlo, hhi⟩
+  have hR : ∀ z ∈ Set.Ioo (g (k - 1)) (g (k + 1)), z ∈ Set.range g → z = g k := by
+    rintro _ ⟨h1, h2⟩ ⟨m, rfl⟩
+    rw [hg.lt_iff_lt] at h1 h2
+    rw [show m = k by omega]
+  by_cases hx : x = g k
+  · filter_upwards [hU] with z hz h
+    exact h.1 (hx ▸ hR z hz h.2)
+  · filter_upwards [hU, eventually_ne_nhds hx] with z hz hzk h
+    exact hzk (hR z hz h.2)
+
+/-- `Statement:` the radii of the vertices, `{2 ^ (-n) | n : ℤ}` in `ℝ≥0∞`. -/
+def ballRadii : Set ENNReal := Set.range fun n : ℤ => (2 : ENNReal) ^ (-n)
+
+/-- `Statement:` the accumulation points of `ballRadii` in `ℝ≥0∞` are exactly 0 and ⊤ of `ℝ≥0∞`. -/
+theorem accPt_ballRadii_iff (x : ENNReal) : AccPt x (𝓟 ballRadii) ↔ x = 0 ∨ x = ⊤ := by
+  have hc : ∀ k : ℤ, (((2 : NNReal) ^ k : NNReal) : ENNReal) = (2 : ENNReal) ^ k := fun k => by
+    rw [ENNReal.coe_zpow two_ne_zero]; rfl
+  have hmono : StrictMono fun k : ℤ => (((2 : NNReal) ^ k : NNReal) : ENNReal) := fun a b h =>
+    ENNReal.coe_lt_coe.2 (zpow_lt_zpow_right₀ (by norm_num : (1 : NNReal) < 2) h)
+  have hR : ballRadii = Set.range fun k : ℤ => (((2 : NNReal) ^ k : NNReal) : ENNReal) := by
+    ext y; constructor
+    · rintro ⟨n, rfl⟩; exact ⟨-n, hc _⟩
+    · rintro ⟨k, rfl⟩
+      exact ⟨-k, show (2 : ENNReal) ^ (-(-k)) = _ by rw [neg_neg]; exact (hc k).symm⟩
+  have hne0 : ∀ k : ℤ, (2 : ENNReal) ^ k ≠ 0 := fun k => by
+    rw [← hc]; exact ENNReal.coe_ne_zero.2 (zpow_ne_zero _ two_ne_zero)
+  have hneT : ∀ k : ℤ, (2 : ENNReal) ^ k ≠ ⊤ := fun k => by rw [← hc]; exact ENNReal.coe_ne_top
+  have ht0 : Tendsto (fun n : ℕ => (2 : ENNReal) ^ (-(n : ℤ))) atTop (𝓝 0) := by
+    refine (ENNReal.tendsto_pow_atTop_nhds_zero_of_lt_one (r := (2 : ENNReal)⁻¹)
+      (by norm_num)).congr fun n => ?_
+    rw [ENNReal.zpow_neg, zpow_natCast, ENNReal.inv_pow]
+  refine ⟨fun h => ?_, ?_⟩
+  · by_contra hx
+    push Not at hx
+    rw [hR] at h
+    have hy : ((x.toNNReal : NNReal) : ENNReal) = x := ENNReal.coe_toNNReal hx.2
+    have hy0 : 0 < x.toNNReal := ENNReal.toNNReal_pos hx.1 hx.2
+    refine not_accPt_range_of_strictMono hmono (k := Int.log 2 x.toNNReal) ?_ ?_ h
+    · rw [← hy]; exact ENNReal.coe_le_coe.2 (Int.zpow_log_le_self (by norm_num) hy0)
+    · rw [← hy]; exact ENNReal.coe_lt_coe.2 (Int.lt_zpow_succ_log_self (by norm_num) _)
+  · rw [accPt_iff_frequently]
+    rintro (rfl | rfl)
+    · exact ht0.frequently (Frequently.of_forall fun n => ⟨hne0 _, n, rfl⟩)
+    · have ht : Tendsto (fun n : ℕ => ((2 : ENNReal) ^ (-(n : ℤ)))⁻¹) atTop (𝓝 ⊤) := by
+        rw [← ENNReal.inv_zero]; exact tendsto_inv_iff.2 ht0
+      refine ht.frequently (Frequently.of_forall fun n => ⟨?_, -n, ?_⟩)
+      · rw [← ENNReal.zpow_neg]; exact hneT _
+      · simp only [neg_neg]; rw [ENNReal.zpow_neg, inv_inv]
+
+/-- `Statement:` every point of `ballRadii` is isolated in it: `ballRadii` is a discrete subspace. -/
+theorem ballRadii_discrete : DiscreteTopology ballRadii := by
+  rw [discreteTopology_subtype_iff]
+  rintro x ⟨n, rfl⟩
+  have h : ¬ AccPt ((2 : ENNReal) ^ (-n)) (𝓟 ballRadii) := by
+    rw [accPt_ballRadii_iff]
+    rintro (h | h)
+    · exact absurd h (ENNReal.zpow_pos two_ne_zero ENNReal.ofNat_ne_top _).ne'
+    · exact absurd h (ENNReal.zpow_lt_top two_ne_zero ENNReal.ofNat_ne_top _).ne
+  rwa [AccPt, not_neBot] at h
+
+-- Statement: so the derived set of `ballRadii` is `{0, ⊤}`, and its closure adds exactly those two.
+example : derivedSet ballRadii = {0, ⊤} := by
+  ext x; simp [derivedSet, accPt_ballRadii_iff]
+example : closure ballRadii = ballRadii ∪ {0, ⊤} := by
+  rw [closure_eq_self_union_derivedSet]
+  congr 1; ext x; simp [derivedSet, accPt_ballRadii_iff]
+
+-- Statement: inversion of `ℝ≥0∞` maps `ballRadii` into itself (`n ↦ -n`) and exchanges 0 and ⊤.
+example : (∀ r ∈ ballRadii, r⁻¹ ∈ ballRadii) ∧ (0 : ENNReal)⁻¹ = ⊤ ∧ (⊤ : ENNReal)⁻¹ = 0 :=
+  ⟨by rintro _ ⟨n, rfl⟩; exact ⟨-n, ENNReal.zpow_neg 2 (-n)⟩, ENNReal.inv_zero, ENNReal.inv_top⟩
+
+-- Statement: the radius `2 ^ (-n)` of `ballRadii`, read in `ℝ`, is the radius of `ballLine n`.
+example (n : ℤ) : Metric.closedBall (0 : ℚ_[2]) ((2 : ENNReal) ^ (-n)).toReal = ballLine n := by
+  have h : (2 : ENNReal) ^ (-n) = (((2 : NNReal) ^ (-n) : NNReal) : ENNReal) := by
+    rw [ENNReal.coe_zpow two_ne_zero]; rfl
+  rw [ballLine, h, ENNReal.coe_toReal, NNReal.coe_zpow, NNReal.coe_ofNat]
+
+-- Statement: control, `ℤ` in `ℝ` has no accumulation point at all.
+example (x : ℝ) : ¬ AccPt x (𝓟 (Set.range ((↑) : ℤ → ℝ))) :=
+  not_accPt_range_of_strictMono Int.cast_strictMono (k := ⌊x⌋) (Int.floor_le x)
+    (by push_cast; exact Int.lt_floor_add_one x)
+-- Statement: control, every point of `ℝ≥0∞` is an accumulation point of `ℝ≥0∞`.
+example (x : ENNReal) : AccPt x (𝓟 Set.univ) := by
+  rw [AccPt, principal_univ, inf_top_eq]; infer_instance
+
+-- Statement: side by side: `ballRadii` accumulates exactly at 0 and ⊤ of `ℝ≥0∞`; in
+-- `WithBot (WithTop ℤ)` ⊥ has no first step and ⊤ covers nothing; every positive real radius is a
+-- vertex.
+example : (∀ x : ENNReal, AccPt x (𝓟 ballRadii) ↔ x = 0 ∨ x = ⊤) ∧
+    ¬ HasFirstStep (⊥ : WithBot (WithTop ℤ)) ∧ (¬ ∃ b : WithBot (WithTop ℤ), b ⋖ ⊤) ∧
+    ∀ r : ℝ, 0 < r → Metric.closedBall (0 : ℚ_[2]) r = ballLine (-(Int.log 2 r)) :=
+  ⟨accPt_ballRadii_iff, end_bot_no_first_step, end_top_covers_nothing,
+    fun _ hr => closedBall_eq_ballLine hr⟩
+-- Reading: CARRIER. The radius `2 ^ (-n)` sends the `ℚ_[2]` end, ⊥ of `WithBot (WithTop ℤ)`, toward ⊤
+-- of `ℝ≥0∞`, and the `{0}` end, ⊤ there, toward 0 of `ℝ≥0∞`. The rungs are discrete away from the two
+-- ends and accumulate only at them, and those two ends are where the index order has no cover; `ℤ` in
+-- `ℝ` accumulates nowhere, so the two-ended accumulation comes from the geometric spacing on both
+-- sides. 0 and ⊤ of `ℝ≥0∞` are distinct (`zero_ne_top`); inversion exchanges them. No first step is
+-- supplied.
+
+end RungRadii
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -239,4 +363,8 @@ open ZeroParadox
 #print axioms end_top_covers_nothing
 #print axioms closedBall_eq_ballLine
 #print axioms radiusPath
+#print axioms not_accPt_range_of_strictMono
+#print axioms ballRadii
+#print axioms accPt_ballRadii_iff
+#print axioms ballRadii_discrete
 end PurityCheck

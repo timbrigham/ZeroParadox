@@ -163,7 +163,8 @@ theorem real_zero_infty_connected :
 /-! ### § VI. The value chart: a first step at `0` exactly when the order is not dense -/
 
 /-- `Statement:` in a linearly ordered additive commutative group `G`, `HasFirstStep (0 : G)` iff
-    `G` is not densely ordered. No Archimedean hypothesis. The whole-order form, over any
+    `G` is not densely ordered (standard; e.g. Clay–Rolfsen, arXiv:0705.2623, Prop. 1.1). No
+    Archimedean hypothesis. The whole-order form, over any
     `Preorder`, is `axb1_fails_everywhere_iff_dense`; translation by `a` carries a cover at `a` to
     one at `0`. -/
 theorem cover_at_zero_iff_not_dense {G : Type*} [AddCommGroup G] [LinearOrder G]

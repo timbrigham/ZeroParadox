@@ -672,7 +672,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 3196,
+        "declarations": 3200,
         "files": 201
       },
       "entries": [
@@ -28715,6 +28715,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "3dae618f-d104-4f50-87d9-ff01c9d8d582",
+          "new": {
+            "file": "ZeroParadox/Valuation/BallLine.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.not_accPt_range_of_strictMono",
+            "short": "not_accPt_range_of_strictMono"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/BallLine.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.not_accPt_range_of_strictMono",
+            "short": "not_accPt_range_of_strictMono",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ball line radii in ENNReal: isolated points accumulating only at 0 and top (BallLine.lean section V)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "3db5b873-7e2f-4039-bbcc-aa8558b6ea29",
           "new": {
             "file": "ZeroParadox/Valuation/PoleCornersBridge.lean",
@@ -29736,6 +29773,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "41066c2a-e33c-46b7-8f63-c946df6e3816",
+          "new": {
+            "file": "ZeroParadox/Valuation/BallLine.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ballRadii",
+            "short": "ballRadii"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/BallLine.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ballRadii",
+            "short": "ballRadii",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ball line radii in ENNReal: isolated points accumulating only at 0 and top (BallLine.lean section V)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -38607,6 +38681,44 @@
             ]
           },
           "reason": "Die computability face (halting as arrival, clock machine), quotients of a motion (drawing vs set: hypersets, codes), carrier-changing steps (wrap, Option), PoleEnds with inhabitation",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "537a8b54-2e3f-40ea-80de-b3adfc33b3aa",
+          "new": {
+            "file": "ZeroParadox/Valuation/BallLine.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.accPt_ballRadii_iff",
+            "short": "accPt_ballRadii_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/BallLine.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.accPt_ballRadii_iff",
+            "short": "accPt_ballRadii_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ball line radii in ENNReal: isolated points accumulating only at 0 and top (BallLine.lean section V)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -70384,6 +70496,43 @@
             "role": []
           },
           "reason": "die-coalg-1028: motion as a Part x Set coalgebra (Die § XX) and observation as a parameter of a pair (Die § XXI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "9a0a7abc-5398-4a9c-8887-a7e483416bfa",
+          "new": {
+            "file": "ZeroParadox/Valuation/BallLine.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ballRadii_discrete",
+            "short": "ballRadii_discrete"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/BallLine.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ballRadii_discrete",
+            "short": "ballRadii_discrete",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ball line radii in ENNReal: isolated points accumulating only at 0 and top (BallLine.lean section V)",
           "verify": {
             "axioms": null,
             "sorry_free": true
