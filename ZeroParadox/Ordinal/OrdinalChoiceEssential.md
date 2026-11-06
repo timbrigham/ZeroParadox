@@ -106,11 +106,11 @@ So the classification splits, and the split is the point:
   choice-free, and it implies excluded middle choice-free, so that respelling is ESSENTIAL on the same
   premise (`ordTotalRespelled` and `em_of_ordTotalRespelled`, the Lean file's § III, footprints in its
   purity block);
-* **the ε₀ results — STATEMENT-CARRIED** (`ε₀ ≠ 0` as a hypothesis already reports the choice,
-  measured 2026-10-08). They inherit choice from Mathlib's `Ordinal` machinery:
-  `Ordinal.instLinearOrder`, `nfp`, `omega0` and `epsilon` (each measured with `Classical.choice`,
-  `ZeroParadox/Category/ChoiceCannotBe.lean` § III) and limit recursion (`SuccOrder.limitRecOn`),
-  measured 2026-10-08.
+* **the ε₀ results — STATEMENT-CARRIED** (`ε₀ ≠ 0` as a hypothesis already reports the choice).
+  They inherit choice from Mathlib's `Ordinal` machinery:
+  `Ordinal.instLinearOrder`, `nfp`, `omega0` and `epsilon` (each with `Classical.choice`, `#print
+  axioms` in the PurityCheck sections of this file's `.lean` and of `ZeroParadox/Ordinal/PricedInterface.lean`)
+  and limit recursion (`SuccOrder.limitRecOn`).
   ZP-N's `ONote` results (`exp_lt_term`, `omegaPow_no_fixedpoint`, `tower_strictMono`, each
   `[propext]`) are evidence that the ascent content does not need it, not a re-proof: they are
   statements on a different carrier.

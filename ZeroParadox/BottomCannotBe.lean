@@ -39,6 +39,9 @@ import ZeroParadox.Valuation.FloorWitness
 import ZeroParadox.Ordinal.ProofFloorCanonical
 import ZeroParadox.Valuation.RiemannSphere
 import ZeroParadox.Valuation.PoleCornersBridge
+import ZeroParadox.Valuation.PolePassage
+import ZeroParadox.Valuation.BallLine
+import ZeroParadox.Reals.ConnectedNoFirstStep
 import ZeroParadox.Multihomed.HilbertDiagonal
 import ZeroParadox.Reals.MarkovSpectralGap
 import ZeroParadox.Category.Node4Generation
@@ -144,6 +147,8 @@ example : @DenselyOrdered ℝ (Preorder.lift (‖·‖ : ℝ → ℝ)).toLT ∧ 
 -- is ⊥ of `NNReal` and has no first step (no atom above it).
 example : (⊥ : NNReal) = 0 ∧ ¬ ZeroParadox.HasFirstStep (0 : NNReal) :=
   ⟨rfl, ZeroParadox.axb1_fails_everywhere_iff_dense.mp inferInstance 0⟩
+-- Statement: and `NNReal` is preconnected, so no point of it, ⊥ of `NNReal` included, has a first step.
+example : ∀ x : NNReal, ¬ ZeroParadox.HasFirstStep x := ZeroParadox.no_firstStep_of_preconnected
 -- Reading: other chart, the valuation order, stated on ℤ_[2] (the next two lines; `addVal_bot`,
 -- § POSITIVE, is `v 0 = ⊤` for an additive valuation).
 -- Statement: on ℤ_[2], ℤ_[2]'s 0 included, `q2Val x ≤ q2Val y ↔ ‖y‖ ≤ ‖x‖`.
@@ -351,6 +356,10 @@ example : (fun x : ℤ => -x) (0 : ℤ) = 0 := rfl
 #check @ZeroParadox.q2_zero_is_fixed
 -- Statement: in ℚ₂, the intersection of the nested balls is exactly `{0}`. [NARROW]
 #check @ZeroParadox.fB_bottom_is_limit
+-- Statement: indexed by `ℤ` (`ballLine`, `ZeroParadox/Valuation/BallLine.lean`), the same balls continue
+-- upward and their union is all of ℚ₂.
+-- Reading: the other end of that line from `{0}`.
+#check @ZeroParadox.iUnion_ballLine
 -- Statement: in `TopCat`, `{0} ⊆ ℚ₂` with its inclusion cone is a limit of the ball tower `fB_functor`.
 #check @ZeroParadox.floorConeIsLimit
 -- Statement: that space is also terminal in `TopCat`; the proof uses only that it has one point, not the
@@ -378,6 +387,9 @@ example : (fun x : ℤ => -x) (0 : ℤ) = 0 := rfl
 #check @ZeroParadox.addVal_bot
 -- Statement: the `cnfToZp2` images of the ω-tower stages below ε₀ converge to ℤ_[2]'s 0. [WIDE, reach]
 #check @ZeroParadox.tower_converges_to_zero
+-- Statement: read by `q2Val`, those images are ⊤ of `ℕ∞` at stage 0, `n` at stage `n ≥ 1`, and tend
+-- to ⊤, which is `q2Val` of ℤ_[2]'s 0 (`q2Val_bot`; `ZeroParadox/Valuation/PolePassage.lean`).
+#check @ZeroParadox.arc_q2Val
 
 /-! ### INVERSION — the symmetry linking the narrow and wide poles -/
 
@@ -385,6 +397,11 @@ example : (fun x : ℤ => -x) (0 : ℤ) = 0 := rfl
 -- Reading: the inversion symmetry of the tower. ⚠ It is ℤ-valued and carries NO literal 0=∞
 -- content — 0 is the excluded centre, and the source file disclaims that reading.
 #check @ZeroParadox.inversion_reverses_filtration
+-- Statement: on the shells of the ball line, `(·⁻¹)` maps `ballLine n \ ballLine (n + 1)`, the nonzero
+-- points of valuation `n`, onto `ballLine (-n) \ ballLine (-n + 1)`.
+-- Reading: INVERSION on the ball line; 0 is fixed by inversion in ℚ₂ (`inv_zero`), and the exchange
+-- of 0 with ∞ is `rInv` on `Sphere` (`sphere_exchange`), not this map.
+#check @ZeroParadox.ballLine_inv_shell
 -- Statement: for rational `x ≠ 0`, the one orbit `2ⁿx` converges to 0 in ℚ₂ AND diverges to ∞ in ℝ.
 -- Reading: this is where the literal 0=∞ content lives — one orbit, two place-views.
 #check @ZeroParadox.doubling_place_dichotomy
@@ -409,6 +426,12 @@ example : (fun x : ℤ => -x) (0 : ℤ) = 0 := rfl
 -- Statement: DRIFT — in any `InfinitudeFloorInversion`, the members tend to the floor while their
 -- complexities tend to `⊤ : ℕ∞`. It carries no `cx floor = ⊤`, so it is not the coincidence witness.
 #check @ZeroParadox.pole_inversion
+-- Statement: no continuous path in `Sphere` runs from 0 of `ℚ_[2]` to ∞ of `Sphere`
+-- (`ZeroParadox/Valuation/PolePassage.lean`).
+-- Reading: CARRIER — `rInv` exchanges those two points (`sphere_exchange`) and no path joins them.
+#check @ZeroParadox.no_path_zero_infty
+-- Statement: control, on `OnePoint ℝ` ∞ lies in the connected component of 0 of ℝ.
+#check @ZeroParadox.real_zero_infty_connected
 -- Statement: Mathlib's `IsInitial.op` — the opposite of an initial object is terminal.
 -- Reading: CITED, not ZP-proved; attribution is the point. Passing to `Cᵒᵖ` is the categorical face
 -- of inversion, swapping the μ-bottom to a terminal object.

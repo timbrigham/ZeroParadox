@@ -57,8 +57,8 @@ Cohen's 1963 independence result (with Fraenkel–Mostowski), **not** Diaconescu
 proved is an *equivalence* between two topos properties (p. 176), and it already concerns a two-point
 shape; the analogue in intuitionistic set theory is Goodman–Myhill (1978), who state the restriction
 explicitly, choice "for sets B, C of at most two elements" (p. 461). With unique choice into `Bool`,
-`ChoiceFragment` and `ExcludedMiddle` are inter-derivable (the `example` after `em_of_choiceFragment` in
-`ZeroParadox/Category/ExcludedMiddleBridge.lean`). Attributing "the converse fails" to Diaconescu is a misreading; see
+`ChoiceFragment` and `ExcludedMiddle` are inter-derivable (see `ZeroParadox/Category/ExcludedMiddleBridge.lean`,
+the `example` after `em_of_choiceFragment`). Attributing "the converse fails" to Diaconescu is a misreading; see
 `ZeroParadox/Category/ChoiceCannotBe.lean` for the full statement and for a candidate explanation of
 why the natural construction of the restricted fragment from excluded middle fails to elaborate in
 Lean. The framework's conversational

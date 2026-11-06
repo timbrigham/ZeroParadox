@@ -1,6 +1,6 @@
 """
 Build ZP-I Illustrated Companion
-Version 1.43 | November 2026
+Version 1.44 | November 2026
 
 Standalone companion for ZP-I: Inside Zero.
 Accessibility target: 2 years of college math.
@@ -276,7 +276,7 @@ def cycle_diagram():
     return d
 
 
-VERSION = '1.43'
+VERSION = '1.44'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -534,7 +534,7 @@ def build():
         '"closed doors." T-IZ uses a fourth passage that none of the three doors govern. '
         'The doors are a picture, not a theorem: they are statements about three different objects, and the '
         'fourth passage reaches 0 in Q₂ only as a limit: no stage of the chain is 0, and the limit is 0, so '
-        'the chain comes back to 0 without passing through any of the three doors. Reading that 0 as filling '
+        'the chain reaches 0 without passing through any of the three doors. Reading that 0 as filling '
         'the bottom role is a commitment, and reading it as a successor null is C-DA2, a further one.'))
     E.append(cbody(
         '<b>Door 1  - R1 (No subtraction):</b> In the lattice, there is no subtraction. '

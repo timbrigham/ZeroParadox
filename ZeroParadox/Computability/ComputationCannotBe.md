@@ -33,9 +33,15 @@ load-bearing, the commitment carrying it is named.
 
 ## The commitments the glosses name
 
-* **`KleeneStructure`** — that the class's `botCode` is the computational face of `bot`, the bottom of
-  the `ZPSemilattice L`. The field `botCode_is_quine` supplies only a periodicity condition, which
-  constant codes meet.
+* **`KleeneStructure`** — its identity reading (that `botCode` is the computational face of ⊥ of `L`) is
+  retired; that ⊥ runs is the occurrence commitment, not a theorem. The field `botCode_is_quine` supplies
+  only a periodicity condition, which constant codes meet.
+* **The self-loop commitment** — whether ⊥ of a `ZPSemilattice`, read as a configuration, self-loops: the
+  `Reading:` above `loop_unfolds_to_infinity` in `ZeroParadox/Computability/ComputationCannotBe.lean`.
+* **The self-copy commitment** — that ⊥ of a `ZPSemilattice` on an infinite carrier performs a self-copy
+  map: the `Reading:` above `infinite_iff_exists_selfCopyRef`; `ZeroParadox/Computability/SelfCopyReference.lean` § IV.
+* **The tape commitment** — the ⊥-role reading of a disjunctive tape: the `Reading:` above
+  `disjunctive_not_periodic`; `ZeroParadox/Information/Disjunctive.lean` § VI.
 * **The occurrence commitment** (instantiation occurs) — as stated in `ZeroParadox/Order/Snap.lean`'s Formal Overview, from
   which, together with DA-1, the snap occurs. T-SNAP holds with nothing moving
   (`tsnap_holds_but_nothing_moves`). In the computational face the framework reads occurrence as

@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-Q: The Frame-Change PDF Builder
-Version 1.24 | November 2026
+Version 1.25 | November 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.24'
+VERSION = '1.25'
 FIRST_RELEASED = 'July 2026'
 
 from reportlab.graphics.shapes import Drawing, Circle, Ellipse, PolyLine, String, Polygon
@@ -85,8 +85,8 @@ def build():
         Paragraph(
             '<i>Synthesis layer, the sequel to ZP-P. The abstract frame-flip schema is proved '
             'sorry-free and choice-free in Lean 4 (ZeroParadox/Settheory/ForkFrameChange.lean); the per-domain realizations '
-            'are witnessed in their home layers (the valuation instance &#8212; the Riemann sphere '
-            '&#8212; in ZeroParadox/Multihomed/SnapFrameChange.lean / ZeroParadox/Valuation/RiemannSphere.lean; the categorical instance in '
+            'are witnessed in their home layers (the valuation face &#8212; the Riemann sphere '
+            '&#8212; in ZeroParadox/Multihomed/SnapFrameChange.lean / ZeroParadox/Valuation/RiemannSphere.lean; the categorical face in '
             'ZeroParadox/Category/SeamFrameChange.lean). The universal cross-category identity is not a theorem &#8212; it '
             'meets a proven wall (Cantor; ZeroParadox/Category/Lawvere.lean). Adds no axiom; the bottom itself is never '
             'positively represented.</i>',
@@ -120,8 +120,8 @@ def build():
         'Like ZP-P, this is a synthesis layer, organised in three tiers held to three standards of '
         'proof. Tier 1 (Section I) is the abstract schema, proved in Lean over a complete lattice: it '
         'extends ZP-P&#8217;s fork with its second face, the order-duality that swaps the two '
-        'closures. Tier 2 (Section II) is the instance catalogue: each domain&#8217;s frame-change is '
-        'a theorem in its home layer, and the valuation instance is the framework&#8217;s originating '
+        'closures. Tier 2 (Section II) is the face catalogue: each domain&#8217;s frame-change is '
+        'a theorem in its home layer, and the valuation face is the framework&#8217;s originating '
         'figure, the p-adic Riemann sphere. Tier 3 (Section III) is the universal form and its walls: '
         'the order-theoretic universal holds, the categorical (Lawvere) universal is a proven wall, '
         'and the cross-domain identity is a type boundary. The fences in Section III are load-bearing '
@@ -227,18 +227,18 @@ def build():
     ))
     E.append(sp(6))
 
-    # ── Section II: The Instance Catalogue (Tier 2) ───────────────────────────────
+    # ── Section II: The Face Catalogue (Tier 2) ───────────────────────────────
     print('[build_zpq] Building Section II...')
     E += [
         hr(),
-        Paragraph('Section II: The Instance Catalogue (Tier 2)', S['h1']),
+        Paragraph('Section II: The Face Catalogue (Tier 2)', S['h1']),
         hr(),
     ]
 
     E.append(body(
         'The same frame-flip appears across the framework, each domain realising it with its own '
-        'concrete involution. ZP-Q does not re-prove each instance &#8212; each is a theorem in its '
-        'home layer &#8212; it records the catalogue and pins the two instances with a full '
+        'concrete involution. ZP-Q does not re-prove each face &#8212; each is a theorem in its '
+        'home layer &#8212; it records the catalogue and pins the two faces with a full '
         'frame-flip (valuation, category) to their Lean witnesses. The two poles of each row are the '
         'two charts; the frame-change is the involution that swaps them.'))
 
@@ -413,7 +413,7 @@ def build():
         'satisfies its hypotheses of a complete lattice and a monotone map, so none of them is an instance '
         'of it. It is universal over its own domain, not over the faces. At the categorical level the '
         'universal is a proven wall (below). What the faces share is a SHAPE realized concretely in each '
-        'domain. The instance table&#8217;s last row, the reals, carries the same pole exchange on its '
+        'domain. The face table&#8217;s last row, the reals, carries the same pole exchange on its '
         'one-point compactification (onePointInv_swaps_real) and has no first step above 0 '
         '(f_snap_impossible), so the frame-flip does not separate &#8477; from &#8474;<sub>2</sub>; '
         'total disconnectedness does (padic_snaps, real_no_snap). The two walls are not hedging: they mark '
@@ -442,7 +442,7 @@ def build():
     E.append(def_box(
         'Hard fence (permanent): cross-domain identity is a type boundary',
         [
-            'The claim that the contact points of all the instances &#8212; the p-adic 0, the Quine '
+            'The claim that the contact points of all the faces &#8212; the p-adic 0, the Quine '
             'atom, the Kleene quine, the categorical zero object &#8212; are numerically one object '
             'is not a theorem and cannot become one. Identity requires a shared type; these are '
             'terms of different types in different categories, so &#8220;x = y&#8221; across them is '
@@ -462,7 +462,7 @@ def build():
         'be nothing to cross. So the boundary is not the price of the connection &#8212; it is its '
         'condition. The keystone is bounded by the exact mechanism it is built from: the diagonal '
         'argument makes the fixed point and, in the same gesture, forbids its universal '
-        'identification. Per-instance frame-flips are theorems and are not hedged; the fences scope '
+        'identification. Per-face frame-flips are theorems and are not hedged; the fences scope '
         'only the universal cross-category claim.',
         bg=BLUE_LITE, border=BLUE
     ))
@@ -500,10 +500,10 @@ def build():
         [
             'Frame-flip schema (ZeroParadox/Settheory/ForkFrameChange.lean): [propext, Quot.sound] &#8212; choice-free. The '
             'universal needs no Axiom of Choice; the duality-swap is definitional.',
-            'Valuation instance (ZeroParadox/Multihomed/SnapFrameChange.lean / ZeroParadox/Valuation/RiemannSphere.lean): [propext, '
+            'Valuation face (ZeroParadox/Multihomed/SnapFrameChange.lean / ZeroParadox/Valuation/RiemannSphere.lean): [propext, '
             'Classical.choice, Quot.sound] &#8212; Classical.choice inherited from the p-adic / '
             'one-point-compactification analysis.',
-            'Categorical instance (ZeroParadox/Category/SeamFrameChange.lean): [propext, Classical.choice, Quot.sound] '
+            'Categorical face (ZeroParadox/Category/SeamFrameChange.lean): [propext, Classical.choice, Quot.sound] '
             '&#8212; inherited from the ModuleCat / category-theory library.',
             'The wall (ZeroParadox/Category/Lawvere.lean): the concrete Cantor no-witness results '
             '(nontrivial_lattice_no_witness, q2_no_witness) and computability_face_fixedPoint '

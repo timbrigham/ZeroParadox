@@ -32,7 +32,7 @@ restates TLCA #25, "Does λβ satisfy the fixed point property?", first raised b
 was open as of that paper (2019, their abstract); a later solution was not located as of 2026-10-31 (one web search; the
 TLCA problem page, last updated 2014, predates the paper and records no status). Fails: no sensible λ-theory satisfies
 the fpp (their Thm 5.4), and in each one, for every k > 0, some closed term has exactly k fixed points modulo that theory
-(their Prop. 5.6). λβ, the least λ-theory, is not sensible (their p. 6, Def. 1.8), so the two do not conflict. -/
+(their Prop. 5.6). λβ, the least λ-theory, is not sensible (from their p. 6 and Def. 1.8), so the two do not conflict. -/
 
 namespace ZeroParadox
 

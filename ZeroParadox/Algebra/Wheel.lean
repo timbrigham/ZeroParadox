@@ -77,7 +77,7 @@ the wheel of fractions `⊙_S A = (A × A)/≡_S` is a `Wheel` for any commutati
 multiplicative submonoid `S` (sorry-free, `Classical.choice`-free, `[propext, Quot.sound]`).
 §VII defines WheelValuationStructure — the typeclass identifying the bridge: a commutative
 ring + multiplicative valuation, with val(0) = ⊤ pinning the special element (motivated by the
-ZFC⁻ + AFA Quine atom `⊥ = {⊥}`, see § VIII; nothing in the Lean derives it). The construction closes the construction
+ZFC⁻ + AFA Quine atom `⊥ = {⊥}`, see § VIII; nothing in the Lean derives it from the Quine atom). The construction closes the construction
 gap; §VI closes the identification gap. The universality result previously scoped as Tier 3
 (a substantial, non-near-term target) is now formalized.
 See notes/wheel_conjecture_proof_gap_2026-05-31.md for the original three-tier diagnosis.

@@ -33,7 +33,7 @@ open Ordinal
 
 /-! ### The carrier
 
-`SynONote` with one point adjoined on top: the shape of Castéran's `ON_plus` (sum of notation systems)
+`SynONote` with one point adjoined on top: the shape of hydra-battles' `ON_plus` (sum of notation systems)
 with a one-point right summand, not an instance of it, because `SynONote`'s order is not well-founded
 (the `example` stating `¬ WellFoundedLT E0Note`). The order, lattice and decidability structure below is all
 Mathlib's `WithTop` machinery, not built here. -/
@@ -51,7 +51,7 @@ abbrev E0Note : Type := WithTop SynONote
 def e0Coe (x : ONote) : E0Note := (toSyn x : SynONote)
 
 /-- Comparison on the carrier is decidable — inherited from Mathlib's `WithTop.decidableLE` applied to
-the comparator-derived order on `SynONote`. This is Castéran's `lt_eq_lt_dec` (decidability survives
+the comparator-derived order on `SynONote`. This is hydra-battles' `lt_eq_lt_dec` (decidability survives
 adjunction) at instance level; nothing is proved here. -/
 @[reducible] def e0DecidableLE : DecidableLE E0Note := inferInstance
 
@@ -100,6 +100,17 @@ theorem e0OmegaPow_fixedpoint_iff (a : E0Note) : e0OmegaPow a = a ↔ a = ⊤ :=
         exact absurd h' (omegaPow_ne_self (ofSyn x))
   · rintro rfl; rfl
 
+-- `Statement:` the constant-`⊤` map is a `Nucleus E0Note` whose closed points are exactly the fixed
+-- points of `e0OmegaPow`.
+example : ∃ n : Nucleus E0Note, ∀ a : E0Note, n a = a ↔ e0OmegaPow a = a :=
+  ⟨{ toFun := fun _ => ⊤
+     map_inf' := fun _ _ => by simp
+     idempotent' := fun _ => le_rfl
+     le_apply' := fun _ => le_top },
+   fun a => by
+     rw [e0OmegaPow_fixedpoint_iff]
+     exact eq_comm⟩
+
 /-! ### The map into `Ordinal` — the crossing
 
 This is where the classical assumption is paid. `ONote.repr` is Mathlib's denotation map, and it is
@@ -107,7 +118,7 @@ This is where the classical assumption is paid. `ONote.repr` is Mathlib's denota
 
 /-- **Every ordinal notation denotes strictly below ε₀.**
 
-The first of `ON_correct`'s three fields (Castéran, `ON_Generic.v`), here for Mathlib's `ONote` and
+The first of `ON_correct`'s three fields (hydra-battles, `ON_Generic.v`), here for Mathlib's `ONote` and
 Mathlib's ε₀. Structural induction: ε₀ is a fixed point of `ω ^ ·`, hence both additively and
 multiplicatively principal, which is exactly what closes the `oadd` case.
 
@@ -181,7 +192,7 @@ example : typeLT NONote = ε₀ := by
 /-- **The crossing.** The carrier's denotation map into Mathlib's classical `Ordinal`: notations go by
 `ONote.repr`, and the adjoined top goes to ε₀.
 
-It has the into and onto properties of Castéran's `ON_correct` (`Schutte/Correctness_E0.v` is the
+It has the into and onto properties of hydra-battles' `ON_correct` (`Schutte/Correctness_E0.v` is the
 existing ε₀ instantiation), with Mathlib's constructed `Ordinal` as the classical target instead of
 Schütte's axiomatized `Ord`. It is not an instance: `ON_correct` is stated over an `ON`, which needs a
 well-founded order (the `example` stating `¬ WellFoundedLT E0Note`), and the comparator property fails.

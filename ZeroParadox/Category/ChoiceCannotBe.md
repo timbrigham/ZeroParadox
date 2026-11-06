@@ -31,8 +31,8 @@ framework's standing temptation. The literature that separates them:
 > concerns a two-point shape, since such a
 > coequalizer has fibres of at most two points; Goodman–Myhill state the restriction explicitly, choice
 > "for sets B, C of at most two elements". With unique choice into `Bool`, `ChoiceFragment` and excluded
-> middle are inter-derivable (the `example` after `em_of_choiceFragment` in
-> `ZeroParadox/Category/ExcludedMiddleBridge.lean`).
+> middle are inter-derivable (see `ZeroParadox/Category/ExcludedMiddleBridge.lean`, the `example` after
+> `em_of_choiceFragment`).
 >
 > **Lawvere (1964/65)**, the antecedent: his author commentary to *An Elementary Theory of the Category
 > of Sets (Long Version) with Commentary* (Reprints in TAC 11, 2005, p. 5) says that among the results
@@ -48,12 +48,8 @@ So *full* choice is strictly stronger than excluded middle, which is in turn str
 constructive base. **The restricted fragment is a different matter, and the distinction matters here.**
 `ZeroParadox/Category/ExcludedMiddleBridge.lean`'s `ChoiceFragment` is a choice principle into the
 two-element `Bool` — a chooser on every inhabited predicate on `Bool` — so in a topos, which always has
-unique choice (E. J. Dubuc and M. Szyld, *Tannaka Theory for Topos*, arXiv:1510.01775v1, Prop. 1.24,
-p. 10), it is *equivalent* to excluded middle (by the Diaconescu–Goodman–Myhill argument); in Lean the
-equivalence holds with unique choice into `Bool` as a hypothesis (the `example` after
-`em_of_choiceFragment`; the type-theoretic form of its excluded-middle-to-data leg, with description
-over every `Type`, is the Rocq standard library's `theories/Logic/ChoiceFacts.v`,
-`constructive_definite_descr_excluded_middle`, cited in `ZeroParadox/Category/ExcludedMiddleBridge.md`).
+unique choice, it is *equivalent* to excluded middle (see `ZeroParadox/Category/ExcludedMiddleBridge.lean`,
+the `example` after `em_of_choiceFragment`).
 In Lean without unique choice, the natural construction of the fragment from excluded middle alone
 fails to elaborate, dying at `Decidable (S true)`, and closes only under `classical`. **That failure
 measures that construction, not the fragment** — a failed elaboration is not a negative result, and a
@@ -197,7 +193,10 @@ fraction either**; it moves with every commit.
   assumes the statement and proves `True` already reports it (the statement control). No proof can
   remove it, so neither ACCIDENTAL nor ESSENTIAL can be asked of it. What can be asked is whether a
   restatement, on a carrier whose statements are choice-free, holds without choice. Detected by the
-  statement control; members are listed in § I/§ III where measured.
+  statement control; members are listed in § I/§ III of `ZeroParadox/Category/ChoiceCannotBe.lean`
+  where measured there, and otherwise in the file that measures them: `decoration_unique` carries it
+  through its `[ValuationStructure U]` binder, with its statement control in the `DecorationUniverse`
+  `[ZP-CUSTOM]` line of `ZeroParadox/Settheory/APG.lean` (ZP-J AFA Addendum, Section V).
 
 "The statement" in STATEMENT-CARRIED is the term as written, which is what the statement control
 measures; a definitionally equal respelling whose own statement is choice-free is a restatement in

@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP Addendum: The Choice-Free Core
-Version 1.17 | November 2026
+Version 1.19 | November 2026
 Framework-wide note; reads after the Foreword.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.17'
+VERSION = '1.19'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard ──
@@ -52,7 +52,7 @@ def build():
     # ── Preamble (artifact-first) ────────────────────────────────────────────────
     print('[build_zp_choice_free_core] Building preamble...')
     E.append(body(
-        'Build the file ZeroParadox/AxiomProfile.lean and read the Lean kernel\'s output. It reports '
+        'Build the file ZeroParadox/AxiomProfile.lean and read the output of Lean\'s `#print axioms` command. It reports '
         'that the central theorem of this framework &#8212; the Binary Snap, T-SNAP, whose SHAPE is '
         'derived while its occurrence follows from the occurrence commitment together with DA-1 (closed given DP-2), the '
         'transition &#8869; &#8594; &#949;<sub>0</sub> &#8212; depends on <b>no axioms at all</b>: not '
@@ -87,7 +87,7 @@ def build():
         hr(),
     ]
     E.append(body(
-        'The Lean kernel\'s `#print axioms` command reports the complete axiom dependency of any '
+        'Lean\'s `#print axioms` command reports the complete axiom dependency of any '
         'result. Run on the framework\'s central results, it returns the following. "Does not depend '
         'on any axioms" is the strongest possible report &#8212; stronger than "choice-free," since '
         'it uses not even propositional extensionality.'))
@@ -107,7 +107,7 @@ def build():
         'A second tier of results is choice-free but uses propositional extensionality and quotient '
         'soundness (`[propext, Quot.sound]`), both standard in Lean 4. These include the power set\'s '
         'depth chart (ps_structural_floor, ZeroParadox/Order/PowerSet.lean) and the wheel of fractions '
-        '(WheelFrac.instWheel, inf_ne_bot). No `Classical.choice`.'))
+        '(ZeroParadox.instWheel and inf_ne_bot, ZeroParadox/Algebra/WheelFrac.lean). No `Classical.choice`.'))
     E.append(sp(6))
 
     # ── Section II ───────────────────────────────────────────────────────────────
@@ -239,7 +239,7 @@ def build():
             'collects, and for related declarations; &#167; I prints the choice-free core and &#167; II further choice-free results; '
             '&#167; III prints the analytic-realization results that carry choice, as an honest '
             'contrast. Build with `lake build ZeroParadox.AxiomProfile` and read '
-            'the kernel\'s report. The per-theorem map is in the project repository.',
+            'the `#print axioms` report. The per-theorem map is in the project repository.',
             'Choice-probe (the one-layer classification): branch `choice-probe`; the verdict and the '
             'three decomposed sources are recorded in the project notes.',
         ]

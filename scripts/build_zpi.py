@@ -1,12 +1,12 @@
 """
 Zero Paradox — ZP-I: Inside Zero PDF Builder
-Version 1.39 | November 2026
+Version 1.40 | November 2026
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.39'
+VERSION = '1.40'
 FIRST_RELEASED = 'April 2026'
 
 # ZP-I uses justified body text; override the left-aligned zp_utils defaults
@@ -95,10 +95,13 @@ def build():
         'is a separate carrier. No '
         'new axioms are required for what it PROVES, which is that convergence, together with the '
         'separate fact that anything filling the bottom role IS the bottom of its own semilattice. '
-        'Reading the 2-adic limit as the thing filling that role is a modelling commitment, not a '
+        'Reading the 2-adic limit as the thing filling that role takes a choice, not a '
         'theorem: the two live in different types, and Q<sub>2</sub>&#8217;s field structure supplies no join and the corpus registers none on Q<sub>2</sub>, so the role '
         'condition is not statable of the limit until a join on Q<sub>2</sub> is chosen — they are distinct MEMBERS of the bottom '
         'family, not one object, and that identity is retired as ill-typed (MC-1). '
+        'Choosing a join on Q<sub>2</sub> is well-typed, and in the semilattice it makes, anything filling the bottom role is '
+        'that semilattice&#8217;s &#8869; by theorem (t_iz_limit_is_new_null); what is retired is identifying the 2-adic 0 with '
+        '&#8869; of another semilattice. '
         'Reading the bottom so reached as a NEW one '
         'rather than the one already there is a further commitment (C-DA2 in ZP-E), and in the 2-adic '
         'chart the arc returns to the SAME 0 (snap_arc_z2_loop). T-IZ and T-SNAP are separate results: T-SNAP fixes the shape of the first transition '
@@ -339,7 +342,7 @@ def build():
             'Statement: Every 2-adic depth chain (S<sub>n</sub>)<sub>n&lt;&#969;</sub> in Q<sub>2</sub>, '
             'nowhere zero, whose valuation equals a depth index in &#8469; that climbs at every step, so that '
             'its 2-adic valuation grows without bound, is a Cauchy sequence that converges, in the 2-adic metric, to 0. '
-            'Reading that limit as an OCCUPANT of the bottom role is a modelling commitment and not '
+            'Reading that limit as an OCCUPANT of the bottom role takes a choice and is not '
             'part of the statement — Q<sub>2</sub>&#8217;s field structure supplies no join and the corpus registers none on Q<sub>2</sub>, so the role condition is not '
             'statable of it. Reading that occupant as a SUCCESSOR null is C-DA2, a further commitment.',
             'Formal hypotheses (t_iz_complete): S : &#8469; &#8594; Q<sub>2</sub> with '

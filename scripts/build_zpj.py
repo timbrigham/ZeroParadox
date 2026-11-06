@@ -1,12 +1,12 @@
 """
 Zero Paradox — ZP-J: Executability of Self-Reference PDF Builder
-Version 2.17 | November 2026
+Version 2.18 | November 2026
 """
 
 import os
 from zp_utils import *
 
-VERSION = '2.17'
+VERSION = '2.18'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -1048,7 +1048,7 @@ def build():
          'ZeroParadox/Valuation/Scale.lean &#167; V proves &#8484;&#8322; admits a ZPSemilattice '
          'carrying a ValuationStructure, as an existence statement, without registering an '
          'instance; no registered instance on &#8484;&#8322; was located in ZeroParadox/**/*.lean '
-         'on 2026-09-13.'],
+         'on 2026-09-13, re-checked 2026-11-06.'],
     ]
     E.append(data_table(
         ['Item', 'Status', 'Description'],

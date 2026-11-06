@@ -672,8 +672,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 3166,
-        "files": 198
+        "declarations": 3196,
+        "files": 201
       },
       "entries": [
         {
@@ -1115,6 +1115,43 @@
             ]
           },
           "reason": "reorg reconcile TEST (deps-unreferenced decl): Op A flatten + Op B whole-file move",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "00c6c804-4ee1-422c-9ff5-6a13e354f340",
+          "new": {
+            "file": "ZeroParadox/Reals/ConnectedNoFirstStep.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.not_preconnected_of_firstStep",
+            "short": "not_preconnected_of_firstStep"
+          },
+          "old": {
+            "file": "ZeroParadox/Reals/ConnectedNoFirstStep.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.not_preconnected_of_firstStep",
+            "short": "not_preconnected_of_firstStep",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "reals"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "ConnectedNoFirstStep: on a linear order with its order topology, preconnected forbids a first step (HasFirstStep) at every point, choice-free; converse under conditional completeness; controls Q, Z, Fin 2, {0} u [1,2]",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -5650,6 +5687,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "0a13a2c5-4893-4078-80b7-a7f80c7cc2c4",
+          "new": {
+            "file": "ZeroParadox/Valuation/BallLine.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ballLine",
+            "short": "ballLine"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/BallLine.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ballLine",
+            "short": "ballLine",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ball line landed in BallLine.lean: closed balls about 0 of Q_2 indexed by Z, covers at vertices, none at the ends, radius chart",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "0a3562dd-ea47-4fe8-9b92-6cf240e76ceb",
           "new": {
             "file": "ZeroParadox/Category/DiagonalWitness.lean",
@@ -6771,6 +6845,46 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0c746cf7-d9c7-472c-86e6-20d08ecbc306",
+          "new": {
+            "file": "ZeroParadox/Valuation/BallLine.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.end_top_covers_nothing",
+            "short": "end_top_covers_nothing"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/BallLine.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.end_top_covers_nothing",
+            "short": "end_top_covers_nothing",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [
+              "snap",
+              "ceiling"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Ball line landed in BallLine.lean: closed balls about 0 of Q_2 indexed by Z, covers at vertices, none at the ends, radius chart",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -8194,6 +8308,43 @@
             ]
           },
           "reason": "Die quotients carrying UP: UpCompat, quotUp, landing transfer, identity-UP reduction to quot",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0f77fcfd-0af7-4834-8fe3-ac976ef47a5d",
+          "new": {
+            "file": "ZeroParadox/Valuation/PolePassage.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ballS_isClopen",
+            "short": "ballS_isClopen"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PolePassage.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ballS_isClopen",
+            "short": "ballS_isClopen",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Pole-passage probe landed (experimental PolePassage): the snap arc on the 2-adic sphere, its inversion, the clopen separation of 0 and infinity, and the q2Val return",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -13733,6 +13884,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "1c738648-e892-42c1-8f4a-9beb3a68dd7b",
+          "new": {
+            "file": "ZeroParadox/Valuation/PolePassage.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.rInv_arcS",
+            "short": "rInv_arcS"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PolePassage.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.rInv_arcS",
+            "short": "rInv_arcS",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Pole-passage probe landed (experimental PolePassage): the snap arc on the 2-adic sphere, its inversion, the clopen separation of 0 and infinity, and the q2Val return",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "1c738ab5-954d-43c3-85af-e1dbc4eb4a09",
           "new": {
             "file": "ZeroParadox/Valuation/InfinitudeFloor.lean",
@@ -18777,6 +18967,43 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "275cf920-ca03-466f-989a-a2b105df2f50",
+          "new": {
+            "file": "ZeroParadox/Valuation/PolePassage.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ballS",
+            "short": "ballS"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PolePassage.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ballS",
+            "short": "ballS",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Pole-passage probe landed (experimental PolePassage): the snap arc on the 2-adic sphere, its inversion, the clopen separation of 0 and infinity, and the q2Val return",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -25220,6 +25447,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "3660e8e8-5a1e-4aed-b9e7-ae36d6bced2e",
+          "new": {
+            "file": "ZeroParadox/Valuation/PolePassage.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.hahn_no_least_positive_value",
+            "short": "hahn_no_least_positive_value"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PolePassage.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.hahn_no_least_positive_value",
+            "short": "hahn_no_least_positive_value",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Probe-2 landed in PolePassage: first step at 0 of an ordered group iff not dense, and the dense-valued HahnSeries control",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -34980,6 +35246,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "4c478879-153f-4c62-9547-808ab63eabf1",
+          "new": {
+            "file": "ZeroParadox/Valuation/BallLine.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.closedBall_eq_ballLine",
+            "short": "closedBall_eq_ballLine"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/BallLine.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.closedBall_eq_ballLine",
+            "short": "closedBall_eq_ballLine",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Ball line landed in BallLine.lean: closed balls about 0 of Q_2 indexed by Z, covers at vertices, none at the ends, radius chart",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "4c6f3a77-828f-4206-a2fa-47249ac91503",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -35884,6 +36187,45 @@
             ]
           },
           "reason": "Die computability face (halting as arrival, clock machine), quotients of a motion (drawing vs set: hypersets, codes), carrier-changing steps (wrap, Option), PoleEnds with inhabitation",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "4eb4e1c8-2445-4c13-877a-574f11107622",
+          "new": {
+            "file": "ZeroParadox/Valuation/BallLine.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.iUnion_ballLine",
+            "short": "iUnion_ballLine"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/BallLine.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.iUnion_ballLine",
+            "short": "iUnion_ballLine",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "ceiling"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Ball line landed in BallLine.lean: closed balls about 0 of Q_2 indexed by Z, covers at vertices, none at the ends, radius chart",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -38420,6 +38762,46 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "53c1d614-ea2e-4375-90e6-c3a4ad09d5b1",
+          "new": {
+            "file": "ZeroParadox/Valuation/BallLine.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ballLine_covBy",
+            "short": "ballLine_covBy"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/BallLine.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ballLine_covBy",
+            "short": "ballLine_covBy",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "valuation"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "Ball line landed in BallLine.lean: closed balls about 0 of Q_2 indexed by Z, covers at vertices, none at the ends, radius chart",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "53d85bcc-c813-45e5-8b25-782022e44c52",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -39515,6 +39897,43 @@
             ]
           },
           "reason": "Die v2 final batch: drawing vs set (self-steps, accessibility, forced rank), ends of a view, orders on motions, placements as views, relaxed least-fixed-point schema, UP legs as nuclei",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "572a2133-2874-48d1-9875-f6f02d032770",
+          "new": {
+            "file": "ZeroParadox/Valuation/PolePassage.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.hahnArc",
+            "short": "hahnArc"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PolePassage.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.hahnArc",
+            "short": "hahnArc",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Probe-2 landed in PolePassage: first step at 0 of an ordered group iff not dense, and the dense-valued HahnSeries control",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -44639,6 +45058,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "6205842d-2382-4506-a867-ac6fe99886a4",
+          "new": {
+            "file": "ZeroParadox/Valuation/PolePassage.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.arcS",
+            "short": "arcS"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PolePassage.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.arcS",
+            "short": "arcS",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation",
+              "ordinal"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Pole-passage probe landed (experimental PolePassage): the snap arc on the 2-adic sphere, its inversion, the clopen separation of 0 and infinity, and the q2Val return",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "6234570b-77e8-4008-b49a-c7beab1975f1",
           "new": {
             "file": "ZeroParadox/Settheory/Loeb.lean",
@@ -45870,6 +46327,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "65230bdc-85ec-40cd-85bd-7c007f961b35",
+          "new": {
+            "file": "ZeroParadox/Valuation/BallLine.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.mem_ballLine_iff_le_valuation",
+            "short": "mem_ballLine_iff_le_valuation"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/BallLine.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.mem_ballLine_iff_le_valuation",
+            "short": "mem_ballLine_iff_le_valuation",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ball line landed in BallLine.lean: closed balls about 0 of Q_2 indexed by Z, covers at vertices, none at the ends, radius chart",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "652dcfb2-a4a1-4538-8761-435f16500a7c",
           "new": {
             "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
@@ -47044,6 +47538,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "67f1a59c-f0c5-4a9a-8d6a-b695ef6f6573",
+          "new": {
+            "file": "ZeroParadox/Valuation/PolePassage.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.join_run_never_returns",
+            "short": "join_run_never_returns"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PolePassage.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.join_run_never_returns",
+            "short": "join_run_never_returns",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Pole-passage probe landed (experimental PolePassage): the snap arc on the 2-adic sphere, its inversion, the clopen separation of 0 and infinity, and the q2Val return",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -55440,6 +55973,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "7a07a1d1-717c-431c-bcd2-19b73fd0f7aa",
+          "new": {
+            "file": "ZeroParadox/Valuation/PolePassage.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.real_zero_infty_connected",
+            "short": "real_zero_infty_connected"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PolePassage.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.real_zero_infty_connected",
+            "short": "real_zero_infty_connected",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "reals"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Pole-passage probe landed (experimental PolePassage): the snap arc on the 2-adic sphere, its inversion, the clopen separation of 0 and infinity, and the q2Val return",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "7a08b7ce-19f0-46bd-bfcf-f3ad43138c56",
           "new": {
             "file": "ZeroParadox/Computability/Occurrence.lean",
@@ -58776,6 +59346,46 @@
             ]
           },
           "reason": "Typicality bridge (2026-11-01): CrossingTrials § IV-VII — almost surely gives some run; zero-block tests; typicality as an explicit hypothesis; the slot machine as a die motion.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "813bb5f4-d6c7-416c-8c87-1e81c58c8bd2",
+          "new": {
+            "file": "ZeroParadox/Valuation/PolePassage.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.hahnArc_loop",
+            "short": "hahnArc_loop"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PolePassage.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.hahnArc_loop",
+            "short": "hahnArc_loop",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom",
+              "ceiling"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Probe-2 landed in PolePassage: first step at 0 of an ordered group iff not dense, and the dense-valued HahnSeries control",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -67684,6 +68294,47 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "9604fafb-19bf-458d-8b44-d136d8825bfa",
+          "new": {
+            "file": "ZeroParadox/Valuation/PolePassage.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.arc_q2Val",
+            "short": "arc_q2Val"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PolePassage.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.arc_q2Val",
+            "short": "arc_q2Val",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation",
+              "ordinal"
+            ],
+            "object": [
+              "bottom",
+              "ceiling"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "Pole-passage probe landed (experimental PolePassage): the snap arc on the 2-adic sphere, its inversion, the clopen separation of 0 and infinity, and the q2Val return",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "960b786f-3629-462f-ae9e-61d7f9f3d8e6",
           "new": {
             "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
@@ -72092,6 +72743,46 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "9eb5b77c-960b-4f1f-bb82-6871bf2bc937",
+          "new": {
+            "file": "ZeroParadox/Valuation/BallLine.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.end_bot_no_first_step",
+            "short": "end_bot_no_first_step"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/BallLine.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.end_bot_no_first_step",
+            "short": "end_bot_no_first_step",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [
+              "snap",
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Ball line landed in BallLine.lean: closed balls about 0 of Q_2 indexed by Z, covers at vertices, none at the ends, radius chart",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "9eda7838-376b-466c-aa8b-2df531ef712e",
           "new": {
             "file": "ZeroParadox/Ordinal/SnapNucleusConstructive.lean",
@@ -72635,6 +73326,45 @@
             ]
           },
           "reason": "twin de-scar: <base>_<FileBasename> file-suffix rename",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "9fc238c5-8a67-4350-94aa-c979032f58e4",
+          "new": {
+            "file": "ZeroParadox/Valuation/BallLine.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.arc_walks_ballLine",
+            "short": "arc_walks_ballLine"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/BallLine.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.arc_walks_ballLine",
+            "short": "arc_walks_ballLine",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Ball line landed in BallLine.lean: closed balls about 0 of Q_2 indexed by Z, covers at vertices, none at the ends, radius chart",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -74634,6 +75364,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "a5028cae-7850-4840-9396-e16abf9f06d9",
+          "new": {
+            "file": "ZeroParadox/Valuation/BallLine.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ballLine_strictAnti",
+            "short": "ballLine_strictAnti"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/BallLine.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ballLine_strictAnti",
+            "short": "ballLine_strictAnti",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ball line landed in BallLine.lean: closed balls about 0 of Q_2 indexed by Z, covers at vertices, none at the ends, radius chart",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "a51b3b83-ba7a-47da-abf1-dffa3b955f47",
           "new": {
             "file": "ZeroParadox/Ordinal/WeakGoodstein.lean",
@@ -74732,6 +75500,46 @@
             ]
           },
           "reason": "AxiomLedger: axiom-profile ledger gate over KleeneChoiceFree (sqrt projections, 14 same-statement bridges, ledger data)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a5650d15-c136-40fa-b984-81c6025c7744",
+          "new": {
+            "file": "ZeroParadox/Valuation/PolePassage.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cover_at_zero_iff_not_dense",
+            "short": "cover_at_zero_iff_not_dense"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PolePassage.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cover_at_zero_iff_not_dense",
+            "short": "cover_at_zero_iff_not_dense",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "valuation"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "Probe-2 landed in PolePassage: first step at 0 of an ordered group iff not dense, and the dense-valued HahnSeries control",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -75848,6 +76656,46 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "a86f3f62-5b32-4605-bff9-f94e32e7874c",
+          "new": {
+            "file": "ZeroParadox/Valuation/BallLine.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ballLine_inv_shell",
+            "short": "ballLine_inv_shell"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/BallLine.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ballLine_inv_shell",
+            "short": "ballLine_inv_shell",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom",
+              "ceiling"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Ball line landed in BallLine.lean: closed balls about 0 of Q_2 indexed by Z, covers at vertices, none at the ends, radius chart",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "a879851d-c196-4904-9ba1-a35d24e45707",
           "new": {
@@ -76319,6 +77167,46 @@
             ]
           },
           "reason": "Die v2 final batch: the four corners as die motions and the tower as a span of motions (experimental PoleCorners / PoleCornersBridge)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a92ba137-8fbd-4d81-af2a-83359c27053d",
+          "new": {
+            "file": "ZeroParadox/Valuation/PolePassage.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cover_at_zero_iff_int",
+            "short": "cover_at_zero_iff_int"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PolePassage.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cover_at_zero_iff_int",
+            "short": "cover_at_zero_iff_int",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "valuation"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Probe-2 landed in PolePassage: first step at 0 of an ordered group iff not dense, and the dense-valued HahnSeries control",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -93115,6 +94003,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "cd625b1c-5161-4dc8-8adc-9bf0f0ae4956",
+          "new": {
+            "file": "ZeroParadox/Valuation/PolePassage.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.no_path_zero_infty",
+            "short": "no_path_zero_infty"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PolePassage.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.no_path_zero_infty",
+            "short": "no_path_zero_infty",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Pole-passage probe landed (experimental PolePassage): the snap arc on the 2-adic sphere, its inversion, the clopen separation of 0 and infinity, and the q2Val return",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "cd839727-ba95-474e-b669-217fd78f8611",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -94091,6 +95016,43 @@
             "role": []
           },
           "reason": "ninf-retraction-1030: the round trip through ofOption: a left inverse is a right inverse (Escardó's density lemma), hence LPO; LPO data gives NInf ≃ Option ℕ; ofOption onto iff LPO; the round trip as a motion on Option ℕ ⊕ NInf (Die § XXIII); Tim ruling 2026-10-30",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "cf25985c-b14b-4fbe-8e74-a59457df99c3",
+          "new": {
+            "file": "ZeroParadox/Reals/ConnectedNoFirstStep.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.preconnected_iff_no_firstStep",
+            "short": "preconnected_iff_no_firstStep"
+          },
+          "old": {
+            "file": "ZeroParadox/Reals/ConnectedNoFirstStep.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.preconnected_iff_no_firstStep",
+            "short": "preconnected_iff_no_firstStep",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "reals"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "ConnectedNoFirstStep: on a linear order with its order topology, preconnected forbids a first step (HasFirstStep) at every point, choice-free; converse under conditional completeness; controls Q, Z, Fin 2, {0} u [1,2]",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -96621,6 +97583,46 @@
           "reason": "IgnoranceSeam.lean: fills, semiconjugacy, prepends, affine stream motions, negation, complement (2026-10-07)",
           "verify": {
             "axioms": "[propext, Quot.sound]",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d55690c6-1a79-4015-9ce8-4100b4fa25fc",
+          "new": {
+            "file": "ZeroParadox/Valuation/PolePassage.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.arcS_tendsto_zero",
+            "short": "arcS_tendsto_zero"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PolePassage.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.arcS_tendsto_zero",
+            "short": "arcS_tendsto_zero",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation",
+              "ordinal"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Pole-passage probe landed (experimental PolePassage): the snap arc on the 2-adic sphere, its inversion, the clopen separation of 0 and infinity, and the q2Val return",
+          "verify": {
+            "axioms": null,
             "sorry_free": true
           }
         },
@@ -103788,6 +104790,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "e4a6884e-264d-4587-9256-eba5a521437a",
+          "new": {
+            "file": "ZeroParadox/Valuation/PolePassage.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.arc_never_meets_infty",
+            "short": "arc_never_meets_infty"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PolePassage.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.arc_never_meets_infty",
+            "short": "arc_never_meets_infty",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Pole-passage probe landed (experimental PolePassage): the snap arc on the 2-adic sphere, its inversion, the clopen separation of 0 and infinity, and the q2Val return",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "e4abeea0-769a-460f-ac47-60754a616d01",
           "new": {
@@ -105581,6 +106622,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "e83257b3-c40b-4fd0-918c-78e65d7a55c6",
+          "new": {
+            "file": "ZeroParadox/Valuation/BallLine.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.mem_ballLine_shell_iff",
+            "short": "mem_ballLine_shell_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/BallLine.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.mem_ballLine_shell_iff",
+            "short": "mem_ballLine_shell_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ball line landed in BallLine.lean: closed balls about 0 of Q_2 indexed by Z, covers at vertices, none at the ends, radius chart",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "e83d2d42-e017-4ae9-8c4e-3e74c8f46051",
           "new": {
             "file": "ZeroParadox/Settheory/GraphBisim.lean",
@@ -106790,6 +107868,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "eb041914-37d7-4de9-9337-7bee63de4c3b",
+          "new": {
+            "file": "ZeroParadox/Valuation/BallLine.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.radiusPath",
+            "short": "radiusPath"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/BallLine.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.radiusPath",
+            "short": "radiusPath",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Ball line landed in BallLine.lean: closed balls about 0 of Q_2 indexed by Z, covers at vertices, none at the ends, radius chart",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "eb12c8ba-9bbb-4041-9264-7758d4938be8",
           "new": {
             "file": "ZeroParadox/Valuation/PadicStillPoint.lean",
@@ -106924,6 +108041,43 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "eb350b3a-3b9a-4bb1-a8f4-f07e25a725a7",
+          "new": {
+            "file": "ZeroParadox/Reals/ConnectedNoFirstStep.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.no_firstStep_of_preconnected",
+            "short": "no_firstStep_of_preconnected"
+          },
+          "old": {
+            "file": "ZeroParadox/Reals/ConnectedNoFirstStep.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.no_firstStep_of_preconnected",
+            "short": "no_firstStep_of_preconnected",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "reals"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "ConnectedNoFirstStep: on a linear order with its order topology, preconnected forbids a first step (HasFirstStep) at every point, choice-free; converse under conditional completeness; controls Q, Z, Fin 2, {0} u [1,2]",
           "verify": {
             "axioms": null,
             "sorry_free": true

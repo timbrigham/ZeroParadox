@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-K: Computational Grounding of Self-Reference PDF Builder
-Version 1.37 | November 2026
+Version 1.38 | November 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.37'
+VERSION = '1.38'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -424,7 +424,9 @@ def build():
         'statement carries it; where only the proof does, whether another proof avoids it is '
         'a separate question, and the table does not answer it. The following were measured on '
         '2026-09-19 against the pinned Mathlib; re-run them rather than citing this table '
-        'if the answer matters.'))
+        'if the answer matters. On this toolchain `#print axioms` can under-report for declarations '
+        'imported from another module (lean4 issue #15226); for the "none" rows, the issue&#8217;s own '
+        'signature was checked and did not fire.'))
 
     E.append(data_table(
         headers=['Declaration', 'Axiom footprint'],

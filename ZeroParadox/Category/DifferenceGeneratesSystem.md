@@ -27,8 +27,8 @@ independence, *not* Diaconescu, whose own theorem is an **equivalence** between 
 (p. 176) and already concerns a two-point shape; the analogue in intuitionistic set theory is
 Goodman–Myhill (1978), who state the restriction explicitly, choice "for sets B, C of at most two
 elements" (p. 461). With unique choice into `Bool`, `ChoiceFragment` and `ExcludedMiddle` are
-inter-derivable (the `example` after `em_of_choiceFragment` in
-`ZeroParadox/Category/ExcludedMiddleBridge.lean`). So: double negation is the
+inter-derivable (see `ZeroParadox/Category/ExcludedMiddleBridge.lean`, the `example` after
+`em_of_choiceFragment`). So: double negation is the
 difference that generates the classical core, and full choice sits above it. See
 `ZeroParadox/Category/ChoiceCannotBe.lean` for the precise attributions. Stated below
 with `example`s only (no new declarations) — this file *identifies*, it does not add a result.

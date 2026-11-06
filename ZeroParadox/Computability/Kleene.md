@@ -27,12 +27,12 @@ reading splits in two. Its identity half is retired: no code is equated with ⊥
 with (1)–(3) through the die's Quine-atom role, which under the `eval` step no single code occupies
 and, for computable `eval`-respecting maps, a class of codes does (Key insight, below). Its running
 half stays a commitment: that ⊥ actually executes is the occurrence commitment. No field asserts
-either half, and no theorem in this corpus relates `botCode` to `bot` (not located as of 2026-11-01, searched as follows: `ZeroParadox/**/*.lean` for `botCode`,
-for `KleeneStructure`, and for "computational face" / "same structural"; no hit states a relation
-between `botCode` and `bot`). For a generic carrier `L` no Lean `=` between them typechecks, since
-`botCode` is a `Code` and `bot` an element of `L`; at `L := Code`, under an assumed instance (none is
-declared in this corpus), one does
-(`ZeroParadox/Computability/ComputationCannotBe.lean` § IV, the two `example`s). Note the two
+either half, and no theorem in this corpus relates `botCode` to `bot` (not located as of
+2026-11-01, searched as follows: `ZeroParadox/**/*.lean` for `botCode`, for `KleeneStructure`, and
+for "computational face" / "same structural"; no hit states a relation between `botCode` and
+`bot`). For a generic carrier `L` no Lean `=` between them typechecks, since `botCode` is a `Code`
+and `bot` an element of `L`; at `L := Code`, under an assumed instance (none is declared in this
+corpus), one does (`ZeroParadox/Computability/ComputationCannotBe.lean` § IV, the two `example`s). Note the two
 sides also differ in shape: (1)–(3) pick out a unique element, while the computational
 fixed points form an infinite family (§ VI).
 
@@ -61,8 +61,8 @@ What Lean supplies underneath: Kleene's second recursion theorem (Mathlib:
 Nat.Partrec.Code.fixed_point₂) guarantees a fixed point exists for any partially
 computable transformation. The AFA Quine atom (CC-2, a set x = {x}) and the Kleene computational
 quine (`IsComputationalQuine c`, that is `eval c = selfApply c`) are compared through a role, not
-an identity: the die's Quine-atom role `Motion.SelfOnlyAt` (`ZeroParadox/Die.lean`), a point that steps to itself and to nothing else,
-occupied or provably empty chart by chart. On codes, with OVER `a → b` when `eval b = F a`, no
+an identity: the die's Quine-atom role `Motion.SelfOnlyAt` (`ZeroParadox/Die.lean`), a point that
+steps to itself and to nothing else, occupied or provably empty chart by chart. On codes, with OVER `a → b` when `eval b = F a`, no
 code occupies it for any `F : Code → ℕ →. ℕ` (`evalStepMotion_not_selfOnlyAt`); on classes of
 codes up to equal `eval`, in the quotient of `evalStepMotion (eval ∘ G)`, some class does for
 computable `eval`-respecting `G : Code → Code` (`codes_vs_classes`); restricted to

@@ -65,12 +65,13 @@ section *iff* subobjects have complements (1975, p. 176), the choice direction b
 (p. 178). The theorem already concerns a two-point shape: such a coequalizer has fibres of at most two
 points, and its proof runs over pp. 176-177. Goodman-Myhill state the restriction explicitly, choice
 "for sets B, C of at most two elements" (1978, p. 461). With unique choice into `Bool`, `ChoiceFragment`
-and `ExcludedMiddle` are inter-derivable (the `example` after `em_of_choiceFragment`).
+and `ExcludedMiddle` are inter-derivable (see `ZeroParadox/Category/ExcludedMiddleBridge.lean`, the `example`
+after `em_of_choiceFragment`).
 Second, that *full* AC is strictly stronger than excluded middle is **Cohen 1963** / Fraenkel–Mostowski
 independence, not Diaconescu.
 **This matters here because `ChoiceFragment` is a choice principle into the two-element `Bool`** — a
-chooser on every inhabited predicate on `Bool` — so in a topos, where unique choice holds (E. J. Dubuc
-and M. Szyld, *Tannaka Theory for Topos*, arXiv:1510.01775v1, Prop. 1.24, p. 10), it would be equivalent to `ExcludedMiddle`, and the
+chooser on every inhabited predicate on `Bool` — so in a topos, where unique choice holds (see
+`ZeroParadox/Category/ExcludedMiddleBridge.lean`, the `example` after `em_of_choiceFragment`), it would be equivalent to `ExcludedMiddle`, and the
 faithfulness check below would have to fail. It does not fail. A candidate explanation is that Lean
 stratifies `Prop` and `Type`: `ChoiceFragment` is equivalent to `Nonempty (∀ p, Decidable p)` and
 `ExcludedMiddle` to `∀ p, Nonempty (Decidable p)` (the `example`s after `ChoiceFragment`; the forward

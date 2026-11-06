@@ -5,7 +5,7 @@ Long form of `ZeroParadox/Ordinal/PricedInterface.lean`.
 ## What this file is
 
 A **measurement**, not a construction. The carrier and the map out of it, declared in `ZeroParadox/Ordinal/PricedInterface.lean`, both follow
-constructions that already exist in the literature (see "Prior art" — they are *hydra-battles*', credited to the
+constructions that already exist in the literature (see "Prior art" — both come from *hydra-battles*, credited to the
 hydra-battles authors as in `ZeroParadox/Ordinal/SnapNucleusConstructive.md` § Prior art, and the
 citation is not a courtesy). What is being contributed here is the *price tag*: the axiom footprint of
 each side of the constructive/classical boundary, exhibited on declarations that sit on either side of a
@@ -29,7 +29,7 @@ and a restatement on a choice-free carrier has two readings. The defined one is 
 Lean restatement where uniqueness of the fixed point is proved and its existence is set by definition, on
 an order that is not well-founded (§ *The carrier, and what it actually is* and § *The closure at the top is STIPULATED, not
 discovered* below). The derived one, a well-founded Lean carrier whose statements are choice-free and on
-which the fixed point is derived, leastness included, was not located as of 2026-10-13 (`ZeroParadox/Ordinal/SnapNucleus.md`
+which the fixed point is derived, by a choice-free derivation, leastness included, was not located as of 2026-10-13 (`ZeroParadox/Ordinal/SnapNucleus.md`
 § "Axiom footprint"); and the crossing into `Ordinal`, `e0Repr`, carries choice (the purity block of `ZeroParadox/Ordinal/PricedInterface.lean`).
 
 Worse, the claim was **not measurable by the instrument used to support it.** `Classical.choice` sits in

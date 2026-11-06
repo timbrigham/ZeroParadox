@@ -131,9 +131,9 @@ example (A : S) : Thm (imp (imp (box (imp (box A) A)) A) (imp (box A) A)) :=
 /-! ## § IV. Gödel's second incompleteness — the `A = falsum` corollary -/
 
 /-- **Gödel's second incompleteness, via Löb.** If the system is consistent (`⊬ falsum`) and has a Löb
-    diagonal for falsum (`hfix1`, `hfix2`), it cannot prove `□falsum → falsum` — the internal
-    statement of its own consistency. Immediate from Löb at `A = falsum`: a proof of `□falsum → falsum` would yield `⊢ falsum`, contradicting consistency. So Löb subsumes
-    Gödel's second theorem; the wall on the provability axis is the unprovability of consistency.
+    diagonal for falsum (`hfix1`, `hfix2`), it cannot prove `□falsum → falsum`, the internal statement of
+    its own consistency. Immediate from Löb at `A = falsum`: a proof of `□falsum → falsum` would yield
+    `⊢ falsum`. So Löb subsumes Gödel's second; the provability axis's wall is unprovable consistency.
     `Statement:` it holds for every unprovable `falsum` with a Löb diagonal (bound universally; § I has no
     falsum constant); the first `example` below is one that does not imply every sentence (no ex-falso).
     `Reading:` when the class is instantiated at a theory of arithmetic and `falsum` is its falsum,
