@@ -56,7 +56,7 @@ enters through the *order instance and the operations*: `Ordinal.instLinearOrder
 `snapNucleus` is built from `nfp` over `omega0 ^ ·` on that order.
 
 The open question is a restatement on a carrier whose statements are choice-free. Its state, part by
-part:
+part (measured 2026-10-08):
 
 * **The ascent below ε₀ is restated, choice-free.** On `ONote`, ZP-N proves the ascent (`exp_lt_term`,
   `omegaPow_no_fixedpoint`, and `tower_strictMono`, the counterpart of `fundamentalSeq_strictMono`).

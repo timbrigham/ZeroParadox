@@ -70,7 +70,7 @@ after `em_of_choiceFragment`).
 Second, that *full* AC is strictly stronger than excluded middle is **Cohen 1963** / Fraenkel–Mostowski
 independence, not Diaconescu.
 **This matters here because `ChoiceFragment` is a choice principle into the two-element `Bool`** — a
-chooser on every inhabited predicate on `Bool` — so in a topos, where unique choice holds (see
+chooser on every inhabited predicate on `Bool` — so in a topos, where unique choice holds (E. J. Dubuc and M. Szyld, Tannaka Theory for Topos, arXiv:1510.01775v1, Prop. 1.24, p. 10) (see
 `ZeroParadox/Category/ExcludedMiddleBridge.lean`, the `example` after `em_of_choiceFragment`), it would be equivalent to `ExcludedMiddle`, and the
 faithfulness check below would have to fail. It does not fail. A candidate explanation is that Lean
 stratifies `Prop` and `Type`: `ChoiceFragment` is equivalent to `Nonempty (∀ p, Decidable p)` and

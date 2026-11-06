@@ -1,6 +1,6 @@
 """
 Build ZP-I Illustrated Companion
-Version 1.44 | November 2026
+Version 1.45 | November 2026
 
 Standalone companion for ZP-I: Inside Zero.
 Accessibility target: 2 years of college math.
@@ -276,7 +276,7 @@ def cycle_diagram():
     return d
 
 
-VERSION = '1.44'
+VERSION = '1.45'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -392,7 +392,7 @@ def build():
     E.append(cbody(
         'In the 2-adic metric, norms decrease geometrically: ‖S(n)‖ ≤ ‖S(0)‖ · 2<sup>−n</sup>. '
         'As n → ∞, the norm → 0. The chain converges to 0 in the 2-adic sense: '
-        'the point with 2-adic valuation +∞ under the usual convention v₂(0) = ∞. Reading that structural limit as filling the bottom role is the first commitment - the role condition is not statable of the limit until a join on Q₂ is chosen - and calling the occupant ⊥′, a successor null, is the second; in this very chart the arc returns to the same 0.'))
+        'the point with 2-adic valuation +∞ under the usual convention v₂(0) = ∞. Reading that structural limit as filling the bottom role takes a choice of join on Q₂ - the role condition is not statable of the limit until a join on Q₂ is chosen, and then it is that semilattice\'s ⊥ by theorem (<tt>t_iz_limit_is_new_null</tt>) - and calling the occupant ⊥′, a successor null, is C-DA2, a commitment; in this very chart the arc returns to the same 0.'))
 
     E.append(example_box('Real-world analogy  - The deepest point in the well', [
         'Imagine a well that has no bottom  - every level opens onto a deeper one. '
@@ -534,8 +534,10 @@ def build():
         '"closed doors." T-IZ uses a fourth passage that none of the three doors govern. '
         'The doors are a picture, not a theorem: they are statements about three different objects, and the '
         'fourth passage reaches 0 in Q₂ only as a limit: no stage of the chain is 0, and the limit is 0, so '
-        'the chain reaches 0 without passing through any of the three doors. Reading that 0 as filling '
-        'the bottom role is a commitment, and reading it as a successor null is C-DA2, a further one.'))
+        'the chain reaches 0 without passing through any of the three doors. In this chart the arc comes back '
+        'to the same 0 (<tt>snap_arc_z2_loop</tt>). Reading that 0 as filling the bottom role takes a choice of '
+        'join on Q₂ (then it is that semilattice\'s ⊥ by theorem, <tt>t_iz_limit_is_new_null</tt>), and reading '
+        'it as a successor null is C-DA2, a commitment.'))
     E.append(cbody(
         '<b>Door 1  - R1 (No subtraction):</b> In the lattice, there is no subtraction. '
         'You cannot join your way back to a smaller state. The ascending chain never '
