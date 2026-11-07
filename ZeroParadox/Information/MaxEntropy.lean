@@ -1,4 +1,4 @@
--- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the fair coin maximizes entropy, missing information vanishes exactly there, and almost every fair-coin tape is incompressible for every prefix-free decoder. Curated results indexed in ZeroParadox/MANIFEST.md.
+-- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the fair coin maximizes entropy, missing information vanishes exactly there, and for each prefix-free decoder almost every fair-coin tape is incompressible. Curated results indexed in ZeroParadox/MANIFEST.md.
 import ZeroParadox.Information.TwoRequirements
 import Mathlib.Analysis.SpecialFunctions.BinaryEntropy
 import Mathlib.Analysis.Convex.Jensen
