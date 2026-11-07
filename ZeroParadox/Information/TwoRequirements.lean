@@ -404,7 +404,7 @@ theorem exists_MLRandom (p : NNReal) (hp : p ≤ 1) : ∃ w, MLRandom (trials p 
 
 /-- `Statement:` if ⊥ of `L` has a first step and `0 < p ≤ 1`, then for `trials p hp`-almost every
 tape `w`, `w` fires (`hw`) and `snap_of_firstStep_fires_once`'s conclusion holds. One way. Almost
-every, not every: the all-`false` tape never fires (the `example`s below). No map from ⊥ of `L` to a
+every, not every: the all-`false` tape never fires (the `example` below). No map from ⊥ of `L` to a
 tape or to `trials p hp` is claimed. -/
 theorem snap_ae_of_firstStep {L : Type*} [ZPSemilattice L] (hR1 : BotHasFirstStep L)
     (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p) :
@@ -428,7 +428,9 @@ Martin-Löf random for `trials p hp` and carries `snap_ae_of_firstStep`'s conclu
 (all tapes under `trials p hp`) and the point reading (one Martin-Löf random tape) agree almost
 everywhere: the ensemble's typical member is a random tape that gives the snap. That ⊥ of `L` is the
 ensemble or a random tape is not proved here; `BotHasFirstStep L` stays a hypothesis, and a firing
-is not proved to be an execution event. -/
+is not proved to be an execution event. Prior art for the pattern (`snap_ae_of_firstStep` the
+almost-every form, `snap_of_firstStep_MLRandom` the every-random form): Landsman, *Typical = random*,
+arXiv:2306.09226, § 4, p. 16; the credit runs from Landsman to here. -/
 theorem mlRandom_and_snap_ae {L : Type*} [ZPSemilattice L] (hR1 : BotHasFirstStep L)
     (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p) :
     ∀ᵐ w ∂(trials p hp), MLRandom (trials p hp) w ∧ ∃ (φ : Bool → L) (hw : ∃ k, w k = true),
@@ -440,7 +442,7 @@ theorem mlRandom_and_snap_ae {L : Type*} [ZPSemilattice L] (hR1 : BotHasFirstSte
   exact ⟨hML, snap_of_firstStep_MLRandom hR1 p hp hp0 w hML⟩
 
 -- Statement: CONTROL, almost every is not every: at the all-`false` tape no `hw` exists, so the
--- conclusion fails there for every `L` (measure zero: the measure-one CONTROL `example` closing
+-- conclusion fails there for every `L` (measure zero: the measure-one CONTROL `example` in
 -- `ZeroParadox/Information/CrossingTrials.lean` § VIII). Dropping the first step: `nnreal_not_botHasFirstStep`.
 example {L : Type*} [ZPSemilattice L] :
     ¬ ∃ (_ : Bool → L) (_ : ∃ k, (fun _ => false : ℕ → Bool) k = true), True :=
