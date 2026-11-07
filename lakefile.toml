@@ -19,7 +19,7 @@ weak.linter.dupNamespace = false      # e.g. ZeroParadox.APG.APG — harmless; r
 [[require]]
 name = "mathlib"
 scope = "leanprover-community"
-rev = "v4.30.0-rc2"
+rev = "v4.35.0"
 
 [[lean_lib]]
 name = "ZeroParadox"
