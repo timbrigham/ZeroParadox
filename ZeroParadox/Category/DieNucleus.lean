@@ -366,6 +366,6 @@ open ZeroParadox
 #print axioms dnegLandingForcedInstance
 -- Mathlib, the two `Prop` instances contrasted above: the pinned one and the synthesized one.
 #print axioms Prop.instHeytingAlgebra
-#print axioms Prop.instCompleteLinearOrder
+#print axioms Prop.completeLinearOrder
 
 end PurityCheck

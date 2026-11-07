@@ -146,7 +146,7 @@ theorem attractor_sameShape : SameShapeFromAnywhere (fun x : Q₂ => 2 * x) := b
     intro N
     have htend : Tendsto (fun n : ℕ => (fun y : Q₂ => 2 * y)^[N + n] x) atTop (𝓝 0) := by
       have h := (doubling_orbit_tendsto_zero x).comp (tendsto_add_atTop_nat N)
-      simpa [hiter, Function.comp, add_comm] using h
+      simpa [hiter, Function.comp_def, add_comm] using h
     exact mem_closure_of_tendsto htend (Filter.Eventually.of_forall fun _ => Set.mem_range_self _)
   · -- uniqueness: y in every N-tail closure ⇒ ‖y‖ ≤ ‖2‖^N‖x‖ ∀N ⇒ y = 0
     intro y hy
@@ -190,13 +190,13 @@ structure BottomInvariantKernel (X : Type*) [Fintype X] where
     in a third domain (finite stochastic dynamics). -/
 noncomputable def markovBIK : BottomInvariantKernel (Fin 2) where
   κ := fullMix
-  μ := PMF.uniformOfFintype (Fin 2)
+  μ := fairCoinFin2
   stationary := by unfold fullMix; exact PMF.bind_const _ _
 
 /-- **Stochastic same shape from anywhere.** From *every* starting distribution, one step of the
     full-mixing kernel reaches the uniform stationary law — the stochastic form of "start anywhere,
     get the same shape." -/
-theorem markov_sameShape (μ : PMF (Fin 2)) : μ.bind fullMix = PMF.uniformOfFintype (Fin 2) := by
+theorem markov_sameShape (μ : PMF (Fin 2)) : μ.bind fullMix = fairCoinFin2 := by
   unfold fullMix; exact PMF.bind_const _ _
 
 /-- **`Statement:` `Fin 0` carries no `BottomInvariantKernel`** — no `PMF` on the empty type. One of
@@ -283,14 +283,14 @@ noncomputable def attractorIMK : InvariantMarkovKernel Q₂ where
     distribution as its stationary law. A genuine Markov kernel in the *same* structure as the two
     deterministic p-adic faces. -/
 noncomputable def markovIMK : InvariantMarkovKernel (Fin 2) where
-  κ := Kernel.const (Fin 2) ((PMF.uniformOfFintype (Fin 2)).toMeasure)
+  κ := Kernel.const (Fin 2) (fairCoinFin2.toMeasure)
   markov := inferInstance
-  μ := (PMF.uniformOfFintype (Fin 2)).toMeasure
+  μ := fairCoinFin2.toMeasure
   isProb := inferInstance
   invariant := by
-    show ((PMF.uniformOfFintype (Fin 2)).toMeasure).bind
-        (Kernel.const (Fin 2) ((PMF.uniformOfFintype (Fin 2)).toMeasure))
-        = (PMF.uniformOfFintype (Fin 2)).toMeasure
+    show (fairCoinFin2.toMeasure).bind
+        (Kernel.const (Fin 2) (fairCoinFin2.toMeasure))
+        = fairCoinFin2.toMeasure
     rw [Measure.const_comp, measure_univ, one_smul]
 
 /-! ## § VII — Attracting kernels: convergence to the invariant law (the #2 ↔ #3 bridge)
@@ -346,7 +346,7 @@ theorem attracting_attractor : AttractingKernel attractorIMK := by
           Measure.map_map measurable_doubling_map (measurable_doubling_map.iterate k),
           ← Function.iterate_succ']
   -- weak convergence, tested against bounded continuous functions
-  rw [ProbabilityMeasure.tendsto_iff_forall_integral_tendsto]
+  refine ProbabilityMeasure.tendsto_iff_forall_integral_tendsto.mpr ?_
   intro f
   show Tendsto (fun n => ∫ x, f x ∂((step attractorIMK)^[n] ν : Measure Q₂)) atTop
       (𝓝 (∫ x, f x ∂(Measure.dirac (0 : Q₂))))
@@ -386,8 +386,8 @@ theorem attracting_markov : AttractingKernel markovIMK := by
     intro ρ
     apply Subtype.ext
     show (ρ : Measure (Fin 2)).bind
-        (Kernel.const (Fin 2) ((PMF.uniformOfFintype (Fin 2)).toMeasure))
-        = (PMF.uniformOfFintype (Fin 2)).toMeasure
+        (Kernel.const (Fin 2) (fairCoinFin2.toMeasure))
+        = fairCoinFin2.toMeasure
     haveI : IsProbabilityMeasure (ρ : Measure (Fin 2)) := ρ.2
     rw [Measure.const_comp, measure_univ, one_smul]
   apply tendsto_nhds_of_eventually_eq
@@ -474,7 +474,7 @@ theorem odometer_not_attracting : ¬ AttractingKernel (odometerIMK (p := p)) := 
   -- so Haar would equal a Dirac mass — impossible, Haar is non-atomic
   have hHaar : haarZp (p := p) = Measure.dirac y := by
     have := congrArg (fun m : ProbabilityMeasure ℤ_[p] => (m : Measure ℤ_[p])) hy
-    simpa [MeasureTheory.diracProba] using this.symm
+    exact this.symm
   -- Haar is odometer-invariant, so `δ_y = δ_{1+y}`, forcing `1 = 0`
   have hinv : (haarZp (p := p)).map (1 + ·) = haarZp (p := p) := (measurePreserving_odometer 1).map_eq
   rw [hHaar, Measure.map_dirac' measurable_odometer_map] at hinv
@@ -517,10 +517,9 @@ theorem no_mp_attractor_to_markov :
     rw [Measure.dirac_apply_of_mem (Set.mem_singleton _)]
   rw [hmap] at hlhs
   have hrhs : markovIMK.μ {φ 0} = (2 : ENNReal)⁻¹ := by
-    show (PMF.uniformOfFintype (Fin 2)).toMeasure {φ 0} = (2 : ENNReal)⁻¹
-    rw [PMF.toMeasure_apply_singleton _ _ (measurableSet_singleton _),
-      PMF.uniformOfFintype_apply]
-    norm_num
+    show fairCoinFin2.toMeasure {φ 0} = (2 : ENNReal)⁻¹
+    rw [PMF.toMeasure_apply_singleton _ _ (measurableSet_singleton _)]
+    simp only [fairCoinFin2, PMF.ofFintype_apply]
   rw [hrhs, ENNReal.inv_eq_one] at hlhs
   exact absurd hlhs (by norm_num)
 

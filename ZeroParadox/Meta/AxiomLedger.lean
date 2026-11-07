@@ -43,12 +43,6 @@ theorem bridge_sqrt_le (new : type_of% @cf_sqrt_le) : type_of% @Nat.sqrt_le := n
 /-- `Statement:` `cf_lt_succ_sqrt`'s type implies `Nat.lt_succ_sqrt`'s. -/
 theorem bridge_lt_succ_sqrt (new : type_of% @cf_lt_succ_sqrt) :
     type_of% @Nat.lt_succ_sqrt := new
-/-- `Statement:` `cf_sqrt_iter_sq_le`'s type implies `Nat.sqrt.iter_sq_le`'s. -/
-theorem bridge_sqrt_iter_sq_le (new : type_of% @ZeroParadox.cf_sqrt_iter_sq_le) :
-    type_of% @Nat.sqrt.iter_sq_le := new
-/-- `Statement:` `cf_sqrt_lt_iter_succ_sq`'s type implies `Nat.sqrt.lt_iter_succ_sq`'s. -/
-theorem bridge_sqrt_lt_iter_succ_sq (new : type_of% @ZeroParadox.cf_sqrt_lt_iter_succ_sq) :
-    type_of% @Nat.sqrt.lt_iter_succ_sq := new
 /-- `Statement:` `cf_sqrt_le_self`'s type implies `Nat.sqrt_le_self`'s. -/
 theorem bridge_sqrt_le_self (new : type_of% @ZeroParadox.cf_sqrt_le_self) :
     type_of% @Nat.sqrt_le_self := new
@@ -58,9 +52,6 @@ theorem bridge_unpair_left_le (new : type_of% @ZeroParadox.cf_unpair_left_le) :
 /-- `Statement:` `cf_unpair_right_le`'s type implies `Nat.unpair_right_le`'s. -/
 theorem bridge_unpair_right_le (new : type_of% @ZeroParadox.cf_unpair_right_le) :
     type_of% @Nat.unpair_right_le := new
-/-- `Statement:` `cf_div2_val`'s type implies `Nat.div2_val`'s. -/
-theorem bridge_div2_val (new : type_of% @ZeroParadox.cf_div2_val) :
-    type_of% @Nat.div2_val := new
 /-- `Statement:` `cf_eval_id`'s type implies `Nat.Partrec.Code.eval_id`'s. -/
 theorem bridge_eval_id (new : type_of% @ZeroParadox.cf_eval_id) :
     type_of% @Nat.Partrec.Code.eval_id := new
@@ -87,17 +78,12 @@ def replacements : List Corpus.Audit.Row :=
     rep `ZeroParadox.AxiomLedger.cf_sqrt_le `ZeroParadox.AxiomLedger.bridge_sqrt_le `Nat.sqrt_le,
     rep `ZeroParadox.AxiomLedger.cf_lt_succ_sqrt `ZeroParadox.AxiomLedger.bridge_lt_succ_sqrt
       `Nat.lt_succ_sqrt,
-    rep `ZeroParadox.cf_sqrt_iter_sq_le `ZeroParadox.AxiomLedger.bridge_sqrt_iter_sq_le
-      `Nat.sqrt.iter_sq_le,
-    rep `ZeroParadox.cf_sqrt_lt_iter_succ_sq `ZeroParadox.AxiomLedger.bridge_sqrt_lt_iter_succ_sq
-      `Nat.sqrt.lt_iter_succ_sq,
     rep `ZeroParadox.cf_sqrt_le_self `ZeroParadox.AxiomLedger.bridge_sqrt_le_self
       `Nat.sqrt_le_self,
     rep `ZeroParadox.cf_unpair_left_le `ZeroParadox.AxiomLedger.bridge_unpair_left_le
       `Nat.unpair_left_le,
     rep `ZeroParadox.cf_unpair_right_le `ZeroParadox.AxiomLedger.bridge_unpair_right_le
       `Nat.unpair_right_le,
-    rep `ZeroParadox.cf_div2_val `ZeroParadox.AxiomLedger.bridge_div2_val `Nat.div2_val,
     rep `ZeroParadox.cf_eval_id `ZeroParadox.AxiomLedger.bridge_eval_id
       `Nat.Partrec.Code.eval_id,
     rep `ZeroParadox.cf_eval_curry `ZeroParadox.AxiomLedger.bridge_eval_curry
@@ -122,9 +108,13 @@ def profiles : List Corpus.Audit.ProfileRow :=
     ⟨`ZeroParadox.const_not_quine_succ, ours⟩,
     ⟨`ZeroParadox.cf_amgm, ours⟩,
     ⟨`ZeroParadox.cf_sq_succ, ours⟩,
+    ⟨`ZeroParadox.cf_sqrt_iter_sq_le, ours⟩,
+    ⟨`ZeroParadox.cf_sqrt_lt_iter_succ_sq, ours⟩,
+    ⟨`Nat.sqrt.iter.eq_1, ["Quot.sound"]⟩,
     ⟨`ZeroParadox.cf_sqrt_isSqrt, ours⟩,
     ⟨`ZeroParadox.cf_sqrt_eq_of, ours⟩,
     ⟨`ZeroParadox.cf_bodd_add_div2, ours⟩,
+    ⟨`ZeroParadox.cf_div2_val, ours⟩,
     ⟨`ZeroParadox.cf_eval_succ, []⟩,
     ⟨`ZeroParadox.cf_eval_left, ours⟩,
     ⟨`ZeroParadox.cf_eval_right, ours⟩,
@@ -155,7 +145,7 @@ def profiles : List Corpus.Audit.ProfileRow :=
     ⟨`ZeroParadox.ofNatCodeCF_eq_ofNatCode, Corpus.Audit.stock⟩,
     ⟨`ZeroParadox.stmtOfNatCodeCFEq, Corpus.Audit.stock⟩,
     ⟨`ZeroParadox.boddNat_div2Nat_eq, ours⟩,
-    ⟨`ZeroParadox.boddNat_eq, []⟩,
+    ⟨`ZeroParadox.boddNat_eq, ours⟩,
     ⟨`ZeroParadox.cf_exists_code_mp, ours⟩,
     ⟨`ZeroParadox.cf_primrec_casesOn', ours⟩,
     ⟨`ZeroParadox.codeArg_add_four, []⟩,
@@ -358,12 +348,9 @@ open ZeroParadox.AxiomLedger
 #print axioms bridge_pair_unpair
 #print axioms bridge_sqrt_le
 #print axioms bridge_lt_succ_sqrt
-#print axioms bridge_sqrt_iter_sq_le
-#print axioms bridge_sqrt_lt_iter_succ_sq
 #print axioms bridge_sqrt_le_self
 #print axioms bridge_unpair_left_le
 #print axioms bridge_unpair_right_le
-#print axioms bridge_div2_val
 #print axioms bridge_eval_id
 #print axioms bridge_eval_curry
 #print axioms bridge_eval_prec_zero

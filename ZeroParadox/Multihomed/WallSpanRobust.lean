@@ -130,8 +130,7 @@ theorem faithful_iff_descending {S : Type u} (r : S → S → Prop) :
   constructor
   · rintro ⟨f, hf⟩; exact apex_wf_of_strictMono_to_ordinal r f hf
   · intro hwf
-    haveI : IsWellFounded S r := ⟨hwf⟩
-    exact ⟨IsWellFounded.rank r, fun a b hab => IsWellFounded.rank_lt_of_rel hab⟩
+    exact ⟨WellFounded.rank r, fun a b hab => WellFounded.rank_lt_of_rel hab⟩
 
 end ZeroParadox
 

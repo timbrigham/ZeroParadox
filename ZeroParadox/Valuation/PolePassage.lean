@@ -45,7 +45,7 @@ noncomputable def arcS (n : ℕ) : Sphere :=
 theorem arcS_tendsto_zero : Tendsto arcS atTop (𝓝 (OnePoint.some (0 : ℚ_[2]))) := by
   have h : Tendsto (fun n => ((cnfToZp2 (towerNONote n) : ℤ_[2]) : ℚ_[2])) atTop (𝓝 0) := by
     have := (continuous_subtype_val (p := fun x : ℚ_[2] => ‖x‖ ≤ 1)).tendsto (0 : ℤ_[2])
-    simpa using this.comp tower_converges_to_zero
+    exact this.comp tower_converges_to_zero
   exact (OnePoint.continuous_coe.tendsto _).comp h
 
 /-- `Statement:` `rInv ∘ arcS` tends to `∞` of `Sphere`, starts at `∞`, and has stage `n + 1` equal

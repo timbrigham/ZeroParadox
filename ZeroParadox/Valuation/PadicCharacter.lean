@@ -2,6 +2,7 @@
 import ZeroParadox.Valuation.PadicHaar
 import Mathlib.Algebra.Group.AddChar
 import Mathlib.MeasureTheory.Integral.Bochner.Basic
+import Mathlib.MeasureTheory.Integral.Bochner.Set
 import Mathlib.MeasureTheory.Group.Measure
 import Mathlib.Tactic
 

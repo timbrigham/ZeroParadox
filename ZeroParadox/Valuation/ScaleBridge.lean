@@ -352,7 +352,9 @@ theorem valBridge_scale_not_injective :
 
 -- Statement: infinitude ALONE suffices — no property of ℤ_[2] beyond its cardinality is used.
 -- (`instZ2ValBridge` above is a separate, sharper witness with the actual 2-adic scale and val.)
-example : Nonempty (ValBridge ℤ_[2]) := nonempty_valBridge_of_infinite _
+example : Nonempty (ValBridge ℤ_[2]) :=
+  haveI : Infinite ℤ_[2] := Infinite.of_injective ((↑) : ℕ → ℤ_[2]) Nat.cast_injective
+  nonempty_valBridge_of_infinite _
 
 -- Statement: the two-element carrier is excluded. `Nontrivial` is supplied here rather than
 -- registered, so this example adds no declaration.

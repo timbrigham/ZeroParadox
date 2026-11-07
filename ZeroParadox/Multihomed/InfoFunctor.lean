@@ -65,9 +65,14 @@ noncomputable def fC_functor : ℕ ⥤ KleisliCat PMF where
   map_id n := by
     funext i
     simp [fC_map, KleisliCat.id_def]
+    rfl
   map_comp f g := by
     funext i
-    simp [fC_map, KleisliCat.comp_def]
+    show (pure (Fin.castLE _ i) : PMF (Fin _)) =
+      (pure (Fin.castLE (leOfHom f) i) : PMF (Fin _)) >>=
+        fun j => (pure (Fin.castLE (leOfHom g) j) : PMF (Fin _))
+    rw [pure_bind]
+    rfl
 
 /-- ⊥ = `Fin 0` is the genuine initial object of `KleisliCat PMF`:
     there is exactly one stochastic map out of the empty type. -/
@@ -82,7 +87,7 @@ noncomputable def fC_zero_isInitial : Limits.IsInitial (fC_functor.obj 0) := by
 theorem fC_no_return {n : ℕ} (hn : 0 < n) :
     IsEmpty (fC_functor.obj n ⟶ fC_functor.obj 0) := by
   refine ⟨fun f => ?_⟩
-  have hsum : ∑' a : Fin 0, (f ⟨0, hn⟩) a = 1 := PMF.tsum_coe _
+  have hsum := PMF.tsum_coe (show PMF (Fin 0) from f ⟨0, hn⟩)
   rw [tsum_empty] at hsum
   exact zero_ne_one hsum
 

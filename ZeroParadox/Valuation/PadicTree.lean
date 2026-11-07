@@ -56,7 +56,7 @@ def children (v : Vtx) : Set Vtx := {v ++ [0], v ++ [1]}
 def tree : SimpleGraph Vtx where
   Adj v w := (∃ d : Fin 2, w = v ++ [d]) ∨ (∃ d : Fin 2, v = w ++ [d])
   symm := by
-    intro v w h
+    refine ⟨fun v w h => ?_⟩
     rcases h with ⟨d, hd⟩ | ⟨d, hd⟩
     · exact Or.inr ⟨d, hd⟩
     · exact Or.inl ⟨d, hd⟩

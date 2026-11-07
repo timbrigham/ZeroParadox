@@ -140,10 +140,12 @@ uniform in `p`, yields weak excluded middle. Choice-free: the decision is the hy
 witness facts (`gx_eq_gb0`, `gx_eq_gb1`, `glue_b0_ne_b1`) carry only `[propext, Quot.sound]`. -/
 theorem wem_of_glue_identity (h : ∀ p : Prop, Decidable (gx p = gb0 p)) : WeakExcludedMiddle := by
   intro p
-  rcases h p with hne | heq
-  · -- `gx p ≠ gb0 p`: were `p` to hold, `gx p = gb0 p` (`gx_eq_gb0`). So `¬p`.
+  cases h p with
+  | isFalse hne =>
+    -- `gx p ≠ gb0 p`: were `p` to hold, `gx p = gb0 p` (`gx_eq_gb0`). So `¬p`.
     exact Or.inl fun hp => hne (gx_eq_gb0 p hp)
-  · -- `gx p = gb0 p`: were `¬p` to hold, `gx p = gb1 p`, forcing `gb0 p = gb1 p`. So `¬¬p`.
+  | isTrue heq =>
+    -- `gx p = gb0 p`: were `¬p` to hold, `gx p = gb1 p`, forcing `gb0 p = gb1 p`. So `¬¬p`.
     exact Or.inr fun hnp => glue_b0_ne_b1 p (heq.symm.trans (gx_eq_gb1 p hnp))
 
 /-! ## § II — Decidable equality of the carrier implies weak excluded middle -/

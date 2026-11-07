@@ -131,7 +131,7 @@ example : ∃ f : Phase → Ordinal.{0}, Function.Injective f ∧
       exact ⟨fun _ => lt_of_lt_of_le (pos_iff_ne_zero.2 hb) le_self_add,
         fun _ => pos_iff_ne_zero.2 hb⟩
     · subst hb; rw [if_neg ha, if_pos rfl]
-      exact ⟨fun h => absurd h (not_lt.2 (zero_le _)), fun h => absurd h (not_lt.2 (zero_le _))⟩
+      exact ⟨fun h => absurd h (not_lt.2 (zero_le)), fun h => absurd h (not_lt.2 (zero_le))⟩
     · rw [if_neg ha, if_neg hb, ← Order.succ_eq_add_one, ← Order.succ_eq_add_one]
       exact Order.succ_lt_succ_iff.symm
   have key : ∀ b, (1 : Ordinal) ≠ f (Phase.up b) := fun b h => by
@@ -196,7 +196,7 @@ theorem phaseTop_epsilon0_isLeast_landing_above_snap :
   refine ⟨fun x => ?_, ⟨?_, ?_⟩, ?_⟩
   · induction x using WithTop.recTopCoe with
     | top => exact le_top
-    | coe a => exact WithTop.coe_le_coe.2 (zero_le a)
+    | coe a => exact WithTop.coe_le_coe.2 (zero_le (a := a))
   · show WithTop.map _ ((epsilonZero : Ordinal) : WithTop Ordinal) = _
     rw [WithTop.map_coe]; exact congrArg _ (Ordinal.nfp_eq_self epsilonZero_fixedPoint)
   · exact WithTop.coe_lt_coe.2 (Ordinal.epsilon_pos 0)
@@ -248,19 +248,32 @@ example : (phaseRel Phase.floor Phase.floor ∧ ¬ Acc phaseRel Phase.floor) ∧
 
 /-! ### § II. The lifted closure -/
 
+section
+-- [ZP port] Lean 4.35: Mathlib's `WithBot` orders carry `Classical.choice`; scope `ZeroParadox/Order/ChoiceFreeWithTop.lean`'s.
+attribute [local instance high] withBotPreorderCF withBotPartialOrderCF
+
 /-- `Statement:` a closure operator `c` on `α` lifts to `WithBot α` by `WithBot.map c`, fixing the
     adjoined `⊥ : WithBot α`; its monotone part is Mathlib's `OrderHom.withBotMap`. -/
 def withBotClosure {α : Type*} [PartialOrder α] (c : ClosureOperator α) :
     ClosureOperator (WithBot α) :=
-  ClosureOperator.mk' (WithBot.map c) c.monotone.withBot_map
+  ClosureOperator.mk' (WithBot.map c)
+    (fun x y h => by
+      induction x using WithBot.recBotCoe with
+      | bot => exact WithBot.LE.bot_le _
+      | coe a =>
+        induction y using WithBot.recBotCoe with
+        | bot => cases h
+        | coe b =>
+          cases h with
+          | coe_le_coe h => exact WithBot.LE.coe_le_coe (c.monotone h))
     (fun x => by
       induction x using WithBot.recBotCoe with
       | bot => exact le_rfl
-      | coe a => exact WithBot.coe_le_coe.2 (c.le_closure a))
+      | coe a => exact WithBot.LE.coe_le_coe (c.le_closure a))
     (fun x => by
       induction x using WithBot.recBotCoe with
       | bot => exact le_rfl
-      | coe a => exact WithBot.coe_le_coe.2 (c.idempotent a).le)
+      | coe a => exact WithBot.LE.coe_le_coe (c.idempotent a).le)
 
 -- `Statement:` the lift's underlying map is `OrderHom.withBotMap` of `c`.
 example {α : Type*} [PartialOrder α] (c : ClosureOperator α) :
@@ -271,6 +284,8 @@ example {α : Type*} [PartialOrder α] (c : ClosureOperator α) :
 theorem withBotClosure_apply {α : Type*} [PartialOrder α] (c : ClosureOperator α) :
     withBotClosure c ⊥ = ⊥ ∧ ∀ a : α, withBotClosure c a = (c a : WithBot α) :=
   ⟨rfl, fun _ => rfl⟩
+
+end
 
 /-! ### § III. The instance on the floor-below member: the corner at the floor
 
@@ -283,13 +298,13 @@ theorem withBotClosure_apply {α : Type*} [PartialOrder α] (c : ClosureOperator
 noncomputable def phaseUpAndOver : UpAndOver (WithBot Ordinal) where
   up := withBotClosure ordinalUpAndOver.up
   corner := ⟨⊥, ((0 : Ordinal) : WithBot Ordinal), (withBotClosure _).isClosed_iff.2 rfl,
-    WithBot.bot_covBy_coe.2 (fun b _ => zero_le b), fun h => by
+    WithBot.bot_covBy_coe.2 (fun b _ => zero_le (a := b)), fun h => by
       have h' : Ordinal.nfp (fun a => Ordinal.omega0 ^ a) 0 = 0 := WithBot.coe_injective h
       rw [← epsilonZero_eq_nfp] at h'
       exact epsilon0_ne_zero h'⟩
   cover := fun y _ _ => by
     induction y using WithBot.recBotCoe with
-    | bot => exact ⟨_, WithBot.bot_covBy_coe.2 (fun b _ => zero_le b)⟩
+    | bot => exact ⟨_, WithBot.bot_covBy_coe.2 (fun b _ => zero_le (a := b))⟩
     | coe o =>
       exact ⟨((Order.succ o : Ordinal) : WithBot Ordinal), WithBot.coe_covBy_coe.2 (Order.covBy_succ o)⟩
 
@@ -302,7 +317,7 @@ theorem phase_floor_isBot : IsBot (phaseEquivWithBot Phase.floor) :=
 /-- `Statement:` the snap covers the boundary model's floor: `⊥ ⋖ ↑0` in `WithBot Ordinal`, nothing
     strictly between (Mathlib `WithBot.bot_covBy_coe`, at the ordinals' least element `0`). -/
 theorem phase_floor_covBy_snap : phaseEquivWithBot Phase.floor ⋖ phaseEquivWithBot snap :=
-  WithBot.bot_covBy_coe.2 (fun b _ => zero_le b)
+  WithBot.bot_covBy_coe.2 (fun b _ => zero_le (a := b))
 
 /-- `Statement:` the tower operator `ω^·` lifted to `WithBot Ordinal`, fixing the floor
     `⊥ : WithBot Ordinal`. -/
@@ -314,7 +329,7 @@ noncomputable def phaseTower : WithBot Ordinal → WithBot Ordinal :=
 theorem phase_epsilon0_isLeastFixedPointFrom_snap :
     IsLeastFixedPointFrom (· ≤ ·) phaseTower (phaseEquivWithBot snap)
       ((epsilonZero : Ordinal) : WithBot Ordinal) := by
-  refine ⟨WithBot.coe_le_coe.2 (zero_le _), ?_, fun b hb hle => ?_⟩
+  refine ⟨WithBot.coe_le_coe.2 (zero_le), ?_, fun b hb hle => ?_⟩
   · show ((Ordinal.omega0 ^ epsilonZero : Ordinal) : WithBot Ordinal) = _
     rw [epsilonZero_fixedPoint]
   · induction b using WithBot.recBotCoe with
@@ -346,7 +361,7 @@ theorem phaseUp_zero_eq_one :
       = phaseUpAndOver.up ((1 : Ordinal) : WithBot Ordinal) := by
   show ((Ordinal.nfp (fun a => Ordinal.omega0 ^ a) 0 : Ordinal) : WithBot Ordinal)
     = ((Ordinal.nfp (fun a => Ordinal.omega0 ^ a) 1 : Ordinal) : WithBot Ordinal)
-  rw [nfp_seed_independent_below_epsilon0 0 (zero_le _),
+  rw [nfp_seed_independent_below_epsilon0 0 (zero_le),
     nfp_seed_independent_below_epsilon0 1 (Order.one_le_iff_ne_zero.2 epsilon0_ne_zero)]
 
 -- `Statement:` the closure is idempotent and not injective (`UpAndOver.up_not_injective`).

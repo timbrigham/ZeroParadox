@@ -212,9 +212,8 @@ either `x` is in the ball around the bottom stream or it is not — no intermedi
 step-function character of p-adic balls, choice-free via decidability of a bounded quantifier. -/
 theorem clopen_gap_at_bot (n : ℕ) (x : Str) :
     AgreeTo n botStr x ∨ ¬ AgreeTo n botStr x := by
-  rcases decidableAgreeTo n botStr x with h | h
-  · exact Or.inr h
-  · exact Or.inl h
+  exact Decidable.falseTrueCases (motive := fun _ => AgreeTo n botStr x ∨ ¬ AgreeTo n botStr x)
+    (fun h => Or.inr h) (fun h => Or.inl h) (decidableAgreeTo n botStr x)
 
 /-- Agreement at every depth is incompatible with apartness. -/
 theorem not_apart_of_agree_all (x y : Str) (h : ∀ n, AgreeTo n x y) : ¬ Apart x y := by

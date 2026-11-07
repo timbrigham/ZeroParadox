@@ -112,14 +112,16 @@ theorem markov_contraction_tendsto {a : ℝ} (ha0 : 0 < a) (ha1 : a < 1)
     simp only [unif]
     have : Tendsto (fun k => (1 + imb ((markovStep a)^[k] v₀)) / 2) atTop (nhds ((1 + 0) / 2)) := by
       exact ((tendsto_const_nhds.add himb).div_const 2)
-    simpa only [add_zero] using (this.congr (fun k => (e0 k).symm))
+    exact (by simpa only [add_zero] using (this.congr (fun k => (e0 k).symm)) :
+      Tendsto (fun k => ((markovStep a)^[k] v₀) 0) atTop (nhds (1 / 2)))
   · -- coordinate 1 → unif 1 = 1/2
     have e1 : ∀ k, ((markovStep a)^[k] v₀) 1 = (1 - imb ((markovStep a)^[k] v₀)) / 2 := fun k =>
       (coord_from_imb (hline k)).2
     simp only [unif]
     have : Tendsto (fun k => (1 - imb ((markovStep a)^[k] v₀)) / 2) atTop (nhds ((1 - 0) / 2)) := by
       exact ((tendsto_const_nhds.sub himb).div_const 2)
-    simpa only [sub_zero] using (this.congr (fun k => (e1 k).symm))
+    exact (by simpa only [sub_zero] using (this.congr (fun k => (e1 k).symm)) :
+      Tendsto (fun k => ((markovStep a)^[k] v₀) 1) atTop (nhds (1 / 2)))
 
 /-! ### NO-GO half: the swap kernel (`a = 1`) has a non-convergent orbit -/
 

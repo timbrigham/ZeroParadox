@@ -296,7 +296,7 @@ theorem f_snap_impossible : ¬∃ ε₀ : F, 0 < ε₀ ∧ ¬∃ δ : F, 0 < δ 
     can check without the order-theory library. -/
 theorem axb1_fails_in_ordered_field : ¬ HasFirstStep (0 : F) := by
   rintro ⟨a, hcov⟩
-  exact not_covBy hcov
+  exact not_covBy_of_denselyOrdered hcov
 
 end General
 

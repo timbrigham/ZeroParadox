@@ -576,7 +576,7 @@ example {x y : ℚ_[2]} (hx : x ≠ 0) (hy : y ≠ 0) :
     have hn : ‖y / x‖ ≤ 1 := by
       rw [Padic.norm_le_one_iff_val_nonneg, div_eq_mul_inv,
         Padic.valuation_mul hy (inv_ne_zero hx), Padic.valuation_inv]; omega
-    exact ⟨⟨y / x, hn⟩, by rw [Algebra.smul_def]; simp [div_mul_cancel₀ y hx]⟩
+    exact ⟨Padic.lift (y / x) hn, by rw [Algebra.smul_def]; simp [div_mul_cancel₀ y hx]⟩
   · rintro ⟨c, rfl⟩
     rw [Algebra.smul_def] at hy ⊢
     have hc : (algebraMap ℤ_[2] ℚ_[2] c) ≠ 0 := left_ne_zero_of_mul hy

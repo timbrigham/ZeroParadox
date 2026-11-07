@@ -121,8 +121,9 @@ def cofixMk (a : A) : Cofix (constPF A).Obj :=
 
 /-- `Cofix.dest (cofixMk a)` has head `a`. -/
 theorem cofixMk_head (a : A) : (Cofix.dest (cofixMk a)).1 = a := by
-  rw [cofixMk, Cofix.dest_corec]
-  rfl
+  exact (congrArg (fun z : (constPF A).Obj (Cofix (constPF A).Obj) => z.1)
+    (Cofix.dest_corec (F := (constPF A).Obj)
+      (fun a => (⟨a, fun e => e.elim⟩ : (constPF A).Obj A)) a)).trans rfl
 
 /-- `Cofix ≃ A`: the final coalgebra of the all-leaf constant functor collapses to `A`.
 The right inverse `cofixMk (dest x).1 = x` is proved by bisimulation. -/
@@ -138,7 +139,8 @@ def cofixEquiv : Cofix (constPF A).Obj ≃ A where
     rw [liftr_iff]
     refine ⟨(Cofix.dest v).1, fun e => e.elim, fun e => e.elim, ?_, ?_, ?_⟩
     · -- Cofix.dest (cofixMk (Cofix.dest v).1) = abs ⟨(Cofix.dest v).1, PEmpty.elim⟩
-      rw [cofixMk, Cofix.dest_corec]
+      refine (Cofix.dest_corec (F := (constPF A).Obj)
+        (fun a => (⟨a, fun e => e.elim⟩ : (constPF A).Obj A)) (Cofix.dest v).1).trans ?_
       apply Sigma.ext
       · rfl
       · apply heq_of_eq

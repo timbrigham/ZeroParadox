@@ -591,14 +591,14 @@ example : ZeroParadox.BotCovered Bool ∧ ZeroParadox.BotCovered ℕ :=
   ⟨⟨true, covBy_of_eq_or_eq (by decide) fun c _ _ => by cases c <;> decide⟩,
     ⟨_, Order.covBy_succ (⊥ : ℕ)⟩⟩
 example : ¬ ZeroParadox.BotCovered Unit ∧ ¬ ZeroParadox.BotCovered NNReal :=
-  ⟨fun ⟨_, h⟩ => h.lt.ne (Subsingleton.elim _ _), fun ⟨_, h⟩ => not_covBy h⟩
+  ⟨fun ⟨_, h⟩ => h.lt.ne (Subsingleton.elim _ _), fun ⟨_, h⟩ => not_covBy_of_denselyOrdered h⟩
 #check @ZeroParadox.botCovered_withBot_iff        -- Statement: ⊥ of `WithBot σ` has a cover iff `σ` has a minimal point (`[propext, Classical.choice, Quot.sound]`, through Mathlib's `WithBot.bot_covBy_coe`)
 #check @ZeroParadox.botCovered_withTop_iff        -- Statement: with ⊥ of `σ` and no maximal point, ⊥ of `WithTop σ` has a cover iff ⊥ of `σ` has one
 -- Statement: the two adjoined-point orders can disagree: `NNReal` has the cut in `WithBot` and not in
 -- `WithTop`; ℕ has it in both.
 example : ZeroParadox.BotCovered (WithBot NNReal) ∧ ¬ ZeroParadox.BotCovered (WithTop NNReal) :=
   ⟨ZeroParadox.botCovered_withBot_iff.2 ⟨⊥, isMin_bot⟩,
-   fun h => let ⟨_, ha⟩ := ZeroParadox.botCovered_withTop_iff.1 h; not_covBy ha⟩
+   fun h => let ⟨_, ha⟩ := ZeroParadox.botCovered_withTop_iff.1 h; not_covBy_of_denselyOrdered ha⟩
 example : ZeroParadox.BotCovered (WithBot ℕ) ∧ ZeroParadox.BotCovered (WithTop ℕ) :=
   ⟨ZeroParadox.botCovered_withBot_iff.2 ⟨⊥, isMin_bot⟩,
    ZeroParadox.botCovered_withTop_iff.2 ⟨_, Order.covBy_succ (⊥ : ℕ)⟩⟩
@@ -611,7 +611,7 @@ example : ZeroParadox.BotIntervalTwo Bool ∧ ZeroParadox.BotIntervalTwo (Fin 3)
   ⟨⟨true, by decide, fun c _ => by cases c <;> decide⟩, ⟨1, by decide, by decide⟩⟩
 example : ¬ ZeroParadox.BotIntervalTwo Unit ∧ ¬ ZeroParadox.BotIntervalTwo NNReal :=
   ⟨fun ⟨_, h, _⟩ => h.ne (Subsingleton.elim _ _),
-    fun h => let ⟨_, hc⟩ := ZeroParadox.botIntervalTwo_botCovered h; not_covBy hc⟩
+    fun h => let ⟨_, hc⟩ := ZeroParadox.botIntervalTwo_botCovered h; not_covBy_of_denselyOrdered hc⟩
 #check @ZeroParadox.botIntervalTwo_botCovered   -- Statement: piece ⇒ cut, no hypothesis
 #check @ZeroParadox.botCovered_botIntervalTwo   -- Statement: cut ⇒ piece, given `DecidableEq`
 #check @ZeroParadox.botCovered_botIntervalTwo_classical -- Statement: cut ⇒ piece with no binder, proved with `classical`
@@ -663,7 +663,7 @@ example : ZeroParadox.BotCovered (WithBot (WithBot ℚ)) ∧
 -- `botCovered_of_finite` is not removable; `Unit` (finite, no cut, above) is the control for the
 -- point other than ⊥.
 example : (∃ a : NNReal, a ≠ ⊥) ∧ ¬ ZeroParadox.BotCovered NNReal :=
-  ⟨⟨1, one_ne_zero⟩, fun ⟨_, h⟩ => not_covBy h⟩
+  ⟨⟨1, one_ne_zero⟩, fun ⟨_, h⟩ => not_covBy_of_denselyOrdered h⟩
 #check @ZeroParadox.axb1_fails_everywhere_iff_dense -- Statement: if `α` is a preorder, then `α` is densely ordered iff no point of `α` has a first step (`∀ bot, ¬ HasFirstStep bot`); both directions. ZP-F's restatement (`ZeroParadox/Reals/OrderedField.lean`) of Mathlib's `denselyOrdered_iff_forall_not_covBy`
 -- Statement: if `α` is a partial order with ⊥ and has the cut, then `α` is not densely ordered; the
 -- converse is refuted at the `WithTop (WithTop NNReal)` example below.
@@ -770,7 +770,7 @@ example :
           = ((k : ℚ) / 2 ^ N + j / 2 ^ M) / 2 := by
         push_cast; field_simp; ring
       rw [e]; linarith
-  exact ⟨hd, fun ⟨_, h⟩ => not_covBy h⟩
+  exact ⟨hd, fun ⟨_, h⟩ => not_covBy_of_denselyOrdered h⟩
 -- Statement: if `S` is a finite set of precisions and `q` lies in the `n`-place grid for some `n ∈ S`,
 -- then `q` lies in the grid of precision `S.sup id`, the largest in `S`; one way; the converse is
 -- not claimed.
@@ -2963,8 +2963,8 @@ example {L : Type} [ZeroParadox.ZPSemilattice L] (a : L) :
 example : (ZeroParadox.Motion.ofFun (fun x : ℕ∞ => x + 1)).reverse.SelfOnlyAt ⊤ :=
   ZeroParadox.Motion.selfOnlyAt_of_step_self
     (fun b c (hb : ⊤ = b + 1) (hc : ⊤ = c + 1) => by
-      have hb' := (WithTop.add_eq_top.1 hb.symm).resolve_right (by decide)
-      have hc' := (WithTop.add_eq_top.1 hc.symm).resolve_right (by decide)
+      have hb' := (WithTop.add_eq_top.1 hb.symm).resolve_right WithTop.one_ne_top
+      have hc' := (WithTop.add_eq_top.1 hc.symm).resolve_right WithTop.one_ne_top
       rw [hb', hc'])
     (show (⊤ : ℕ∞) = ⊤ + 1 from rfl)
 #check @ZeroParadox.Motion.eq_of_step_to_ofFun_iff_iterate -- Statement: for a function step, `y` is in the first set iff no start other than `y` reaches `y` by iterating; both directions
@@ -3376,8 +3376,8 @@ example {σ : Type} [PartialOrder σ] (g : σ → σ) (hg : ∀ x, x ≤ g x) :
 example : let M := ZeroParadox.Motion.ofTotal (id : Option ℕ → Option ℕ) (fun _ => rfl)
                 (fun a b => b = Option.map Nat.succ a)
     ¬ @ZeroParadox.Motion.StepLowers (WithBot ℕ) M _ ∧ ¬ @ZeroParadox.Motion.StepLowers (WithTop ℕ) M _ :=
-  ⟨fun h => absurd (h (some 0) (some 1) rfl) (by decide),
-   fun h => absurd (h (some 0) (some 1) rfl) (by decide)⟩
+  ⟨fun h => absurd (WithBot.coe_le_coe.1 (h (some 0) (some 1) rfl)) (by decide),
+   fun h => absurd (WithTop.coe_le_coe.1 (h (some 0) (some 1) rfl)) (by decide)⟩
 -- Statement: CONTROL, a motion moving `none`: OVER `none ↦ some 0`, `some n ↦ some (n + 1)` raises in
 -- the `WithBot` order and neither raises nor lowers in the `WithTop` order; `none` is in the first set
 -- and not in the second.
@@ -3387,8 +3387,8 @@ example : let M := ZeroParadox.Motion.ofTotal (id : Option ℕ → Option ℕ) (
       ¬ @ZeroParadox.Motion.StepLowers (WithTop ℕ) M _ ∧
       (∀ a, M.step a none → a = none) ∧ ¬ (∀ b, M.step none b → b = none) := by
   intro M
-  refine ⟨?_, fun h => absurd (h none (some 0) rfl) (by decide),
-    fun h => absurd (h (some 0) (some 1) rfl) (by decide), fun a ha => ?_,
+  refine ⟨?_, fun h => absurd (h none (some 0) rfl) (WithTop.not_top_le_coe 0),
+    fun h => absurd (WithTop.coe_le_coe.1 (h (some 0) (some 1) rfl)) (by decide), fun a ha => ?_,
     fun h => absurd (h (some 0) rfl) (by decide)⟩
   · rintro a b rfl
     rcases a with _ | n
@@ -4215,7 +4215,7 @@ example {L : Type*} [ZeroParadox.ZPSemilattice L] :
 example {F : Type*} [Field F] [LinearOrder F] [IsStrictOrderedRing F] (S : ℕ → F) :
     IsEmpty (OrderBot F) ∧ ¬ (S 0 ⋖ S 1) ∧ ¬ ZeroParadox.HasFirstStep (0 : F) :=
   ⟨⟨fun h => by letI := h; exact not_lt.2 (bot_le : (⊥ : F) ≤ ⊥ - 1) (sub_one_lt ⊥)⟩,
-    not_covBy, ZeroParadox.axb1_fails_in_ordered_field⟩
+    not_covBy_of_denselyOrdered, ZeroParadox.axb1_fails_in_ordered_field⟩
 -- Statement: CONTROL, `Unit`: `hocc` has no member and no motion on `Unit` steps elsewhere.
 example : (¬ ∃ S : ℕ → Unit, S 1 ≠ S 0) ∧ ∀ M : ZeroParadox.Motion Unit, ¬ M.LeavesAt () :=
   ⟨fun ⟨_, h⟩ => h rfl, fun _ ⟨_, _, h⟩ => h rfl⟩
@@ -4703,11 +4703,13 @@ example (d : DecidableEq Ordinal.{0}) : ZeroParadox.WeakExcludedMiddle := by
   intro p
   let o : Ordinal.{0} := ⨆ _ : p, (1 : Ordinal.{0})
   have hb : BddAbove (Set.range fun _ : p => (1 : Ordinal.{0})) := Ordinal.bddAbove_of_small
-  rcases d o 0 with h | h
-  · refine Or.inr fun hnp => h ?_
+  cases d o 0 with
+  | isFalse h =>
+    refine Or.inr fun hnp => h ?_
     have : IsEmpty p := ⟨hnp⟩
     simp [o]
-  · refine Or.inl fun hp => ?_
+  | isTrue h =>
+    refine Or.inl fun hp => ?_
     have h1 : (1 : Ordinal.{0}) ≤ o := le_ciSup hb hp
     rw [h] at h1
     exact absurd h1 (by simp)
@@ -4723,11 +4725,13 @@ example (d : DecidableEq Ordinal.{0}) : ZeroParadox.WLPO := by
   refine ZeroParadox.wlpo_of_weakExcludedMiddle fun p => ?_
   let o : Ordinal.{0} := ⨆ _ : p, (1 : Ordinal.{0})
   have hb : BddAbove (Set.range fun _ : p => (1 : Ordinal.{0})) := Ordinal.bddAbove_of_small
-  rcases d o 0 with h | h
-  · refine Or.inr fun hnp => h ?_
+  cases d o 0 with
+  | isFalse h =>
+    refine Or.inr fun hnp => h ?_
     have : IsEmpty p := ⟨hnp⟩
     simp [o]
-  · refine Or.inl fun hp => ?_
+  | isTrue h =>
+    refine Or.inl fun hp => ?_
     have h1 : (1 : Ordinal.{0}) ≤ o := le_ciSup hb hp
     rw [h] at h1
     exact absurd h1 (by simp)

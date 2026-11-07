@@ -49,7 +49,7 @@ theorem cf_amgm (a b : ℕ) : 4 * (a * b) ≤ (a + b) * (a + b) := by
 theorem cf_sq_succ (s : ℕ) : (s + 1) * (s + 1) = s * s + s + s + 1 := by
   simp only [Nat.add_mul, Nat.mul_add, Nat.mul_one, Nat.one_mul]; omega
 
-/-- `Statement:` same type as Mathlib's `Nat.sqrt.iter_sq_le`, choice-free proof. -/
+/-- `Statement:` same type as Lean core's (private) `Nat.sqrt.iter_sq_le`, choice-free proof. -/
 theorem cf_sqrt_iter_sq_le (n : ℕ) : ∀ g, Nat.sqrt.iter n g * Nat.sqrt.iter n g ≤ n := by
   intro g
   induction g using Nat.strong_induction_on with
@@ -67,7 +67,7 @@ theorem cf_sqrt_iter_sq_le (n : ℕ) : ∀ g, Nat.sqrt.iter n g * Nat.sqrt.iter 
           omega
         exact (Nat.le_div_iff_mul_le hg).1 h3
 
-/-- `Statement:` same type as Mathlib's `Nat.sqrt.lt_iter_succ_sq`, choice-free proof. -/
+/-- `Statement:` same type as Lean core's (private) `Nat.sqrt.lt_iter_succ_sq`, choice-free proof. -/
 theorem cf_sqrt_lt_iter_succ_sq (n : ℕ) : ∀ g, n < (g + 1) * (g + 1) →
     n < (Nat.sqrt.iter n g + 1) * (Nat.sqrt.iter n g + 1) := by
   intro g
@@ -203,12 +203,13 @@ theorem cf_bodd_add_div2 : ∀ n, (Nat.bodd n).toNat + 2 * Nat.div2 n = n
   | 0 => rfl
   | n + 1 => by
     have ih := cf_bodd_add_div2 n
-    rw [Nat.bodd_succ, Nat.div2_succ]
+    rw [Nat.div2_val] at ih
+    rw [Nat.bodd_succ, Nat.div2_val]
     cases hb : Nat.bodd n <;> rw [hb] at ih
-    · show 1 + 2 * Nat.div2 n = n + 1
+    · show 1 + 2 * ((n + 1) / 2) = n + 1
       have : (false : Bool).toNat = 0 := rfl
       rw [this] at ih; omega
-    · show 0 + 2 * (Nat.div2 n + 1) = n + 1
+    · show 0 + 2 * ((n + 1) / 2) = n + 1
       have : (true : Bool).toNat = 1 := rfl
       rw [this] at ih; omega
 
@@ -250,7 +251,8 @@ theorem cf_eval_pair {cf cg : Code} {n a b : ℕ} (h1 : eval cf n = Part.some a)
 theorem cf_eval_comp {cf cg : Code} {n a : ℕ} (h : eval cg n = Part.some a) :
     eval (comp cf cg) n = eval cf a := by
   show eval cg n >>= eval cf = _
-  rw [h, Part.bind_eq_bind, Part.bind_some]
+  rw [h]
+  exact Part.bind_some a _
 
 /-- `Statement:` `comp cf cg` on two total stages returns the second stage's value. -/
 theorem cf_eval_comp_some {cf cg : Code} {n a b : ℕ} (h : eval cg n = Part.some a)
@@ -457,8 +459,11 @@ example : type_of% @Nat.unpair_pair := @cf_unpair_pair
 example : type_of% @Nat.pair_unpair := @cf_pair_unpair
 example : type_of% @Nat.sqrt_le := fun n => (cf_sqrt_isSqrt n).1
 example : type_of% @Nat.lt_succ_sqrt := fun n => (cf_sqrt_isSqrt n).2
-example : type_of% @Nat.sqrt.iter_sq_le := @cf_sqrt_iter_sq_le
-example : type_of% @Nat.sqrt.lt_iter_succ_sq := @cf_sqrt_lt_iter_succ_sq
+example : ∀ (n guess : Nat), Nat.sqrt.iter n guess * Nat.sqrt.iter n guess ≤ n :=
+  @cf_sqrt_iter_sq_le
+example : ∀ (n guess : Nat), n < (guess + 1) * (guess + 1) →
+    n < (Nat.sqrt.iter n guess + 1) * (Nat.sqrt.iter n guess + 1) :=
+  @cf_sqrt_lt_iter_succ_sq
 example : type_of% @Nat.sqrt_le_self := @cf_sqrt_le_self
 example : type_of% @Nat.unpair_left_le := @cf_unpair_left_le
 example : type_of% @Nat.unpair_right_le := @cf_unpair_right_le
@@ -733,8 +738,6 @@ open ZeroParadox
 #print axioms Nat.pair_unpair
 #print axioms Nat.sqrt_le
 #print axioms Nat.lt_succ_sqrt
-#print axioms Nat.sqrt.iter_sq_le
-#print axioms Nat.sqrt.lt_iter_succ_sq
 #print axioms Nat.sqrt_le_self
 #print axioms Nat.unpair_left_le
 #print axioms Nat.unpair_right_le

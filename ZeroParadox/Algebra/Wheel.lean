@@ -463,7 +463,7 @@ example : ¬ (∀ x y z : ZPWheelElem,
   have hx : zpwMul (zpwAdd (ZPWheelElem.fin 1) (.fin 0)) .inf
       = zpwAdd (zpwMul (ZPWheelElem.fin 1) .inf) (zpwMul (.fin 0) .inf) :=
     h (.fin 1) (.fin 0) .inf
-  norm_num [zpwAdd, zpwMul] at hx
+  simp only [zpwAdd, zpwMul, add_zero, one_ne_zero, ite_false, ite_true] at hx
   exact zpw_inf_ne_bot hx
 
 /-- fin(0) ≠ ⊥ₗ: `fin 0`, ℚ's zero, is distinct from the wheel's absorbing element ⊥ₗ.

@@ -119,7 +119,7 @@ abbrev nnrealMaxZPS : ZPSemilattice NNReal where
   join_assoc := max_assoc
   join_comm := max_comm
   join_idem := max_self
-  bot_join := fun x => max_eq_right (zero_le x)
+  bot_join := fun _ => max_eq_right zero_le
 
 /-- `Statement:` the zero-block typical tapes include the all-`true` tape at every `p ≤ 1`; the
 `example` in `ZeroParadox/Information/CrossingTrials.lean` § VI, named. -/
@@ -241,7 +241,7 @@ theorem blockWord_length (b : Bool) (N n j : ℕ) : (blockWord b N n j).length =
 theorem blockWord_getElem (b : Bool) (N n j i : ℕ) (h : i < (blockWord b N n j).length) :
     (blockWord b N n j)[i] = if i < N then bitAt j i else b := by
   unfold blockWord
-  rw [List.getElem_append]
+  refine (List.getElem_append h).trans ?_
   split_ifs with h1 h2 h2
   · simp
   · simp at h1; omega
@@ -366,7 +366,7 @@ theorem countable_computable_enum :
 /-- `Statement:` if `μ (U m) ≤ 2⁻ᵐ` for every `m`, then `⋂ m, U m` is `μ`-null. -/
 theorem measure_iInter_le_pow_zero (μ : Measure (ℕ → Bool)) (U : ℕ → Set (ℕ → Bool))
     (h : ∀ m, μ (U m) ≤ 2⁻¹ ^ m) : μ (⋂ m, U m) = 0 := by
-  refine le_antisymm ?_ (zero_le _)
+  refine le_antisymm ?_ zero_le
   have ht : Tendsto (fun m : ℕ => (2⁻¹ : ENNReal) ^ m) atTop (nhds 0) :=
     ENNReal.tendsto_pow_atTop_nhds_zero_of_lt_one (by norm_num)
   exact ge_of_tendsto' ht fun m => (measure_mono (Set.iInter_subset _ m)).trans (h m)
@@ -738,7 +738,7 @@ theorem not_eventuallyConst_of_MLRandom (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p
       (Primrec.pair (Primrec.const N) (Primrec.nat_mul.comp (Primrec.const K) Primrec.id))
     refine hML (fun m => constBlock true N (K * m)) ⟨fun m => ?_, g, hg, hgf⟩ ?_
     · rw [trials_constBlock, if_pos rfl, pow_mul]
-      exact pow_le_pow_left₀ (zero_le _) hK m
+      exact pow_le_pow_left₀ zero_le hK m
     · simp only [Set.mem_iInter, constBlock, Set.mem_setOf_eq, Finset.mem_Ico]
       intro m k hk; exact hb k hk.1
 

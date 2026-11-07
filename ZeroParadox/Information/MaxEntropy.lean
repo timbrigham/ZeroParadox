@@ -354,7 +354,7 @@ theorem fairTape_compressibleTapes_le (D : List Bool → Option (List Bool))
       simp only [Option.isSome_some, if_true]
       split_ifs with hlen
       · rw [fairTape_prefixCyl, fairTape_prefixCyl, ← pow_add]
-        exact pow_le_pow_of_le_one (zero_le _) (by norm_num) (by omega)
+        exact pow_le_pow_of_le_one zero_le (by norm_num) (by omega)
       · simp
   calc fairTape (compressibleTapes D c) ≤ fairTape (⋃ d, B d) := measure_mono hsub
     _ ≤ ∑' d, fairTape (B d) := measure_iUnion_le _

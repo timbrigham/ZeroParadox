@@ -672,8 +672,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 3310,
-        "files": 204
+        "declarations": 3320,
+        "files": 206
       },
       "entries": [
         {
@@ -10660,6 +10660,43 @@
             "role": []
           },
           "reason": "SnapNucleusConstructive: machine-checked IMPOSSIBILITY - no idempotent endomap of ONote has epsilon-number closed points; obstruction is expressive reach (the carrier cannot name the closure), NOT choice",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "13dcfe05-5b1a-4dfe-961f-32bf060dbc64",
+          "new": {
+            "file": "ZeroParadox/Order/ChoiceFreeWithTop.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.withBotOrderTopCF",
+            "short": "withBotOrderTopCF"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/ChoiceFreeWithTop.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.withBotOrderTopCF",
+            "short": "withBotOrderTopCF",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Lean 4.35 upgrade: new choice-free declarations (rulings 165, 168, 190)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -55595,6 +55632,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "74ac1b04-6c28-4ef0-964c-784c933f8815",
+          "new": {
+            "file": "ZeroParadox/Order/PowerSet.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.psListMem",
+            "short": "psListMem"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/PowerSet.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.psListMem",
+            "short": "psListMem",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Lean 4.35 upgrade: new choice-free declarations (rulings 165, 168, 190)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "74af6a38-8f0d-4112-9127-d30d2977c93a",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -63111,6 +63185,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "843d87ee-f752-4bdd-a076-2db5e50b5b24",
+          "new": {
+            "file": "ZeroParadox/Reals/MarkovSpectralGap.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fairCoinFin2",
+            "short": "fairCoinFin2"
+          },
+          "old": {
+            "file": "ZeroParadox/Reals/MarkovSpectralGap.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.fairCoinFin2",
+            "short": "fairCoinFin2",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "reals"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Lean 4.35 upgrade: new choice-free declarations (rulings 165, 168, 190)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "8497b152-8e9b-4b89-9694-86f0fcb71af6",
           "new": {
             "file": "ZeroParadox/Settheory/HypersetOrder.lean",
@@ -64140,6 +64251,43 @@
             ]
           },
           "reason": "New file ZeroParadox/Valuation/PricedPadicInterface.lean — p-adic Group A priced carrier (29 decls)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "86c3f939-1128-47bf-bbab-f802a2985c96",
+          "new": {
+            "file": "ZeroParadox/Order/ChoiceFreeWithTop.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.withTopPartialOrderCF",
+            "short": "withTopPartialOrderCF"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/ChoiceFreeWithTop.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.withTopPartialOrderCF",
+            "short": "withTopPartialOrderCF",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Lean 4.35 upgrade: new choice-free declarations (rulings 165, 168, 190)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -65570,6 +65718,43 @@
             ]
           },
           "reason": "Die mining landing (ruled 2026-10-21): trap data (emptiness, rank, monotone), no reversal under <, reverse of an injective step, RelHom maps of motions, wheel as a die face",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "8a723cfe-5226-4fba-9b6b-1492e56ac2e9",
+          "new": {
+            "file": "ZeroParadox/Order/ChoiceFreeWithTop.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.withTopPreorderCF",
+            "short": "withTopPreorderCF"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/ChoiceFreeWithTop.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.withTopPreorderCF",
+            "short": "withTopPreorderCF",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Lean 4.35 upgrade: new choice-free declarations (rulings 165, 168, 190)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -84218,6 +84403,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "b1add25d-cbfd-4eb2-bea2-d442be22f57c",
+          "new": {
+            "file": "ZeroParadox/Order/ChoiceFreeWithTop.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.withBotPreorderCF",
+            "short": "withBotPreorderCF"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/ChoiceFreeWithTop.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.withBotPreorderCF",
+            "short": "withBotPreorderCF",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Lean 4.35 upgrade: new choice-free declarations (rulings 165, 168, 190)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "b1cbd7f2-6c8c-4319-a2cf-ef9114edb3d4",
           "new": {
             "file": "ZeroParadox/Ordinal/SnapSuccession.lean",
@@ -90295,6 +90517,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "bd674da1-1e15-4f53-835f-16649a8c2daa",
+          "new": {
+            "file": "ZeroParadox/Order/ChoiceFreeWithTop.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.withBotPartialOrderCF",
+            "short": "withBotPartialOrderCF"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/ChoiceFreeWithTop.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.withBotPartialOrderCF",
+            "short": "withBotPartialOrderCF",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Lean 4.35 upgrade: new choice-free declarations (rulings 165, 168, 190)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "bd952922-8d45-4e58-b4d9-2714fefdc9c9",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -94392,6 +94651,43 @@
         {
           "claims": {
             "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c6f47600-70d7-4900-8003-b79dc6e7f548",
+          "new": {
+            "file": "ZeroParadox/Order/ChoiceFreeWithTop.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.withTopOrderTopCF",
+            "short": "withTopOrderTopCF"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/ChoiceFreeWithTop.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.withTopOrderTopCF",
+            "short": "withTopOrderTopCF",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Lean 4.35 upgrade: new choice-free declarations (rulings 165, 168, 190)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
             "witness_of": [
               "node-algebra"
             ]
@@ -97476,6 +97772,43 @@
             ]
           },
           "reason": "Sibling faces of the diagonal fixed point, built 2026-07-16: Tarski (truth/wall), Curry (explosion/wall), Rice (computability undecidability, cites Mathlib), Löb (provability, from-scratch ProvabilityLogic typeclass + Gödel 2). Each wired to the bottom element via the family's μ/ν structure.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "cd4a54ab-abd9-42cf-85ca-c8fe3ec5dd4a",
+          "new": {
+            "file": "ZeroParadox/Order/ChoiceFreeWithTop.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.withTopOrderBotCF",
+            "short": "withTopOrderBotCF"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/ChoiceFreeWithTop.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.withTopOrderBotCF",
+            "short": "withTopOrderBotCF",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Lean 4.35 upgrade: new choice-free declarations (rulings 165, 168, 190)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -121784,6 +122117,43 @@
             ]
           },
           "reason": "Die v2 final batch: drawing vs set (self-steps, accessibility, forced rank), ends of a view, orders on motions, placements as views, relaxed least-fixed-point schema, UP legs as nuclei",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "feafbcd3-46a4-4355-ae75-8dc7d93d4cc3",
+          "new": {
+            "file": "ZeroParadox/Order/ChoiceFreeWithTop.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.withBotOrderBotCF",
+            "short": "withBotOrderBotCF"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/ChoiceFreeWithTop.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.withBotOrderBotCF",
+            "short": "withBotOrderBotCF",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Lean 4.35 upgrade: new choice-free declarations (rulings 165, 168, 190)",
           "verify": {
             "axioms": null,
             "sorry_free": true
