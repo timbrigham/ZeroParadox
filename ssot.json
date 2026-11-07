@@ -672,7 +672,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 3274,
+        "declarations": 3276,
         "files": 203
       },
       "entries": [
@@ -71010,6 +71010,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "98a1e320-e2ad-4701-9d95-da9179f13284",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.mlRandom_and_snap_ae",
+            "short": "mlRandom_and_snap_ae"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.mlRandom_and_snap_ae",
+            "short": "mlRandom_and_snap_ae",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "TwoRequirements ensemble form: with BotHasFirstStep L and 0<p<=1, trials p hp-almost every tape gives the snap (snap_ae_of_firstStep) and is Martin-Loef random as well (mlRandom_and_snap_ae). Hypotheses, neither discharged; almost every, not every.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "98b93dd0-1745-44a4-a69e-c8cbac678bcd",
           "new": {
             "file": "ZeroParadox/Ordinal/CnfBridge.lean",
@@ -90365,6 +90402,43 @@
             ]
           },
           "reason": "UniversalChoiceFree § IX: a self-printing universal code at [propext, Quot.sound] (restated SelfPrints ∧ Universal via encodeCode/ofNatCodeCF), faithfulness bridges, statement controls, controls zero_selfPrints_not_universal / universal_not_selfPrints_cf / unshifted_incompatible",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c0316f26-9bc0-4682-b58c-164259e0be6f",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.snap_ae_of_firstStep",
+            "short": "snap_ae_of_firstStep"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.snap_ae_of_firstStep",
+            "short": "snap_ae_of_firstStep",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "TwoRequirements ensemble form: with BotHasFirstStep L and 0<p<=1, trials p hp-almost every tape gives the snap (snap_ae_of_firstStep) and is Martin-Loef random as well (mlRandom_and_snap_ae). Hypotheses, neither discharged; almost every, not every.",
           "verify": {
             "axioms": null,
             "sorry_free": true
