@@ -156,6 +156,8 @@ theorem witness_antitone {β : Type*} {M M' : (β → β) → Prop}
 
 /-! ### § III. The smallest concrete witness — the two-element pole and its four self-maps. -/
 
+-- [ZP port] Lean 4.35: Mathlib's `Fintype` deriving handler needs the pre-4.35 defeq transparency.
+set_option backward.isDefEq.respectTransparency false in
 /-- The pole: the two-element type `{0, ∞}`. -/
 inductive Pole where
   | zero

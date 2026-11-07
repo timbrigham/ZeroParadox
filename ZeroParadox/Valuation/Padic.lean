@@ -49,6 +49,8 @@ the two states is then verified by decidable equality, requiring no classical ax
 AX-B1 itself is the cover of ⊥ with a two-element first interval (`HasFirstStep`,
 `ZeroParadox/Reals/OrderedField.lean`); that this carrier has exactly two states is its own choice. -/
 
+-- [ZP port] Lean 4.35: Mathlib's `Fintype` deriving handler needs the pre-4.35 defeq transparency.
+set_option backward.isDefEq.respectTransparency false in
 /-- The two ontological states: non-existence (⊥ in ZP-A) and existence. -/
 -- [ZP-CUSTOM] replaces: Fin 2 | reason: Fin 2's constructors are ⟨0,_⟩ and ⟨1,_⟩ — natural numbers. nullState ≠ ℕ's 0 by convention; it is a semantic state with no numeric meaning. Free inductive eliminates the ℕ dependency and makes ⊥ ↦ null a structural fact, not a labelling choice.
 inductive OntologicalStates where
