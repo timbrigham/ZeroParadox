@@ -221,10 +221,10 @@ example {L : Type*} [ZPSemilattice L] :
 -- Statement: `t_snap_given` needs no cover: on `ℚ≥0` under `max`, a densely ordered join-semilattice whose ⊥
 -- is 0 of `ℚ≥0`, the triple holds at the step 0 → 1/2 while nothing covers 0 (compare `t_snap_derived_cover`).
 example :
-    letI : ZPSemilattice NNRat := ⟨max, 0, max_assoc, max_comm, max_self, fun x => max_eq_right (zero_le x)⟩
+    letI : ZPSemilattice NNRat := ⟨max, 0, max_assoc, max_comm, max_self, fun x => max_eq_right (zero_le (a := x))⟩
     ((0 : NNRat) ≠ 1 / 2 ∧ (1 / 2 : NNRat) ≠ 0 ∧ join (0 : NNRat) (1 / 2) = 1 / 2) ∧
       ¬ ∃ y : NNRat, @CovBy NNRat (zpSemilatticeSup NNRat).toLT 0 y := by
-  letI : ZPSemilattice NNRat := ⟨max, 0, max_assoc, max_comm, max_self, fun x => max_eq_right (zero_le x)⟩
+  letI : ZPSemilattice NNRat := ⟨max, 0, max_assoc, max_comm, max_self, fun x => max_eq_right (zero_le (a := x))⟩
   have key : ∀ a b : NNRat, @LT.lt NNRat (zpSemilatticeSup NNRat).toLT a b ↔ a < b := fun a b => by
     show (max a b = b ∧ ¬ max b a = a) ↔ a < b
     rw [max_eq_right_iff, max_eq_right_iff]
@@ -349,6 +349,12 @@ before the snap, ⊥ can reach ALL of L; after the snap, ε₀ can reach only a 
 subset. This is the inverse face of the Zero Paradox: ⊥ is the universal source,
 yet transitioning away from it permanently forecloses access to ⊥ itself. -/
 
+section
+-- [ZP port] Lean 4.35: `⊂` on `Set` now elaborates to `<` from `Set.instCompleteAtomicBooleanAlgebra`,
+-- which carries `Classical.choice`; erasing the two Boolean-algebra instances here routes it through the
+-- choice-free `Set.instDistribLattice` (`[propext, Quot.sound]`), the 4.30 footprint.
+attribute [-instance] Set.instCompleteAtomicBooleanAlgebra Set.instBooleanAlgebra
+
 /-- T-SNAP (accessible states shrink): the Binary Snap strictly narrows the set of
     reachable states. From ⊥, every element of L is accessible (A4: bot_le x always).
     From ε₀, only {x | ε₀ ≤ x} is accessible — a proper subset, since ⊥ is excluded:
@@ -363,6 +369,7 @@ theorem t_snap_accessible_proper_subset {L : Type*} [ZPSemilattice L] {ε₀ : L
   · intro x _; exact bot_le x
   · intro h
     exact hne (le_antisymm (bot_le ε₀) (h (bot_le bot)))
+end
 
 /-! ## VI. DP-2 — Execution Distinguishability and DA-1 Lean Formalization
 

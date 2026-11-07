@@ -263,7 +263,7 @@ instance nnrealOrderCat : Category NNReal where
 
 /-- Every morphism out of 0 exists and is unique (zero_le). -/
 instance nnrealHom0Unique (y : NNReal) : Unique ((0 : NNReal) ⟶ y) where
-  default := ⟨⟨zero_le y⟩⟩
+  default := ⟨⟨zero_le (a := y)⟩⟩
   uniq    := fun _ => Subsingleton.elim _ _
 
 /-- ℝ≥0 is a ZPCategory with 0 as initial object.
@@ -276,7 +276,7 @@ noncomputable instance nnrealZPCategory : ZPCategory NNReal where
     have h : t + 1 ≤ t := (ht.from (t + 1)).down.down
     exact absurd h (not_le.mpr (lt_add_of_pos_right t one_pos))⟩
   ax_g2             := fun x hne => ⟨fun f => by
-    have hx0 : x = 0 := le_antisymm f.down.down (zero_le x)
+    have hx0 : x = 0 := le_antisymm f.down.down (zero_le (a := x))
     subst hx0; exact hne.elim (Iso.refl (0 : NNReal))⟩
 
 /-- Shared concrete ZPCategory witness for F_B, F_C, and F_D.
