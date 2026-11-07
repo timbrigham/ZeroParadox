@@ -313,6 +313,37 @@ proved about where choice does work. -/
 #check @Prop.instHeytingAlgebra
 #check @Prop.instBooleanAlgebra
 
+-- STATEMENT-CARRIED IS INSTANCE-RELATIVE — one statement text, two definitionally equal instances,
+-- opposite footprints. The same hazard as the entry above, on `WithTop`: Mathlib's order instances
+-- there go through `WithTop.le_def`, proved by `grind` (`ZeroParadox/Order/ChoiceFreeWithTop.lean`).
+-- Statement: Mathlib's `WithTop` preorder, partial order and least element carry
+-- `[propext, Classical.choice, Quot.sound]` (printed next).
+#print axioms WithTop.instPreorder
+#print axioms WithTop.instPartialOrder
+#print axioms WithTop.instOrderBot
+-- Statement: the corpus's preorder, partial order and least element over the same `≤` and `<`
+-- (`WithTop.instLE`, `WithTop.instLT`) measure no axioms (printed next).
+#check @ZeroParadox.withTopPreorderCF
+#print axioms ZeroParadox.withTopPreorderCF
+#print axioms ZeroParadox.withTopPartialOrderCF
+#print axioms ZeroParadox.withTopOrderBotCF
+-- Statement: on `WithTop ℕ` the two preorders are definitionally equal.
+example : (WithTop.instPreorder : Preorder (WithTop ℕ)) = ZeroParadox.withTopPreorderCF := rfl
+-- Statement: `BotCovered (WithTop σ) ↔ BotCovered σ`, elaborated under the corpus's instances; its
+-- footprint, no axioms, is printed in `ZeroParadox/Die.lean`'s PurityCheck.
+#check @ZeroParadox.botCovered_withTop_iff
+-- Statement: the same proof term proves the same statement text elaborated under Mathlib's instances,
+-- whose elaborated type names `WithTop.instPartialOrder` and `WithTop.instOrderBot`, printed above.
+example {σ : Type} [PartialOrder σ] [OrderBot σ] [NoMaxOrder σ] :
+    ZeroParadox.BotCovered (WithTop σ) ↔ ZeroParadox.BotCovered σ :=
+  ZeroParadox.botCovered_withTop_iff
+-- Reading: both sides, neither denied. Read under Mathlib's instances the statement carries
+-- `Classical.choice`, since `#print axioms` walks the type (`_trivialAboutZ2` in
+-- `ZeroParadox/Valuation/Scale.lean`), and no proof of it can drop it (STATEMENT-CARRIED,
+-- `ZeroParadox/Category/ChoiceCannotBe.md`); read under the corpus's, the same text carries none. So
+-- the bin is a property of the elaborated statement, instances included, and neither reading says the
+-- mathematics needs choice.
+
 /-! ## § IV. The ESSENTIAL cases — reductions to taboos, and the premise they rest on
 
 The arrow runs from each principle (cases 1 to 5 below) to its taboo, so each theorem speaks of the

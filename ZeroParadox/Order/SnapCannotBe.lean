@@ -10,6 +10,7 @@ import ZeroParadox.Valuation.BallLine
 import ZeroParadox.Reals.ConnectedNoFirstStep
 import ZeroParadox.Information.TwoRequirements
 import ZeroParadox.Information.MaxEntropy
+import ZeroParadox.Information.SnapEpsilonZero
 
 /-!
 # Machine-checked characterization index of the snap ⊥ → ε₀ — what the snap IS and IS NOT
@@ -103,6 +104,8 @@ example : ¬ @CovBy ℕ (ZeroParadox.zpSemilatticeSup ℕ).toLT 0 2 := fun h =>
 -- Reading: CARRIER — the slot chart's `hw` from typicality of one tape, the cover from AX-B1's form on `L`, each a
 --   hypothesis and neither discharged (the `NNReal` and all-`false` controls in `ZeroParadox/Information/TwoRequirements.lean`).
 #check @ZeroParadox.snap_of_firstStep_MLRandom        -- Statement: the same conclusion with `ZeroBlockTypical` replaced by Martin-Löf randomness for `trials p hp` (`MLRandom`, defined in `ZeroParadox/Information/TwoRequirements.lean`), which implies it (`zeroBlockTypical_of_MLRandom`); one way. No tape is named and ⊥ of `L` is not claimed random
+#check @ZeroParadox.phase_snap_of_MLRandom            -- Statement: CORNER, on `WithBot Ordinal` under join `max` (`ZeroParadox/Information/SnapEpsilonZero.lean`): if `w` is Martin-Löf random for `trials p hp` with `0 < p`, some run's `S 1` covers ⊥ of `WithBot Ordinal`, equals the snap `↑0 ≠ ↑ε₀`, and `phaseUpAndOver.up` sends it to `↑ε₀`; one way
+#check @ZeroParadox.epsilonOrZero_snap_of_MLRandom    -- Statement: COVER, on `EpsilonOrZero`, the carrier of the example above, under join `max`: if `w` is as above, some run's `S 1` covers 0 of `Ordinal` and has value ε₀ ≠ 0; one way. The two are related by `epsilonOrZeroIsoLanding_spec`, and neither is the snap's only form
 #check @ZeroParadox.snap_ae_of_firstStep              -- Statement: if ⊥ of `L` has a first step (`BotHasFirstStep L`) and `0 < p ≤ 1`, then for `trials p hp`-almost every tape `w` some `φ` and `hw` give `snap_of_two_requirements`'s conclusion; one way. Almost every, not every: the all-`false` tape never fires. No map from ⊥ of `L` to a tape or to `trials p hp` appears
 #check @ZeroParadox.mlRandom_and_snap_ae              -- Statement: the same, with `MLRandom (trials p hp) w` conjoined: almost every tape is Martin-Löf random for `trials p hp` and gives that conclusion; one way
 #check @ZeroParadox.maxEntropy_mlRandom_and_snap_ae    -- Statement: the same, with `0 < p` replaced by `binEntropy p = log 2`, the maximum-entropy coin `p = 1/2` (`ZeroParadox/Information/MaxEntropy.lean`); one way. No tape law of ⊥ of `L` is constructed, and `BotHasFirstStep L` stays a hypothesis

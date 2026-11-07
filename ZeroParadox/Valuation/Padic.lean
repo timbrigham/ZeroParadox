@@ -433,8 +433,8 @@ rather than annotated.)*
 
 *(Three corrections, all 2026-08-01, all caught by gates rather than by me. (i) This paragraph once
 cited `f_snap_impossible` as holding "on the Archimedean side", mis-scoping a theorem that covers every
-ordered field. (ii) The fix for (i) then attributed the wrong proof route — "density
-(`LinearOrderedSemiField.toDenselyOrdered`, then `not_covBy`)" — which is the route of
+ordered field. (ii) The fix for (i) then attributed the wrong proof route — density, then no cover
+(`LinearOrderedSemiField.toDenselyOrdered`, then `not_covBy_of_denselyOrdered`) — which is the route of
 `axb1_fails_in_ordered_field` four lines further down, whose own docstring says it is proved through
 Mathlib **rather than** through `f_snap_impossible`. A wrong reason under a true conclusion breaks
 nothing downstream, which is exactly why it needed a gate to find. (iii) The same fix then called the

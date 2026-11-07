@@ -82,7 +82,7 @@ theorem root_purity_split :
 example (p : Prop) (P : p → Prop) (h₁ h₂ : p) : P h₁ ↔ P h₂ := Iff.rfl
 
 section PurityCheck
--- Measured footprint (lake build, v4.30.0-rc2):
+-- Measured footprint (lake build, v4.35.0):
 --   w_isEmpty                 : (no axioms)                                   — bare WType eliminator
 --   fix_isEmpty_constructive  : (no axioms)                                   — FULLY AXIOM-FREE
 --   cofix_nonempty'           : [propext, Classical.choice, Quot.sound]       — choice-carrying (ν)

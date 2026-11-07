@@ -718,7 +718,7 @@ theorem collapse_from_unit {L : Type*} [W : WheelValuationStructure L]
 
 /-- `Statement:` `WVSNondegenerate L ↔ wvs_val 1 ≠ ⊤` — nondegeneracy is a fact about the unit alone.
     ⚠ Use this form, not `nondegenerate_iff_map_one`, in anything that must stay axiom-free: same
-    content, and only this one avoids the `ℕ∞` numeral. -/
+    content, and this one measures no axioms where that one measures `[propext, Quot.sound]` (§ IX). -/
 theorem nondegenerate_iff_unit_ne_top (L : Type*) [W : WheelValuationStructure L] :
     WVSNondegenerate L ↔ W.wvs_val 1 ≠ ⊤ :=
   ⟨fun ⟨x, hx⟩ h1 => hx (collapse_from_unit h1 x), fun h => ⟨1, h⟩⟩
@@ -805,14 +805,12 @@ example : ∃ v : ℤ → ℕ∞, (∀ x y : ℤ, v (x * y) = v x + v y) ∧ v 0
   ⟨fun _ => 0, fun _ _ => by simp, by simp⟩
 
 /-! **Axiom footprint**, checked by § IX rather than asserted here. Six of the seven gauge
-declarations are axiom-free; `nondegenerate_iff_map_one` reports `[propext, Classical.choice,
-Quot.sound]` — and that footprint is carried by the STATEMENT, not the proof.
-⚠ The two `nondegenerate_iff_*` theorems are the measurement: same fact, same file, same style, only
-the second writing the `ℕ∞` numeral `0`. Measured 2026-09-12 in this pinned Mathlib — at `ℕ∞`,
-`(⊤ : ℕ∞) = ⊤`, `((n : ℕ) : ℕ∞) = n` and `a + b = a + b` are each axiom-free by `rfl`, while
-`(0 : ℕ∞) = 0` and `(1 : ℕ∞) = 1` by `rfl` each report the same triple. Scope: those five `rfl`s; no
-claim about which instance declaration carries it. `ZeroParadox/Ordinal/SyntacticCollapse.lean`
-records the same shape on `ℚ`. -/
+declarations are axiom-free; `nondegenerate_iff_map_one` reports `[propext, Quot.sound]`, and none of
+the seven carries `Classical.choice`.
+⚠ The two `nondegenerate_iff_*` theorems state the same fact, the second writing the `ℕ∞` numeral `0`.
+At the pinned Mathlib the numerals `(0 : ℕ∞)` and `(1 : ℕ∞)` measure no axioms
+(`ZeroParadox/Valuation/PricedPadicInterface.lean` § IV prints them), so the numeral does not account
+for the difference between the two footprints. -/
 
 -- ============================================================
 -- § VIII. The Main Conjecture (Resolved)

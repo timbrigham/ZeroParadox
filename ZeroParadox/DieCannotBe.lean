@@ -52,6 +52,7 @@ import ZeroParadox.Settheory.Model
 import ZeroParadox.Order.SeamSchema
 import ZeroParadox.Information.CrossingTrials
 import ZeroParadox.Order.DieJoints
+import ZeroParadox.Information.SnapEpsilonZero
 
 set_option maxHeartbeats 400000
 
@@ -3851,7 +3852,7 @@ example (s : WithTop Ordinal → WithTop Ordinal → Prop) :
       ((⊥ : Ordinal) : WithTop Ordinal) := by
   rw [ZeroParadox.Motion.isLanding_ofNucleus_iff, ZeroParadox.snapNucleusTop_coe_bot]
   exact fun h => ZeroParadox.epsilon0_ne_bot (WithTop.coe_injective h)
-#check @ZeroParadox.em_iff_ofNucleus_dneg_isLanding -- Statement: MEMBER: excluded middle iff every proposition is a landing of `ofNucleus (dnegNucleus Prop) s` (`em_iff_dnegNucleus_trivial` through `isLanding_ofNucleus_iff`); `[propext]`: the statement's `SemilatticeInf Prop` instance is read off the pinned `Prop.instHeytingAlgebra` and is choice-free, where the `SemilatticeInf Prop` instance synthesized under that file's imports carries `Classical.choice` through `Prop.instCompleteLinearOrder` (the parent instances `Prop.instHeytingAlgebra` and `Prop.instCompleteLinearOrder`, and the forced form `dnegLandingForcedInstance`, are printed in `ZeroParadox/Category/DieNucleus.lean`)
+#check @ZeroParadox.em_iff_ofNucleus_dneg_isLanding -- Statement: MEMBER: excluded middle iff every proposition is a landing of `ofNucleus (dnegNucleus Prop) s` (`em_iff_dnegNucleus_trivial` through `isLanding_ofNucleus_iff`); `[propext]`: the statement's `SemilatticeInf Prop` instance is read off the pinned `Prop.instHeytingAlgebra` and is choice-free; the `SemilatticeInf Prop` instance synthesized under that file's imports goes through `Prop.instCompleteLattice`, and the forced form `dnegLandingForcedInstance` measures `[propext]`; `Prop.completeLinearOrder`, a definition and not an instance, carries `Classical.choice` (`Prop.instHeytingAlgebra`, `Prop.completeLinearOrder` and `dnegLandingForcedInstance` are printed in `ZeroParadox/Category/DieNucleus.lean`)
 #check @ZeroParadox.no_snap_nucleus              -- Statement: NON-MEMBER: for every nucleus `j` on `SynONote`, not every closed point of `j` is fixed by `omegaPow`; so no `ofTotal j _ s` has only `omegaPow`-fixed landings (the die form in `ZeroParadox/Category/DieNucleus.lean` § IV, whose next `example` gives the landings as the closed points). The `Nucleus`-typed corollary of `no_snap_closure`; `SynONote` has no ⊤ over its order (`tower_no_upper_bound`), so `ofNucleus_top_up` is not stated there
 #check @ZeroParadox.no_snap_closure              -- Statement: the order-free form: no idempotent endomap of `ONote` has only `omegaPow`-fixed fixed points; no order, no monotonicity, no inflation assumed
 
@@ -4067,6 +4068,17 @@ example :
     clear h1 h2
     omega
   · exact h.2 (c := 1) ((key 0 1).2 (by decide)) ((key 1 2).2 (by decide))
+-- Statement: BRIDGE across the GAP above, one way. The GAP stands for an arbitrary run; the bridge
+-- supplies one run from a tape. The tape's randomness is a hypothesis on `w`, its measure sits
+-- beside the die (§ XXVIII), and ⊥ of `L` is not claimed random.
+#check @ZeroParadox.snap_of_firstStep_MLRandom    -- Statement: if ⊥ of `L` has a first step in ZP-A's induced order (`BotHasFirstStep L`) and `w` is Martin-Löf random for `trials p hp` with `0 < p`, then some `φ` and firing proof `hw` make `φ ∘ firedRun w hw` a state sequence meeting `hcc1`, `hocc` and `hcov`; one way
+#check @ZeroParadox.linearMaxZPS_snap_target      -- Statement: if `α` is linearly ordered with least element `b`, `b ⋖ a`, and `w` is as above, then under join `max` the run's `S 1` covers `b` in `α`'s order and equals `a`; one way
+#check @ZeroParadox.phase_snap_of_MLRandom        -- Statement: CORNER leg: if `w` is as above, then on `WithBot Ordinal` under join `max` some run's `S 1` covers ⊥ of `WithBot Ordinal`, equals the snap `↑0`, differs from `↑ε₀`, and `phaseUpAndOver.up` sends it to `↑ε₀`; one way
+#check @ZeroParadox.epsilonOrZero_snap_of_MLRandom -- Statement: COVER leg: if `w` is as above, then on `EpsilonOrZero` (0 of `Ordinal` and the fixed points of `ω^·`) under join `max` some run's `S 1` covers 0 of `Ordinal` and has value ε₀, which is not 0; one way
+#check @ZeroParadox.epsilonOrZeroIsoLanding_spec  -- Statement: RELATION: the order isomorphism from `EpsilonOrZero` to the landings of `phaseUpAndOver.up` sends 0 of `Ordinal` to ⊥ of `WithBot Ordinal` (not to `↑0`) and ε₀ to `↑ε₀`, and carries the cover `0 ⋖ ε₀` to a cover among the landings
+-- Reading: CARRIER, two views of one step, neither THE view. On the full carrier the first step
+-- lands on `↑0` and `↑ε₀` is one UP further (the corner); on the view of landings the first step is
+-- ε₀ itself (the cover). The isomorphism is the relation; in both, ε₀ is the step off a floor, not it.
 -- Statement: the other direction: if a motion on `L` steps elsewhere at ⊥ of `L`, some step `⊥ → b`
 -- carries T-SNAP's triple at `(⊥, b)`. No landing hypothesis is used, so the UP leg plays no part.
 example {L : Type*} [ZeroParadox.ZPSemilattice L] (M : ZeroParadox.Motion L)
@@ -4210,7 +4222,7 @@ example {L : Type*} [ZeroParadox.ZPSemilattice L] :
   exact ⟨hs, fun h => ZeroParadox.Motion.not_selfOnlyAt_and_leavesAt _ _ ⟨hs, h⟩⟩
 -- Statement: CONTROL, an ordered field (ℝ is one), in the field's OWN linear order: it has no
 -- `OrderBot`, so `BotCovered` is not stated in that order (neither member nor non-member); no pair is
--- a cover (`not_covBy`); and the field's 0 has no first step (`axb1_fails_in_ordered_field`). `hcov`
+-- a cover (`not_covBy_of_denselyOrdered`); and the field's 0 has no first step (`axb1_fails_in_ordered_field`). `hcov`
 -- is typed in the order a `ZPSemilattice` induces, not this one, so this control is silent on `hcov`.
 example {F : Type*} [Field F] [LinearOrder F] [IsStrictOrderedRing F] (S : ℕ → F) :
     IsEmpty (OrderBot F) ∧ ¬ (S 0 ⋖ S 1) ∧ ¬ ZeroParadox.HasFirstStep (0 : F) :=
@@ -4850,6 +4862,7 @@ example : (∀ n, ZeroParadox.slotRun (fun _ => false) n = false) ∧
 #check @ZeroParadox.trials_fires_once          -- Statement: if `0 < p ≤ 1`, the tapes that fire somewhere have `trials p hp` measure one
 #check @ZeroParadox.t_snap_of_avoids           -- Statement: § VI's hypotheses on a tape give its `hw` and `t_snap_of_fires_once`'s conclusion; one way
 -- Reading: `hw` is the occurrence commitment in its slot chart (`ZeroParadox/Order/SnapCannotBe.lean` § II).
+-- Statement: if ⊥ of `L` has a first step and the tape is Martin-Löf random for `trials p hp` with `0 < p`, some run from it also carries the cover `hcov`, one way: `snap_of_firstStep_MLRandom`, the carrier-to-run bridge in § XXIII.
 
 /-! ### § XXIX. A limit pinned from two directions: `PinnedLimit` -/
 -- Reading: Tim's role, "squishy" in his word: pinned from below by the stages of a run and from the

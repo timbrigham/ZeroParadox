@@ -293,7 +293,7 @@ example : (∃! y, (Motion.ofTotal (id : Unit → Unit) (fun _ => rfl) (fun _ _ 
   exact absurd (h1.trans h2.symm) (by decide)
 
 section PurityCheck
--- Measured footprint (lake build, v4.30.0-rc2):
+-- Measured footprint (lake build, v4.35.0):
 --   objEquiv             : [Quot.sound]                                — the action collapse
 --   fixEquiv  (μ side)   : [propext, Quot.sound]                       — CHOICE-FREE
 --   cofixEquiv (ν side)  : [propext, Classical.choice, Quot.sound]     — choice-carrying

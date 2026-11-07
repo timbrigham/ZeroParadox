@@ -153,8 +153,8 @@ theorem val_quine_unique (x y : L)
     (hx : selfMemFromVal x) (hy : selfMemFromVal y) : x = y := by
   rw [scale_unique_fp x hx, scale_unique_fp y hy]
 
-/-- {x | selfMemFromVal x} = {⊥}. Carries Classical.choice; the `[ValuationStructure L]` assumption
-    alone suffices for that, since a trivial statement under it already carries choice. -/
+/-- {x | selfMemFromVal x} = {⊥}. Footprint: the PurityCheck below, where `ValuationStructure`
+    itself measures no axioms. -/
 theorem val_selfMem_singleton :
     {x : L | selfMemFromVal x} = ({bot} : Set L) :=
   singleton_from_unique_witness
@@ -291,15 +291,13 @@ theorem z2_two_views :
     re-founded 2-adic type would change the question is separate and not addressed. ⚠ `ZPSemilattice`
     itself is clean — it is this carrier, not that class. `PadicInt` is the evidence and
     `q2Scale_bot` is the consequence — a theorem with no ℕ∞ and no equality test in it, tainted
-    anyway. ⚠ The class's own numeral is a SEPARATE cost, carried by the class's own type, so it
-    is STATEMENT-CARRIED in the sense `ZeroParadox/Category/ChoiceCannotBe.md` § *Accidental versus
-    essential* defines (a class has no proof to re-prove), and respelling the successor as a cast
-    from ℕ is a choice-free restatement in that bin's sense: it clears the class outright. ⚠ The
-    numeral half is pin-relative; its routes, its dated measurements and the Brasca–Clemente prior
-    art are in `ZeroParadox/Valuation/PricedPadicInterface.lean` § I (`enat_add_choice`). The
-    CARRIER half is not pin-relative in the same way — it follows from the printer walking the
-    TYPE, so it holds of any statement mentioning `ℤ_[2]` for as long as `PadicInt` is built with
-    choice. ⚠ The two counterfactual PAIRS below emit exactly that — carrier, then numeral.
+    anyway. ⚠ The class adds no cost of its own: `ValuationStructure`, and both transcriptions of
+    its fields below (`_VSlit`, successor `+ 1`; `_VScast`, successor `+ ((1 : ℕ) : ℕ∞)`), measure
+    no axioms at the pin. The numeral's routes and the Brasca–Clemente prior art on numeral
+    footprints are in `ZeroParadox/Valuation/PricedPadicInterface.lean` § I (`enat_add_choice`). The
+    CARRIER's cost follows from the printer walking the TYPE, so it holds of any statement
+    mentioning `ℤ_[2]` for as long as `PadicInt` is built with choice. ⚠ The two counterfactual
+    PAIRS below emit both — the carrier, then the class.
     ⚠ The footprint UNIVERSAL here (ruled out for every spelling) is not emitted and cannot be —
     a footprint list settles instances, never universals. The printer's own type-walk
     IS emitted, by `_trivialAboutZ2` / `_trivialAboutNat` below. -/
@@ -413,9 +411,9 @@ private theorem _trivialAboutNat : ∀ _ : ℕ, (0 : ℕ) = 0 := fun _ => rfl
 -- Carrier, not class: same class, two carriers, opposite answers.
 private def _zpsZ2 : Type := ZPSemilattice ℤ_[2]
 private def _zpsN : Type := ZPSemilattice ℕ
--- Numeral, STATEMENT-CARRIED with a choice-free restatement: `ValuationStructure`'s six fields
--- transcribed TWICE (§ I), differing only in how the successor is spelled. Stated at the class,
--- not at a bare ℕ∞ value, because that is the level the claim is about.
+-- Numeral: `ValuationStructure`'s six fields transcribed TWICE (§ I), differing only in how the
+-- successor is spelled; both measure no axioms (printed below). Stated at the class, not at a bare
+-- ℕ∞ value, because that is the level the claim is about.
 private class _VSlit (L : Type*) [ZPSemilattice L] where
   scale : L → L
   val : L → ℕ∞
@@ -437,9 +435,10 @@ private class _VScast (L : Type*) [ZPSemilattice L] where
 --   (1) a field added WITH a default -- build green, both guards silent, footprints unchanged,
 --       and the transcription is then short by one field;
 --   (2) a field RETYPED to something DEFEQ -- respelling the canonical `val_scale` as
---       `+ ((1 : ℕ) : ℕ∞)` elaborates through every example unchanged, exit 0, while the
---       footprints flip. Elaboration preserves definitional equality; `#print axioms` does not,
---       and that difference is precisely what this block measures.
+--       `+ ((1 : ℕ) : ℕ∞)` elaborates through every example unchanged, exit 0, whatever the
+--       footprints do. Elaboration preserves definitional equality; `#print axioms` does not
+--       (a defeq pair with opposite footprints: `ZeroParadox/Category/ChoiceCannotBe.lean` § III,
+--       the `WithTop` entry), and that difference is precisely what this block measures.
 -- So build-breaks implies the field lists diverged; build-passes does NOT imply they agree.
 -- Anonymous, so nothing is owed.
 example {L : Type*} [ZPSemilattice L] (v : ValuationStructure L) : _VSlit L :=
@@ -459,9 +458,9 @@ example {L : Type*} [ZPSemilattice L] (b : _VScast L) : _VSlit L :=
 #print axioms _zpsN
 #print axioms _VSlit
 #print axioms _VScast
--- The class TYPE carries choice, and the numeral in `val_scale` is THE route, not merely one
--- of several: `_VScast` above respells that numeral and NOTHING else, and comes out clean, so
--- no other constituent of the class is tainted. Both lines below are carrier-free.
+-- The class TYPE measures no axioms, as both transcriptions above do, while the
+-- `AddMonoidWithOne ℕ∞` bundle carries choice, so the class does not reach that bundle. Both
+-- lines below are carrier-free.
 #print axioms ValuationStructure
 #print axioms instAddMonoidWithOneENat
 

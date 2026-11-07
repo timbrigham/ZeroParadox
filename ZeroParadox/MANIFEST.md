@@ -325,7 +325,9 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 
 ### Information (ZP-C)
 
+- `ZeroParadox/Information/BrudnoBridge.lean` - Brudno bridge: `trials` and `MLRandom` against `kolmogorov-complexity-lean`
 - `ZeroParadox/Information/MaxEntropy.lean` - Maximum entropy: the fair coin, missing information, and incompressible tapes
+- `ZeroParadox/Information/SnapEpsilonZero.lean` - The snap at ε₀: the corner on one carrier, the cover on another
 - `ZeroParadox/Information/TwoRequirements.lean` - Two requirements: a first step at ⊥ of `L`, and a typical tape
 
 ### State / Hilbert (ZP-D)

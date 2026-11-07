@@ -133,7 +133,7 @@ theorem arity_collapse :
     ZeroParadox.idPF_no_seam, binPF_no_seam⟩
 
 section PurityCheck
--- Measured footprint (lake build, v4.30.0-rc2) — the same μ-choice-free / ν-choice split as
+-- Measured footprint (lake build, v4.35.0) — the same μ-choice-free / ν-choice split as
 -- ZeroParadox/Settheory/Coalgebra.lean and ZeroParadox/Category/RootCutDegeneracy.lean:
 --   binFix_isEmpty    (μ empty)     : [propext, Quot.sound]                       — CHOICE-FREE
 --   binCofix_nonempty (ν inhabited) : [propext, Classical.choice, Quot.sound]     — Mathlib M-type

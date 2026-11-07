@@ -454,7 +454,8 @@ def stmtPartrecProdHyp : Prop := ∀ f : ℕ × ℕ →. ℕ, Partrec f → True
 -- with the pair instance `Primcodable.prod`, before any recursion theorem is stated, and the unary
 -- `stmtPartrecProdHyp` shows it comes with that instance, not with having two arguments.
 
--- Statement: each `cf_` lemma of § I and § II named after a Mathlib constant has exactly its type.
+-- Statement: each `cf_` lemma of § I and § II named after a Mathlib or Lean core constant has exactly
+-- its type; the two `Nat.sqrt.iter` twins are private in Lean core, so their type is written out.
 example : type_of% @Nat.unpair_pair := @cf_unpair_pair
 example : type_of% @Nat.pair_unpair := @cf_pair_unpair
 example : type_of% @Nat.sqrt_le := fun n => (cf_sqrt_isSqrt n).1
@@ -473,11 +474,12 @@ example : type_of% @Nat.Partrec.Code.eval_curry := @cf_eval_curry
 example : type_of% @Nat.Partrec.Code.eval_prec_zero := @cf_eval_prec_zero
 example : type_of% @Nat.Partrec.Code.eval_prec_succ := @cf_eval_prec_succ
 
--- Statement: the Mathlib constants named above, and `stmtFixedPoint₂` / `stmtFixedPoint`, carry
--- `Classical.choice`; the `cf_` lemmas, `fpCF`, `kleene_cf`, `kleene_cf_fixed₂` and `stmtKleeneCF` do
--- not (the `#print axioms` lines in `PurityCheck`).
--- Reading: in the bins of `ZeroParadox/Category/ChoiceCannotBe.md`, those Mathlib lemmas are
--- ACCIDENTAL (a choice-free proof of the same type is exhibited above) and `fixed_point₂` /
+-- Statement: the constants named by `type_of%` above other than `Nat.div2_val`, and `stmtFixedPoint₂` /
+-- `stmtFixedPoint`, carry `Classical.choice`; `Nat.div2_val` (proved by `rfl`), the `cf_` lemmas,
+-- `fpCF`, `kleene_cf`, `kleene_cf_fixed₂` and `stmtKleeneCF` do not (the `#print axioms` lines in
+-- `PurityCheck`).
+-- Reading: in the bins of `ZeroParadox/Category/ChoiceCannotBe.md`, those choice-carrying library
+-- lemmas are ACCIDENTAL (a choice-free proof of the same type is exhibited above) and `fixed_point₂` /
 -- `fixed_point` are STATEMENT-CARRIED; the self-referential address is constructed, not selected.
 -- Reading (cited, not claimed): the construction is Kleene's, "On notation for ordinal numbers", J.
 -- Symbolic Logic 3(4) (1938), p. 153: "Let e define ψ(S¹ₙ(y, y), 𝔵) recursively, and set
@@ -496,7 +498,7 @@ example : type_of% @Nat.Partrec.Code.eval_prec_succ := @cf_eval_prec_succ
 -- data); the counterpart of `diag_closure_spec`, which evaluates the code `e_f` returns, needs a
 -- universal code and is not built here. It builds no `NamingSystem` instance, and adds the measurement
 -- on `Code`, where the choice sits in the statements' packaging (`Partrec₂`, `Denumerable Code`) and in
--- the proofs of Mathlib's arithmetic lemmas named above (their `cf_` re-proofs are clean), not in the
+-- the proofs of the library's arithmetic lemmas named above (their `cf_` re-proofs are clean), not in the
 -- construction.
 -- Statement: a universal code is built in `ZeroParadox/Computability/UniversalChoiceFree.lean`
 -- (`universal_code_cf`), which imports this file.
@@ -732,8 +734,8 @@ open ZeroParadox
 #print axioms cf_ofNatCodeCF_encodeCode
 #print axioms ofNatCodeCF_eq_ofNatCode
 #print axioms stmtOfNatCodeCFEq
--- The Mathlib constants the `cf_` lemmas share a type with, the two recursion theorems, and
--- `ofNatCode`.
+-- The Mathlib and Lean core constants the `cf_` lemmas share a type with, the two recursion
+-- theorems, and `ofNatCode`.
 #print axioms Nat.unpair_pair
 #print axioms Nat.pair_unpair
 #print axioms Nat.sqrt_le

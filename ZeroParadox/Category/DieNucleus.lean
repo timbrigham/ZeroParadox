@@ -232,10 +232,11 @@ example (s : WithTop Ordinal → WithTop Ordinal → Prop) :
     `Reading:` measured `[propext]` (printed below). A `Nucleus X` carries `[SemilatticeInf X]` and no
     `Order.Frame X`, so the `SemilatticeInf Prop` instance in the statement is the one unification reads
     off the pinned `Prop.instHeytingAlgebra` through `Lattice.toSemilatticeInf`, and that instance is
-    choice-free; the instance `inferInstance` synthesizes for `SemilatticeInf Prop` under this file's
-    imports routes through `Prop.instCompleteLinearOrder` and carries `Classical.choice`, as `Order.Frame
-    Prop` does, and forcing it into this motion carries that footprint (`dnegLandingForcedInstance`,
-    printed below). -/
+    choice-free. The instance `inferInstance` synthesizes for `SemilatticeInf Prop` under this file's
+    imports routes through `Prop.instCompleteLattice`, and forcing it into this motion gives
+    `dnegLandingForcedInstance`, `[propext]` (printed below). `Prop.completeLinearOrder`
+    and `Prop.linearOrder` are definitions, not instances, and carry `Classical.choice`, as the
+    synthesized `Order.Frame Prop` does. -/
 theorem em_iff_ofNucleus_dneg_isLanding (s : Prop → Prop → Prop) :
     ExcludedMiddle ↔ ∀ p : Prop,
       (Motion.ofNucleus (@dnegNucleus Prop Prop.instHeytingAlgebra) s).IsLanding p := by
@@ -341,8 +342,8 @@ Measured from the build log, 2026-10-21. `toNucleus` depends on no axioms; `ofNu
 `[propext, Quot.sound]`. `ofNucleus_bot_up` is `rfl`, so its footprint is the statement's, through Mathlib's
 `⊥ : Nucleus X` (`ofNucleus_top_up`, the same proof at `⊤`, is the control). The bare-`Ordinal` member and
 `snapNucleusTop_isLanding_iff` are STATEMENT-CARRIED through Mathlib's `Ordinal` fixed-point theory, as for
-`snapNucleus` in `ZeroParadox/Ordinal/SnapNucleus.lean`. On `Prop` the statement's `SemilatticeInf` instance is
-read off `Prop.instHeytingAlgebra`, `[propext]`; the synthesized one and `dnegLandingForcedInstance` carry choice (all printed below). -/
+`snapNucleus` in `ZeroParadox/Ordinal/SnapNucleus.lean`. On `Prop`, `Prop.instHeytingAlgebra` and
+`dnegLandingForcedInstance` measure `[propext]` and `Prop.completeLinearOrder` carries choice (printed below). -/
 
 section PurityCheck
 open ZeroParadox
@@ -364,7 +365,7 @@ open ZeroParadox
 #print axioms snapNucleusTop_isLanding_iff
 #print axioms em_iff_ofNucleus_dneg_isLanding
 #print axioms dnegLandingForcedInstance
--- Mathlib, the two `Prop` instances contrasted above: the pinned one and the synthesized one.
+-- Mathlib: the pinned `Prop` instance, and `Prop.completeLinearOrder`, a definition, not an instance.
 #print axioms Prop.instHeytingAlgebra
 #print axioms Prop.completeLinearOrder
 

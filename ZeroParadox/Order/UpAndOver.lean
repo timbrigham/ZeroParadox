@@ -122,7 +122,7 @@ example [Fintype α] : 3 ≤ Fintype.card α := by
   simpa using Fintype.card_le_of_injective _ hinj
 
 /-- `Statement:` a densely ordered carrier carries no `UpAndOver`: density refuses the cover in the
-    corner (Mathlib `not_covBy`; the corpus form of "no cover anywhere" is
+    corner (Mathlib `not_covBy_of_denselyOrdered`; the corpus form of "no cover anywhere" is
     `axb1_fails_everywhere_iff_dense`). Density is sufficient for exclusion, not necessary: `Bool`
     is not densely ordered and is refused too (§ III). -/
 theorem isEmpty_of_denselyOrdered [DenselyOrdered α] : IsEmpty (UpAndOver α) :=

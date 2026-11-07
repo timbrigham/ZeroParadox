@@ -29,7 +29,7 @@ infinity is, and the library supplies the answer: well-foundedness is equivalent
 **infinite descending chain**, so the same fact reads as *"an infinite descent issues from the floor."*
 That is the INFINITE pole of ⊥ in this face, and the one the self-loop form hides.
 
-Standard form, read at source in the pinned Mathlib (`v4.30.0-rc2`) — `Mathlib/Order/WellFounded.lean`:
+Standard form, read at source in the pinned Mathlib (`v4.35.0`) — `Mathlib/Order/WellFounded.lean`:
 * `wellFounded_iff_isEmpty_descending_chain` — `WellFounded r ↔ IsEmpty { f : ℕ → α // ∀ n, r (f (n+1)) (f n) }`.
 * `not_acc_iff_exists_descending_chain` — `¬ Acc r x ↔ ∃ f, f 0 = x ∧ ∀ n, r (f (n+1)) (f n)`; the
   **pointwise** version, which is what "at the floor" needs.

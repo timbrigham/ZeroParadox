@@ -7,6 +7,7 @@ import ZeroParadox.Ordinal.PricedInterface
 import ZeroParadox.Order.LeastFixedPoint
 import ZeroParadox.Valuation.SemilatticeInstance
 import ZeroParadox.Multihomed.BoundaryOrder
+import ZeroParadox.Information.SnapEpsilonZero
 
 /-!
 # Machine-checked characterization index of ε₀ — what ε₀ IS and what it IS NOT
@@ -157,6 +158,8 @@ example : (∀ a : Ordinal.{u}, Ordinal.nfp (fun α => Ordinal.omega0 ^ α) a =
 -- Statement: the strict form in the floor-below boundary model: `↑ε₀` is the least closed point
 -- (landing) of `phaseUpAndOver.up` strictly above ⊥ of `WithBot Ordinal`.
 #check @ZeroParadox.phase_epsilon0_isLeast_landing_above_floor
+#check @ZeroParadox.phase_snap_of_MLRandom        -- Statement: CORNER: on `WithBot Ordinal` under join `max`, if the tape `w` is Martin-Löf random for `trials p hp` with `0 < p`, some run's first step covers ⊥ of `WithBot Ordinal` at the snap `↑0`, not at `↑ε₀`, and `phaseUpAndOver.up` sends `↑0` to `↑ε₀`; one way
+#check @ZeroParadox.epsilonOrZero_snap_of_MLRandom -- Statement: COVER: on `EpsilonOrZero`, whose ⊥ is 0 of `Ordinal`, under the same hypothesis some run's first step covers that ⊥ with value ε₀ ≠ 0; one way. Reading: ε₀ occupies the cover of that floor, never the floor (§ I)
 
 /-! ### § II. What ε₀ IS — the construction: first fixed point of the ω-tower from ⊥ of `Ordinal` -/
 #check @ZeroParadox.epsilon0_eq_nfp_bot       -- Statement: ε₀ = nfp (ω^·) ⊥, seeded at ⊥ of `Ordinal`
@@ -169,6 +172,7 @@ example : (∀ a : Ordinal.{u}, Ordinal.nfp (fun α => Ordinal.omega0 ^ α) a =
 #check @ZeroParadox.epsilon0_min_eq_max       -- Statement: ε₀ is the sup of the tower ∧ the least fixed point of ω^· (`IsLeast`)
 #check @ZeroParadox.epsilon0_least_fixedpoint -- Statement: the MIN face, lower-bound half only: ε₀ ≤ every fixed point of ω^·
 #check @ZeroParadox.epsilonZero_eq_iSup       -- Statement: the MAX face: ε₀ is the supremum of the ω-tower
+#check @ZeroParadox.snap_epsilon0_two_faces   -- Statement: on `WithBot Ordinal`, `up` sends the snap `↑0` to `↑ε₀` and ε₀ is the tower's supremum; on `EpsilonOrZero`, ε₀ covers 0 of `Ordinal` and is the least fixed point of ω^·; the iso sends that cover to `up`'s landing from the snap. Reading: one face per carrier, related by the iso, neither collapsed into the other
 #check @ZeroParadox.epsilon0_pinnedLimit      -- Statement: the tower is a run of ω^·, and ε₀ occupies the die role `PinnedLimit` (least upper bound of the stages, not a stage, least fixed point, the run climbing: `Monotone s`, a property of the run, distinct from the motion property `Motion.Climb`)
 #check @ZeroParadox.epsilon0_not_pinnedLimitUnique -- Statement: and not its strong form `PinnedLimitUnique`: ε₁ is another fixed point
 #check @ZeroParadox.pinnedLimit_opow_eq_epsilon0 -- Statement: under ω^·, every occupant of `PinnedLimit`, over any run, is ε₀; so ε₁, the § I-b role at the floor ε₀, occupies none

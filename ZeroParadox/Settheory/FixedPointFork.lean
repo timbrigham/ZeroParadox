@@ -51,7 +51,7 @@ Per-instance forks are theorems and are not hedged.
 
 ## Status
 
-PROVED. Four theorems, no `sorry`; choice-free (`[propext, Quot.sound]` only — see PurityCheck).
+PROVED. Four theorems, no `sorry`; choice-free (at most `[propext, Quot.sound]` — see PurityCheck).
 -/
 
 namespace ZeroParadox
@@ -105,7 +105,7 @@ This file is the framework side of that boundary: the abstract fork over a compl
 -/
 
 section PurityCheck
--- All four report `[propext, Quot.sound]` only — NO `Classical.choice`. The fork schema spine is
+-- Three report `[propext, Quot.sound]` and `unique_of_collapse` `[propext]` — NO `Classical.choice`. The fork schema spine is
 -- choice-free. (propext = propositional extensionality, Quot.sound = quotient soundness; both are
 -- Lean axioms used throughout Mathlib, not the Axiom of Choice.) Consistent with the choice-free core:
 -- see ZeroParadox/AxiomProfile.lean.

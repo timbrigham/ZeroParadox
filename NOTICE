@@ -50,3 +50,10 @@ Arguments followed, not code included:
   ZeroParadox/Order/PataraiaFromBourbakiWitt.lean
     Cites the same formalization and proves its statements by a
     different route (the Bourbaki-Witt theorem); no TypeTopology code.
+
+Lake dependencies, fetched at build time, not included:
+  kolmogorov-complexity-lean
+    Copyright 2024 Alexey Milovanov. Apache License, Version 2.0.
+    https://github.com/AlexeyMilovanov/kolmogorov-complexity-lean, at
+    commit 7e7111685355e3e7925c32621788e977ca53108f; cited by
+    ZeroParadox/Information/BrudnoBridge.lean. Full text in its LICENSE.

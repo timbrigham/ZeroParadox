@@ -54,8 +54,8 @@ declaration is added. **The block at the bottom of the `.lean` file is the regis
 not copy it.** What is stated here is only the shape it prints, which is the finding:
 
 * **Constructive side — choice-free, and not uniformly `[propext]`.** Footprints range from **no axioms
-  at all** (the carrier and its coercion) up through `[propext]` to `[propext, Quot.sound]`. No
-  declaration on this side carries `Classical.choice`.
+  at all** (the carrier and its coercion) up to `[propext]`. No declaration on this side carries
+  `Classical.choice`.
 * **The map — `Classical.choice`, uniformly.** Every declaration **in that block** whose statement
   mentions `Ordinal` reports `[propext, Classical.choice, Quot.sound]`, with no exceptions and no
   gradation among them. ⚠ **Scoped to this block on purpose.** It is not
@@ -72,13 +72,14 @@ not copy it.** What is stated here is only the shape it prints, which is the fin
   it is `e0Repr_not_injective` plus `Function.not_injective_iff`. It is a **crossing** declaration, it
   belongs exactly where the block files it, and it prices the crossing like every other one.
 
-**The `Quot.sound` on part of the constructive side** arrives through Mathlib's `WithTop` order
-instances and lemmas (`WithTop.instPreorder`, `WithTop.decidableLE`, `WithTop.decidableLT`,
-`WithTop.instOrderTop`, `WithTop.coe_lt_top`, each `[propext, Quot.sound]`), not through anything
-about ordinals: `SynONote`'s own order, `instLinearOrderSynONote`, measures `[propext]`. It is *not*
-`Classical.choice`, and no declaration on the constructive side carries choice.
+**The constructive side avoids Mathlib's `WithTop` order instances.** At the pin those instances and
+lemmas (`WithTop.instPreorder`, `WithTop.decidableLE`, `WithTop.decidableLT`, `WithTop.coe_lt_top`)
+carry `Classical.choice`, as does `WithTop.le_def`, which Mathlib proves by `grind`; the bare
+`WithTop.instLE`/`instLT` carry no axioms. The Lean file pins those two and proves decidability,
+`e0Coe_lt_top` and `e0_le_top` by cases on their constructors (the `[ZP port]` comment above them).
+`SynONote`'s own order, `instLinearOrderSynONote`, measures `[propext]`.
 
-So the boundary is *priced*: the notation side's declarations cost at most `[propext, Quot.sound]` and
+So the boundary is *priced*: the notation side's declarations cost at most `[propext]` and
 never `Classical.choice`; crossing to `Ordinal` costs `Classical.choice` at every declaration; and the
 crossing is one named map rather than a diffuse correspondence.
 
@@ -204,9 +205,9 @@ points of one carrier.
 
 ## Triviality assessment
 
-The carrier is an `abbrev`. The order, the decidability instances, and the lattice structure are all
-inherited from Mathlib's `WithTop` instances applied to an order built in a sibling file — `PricedInterface.lean`
-proves none of that and should get no credit for it. `e0OmegaPow_top` is `rfl`. `e0Repr_top` is `rfl`.
+The carrier is an `abbrev`. Its `≤` and `<` are Mathlib's `WithTop` relations applied to an order built in
+a sibling file, and the decidability and the top bound are case splits on their constructors —
+`PricedInterface.lean` should get no credit for any of that. `e0OmegaPow_top` is `rfl`. `e0Repr_top` is `rfl`.
 
 Not everything here is free. `repr_lt_epsilon0` — every raw notation denotes strictly below ε₀ — is a
 short structural induction, but it does need the right closure facts about ε₀ (additive and
@@ -233,8 +234,8 @@ that it is *stated as a price* on a specific named map, rather than left as a ge
   `lt_wf` does not transfer. The decidability-preservation idea is `ON_plus.v`'s and is what `WithTop` repeats. The
   abstraction `ON_plus` is stated over, `Class ON` (`ON_Generic.v`) — a well-founded ordered datatype
   with a comparison function — is published. Mathlib's `WithBot`/`WithTop` decidability and lattice instances
-  (`Mathlib/Order/WithBot.lean`) are the same move at instance level, and are what `PricedInterface.lean` actually
-  calls.
+  (`Mathlib/Order/WithBot.lean`) are the same move at instance level; `PricedInterface.lean` calls their
+  bare `WithTop.instLE`/`instLT` and constructors.
 * **The map.** The canonical name for "a notation system correctly denotes into a classical ordinal"
   is **`ON_correct`** (`ON_Generic.v`), with the three fields listed above. It is **already
   instantiated at ε₀**: `theories/ordinals/Schutte/Correctness_E0.v` builds `inject : T1 → Ord` with

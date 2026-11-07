@@ -184,10 +184,10 @@ structure BottomInvariantKernel (X : Type*) [Fintype X] where
   /-- one Markov step leaves `μ` invariant -/
   stationary : μ.bind κ = μ
 
-/-- The **stochastic (Markov) face**: the full-mixing doubly-stochastic kernel on `Fin 2`
-    (`MarkovSpectralGap.fullMix`: every state ↦ the uniform distribution) with the uniform
-    distribution as its stationary law. A non-p-adic instance of the invariant-structure universal,
-    in a third domain (finite stochastic dynamics). -/
+/-- The **stochastic (Markov) face**: the full-mixing doubly-stochastic kernel on `Fin 2` (`fullMix`,
+    `ZeroParadox/Reals/MarkovSpectralGap.lean`: every state ↦ the uniform distribution) with the
+    uniform distribution as its stationary law. A non-p-adic instance of the invariant-structure
+    universal, in a third domain (finite stochastic dynamics). -/
 noncomputable def markovBIK : BottomInvariantKernel (Fin 2) where
   κ := fullMix
   μ := fairCoinFin2

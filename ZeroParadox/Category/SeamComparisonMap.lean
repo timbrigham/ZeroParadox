@@ -270,7 +270,7 @@ example (g : (fC_functor.obj 0 ⟶ fC_functor.obj 0) → (fC_functor.obj 0 ⟶ f
     fun _ _ => Subsingleton.elim _ _⟩
 
 section PurityCheck
--- Measured footprint (lake build, v4.30.0-rc2): every result is
+-- Measured footprint (lake build, v4.35.0): every result is
 --   [propext, Classical.choice, Quot.sound]
 -- the expected library-choice footprint. The `Classical.choice` enters through `ZeroParadox/Category/RootCutDegeneracy.lean`'s ν-side
 -- (`cofixMk` / `root_seam`, the Mathlib M-type corecursion artifact) and the categorical seam
