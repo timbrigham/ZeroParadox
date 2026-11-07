@@ -402,6 +402,50 @@ theorem mlRandom_ae (μ : Measure (ℕ → Bool)) : ∀ᵐ w ∂μ, MLRandom μ 
 theorem exists_MLRandom (p : NNReal) (hp : p ≤ 1) : ∃ w, MLRandom (trials p hp) w :=
   (mlRandom_ae (trials p hp)).exists
 
+/-- `Statement:` if ⊥ of `L` has a first step and `0 < p ≤ 1`, then for `trials p hp`-almost every
+tape `w`, `w` fires (`hw`) and `snap_of_firstStep_fires_once`'s conclusion holds. One way. Almost
+every, not every: the all-`false` tape never fires (the `example`s below). No map from ⊥ of `L` to a
+tape or to `trials p hp` is claimed. -/
+theorem snap_ae_of_firstStep {L : Type*} [ZPSemilattice L] (hR1 : BotHasFirstStep L)
+    (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p) :
+    ∀ᵐ w ∂(trials p hp), ∃ (φ : Bool → L) (hw : ∃ k, w k = true),
+      let S := φ ∘ firedRun w hw
+      (S 0 = bot ∧ S 1 ≠ S 0 ∧ IsStateSequence S) ∧
+      ((S 0 ≠ S 1 ∧ S 1 ≠ S 0 ∧ join (S 0) (S 1) = S 1) ∧
+        letI := zpSemilatticeSup L; (bot : L) ⋖ S 1) := by
+  have hm : MeasurableSet {w : ℕ → Bool | ∃ k, w k = true} := by
+    have e : {w : ℕ → Bool | ∃ k, w k = true} = ⋃ k, fires k := by ext w; simp [fires]
+    rw [e]; exact MeasurableSet.iUnion fires_measurable
+  have hfire : ∀ᵐ w ∂(trials p hp), w ∈ {w : ℕ → Bool | ∃ k, w k = true} :=
+    (ae_iff_measure_eq hm.nullMeasurableSet).2 (by rw [trials_fires_once p hp hp0, measure_univ])
+  filter_upwards [hfire] with w hw
+  obtain ⟨φ, h⟩ := snap_of_firstStep_fires_once hR1 w hw
+  exact ⟨φ, hw, h⟩
+
+/-- `Statement:` under `snap_ae_of_firstStep`'s hypotheses, `trials p hp`-almost every tape is
+Martin-Löf random for `trials p hp` and carries `snap_ae_of_firstStep`'s conclusion; from
+`mlRandom_ae` and `snap_of_firstStep_MLRandom`. One way. `Reading:` CARRIER: the ensemble reading
+(all tapes under `trials p hp`) and the point reading (one Martin-Löf random tape) agree almost
+everywhere: the ensemble's typical member is a random tape that gives the snap. That ⊥ of `L` is the
+ensemble or a random tape is not proved here; `BotHasFirstStep L` stays a hypothesis, and a firing
+is not proved to be an execution event. -/
+theorem mlRandom_and_snap_ae {L : Type*} [ZPSemilattice L] (hR1 : BotHasFirstStep L)
+    (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p) :
+    ∀ᵐ w ∂(trials p hp), MLRandom (trials p hp) w ∧ ∃ (φ : Bool → L) (hw : ∃ k, w k = true),
+      let S := φ ∘ firedRun w hw
+      (S 0 = bot ∧ S 1 ≠ S 0 ∧ IsStateSequence S) ∧
+      ((S 0 ≠ S 1 ∧ S 1 ≠ S 0 ∧ join (S 0) (S 1) = S 1) ∧
+        letI := zpSemilatticeSup L; (bot : L) ⋖ S 1) := by
+  filter_upwards [mlRandom_ae (trials p hp)] with w hML
+  exact ⟨hML, snap_of_firstStep_MLRandom hR1 p hp hp0 w hML⟩
+
+-- Statement: CONTROL, almost every is not every: at the all-`false` tape no `hw` exists, so the
+-- conclusion fails there for every `L` (measure zero: the measure-one CONTROL `example` closing
+-- `ZeroParadox/Information/CrossingTrials.lean` § VIII). Dropping the first step: `nnreal_not_botHasFirstStep`.
+example {L : Type*} [ZPSemilattice L] :
+    ¬ ∃ (_ : Bool → L) (_ : ∃ k, (fun _ => false : ℕ → Bool) k = true), True :=
+  fun ⟨_, ⟨_, h⟩, _⟩ => Bool.false_ne_true h
+
 /-! ## § III. Frequency of `true` tending to `p` (the strong law of large numbers)
 
 Per tape: the fraction of `true` among the first `n` stages tends to `p`. That a Martin-Löf random
@@ -821,6 +865,8 @@ open ZeroParadox
 #print axioms measure_iInter_le_pow_zero
 #print axioms mlRandom_ae
 #print axioms exists_MLRandom
+#print axioms snap_ae_of_firstStep
+#print axioms mlRandom_and_snap_ae
 #print axioms tapeInd
 #print axioms trueFreq
 #print axioms FreqBalanced
