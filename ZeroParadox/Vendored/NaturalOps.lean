@@ -27,7 +27,7 @@ CHANGES FROM THE UPSTREAM v4.28.0 SOURCE (kept minimal, mechanical, NON-semantic
       * removed `@[expose] public section` (declarations are public by default here).
   - Removed the `deprecated_module "…"` block and its `Mathlib.Tactic.Linter.DeprecatedModule`
     import (we do NOT want the deprecation warning; this is an intentional revival).
-  - No mathematical content, definitions, statements, or proofs were altered.
+  - No mathematical content, definitions, or statements were altered; proof bodies were adjusted only for upstream API changes, each marked `[ZP port]`.
   Any further edits below this header are porting fixes for Mathlib API drift between
   v4.28.0 and v4.35.0 and are marked inline with `-- [ZP port]`.
 

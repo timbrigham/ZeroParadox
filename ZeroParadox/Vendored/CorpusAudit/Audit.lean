@@ -8,7 +8,7 @@ Upstream    : https://github.com/GuardianEngineAI/corpus (branch main)
 Commit      : 89d2876275ca7e9b935442b4cb20a0e1833225ea, 2026-09-08 (blob ids of all three
               files verified against that commit's tree, 2026-10-23)
 Upstream pin: leanprover/lean4:v4.28.0, no package dependencies (core Lean only)
-Ported to   : leanprover/lean4:v4.30.0-rc2 (this repository's pin)
+Ported to   : leanprover/lean4:v4.35.0 (this repository's pin)
 Author      : Larsen James Close, 2026 (copyright header retained verbatim below)
 License     : Apache 2.0 (unchanged); full text in `LICENSE` beside this file
 Namespace   : upstream's `Corpus.*`, kept so a local edit diffs cleanly against upstream. No
@@ -37,6 +37,8 @@ CHANGES FROM UPSTREAM (port-probe numbering; marked inline with `-- [ZP port Pn]
      PR #7 proposes replacing it (open, not merged, as of 2026-11-01).
   Local only, not for upstream: import paths renamed to this folder (`-- [ZP port]`).
   Upstream's v4.28.0 sources compiled and ran unchanged on v4.30.0-rc2 (probe, 2026-10-23).
+  Port to v4.35.0: Relation.lean's `kernelAccepts` passes the `maxRecDepth` option to
+     `addDeclCore`, which takes it as an argument there (Relation.lean header, item 2).
 ================================================================================
 -/
 
