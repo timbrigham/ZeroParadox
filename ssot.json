@@ -672,8 +672,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 3276,
-        "files": 203
+        "declarations": 3310,
+        "files": 204
       },
       "entries": [
         {
@@ -2857,6 +2857,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "042f1c90-7b9a-4a2c-8641-f2d2a5003e4b",
+          "new": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.avg_eq_inv_card",
+            "short": "avg_eq_inv_card"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.avg_eq_inv_card",
+            "short": "avg_eq_inv_card",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/MaxEntropy.lean (experimental, Tim ruling 154): fair coin maximizes entropy, missing information zero iff fair, chain to mlRandom_and_snap_ae under binEntropy p = log 2, Kraft in measure form, almost every fair tape incompressible for any prefix-free decoder. The occurrence commitment is reduced, not discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "04403ab7-2cf3-4cc8-b6db-e32cf01b3760",
           "new": {
             "file": "ZeroParadox/Valuation/PoleCornersBridge.lean",
@@ -4579,6 +4616,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "0702cfac-932d-4e4e-8601-76172ac4b173",
+          "new": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.half_add_quarter_lt_one",
+            "short": "half_add_quarter_lt_one"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.half_add_quarter_lt_one",
+            "short": "half_add_quarter_lt_one",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/MaxEntropy.lean (experimental, Tim ruling 154): fair coin maximizes entropy, missing information zero iff fair, chain to mlRandom_and_snap_ae under binEntropy p = log 2, Kraft in measure form, almost every fair tape incompressible for any prefix-free decoder. The occurrence commitment is reduced, not discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "0712a9eb-ae4e-4cf1-ba36-549143d81551",
           "new": {
@@ -5376,6 +5450,43 @@
             "role": []
           },
           "reason": "die-coalg-1028: motion as a Part x Set coalgebra (Die § XX) and observation as a parameter of a pair (Die § XXI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "08fca641-1005-477e-af15-470e267f7934",
+          "new": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fairTape_compressibleTapes_le",
+            "short": "fairTape_compressibleTapes_le"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.fairTape_compressibleTapes_le",
+            "short": "fairTape_compressibleTapes_le",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/MaxEntropy.lean (experimental, Tim ruling 154): fair coin maximizes entropy, missing information zero iff fair, chain to mlRandom_and_snap_ae under binEntropy p = log 2, Kraft in measure form, almost every fair tape incompressible for any prefix-free decoder. The occurrence commitment is reduced, not discharged.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -7400,6 +7511,43 @@
             ]
           },
           "reason": "Die extension: OVER selection (data/total), OVER trichotomy at a point, fan-in and reversal (Die.lean § VIII-X)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0d12deab-03e4-416f-8127-704971f04c31",
+          "new": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.missingInfo",
+            "short": "missingInfo"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.missingInfo",
+            "short": "missingInfo",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/MaxEntropy.lean (experimental, Tim ruling 154): fair coin maximizes entropy, missing information zero iff fair, chain to mlRandom_and_snap_ae under binEntropy p = log 2, Kraft in measure form, almost every fair tape incompressible for any prefix-free decoder. The occurrence commitment is reduced, not discharged.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -12508,6 +12656,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "17fec512-69db-4fd1-a267-0d59303dafe1",
+          "new": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.shannonEntropy_eq_log_iff",
+            "short": "shannonEntropy_eq_log_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.shannonEntropy_eq_log_iff",
+            "short": "shannonEntropy_eq_log_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/MaxEntropy.lean (experimental, Tim ruling 154): fair coin maximizes entropy, missing information zero iff fair, chain to mlRandom_and_snap_ae under binEntropy p = log 2, Kraft in measure form, almost every fair tape incompressible for any prefix-free decoder. The occurrence commitment is reduced, not discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "18122282-6f26-45a0-b1e0-c8114d6be4e4",
           "new": {
@@ -13882,6 +14067,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "1acbfcc4-4d2a-494f-92ac-ef58f1e564ab",
+          "new": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.eq_half_of_maxEntropy",
+            "short": "eq_half_of_maxEntropy"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.eq_half_of_maxEntropy",
+            "short": "eq_half_of_maxEntropy",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/MaxEntropy.lean (experimental, Tim ruling 154): fair coin maximizes entropy, missing information zero iff fair, chain to mlRandom_and_snap_ae under binEntropy p = log 2, Kraft in measure form, almost every fair tape incompressible for any prefix-free decoder. The occurrence commitment is reduced, not discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "1ad750b6-d66f-4fc9-ac13-5cdc96b97b47",
           "new": {
             "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
@@ -14461,6 +14683,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "1c88eb75-45c6-4b64-915c-855040bd36dd",
+          "new": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.missingInfo_fin_eq_zero_iff",
+            "short": "missingInfo_fin_eq_zero_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.missingInfo_fin_eq_zero_iff",
+            "short": "missingInfo_fin_eq_zero_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/MaxEntropy.lean (experimental, Tim ruling 154): fair coin maximizes entropy, missing information zero iff fair, chain to mlRandom_and_snap_ae under binEntropy p = log 2, Kraft in measure form, almost every fair tape incompressible for any prefix-free decoder. The occurrence commitment is reduced, not discharged.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -22415,6 +22674,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "2d6333c6-68c9-4b04-918e-ef096865ad89",
+          "new": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.avg_negMulLog_eq",
+            "short": "avg_negMulLog_eq"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.avg_negMulLog_eq",
+            "short": "avg_negMulLog_eq",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/MaxEntropy.lean (experimental, Tim ruling 154): fair coin maximizes entropy, missing information zero iff fair, chain to mlRandom_and_snap_ae under binEntropy p = log 2, Kraft in measure form, almost every fair tape incompressible for any prefix-free decoder. The occurrence commitment is reduced, not discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "2d82c6a8-c7f3-4d1a-81c5-c4ddc293c1f5",
           "new": {
             "file": "ZeroParadox/Valuation/InfinitudeFloor.lean",
@@ -22924,6 +23220,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "2e8c47e3-1db7-4b37-b097-8528147ddbd3",
+          "new": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.pairwise_disjoint_domCyl",
+            "short": "pairwise_disjoint_domCyl"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.pairwise_disjoint_domCyl",
+            "short": "pairwise_disjoint_domCyl",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/MaxEntropy.lean (experimental, Tim ruling 154): fair coin maximizes entropy, missing information zero iff fair, chain to mlRandom_and_snap_ae under binEntropy p = log 2, Kraft in measure form, almost every fair tape incompressible for any prefix-free decoder. The occurrence commitment is reduced, not discharged.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -23576,6 +23909,43 @@
             "role": []
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "2fd4ed2d-eb67-4c91-b7d4-d0002971c223",
+          "new": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.prefixOf",
+            "short": "prefixOf"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.prefixOf",
+            "short": "prefixOf",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/MaxEntropy.lean (experimental, Tim ruling 154): fair coin maximizes entropy, missing information zero iff fair, chain to mlRandom_and_snap_ae under binEntropy p = log 2, Kraft in measure form, almost every fair tape incompressible for any prefix-free decoder. The occurrence commitment is reduced, not discharged.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -26323,6 +26693,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "36bbf61a-2b0a-4812-8c15-dada562de43b",
+          "new": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ae_incompressible",
+            "short": "ae_incompressible"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ae_incompressible",
+            "short": "ae_incompressible",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/MaxEntropy.lean (experimental, Tim ruling 154): fair coin maximizes entropy, missing information zero iff fair, chain to mlRandom_and_snap_ae under binEntropy p = log 2, Kraft in measure form, almost every fair tape incompressible for any prefix-free decoder. The occurrence commitment is reduced, not discharged.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -29399,6 +29806,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "3d824490-d377-43e8-9882-9ac0958cd716",
+          "new": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.kraft_measure",
+            "short": "kraft_measure"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.kraft_measure",
+            "short": "kraft_measure",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/MaxEntropy.lean (experimental, Tim ruling 154): fair coin maximizes entropy, missing information zero iff fair, chain to mlRandom_and_snap_ae under binEntropy p = log 2, Kraft in measure form, almost every fair tape incompressible for any prefix-free decoder. The occurrence commitment is reduced, not discharged.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -32765,6 +33209,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "451de84c-db12-42fb-b18f-b6a86674af45",
+          "new": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.mem_prefixCyl_iff",
+            "short": "mem_prefixCyl_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.mem_prefixCyl_iff",
+            "short": "mem_prefixCyl_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/MaxEntropy.lean (experimental, Tim ruling 154): fair coin maximizes entropy, missing information zero iff fair, chain to mlRandom_and_snap_ae under binEntropy p = log 2, Kraft in measure form, almost every fair tape incompressible for any prefix-free decoder. The occurrence commitment is reduced, not discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "453d5650-98e3-4277-bf05-ceeb2f2b9d2a",
           "new": {
             "file": "ZeroParadox/Computability/SelfCopyReference.lean",
@@ -32828,6 +33309,43 @@
             ]
           },
           "reason": "UniversalChoiceFree § IX: a self-printing universal code at [propext, Quot.sound] (restated SelfPrints ∧ Universal via encodeCode/ofNatCodeCF), faithfulness bridges, statement controls, controls zero_selfPrints_not_universal / universal_not_selfPrints_cf / unshifted_incompatible",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "456628c5-8f7f-4cdc-b17c-b13435472302",
+          "new": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fairTape_prefixCyl",
+            "short": "fairTape_prefixCyl"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.fairTape_prefixCyl",
+            "short": "fairTape_prefixCyl",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/MaxEntropy.lean (experimental, Tim ruling 154): fair coin maximizes entropy, missing information zero iff fair, chain to mlRandom_and_snap_ae under binEntropy p = log 2, Kraft in measure form, almost every fair tape incompressible for any prefix-free decoder. The occurrence commitment is reduced, not discharged.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -37738,6 +38256,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "4faa9b74-d729-43dc-866b-03b8af11a41b",
+          "new": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.shannonEntropy",
+            "short": "shannonEntropy"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.shannonEntropy",
+            "short": "shannonEntropy",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/MaxEntropy.lean (experimental, Tim ruling 154): fair coin maximizes entropy, missing information zero iff fair, chain to mlRandom_and_snap_ae under binEntropy p = log 2, Kraft in measure form, almost every fair tape incompressible for any prefix-free decoder. The occurrence commitment is reduced, not discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "4fb8620d-44e6-420b-b2f9-729444096084",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -40919,6 +41474,43 @@
             ]
           },
           "reason": "Meta helper renamed in source to remove ExtractDeps/Snapshot qualified collision",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "56c0a6f3-9e26-4a50-ad60-a35c36248042",
+          "new": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.missingInfo_eq_zero_iff",
+            "short": "missingInfo_eq_zero_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.missingInfo_eq_zero_iff",
+            "short": "missingInfo_eq_zero_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/MaxEntropy.lean (experimental, Tim ruling 154): fair coin maximizes entropy, missing information zero iff fair, chain to mlRandom_and_snap_ae under binEntropy p = log 2, Kraft in measure form, almost every fair tape incompressible for any prefix-free decoder. The occurrence commitment is reduced, not discharged.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -44564,6 +45156,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "5da8fdcd-b6d6-4bcb-9ae2-8b25ce7a14b9",
+          "new": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.missingInfo_eq_kl",
+            "short": "missingInfo_eq_kl"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.missingInfo_eq_kl",
+            "short": "missingInfo_eq_kl",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/MaxEntropy.lean (experimental, Tim ruling 154): fair coin maximizes entropy, missing information zero iff fair, chain to mlRandom_and_snap_ae under binEntropy p = log 2, Kraft in measure form, almost every fair tape incompressible for any prefix-free decoder. The occurrence commitment is reduced, not discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "5db10ff2-8066-4f85-b7ed-fa9f0ad368da",
           "new": {
             "file": "ZeroParadox/Valuation/BottomInvariant.lean",
@@ -45615,6 +46244,43 @@
             ]
           },
           "reason": "Sibling faces of the diagonal fixed point, built 2026-07-16: Tarski (truth/wall), Curry (explosion/wall), Rice (computability undecidability, cites Mathlib), Löb (provability, from-scratch ProvabilityLogic typeclass + Gödel 2). Each wired to the bottom element via the family's μ/ν structure.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "60855e53-e019-4d2e-9057-c128e422e43b",
+          "new": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.appendFalse",
+            "short": "appendFalse"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.appendFalse",
+            "short": "appendFalse",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/MaxEntropy.lean (experimental, Tim ruling 154): fair coin maximizes entropy, missing information zero iff fair, chain to mlRandom_and_snap_ae under binEntropy p = log 2, Kraft in measure form, almost every fair tape incompressible for any prefix-free decoder. The occurrence commitment is reduced, not discharged.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -48237,6 +48903,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "66eaab80-c142-4a1d-bfc9-924e71f4d1cb",
+          "new": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.shannonEntropy_le_log",
+            "short": "shannonEntropy_le_log"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.shannonEntropy_le_log",
+            "short": "shannonEntropy_le_log",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/MaxEntropy.lean (experimental, Tim ruling 154): fair coin maximizes entropy, missing information zero iff fair, chain to mlRandom_and_snap_ae under binEntropy p = log 2, Kraft in measure form, almost every fair tape incompressible for any prefix-free decoder. The occurrence commitment is reduced, not discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "67285818-6942-4377-b3ce-aa836d29e620",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -50407,6 +51110,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "6b99fd05-62ce-4a36-b399-cbcd23ea2353",
+          "new": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.compressible_card",
+            "short": "compressible_card"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.compressible_card",
+            "short": "compressible_card",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/MaxEntropy.lean (experimental, Tim ruling 154): fair coin maximizes entropy, missing information zero iff fair, chain to mlRandom_and_snap_ae under binEntropy p = log 2, Kraft in measure form, almost every fair tape incompressible for any prefix-free decoder. The occurrence commitment is reduced, not discharged.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -53565,6 +54305,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "726bc71b-3701-4943-92b6-78024287ce15",
+          "new": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.shortWords",
+            "short": "shortWords"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.shortWords",
+            "short": "shortWords",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/MaxEntropy.lean (experimental, Tim ruling 154): fair coin maximizes entropy, missing information zero iff fair, chain to mlRandom_and_snap_ae under binEntropy p = log 2, Kraft in measure form, almost every fair tape incompressible for any prefix-free decoder. The occurrence commitment is reduced, not discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "7291c529-660b-4063-87b6-05d3a93cc055",
           "new": {
@@ -53920,6 +54697,43 @@
             ]
           },
           "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "7331c57d-6c25-4106-b164-0a47227cf497",
+          "new": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.prefix_of_mem_prefixCyl",
+            "short": "prefix_of_mem_prefixCyl"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.prefix_of_mem_prefixCyl",
+            "short": "prefix_of_mem_prefixCyl",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/MaxEntropy.lean (experimental, Tim ruling 154): fair coin maximizes entropy, missing information zero iff fair, chain to mlRandom_and_snap_ae under binEntropy p = log 2, Kraft in measure form, almost every fair tape incompressible for any prefix-free decoder. The occurrence commitment is reduced, not discharged.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -60296,6 +61110,43 @@
         {
           "claims": {
             "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "808c7607-01f0-4ad5-8c3c-61ee92ebea72",
+          "new": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.prefixCyl_eq_pi",
+            "short": "prefixCyl_eq_pi"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.prefixCyl_eq_pi",
+            "short": "prefixCyl_eq_pi",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/MaxEntropy.lean (experimental, Tim ruling 154): fair coin maximizes entropy, missing information zero iff fair, chain to mlRandom_and_snap_ae under binEntropy p = log 2, Kraft in measure form, almost every fair tape incompressible for any prefix-free decoder. The occurrence commitment is reduced, not discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
             "witness_of": [
               "DA-1"
             ]
@@ -62773,6 +63624,43 @@
             ]
           },
           "reason": "Die computability face (halting as arrival, clock machine), quotients of a motion (drawing vs set: hypersets, codes), carrier-changing steps (wrap, Option), PoleEnds with inhabitation",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "85fb38f0-0134-4eff-ae49-a48abdd114e7",
+          "new": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.compressibleTapes",
+            "short": "compressibleTapes"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.compressibleTapes",
+            "short": "compressibleTapes",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/MaxEntropy.lean (experimental, Tim ruling 154): fair coin maximizes entropy, missing information zero iff fair, chain to mlRandom_and_snap_ae under binEntropy p = log 2, Kraft in measure form, almost every fair tape incompressible for any prefix-free decoder. The occurrence commitment is reduced, not discharged.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -66647,6 +67535,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "8fe19ae8-601f-4d73-ab33-da6f799996bd",
+          "new": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.card_shortWords_le",
+            "short": "card_shortWords_le"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.card_shortWords_le",
+            "short": "card_shortWords_le",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/MaxEntropy.lean (experimental, Tim ruling 154): fair coin maximizes entropy, missing information zero iff fair, chain to mlRandom_and_snap_ae under binEntropy p = log 2, Kraft in measure form, almost every fair tape incompressible for any prefix-free decoder. The occurrence commitment is reduced, not discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "8fe57b41-dc48-4c68-8401-c1216cf925c1",
           "new": {
@@ -68407,6 +69332,43 @@
             ]
           },
           "reason": "Die v2 final batch: the four corners as die motions and the tower as a span of motions (experimental PoleCorners / PoleCornersBridge)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "93045c5f-6524-4103-81ae-c7446ccd77fd",
+          "new": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.PrefixFree",
+            "short": "PrefixFree"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.PrefixFree",
+            "short": "PrefixFree",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/MaxEntropy.lean (experimental, Tim ruling 154): fair coin maximizes entropy, missing information zero iff fair, chain to mlRandom_and_snap_ae under binEntropy p = log 2, Kraft in measure form, almost every fair tape incompressible for any prefix-free decoder. The occurrence commitment is reduced, not discharged.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -72809,6 +73771,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "9ba9832e-10e4-4e2f-a41e-eedfd85130c4",
+          "new": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.prefixCyl_measurable",
+            "short": "prefixCyl_measurable"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.prefixCyl_measurable",
+            "short": "prefixCyl_measurable",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/MaxEntropy.lean (experimental, Tim ruling 154): fair coin maximizes entropy, missing information zero iff fair, chain to mlRandom_and_snap_ae under binEntropy p = log 2, Kraft in measure form, almost every fair tape incompressible for any prefix-free decoder. The occurrence commitment is reduced, not discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "9bb96cfb-2ea1-4457-b6bf-1ece0a3b5384",
           "new": {
@@ -74852,6 +75851,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "9f6215f3-cade-40b4-8fc4-3fc89799d949",
+          "new": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.avg_negMulLog_le",
+            "short": "avg_negMulLog_le"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.avg_negMulLog_le",
+            "short": "avg_negMulLog_le",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/MaxEntropy.lean (experimental, Tim ruling 154): fair coin maximizes entropy, missing information zero iff fair, chain to mlRandom_and_snap_ae under binEntropy p = log 2, Kraft in measure form, almost every fair tape incompressible for any prefix-free decoder. The occurrence commitment is reduced, not discharged.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -79946,6 +80982,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "aad7b768-8069-4f8d-a3bb-4314fd8a45a9",
+          "new": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_eq_fairTape_of_maxEntropy",
+            "short": "trials_eq_fairTape_of_maxEntropy"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_eq_fairTape_of_maxEntropy",
+            "short": "trials_eq_fairTape_of_maxEntropy",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/MaxEntropy.lean (experimental, Tim ruling 154): fair coin maximizes entropy, missing information zero iff fair, chain to mlRandom_and_snap_ae under binEntropy p = log 2, Kraft in measure form, almost every fair tape incompressible for any prefix-free decoder. The occurrence commitment is reduced, not discharged.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -95166,6 +96239,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "cb6307fa-6c05-44e5-8b77-a190138d1040",
+          "new": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.maxEntropy_mlRandom_and_snap_ae",
+            "short": "maxEntropy_mlRandom_and_snap_ae"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.maxEntropy_mlRandom_and_snap_ae",
+            "short": "maxEntropy_mlRandom_and_snap_ae",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/MaxEntropy.lean (experimental, Tim ruling 154): fair coin maximizes entropy, missing information zero iff fair, chain to mlRandom_and_snap_ae under binEntropy p = log 2, Kraft in measure form, almost every fair tape incompressible for any prefix-free decoder. The occurrence commitment is reduced, not discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "cb6805f1-7df4-49ed-b1ed-2deac154e9ca",
           "new": {
             "file": "ZeroParadox/Ordinal/SnapNucleus.lean",
@@ -98747,6 +99857,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d2aac643-6d6c-497b-9fb9-228558e0088e",
+          "new": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.negMulLog_inv_natCast",
+            "short": "negMulLog_inv_natCast"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.negMulLog_inv_natCast",
+            "short": "negMulLog_inv_natCast",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/MaxEntropy.lean (experimental, Tim ruling 154): fair coin maximizes entropy, missing information zero iff fair, chain to mlRandom_and_snap_ae under binEntropy p = log 2, Kraft in measure form, almost every fair tape incompressible for any prefix-free decoder. The occurrence commitment is reduced, not discharged.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -110426,6 +111573,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "ea387eb9-0856-45c9-bef1-3663a90d2919",
+          "new": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.maximizer_admissible",
+            "short": "maximizer_admissible"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.maximizer_admissible",
+            "short": "maximizer_admissible",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/MaxEntropy.lean (experimental, Tim ruling 154): fair coin maximizes entropy, missing information zero iff fair, chain to mlRandom_and_snap_ae under binEntropy p = log 2, Kraft in measure form, almost every fair tape incompressible for any prefix-free decoder. The occurrence commitment is reduced, not discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "ea56e437-63fc-4ec0-aedd-a4b996253001",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -111743,6 +112927,43 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ed3e93b3-3eb6-48f2-ab84-182de7830450",
+          "new": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.missingInfo_nonneg",
+            "short": "missingInfo_nonneg"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.missingInfo_nonneg",
+            "short": "missingInfo_nonneg",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/MaxEntropy.lean (experimental, Tim ruling 154): fair coin maximizes entropy, missing information zero iff fair, chain to mlRandom_and_snap_ae under binEntropy p = log 2, Kraft in measure form, almost every fair tape incompressible for any prefix-free decoder. The occurrence commitment is reduced, not discharged.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -120195,6 +121416,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "fe236a61-3a8c-40d4-bc51-26f0baad3ea6",
+          "new": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.mem_shortWords",
+            "short": "mem_shortWords"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/MaxEntropy.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.mem_shortWords",
+            "short": "mem_shortWords",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/MaxEntropy.lean (experimental, Tim ruling 154): fair coin maximizes entropy, missing information zero iff fair, chain to mlRandom_and_snap_ae under binEntropy p = log 2, Kraft in measure form, almost every fair tape incompressible for any prefix-free decoder. The occurrence commitment is reduced, not discharged.",
           "verify": {
             "axioms": null,
             "sorry_free": true
