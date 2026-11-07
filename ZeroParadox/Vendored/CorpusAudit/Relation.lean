@@ -5,7 +5,7 @@ VENDORED FROM GuardianEngineAI/corpus - provenance (Zero Paradox project)
 Source      : Corpus/Relation.lean
 Upstream    : https://github.com/GuardianEngineAI/corpus (branch main)
 Commit      : 89d2876275ca7e9b935442b4cb20a0e1833225ea (blob 71dfda33, verified 2026-10-23)
-Upstream pin: leanprover/lean4:v4.28.0; ported to this repository's v4.30.0-rc2
+Upstream pin: leanprover/lean4:v4.28.0; ported to this repository's v4.35.0
 Author      : Larsen James Close
 License     : Apache 2.0; full text in `LICENSE` beside this file
 
@@ -13,7 +13,8 @@ Why vendored, and the full list of changes: the provenance block of `Audit.lean`
 Changes to THIS file:
   1. The Apache-2.0 header below was added; upstream's copy of this file carries none, so it is
      copied from its siblings and the repository LICENSE. (local edit; candidate to offer upstream)
-  The body below the header is upstream's, unchanged.
+  2. `kernelAccepts`: v4.35's `addDeclCore` takes a `maxRecDepth` argument; passes the option's value. (port)
+  The body below the header is otherwise upstream's, unchanged.
 ================================================================================
 -/
 
@@ -61,7 +62,7 @@ private def kernelAccepts (levels : List Name) (type value : Expr) : CoreM Bool 
   let name ← mkFreshUserName `Corpus.Relation.probe
   let decl := Declaration.thmDecl { name, levelParams := levels, type, value }
   let env := (← getEnv).toKernelEnv
-  match env.addDeclCore 200000 decl none with
+  match env.addDeclCore 200000 (maxRecDepth.get (← getOptions)).toUSize decl none with
   | .ok _ => return true
   | .error (.declTypeMismatch ..) | .error (.exprTypeMismatch ..) |
       .error (.appTypeMismatch ..) => return false
