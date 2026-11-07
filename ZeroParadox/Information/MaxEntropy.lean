@@ -33,7 +33,10 @@ open MeasureTheory Filter ZPSemilattice
 /-! ## § I. Entropy is maximal exactly at the uniform law
 
 Binary case in Mathlib (the first `example`). The `n`-symbol case is Jensen on the strictly concave
-`Real.negMulLog`; not located in the pinned Mathlib as of 2026-11-06 (grep of `negMulLog`, `log_card`). -/
+`Real.negMulLog`; not located in the pinned Mathlib as of 2026-11-06 (grep of `negMulLog`, `log_card`).
+Standard (Gibbs' inequality); a formal version outside the closure is the PFR project's
+`ProbabilityTheory.measureEntropy_le_log_card` (located by theoremsearch, not read, not compared
+here). -/
 
 section Entropy
 
@@ -121,8 +124,8 @@ theorem missingInfo_nonneg (p : ℝ) : 0 ≤ missingInfo p :=
 
 /-- `Statement:` missing information is zero iff `p = 1/2`, iff `binEntropy p = log 2`; both
 directions. `Reading:` INVERSION: the observer's zero sits where the ensemble's entropy is maximal.
-Both sides are finite, in `[0, log 2]` per symbol; the pole, zero coinciding with infinity, has its
-own coincidence witness, `infinitude_forces_infinite_complexity`. -/
+For `0 ≤ p ≤ 1` both sides are finite, in `[0, log 2]` per symbol; the pole, zero coinciding with
+infinity, has its own coincidence witness, `infinitude_forces_infinite_complexity`. -/
 theorem missingInfo_eq_zero_iff (p : ℝ) :
     (missingInfo p = 0 ↔ p = 2⁻¹) ∧ (missingInfo p = 0 ↔ binEntropy p = log 2) := by
   have h : missingInfo p = 0 ↔ binEntropy p = log 2 := by
@@ -174,7 +177,8 @@ theorem trials_eq_fairTape_of_maxEntropy (p : NNReal) (hp : p ≤ 1)
 /-- `Statement:` if ⊥ of `L` has a first step and `p` maximizes binary entropy, then `trials p hp`-
 almost every tape is Martin-Löf random and gives the snap; `mlRandom_and_snap_ae`. One way.
 `Reading:` CARRIER: the occurrence commitment is reduced to "the bottom's tape law is the
-maximum-entropy coin". That ⊥ of `L` has a tape law, is unconstrained, or is random is not proved;
+maximum-entropy coin", one sufficient choice: any `0 < p` gives the snap (`mlRandom_and_snap_ae`);
+the fair coin is the one § IV ties to incompressibility. That ⊥ of `L` has a tape law, is unconstrained, or is random is not proved;
 `BotHasFirstStep L` stays a hypothesis, and almost every is not every. -/
 theorem maxEntropy_mlRandom_and_snap_ae {L : Type*} [ZPSemilattice L] (hR1 : BotHasFirstStep L)
     (p : NNReal) (hp : p ≤ 1) (hmax : Real.binEntropy (p : ℝ) = Real.log 2) :
@@ -192,12 +196,13 @@ example : Real.binEntropy ((0 : NNReal) : ℝ) ≠ Real.log 2 := by
 /-! ## § IV. Incompressibility without a machine
 
 A decoder is any `D : List Bool → Option (List Bool)`; `D d = some x` reads "`d` describes `x`".
-`kraft_measure` is Kraft's inequality for a prefix-free domain in measure form; its finite-code
-sibling is Mathlib's `InformationTheory.kraft_mcmillan_inequality` (uniquely decodable, the `example`
-after it). `Reading:` with the optimal prefix machine `U` as `D`, `ae_incompressible` is the
-almost-every form of "`K(w↾n) ≥ n − c`"; `U` is not defined here. "Maximally complex" means
-PREFIX-FREE incompressible: for plain complexity no tape has constant deficiency
-(`ZeroParadox/Information/Disjunctive.md`). -/
+`kraft_measure` is Kraft's inequality, measure form, prefix-free domain; finite sibling: Mathlib's
+`InformationTheory.kraft_mcmillan_inequality` (the `example` after it). Closer siblings in Milovanov
+(§ V, not compared): `domainWeight_le_one`, and `card_compressibleWordsLt` for `compressible_card`.
+The `2⁻ᶜ` bound is the easy half of Schnorr's theorem. `Reading:` CARRIER: with the optimal prefix
+machine `U` as `D`, `ae_incompressible` is the almost-every form of "`K(w↾n) ≥ n − c`"; `U` is not
+defined here. "Maximally complex" means PREFIX-FREE incompressible: for plain complexity no tape has
+constant deficiency (`ZeroParadox/Information/Disjunctive.md`). -/
 
 /-- `Statement:` a prefix cylinder is a box over the first `l.length` coordinates. -/
 theorem prefixCyl_eq_pi (l : List Bool) :
@@ -384,7 +389,8 @@ theorem half_add_quarter_lt_one : (2⁻¹ : ENNReal) + 2⁻¹ ^ 2 < 1 := by
   norm_num
 
 -- Statement: CONTROL, drop prefix-freeness: under `appendFalse`, `compressibleTapes appendFalse 1`
--- exceeds the bound `2⁻¹` (it holds every tape with a `false` in its first two bits, measure 3/4).
+-- exceeds the bound `2⁻¹` (it holds every tape with a `false` anywhere; the proof uses the subset
+-- with one in the first two bits, measure 3/4).
 example : ¬ fairTape (compressibleTapes appendFalse 1) ≤ 2⁻¹ ^ 1 ∧
     ¬ PrefixFree {d | (appendFalse d).isSome} := by
   constructor
@@ -419,14 +425,14 @@ example : ¬ fairTape (compressibleTapes appendFalse 1) ≤ 2⁻¹ ^ 1 ∧
 
 /-! ## § V. Prior art, outside the dependency closure
 
-Levin–Schnorr and Brudno for binary Bernoulli measures are formalized in A. Milovanov,
-`kolmogorov-complexity-lean` @7e71116 (Lean 4.35; not compared with our definitions here):
-`isMartinLofRandom_uniform_iff_le_KPPlain_cantorPrefix`, uniform Martin-Löf randomness iff
-`K(w↾n) ≥ n − c` for prefix-free `K`; `tendsto_plainK_cantorPrefix_div`, plain complexity per bit tends
-to the entropy for every Martin-Löf random tape of a computable `p`; and its almost-every form
-`measure_setOf_not_tendsto_plainK_cantorPrefix_div`. A rate statement alone does not give Martin-Löf
-randomness (standard, not proved here). Brudno in Hoyrup's form: Cenzer–Porter, arXiv:2103.03971,
-p. 22, Thm 32, located by search 2026-11-06. -/
+A. Milovanov, `kolmogorov-complexity-lean` @7e71116 (Lean 4.35; not compared with our definitions).
+Levin–Schnorr, uniform measure: `isMartinLofRandom_uniform_iff_le_KPPlain_cantorPrefix`, Martin-Löf
+random iff `K(w↾n) ≥ n − c`, prefix-free `K`. Brudno, Bernoulli `p`:
+`tendsto_plainK_cantorPrefix_div` (computable `p`, `0 < p < 1`, every Martin-Löf random tape; entropy
+in bits, ours in nats); almost-every form `measure_setOf_not_tendsto_plainK_cantorPrefix_div` (any
+`p ≤ 1`). A rate alone does not give Martin-Löf randomness (standard, not proved here). Ergodic
+measures: Hoyrup's effective Shannon–McMillan–Breiman (Cenzer–Porter, arXiv:2103.03971, p. 22,
+Thm 32, retrieved 2026-11-07; primary: Hoyrup, STACS 2012, arXiv:1107.1149, not retrieved). -/
 
 end ZeroParadox
 
