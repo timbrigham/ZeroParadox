@@ -171,7 +171,7 @@ structural induction on the notation, never through `repr`; Mathlib's `ONote.cmp
 reused because it requires the `NF` predicate, which is itself defined via `repr` and carries choice.
 The result is a `LinearOrder SynONote`, hence a `SemilatticeInf`, hence `Nucleus SynONote` typechecks —
 and every piece of it is `[propext]` or cleaner. That is what makes `no_snap_nucleus` a statement about
-an actually-inhabitable type rather than a vacuous one.
+an inhabited type, `Nucleus SynONote` (`idNucleus` inhabits it), rather than an uninhabited one.
 
 ## Triviality assessment
 
@@ -201,10 +201,13 @@ on the syntactic substrate to avoid inherited choice is ZP-N's
 (point-free Lawvere-Tierney). That Cantor normal form names exactly the ordinals below ε₀ is classical
 proof theory, not a result proved in the Lean file.
 
-**The closest specialist precedent, named.** Castéran and Contejean's *hydra-battles* development (Coq)
-carries a CNF datatype `T1` for the ordinals **below** ε₀, constructive (axiom-free / intuitionistic
-outside its Schütte module), with ε₀ as the notation system's **supremum** — and, per our own prior-art
-survey of 2026-06-27, *not* phrased as a least fixed point and carrying no least-fixed-point theorem.
+**The closest specialist precedent, named.** The *hydra-battles* development (Coq; credited here to
+the hydra-battles authors, since its book names P. Castéran with contributions by É. Contejean,
+F. Hatat and P. Manoury) carries a CNF datatype `T1` for the ordinals **below** ε₀, constructive
+(axiom-free / intuitionistic outside its Schütte module), with ε₀ as the notation system's
+**supremum**. Its `Epsilon0/T1.v` development, per our own prior-art survey of 2026-06-27, is *not*
+phrased as a least fixed point and carries no least-fixed-point theorem; the library's classical
+Schütte module does prove leastness (`epsilon0_lfp`, cited in ZP-N, `scripts/build_zpn.py`).
 That is the same carrier and the same supremum as here. Grimm's Gaia development (INRIA RR-8407) builds a
 comparable `T1 ≈ ε₀` and treats ε₀ as a fixed point of `ω^·`, but **explicitly uses excluded middle and
 choice** — the classical comparison point.
@@ -222,7 +225,7 @@ layer carries a distinctive construction with its own separate prior art.
 
 **Two further hydra-battles constructions are cited here because a sibling file follows their shape.**
 `ZeroParadox/Ordinal/PricedInterface.lean` adjoins a top to `SynONote` and maps the result into
-Mathlib's `Ordinal`. Both moves follow Castéran, and the credit above does not reach them:
+Mathlib's `Ordinal`. Both moves follow hydra-battles, and the credit above does not reach them:
 `theories/ordinals/OrdinalNotations/ON_plus.v` builds the **sum of two ordinal notation systems**
 generically (`compare_plus`, `plus_comp`, `lt_wf`, `ON_plus`, and `lt_eq_lt_dec` proving that
 decidability of comparison survives the adjunction). "Notations plus one adjoined point" has that

@@ -33,15 +33,15 @@ qualification to live in **Set**; stated unqualified it is loose.)
 2. **Instance catalog (other layers — referenced, not re-proved here):** set theory (ZP-J/K,
    AbstractSelfApp / Quine atom), number systems (ZP-B/F, ℝ vs ℚ₂ via Ostrowski), the categorical
    parent (W-types vs M-types, `QPF.Fix` vs `QPF.Cofix`).
-3. **Unification (prose conjecture, FENCED — never a Lean claim):** that the contact points of all
-   instances are faces of *one* object (the diagonal fixed point). This is a type boundary, not a
-   missing proof: `x = y` across distinct categories is not a well-formed proposition.
+3. **Unification (a role, never an identity):** the contact points share a ROLE defined in the die
+   (`ZeroParadox/Die.lean`; the Quine atom's is `Motion.SelfOnlyAt`), each chart occupied or provably
+   empty by theorem (`ZeroParadox/DieCannotBe.lean` § XV). `x = y` across categories is ill-formed.
 
 ## Fences
 
-- **Hard fence (permanent):** cross-instance identity ("the contact points are one object") is not a
-  theorem and cannot be — it is a definitional/modeling commitment. Each framework forks at *its own*
-  contact point; that is all that is claimed formally.
+- **Hard fence (permanent):** no equation across instances is stated or committed to (it is ill-typed);
+  the instances are measured against one die role, not an identity. Each framework forks at *its own* contact point;
+  that is all that is claimed formally.
 - **Soft fence (conjecture):** that *every* domain fork is an instance of this μ/ν schema. The
   schema is a theorem here and for canonical functors; "every fork is μ/ν" is the open
   generalization. (The Ostrowski / ℝ-vs-ℚ₂ instance, in particular, is theorem-backed on its own
@@ -51,7 +51,7 @@ Per-instance forks are theorems and are not hedged.
 
 ## Status
 
-PROVED. Four theorems, no `sorry`; choice-free (`[propext, Quot.sound]` only — see PurityCheck).
+PROVED. Four theorems, no `sorry`; choice-free (at most `[propext, Quot.sound]` — see PurityCheck).
 -/
 
 namespace ZeroParadox
@@ -105,7 +105,7 @@ This file is the framework side of that boundary: the abstract fork over a compl
 -/
 
 section PurityCheck
--- All four report `[propext, Quot.sound]` only — NO `Classical.choice`. The fork schema spine is
+-- Three report `[propext, Quot.sound]` and `unique_of_collapse` `[propext]` — NO `Classical.choice`. The fork schema spine is
 -- choice-free. (propext = propositional extensionality, Quot.sound = quotient soundness; both are
 -- Lean axioms used throughout Mathlib, not the Axiom of Choice.) Consistent with the choice-free core:
 -- see ZeroParadox/AxiomProfile.lean.

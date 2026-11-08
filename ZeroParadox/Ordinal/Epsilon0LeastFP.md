@@ -99,21 +99,29 @@ on its own. Below ε₀ it is constantly ε₀; `epsilon_succ_eq_nfp` gives `nfp
 * **No ε-number can test it.** Every ε-number is a fixed point, so `nfp (ω^·) ε₁ = ε₁` and likewise at
   every rung — the whole family is blind to the difference between the general fact and *"above ε₀ the
   seed does all the work"*, which is false. Test above ε₀ with a **non**-fixed point such as `succ ε₀`.
-* **The rungs do NOT partition.** The intervals `(ε_o, ε_(o+1)]` miss every **limit**-index ε-number,
-  e.g. `ε_ω`.
+* **The intervals between rungs do not cover the seeds.** The intervals `(ε_o, ε_(o+1)]`
+  (`successor_cell_eq_Ioc`) miss the first cell `[0, ε₀]` (`first_cell_eq_Iic`; index 0 is neither a
+  successor nor a limit, `Order.not_isSuccLimit_bot`) and every **limit**-index ε-number, e.g. `ε_ω`,
+  which lies in no such interval (`Ordinal.veblen_right_strictMono`). The cells, as fibres of the landing
+  map, do partition the seeds: every landing is some `ε_o` with a unique index (`Ordinal.veblen_injective`;
+  the `example` after `limit_cell_eq_singleton` in `ZeroParadox/Ordinal/Epsilon0LeastFP.lean`). For any
+  normal map the landings are the values of its derivative, itself normal (`Ordinal.mem_range_deriv`,
+  `Ordinal.isNormal_deriv`).
 * **Normality is essential**: the implication fails for a non-normal operator.
 
 `Reading:` **INVARIANT** (conjectural) — the framework reads this as the ratified **"iterative bottoms"**
-picture: the rungs of the succession are bottoms *relative to their iteration*, **never ⊥ itself**, and
-⊥ sits at the base of the interval without being distinguished within it. The same **shape** is a
+picture: the rungs of the succession are bottoms *relative to their iteration*, **never ⊥ of
+`Ordinal`**, and ⊥ of `Ordinal` sits at the low end of `[0, ε₀]` without being distinguished
+within it. The same **shape** is a
 theorem in another carrier, `every_node_is_a_floor` (`ZeroParadox/Valuation/LocalFloor.lean`).
 
 ⚠ **SHAPE, never instance-of.** Different carriers, different mechanisms — self-similarity there, the
 absence of fixed points strictly below ε₀ here — and the two theorems conclude **different
 propositions**. `ℕ → Fin 2` is not `Ordinal`; only the moral is shared.
 
-⚠ **`ε₀ ≠ ⊥` is untouched bedrock** (`epsilon0_ne_bot`), and the ratified vocabulary exists precisely
-because the rungs are **not** ⊥. **Nothing here identifies any rung with ⊥.**
+⚠ **`ε₀ ≠ ⊥` in `Ordinal` is untouched bedrock** (`epsilon0_ne_bot`), and the ratified vocabulary
+exists precisely because the rungs are **not** ⊥ of `Ordinal`. **Nothing here identifies any rung
+with ⊥ of `Ordinal`**; a rung is ⊥ of its own up-set `Set.Ici rung`, which is a different carrier.
 
 ⚠ **"Iterative bottom" is the ratified term for the ITERATION sense.** Do not substitute "local bottom"
 *there* — that phrase is taken for the per-domain MC-1 family

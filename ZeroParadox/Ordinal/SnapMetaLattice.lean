@@ -1,4 +1,5 @@
 import ZeroParadox.Ordinal.SnapNucleus
+import ZeroParadox.Valuation.InfinitudeFloor
 import Mathlib.Order.Sublocale
 
 set_option maxHeartbeats 400000
@@ -18,14 +19,14 @@ and the **sublocales** (the systems they generate) form a `Coframe`: the *lattic
 
 **Why this is the boundary doing the work.** Bare `Ordinal` has no top (`IsEmpty (OrderTop Ordinal)`,
 `ZeroParadox/Category/DieNucleus.lean` § IV); the ceiling, ⊤ of `WithTop Ordinal`, unlocks the lattice. Reading it as
-the infinite pole is a placement Reading (`ZeroParadox/Multihomed/BoundaryOrder.lean` § I): the pole chart's coincidence
-witness `infinitude_forces_infinite_complexity` (`ZeroParadox/BottomCannotBe.lean` § INVERSION) takes an `InfinitudeFloor`
-carrier, and every infinite carrier admits one (`infinitudeFloor_nonempty_iff_infinite`), so the class cannot single out
-⊤ of `WithTop Ordinal`. The placement is a theorem: `phaseEquivWithTop` sends `Phase.floor` to the greatest element
-(the `IsTop` half of `phaseEquivWithTop_floor_covers_nothing`, BoundaryOrder § I). Its NOVELTY, a NEXT bottom, is
-the framework's commitment, not a theorem (`ZeroParadox/Order/SnapCannotBe.lean` § IV): `phaseFloorToTop`, defined as
-`phaseEquivWithBot.symm.trans phaseEquivWithTop`, re-places one `Phase.floor`, sending ⊥ of `WithBot Ordinal` to ⊤ of
-`WithTop Ordinal` (`phaseFloorToTop_apply.1`); in the 2-adic realization the arc reapproaches the same 0 (`snap_arc_z2_loop`).
+the infinite pole is a placement Reading (`ZeroParadox/Multihomed/BoundaryOrder.lean` § I): the coincidence witness
+`infinitude_forces_infinite_complexity` (`ZeroParadox/BottomCannotBe.lean` § INVERSION) takes an `InfinitudeFloor`
+carrier, every infinite carrier admits one (`infinitudeFloor_nonempty_iff_infinite`), and any point of it can be the
+`floor` (the `example` after `snapSublocale`), so the class cannot single out ⊤ of `WithTop Ordinal`. The map is a theorem:
+`phaseEquivWithTop` sends `Phase.floor` to the greatest element (`phaseEquivWithTop_floor_covers_nothing`, `IsTop`
+half). The NOVELTY of ⊤ of `WithTop Ordinal`, a NEXT bottom, is the framework's commitment, not a theorem
+(`ZeroParadox/Order/SnapCannotBe.lean` § IV): `phaseFloorToTop` sends ⊥ of `WithBot Ordinal` to ⊤ of `WithTop Ordinal`
+(`phaseFloorToTop_apply.1`); in the 2-adic realization the arc reapproaches the same 0 (`snap_arc_z2_loop`).
 
 **Honest scope.** The frame structure of `WithTop Ordinal` is Mathlib's, and that the nuclei on a frame form a frame
 is locale theory (Escardó, "Joins in the frame of nuclei", Applied Categorical Structures 11 (2003), § 1 of the author's
@@ -76,9 +77,10 @@ noncomputable example (j : Nucleus (WithTop Ordinal)) : Sublocale (WithTop Ordin
 /-! ### § III. Contrast — the bare ordinals carry a modality but NOT the lattice
 
 `snapNucleus : Nucleus Ordinal` exists on the bare ordinals (a `Nucleus` needs only `SemilatticeInf`). But
-`Ordinal` is not a frame, so `Order.Frame (Nucleus Ordinal)` and `Sublocale Ordinal` do NOT fire there —
-the single modality lives one level below the lattice. Adjoining the top is what lifts it into a lattice of
-systems. -/
+`Ordinal` is not a frame (it has no top), and the nuclei on it do not form a lattice: the `example` below
+exhibits two with no common upper bound. `Sublocale X` takes `[Order.Frame X]` as an argument, so
+`Sublocale Ordinal` does not typecheck — the single modality lives one level below the lattice. Adjoining the top
+is what lifts it into a lattice of systems. -/
 
 /-- The single modality on the bare ordinals (from `ZeroParadox/Ordinal/SnapNucleus.lean`). -/
 noncomputable example : Nucleus Ordinal := snapNucleus
@@ -91,9 +93,11 @@ noncomputable example : Nucleus Ordinal := snapNucleus
     `Motion.isLanding_ofNucleus_anti` with `Motion.isLanding_ofNucleus_iff`,
     `ZeroParadox/Category/DieNucleus.lean`, on a meet-semilattice; Mathlib's `Nucleus.range_subset_range`
     assumes a frame); so `m 0` is a successor `succ b`, and no `succ b` has `ω ^ succ b = succ b`.
-    `Reading:` adjacent prior art, for closure operations on a poset rather than nuclei: Elliott,
-    arXiv:1101.2462 (2011), § 4, p. 12 (`⋆₁ ≤ ⋆₂` iff the fixed set of `⋆₁` contains that of `⋆₂`), and
-    Lemma 4.2, p. 13 (on a bounded complete poset, joins of BOUNDED families of closure operations). -/
+    `Reading:` adjacent prior art: Elliott, arXiv:1101.2462v1 (2011), § 4, p. 12 (closure operations on a
+    poset, `⋆₁ ≤ ⋆₂` iff the fixed set of `⋆₁` contains that of `⋆₂`), Lemma 4.2, p. 13 (on a bounded
+    complete poset, joins of BOUNDED families of closure operations), and Proposition 4.3, p. 13 (the same
+    for his nuclei on an ordered magma, when it is also near residuated). On the chain `Ordinal` a closure operation preserves binary meets,
+    so it is a `Nucleus`, and Lemma 4.2 bears directly: this pair is the unbounded case it excludes. -/
 example : ∃ j k : Nucleus Ordinal, ∀ m : Nucleus Ordinal, ¬ (j ≤ m ∧ k ≤ m) := by
   classical
   let kf : Ordinal → Ordinal := fun x => if ∃ b, succ b = x then x else succ x
@@ -193,6 +197,18 @@ theorem snapNucleusTop_coe_bot :
     `WithTop Ordinal`. This is "the snap generates a system," fully closed: the object exists and sits in
     the lattice. -/
 noncomputable def snapSublocale : Sublocale (WithTop Ordinal) := snapNucleusTop.toSublocale
+
+-- `Statement:` on an infinite carrier every point is the `floor` of some `InfinitudeFloor`: transport
+-- an instance along `Equiv.swap` of its floor and the chosen point.
+example {α : Type*} [Infinite α] (a : α) : ∃ I : InfinitudeFloor α, I.floor = a := by
+  classical
+  obtain ⟨I⟩ := (infinitudeFloor_nonempty_iff_infinite α).mpr ‹_›
+  refine ⟨{ floor := Equiv.swap I.floor a I.floor
+            cx := I.cx ∘ (Equiv.swap I.floor a).symm
+            member := Equiv.swap I.floor a ∘ I.member
+            cx_member_strictMono := by simpa [Function.comp_def] using I.cx_member_strictMono
+            cx_floor_eq_iSup := by simpa [Function.comp_def] using I.cx_floor_eq_iSup }, ?_⟩
+  simp
 
 end ZeroParadox
 

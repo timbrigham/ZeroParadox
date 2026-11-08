@@ -11,9 +11,25 @@ internalized.* ("Wall" is a flagged metaphor-nickname per the project idiom rule
 gloss.)
 
 Across five separate pushes (fork unification, the Quine atom CC-2, MC-1, "realization is the choice",
-the faithfulness criterion) the framework keeps landing on the SAME boundary: a structural shadow Lean's
-well-founded kernel CAN host, plus a metatheoretic residue it CANNOT. The Lean file represents that
-boundary as an **object-level theorem**, the honest in-kernel face of it.
+the faithfulness criterion) the framework keeps landing on the SAME boundary: a structural shadow (a
+function fixed point, below) that Lean hosts, plus a metatheoretic residue, a statement about the system
+rather than a Lean proposition (see the fences). The literal is refuted in the well-founded `ZFSet`
+chart (`no_quine_atom` and the `x ≠ {x}` `example` after it in the Lean file). The die
+(`ZeroParadox/Die.lean`) defines the predicate `SelfOnlyAt`, a point that steps to itself and to nothing
+else; the corpus reads the Quine atom as that ROLE, and which charts occupy it are the theorems below. In
+Aczel's terms it is the one-node graph with a single self-loop, which under AFA pictures Ω = {Ω}
+(Aczel 1988, Ex. 1.3, p. 6); a set stepping to its members is his system V (p. 13), whose sets are those
+of his own set theory, not Mathlib's well-founded `ZFSet`. The graph chart places it too
+(`ZeroParadox/Settheory/HypersetOrder.lean` § VII: `omegaLoop_selfOnlyAt`, and, up to bisimulation,
+`wrapMotion_omegaLoop_selfOnlyAt`, an instance of `wrapMotion_quot_selfOnlyAt_iff`). `Reading:` CARRIER —
+of the two charts below, one occupies the role and one provably does not. In `ZFSet`, where a
+set steps to its members, a set occupies it iff x = {x} (`zfset_selfOnlyAt_mem_iff`) and none does
+(`zfset_quine_role_unoccupied`); in the coalgebra chart `Cofix idPF_Coalgebra.Obj`, where a point steps
+to its children, `cofixSelf` occupies it (`cofix_quine_role_occupied`,
+`ZeroParadox/Settheory/Coalgebra.lean`). That chart has one point (`cofixSelf` exists, and
+`cofix_subsingleton` allows at most one), so its occupancy is the one-node loop; the contrast it carries
+is `categorical_fork_strict`. No equation across the two carriers is stated. The Lean file represents that boundary as an **object-level theorem**, the
+honest in-kernel face of it.
 
 ## What the wall reduces to (the provable core)
 
@@ -21,13 +37,22 @@ The keystone (the diagonal fixed point) has two encodings:
 
 - **The SHADOW** — `selfApp x = x`: a FUNCTION fixed point. Compatible with well-foundedness, hostable in
   Lean, proved choice-free (`AbstractSelfApp` / `selfMem_eq_singleton_bot`, [propext, Quot.sound]).
-- **The LITERAL** — `x ∈ x` (= `r x x`): a RELATION self-loop. **Forbidden by well-foundedness.** This is
-  the Quine atom ⊥={⊥}; it cannot live in a well-founded foundation.
+- **The LITERAL** — the Quine atom ⊥={⊥}, which implies the RELATION self-loop `x ∈ x` (= `r x x`)
+  (x = {x} implies x ∈ x; the converse fails under AFA: Aczel 1988 Example 1.5 gives a witness, the
+  set x = {∅, x}, with x ∈ x and x ≠ {x}). **The self-loop is
+  forbidden by well-foundedness**, so the Quine atom cannot live in a well-founded foundation.
 
 So the wall is exactly: **a well-founded relation admits no self-loop.** That one theorem explains why the
-shadow is hostable/choice-free and the literal is not — and why Lean's kernel (well-founded by
-construction) can only ever realize the shadow. The set-theoretic instance is "no self-membered set under
-Foundation," the in-kernel refutation of the literal Quine atom.
+shadow is hostable and choice-free, and the literal is not hostable in a well-founded carrier.
+
+`Statement:` **CARRIER** — scope, in two charts: in Mathlib's `ZFSet`, whose membership is well-founded
+(`ZFSet.mem_wf`), no set is a member of itself (`no_quine_atom`); but Lean does build a
+non-well-founded fixed point in the coalgebra chart, where the final coalgebra `Cofix` is inhabited
+while the initial algebra is empty (`categorical_fork_strict`, `ZeroParadox/Settheory/Coalgebra.lean`).
+The set-theoretic instance is "no self-membered set under Foundation," the in-kernel refutation of the
+literal Quine atom in `ZFSet`. Separately, at the level of types, Cantor is `cantor_via_engine`
+(`ZeroParadox/Settheory/Wall.lean`), whose `#check` reads
+`∀ {A : Type u_1} (g : A → A → Prop), ¬Function.Surjective g`.
 
 ## Honest fences (do not overclaim)
 
@@ -46,11 +71,16 @@ Foundation," the in-kernel refutation of the literal Quine atom.
 
 ## Prior art and library overlap (cite, do not reinvent)
 
-- The diagonal-family unification — Cantor / Russell / Gödel / Turing / Tarski as one diagonal argument via
-  a single fixed-point theorem — is **Lawvere (1969)**, "Diagonal Arguments and Cartesian Closed Categories"
-  (LNM 92, pp. 134–145; TAC Reprint 15, 2006), and **Yanofsky (2003)**, "A Universal Approach to
-  Self-Referential Paradoxes, Incompleteness and Fixed Points" (Bull. Symbolic Logic 9(3):362–386;
-  arXiv:math/0305282). The unification is THEIRS; the Lean file formalizes it and links it to ⊥.
+- The diagonal-family unification — Cantor, Russell, Gödel, Turing and Tarski's arguments as one diagonal
+  argument via a single fixed-point theorem — is two authors' work, and the cases are credited
+  separately. **Lawvere (1969)**, "Diagonal Arguments and Cartesian Closed Categories" (LNM 92,
+  pp. 134–145; TAC Reprint 15, 2006), treats Cantor, Russell, Tarski's undefinability of truth and an
+  abstract "incompleteness theorem" (his quotation marks, reprint p. 11); his introduction
+  (reprint p. 3) names Cantor, Russell, Gödel and Tarski, and Turing and the halting problem were not
+  located in our copy of the reprint (text search, 2026-11-01). **Yanofsky (2003)**, "A Universal Approach
+  to Self-Referential Paradoxes, Incompleteness and Fixed Points" (Bull. Symbolic Logic 9(3):362–386;
+  arXiv:math/0305282), adds Turing's halting problem (arXiv v1 pp. 11–12), the recursion theorem (p. 18)
+  and Rice's theorem (p. 19). The unification is THEIRS; the Lean file formalizes it and links it to ⊥.
 - The point-surjective theorem is already in **Mathlib**: `Function.exists_fixed_point_of_surjective` (its
   own docstring calls it an instance of Lawvere's fixed-point theorem), with `Function.cantor_surjective`
   for Cantor. `lawvere_fixedpoint` and `cantor_via_engine` are independent axiom-free re-derivations,
@@ -90,8 +120,10 @@ what makes the following free:
   given point. ⚠ Its *extract-a-chain* direction builds the sequence with `.choose_spec` and
   so carries `Classical.choice`. **⚠ The natural inference — "supply the witness yourself and use only
   the other direction to stay choice-free" — is FALSE, and was MEASURED false**: `#print axioms`
-  follows the STATEMENT, so citing the biconditional at all pulls in the choice used by the direction
-  you did not take. Measured on `bot_not_acc` (`ZeroParadox/Multihomed/Boundary.lean`): the one-line
+  follows the statement AND the proof term of every constant cited, and a biconditional is one constant
+  whose proof term carries both directions, so citing it at all pulls in the choice used by the
+  direction you did not take. (The statement half is real too, but it is not the mechanism here; the
+  same split is stated at `ZeroParadox/Multihomed/Boundary.md`, § "The descent route".) Measured on `bot_not_acc` (`ZeroParadox/Multihomed/Boundary.lean`): the one-line
   `not_acc_iff_exists_descending_chain.mpr` route came back `[propext, Classical.choice, Quot.sound]`,
   and only the HAND proof from `fixed_bot` came back axiom-free. (Verified at source 2026-07-29. Line numbers deliberately omitted: a line number is a copy of
   a location and drifts — the lemma name is the stable anchor and is `#check`-able.)
@@ -144,8 +176,11 @@ The involutive-fork witnesses — `InvolutiveFork`, `collapsed_iff_fixed`, `whee
 `fixed_pole_forces_collapse` and `collapsed_iff_fixed` depend on no axioms; the two
 wheel-of-fractions instances are `[propext, Quot.sound]`.
 
-`lawvere_fixedpoint` (axiom-free) is the GENERAL theorem unifying the **diagonal family** — Cantor and
-Russell are its corollaries, triggered by the engine (`Not` is fixed-point-free). Within the diagonal family
+`lawvere_fixedpoint` (axiom-free) is the GENERAL theorem unifying the **diagonal family** — Russell
+(`russell_via_engine`) and the decider diagonal (`no_self_decider`) are proved through it, triggered by the
+engine (`Not`, resp. Boolean negation, is fixed-point-free); Cantor is the same contrapositive at
+`B = Prop`, a corollary of it at `Not`, and the Lean proof (`cantor_via_engine`) inlines that step,
+calling the engine `negation_no_fixedpoint` directly. Within the diagonal family
 this is a real unification *theorem*, not the grand conjecture; the well-founded family is proved by a
 different mechanism (induction), and whether it folds in too is the open one-root-or-two question.
 
@@ -191,8 +226,10 @@ by accessibility, not by the engine (`selfloop_permitted` / `engine_is_wf_free` 
 
 The failure SIGNATURE changes with the conditions — distinct ways the one self-reference resists
 internalization, not one failure repeated. The formal/metatheoretic frontier is itself part of the map:
-`x∉x`, ε₀∉ONote, no-self-loop are in-kernel; the cross-category identity (MC-1's identity half) and the
-literal AFA universe are metatheoretic-only.
+`x∉x`, ε₀∉ONote, no-self-loop are in-kernel; the cross-category identity (MC-1's identity half) is
+retired as ill-typed, and what relates the charts is stated instead as one die role, which a point of
+each chart occupies or provably none does
+(the Quine-atom role above); the literal AFA universe is metatheoretic-only.
 
 **The computability row is the pivot (2026-06-27).** It is the ONLY framework where the fixed point is
 NOT refuted/unreachable but provably EXISTS — `infinite_quine_family` gives infinitely many. ⚠ **Carry

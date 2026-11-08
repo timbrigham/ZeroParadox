@@ -4,20 +4,41 @@ Ride-along companion to `ZeroParadox/Valuation/SemilatticeInstance.lean`.
 
 ## Theorem T-IZ, stated exactly
 
-Every maximal ascending chain in the Zero Paradox framework is a Cauchy sequence that
-**converges to 0 in Q₂**. That is the whole of what is proved about the chain.
+A sequence `S : ℕ → Q₂` with `‖Sₙ‖ ≤ 2⁻ⁿ` **converges to 0 in Q₂** (`t_iz_cauchy`, whose
+conclusion is the convergence; Cauchy follows from it; `t_inside_zero` is the same with an unused
+guard `S 0 ≠ 0`). That convergence is the whole of what `t_iz_cauchy` states; it is the first conjunct of
+`t_iz_complete`, the T-IZ that `CLAIMS.md` ratifies. In this file `S` is linked to a
+depth index `depths : ℕ → ℕ` (a strict state sequence in `ℕ`, in `h_strict_from_r1_t3`) only by the
+modelling hypothesis `IsDepthChain`, or its weaker form `TracksDepth`; no theorem in this file takes a
+chain in any other `ZPSemilattice`. `ZeroParadox/Valuation/ScaleRealization.lean` reaches strict
+valuation ascent along a realized orbit `n ↦ ρ (scale^[n] x)` from equivariance and a nonzero start
+`ρ x ≠ 0` (`realized_strict`).
 
-⚠ **Two further readings, both commitments, neither part of the statement:**
+⚠ **Two further readings, neither part of the statement: occupancy takes a choice of join, novelty is a commitment:**
 
-1. **Occupancy** — reading that limit as an OCCUPANT of the ⊥ role. This is not merely
-   unproved. `ZPSemilattice ℚ_[2]` does not synthesize, so the join-identity is **not statable**
-   of the limit: a type error, not a missing lemma.
+1. **Occupancy** — reading that limit as an OCCUPANT of the ⊥ role, the join-identity of a
+   `ZPSemilattice`. This is not merely unproved. `ZPSemilattice ℚ_[2]` does not synthesize, so
+   the join-identity is **not statable** of the limit: a type error, not a missing lemma. A join
+   on ℚ₂ can be chosen, through a well-ordering, and then its ⊥ fills the role, and any point can
+   be that ⊥ (the CONTROL `example` after `c_t_iz_null_balance`): that SOME join makes the limit
+   its ⊥ is proved, and reading the limit as the occupant takes a choice of a particular join; which
+   point fills the role depends on the join chosen. An identity between the limit and
+   ⊥ of another semilattice is ill-typed (MC-1). Under doubling, a step defined from ℚ₂'s ring
+   operations with no join picked, the die's role `Motion.SelfOnlyAt` (`ZeroParadox/Die.lean`, a
+   point that steps to itself and to nothing else) has 0 as its only occupant (the `example` after
+   the CONTROL); under squaring, also defined from the ring operations, 1 occupies it as well (the
+   CONTROL after that), so the occupant follows the step. All three statements carry
+   `Classical.choice`, from Mathlib's ℚ₂ itself (measured 2026-11-03: any statement over ℚ_[2],
+   even `x = x`, prints `Classical.choice`; the first CONTROL also uses a well-ordering), so the contrast between doubling
+   and the chosen join is one of which structure is picked, not of the axiom footprint.
 2. **Novelty** — reading that occupant as the chain's own *successor* null. This is C-DA2, and
    the `t_iz_limit_is_new_null` gloss in `Order/SnapCannotBe.lean` forbids citing that theorem as its witness.
 
 So there are three tiers, and `CLAIMS.md`'s T-IZ row is the ratified statement of them:
-**convergence PROVED · role-recognition PROVED as an implication · occupancy a COMMITMENT ·
-novelty a further COMMITMENT.**
+**convergence PROVED · role-recognition PROVED as an implication · occupancy takes a CHOICE of
+join (which point fills the join-identity role depends on the join chosen) · novelty a COMMITMENT
+(C-DA2).** Beside them, the die
+role under doubling is occupied by 0 alone, PROVED (and occupied by 0 and 1 under squaring).
 
 ## What `t_iz_complete` is, and what it is not
 
@@ -84,14 +105,15 @@ It does **not** carry the additive balance `0 + x + (−x) = 0`, and that identi
 
 Nor does it establish that the 2-adic limit *occupies* the role. `#synth ZPSemilattice ℚ_[2]` fails
 (verified by running), so `∀ x, join S x = x` is not a well-formed proposition of that limit — a type
-error, not a missing lemma. Occupancy is a commitment; reading the occupant as a successor ⊥′ is a
-further one (C-DA2).
+error, not a missing lemma — until a join is chosen, and a chosen join makes any point its ⊥ (the
+CONTROL `example` after the theorem). Occupancy takes a choice of join, and which point fills the
+role depends on the join chosen; reading the occupant as a successor ⊥′ is a commitment (C-DA2).
 
 ## The layer's components
 
 - **§ I** Cauchy convergence — the topological core (inherits `Classical.choice` from Mathlib analysis)
 - **§ Ib** `h_strict` from `IsDepthChain` + `IsStrictStateSequence` — closes R-IZ-A (proved)
-- **§ II** Valuation-complexity bridge — refuted (counterexample Sₙ = 2ⁿ, ZP-I § II.B); T-IZ never
+- **§ II** Valuation-complexity bridge — refuted (status and counterexample: `CLAIMS.md`); T-IZ never
   depended on it (it goes through `t_iz_cauchy`)
 - **§ III** The T-IZ theorem and the ⊥ role, role half only (`t_iz_limit_is_new_null`), proved; that
   the return is to a NEW bottom is C-DA2, a commitment
@@ -103,7 +125,7 @@ further one (C-DA2).
 
 ## The Kolmogorov bridge is refuted, and T-IZ never used it
 
-**Refuted (counterexample Sₙ = 2ⁿ, ZP-I § II.B); T-IZ never depended on it (it goes through
+**Refuted (status and counterexample: `CLAIMS.md`); T-IZ never depended on it (it goes through
 `t_iz_cauchy`).** `t_iz_complete` computes no Kolmogorov complexity either: its step 4 is
 `IsQuineAtom (bot : L')`, discharged from class fields alone. That is a fact about this proof route,
 not a demonstration that the AFA/Kleene path and the K/AIT path are one property:

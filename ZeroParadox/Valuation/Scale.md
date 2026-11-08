@@ -41,7 +41,7 @@ ZeroParadox/Valuation/ScaleBridge.lean resolves this by defining ValBridge — t
 with bot as a plain field — and builds a formal ℤ_[2] instance using the standalone
 theorems in `ZeroParadox/Valuation/Scale.lean` § V. A toValBridge instance makes any ZPSemilattice+ValuationStructure
 type also a ValBridge instance, unifying both tracks under a common ancestor.
-The formal gap described in `ZeroParadox/Valuation/Scale.lean` § V is closed.
+The gap once recorded at `ZeroParadox/Valuation/Scale.lean` § V is closed (§ V below).
 
 ## § V — the 2-adic parallel: what holds, what is registered, and the prior art
 
@@ -53,7 +53,9 @@ REGISTERED, and whether one EXISTS, are not the same question, and only the firs
 instance synthesis reports. Both are measured: `#synth` fails, because no such instance is
 declared; and the existential is provable, because § V's closing example supplies a semilattice
 with bottom 0 and discharges all four axioms over it. ⚠ So "ℤ_[2] cannot be a ValuationStructure
-instance" is true only in the not-registered reading and false read modally (both readings measured 2026-08-30). The related gap
+instance" is true only in the not-registered reading and false read modally (both readings measured
+2026-11-03: `#synth ZPSemilattice ℤ_[2]` fails in a scratch file importing
+`ZeroParadox.Valuation.Scale`, run with `lake env lean`, and § V's semilattice `example` elaborates). The related gap
 once recorded at `ZeroParadox/Valuation/Scale.lean` § V — "a ZPSemilattice instance for a concrete
 type carrying a ValuationStructure" — is CLOSED in two independent ways: ℕ∞ carries both structures (`instNatInfZPS` and
 `instNatInfVal` in `ZeroParadox/Settheory/Model.lean`, which imports Scale.lean), and
@@ -61,8 +63,9 @@ type carrying a ValuationStructure" — is CLOSED in two independent ways: ℕ�
 
 **Why ℤ_[2] and not ℚ_[2].** `PadicInt.valuation : ℤ_[2] → ℕ` is ℕ-valued, which is what makes
 `q2Val_scale` provable. In ℚ_[2], `valuation : ℚ_[2] → ℤ` can be negative, and the `.toNat`
-truncation makes the key identity false (take x = 2⁻¹). ⚠ That is a fact about a ℕ∞-TARGETED
-valuation built by truncation — the only kind this class admits — and NOT a fact about ℚ_[2].
+truncation makes the key identity false (take x = 2⁻¹). ⚠ That concerns ℕ∞-TARGETED
+valuations, the only kind this class admits: no ℕ∞-valued `val` meets the four axioms on ℚ_[2]
+with scale ×2 (the last `example` of `Scale.lean` § V). With another target ℚ_[2] carries it:
 `Padic.addValuation : AddValuation ℚ_[2] (WithTop ℤ)` has no truncation, satisfies the same
 identity, and is already used at `ZeroParadox/Valuation/ValuationAFA_Padic.lean`. The
 obstruction is this class's ℕ∞ target, a design choice, not the field.

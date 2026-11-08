@@ -34,7 +34,7 @@ variable {σ : Type} (f : σ → Option σ)
 
 /-- The step function read as a coalgebra for `X ↦ 1 + X`: halted is a leaf, stepping is a
     successor whose unique child is the next configuration. -/
--- [ZP-CUSTOM] no Mathlib analog | reason: the connector between Mathlib's `StateTransition`-style step function `σ → Option σ` and the framework's own `natPF_NatListRegime` presentation of the `1 + X` functor. Mathlib carries both sides and no map between them; this is the bridge, and it is where the framework's operational and coalgebraic faces meet.
+-- [ZP-CUSTOM] no Mathlib analog | reason: the connector between Mathlib's `StateTransition`-style step function `σ → Option σ` and the framework's own `natPF_NatListRegime` presentation of the `1 + X` functor. Mathlib carries both sides, and a map between them was not located in the Mathlib then pinned (`5450b53`) as of 2026-10-31 (searched: Mathlib files mentioning `StateTransition` together with `PFunctor`, `QPF` or `Coalgebra`, none; `Option` under `Data/PFunctor` and `Data/QPF`, none; one LeanExplore query; nearest neighbour `Computation.corec`, into `Computation α` rather than the QPF `Cofix`); this is the bridge, and it is where the framework's operational and coalgebraic faces meet.
 def stepCoalg : σ → natPF_NatListRegime.Obj σ :=
   fun s => match f s with
            | none    => ⟨false, fun e => e.elim⟩
@@ -81,8 +81,8 @@ theorem notEL_dest {x : Cofix natPF_NatListRegime.Obj} (h : ¬ EventuallyLeaf x)
     is a Lean `=` within one type rather than a reading across types.
 
     **Prior art:** Escardó's `not-finite-is-∞'` (TypeTopology), proved there from function
-    extensionality alone; Rutten, TCS 249 (2000) §12 pp. 51–52 for the same bisimulation on the
-    same carrier. Also `Miniature.lean`'s `enat_fp_iff` in the `WithTop ℕ` presentation. Cited,
+    extensionality alone; Rutten, TCS 249 (2000), supplies the carrier and the bisimulation
+    technique (§12 pp. 51–52, applied there to arithmetic laws, not to this uniqueness). Also `Miniature.lean`'s `enat_fp_iff` in the `WithTop ℕ` presentation. Cited,
     not claimed. -/
 theorem notEL_unique (x : Cofix natPF_NatListRegime.Obj) (h : ¬ EventuallyLeaf x) :
     x = natInfinity := by
@@ -162,8 +162,10 @@ theorem tri_idle_never_starts (s : Unit) :
   simp [TriStepping] at hstep
 
 /-- **The gauge, both halves in one statement.** Two-valued: the unstarted state is absent from
-    the type. Three-valued: it is inhabited. So what makes execution forced is the CLEANNESS OF
-    THE SPLIT, not the dynamics. -/
+    the type. Three-valued: it is inhabited. So what removes the unstarted state is the
+    CLEANNESS OF THE SPLIT, not the dynamics. Nothing here forces execution: a configuration
+    with no unstarted state still halts or steps, and a self-loop counts as stepping while
+    changing nothing (`loop_is_a_trap`, `ZeroParadox/Computability/Occurrence.lean`). -/
 theorem forcing_needs_the_binary_split :
     (∀ (σ : Type) (f : σ → Option σ) (s : σ), ¬ (f s ≠ none ∧ ¬ ∃ s', f s = some s')) ∧
     (∃ (g : Unit → TriStep Unit) (s : Unit), ¬ TriHalted g s ∧ ¬ TriStepping g s) :=
@@ -179,7 +181,7 @@ point of the next-time operator is everything). `stepCoalg` above already reads 
 **⚠ PRIOR ART — AMM DO THIS CASE THEMSELVES. The delta here is the FORMALIZATION, not the
 specialization.** An earlier draft credited only their Ex 4.5(1) (powerset/graph) and called § V "the
 deterministic specialization of that". That understated them. **Read the paper, not a copy of it** —
-`.claude-local/papers/adamek_milius_moss_wellfounded_recursive_coalgebras.pdf`, at these locators:
+Adámek, Milius and Moss, *On Well-Founded and Recursive Coalgebras*, arXiv:1910.09401v2, at these locators:
 
 | AMM | what is there | what it covers here |
 |---|---|---|

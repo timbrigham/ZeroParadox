@@ -87,7 +87,7 @@ noncomputable instance simplex_point_unique_NuLeafReconcile : Unique simplexPoin
   have h : stdSimplex ℝ (Fin 1) = {fun _ ↦ (1 : ℝ)} := stdSimplex_unique ℝ (Fin 1)
   -- transport the singleton `Unique` instance across the set equality of carriers
   have e : simplexPoint_NuLeafReconcile ≃ ↥({fun _ ↦ (1 : ℝ)} : Set (Fin 1 → ℝ)) :=
-    Equiv.setCongr h
+    Set.equivOfEq h
   exact e.unique
 
 /-- **GO (leaf-level ν reconciliation, IN-statement).** A genuine homeomorphism between the two

@@ -33,7 +33,7 @@ open ZeroParadox
 
 /-- Same four axioms as ValuationStructure, but `bot` is a plain field.
     No ZPSemilattice required — the join operation ⊔ never appears in any axiom. -/
--- [ZP-CUSTOM] replaces: ValuationStructure (ZeroParadox/Valuation/Scale.lean) | reason: ValuationStructure required [ZPSemilattice L] but the join operation ⊔ never appears in any of its four axioms — the constraint was an encoding artefact. ValBridge carries the same four axioms with bot as a plain field, allowing ℤ_[2] (for which no ZPSemilattice is defined) to be a formal instance. Unifies both tracks under one ancestor.
+-- [ZP-CUSTOM] replaces: ValuationStructure (ZeroParadox/Valuation/Scale.lean) | reason: ValuationStructure required [ZPSemilattice L] but the join operation ⊔ never appears in any of its four axioms — the constraint was an encoding artefact. ValBridge carries the same four axioms with bot as a plain field, allowing ℤ_[2] (for which no ZPSemilattice is registered as an instance; one is built inside an `example` of ZeroParadox/Valuation/Scale.lean § V) to be a formal instance. Unifies both tracks under one ancestor.
 class ValBridge (L : Type*) where
   bot : L
   scale : L → L
@@ -80,14 +80,15 @@ theorem selfMem_eq_singleton_free :
 /-! ## § III. ℤ_[2] Instance — The Formal Bridge -/
 
 /-- ℤ_[2] with scale = ×2 and val = v₂ is a ValBridge.
-    bot = 0. All four proved as standalone theorems in ZeroParadox/Valuation/Scale.lean: q2Val_bot,
--- q2Val_unique, q2Scale_bot, q2Scale_unique_fp.
+    bot = 0. All four proved as standalone theorems in ZeroParadox/Valuation/Scale.lean:
+    q2Scale_bot, q2Val_bot, q2Val_unique, q2Val_scale.
     This is the formal instance that ZeroParadox/Valuation/Scale.lean did not build,
-    because no ZPSemilattice ℤ_[2] is defined — showing the ZPSemilattice constraint
-    was an encoding artefact, not a mathematical requirement. ⚠ "not defined", never
-    "not possible": ℤ_[2] is INFINITE, so `nonempty_valBridge_of_infinite` (§ VI) gives
-    the instance outright. -/
--- [ZP-CUSTOM] instance: ValBridge ℤ_[2] | reason: no ZPSemilattice ℤ_[2] is defined — its ring structure supplies no natural join with 0 as bottom — so ℤ_[2] does not satisfy ValuationStructure, which requires one. (A fact about what is DEFINED, never about what is POSSIBLE. ⚠ Inhabitation is the sole obstruction to ZPSemilattice ALONE, not to this class: valBridge_nonempty_iff (§ VI) settles membership exactly — infinite, or inhabited and trivial — and Bool is inhabited yet admits none. ℤ_[2] qualifies by being INFINITE. Being a ring is not the obstruction either, and ZPSemilattice ℕ exists. What has NOT been located as of 2026-08-30 is a NATURAL join, searched over every registered ZPSemilattice instance in this corpus.) ValBridge's bot-as-plain-field design drops the requirement, which the four axioms never used anyway. All four delegate directly to q2Scale_bot, q2Val_bot, q2Val_unique and q2Val_scale, proved in ZeroParadox/Valuation/Scale.lean.
+    because no ZPSemilattice ℤ_[2] is registered as an instance (one is built, unregistered,
+    inside the proof of the `example` in ZeroParadox/Valuation/Scale.lean § V) — showing the
+    ZPSemilattice constraint was an encoding artefact, not a mathematical requirement.
+    ⚠ "not registered", never "not possible": ℤ_[2] is INFINITE, so
+    `nonempty_valBridge_of_infinite` (§ VI) gives the instance outright. -/
+-- [ZP-CUSTOM] instance: ValBridge ℤ_[2] | reason: no ZPSemilattice ℤ_[2] is registered as an instance — a natural join with 0 as bottom was not located (dated search below) — so no ValuationStructure on ℤ_[2], which requires one, is registered either. One of each is built inside a proof and not registered (the `example` in ZeroParadox/Valuation/Scale.lean § V: some ZPSemilattice ℤ_[2] with 0 as bot carries a ValuationStructure). (A fact about what is REGISTERED, never about what is POSSIBLE. ⚠ Inhabitation is the sole obstruction to ZPSemilattice ALONE, not to this class: valBridge_nonempty_iff (§ VI) settles membership exactly — infinite, or inhabited and trivial — and Bool is inhabited yet admits none. ℤ_[2] qualifies by being INFINITE. Being a ring is not the obstruction either, and ZPSemilattice ℕ exists. What has NOT been located as of 2026-08-30 is a NATURAL join, searched over every registered ZPSemilattice instance in this corpus.) ValBridge's bot-as-plain-field design drops the requirement, which the four axioms never used anyway. All four delegate directly to q2Scale_bot, q2Val_bot, q2Val_unique and q2Val_scale, proved in ZeroParadox/Valuation/Scale.lean.
 noncomputable instance instZ2ValBridge : ValBridge ℤ_[2] where
   bot := 0
   scale := (2 * ·)
@@ -351,7 +352,9 @@ theorem valBridge_scale_not_injective :
 
 -- Statement: infinitude ALONE suffices — no property of ℤ_[2] beyond its cardinality is used.
 -- (`instZ2ValBridge` above is a separate, sharper witness with the actual 2-adic scale and val.)
-example : Nonempty (ValBridge ℤ_[2]) := nonempty_valBridge_of_infinite _
+example : Nonempty (ValBridge ℤ_[2]) :=
+  haveI : Infinite ℤ_[2] := Infinite.of_injective ((↑) : ℕ → ℤ_[2]) Nat.cast_injective
+  nonempty_valBridge_of_infinite _
 
 -- Statement: the two-element carrier is excluded. `Nontrivial` is supplied here rather than
 -- registered, so this example adds no declaration.

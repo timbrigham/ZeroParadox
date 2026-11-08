@@ -25,35 +25,49 @@ framework's standing temptation. The literature that separates them:
 
 > **Diaconescu (1975)**: in a topos, the axiom of choice implies excluded middle. **Goodman–Myhill
 > (1978, p. 461)** give the analogue in intuitionistic set theory. Diaconescu's theorem is stated as an
-> **equivalence** — a coequalizer of two nonintersecting monomorphisms has a section *iff* subobjects have complements (p. 176); "AC implies complemented
-> subobjects" is the corollary (p. 178). The theorem already concerns a two-point shape, since such a
+> **equivalence** — a coequalizer of two nonintersecting monomorphisms has a section *iff* subobjects
+> have complements (p. 176); the choice direction is
+> the corollary, "AC implies that every subobject has a complement" (p. 178). The theorem already
+> concerns a two-point shape, since such a
 > coequalizer has fibres of at most two points; Goodman–Myhill state the restriction explicitly, choice
 > "for sets B, C of at most two elements". With unique choice into `Bool`, `ChoiceFragment` and excluded
-> middle are inter-derivable (the `example` after `em_of_choiceFragment` in
-> `ZeroParadox/Category/ExcludedMiddleBridge.lean`).
+> middle are inter-derivable (see `ZeroParadox/Category/ExcludedMiddleBridge.lean`, the `example` after
+> `em_of_choiceFragment`).
+>
+> **Lawvere (1964/65)**, the antecedent: his author commentary to *An Elementary Theory of the Category
+> of Sets (Long Version) with Commentary* (Reprints in TAC 11, 2005, p. 5) says that among the results
+> of the 1965 manuscript "is the fact that the axiom of choice implies classical logic", later proved by
+> Diaconescu "under the strong hypothesis that the ambient category is a topos", while the manuscript
+> derives the topos property from choice as well. Read in the reprint's commentary only; the
+> manuscript's own proof was not checked against that description here.
 >
 > **Cohen (1963)**, with Fraenkel–Mostowski: *full* AC is strictly stronger than excluded middle. This
 > is an independence result about ZF, **not** anything Diaconescu proved — do not attribute it to him.
 
 So *full* choice is strictly stronger than excluded middle, which is in turn strictly stronger than the
 constructive base. **The restricted fragment is a different matter, and the distinction matters here.**
-`ZeroParadox/Category/ExcludedMiddleBridge.lean`'s `ChoiceFragment` is a choice principle into the two-element `Bool` — a
-chooser on every inhabited predicate on `Bool` — so in a topos, which always has unique choice, it is *equivalent* to excluded middle (the standard
-Diaconescu–Goodman–Myhill theorem); in Lean the equivalence holds with unique choice into `Bool` as a
-hypothesis (the `example` after `em_of_choiceFragment`). In Lean, the natural construction of the
-fragment from excluded middle fails to elaborate, dying at `Decidable (S true)`, and closes only under
-`classical`. **That failure measures that construction, not the fragment** — a failed elaboration is not
-a negative result, and a formal independence claim would
-need a metatheoretic argument outside Lean (the home file
+`ZeroParadox/Category/ExcludedMiddleBridge.lean`'s `ChoiceFragment` is a choice principle into the
+two-element `Bool` — a chooser on every inhabited predicate on `Bool` — so in a topos, which always has
+unique choice (E. J. Dubuc and M. Szyld, Tannaka Theory for Topos, arXiv:1510.01775v1, Prop. 1.24, p. 10), it is *equivalent* to excluded middle (see `ZeroParadox/Category/ExcludedMiddleBridge.lean`,
+the `example` after `em_of_choiceFragment`).
+In Lean without unique choice, the natural construction of the fragment from excluded middle alone
+fails to elaborate, dying at `Decidable (S true)`, and closes only under `classical`. **That failure
+measures that construction, not the fragment** — a failed elaboration is not a negative result, and a
+formal independence claim would need a metatheoretic argument outside Lean (the home file
 `ZeroParadox/Category/ExcludedMiddleBridge.lean` states this limit explicitly). `Reading:` a candidate
 explanation of the apparent gap between that equivalence and that failed construction is
 **Lean's `Prop`/`Type` stratification**, not anything in Diaconescu's theorem. The fragment's chooser
 returns data, a `Bool` (`ChoiceFragment`), while `ExcludedMiddle` is `Prop`-valued, and Lean's
 stratification does not let `Or` in `Prop` eliminate into `Bool`. A topos also distinguishes its
-truth-value object from 1 + 1 (they coincide exactly when it is Boolean); there unique choice holds, so
-a decided proposition determines an element of 1 + 1, and without unique choice the equivalence need not carry over to Lean. Whether the fragment is derivable from `ExcludedMiddle` in
-Lean is not established here, so this explanation is a candidate, not a finding; the topos theorem is
-Diaconescu's. Every evocative reading in the framework's prose — "choice is which way you view the
+truth-value object from 1 + 1 (they coincide exactly when it is Boolean); there unique choice holds
+(Dubuc and Szyld, cited above), so a decided proposition determines an element of 1 + 1 (this form not
+located in a source as of 2026-11-01; searched in topos-theory notes and theses held locally and on the
+open web, while the theorem-search and Lean-library queries targeted unique choice, not this form), and
+without unique choice the equivalence need not carry over to Lean. Whether the fragment is derivable
+from `ExcludedMiddle` in Lean without `Classical.choice` and without a unique-choice hypothesis is not
+established here, so this explanation is a candidate, not a finding. The topos-side equivalence of the
+fragment with excluded middle, earlier in this paragraph, is Diaconescu's argument; nothing in it is
+claimed here. Every evocative reading in the framework's prose — "choice is which way you view the
 self-dual split", "reading the pole as the floor is an act of choice" — is a **model** of the
 choice-versus-no-choice distinction, never the axiom itself. Where such a reading has been made precise
 (`ZeroParadox/Valuation/PoleChartSelection.lean`), the honest result was that the built object **refutes** the naive
@@ -65,7 +79,8 @@ every Heyting algebra Boolean; the scope is `Prop`).
 
 ### No count is recorded here, deliberately
 
-**`ChoiceCannotBe.lean` and this long form state no figure for how many declarations carry `Classical.choice`, and none should be added
+**`ChoiceCannotBe.lean` and this long form state no figure for how many declarations carry
+`Classical.choice`, and none should be added
 to it.** Three reasons, in order of importance.
 
 **A count mostly measures Mathlib, not this framework.** Most choice footprints traced so far come from a
@@ -74,7 +89,8 @@ Mathlib construction — the `Ordinal` order instance and operations (`Ordinal.i
 `compl_sup_distrib`, arbitrary-type decidability, a `ℚ` division-ring instance, in one case a single
 tactic call. **Not all: `ZeroParadox/Category/Lawvere.lean`'s bare `classical` in
 `fixedPointFree_of_nontrivial` is the framework's own, and § IV classifies it ESSENTIAL, on the
-premise stated there** — the cost is in stating the swap over types **whose equality is not decidable** (the swap is `if x = b₀ then b₁ else b₀`;
+premise stated there** — the cost is in stating the swap over types **whose equality is not decidable**
+(the swap is `if x = b₀ then b₁ else b₀`;
 decidable equality is exactly what the § IV escape restores), which is the framework's chosen
 generality, not Mathlib's. `ZeroParadox/Die.lean`'s bare `classical`s in
 `botCovered_botIntervalTwo_classical`, `Motion.registeredDecidable_of_classical` and
@@ -166,13 +182,23 @@ fraction either**; it moves with every commit.
   fragment is not plain intuitionistic logic, so the § IV premise is what carries that non-provability
   over to it. Reaching a weaker taboo is a weaker implication and needs a stronger premise. **The
   located cases, and the premise, are in § IV** (`em_of_wellOrder_comparable`, `wem_of_fixedPointFree`,
-  `wem_of_botCovered_botIntervalTwo`, `Motion.em_of_registeredDecidable`, `Motion.em_of_selectedData`). Detected by *reducing* — deriving a taboo from the
+  `wem_of_botCovered_botIntervalTwo`, `Motion.em_of_registeredDecidable`, `Motion.em_of_selectedData`).
+  Detected by *reducing* — deriving a taboo from the
   principle — which is the mirror image of the accidental test: accidental is shown by re-proving
   without choice, essential by showing that re-proving without choice would prove a taboo. Note this is
   a statement about the PRINCIPLE, not about any one proof of it: `#print axioms` on a proof reports that
   proof's footprint and can never witness the principle's necessity, which is exactly why the essential
   side needs a reduction instead of a measurement.
-* **STATEMENT-CARRIED** — the statement's own type carries `Classical.choice`: a theorem that only assumes the statement and proves `True` already reports it (the statement control). No proof can remove it, so neither ACCIDENTAL nor ESSENTIAL can be asked of it. What can be asked is whether a restatement, on a carrier whose statements are choice-free, holds without choice. Detected by the statement control; members are listed in § I/§ III where measured.
+* **STATEMENT-CARRIED** — the statement's own type carries `Classical.choice`: a theorem that only
+  assumes the statement and proves `True` already reports it (the statement control). No proof can
+  remove it, so neither ACCIDENTAL nor ESSENTIAL can be asked of it. What can be asked is whether a
+  restatement, on a carrier whose statements are choice-free, holds without choice. Detected by the
+  statement control; members are listed in § I/§ III of `ZeroParadox/Category/ChoiceCannotBe.lean`
+  where measured there, and otherwise in the file that measures them: `decoration_unique` carries it
+  through its `[Fintype V]` binder under the instances the pinned Mathlib supplies, with its statement
+  controls in the `DecorationUniverse` `[ZP-CUSTOM]` line of `ZeroParadox/Settheory/APG.lean` (ZP-J AFA
+  Addendum, Section V). Membership is relative to those instances (§ III, STATEMENT-CARRIED IS
+  INSTANCE-RELATIVE).
 
 "The statement" in STATEMENT-CARRIED is the term as written, which is what the statement control
 measures; a definitionally equal respelling whose own statement is choice-free is a restatement in
@@ -183,6 +209,8 @@ The same split between a statement's and a proof's reach of `Classical.choice` i
 by V. Gonzalez, "Where Formal Libraries Spend Their Axioms", Zenodo 2026, doi:10.5281/zenodo.21769846
 (page numbers from v1.0.3, doi:10.5281/zenodo.21866855), § 4 (p. 8) and § 8 (p. 14): a theorem whose
 statement mentions something choice-dependent "cannot be made choice-free however it is proved" (cited, not claimed).
+This long form states the same split for its own statements in its own voice: STATEMENT-CARRIED
+above ("No proof can remove it").
 
 Prior art for the distinction and its methods: constructive reverse mathematics, which classifies
 theorems ("to classify [over intuitionistic logic] various theorems … by logical principles") and whose

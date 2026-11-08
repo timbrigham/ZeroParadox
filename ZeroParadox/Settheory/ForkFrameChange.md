@@ -16,6 +16,8 @@ the diagonal fixed point.
 
 `Statement:` INVERSION and COINCIDENCE, bundled (`fork_is_frameflip`). `Reading:` INVERSION, conjectural: that
 the valuation and category frame-flips share its exchange; the category face also proves the COINCIDENCE (`catseam_is_frameflip`).
+`Statement:` the category face proves the COINCIDENCE (`catseam_is_frameflip`: the seam is initial and terminal); the valuation
+face's coincidence witness is `infinitude_forces_infinite_complexity`. "Its exchange" is `fork_is_frameflip`'s order-duality swap.
 `fork_is_frameflip` bundles both faces: the duality-swap (P2) with `fork_collapse_iff` (P1). This is the
 order-theoretic universal `fork_is_frameflip` — the domain-independent shape that the valuation
 (`snap_is_frameflip`) and category (`catseam_is_frameflip`) faces are read as sharing (conjectural; see the

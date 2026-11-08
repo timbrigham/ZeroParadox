@@ -1,3 +1,4 @@
+import ZeroParadox.Order.ChoiceFreeWithTop
 import Mathlib.Order.Cover
 import Mathlib.Order.BoundedOrder.Basic
 import Mathlib.Data.PFun
@@ -75,12 +76,12 @@ example {α : Type u} (u : α →. α) : (∀ x y, y ∈ u x → y ∈ u y) ↔ 
     funext x
     apply Part.ext
     intro y
-    rw [PFun.comp_apply, Part.mem_bind_iff]
+    rw [PFun.comp_apply, Part.mem_bind_iff (g := u)] -- [ZP port] Lean 4.35: `g` named through `PFun`
     exact ⟨fun ⟨z, hz, hyz⟩ => (Part.mem_unique (h x z hz) hyz) ▸ hz,
       fun hy => ⟨y, hy, h x y hy⟩⟩
   · intro h x y hy
     have hy' : y ∈ (u.comp u) x := by rw [congrFun h x]; exact hy
-    rw [PFun.comp_apply, Part.mem_bind_iff] at hy'
+    rw [PFun.comp_apply, Part.mem_bind_iff (g := u)] at hy' -- [ZP port] Lean 4.35: as above
     obtain ⟨z, hz, hyz⟩ := hy'
     exact Part.mem_unique hz hy ▸ hyz
 
@@ -617,6 +618,28 @@ theorem selectedTotal_of_option (f : α → Option α) (h : ∀ a b, M.step a b 
   rw [hb']
   rfl
 
+/-- `Statement:` if `α` has points `u ≠ v` and a `Bool` test `t` with `t b = true ↔ b = u`, and every
+    `Prop`-valued step on `α` has a total selector, weak excluded middle holds; the reduction reads
+    the selector at `u` of the step to `u` when `p` and to `v` when `¬ p`. -/
+theorem wem_of_selectedTotal_propStep (u v : α) (huv : u ≠ v) (t : α → Bool)
+    (ht : ∀ b, t b = true ↔ b = u)
+    (H : ∀ s : α → α → Prop, (ofTotal id (fun _ => rfl) s).SelectedTotal) :
+    ∀ p : Prop, ¬ p ∨ ¬ ¬ p := by
+  intro p
+  obtain ⟨f, hf⟩ := H (fun _ b => (b = u ∧ p) ∨ (b = v ∧ ¬ p))
+  cases hfu : t (f u) with
+  | true =>
+    have e := (ht _).1 hfu
+    refine Or.inr fun hnp => ?_
+    rcases hf u ⟨v, Or.inr ⟨rfl, hnp⟩⟩ with ⟨_, hp⟩ | ⟨hv, _⟩
+    · exact hnp hp
+    · exact huv (e.symm.trans hv)
+  | false =>
+    refine Or.inl fun hp => ?_
+    rcases hf u ⟨u, Or.inl ⟨rfl, hp⟩⟩ with ⟨hu, _⟩ | ⟨_, hnp⟩
+    · rw [(ht _).2 hu] at hfu; cases hfu
+    · exact hnp hp
+
 /-! ### § IX. The OVER leg's WHETHER: what OVER does at a point -/
 
 variable (M)
@@ -645,9 +668,10 @@ theorem overTrichotomy_of_option [DecidableEq α] (f : α → Option α)
   cases hf : f y with
   | none => exact Or.inl fun b hb => by rw [h, hf] at hb; cases hb
   | some b =>
-    rcases decEq b y with hne | heq
-    · exact Or.inr (Or.inr ⟨b, (h y b).2 hf, hne⟩)
-    · subst heq
+    cases decEq b y with -- [ZP port] Lean 4.35: rcases on `Decidable` no longer binds names
+    | isFalse hne => exact Or.inr (Or.inr ⟨b, (h y b).2 hf, hne⟩)
+    | isTrue heq =>
+      subst heq
       exact Or.inr (Or.inl ⟨(h _ _).2 hf,
         fun c hc => (Option.some_injective _ (hf.symm.trans ((h _ c).1 hc))).symm⟩)
 
@@ -667,6 +691,32 @@ theorem lpo_of_trichotomy_nat_boolStep
       · exact absurd hn (h n)
   · exact Or.inl ⟨0, hs⟩
   · exact Or.inl ⟨b, hb⟩
+
+/-- `Statement:` if, at a point `y` of `α`, the trichotomy holds for every `Prop`-valued step on `α`,
+    excluded middle holds; the reduction reads the step `a ↦ {b | p ∧ b = y}` at `y`. -/
+theorem em_of_trichotomy_propStep (y : α)
+    (H : ∀ s : α → α → Prop, (ofTotal id (fun _ => rfl) s).OverTrichotomy y) :
+    ∀ p : Prop, p ∨ ¬ p := by
+  intro p
+  rcases H (fun _ b => p ∧ b = y) with h | ⟨⟨hp, _⟩, _⟩ | ⟨b, ⟨_, hb⟩, hne⟩
+  · exact Or.inr fun hp => h y ⟨hp, rfl⟩
+  · exact Or.inl hp
+  · exact absurd hb hne
+
+/-- `Statement:` if excluded middle holds, every motion meets the trichotomy at every point. -/
+theorem trichotomy_of_em (em : ∀ p : Prop, p ∨ ¬ p) (M : Motion α) (y : α) :
+    M.OverTrichotomy y := by
+  rcases em (∃ b, M.step y b ∧ b ≠ y) with h1 | h1
+  · exact Or.inr (Or.inr h1)
+  · rcases em (M.step y y) with h2 | h2
+    · refine Or.inr (Or.inl ⟨h2, fun b hb => ?_⟩)
+      rcases em (b = y) with e | e
+      · exact e
+      · exact absurd ⟨b, hb, e⟩ h1
+    · refine Or.inl fun b hb => ?_
+      rcases em (b = y) with e | e
+      · exact h2 (e ▸ hb)
+      · exact h1 ⟨b, hb, e⟩
 
 /-- `Statement:` if `y` has at most one successor and steps to itself, `y` steps to itself only; no
     order is used. `Reading:` the order-free trap beside § XII's order traps. -/
@@ -1335,16 +1385,21 @@ theorem isBot_and_isTop_iff {X : Type u} [PartialOrder X] (x : X) :
   ⟨fun ⟨hb, ht⟩ y => le_antisymm (ht y) (hb y),
    fun h => ⟨fun y => (h y).symm ▸ le_rfl, fun y => (h y).symm ▸ le_rfl⟩⟩
 
+section
+-- [ZP port] Lean 4.35: Mathlib proves `WithBot`/`WithTop.le_def` by `grind`, so their `Preorder`
+-- carries `Classical.choice`; pin the bare `instLE` here and prove from its constructors.
+attribute [local instance high] WithBot.instLE WithTop.instLE
+
 /-- `Statement:` on `WithBot σ`, ⊥ is also greatest iff `σ` is empty. -/
 theorem withBot_bot_isBot_and_isTop_iff {σ : Type u} [Preorder σ] :
     (IsBot (⊥ : WithBot σ) ∧ IsTop (⊥ : WithBot σ)) ↔ IsEmpty σ := by
   constructor
   · rintro ⟨-, ht⟩
-    exact ⟨fun a => WithBot.not_coe_le_bot a (ht a)⟩
+    exact ⟨fun a => by cases ht a⟩
   · intro h
-    refine ⟨fun _ => bot_le, fun x => ?_⟩
+    refine ⟨fun x => WithBot.LE.bot_le x, fun x => ?_⟩
     induction x using WithBot.recBotCoe with
-    | bot => exact le_rfl
+    | bot => exact WithBot.LE.bot_le _
     | coe a => exact isEmptyElim a
 
 /-- `Statement:` on `WithTop σ`, ⊤ is also least iff `σ` is empty. -/
@@ -1352,12 +1407,14 @@ theorem withTop_top_isBot_and_isTop_iff {σ : Type u} [Preorder σ] :
     (IsBot (⊤ : WithTop σ) ∧ IsTop (⊤ : WithTop σ)) ↔ IsEmpty σ := by
   constructor
   · rintro ⟨hb, -⟩
-    exact ⟨fun a => WithTop.not_top_le_coe a (hb a)⟩
+    exact ⟨fun a => by cases hb a⟩
   · intro h
-    refine ⟨fun x => ?_, fun _ => le_top⟩
+    refine ⟨fun x => ?_, fun x => WithTop.LE.le_top x⟩
     induction x using WithTop.recTopCoe with
-    | top => exact le_rfl
+    | top => exact WithTop.LE.le_top _
     | coe a => exact isEmptyElim a
+
+end
 
 /-- `Statement:` ⊥ of `WithBot σ` has a cover iff `σ` has a minimal point. -/
 theorem botCovered_withBot_iff {σ : Type u} [PartialOrder σ] :
@@ -1370,19 +1427,31 @@ theorem botCovered_withBot_iff {σ : Type u} [PartialOrder σ] :
   · rintro ⟨a, ha⟩
     exact ⟨a, WithBot.bot_covBy_coe.2 ha⟩
 
+section
+-- [ZP port] Lean 4.35: Mathlib's `WithTop` orders carry `Classical.choice`; scope `ZeroParadox/Order/ChoiceFreeWithTop.lean`'s.
+attribute [local instance high] withTopPreorderCF withTopPartialOrderCF withTopOrderBotCF
+
 /-- `Statement:` if `σ` has a least point and no maximal point, ⊥ of `WithTop σ` has a cover iff ⊥
     of `σ` has one. -/
 theorem botCovered_withTop_iff {σ : Type u} [PartialOrder σ] [OrderBot σ] [NoMaxOrder σ] :
     BotCovered (WithTop σ) ↔ BotCovered σ := by
+  have inv : ∀ {x y : σ}, (x : WithTop σ) < y → x < y := fun h => by
+    change WithTop.LT _ _ at h
+    cases h with | coe_lt_coe h => exact h
   constructor
   · rintro ⟨a, h⟩
     induction a using WithTop.recTopCoe with
     | top =>
       obtain ⟨b, hb⟩ := exists_gt (⊥ : σ)
-      exact absurd (WithTop.coe_lt_top b) (h.2 (WithTop.coe_lt_coe.2 hb))
-    | coe a => exact ⟨a, WithTop.coe_covBy_coe.1 h⟩
+      exact (h.2 (WithTop.LT.coe_lt_coe hb) (WithTop.LT.lt_top b)).elim
+    | coe a => exact ⟨a, inv h.1, fun c h1 h2 => h.2 (WithTop.LT.coe_lt_coe h1) (WithTop.LT.coe_lt_coe h2)⟩
   · rintro ⟨a, h⟩
-    exact ⟨a, WithTop.coe_covBy_coe.2 h⟩
+    refine ⟨a, WithTop.LT.coe_lt_coe h.1, fun c h1 h2 => ?_⟩
+    induction c using WithTop.recTopCoe with
+    | top => change WithTop.LT _ _ at h2; cases h2
+    | coe c => exact h.2 (inv h1) (inv h2)
+
+end
 
 /-- `Statement:` under any `≤`, an empty carrier has no least-element and no greatest-element
     structure. -/
@@ -1832,6 +1901,12 @@ def closedSublattice : CompleteSublattice (Set α) :=
     (fun _ hs => ⟨fun x hx y hy t ht => (hs ht).1 x (hx t ht) y hy,
                   fun x hx b hb t ht => (hs ht).2 x (hx t ht) b hb⟩)
 
+section
+-- [ZP port] Lean 4.35: `subset_rfl`/`Subset.trans` on `Set` now go through
+-- `Set.instCompleteAtomicBooleanAlgebra`, which carries `Classical.choice`; erasing the two
+-- Boolean-algebra instances here routes them through the choice-free `Set.instDistribLattice`.
+attribute [-instance] Set.instCompleteAtomicBooleanAlgebra Set.instBooleanAlgebra
+
 /-- `Statement:` `restrictInclusion` along `S ⊆ S` is the identity. -/
 theorem restrictInclusion_refl {S : Set α} (hS : M.UpClosed S) (x : S) :
     M.restrictInclusion hS hS subset_rfl x = x := rfl
@@ -1842,6 +1917,8 @@ theorem restrictInclusion_trans {S T U : Set α} (hS : M.UpClosed S) (hT : M.UpC
     (hU : M.UpClosed U) (hTS : T ⊆ S) (hUT : U ⊆ T) (x : U) :
     M.restrictInclusion hS hT hTS (M.restrictInclusion hT hU hUT x) =
       M.restrictInclusion hS hU (hUT.trans hTS) x := rfl
+
+end
 
 /-- `Statement:` `M ≤ N` when `M` and `N` have the same UP and every step of `M` is a step of `N`. -/
 -- [ZP-CUSTOM] no Mathlib analog | reason: an order on the die's own record `Motion`: equality of the
@@ -2176,6 +2253,10 @@ example {α β : Type} (M : Motion α) (N : Motion β) (f : α → β) :
     p. 10, conditions 1–2 ("functional bisimulations", p. 13). -/
 def StepBack (M : Motion α) (N : Motion β) (f : α → β) : Prop :=
   ∀ a c, N.step (f a) c → ∃ b, M.step a b ∧ f b = c
+
+-- Reading: `StepBack` also resembles the back condition of a bounded morphism (p-morphism) of modal
+-- logic; no source for that name was retrieved as of 2026-11-03 (searched: the local papers library
+-- for Blackburn and for modal logic).
 
 -- Statement: `StepBack` is `Relation.Fibration` of the reversed steps, by `Iff.rfl`.
 example (M : Motion α) (N : Motion β) (f : α → β) :
@@ -3018,8 +3099,8 @@ example :
 -- `f ↦ (x ↦ (V ↦ x (V ∘ f)))` fails `PreservesWeakPullbacksElementwise`, at `f : Bool → Bool`
 -- constant `false` and `g : Unit → Bool` constant `true`, whose pullback is empty. Reading: the
 -- functor is the contravariant powerset composed with itself, the neighbourhood functor with `Prop`
--- for `2`, which Gumm and Freese (arXiv:2103.09566, p. 1) name as an exception to weak preservation
--- of pullbacks.
+-- in place of `2` (the two agree only classically); Gumm and Freese (arXiv:2103.09566, p. 1) name the
+-- neighbourhood functor as an exception to weak preservation of pullbacks.
 example : ¬ PreservesWeakPullbacksElementwise
     { obj := fun S : Type => (S → Prop) → Prop
       map := fun f => TypeCat.ofHom fun x V => x fun a => V (f a) } := by
@@ -3191,7 +3272,9 @@ theorem isBisim_comp {M : Motion α} {N : Motion β} {P : Motion γ} {R : α →
 def Bisimilar (M : Motion α) (N : Motion β) (a : α) (b : β) : Prop := ∃ R, IsBisim M N R ∧ R a b
 
 /-- `Statement:` `Bisimilar M M` is an equivalence relation (Mathlib `Equivalence`). `Reading:` the
-    last clause of Rutten's Corollary 5.6 (p. 33); transitivity here uses `isBisim_comp`. -/
+    equivalence half of the last clause of Rutten's Corollary 5.6 (p. 33), that the greatest
+    bisimulation on one system is a bisimulation equivalence; the bisimulation half is
+    `isBisim_bisimilar` at `N := M`. Transitivity here uses `isBisim_comp`. -/
 theorem bisimilar_equivalence (M : Motion α) : Equivalence (Bisimilar M M) :=
   ⟨fun _ => ⟨Eq, isBisim_eq M, rfl⟩,
    fun ⟨R, hR, r⟩ => ⟨flip R, isBisim_flip hR, r⟩,
@@ -3255,7 +3338,7 @@ theorem isBisim_ker_coalgHom {α β : Type u} {M : Motion α} {N : Motion β}
 
 /-- `Statement:` if `f` carries steps to steps and has `StepBack` and `UpStrict`, and `Q` is a
     bisimulation from `N` to itself, `fun a a' => Q (f a) (f a')` is one from `M` to itself.
-    `Reading:` Rutten's Proposition* 5.9(2) (p. 34). -/
+    `Reading:` for carriers in one universe, Rutten's Proposition* 5.9(2) (p. 34). -/
 theorem isBisim_preimage {M : Motion α} {N : Motion β} {f : α → β}
     (hf : ∀ a b, M.step a b → N.step (f a) (f b)) (hb : StepBack M N f) (hu : UpStrict M N f)
     {Q : β → β → Prop} (hQ : IsBisim N N Q) : IsBisim M M (fun a a' => Q (f a) (f a')) := by
@@ -3619,15 +3702,13 @@ theorem hmap_ofNat_ne (y : NInf) (n : ℕ) : hmap y (ofNat n) ≠ y := by
   | true =>
     rw [hmap_ofNat_of_true y n hy]
     intro e
-    have := congrArg (fun z : NInf => z.1 n) e
-    simp only at this
+    have := congrArg (fun z : NInf => z.1 n) e -- [ZP port] Lean 4.35: arrives beta-reduced
     rw [hy] at this
     exact absurd this (by rw [show (ofNat n).1 n = false from decide_eq_false (Nat.lt_irrefl n)]; decide)
   | false =>
     rw [hmap_ofNat_of_false y n hy]
     intro e
-    have := congrArg (fun z : NInf => z.1 n) e
-    simp only at this
+    have := congrArg (fun z : NInf => z.1 n) e -- [ZP port] Lean 4.35: arrives beta-reduced
     rw [hy] at this
     exact absurd this (by
       rw [show (ofNat (n + 1)).1 n = true from decide_eq_true (Nat.lt_succ_self n)]; decide)
@@ -3776,17 +3857,19 @@ theorem overTrichotomy_option_boolStep_of_lpo
     (ofTotal id (fun _ => rfl) (fun a b => r a b = true)).OverTrichotomy y := by
   have hb : ∀ b, (r y b && !decide (b = y)) = true → r y b = true ∧ b ≠ y := by
     intro b hb
-    rcases decEq b y with hne | he
-    · cases hr : r y b
+    cases decEq b y with -- [ZP port] Lean 4.35: rcases on `Decidable` no longer binds names
+    | isFalse hne =>
+      cases hr : r y b
       · rw [hr] at hb; cases hb
       · exact ⟨rfl, hne⟩
-    · rw [decide_eq_true he] at hb
+    | isTrue he =>
+      rw [decide_eq_true he] at hb
       cases hr : r y b <;> rw [hr] at hb <;> cases hb
   have hc : ∀ b, (r y b && !decide (b = y)) = false → r y b = true → b = y := by
     intro b hb hr
-    rcases decEq b y with hne | he
-    · rw [hr, decide_eq_false hne] at hb; cases hb
-    · exact he
+    cases decEq b y with -- [ZP port] Lean 4.35: rcases on `Decidable` no longer binds names
+    | isFalse hne => rw [hr, decide_eq_false hne] at hb; cases hb
+    | isTrue he => exact he
   rcases h (fun n => r y (some n) && !decide (some n = y)) with ⟨n, hn⟩ | hall
   · exact Or.inr (Or.inr ⟨some n, hb _ hn⟩)
   · cases hnone : (r y none && !decide (none = y)) with
@@ -3840,12 +3923,12 @@ end Motion
 namespace NInf
 
 /-- `Statement:` if a `Bool` test `t` isolates `∞`, deciding membership in `{∞}`, the weak limited
-    principle of omniscience (WLPO) holds. `Reading:` "isolated": Escardó, arXiv:2609.10447v3, Def.
-    3.2 (p. 14), as data; compare his Examples 3.3(5) with the `Nonempty` iff example, whose forward
-    direction this is at the `Prop` level (`ZeroParadox/DieCannotBe.lean` § XXVII). Via
-    `isolating_infty_iff`, the choice-free reduction is the WLPO row with Lemma 3.3 (p. 4) of his
-    preprint of JSL 78(3) (2013), formalized for the `ℕ∞`-indexed `WLPO` as TypeTopology
-    `basic-discontinuity-taboo` (`Taboos.BasicDiscontinuity`, retrieved 2026-10-29). -/
+    principle of omniscience (WLPO) holds. `Reading:` "isolates": `∞` is isolated (Escardó,
+    arXiv:2609.10447v3, Def. 3.2, p. 14), as data; compare his Examples 3.3(5) with the `Nonempty`
+    iff example (`ZeroParadox/DieCannotBe.lean` § XXVII), of which this is the forward direction at
+    the `Prop` level. By `isolating_infty_iff`, `t` satisfies TypeTopology's `basic-discontinuity`;
+    its `basic-discontinuity-taboo` (`Taboos.BasicDiscontinuity`, retrieved 2026-10-29, for the
+    `ℕ∞`-indexed `WLPO`) is Escardó's WLPO row with Lemma 3.3 (JSL 78(3) (2013), preprint p. 4). -/
 theorem wlpo_of_isolating_infty (t : NInf → Bool) (ht : ∀ b, t b = true ↔ b = infty) :
     ∀ r : ℕ → Bool, (∀ n, r n = false) ∨ ¬ ∀ n, r n = false := fun r => by
   cases h : t (det r) with
@@ -3950,7 +4033,8 @@ def decEq_of_isolating_infty (t : NInf → Bool) (ht : ∀ b, t b = true ↔ b =
     DecidableEq NInf := decEq_of_wlpoData fun r =>
   @decidable_of_iff _ _ ((ht (det r)).trans (det_eq_infty_iff r)) (instDecidableEqBool (t (det r)) true)
 
-/-- `Statement:` and back: decidable equality on `NInf` gives a `Bool` test isolating `∞`. -/
+/-- `Statement:` and back: decidable equality on `NInf` gives that a `Bool` test isolating `∞`
+    exists. -/
 theorem isolating_infty_of_decEq (d : DecidableEq NInf) :
     ∃ t : NInf → Bool, ∀ b, t b = true ↔ b = infty :=
   ⟨fun b => @decide _ (d b infty), fun b => @decide_eq_true_iff _ (d b infty)⟩
@@ -3967,6 +4051,19 @@ theorem wlpo_of_tag (g : NInf → Option ℕ) (hg : ∀ x, g x = none ↔ x = in
       refine ⟨fun h => Bool.noConfusion h, fun e => ?_⟩
       have := (hg b).2 e
       rw [hb] at this; cases this
+
+-- The `DecidableEq` binder is kept in the type on purpose: the proof cases on it, and the
+-- PurityCheck prints the footprint that binder buys.
+set_option linter.unusedDecidableInType false in
+/-- `Statement:` if `D` has decidable equality and a map `g : NInf → D` has `g x = g ∞ ↔ x = ∞` at
+    every `x`, WLPO holds. `wlpo_of_tag` has the hypotheses of the case `D = Option ℕ`, there with
+    `g ∞ = none` (`ZeroParadox/DieCannotBe.lean` § XXVII). -/
+theorem wlpo_of_discrete_tag {D : Type*} [DecidableEq D] (g : NInf → D)
+    (hg : ∀ x, g x = g infty ↔ x = infty) :
+    ∀ r : ℕ → Bool, (∀ n, r n = false) ∨ ¬ ∀ n, r n = false := fun r => by
+  by_cases h : g (det r) = g infty
+  · exact Or.inl ((det_eq_infty_iff r).1 ((hg _).1 h))
+  · exact Or.inr fun hall => h (by rw [(det_eq_infty_iff r).2 hall])
 
 /-- `Statement:` `toPart x` is defined iff `x n = false` for some `n`, with value the least such `n`. -/
 def toPart (x : NInf) : Part ℕ := ⟨∃ n, x.1 n = false, fun h => Nat.find h⟩
@@ -4009,7 +4106,7 @@ theorem toPart_injective : Function.Injective toPart := by
       | false =>
         have e := key y x hxy.symm n hy
         have := congrArg (fun z : NInf => z.1 n) e
-        simp only at this; rw [hy, hx] at this; exact this.symm
+        rw [hy, hx] at this; exact this.symm -- [ZP port] Lean 4.35: `congrArg` result arrives beta-reduced
       | true => rfl
 
 /-- `Statement:` `toPart ∘ ofOption = Part.ofOption` on `Option ℕ`. -/
@@ -4028,6 +4125,90 @@ theorem toPart_ofOption (o : Option ℕ) : toPart (ofOption o) = Part.ofOption o
       simp [ofOption, ofNat] at this h2
       exact congrArg some (by omega)
     · intro h; cases h; rfl
+
+/-- `Statement:` partial elements of `ℕ` defined iff `∃ n, α n = true`, for some `α`. -/
+def RosPart : Type := {o : Part ℕ // ∃ α : ℕ → Bool, (o.Dom ↔ ∃ n, α n = true)}
+
+/-- `Statement:` `toPart x` with the witness `α = fun n => !x n` for its definedness. -/
+def toRos (x : NInf) : RosPart := ⟨toPart x, ⟨fun n => !x.1 n,
+  ⟨fun ⟨n, h⟩ => ⟨n, by simp [h]⟩, fun ⟨n, h⟩ => ⟨n, by simpa using h⟩⟩⟩⟩
+
+/-- `Statement:` if `toRos` is onto, LPO holds; the proof reads the preimage of the element with
+    value `0` defined iff `∃ n, α n = true` at bit `0`. -/
+theorem lpo_of_toRos_surjective (h : Function.Surjective toRos) :
+    ∀ α : ℕ → Bool, (∃ n, α n = true) ∨ ∀ n, α n = false := by
+  intro α
+  obtain ⟨x, hx⟩ := h ⟨⟨∃ n, α n = true, fun _ => 0⟩, ⟨α, Iff.rfl⟩⟩
+  have hx' : toPart x = ⟨∃ n, α n = true, fun _ => 0⟩ := congrArg Subtype.val hx
+  cases h0 : x.1 0 with
+  | false =>
+    left
+    have hd : (toPart x).Dom := ⟨0, h0⟩
+    rw [hx'] at hd; exact hd
+  | true =>
+    right
+    intro n
+    cases hn : α n with
+    | false => rfl
+    | true =>
+      have hm : (0 : ℕ) ∈ toPart x := by rw [hx']; exact ⟨⟨n, hn⟩, rfl⟩
+      rw [(mem_toPart_iff x 0).1 hm] at h0
+      exact absurd h0 (by decide)
+
+/-- `Statement:` if LPO holds, `toRos` is onto. -/
+theorem toRos_surjective_of_lpo (h : ∀ α : ℕ → Bool, (∃ n, α n = true) ∨ ∀ n, α n = false) :
+    Function.Surjective toRos := by
+  rintro ⟨o, α, hα⟩
+  rcases h α with hex | hall
+  · have hd : o.Dom := hα.2 hex
+    refine ⟨ofNat (o.get hd), Subtype.ext (Part.ext fun n => ?_)⟩
+    show n ∈ toPart (ofOption (some (o.get hd))) ↔ n ∈ o
+    rw [toPart_ofOption, Part.mem_ofOption]
+    exact ⟨fun e => (Option.some_injective _ e) ▸ Part.get_mem hd,
+      fun hn => congrArg some (Part.mem_unique (Part.get_mem hd) hn)⟩
+  · refine ⟨infty, Subtype.ext (Part.ext fun n => ?_)⟩
+    show n ∈ toPart infty ↔ n ∈ o
+    constructor
+    · rintro ⟨⟨m, hm⟩, _⟩; cases hm
+    · rintro ⟨hd, _⟩
+      obtain ⟨m, hm⟩ := hα.1 hd
+      rw [hall m] at hm; cases hm
+
+/-- `Statement:` `toRos` is onto iff LPO; both directions. `Reading:` compare Escardó and Knapp,
+    CSL 2017, § 2.8, p. 21:6: "the decidability of Rosolini propositions is known as LPO". -/
+theorem toRos_surjective_iff :
+    Function.Surjective toRos ↔ ∀ α : ℕ → Bool, (∃ n, α n = true) ∨ ∀ n, α n = false :=
+  ⟨lpo_of_toRos_surjective, toRos_surjective_of_lpo⟩
+
+/-- `Statement:` every proposition `p` has some `α : ℕ → Bool` with `p ↔ ∃ n, α n = true`. -/
+def AllRosolini : Prop := ∀ p : Prop, ∃ α : ℕ → Bool, (p ↔ ∃ n, α n = true)
+
+/-- `Statement:` if excluded middle holds, `AllRosolini` holds. -/
+theorem allRosolini_of_em (em : ∀ p : Prop, p ∨ ¬ p) : AllRosolini := fun p =>
+  (em p).elim (fun hp => ⟨fun _ => true, ⟨fun _ => ⟨0, rfl⟩, fun _ => hp⟩⟩)
+    (fun hn => ⟨fun _ => false, ⟨fun hp => absurd hp hn, fun ⟨_, h⟩ => by cases h⟩⟩)
+
+/-- `Statement:` if `AllRosolini` and LPO hold, excluded middle holds. -/
+theorem em_of_allRosolini_lpo (hr : AllRosolini)
+    (hl : ∀ α : ℕ → Bool, (∃ n, α n = true) ∨ ∀ n, α n = false) : ∀ p : Prop, p ∨ ¬ p := fun p => by
+  obtain ⟨α, hα⟩ := hr p
+  rcases hl α with h | h
+  · exact Or.inl (hα.2 h)
+  · exact Or.inr fun hp => by obtain ⟨n, hn⟩ := hα.1 hp; rw [h n] at hn; cases hn
+
+/-- `Statement:` the inclusion `RosPart → Part ℕ` is onto iff `AllRosolini`; both directions. -/
+theorem rosIncl_surjective_iff :
+    Function.Surjective (Subtype.val : RosPart → Part ℕ) ↔ AllRosolini := by
+  constructor
+  · intro h p
+    obtain ⟨⟨o, hro⟩, ho⟩ := h ⟨p, fun _ => 0⟩
+    obtain ⟨α, hα⟩ := hro
+    refine ⟨α, ?_⟩
+    have ho' : o = ⟨p, fun _ => 0⟩ := ho
+    subst ho'
+    exact hα
+  · intro h o
+    exact ⟨⟨o, h o.Dom⟩, rfl⟩
 
 /-- `Statement:` a map `g : NInf → Option ℕ` with `g x = some n ↔ x = n̲` gives LPO (Escardó, p. 4,
     the LPO row `ℕ∞ = ℕ ∪ {∞}`, right to left; compare his Corollary 3.7, p. 5). -/
@@ -4296,6 +4477,716 @@ theorem lpo_of_loopAt_image (r : NInf → Option ℕ)
   NInf.lpo_of_leftInverse r ((loopAt_image_iff_leftInverse r).1 h)
 
 end Motion
+
+/-! ### § XXIV. A limit pinned from two directions: `PinnedLimit`
+`Reading:` Tim's role (2026-11-03), "squishy" in his word: a value pinned from below as the least
+upper bound of the stages of a climbing run (`Monotone s`) it is not a stage of, and from the step
+map as its least fixed point. The run `s (n + 1) = g (s n)` is `(Motion.ofFun g).IsRun s`, stated beside the role at each
+occupant. The ε₀ occupant is `epsilon0_pinnedLimit` (`ZeroParadox/Ordinal/Epsilon0MinMax.lean` § III). -/
+
+section PinnedLimit
+
+variable {α : Type*} [Preorder α]
+
+/-- `Statement:` `c` is the least upper bound of the stages `Set.range s`, is not a stage, and is the
+    least fixed point of `g`, and the run climbs (`Monotone s`). `Reading:` the standard name, for a
+    monotone `g` and the run from the least element of a partial order, is closure ordinal ω
+    (`pinnedLimit_iff_closure_omega`). -/
+-- [ZP-CUSTOM] no Mathlib analog | reason: Mathlib's Kleene theorems for an ω-continuous map
+-- (`fixedPoints.lfp_eq_sSup_iterate` on a complete lattice,
+-- `OmegaCompletePartialOrder.fixedPoints.ωSup_iterate_mem_fixedPoint` on an ω-complete partial
+-- order) and `Ordinal.nfp` state the sup and leastness halves; this is the
+-- four-clause predicate on a preorder, with the not-a-stage and climbing clauses.
+def PinnedLimit (g : α → α) (s : ℕ → α) (c : α) : Prop :=
+  IsLUB (Set.range s) c ∧ c ∉ Set.range s ∧ IsLeast {x | g x = x} c ∧ Monotone s
+
+/-- `Statement:` `PinnedLimit g s c`, and every fixed point of `g` is `c`. -/
+def PinnedLimitUnique (g : α → α) (s : ℕ → α) (c : α) : Prop :=
+  PinnedLimit g s c ∧ ∀ x, g x = x → x = c
+
+/-- `Statement:` `PinnedLimit` with clause (c) relative to the first stage: `c` is the least fixed
+    point of `g` at or above `s 0`. -/
+-- [ZP-CUSTOM] extends: PinnedLimit (ZeroParadox/Die.lean) | reason: the least fixed point above a
+-- seed, which `PinnedLimit` (least over the whole carrier) cannot see at a seed above the least one;
+-- Mathlib's `OrderHom.nextFixed` is that fixed point on a complete lattice, for a seed `x ≤ f x`.
+def PinnedLimitAbove (g : α → α) (s : ℕ → α) (c : α) : Prop :=
+  IsLUB (Set.range s) c ∧ c ∉ Set.range s ∧ IsLeast {x | g x = x ∧ s 0 ≤ x} c ∧ Monotone s
+
+/-- `Statement:` `PinnedLimit g s c → PinnedLimitAbove g s c`, for every run. -/
+theorem PinnedLimit.toAbove {g : α → α} {s : ℕ → α} {c : α} (h : PinnedLimit g s c) :
+    PinnedLimitAbove g s c :=
+  ⟨h.1, h.2.1, ⟨⟨h.2.2.1.1, h.1.1 ⟨0, rfl⟩⟩, fun _ hx => h.2.2.1.2 hx.1⟩, h.2.2.2⟩
+
+/-- `Statement:` when `s 0` is ⊥ of `α`, `PinnedLimitAbove g s c ↔ PinnedLimit g s c`; both
+    directions. -/
+theorem pinnedLimitAbove_iff_of_bot [OrderBot α] {g : α → α} {s : ℕ → α} {c : α} (hs : s 0 = ⊥) :
+    PinnedLimitAbove g s c ↔ PinnedLimit g s c :=
+  ⟨fun h => ⟨h.1, h.2.1, ⟨h.2.2.1.1.1, fun _ hx => h.2.2.1.2 ⟨hx, hs ▸ bot_le⟩⟩, h.2.2.2⟩,
+    PinnedLimit.toAbove⟩
+
+end PinnedLimit
+
+/-- `Statement:` on a partial order `α` with a least element, for a monotone `g`, `PinnedLimit` at the
+    run `g^[n] ⊥` from ⊥ of `α` holds iff `c` is the least upper bound of the stages, `g c = c`, and no stage is
+    fixed; both directions. `Reading:` the right side is closure ordinal ω, "we reached the (least)
+    fixed point for the first time at stage ω. We say that ω is the closure ordinal of these
+    operators" (A. Das and L. Melgaard, *Cyclic proofs for arithmetical inductive definitions*, FSCD
+    2023, doi:10.4230/LIPIcs.FSCD.2023.23, 23:4, Example 2.9, there on `𝒫(ℕ)`). -/
+theorem pinnedLimit_iff_closure_omega {α : Type*} [PartialOrder α] [OrderBot α] (g : α → α)
+    (hg : Monotone g) (c : α) :
+    PinnedLimit g (fun n => g^[n] ⊥) c ↔
+      (IsLUB (Set.range fun n => g^[n] ⊥) c ∧ g c = c ∧ ∀ n, g (g^[n] ⊥) ≠ g^[n] ⊥) := by
+  have chain : Monotone (fun n => g^[n] ⊥) := hg.monotone_iterate_of_le_map bot_le
+  have below : ∀ x, g x = x → ∀ n, g^[n] ⊥ ≤ x := fun x hx n => by
+    induction n with
+    | zero => exact bot_le
+    | succ k ih => rw [Function.iterate_succ_apply', ← hx]; exact hg ih
+  constructor
+  · rintro ⟨hlub, hnot, ⟨hfix, _⟩, _⟩
+    refine ⟨hlub, hfix, fun k hk => hnot ⟨k, ?_⟩⟩
+    have const : ∀ m, g^[k + m] ⊥ = g^[k] ⊥ := fun m => by
+      induction m with
+      | zero => rfl
+      | succ j ih => rw [← add_assoc, Function.iterate_succ_apply', ih, hk]
+    have ub : ∀ n, g^[n] ⊥ ≤ g^[k] ⊥ := fun n => by
+      rcases le_total n k with h | h
+      · exact chain h
+      · obtain ⟨m, rfl⟩ := Nat.exists_eq_add_of_le h; rw [const m]
+    exact le_antisymm (hlub.1 ⟨k, rfl⟩) (hlub.2 (by rintro _ ⟨n, rfl⟩; exact ub n))
+  · rintro ⟨hlub, hfix, hnf⟩
+    refine ⟨hlub, fun ⟨k, hk⟩ => hnf k (by simp only at hk; rw [hk]; exact hfix),
+      ⟨hfix, fun x hx => ?_⟩, chain⟩
+    exact hlub.2 (by rintro _ ⟨n, rfl⟩; exact below x hx n)
+
+/-- `Statement:` on a finite partial order, `PinnedLimitAbove g s c` fails for every `g`, `s` and `c`:
+    a climbing run there is eventually constant (the ascending chain condition, Mathlib
+    `wellFoundedGT_iff_monotone_chain_condition`), so the least upper bound of its stages is a stage. -/
+theorem not_pinnedLimitAbove_of_finite {α : Type*} [PartialOrder α] [Finite α] (g : α → α)
+    (s : ℕ → α) (c : α) : ¬ PinnedLimitAbove g s c := by
+  rintro ⟨hlub, hnot, _, hs⟩
+  obtain ⟨N, hN⟩ := wellFoundedGT_iff_monotone_chain_condition.1 inferInstance ⟨s, hs⟩
+  refine hnot ⟨N, le_antisymm (hlub.1 ⟨N, rfl⟩) (hlub.2 ?_)⟩
+  rintro _ ⟨k, rfl⟩
+  rcases le_total k N with h | h
+  · exact hs h
+  · exact (hN k h).ge
+
+/-- `Statement:` on a finite partial order, `PinnedLimit g s c` fails for every `g`, `s` and `c`. -/
+theorem not_pinnedLimit_of_finite {α : Type*} [PartialOrder α] [Finite α] (g : α → α)
+    (s : ℕ → α) (c : α) : ¬ PinnedLimit g s c :=
+  fun h => not_pinnedLimitAbove_of_finite g s c h.toAbove
+
+-- `Statement:` CONTROL: antisymmetry is a premise of the exclusion. On `Bool` preordered by `x ≤ y`
+-- for all `x`, `y` (not a partial order), the constant run at `false` climbs and `true` occupies
+-- `PinnedLimit id`.
+example : ∃ inst : Preorder Bool, @PinnedLimit Bool inst id (fun _ => false) true :=
+  ⟨{ le := fun _ _ => True, le_refl := fun _ => trivial, le_trans := fun _ _ _ _ _ => trivial,
+      lt := fun _ _ => False, lt_iff_le_not_ge := fun _ _ => by simp },
+    ⟨fun _ _ => trivial, fun _ _ => trivial⟩, fun ⟨_, h⟩ => by simp at h, ⟨rfl, fun _ _ => trivial⟩,
+    fun _ _ _ => trivial⟩
+
+-- `Statement:` CONTROL: on `Finset Bool` (four points) the step sending `{false}` to `{true}`,
+-- `{true}` and `∅` to `{false}`, and fixing only `univ`, has the alternating run; `univ` is the least
+-- upper bound of its stages, is not a stage, and is the least fixed point, the run does not climb, and
+-- no point occupies `PinnedLimitUnique` there (`not_pinnedLimit_of_finite`). The climbing clause is
+-- what fails here. The exclusion names no clause: at the `Fin 3` CONTROL below the run climbs and its
+-- least upper bound `2` is a stage.
+example : (Motion.ofFun fun x : Finset Bool =>
+      if x = Finset.univ then Finset.univ else if x = {false} then {true} else {false}).IsRun
+      (fun n => if n % 2 = 0 then {false} else {true}) ∧
+    (IsLUB (Set.range fun n => if n % 2 = 0 then ({false} : Finset Bool) else {true}) Finset.univ ∧
+      Finset.univ ∉ Set.range (fun n => if n % 2 = 0 then ({false} : Finset Bool) else {true}) ∧
+      IsLeast {x : Finset Bool | (if x = Finset.univ then Finset.univ else
+        if x = {false} then {true} else {false}) = x} Finset.univ) ∧
+    ¬ Monotone (fun n => if n % 2 = 0 then ({false} : Finset Bool) else {true}) ∧
+    ∀ c, ¬ PinnedLimitUnique (fun x : Finset Bool =>
+      if x = Finset.univ then Finset.univ else if x = {false} then {true} else {false})
+      (fun n => if n % 2 = 0 then {false} else {true}) c := by
+  have fix : ∀ x : Finset Bool, (if x = Finset.univ then Finset.univ else
+      if x = {false} then {true} else {false}) = x ↔ x = Finset.univ := by decide
+  refine ⟨fun n => ?_, ⟨⟨fun _ _ => Finset.subset_univ _, fun b hb => ?_⟩, ?_, ?_⟩,
+    fun h => absurd (h (Nat.zero_le 1)) (by decide), fun c h => not_pinnedLimit_of_finite _ _ c h.1⟩
+  · show (if (n + 1) % 2 = 0 then ({false} : Finset Bool) else {true}) =
+      (fun x : Finset Bool => if x = Finset.univ then Finset.univ else
+        if x = {false} then {true} else {false}) (if n % 2 = 0 then {false} else {true})
+    rcases Nat.mod_two_eq_zero_or_one n with h | h
+    · rw [if_neg (by omega : ¬ (n + 1) % 2 = 0), if_pos h]; decide
+    · rw [if_pos (by omega : (n + 1) % 2 = 0), if_neg (by omega : ¬ n % 2 = 0)]; decide
+  · have h0 : ({false} : Finset Bool) ⊆ b := hb ⟨0, rfl⟩
+    have h1 : ({true} : Finset Bool) ⊆ b := hb ⟨1, rfl⟩
+    intro y _
+    cases y
+    · exact h0 (Finset.mem_singleton_self _)
+    · exact h1 (Finset.mem_singleton_self _)
+  · rintro ⟨n, hn⟩
+    dsimp only at hn
+    split_ifs at hn <;> exact absurd hn (by decide)
+  · exact ⟨(fix _).2 rfl, fun x hx => ((fix x).1 hx) ▸ le_rfl⟩
+
+-- `Statement:` on a complete lattice, for an ω-Scott-continuous `f`, `lfp f` meets clauses (a) and
+-- (c) at the run from ⊥ of that lattice (Kleene's fixed-point theorem, Mathlib
+-- `fixedPoints.lfp_eq_sSup_iterate`); the premises are the complete lattice and ω-Scott-continuity.
+example {β : Type*} [CompleteLattice β] (f : β →o β)
+    (h : OmegaCompletePartialOrder.ωScottContinuous f) :
+    IsLUB (Set.range fun n => (⇑f)^[n] ⊥) f.lfp ∧ IsLeast {x | f x = x} f.lfp :=
+  ⟨by rw [fixedPoints.lfp_eq_sSup_iterate f h]; exact isLUB_iSup,
+    ⟨f.map_lfp, fun _ hx => f.lfp_le_fixed hx⟩⟩
+
+namespace NInf
+
+/-- `Statement:` tape-wise order: `x ≤ y` iff every `true` bit of `x` is a `true` bit of `y`. -/
+instance instPartialOrder : PartialOrder NInf where
+  le x y := ∀ i, x.1 i = true → y.1 i = true
+  le_refl _ _ h := h
+  le_trans _ _ _ h1 h2 i h := h2 i (h1 i h)
+  le_antisymm x y h1 h2 := ext fun i => by
+    cases hx : x.1 i <;> cases hy : y.1 i
+    · rfl
+    · exact absurd (h2 i hy) (by rw [hx]; decide)
+    · exact absurd (h1 i hx) (by rw [hy]; decide)
+    · rfl
+
+/-- `Statement:` the tape-wise order unfolded. -/
+theorem le_def (x y : NInf) : x ≤ y ↔ ∀ i, x.1 i = true → y.1 i = true := Iff.rfl
+
+-- `Statement:` it is the pointwise order of `ℕ → Bool` restricted to `NInf`.
+example (x y : NInf) : x ≤ y ↔ ∀ i, x.1 i ≤ y.1 i :=
+  forall_congr' fun i => by cases x.1 i <;> cases y.1 i <;> decide
+
+/-- `Statement:` ⊥ of `NInf` is `ofNat 0`. -/
+instance instOrderBot : OrderBot NInf where
+  bot := ofNat 0
+  bot_le _ i h := by simp [ofNat] at h
+
+/-- `Statement:` ⊤ of `NInf` is `infty`. -/
+instance instOrderTop : OrderTop NInf where
+  top := infty
+  le_top _ _ _ := rfl
+
+/-- `Statement:` ⊥ of `NInf` is `ofNat 0`. -/
+theorem bot_eq : (⊥ : NInf) = ofNat 0 := rfl
+
+/-- `Statement:` ⊤ of `NInf` is `infty`. -/
+theorem top_eq : (⊤ : NInf) = infty := rfl
+
+-- `Statement:` ⊥ of `NInf` is the all-`false` tape and ⊤ of `NInf` the all-`true` tape.
+example : (⊥ : NInf).1 = (fun _ => false) ∧ (⊤ : NInf).1 = (fun _ => true) :=
+  ⟨funext fun i => by simp [bot_eq, ofNat], rfl⟩
+
+/-- `Statement:` `ofNat m ≤ ofNat n ↔ m ≤ n`; both directions. -/
+theorem ofNat_le_iff (m n : ℕ) : ofNat m ≤ ofNat n ↔ m ≤ n := by
+  constructor
+  · intro h
+    rcases Nat.lt_or_ge n m with hc | hc
+    · have := h n (by simp [ofNat]; omega)
+      simp [ofNat] at this
+    · exact hc
+  · intro h i hi; simp [ofNat] at hi ⊢; omega
+
+/-- `Statement:` `x ≤ succ x`. -/
+theorem le_succ (x : NInf) : x ≤ succ x := fun i h => by
+  cases i with
+  | zero => rfl
+  | succ j => exact x.2 j h
+
+/-- `Statement:` if `succ x ≤ x`, then `x = ∞`. -/
+theorem eq_infty_of_succ_le (x : NInf) (h : succ x ≤ x) : x = infty := by
+  apply ext
+  intro i
+  induction i with
+  | zero => exact h 0 rfl
+  | succ j ih => exact h (j + 1) ih
+
+/-- `Statement:` `succ x = x ↔ x = ∞`; both directions. `Reading:` prior art in
+    `ZeroParadox/DieCannotBe.lean` § XXIX. -/
+theorem succ_fixed_iff (x : NInf) : succ x = x ↔ x = infty :=
+  ⟨fun h => eq_infty_of_succ_le x (le_of_eq h), fun e => e ▸ succ_infty⟩
+
+/-- `Statement:` `∞` is the least upper bound of the finite stages. -/
+theorem isLUB_range_ofNat : IsLUB (Set.range ofNat) infty :=
+  ⟨fun _ _ => le_top, fun _ hb i _ => hb ⟨i + 1, rfl⟩ i (decide_eq_true (Nat.lt_succ_self i))⟩
+
+/-- `Statement:` `∞` is not a finite stage. -/
+theorem infty_not_mem_range_ofNat : infty ∉ Set.range ofNat := fun ⟨n, hn⟩ => ofNat_ne_infty n hn
+
+/-- `Statement:` `ofNat` is a run of `Motion.ofFun succ`, and `∞` occupies `PinnedLimitUnique succ ofNat`. -/
+theorem pinnedLimitUnique_succ :
+    (Motion.ofFun succ).IsRun ofNat ∧ PinnedLimitUnique succ ofNat infty :=
+  ⟨fun n => (succ_ofNat n).symm,
+    ⟨isLUB_range_ofNat, infty_not_mem_range_ofNat,
+      ⟨succ_infty, fun x hx => ((succ_fixed_iff x).1 hx) ▸ le_rfl⟩,
+      fun m n h => (ofNat_le_iff m n).2 h⟩,
+    fun x hx => (succ_fixed_iff x).1 hx⟩
+
+/-- `Statement:` anything between `ofNat n` and `ofNat (n + 1)` is one of them. -/
+theorem eq_or_eq_of_between (n : ℕ) (c : NInf) (h1 : ofNat n ≤ c) (h2 : c ≤ ofNat (n + 1)) :
+    c = ofNat n ∨ c = ofNat (n + 1) := by
+  have lo : ∀ i, i < n → c.1 i = true := fun i hi => h1 i (decide_eq_true hi)
+  have hi' : ∀ i, n + 1 ≤ i → c.1 i = false := fun i hi => by
+    cases hc : c.1 i
+    · rfl
+    · have := of_decide_eq_true (h2 i hc); omega
+  cases hb : c.1 n
+  · left; exact ext fun i => by
+      show c.1 i = decide (i < n)
+      rcases Nat.lt_trichotomy i n with h | h | h
+      · rw [lo i h]; exact (decide_eq_true h).symm
+      · subst h; rw [hb]; exact (decide_eq_false (Nat.lt_irrefl _)).symm
+      · rw [hi' i h]; exact (decide_eq_false (by omega)).symm
+  · right; exact ext fun i => by
+      show c.1 i = decide (i < n + 1)
+      rcases Nat.lt_trichotomy i n with h | h | h
+      · rw [lo i h]; exact (decide_eq_true (by omega)).symm
+      · subst h; rw [hb]; exact (decide_eq_true (Nat.lt_succ_self _)).symm
+      · rw [hi' i h]; exact (decide_eq_false (by omega)).symm
+
+/-- `Statement:` `ofNat (n + 1)` covers `ofNat n`. -/
+theorem ofNat_covBy (n : ℕ) : ofNat n ⋖ ofNat (n + 1) := by
+  refine ⟨lt_of_le_of_ne ((ofNat_le_iff _ _).2 (by omega)) fun e => ?_, fun c h1 h2 => ?_⟩
+  · have := (ofNat_le_iff (n + 1) n).1 (e ▸ le_rfl); omega
+  · rcases eq_or_eq_of_between n c h1.le h2.le with e | e
+    · exact h1.ne e.symm
+    · exact h2.ne e
+
+/-- `Statement:` `EveryStepCovered NInf`, with the witness `succ x` at each non-maximal `x`. -/
+theorem everyStepCovered : EveryStepCovered NInf := by
+  intro x hx
+  have hne : x ≠ infty := fun e => hx (by rw [e]; exact fun _ _ => le_top)
+  refine ⟨succ x, lt_of_le_of_ne (le_succ x) fun e => hne (eq_infty_of_succ_le x (e ▸ le_rfl)),
+    fun c h1 h2 => ?_⟩
+  apply not_not_exists_ofNat x hne
+  rintro ⟨k, rfl⟩
+  rw [succ_ofNat] at h2
+  rcases eq_or_eq_of_between k c h1.le h2.le with e | e
+  · exact h1.ne e.symm
+  · exact h2.ne e
+
+/-- `Statement:` no point is covered by `∞`. -/
+theorem not_covBy_infty (b : NInf) : ¬ b ⋖ infty := by
+  intro h
+  apply not_not_exists_ofNat b h.lt.ne
+  rintro ⟨k, rfl⟩
+  exact h.2 (ofNat_covBy k).lt (lt_of_le_of_ne le_top (ofNat_ne_infty _))
+
+/-- `Statement:` `∞` is a successor limit of `NInf` (Mathlib `Order.IsSuccLimit`). -/
+theorem isSuccLimit_infty : Order.IsSuccLimit infty :=
+  ⟨fun h => ofNat_ne_infty 0 (le_antisymm bot_le (h (bot_le : (⊥ : NInf) ≤ infty))),
+    fun b => not_covBy_infty b⟩
+
+/-- `Statement:` every finite stage is covered by the next, `BotCovered` and `EveryStepCovered` hold,
+    `∞` is a successor limit, and some `e : (NInf → Bool) → NInf` has `p (e p) = true → ∀ x, p x = true`
+    for every `p` (witness `eps`, by `eps_spec`). -/
+theorem covered_limit_searchable :
+    (∀ n : ℕ, ofNat n ⋖ ofNat (n + 1)) ∧ BotCovered NInf ∧ EveryStepCovered NInf ∧
+    Order.IsSuccLimit infty ∧
+    ∃ e : (NInf → Bool) → NInf, ∀ p : NInf → Bool, p (e p) = true → ∀ x, p x = true :=
+  ⟨ofNat_covBy, ⟨ofNat 1, ofNat_covBy 0⟩, everyStepCovered, isSuccLimit_infty, ⟨eps, eps_spec⟩⟩
+
+section
+-- [ZP port] Lean 4.35: `WithTop.instPreorder` carries `Classical.choice` (`le_def` by `grind`);
+-- `≃o` needs only `≤`, so pin the bare choice-free `WithTop.instLE` here.
+attribute [local instance high] WithTop.instLE
+
+/-- `Statement:` any order isomorphism `NInf ≃o WithTop ℕ` gives WLPO. `Reading:` by
+    `wlpo_of_discrete_tag` at `D = WithTop ℕ`, whose `DecidableEq` is an instance. -/
+theorem wlpo_of_iso (e : NInf ≃o WithTop ℕ) :
+    ∀ r : ℕ → Bool, (∀ n, r n = false) ∨ ¬ ∀ n, r n = false :=
+  wlpo_of_discrete_tag e fun _ => e.injective.eq_iff
+
+end
+
+-- `Statement:` the order is not used: any injection into `WithTop ℕ` gives WLPO.
+example (e : NInf → WithTop ℕ) (he : Function.Injective e) :
+    ∀ r : ℕ → Bool, (∀ n, r n = false) ∨ ¬ ∀ n, r n = false :=
+  wlpo_of_discrete_tag e fun _ => he.eq_iff
+
+/-- `Statement:` `WithTop ℕ → NInf`, `⊤ ↦ ∞` and `n ↦ ofNat n`. -/
+def ofWithTop : WithTop ℕ → NInf
+  | ⊤ => infty
+  | (n : ℕ) => ofNat n
+
+section
+-- [ZP port] Lean 4.35: Mathlib's `WithTop` `Preorder` carries `Classical.choice`; scope `ZeroParadox/Order/ChoiceFreeWithTop.lean`'s.
+attribute [local instance high] withTopPreorderCF
+
+/-- `Statement:` `ofWithTop` is strictly monotone. -/
+theorem ofWithTop_strictMono : StrictMono ofWithTop := by
+  intro a b hab
+  change WithTop.LT a b at hab
+  cases a with
+  | top => cases hab
+  | coe m =>
+    cases b with
+    | top => exact lt_of_le_of_ne le_top (ofNat_ne_infty m)
+    | coe n =>
+      have hmn : m < n := by cases hab with | coe_lt_coe h => exact h
+      refine lt_of_le_of_ne ((ofNat_le_iff _ _).2 hmn.le) fun e => ?_
+      have := (ofNat_le_iff n m).1 (le_of_eq (show ofNat n = ofNat m from e.symm)); omega
+
+end
+
+/-- `Statement:` CONTROL: `NInf ≃o WithTop ℕ` from `Classical.propDecidable`, so `wlpo_of_iso`'s
+    hypothesis is inhabited classically. -/
+noncomputable def orderIsoWithTopClassical : NInf ≃o WithTop ℕ :=
+  (StrictMono.orderIsoOfSurjective ofWithTop ofWithTop_strictMono fun x => by
+    classical
+    by_cases h : ∃ k, x = ofNat k
+    · obtain ⟨k, rfl⟩ := h; exact ⟨k, rfl⟩
+    · exact ⟨⊤, (eq_infty_of_ne_ofNat x fun k e => h ⟨k, e⟩).symm⟩).symm
+
+end NInf
+
+/-- `Statement:` `WithTop ℕ`, step `· + 1`, stages the coercion: `⊤` occupies
+    `PinnedLimitUnique`. `Statement:` INVARIANT: the predicate `PinnedLimitUnique` holds at `NInf`'s `∞`
+    (`NInf.pinnedLimitUnique_succ`) and at `WithTop ℕ`'s `⊤`, so it does not separate the two
+    carriers; identifying them by an order isomorphism costs WLPO (`NInf.wlpo_of_iso`). -/
+theorem pinnedLimitUnique_withTop :
+    (Motion.ofFun fun x : WithTop ℕ => x + 1).IsRun (fun n : ℕ => (n : WithTop ℕ)) ∧
+    PinnedLimitUnique (fun x : WithTop ℕ => x + 1) (fun n : ℕ => (n : WithTop ℕ)) ⊤ := by
+  have fix : ∀ x : WithTop ℕ, x + 1 = x ↔ x = ⊤ := fun x => by
+    constructor
+    · intro h
+      cases x with
+      | top => rfl
+      | coe n =>
+        exfalso
+        rw [← WithTop.coe_one, ← WithTop.coe_add, WithTop.coe_inj] at h
+        exact Nat.succ_ne_self n h
+    · rintro rfl; rfl
+  refine ⟨fun n => show ((n + 1 : ℕ) : WithTop ℕ) = (n : WithTop ℕ) + 1 by simp,
+    ⟨⟨fun _ _ => le_top, fun b hb => ?_⟩, fun ⟨n, hn⟩ => WithTop.coe_ne_top hn,
+    ⟨rfl, fun x hx => ((fix x).1 hx) ▸ le_rfl⟩, fun a b h => show (a : WithTop ℕ) ≤ b by exact_mod_cast h⟩,
+    fun x hx => (fix x).1 hx⟩
+  cases b with
+  | top => exact le_rfl
+  | coe m =>
+    exfalso
+    have := hb ⟨m + 1, rfl⟩
+    exact absurd (Nat.cast_le.1 this) (by omega)
+
+-- `Statement:` CONTROL: `ℕ` with `Nat.succ` has a run and no occupant (no fixed point).
+example : (Motion.ofFun Nat.succ).IsRun id ∧ ∀ c : ℕ, ¬ PinnedLimit Nat.succ id c :=
+  ⟨fun _ => rfl, fun c ⟨_, _, ⟨hfix, _⟩, _⟩ => Nat.succ_ne_self c hfix⟩
+
+-- `Statement:` CONTROL: on `Fin 3` with step `![1, 2, 2]`, the run from `0` climbs, and its least
+-- upper bound `2` is a fixed point and a stage, so there is no occupant.
+example : (Motion.ofFun (![1, 2, 2] : Fin 3 → Fin 3)).IsRun
+      (fun n => (![1, 2, 2] : Fin 3 → Fin 3)^[n] 0) ∧
+    Monotone (fun n => (![1, 2, 2] : Fin 3 → Fin 3)^[n] 0) ∧
+    ∀ c : Fin 3, ¬ PinnedLimit (![1, 2, 2] : Fin 3 → Fin 3)
+      (fun n => (![1, 2, 2] : Fin 3 → Fin 3)^[n] 0) c := by
+  refine ⟨fun n => show (![1, 2, 2] : Fin 3 → Fin 3)^[n + 1] 0 = _ by
+    simp only [Function.iterate_succ_apply'],
+    Monotone.monotone_iterate_of_le_map (by decide) (by decide), ?_⟩
+  rintro c ⟨hlub, hnot, _⟩
+  have h2 : (![1, 2, 2] : Fin 3 → Fin 3)^[2] 0 = 2 := rfl
+  have hle : (2 : Fin 3) ≤ c := h2 ▸ hlub.1 ⟨2, rfl⟩
+  have hc : c = 2 := le_antisymm (by fin_cases c <;> decide) hle
+  exact hnot ⟨2, h2.trans hc.symm⟩
+
+-- `Statement:` CONTROL: on `NInf` with `g = id`, the least fixed point is ⊥ of `NInf`, `ofNat 0`, not
+-- the least upper bound `∞` of the stages, so no point occupies `PinnedLimit id NInf.ofNat`.
+example : IsLeast {x : NInf | id x = x} (NInf.ofNat 0) ∧
+    ∀ c : NInf, ¬ PinnedLimit id NInf.ofNat c := by
+  refine ⟨⟨rfl, fun _ _ => bot_le⟩, fun c ⟨hlub, _, ⟨_, hleast⟩, _⟩ => ?_⟩
+  have hc : c = NInf.infty := hlub.unique NInf.isLUB_range_ofNat
+  have hbot : c ≤ NInf.ofNat 0 := hleast (show id (NInf.ofNat 0) = NInf.ofNat 0 from rfl)
+  rw [hc] at hbot
+  exact absurd (hbot 0 rfl) (by decide)
+
+/-! ### § XXV. First-occurrence time as a Galois insertion: tapes onto `NInf`, order reversed
+`Reading:` Tim's "bend" (2026-11-03): one tape read two ways, as a firing record in `ℕ → Bool`
+(pointwise order, Mathlib's `Pi` instance) and as its waiting time `det` in `NInf`. "Time" is his
+reading only; nothing here is a claim about physics. -/
+
+namespace NInf
+
+/-- `Statement:` ⊥ of `NInf` and ⊤ of `NInf` together, as Mathlib's `BoundedOrder`. -/
+instance instBoundedOrder : BoundedOrder NInf := { instOrderBot, instOrderTop with }
+
+/-- `Statement:` on `ℕ → Bool`, `r ≤ r'` iff every `true` bit of `r` is a `true` bit of `r'`. -/
+theorem tape_le_iff (r r' : ℕ → Bool) : r ≤ r' ↔ ∀ i, r i = true → r' i = true := by
+  refine forall_congr' fun i => ?_
+  cases r i <;> cases r' i <;> simp
+
+/-- `Statement:` `detSeq r n = true` iff `r k = false` for every `k ≤ n`; both directions. -/
+theorem detSeq_eq_true_iff (r : ℕ → Bool) (n : ℕ) :
+    detSeq r n = true ↔ ∀ k ≤ n, r k = false := by
+  refine ⟨detSeq_true r n, ?_⟩
+  induction n with
+  | zero => intro h; simp [detSeq, h 0 le_rfl]
+  | succ n ih =>
+    intro h
+    simp [detSeq, ih (fun k hk => h k (by omega)), h (n + 1) le_rfl]
+
+/-- `Statement:` ⊥ of `ℕ → Bool` is below every tape, with axioms `[propext]`. -/
+theorem tape_bot_le (r : ℕ → Bool) : (⊥ : ℕ → Bool) ≤ r :=
+  (tape_le_iff _ _).2 fun _ h => Bool.noConfusion h
+
+/-- `Statement:` by Mathlib's `bot_le`, axioms `[propext, Classical.choice, Quot.sound]`. -/
+theorem mathlib_bot_le_tape (r : ℕ → Bool) : (⊥ : ℕ → Bool) ≤ r := bot_le
+
+/-- `Statement:` `det` is antitone: if every `true` bit of `r` is a `true` bit of `r'`, then
+    `det r' ≤ det r`. -/
+theorem det_antitone : Antitone det := by
+  intro r r' hle
+  rw [le_def]; intro i hi
+  have hi' := (detSeq_eq_true_iff r' i).1 hi
+  show detSeq r i = true
+  rw [detSeq_eq_true_iff]
+  intro k hk
+  cases hr : r k
+  · rfl
+  · have := (tape_le_iff r r').1 hle k hr; rw [hi' k hk] at this; cases this
+
+/-- `Statement:` `det` sends ⊥ of `ℕ → Bool` to ⊤ of `NInf` and ⊤ of `ℕ → Bool` to ⊥ of `NInf`. -/
+theorem det_poles : det ⊥ = ⊤ ∧ det ⊤ = ⊥ := by
+  refine ⟨(det_eq_infty_iff _).2 fun _ => rfl, ext fun i => ?_⟩
+  cases i <;> simp [det, detSeq] <;> rfl
+
+/-- `Statement:` the bitwise complement of a point of `NInf`, as a tape. -/
+def negS (x : NInf) : ℕ → Bool := fun n => !x.1 n
+
+/-- `Statement:` `det (negS x) = x`: `negS` is a section of `det`. -/
+theorem det_negS (x : NInf) : det (negS x) = x := ext fun n => by
+  show detSeq (negS x) n = x.1 n
+  cases hx : x.1 n
+  · cases hd : detSeq (negS x) n
+    · rfl
+    · have := (detSeq_eq_true_iff _ n).1 hd n le_rfl; simp [negS, hx] at this
+  · rw [detSeq_eq_true_iff]; intro k hk; simp [negS, true_le x hx k hk]
+
+/-- `Statement:` `negS` is antitone. -/
+theorem negS_antitone : Antitone negS := by
+  intro x y h
+  rw [tape_le_iff]; intro i hi
+  cases hx : x.1 i
+  · simp [negS, hx]
+  · have := h i hx; simp [negS, this] at hi
+
+/-- `Statement:` `x ≤ det r ↔ r ≤ negS x`; both directions. -/
+theorem le_det_iff (r : ℕ → Bool) (x : NInf) : x ≤ det r ↔ r ≤ negS x := by
+  rw [le_def, tape_le_iff]
+  constructor
+  · intro h i hr
+    cases hx : x.1 i
+    · simp [negS, hx]
+    · have := (detSeq_eq_true_iff r i).1 (h i hx) i le_rfl; rw [hr] at this; cases this
+  · intro h i hx
+    show detSeq r i = true
+    rw [detSeq_eq_true_iff]; intro k hk
+    cases hr : r k
+    · rfl
+    · have := h k hr; simp [negS, true_le x hx k hk] at this
+
+/-- `Statement:` `det` into the order dual of `NInf` is the lower adjoint of a Galois connection
+    (Mathlib `GaloisConnection`) with upper adjoint `negS`. -/
+theorem det_gc :
+    GaloisConnection (OrderDual.toDual ∘ det) (negS ∘ OrderDual.ofDual) :=
+  fun r x => OrderDual.toDual_le.trans (le_det_iff r (OrderDual.ofDual x))
+
+/-- `Statement:` and a Galois insertion (Mathlib `GaloisInsertion`): the upper adjoint `negS` is a
+    section of `det`. `Reading:` Tim's "bend" (2026-11-03). -/
+def det_gi : GaloisInsertion (OrderDual.toDual ∘ det) (negS ∘ OrderDual.ofDual) :=
+  det_gc.toGaloisInsertion fun x => by
+    show x ≤ OrderDual.toDual (det (negS (OrderDual.ofDual x)))
+    rw [det_negS]; exact le_rfl
+-- `Statement:` on 2-adic digit tapes `det` is the 2-adic valuation (`ZeroParadox/Category/IgnoranceSeam.lean` § VIII).
+
+-- `Statement:` `det r` is the bitwise complement of Mathlib's `partialSups r`, on `Bool` the running
+-- "or" (has `r` fired by stage `n`), pointwise at every `n`.
+example (r : ℕ → Bool) (n : ℕ) : (det r).1 n = !(partialSups r n) := by
+  induction n with
+  | zero => simp [det, detSeq]
+  | succ n ih =>
+    have e : partialSups r (n + 1) = (partialSups r n || r (n + 1)) := by
+      rw [← Order.succ_eq_add_one, partialSups_succ, Order.succ_eq_add_one]; rfl
+    show (detSeq r n && !r (n + 1)) = _
+    rw [show detSeq r n = (det r).1 n from rfl, ih, e]
+    cases partialSups r n <;> cases r (n + 1) <;> rfl
+
+-- `Statement:` Mathlib's `partialSups.gi`: a Galois insertion of `ℕ → Bool` onto its monotone sequences.
+-- Axioms: `det_gi` `[propext, Quot.sound]`; `partialSups.gi` `[propext, Classical.choice, Quot.sound]`.
+noncomputable example : GaloisInsertion (partialSups : (ℕ → Bool) → ℕ →o Bool) DFunLike.coe :=
+  partialSups.gi
+
+-- `Statement:` `det r` is the first hitting time of `true` in `r`: `ofNat (Nat.find hw)` when `r` fires;
+-- when it never fires, `det r = infty` (`det_eq_infty_iff`).
+example (r : ℕ → Bool) (hw : ∃ k, r k = true) : det r = ofNat (Nat.find hw) := by
+  apply ext; intro i
+  show detSeq r i = decide (i < Nat.find hw)
+  cases hd : detSeq r i
+  · obtain ⟨k, hk, e⟩ := detSeq_false r i hd
+    have := Nat.find_min' hw e
+    exact (decide_eq_false (by omega)).symm
+  · have h := (detSeq_eq_true_iff r i).1 hd
+    symm; refine decide_eq_true ?_
+    by_contra hc
+    have := h (Nat.find hw) (by omega); rw [Nat.find_spec hw] at this; cases this
+
+-- `Statement:` `det r` satisfies TypeTopology's two `force-decreasing` equations at `β = !r`: `!r 0` at
+-- `0`, and `min₂ (β (n + 1)) (force-decreasing β n)` at `n + 1`, with `&&` for `min₂`.
+example (r : ℕ → Bool) (n : ℕ) :
+    (det r).1 0 = !r 0 ∧ (det r).1 (n + 1) = (!r (n + 1) && (det r).1 n) :=
+  ⟨rfl, Bool.and_comm _ _⟩
+
+/-- `Statement:` `det` as a bounded order homomorphism (Mathlib `BoundedOrderHom`) from `ℕ → Bool`
+    into the order dual of `NInf`. -/
+def detHom : BoundedOrderHom (ℕ → Bool) NInfᵒᵈ where
+  toFun r := OrderDual.toDual (det r)
+  monotone' := fun _ _ h => det_antitone h
+  map_top' := congrArg OrderDual.toDual det_poles.2
+  map_bot' := congrArg OrderDual.toDual det_poles.1
+
+/-- `Statement:` no adjoint on the other side: no `g` has `g x ≤ r ↔ det r ≤ x` for all `x`, `r`. -/
+theorem no_lower_adjoint : ¬ ∃ g : NInf → ℕ → Bool, ∀ x r, g x ≤ r ↔ det r ≤ x := by
+  rintro ⟨g, hg⟩
+  have h1 : det (fun n => decide (n = 0)) ≤ ofNat 1 := by
+    rw [le_def]; intro i hi
+    exact absurd ((detSeq_eq_true_iff _ i).1 hi 0 (Nat.zero_le _)) (by decide)
+  have h2 : det (fun n => decide (n = 1)) ≤ ofNat 1 := by
+    rw [le_def]; intro i hi
+    cases i with
+    | zero => rfl
+    | succ j => -- [ZP port] Lean 4.35: tape argument named; no longer inferred through `det`
+      exact absurd ((detSeq_eq_true_iff (fun n => decide (n = 1)) (j + 1)).1 hi 1 (by omega))
+        (by decide)
+  have g1 := (tape_le_iff _ _).1 ((hg _ _).2 h1)
+  have g2 := (tape_le_iff _ _).1 ((hg _ _).2 h2)
+  have hbot : g (ofNat 1) ≤ (fun _ => false) := by
+    rw [tape_le_iff]; intro i hi
+    have a := g1 i hi; have b := g2 i hi
+    simp only [decide_eq_true_eq] at a b; subst a; cases b
+  have h3 := (hg _ _).1 hbot
+  have e := (det_eq_infty_iff (fun _ : ℕ => false)).2 fun _ => rfl
+  rw [e, le_def] at h3
+  exact absurd (h3 1 rfl) (by decide)
+
+/-- `Statement:` the tape firing exactly at `n` has waiting time `ofNat n`. -/
+theorem det_fire (n : ℕ) : det (fun k => decide (k = n)) = ofNat n := ext fun i => by
+  show detSeq _ i = decide (i < n)
+  cases hd : detSeq (fun k => decide (k = n)) i
+  · obtain ⟨k, hk, e⟩ := detSeq_false _ i hd
+    simp only [decide_eq_true_eq] at e; subst e; exact (decide_eq_false (by omega)).symm
+  · have := (detSeq_eq_true_iff _ i).1 hd
+    symm; refine decide_eq_true ?_; by_contra hc; have := this n (by omega); simp at this
+
+/-- `Statement:` `det` is not injective. -/
+theorem det_not_injective : ¬ Function.Injective det := fun h => by
+  have e := h ((det_fire 0).trans det_poles.2.symm)
+  have := congrFun e 1; simp at this
+
+/-- `Statement:` the tape `true` at `n` iff `x.1 n = false` and (`n = 0` or `x.1 (n - 1) = true`):
+    at `ofNat j` the tape firing exactly at `j`, at `infty` the tape that never fires (examples below). -/
+def exactS (x : NInf) : ℕ → Bool :=
+  fun n => !x.1 n && (match n with | 0 => true | m + 1 => x.1 m)
+
+-- `Statement:` `exactS (ofNat j)` fires exactly at `j`.
+example (j : ℕ) : exactS (ofNat j) = fun k => decide (k = j) := by
+  funext k
+  cases k with
+  | zero => cases j <;> simp [exactS, ofNat]
+  | succ m =>
+    show (!decide (m + 1 < j) && decide (m < j)) = decide (m + 1 = j)
+    by_cases h : m + 1 = j
+    · subst h; simp
+    · rw [decide_eq_false h]; by_cases h2 : m < j
+      · rw [decide_eq_true (show m + 1 < j by omega)]; rfl
+      · rw [decide_eq_false h2]; simp
+
+-- `Statement:` `exactS infty` is the all-`false` tape.
+example : exactS infty = fun _ => false := by
+  funext k; cases k <;> rfl
+
+/-- `Statement:` `det (exactS x) = x`: `exactS` is a second section of `det`. -/
+theorem det_exactS (x : NInf) : det (exactS x) = x := ext fun n => by
+  show detSeq (exactS x) n = x.1 n
+  cases hx : x.1 n
+  · obtain ⟨j, hj, rfl⟩ := eq_ofNat_of_false x n hx
+    cases hd : detSeq (exactS (ofNat j)) n
+    · rfl
+    · have h := (detSeq_eq_true_iff _ n).1 hd j hj
+      cases j with
+      | zero => exact absurd h (by decide)
+      | succ m =>
+        have e1 : (ofNat (m + 1)).1 (m + 1) = false := decide_eq_false (Nat.lt_irrefl _)
+        have e2 : (ofNat (m + 1)).1 m = true := decide_eq_true (Nat.lt_succ_self m)
+        have h' : exactS (ofNat (m + 1)) (m + 1) = true := by
+          show (!(ofNat (m + 1)).1 (m + 1) && (ofNat (m + 1)).1 m) = true
+          rw [e1, e2]; rfl
+        rw [h] at h'; cases h'
+  · rw [detSeq_eq_true_iff]; intro k hk
+    cases k with
+    | zero => show (!x.1 0 && true) = false; rw [true_le x hx 0 hk]; rfl
+    | succ m => show (!x.1 (m + 1) && x.1 m) = false; rw [true_le x hx _ hk]; rfl
+
+/-- `Statement:` `exactS` is neither antitone nor monotone. -/
+theorem exactS_not_mono : ¬ Antitone exactS ∧ ¬ Monotone exactS := by
+  have h01 : ofNat 0 ≤ ofNat 1 := bot_le
+  refine ⟨fun h => ?_, fun h => ?_⟩
+  · exact absurd (h h01 1) (by decide)
+  · exact absurd (h h01 0) (by decide)
+
+/-- `Statement:` the tape `n ↦ x.1 n && !x.1 (n + 1)`. -/
+def naiveS (x : NInf) : ℕ → Bool := fun n => x.1 n && !x.1 (n + 1)
+
+/-- `Statement:` `naiveS` is not a section of `det`: `det (naiveS (ofNat 0)) = ∞ ≠ ofNat 0`. -/
+theorem naiveS_fails : det (naiveS (ofNat 0)) = infty ∧ det (naiveS (ofNat 0)) ≠ ofNat 0 := by
+  have h : det (naiveS (ofNat 0)) = infty :=
+    (det_eq_infty_iff _).2 fun n => by simp [naiveS, ofNat]
+  exact ⟨h, by rw [h]; exact (ofNat_ne_infty 0).symm⟩
+
+/-- `Statement:` CONTROL: the constant map `ofNat 0` is antitone and does not send ⊥ of `ℕ → Bool`
+    to ⊤ of `NInf`. -/
+theorem const0_fails : Antitone (fun _ : ℕ → Bool => (ofNat 0 : NInf)) ∧
+    (fun _ : ℕ → Bool => (ofNat 0 : NInf)) ⊥ ≠ ⊤ :=
+  ⟨fun _ _ _ => le_rfl, ofNat_ne_infty 0⟩
+
+/-- `Statement:` CONTROL: the constant map `∞` is antitone and does not send ⊤ of `ℕ → Bool` to ⊥
+    of `NInf`. -/
+theorem constInf_fails : Antitone (fun _ : ℕ → Bool => (infty : NInf)) ∧
+    (fun _ : ℕ → Bool => (infty : NInf)) ⊤ ≠ ⊥ :=
+  ⟨fun _ _ _ => le_rfl, fun h => ofNat_ne_infty 0 h.symm⟩
+
+/-- `Statement:` the map reading only bit `0`: `ofNat 0` if it is `true`, else `∞`. -/
+def firstBitWait (r : ℕ → Bool) : NInf := cond (r 0) (ofNat 0) infty
+
+/-- `Statement:` CONTROL: `firstBitWait` is antitone, sends ⊥ of `ℕ → Bool` to ⊤ of `NInf` and ⊤ of
+    `ℕ → Bool` to ⊥ of `NInf`, and is not `det`. -/
+theorem head_also_poles : Antitone firstBitWait ∧ firstBitWait ⊥ = ⊤ ∧
+    firstBitWait ⊤ = ⊥ ∧ firstBitWait ≠ det := by
+  refine ⟨fun r r' h => ?_, rfl, rfl, fun e => ?_⟩
+  · cases h0 : r 0
+    · show firstBitWait r' ≤ cond (r 0) (ofNat 0) infty
+      rw [h0]; exact le_top
+    · have : r' 0 = true := (tape_le_iff r r').1 h 0 h0
+      show cond (r' 0) (ofNat 0) infty ≤ _
+      rw [this]; exact bot_le
+  · have := congrArg (fun f => (f (fun n => decide (n = 1))).1 1) e
+    simp [firstBitWait, det, detSeq, infty] at this
+    exact absurd this (by decide) -- [ZP port] Lean 4.35: `simp` no longer reduces the `cond`
+
+/-- `Statement:` CONTROL for `det_poles`: no `b : ℕ` is a top of `ℕ`, so no map `(ℕ → Bool) → ℕ` sends
+    ⊥ of `ℕ → Bool` to a top, as `det` sends it to ⊤ of `NInf` (example below). -/
+theorem nat_no_top (b : ℕ) : ¬ IsTop b := not_isTop b
+
+-- `Statement:` no `f : (ℕ → Bool) → ℕ` sends ⊥ of `ℕ → Bool` to a top of `ℕ`.
+example (f : (ℕ → Bool) → ℕ) : ¬ IsTop (f ⊥) := nat_no_top _
+
+/-- `Statement:` CONTROL: no antitone `f : (ℕ → Bool) → ℕ` sends the tape firing exactly at `n` to
+    `n` for every `n`. -/
+theorem no_nat_wait :
+    ¬ ∃ f : (ℕ → Bool) → ℕ, Antitone f ∧ ∀ n, f (fun k => decide (k = n)) = n := by
+  rintro ⟨f, hf, hn⟩
+  have := hf (tape_bot_le fun k => decide (k = f ⊥ + 1))
+  rw [hn] at this; exact Nat.not_succ_le_self _ this
+
+/-- `Statement:` `det` of ⊥ of `ℕ → Bool` occupies `PinnedLimitUnique succ ofNat`
+    (`pinnedLimitUnique_succ`, § XXIV). -/
+theorem det_bot_pinnedLimitUnique : PinnedLimitUnique succ ofNat (det ⊥) :=
+  det_poles.1 ▸ pinnedLimitUnique_succ.2
+
+end NInf
 
 end ZeroParadox
 
@@ -4731,5 +5622,80 @@ open ZeroParadox
 #print axioms Motion.loopAt_image_iff_leftInverse
 #print axioms Motion.loopAt_image_iff_loopAt_all
 #print axioms Motion.lpo_of_loopAt_image
+#print axioms NInf.wlpo_of_discrete_tag
+#print axioms NInf.RosPart
+#print axioms NInf.toRos
+#print axioms NInf.lpo_of_toRos_surjective
+#print axioms NInf.toRos_surjective_of_lpo
+#print axioms NInf.toRos_surjective_iff
+#print axioms NInf.AllRosolini
+#print axioms NInf.allRosolini_of_em
+#print axioms NInf.em_of_allRosolini_lpo
+#print axioms NInf.rosIncl_surjective_iff
+#print axioms Motion.wem_of_selectedTotal_propStep
+#print axioms Motion.em_of_trichotomy_propStep
+#print axioms Motion.trichotomy_of_em
+#print axioms PinnedLimit
+#print axioms PinnedLimitUnique
+#print axioms PinnedLimitAbove
+#print axioms PinnedLimit.toAbove
+#print axioms pinnedLimitAbove_iff_of_bot
+#print axioms pinnedLimit_iff_closure_omega
+#print axioms not_pinnedLimitAbove_of_finite
+#print axioms not_pinnedLimit_of_finite
+#print axioms NInf.instPartialOrder
+#print axioms NInf.le_def
+#print axioms NInf.instOrderBot
+#print axioms NInf.instOrderTop
+#print axioms NInf.bot_eq
+#print axioms NInf.top_eq
+#print axioms NInf.ofNat_le_iff
+#print axioms NInf.le_succ
+#print axioms NInf.eq_infty_of_succ_le
+#print axioms NInf.succ_fixed_iff
+#print axioms NInf.isLUB_range_ofNat
+#print axioms NInf.infty_not_mem_range_ofNat
+#print axioms NInf.pinnedLimitUnique_succ
+#print axioms NInf.eq_or_eq_of_between
+#print axioms NInf.ofNat_covBy
+#print axioms NInf.everyStepCovered
+#print axioms NInf.not_covBy_infty
+#print axioms NInf.isSuccLimit_infty
+#print axioms NInf.covered_limit_searchable
+#print axioms NInf.wlpo_of_iso
+#print axioms NInf.ofWithTop
+#print axioms NInf.ofWithTop_strictMono
+#print axioms NInf.orderIsoWithTopClassical
+#print axioms pinnedLimitUnique_withTop
+
+#print axioms NInf.instBoundedOrder
+#print axioms NInf.tape_le_iff
+#print axioms NInf.detSeq_eq_true_iff
+#print axioms NInf.tape_bot_le
+#print axioms NInf.mathlib_bot_le_tape
+#print axioms NInf.det_antitone
+#print axioms NInf.det_poles
+#print axioms NInf.negS
+#print axioms NInf.det_negS
+#print axioms NInf.negS_antitone
+#print axioms NInf.le_det_iff
+#print axioms NInf.det_gc
+#print axioms NInf.det_gi
+#print axioms NInf.detHom
+#print axioms NInf.no_lower_adjoint
+#print axioms NInf.det_fire
+#print axioms NInf.det_not_injective
+#print axioms NInf.exactS
+#print axioms NInf.det_exactS
+#print axioms NInf.exactS_not_mono
+#print axioms NInf.naiveS
+#print axioms NInf.naiveS_fails
+#print axioms NInf.const0_fails
+#print axioms NInf.constInf_fails
+#print axioms NInf.firstBitWait
+#print axioms NInf.head_also_poles
+#print axioms NInf.nat_no_top
+#print axioms NInf.no_nat_wait
+#print axioms NInf.det_bot_pinnedLimitUnique
 
 end PurityCheck

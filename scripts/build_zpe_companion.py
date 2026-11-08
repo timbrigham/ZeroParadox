@@ -1,6 +1,6 @@
 """
 Build ZP-E Illustrated Companion
-Version 1.27 | October 2026
+Version 1.41 | November 2026
 """
 
 import os
@@ -144,7 +144,7 @@ def axioms_table():
     rows = [
         ['AX-B1',
          'Binary Existence. A state either exists or it does not. No third option. '
-         'The framework&#8217;s ONE substantive modelling commitment: that the outcome space is DISCRETE rather than a continuum. The two states being distinct is decidable; the choice of a discrete alphabet is not, and the real numbers are where it fails.'],
+         'The framework&#8217;s ONE substantive modelling commitment: that the outcome space is DISCRETE rather than a continuum. The two states being distinct is decidable; the choice of a discrete alphabet is not. In the real numbers, an ordered field, 0 has no first step above it, AX-B1&#8217;s form (f_snap_impossible: no linearly ordered field has a least positive element).'],
         ['AX-G1',
          'Initial Object Exists, and No Terminal Object. There is a starting point that reaches everything in exactly one way, '
          'and no end point that everything reaches in exactly one way. '
@@ -154,7 +154,11 @@ def axioms_table():
         ['AX-G2',
          'Source Asymmetry. Nothing returns to the initial object. '
          'The origin is unreachable from outside. '
-         'Not a novel commitment — follows from ZP-A antisymmetry and ZP-B C3.'],
+         'Not a novel commitment where it holds: in a category built from a partial order with a least element, '
+         'such as the ZP-A semilattice order, a morphism into the least element means being below it, so antisymmetry '
+         'makes the source that element (the least element is a strict initial object, in the sense of Carboni, Lack and Walters 1993; the two antisymmetry examples at the end of ZeroParadox/Category/AxG2Reduce.lean). '
+         'ZP-B C3 is the analogous fact in Q<sub>2</sub>, proved in its own layer. It does not hold in every category: '
+         'ZP-H&#8217;s AX-G2 row names one where it fails.'],
     ]
     data = [hdr] + [[Paragraph(fix(r[0]), CS['tbl_cell']),
                      Paragraph(fix(r[1]), CS['tbl_cell'])] for r in rows]
@@ -171,7 +175,7 @@ def axioms_table():
     t = Table(data, colWidths=[TW*0.18, TW*0.82])
     t.setStyle(ts); return t
 
-VERSION = '1.27'
+VERSION = '1.41'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -219,7 +223,7 @@ def build():
         'the Binary Snap from its own mathematical vantage point. Each description is proved within its own '
         'framework, from that framework&#8217;s own premises (ZP-D&#8217;s include its design premise DP-1). ZP-H T-H3 '
         '(th3_snap_all_functors) is their conjunction, four domain facts joined by &#8220;and&#8221;, with no functor or morphism in '
-        'its statement; ZP-H&#8217;s modelling commitment is the identification, under its functors, of the objects each framework located independently. '
+        'its statement, and ZP-H identifies none of the objects each framework located; where a shared role is checked, it is checked in one framework at a time (ZP-H Section VI). '
         'Reading the four as one event is the framework&#8217;s interpretation, not a theorem. The bottoms the four '
         'descriptions start from form a family (the bottom family, MC-1), not one object: an identity across the '
         'frameworks is retired as ill-typed, because their objects live in different mathematical types.'))
@@ -240,7 +244,8 @@ def build():
         'The symbol ε₀ has two charts, and they are not merged. In the ordinal chart, ε₀ is the '
         'proof-theoretic ordinal of Peano Arithmetic, the minimum ordinal up to which PA '
         'cannot prove transfinite induction. Goodstein\'s theorem is the standard witness: every '
-        'Goodstein sequence eventually terminates, but PA cannot prove this; the proof requires '
+        'Goodstein sequence eventually terminates, but PA cannot prove this (Kirby and Paris, 1982, as '
+        'ZeroParadox/Ordinal/Goodstein.lean records); the proof requires '
         'transfinite induction up to ε₀. That ordinal is at once the least fixed point of the map '
         'α ↦ ω^α and the supremum of the tower ω, ω^ω, ω^(ω^ω), …, and neither face replaces the other. '
         'In that chart the snap does land on it: closing ⊥ under α ↦ ω^α gives ε₀ in one step. '
@@ -275,11 +280,15 @@ def build():
         'foundational assumption, taken without derivation. The claim was: when P₀ is reached, '
         'the Snap happens. Why? Because AX-1 says so. That claim bundled two things: the shape of '
         'the Snap (what a step off ⊥ looks like) and its occurrence (that the step is taken). '
-        'AX-1 is now retired, and its content was split in two: T-SNAP proves the shape, and that the Snap occurs is stated separately: it follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2).'))
+        'AX-1 is now retired, and its content was split in two: T-SNAP proves the shape, and that the Snap occurs is stated separately: it follows from the occurrence commitment together with DA-1 (closed given DP-2). '
+        'The occurrence commitment is stated in two charts, execution and slot, in the header of '
+        'ZeroParadox/Order/Snap.lean (indexed in ZeroParadox/Order/SnapCannotBe.lean &#167; II and CLAIMS.md), '
+        'the slot chart as the hypothesis hw of t_snap_of_fires_once, that the tape fires at some stage, beside the theorem trials_fires_once that, for independent stages each firing with probability p, 0 &lt; p &#8804; 1, firing at some stage has probability one, which names no tape '
+        '(ZeroParadox/Information/CrossingTrials.lean &#167; VIII).'))
     E.append(cbody(
         'The DA-1 insert puts an argument where "Because AX-1 says so" stood, and the occurrence '
-        'commitment stays in place. The argument runs as follows. The occurrence commitment says instantiation '
-        'occurs as a running configuration: the configuration reaching P₀ is a running machine&#8217;s current '
+        'commitment stays in place. The argument runs as follows. In its execution chart, the occurrence '
+        'commitment says instantiation occurs as a running configuration: the configuration reaching P₀ is a running machine&#8217;s current '
         'configuration, not an inert string. That is a commitment, not a theorem (formal ZP-E, T-SNAP Step 2). '
         'Given it, the machine has left c₀ and is at c₁, by the definition of the first running configuration (D7); '
         'DA-1 (closed given DP-2) uses that commitment and does not supply it. Any running configuration passes through c₁ '
@@ -289,20 +298,24 @@ def build():
         'it fixes the shape of the step, not that the step happens. The argument about the framework&#8217;s own '
         'sequence uses commitments, among them AX-B1 (existence is binary: a state exists or it does not) and '
         'CC-1 (the sequence starts at ⊥); that the step actually happens rests further on DA-1, which is closed '
-        'only given DP-2, and on the framework&#8217;s commitment that instantiation occurs. The formal ZP-E '
+        'only given DP-2, and on the occurrence commitment. The formal ZP-E '
         'states these premises under Premises of T-SNAP, and the Lean t_snap_given takes two of them as its hypotheses: '
         'the start at ⊥ and the first step being taken.'))
     E.append(cbody(
         'DA-1 is a Derived Proposition, closed given DP-2, as the next paragraph explains. That a '
         'configuration at P₀ is executing is not part of what it derives: that is DP-2&#8217;s precondition, '
-        'and it is what the occurrence commitment asserts. ZP-A CC-2, '
-        '⊥ = {⊥}, itself a commitment (argued, not proved), motivates it. The bottom element ⊥ '
-        'is a Quine atom, a self-containing object with no external position from which it '
+        'and it is what the occurrence commitment asserts. ZP-A CC-2, the Quine atom, motivates it. In the die '
+        'it is a role, a point that steps to itself and to nothing else; under a self-application map supplied '
+        'by AbstractSelfApp, ⊥ of a ZP-A semilattice is its only occupant by that class&#8217;s own fields '
+        '(selfApp_quine_role_iff), which the constant map onto ⊥ also meets, so the content is in the host. That '
+        'any host of the role is not well-founded is forced (quineAtomHost_not_wellFounded); which requirements '
+        'to demand of it, and adopting AFA, stay commitments (argued, not proved). In that role, '
+        '⊥ of the semilattice leaves no external position from which it '
         'could be interpreted as a static description. So if ⊥ executes at all, nothing outside '
         'it can be the executor; the executor is ⊥ itself. That rules out an external executor, '
         'not an inert ⊥: the two-state machine type in the Lean source has a Quine-atom bottom '
         'and also admits a dynamics in which nothing moves. That the configuration reaching P₀ is running is the occurrence '
-        'commitment, not a consequence of ⊥ = {⊥}.'))
+        'commitment, not a consequence of the Quine atom (CC-2).'))
     E.append(cbody(
         '<b>The two-layer structure of DA-1:</b> DA-1 rests on two explicit layers. '
         'The first is the formal conditional: DP-2 (Execution Distinguishability) establishes '
@@ -316,19 +329,24 @@ def build():
         'running rather than inert? That precondition is what the occurrence commitment asserts. Three '
         'arguments bear on it, and none derives it.'))
     E.append(cbody(
-        '<b>Three arguments for the precondition:</b> '
-        '(1) CC-2/R3 (ZP-A): ⊥ = {⊥} is a Quine atom — it interprets itself, leaving no '
+        '<b>Three arguments for the precondition (ZP-E&#8217;s Paths 1, 2 and 3):</b> '
+        '(1) CC-2/R3 (ZP-A): ⊥ of the state semilattice fills the Quine-atom role (CC-2), whose occupancy '
+        'is settled chart by chart — read as interpreting itself, it leaves no '
         'external position from which it could be read as a static description. As shown above, '
         'that rules out an external executor, not an inert ⊥. '
-        '(2) L-INF (ZP-C): the surprisal of ⊥ diverges to infinity — no finite static '
-        'distribution can represent ⊥. That rules out a finite static description; the step from '
+        '(2) Informational, in two charts: surprisal grows without bound with depth in the ball hierarchy, '
+        'each value finite (ZP-C L-INF, l_inf); and at 0 of ℚ₂, the one point in every ball of the chain centred '
+        'at 0, the 2-adic additive valuation is ⊤ (padic_addVal_bot). ⊥ of the machine-state type, c₀, corresponds to '
+        'that point. From this the framework argues that no finite static distribution can represent ⊥. That '
+        'rules out a finite static description; the step from '
         'there to executing is a bridge principle of its own, a missing principle and not a missing proof, '
         'which the framework does not adopt and which is separate from the occurrence commitment. '
         '(3) Computational (incompressibility as self-description): at the incompressibility threshold P₀, the configuration c₁ '
-        'is maximally incompressible — K(c₁|n)/|c₁| = 1 — so no shorter external program generates it. '
+        'is incompressible (K(c₁|n) ≥ |c₁|, the ratio K(c₁|n)/|c₁| being 1 up to an additive constant in K), '
+        'so no shorter external program generates it. '
         'That rules out a shorter external generator, not an inert string: an incompressible string '
-        'written down and never run has no shorter generator and is still not executing. So executing '
-        'is not derivable from incompressibility; that the configuration reaching P₀ '
+        'written down and never run has no shorter generator and is still not executing. So Path 3 does not derive executing '
+        'from incompressibility; that the configuration reaching P₀ '
         'is running, not inert, is what the occurrence commitment asserts. '
         'All three share D7\'s static/executing dichotomy as background and none is circular '
         'with DP-2.'))
@@ -341,14 +359,14 @@ def build():
         'carried together by da1_paths_unified as a conjunction; that they name one structural fact is the '
         'framework&#8217;s reading. Neither Path 2 (unbounded surprisal) nor Path 3 (incompressibility) derives '
         'executing: the step from unbounded surprisal to executing is a bridge principle of its own, a missing principle that the '
-        'framework does not adopt and that is separate from the occurrence commitment, and Path 3 shows that '
-        'executing is not derivable from incompressibility. '
+        'framework does not adopt and that is separate from the occurrence commitment; for Path 3 the reason is '
+        'item (3) above, a fact of algorithmic information theory and not among what Lean checks. '
         'The formal grounding of DA-1 is therefore DP-2, through da1_minimal_path.'))
     # The caption is kept on the same page as its diagram (it was orphaned onto the next page).
     E.append(KeepTogether([tsnap_chain_diagram(), ccaption(
         'The T-SNAP derivation chain. The chain uses commitments, '
         'among them AX-B1 and CC-1 (S₀ = ⊥), and fixes the shape of the Snap; that the Snap occurs rests further on '
-        'the occurrence commitment (instantiation occurs), whose content is DA-1&#8217;s precondition, and on DA-1 (closed given DP-2), '
+        'the occurrence commitment, whose execution chart is DA-1&#8217;s precondition, and on DA-1 (closed given DP-2), '
         'which consumes it. AX-1 is retired: its shape is now a '
         'theorem (T-SNAP, amber), and that the Snap occurs is stated separately, following from that commitment together with DA-1.')]))
     E.append(sp(4))
@@ -357,7 +375,7 @@ def build():
         'Surveillance footage can prove the first while the second still rests on testimony the court '
         'chooses to accept. AX-1 bundled two claims in the same way. T-SNAP proves the first, the shape '
         'of the Snap, which was once assumed. The second, that the Snap happens, was not proved along with '
-        'it: it follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2).',
+        'it: it follows from the occurrence commitment together with DA-1 (closed given DP-2).',
     ]))
     E.append(sp(8))
 
@@ -369,8 +387,8 @@ def build():
     E.append(sp(6))
     E.append(cbody(
         'AX-1 is not on this list: it is retired, and its shape is Theorem T-SNAP. Further commitments are not axioms and are stated where they are used, '
-        'among them the occurrence commitment (that instantiation occurs; together with DA-1 it gives that the Snap happens), CC-1 (S₀ = ⊥, a ZP-A Conditional Claim), the choice of starting point that T-SNAP is derived given, '
-        'and CC-2 (⊥ = {⊥}, a ZP-A Forced Metatheoretic Commitment), which motivates DA-1&#8217;s precondition; DA-1 itself is closed given DP-2. '
+        'among them the occurrence commitment (together with DA-1 it gives that the Snap happens), CC-1 (S₀ = ⊥, a ZP-A Conditional Claim), the choice of starting point that T-SNAP is derived given, '
+        'and CC-2 (the Quine atom: the role of a point that steps to itself and to nothing else, whose occupancy is settled chart by chart; in the set chart under AFA, the set x = {x}, Aczel 1988, Example 1.3; a ZP-A Forced Metatheoretic Commitment: adopting AFA is CC-2&#8217;s commitment, the host requirements (QuineAtomHost) are its Lean abstraction, and that any such host gives up Foundation is forced (quineAtomHost_not_wellFounded)), which motivates DA-1&#8217;s precondition; DA-1 itself is closed given DP-2. '
         'The framework makes no stronger claim than it has to.'))
     E.append(sp(8))
     E.append(remember_box(

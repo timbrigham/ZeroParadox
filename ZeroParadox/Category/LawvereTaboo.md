@@ -44,15 +44,16 @@ keystone (the diagonal engine) rather than on an imported order instance.
 * **Not full excluded middle.** The taboo landed on is weak excluded middle, which is strictly
   weaker than `ExcludedMiddle` in intuitionistic logic. No attempt was made here to strengthen it,
   and the reader should not assume it can be strengthened.
-* **The converse is not machine-checked here; in Lean it is left open.** Its scope is univalent
-  foundations, the setting of de Jong–Escardó, arXiv:2601.12536: there weak excluded middle gives the
+* **The converse is not machine-checked here; in Lean it is left open.** It is proved in univalent
+  foundations, the setting of de Jong–Escardó, arXiv:2601.12536v2: there weak excluded middle gives the
   general statement back, in two steps. The first step is published, Prop 6.4, p. 24, *"If weak
   excluded middle holds and the type X has two distinct points, then X has a decomposition"*, proved
   by sending `x` to 0 if `¬(x ≠ x₀)` and to 1 if `¬¬(x ≠ x₀)`. The second step, decomposition to
-  fixed-point-free endomap, is the elementary derivation in the prior-art section below, and is ours.
+  fixed-point-free endomap, is the elementary derivation in the prior-art section below, where the
+  search for a source stating the fixed-point-free form is recorded (none located as of 2026-10-07).
   The first step is a case split: under weak excluded middle the two mutually exclusive subobjects
   `¬(x = b₀)` and `¬¬(x = b₀)` cover, so a map can be glued from them (Prop 6.4's two cases are
-  these two, swapped, by triple negation). An earlier instance of the same case split is Simpson's
+  these two, swapped, by triple negation). An earlier instance of the same form of case split is Simpson's
   proof of Thm 5 of Booij–Escardó–Lumsdaine–Shulman (arXiv:1701.05617), p. 5, in its direction from
   weak excluded middle to a map: *"define f : U → 2 by f(A) = ff if ¬A and f(A) = tt if ¬¬A"*. Its
   other direction, from the map to weak excluded middle via *"Z = ¬A × X + ¬¬A × Y"* (p. 6), runs
@@ -78,13 +79,16 @@ The mathematics of this genre is not new and is not claimed as new.
   Lumsdaine–Shulman Thm 3 and Thm 5 (below) are as close, and so is de Jong–Escardó (below) in both
   directions. De Jong–Escardó Prop 6.4, p. 24, runs from weak excluded middle to a decomposition,
   opposite to `wem_of_fixedPointFree`; their Lemma 6.6, Lemma 6.7 and Thm 6.10, p. 24, run the same way as
-  `wem_of_fixedPointFree`, deriving weak excluded middle from a decomposition of the type of
-  propositions `Ω_U`, of a type with `Ω`-paths, or of an injective type.
+  `wem_of_fixedPointFree`, each with its universe levels: Lemma 6.6, a decomposition of the type
+  `Ω_U` of propositions in a universe `U` gives weak excluded middle in `U`; Lemma 6.7, a type
+  `X : U` with a decomposition and `Ω_V`-paths gives weak excluded middle in the universe `V`;
+  Thm 6.10, a type `D : U` injective with respect to the universes `V` and `W` gives, from any
+  decomposition, weak excluded middle in `V`.
   Decomposability is strictly stronger than what is used in `wem_of_fixedPointFree`: a decomposition
   `f : X → 𝟚` with witnesses `x₀ x₁` yields the fixed-point-free endomap
   `x ↦ if f x = 0 then x₁ else x₀` (it changes the value of `f`, so it cannot fix anything). So a
   fixed-point-free endomap is the *weaker* conclusion, which makes the implication to weak excluded
-  middle formally the stronger one. That derivation is elementary and is ours, not Escardó's. No
+  middle formally the stronger one. That derivation is elementary. No
   source stating the fixed-point-free form was located as of 2026-10-07, searched by phrase in
   theoremsearch and on the open web and among the sources listed here.
 * **A. B. Booij, M. Escardó, P. LeFanu Lumsdaine and M. Shulman, "Parametricity, automorphisms of the
@@ -92,7 +96,8 @@ The mathematics of this genre is not new and is not claimed as new.
   (Simpson), p. 5: the statements and the contrast with `wem_of_fixedPointFree` are in the comment
   above that theorem in `LawvereTaboo.lean`, which also credits Simpson's proof technique.
 * **T. de Jong and M. Escardó, "Examples and counterexamples of injective types"**
-  (arXiv:2601.12536, 18 January 2026). Read in full from the held copy; Prop 6.4, p. 24, is quoted
+  (arXiv:2601.12536v2, 4 September 2026; page numbers are those of v2, the version read). Read in
+  full from the held copy; Prop 6.4, p. 24, is quoted
   under "What is NOT claimed" above. From the abstract verbatim (cited, not claimed): *"any type with an apartness
   relation and two points apart cannot be injective unless weak excluded middle holds"*, and
   *"injective types have no non-trivial decidable properties, unless weak excluded middle holds,

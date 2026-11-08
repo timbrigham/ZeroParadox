@@ -1,4 +1,3 @@
--- EXPERIMENTAL (branch scaffolding): bottom-diagram probe campaign, not a finalized layer. Curated/load-bearing results are indexed in ZeroParadox/BottomCannotBe.lean and classified in ZeroParadox/MANIFEST.md.
 import ZeroParadox.Valuation.Padic
 import ZeroParadox.Valuation.TopFunctor
 import Mathlib.Topology.Category.TopCat.Limits.Basic
@@ -108,8 +107,7 @@ theorem cone_val_const (S : Cone fB_functor) (x : S.pt) {m n : ℕ} (h : m ≤ n
   have hx := congrArg Subtype.val (ConcreteCategory.congr_hom hnat x)
   -- `fB_functor.map` is a value-preserving inclusion; `legVal` is already the `.val`
   simp only [legVal]
-  simpa [fB_functor, fBIncl, fBObj, Set.coe_inclusion, Function.comp,
-    TopCat.hom_comp, ContinuousMap.comp] using hx.symm
+  exact hx.symm
 
 /-- The underlying `Q₂` value of any cone leg `legVal S x n` is `0`: it lies in every ball
 (by `cone_val_const` collapsing all legs to one value) and hence in `⋂ q2Ball n = {0}`. -/

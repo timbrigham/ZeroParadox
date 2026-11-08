@@ -137,12 +137,12 @@ theorem mem_range_pfunctor_map {P : PFunctor.{u, u}} {A : Type u} (i : A → X) 
   obtain ⟨a, g⟩ := z
   constructor
   · rintro ⟨⟨a', h⟩, heq⟩ b
-    rw [PFunctor.map_eq] at heq
+    change (⟨a', i ∘ h⟩ : P.Obj X) = ⟨a, g⟩ at heq
     cases heq
     exact ⟨h b, rfl⟩
   · intro hg
     refine ⟨⟨a, fun b => (hg b).choose⟩, ?_⟩
-    rw [PFunctor.map_eq]
+    show (⟨a, i ∘ fun b => (hg b).choose⟩ : P.Obj X) = ⟨a, g⟩
     congr 1
     funext b
     exact (hg b).choose_spec

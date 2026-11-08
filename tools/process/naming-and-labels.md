@@ -22,12 +22,16 @@ When assigning a label, ask: "Is this result the central claim of its section, o
 
 ### Readable Name Convention — CC-2 is "the Quine atom" (framework-wide, additive)
 
-**Standing rule (Tim, 2026-06-09).** CC-2 (⊥ = {⊥}, the self-containing bottom) is the conceptual keystone of the framework — it is what forces ZF+AFA, makes ⊥ immune to external description, and is the single contact point between ZFC+Foundation and ZF+AFA. The bare label "CC-2" undersells it on two counts: it reads as a minor sequence code, and the "CC = Conditional Claim" prefix is now **stale** — CC-2 was upgraded to a Forced Metatheoretic Commitment (closed via ZP-J T-EXEC), so it is no longer a conditional claim. This is the same situation AX-1 was in before it became T-SNAP.
+**Standing rule (Tim, 2026-06-09).** CC-2 (in ZF+AFA, ⊥ = {⊥}, the self-containing bottom) is the conceptual keystone of the framework — it is what forces ZF+AFA, makes ⊥ immune to external description, and is the single contact point between ZFC+Foundation and ZF+AFA. The bare label "CC-2" undersells it on two counts: it reads as a minor sequence code, and the "CC = Conditional Claim" prefix is now **stale** — CC-2 was upgraded to a Forced Metatheoretic Commitment (closed via ZP-J T-EXEC), so it is no longer a conditional claim. This is the same situation AX-1 was in before it became T-SNAP.
 
 **The convention — ADDITIVE, never eliminative:**
 - Present CC-2 with the readable name **"the Quine atom."** This is a recognized set-theory term (Quine, Aczel) — it carries real gravity and a literature anchor, and it is NOT ZP-invented jargon (avoid inventing a ZP-branded name — that would undo the de-jargoning work).
 - **Keep "CC-2" as the formal handle and note it alongside** — e.g., "the Quine atom (CC-2)" on first/significant mention. Do NOT remove or rename the CC-2 identifier anywhere; every existing cross-reference stays valid.
-- Gloss once per document as "the self-containing bottom, ⊥ = {⊥}."
+- Gloss once per document as "the Quine atom (CC-2): the role of a point that steps to itself and to
+  nothing else, whose occupancy is settled chart by chart." The occupancy theorems are per chart:
+  `selfApp_quine_role_iff`, `quineAtomHost_quine_role_iff`, `cofix_quine_role_occupied`,
+  `zfset_quine_role_unoccupied` (unoccupied in `ZFSet`). In ZF+AFA the occupant satisfies `⊥ = {⊥}`;
+  scope that equation as the next bullet says, never as the gloss.
 - **⚠ SCOPE THE GLOSS — BANKED 2026-08-01 (Tim), NOT YET ROLLED OUT.** `⊥ = {⊥}` is well-formed and
   true **in the ZF+AFA metatheory** — that is anti-foundation's actual content and Aczel's Quine atom
   is a real object, so **do NOT retire it** (a flat retirement would deny a true theorem of a real set
@@ -93,9 +97,10 @@ commitment" to one object; it names the **bottom family**. The "MC = Modeling Co
 (the same arc as AX-1→T-SNAP and CC-2→FMC). The earlier "correspondence derived / identity a commitment"
 split is superseded:
 
-- **Correspondence half — now formally realized.** Each domain bottom is the categorical bottom
-  (limit or initial object) of its own *real* Mathlib category: F_B `fB_functor : ℕᵒᵖ ⥤ TopCat`
-  (⊥ = inverse limit `⋂ B(0,2⁻ⁿ) = {0}`), F_D `fD_functor : ℕ ⥤ ModuleCat ℂ` (⊥ = initial object
+- **Correspondence half — now formally realized**, differently per *real* Mathlib category:
+  F_B `fB_functor : ℕᵒᵖ ⥤ TopCat` (the floor `{0} ⊆ ℚ₂` is the limit of the ball tower,
+  `floorConeIsLimit`; terminal, `padic_bottom_isTerminal`; not initial, `padic_bottom_not_initial`;
+  the set equation `⋂ B(0,2⁻ⁿ) = {0}` is `fB_bottom_is_limit`), F_D `fD_functor : ℕ ⥤ ModuleCat ℂ` (⊥ = initial object
   `StateSpace 0`), F_C `fC_functor : ℕ ⥤ KleisliCat PMF` (⊥ = initial object `Fin 0`, with
   `fC_no_return` = AX-G2 as a theorem). Bundled witness: `mc1_correspondence` (`MC1Bridge.lean`).
   So the bare label "MC = Modeling Commitment" now **undersells** this half.

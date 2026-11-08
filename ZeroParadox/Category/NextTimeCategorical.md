@@ -11,7 +11,8 @@ version and proves the two agree, so the concrete predicate is no longer merely 
 
 ## Prior art — locators, not quotations
 
-Source: `.claude-local/papers/adamek_milius_moss_wellfounded_recursive_coalgebras.pdf`.
+Source: Adámek, Milius, Moss, *On Well-Founded and Recursive Coalgebras*, arXiv:1910.09401v2
+(16 Feb 2020).
 
 | AMM | what is there | built as |
 |---|---|---|
@@ -25,7 +26,7 @@ next-time operator itself they credit to **Jacobs** `[17]`; and Def 4.3 they giv
 Taylor [28, Exercise VI.17]"*.
 
 ⚠ **`[28]` is Taylor's *Practical Foundations of Mathematics* (CUP 1999), which this project does NOT
-hold** — the Taylor PDF in `.claude-local/papers/` is his *Well founded coalgebras and recursion*, a
+hold** — the Taylor document on coalgebras this project holds is his *Well founded coalgebras and recursion*, a
 different document with no Exercise VI.17. The same caveat is stated at
 `ZeroParadox/Category/WellFoundedCoalgebra.lean`'s overview.
 
@@ -65,8 +66,8 @@ CategoryTheory.MonoOver           [propext, Classical.choice, Quot.sound]   <- t
 Subobject.mk / .arrow / .pullback / .lower   all the same
 ```
 
-`#print axioms` follows the **statement**, so **every result mentioning `Subobject` is choice-carrying
-no matter how it is proved.** Per `CLAUDE.md` § *Revalidate, don't redraft*: a type carrying an axiom
+`#print axioms` follows the statement and the proof; here the **statement** alone settles it, so
+**every result mentioning `Subobject` is choice-carrying no matter how it is proved.** Per `CLAUDE.md` § *Revalidate, don't redraft*: a type carrying an axiom
 makes "removable" false for every possible proof. This is a fact about Mathlib's subobject machinery,
 not about anything here.
 

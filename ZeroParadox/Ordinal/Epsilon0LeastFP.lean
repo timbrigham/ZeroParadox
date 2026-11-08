@@ -50,9 +50,10 @@ theorem bot_is_not_a_step : Ordinal.omega0 ^ (0 : Ordinal) ≠ (0 : Ordinal) := 
 
 `nothing_between_is_a_step` says no point strictly below ε₀ is a landing; the theorems below say the
 complement, that **every point at or below ε₀ reaches the SAME landing**. ⚠ The general fact is that
-`nfp (ω^·) a` is the least ε-number `≥ a`, so no ε-number can test it. The cells partition the seeds;
-the intervals `(ε_o, ε_(o+1)]` miss each limit-index ε-number (`limit_cell_eq_singleton`).
-Veblen's classical form, the three traps, and the SHAPE-never-instance-of fence: `ZeroParadox/Ordinal/Epsilon0LeastFP.md`. -/
+`nfp (ω^·) a` is the least ε-number `≥ a`, so no ε-number can test it. Every landing is some `ε_o` with a
+unique index, so the cells partition the seeds (the `example` after `limit_cell_eq_singleton`); the intervals
+`(ε_o, ε_(o+1)]` do not cover them. What they miss, Veblen's classical form, the three traps, and the
+SHAPE-never-instance-of fence: `ZeroParadox/Ordinal/Epsilon0LeastFP.md`. -/
 
 /-- **`Statement:` every seed at or below ε₀ reaches ε₀.** The least fixed point *from* `a` is ε₀ for
 every `a ≤ ε₀`, so within that range the seed carries no information: `≤` because ε₀ is itself a
@@ -162,7 +163,7 @@ example (s : Ordinal) : ∃! o, Ordinal.nfp (fun a => ω ^ a) s = Ordinal.epsilo
   have hr : Ordinal.nfp (fun a => ω ^ a) s ∈ Set.range (Ordinal.veblen 1) := by
     rw [Ordinal.mem_range_veblen one_ne_zero]
     intro b hb
-    have hb0 : b = 0 := Order.lt_one_iff_nonpos.mp hb |>.antisymm (zero_le b)
+    have hb0 : b = 0 := Order.lt_one_iff_nonpos.mp hb |>.antisymm (zero_le (a := b))
     subst hb0
     simpa [Ordinal.veblen_zero] using hfp
   obtain ⟨o, ho⟩ := hr

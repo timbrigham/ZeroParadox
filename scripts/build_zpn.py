@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-N: The Constructive Snap PDF Builder
-Version 2.5 | October 2026
+Version 2.9 | November 2026
 
 Lean: ConstructiveOrdinals.lean, SnapNucleusConstructive.lean, OrdinalChoiceEssential.lean,
 PricedInterface.lean. Follows all rules in scripts/PDF_Rendering_Standards.md.
@@ -9,7 +9,7 @@ PricedInterface.lean. Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '2.5'
+VERSION = '2.9'
 FIRST_RELEASED = 'July 2026'
 
 
@@ -48,27 +48,33 @@ def build():
         'with no Axiom of Choice. But the machinery ZP-L reaches for to state that structure '
         'semantically is not: comparing arbitrary well-orders implies excluded middle. So the choice '
         'is not a mere artifact of how a proof was written. ZP-L&#8217;s &#949;<sub>0</sub> results, '
-        'as stated, already carry Classical.choice in their statements (the statement control, '
-        'measured 2026-10-08), so no proof of those statements can drop it. For the ascent below '
+        'as stated, already carry Classical.choice in their statements (the statement controls, '
+        'printed in ZeroParadox/Ordinal/Epsilon0MinMax.lean), so no proof of those statements can '
+        'drop it. For the ascent below '
         '&#949;<sub>0</sub> it is the price of a tool stronger than the job requires: the ascent is '
         'restated choice-free here, on notations. For &#949;<sub>0</sub> itself, a choice-free Lean '
         'restatement of the fixed-point equation and its uniqueness on E0Note exists, with existence '
         'set by definition (E0Note, below); a choice-free derivation in Lean of the fixed point on a '
-        'well-founded carrier, leastness included, was not located as of 2026-10-08 '
+        'well-founded carrier whose statements are choice-free, leastness included, was not located '
+        'as of 2026-10-08, searched again 2026-10-13 '
         '(ZeroParadox/Ordinal/SnapNucleus.md, section Axiom footprint, records the search).'))
     E.append(body(
         'So this layer does two things. It rebuilds the ascent syntactically, where it is choice-free. '
         'And it builds a carrier of notations denoting the ordinals up to &#949;<sub>0</sub> &#8212; '
         'ordinal notations with one point '
         'adjoined on top &#8212; where the crossing into Mathlib&#8217;s semantic ordinals is a single '
-        'named map whose cost can be read off directly. Staying on the notation side is free of choice; '
-        'crossing is not; and the crossing is one function rather than a diffuse dependency.'))
+        'named map whose cost can be read off directly. On the notation side the comparison, the '
+        'ascent and the carrier&#8217;s declarations are free of choice, though well-formedness through '
+        'Mathlib&#8217;s NF is not (tower_NF, Section III); crossing is not; and the crossing is one '
+        'function rather than a diffuse dependency.'))
     E.append(body(
         'The move is to work at the level of ordinal <i>notations</i> (ONote, Cantor-normal-form '
         'terms), whose comparison ONote.cmp is choice-free (propext-only) and never passes through '
         'repr into the semantic Ordinal type. &#949;<sub>0</sub> is not itself a notation: the '
         'notations name exactly the ordinals below &#949;<sub>0</sub>, and &#949;<sub>0</sub> is their '
-        'limit &#8212; the fixed point the notation system cannot reach. So the snap threshold is '
+        'limit: every notation denotes below it (repr_lt_epsilon0, '
+        'ZeroParadox/Ordinal/PricedInterface.lean), and the tower climbs past every notation '
+        '(tower_no_upper_bound, ZeroParadox/Ordinal/SnapNucleusConstructive.lean). So the snap threshold is '
         'characterised <i>from below</i>: the tower ascends, and the fixed point (&#949;<sub>0</sub>) '
         'is precisely what lies beyond every notation. This layer adds no axiom; it isolates where '
         'choice actually enters the ordinal snap.'))
@@ -195,28 +201,34 @@ def build():
         'notations (Section II) uses propext alone.'))
 
     E.append(remark_box(
-        'Remark: even well-formedness inherits choice (the bridge, made visible)',
+        'Remark: even well-formedness inherits choice (through NF&#8217;s definition)',
         [
             'tower_NF &#8212; the statement that each tower stage is in normal form &#8212; DOES carry '
             'Classical.choice ([propext, Classical.choice, Quot.sound]), because Mathlib&#8217;s NF '
             'predicate is defined through repr into Ordinal. The snap facts (Section II) do not depend '
             'on NF, so they stay choice-free; but even &#8220;this notation is well-formed&#8221; '
             'inherits choice, through NF&#8217;s definition. That is one site where choice enters, not '
-            'the only one: ZP-L&#8217;s least-fixed-point results are not routed through tower_NF, and '
-            'their choice is carried by their own statements, through Ordinal&#8217;s order instance '
-            'and operations (ZeroParadox/Ordinal/SnapNucleus.md &#167; Axiom footprint).',
+            'the only one: ZP-L&#8217;s least-fixed-point results (epsilon0_min_eq_max and '
+            'epsilon0_eq_nfp_bot, ZeroParadox/Ordinal/Epsilon0MinMax.lean) are not routed through '
+            'tower_NF (their files do not import ZeroParadox/Ordinal/ConstructiveOrdinals.lean, where '
+            'tower_NF is declared), and their choice is carried by their own statements, through '
+            'Ordinal&#8217;s order instance and operations (the statement controls '
+            'epsilon0MinMaxStatement and epsilon0EqNfpBotStatement, printed in that file; where the '
+            'choice enters: ZeroParadox/Ordinal/SnapNucleus.md &#167; Axiom footprint).',
         ]
     ))
     E.append(sp(6))
 
     E.append(body(
-        'That diagnosis suggests its own remedy: build a carrier of notations denoting the ordinals up '
+        'The diagnosis above, that choice enters through Ordinal&#8217;s order instance and the '
+        'operations on it, never through the notations&#8217; own comparison, suggests its own '
+        'remedy: build a carrier of notations denoting the ordinals up '
         'to &#949;<sub>0</sub>. E0Note is ordinal '
         'notations with a single point adjoined on top, that point standing for &#949;<sub>0</sub>. '
         'Below the top, comparison is the existing syntactic comparator and stays decidable; the map '
         'e0Repr sends the carrier into Mathlib&#8217;s Ordinal. Measured, the boundary is priced: the '
         'carrier side&#8217;s declarations carry no Classical.choice, and the map carries it at every '
-        'declaration. Staying constructive is free; crossing costs the classical assumption; and the '
+        'declaration. On the carrier, staying constructive is free; crossing costs the classical assumption; and the '
         'crossing is one named function.'))
 
     E.append(def_box(
@@ -245,7 +257,8 @@ def build():
             'predicate is itself defined through the representation map.',
             'The construction is <b>not new</b>. The carrier has the shape of Cast&#233;ran&#8217;s '
             'generic sum of notation systems (hydra-battles, ON_plus &#8212; that file carries his name '
-            'alone, though the library as a whole is his and Contejean&#8217;s) with a one-point right '
+            'alone, while the library as a whole is the work of the hydra-battles authors) with a '
+            'one-point right '
             'summand, and is not an instance of it: ON_plus sums well-founded notation systems, and this '
             'carrier&#8217;s order is not well-founded (the second bullet above). The map is likewise '
             'not an ON_correct member (the bullet above). What is contributed is the measurement.',
@@ -260,11 +273,13 @@ def build():
             'from within the notation system (no notation is a fixed point of '
             'x &#8614; &#969;<sup>x</sup>; the tower climbs without bound). The matching '
             '<i>minimality</i> &#8212; that &#949;<sub>0</sub> is the LEAST fixed point of '
-            'x &#8614; &#969;<sup>x</sup> &#8212; is a separate, harder target: it quantifies over the '
+            'x &#8614; &#969;<sup>x</sup> &#8212; is a separate target: it quantifies over the '
             'limit, which no notation names (tower_no_upper_bound; across the crossing, '
             'repr_lt_epsilon0), so it cannot be stated purely syntactically on ONote. '
-            'Leastness is proved on Ordinal (epsilon0_min_eq_max, with choice); a choice-free proof of '
-            'it on a well-founded carrier was not located as of 2026-10-08. What is proved here is the '
+            'Leastness is proved on Ordinal (epsilon0_min_eq_max, with choice); a choice-free derivation of '
+            'it in Lean on a well-founded carrier whose statements are choice-free was not located as '
+            'of 2026-10-08, searched again 2026-10-13 (ZeroParadox/Ordinal/SnapNucleus.md, section Axiom footprint, records the '
+            'search and the defined reading on E0Note). What is proved here is the '
             'from-below half, choice-free.',
             'Prior art for leastness, classical: hydra-battles (Coq) proves epsilon0_lfp, that '
             '&#949;<sub>0</sub> is the least fixed point of phi0, its name for x &#8614; &#969;<sup>x</sup> '
@@ -313,7 +328,9 @@ def build():
             'only &#8212; choice-free, and free even of Quot.sound. Proved by structural recursion on '
             'ONote; repr / Ordinal are never touched.',
             'Well-formedness (tower_NF): [propext, Classical.choice, Quot.sound] &#8212; Classical.choice '
-            'inherited from Mathlib&#8217;s NF / repr, which passes through the Ordinal type.',
+            'inherited through Mathlib&#8217;s NF, defined via repr into Ordinal, whose order instance '
+            'and operations carry it; the type Ordinal itself reports [propext, Quot.sound] '
+            '(Section III).',
             'The taboo (em_of_wellOrder_comparable): [propext, Quot.sound] &#8212; choice-free by '
             'design, because the classical content is the hypothesis rather than the proof. Its '
             'converse (comparable_of_classical) carries Classical.choice, as it must.',
@@ -327,9 +344,11 @@ def build():
             'results, as stated, are <b>statement-carried</b> (their statements carry choice); for '
             '&#949;<sub>0</sub> itself, a choice-free Lean restatement of the fixed-point equation and '
             'its uniqueness on E0Note sets existence by definition, and a choice-free derivation in '
-            'Lean of the fixed point on a well-founded carrier, leastness included, was not '
-            'located as of 2026-10-08 (ZeroParadox/Ordinal/SnapNucleus.md, section Axiom footprint). '
-            'Zero sorry. Verified: lake build, October 2026.',
+            'Lean of the fixed point on a well-founded carrier whose statements are choice-free, '
+            'leastness included, was not located as of 2026-10-08, searched again 2026-10-13 '
+            '(ZeroParadox/Ordinal/SnapNucleus.md, section Axiom footprint).',
+            'The footprints listed here are copies; the live record is the #print axioms output of '
+            'each named .lean file.',
         ]
     ))
     E.append(sp(6))
@@ -344,7 +363,9 @@ def build():
             'a carrier of notations denoting the ordinals up to &#949;<sub>0</sub>, with the crossing '
             'priced at one named map | '
             'leastness of &#949;<sub>0</sub> is proved on Ordinal (epsilon0_min_eq_max, with choice); '
-            'a choice-free proof of it on a well-founded carrier was not located as of 2026-10-08.</i>',
+            'a choice-free derivation of it in Lean on a well-founded carrier whose statements are '
+            'choice-free was not located as of 2026-10-08, searched again 2026-10-13 (ZeroParadox/Ordinal/SnapNucleus.md, '
+            'section Axiom footprint).</i>',
             S['endnote']),
     ]
 

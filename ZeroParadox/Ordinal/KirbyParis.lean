@@ -20,7 +20,7 @@ This file proves it. The order-independent valuation needs the natural sum `♯`
 from Mathlib (it lived in Combinatorial Game Theory, moved to an external repo), so it is recovered here
 from a vendored Mathlib-v4.28 snapshot (`Vendored.NaturalOps`) plus the ω-power closure
 `nadd_lt_omega0_opow` (`Ordinal.NaturalOpsPow`, the CNF characterization that the snapshot left as a
-TODO). See `.claude-local/notes/kirby_paris_nadd_absent_2026-06-29.md`.
+TODO); the vendoring rationale is in the header of `ZeroParadox/Vendored/NaturalOps.lean`.
 
 What is proved:
 * `Step` — the Kirby–Paris cut relation (a superset of the genuine battle moves; its well-foundedness

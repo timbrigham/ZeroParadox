@@ -89,8 +89,7 @@ theorem denseRange_odometer_orbit (x : ℤ_[p]) :
     DenseRange (fun n : ℕ => x + (n : ℤ_[p])) := by
   have hg : DenseRange (fun y : ℤ_[p] => x + y) :=
     Function.Surjective.denseRange (fun z => ⟨z - x, by ring⟩)
-  simpa [Function.comp] using
-    hg.comp PadicInt.denseRange_natCast (continuous_const.add continuous_id)
+  exact hg.comp PadicInt.denseRange_natCast (continuous_const.add continuous_id)
 
 end ZeroParadox
 

@@ -16,7 +16,9 @@ cites; it is a curated map of what is established, not a source of new claims.
 **On the central claim (read this first).** The organizing thesis is that the bottom element recurs in the
 same structural role across several domains. What is **proved** is the *membership* and the *recurrence of
 the slot structure*. The reading that the various bottoms are *one object* is retired as ill-typed (object
-equality across categories does not typecheck and is not invariant under equivalence); what separates the members
+equality across categories does not typecheck and is not invariant under equivalence; for the equivalence
+principle see Ahrens and North, "Univalent foundations and the equivalence principle", arXiv:2202.01892,
+§ 2, as `CLAIMS.md` cites it); what separates the members
 is proved property by property (seam_unique_among_named, for the named bottoms, in a lattice with no top).
 The index above is where the precise line between proved and conjectural is kept.
 
@@ -26,9 +28,11 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 
 ### Order / lattice (ZP-A, ZP-E)
 
+- `ZeroParadox/Order/ChoiceFreeWithTop.lean` - Choice-free orders on `WithTop α` and `WithBot α`
 - `ZeroParadox/Order/Lattice.lean` - ZP-A: Lattice Algebra
 - `ZeroParadox/Order/LeastFixedPoint.lean` - The μ abstraction: least fixed point reached from a seed (the ceiling analogue of `AbstractSelfApp`)
   - ride-along docs: `ZeroParadox/Order/LeastFixedPoint.md` - The schema, its three faces, and why the seed is a role rather than an origin
+- `ZeroParadox/Order/PadicLimitCone.lean` - The p-adic floor `{0}` is a genuine categorical limit cone
 - `ZeroParadox/Order/PataraiaChoiceFree.lean` - Pataraia's theorem and induction, with no axioms
 - `ZeroParadox/Order/PataraiaFromBourbakiWitt.lean` - Pataraia's statement from Bourbaki–Witt, classically
   - ride-along docs: `ZeroParadox/Order/PataraiaFromBourbakiWitt.md` - Prior art for the classical route, and where the choice-free proofs are formalized
@@ -77,6 +81,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 
 - `ZeroParadox/Information/BottomMeasure.lean` - P6: measure = +∞ at the bottom — per-domain bundle, and the type-boundary finding
 - `ZeroParadox/Information/CrossingTrials.lean` - Crossing trials: what a probability on the crossing would buy
+  - ride-along docs: `ZeroParadox/Information/CrossingTrials.md` - Crossing trials, § IV–IX: from almost surely to one run, from one firing to a state sequence, and why a finite reading can confirm a firing (`isOpen_fires_once`) and never refute one
 - `ZeroParadox/Information/Disjunctive.lean` - Disjunctive sequences: a tape on which every finite word occurs
   - ride-along docs: `ZeroParadox/Information/Disjunctive.md` - Disjunctive sequences: prior art, footprints and fences
 - `ZeroParadox/Information/PadicSurprisal.lean` - B3 (pipeline): information surprisal ≡ 2-adic depth at the floor
@@ -120,6 +125,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Category/LawvereTaboo.lean` - The diagonal engine's supplier is a constructive taboo
   - ride-along docs: `ZeroParadox/Category/LawvereTaboo.md` - The diagonal engine's supplier is a constructive taboo: result, fences and prior art
 - `ZeroParadox/Category/LawvereTwoAdic.lean` - Add-one, doubling and the relativized Lawvere witness: on ℤ, ℤ_[2] and partial digit streams
+- `ZeroParadox/Category/TreeSeam.lean` - ZP-H tree — the #5 straddle resolved: the Hilbert bottom is the μ=ν seam
 
 ### Multi-homed bridges (ZP-H)
 
@@ -139,6 +145,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Multihomed/SelfClosureObstruction.lean` - Self-Closure Obstructions: the wall-side mirror of the diagonal fixed point (experimental probe)
 - `ZeroParadox/Multihomed/SeparatedSuccession.lean` - The type bridge: a separated succession as an interface, with two known implementations
 - `ZeroParadox/Multihomed/TopNumEdge.lean` - Web edge: topology ↔ number theory (the valuation generates the ball topology)
+- `ZeroParadox/Multihomed/TreeObstructions.lean` - ZP-H: The bottom-diagram tree — machine-checked obstruction core (E4 + SPLIT, rebuilt)
 
 ### Set theory / AFA (ZP-J)
 
@@ -206,7 +213,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Ordinal/NaturalOpsPow.lean` - Natural sum on powers of ω — the deferred CNF characterization (ported)
 - `ZeroParadox/Ordinal/OrdinalChoiceEssential.lean` - Comparability of well-orders is a constructive taboo
   - ride-along docs: `ZeroParadox/Ordinal/OrdinalChoiceEssential.md` - Comparability of well-orders is a constructive taboo: result, prior art and fences
-- `ZeroParadox/Ordinal/P8.lean` - P8 re-attempt: ε₀ → 0 in ℤ₂ via a tower-rank 2-adic encoding
+- `ZeroParadox/Ordinal/P8.lean` - P8 re-attempt: the ω-tower's encodings → 0 in ℤ₂ via a tower-rank 2-adic encoding
 - `ZeroParadox/Ordinal/PricedInterface.lean` - A priced interface: notations denoting the ordinals up to ε₀, a map into `Ordinal`, and both sides' axiom footprints
   - ride-along docs: `ZeroParadox/Ordinal/PricedInterface.md` - PricedInterface — ride-along documentation
 - `ZeroParadox/Ordinal/SnapMetaLattice.lean` - The lattice of systems: adjoining the point at infinity makes the ordinals a frame
@@ -258,18 +265,19 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 
 ### Order / lattice (ZP-A, ZP-E)
 
+- `ZeroParadox/Order/DieJoints.lean` - Joints and dual joints: cut points approached from one side and not reached there
 - `ZeroParadox/Order/MarkovContractionDual.lean` - The dual contraction dichotomy on the Markov ν-side (#2)
 - `ZeroParadox/Order/MarkovPlacement.lean` - The unplaced node: does the Markov attractor (#2) admit ANY order-extremal or categorical placement?
 - `ZeroParadox/Order/OrbitDichotomy.lean` - The orbit dichotomy — "one or infinitely many", no finite middle (probe)
-- `ZeroParadox/Order/PadicLimitCone.lean` - The p-adic floor `{0}` is a genuine categorical limit cone
 - `ZeroParadox/Order/ProofFloorHomset.lean` - Axis III over the proof-theory floor #1 (the hom-set carrier convention)
-- `ZeroParadox/Order/SeamSchema.lean` - A shared "seam schema" for the QPF root-seam and the lattice selfApp seam, with the cross-setting fence IN the statement.
+- `ZeroParadox/Order/SeamSchema.lean` - A shared "seam schema" for the QPF root-seam and the lattice selfApp seam; this file exhibits no map between the two settings
 - `ZeroParadox/Order/WellFoundedObstruct.lean` - Well-foundedness obstructs the attractor character of the μ floor
   - ride-along docs: `ZeroParadox/Order/WellFoundedObstruct.md` - The NO-GO gauge on the attractor reading, and what the capstone does not claim
 
 ### Valuation / number theory (ZP-B, ZP-F)
 
 - `ZeroParadox/Valuation/AxisSweepProbe.lean` - Experimental probes: the fork is trivially satisfiable, and the pole vs chain / branching pairs
+- `ZeroParadox/Valuation/BallLine.lean` - The line of closed balls about 0 of `ℚ_[2]`: a cover at every vertex, none at either end
 - `ZeroParadox/Valuation/BottomInvariant.lean` - A first universal: the bottom carries an invariant probability measure
   - ride-along docs: `ZeroParadox/Valuation/BottomInvariant.md` - Evidence for a universal at the existence level, and where it stops
 - `ZeroParadox/Valuation/BoundaryGap.lean` - The boundary embedding: the exact gap to the Bruhat-Tits tree
@@ -305,6 +313,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Valuation/PoleCorners.lean` - The four corners: 0 and ∞ have exactly four representations to each other
 - `ZeroParadox/Valuation/PoleCornersBridge.lean` - Bridge: the four corners are the corners of the tower to ω (shared-shape correspondence)
   - ride-along docs: `ZeroParadox/Valuation/PoleCornersBridge.md` - Assembling a correspondence without asserting an identity
+- `ZeroParadox/Valuation/PolePassage.lean` - The snap arc on the 2-adic sphere: no passage through `∞`, a return in the valuation
 - `ZeroParadox/Valuation/RateTransport.lean` - within-Axis-I positive rate-transport via the shared geometric rate `2^(-n)`
 - `ZeroParadox/Valuation/RootAsymmetry.lean` - Root-asymmetry test: #1 (μ order-floor) vs #3 (ν p-adic limit)
 - `ZeroParadox/Valuation/ScaleDepthWitness.lean` - A concrete family satisfying ZP-I's `IsDepthChain`, and the gauge pricing what that satisfaction is worth
@@ -315,6 +324,13 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Valuation/TowerHeightFloor.lean` - Height meets floor: the tower's 2-adic images as an InfinitudeFloor, norm order reversed from stage 1 — ε₀ ≠ ⊥ of `Ordinal` preserved
   - ride-along docs: `ZeroParadox/Valuation/TowerHeightFloor.md` - Height meets floor — the tower's 2-adic images as an InfinitudeFloor, norm order reversed from stage 1
 
+### Information (ZP-C)
+
+- `ZeroParadox/Information/BrudnoBridge.lean` - Brudno bridge: `trials` and `MLRandom` against `kolmogorov-complexity-lean`
+- `ZeroParadox/Information/MaxEntropy.lean` - Maximum entropy: the fair coin, missing information, and incompressible tapes
+- `ZeroParadox/Information/SnapEpsilonZero.lean` - The snap and ε₀ on two carriers: on `WithBot Ordinal` the first step lands at ↑0 and `up` carries it to ↑ε₀ (the corner); on `EpsilonOrZero` the first step is ε₀ (the cover)
+- `ZeroParadox/Information/TwoRequirements.lean` - Two requirements: a first step at ⊥ of `L`, and a typical tape
+
 ### State / Hilbert (ZP-D)
 
 - `ZeroParadox/State/ProbeSeparates.lean` - `Fin 0` is empty; the zero ℂ-module on `Fin 0` is inhabited
@@ -322,6 +338,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 
 ### Reals (counterexamples)
 
+- `ZeroParadox/Reals/ConnectedNoFirstStep.lean` - Connectedness and the first step on a linear order with its order topology
 - `ZeroParadox/Reals/RateClassInvariant.lean` - Axis IV: convergence-rate class as a cross-root invariant
 
 ### Category theory (ZP-G, ZP-H)
@@ -350,7 +367,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Category/SeamBiproductUnit.lean` - The seam #5 is the additive UNIT of the biproduct on `ModuleCat ℂ`
 - `ZeroParadox/Category/SeamBridge.lean` - Is the seam a genuine BRIDGE between the subtrees, or a coincidentally two-sided object?
 - `ZeroParadox/Category/SeamCoincidence.lean` - The seam IS the categorical μ=ν coincidence
-- `ZeroParadox/Category/SeamComparisonMap.lean` - The canonical μ→ν comparison map at the root seam, and the honest fence on "root-seam ≅ node-seam"
+- `ZeroParadox/Category/SeamComparisonMap.lean` - The canonical μ→ν comparison map at the root seam, and the root seam beside the node seam
 - `ZeroParadox/Category/SeamFrameChange.lean` - The frame-change in the category frame: `op`-duality swaps initial ↔ terminal at the seam
 - `ZeroParadox/Category/SeamGeneric.lean` - The seam as a GENERIC theorem (the μ=ν coincidence is a real categorical fact)
 - `ZeroParadox/Category/SeamLimColim.lean` - The seam diagram-level coincidence (lim = colim at the zero object)
@@ -358,7 +375,6 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Category/SeamUniqueness.lean` - Seam uniqueness extended: is any OTHER bottom a zero object?
   - ride-along docs: `ZeroParadox/Category/SeamUniqueness.md` - Which named bottom is a zero object: the per-bottom obstructions and the fence
 - `ZeroParadox/Category/TopNoGo.lean` - In TopCat the empty space is not isomorphic to the one-point space
-- `ZeroParadox/Category/TreeSeam.lean` - ZP-H tree — the #5 straddle resolved: the Hilbert bottom is the μ=ν seam
 - `ZeroParadox/Category/WellFoundedCoalgebra.lean` - The next time operator: μ/ν as an INTRINSIC property, not a construction
 
 ### Multi-homed bridges (ZP-H)
@@ -373,7 +389,6 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Multihomed/SnapFrameChange.lean` - The tower limit's two chart-readings: ⊥ and ∞ are two charts, swapped by `rInv`
   - ride-along docs: `ZeroParadox/Multihomed/SnapFrameChange.md` - SnapFrameChange — the tower limit's two chart-readings
 - `ZeroParadox/Multihomed/SpanObstruction.lean` - The #1↔#3 cross-root obstruction under a SPAN (THIN-BUT-HONEST)
-- `ZeroParadox/Multihomed/TreeObstructions.lean` - ZP-H: The bottom-diagram tree — machine-checked obstruction core (E4 + SPLIT, rebuilt)
 - `ZeroParadox/Multihomed/TreeT1.lean` - ZP-H tree, edge T1 — the within-μ edge: proof-theory floor ↔ categorical-initial bottoms
 - `ZeroParadox/Multihomed/TreeT2.lean` - ZP-H tree, edge T2 — the within-ν edge: Markov attractor ↔ p-adic inverse-limit
 - `ZeroParadox/Multihomed/TwoFacesBot.lean` - Direction B — the two faces of ⊥ at the seam: VACUOUS (they coincide, but only as a bare singleton)
@@ -392,7 +407,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 
 - `ZeroParadox/Computability/ChoicePurityInvariant.lean` - Is choice-purity an IN-STATEMENT μ/ν separating invariant?
   - ride-along docs: `ZeroParadox/Computability/ChoicePurityInvariant.md` - ChoicePurityInvariant — ride-along documentation
-- `ZeroParadox/Computability/CodeDataFrameChange.lean` - The frame-change in the computability frame: the code↔data involution and the quine on its fixed locus
+- `ZeroParadox/Computability/CodeDataFrameChange.lean` - The frame-change in the computability frame: the code↔data involution, whose fixed locus holds every code's self-application
 - `ZeroParadox/Computability/ComputableCrossing.lean` - The Lawvere bridge, crossed in the computability face (probe)
   - ride-along docs: `ZeroParadox/Computability/ComputableCrossing.md` - Where the obstruction is absent: the universal machine as a reflexive object
 - `ZeroParadox/Computability/MarkovNuUniversal.lean` - Does the Markov node (#2) get a ν (terminal/unique-fixed-point) universal property?
@@ -408,4 +423,4 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 
 ---
 
-*Generated by `build_manifest.py` from the Lean tree + each file's `-- EXPERIMENTAL` header. Rerun after adding, moving, or renaming a file. (134 core, 106 experimental.)*
+*Generated by `build_manifest.py` from the Lean tree + each file's `-- EXPERIMENTAL` header. Rerun after adding, moving, or renaming a file. (138 core, 111 experimental.)*

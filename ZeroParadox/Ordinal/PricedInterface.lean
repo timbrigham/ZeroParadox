@@ -33,10 +33,11 @@ open Ordinal
 
 /-! ### The carrier
 
-`SynONote` with one point adjoined on top: the shape of Castéran's `ON_plus` (sum of notation systems)
+`SynONote` with one point adjoined on top: the shape of hydra-battles' `ON_plus` (sum of notation systems)
 with a one-point right summand, not an instance of it, because `SynONote`'s order is not well-founded
-(the `example` stating `¬ WellFoundedLT E0Note`). The order, lattice and decidability structure below is all
-Mathlib's `WithTop` machinery, not built here. -/
+(the `example` stating `¬ WellFoundedLT E0Note`). The carrier and its `≤`/`<` are Mathlib's `WithTop`
+(`WithTop.instLE`/`instLT`); the decidability of comparison is proved below by cases on that order's
+constructors, and `e0Coe_lt_top` and `e0_le_top` are applications of them. -/
 
 /-- **The carrier: ordinal notations with a single adjoined top.**
 
@@ -50,22 +51,39 @@ abbrev E0Note : Type := WithTop SynONote
 /-- The notations, viewed inside the carrier. -/
 def e0Coe (x : ONote) : E0Note := (toSyn x : SynONote)
 
-/-- Comparison on the carrier is decidable — inherited from Mathlib's `WithTop.decidableLE` applied to
-the comparator-derived order on `SynONote`. This is Castéran's `lt_eq_lt_dec` (decidability survives
-adjunction) at instance level; nothing is proved here. -/
-@[reducible] def e0DecidableLE : DecidableLE E0Note := inferInstance
+section
+-- [ZP port] Lean 4.35: Mathlib proves `WithTop.le_def`/`lt_def` by `grind`, so `WithTop.instPreorder`,
+-- `instOrderTop`, `coe_lt_top` and `decidableLE`/`decidableLT` carry `Classical.choice`; pin the bare
+-- choice-free `WithTop.instLE`/`instLT` here and decide and prove from their constructors.
+attribute [local instance high] WithTop.instLE WithTop.instLT
+
+/-- Comparison on the carrier is decidable — by cases on `WithTop.LE`'s constructors, deciding below
+`⊤` with the comparator-derived order on `SynONote`. This is hydra-battles' `lt_eq_lt_dec`
+(decidability survives adjunction), the move Mathlib's `WithTop.decidableLE` makes at instance level. -/
+@[reducible] def e0DecidableLE : DecidableLE E0Note
+  | _, ⊤ => isTrue (WithTop.LE.le_top _)
+  | ⊤, (_ : SynONote) => isFalse (fun h => by cases h)
+  | (a : SynONote), (b : SynONote) =>
+      if h : a ≤ b then isTrue (WithTop.LE.coe_le_coe h)
+      else isFalse (fun h' => by cases h'; contradiction)
 
 /-- Strict comparison on the carrier is decidable. -/
-@[reducible] def e0DecidableLT : DecidableLT E0Note := inferInstance
+@[reducible] def e0DecidableLT : DecidableLT E0Note
+  | ⊤, _ => isFalse (fun h => by cases h)
+  | (a : SynONote), ⊤ => isTrue (WithTop.LT.lt_top a)
+  | (a : SynONote), (b : SynONote) =>
+      if h : a < b then isTrue (WithTop.LT.coe_lt_coe h)
+      else isFalse (fun h' => by cases h'; contradiction)
 
 /-- Equality on the carrier is decidable. -/
 @[reducible] def e0DecidableEq : DecidableEq E0Note := inferInstance
 
 /-- Every notation sits strictly below the adjoined top. -/
-theorem e0Coe_lt_top (x : ONote) : e0Coe x < (⊤ : E0Note) := WithTop.coe_lt_top _
+theorem e0Coe_lt_top (x : ONote) : e0Coe x < (⊤ : E0Note) := WithTop.LT.lt_top _
 
 /-- The adjoined top bounds the whole carrier. -/
-theorem e0_le_top (a : E0Note) : a ≤ (⊤ : E0Note) := le_top
+theorem e0_le_top (a : E0Note) : a ≤ (⊤ : E0Note) := WithTop.LE.le_top _
+end
 
 /-! ### The tower operator, and the stipulated fixed point
 
@@ -100,6 +118,17 @@ theorem e0OmegaPow_fixedpoint_iff (a : E0Note) : e0OmegaPow a = a ↔ a = ⊤ :=
         exact absurd h' (omegaPow_ne_self (ofSyn x))
   · rintro rfl; rfl
 
+-- `Statement:` the constant-`⊤` map is a `Nucleus E0Note` whose closed points are exactly the fixed
+-- points of `e0OmegaPow`.
+example : ∃ n : Nucleus E0Note, ∀ a : E0Note, n a = a ↔ e0OmegaPow a = a :=
+  ⟨{ toFun := fun _ => ⊤
+     map_inf' := fun _ _ => by simp
+     idempotent' := fun _ => le_rfl
+     le_apply' := fun _ => le_top },
+   fun a => by
+     rw [e0OmegaPow_fixedpoint_iff]
+     exact eq_comm⟩
+
 /-! ### The map into `Ordinal` — the crossing
 
 This is where the classical assumption is paid. `ONote.repr` is Mathlib's denotation map, and it is
@@ -107,7 +136,7 @@ This is where the classical assumption is paid. `ONote.repr` is Mathlib's denota
 
 /-- **Every ordinal notation denotes strictly below ε₀.**
 
-The first of `ON_correct`'s three fields (Castéran, `ON_Generic.v`), here for Mathlib's `ONote` and
+The first of `ON_correct`'s three fields (hydra-battles, `ON_Generic.v`), here for Mathlib's `ONote` and
 Mathlib's ε₀. Structural induction: ε₀ is a fixed point of `ω ^ ·`, hence both additively and
 multiplicatively principal, which is exactly what closes the `oadd` case.
 
@@ -181,7 +210,7 @@ example : typeLT NONote = ε₀ := by
 /-- **The crossing.** The carrier's denotation map into Mathlib's classical `Ordinal`: notations go by
 `ONote.repr`, and the adjoined top goes to ε₀.
 
-It has the into and onto properties of Castéran's `ON_correct` (`Schutte/Correctness_E0.v` is the
+It has the into and onto properties of hydra-battles' `ON_correct` (`Schutte/Correctness_E0.v` is the
 existing ε₀ instantiation), with Mathlib's constructed `Ordinal` as the classical target instead of
 Schütte's axiomatized `Ord`. It is not an instance: `ON_correct` is stated over an `ON`, which needs a
 well-founded order (the `example` stating `¬ WellFoundedLT E0Note`), and the comparator property fails.
@@ -251,8 +280,9 @@ forms is the standard fix."* It characterizes exactly when injectivity is **rest
 
 `Reading:` (conjectural) the framework reads the fiber as an instance of the **shape** that statistics
 calls *identifiability* — the parameter-to-observable map failing to be injective. ⚠ **Do not write
-"structural identifiability" for this.** Both sources on disk (Villaverde 2016; Castro & de Boer 2020,
-`.claude-local/papers/`) scope that term to **parametrized dynamic models**, where "structural"
+"structural identifiability" for this.** Both sources read (Villaverde, Barreiro and Papachristodoulou,
+PLOS Comput. Biol. 2016, doi:10.1371/journal.pcbi.1005153; Castro and de Boer, PLOS Comput. Biol. 2020,
+doi:10.1371/journal.pcbi.1008248) scope that term to **parametrized dynamic models**, where "structural"
 contrasts with *practical* identifiability limited by data. `e0Repr` has no data, no dynamics and no
 such contrast, so the modifier does no work here. `CLAIMS.md`'s use of the term (the Buckingham row)
 is scoped to **ZP-B's real-valued threshold** `2^k`, a different object, and that row states the
@@ -267,8 +297,7 @@ pointer to the precedent, not a POV claim about `e0Repr`.
 `Reading:` (conjectural) the framework reads this as where statistics enters, under Tim's framing that
 **succession is a state of representation**: what is uncertain is *which representation*, never *what
 happened*. ⚠ **Nothing here posits that anything moved** — the no-traversal commitment is untouched, and
-the distribution below is over notations, not over histories. Long form:
-`.claude-local/notes/future-research/offset_from_the_origin_2026-08-05.md`. -/
+the distribution below is over notations, not over histories. -/
 theorem e0Repr_not_injective : ¬ Function.Injective e0Repr := by
   intro hinj
   obtain ⟨x, y, hne, hrepr⟩ := mathlib_ONote_order_not_antisymm
@@ -314,7 +343,7 @@ example : ¬ WellFoundedLT E0Note := by
       rintro k rfl
       exact ih _ (hlt k) (k + 1) rfl
   intro h
-  exact hacc _ (h.wf.apply _) 0 rfl
+  exact hacc _ (h.apply _) 0 rfl
 
 /-- **`Statement:` the fiber, exhibited.** Two distinct notations with one denotation — the unfolding of
 `e0Repr_not_injective`, with `1 + ω` and `ω` as the underlying witness. -/
@@ -442,7 +471,7 @@ end ZeroParadox
 /-! ## Axiom Purity Check — this block IS the deliverable
 
 The two sides of the interface, measured. Observed: the carrier side is choice-free, ranging from no
-axioms at all up to `[propext, Quot.sound]`; the map side is uniformly
+axioms at all up to `[propext]`; the map side is uniformly
 `[propext, Classical.choice, Quot.sound]`. **The per-declaration numbers live HERE and nowhere else** —
 `ZeroParadox/Ordinal/PricedInterface.md` states only the shape, deliberately, because an enumeration
 duplicated into prose goes stale. If this block ever prints something outside

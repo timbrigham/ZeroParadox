@@ -114,10 +114,11 @@ Adámek–Milius–Moss 2020 (arXiv:1910.09401) Def 5.1 and Construction 5.2, p.
 power-set coalgebras (Ex 2.1(1), p. 4) and their next-time operator (Ex 4.2(1), p. 15). Theirs
 keeps a subcoalgebra of nodes; this keeps every node and drops arrows. Their Prop 5.5, p. 23
 (coreflection) is the categorical neighbour of `wfPart_same`. No graph-level statement of
-`wfPart_same` was located as of 2026-10-20 (Aczel 1988, AMM 2020, Barwise–Moss 1991, Taylor
-*Well founded coalgebras and recursion*, Rutten *Universal coalgebra* 2000, Rutten–Turi *On the
-Foundations of Final Semantics: Non-Standard Sets, Metric Spaces, Partial Orders* 1993;
-theoremsearch, three phrasings). -/
+`wfPart_same` was located as of 2026-10-20 (Aczel 1988, AMM 2020, Barwise–Moss 1991, Taylor *Well
+founded coalgebras and recursion*, Rutten *Universal coalgebra* 2000, Rutten–Turi *On the Foundations
+of Final Semantics: Non-Standard Sets, Metric Spaces, Partial Orders* 1993; theoremsearch, three
+phrasings), nor on 2026-11-03 in Barwise–Moss 1996 (*Vicious Circles*; its index and pp. 24, 348
+read: the well-founded part of a relation, p. 24, and Answer 9.7, p. 348, are neighbours only). -/
 
 /-- `Statement:` the converse of a bisimulation is a bisimulation. -/
 theorem isBisim_flip {A : MemGraph m} {B : MemGraph n} {R : Fin m → Fin n → Prop}

@@ -95,12 +95,12 @@ end ZeroParadox
 
 /-! ## Axiom Purity Check
 
-**Measured 2026-07-30, all four: `[propext, Classical.choice, Quot.sound]`.** The choice is inherited
-from Mathlib's `QPF.Cofix`, which is `Quot (@Mcongr F q)` over the M-type construction — every
-statement here mentions `Cofix`, and `#print axioms` follows the STATEMENT, not the proof. This
-matches the ν-side footprint `Category/CoalgebraForkPlace.lean` already records (μ side choice-free,
-ν side not). None of it is a new commitment: the proofs themselves are one `Cofix.bisim`, one
-`Cofix.dest_corec`, and one `congrArg` on a `Sigma.fst`.
+**Measured 2026-07-30, all four: `[propext, Classical.choice, Quot.sound]`.** Every statement here
+mentions Mathlib's `QPF.Cofix` (`Quot (@Mcongr F q)` over the M-type), whose type carries the choice
+(`ZeroParadox/Category/ChoiceCannotBe.lean` § III, at `cofix_nonempty'`). `#print axioms` follows the
+statement and the proof; here the statement already accounts for it. This matches the ν-side
+footprint `Category/CoalgebraForkPlace.lean` records (μ side choice-free, ν side not). None of it is a
+new commitment: the proofs are one `Cofix.bisim`, one `Cofix.dest_corec`, one `congrArg` on `Sigma.fst`.
 -/
 section PurityCheck
 open ZeroParadox

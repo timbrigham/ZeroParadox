@@ -3,7 +3,7 @@ import Mathlib.NumberTheory.Padics.PadicIntegers
 import Mathlib.Analysis.SpecificLimits.Normed
 
 /-!
-# P8 re-attempt: ε₀ → 0 in ℤ₂ via a tower-rank 2-adic encoding
+# P8 re-attempt: the ω-tower's encodings → 0 in ℤ₂ via a tower-rank 2-adic encoding
 
 The parked "ZP-B route" (zpl_cantor_zp2_bridge): encode ordinals < ε₀ into ℤ₂ so the ω-tower's
 encodings converge to ℤ_[2]'s 0, without Gentzen. ε₀ gets no encoding: the domain is `{α // α < ε₀}`.

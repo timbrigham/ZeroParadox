@@ -55,7 +55,7 @@ theorem halting_undecidable (n : ℕ) : ¬ ComputablePred (fun c => (eval c n).D
 /-- **The exists-but-undecidable signature.** In the computability setting the recursion theorem, used
     twice, gives *both*: every computable self-map on codes has a fixed point **up to `eval`** (the Kleene quine
     exists — ν, via `computability_face_fixedPoint`; NOT a literal fixed point — `fun c => Code.pair c c`
-    has none), *and* every non-trivial extensional property is undecidable (Rice).
+    has none, `code_pair_diag_fixedPointFree`), *and* every non-trivial extensional property is undecidable (Rice).
     The second conjunct does not mention `f`: the undecidability is of `C` over all codes, and nothing
     is stated about membership at `f`'s fixed point (gloss: `ZeroParadox/Computability/ComputationCannotBe.lean` § V). -/
 theorem quine_exists_yet_rice (C : Set Code)

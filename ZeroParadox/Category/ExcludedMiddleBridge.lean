@@ -75,11 +75,12 @@ chooser bounded only in its codomain, and it is all `em_of_choiceFragment` consu
 Two things make this the faithful fragment rather than a weakened stand-in. First, the chooser is a
 *function of the predicate*, so extensionally equal predicates receive equal choices — that is precisely
 the leverage `em_of_choiceFragment` uses. Second, it is genuinely implied by Lean's `Classical.choice`
-(`choiceFragment_of_classical` below), so the hypothesis is not vacuous.
+(`choiceFragment_of_classical` below), so the hypothesis is satisfiable.
 
 **Faithfulness check (run 2026-07-19).** The worry worth taking seriously is the converse: if
-`ExcludedMiddle → ChoiceFragment` were provable, the two would be equivalent and § II would be excluded
-middle implying itself in costume, not a choice principle implying it. Measured result: the natural
+`ExcludedMiddle → ChoiceFragment` were provable without unique choice into `Bool` (with it as a second
+hypothesis it is: the `example` after `em_of_choiceFragment`), the two would be equivalent and § II would
+be excluded middle implying itself in costume, not a choice principle implying it. Measured result: the natural
 construction `fun S => if S true then true else false` under only `ExcludedMiddle` **fails to elaborate**
 — `failed to synthesize instance of type class Decidable (S true)`. That is the `Prop`→`Bool` elimination
 barrier: excluded middle supplies a disjunction in `Prop`, which cannot be eliminated to produce data,
@@ -90,13 +91,19 @@ choice, not through excluded middle, and the fragment **appears to sit above** `
 **Honest limit:** a failed proof attempt is not a proof of unprovability. This is strong evidence — the
 failure is at the exact structural barrier that separates the two in type theory — not a formal
 independence result, which would need a metatheoretic argument outside Lean.
-**And note what the barrier is and is not.** It is Lean's `Prop`/`Type` stratification: the fragment
-yields data (`Bool`), so it is really `∀ p, Decidable p`, while `ExcludedMiddle` is `Prop`-valued and does
-not eliminate into data. It is **not** a general fact about choice versus excluded middle — in a topos,
-which always has unique choice, this very fragment is *equivalent* to excluded middle (the standard
-Diaconescu–Goodman–Myhill theorem); in Lean the equivalence holds with unique choice into `Bool` as a
+**And note what the barrier is and is not.** A candidate explanation, not a finding, is Lean's
+`Prop`/`Type` stratification: the fragment's chooser yields data (`Bool`), and the fragment is
+equivalent to `Nonempty (∀ p, Decidable p)`, while `ExcludedMiddle` is equivalent to
+`∀ p, Nonempty (Decidable p)` (the `example`s after this definition), and `Or` in `Prop` does not
+eliminate into data. The two differ only in whether `Nonempty` sits outside or inside `∀ p`; each
+`Decidable p` has at most one element, so moving `Nonempty` outward is an instance of unique choice.
+It is **not** a general fact about choice versus excluded middle — in a topos,
+which always has unique choice (E. J. Dubuc and M. Szyld, *Tannaka Theory for Topos*,
+arXiv:1510.01775v1, Prop. 1.24, p. 10), this very fragment is *equivalent* to excluded middle (by the
+Diaconescu–Goodman–Myhill argument); in Lean the equivalence holds with unique choice into `Bool` as a
 hypothesis (the `example` after `em_of_choiceFragment`).
-The gap measured here is a property of the ambient type theory, not of the two principles. -/
+On that candidate, the gap measured here is a property of the ambient type theory, not of the two
+principles. -/
 def ChoiceFragment : Prop :=
   ∃ ch : (Bool → Prop) → Bool, ∀ S : (Bool → Prop), (∃ b, S b) → S (ch S)
 
@@ -106,7 +113,49 @@ def ChoiceFragment : Prop :=
 #check_failure (fun h : True ∨ False =>
   (Or.casesOn (motive := fun _ => Bool) h (fun _ => true) (fun _ => false) : Bool))
 example : Decidable True → Bool := fun h =>
-  Decidable.casesOn (motive := fun _ => Bool) h (fun _ => false) (fun _ => true)
+  Decidable.falseTrueCases (motive := fun _ => Bool) (fun _ => false) (fun _ => true) h
+
+-- Statement: the fragment is equivalent to the propositional truncation of data-valued decidability,
+-- `Nonempty (∀ p, Decidable p)`; the chooser decides `p` on the pair of predicates
+-- `em_of_choiceFragment` uses.
+-- Reading: both sides are theorems of Lean's classical ambient logic, so the content is the
+-- construction, not the truth of the biconditional. Credit (cited, not claimed): nLab,
+-- "Diaconescu-Goodman-Myhill theorem", lists among the equivalents of excluded middle "Finite sets
+-- are choice (in fact, it suffices for 2 to be choice)"; this is a reading across Lean's
+-- `Prop`/`Type` split.
+example : ChoiceFragment ↔ Nonempty (∀ p : Prop, Decidable p) := by
+  refine ⟨fun ⟨ch, hch⟩ => ⟨fun p => ?_⟩, fun ⟨dec⟩ => ?_⟩
+  · have hA := hch (fun b => b = true ∨ p) ⟨true, Or.inl rfl⟩
+    have hB := hch (fun b => b = false ∨ p) ⟨false, Or.inl rfl⟩
+    exact if h : ch (fun b => b = true ∨ p) = ch (fun b => b = false ∨ p) then
+      isTrue (hA.elim (fun hAt => hB.elim (fun hBf => absurd (hAt ▸ hBf ▸ h) (by decide)) id) id)
+    else
+      isFalse fun hp => h (by
+        have : (fun b => b = true ∨ p) = (fun b => b = false ∨ p) :=
+          funext fun b => propext ⟨fun _ => Or.inr hp, fun _ => Or.inr hp⟩
+        rw [this])
+  · refine ⟨fun S => @decide (S true) (dec _), fun S hS => ?_⟩
+    show S (@decide (S true) (dec _))
+    generalize dec (S true) = d
+    cases d with
+    | isTrue h => exact h
+    | isFalse hn =>
+      obtain ⟨b, hb⟩ := hS
+      cases b with
+      | true => exact absurd hb hn
+      | false => exact hb
+
+-- Statement: excluded middle is equivalent to `∀ p, Nonempty (Decidable p)`, `Nonempty` inside.
+-- Credit: the forward leg is the `match` inside Lean core's `Classical.propDecidable`
+-- (`Init/Classical.lean`), with the hypothesis in place of `Classical.em`; core then applies
+-- `Classical.choice` to that `Nonempty`, a step this leg does not take.
+example : ExcludedMiddle ↔ ∀ p : Prop, Nonempty (Decidable p) :=
+  ⟨fun h p => (h p).elim (fun hp => ⟨isTrue hp⟩) (fun hn => ⟨isFalse hn⟩),
+   fun h p => (h p).elim fun d => match d with
+     | isTrue hp => Or.inl hp
+     | isFalse hn => Or.inr hn⟩
+-- Statement: each `Decidable p` has at most one element.
+example (p : Prop) : Subsingleton (Decidable p) := inferInstance
 
 /-- **The fragment is non-vacuous.** Lean's `Classical.choice` supplies it. Footprint is classical by
 construction — that is the point: this is the *source* end of the § II arrow, and it inhabits the
@@ -144,9 +193,10 @@ theorem em_of_choiceFragment (h : ChoiceFragment) : ExcludedMiddle := by
     have : A = B := funext fun b => propext ⟨fun _ => Or.inr hp, fun _ => Or.inr hp⟩
     rw [this]
   -- `Bool` equality is decidable with no classical input.
-  rcases Bool.decEq (ch A) (ch B) with hne | heq
-  · exact Or.inr fun hp => hne (hpAB hp)
-  · rcases hA with hAt | hp
+  cases Bool.decEq (ch A) (ch B) with
+  | isFalse hne => exact Or.inr fun hp => hne (hpAB hp)
+  | isTrue heq =>
+    rcases hA with hAt | hp
     · rcases hB with hBf | hp
       · exact absurd (hAt ▸ hBf ▸ heq) (by decide)
       · exact Or.inl hp
@@ -171,6 +221,20 @@ example (uc : ∀ P : Bool → Prop, (∃! b, P b) → {b : Bool // P b}) :
     cases b with
     | true => exact absurd hb hn
     | false => exact hb
+-- Reading (cited, not claimed): the Rocq standard library's `theories/Logic/ChoiceFacts.v` proves the
+-- type-theoretic form of the excluded-middle-to-data leg, `constructive_definite_descr_excluded_middle`
+-- (constructive definite description, `forall P, (exists! x, P x) -> {x | P x}` at every type, the
+-- data-valued form of unique choice that the `uc` hypothesis above takes at `Bool`, with excluded
+-- middle gives `forall P:Prop, {P} + {~ P}`), and states that
+-- "constructive definite description transports excluded-middle from [Prop] to [Set]", crediting the
+-- idea of its proof to L. Chicli, L. Pottier and C. Simpson, "Mathematical Quotients and Quotient
+-- Types in Coq", TYPES 2002, LNCS 2646. Read in the authors' preprint (preprint page numbers): § 5,
+-- pp. 12-13, shows the axiom of unique choice with values in `Prop` contradicts excluded middle in
+-- `Prop` in Coq, completing the proof with the § 4.2 argument, pp. 10-11 (the goal is `False`, so the
+-- existence of a map `Prop → bool` can be eliminated to give `{P} + {~P}`); their § 6, p. 13, says the
+-- impredicativity of `Set` is essential to that proof. As in `ChoiceFacts.v`, the
+-- credit is for that proof idea, not for the transport result. This example, with the one after
+-- `ChoiceFragment`, is the `Bool`-chooser instance of that transport.
 
 /-! ## § III — Composition -/
 

@@ -7,8 +7,7 @@ import ZeroParadox.Multihomed.SelfAppSeam
 import ZeroParadox.Computability.SelfApp
 
 /-!
-# A shared "seam schema" for the QPF root-seam and the lattice selfApp seam,
-with the cross-setting fence IN the statement.
+# A shared "seam schema" for the QPF root-seam and the lattice selfApp seam; this file exhibits no map between the two settings
 
 ## Engineer's Take
 
@@ -21,11 +20,11 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 ## Formal Overview (AI-assisted)
 
-`ZeroParadox/Category/SeamComparisonMap.lean` fenced the **root-seam** (the QPF `constPF` seam, `Fix ≃ Cofix`) against the **node-seam** (the
+`ZeroParadox/Category/SeamComparisonMap.lean` set the **root-seam** (the QPF `constPF` seam, `Fix ≃ Cofix`) against the **node-seam** (the
 #5 Hilbert zero object). This file tests a *different* pairing: the root-seam against the
 **lattice / selfApp seam** of `ZeroParadox/Multihomed/SelfAppSeam.lean` (`{x | selfApp x = x} = {⊥}`, ⊥ both least and greatest fixed
 point). The pre-registered question: do these two seams share a common Lean-statable schema, or is any
-"shared schema" merely a prose juxtaposition (a modeling commitment)?
+"shared schema" merely a prose juxtaposition?
 
 **The schema.** Both seams are, abstractly, the claim "the least-fixed-point carrier and the
 greatest-fixed-point carrier are connected by a canonical iso/equality." We capture that as a record
@@ -57,10 +56,10 @@ greatest-fixed-point carrier are connected by a canonical iso/equality." We capt
   which is a denial the convention has no slot for, and is very likely false, since order-duality is
   exactly such an exchanging map.)*
 
-  To make the lattice selfApp seam an instance of `SeamSchema` the μ-carrier and the
-  ν-carrier must BOTH be taken to be the same object — the fixed-point subtype `{x // selfApp x = x}` —
-  and the seam witness is `Equiv.refl`. There is no pair of distinct carriers to relate: "least = greatest"
-  collapses them to one type before the schema is even applied.
+  To make the lattice selfApp seam an instance of `SeamSchema` this file DEFINES the μ-carrier and
+  the ν-carrier as the same object — the fixed-point subtype `{x // selfApp x = x}` — and the seam
+  witness as `Equiv.refl`. That collapse is a choice of definition, not a consequence of
+  "least = greatest".
 
 **The GO content (what is genuinely proved).** `both_satisfy_seam_schema`: BOTH nodes instantiate
 `SeamSchema`, with the discriminator witnessed in-statement — the QPF instance's `cmp` is the canonical
@@ -68,25 +67,23 @@ bijective comparison; the lattice instance's carrier is the *nonempty* singleton
 is non-degenerate, not the vacuous empty case). The schema instantiates at both nodes.
 
 **The NO-GO fence (the load-bearing deflation, IN the statement).** `seam_schema_is_degenerate_for_lattice`
-states the catch: the lattice instance fits `SeamSchema` ONLY because its two carriers are forced equal
-(`μ = ν` as the same subtype) so the `cmp` is `Equiv.refl` — a trivial identity equivalence — whereas
+states the catch: the lattice instance fits `SeamSchema` with its two carriers defined as one type
+(`μ = ν` as the same subtype), so its `cmp` is `Equiv.refl` — a trivial identity equivalence — whereas
 the QPF instance relates two provably DISTINCT types (`Fix` and `Cofix` are not definitionally equal,
 and for the recursive functor `idPF_Coalgebra` they are not even equivalent, `idPF_no_seam`). So the shared
 schema is satisfied by both, but the *only* common content is "there is some equivalence between the
 μ-carrier and the ν-carrier" — which is automatically true once the lattice carriers are collapsed to a
-single type. `no_cross_setting_map` records that there is NO map exhibited between the QPF setting
-(a type equivalence `Fix ≃ Cofix`) and the lattice setting (a set equality `{x | selfApp x = x} = {⊥}`):
-the two `SeamSchema` instances live over unrelated carrier types and nothing in this file transports one
-to the other. Therefore the unification "the QPF root-seam IS the lattice selfApp seam" is a
-cross-setting modeling commitment / fenced analogy, NOT a theorem. The schema is a common *shape*; it is
-not a common *map*.
+single type. `no_cross_setting_map` records the QPF setting (a type equivalence `Fix ≃ Cofix`) and the
+lattice setting (a set equality `{x | selfApp x = x} = {⊥}`) side by side: the two `SeamSchema`
+instances live over different carrier types, and nothing in this file transports one to the other. The schema is a common *shape*; it is not a common *map*. `Reading:` CARRIER — the shared
+die role is occupied per chart (`selfApp_seam_role_unique`, `constPF_seam_role_unique`), no equation across.
 
 **Honest verdict.** The genuine new Lean content is: a single explicit `SeamSchema` record that both
 nodes provably instantiate, with the QPF instance's bijective canonical comparison and the lattice
 instance's nonempty singleton f.p. set both witnessed in-statement. What is fenced (and stated as a
-theorem about the construction itself) is that the lattice instance is forced through `Equiv.refl` on a
-collapsed carrier, the QPF instance relates distinct types, and no cross-setting map exists — so the
-schema unifies the *shape*, not the seams. This is the DECORATIVE-vs-real test resolved honestly: the
+theorem about the construction itself) is that the lattice instance is defined as `Equiv.refl` on a
+collapsed carrier and the QPF instance relates distinct types; this file exhibits no cross-setting map,
+so the schema unifies the *shape*, not the seams. This is the DECORATIVE-vs-real test resolved honestly: the
 shared schema is real and both-instantiated, but it is loose enough to be vacuous on the lattice side,
 and that looseness is itself proved.
 -/
@@ -141,9 +138,9 @@ abbrev FpSub (L : Type u) [ZPSemilattice L] [AbstractSelfApp L] : Type u :=
   {x : L // AbstractSelfApp.selfApp x = x}
 
 /-- The lattice selfApp seam as a `SeamSchema`. The μ-carrier (least f.p.) and the ν-carrier
-(greatest f.p.) are FORCED to be the same object — the fixed-point subtype `FpSub L` — because
-"least = greatest" (`selfApp_bot_is_both_extremal`) collapses them before the schema applies.
-Hence the seam witness can only be `Equiv.refl`. -/
+(greatest f.p.) are DEFINED here as the same object — the fixed-point subtype `FpSub L` — and the
+seam witness as `Equiv.refl`. The collapse is this definition's choice; "least = greatest"
+(`selfApp_bot_is_both_extremal`) is what makes one carrier serve for both readings. -/
 def latticeSeam : SeamSchema (FpSub L) (FpSub L) :=
   ⟨Equiv.refl _⟩
 
@@ -175,13 +172,13 @@ theorem both_satisfy_seam_schema :
         ∧ (bot : L) ∈ {x : L | AbstractSelfApp.selfApp x = x}) :=
   ⟨qpfSeam_cmp_is_canonical Unit, latticeSeam_carrier_nonempty_singleton⟩
 
-/-! ## NO-GO fence: the schema is loose on the lattice side, and no cross-setting map exists -/
+/-! ## NO-GO fence: the schema is loose on the lattice side, and this file exhibits no cross-setting map -/
 
 /-- **The lattice seam fits the schema only via `Equiv.refl` on a collapsed carrier.** In-statement:
 the `cmp` of `latticeSeam` is literally `Equiv.refl (FpSub L)` — the trivial identity equivalence. The
 lattice instance carries NO information beyond "the carrier is equivalent to itself", because
-"least = greatest" already collapsed the two carriers to one type. This is the degeneracy fence: on the
-lattice side the schema is vacuous. -/
+`latticeSeam` defines the two carriers as one type. This is the degeneracy fence: on the lattice side
+the schema is vacuous. -/
 theorem seam_schema_is_degenerate_for_lattice :
     (latticeSeam (L := L)).cmp = Equiv.refl (FpSub L) := rfl
 
@@ -194,22 +191,22 @@ theorem qpf_seam_not_automatic :
     IsEmpty (Fix ZeroParadox.idPF_Coalgebra.Obj ≃ Cofix ZeroParadox.idPF_Coalgebra.Obj) :=
   idPF_no_seam
 
-/-- **No cross-setting map (the capstone fence, content IN the statement).** The two `SeamSchema`
-instances are recorded side by side as living over UNRELATED carrier settings, with no transport
-between them:
+/-- **No cross-setting map exhibited (the capstone fence).** The two `SeamSchema`
+instances are recorded side by side over two carrier settings, with no transport between them given
+in this file:
 
 * QPF: a type equivalence `Fix (constPF Unit).Obj ≃ Cofix (constPF Unit).Obj` whose witness is the
   canonical bijective comparison (distinct carriers; the equivalence FAILS for the recursive functor
   `idPF_Coalgebra`, so it is genuine content);
-* lattice: a set equality `{x | selfApp x = x} = {⊥}` whose `SeamSchema` witness is forced to be
+* lattice: a set equality `{x | selfApp x = x} = {⊥}` whose `SeamSchema` witness is defined as
   `Equiv.refl` on the collapsed singleton carrier (vacuous content).
 
 Both are true; neither is derived from the other in this file, and there is NO function exhibited
 between the QPF carrier setting and the lattice carrier setting. The `SeamSchema` record unifies the
 *shape* "least-fp carrier ≃ greatest-fp carrier", but it is loose enough to be satisfied by `refl` on
-the lattice side and is satisfied non-trivially only on the QPF side. Therefore "the QPF root-seam IS
-the lattice selfApp seam" is a cross-setting modeling commitment / fenced analogy, NOT a Lean theorem.
-The shared schema is a common shape, not a common map. -/
+the lattice side and is satisfied non-trivially only on the QPF side. The shared schema is a common
+shape, not a common map; the shared die role is occupied per chart (`selfApp_seam_role_unique`,
+`constPF_seam_role_unique`). -/
 theorem no_cross_setting_map :
     -- QPF side: genuine equivalence (canonical, bijective) between distinct carriers ...
     (((qpfSeam Unit).cmp : Fix (constPF Unit).Obj → Cofix (constPF Unit).Obj) = canonicalCmp
@@ -222,6 +219,15 @@ theorem no_cross_setting_map :
       ({x : L | AbstractSelfApp.selfApp x = x} = ({bot} : Set L)) :=
   ⟨qpfSeam_cmp_is_canonical Unit, idPF_no_seam, rfl, selfApp_fp_set_eq_singleton_bot⟩
 
+/-- `Statement:` in the die motion `ofFun selfApp` on a `ZPSemilattice` with `AbstractSelfApp`, exactly
+    one point steps to itself only. The type names no point; the proof's witness is the least element
+    `bot`, from the class fields `fixed_bot` and `unique_fp`, and `selfApp_fp_set_eq_singleton_bot`
+    (with `Motion.selfOnlyAt_ofFun_iff`) states that identification. -/
+theorem selfApp_seam_role_unique :
+    ∃! y, (Motion.ofFun (AbstractSelfApp.selfApp (L := L))).SelfOnlyAt y :=
+  ⟨bot, (Motion.selfOnlyAt_ofFun_iff _ _).2 AbstractSelfApp.fixed_bot,
+    fun y hy => AbstractSelfApp.unique_fp y ((Motion.selfOnlyAt_ofFun_iff _ _).1 hy)⟩
+
 section PurityCheck
 #print axioms qpfSeam_cmp_is_canonical
 #print axioms latticeSeam_carrier_nonempty_singleton
@@ -229,6 +235,7 @@ section PurityCheck
 #print axioms seam_schema_is_degenerate_for_lattice
 #print axioms qpf_seam_not_automatic
 #print axioms no_cross_setting_map
+#print axioms selfApp_seam_role_unique
 end PurityCheck
 
 end ZeroParadox

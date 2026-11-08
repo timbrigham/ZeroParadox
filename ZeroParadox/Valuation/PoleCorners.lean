@@ -54,6 +54,8 @@ namespace ZeroParadox
 
 /-! ### § I. The pole and its four representations -/
 
+-- [ZP port] Lean 4.35: Mathlib's `Fintype` deriving handler needs the pre-4.35 defeq transparency.
+set_option backward.isDefEq.respectTransparency false in
 /-- The pole: the two-element type `{0, ∞}` — the framework's self-dual point `0 = ∞`. -/
 inductive Pole where
   | zero

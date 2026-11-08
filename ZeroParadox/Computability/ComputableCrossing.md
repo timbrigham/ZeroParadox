@@ -14,7 +14,7 @@ function space — and Set refutes it (`reflexive_object_refuted`,
 complete lattices the monotone/domain regime has no fixed-point-free MONOTONE endomap
 (Knaster–Tarski), which removes the monotone witness only. This records a regime where the
 obstruction is absent up to `eval`, which the framework already contains: the **computable** regime
-(literally fixed-point-free computable maps still exist, `Code.pair c c` below).
+(literally fixed-point-free computable maps still exist, `Code.pair c c` below, `code_pair_diag_fixedPointFree`).
 
 ## Why the computable regime crosses it
 
@@ -25,15 +25,16 @@ The universal machine `eval : Code → (ℕ →. ℕ)` is point-surjective onto 
 
 ⚠ **THAT IS WEAKER THAN "no fixed-point-free total computable endomap", AND THE STRONG FORM IS FALSE.**
 `fun c => Code.pair c c` is total, computable, and has no fixed point anywhere — pairing a code with
-itself always makes it structurally larger. Rogers is an equality **under the `eval` quotient**: two
+itself always makes it structurally larger (`code_pair_diag_fixedPointFree`,
+`ZeroParadox/Category/Lawvere.lean`). Rogers is an equality **under the `eval` quotient**: two
 different programs computing the same function.
 
 ⚠ **So this is NOT the exact dual of `reflexive_object_refuted`**, which consumes *literal* `f x ≠ x` —
 a precondition the witness above satisfies. The conclusion (Lawvere fires in the computable category)
 still holds, for a reason about **which maps exist**, not about which types they land in:
 `no_computable_evalFixedPointFree` shows no computable self-map on codes is eval-fixed-point-free, so
-the diagonal that would refute the witness has no computable representative and the obstruction cannot
-fire. The obstruction is absent **at the level of `eval`**, which is the level the reflexive object
+up to `eval` the diagonal that would refute the witness has no computable representative and the
+obstruction cannot fire (under literal equality it fires, by `Code.pair c c` above). The obstruction is absent **at the level of `eval`**, which is the level the reflexive object
 lives at.
 
 ⚠ **NOT because `eval` lands in a different codomain.** That reading is refuted in one line —

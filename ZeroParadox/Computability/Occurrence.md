@@ -26,7 +26,9 @@ than statement lives here.
 
 ## What is claimed and what is not
 
-The mathematics is classical throughout — the halting results are Turing (1936) via Mathlib, and the
+The mathematics is classical throughout — the halting results are the ones conventionally credited
+to Turing (1936; that paper was not consulted here), used through Mathlib's
+`ComputablePred.halting_problem`, `halting_problem_re` and `halting_problem_not_re`, and the
 bottom-as-divergence reading is domain theory (Scott). Nothing is offered as new mathematics. What the
 Lean file contributes is the *arrangement*: which of the framework's own commitments collide (§ III),
 and where its occurrence question actually lives (§ V). The identification of the framework's
@@ -58,8 +60,9 @@ anything with a single-valued step function, of which Turing machines are one wi
 does **not** license "the framework's bottom is a Turing machine" — that is an identity across carriers,
 and the same type boundary as everywhere else. The requirements are Mathlib's (`StateTransition`), the
 witness is Mathlib's (`Turing.TM0`); what is the framework's own is the **reading** of the trichotomy,
-nothing more. Compare `ZeroParadox/Settheory/QuineHost.lean`: the honest form was never "we commit to
-AFA" but "here are the requirements, and AFA is a witness meeting them."
+nothing more. Compare `ZeroParadox/Settheory/QuineHost.lean`, where there is a commitment of the
+framework's own: adopting AFA is CC-2's commitment, and the host requirements (`QuineAtomHost`) are its Lean
+abstraction.
 
 ### Consequence 2 — `StateTransition`'s API is under-used; check it before hand-rolling
 
@@ -196,9 +199,9 @@ Turing development uses the word for exactly this (`Mathlib/Computability/Turing
 quote is cited for EXISTENCE only — no other source here was read.** The notion is standard in model
 checking; *stutter equivalence* is commonly attributed to Browne, Clarke & Grumberg, TCS **59** (1988),
 and stuttering-insensitivity of specifications to Lamport (IFIP 1983), with a textbook treatment in
-Baier & Katoen, *Principles of Model Checking* (cited above for the trap state). **None of the three was
-located in `.claude-local/papers/` as of 2026-08-06, and this paragraph makes no claim about what any of
-them says.** ⚠ Baier & Katoen is the exception worth naming: the adjacency section above *does* assert
+Baier & Katoen, *Principles of Model Checking* (cited above for the trap state). **None of the three
+had been located in this project's paper library as of 2026-08-06, and this paragraph makes no
+claim about what any of them says.** ⚠ Baier & Katoen is the exception worth naming: the adjacency section above *does* assert
 its content (p. 157, the trap state), checked against an extracted source. Unfiled is not unread.
 
 Nothing in the stuttering section is claimed as new mathematics: the content is that the corpus's own
@@ -206,7 +209,7 @@ trichotomy does not separate these cases.
 
 ## The trichotomy: loop versus recursion
 
-*(Settled 2026-07-31; long form in `.claude-local/notes/recursion_not_loop_2026-07-30.md`.)* Whether
+*(Settled 2026-07-31.)* Whether
 the bottom is a self-LOOP or a RECURSION — a descent through pairwise-distinct configurations — does
 not change the well-foundedness verdict, which is what the trichotomy results turn on. (Those results
 are stated for `f s = some s`; a distinct-state descent falls outside their hypothesis rather than
@@ -218,7 +221,7 @@ better founded than a self-loop: **distinctness buys nothing; well-foundedness c
 `1 + X`, every non-terminating behaviour equals `natInfinity`.
 
 `Reading:` the "cannot depart" family is plausibly a one-relation shadow of coalgebraic
-well-foundedness (Osius 1974 → Taylor → Adámek–Milius–Moss). Taylor (*Practical Foundations of Mathematics*, Prop 111 p. 6) and AMM are also
+well-foundedness (Osius 1974 → Taylor → Adámek–Milius–Moss). Taylor (*Well founded coalgebras and recursion*, Prop 111 p. 6) and AMM are also
 cited by `snap_boundary_two_registers` (`ZeroParadox/Multihomed/BoundaryBridge.lean`), which fences
 that the corpus proves the ⇒ direction alone; the Osius attribution is AMM's own, at their p. 11 and ref [26] (*J. Pure
 Appl. Algebra* 4, 1974). Rutten, *Universal coalgebra*, TCS 249 (2000) p. 16 states the subject in one

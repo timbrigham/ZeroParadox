@@ -4,31 +4,31 @@ Update this file first on any version bump. README.md Framework table is verifie
 
 | Document | Formal Version | Filename | Companion Version | Comp AR | Notes |
 |----------|---------------|----------|-------------------|---------|-------|
-| ZP-A Lattice Algebra | v1.33 | ZP-A_Lattice_Algebra.pdf | v1.12 | N/— | formal:f6478f2b comp:aa71c65d |
-| ZP-B p-Adic Topology | v1.30 | ZP-B_pAdic_Topology.pdf | v1.21 | N/— | formal:6080b209 comp:4d3ce35e |
-| ZP-F The Counterexamples | v1.20 | ZP-F_The_Counterexamples.pdf | v1.19 | N/— | formal:b99fbdbb comp:dee59dce |
-| ZP-C Information Theory | v1.26 | ZP-C_Information_Theory.pdf | v2.11 | N/— | formal:7ba26d82 comp:51d4a5bc |
-| ZP-D State Layer | v1.19 | ZP-D_State_Layer.pdf | v1.18 | N/— | formal:339590dd comp:6be72c57 |
-| ZP-E Bridge Document | v3.61 | ZP-E_Bridge_Document.pdf | v1.27 | Y/Y | formal:7e3ca909 comp:3a25f240 |
-| ZP-G Category Theory | v1.23 | ZP-G_Category_Theory.pdf | v1.14 | N/— | formal:7b23b058 comp:c39d201c |
-| ZP-H Categorical Bridge | v1.27 | ZP-H_Categorical_Bridge.pdf | v1.21 | N/— | formal:ac557a4e comp:b85ebaf7 |
-| ZP-H Native Categories Addendum | v1.7 | ZP-H_Native_Categories_Addendum.pdf | N/A | N/— | formal:6055c8d4 |
-| ZP-I Inside Zero | v1.28 | ZP-I_Inside_Zero.pdf | v1.34 | N/— | formal:37707b03 comp:8e589905 |
-| ZP-J Self-Reference | v2.13 | ZP-J_Self_Reference.pdf | v1.34 | N/— | formal:265f043a comp:795e47b1 |
-| ZP-J AFA Addendum | v1.19 | ZP-J_AFA_Addendum.pdf | N/A | N/— | formal:2919b9d3 |
-| ZP-J Wheel Addendum | v1.8 | ZP-J_Wheel_Addendum.pdf | v1.6 | N/— | formal:1711b209 comp:feb49592 |
-| ZP-J Keystone Addendum | v1.26 | ZP-J_Keystone_Addendum.pdf | N/A | N/— | formal:4f3bf1da |
-| ZP-K Computational Grounding | v1.27 | ZP-K_Computational_Grounding.pdf | v1.25 | N/— | formal:c4f1633e comp:7ecb1d32 |
-| ZP-L Incomputability Convergence | v1.30 | ZP-L_Incomputability_Convergence.pdf | v1.18 | N/— | formal:e9597380 comp:c273dc84 |
-| ZP-M Kleene-Ordinal Bridge | v1.13 | ZP-M_Kleene_Ordinal_Bridge.pdf | v1.8 | N/— | formal:e7f71e6d comp:139f50be |
-| ZP-N The Constructive Snap | v2.5 | ZP-N_The_Constructive_Snap.pdf | N/A | N/— | formal:5bb204ce |
-| ZP-P The Fixed-Point Fork | v1.26 | ZP-P_The_Fixed_Point_Fork.pdf | N/A | N/— | formal:ee630188 |
-| ZP-R Cross-Category Fixed Point | v1.20 | ZP-R_Cross_Category_Fixed_Point.pdf | N/A | N/— | formal:b73d52ec |
-| ZP-R Diagonal Family Addendum | v1.18 | ZP-R_Diagonal_Family_Addendum.pdf | N/A | N/— | formal:386d90ea |
-| ZP-Q The Frame-Change | v1.13 | ZP-Q_The_Frame_Change.pdf | N/A | N/— | formal:bcbee63b |
-| Zero Paradox Foreword | v2.36 | Zero_Paradox_Foreword.pdf | N/A | N/A | formal:ce7e929a |
-| ZP Tools | N/A | ZP_Tools_and_Methods.pdf | N/A | N/A | formal:e6eb108d |
-| ZP Choice-Free Core Addendum | v1.13 | ZP_Choice_Free_Core_Addendum.pdf | N/A | N/A | formal:e357360d |
+| ZP-A Lattice Algebra | v1.37 | ZP-A_Lattice_Algebra.pdf | v1.23 | N/— | formal:8ac90a09 comp:3d18bb87 |
+| ZP-B p-Adic Topology | v1.33 | ZP-B_pAdic_Topology.pdf | v1.21 | N/— | formal:f932756c comp:4d3ce35e |
+| ZP-F The Counterexamples | v1.26 | ZP-F_The_Counterexamples.pdf | v1.24 | N/— | formal:ed9832ca comp:43e4294e |
+| ZP-C Information Theory | v1.39 | ZP-C_Information_Theory.pdf | v2.14 | N/— | formal:4a46b049 comp:10cbc861 |
+| ZP-D State Layer | v1.21 | ZP-D_State_Layer.pdf | v1.18 | N/— | formal:af01d656 comp:6be72c57 |
+| ZP-E Bridge Document | v3.80 | ZP-E_Bridge_Document.pdf | v1.41 | Y/Y | formal:6042e5ce comp:a95ace57 |
+| ZP-G Category Theory | v1.27 | ZP-G_Category_Theory.pdf | v1.16 | N/— | formal:e901301e comp:668a9008 |
+| ZP-H Categorical Bridge | v1.35 | ZP-H_Categorical_Bridge.pdf | v1.26 | N/— | formal:95dad22c comp:7d801305 |
+| ZP-H Native Categories Addendum | v1.14 | ZP-H_Native_Categories_Addendum.pdf | N/A | N/— | formal:b961348b |
+| ZP-I Inside Zero | v1.44 | ZP-I_Inside_Zero.pdf | v1.49 | N/— | formal:e7223686 comp:c5105dc3 |
+| ZP-J Self-Reference | v2.19 | ZP-J_Self_Reference.pdf | v1.42 | N/— | formal:c802922a comp:ab3e7a27 |
+| ZP-J AFA Addendum | v1.22 | ZP-J_AFA_Addendum.pdf | N/A | N/— | formal:5bb92504 |
+| ZP-J Wheel Addendum | v1.11 | ZP-J_Wheel_Addendum.pdf | v1.15 | N/— | formal:849e279d comp:7812acd4 |
+| ZP-J Keystone Addendum | v1.31 | ZP-J_Keystone_Addendum.pdf | N/A | N/— | formal:f97b62dd |
+| ZP-K Computational Grounding | v1.38 | ZP-K_Computational_Grounding.pdf | v1.34 | N/— | formal:45418ad4 comp:8180bfc8 |
+| ZP-L Incomputability Convergence | v1.38 | ZP-L_Incomputability_Convergence.pdf | v1.23 | N/— | formal:f9a872b7 comp:a0e059df |
+| ZP-M Kleene-Ordinal Bridge | v1.20 | ZP-M_Kleene_Ordinal_Bridge.pdf | v1.14 | N/— | formal:502353c3 comp:9888babd |
+| ZP-N The Constructive Snap | v2.9 | ZP-N_The_Constructive_Snap.pdf | N/A | N/— | formal:625a4d4e |
+| ZP-P The Fixed-Point Fork | v1.37 | ZP-P_The_Fixed_Point_Fork.pdf | N/A | N/— | formal:794df5a8 |
+| ZP-R Cross-Category Fixed Point | v1.27 | ZP-R_Cross_Category_Fixed_Point.pdf | N/A | N/— | formal:b2c9513f |
+| ZP-R Diagonal Family Addendum | v1.25 | ZP-R_Diagonal_Family_Addendum.pdf | N/A | N/— | formal:126a51c7 |
+| ZP-Q The Frame-Change | v1.25 | ZP-Q_The_Frame_Change.pdf | N/A | N/— | formal:355f4257 |
+| Zero Paradox Foreword | v2.47 | Zero_Paradox_Foreword.pdf | N/A | N/A | formal:f4f5c8d2 |
+| ZP Tools | N/A | ZP_Tools_and_Methods.pdf | N/A | N/A | formal:7d101f1d |
+| ZP Choice-Free Core Addendum | v1.19 | ZP_Choice_Free_Core_Addendum.pdf | N/A | N/A | formal:825920cd |
 
 **Comp AR column key:** `Y/Y` = current comp hash adversary-reviewed + remediated (or confirmed clean). `Y/N` = reviewed, fixes identified but not yet applied. `N/—` = not yet reviewed.
 
@@ -42,7 +42,7 @@ The `formal:XXXXXXXX comp:XXXXXXXX` tokens in the Notes column above are SHA-256
 ```
 python tools/verify/check_hashes.py
 ```
-A hash `MISMATCH` means a script was modified without a version bump and PDF rebuild. An AR status of `STALE` means the companion script changed since its last adversary review — re-review required before merge.
+A hash `MISMATCH` means a script was modified without a version bump and PDF rebuild. An AR status (`STALE` included) comes from a legacy per-document tracker that gates nothing: review coverage is a verdict in the ledger, and `check_hashes.py` prints that these columns are to be ignored.
 
 **Post-fix workflow** — after applying adversary-review fixes, rebuilding the PDF, and updating the hash in register.md, run one command to close the loop:
 ```

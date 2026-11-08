@@ -1,4 +1,4 @@
-name: Axiom Ledger
+name: Axiom Ledger (choice-free computability)
 
 # The axiom-profile gate. Re-elaborates ZeroParadox/Meta/AxiomLedger.lean, whose `#eval`
 # recomputes every ledgered declaration's axiom profile with the vendored auditor
@@ -7,8 +7,13 @@ name: Axiom Ledger
 # "Complete Project" also fails on drift; this job isolates it and shows the table. Fires on a
 # toolchain or Mathlib bump too, because that is when a profile drifts. A last step checks the
 # gate fails closed: a ledger with one planted wrong profile must come out red.
+# The path filters below do not cover the ledgered files' whole import closure (Kleene.lean and
+# its imports, for one), so a weekly scheduled run re-checks the ledger on the default branch
+# whatever changed. GitHub disables scheduled runs after 60 days with no repository activity.
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '17 6 * * 1'
   push:
     branches:
       - main

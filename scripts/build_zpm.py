@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-M: Kleene-Ordinal Bridge PDF Builder
-Version 1.13 | October 2026
+Version 1.20 | November 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.13'
+VERSION = '1.20'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -28,7 +28,7 @@ def build():
             '<i>Synthesis bridge. '
             'All theorems §I&#8211;§IV proved sorry-free in Lean 4. '
             'Closes the hfp free hypothesis (ZP-L) and the snapEmbed type bridge. '
-            'Axiom footprint: [propext, Classical.choice, Quot.sound] throughout.</i>',
+            'Axiom footprint: at most [propext, Classical.choice, Quot.sound], per declaration below.</i>',
             S['note']),
         sp(10),
         hr(),
@@ -43,16 +43,17 @@ def build():
         'alignment hypothesis plus monotonicity: hfp is not an independent condition. '
         'Second, the canonical type bridge snapEmbed : MachinePhase &#8594; &#8484;&#8322; '
         'formalizes the structural triangle connecting the pre-snap state c&#8320; '
-        '(read as the Kleene quine, a KleeneStructure requirement in ZP-K, not a theorem), the ordinal snap at &#949;&#8320; (ZP-L), and the '
+        '(&#8869; of MachinePhase; reading it as the Kleene quine is not an equation, since a Code and a MachinePhase state '
+        'are different types, and that it runs is the occurrence commitment), the ordinal snap at &#949;&#8320; (ZP-L), and the '
         '2-adic limit 0 (ZP-B).'))
     E.append(body(
-        'The closing result (§IV) records that both the Kleene recursion theorem and '
-        'the ordinal fixed-point &#949;&#8320; = &#969;^&#949;&#8320; are instances of '
-        'the same diagonalization pattern: a self-referential operation produces a forced '
-        'fixed point. The two domains — computability theory (codes and Gödel numbers) '
-        'and ordinal theory (&#969;-tower iteration) — use no shared mathematical machinery, '
-        'but the structural schema is identical. Remark R-M.1 tracks what this means for '
-        'DA-1 Path 2 and the boundary of the diagonalization frame.'))
+        'The closing result (§IV) proves two existence statements together: a code c with eval c n = eval c (encode c + n) '
+        'for every n (a periodicity condition, proved via the recursion theorem, which constant codes also meet) and the least '
+        'ordinal fixed point &#949;&#8320; = &#969;^&#949;&#8320;. '
+        'It is a conjunction of two existence proofs over different types. The two domains — computability '
+        'theory (codes and Gödel numbers) and ordinal theory (&#969;-tower iteration) — use no shared '
+        'mathematical machinery; reading them as one pattern is the framework&#8217;s interpretation, not '
+        'what the theorem proves (Remark R-M.1). R-M.1 also tracks what this means for DA-1 Path 2.'))
     E.append(hr())
 
     # ── Section I: The snapEmbed Morphism ──────────────────────────────────────
@@ -69,11 +70,18 @@ def build():
         'Under multiplication on &#8484;&#8322;, 0 is absorbing — mirroring exactly the '
         'join structure on MachinePhase, where c&#8321; is the absorbing element.'))
     E.append(body(
-        'Within the ZP framework, 0 &#8712; &#8484;&#8322; plays the role of &#8869; — '
-        'it is the 2-adic valuation limit and the fixed point of multiplication by 2. '
-        'snapEmbed makes this modelling commitment concrete: c&#8321; maps to 0 because '
-        'c&#8321; IS the object at infinite 2-adic depth. This is a modelling commitment, '
-        'not a ring-theoretic theorem.'))
+        'No equation between a MachinePhase state and a 2-adic integer is stated; they are different types. '
+        'What c&#8321; and 0 share is a role, the die&#8217;s Motion.SelfOnlyAt (ZeroParadox/Die.lean): a point that '
+        'steps to itself and to nothing else; in each carrier its occupant is proved for the step chosen there. '
+        'Two pairings, each through the map snapEmbed, stand in place of an identity (Incompleteness.lean &#167;I-b). Under the join step a &#8594; join a z for some z, only '
+        'c&#8321; occupies the role (machineJoinMotion_selfOnlyAt_iff); under the multiplication step x &#8594; x&#183;w for some w '
+        'on &#8484;&#8322;, only 0 does (z2MulMotion_selfOnlyAt_iff); snapEmbed is a map of these two motions '
+        '(snapEmbedHom). Its back clause fails at c&#8320; (1 steps to 2, and no state maps to 2), so the general '
+        'transport of the role along such maps does not apply; at c&#8321; the role does carry over, because 0 has only '
+        'itself as successor (snapEmbed_selfOnlyAt_c1, from Motion.selfOnlyAt_relHom). Under doubling on &#8484;&#8322;, '
+        'only 0 occupies the role (z2_double_selfOnlyAt_iff), and 0 is divisible by every power of 2 (snapEmbed_c1_dvd); but snapEmbed '
+        'carries no motion with a step at c&#8320; into doubling steps (snapEmbed_doubling_noStepAt): the snap '
+        'c&#8320; &#8594; c&#8321; goes to 1 &#8594; 0, which is not a doubling step.'))
 
     E.append(def_box(
         'Definition: snapEmbed (Incompleteness.lean §I)',
@@ -84,8 +92,8 @@ def build():
             '',
             'The morphism property: join on MachinePhase (c&#8321; is absorbing under join) '
             'corresponds to multiplication on &#8484;&#8322; (0 is absorbing under &#215;). '
-            'Both structures share the absorbing-element pattern — the bridge is structural, '
-            'not incidental.',
+            'In the die this is a map of motions, from a &#8594; join a z for some z on MachinePhase to '
+            'x &#8594; x&#183;w for some w on &#8484;&#8322; (snapEmbedHom, &#167;I-b).',
         ]
     ))
     E.append(sp(6))
@@ -131,9 +139,28 @@ def build():
             '&#8704; n : &#8469;,  (2 : &#8484;&#8322;)^n &#8739; snapEmbed c&#8321;',
             'c&#8321; maps to 0, which is divisible by all powers of 2.',
             '0 &#8712; &#8484;&#8322; is divisible by 2^n for every n &#8212; infinite 2-adic depth.',
-            'This is the formal signature of &#8869; = {&#8869;}: infinite 2-adic valuation.',
             'Proof: simp [snapEmbed_c1].',
             'Lean purity: [propext, Classical.choice, Quot.sound]. ✓',
+        ]
+    ))
+    E.append(sp(4))
+
+    E.append(result_box(
+        'Results: snapEmbed in the die (Incompleteness.lean §I-b)',
+        [
+            'machineJoinMotion_selfOnlyAt_iff: under a &#8594; join a z for some z, y steps to itself and to nothing else iff y = c&#8321;. '
+            'Lean purity: [propext].',
+            'z2MulMotion_selfOnlyAt_iff: under x &#8594; x&#183;w for some w on &#8484;&#8322;, y steps to itself and to nothing else iff y = 0. '
+            'Lean purity: [propext, Classical.choice, Quot.sound].',
+            'snapEmbedHom: snapEmbed is a strict map between these two motions (steps to steps, from snapEmbed_mul_morphism). '
+            'An example beside it shows the back clause fails at c&#8320; (1 steps to 2, and no state maps to 2). '
+            'Lean purity: [propext, Classical.choice, Quot.sound].',
+            'snapEmbed_selfOnlyAt_c1: the image of c&#8321; steps to itself only in the multiplication motion, carried along '
+            'snapEmbedHom&#8217;s steps by Motion.selfOnlyAt_relHom. Lean purity: [propext, Classical.choice, Quot.sound].',
+            'z2_double_selfOnlyAt_iff: under doubling on &#8484;&#8322;, y steps to itself and to nothing else iff y = 0. '
+            'Lean purity: [propext, Classical.choice, Quot.sound].',
+            'snapEmbed_doubling_noStepAt: if snapEmbed sends every step of a motion M on MachinePhase to a doubling step, '
+            'c&#8320; has no step in M. Lean purity: [propext, Classical.choice, Quot.sound]. ✓',
         ]
     ))
     E.append(sp(6))
@@ -146,8 +173,8 @@ def build():
             'occupant 0 and the &#949;&#8320; occupant differ (epsilon0_ne_bot); against the '
             '2-adic 0 an identity with &#949;&#8320; is not a well-formed statement '
             '(it fails to elaborate, Ordinal vs &#8484;&#8322;), and the link runs '
-            'through maps: snapEmbed sends c&#8321; to 0, the Scale.lean chart\'s '
-            '(&#8869; = 0) bottom-role occupant. The canonical threshold '
+            'through maps: snapEmbed sends c&#8321; to 0, the bottom-role occupant of the Scale.lean chart, '
+            'whose join with &#8869; = 0 is chosen (ZeroParadox/Valuation/Scale.lean &#167;V). The canonical threshold '
             'map Ordinal &#8594; MachinePhase is order-non-decreasing in ZP-A\'s join order '
             '(snap_map_mono), and no map Ordinal &#8594; MachinePhase is compatible with the '
             'CNF &#8594; &#8484;&#8322; map along the tower: for every g : MachinePhase &#8594; '
@@ -221,8 +248,8 @@ def build():
     E.append(callout(
         'What §II achieves: hfp is no longer a free hypothesis in the minimality theorem. '
         'Given &#981; &#949;&#8320; = c&#8321; (the alignment condition: the map snaps at '
-        '&#949;&#8320;) plus monotonicity, the full minimality result follows from the ordinal '
-        'structure alone. hfp is a derived consequence, not an additional commitment.',
+        '&#949;&#8320;) plus monotonicity and every tower stage sent to c&#8320; (h0), the full '
+        'minimality result follows (snap_unconditional). hfp is a derived consequence, not an additional commitment.',
         bg=GREEN_LITE, border=GREEN
     ))
     E.append(sp(6))
@@ -291,24 +318,28 @@ def build():
     ))
     E.append(sp(6))
 
-    # ── Section IV: Shared Diagonalization Pattern ─────────────────────────────
+    # ── Section IV: The Kleene and Ordinal Fixed Points ─────────────────────────────
     print('[build_zpm] Building Section IV...')
     E += [
         hr(),
-        Paragraph('Section IV: Shared Diagonalization Pattern', S['h1']),
+        Paragraph('Section IV: The Kleene and Ordinal Fixed Points', S['h1']),
         hr(),
     ]
 
     E.append(body(
-        'Both the Kleene recursion theorem (ZP-K) and the ordinal fixed-point &#949;&#8320; '
-        '(ZP-L) arise from the same structural schema: a self-referential operation has a '
-        'forced fixed point. In computability theory, the diagonal applies to codes and '
-        'their Gödel numbers. In ordinal theory, the diagonal applies to the tower iteration '
-        '&#945; &#8614; &#969;^&#945;. The two domains share no mathematical machinery, '
-        'but the diagonalization pattern is identical.'))
+        'The Kleene recursion theorem (ZP-K) gives a code fixed up to evaluation, and &#949;&#8320; (ZP-L) is '
+        'the least fixed point of &#969;^&#183;; the two come from different constructions. In computability theory the construction '
+        'is a diagonal argument over codes and their Gödel numbers. In ordinal theory &#949;&#8320; is '
+        'reached by iterating the normal function &#945; &#8614; &#969;^&#945; from 0 and taking the '
+        'supremum (&#949;&#8320; = nfp (&#969;^&#183;) 0, epsilonZero_eq_nfp in ZeroParadox/Ordinal/Gentzen.lean), the '
+        'fixed-point lemma for normal functions rather than a diagonal argument. The two domains share no '
+        'mathematical machinery. The theorem below records the ordinal fixed point and, on the computability side, '
+        'the computability fixed point the recursion theorem yields: a code c with eval c = selfApply c '
+        '(IsComputationalQuine), a predicate constant codes also satisfy, so it does not pin self-reference '
+        '(Remark R-M.1).'))
 
     E.append(data_table(
-        headers=['Domain', 'Self-referential operation', 'Forced fixed point'],
+        headers=['Domain', 'Operation', 'Fixed point'],
         rows_data=[
             ['Computability (ZP-K)',
              'eval c = selfApply c  (c runs on its own Gödel number)',
@@ -327,11 +358,12 @@ def build():
             '(&#8707; c : Code, &#8704; n, eval c n = eval c (encode c + n))  &#8743;',
             '(&#8707; &#945; : Ordinal, &#969;^&#945; = &#945; &#8743; '
             '&#8704; &#946;, &#969;^&#946; = &#946; &#8594; &#945; &#8804; &#946;)',
-            'Both diagonalization patterns produce fixed points, co-proved in one formal context.',
-            'Left: Kleene quine (period = Gödel number of c), via computational_quine_exists.',
+            'Two existence statements, co-proved in one formal context.',
+            'Left: a code periodic with period its own Gödel number, via computational_quine_exists; '
+            'constant codes also satisfy it, so the left conjunct alone does not pin self-reference.',
             'Right: &#949;&#8320; = &#969;^&#949;&#8320;, minimal; via epsilonZero_fixedPoint '
             'and epsilonZero_le_fixedPoint.',
-            'The co-existence is the formal content: two forced fixed points, two domains, '
+            'The co-existence is the formal content: two existence statements, two domains, '
             'one theorem.',
             'Lean purity: [propext, Classical.choice, Quot.sound]. ✓',
         ]
@@ -341,29 +373,38 @@ def build():
     E.append(remark_box(
         'Remark R-M.1: DA-1 Path 2 and the Limits of the Diagonalization Frame',
         [
-            'both_fixed_points_exist establishes that Kleene diagonalization (a code on '
-            'its own Gödel number) and ordinal diagonalization (&#949;&#8320; = &#969;^&#949;&#8320;, '
-            'least fixed point) are the same structural pattern in two domains. Both are '
-            'textbook instances of the diagonalization schema.',
-            'L-INF (ZP-C §II: &#8869; has divergent surprisal — unbounded information content, '
-            'incompressible by any finite description) is structurally analogous. Whether it '
-            'fits the same diagonalization schema formally is the open question.',
-            'The formally unconnected instance is L-INF. This gap is DA-1 Path 2 — the '
-            'informational bridge. The reason Path 2 resisted formalization is now visible '
-            'from this layer: L-INF is a measure-theoretic statement (Shannon entropy, '
-            'probability distributions) while the Kleene quine is a computability-theoretic '
-            'statement (partial recursive functions, Gödel encoding). The two frameworks '
-            'share no mathematical machinery.',
-            'The diagonalization frame established here provides the common conceptual ground, '
-            'but the formal bridge requires the Kolmogorov complexity connection: '
-            'incompressibility is the concept that lives in both worlds simultaneously. '
-            'That bridge is outside the current Lean scope, pending AIT infrastructure '
-            'not yet in Mathlib.',
-            'DA-1 Path 2 was recharacterized in ZP-E/ZP-K as a foundational commitment '
-            'rather than a missing proof. The diagonalization frame here makes the boundary '
-            'precise: the gap is not a skipped proof step but a genuine framework separation — '
-            'measure-theoretic surprisal on one side, computability-theoretic encoding on the '
-            'other, with no shared machinery in current Mathlib.',
+            'both_fixed_points_exist records, on one side, a code periodic with period its own Gödel number '
+            '(obtained by Kleene diagonalization, though constant codes also meet the condition) and, on the other, '
+            'the ordinal &#949;&#8320; = &#969;^&#949;&#8320;, the least fixed point and the supremum of the iterates '
+            'of &#969;^&#183; from 0. The statement is a '
+            'conjunction of two existentials, so it establishes that both exist, not that they are one '
+            'structural pattern; reading them as the same pattern is the framework&#8217;s interpretation, '
+            'and no equation between a Code and an Ordinal is well-formed. The Kleene fixed point comes from '
+            'a diagonal argument (Lawvere 1969; Yanofsky 2003, Theorem 5, places the recursion theorem under that schema); &#949;&#8320; comes from the fixed-point lemma for normal functions, by '
+            'iteration to a supremum.',
+            'The informational argument has two charts. Depth chart, ZP-C L-INF: surprisal is unbounded above in the '
+            'ball-hierarchy depth, each value finite (l_inf). Point chart: at 0 of Q<sub>2</sub>, the one point in every '
+            'ball of the chain centred at 0, the 2-adic additive valuation is &#8868; (padic_addVal_bot), the point to '
+            'which c&#8320;, &#8869; of MachinePhase, corresponds in ZP-C. As of 2026-11-01 no single declared map from '
+            'MachinePhase into &#8484;<sub>2</sub> or &#8474;<sub>2</sub> sends c&#8320; to 0: searching the .lean files under '
+            'ZeroParadox/ for both type names finds snapEmbed (ZeroParadox/Ordinal/Incompleteness.lean) and two negative '
+            'examples (ZeroParadox/Ordinal/Gentzen.lean, ZeroParadox/Valuation/SemilatticeInstance.lean). A composite does: '
+            'the order isomorphism from MachinePhase onto the two-point Pole (c&#8320; to zero), exhibited in an anonymous '
+            'example in ZeroParadox/DieCannotBe.lean and read there as order shape only, followed by poleToSphere '
+            '(ZeroParadox/Valuation/PoleCornersBridge.lean), which sends zero to 0 of &#8474;<sub>2</sub> in its one-point '
+            'compactification; that composite is not declared. '
+            '&#167; I&#8217;s snapEmbed is a different map, sending c&#8320; to 1 and c&#8321; to 0; the two are not '
+            'composed. L-INF is structurally analogous to the Kleene fixed point. Whether it '
+            'fits Kleene&#8217;s diagonalization schema formally is the open question this remark tracks.',
+            'L-INF stays formally unconnected. It is a measure-theoretic statement '
+            '(surprisal under a probability measure on ZP-B&#8217;s binary space), while the Kleene quine '
+            'is a computability-theoretic statement (partial recursive functions, Gödel encoding), '
+            'and neither this remark nor both_fixed_points_exist links them. ZP-C uses the surprisal '
+            'measure and Kolmogorov complexity as two separate arguments (ZP-C Remark R-BRIDGE).',
+            'DA-1 Path 2 is a different matter. In ZP-E (DA-1 insert &#167; IV) it is the step from '
+            'unbounded surprisal to executing: a bridge principle of its own, a missing principle and '
+            'not a missing proof, which the framework does not adopt and which is not the occurrence '
+            'commitment (ZeroParadox/Ordinal/Incompleteness.md, Remark R-M.1).',
         ]
     ))
     E.append(sp(6))
@@ -388,6 +429,12 @@ def build():
             ['snap_state_zp2_is_zero', '§III', 'Proved ✓'],
             ['zpm_triangle', '§III', 'Proved ✓'],
             ['both_fixed_points_exist', '§IV', 'Proved ✓'],
+            ['machineJoinMotion_selfOnlyAt_iff', '§I-b', 'Proved ✓'],
+            ['z2MulMotion_selfOnlyAt_iff', '§I-b', 'Proved ✓'],
+            ['snapEmbedHom', '§I-b', 'Defined ✓'],
+            ['snapEmbed_selfOnlyAt_c1', '§I-b', 'Proved ✓'],
+            ['z2_double_selfOnlyAt_iff', '§I-b', 'Proved ✓'],
+            ['snapEmbed_doubling_noStepAt', '§I-b', 'Proved ✓'],
         ],
         col_widths=[TW * 0.55, TW * 0.15, TW * 0.30],
     ))
@@ -396,15 +443,17 @@ def build():
     E.append(axiom_box(
         'Axiom Purity',
         [
-            'All theorems carry axiom footprint: [propext, Classical.choice, Quot.sound].',
-            'These are standard Mathlib infrastructure axioms, inherited from ordinal theory '
-            '(ZP-L), 2-adic analysis (ZP-B), and computability theory (ZP-K).',
+            'Axiom footprint: at most [propext, Classical.choice, Quot.sound], per declaration (machineJoinMotion and machineJoinMotion_selfOnlyAt_iff carry [propext] only).',
+            'propext, Classical.choice and Quot.sound are Lean&#8217;s own axioms; here they are reached through '
+            'Mathlib&#8217;s ordinal theory (ZP-L), 2-adic analysis (ZP-B), and computability theory (ZP-K).',
             'Classical.choice is carried by the statements of the ordinal fixed-point (nfp) results as '
-            'written (statement control, measured 2026-10-08; ZeroParadox/Category/ChoiceCannotBe.md), '
+            'written (the statement controls printed in ZeroParadox/Ordinal/Epsilon0MinMax.lean; '
+            'ZeroParadox/Category/ChoiceCannotBe.md), '
             'and present in '
             'the computability fixed-point (Kleene\'s theorem). ZP-K Section IV tabulates the '
             'per-declaration measurements.',
-            'Zero sorry in Incompleteness.lean. Verified: lake build, May 2026.',
+            'The footprints listed here are copies; to re-measure one, run #print axioms on the named '
+            'declaration.',
         ]
     ))
     E.append(sp(6))
@@ -415,7 +464,7 @@ def build():
             '<i>End of ZP-M | Kleene&#8211;Ordinal Bridge | '
             'snapEmbed type bridge | hfp gap closed | zpm_triangle co-proved | '
             'both_fixed_points_exist | R-M.1: DA-1 Path 2 boundary | '
-            'All Incompleteness.lean theorems verified. Axioms: [propext, Classical.choice, Quot.sound].</i>',
+            'All Incompleteness.lean theorems verified. Axioms: at most [propext, Classical.choice, Quot.sound], per declaration.</i>',
             S['endnote']),
     ]
 

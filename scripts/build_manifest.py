@@ -39,7 +39,9 @@ cites; it is a curated map of what is established, not a source of new claims.
 **On the central claim (read this first).** The organizing thesis is that the bottom element recurs in the
 same structural role across several domains. What is **proved** is the *membership* and the *recurrence of
 the slot structure*. The reading that the various bottoms are *one object* is retired as ill-typed (object
-equality across categories does not typecheck and is not invariant under equivalence); what separates the members
+equality across categories does not typecheck and is not invariant under equivalence; for the equivalence
+principle see Ahrens and North, "Univalent foundations and the equivalence principle", arXiv:2202.01892,
+§ 2, as `CLAIMS.md` cites it); what separates the members
 is proved property by property (seam_unique_among_named, for the named bottoms, in a lattice with no top).
 The index above is where the precise line between proved and conjectural is kept.
 """

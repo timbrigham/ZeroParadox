@@ -5,8 +5,7 @@ import ZeroParadox.Category.RootCutDegeneracy
 import ZeroParadox.Category.SeamArrowLevel
 
 /-!
-# The canonical μ→ν comparison map at the root seam, and the honest
-fence on "root-seam ≅ node-seam"
+# The canonical μ→ν comparison map at the root seam, and the root seam beside the node seam
 
 ## Engineer's Take
 
@@ -26,7 +25,7 @@ equivalence (it factors through `A` on both sides). It does **not** identify the
 **μ→ν comparison map** — the map that recursion theory actually means by "the comparison from the
 initial algebra to the final coalgebra" — nor prove that *that* map is the iso.
 
-This file closes that gap and then fences the keystone honestly.
+This file closes that gap and then sets the root seam beside the node seam, each under its own condition.
 
 **GO (the genuinely new edge).** For any QPF `F`, the canonical comparison `Fix F → Cofix F` is the
 unique initial-algebra homomorphism into `Cofix F` regarded as an `F`-algebra via the inverse of
@@ -48,9 +47,9 @@ So the *canonical* μ→ν comparison — the one defined by recursion, with its
 statement — is an isomorphism for the no-recursive-position functor. That is strictly more than `ZeroParadox/Category/RootCutDegeneracy.lean`
 (existence of an equiv): it pins down *which* map and proves the comparison itself invertible.
 
-**NO-GO / honest fence (the load-bearing deflation, IN the statements).** The pre-registered risk was
-that "root-seam ≅ node-seam" is a loose analogy, not a structural identity. It is. Two facts make this
-decisive and they are stated in Lean:
+**NO-GO (the deflation, IN the statements).** The pre-registered question was whether
+"root-seam ≅ node-seam" is a structural identity. An equation between the two settings is ill-typed;
+two facts, stated in Lean, show that each seam has its own governing condition:
 
 1. `seam_iff_no_recursive_position` — the canonical comparison is an iso for `constPF` (no recursive
    position) and is *not* even a bijection for `idPF_Coalgebra` (one recursive position): there `Fix` is empty
@@ -64,11 +63,10 @@ decisive and they are stated in Lean:
 
 The two governing conditions live in different settings (a QPF / coalgebra condition on a functor vs a
 universal-property condition on an object) and there is **no map between the settings** in this file.
-`root_node_seam_no_identity` packages the conclusion: the root-seam iso and the node-seam arrow
-collapse are recorded side by side as *distinct* phenomena, both true, neither derivable from the
-other here — so "the polynomial-functor seam and the zero-object seam are the SAME phenomenon" is a
-**cross-setting modeling commitment / analogy**, not a Lean theorem. The honest new content is the
-canonical-comparison iso (GO); the unification is fenced.
+`root_node_seam_no_identity` records the root-seam iso and the node-seam arrow collapse side by side,
+both true, neither derived from the other. `Reading:` CARRIER — what they share is a die role, occupied
+per chart with no equation across (`constPF_seam_role_unique`, `moduleCat_seam_role_unique_iff_isZero`;
+indexed in `ZeroParadox/DieCannotBe.lean`).
 -/
 
 namespace ZeroParadox
@@ -142,7 +140,7 @@ theorem canonicalCmp_bijective :
   rw [canonicalCmp_eq_root_seam]
   exact (root_seam : Fix (constPF A).Obj ≃ _).bijective
 
-/-! ## The honest fence: root-seam vs node-seam are distinct phenomena -/
+/-! ## Root-seam and node-seam: each governed by its own condition -/
 
 /-- **The root-seam is governed by absence of a recursive position.** For `constPF` (no recursive
 position) the canonical comparison is a bijection; for `idPF_Coalgebra` (one recursive position) NO function
@@ -172,19 +170,19 @@ theorem node_seam_arrow_collapse_is_generic :
           = 𝟙 (ZeroParadox.fC_functor.obj 0) :=
   ZeroParadox.collapse_fires_off_seam
 
-/-- **The honest fence (capstone, content IN the statement).** The root-level seam (canonical μ→ν
-comparison is an iso, governed by absence of a recursive position) and the node-#5 seam (arrow
-coincidence at a zero object, governed by the zero-object universal property and itself generic) are
-recorded side by side as DISTINCT phenomena in DISTINCT settings:
+/-- **Capstone (content IN the statement).** The root-level seam (canonical μ→ν comparison is an iso,
+governed by absence of a recursive position) and the node-#5 seam (arrow coincidence at a zero object,
+governed by the zero-object universal property and itself generic) are recorded side by side, each in
+its own setting:
 
 * root: `Function.Bijective canonicalCmp` for `constPF Unit`;
 * node: the zero-object arrow coincidence `to = from`, which equals `to = 𝟙 = from` (`ZeroParadox/Category/SeamArrowLevel.lean`), a
   collapse that is generic to bare initial / bare terminal objects.
 
 Both are true; neither is derived from the other in this file, and there is no map between the QPF
-setting and the categorical setting here. Therefore "the polynomial-functor seam and the zero-object
-seam are the SAME phenomenon" is a cross-setting modeling commitment / analogy, NOT a theorem. The
-genuine new Lean content is the canonical-comparison iso; the unification is fenced. -/
+setting and the categorical setting here. What the two seams share is the die role of exactly one
+point stepping to itself only, occupied per chart (`constPF_seam_role_unique`,
+`moduleCat_seam_role_unique_iff_isZero`); no equation across the two settings is stated. -/
 theorem root_node_seam_no_identity :
     -- root-seam: canonical comparison is an iso for the no-recursive-position functor
     Function.Bijective (canonicalCmp : Fix (constPF Unit).Obj → Cofix (constPF Unit).Obj)
@@ -202,8 +200,77 @@ theorem root_node_seam_no_identity :
    ZeroParadox.initial_endo_is_id
      (ZeroParadox.hilbert_bottom_isZero).isInitial⟩
 
+/-! ## The seam role in the die: the zero-object chart
+The chart: the elements of a module `X`, UP the identity, OVER the graph of an endomorphism of `X`. -/
+
+universe v
+
+/-- `Statement:` for a module `X`, every endomorphism `f` has exactly one point stepping to itself
+    only in `ofFun f` iff `X` is a zero object; both directions. -/
+theorem moduleCat_seam_role_unique_iff_isZero {R : Type u} [Ring R] (X : ModuleCat.{v} R) :
+    (∀ f : X ⟶ X, ∃! y, (Motion.ofFun f.hom).SelfOnlyAt y) ↔ Limits.IsZero X := by
+  constructor
+  · intro h
+    obtain ⟨y₀, -, hu⟩ := h (𝟙 X)
+    haveI : Subsingleton X := ⟨fun a b => by
+      rw [hu a ((Motion.selfOnlyAt_ofFun_iff _ _).2 rfl),
+        hu b ((Motion.selfOnlyAt_ofFun_iff _ _).2 rfl)]⟩
+    exact ModuleCat.isZero_of_subsingleton X
+  · intro hz f
+    haveI : Subsingleton X := ModuleCat.subsingleton_of_isZero hz
+    exact ⟨0, (Motion.selfOnlyAt_ofFun_iff _ _).2 (map_zero f.hom),
+      fun _ _ => Subsingleton.elim _ _⟩
+
+/-- `Statement:` the same with `f` the identity alone: exactly one point steps to itself only in
+    `ofFun (𝟙 X)` iff `X` is a zero object; both directions. -/
+theorem moduleCat_id_seam_role_unique_iff_isZero {R : Type u} [Ring R] (X : ModuleCat.{v} R) :
+    (∃! y, (Motion.ofFun (𝟙 X : X ⟶ X).hom).SelfOnlyAt y) ↔ Limits.IsZero X := by
+  constructor
+  · rintro ⟨y₀, -, hu⟩
+    haveI : Subsingleton X := ⟨fun a b => by
+      rw [hu a ((Motion.selfOnlyAt_ofFun_iff _ _).2 rfl),
+        hu b ((Motion.selfOnlyAt_ofFun_iff _ _).2 rfl)]⟩
+    exact ModuleCat.isZero_of_subsingleton X
+  · intro hz
+    exact (moduleCat_seam_role_unique_iff_isZero X).2 hz (𝟙 X)
+
+/-- `Statement:` at the Hilbert zero object `fD_functor.obj 0`, every endomorphism has exactly one
+    point stepping to itself only. `Reading:` the carrier has one point, so this restates `IsZero`. -/
+theorem hilbert_zero_seam_role_unique (f : fD_functor.obj 0 ⟶ fD_functor.obj 0) :
+    ∃! y, (Motion.ofFun f.hom).SelfOnlyAt y :=
+  (moduleCat_seam_role_unique_iff_isZero _).2 hilbert_bottom_isZero f
+
+-- Statement: CONTROL: at `fD_functor.obj 1`, not a zero object, some endomorphism does not have
+-- exactly one point stepping to itself only.
+example : ¬ ∀ f : fD_functor.obj 1 ⟶ fD_functor.obj 1, ∃! y, (Motion.ofFun f.hom).SelfOnlyAt y :=
+  fun h => by
+    have hs := ModuleCat.subsingleton_of_isZero ((moduleCat_seam_role_unique_iff_isZero _).1 h)
+    have : (EuclideanSpace.single (0 : Fin 1) (1 : ℂ) : StateSpace 1) = 0 :=
+      @Subsingleton.elim (StateSpace 1) hs _ _
+    simpa using congrArg (fun v => v (0 : Fin 1)) this
+
+-- Statement: CONTROL: at node #4, `fC_functor.obj 0` (initial, not a zero object), the carrier is
+-- empty, so no motion on it has a point stepping to itself only.
+example (M : Motion (fC_functor.obj 0)) : ¬ ∃ y, M.SelfOnlyAt y := by
+  rintro ⟨y, -⟩
+  exact Fin.elim0 y
+
+-- Statement: the other variant, carrier the endomorphisms `fC_functor.obj 0 ⟶ fC_functor.obj 0`:
+-- every self-map of it has exactly one point stepping to itself only. Reading: on endomorphisms the
+-- carrier has one point at node #4 (`fC_zero_isInitial`) and at node #5 (`hilbert_bottom_isZero`), so
+-- the role is occupied at both and restates that each hom-set is a singleton. On elements the carrier is
+-- empty at node #4 (an object of `KleisliCat PMF`, not a module) and has one point at node #5, so the
+-- element carriers separate the two nodes by cardinality alone; `moduleCat_seam_role_unique_iff_isZero`
+-- applies at node #5, whose object is a module; node #4's is not.
+example (g : (fC_functor.obj 0 ⟶ fC_functor.obj 0) → (fC_functor.obj 0 ⟶ fC_functor.obj 0)) :
+    ∃! y, (Motion.ofFun g).SelfOnlyAt y := by
+  haveI : Subsingleton (fC_functor.obj 0 ⟶ fC_functor.obj 0) :=
+    ⟨fun a b => fC_zero_isInitial.hom_ext a b⟩
+  exact ⟨𝟙 _, (Motion.selfOnlyAt_ofFun_iff _ _).2 (Subsingleton.elim _ _),
+    fun _ _ => Subsingleton.elim _ _⟩
+
 section PurityCheck
--- Measured footprint (lake build, v4.30.0-rc2): every result is
+-- Measured footprint (lake build, v4.35.0): every result is
 --   [propext, Classical.choice, Quot.sound]
 -- the expected library-choice footprint. The `Classical.choice` enters through `ZeroParadox/Category/RootCutDegeneracy.lean`'s ν-side
 -- (`cofixMk` / `root_seam`, the Mathlib M-type corecursion artifact) and the categorical seam
@@ -219,6 +286,9 @@ section PurityCheck
 #print axioms seam_iff_no_recursive_position
 #print axioms node_seam_arrow_collapse_is_generic
 #print axioms root_node_seam_no_identity
+#print axioms moduleCat_seam_role_unique_iff_isZero
+#print axioms moduleCat_id_seam_role_unique_iff_isZero
+#print axioms hilbert_zero_seam_role_unique
 end PurityCheck
 
 end ZeroParadox

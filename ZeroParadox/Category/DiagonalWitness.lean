@@ -50,11 +50,11 @@ theorem no_witnessRel_of_admissible_fpf {β : Type*} {M : (β → β) → Prop}
   exact hgf b hb
 
 -- Statement: with literal equality the computable endomaps of codes carry no relativized witness:
---   `fun c => Code.pair c c` is computable and fixes no code.
+--   `fun c => Code.pair c c` is computable and fixes no code (`code_pair_diag_fixedPointFree`,
+--   `ZeroParadox/Category/Lawvere.lean`).
 example : ¬ HasWitnessRel Nat.Partrec.Code Computable :=
   no_witnessRel_of_admissible_fpf (g := fun c => Nat.Partrec.Code.pair c c)
-    (Nat.Partrec.Code.primrec₂_pair.comp Primrec.id Primrec.id).to_comp
-    (fun c h => by have := congrArg sizeOf h; simp at this)
+    code_pair_diag_fixedPointFree.1 code_pair_diag_fixedPointFree.2
 
 /-- **Antitone in the admissible class (the topology spine).** Shrinking the admissible endomap class
     can only help the witness. So `{M | HasWitnessRel β M}` is downward-closed in `⊆` — a lower set /
@@ -113,7 +113,8 @@ theorem hasWitnessRel_of_subsingleton {β : Type u} [Nonempty β] [Subsingleton 
     inclusion), the set of classes carrying a diagonal witness is a **lower set** — downward closed. A
     lower set is exactly a closed set of the Alexandrov topology on the poset, so this is the topology
     the diagonal-fixed-point collection sits on: the fork (wall vs floor) is the boundary of one closed
-    set, crossed as the admissible class shrinks past the fixed-point-free diagonal. Immediate from
+    set. One way only: the floor can switch on only once the class contains no fixed-point-free map
+    (`no_witnessRel_of_admissible_fpf`); the converse is not claimed. Immediate from
     `witnessRel_antitone`. -/
 theorem witnessSet_isLowerSet {β : Type u} :
     IsLowerSet {M : Set (β → β) | HasWitnessRel β M} := by
@@ -122,19 +123,23 @@ theorem witnessSet_isLowerSet {β : Type u} :
 
 /-! ## § Axis 2 — the genuine floor in the effective category (joining the effective-topos program)
 
-The `HasWitnessRel` topology above is axis 1: the admissible map-class M *within* a fixed category
-(raw functions, raw equality). The genuine NONTRIVIAL floor lives one axis out — in the **effective
-category**, where "endomap" means computable and "equality" means eval-equality. There the Cantor
-obstruction lifts, and the diagonal genuinely closes: Rogers' fixed-point / Kleene's recursion theorem. This is the
-recognized **effective-topos / Turing-category** setting (Lawvere 1969; Hyland 1982, "The effective
-topos"; Cockett–Hofstra 2008, "Introduction to Turing categories"; van Oosten). Located and cited here,
-NOT claimed — the framework joins that program. -/
+The `HasWitnessRel` topology above is axis 1: the admissible map-class M *within* a fixed category (raw functions,
+raw equality). The genuine NONTRIVIAL floor lives one axis out — in the **effective category**, where "endomap"
+means computable and "equality" means eval-equality. There the Cantor obstruction lifts, and the diagonal genuinely
+closes: Rogers' fixed-point / Kleene's recursion theorem. This is the recognized **effective-topos / Turing-category**
+setting (Lawvere 1969, TAC reprint § 2 p. 9, only asks about the recursive case; Hyland 1982, "The effective
+topos"; Cockett–Hofstra 2008, "Introduction to Turing categories"; van Oosten 2008, *Realizability*, §3.7 (a sketch of what we identify as Bauer 2006), whose Cor. 3.7.7, the recursion
+theorem, is derived from the one non-logical axiom that section adds to its standing topos hypotheses; scope in
+`ZeroParadox/Category/DiagonalWitness.md`). Located and cited here, NOT claimed — the framework joins that program. -/
 
 /-- **Axis-2 genuine floor.** Every *computable* self-map on codes has an eval-fixed point —
     **Rogers' fixed-point theorem** (`computability_face_fixedPoint` = Mathlib
     `Nat.Partrec.Code.fixed_point`). Mathlib reserves the name *Kleene's second recursion theorem*
     for `fixed_point₂`, and literally derives `fixed_point₂` from `fixed_point`, so the two are
-    inter-derivable. `ZeroParadox/Category/Lawvere.lean` attaches **both** names to `fixed_point` as a
+    inter-derivable. The split is Mathlib's naming: in Rogers 1967 `fixed_point` is Theorem 11-I
+    (p. 180), a special case of Theorem 11-IV, which he notes is sometimes called the second
+    recursion theorem (p. 196), and the two-place form is "Kleene's version" (Exercise 11-4, p. 214).
+    `ZeroParadox/Category/Lawvere.lean` attaches **both** names to `fixed_point` as a
     slash-alias ("Rogers / Kleene's recursion theorem") rather than making this split — compatible, but
     not the same convention. The fine end of axis 2. -/
 theorem effective_floor_fixedPoint {g : Nat.Partrec.Code → Nat.Partrec.Code} (hg : Computable g) :
@@ -142,10 +147,10 @@ theorem effective_floor_fixedPoint {g : Nat.Partrec.Code → Nat.Partrec.Code} (
   computability_face_fixedPoint hg
 
 /-- **Why the wall lifts in the effective category (the axis-2 mechanism).** There is no *computable*
-    self-map on codes that is eval-fixed-point-free: the recursion theorem forces a fixed point. So the
-    diagonal swap that refutes the witness at the Set level (`no_witnessRel_of_admissible_fpf`) has NO
-    computable representative up to `eval`; with literal equality one exists (the `example` after
-    `no_witnessRel_of_admissible_fpf`). This is why the floor can switch on along axis 2. -/
+    self-map on codes that is eval-fixed-point-free, so the Set-level refutation
+    (`no_witnessRel_of_admissible_fpf`) has no computable instance up to `eval`. Under literal
+    equality it runs (`fun c => Code.pair c c`, the `example` after that theorem). Hence the floor
+    can switch on along axis 2. -/
 theorem no_computable_evalFixedPointFree {g : Nat.Partrec.Code → Nat.Partrec.Code} (hg : Computable g) :
     ¬ (∀ c, Nat.Partrec.Code.eval (g c) ≠ Nat.Partrec.Code.eval c) := by
   intro hfpf
@@ -232,7 +237,6 @@ theorem no_witnessRel_evalClass_top : ¬ HasWitnessRel EvalClass (fun _ => True)
     exact (hd : False)
   refine no_witnessRel_of_admissible_fpf
     (g := fun y => if y = ⟦Code.zero⟧ then ⟦cn⟧ else ⟦Code.zero⟧) trivial (fun y hy => ?_)
-  dsimp only at hy
   by_cases h : y = ⟦Code.zero⟧
   · rw [if_pos h] at hy; exact hne (h ▸ hy.symm)
   · rw [if_neg h] at hy; exact h hy.symm

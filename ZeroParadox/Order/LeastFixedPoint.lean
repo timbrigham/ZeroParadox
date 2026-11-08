@@ -235,7 +235,7 @@ example : ¬ IsLeastFixedPointUpTo (fun A B : Type => Nonempty (A ↪ B)) (fun _
     (`IsLeastFixedPointFrom`). -/
 theorem aleph0_isLeastFixedPointFrom :
     IsLeastFixedPointFrom (· ≤ ·) (fun c : Cardinal.{0} => c + 1) 0 Cardinal.aleph0 where
-  seed_le := zero_le _
+  seed_le := zero_le
   fixed := Cardinal.add_one_eq le_rfl
   least := fun b hb _ => by
     by_contra hlt
@@ -296,7 +296,7 @@ theorem quot_optionMotion_step_iff (X Y : Cardinal.{0}) :
     (optionMotion.quot Cardinal.isEquivalent).step X Y ↔ Y = X + 1 := by
   induction X using Quotient.ind with
   | _ a =>
-    rw [Motion.quot_step_mk_iff optionMotion_stepCompat]
+    refine (Motion.quot_step_mk_iff optionMotion_stepCompat a Y).trans ?_
     constructor
     · rintro ⟨b, hb, rfl⟩
       have hb' : b = Option a := hb
@@ -325,14 +325,16 @@ end ZeroParadox
 
 /-! ## Axiom Purity Check
 
-The schema's `selfApp_*` instances and `IsLeastFixedPointFrom.unique` are axiom-free (no axioms at
-all); the Mathlib-`lfp` grounding `lfp_isLeastFixedPointFrom` is choice-free `[propext, Quot.sound]`.
-The ordinal faces (`isLeastFixedPointFrom_nfp`, `epsilon0_*`) and the Kleene face are
-STATEMENT-CARRIED (`ZeroParadox/Category/ChoiceCannotBe.md`): each statement, only assumed, already
-reports `Classical.choice` (statement control, measured 2026-10-08), from Mathlib's `Ordinal`/`nfp` and
-`Code`/`Partrec` machinery. The open question is a restatement on a choice-free carrier; ZP-N proves the
-snap-from-below (the ascent) choice-free on `ONote`, which is evidence for that question, not a
-restatement of these faces. -/
+The schema's `selfApp_*` instances and `IsLeastFixedPointFrom.unique` are axiom-free (no axioms at all); the
+Mathlib-`lfp` grounding `lfp_isLeastFixedPointFrom` is choice-free `[propext, Quot.sound]`. The ordinal
+faces (`isLeastFixedPointFrom_nfp`, `epsilon0_*`) and the Kleene face are STATEMENT-CARRIED
+(`ZeroParadox/Category/ChoiceCannotBe.md`): each statement, with no proof attached, already carries
+`Classical.choice`, from Mathlib's `Ordinal`/`nfp` and `Code`/`Partrec` machinery (for the ε₀ statements,
+the statement controls printed in `ZeroParadox/Ordinal/Epsilon0MinMax.lean`). The remaining ordinal question
+is a restatement on a carrier whose statements are choice-free, with two readings: a defined one, in Lean on
+`E0Note`, and a derived one, on a well-founded carrier, not located as of 2026-10-13; both, with the search
+record, are in `ZeroParadox/Ordinal/SnapNucleus.md` § "Axiom footprint". ZP-N proves the snap-from-below
+(the ascent) choice-free on `ONote`, which is evidence for that question, not a restatement of these faces. -/
 
 section PurityCheck
 open ZeroParadox

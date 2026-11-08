@@ -43,7 +43,7 @@ the zero object the coincidence fails (`generic_object_empty_lim_ne_colim`, `Sea
 `0` on the sphere — the frame-change fixes only the bottom.
 
 **Fences.** Category point-of-view's shape of the frame-change; the abstract cross-domain "snap = frame
-change" stays conjectural (type boundary; see `.claude-local/notes/frame_change_across_domains_2026-07-11.md`).
+change" stays conjectural (type boundary).
 The content is a bundling of `hilbert_bottom_isZero` with Mathlib's `op`-duality; no mathematical novelty.
 
 Prior art (cited, not reproved): that a zero object stays zero under `op` is Mathlib's

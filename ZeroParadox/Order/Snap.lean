@@ -22,7 +22,12 @@ DA-1 is addressed in ZPJ and ZPK. DA-2 is addressed in ZPI.
 
 ## Formal Overview
 AX-1 is retired: the SHAPE of the snap is proved (`t_snap_derived`, `t_snap_given`), and that the snap OCCURS follows
-from the occurrence commitment (instantiation occurs) together with DA-1, not from T-SNAP (`tsnap_holds_but_nothing_moves`).
+from the occurrence commitment together with DA-1, not from T-SNAP (`tsnap_holds_but_nothing_moves`).
+`Reading:` CARRIER — the occurrence commitment, in two charts. Execution chart: instantiation occurs (Sense B, a
+running configuration). Slot chart: the realized run has fired at least once, the hypothesis `hw` of
+`t_snap_of_fires_once` (`ZeroParadox/Information/CrossingTrials.lean` § VIII), which, with `φ` sending `false` to ⊥ of
+`L` and `true` to a point other than ⊥ of `L`, gives `t_snap_given`'s `hcc1` and `hocc`; if `0 < p ≤ 1` firing has probability one (`trials_fires_once`), and a particular tape need not fire (the
+all-`false` tape). `Reading:` CARRIER — the two charts correspond; a firing is not proved to be an execution event.
 The inserts DA-1, DA-2, DA-3 and the cross-framework link: `ZeroParadox/Order/Snap.md`.
 -/
 
@@ -120,6 +125,12 @@ theorem t_snap_given {L : Type*} [ZPSemilattice L] (S : ℕ → L)
     S 0 ≠ S 1 ∧ S 1 ≠ S 0 ∧ join (S 0) (S 1) = S 1 :=
   ⟨fun h => hocc h.symm, hocc, by rw [hcc1]; exact bot_join _⟩
 
+-- Statement: in the occurrence commitment's slot chart, `t_snap_of_fires_once`
+-- (`ZeroParadox/Information/CrossingTrials.lean` § VIII) supplies `hcc1` and `hocc` from a tape that
+-- fired at least once, with `φ` sending `false` to ⊥ of `L` and `true` to a point other than ⊥ of
+-- `L`; its sequence steps once, at index 1, and stays, so it is not an
+-- `IsStrictStateSequence` (the example in `ZeroParadox/Order/SnapCannotBe.lean` § II).
+
 -- Statement: `t_snap_derived` is the instance at the sequence `c₀, c₁, c₁, …`, chosen to move: `hcc1` is `rfl` and `hocc` is `c₁ ≠ c₀`.
 example : c₀ ≠ c₁ ∧ c₁ ≠ c₀ ∧ join c₀ c₁ = c₁ :=
   t_snap_given (fun n => if n = 0 then c₀ else c₁) rfl (by decide)
@@ -188,8 +199,10 @@ example {L : Type*} [ZPSemilattice L] (S : ℕ → L) (n : ℕ)
     letI := zpSemilatticeSup L; IsAtom (⟨S (n + 1), hcov.le⟩ : Set.Ici (S n)) := by
   letI := zpSemilatticeSup L; exact (covBy_iff_atom_Ici hcov.le).1 hcov
 
--- Statement: the binders are satisfiable: `t_snap_derived`'s run `c₀, c₁, c₁, …` meets all three.
-example : (c₀ ≠ c₁ ∧ c₁ ≠ c₀ ∧ join c₀ c₁ = c₁) ∧
+/-- Statement: in `MachinePhase`, `t_snap_derived`'s run `c₀, c₁, c₁, …` meets all three binders
+    of `t_snap_given_cover`: the T-SNAP triple holds and `c₁` covers ⊥ of `MachinePhase` (= `c₀`)
+    in ZP-A's induced order. -/
+theorem t_snap_derived_cover : (c₀ ≠ c₁ ∧ c₁ ≠ c₀ ∧ join c₀ c₁ = c₁) ∧
     letI := zpSemilatticeSup MachinePhase; (bot : MachinePhase) ⋖ c₁ := by
   refine t_snap_given_cover (fun n => if n = 0 then c₀ else c₁) rfl (by decide) ?_
   letI := zpSemilatticeSup MachinePhase
@@ -204,6 +217,22 @@ example {L : Type*} [ZPSemilattice L] :
       ¬ ((bot : L) ⋖ bot) ∧ ¬ IsAtom (bot : L) := by
   letI := zpSemilatticeSup L; letI := zpOrderBot L
   exact ⟨fun h => lt_irrefl _ h.1, fun h => h.1 rfl⟩
+
+-- Statement: `t_snap_given` needs no cover: on `ℚ≥0` under `max`, a densely ordered join-semilattice whose ⊥
+-- is 0 of `ℚ≥0`, the triple holds at the step 0 → 1/2 while nothing covers 0 (compare `t_snap_derived_cover`).
+example :
+    letI : ZPSemilattice NNRat := ⟨max, 0, max_assoc, max_comm, max_self, fun x => max_eq_right (zero_le (a := x))⟩
+    ((0 : NNRat) ≠ 1 / 2 ∧ (1 / 2 : NNRat) ≠ 0 ∧ join (0 : NNRat) (1 / 2) = 1 / 2) ∧
+      ¬ ∃ y : NNRat, @CovBy NNRat (zpSemilatticeSup NNRat).toLT 0 y := by
+  letI : ZPSemilattice NNRat := ⟨max, 0, max_assoc, max_comm, max_self, fun x => max_eq_right (zero_le (a := x))⟩
+  have key : ∀ a b : NNRat, @LT.lt NNRat (zpSemilatticeSup NNRat).toLT a b ↔ a < b := fun a b => by
+    show (max a b = b ∧ ¬ max b a = a) ↔ a < b
+    rw [max_eq_right_iff, max_eq_right_iff]
+    exact ⟨fun h => not_le.1 h.2, fun h => ⟨h.le, not_le.2 h⟩⟩
+  refine ⟨t_snap_given (fun n => if n = 0 then 0 else 1 / 2) rfl (by norm_num), ?_⟩
+  rintro ⟨y, h⟩
+  obtain ⟨c, h1, h2⟩ := exists_between ((key 0 y).1 h.1)
+  exact h.2 ((key 0 c).2 h1) ((key c y).2 h2)
 
 /-- T-SNAP (irreversibility): Algebraic form of ZP-A R1 (no subtraction operator).
     If x ≼ y and x ≠ y, no join from y can return to x.
@@ -228,8 +257,7 @@ example {L : Type*} [ZPSemilattice L] :
     so there is no strict pair. In a carrier that has one, `⊥ ⋖ a` (`HasFirstStep`,
     `ZeroParadox/Reals/OrderedField.lean`) is that first inhabitant — note the order:
     `ZPSemilattice`'s `le` is a def with no `LT` instance, so `⋖` over it is stated in the order
-    `zpSemilatticeSup` builds (`t_snap_given_cover`).
-    Long form: `.claude-local/notes/no_subtraction_is_vacuous_at_bottom_2026-07-31.md`. -/
+    `zpSemilatticeSup` builds (`t_snap_given_cover`). -/
 theorem t_snap_irreversible {L : Type*} [ZPSemilattice L] {x y : L}
     (hle : le x y) (hne : x ≠ y) :
     ¬∃ z : L, join y z = x := by
@@ -321,6 +349,12 @@ before the snap, ⊥ can reach ALL of L; after the snap, ε₀ can reach only a 
 subset. This is the inverse face of the Zero Paradox: ⊥ is the universal source,
 yet transitioning away from it permanently forecloses access to ⊥ itself. -/
 
+section
+-- [ZP port] Lean 4.35: `⊂` on `Set` now elaborates to `<` from `Set.instCompleteAtomicBooleanAlgebra`,
+-- which carries `Classical.choice`; erasing the two Boolean-algebra instances here routes it through the
+-- choice-free `Set.instDistribLattice` (`[propext, Quot.sound]`), the 4.30 footprint.
+attribute [-instance] Set.instCompleteAtomicBooleanAlgebra Set.instBooleanAlgebra
+
 /-- T-SNAP (accessible states shrink): the Binary Snap strictly narrows the set of
     reachable states. From ⊥, every element of L is accessible (A4: bot_le x always).
     From ε₀, only {x | ε₀ ≤ x} is accessible — a proper subset, since ⊥ is excluded:
@@ -335,6 +369,7 @@ theorem t_snap_accessible_proper_subset {L : Type*} [ZPSemilattice L] {ε₀ : L
   · intro x _; exact bot_le x
   · intro h
     exact hne (le_antisymm (bot_le ε₀) (h (bot_le bot)))
+end
 
 /-! ## VI. DP-2 — Execution Distinguishability and DA-1 Lean Formalization
 
@@ -346,9 +381,9 @@ post-execution null and the pre-execution null are different instances.
 This separates two things the narrative might conflate: the *value* a machine produces
 (which can be ⊥ in both cases) and the *machine state* (c₀ before execution, c₁ after).
 
-Given DP-2, DA-1 (instantiation = execution) is Lean-formalizable at the minimal-path
-level: the act of instantiating ⊥ moves the machine from c₀ to c₁, regardless of what
-value the operation returns. The "return to null" is a new null — not a return to c₀. -/
+DA-1's minimal-path form is `da1_minimal_path` below: it takes no hypothesis and does not
+carry that the step is taken; given DA-1's precondition, c₀ → c₁ is D7's (ZP-E, T-SNAP
+Step 3). Reading the returned null as a NEW null is C-DA2, a commitment (SnapCannotBe § IV). -/
 
 /-! ### NO-GO gauge — `TrackedOutput` is a RECORD, not a requirements class. Two `MachinePhase`
 fields and no laws, so any pair inhabits it and nothing can fail to be one. Its content is the
@@ -409,6 +444,7 @@ open ZeroParadox ZeroParadox ZPSemilattice ZeroParadox
 #print axioms zpSemilatticeSup
 #print axioms zpOrderBot
 #print axioms t_snap_given_cover
+#print axioms t_snap_derived_cover
 #print axioms t_snap_irreversible
 #print axioms da2_bottom_characterization
 #print axioms c_da2_novelty

@@ -18,9 +18,14 @@ Identification with the same symbology is a commitment of this framework.
 ---
 
 ## Formal Overview
-The correspondence half of MC-1 over the real domain categories (`TopCat`, `ModuleCat ℂ`, `KleisliCat PMF`): each
-domain bottom is the categorical bottom of its own category, bundled in `mc1_correspondence`. The literal cross-category
-identity is retired as ill-typed. Halves, prior art and positioning: `ZeroParadox/Multihomed/MC1Bridge.md`.
+The correspondence half of MC-1 over the real domain categories, per category (the three full positions are stated together in
+`floor_positions_full`, `ZeroParadox/Category/TreeSeam.lean`): the floor is a zero object (`Statement:` COINCIDENCE, initial and terminal at once)
+in `ModuleCat ℂ`; initial and
+not terminal in `KleisliCat PMF`; in `TopCat` terminal (it has one point; `padic_bottom_isTerminal`) and not
+initial (`padic_bottom_not_initial`), and separately the limit of the ball tower (`floorConeIsLimit`).
+`mc1_correspondence` bundles two `IsInitial` fields, the no-return field and the `TopCat` set equation. The
+literal cross-category identity is retired as ill-typed. Halves, prior art and positioning:
+`ZeroParadox/Multihomed/MC1Bridge.md`.
 -/
 
 namespace ZeroParadox
@@ -28,31 +33,33 @@ namespace ZeroParadox
 open CategoryTheory ZeroParadox ZeroParadox ZeroParadox ZeroParadox
 
 /-! ### NO-GO gauge — `MC1Correspondence` is a BUNDLED WITNESS, not a requirements class.
-It takes no parameter, so no carrier can fail to be a member — that follows from the missing
-parameter, not from Prop-ness: two of its four fields are `IsInitial` **data**, which is why
-`MC1Correspondence : Type 1` and `mc1_correspondence` is a `def`, the one inhabitant.
+It takes no parameter, so no carrier can fail to be a member — that follows from the missing parameter, not from Prop-ness:
+two of its four fields are `IsInitial` **data**, which is why `MC1Correspondence : Type 1` and `mc1_correspondence` is a `def`, the one inhabitant.
 
 ⚠ **The reading it must not license.** Bundling the three bottoms into one term does **not** make
 them one object — that identity is **retired as ill-typed** (object equality across categories does not typecheck
 and is not invariant under equivalence); what separates the members is proved property by property
-(`seam_unique_among_named`, for the named bottoms, in a lattice with no top). The bundle establishes the **correspondence** half: each
-domain bottom is the categorical bottom of its own real Mathlib category. Cite the fields, never the bundle's existence. -/
+(`seam_unique_among_named`, for the named bottoms, in a lattice with no top). The **correspondence** half, per category: two
+`IsInitial` fields, and for `TopCat` a set equation; that floor is terminal (one point; `padic_bottom_isTerminal`), not initial (`padic_bottom_not_initial`).
+Cite the fields, never the bundle's existence. -/
 
-/-- The MC-1 correspondence over the real domain categories: the snap floor is the categorical
-    bottom (initial object / inverse limit) of each domain's genuine Mathlib category, and the
-    information bottom admits no return morphism. Bundles the three real-category realizations.
-    This is the correspondence half of MC-1; the literal cross-category identity is not asserted. -/
+/-- The MC-1 correspondence over the real domain categories, as four fields: the snap floor is
+    initial in F_D's `ModuleCat ℂ` and in F_C's `KleisliCat PMF`; no stage `n > 0` of `fC_functor` maps
+    into stage 0; and F_B's floor is pinned by a set equation in ℚ₂ (`top_limit`; the `TopCat` limit is
+    `floorConeIsLimit`, outside the bundle). This is the correspondence half of MC-1; the literal
+    cross-category identity is not asserted. -/
 structure MC1Correspondence : Type _ where
   /-- F_D: in `ModuleCat ℂ`, the snap floor `StateSpace 0` is the genuine initial (zero) object. -/
   hilb_initial : Limits.IsInitial (fD_functor.obj 0)
   /-- F_C: in `KleisliCat PMF`, the snap floor `Fin 0` is the genuine initial object. -/
   info_initial : Limits.IsInitial (fC_functor.obj 0)
-  /-- F_C: AX-G2 realized — no stochastic map returns into the snap floor from a nonempty object. -/
+  /-- F_C: AX-G2 realized — no stochastic map into the snap floor from a stage `n > 0` of `fC_functor`. -/
   info_no_return : ∀ {n : ℕ}, 0 < n → IsEmpty (fC_functor.obj n ⟶ fC_functor.obj 0)
-  /-- F_B: in `TopCat`, the snap floor is the inverse limit of the clopen-ball system. -/
+  /-- F_B: the clopen balls `q2Ball n` of ℚ₂ intersect exactly in `{0}`. A set equation, not a limit
+      cone in `TopCat`; that cone is `floorConeIsLimit` (`ZeroParadox/Order/PadicLimitCone.lean`). -/
   top_limit : (⋂ n, q2Ball n) = {(0 : Q₂)}
 
-/-- The witness: all three real-category realizations hold simultaneously. -/
+/-- The witness: the four fields hold simultaneously. -/
 noncomputable def mc1_correspondence : MC1Correspondence where
   hilb_initial := fD_zero_isInitial
   info_initial := fC_zero_isInitial

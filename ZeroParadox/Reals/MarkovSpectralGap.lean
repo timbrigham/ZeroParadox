@@ -92,15 +92,19 @@ lemma tendsto_norm_iterate_zero (f : Fin n → PMF (Fin n)) {v : Fin n → ℝ} 
 
 /-! ## § II — A concrete mixing chain with a maximal gap -/
 
+/-- `Statement:` the fair coin on `Fin 2`, the `PMF` giving each of the two outcomes probability `1/2`. -/
+noncomputable def fairCoinFin2 : PMF (Fin 2) :=
+  PMF.ofFintype (fun _ => (2 : ENNReal)⁻¹) (by rw [Fin.sum_univ_two, ENNReal.inv_two_add_inv_two])
+
 /-- The fully-mixing 2-state kernel: every state maps to the uniform distribution. -/
-noncomputable def fullMix : Fin 2 → PMF (Fin 2) := fun _ => PMF.uniformOfFintype (Fin 2)
+noncomputable def fullMix : Fin 2 → PMF (Fin 2) := fun _ => fairCoinFin2
 
 /-- `fullMix` is doubly-stochastic. -/
 theorem fullMix_doublyStochastic : DoublyStochastic fullMix := by
   intro k
   have hval : ∀ j : Fin 2, ((fullMix j) k).toReal = 1 / 2 := by
     intro j
-    simp only [fullMix, PMF.uniformOfFintype_apply, Fintype.card_fin]
+    simp only [fullMix, fairCoinFin2, PMF.ofFintype_apply, ENNReal.toReal_inv, ENNReal.toReal_ofNat]
     norm_num
   simp_rw [hval]
   norm_num
@@ -117,7 +121,7 @@ theorem fullMix_eigen_zero : T fullMix v0 = (0 : ℝ) • v0 := by
   rw [T_apply, Pi.zero_apply, Fin.sum_univ_two]
   have hval : ∀ j : Fin 2, ((fullMix j) k).toReal = 1 / 2 := by
     intro j
-    simp only [fullMix, PMF.uniformOfFintype_apply, Fintype.card_fin]
+    simp only [fullMix, fairCoinFin2, PMF.ofFintype_apply, ENNReal.toReal_inv, ENNReal.toReal_ofNat]
     norm_num
   rw [hval 0, hval 1]
   simp [v0]
@@ -162,6 +166,7 @@ open ZeroParadox
 
 #print axioms iterate_eigen
 #print axioms tendsto_norm_iterate_zero
+#print axioms fairCoinFin2
 #print axioms fullMix_doublyStochastic
 #print axioms fullMix_eigen_zero
 #print axioms v0_ne_zero

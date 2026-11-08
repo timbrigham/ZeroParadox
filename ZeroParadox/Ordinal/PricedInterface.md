@@ -5,7 +5,8 @@ Long form of `ZeroParadox/Ordinal/PricedInterface.lean`.
 ## What this file is
 
 A **measurement**, not a construction. The carrier and the map out of it, declared in `ZeroParadox/Ordinal/PricedInterface.lean`, both follow
-constructions that already exist in the literature (see "Prior art" — they are Castéran's, and the
+constructions that already exist in the literature (see "Prior art" — both come from *hydra-battles*, credited to the
+hydra-battles authors as in `ZeroParadox/Ordinal/SnapNucleusConstructive.md` § Prior art, and the
 citation is not a courtesy). What is being contributed here is the *price tag*: the axiom footprint of
 each side of the constructive/classical boundary, exhibited on declarations that sit on either side of a
 single named map, in a setting where the classical target is a real library type (Mathlib's `Ordinal`)
@@ -22,20 +23,24 @@ is no choice in the type. And the conclusion overreaches its evidence by one ste
 choice-free (`ZeroParadox/Ordinal/ConstructiveOrdinals.lean`) is a fact about the *ascent*, while ε₀ is
 past what the notation system can name (`tower_cofinal`,
 `ZeroParadox/Ordinal/SnapNucleusConstructive.lean`). What can be said instead: the ε₀ results, as stated, are
-**STATEMENT-CARRIED** (statement control, measured 2026-10-08; `ZeroParadox/Category/ChoiceCannotBe.md`),
+**STATEMENT-CARRIED** (the statement controls printed in `ZeroParadox/Ordinal/Epsilon0MinMax.lean`;
+`ZeroParadox/Category/ChoiceCannotBe.md`),
 and a restatement on a choice-free carrier has two readings. The defined one is `E0Note`: a choice-free
 Lean restatement where uniqueness of the fixed point is proved and its existence is set by definition, on
 an order that is not well-founded (§ *The carrier, and what it actually is* and § *The closure at the top is STIPULATED, not
-discovered* below). The derived one, a well-founded Lean carrier on which the fixed point is derived,
-leastness included, was not located as of 2026-10-13 (`ZeroParadox/Ordinal/SnapNucleus.md`
-§ "Axiom footprint"); and the crossing into `Ordinal`, `e0Repr`, carries choice (the purity block).
+discovered* below). The derived one, a well-founded Lean carrier whose statements are choice-free and on
+which the fixed point is derived, by a choice-free derivation, leastness included, was not located as of 2026-10-13 (`ZeroParadox/Ordinal/SnapNucleus.md`
+§ "Axiom footprint"); and the crossing into `Ordinal`, `e0Repr`, carries choice (the purity block of `ZeroParadox/Ordinal/PricedInterface.lean`).
 
 Worse, the claim was **not measurable by the instrument used to support it.** `Classical.choice` sits in
 the `Ordinal.partialOrder` *instance term*, so every statement written through that instance inherits it,
 as written, however it is proved — `a ≤ a` carries choice while `a = a` does not (`order_footprint_le` and
 `order_footprint_eq`, `ZeroParadox/Ordinal/OrdinalChoiceEssential.lean`, stated as two theorems
 precisely so that file's purity block *prints* the contrast rather than asserting it). Axiom footprints
-on ε₀ results measure the ambient instance, not the proofs.
+on ε₀ results measure the choice-carrying constants their statements reach, the order instance and the
+operations (`Ordinal.omega0`, `Ordinal.nfp`, printed in the purity blocks of
+`ZeroParadox/Ordinal/OrdinalChoiceEssential.lean` and `ZeroParadox/Ordinal/PricedInterface.lean`
+respectively), not the proofs.
 
 This file replaces the unanswerable question with a measurable one: not *is the choice real*, but *what
 does crossing cost*.
@@ -49,8 +54,8 @@ declaration is added. **The block at the bottom of the `.lean` file is the regis
 not copy it.** What is stated here is only the shape it prints, which is the finding:
 
 * **Constructive side — choice-free, and not uniformly `[propext]`.** Footprints range from **no axioms
-  at all** (the carrier and its coercion) up through `[propext]` to `[propext, Quot.sound]`. No
-  declaration on this side carries `Classical.choice`.
+  at all** (the carrier and its coercion) up to `[propext]`. No declaration on this side carries
+  `Classical.choice`.
 * **The map — `Classical.choice`, uniformly.** Every declaration **in that block** whose statement
   mentions `Ordinal` reports `[propext, Classical.choice, Quot.sound]`, with no exceptions and no
   gradation among them. ⚠ **Scoped to this block on purpose.** It is not
@@ -67,27 +72,30 @@ not copy it.** What is stated here is only the shape it prints, which is the fin
   it is `e0Repr_not_injective` plus `Function.not_injective_iff`. It is a **crossing** declaration, it
   belongs exactly where the block files it, and it prices the crossing like every other one.
 
-**The `Quot.sound` on part of the constructive side** arrives through Mathlib's `WithTop` order
-instances and lemmas (`WithTop.instPreorder`, `WithTop.decidableLE`, `WithTop.decidableLT`,
-`WithTop.instOrderTop`, `WithTop.coe_lt_top`, each `[propext, Quot.sound]`), not through anything
-about ordinals: `SynONote`'s own order, `instLinearOrderSynONote`, measures `[propext]`. It is *not*
-`Classical.choice`, and no declaration on the constructive side carries choice.
+**The constructive side avoids Mathlib's `WithTop` order instances.** At the pin those instances and
+lemmas (`WithTop.instPreorder`, `WithTop.decidableLE`, `WithTop.decidableLT`, `WithTop.coe_lt_top`)
+carry `Classical.choice`, as does `WithTop.le_def`, which Mathlib proves by `grind`; the bare
+`WithTop.instLE`/`instLT` carry no axioms. The Lean file pins those two, proves decidability by cases
+on their constructors, and proves `e0Coe_lt_top` and `e0_le_top` as applications of those constructors
+(`WithTop.LT.lt_top`, `WithTop.LE.le_top`; the `[ZP port]` comment above them).
+`SynONote`'s own order, `instLinearOrderSynONote`, measures `[propext]`.
 
-So the boundary is *priced*: the notation side's declarations cost at most `[propext, Quot.sound]` and
+So the boundary is *priced*: the notation side's declarations cost at most `[propext]` and
 never `Classical.choice`; crossing to `Ordinal` costs `Classical.choice` at every declaration; and the
 crossing is one named map rather than a diffuse correspondence.
 
 **What that measurement does and does not license.** It locates where the classical assumption is paid
 on this pair of carriers. It does **not** show that Mathlib's ε₀ results are eliminable: as stated they
-are STATEMENT-CARRIED, so no proof of them can drop the choice, and the open question is a restatement
-on a choice-free carrier, with the two readings of § *Why this file exists — a correction of record*:
-the defined one on `E0Note`, and the derived one, not located in Lean. Its state is in `ZeroParadox/Ordinal/SnapNucleus.md` § "Axiom footprint".
+are STATEMENT-CARRIED, so no proof of them can drop the choice. The remaining question is a restatement
+on a carrier whose statements are choice-free, with the two readings of § *Why this file exists — a
+correction of record*: the defined one, in Lean on `E0Note`, and the derived one, not located as of
+2026-10-13. Both, with the search record, are in `ZeroParadox/Ordinal/SnapNucleus.md` § "Axiom footprint".
 This is the same limit `ZeroParadox/Ordinal/SyntacticCollapse.md` records. Scoped to
 what is measured: *the ascent below ε₀ borrows a tool far stronger than it needs*, because its
 counterpart on notations measures `[propext]`. Note also the standing caveat from
 `ZeroParadox/Ordinal/OrdinalChoiceEssential.lean` — `Classical.choice` sits in `Ordinal`'s order
 *instance term*, so a statement that reaches that instance carries the choice whatever its proof
-(`order_footprint_le` against `order_footprint_eq`, as in § *The measured price* above). The purity block is a measurement of the
+(`order_footprint_le`, as in § *The measured price* above). The purity block is a measurement of the
 interface, not a verdict on any particular proof's essential needs.
 
 ## The carrier, and what it actually is
@@ -128,7 +136,7 @@ it is stated for.
 
 ## What is NOT proved here, and must not be inferred
 
-`ON_correct` (Castéran, `ON_Generic.v`; see below) is a class stated over an `ON`, a type with a
+`ON_correct` (*hydra-battles*, `ON_Generic.v`; see below) is a class stated over an `ON`, a type with a
 comparison whose order is well-founded (`Class ON`'s field `ON_wf`), together with a target ordinal
 and a denotation map. Its three fields ask that every notation denotes below the target ordinal, that
 the map is **onto** the segment below it, and that the syntactic comparator **agrees** with the
@@ -198,9 +206,10 @@ points of one carrier.
 
 ## Triviality assessment
 
-The carrier is an `abbrev`. The order, the decidability instances, and the lattice structure are all
-inherited from Mathlib's `WithTop` instances applied to an order built in a sibling file — `PricedInterface.lean`
-proves none of that and should get no credit for it. `e0OmegaPow_top` is `rfl`. `e0Repr_top` is `rfl`.
+The carrier is an `abbrev`. Its `≤` and `<` are Mathlib's `WithTop` relations applied to an order built in
+a sibling file, the decidability is a case split on their constructors, and the top bound is a
+constructor application —
+`PricedInterface.lean` should get no credit for any of that. `e0OmegaPow_top` is `rfl`. `e0Repr_top` is `rfl`.
 
 Not everything here is free. `repr_lt_epsilon0` — every raw notation denotes strictly below ε₀ — is a
 short structural induction, but it does need the right closure facts about ε₀ (additive and
@@ -215,7 +224,8 @@ that it is *stated as a price* on a specific named map, rather than left as a ge
 
 ## Prior art — the construction is not ours
 
-**Castéran and Contejean, *hydra-battles* (rocq-community/hydra-battles), is the source of both halves.**
+***hydra-battles* (rocq-community/hydra-battles; credited to the hydra-battles authors, as in
+`ZeroParadox/Ordinal/SnapNucleusConstructive.md` § Prior art) is the source of both halves.**
 
 * **The carrier.** `theories/ordinals/OrdinalNotations/ON_plus.v` builds the **sum of two ordinal
   notation systems** — `t := (A + B)`, everything in `A` below everything in `B`, with the comparator
@@ -223,11 +233,11 @@ that it is *stated as a price* on a specific named map, rather than left as a ge
   `ON_plus`, and crucially `lt_eq_lt_dec` proving that **decidability of comparison is preserved,
   generically**. `E0Note` has that construction's shape with a one-point right summand, and is not an instance of it:
   `ON_plus` sums two `ON`s, and `SynONote` is not one, because its order is not well-founded (above), so
-  `lt_wf` does not transfer. The decidability-preservation idea is his and is what `WithTop` repeats. The
+  `lt_wf` does not transfer. The decidability-preservation idea is `ON_plus.v`'s and is what `WithTop` repeats. The
   abstraction `ON_plus` is stated over, `Class ON` (`ON_Generic.v`) — a well-founded ordered datatype
   with a comparison function — is published. Mathlib's `WithBot`/`WithTop` decidability and lattice instances
-  (`Mathlib/Order/WithBot.lean`) are the same move at instance level, and are what `PricedInterface.lean` actually
-  calls.
+  (`Mathlib/Order/WithBot.lean`) are the same move at instance level; `PricedInterface.lean` calls their
+  bare `WithTop.instLE`/`instLT` and constructors.
 * **The map.** The canonical name for "a notation system correctly denotes into a classical ordinal"
   is **`ON_correct`** (`ON_Generic.v`), with the three fields listed above. It is **already
   instantiated at ε₀**: `theories/ordinals/Schutte/Correctness_E0.v` builds `inject : T1 → Ord` with

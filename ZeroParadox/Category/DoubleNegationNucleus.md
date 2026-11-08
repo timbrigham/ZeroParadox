@@ -17,7 +17,9 @@ examples were about: the double-negation map `a ↦ aᶜᶜ` as a genuine `Nucle
 
 This is the exact parallel to `snapNucleus` (`ZeroParadox/Ordinal/SnapNucleus.lean`). Both are concrete
 difference-generators — inflationary, idempotent, meet-preserving modalities — of two of the framework's
-threads: the **snap** (the ordinal difference `α ↦ ω^α`, generating ε₀) and **double negation** (the
+threads: the **snap** (the ordinal difference `α ↦ ω^α`, which from ⊥ of `Ordinal` generates ε₀
+(`epsilon0_eq_nfp_bot`), at once the least fixed point of `α ↦ ω^α` and the supremum of the ω-tower, `epsilon0_min_eq_max` in
+`ZeroParadox/Ordinal/Epsilon0MinMax.lean`) and **double negation** (the
 logical difference `a ↦ aᶜᶜ`, generating the classical core). Applying the modality collapses to the
 classical core: `aᶜᶜ` is the element after excluded middle has settled it to a definite value. The
 generated system — the nucleus's closed points — is exactly the **regular elements** `{a | aᶜᶜ = a}`, the
@@ -55,12 +57,13 @@ Cohen's 1963 independence result (with Fraenkel–Mostowski), **not** Diaconescu
 proved is an *equivalence* between two topos properties (p. 176), and it already concerns a two-point
 shape; the analogue in intuitionistic set theory is Goodman–Myhill (1978), who state the restriction
 explicitly, choice "for sets B, C of at most two elements" (p. 461). With unique choice into `Bool`,
-`ChoiceFragment` and `ExcludedMiddle` are inter-derivable (the `example` after `em_of_choiceFragment` in
-`ZeroParadox/Category/ExcludedMiddleBridge.lean`). Attributing "the converse fails" to Diaconescu is a misreading; see
-`ZeroParadox/Category/ChoiceCannotBe.lean` for the full statement and for why the restricted fragment
-nonetheless comes apart from excluded middle in Lean specifically. The framework's conversational
+`ChoiceFragment` and `ExcludedMiddle` are inter-derivable (see `ZeroParadox/Category/ExcludedMiddleBridge.lean`,
+the `example` after `em_of_choiceFragment`). Attributing "the converse fails" to Diaconescu is a misreading; see
+`ZeroParadox/Category/ChoiceCannotBe.lean` for the full statement and for a candidate explanation of
+why the natural construction of the restricted fragment from excluded middle fails to elaborate in
+Lean. The framework's conversational
 "choice = which way you view the self-dual split" reading is the looser, informal thread — discussed in
-`ZeroParadox/Category/DifferenceGeneratesSystem.lean`, not asserted here; the object built here is the double-negation
+`ZeroParadox/Category/ChoiceCannotBe.md` (§ "The headline fence"), not asserted here; the object built here is the double-negation
 (excluded-middle) nucleus, nothing stronger.
 
 **Correction of record: this file once made that error itself.** It was originally titled "Choice as a

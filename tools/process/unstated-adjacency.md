@@ -41,8 +41,9 @@ lands on, not five sections away.
 are free** — a theorem over `σ → Option σ` is elementary *because* it covers everything, and covering
 everything is the payoff; state both halves. (2) **Adjacency is not identity.** "Turing machines are
 witnesses" is licensed; "the bottom is a Turing machine" is a cross-carrier identity and the same type
-boundary as everywhere else. The `QuineHost` precedent is the model: never "we commit to AFA", always "here
-are the requirements, and AFA is a witness meeting them."
+boundary as everywhere else. The `QuineHost` precedent is the model: "here are the requirements, and AFA
+is a witness meeting them" states the adjacency, and that adopting AFA is CC-2's commitment (Tim,
+2026-11-03) is stated beside it as a commitment, never as "the bottom is the AFA set".
 
 ### ⭐ THE TWO RULES ABOVE AND BELOW PULL OPPOSITE WAYS. The resolution: ONE LINE at the site, the FULL STATEMENT at the canonical home. (Tim, 2026-08-15.)
 

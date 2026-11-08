@@ -47,7 +47,9 @@ Completing the meta-lattice by that boundary is a separate construction, not att
 ## Axiom footprint
 
 `snapNucleus` and the results about it are STATEMENT-CARRIED (`ZeroParadox/Category/ChoiceCannotBe.md`):
-each statement, only assumed, already reports `Classical.choice` (statement control, measured 2026-10-08).
+each statement, only assumed, already reports `Classical.choice` (the statement controls
+`snapNucleusNonemptyStatement` and `snapNucleusBotStatement`, `#print axioms` in the PurityCheck section of
+`ZeroParadox/Ordinal/SnapNucleus.lean`).
 The choice is **not** in the `Ordinal` type — `#print axioms Ordinal` reports `[propext, Quot.sound]`. It
 enters through the *order instance and the operations*: `Ordinal.instLinearOrder`, `Ordinal.nfp`,
 `Ordinal.omega0` and `Ordinal.epsilon` each measure `[propext, Classical.choice, Quot.sound]`, and
@@ -77,10 +79,33 @@ part (measured 2026-10-08):
   exponentiation at every base (Thm 18), and their cubical Agda development defines ε₀ as the limit
   of the ω-tower and proves ε₀ = ω^ε₀ (the development uses Agda's `{-# TERMINATING #-}` pragma to work
   around one known Agda bug and one termination-checker limitation, KNX p. 3, which does not say which
-  results use it); every Cantor normal form lies below it (Thm 22). A lemma that
+  results use it; the same paragraph adds that such recursive calls, when proving a proposition, are
+  justified by the eliminator presentation of Dijkstra's thesis (*Quotient Inductive-Inductive
+  Definitions*, Nottingham 2017, KNX's reference 21), "although it would be non-trivial to reduce our
+  mutual definitions to eliminators", and the page states just before that pen-and-paper proofs of
+  all their results are in the appendix); every Cantor normal form lies below it (Thm 22). A lemma that
   ε₀ is the *least* fixed point of `ω^·` was not located there as of 2026-10-08 (searched: the paper,
   and the Agda module `BrouwerTree.Arithmetic.Properties`, pinned to a commit in
   `ZeroParadox/Ordinal/ConstructiveOrdinals.md` § Prior art).
+  A second constructive carrier outside Lean is the Coq library *hydra-battles* (P. Castéran, with
+  contributions by É. Contejean, F. Hatat and P. Manoury, *Hydra Battles in Coq*, draft of
+  4 November 2020). Its book states that, except for the `Schutte` library, the development is
+  axiom-free and respects the rules of intuitionistic logic, and that the `Equations` plug-in used
+  in Chap. 6 imports axioms (p. 9). Its notation `T2`, for the ordinals below Γ₀ (that the
+  notation system `Gamma0` built on it is a correct implementation of [0, Γ₀) is Project 8.7 of the
+  2020 draft, p. 157), proves `epsilon0_fxp : epsilon0 = phi zero epsilon0` from `epsilon_fxp`,
+  which is closed by `reflexivity` (p. 155). Our reading of why reflexivity suffices: `epsilon b` is
+  defined as `[one, b]` (p. 148), and the `phi` definition on p. 155 returns `[b1, b2]` unchanged
+  when its first argument is below `b1`. Its order on Veblen-normal-form terms (the subtype `G0`)
+  is well-founded (`lt_wf`, p. 157). There the fixed-point equation holds by computation. A
+  leastness lemma was located there only in the classical `Schutte` library as of 2026-11-01
+  (searched at `ed8e604`: `least_fixpoint` across the repository, `theories/ordinals/Gamma0/Gamma0.v`
+  and `theories/gaia/nfwfgaia.v`): `epsilon0_lfp : least_fixpoint lt phi0 epsilon0` in
+  `theories/ordinals/Schutte/AP.v`, which imports `Coq.Logic.Epsilon`. Outside `Schutte`,
+  `epsilon0_as_lub` in `theories/ordinals/Gamma0/Gamma0.v` is a least-strict-upper-bound statement over
+  the terms below ε₀: every normal-form strict upper bound of them is at least ε₀. It is not the
+  ω-tower-supremum statement, which this corpus states in Lean as `epsilonZero_eq_iSup`
+  (`ZeroParadox/Ordinal/Gentzen.lean`).
 * **The defined reading, in Lean: `E0Note`.** `ZeroParadox/Ordinal/PricedInterface.lean` adjoins one
   point ⊤ above the notations (`E0Note := WithTop SynONote`), and `e0Repr` sends ⊤, and only ⊤, to ε₀
   (`e0Repr_eq_epsilon0_iff`). There the tower operator fixes ⊤ **by definition**
@@ -90,8 +115,10 @@ part (measured 2026-10-08):
   uniqueness on `E0Note`, with existence set by definition rather than derived, on an order that is not
   well-founded (the `example` stating `¬ WellFoundedLT E0Note`). That file states no leastness
   declaration. Its crossing into `Ordinal`, `e0Repr`, carries `Classical.choice` (its purity block).
-* **Open: the derived reading.** A well-founded Lean carrier whose statements are choice-free, on which ε₀'s fixed point is derived
-  rather than set by definition, leastness included, was not located as of 2026-10-13. Searched: this
+  On `E0Note` a snap nucleus exists trivially: the constant-⊤ map is a `Nucleus` whose closed points are
+  exactly the fixed points of `e0OmegaPow` (the `example` after `e0OmegaPow_fixedpoint_iff`).
+* **Open: the derived reading.** A well-founded Lean carrier whose statements are choice-free, on which ε₀'s fixed point is derived,
+  by a choice-free derivation, rather than set by definition, leastness included, was not located as of 2026-10-13. Searched: this
   corpus, 2026-10-08 and again 2026-10-13 (`ZeroParadox/**/*.lean` for carriers built over ordinal notations; `E0Note` is the
   only one reaching ε₀); and on 2026-10-13, `theoremsearch` on "epsilon zero is the least fixed point of omega
   exponentiation on a well-founded ordinal notation system, constructive proof" (formal and
@@ -102,7 +129,9 @@ part (measured 2026-10-08):
   fixed point well-founded without Classical.choice"; each returned Mathlib's `Ordinal` and
   `ONote` material (its well-foundedness `NONote.lt_wf` goes through `repr`), or work outside Lean. The crossing of any such result
   into Mathlib's `Ordinal` carries choice, because the target statements are STATEMENT-CARRIED
-  (above).
+  (above). A later check of the same item against two Lean carriers of MaxWellApexLab/OrdinalAnalysis
+  (commit `87baec7`, 2026-10-17) is recorded in `ZeroParadox/Ordinal/ConstructiveOrdinals.md`: on
+  both, the fixed point is set by a normal-form convention, so neither is the derived reading.
 
 ## Credit outward
 

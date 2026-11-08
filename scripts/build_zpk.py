@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-K: Computational Grounding of Self-Reference PDF Builder
-Version 1.27 | October 2026
+Version 1.38 | November 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.27'
+VERSION = '1.38'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -34,13 +34,21 @@ def build():
         'self-reference structure. On the framework\'s reading, ⊥ in the computational '
         'instantiation is not a state of a Turing machine: it is the ground state of a universal '
         'Turing machine — the state from which no external executor is required. Kleene\'s '
-        'second recursion theorem supplies a fixed point of the self-application operator; that '
-        'this fixed point is to be read as the computational expression of ⊥ = {⊥} is the '
-        'framework\'s commitment, carried by the KleeneStructure class, not a property the '
-        'theorem establishes.'))
+        'second recursion theorem supplies a fixed point of the self-application operator. The '
+        'reading of that fixed point as ⊥\'s computational counterpart splits in two, and no field '
+        'of the KleeneStructure class asserts either half. Its identity half is retired: a code and '
+        '⊥ of a lattice are compared through the Quine-atom role (Motion.SelfOnlyAt, a point that '
+        'steps to itself and to nothing else), which under the eval step no single code occupies '
+        '(evalStepMotion_not_selfOnlyAt) and, for a computable map respecting equal output, a class '
+        'of codes up to equal output does (codes_vs_classes). Its running half, that ⊥ actually '
+        'executes, is the occurrence commitment.'))
     E.append(body(
         'The central result is a three-way equivalence within this framework, in the precise sense '
-        'defined by Remark R-K.0: the structural roles of ⊥ — Quine atom (set-theoretic), bottom '
+        'defined by Remark R-K.0: the structural roles of ⊥ of a lattice carrying AFAStructure — '
+        'the Quine-atom role (CC-2, read in the lattice\'s AFA structure, where ⊥ fills it by the '
+        'class fields bot_self_mem and quine_unique; the set-theoretic fact is Aczel 1988, p. 19, '
+        'where AFA allows at most one solution of x = {x}; see ZP-J; in Mathlib\'s ZFSet no set '
+        'occupies it, zfset_quine_role_unoccupied), bottom '
         'element (order-theoretic), and join identity (algebraic) — are PROVED to coincide, while '
         'the fourth role, Kleene fixed point (computational), is required as a typeclass field '
         'rather than derived. '
@@ -158,7 +166,8 @@ def build():
             'infinitely many self-printing codes exist, and no behaviour belongs to two of them. '
             'Contrast padding, where infinitely many codes share one behaviour.',
             'Lean: ZeroParadox.selfprints_behaviour_injective. Purity: propext, Classical.choice, '
-            'Quot.sound (measured 2026-10-04); the predicate SelfPrints itself carries the same three.',
+            'Quot.sound (#print axioms in the PurityCheck section of '
+            'ZeroParadox/Computability/Kleene.lean); the predicate SelfPrints itself carries the same three.',
         ]
     ))
     E.append(sp(6))
@@ -178,9 +187,15 @@ def build():
     E.append(body(
         'ZP-K\'s KleeneStructure extends AFAStructure with a computational witness: a code '
         'botCode satisfying the selfApply periodicity condition, whose existence is guaranteed '
-        'by Kleene\'s theorem. The typeclass commitment takes AFA self-containment (⊥ = {⊥}) '
-        'and the Kleene fixed point to be the same structural role stated in two formal '
-        'languages — this is the motivating claim, not a consequence derived by the theorems.'))
+        'by Kleene\'s theorem. The class was built for the reading that AFA self-containment (the '
+        'Quine atom, CC-2) and the Kleene fixed point are one structural role in two formal '
+        'languages. That role is stated once, as the Quine-atom role Motion.SelfOnlyAt (a point that '
+        'steps to itself and to nothing else), and each chart carries its own occupancy theorem: '
+        'with membership as the step, ⊥ is the only occupant in an AFAStructure lattice '
+        '(quineAtomHost_quine_role_iff, host afaStructure_isQuineAtomHost); on codes under the eval '
+        'step no single code occupies it (evalStepMotion_not_selfOnlyAt), and for a computable map '
+        'respecting equal output a class of codes up to equal output does (codes_vs_classes). No '
+        'equation across a code and ⊥ is stated, and no field of the class asserts one.'))
 
     E.append(def_box(
         'KleeneStructure Typeclass (Kleene.lean § II)',
@@ -198,18 +213,20 @@ def build():
             'Any KleeneStructure instance must supply both the AFA witness (bot_self_mem) '
             'and the computational witness (botCode with botCode_is_quine). Both are class '
             'FIELDS — assumptions discharged at instantiation, not results proved here. They are '
-            'required together because the framework READS them as one structural fact; that '
-            'reading is the motivation for the class, and it is not derived within it.',
+            'required together because the class was built for the reading that they are one '
+            'structural fact; that reading is not derived within it, and its identity half is '
+            'retired in favour of per-chart occupancy of the Quine-atom role (I above).',
         ]
     ))
     E.append(sp(6))
 
     E.append(Paragraph('II. Why Not a Bridge Axiom?', S['h2']))
     E.append(body(
-        'The identification between AFA self-containment and Kleene computational fixed points '
-        'is not asserted as a new axiom. KleeneStructure is a typeclass: any concrete type '
-        'claiming this identification must discharge it as a proof obligation. The commitment '
-        'is checked at instantiation, not accepted globally.'))
+        'No identification between AFA self-containment and Kleene computational fixed points '
+        'is asserted, as a new axiom or as a class field. KleeneStructure is a typeclass: any '
+        'concrete type must discharge its fields (among them a predicate selfMem with ⊥ its unique witness, and a '
+        'code botCode meeting the periodicity condition) as proof obligations. They are checked at instantiation, not '
+        'accepted globally.'))
     E.append(callout(
         'The distinction from ZP-J carries over: a freestanding axiom says "trust me." '
         'A typeclass field says "prove it for your specific type, or it does not compile." '
@@ -227,9 +244,12 @@ def build():
     ]
 
     E.append(body(
-        'ZP-J T-EXEC established a three-way equivalence: Quine atom (set-theoretic) ↔ '
-        'bottom element (order-theoretic) ↔ join identity (algebraic). T-COMP proves exactly '
-        'those three equivalent. ZP-K bundles a fourth face — Kleene fixed point '
+        'ZP-J T-EXEC established a three-way equivalence in a lattice carrying AFAStructure: Quine '
+        'atom (in the lattice\'s AFA structure; in Mathlib\'s ZFSet the role is unoccupied, '
+        'zfset_quine_role_unoccupied) ↔ '
+        'bottom element (order-theoretic) ↔ join identity (algebraic). T-COMP, whose statement is '
+        '(1) ↔ ((2) ∧ (3)), proves those three equivalent together with da2_bottom_characterization, '
+        'which gives (2) ↔ (3). ZP-K bundles a fourth face — Kleene fixed point '
         '(computational) — as a KleeneStructure class field, so all four are present '
         'simultaneously in any KleeneStructure lattice, but the fourth is required at '
         'instantiation rather than proved equivalent to the others.'))
@@ -237,7 +257,8 @@ def build():
         'Remark R-K.0 — What T-COMP Proves, and What "Four-Way" Meant',
         [
             'The equivalence among (1)–(4) has two distinct sources:',
-            '(1)–(3) are equivalent by T-EXEC (ZP-J): any element that is a Quine atom is also '
+            '(1)–(3) are equivalent by T-EXEC (ZP-J), with da2_bottom_characterization for '
+            '(2) ↔ (3): any element that is a Quine atom is also '
             '⊥ and a join identity, and vice versa. This is a genuine logical derivation — the '
             'three properties are proved to coincide from the AFAStructure axioms.',
             '(4) is present in any KleeneStructure instance because KleeneStructure requires it '
@@ -257,7 +278,9 @@ def build():
             'instance." (1)–(3) are independently proved equivalent. (4) is bundled in by the '
             'typeclass requirement. The philosophical claim — that Kleene computational '
             'self-reference and AFA set-theoretic self-reference are the same thing — is the '
-            'motivation for the typeclass design, not a consequence derived within it.',
+            'motivation for the typeclass design, not a consequence derived within it. Its identity '
+            'half is retired: what the two share is the Quine-atom role, whose occupancy is settled chart by chart '
+            '(Section II.I), and that ⊥ actually executes is the occurrence commitment.',
         ]
     ))
     E.append(sp(6))
@@ -266,14 +289,15 @@ def build():
         'Theorem T-COMP — Computational Grounding (Kleene.lean § III)',
         [
             'In any KleeneStructure lattice L, for any q : L, the following are equivalent:',
-            '(1) IsQuineAtom q  — set-theoretic self-reference (AFA)',
+            '(1) IsQuineAtom q  — the Quine-atom role in the lattice\'s AFA structure (CC-2)',
             '(2) q = ⊥  — order-theoretic minimum (ZP-A)',
             '(3) ∀ x : L, join q x = x  — algebraic generator (ZP-A A4)',
             '',
             'Separately, the KleeneStructure requirement: ∃ botCode : Code, IsComputationalQuine '
             'botCode (computational self-reference). It is not a clause of t_comp; it is present in '
             'any KleeneStructure instance because botCode_is_quine is a required field. The '
-            'equivalence of (1)–(3) is derived by T-EXEC.',
+            'equivalence of (1)–(3) is derived by T-EXEC, with da2_bottom_characterization for '
+            '(2) ↔ (3).',
             'Lean: ZeroParadox.t_comp. '
             'Purity: standard foundational axioms — from Mathlib computability. ✓',
         ]
@@ -292,7 +316,7 @@ def build():
         'witness of execution and not a second independent proof.'))
     E.append(body(
         'Path 1 says: nothing external to ⊥ can execute ⊥, so if ⊥ executes at all, the executor '
-        'is ⊥ itself, read as ⊥ = {⊥}; that rules out an external executor, not an inert ⊥. '
+        'is ⊥ itself, ⊥ read as the Quine atom (CC-2); that rules out an external executor, not an inert ⊥. '
         'Path 3 says: no shorter external program generates ⊥; that rules out a shorter external '
         'generator, not an inert string, so Path 3 does not derive executing from incompressibility. '
         'The framework READS these as one claim in two vocabularies. What is '
@@ -341,8 +365,9 @@ def build():
             'Lean proves only the Quine-atom statement above; that ⊥ executes is the occurrence '
             'commitment, not this theorem. Lean witnesses ⊥ as the AFA Quine '
             'atom of MachinePhase (da1_closed_concrete) and carries the Kleene quine as a '
-            'KleeneStructure requirement (botCode_is_quine); that these are one structural fact is '
-            'the framework\'s reading.',
+            'KleeneStructure requirement (botCode_is_quine); no Lean statement makes them one '
+            'object, and what they share is the Quine-atom role, whose occupancy is settled chart by chart '
+            '(Section II.I).',
             'Lean: ZeroParadox.description_instantiation_gap_closed. '
             'Purity: standard foundational axioms only. ✓',
         ]
@@ -399,7 +424,9 @@ def build():
         'statement carries it; where only the proof does, whether another proof avoids it is '
         'a separate question, and the table does not answer it. The following were measured on '
         '2026-09-19 against the pinned Mathlib; re-run them rather than citing this table '
-        'if the answer matters.'))
+        'if the answer matters. On this toolchain `#print axioms` can under-report for declarations '
+        'imported from another module (lean4 issue #15226); for the "none" rows, the issue&#8217;s own '
+        'signature was checked and did not fire.'))
 
     E.append(data_table(
         headers=['Declaration', 'Axiom footprint'],
@@ -433,25 +460,30 @@ def build():
     E.append(body(
         'The Kleene.lean § VIII and Disjunctive.lean declarations cited in Section I.III and '
         'Section VI are not in that table. Their #print axioms lines are in those two files\' '
-        'PurityCheck sections, and where Classical.choice enters selfref_universal_exists is recorded in '
-        'ZeroParadox/Computability/Kleene.md § VIII, measured 2026-10-04.'))
+        'PurityCheck sections; those of kleene_cf and selfref_universal_exists_enc are in the '
+        'PurityCheck sections of ZeroParadox/Computability/KleeneChoiceFree.lean and '
+        'ZeroParadox/Computability/UniversalChoiceFree.lean. Where Classical.choice enters selfref_universal_exists is recorded in '
+        'ZeroParadox/Computability/Kleene.md § VIII.'))
     E.append(body(
         'ZP-J T-EXEC and all its corollaries remain axiom-free. Classical.choice is not '
         'confined to the computability rows: in Disjunctive.lean, champ_disjunctive carries it, '
         'reached through disjunctive_iff_once, while the at-least-once form '
-        'champ_disjunctiveOnce measures propext and Quot.sound only (measured 2026-10-04; '
-        'ZeroParadox/Information/Disjunctive.md, Footprints).'))
+        'champ_disjunctiveOnce measures propext and Quot.sound only (#print axioms in the '
+        'PurityCheck section of ZeroParadox/Information/Disjunctive.lean).'))
 
     E.append(remark_box(
         'Remark: Classical Choice in Computability',
         [
             'Kleene\'s theorem as Mathlib states it, ∀ f, Partrec₂ f → ∃ c, eval c = f c, carries '
             'Classical.choice in its statement: that statement, measured as a proposition, reports '
-            'propext, Classical.choice and Quot.sound (2026-10-04), and so does the statement of '
+            'propext, Classical.choice and Quot.sound, and so does the statement of '
             'Rogers\' theorem, ∀ f, Computable f → ∃ c, eval (f c) = eval c. So every proof of '
             'either, as stated, carries the triple. Where it enters each statement is recorded in '
-            'ZeroParadox/Computability/Kleene.md § VIII. Whether a restated, choice-free statement '
-            'has a choice-free proof is UNCLASSIFIED (Section VI.IV).',
+            'ZeroParadox/Computability/Kleene.md § VIII. A restatement of Kleene\'s form whose '
+            'statement and proof are both choice-free, for a transformation given as a code rather '
+            'than as a Partrec₂ function, is kleene_cf (ZeroParadox/Computability/KleeneChoiceFree.lean, '
+            'propext and Quot.sound only; the Open Items Register below); Rogers\' form has no such '
+            'restatement in this corpus.',
             'The MachinePhase instance (§ V) picks botCode with Classical.choose from '
             'computational_quine_exists, which is what makes machinePhaseKleene noncomputable. A '
             'computable instance with the constant code Code.const 0 also exists (the example after '
@@ -488,8 +520,10 @@ def build():
             '  quine_unique _ _ hx hy := hx.trans hy.symm   (if x = ⊥ and y = ⊥ then x = y)',
             '  bot_self_mem   := rfl                (⊥ = ⊥, proved by reflexivity)',
             '',
-            'This is the CIC encoding of ⊥ = {⊥}: the initial machine state is self-containing '
-            'and is the unique element with this property. No ZF+AFA axiom is added — '
+            'This is the CIC-compatible stand-in for the Quine atom (CC-2): the initial machine '
+            'state is self-containing and is the unique element with this property, so with '
+            'membership as the step it is the only occupant of the Quine-atom role '
+            '(quineAtomHost_quine_role_iff, host afaStructure_isQuineAtomHost). No ZF+AFA axiom is added — '
             'the structural fact is encoded as a definition that Lean verifies.',
         ]
     ))
@@ -506,9 +540,9 @@ def build():
             'botCode is a class field supplied at instantiation; this instance supplies it as '
             'Classical.choose applied to computational_quine_exists — some witness of that '
             'existence statement, not a distinguished code. Reading it as '
-            '"the program that IS its own program" is the framework\'s commitment carried by the '
-            'class, not a property this instance establishes: IsComputationalQuine is a '
-            'periodicity condition, strictly weaker than self-reference.',
+            '"the program that IS its own program" is not a property this instance establishes, '
+            'and no field of the class asserts it (its identity half is retired, Section II.I): '
+            'IsComputationalQuine is a periodicity condition, strictly weaker than self-reference.',
         ]
     ))
     E.append(sp(6))
@@ -543,24 +577,28 @@ def build():
     E.append(body(
         'ZP-E\'s DA-1 section previously carried the designation "Outside Lean Scope" with '
         'three justifications: Path 1 requires ZF+AFA, which ZP-E held incompatible with Lean\'s CIC/MLTT; '
-        'Path 3 requires Kolmogorov complexity (uncomputable, absent from Mathlib); Path 2 '
+        'Path 3 requires Kolmogorov complexity (it is uncomputable, and that alone does not keep it '
+        'out of Lean, where a noncomputable definition is allowed; no formalization of it was located in '
+        'the pinned Mathlib as of 2026-10-04, searched as recorded in '
+        'ZeroParadox/Information/Disjunctive.md, and Lean developments outside Mathlib that define it '
+        'are named at the ZPSurprisal entry of LEAN_CUSTOM_REGISTRY.md); Path 2 '
         'requires a step from unbounded surprisal to executing, which ZP-E names a bridge '
         'principle of its own, a missing principle and not a missing proof.'))
     E.append(body(
         'For Path 1 (AFA structural), in Lean the two charts split: Mathlib\'s ZFSet, a model of '
-        'ZFC, contains no set that is a member of itself (no_quine_atom), while outside ZFSet '
+        'ZFC, contains no set that is a member of itself (no_quine_atom; Mathlib\'s ZFSet.mem_irrefl), while outside ZFSet '
         'Lean hosts a one-atom model whose distinguished element is its own unique self-member '
         '(the QuineHost instance on OneAtom, ZeroParadox/Settheory/QuineHost.lean &#167; V). '
         'The Lean counterpart of Path 1 is da1_closed_concrete, which proves '
         'IsQuineAtom (⊥ : MachinePhase) and nothing computational: in the AFAStructure '
-        'typeclass, selfMem encodes ⊥ = {⊥} in CIC-compatible form, and the proof obligation '
+        'typeclass, selfMem stands in for the Quine atom (CC-2) in CIC-compatible form, and the proof obligation '
         'is discharged by the MachinePhase instance. Path 3 (computational) is NOT resolved '
         'here. Its Lean counterpart, botCode_is_quine, is a KleeneStructure class field — an assumption '
         'supplied at instantiation, not a second independent proof — and the condition it '
         'requires, IsComputationalQuine, is a periodicity condition that a constant code '
         'satisfies trivially. The Kolmogorov reading ("no shorter program is prior to ⊥") has '
-        'no formal content in ZP-K: Kolmogorov complexity is uncomputable and absent from the '
-        'development. Path 3 therefore derives nothing here: in ZP-E it bears on DA-1\'s '
+        'no formal content in ZP-K: Kolmogorov complexity is not formalized in this corpus (a scope '
+        'decision, recorded at the ZPSurprisal entry of LEAN_CUSTOM_REGISTRY.md). Path 3 therefore derives nothing here: in ZP-E it bears on DA-1\'s '
         'precondition and does not derive executing from incompressibility, and that '
         'precondition is what the occurrence commitment asserts.'))
     E.append(body(
@@ -656,9 +694,12 @@ def build():
             'universal code on a channel e + 1.',
             'Reading: replicas share everything but the address. Incompressibility is a property of '
             'each instance, and the next instance adds only its address. That is a claim about '
-            'relative complexity, and it stays a reading while Kolmogorov complexity is not in Lean.',
+            'relative complexity, and it stays a reading while Kolmogorov complexity is not formalized '
+            'in this corpus (a scope decision, recorded at the ZPSurprisal entry of '
+            'LEAN_CUSTOM_REGISTRY.md, which also names Lean developments outside Mathlib that define it).',
             'Lean: ZeroParadox.selfPrints_universal_address. '
-            'Purity: propext, Classical.choice, Quot.sound (measured 2026-10-04).',
+            'Purity: propext, Classical.choice, Quot.sound (#print axioms in the PurityCheck section '
+            'of ZeroParadox/Computability/Kleene.lean).',
         ]
     ))
     E.append(sp(6))
@@ -697,11 +738,10 @@ def build():
         'measured: selfref_universal_exists carries Classical.choice, and so does its statement, '
         'through Mathlib\'s numbering of codes (Denumerable Code, reached through ofNatCode); '
         'restated with encodeCode for the Gödel number and the channel of code d written '
-        'Nat.pair (encodeCode d + 1) n, the statement is axiom-free, and no proof of the restated form '
-        'without choice was found. ZeroParadox/Computability/Kleene.md § VIII records the '
-        'measurement (2026-10-04) and what the route lacked as located then. Every proof of the '
-        'statement as written carries choice; whether the restated statement has a choice-free '
-        'proof is UNCLASSIFIED.'))
+        'Nat.pair (encodeCode d + 1) n, the statement is axiom-free, and it has a proof at '
+        'propext and Quot.sound only, selfref_universal_exists_enc '
+        '(ZeroParadox/Computability/UniversalChoiceFree.lean). ZeroParadox/Computability/Kleene.md '
+        '§ VIII records the measurements. Every proof of the statement as written carries choice.'))
 
     E.append(Paragraph('V. The Zero Tape: Reference and Self', S['h2']))
     E.append(body(
@@ -764,7 +804,7 @@ def build():
         ['machinePhaseAFA (AFAStructure)',
          'selfMem := x = ⊥; quine_unique; bot_self_mem := rfl',
          'No axioms',
-         'CIC encoding of ⊥ = {⊥} for MachinePhase ✓'],
+         'CIC stand-in for the Quine atom (CC-2) on MachinePhase ✓'],
         ['machinePhaseKleene (KleeneStructure)',
          'machinePhaseAFA + Classical.choose computational_quine_exists',
          'Standard Mathlib foundational axioms',
@@ -777,42 +817,42 @@ def build():
          'structural closure by typeclass design — see R-K.0)'],
         ['fixed_points_infinite, padding',
          'fixed_point₂_unbounded (Kleene.lean § VIII)',
-         'propext, Classical.choice, Quot.sound (measured 2026-10-04)',
+         'propext, Classical.choice, Quot.sound (#print axioms, ZeroParadox/Computability/Kleene.lean)',
          'Lean ✓ — infinitely many fixed points for every partially computable F; the Padding Lemma'],
         ['selfref_universal_exists, selfref_universal_infinite',
          'fixed_point₂ (Mathlib) + selfPrintOrDelegate_partrec; fixed_points_infinite',
-         'propext, Classical.choice, Quot.sound (measured 2026-10-04), carried by the statement; '
-         'restated form UNCLASSIFIED, Kleene.md § VIII',
+         'propext, Classical.choice, Quot.sound (#print axioms, ZeroParadox/Computability/Kleene.lean), carried by the statement; '
+         'restated form proved without choice, selfref_universal_exists_enc (ZeroParadox/Computability/Kleene.md § VIII)',
          'Lean ✓ — existence of self-printing universal codes; nothing says a code is run'],
         ['selfprints_behaviour_injective',
          'SelfPrints at channel 0 + Encodable.encode_injective',
-         'propext, Classical.choice, Quot.sound (measured 2026-10-04)',
+         'propext, Classical.choice, Quot.sound (#print axioms, ZeroParadox/Computability/Kleene.lean)',
          'Lean ✓ — Reading: a uniqueness at the level of behaviour'],
         ['selfPrints_universal_address',
          'SelfPrints + Universal + Encodable.encode_injective',
-         'propext, Classical.choice, Quot.sound (measured 2026-10-04)',
+         'propext, Classical.choice, Quot.sound (#print axioms, ZeroParadox/Computability/Kleene.lean)',
          'Lean ✓ — Reading: replicas share everything but the address'],
         ['code_occurs_of_disjunctive',
          'Disjunctive (Disjunctive.lean § I) at each code word',
-         'propext, Classical.choice, Quot.sound (measured 2026-10-04)',
+         'propext, Classical.choice, Quot.sound (#print axioms, ZeroParadox/Information/Disjunctive.lean)',
          'Lean ✓ — presence, Sense A; no code is read or run'],
         ['champ_disjunctive, champ_disjunctiveOnce, champ_primrec',
          'tri / untri slot layout + bitAt_ofBits; disjunctive_iff_once; Mathlib Primrec',
          'champ_disjunctive: propext, Classical.choice, Quot.sound; champ_disjunctiveOnce: '
-         'propext, Quot.sound; champ_primrec: propext, Classical.choice, Quot.sound (measured '
-         '2026-10-04)',
+         'propext, Quot.sound; champ_primrec: propext, Classical.choice, Quot.sound '
+         '(#print axioms, ZeroParadox/Information/Disjunctive.lean)',
          'Lean ✓ — disjunctive without randomness'],
         ['fairTape_disjunctive_ae',
          'second Borel–Cantelli (measure_limsup_eq_one) on disjoint aligned blocks',
-         'propext, Classical.choice, Quot.sound (measured 2026-10-04)',
+         'propext, Classical.choice, Quot.sound (#print axioms, ZeroParadox/Information/Disjunctive.lean)',
          'Lean ✓ — almost every fair-coin tape is disjunctive'],
         ['disjunctive_not_periodic',
          'not_disjunctive_of_periodic (Disjunctive.lean § V)',
-         'propext, Classical.choice, Quot.sound (measured 2026-10-04)',
+         'propext, Classical.choice, Quot.sound (#print axioms, ZeroParadox/Information/Disjunctive.lean)',
          'Lean ✓ — no full self-copy at any offset a > 0'],
         ['carry_steps_onward_forever_yet_shows_nothing',
          'stutter_obs_const + carry_stutters (Occurrence.lean § VI-c)',
-         'propext, Classical.choice, Quot.sound (measured 2026-10-04)',
+         'propext, Classical.choice, Quot.sound (#print axioms, ZeroParadox/Computability/Occurrence.lean)',
          'Lean ✓ — steps onward forever with a constant observable'],
         ['Reading: zero tape (Section VI.V)',
          'BottomCannotBe.lean, "The infinitude in two charts: content and self"',
@@ -857,7 +897,7 @@ def build():
          'CLOSED — two predicates, two answers',
          'Codes meeting IsComputationalQuine are not unique: the constant codes alone give '
          'infinitely many (infinite_quine_family). That the Quine atom is ⊥ of the lattice, and the '
-         'only one, flows from ZP-J T-EXEC (set-theoretic side). For self-printing codes, a '
+         'only one, flows from ZP-J T-EXEC (the AFA side). For self-printing codes, a '
          'uniqueness at the level of behaviour is proved (selfprints_behaviour_injective).'],
         ['Rogers\' fixed-point theorem',
          'CLOSED — roger_fixed_point_exists',
@@ -868,16 +908,19 @@ def build():
          'The 2-adic model from ZP-B (Q₂ structure) has not been given a KleeneStructure '
          'instance. This is a natural extension but not required for T-SNAP or DA-1.'],
         ['Choice-free recursion theorem',
-         'OPEN — measured negative, 2026-10-04',
+         'CLOSED for Kleene\'s form (kleene_cf) and the channel restatement '
+         '(selfref_universal_exists_enc); Rogers\' form not restated',
          'The statement of selfref_universal_exists carries Classical.choice through Mathlib\'s '
-         'numbering of codes (Denumerable Code); restated with encodeCode for the Gödel number and '
-         'the channel of code d written Nat.pair (encodeCode d + 1) n, it is axiom-free, and no '
-         'proof of the restated form without choice was found. What the route lacked, as located '
-         'then, is recorded in ZeroParadox/Computability/Kleene.md § VIII. Every proof of the '
-         'statement as written carries choice; whether the restated form has a choice-free proof '
-         'is UNCLASSIFIED.'],
+         'numbering of codes (Denumerable Code), so every proof of it as written carries choice. '
+         'Restated with encodeCode for the Gödel number and the channel of code d written '
+         'Nat.pair (encodeCode d + 1) n, it is axiom-free, and selfref_universal_exists_enc '
+         '(ZeroParadox/Computability/UniversalChoiceFree.lean) proves it at propext and Quot.sound '
+         'only. The recursion theorem itself, for a transformation given as a code, is kleene_cf '
+         '(ZeroParadox/Computability/KleeneChoiceFree.lean), at the same footprint. Rogers\' form, '
+         '∀ f, Computable f → ∃ c, eval (f c) = eval c, has no choice-free restatement in this '
+         'corpus. The record is ZeroParadox/Computability/Kleene.md § VIII.'],
         ['Martin-Löf randomness ⇒ disjunctive',
-         'OPEN — not in Lean',
+         'OPEN — not formalized in this corpus',
          'Standard theory: a Martin-Löf random sequence is disjunctive, and by the Levin–Schnorr '
          'theorem Martin-Löf randomness is incompressibility of every prefix, K(first n bits of x) ≥ '
          'n − c for some constant c and every n, with K the prefix-free complexity (Franklin and '
@@ -886,7 +929,10 @@ def build():
          'p. 15, crediting Martin-Löf; Martin-Löf 1971, Theorem 1, proves the form conditional on '
          'the length n). Martin-Löf randomness and '
          'Kolmogorov complexity are not located in the Mathlib pin as of 2026-10-04 (search record '
-         'in Disjunctive.md). Until this bridge is formalised, the framework\'s commitment that the '
+         'in ZeroParadox/Information/Disjunctive.md). Outside Mathlib, one development named at the '
+         'ZPSurprisal entry of LEAN_CUSTOM_REGISTRY.md defines Martin-Löf randomness and proves the '
+         'Levin–Schnorr theorem; a proof there that a Martin-Löf random sequence is disjunctive was '
+         'not located as of 2026-11-01 (the search is recorded at that entry). Until this bridge is formalised, the framework\'s commitment that the '
          'occupant of its ⊥ role, ⊥ of a ZPSemilattice, read as a tape, is maximally complex reaches '
          'Disjunctive (Section VI.I) only as a reading.'],
     ]

@@ -15,8 +15,12 @@ Bottom is not ever epsilon zero. Always next to, but never the same as.
 
 ---
 
+`Reading:` the Take's "brand new instance of bottom" is the novelty commitment (C-DA2), not a theorem: proved is
+the role half, that anything filling the bottom role is ⊥ of its semilattice (`t_iz_limit_is_new_null`); in the
+2-adic realization the arc returns to the same 0 (`snap_arc_z2_loop`).
+
 The snap re-seeds above where it landed and runs again; the ε-numbers are the targets it runs TO,
-never ⊥ itself (`epsilon0_ne_bot`). The overview, the iterative-bottom vocabulary ruling and every
+never ⊥ of `Ordinal` (`epsilon0_ne_bot`). The overview, the iterative-bottom vocabulary ruling and every
 fence live in the ride-along `SnapSuccession.md`; each result is stated again at its own declaration.
 -/
 

@@ -1,5 +1,6 @@
 import Mathlib.Data.QPF.Univariate.Basic
 import ZeroParadox.Settheory.FixedPointFork
+import ZeroParadox.Die
 
 /-!
 # ZP-P instance: the categorical parent (initial algebra vs final coalgebra)
@@ -26,10 +27,16 @@ fork is exactly the self-referential element that ν admits and μ forbids — t
 ZFC+Foundation (no ⊥={⊥}) vs ZFC+AFA (⊥={⊥}) (set theory: ZP-J).
 
 **FENCE.** This is the genuine μ/ν instance of the schema (unlike the Ostrowski number-system instance,
-which is theorem-backed but not a μ/ν instance). What is claimed here is exactly the two Lean theorems
-below: `Fix` empty, `Cofix` inhabited, for this functor. The identification of this categorical contact
-point with the diagonal fixed point of the other layers is the cross-instance identity — a modeling
-commitment, not a theorem (ZP-P hard fence).
+which is theorem-backed but not a μ/ν instance). For this functor the least fixed point is empty and the
+greatest is inhabited (`categorical_fork_strict`), with exactly one point (`cofixSelf` for existence,
+`cofix_subsingleton` for at most one). In die terms that point occupies the Quine-atom role, a point that
+steps to itself and to nothing else (`Motion.SelfOnlyAt`, `cofix_quine_role_occupied`); because the chart
+has a single point, that occupancy restates the fork and adds no further content. The same role is
+unoccupied in the well-founded set chart (`zfset_quine_role_unoccupied`,
+`ZeroParadox/Settheory/Wall.lean`). The diagonal fixed points of the other layers are each stated as
+occupants of the role in their own chart (indexed in `ZeroParadox/DieCannotBe.lean` § XV); no equation
+across charts is stated (one would be ill-typed) and none is committed to. What relates the charts is the
+one role each chart is measured against, which is the die's definition, not an identity (ZP-P hard fence).
 
 ## Status
 
@@ -39,14 +46,8 @@ M-type / corecursion machinery. **That choice sits in `QPF.Cofix` itself** (meas
 type reports `[propext, Classical.choice, Quot.sound]`), so it is not removable by any proof of this
 statement — but it IS attributable to the QPF quotient layer rather than to the mathematics, because
 `PFunctor.M`'s former and constructors are axiom-free (its DESTRUCTOR is not) and
-`strict_cofix_nonempty` proves the same inhabitation over it with no
-axioms. Ahrens et al. agree from the other side: for a polynomial
-functor the final coalgebra is constructible choice-free (their construction needs
-only function extensionality, which Lean has; only their uniqueness half uses univalence, see
-`ZeroParadox/Computability/ChoicePurityInvariant.lean`. Veltri is CONTRAST, not support: for the
-non-polynomial finite-powerset functor his results run the other way — certain constructions
-there are obtained ASSUMING choice principles rather than shown to need them, and his own
-preferred coinductive construction needs neither choice nor LLPO). See PurityCheck.
+`strict_cofix_nonempty` proves the same inhabitation over it with no axioms. Prior art (Ahrens et al.;
+Veltri as contrast): the PurityCheck note below and `ZeroParadox/Computability/ChoicePurityInvariant.md`.
 -/
 
 namespace ZeroParadox
@@ -86,6 +87,57 @@ categorical analog of the Quine atom in νF \ μF. -/
 theorem categorical_fork_strict :
     IsEmpty (Fix idPF_Coalgebra.Obj) ∧ Nonempty (Cofix idPF_Coalgebra.Obj) :=
   ⟨fix_isEmpty, cofix_nonempty⟩
+
+/-! ### The Quine-atom role in the die
+Beside the FENCE above: in the die (`ZeroParadox/Die.lean`) the Quine atom is a ROLE, `Motion.SelfOnlyAt`
+(a point stepping to itself and to nothing else). `Reading:` CARRIER — of two charts, the one in this file
+occupies it (`cofix_quine_role_occupied`) and `ZFSet`, whose chart is in `ZeroParadox/Settheory/Wall.lean`,
+provably does not (`zfset_quine_role_unoccupied`). No equation is stated across them: an equation between a
+`Cofix idPF_Coalgebra.Obj` point and a `ZFSet` is ill-typed. This chart has one point (`cofixSelf` exists,
+and `cofix_subsingleton` allows at most one). Rutten's example is the identity functor on sets, whose final
+system is a one-element set (TCS 249 (2000), Example 10.2(1), p. 44); `idPF_Coalgebra.Obj` is isomorphic
+to that functor (`idPF_Coalgebra.Obj α ≅ α`). So this chart's occupancy is the one-node loop and carries no
+contrast inside the chart; the contrast it carries is `categorical_fork_strict`. -/
+
+/-- `Statement:` the element `cofix_nonempty` builds: the corecursion from the one-point coalgebra. -/
+noncomputable def cofixSelf : Cofix idPF_Coalgebra.Obj :=
+  Cofix.corec (fun _ : PUnit => (⟨PUnit.unit, fun _ => PUnit.unit⟩ : idPF_Coalgebra.Obj PUnit)) PUnit.unit
+
+/-- `Statement:` `Cofix.dest cofixSelf` is the one-slot node whose only child is `cofixSelf`. -/
+theorem dest_cofixSelf :
+    Cofix.dest cofixSelf = (⟨PUnit.unit, fun _ => cofixSelf⟩ : idPF_Coalgebra.Obj _) := by
+  rw [cofixSelf, Cofix.dest_corec]; rfl
+
+/-- `Statement:` in the die motion on `Cofix idPF_Coalgebra.Obj` with UP the identity and OVER
+    `x ⟶ y` when `y` is a child of `x` under `Cofix.dest`, `cofixSelf` steps to itself and to nothing
+    else (`Motion.SelfOnlyAt`). -/
+theorem cofixSelf_selfOnlyAt :
+    (Motion.ofTotal (id : Cofix idPF_Coalgebra.Obj → _) (fun _ => rfl)
+      (fun x y => ∃ b, (Cofix.dest x).2 b = y)).SelfOnlyAt cofixSelf := by
+  refine ⟨⟨PUnit.unit, by rw [dest_cofixSelf]⟩, fun b ⟨i, hi⟩ => ?_⟩
+  rw [dest_cofixSelf] at hi
+  exact hi.symm
+
+/-- `Statement:` so in that motion some point steps to itself and to nothing else. -/
+theorem cofix_quine_role_occupied :
+    ∃ x, (Motion.ofTotal (id : Cofix idPF_Coalgebra.Obj → _) (fun _ => rfl)
+      (fun x y => ∃ b, (Cofix.dest x).2 b = y)).SelfOnlyAt x :=
+  ⟨cofixSelf, cofixSelf_selfOnlyAt⟩
+
+/-- `Statement:` `Cofix idPF_Coalgebra.Obj` has at most one point (bisimulation by the
+    always-true relation). The same argument over `PFunctor.M idPF_Coalgebra` is the `heq` step of
+    the leaf-free M-type `example` in `ZeroParadox/DieCannotBe.lean` § XI. -/
+theorem cofix_subsingleton : ∀ x y : Cofix idPF_Coalgebra.Obj, x = y := by
+  intro x y
+  apply Cofix.bisim_rel (fun _ _ => True) _ x y trivial
+  intro a b _
+  rcases ha : Cofix.dest a with ⟨u, f⟩
+  rcases hb : Cofix.dest b with ⟨v, g⟩
+  cases u; cases v
+  show (⟨PUnit.unit, Quot.mk _ ∘ f⟩ : idPF_Coalgebra.Obj _) = ⟨PUnit.unit, Quot.mk _ ∘ g⟩
+  congr 1
+  funext i
+  exact Quot.sound trivial
 
 /-! ## Engineer's Take
 
@@ -135,7 +187,7 @@ section PurityCheck
 -- only at their uniqueness result; Lean has funext). For Lean's Axiom-K setting the closer
 -- citation is **Altenkirch–Ghani–Hancock–McBride–Morris, *Indexed Containers* (JFP 25, 2015)**,
 -- which ACS themselves point at (§1.1) and generalize "to the whole of HoTT". **The full
--- three-way setting comparison is in `ZeroParadox/Computability/ChoicePurityInvariant.lean` —
+-- three-way setting comparison is in `ZeroParadox/Computability/ChoicePurityInvariant.md` —
 -- read it there, not here.** In the finite-powerset case — the non-polynomial one — the literature
 -- pins each presentation: full AC for the set-quotient, countable choice together with LLPO for
 -- Worrell's limit. The CHOICE half is a fact about those constructions, not a necessity: two of
@@ -146,6 +198,11 @@ section PurityCheck
 #print axioms fix_isEmpty
 #print axioms cofix_nonempty
 #print axioms categorical_fork_strict
+#print axioms cofixSelf
+#print axioms dest_cofixSelf
+#print axioms cofixSelf_selfOnlyAt
+#print axioms cofix_quine_role_occupied
+#print axioms cofix_subsingleton
 
 /- **M3 metric — the fork choice discriminator (lake build, 2026-06-27).** The per-side footprint is
    a genuine SPLIT, and that split is the measured invariant of the fork: the μ (initial-algebra,

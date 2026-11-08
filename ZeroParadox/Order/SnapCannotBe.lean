@@ -4,6 +4,13 @@ import ZeroParadox.Valuation.SemilatticeInstance
 import ZeroParadox.Valuation.SnapDichotomy
 import ZeroParadox.Reals.OrderedField
 import ZeroParadox.Multihomed.BoundaryOrder
+import ZeroParadox.Information.CrossingTrials
+import ZeroParadox.Valuation.PolePassage
+import ZeroParadox.Valuation.BallLine
+import ZeroParadox.Reals.ConnectedNoFirstStep
+import ZeroParadox.Information.TwoRequirements
+import ZeroParadox.Information.MaxEntropy
+import ZeroParadox.Information.SnapEpsilonZero
 
 /-!
 # Machine-checked characterization index of the snap ⊥ → ε₀ — what the snap IS and IS NOT
@@ -26,7 +33,7 @@ section SnapCannotBeIndex
 /-! ### § I. What the snap IS NOT — not an axiom, not reversible, not a return to the same `TrackedOutput` configuration -/
 #check @ZeroParadox.t_snap_derived                    -- Statement: in `MachinePhase`, `c₀ ≠ c₁ ∧ c₁ ≠ c₀ ∧ join c₀ c₁ = c₁` — the shape (AX-1 is retired); that the snap occurs follows from the occurrence commitment together with DA-1, not from this line, and the next line is why
 #check @ZeroParadox.tsnap_holds_but_nothing_moves     -- Statement: in `MachinePhase`, T-SNAP's statement holds together with a dynamics `stuckPhase` in which every phase is fixed, so T-SNAP is not an occurrence claim
--- `Statement:` a state sequence in `MachinePhase` that starts at its ⊥ `c₀` and never steps is the `example` after `t_snap_given` in `ZeroParadox/Order/Snap.lean`.
+-- `Statement:` a state sequence in `MachinePhase` that starts at its ⊥ `c₀` and never steps exists: the `example` in `ZeroParadox/Order/Snap.lean` stating that `MachinePhase` does not discharge `hocc` (`∃ S, S 0 = bot ∧ IsStateSequence S ∧ ∀ n, S (n + 1) = S n`).
 #check @ZeroParadox.t_snap_irreversible              -- Statement: in any `ZPSemilattice`, for `le x y` and `x ≠ y`, no `z` has `join y z = x`. Reading: at `x := bot` and `y` any state above it (c₁ in `MachinePhase`, which the discrete chart names ε₀), no join from `y` returns to that semilattice's ⊥. The statement mentions neither ⊥ nor the snap
 #check @ZeroParadox.dp2_execution_distinguishability  -- Statement: `preInstantiation` and `postInstantiation` share the output value and differ in machine state. Reading: the post-snap null and the pre-snap null are distinct instances in `TrackedOutput`; in the ℤ₂ chart the arc reapproaches the SAME 0 (`snap_arc_z2_loop`, § IV)
 #check @ZeroParadox.da1_minimal_path                  -- Statement: the two configurations are DISTINCT while sharing an output value, with states `c₀` before and `c₁` after. It does NOT carry that the step is taken, and irrecoverability is not in it — see the fence in its home docstring
@@ -35,6 +42,22 @@ section SnapCannotBeIndex
 #check @ZeroParadox.t_snap_join                       -- Statement: in any `ZPSemilattice`, `join bot x = x` for every `x` (A4, `bot_join`); the binder is named ε₀. Reading: the algebraic core ⊥ ∨ ε₀ = ε₀
 #check @ZeroParadox.t_snap_machine                    -- Statement: in `MachinePhase`, `join c₀ c₁ = c₁` (initial → running)
 #check @ZeroParadox.t_snap_given                      -- Statement: over any ZPSemilattice, `S 0 = bot` (CC-1) and `S 1 ≠ S 0` (occurrence at the first step) give `t_snap_derived`'s shape at S 0, S 1; the inequalities restate `hocc`, and only the join comes from A4. No binder makes `S 1` an atom above `S 0`, and the step is assumed (`hocc`), not forced. Two commitments are the binders; `t_snap_derived` is its MachinePhase instance at a sequence chosen to move, and `MachinePhase` does not discharge `hocc`
+-- Reading: CARRIER — the occurrence commitment, in two charts. Execution chart: instantiation occurs (Sense B,
+--   a running configuration). Slot chart: the realized run has fired at least once, the hypothesis
+--   `hw` of `t_snap_of_fires_once` (`ZeroParadox/Information/CrossingTrials.lean` § VIII).
+#check @ZeroParadox.t_snap_of_fires_once             -- Statement: if `φ : Bool → L` sends `false` to ⊥ of `L` and `true` to a point other than ⊥ of `L`, and the tape `w` fires at some stage (`hw`), then `φ ∘ firedRun w hw` meets `t_snap_given`'s `hcc1` and `hocc` and is a state sequence; one way
+#check @ZeroParadox.trials_fires_once                -- Statement: if `0 < p ≤ 1`, the tapes that fire at some stage have `trials p hp` measure one; it names no tape
+-- `Statement:` CONTROL, a particular tape need not fire: the all-`false` tape fires at no stage.
+example : ¬ ∃ k, (fun _ => false : ℕ → Bool) k = true := fun ⟨_, h⟩ => Bool.false_ne_true h
+-- `Statement:` occurrence once: the slot chart's sequence steps at index 1 and stays, so it is not an
+-- `IsStrictStateSequence` (ZP-A's proper ascent at every step).
+example {L : Type*} [ZeroParadox.ZPSemilattice L] (φ : Bool → L) (w : ℕ → Bool) (hw : ∃ k, w k = true) :
+    ¬ ZeroParadox.ZPSemilattice.IsStrictStateSequence (φ ∘ ZeroParadox.firedRun w hw) := fun h => by
+  have a : ZeroParadox.firedRun w hw 1 = true := (ZeroParadox.firedRun_spec w hw).2 0
+  have b : ZeroParadox.firedRun w hw 2 = true := (ZeroParadox.firedRun_spec w hw).2 1
+  exact h.2 1 (show φ (ZeroParadox.firedRun w hw 1) = φ (ZeroParadox.firedRun w hw 2) by rw [a, b])
+-- Reading: CARRIER — the two charts correspond: a firing is read as an instantiation. That correspondence is
+--   not proved; a firing is not shown to be an execution event.
 -- Reading: CARRIER. "⊥ → ε₀" in the lines that use c₁ (`t_snap_derived`, `t_snap_machine`) is the
 --   discrete-state chart, where ε₀ names the first state above ⊥ (c₁ in `MachinePhase`), and "atom above
 --   ⊥" is a claim in that chart only. `t_snap_join`, `t_snap_irreversible` and
@@ -77,6 +100,15 @@ example : ¬ @CovBy ℕ (ZeroParadox.zpSemilatticeSup ℕ).toLT 0 2 := fun h =>
       show ¬ ZeroParadox.ZPSemilattice.join 1 0 = 0 by decide⟩
     ⟨show ZeroParadox.ZPSemilattice.join 1 2 = 2 by decide,
       show ¬ ZeroParadox.ZPSemilattice.join 2 1 = 1 by decide⟩
+#check @ZeroParadox.snap_of_two_requirements          -- Statement: if ⊥ of `L` has a first step in ZP-A's induced order (`BotHasFirstStep L`) and the tape `w` avoids every zero-block test for `trials p hp` with `0 < p` (`ZeroBlockTypical`), then some `φ : Bool → L` and some proof `hw` that `w` fires make `S := φ ∘ firedRun w hw` a state sequence with `S 0 = bot` and `S 1 ≠ S 0` that carries `t_snap_given_cover`'s conclusion, the triple and `bot ⋖ S 1`; one way. `φ` is built from the cover's witness; no map from ⊥ of `L` to a tape appears
+-- Reading: CARRIER — the slot chart's `hw` from typicality of one tape, the cover from AX-B1's form on `L`, each a
+--   hypothesis and neither discharged (the `NNReal` and all-`false` controls in `ZeroParadox/Information/TwoRequirements.lean`).
+#check @ZeroParadox.snap_of_firstStep_MLRandom        -- Statement: the same conclusion with `ZeroBlockTypical` replaced by Martin-Löf randomness for `trials p hp` (`MLRandom`, defined in `ZeroParadox/Information/TwoRequirements.lean`), which implies it (`zeroBlockTypical_of_MLRandom`); one way. No tape is named and ⊥ of `L` is not claimed random
+#check @ZeroParadox.phase_snap_of_MLRandom            -- Statement: CORNER, on `WithBot Ordinal` under join `max` (`ZeroParadox/Information/SnapEpsilonZero.lean`): if `w` is Martin-Löf random for `trials p hp` with `0 < p`, some run's `S 1` covers ⊥ of `WithBot Ordinal`, equals the snap `↑0 ≠ ↑ε₀`, and `phaseUpAndOver.up` sends it to `↑ε₀`; one way
+#check @ZeroParadox.epsilonOrZero_snap_of_MLRandom    -- Statement: COVER, on `EpsilonOrZero`, the carrier of the example above, under join `max`: if `w` is as above, some run's `S 1` covers 0 of `Ordinal` and has value ε₀ ≠ 0; one way. The two are related by `epsilonOrZeroIsoLanding_spec`, and neither is the snap's only form
+#check @ZeroParadox.snap_ae_of_firstStep              -- Statement: if ⊥ of `L` has a first step (`BotHasFirstStep L`) and `0 < p ≤ 1`, then for `trials p hp`-almost every tape `w` some `φ` and `hw` give `snap_of_two_requirements`'s conclusion; one way. Almost every, not every: the all-`false` tape never fires. No map from ⊥ of `L` to a tape or to `trials p hp` appears
+#check @ZeroParadox.mlRandom_and_snap_ae              -- Statement: the same, with `MLRandom (trials p hp) w` conjoined: almost every tape is Martin-Löf random for `trials p hp` and gives that conclusion; one way
+#check @ZeroParadox.maxEntropy_mlRandom_and_snap_ae    -- Statement: the same, with `0 < p` replaced by `binEntropy p = log 2`, the maximum-entropy coin `p = 1/2` (`ZeroParadox/Information/MaxEntropy.lean`); one way. No tape law of ⊥ of `L` is constructed, and `BotHasFirstStep L` stays a hypothesis
 -- `Statement:` on `Set Bool` (join `∪`, ⊥ = ∅) `∅` has two distinct covers in that order, with join
 -- `Set.univ`, so `hcov` does not fix the target; on a carrier with its own linear order,
 -- `axb1_gives_unique_target` fixes the cover in that order. Reading: prior art, Winskel, *Event
@@ -135,6 +167,8 @@ example : ¬ @IsAtom (Set.Ici (0 : ℕ)) _ Set.Ici.orderBot ⟨2, Nat.zero_le 2�
 /-! ### § IV. The snap returns to a ⊥ (read as a successor null — a commitment); its 2-adic realization is a loop -/
 #check @ZeroParadox.c_da2_novelty                     -- Statement: contrapositive of the role fact, in one `ZPSemilattice`: a state `≠ bot` cannot satisfy the join-identity. Reading: "distinct successor instantiation" is the reading, not the statement
 #check @ZeroParadox.snap_arc_z2_loop                  -- Statement: the `cnfToZp2` image of tower stage 0 is ℤ_[2]'s 0, every stage `n ≥ 1` has a nonzero image, and the images tend to that same 0
+#check @ZeroParadox.arc_q2Val                         -- Statement: read by `q2Val`, those images are ⊤ of `ℕ∞` at stage 0, `n` at every stage `n ≥ 1`, and tend to ⊤, which is `q2Val` of ℤ_[2]'s 0 (`q2Val_bot`; `ZeroParadox/Valuation/PolePassage.lean`)
+#check @ZeroParadox.no_path_zero_infty                -- Statement: no continuous path in `Sphere` (`OnePoint ℚ_[2]`) runs from 0 of `ℚ_[2]` to ∞ of `Sphere`. Reading: the loop returns to 0 of `ℚ_[2]` without passing ∞ of `Sphere` (`arc_never_meets_infty`); its `rInv` image is the loop at ∞ (`rInv_arcS`)
 #check @ZeroParadox.t_iz_limit_is_new_null            -- Statement: role half only, in any `ZPSemilattice`: (∀ x, join terminal x = x) → terminal = bot of that semilattice. Novelty is NOT in this statement; do not cite it as the novelty witness
 
 /-! ### § V. WHERE the snap is RULED OUT — and what only removes the obstruction
@@ -147,11 +181,21 @@ commitment is that the framework's carrier has it. AX-B1 holds at every state wi
 each has a first distinct state above it, with nothing strictly between. A state with nothing above it
 owes no step. -/
 #check @ZeroParadox.axb1_gives_unique_target          -- Statement: on a LINEAR order, AX-B1 at `bot` gives exactly one cover; the `Set Bool` control beside it in `ZeroParadox/Reals/OrderedField.lean` has two
-#check @ZeroParadox.HasFirstStep                      -- Statement: an ORDER predicate — `∃ a, bot ⋖ a`, Mathlib's covering relation. ⚠ `LT ℚ_[p]` does not synthesize, so this is not statable of ℚ_p until an order is supplied (the norm preorder of `ZeroParadox/BottomCannotBe.lean` § ROLE); the p-adic line below fences NORM values, a different predicate
+#check @ZeroParadox.HasFirstStep                      -- Statement: an ORDER predicate — `∃ a, bot ⋖ a`, Mathlib's covering relation. ⚠ `LT ℚ_[2]` does not synthesize (probed at p = 2, the `#check_failure` in `ZeroParadox/BottomCannotBe.lean` § ROLE), so this is not statable of ℚ₂ until an order is supplied (the norm preorder of `ZeroParadox/BottomCannotBe.lean` § ROLE); the p-adic line below fences NORM values, a different predicate
 #check @ZeroParadox.f_snap_blocked                    -- Statement: over `Field + LinearOrder + IsStrictOrderedRing`, every positive ε₀ admits a smaller positive δ; the binder ε₀ is any positive element of `F`, a candidate first step above `F`'s 0, not the ordinal
 #check @ZeroParadox.f_snap_impossible                 -- Statement: hence no such field has a least positive element. No Archimedean hypothesis appears in the binders
 #check @ZeroParadox.axb1_fails_in_ordered_field       -- Statement: `¬ HasFirstStep (0 : F)`. Reading: AX-B1 is what supplies the step; an ordered field lacks it, and that the framework's carrier has it is the commitment
-#check @ZeroParadox.axb1_fails_everywhere_iff_dense   -- Statement: the obstruction CHARACTERIZED, over a bare `Preorder` with no field and no topology — `DenselyOrdered α ↔ ∀ bot, ¬ HasFirstStep bot`. `axb1_fails_in_ordered_field` directly above is an instance of its right-hand side; `f_snap_impossible` is the same fact in the halving vocabulary, not an instance of this statement. Density is what obstructs a first step — connectedness is a separate, topological fence (`real_no_snap`)
+#check @ZeroParadox.axb1_fails_everywhere_iff_dense   -- Statement: the obstruction CHARACTERIZED, over a bare `Preorder` with no field and no topology — `DenselyOrdered α ↔ ∀ bot, ¬ HasFirstStep bot`. `axb1_fails_in_ordered_field` directly above is an instance of its right-hand side; `f_snap_impossible` is the same fact in the halving vocabulary, not an instance of this statement. Reading: CARRIER — density is what obstructs a first step — connectedness is a topological fence (on ℝ, Mathlib's `PreconnectedSpace ℝ` instance, used by the ℝ `example` in `ZeroParadox/Reals/ConnectedNoFirstStep.lean`; `real_no_snap`, not totally disconnected, is weaker); on a linear order with its order topology it implies this one (`no_firstStep_of_preconnected`), and not conversely
+#check @ZeroParadox.no_firstStep_of_preconnected      -- Statement: on a linear order with its order topology, preconnected gives `¬ HasFirstStep bot` at every `bot`; Mathlib's `denselyOrdered_of_preconnectedSpace` in `HasFirstStep` form, at `[propext, Quot.sound]`. Reading: on one linearly ordered carrier the topological fence implies the order fence, not conversely (the ℚ control in `ZeroParadox/Reals/ConnectedNoFirstStep.lean`)
+#check @ZeroParadox.preconnected_iff_no_firstStep     -- Statement: on a conditionally complete linear order with its order topology, `PreconnectedSpace α ↔ ∀ bot, ¬ HasFirstStep bot`; the completeness binder carries the backward direction (ℚ is dense and not preconnected)
+#check @ZeroParadox.cover_at_zero_iff_not_dense      -- Statement: at one point, in a linearly ordered additive commutative group: `HasFirstStep 0` iff the order is not dense; no Archimedean hypothesis (`ZeroParadox/Valuation/PolePassage.lean` § VI)
+#check @ZeroParadox.cover_at_zero_iff_int             -- Statement: with `[Archimedean G]` added, `HasFirstStep 0` iff `G ≃+o ℤ`
+#check @ZeroParadox.hahnArc_loop                      -- Statement: CONTROL, on `HahnSeries ℚ ℚ`, value group ℚ (no first step at 0), `addVal` of `hahnArc` is ⊤ at stage 0, finite after, and eventually above every rational. Reading: CARRIER — density refuses the value group a first step and does not refuse the valuation loop ⊤ → finite → ⊤
+#check @ZeroParadox.ballLine_covBy                    -- Statement: in `Set.range ballLine`, the closed balls of radius `2^(-n)` about 0 of `ℚ_[2]` under inclusion, `ballLine (n + 1) ⋖ ballLine n` (`ZeroParadox/Valuation/BallLine.lean`)
+#check @ZeroParadox.end_bot_no_first_step             -- Statement: in `WithBot (WithTop ℤ)`, that line with both ends adjoined, ⊥ has no first step. Reading: CARRIER — the first step lives at the vertices, not at the ends
+#check @ZeroParadox.end_top_covers_nothing            -- Statement: in `WithBot (WithTop ℤ)`, nothing is covered by ⊤
+#check @ZeroParadox.radiusPath                        -- Statement: CONTROL, a path in `ℝ≥0∞` from 0 to ⊤; `ℝ≥0∞` is densely ordered, so 0 has no first step there (`axb1_fails_everywhere_iff_dense`). Reading: CARRIER — the radius order joins the ends and has no first step; read back as balls, a positive radius lands on a vertex (`closedBall_eq_ballLine`)
+#check @ZeroParadox.accPt_ballRadii_iff               -- Statement: the radii `ballRadii = {2 ^ (-n) | n : ℤ}` of the vertices, in `ℝ≥0∞`, have accumulation points exactly 0 and ⊤ of `ℝ≥0∞`, and each radius is an isolated point (`ballRadii_discrete`). Reading: CARRIER — the radii are discrete away from the two ends and accumulate only at them, the ends at which `WithBot (WithTop ℤ)` has no cover (`end_bot_no_first_step`, `end_top_covers_nothing`); ℤ in ℝ, the control beside it, accumulates nowhere. No first step is supplied, and AX-B1 stays a commitment
 #check @ZeroParadox.real_no_snap                      -- Statement: CARRIER — ℝ is NOT totally disconnected
 #check @ZeroParadox.padic_snaps                       -- Statement: CARRIER — ℚ_p IS totally disconnected. Reading: this removes the obstruction and supplies no first step — norms accumulate at 0 in ANY non-trivially normed field (Mathlib `NormedField.exists_norm_lt`), ℝ included, so that half is not p-adic
 #check @ZeroParadox.snap_dichotomy                    -- Statement: every ℚ_p is totally disconnected and ℝ is not, and for NONTRIVIAL absolute values on ℚ, real and p-adic are exclusive and exhaustive (Ostrowski). ⚠ SCOPE: completions of ℚ only

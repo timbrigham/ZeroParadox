@@ -6,8 +6,10 @@ declarations, the Engineer's Take and the per-declaration glosses.
 ## The construction
 
 The wheel of fractions of a commutative ring `A` with respect to a multiplicative submonoid `S`, built
-to prove it is a `Wheel` (`ZeroParadox/Algebra/Wheel.lean`). This turns that file's §VIII conjecture
-into a theorem.
+to prove it is a `Wheel` (`ZeroParadox/Algebra/Wheel.lean`). `instWheel` proves the part of that
+file's conjecture that starts from ring structure: for every commutative ring and submonoid, the wheel
+axioms hold. Ring structure is an input, not derived; `ZeroParadox/Algebra/Wheel.lean` § VIII, a
+documentation anchor with no theorem object, records what stays open.
 
 Carlström, source-verified: `⊙_S A = (A × A) / ≡_S`, where
 
@@ -15,7 +17,8 @@ Carlström, source-verified: `⊙_S A = (A × A) / ≡_S`, where
 
 with `0 = [0,1]`, `1 = [1,1]`, `[x,y] + [x',y'] = [x·y' + x'·y, y·y']`, `[x,y]·[x',y'] = [x·x', y·y']`,
 and `/[x,y] = [y,x]`. Then `/0 = [1,0] = ∞`, `0·/0 = [0,0] = ⊥`, with `∞ ≠ ⊥` (the wheel, not the
-meadow) — matching the ZP porthole.
+meadow): the 0/∞ exchange and the absorbing element, the objects `ZeroParadox/Algebra/Wheel.lean`'s
+Formal Overview names.
 
 **Status: complete.** Fully `sorry`-free: `≡_S` is an equivalence, the five operations are well-defined
 on the quotient, every axiom of the ZP `Wheel` typeclass holds (a faithful encoding of Carlström's
@@ -25,7 +28,8 @@ on the quotient, every axiom of the ZP `Wheel` typeclass holds (a faithful encod
 ## The involutive fork, and why it does NOT unify with the ordered μ/ν fork
 
 `fixed_pole_forces_collapse` is the witness for the involutive-fork-with-a-fixed-pole row of the wall
-taxonomy: **if the involution fixes the pole, the two poles coincide.**
+taxonomy (`ZeroParadox/Settheory/Wall.md`, the failure-mode table): **if the involution fixes the pole,
+the two poles coincide.**
 
 The two forks are **different species**:
 
@@ -47,6 +51,11 @@ Unifying the two forks would need the categorical machinery (both are ℤ/2ℤ a
 CATEGORY, dualizing μ↔ν, while inversion acts on the ELEMENT set, swapping 0↔∞); that stays the horizon.
 
 ## Prior art — Carlström § 4 proves MORE
+
+Locators below are to J. Carlström, *Wheels — On Division by Zero*, Research Reports in Mathematics
+No. 11, Department of Mathematics, Stockholm University, 2001 (cited here as Carlström 2001:11). The
+later journal version, *Mathematical Structures in Computer Science* 14(1):143–184, 2004, paginates
+differently, and these locators do not apply to it.
 
 The specific result is **Prop. 4.4** (Carlström 2001:11, PDF p. 27, printed p. 25):
 *"If any two of the elements 0, 1, /0 and 0/0 are equal in a wheel H, then H is trivial."*
@@ -70,8 +79,9 @@ corpus uses. The substance — `0 ∈ S` trivializes, so exclude it — is his.
 
 ⚠ **The construction's lineage runs through Setzer.** Carlström credits him for the name and the
 construction at printed p. 3 and presents his own paper as a generalisation from integral domains to any
-commutative semiring — so "Carlström's" here means that general form, which is the one this file
-formalizes. The quotations and the full credit chain are in `ZeroParadox/Algebra/Wheel.lean`
+commutative semiring — so "Carlström's" here means that general form. This file formalizes the
+commutative-ring case (`[CommRing A]` in `ZeroParadox/Algebra/WheelFrac.lean`), a special case of his semiring
+generality. The quotations and the full credit chain are in `ZeroParadox/Algebra/Wheel.lean`
 § "Lineage" (the `Wheel` class docstring).
 
 ## Standard names for what is written by hand
@@ -101,9 +111,9 @@ originals before citing them directly. Searched 2026-08-02: no prior art located
 
 Until this date `InvolutiveFork` had a witness for exactly one of its two states. `wheelFork_not_collapsed`
 inhabits the OPEN side; nothing inhabited the COLLAPSED one, so `fixed_pole_forces_collapse` had **no
-witness for its own hypothesis** and could have been true vacuously for all the corpus showed. `R-TWOPOLE`
-is the rule that asks for both; the gap survived because the open side's docstring defends non-vacuity
-convincingly and one pole reads as enough.
+witness for its own hypothesis** and could have been true vacuously for all the corpus showed. The
+project's rule is to build a witness on both sides; the gap survived because the open side's docstring
+defends non-vacuity convincingly and one pole reads as enough.
 
 Mathlib supplies the missing one and no construction is needed. `inv_zero` — the junk-value convention
 `(0 : G)⁻¹ = 0` on any `GroupWithZero` — **is** the fixed-pole condition, and `inv_inv` is the involution
@@ -111,8 +121,8 @@ law. So the example takes `dual := Inv.inv`, `pole₀ := 0`, and discharges `Col
 
 ⚠ **`dual` and `pole₀` are pinned in the statement**, mirroring `Wheel.lean`'s `gauge_strong`. The bare
 `∃ F, F.Collapsed` is satisfied on any inhabited type by the identity involution at a single point, so it
-would witness nothing — the genericity trap `R-TOLEAN` names. Pinning is what makes the existential say
-something about *inversion* rather than about *forks*.
+would witness nothing. Pinning is what makes the existential say something about *inversion* rather
+than about *forks*.
 
 **The reading.** This is what totalising division looks like when you adjoin nothing: the reciprocal of
 zero lands on the zero already there, so the fork's two ends are the same point and there is no distinct
@@ -126,18 +136,24 @@ distributivity. `ZeroParadox/Algebra/Wheel.lean` § V carries both directions of
 deals — the forward leg (identifying `∞` with `⊥` forces triviality) and the reverse (the meadow equation
 `/0 = 0` forces triviality), each with controls showing the hypotheses are load-bearing on `ZPWheelElem`.
 
-⚠ **Not a claim that a meadow is a collapsed wheel.** It is not: a meadow stays a commutative ring, and
-`ZPWheelElem` is not one. The shared object is the `InvolutiveFork` abstraction, which both instantiate
-with opposite verdicts. Bergstra and Ponse (1406.6878, § 4 "Concluding Remarks", printed p. 14) write
-that *"we have not yet found a structural connection"* between wheels and **common** meadows — their
-own first-person hedge, not a settled negative. Common meadows are the NON-involutive ones, where `0⁻¹`
-is a separate error element, so they are a different pair from the involutive meadow (`0⁻¹ = 0`,
-BHT 0901.0823) this paragraph is built on — involutivity being exactly what separates them. Nothing
-here supplies a connection on either pair.
+⚠ **Not a claim that a meadow is a collapsed wheel.** A wheel with `/0 = 0` is trivial (the reverse-leg
+`example` in `ZeroParadox/Algebra/Wheel.lean` § V, Carlström's Prop. 4.4), so an involutive meadow
+(`0⁻¹ = 0`) with more than one element is never one; the one-element carrier is both, and § V states
+that overlap. The shared
+object is
+the `InvolutiveFork` abstraction, which both instantiate with opposite verdicts. Bergstra and Ponse
+(1406.6878, § 4 "Concluding Remarks", printed p. 14) write that *"we have not yet found a structural connection"* between wheels and **common** meadows — their
+own first-person hedge, not a settled negative. Common meadows are non-involutive, with `0⁻¹` a
+separate error element (in Bergstra and Ponse's fracpairs over a reduced commutative ring every `x/0` is equivalent to
+`0/0`: arXiv:1411.4410, Prop. 2.1.2, printed p. 4, so `/0` and `0·/0` are one element there, where the
+wheel keeps them apart), so they are a different pair from the involutive meadow (`0⁻¹ = 0`,
+BHT 0901.0823) this paragraph is built on. Common meadows are not the only non-involutive kind:
+Bergstra & Middelburg (arXiv:1406.2092, p. 2) study "one-based non-involutive meadows", where the
+inverse of zero is one, an element already present, so being non-involutive alone does not single out common
+meadows. Nothing here supplies a connection on either pair.
 
-## Unstated adjacency — five involution declarations under four names, none wired up as of 2026-09-25
+## Unstated adjacency — involution declarations not wired up as of 2026-09-25
 
-**The unit is the DECLARATION, not the identifier: five declarations, four distinct names.**
 `rInv_involutive` + `rInv_swaps` (`ZeroParadox/Valuation/RiemannSphere.lean`) is the Riemann fork the
 `InvolutiveFork` docstring calls "the motivating instance"; also `flipPoles_involutive`
 (`ZeroParadox/Computability/Occurrence.lean` — stated pointwise rather than as `Function.Involutive`),
@@ -145,7 +161,10 @@ here supplies a connection on either pair.
 at two sites (`ZeroParadox/Valuation/PoleCorners.lean`, `ZeroParadox/Miniature.lean`). Searched
 2026-09-25 over `ZeroParadox/**/*.lean` and the tracked `.md`: the only `InvolutiveFork` instances
 located are `wheelFork` and the `GroupWithZero` example, both in `ZeroParadox/Algebra/WheelFrac.lean`,
-so none of the five is wired up. **Not a closed list of the corpus's involutions** — the same sweep for
+so none of these is wired up. **Not a closed list of the corpus's involutions** — the same sweep for
 `Function.Involutive` also returns `σ_involutive`
 (`ZeroParadox/Computability/MarkovNuUniversal.lean`), an involution but not a pole exchange. Wiring any
-of them is a pointer exercise, not new declarations.
+of them is a pointer exercise, not new declarations. Since that search,
+`ZeroParadox/Algebra/WheelFrac.lean` has also gained the identity-fork `example` after
+`wheelFork_not_collapsed`: a generic witness on any inhabited type, and not one of the declarations
+listed here.

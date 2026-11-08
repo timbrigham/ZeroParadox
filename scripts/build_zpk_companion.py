@@ -1,6 +1,6 @@
 """
 Build ZP-K Illustrated Companion
-Version 1.25 | October 2026
+Version 1.34 | November 2026
 """
 
 import os
@@ -51,7 +51,7 @@ def four_way_diagram():
 
     # Top: Set theory / AFA
     node(cx - bw/2, cy + cr + 10, INDIGO, INDIGO_LITE,
-         'Set Theory (AFA)', '⊥ = {⊥}', 'Quine atom',
+         'Set Theory (AFA)', 'x = {x}', 'Quine atom',
          cx, cy + cr + 10, cx, cy + cr + 2)
 
     # Bottom: Computation / Kleene
@@ -78,8 +78,9 @@ def four_way_table():
            Paragraph('Intuition', CS['kr_hdr'])]
     rows = [
         ['Set theory (AFA)',
-         '&#8869; = {&#8869;} — Quine atom',
-         '⊥ is its own sole member; no external interpreter exists'],
+         'x = {x} — the Quine-atom role (CC-2); in an AFAStructure lattice &#8869; is its only '
+         'occupant (quineAtomHost_quine_role_iff)',
+         'the set Q = {Q} is its own sole member; ⊥ occupies the role in the lattice'],
         ['Order theory (ZP-A)',
          '&#8869; &#8804; x for all x — minimum',
          '⊥ is below everything; the universal starting point'],
@@ -88,8 +89,9 @@ def four_way_table():
          '⊥ contributes nothing to any join; the additive zero'],
         ['Computation (Kleene)',
          'eval botCode = selfApply botCode — fixed point',
-         'a fixed point of self-application; reading it as "⊥ is its own program" is the '
-         'framework\'s commitment, not a consequence'],
+         'a fixed point of self-application; "⊥ is its own program" is not an identity: '
+         'codes occupy the Quine-atom role in their own chart, as a class up to equal output, for a '
+         'computable map respecting equal output (codes_vs_classes)'],
     ]
     data = [hdr] + [[Paragraph(fix(r[0]), CS['kr_body']),
                      Paragraph(fix(r[1]), CS['kr_body']),
@@ -107,7 +109,7 @@ def four_way_table():
     t = Table(data, colWidths=[TW*0.22, TW*0.30, TW*0.48])
     t.setStyle(ts); return t
 
-VERSION = '1.25'
+VERSION = '1.34'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -150,16 +152,21 @@ def build():
     # What Is ZP-K Doing?
     E.append(Paragraph('What Is ZP-K Doing?', CS['h1']))
     E.append(cbody(
-        'ZP-J proved that the Quine atom (set-theoretic self-reference) and the bottom element '
-        '(order-theoretic minimum) are the same object. ZP-K adds a fourth language: '
+        'ZP-J proved that inside a ZPSemilattice carrying AFAStructure, the Quine atom (CC-2, '
+        'set-theoretic self-reference) is the bottom element ⊥ (order-theoretic minimum) and no other '
+        'element is (T-EXEC, t_exec_triple_iff): one occupant of the Quine-atom role, in the lattice '
+        'chart. ZP-K adds a fourth language: '
         'computability theory. It adds a fourth description of ⊥, this time in terms of '
         'Turing machines and Kleene\'s second recursion theorem. THREE of the four descriptions '
         'are proved equivalent: T-COMP shows that, for an element of a ZPSemilattice carrying '
         'KleeneStructure, being a Quine atom is equivalent to being the semilattice\'s least element ⊥ '
         'together with the join identity, and da2_bottom_characterization shows those two '
-        'equivalent. ZP-K carries c₀\'s computational face as a '
-        'KleeneStructure requirement (botCode_is_quine); reading c₀ as the Kleene quine is the '
-        'KleeneStructure commitment, not a theorem.'))
+        'equivalent. ZP-K\'s KleeneStructure requires some code to be a computational quine '
+        '(botCode_is_quine, a periodicity condition that constant codes also meet); no field ties that code to c₀. Reading c₀ as the Kleene quine splits in '
+        'two: its identity half is retired, since codes occupy the Quine-atom role in their own '
+        'chart, as a class of codes up to equal output, for a computable map respecting equal '
+        'output (codes_vs_classes); and that c₀ runs is the '
+        'occurrence commitment. Neither half is a theorem.'))
     E.append(cbody(
         'On the framework\'s reading, ⊥ is not a description of a Turing machine waiting for an '
         'outside party to run it: ⊥ is read as an instance of a Turing machine (its ground state, '
@@ -196,9 +203,12 @@ def build():
         'Kleene\'s theorem guarantees that every partially computable map f sending each program to '
         'a partial function has a fixed point, a program c whose behaviour eval c is the function f '
         'sends it to, eval c = f c (kleene_fixed_point_exists); a self-printing program of this kind '
-        'is a fixed point of one particular such map (selfref_universal_exists, below). On the framework\'s reading, the computational Quine is the expression '
-        'of ⊥ = {⊥} in the language of programs: c is its own program, just as ⊥ is its own member. '
-        'ZP-K carries that reading as a KleeneStructure requirement (botCode_is_quine), not a theorem.',
+        'is a fixed point of one particular such map (selfref_universal_exists, below). ZP-K was built '
+        'on the reading that the computational Quine expresses the Quine atom (CC-2) in the language '
+        'of programs: c is its own program, just as ⊥ is its own member. Stated in the die, that is '
+        'one role with an occupant in each chart, not an identity: ⊥ in an AFAStructure lattice '
+        '(quineAtomHost_quine_role_iff), and a class of codes up to equal output on the code side, '
+        'for a computable map respecting equal output (codes_vs_classes). No field of KleeneStructure asserts an identity.',
     ]))
     E.append(sp(4))
     E.append(cbody(
@@ -222,17 +232,23 @@ def build():
     E.append(sp(8))
 
     # The four-way equivalence
-    E.append(Paragraph('T-COMP: The Three-Way Equivalence, and What Computation Adds', CS['h1']))
+    E.append(Paragraph('The Three-Way Equivalence (T-COMP with da2_bottom_characterization), and What Computation Adds', CS['h1']))
     E.append(cbody(
         'ZP-K\'s central theorem, T-COMP (Computational Grounding), with da2_bottom_characterization, proves that THREE of the '
-        'four descriptions below are equivalent - self-containment, order, and algebra all '
-        'identify the same object. The fourth, the computational one, is not a clause of the '
+        'four descriptions below are equivalent - the Quine-atom predicate (AFA), order, and algebra all '
+        'identify the same element of the lattice. The fourth, the computational one, is not a clause of the '
         'theorem: it is supplied as an assumption when the structure is built. The framework '
         'holds to that distinction:'))
     E.append(four_way_diagram())
     E.append(ccaption(
-        'The null ground element ⊥ at the center, described in four formal languages. The arrows '
-        'among the first three are proved equivalences. The computational description is joined to '
+        '⊥ of the lattice at the center, described in three formal languages; the fourth node, the '
+        'computational one, is a condition on a code (KleeneStructure.botCode_is_quine), supplied by assumption and not one '
+        'object with ⊥: for a generic lattice L an equation between a code and ⊥ of L is '
+        'ill-typed (for L the type of codes itself it typechecks, ZeroParadox/Computability/'
+        'ComputationCannotBe.lean § IV), and no theorem states one. In the code chart the '
+        'Quine-atom role is filled by a class of codes up to equal output, not by one code: under '
+        'the evaluation step no single code occupies it (evalStepMotion_not_selfOnlyAt), and, for a '
+        'computable map respecting equal output, a class does (codes_vs_classes). The arrows among the first three are proved equivalences. The computational description is joined to '
         'them by assumption, not by proof.'))
     E.append(sp(4))
     E.append(four_way_table())
@@ -244,13 +260,16 @@ def build():
         'the motivation for building a KleeneStructure, the formal bridge connecting the '
         'set-theoretic (AFAStructure) and computational (Kleene fixed-point) descriptions. It is '
         'not something ZP-K derives: the bridge is built because the reading is held, not the '
-        'other way round.'))
+        'other way round. The identity half of that reading is retired: what the descriptions '
+        'share is the Quine-atom role (Motion.SelfOnlyAt, a point that steps to itself and to '
+        'nothing else), and each chart proves its own occupancy of it.'))
     E.append(sp(4))
     E.append(remember_box(
         'Remember: T-COMP is not saying that set theory and computability theory are the same. '
         'It is saying that the specific structural role played by ⊥ — self-containment, '
         'minimality, join-identity — is expressible in several languages, and that THREE of '
-        'those expressions are provably equivalent; the computational one is joined by '
+        'those expressions are provably equivalent (T-COMP with da2_bottom_characterization); '
+        'the computational one is joined by '
         'assumption. The equivalence is local to this '
         'structural role, not a global identification of the frameworks.'))
     E.append(sp(8))
@@ -262,15 +281,23 @@ def build():
     E.append(cbody(
         '<b>Path 1 (Structural — AFA):</b> Nothing external to ⊥ can execute ⊥, so if ⊥ '
         'executes at all, it executes itself. That rules out an outside executor; it does not rule '
-        'out an inert ⊥. ZP-J proved axiom-free that ⊥ is the unique self-containing element (the structural fixed point); that this is the literal ⊥ = {⊥} holds in the ZF+AFA setting. '
+        'out an inert ⊥. ZP-J proved axiom-free that ⊥ of a lattice carrying AFAStructure is its unique self-containing element (the structural fixed point). '
+        'Read in ZFC<sup>&#8722;</sup> + AFA (Foundation replaced by AFA, Choice kept), the Quine-atom role is filled by a set x with x = {x} (Aczel 1988, '
+        'Example 1.3); in Mathlib\'s ZFSet it '
+        'is unoccupied (zfset_quine_role_unoccupied). No equation across the lattice and a set '
+        'chart is stated. '
         '<b>What Lean witnesses via ZP-K:</b> Path 1\'s Lean counterpart is da1_closed_concrete, which proves '
         'IsQuineAtom (⊥ : MachinePhase) through the KleeneStructure instance machinePhaseKleene, '
         'whose AFAStructure part is machinePhaseAFA. There selfMem is defined as x = ⊥, so the '
         'content is the uniqueness rather than the membership, and the same statement has a proof '
         'from machinePhaseAFA alone (the example after da1_closed_concrete in Kleene.lean).'))
     E.append(cbody(
-        '<b>Path 2 (Informational — L-INF):</b> The surprisal of ⊥ is unbounded — no finite '
-        'interpreter can hold it as a stored description. '
+        '<b>Path 2 (Informational — L-INF):</b> Surprisal at ⊥ has two charts (⊥ of MachinePhase corresponds to 0 of Q₂ by the framework\'s reading, not an identity). In the '
+        'depth chart every depth n of the binary ball hierarchy has finite surprisal n and no finite '
+        'bound holds of all of them (l_inf); in the point chart the complexity at the floor 0 of Q₂ '
+        'is ⊤ (infinitude_forces_infinite_complexity, at the Q₂ instance q2InfinitudeFloor). Both, and why no equation joins them: '
+        'ZeroParadox/Information/Surprisal.lean, l_inf. Reading: no finite interpreter can hold ⊥ '
+        'as a stored description. '
         '<b>Remains outside Lean scope:</b> the step from "unbounded surprisal" to "executing" '
         'is a bridge principle of its own, which the framework does not adopt, and it is not the '
         'occurrence commitment.'))
@@ -305,9 +332,11 @@ def build():
         'waiting for someone outside to press "run": if it runs at all, it runs itself (Path 1). '
         'That it does run is the occurrence commitment, which DA-1 uses and does not supply; '
         'given it, the machine has left c₀ for c₁, by the definition of the first running '
-        'configuration (D7). ZP-K carries c₀\'s computational face as a '
-        'KleeneStructure requirement (botCode_is_quine); reading c₀ as the Kleene quine is the '
-        'KleeneStructure commitment, not a theorem. What T-COMP, with da2_bottom_characterization, proves is narrower: '
+        'configuration (D7). ZP-K\'s KleeneStructure requires some code to be a computational quine '
+        '(botCode_is_quine, a periodicity condition that constant codes also meet); no field ties that code to c₀; reading c₀ as the Kleene quine is not an '
+        'identity (codes occupy the Quine-atom role in their own chart, as a class up to equal output, '
+        'for a computable map respecting equal output, codes_vs_classes), and that '
+        'c₀ runs is the occurrence commitment. What T-COMP, with da2_bottom_characterization, proves is narrower: '
         'three of the four descriptions of ⊥ are equivalent to one another. It says nothing '
         'about external agents, and nothing about execution.'))
     E.append(sp(4))
@@ -327,11 +356,14 @@ def build():
     E.append(Paragraph('A Note on Proof Purity', CS['h1']))
     E.append(cbody(
         'The statements of Kleene\'s theorem and of Rogers\' fixed-point theorem, as Mathlib '
-        'states them, already carry Classical.choice (measured 2026-10-04), so every proof of '
+        'states them, already carry Classical.choice (where it enters is recorded in '
+        'ZeroParadox/Computability/Kleene.md § VIII), so every proof of '
         'them as stated carries it too: the STATEMENT-CARRIED class of '
         'ZeroParadox/Category/ChoiceCannotBe.md. That footprint is inherited from Mathlib rather '
-        'than a Zero Paradox commitment. Whether a restated, choice-free statement has a '
-        'choice-free proof is unclassified in that document\'s sense. ZP-K Section IV tabulates the measured axiom footprints. '
+        'than a Zero Paradox commitment. Kleene\'s theorem restated with the transformation given '
+        'as a code has a statement and a proof free of choice (kleene_cf, '
+        'ZeroParadox/Computability/KleeneChoiceFree.lean); Rogers\' form has no such restatement '
+        'in this corpus. ZP-K Section IV tabulates the measured axiom footprints. '
         'What is free of Classical.choice is the choice-free CORE, and that is narrower than any layer '
         'name: ZeroParadox/AxiomProfile.lean &#167;I is where the core is listed and each '
         'footprint measured &#8212; T-SNAP, the lattice, the Quine atom. Results elsewhere '
@@ -373,17 +405,18 @@ def build():
         'but unprovable in PA &#8212; a fixed point, not an oscillation.'))
     E.append(cbody(
         'ZP-K&#8217;s construction achieves the same structural form in the setting of &#8869;. '
-        '&#8869; = {&#8869;} (the AFA Quine atom; da1_closed_concrete gives this for MachinePhase, where selfMem is defined as x = &#8869;, so the content is the uniqueness rather than the membership) is '
+        'The Quine atom (CC-2), here &#8869; of MachinePhase (da1_closed_concrete; selfMem is defined '
+        'as x = &#8869;, so the content is the uniqueness rather than the membership), is '
         'self-containing, not self-negating: x = f(x) where f is set-membership, not '
         'x = NOT x. The Kleene fixed point gives the same structure computationally: '
         'a code whose behavior is determined entirely by itself. Both witnesses resolve '
         'at a fixed point. Neither oscillates.'))
     E.append(cbody(
-        'ZP-E&#8217;s t_snap_irreversible goes further: it formally proves that the '
-        'liar-type trajectory is structurally impossible in this framework, not merely '
-        'absent. Once c&#8320; transitions to c&#8321;, the semilattice axioms guarantee '
-        'no path returns. The sequence c&#8320; &#8594; c&#8321; &#8594; c&#8320; &#8594; &#8230; '
-        'cannot occur &#8212; the algebra forbids it.'))
+        'ZP-E&#8217;s t_snap_irreversible goes further for one kind of step, the join: if x lies '
+        'strictly below y, no join of y with anything gives back x. So once c&#8320; has moved to '
+        'c&#8321;, no join returns, and the sequence c&#8320; &#8594; c&#8321; &#8594; c&#8320; '
+        '&#8594; &#8230; cannot occur given that every transition is a join. The theorem says '
+        'nothing about steps of other kinds.'))
     E.append(sp(4))
     E.append(remember_box(
         'This is a structural observation, not a claim that ZP proves G&#246;del&#8217;s '
@@ -412,10 +445,12 @@ def build():
         'simple counting tape in the style of Champernowne is disjunctive and computable. The '
         'framework holds, as a commitment, that the occupant of its ⊥ role, ⊥ of a ZPSemilattice, '
         'read as a tape, is maximally complex; that commitment is about that occupant, not about '
-        'the all-false tape below. Standard theory, not proved in Lean: a sequence whose every '
+        'the all-false tape below. Standard theory, not proved in this corpus: a sequence whose every '
         'prefix is incompressible up to a constant in the prefix-free sense of Kolmogorov '
         'complexity is exactly a Martin-Löf random one (the Levin–Schnorr theorem; Franklin and '
-        'Porter, arXiv:2004.02851, Theorem 2.5), and such a sequence is disjunctive. The '
+        'Porter, arXiv:2004.02851, Theorem 2.5; proved in Lean outside Mathlib in a development '
+        'that the ZPSurprisal entry of LEAN_CUSTOM_REGISTRY.md names), and such a sequence is '
+        'disjunctive. The '
         'prefix-free sense matters: with plain complexity every infinite sequence has infinitely '
         'many prefixes of length n compressible to at most n − log n bits (Franklin and Porter, '
         'arXiv:2004.02851, § 2.2, p. 15, crediting Martin-Löf; Martin-Löf 1971, Theorem 1, proves '
@@ -442,9 +477,11 @@ def build():
         'a theorem about programs: building a program is a computation, and choosing a program by '
         'what it does is where choice would do its work. In Lean the footprint does not draw that '
         'line: the existence theorem\'s statement carries Classical.choice (STATEMENT-CARRIED in '
-        'the sense of ZeroParadox/Category/ChoiceCannotBe.md), and whether a restated, '
-        'choice-free statement has a choice-free proof is unclassified in that sense '
-        '(ZeroParadox/Computability/Kleene.md § VIII).'))
+        'the sense of ZeroParadox/Category/ChoiceCannotBe.md), while a restated statement, with '
+        'the Gödel number and the channels spelled without Mathlib\'s numbering of programs, is '
+        'free of choice and has a proof free of choice (selfref_universal_exists_enc, '
+        'ZeroParadox/Computability/UniversalChoiceFree.lean; the record is '
+        'ZeroParadox/Computability/Kleene.md § VIII).'))
     E.append(cbody(
         '<b>The zero tape.</b> The all-false tape is ⊥ of the bit-by-bit tape order, carries no '
         'program\'s code except the empty one, and is what any tape becomes when compared with '
@@ -476,7 +513,7 @@ def build():
     E.append(key_result_box(
         'Key Result — ZP-K',
         'T-COMP: IsQuineAtom(q) ↔ q = &#8869; ∧ (∀ x, q &#8744; x = x). '
-        'THREE characterisations are proved equivalent - self-containment (AFA), order, and algebra '
+        'THREE characterisations are proved equivalent - the Quine-atom predicate (AFA), order, and algebra '
         '(the last two by da2_bottom_characterization). '
         'The computational face is NOT a fourth clause of this theorem: it enters as an assumption, '
         'the KleeneStructure field botCode_is_quine. '

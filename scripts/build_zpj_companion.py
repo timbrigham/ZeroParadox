@@ -1,59 +1,6 @@
 """
 Build ZP-J Illustrated Companion
-Version 1.34 | October 2026
-v1.33: ROUND-6 OUTSTANDING CLOSEOUT, items 3a, 3b, 3d, 6 (corpus-zpj-v2.8-round6-outstanding.md
-EXECUTION SPEC 2026-09-28). 3a (CC-2 proved half): the Foundation-freeness sentence cited no
-identifier; it now cites wf_no_selfloop (ZeroParadox/Settheory/Wall.lean - fully general, no
-well-founded relation admits a self-loop), with quineHost_not_wellFounded / zfSet_no_quine_bottom
-(QuineHost.lean) named as its QuineHost- and ZFSet-specific corollaries rather than the general
-claim's citation. 3b (Z_[2] remember box): "admits a lattice carrying THIS valuation structure"
-overclaimed a specific instance where Scale.lean section V proves only existence (Nonempty
-ValuationStructure); now "a valuation structure". 3d (APG well-founded corollary): "Mostowski's
-Collapsing Lemma (p. 4)" cited the general lemma for a claim that is actually Corollary 1.1 (p. 5)
-of Aczel's manuscript; now cites Corollary 1.1 and keeps the Collapsing Lemma as what it follows
-from. 6 (Z_[2] lattice note): "no lattice on Z_[2] is registered in the corpus" was undated, unlike
-the formal document's parallel claim; now dated "as of 2026-09-28".
-v1.32: CC-1 STATUS SYNC with ZP-J v2.8. The abstraction-chain table cell 'T-EXEC, J1, CC-1 as proved theorems' collapsed CC-1 to its proved half; it now reads 'CC-1 in conditional form'. cc1_derived proves the conditional (a Quine-atom start is a bottom start) and t_exec_iff the converse; the starting-point choice is restated, not forced, since a valid state sequence can start above bottom. GATE ROUND 2 (ordinary, carried): the 'not forced' reason needs its scope - on a ONE-point lattice every sequence starts at bottom, so the countermodel is stated for a lattice with a second point, and the OntBridge.lean example now also shows the start is not a Quine atom. Editorial O1: p1 said CC-2 is 'no longer a freestanding modelling assumption'; it remains ZP-A's Forced Metatheoretic Commitment, read at the lattice level as the role. Key Results: T-EXEC proves whatever fills the role is bottom (t_exec), not 'only occupant'.
-v1.31: COMPANION SYNC WITH ZP-J v2.7 (ZPJ-ITER, ZPJ-AFA-THM). "Graphs That Decorate Themselves" said composing the decoration equation around a cycle gives d(v) = scale^k(d(v)); cyclic_decoration_eq_bot never forms that equation, and it holds only at single-child vertices. The cyclic paragraph now gives the depth BOUND in plain language. AFA was called a theorem at four sites ("the unique decoration theorem", "AFA proves", "AFA's central uniqueness theorem", "AFA's decoration theorem"); Aczel ch. 1 p. 6 states it as an axiom over every graph, and each site now says so. Also, measured 2026-09-13: the Z_[2] model's Classical.choice was attributed to Mathlib alone at two sites; Mathlib's 2-adic structures carry it already in the statements (a type probe over Mathlib's multiplication reports it), and the valuation q2Val adds its own route through instDecidableEqZ2 := Classical.decEq, so both sites name both routes. And the opening said ZP-J proves T-EXEC "using the valuation structure of Q2 and the AFA uniqueness result"; t_exec is (hq.2 bot AFAStructure.bot_self_mem).symm and uses no valuation, which enters later as the explanation of uniqueness. EDITORIAL ROUND 1, Tim's call on the claim ("match the Lean"): the section formerly headed "Two Assumptions That Became Theorems" ran an implication BACKWARDS - it said the ZP-A axioms "force the bottom element to be self-containing", but bot_self_mem is a class FIELD that t_exec consumes; CC-2 now reads as an input plus an argued commitment and CC-1 as cc1_derived actually binds it (a state sequence starting at a Quine atom). Also: the T-EXEC box cited the one-direction t_exec for an iff and equated q = {q} with q in q; the Z_[2] model was presented as the full AFA route when it runs through ValBridge and reaches only the fixed-point shadow; and "these three fields can be derived" now names the two laws. EDITORIAL ROUND 2 (FAIL-BEDROCK): round 1 corrected the CC-2 section only, so four other sites still said the reverse ("a derived consequence of T-EXEC at the structural level", "T-EXEC proves the structural self-containment fixed point", "ZP-J makes that argument formal" after "which forces bottom = {bottom}", and "T-EXEC makes this explicit" under the set-membership row) - a half-applied fix turning a consistent error into a self-contradiction. Tim: "Bot is a role not a fixed value... I thought we had this worked out long ago?" It was: SetTheoryAFA.lean's NO-GO gauge says the class encodes the ROLE. Every CC-2 site now says that T-EXEC identifies the occupant of the Quine-atom role and the literal set fact is the ZF+AFA commitment. Also: T-EXEC was credited to the quine_unique field it does not use (it uses bot_self_mem and the uniqueness half of its own hypothesis); "bottom in bottom, i.e. bottom = {bottom}" reversed to the true direction; CC-1's hypothesis restored; decoration uniqueness scoped to DecorationUniverses; "the uniqueness half of what AFA asserts" is now an analogue. EDITORIAL ROUND 3 (FAIL-BEDROCK): the disclaimer and the opening still said bottom = {bottom} is "provably the unique bottom element" and "a derived theorem" two sentences before the corrected paragraph denied it. Restated to Wheel.lean's CC-2 convention: the set identity is stated only of AFA set theory, where it is well-typed, and the lattice-level statement is the role and its occupant. The Remember box and Key Results no longer call bottom both the role and the occupant; "the self-containing set is {bottom}" now says the SET OF self-containing elements is {bottom}; the Quine-atom diagram caption says the picture is of the AFA set. ADVERSARY ROUND 4 (FAIL-BEDROCK, D1): the section headed "Aczel's DC Question - Closed for Self-Membership" said "ZP-J answers this question for the self-membership case: DC is not essential". The Lean identifies the set of self-containing elements in a lattice with no Classical.choice; it defines no set-continuous operator and never meets the step of Aczel's proof that uses DC, so it answers nothing about that proof. This is the recurrence of the v1.20/v1.22 AR fixes, which had removed the Aczel-specific claim. Retitled and restated; the intro and Key Results no longer say "no Dependent Choice". TIM'S CALL ON ROUND 4 (carrier): CC-1 restated as an equivalence - given AFAStructure, starting at a Quine atom and starting at bottom are the same condition (cc1_derived, and t_exec_iff for the converse), so CC-1 is restated through the role, not forced; the opening, the Two Assumptions section and Key Results say so, and that section no longer says the claims "became theorems". ROUND-4 ORDINARY RESIDUE: the T-EXEC box no longer places a Lean theorem "in the ZF+AFA setting" and says ZP-A semilattice, not "any type"; the Remember box no longer says "properly grounded under AFA" (a condition no bottom fails); the abstraction-chain paragraph now says every ZP-A semilattice supplies the class trivially; CC-2 is ZP-A's argued metatheoretic commitment, not "previously a modelling commitment". ADVERSARY ROUND 5 (FAIL-BEDROCK, D1): the abstraction-chain section ran the implication BACKWARDS - "AbstractSelfApp requires less", "ValuationStructure requires even less", "Each layer of the chain removes one more thing you have to assume" - one sentence after saying every ZP-A semilattice carries AFAStructure trivially. toAbstractSelfApp and toAFAStructure are instances, so ValuationStructure is the STRONGEST assumption: every lattice carries AbstractSelfApp and AFAStructure, and valuationStructure_forces_infinite makes any nontrivial ValuationStructure carrier infinite, which is why OntologicalStates has none. The section now reads the table top-down with the stronger rows on top, says the stronger rows buy an explanation rather than fewer assumptions, and is retitled from "Peeling Back the Layers"; ValBridge (weaker than ValuationStructure, and not a route to AFAStructure) now sits "beside the chain" rather than "one more layer underneath"; the opening, the "four directions" summary, the valuation-argument lead-in and Key Results no longer say the chain reduces the commitments. TWO-POLE AUDIT RESTORATIONS (Tim: restore all): (L2) CC-2 is ZP-A's Forced Metatheoretic Commitment with a proved half (Foundation-freeness) and an argued half; (L3) the opening, Two Assumptions and Key Results no longer say the set equation is "not derived" - in AFA set theory Q = {Q} is a theorem with exactly one solution (Aczel Ex. 1.3) and the commitment is that the framework's bottom is that set; (L5) the Z_[2] remember box keeps that Scale.lean section V proves Z_[2] admits the full chain as an existence statement; (L8) the APG section keeps that "every APG pictures a unique set" follows from AFA and that Mostowski gives the well-founded case without it. Also the Quine atom is "its own sole member" rather than "self-containing" (0* = {empty, 0*} is self-membered and not the Quine atom, Aczel Ex. 1.5); the opening's "in that setting" for a Lean equivalence; and "a simpler input, fixed_bot" (pre-round-5 polarity; the structure carrying fixed_bot is the stronger one).
-v1.30: FIELD-COUNT SLIP CORRECTED (companion sync with ZP-J v2.6). "AFAStructure has three typeclass fields - three things you must prove" counted the DATA field as an obligation: SetTheoryAFA.lean:80 declares `selfMem : L -> Prop`, a predicate you SUPPLY, alongside two laws you prove. Same slip the formal document carried for DecorationUniverse, where counting `collect` as a law is what made two laws read as three.
-v1.29: rendered Lean citations synced to post-reorg files/namespaces the earlier passes missed (bare ZPx.lean / ZeroParadox.ZPx.* / ZPx.<decl>; SSOT-driven).
-v1.28: rendered Lean-file citations synced to post-reorg basenames (namespace de-scar); docstring changelog above kept as the historical record.
-v1.26: FMC precision (sweep Step 4) — Key Results box and the T-EXEC body line now split the proved structural fixed point (axiom-free) from the argued set-membership reading (the ZF+AFA setting itself).
-v1.25: §6 "future work" bridge sentence retired — the 2-adic valuation argument is now formalized (ZPJ_ScaleBridge wired into the maintained build); §7 gains the common-ancestor (ValBridge) framing — the abstract lattice track and ℤ₂ are instances of one minimal typeclass; §8 adds ℤ₂ as a third concrete model. The ℤ₂ instance is flagged as inheriting Classical.choice from Mathlib's p-adic library (unlike the axiom-free core T-EXEC).
-v1.24: Directed-graph (APG) diagram added for the Quine atom (self-loop + well-founded chain ending at ∅); arithmetic analogy scoped (it cannot show ⊥={⊥} — routed to mirror/graph); "depth" rephrased from "how far from ⊥" to intrinsic descent/valuation (Dan feedback 2026-06-15). Fixed latent null glyph scaleᵏ (&#7503; → <sup>k</sup>).
-v1.23: "his question" pronoun fixed; abstraction chain direction clarified; remember_box leads with analogy; p-adic removed from disclaimer (future work); "Not three separate" prose replaced; T-EXEC antecedent named (ER/AR fixes).
-v1.22: "ZP lattice" replaced with structural description; "bounded semilattice" corrected to join-semilattice; AFAStructure typeclass used directly; Aczel specific claims replaced with generic AFA fixed-point framing (ER/AR fixes).
-v1.21: ZP-A semilattice replaced with standard structural description; section heading scoped; AFA/ZP-J framing clarified; "uniqueness half" hedged as analogous (AR fixes).
-v1.20: Aczel attribution removed; open question stated without attribution (AR fix).
-v1.19: Plain-meaning table corrected; AFA/ZP-J scope clarified; sorry note added to key result box (AR/ER fixes).
-v1.18: Three residual em-dashes in three_way_table() removed (ER fix).
-v1.17: Em-dashes removed; Quine Atom added to tagline; 2-adic analogy caveat moved to front (AR/ER fixes).
-v1.16: Title reverted to "The Self-Containing Null".
-v1.15: Title changed to "The Quine Atom" (standard AFA term).
-v1.14: "full AFA decoration" scoped to finite APGs; Aczel quote paraphrased; sorry-free claim scoped (ER fixes).
-v1.13: Disclaimer leads with AFA math before brand name (AR fix).
-v1.12: "Zero Paradox" expanded in disclaimer; "Really" dropped from subtitle (AR fix).
-v1.11: Em-dashes removed from subtitle and first body paragraph; opening paragraph
-       rewritten to lead with AFA mathematical content (AR/ER fix).
-v1.10: Header banner color corrected INDIGO → COMP_BLUE (matches all other companions).
-v1.9: Cover and disclaimer updated to reflect that this companion serves both
-      ZP-J Self-Reference and ZP-J AFA Addendum.
-v1.8: quine_atom_diagram — replace HTML entities (&#8869;) with literal ⊥ in
-      String() drawing primitives; entities render literally there, not as glyphs.
-v1.7: vocab fix: ZP-J v2.0 → ZP-J.
-v1.6: Five new sections added for ZP-J content — the valuation argument,
-      the abstraction chain, two concrete models, Aczel's DC question, and
-      APG decoration uniqueness. Key result box updated.
-v1.5: Strip version number from companion footer.
-v1.4: Strip version number from disclaimer cross-reference to ZP-J formal document.
-v1.3: Disclaimer updated — "formal ontology" replaced with "formal document". Opening paragraph
-      revised — DA-1 glossed on first use instead of using internal label alone.
-v1.2: quine_atom_diagram: dh increased (2.0 → 2.8 in), cy changed to fixed 110 so the
-      "⊥ = {⊥}" label (cy - r_outer - 18) no longer falls at y=-18 below the drawing box.
-v1.1: Corrected CC-2 status to metatheoretic commitment within ZF+AFA; commitment shifts
-to the AFA setting itself. CC-1 remains fully discharged axiom-free. Aligns with R-J.0.
-v1.0: Initial release. Covers T-EXEC (Quine atom = ⊥), the three-way equivalence,
-and the closure of CC-1 and CC-2 as derived theorems rather than freestanding commitments.
+Version 1.42 | November 2026
 """
 
 import os
@@ -82,11 +29,11 @@ def quine_atom_diagram():
     r_inner = 28
     d.add(Circle(cx, cy, r_inner, fillColor=INDIGO,
                  strokeColor=INDIGO, strokeWidth=0))
-    d.add(String(cx - 9, cy - 6, '⊥',
+    d.add(String(cx - 6, cy - 6, 'Q',
                  fontSize=16, fontName='DV-B', fillColor=WHITE))
 
-    # Label: ⊥ = {⊥}
-    d.add(String(cx - 28, cy - r_outer - 18, '⊥  =  {⊥}',
+    # Label: Q = {Q} (the AFA set; the lattice's occupant of the role is a separate theorem)
+    d.add(String(cx - 28, cy - r_outer - 18, 'Q  =  {Q}',
                  fontSize=13, fontName='DV-B', fillColor=INDIGO))
 
     # Self-membership arrow
@@ -97,8 +44,8 @@ def quine_atom_diagram():
     d.add(Line(bx + 5, by - 6, bx, by, strokeColor=INDIGO, strokeWidth=1.5))
 
     d.add(String(14, 10,
-                 'The Quine atom: ⊥ is a member of itself. '
-                 'The outer ring is the set {⊥}; the inner disk is ⊥ as an element.',
+                 'The Quine atom (CC-2) in AFA: Q is its own sole member. '
+                 'The outer ring is the set {Q}; the inner disk is Q as an element.',
                  fontSize=7.5, fontName='DV-I', fillColor=GREY_TEXT))
     return d
 
@@ -128,7 +75,7 @@ def quine_graph_diagram():
     # RIGHT — Quine atom ⊥ with a self-loop (dashed: exits right, re-enters the top)
     qx = 365
     d.add(Circle(qx, cy, 18, fillColor=INDIGO, strokeColor=INDIGO, strokeWidth=0))
-    d.add(String(qx - 9, cy - 6, '⊥', fontSize=16, fontName='DV-B', fillColor=WHITE))
+    d.add(String(qx - 6, cy - 6, 'Q', fontSize=16, fontName='DV-B', fillColor=WHITE))
     loop = Path(strokeColor=INDIGO, strokeWidth=1.4, fillColor=None,
                 strokeDashArray=[2.5, 2.5])
     loop.moveTo(qx + 18, cy)                       # exit the right edge
@@ -137,7 +84,7 @@ def quine_graph_diagram():
     # solid arrowhead at the top entry, pointing down into the ball
     d.add(Line(qx - 5, cy + 25, qx, cy + 18, strokeColor=INDIGO, strokeWidth=1.4))
     d.add(Line(qx + 5, cy + 25, qx, cy + 18, strokeColor=INDIGO, strokeWidth=1.4))
-    d.add(String(qx - 42, cy - 42, '⊥ = {⊥}: the chain loops on itself',
+    d.add(String(qx - 42, cy - 42, 'Q = {Q}: the chain loops on itself',
                  fontSize=8, fontName='DV-I', fillColor=GREY_TEXT))
     return d
 
@@ -148,9 +95,11 @@ def three_way_table():
            Paragraph('What ⊥ satisfies', CS['tbl_hdr']),
            Paragraph('Plain meaning', CS['tbl_hdr'])]
     rows = [
-        ['Set theory (AFA)',
-         '&#8869; = {&#8869;}  (so &#8869; &#8712; &#8869;)',
-         '⊥ contains exactly one element: itself. AFA allows at most one set that is its own '
+        ['Membership host (the QuineAtomHost an AFAStructure on L builds)',
+         'is the occupant of the Quine-atom role in that host, '
+         'the role the set Q = {Q} plays in AFA set theory (quineAtomHost_quine_role_iff with '
+         'afaStructure_isQuineAtomHost)',
+         'In AFA the set Q = {Q} contains exactly one element: itself. AFA allows at most one set that is its own '
          'sole member (x = {x}); bare self-membership is not unique there (see the T-EXEC box above). '
          'The Lean requirement: QuineAtomHost, ZeroParadox/Settheory/QuineHost.lean &#167; VII'],
         ['Order theory (ZP-A)',
@@ -173,7 +122,7 @@ def three_way_table():
         ('LEFTPADDING',   (0,0),(-1,-1), 6), ('RIGHTPADDING', (0,0),(-1,-1), 6),
         ('VALIGN',        (0,0),(-1,-1), 'TOP'),
     ])
-    t = Table(data, colWidths=[TW*0.22, TW*0.28, TW*0.50])
+    t = Table(data, colWidths=[TW*0.22, TW*0.38, TW*0.40])
     t.setStyle(ts); return t
 
 
@@ -210,7 +159,7 @@ def abstraction_chain_table():
     t.setStyle(ts); return t
 
 
-VERSION = '1.34'
+VERSION = '1.42'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -240,11 +189,11 @@ def build():
     hdr.setStyle(hdr_ts)
     E += [hdr, sp(6),
           Paragraph('The Self-Containing Null', CS['title']),
-          Paragraph('What &#8869; = {&#8869;} Means, and Why It Matters', CS['subtitle']),
+          Paragraph('What the Quine Atom Means, and Why It Matters', CS['subtitle']),
           Paragraph('ZP Companion | The Quine Atom | ' + version_line(FIRST_RELEASED, VERSION), CS['meta']),
           Paragraph(
-              'This companion explains in plain language what &#8869; = {&#8869;} (the Quine atom '
-              'of AFA set theory) means, and the proof that whatever plays that role in a lattice '
+              'This companion explains in plain language what the Quine atom (CC-2; in AFA set theory '
+              'the set Q = {Q}) means, and the proof that whatever plays that role in a lattice '
               'is its unique bottom element. '
               'This is one result in the Zero Paradox project (ZP-J), connecting '
               'AFA set theory, p-adic topology, and lattice algebra. '
@@ -258,12 +207,17 @@ def build():
     # ── What Is ZP-J Doing? ──────────────────────────────────────────────────
     E.append(Paragraph('What Is ZP-J Doing?', CS['h1']))
     E.append(cbody(
-        'In AFA set theory the Quine atom is the set Q satisfying Q = {Q}, and the framework '
-        'identifies the bottom element &#8869; with it. That identification is a statement about '
-        'sets; a lattice cannot state it directly, because it would compare an element with a set '
-        'of elements. ZP-E argues, informally, that '
-        'nothing external to &#8869; can execute &#8869;, so &#8869; must execute itself, and '
-        'reads that as &#8869; = {&#8869;} (see ZP-E for the full three-path argument).'))
+        'In AFA set theory the Quine atom is the set Q satisfying Q = {Q}. The framework treats the '
+        'Quine atom (CC-2) as a ROLE: a point that steps to itself and to nothing else, here along '
+        'membership. Each setting has its own occupant, proved there: Q in AFA set theory; none in '
+        'Mathlib\'s sets, which obey Foundation (zfset_quine_role_unoccupied, '
+        'ZeroParadox/Settheory/Wall.lean); and &#8869; in a lattice carrying the role '
+        '(quineAtomHost_quine_role_iff, ZeroParadox/Settheory/QuineDichotomy.lean). No equation between '
+        '&#8869; and Q is written, because it would compare an element of a lattice with a set. '
+        'ZP-E argues, informally, that '
+        'nothing external to &#8869; can execute &#8869;, so if &#8869; executes at all, the executor is '
+        '&#8869; itself, and reads that as &#8869; occupying the Quine-atom role. That rules out an external executor, not an '
+        'inert &#8869; (see ZP-E for the full three-path argument).'))
     E.append(cbody(
         'ZP-J formalises the structural part of that picture. The Quine atom becomes a ROLE, not a '
         'fixed value: the AFAStructure typeclass describes it, and its field bot_self_mem places '
@@ -272,11 +226,11 @@ def build():
         'element  - is the bottom element &#8869;; its later sections add a valuation argument, '
         'also machine-checked for the 2-adic integers, that derives the typeclass laws in '
         'carriers that have a depth measure. '
-        'CC-2 (&#8869; = {&#8869;}) remains a commitment (ZP-A calls it a Forced Metatheoretic '
+        'CC-2, the Quine atom, remains a commitment (ZP-A calls it a Forced Metatheoretic '
         'Commitment); at the lattice level it is read as that role, and T-EXEC identifies the role\'s occupant. In AFA set theory the set '
-        'Q = {Q} exists and is unique, a consequence of the axiom (Aczel 1988, Example 1.3); that the '
-        'framework\'s &#8869; is that set is the commitment, argued rather than chosen freely, and not a '
-        'Lean theorem. CC-1 (S&#8320; = &#8869;) is restated, not forced: in any lattice carrying the '
+        'Q = {Q} exists and is unique, a consequence of the axiom (Aczel 1988, Example 1.3); adopting AFA '
+        'for the set setting is the commitment, argued rather than chosen freely, and not a '
+        'Lean theorem, and no equation between &#8869; and Q is claimed. CC-1 (S&#8320; = &#8869;) is restated, not forced: in any lattice carrying the '
         'typeclass, a state sequence starts at a Quine atom exactly when it starts at &#8869;, and on a '
         'lattice with a second point a valid sequence can start above &#8869;, at a point that is not a '
         'Quine atom, so the choice of starting point is expressed through the role rather than removed.'))
@@ -285,7 +239,8 @@ def build():
         'self-containing elements as {&#8869;} without the axiom of choice; it derives the '
         'typeclass laws from stronger structures, ending in a valuation argument; it '
         'demonstrates the structure on two concrete types; and it proves a '
-        'decoration uniqueness theorem for finite APGs into abstract DecorationUniverses.'))
+        'decoration uniqueness theorem for every directed graph, finite or not, into abstract '
+        'DecorationUniverses, with a separate graph-side proof for finite APGs.'))
     E.append(sp(4))
 
     # ── What Is a Quine Atom? ────────────────────────────────────────────────
@@ -295,7 +250,7 @@ def build():
         'a measure of how deeply nested its membership is. A set like {{{&#8709;}}} has rank 3 '
         'because you have to unwrap three layers to reach the empty set. Importantly, no '
         'set under Foundation can be a member of itself: that would create an infinite '
-        'descending chain &#8869; &#8715; &#8869; &#8715; &#8869; &#8715; &#8230; with no bottom.'))
+        'descending chain x &#8715; x &#8715; x &#8715; &#8230; with no end.'))
     E.append(cbody(
         'Anti-Foundation (AFA) drops that prohibition. It allows non-well-founded sets  - '
         'sets that can be members of themselves. The simplest such object is the Quine atom: '
@@ -305,24 +260,25 @@ def build():
         'self-loop it guarantees exactly one such set exists.'))
     E.append(quine_atom_diagram())
     E.append(ccaption(
-        'The Quine atom ⊥ = {⊥}, pictured as a set in AFA set theory: ⊥ is the sole member of itself. '
-        'The outer ring is the set {⊥} and the inner disk is ⊥ as an element. '
-        'They are the same object.'))
+        'The Quine atom (CC-2), pictured as a set in AFA set theory: Q is the sole member of itself. '
+        'The outer ring is the set {Q} and the inner disk is Q as an element. '
+        'They are the same set. In a lattice the role\'s only occupant is &#8869; (T-EXEC); no equation '
+        'between &#8869; and Q is written.'))
     E.append(sp(6))
     E.append(quine_graph_diagram())
     E.append(ccaption(
         'A second way to see it - as a directed graph (an "accessible pointed graph", or APG, '
         'the structure Aczel\'s anti-foundation axiom decorates). Each arrow points from a set '
         'to one of its members. Ordinary sets are well-founded: following the arrows always ends, '
-        'here at the empty set ∅. The bottom ⊥ is the lone exception - its arrow loops straight '
-        'back to itself. That self-loop is exactly ⊥ = {⊥}, the Quine atom: a membership chain '
+        'here at the empty set ∅. The Quine atom Q is the lone exception - its arrow loops straight '
+        'back to itself. That self-loop is exactly Q = {Q}: a membership chain '
         'that never bottoms out.'))
     E.append(sp(4))
     E.append(example_box('Real-world analogy  - A mirror facing a mirror', [
         'Hold two mirrors facing each other. Each reflection contains the other mirror, '
         'which contains another reflection, which contains another mirror &#8230; infinitely. '
         'The image is self-referential: the full scene is visible inside itself at every '
-        'level. The Quine atom &#8869; = {&#8869;} has this structure  - &#8869; is inside '
+        'level. The Quine atom Q = {Q} has this structure  - Q is inside '
         'itself, not as a smaller copy, but as the same object.',
     ]))
     E.append(sp(8))
@@ -357,25 +313,28 @@ def build():
         'bottom element plays it. The two notions identify the same object.'))
     E.append(sp(8))
 
-    # ── Three Languages, One Object ──────────────────────────────────────────
-    E.append(Paragraph('Three Languages, One Object', CS['h1']))
+    # ── Three Languages, One Element of the Lattice ───────────────────────────
+    E.append(Paragraph('Three Languages, One Element of the Lattice', CS['h1']))
     E.append(cbody(
-        'T-EXEC establishes a three-way identification. &#8869; is the same object described '
-        'in three different mathematical languages:'))
+        'T-EXEC establishes a three-way identification within one lattice: in a lattice L carrying '
+        'AFAStructure, the Quine-atom predicate, the least element and the join identity pick out one '
+        'element of L, &#8869; of L (t_exec_triple_iff with da2_bottom_characterization), described in three different mathematical '
+        'languages:'))
     E.append(three_way_table())
     E.append(sp(4))
     E.append(cbody(
         'These are not three separate properties that happen to coincide. They are three '
         'descriptions of the same structural role. T-EXEC machine-checks that the three roles '
-        'have one occupant (t_exec_triple_iff); the set-theory row is the AFA reading of the '
-        'first role, not a Lean statement.'))
+        'have one occupant (t_exec_triple_iff with da2_bottom_characterization), and quineAtomHost_quine_role_iff at '
+        'afaStructure_isQuineAtomHost does so for the membership-host row; that row is the Lean chart whose AFA '
+        'reading is the set Q = {Q}; that reading is not a Lean statement.'))
     E.append(sp(4))
     E.append(example_box('Real-world analogy  - Zero in arithmetic (partial)', [
         '0 in arithmetic wears more than one hat at once: it is the additive identity '
         '(x + 0 = x) and the smallest non-negative integer (0 ≤ n for all n ∈ ℕ). '
         'Those two line up cleanly with ⊥ as join identity and ⊥ as minimum. '
         'But arithmetic has no honest way to show the third hat - ⊥ as the Quine atom '
-        '(⊥ = {⊥}, "zero inside zero"): ordinary numbers simply do not contain themselves. '
+        '(the role the AFA set Q = {Q} plays, "zero inside zero"): ordinary numbers simply do not contain themselves. '
         'For that self-containing property the right pictures are the mirror-facing-a-mirror '
         'analogy and the directed graph above, not arithmetic.',
     ]))
@@ -395,7 +354,7 @@ def build():
         'that certain structural facts were assumed rather than derived. ZP-J restates both in '
         'terms of a role, and neither commitment disappears:'))
     E.append(cbody(
-        '<b>CC-2 (&#8869; = {&#8869;}):</b> In ZP-A, a Forced Metatheoretic Commitment with two '
+        '<b>CC-2 (the Quine atom):</b> In ZP-A, a Forced Metatheoretic Commitment with two '
         'halves: that any set theory hosting a self-membered bottom gives up Foundation is proved in '
         'Lean (wf_no_selfloop, ZeroParadox/Settheory/Wall.lean  - no well-founded relation admits a '
         'self-loop; the QuineHost-specific case is its corollary quineHost_not_wellFounded, and '
@@ -405,7 +364,8 @@ def build():
         'AFAStructure typeclass encodes, with its field bot_self_mem placing &#8869; in it. T-EXEC '
         'proves that whatever fills that role is &#8869;. In AFA set theory the equation Q = {Q} is '
         'itself a theorem, with exactly one solution (Aczel 1988, Example 1.3); what is not derived is '
-        'that the framework\'s &#8869; is that set, which is the commitment.'))
+        'the adoption of AFA for the set setting, which is the commitment. No equation between &#8869; '
+        'and Q is written: each setting\'s occupant of the role is that setting\'s own theorem.'))
     E.append(cbody(
         '<b>CC-1 (S&#8320; = &#8869;):</b> ZP-J proves <i>cc1_derived</i> in Lean 4: if a '
         'state sequence starts at a Quine atom, it starts at &#8869;, because T-EXEC identifies '
@@ -432,8 +392,9 @@ def build():
         'Imagine every element carries a "depth"  - a value in the extended naturals '
         '{0, 1, 2, &#8230;, &#8734;} given by how many times you can descend through its '
         'structure before bottoming out. Ordinary elements bottom out '
-        'in finitely many steps, so their depth is finite; &#8869; never bottoms out  - it '
-        'contains itself  - so its depth is &#8734;. Applying scale  - the self-application '
+        'in finitely many steps, so their depth is finite; &#8869; of the lattice never bottoms '
+        'out  - its depth is &#8734;, the field val_bot (val &#8869; = &#8868;) of '
+        'ValuationStructure. Applying scale  - the self-application '
         'operation  - raises depth by exactly 1 at every non-&#8869; element. '
         'So if scale(x) = x, then depth(x) = depth(x) + 1  - an equation with no finite '
         'solution. Only &#8869;, whose depth is already &#8734; (and &#8734; + 1 = &#8734; in '
@@ -583,10 +544,12 @@ def build():
     E.append(cbody(
         'ZP-J proves something different: a uniqueness-only result for abstract DecorationUniverses  - '
         'types carrying the ValuationStructure and a collect operation, without importing AFA axioms. '
-        'The result: for any <b>finite</b> APG, any two valid decorations must agree at every vertex. '
+        'The result: on <b>any</b> directed graph, finite or infinite, any two valid decorations '
+        'must agree at every vertex (decoration_unique_of_val). For finite APGs a separate, '
+        'graph-side proof gives the same (decoration_unique). '
         'Existence is not proved; the ZP-J result is a constraint, not a construction.'))
     E.append(cbody(
-        'The proof follows the same two-direction logic as T-EXEC:'))
+        'The finite, graph-side proof follows the same two-direction logic as T-EXEC:'))
     E.append(cbody(
         '<b>Cyclic vertices:</b> Collecting a set of children always raises depth by at least 1, '
         'so a vertex is at least one step deeper than each of its children. Walk once around a '
@@ -600,25 +563,39 @@ def build():
         'induction. If two decorations agree on all the children of a vertex, they must '
         'agree on the vertex itself  - because the label is assembled from the children\'s '
         'labels and the assembly rule is the same. The induction terminates because the '
-        'set of reachable vertices strictly shrinks at each child.'))
+        'set of reachable vertices strictly shrinks at each child. Counting those vertices is '
+        'what needs the graph to be finite.'))
+    E.append(cbody(
+        '<b>The other reading:</b> instead of sorting vertices into cyclic and acyclic, sort '
+        'the labels by depth. A label of finite depth n is assembled from children whose labels '
+        'have depth below n, so induction on n settles it; the only label of infinite depth is '
+        '&#8869; of the decorating type. Think of a recursion that terminates on the size of its '
+        'output rather than its input: nothing about the graph is counted, so the graph may be '
+        'infinite (decoration_unique_of_val). This adapts the standard proof of a result Aczel sets '
+        'as an exercise, that the Foundation axiom gives every graph at most one decoration (Aczel, '
+        'Non-Well-Founded Sets, 1988, Exercise 2.1, p. 20), with one exception admitted: the single '
+        'label of infinite depth. The two readings are linked one way: a cyclic '
+        'vertex gets infinite depth, and nothing is claimed in reverse.'))
     E.append(sp(4))
     E.append(remember_box(
-        'decoration_unique is the ZP analogue of the uniqueness clause of AFA, which is an axiom. '
+        'decoration_unique_of_val is the ZP analogue of the uniqueness clause of AFA, which is an axiom. '
         'It does not construct a decoration or prove one exists  - it proves that '
         'any two valid decorations must be identical. It is an analogue of the uniqueness half '
         'of what AFA asserts, not that clause itself: it is proved for abstract '
-        'DecorationUniverses over finite graphs, without importing set-theoretic AFA axioms.'))
+        'DecorationUniverses over every graph, finite or not, without importing set-theoretic '
+        'AFA axioms. decoration_unique is its finite form: a graph-side proof for finite APGs.'))
     E.append(sp(8))
 
     # ── Key Result Box ───────────────────────────────────────────────────────
     E.append(key_result_box(
         'Key Results  - ZP-J',
         'T-EXEC (axiom-free, Lean 4): IsQuineAtom(q) &#8596; q = &#8869;. '
-        'The Quine atom, the order minimum, and the join identity are the same element. '
+        'In a lattice L carrying AFAStructure, the Quine-atom predicate, the order minimum and the '
+        'join identity pick out one element of L (t_exec_triple_iff with da2_bottom_characterization). '
         'CC-1 (S&#8320; = &#8869;): a state sequence starts at a Quine atom exactly when it starts '
         'at &#8869; (cc1_derived with t_exec_iff)  - axiom-free in Lean 4; the starting point is '
         'restated through the role, not forced (on a lattice with a second point a valid sequence can start above &#8869;). '
-        'CC-2 (&#8869; = {&#8869;}): its structural content is a role, the Quine-atom role that AFAStructure encodes, and T-EXEC proves whatever fills that role is &#8869; (axiom-free); in AFA set theory Q = {Q} has exactly one solution, a theorem of that theory, and that the framework\'s &#8869; is that set is the commitment, not a Lean theorem. '
+        'CC-2 (the Quine atom): its structural content is a role, the Quine-atom role that AFAStructure encodes, and T-EXEC proves whatever fills that role is &#8869; (axiom-free); in AFA set theory Q = {Q} has exactly one solution, a theorem of that theory; adopting AFA for the set setting is the commitment, not a Lean theorem, and no equation between &#8869; and Q is written. '
         'Choice-free: the set of self-containing elements, {&#8869;}, is identified in one step '
         'with no axiom of choice; this does not address Aczel\'s question about Dependent Choice. '
         'Abstraction chain: ValuationStructure &#8594; AbstractSelfApp &#8594; AFAStructure  - '
@@ -627,10 +604,13 @@ def build():
         'reduce what must be assumed. '
         'Concrete instances: &#8469;&#8734; satisfies the full ValuationStructure chain; '
         'OntologicalStates connects at the AbstractSelfApp level directly. '
-        'decoration_unique: any two valid decorations of a finite APG into a DecorationUniverse agree. '
+        'decoration_unique_of_val: any two valid decorations of any graph, finite or not, into a '
+        'DecorationUniverse agree, with no finiteness hypothesis. '
+        'decoration_unique: the same for a finite APG, by a graph-side proof. '
         'All stated results sorry-free in Lean 4 '
-        '(decoration_unique proved via strong induction on reach cardinality; '
-        'an auxiliary acyclic_decoration_unique in APG.lean is sorry\'d and commented out  - '
+        '(decoration_unique proved via strong induction on reach cardinality, '
+        'decoration_unique_of_val via strong induction on the depth of the decorating value; '
+        'an auxiliary acyclic_decoration_unique in ZeroParadox/Settheory/APG.lean is sorry\'d and commented out  - '
         'it is not used by decoration_unique). &#10003;'))
     E.append(sp(6))
 

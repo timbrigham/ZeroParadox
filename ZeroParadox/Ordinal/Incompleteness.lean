@@ -11,9 +11,9 @@
 
   **Gap 2 (ZP-K / ZP-L):** ZP-K establishes that the Quine atom is ⊥ = c₀ (bottom of
   MachinePhase) — an order-theoretic fact about MachinePhase, with no `Code` and no
-  execution in the statement. Reading c₀ as *the Kleene quine* is ZP-K's
-  `KleeneStructure` commitment, not a theorem, and no equation between a `Code` and a
-  `MachinePhase` is well-formed. Where ZP-L places the transition, and under which hypotheses:
+  execution in the statement. Reading c₀ as *the Kleene quine* splits (ZP-K § II): no equation
+  between a `Code` and a `MachinePhase` is well-formed, so its identity half is retired, and that
+  ⊥ of `MachinePhase` runs is the occurrence commitment. Where ZP-L places the transition, and under which hypotheses:
   `snap_unconditional` and the `example`s after it, § II. The formal path from c₀ = ⊥ through the snap at ε₀ to c₁ (ZP-L), mediated through
   `ℤ_[2]` by `cnfToZp2` from the ordinal side and `snapEmbed` from `MachinePhase`, is the missing structural triangle: ⊥ → ε₀ → c₁.
 
@@ -78,7 +78,7 @@ theorem snapEmbed_injective : Function.Injective snapEmbed := by
     Under multiplication, 0 is absorbing — matching c₁ absorbing in MachinePhase. -/
 theorem snapEmbed_mul_morphism (a b : MachinePhase) :
     snapEmbed (join a b) = snapEmbed a * snapEmbed b := by
-  cases a <;> cases b <;> simp [snapEmbed]
+  cases a <;> cases b <;> simp [snapEmbed] <;> rfl
 
 /-- The 2-adic valuation of snapEmbed c₀ is 0 (it is a unit). -/
 theorem snapEmbed_c0_val : (snapEmbed c₀).valuation = 0 := by
@@ -87,6 +87,94 @@ theorem snapEmbed_c0_val : (snapEmbed c₀).valuation = 0 := by
 /-- 0 in ℤ_[2] is divisible by all powers of 2 (infinite 2-adic valuation). -/
 theorem snapEmbed_c1_dvd (n : ℕ) : (2 : ℤ_[2])^n ∣ snapEmbed c₁ := by
   simp [snapEmbed_c1]
+
+/-! ### § I-b. snapEmbed in the die
+
+The die's Quine-atom role is `Motion.SelfOnlyAt` (`ZeroParadox/Die.lean`): a point that steps to
+itself and to nothing else. Two pairings are stated below, each through the map `snapEmbed`; no
+equation across `MachinePhase` and `ℤ_[2]` is stated. Long form: `ZeroParadox/Ordinal/Incompleteness.md` § I. -/
+
+/-- `Statement:` the join motion on `MachinePhase`: UP the identity, OVER `a → join a z` for some `z`. -/
+def machineJoinMotion : Motion MachinePhase :=
+  Motion.ofTotal id (fun _ => rfl) (fun a b => ∃ z, b = join a z)
+
+/-- `Statement:` the multiplication motion on `ℤ_[2]`: UP the identity, OVER `x → x * w` for some `w`. -/
+def z2MulMotion : Motion ℤ_[2] :=
+  Motion.ofTotal id (fun _ => rfl) (fun x y => ∃ w, y = x * w)
+
+/-- `Statement:` `snapEmbed` is a strict map of motions from `machineJoinMotion` to `z2MulMotion`:
+    steps go to steps (`snapEmbed_mul_morphism`) and the UP squares commute. -/
+noncomputable def snapEmbedHom : Motion.Hom machineJoinMotion z2MulMotion where
+  toFun := snapEmbed
+  map_step := by
+    rintro a b ⟨z, rfl⟩
+    exact ⟨snapEmbed z, snapEmbed_mul_morphism a z⟩
+  map_up := fun x => by simp [machineJoinMotion, z2MulMotion, Motion.ofTotal]
+
+/-- `Statement:` in `machineJoinMotion`, `y` steps to itself and to nothing else iff `y = c₁`; both
+    directions. -/
+theorem machineJoinMotion_selfOnlyAt_iff (y : MachinePhase) :
+    machineJoinMotion.SelfOnlyAt y ↔ y = c₁ := by
+  constructor
+  · rintro ⟨_, h⟩
+    cases y
+    · exact absurd (h c₁ ⟨c₁, rfl⟩) (by decide)
+    · rfl
+  · rintro rfl; exact ⟨⟨c₁, rfl⟩, by rintro b ⟨z, rfl⟩; cases z <;> rfl⟩
+
+/-- `Statement:` in `z2MulMotion`, `y` steps to itself and to nothing else iff `y = 0`; both
+    directions. -/
+theorem z2MulMotion_selfOnlyAt_iff (y : ℤ_[2]) : z2MulMotion.SelfOnlyAt y ↔ y = 0 := by
+  constructor
+  · rintro ⟨_, h⟩
+    simpa using (h (y * 0) ⟨0, rfl⟩).symm
+  · rintro rfl; exact ⟨⟨0, (mul_zero 0).symm⟩, by rintro b ⟨w, rfl⟩; exact zero_mul w⟩
+
+-- `Statement:` `snapEmbedHom` has no back clause at `c₀`: `snapEmbed c₀ = 1` steps to `2` in
+-- `z2MulMotion`, and no state maps to `2`. So `Motion.LaxHom.selfOnlyAt` does not apply as a whole;
+-- at `c₁` the role does carry over (`snapEmbed_selfOnlyAt_c1`).
+example : ¬ Motion.StepBack machineJoinMotion z2MulMotion snapEmbed := by
+  intro h
+  obtain ⟨b, _, hb⟩ := h c₀ 2 ⟨2, by rw [snapEmbed_c0, one_mul]⟩
+  cases b
+  · exact absurd (hb.symm.trans snapEmbed_c0) (by norm_num)
+  · exact two_ne_zero (hb.symm.trans snapEmbed_c1)
+
+/-- `Statement:` the role carries over at `c₁`: `c₁` steps to itself only in `machineJoinMotion`,
+    and its image `0` has at most one successor in `z2MulMotion`, so the image steps to itself only
+    (`Motion.selfOnlyAt_relHom`, applied along `snapEmbedHom`'s steps). -/
+theorem snapEmbed_selfOnlyAt_c1 : z2MulMotion.SelfOnlyAt (snapEmbedHom.toFun c₁) :=
+  Motion.selfOnlyAt_relHom (M := machineJoinMotion) (N := z2MulMotion)
+    ⟨snapEmbedHom.toFun, snapEmbedHom.map_step⟩
+    ((machineJoinMotion_selfOnlyAt_iff c₁).2 rfl)
+    (by rintro b c ⟨w, rfl⟩ ⟨w', rfl⟩; simp [snapEmbedHom, snapEmbed_c1])
+
+/-- `Statement:` doubling on `ℤ_[2]`: `y` steps to itself and to nothing else iff `y = 0`; both
+    directions. -/
+theorem z2_double_selfOnlyAt_iff (y : ℤ_[2]) :
+    (Motion.ofFun (fun x : ℤ_[2] => 2 * x)).SelfOnlyAt y ↔ y = 0 :=
+  (Motion.selfOnlyAt_ofFun_iff _ y).trans
+    ⟨fun h => by linear_combination h, fun h => by rw [h, mul_zero]⟩
+
+/-- `Statement:` the doubling pairing: if `snapEmbed` carries every step of a motion `M` on
+    `MachinePhase` to a step of doubling on `ℤ_[2]`, then `c₀` has no step in `M`. Under doubling
+    the role's only occupant is `0` (`z2_double_selfOnlyAt_iff`). -/
+theorem snapEmbed_doubling_noStepAt (M : Motion MachinePhase)
+    (h : ∀ a b, M.step a b →
+      (Motion.ofFun (fun x : ℤ_[2] => 2 * x)).step (snapEmbed a) (snapEmbed b)) :
+    M.NoStepAt c₀ := by
+  intro b hb
+  have hs : snapEmbed b = 2 * snapEmbed c₀ := h _ _ hb
+  rw [snapEmbed_c0, mul_one] at hs
+  cases b
+  · exact absurd (hs.symm.trans snapEmbed_c0) (by norm_num)
+  · exact two_ne_zero (hs.symm.trans snapEmbed_c1)
+
+-- `Statement:` so the snap step `c₀ → c₁` maps to `1 → 0`, which is not a doubling step.
+example : ¬ (Motion.ofFun (fun x : ℤ_[2] => 2 * x)).step (snapEmbed c₀) (snapEmbed c₁) := by
+  change ¬ (snapEmbed c₁ = 2 * snapEmbed c₀)
+  rw [snapEmbed_c0, snapEmbed_c1, mul_one]
+  exact (two_ne_zero (α := ℤ_[2])).symm
 
 /-! ## §II. Deriving hfp from ε₀ Initialization
 
@@ -206,21 +294,21 @@ example (φ : Ordinal → MachinePhase) (h0 : ∀ n : ℕ, φ (fundamentalSeq n)
 
 ZP-K established: ⊥ = c₀ is the unique Quine atom of MachinePhase
 (`da1_closed_concrete`). Note what that theorem does *not* say — it mentions no `Code`
-and no execution. Reading c₀ as *the Kleene quine* is ZP-K's `KleeneStructure`
-commitment, not a theorem, and it is not a Lean `=`: a quine is a `Code` and c₀ is a
-`MachinePhase`, so no equation between them is well-formed. See ZP-K § II / § III.
-ZP-L established: **given** that the snap happens at ε₀, it happens **nowhere below** it. The
-same caution as the ZP-K sentence above applies here: `snap_unconditional` is named for its lack
-of a fixed-point hypothesis, not for lacking hypotheses — it takes `hε₀ : φ epsilonZero = c₁` as
-an argument, so the snap is assumed and its *minimality* is what is derived. ZP-L does not force
-the snap. (Corrected 2026-07-31; this line read "ε₀ forces the snap from c₀ to c₁".)
+and no execution. Reading c₀ as *the Kleene quine* splits as in the header: no `=` between a
+`Code` and a `MachinePhase` is well-formed, so its identity half is retired (the code chart has its
+own occupants of the die's Quine-atom role); its running half is the occurrence commitment.
+ZP-L established, under `hmono`, `h0` (every tower stage sent to c₀) and `hε₀` (φ ε₀ = c₁), that φ
+sends nothing below ε₀ to c₁ (`snap_unconditional`, § II). The ZP-K caution applies here too:
+`snap_unconditional` is named for its lack of a fixed-point hypothesis, not for lacking hypotheses;
+it takes `hε₀` as an argument, so the snap is assumed and its *minimality* is derived. ZP-L does
+not force the snap.
 
-The triangle (the top node read under that commitment):
-    c₀ = ⊥ (the Quine atom; read as the Kleene quine, ZP-K)
+The triangle:
+    c₀ = ⊥ of `MachinePhase` (its Quine atom, ZP-K)
          ↕ snap at ε₀
     c₁     (snap state, ZP-L)
          ↕ snapEmbed
-    0 ∈ ℤ_[2] (2-adic limit of tower, ZP-L)
+    0 ∈ ℤ_[2] (limit of the tower's `cnfToZp2` images, ZP-L; the tower's supremum is ε₀)
 
 This section makes the full triangle formal.
 -/
@@ -249,18 +337,17 @@ theorem zpm_triangle :
    tower_converges_to_zero,
    snap_state_zp2_is_zero⟩
 
-/-! ## §IV. Shared Diagonalization Pattern
+/-! ## §IV. Two Fixed-Point Existentials
 
-Both the Kleene recursion theorem (ZP-K) and ε₀'s fixed-point property (ZP-L) follow
-the same diagonalization pattern: a self-referential operation has a fixed point.
+`both_fixed_points_exist` conjoins one existential over codes and one over ordinals. The code
+conjunct is a periodicity with period the code's Gödel number, met by any code that ignores its
+input (`Code.zero`, the `example` in `ZeroParadox/Ordinal/Epsilon0CannotBe.lean` § IV), so it is
+not diagonal content by itself; the ordinal conjunct is ε₀'s least-fixed-point face. Long form:
+`ZeroParadox/Ordinal/Incompleteness.md` § Remark R-M.1. -/
 
-  Kleene: ∃ c, ∀ n, eval c n = eval c (encode c + n)   [diagonal on codes]
-  ε₀:     ∃ α, ω^α = α ∧ (∀ β, ω^β = β → α ≤ β)       [diagonal on ordinals]
-
-This section records that both fixed points exist in the same formal context. -/
-
-/-- Both diagonalization patterns produce fixed points in their respective domains.
-    Kleene: periodic code (period = Gödel number). Ordinal: ε₀ = ω^ε₀, least such. -/
+/-- A conjunction of two fixed-point existentials, one over codes and one over ordinals.
+    Codes: some code is periodic with period its own Gödel number, a condition constant codes also
+    meet (§ IV). Ordinals: ε₀ = ω^ε₀, least such. -/
 theorem both_fixed_points_exist :
     (∃ c : Code, ∀ n, eval c n = eval c (Encodable.encode c + n)) ∧
     (∃ α : Ordinal, omega0 ^ α = α ∧
@@ -272,8 +359,7 @@ theorem both_fixed_points_exist :
 
 /-! ### Remark R-M.1: DA-1 Path 2 and the Limits of the Diagonalization Frame
 
-`both_fixed_points_exist` is a conjunction of two existentials: each diagonalization yields a
-fixed point in its own domain, and no equation between a `Code` and an `Ordinal` is well-formed.
+`both_fixed_points_exist` is a conjunction of two existentials, one per domain (§ IV), and no equation between a `Code` and an `Ordinal` is well-formed.
 Where L-INF stands relative to that schema, and how that differs from DA-1 Path 2:
 `ZeroParadox/Ordinal/Incompleteness.md` § Remark R-M.1. -/
 
@@ -283,8 +369,20 @@ end ZeroParadox
 section PurityCheck
 open ZeroParadox
 
+#print axioms snapEmbed_c0
+#print axioms snapEmbed_c1
+#print axioms snapEmbed_c0_val
+#print axioms snapEmbed_c1_dvd
 #print axioms snapEmbed_injective
 #print axioms snapEmbed_mul_morphism
+#print axioms machineJoinMotion
+#print axioms z2MulMotion
+#print axioms snapEmbedHom
+#print axioms machineJoinMotion_selfOnlyAt_iff
+#print axioms z2MulMotion_selfOnlyAt_iff
+#print axioms snapEmbed_doubling_noStepAt
+#print axioms snapEmbed_selfOnlyAt_c1
+#print axioms z2_double_selfOnlyAt_iff
 #print axioms hfp_from_epsilon_zero
 #print axioms snap_unconditional
 #print axioms snap_state_zp2_is_zero

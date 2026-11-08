@@ -1,13 +1,18 @@
 """
 Build ZP-L Illustrated Companion
-Version 1.18 | October 2026
+Version 1.23 | November 2026
 Citation fence (Gentzen): the Convergence section's credits follow CLAIMS.md's Gentzen rows and are
-taken from the primary papers, never from a secondary source's labels. Provability of transfinite
-induction below epsilon-0 is what Gentzen 1943 (p. 140 and its footnote 3) reports, crediting
-Hilbert-Bernays; it is never called Hilbert-Bernays' theorem, and no year is given for Grundlagen der
-Mathematik II (no copy among this project's filed papers, searched by file name, 2026-10-13). Not
-cited: p. 140's announcement of the presentations in Gentzen 1943 section 2 (pp. 145-155 not checked
-against the text), and the 1938 Neue Fassung.
+taken from Gentzen 1943 (Math. Ann. 119), the one primary paper filed here, never from a secondary
+source's labels. The 1936 consistency credit rests on Gentzen 1943, p. 140, footnote 2: the 1936
+paper itself was not among this project's filed papers as of 2026-11-03 (searched by file name).
+The rendered Cantor-normal-form credit (Gentzen 1943, section 1) has no CLAIMS.md row; it is read
+from p. 141 of the filed scan, where every ordinal below epsilon-0 is written (uniquely) with 0,
+omega, sum and omega-exponentiation. Provability of transfinite induction below epsilon-0 is what
+Gentzen 1943 (p. 140 and its footnote 3) reports, crediting Hilbert-Bernays; it is never called
+Hilbert-Bernays' theorem, and no year is given for Grundlagen der Mathematik II (a copy was not
+located among this project's filed papers as of 2026-10-13, searched by file name). Not cited: p. 140's
+announcement of the presentations in Gentzen 1943 section 2 (pp. 146-151 on the filed scan), and the
+1938 Neue Fassung.
 """
 
 import os
@@ -179,23 +184,23 @@ def dual_convergence_diagram():
         d.add(Circle(dots_x + j * 8, row_bot, 2,
                      fillColor=INDIGO, strokeColor=INDIGO, strokeWidth=0))
 
-    # Arrow to 0 = ⊥ box
+    # Arrow to the 0 box
     arr2_x1 = dots_x + 3 * 8 + 4
     arr2_x2 = end_bx - 3
     d.add(Line(arr2_x1, row_bot, arr2_x2, row_bot, strokeColor=INDIGO, strokeWidth=1.5))
     d.add(Line(arr2_x2, row_bot, arr2_x2 - 7, row_bot + 4, strokeColor=INDIGO, strokeWidth=1.5))
     d.add(Line(arr2_x2, row_bot, arr2_x2 - 7, row_bot - 4, strokeColor=INDIGO, strokeWidth=1.5))
 
-    # 0 = ⊥ box (indigo)
+    # 0 box (indigo): the norm view's least point, so no ⊥ of another structure is drawn here
     d.add(Rect(end_bx, bot_by, end_bw, bh,
                fillColor=INDIGO_LITE, strokeColor=INDIGO, strokeWidth=1.8, rx=3, ry=3))
-    d.add(String(end_bx + 5, bot_by + bh - 13, '0 = ⊥',
+    d.add(String(end_bx + 5, bot_by + bh - 13, '0',
                  fontSize=9.5, fontName='DV-B', fillColor=INDIGO))
     d.add(String(end_bx + 5, bot_by + 5, '(limit)',
                  fontSize=7.5, fontName='DV-I', fillColor=INDIGO))
 
     # Row label (above bottom row, in the inter-row gap)
-    d.add(String(x0, bot_by + bh + 8, '2-adic norm of image (converges to 0 = ⊥):',
+    d.add(String(x0, bot_by + bh + 8, '2-adic norm of image (converges to 0):',
                  fontSize=8, fontName='DV-I', fillColor=GREY_TEXT))
 
     # ── Vertical dashed connectors between rows ───────────────────────────────
@@ -219,7 +224,7 @@ def dual_convergence_diagram():
     return d
 
 
-VERSION = '1.18'
+VERSION = '1.23'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -272,10 +277,11 @@ def build():
     # ── What Is ZP-L Doing? ───────────────────────────────────────────────────
     E.append(Paragraph('What Is ZP-L Doing?', CS['h1']))
     E.append(cbody(
-        'ZP-K carries the computational face of the initial machine state c&#8320; as a '
+        'ZP-K carries a computational counterpart of the initial machine state c&#8320; as a '
         'KleeneStructure requirement (botCode_is_quine): a program whose behavior is determined '
         'entirely by its own index, whose existence the second recursion theorem guarantees. '
-        'Reading c&#8320; as the Kleene quine is that commitment, not a theorem. ZP-L picks up the thread from a different '
+        'No equation makes c&#8320; that program: the identity reading is retired, and what stays a '
+        'commitment is that c&#8320; actually runs, the occurrence commitment. ZP-L picks up the thread from a different '
         'direction: the ordinal direction. If a map &#981; assigns machine phases to ordinals '
         '&#8212; sending c&#8320; to everything below a certain point and c&#8321; above it '
         '&#8212; what is that threshold ordinal? ZP-L establishes the answer: &#949;&#8320;, '
@@ -285,7 +291,9 @@ def build():
         'threshold &#8212; no monotone, tower-aligned map can snap before &#949;&#8320;, and '
         'the canonical map snaps exactly there. ZP-L also establishes the connection to '
         'ZP-B: as the tower stages approach &#949;&#8320; in ordinal order, their '
-        '2-adic images converge to 0 = &#8869; in &#8484;&#8322;. The same sequence '
+        '2-adic images converge to 0 in &#8484;&#8322;, the point that is least in '
+        '&#8484;&#8322;\'s norm preorder and greatest in its valuation preorder (z2_two_views, '
+        'ZeroParadox/Valuation/Scale.lean). The same sequence '
         'witnesses both convergences simultaneously.'))
     E.append(sp(4))
     E.append(example_box('Real-world analogy &#8212; the unreachable horizon', [
@@ -365,9 +373,10 @@ def build():
     # ── The Two-Adic Connection ───────────────────────────────────────────────
     E.append(Paragraph('The Two-Adic Connection', CS['h1']))
     E.append(cbody(
-        'ZP-B established that 0 = &#8869; in the 2-adic integers &#8484;&#8322; is the '
-        'valuative sink: the 2-adic valuation of 0 is infinite, which means 0 sits at the '
-        'bottom of the 2-adic metric. ZP-L connects this to the ordinal tower via a map, '
+        'ZP-B established that 0 in the 2-adic integers &#8484;&#8322; is the '
+        'valuative sink: the 2-adic valuation of 0 is infinite. So 0 is the greatest point in '
+        'the valuation preorder and the least in the norm preorder, where its norm is 0 '
+        '(z2_two_views). ZP-L connects this to the ordinal tower via a map, '
         'cnfToZp2, from ordinals below &#949;&#8320; into &#8484;&#8322;, defined by recursion '
         'on their Cantor normal forms.'))
     E.append(cbody(
@@ -376,14 +385,14 @@ def build():
         'the valuation, the images climb: 2<sup>n</sup> has 2-adic valuation n, rising toward '
         'the infinite valuation of 0. Read through the norm, they fall: the 2-adic norm of '
         '2<sup>n</sup> is (1/2)<sup>n</sup>, which goes to 0 as n increases. So as the ordinal '
-        'tower climbs toward &#949;&#8320; from below, its 2-adic image converges to 0 = &#8869; '
+        'tower climbs toward &#949;&#8320; from below, its 2-adic image converges to 0 '
         'in the 2-adic metric, the point it started from. Two convergences, one tower.'))
     E.append(sp(4))
     E.append(dual_convergence_diagram())
     E.append(ccaption(
         'Same tower stages, two perspectives. Teal (top row): ordinal stages 1, &#969;, &#969;^&#969;, &#8230; '
         'approach &#949;&#8320; from below. Indigo (bottom row): the 2-adic norms of their '
-        'images 1/2, 1/4, 1/8, &#8230; converge to 0 = &#8869;. '
+        'images 1/2, 1/4, 1/8, &#8230; converge to 0. '
         'ZP-L &#167;VII: snap_zp2_correspondence.'))
     E.append(sp(4))
     E.append(cbody(
@@ -398,15 +407,23 @@ def build():
     # ── The Kleene Connection ─────────────────────────────────────────────────
     E.append(Paragraph('The Kleene Connection', CS['h1']))
     E.append(cbody(
-        'ZP-K carries &#8869;\'s computational face as a requirement of its Kleene structure: '
-        'the class field botCode_is_quine, which asks the nominated code to satisfy '
+        'ZP-K\'s Kleene structure carries a computational-quine requirement, read as &#8869;\'s counterpart: '
+        'the class field botCode_is_quine, which asks the supplied code to satisfy '
         'IsComputationalQuine &#8212; a periodicity condition, eval c n = eval c (encode c + n) '
         'for every n, so the code\'s own G&#246;del number is a period of it. Kleene\'s second '
         'recursion theorem guarantees such a code exists. The condition does not by itself pin '
         'self-reference: the constant codes satisfy it, and they are what witnesses '
-        'infinite_quine_family (ZP-K &#167;VI). That the program and the bottom are one object '
-        'is the framework\'s reading rather than a Lean equation &#8212; a program code and the '
-        'lattice carrier are different types. ZP-L identifies '
+        'infinite_quine_family (ZP-K &#167;VI). A program and &#8869; of the lattice are compared '
+        'through a role rather than an identity: the Quine-atom role, a point that steps to itself '
+        'and to nothing else (Motion.SelfOnlyAt), which a point of each chart occupies or provably none does. '
+        '&#8869; of the lattice is its only occupant under a self-application map supplied by '
+        'AbstractSelfApp (selfApp_quine_role_iff). On codes, stepping '
+        'from a code to the codes whose output is what a map assigns it, no single code occupies '
+        'it (evalStepMotion_not_selfOnlyAt), and for a computable map respecting equal output '
+        'some class of codes up to equal output does (codes_vs_classes, '
+        'ZeroParadox/Computability/Kleene.lean). No equation across a program code and the '
+        'lattice carrier is stated; they are different types, so the supplied code is not identified with &#8869;, '
+        'and that &#8869; actually runs stays the occurrence commitment. ZP-L identifies '
         '&#949;&#8320; as an ordinal fixed point: the first ordinal satisfying &#969;^&#945; = &#945;, '
         'guaranteed to exist by the fixed-point theorem for normal functions. Both fixed-point '
         'proofs carry Classical.choice in their Lean formalizations; ZP-K Section IV '
@@ -459,8 +476,10 @@ def build():
     E.append(cbody(
         'ZP-L and Gentzen share the ordinal itself. ZP-L defines &#949;&#8320; as Mathlib&#8217;s '
         'Ordinal.epsilon 0, where &#969;-tower self-iteration closes on itself, and writes the '
-        'ordinals below it in Cantor normal form, the notation ordinal analysis also uses (Gentzen 1943, &#167;1). Gentzen '
-        'starts from proof theory: &#949;&#8320; is where PA&#8217;s provability tower runs out. '
+        'ordinals below it in Cantor normal form, the notation ordinal analysis also uses (Gentzen 1943, &#167;1). The '
+        'proof-theoretic side starts from PA: &#949;&#8320; is where PA&#8217;s provable cases of '
+        'transfinite induction run out, the cases below it credited by Gentzen to Hilbert-Bernays '
+        '(1943, p. 140, footnote 3) and the case at it Gentzen&#8217;s own (1943). '
         'What is ZP-L&#8217;s own is the snap: a monotone map sending the tower&#8217;s stages to '
         'c&#8320; fires nowhere below &#949;&#8320;, and its firing at &#949;&#8320; is a hypothesis, '
         'h&#949;&#8320; (ZeroParadox/Ordinal/Incompleteness.lean &#167; II).'))
@@ -510,7 +529,7 @@ def build():
         '(c&#8321; on every fixed point of &#969;^&#183;), snapping at &#949;&#8320;, '
         'and &#949;&#8320; minimal &#8212; with no free hypotheses. '
         'snap_zp2_correspondence co-proves that the same tower witnesses both the '
-        'ordinal approach to &#949;&#8320; and the 2-adic convergence to 0 = &#8869;. '
+        'ordinal approach to &#949;&#8320; and the 2-adic convergence to 0 in &#8484;&#8322;. '
         'All theorems proved without sorry. ZPM places both sides in &#8484;&#8322;: cnfToZp2 '
         'sends the tower\'s ordinal notations there, snapEmbed sends the machine phases there, '
         'and the tower\'s images converge to snapEmbed\'s value at c&#8321; (zpm_triangle).'))

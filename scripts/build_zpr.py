@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-R: A Cross-Category Account of the Self-Referential Fixed Point — PDF Builder
-Version 1.20 | October 2026
+Version 1.27 | November 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.20'
+VERSION = '1.27'
 FIRST_RELEASED = 'July 2026'
 
 
@@ -36,7 +36,7 @@ def build():
             'D<sub>&#8734;</sub> and its generalizations) free of a monotone obstruction on complete lattices '
             '(Knaster&#8211;Tarski), with no reflexive object built here and no map from the two-element '
             'chain onto its monotone self-maps (the first finite stage of Soto-Andrade and Varela\'s '
-            'two-element example; Trimble; Bergman), and realized in the <b>computability</b> face '
+            'two-element example; Trimble; Bergman; stated there for order-preserving maps, ours for any map), and realized in the <b>computability</b> face '
             '(Rogers / Kleene). Every theorem used is classical. Each result box (R1&#8211;R4) and each '
             'F1 property is backed by a machine-checked Lean 4 theorem, except one marked cited: that '
             'the computability fixed point is an instance of Lawvere\'s theorem. The rest is cited '
@@ -53,7 +53,9 @@ def build():
     E.append(body(
         'A recurring role in this framework is a fixed point of self-application &#8212; '
         '"self-referential" in the sense of being defined by pointing at itself. Its occupants differ '
-        'by face: a self-containing set (&#8869; of an AFA lattice, &#8869; = {&#8869;}) and a '
+        'by face: &#8869; of an AFA lattice, the occupant there of the Quine-atom role (a point that '
+        'steps to itself and to nothing else; quineAtomHost_quine_role_iff, for the host built from '
+        'the AFA structure), and a '
         'program equal to its own transform up to evaluation (a Kleene code). This document asks one checkable question: is a fixed point in that role an '
         'instance of <b>Lawvere\'s fixed-point theorem</b> (Lawvere 1969) &#8212; the '
         'categorical statement behind the diagonal arguments of Cantor, Russell, G&#246;del and Tarski, '
@@ -77,7 +79,8 @@ def build():
         'placement uses: that a fixed-point-free endomap of an object Y rules out, for every A, a '
         'point-surjection A &#8594; Y<sup>A</sup> is Lawvere\'s Corollary 1.2 (p. 5 of the 2006 TAC '
         'reprint). Of the suggestion of Soto-Andrade and Varela (1984, pp. 1 and 18) '
-        'that every structure with the fixed point property is a retract of a reflexive '
+        'that every structure with the fixed point property (in the order and category sense used '
+        'throughout ZP-R: every endomap of the structure has a fixed point) is a retract of a reflexive '
         'domain, ZP-R answers the question only in Set, where it holds trivially (Section II), and '
         'makes no claim about the categories they intend.'))
     E.append(hr())
@@ -212,7 +215,8 @@ def build():
         'follows their remark that the converse of Lawvere\'s theorem fails for lattices with '
         'monotone maps; it is the case Y = 2 of Trimble\'s Cantor theorem for posets, that no poset '
         'map Y &#8594; 2<sup>Y</sup> is surjective, and the case P = 2 of Bergman\'s Corollary 7 '
-        '(2008), that no isotone map from a poset to its lattice of downsets is surjective (both '
+        'of arXiv:0801.0751 (Corollary 3.2 in the 2008 journal version), that no isotone map from a '
+        'poset to its lattice of downsets is surjective (all three '
         'there for order-preserving maps; the Lean example allows any map, by counting two points '
         'against three monotone self-maps). A related question, about retracts rather than '
         'reflexive objects, is the suggestion of Soto-Andrade and Varela (1984, pp. 1 and 18) '
@@ -254,8 +258,8 @@ def build():
             'Witnesses: monotone_regime_derives_pinned (LawvereBridge.lean), for the fork; the last '
             'anonymous example of LawvereBridge.lean &#167; VII, for the two-element chain (the first '
             'finite stage of Soto-Andrade and Varela\'s two-element example, 1984, &#167;2.5, '
-            'pp. 15&#8211;16; Trimble, "No surjective map Y &#8594; 2<sup>Y</sup>"; Bergman 2008, '
-            'Corollary 7). Lean purity: monotone_regime_derives_pinned choice-free; in the '
+            'pp. 15&#8211;16; Trimble, "No surjective map Y &#8594; 2<sup>Y</sup>"; Bergman, '
+            'Corollary 7 of arXiv:0801.0751, Corollary 3.2 in the journal). Lean purity: monotone_regime_derives_pinned choice-free; in the '
             'two-element-chain example the no-surjection half is [propext], and Classical.choice enters '
             'through the Knaster&#8211;Tarski half (OrderHom.lfp on Mathlib\'s complete-lattice instance '
             'on Bool). ✓',
@@ -272,8 +276,8 @@ def build():
             'gives every total computable endomap of codes a fixed point <i>up to eval</i> &#8212; two '
             'codes computing the same function.',
             'That is weaker than "no fixed-point-free endomap", and the strong form is false: '
-            'c &#8614; pair(c, c) is total and computable and returns its own input for no c (stated '
-            'in the Lean docstrings, not formalized as a declaration). The '
+            'fun c =&gt; Code.pair c c is total and computable and returns its own input for no c '
+            '(code_pair_diag_fixedPointFree, ZeroParadox/Category/Lawvere.lean). The '
             'obstruction is absent at the level of <i>eval</i>, which is where the reflexive object '
             'lives &#8212; and the reason is that the effective category admits fewer <i>maps</i>, '
             'not that eval lands in a different type: no computable self-map on codes is '
@@ -397,7 +401,8 @@ def build():
             'instance, is definable in ZFC.',
             'Reading: the framework treats the self-application fixed point as a role carried with its '
             'face, characterized rather than constructed as one global object. Its choice of a '
-            'non-well-founded foundation (ZF + AFA rather than ZFC; Aczel 1988; Barwise &amp; Moss 1996) '
+            'non-well-founded foundation (ZFC<sup>&#8722;</sup> + AFA: Foundation replaced by AFA, Choice kept; Aczel 1988, '
+            'p. xviii; Barwise &amp; Moss 1996, p. 72, whose ZFC<sup>&#8722;</sup> on p. 28 also has urelements) '
             'is a separate commitment, which this face-locality does not by itself require. A theorem stated for every suitable category can be '
             '<i>witnessed</i> in whichever category has Lawvere\'s hypothesis; the <i>occupant</i> it '
             'produces is defined only relative to that category.',
@@ -428,9 +433,13 @@ def build():
         'supplied by the class fields fixed_bot and unique_fp (selfApp_pinnable), not by the engine, '
         'whose hypothesis fails on every ZPSemilattice with an element other than &#8869; '
         '(nontrivial_lattice_no_witness). On every ZPSemilattice with an element other than &#8869;, '
-        'that face\'s only link to the computability face is the KleeneStructure commitment: it '
-        'nominates a code meeting a periodicity condition (one that constant codes also meet) as the '
-        'computational witness of the bottom role, a commitment of the class and not a theorem '
+        'that face is linked to the computability face through the die\'s Quine-atom role, '
+        'whose occupancy is settled chart by chart: in the code chart no single code occupies it under the eval step '
+        '(evalStepMotion_not_selfOnlyAt), and a class of codes up to equal eval does, for computable '
+        'eval-respecting maps (codes_vs_classes). KleeneStructure supplies a code meeting a periodicity '
+        'condition (one that constant codes also meet) and equates it with nothing. The reading it was '
+        'built for, that this code is the computational witness of &#8869;, splits: its identity half is '
+        'retired, and its running half, that &#8869; executes, is the occurrence commitment '
         '(ZeroParadox/Computability/Kleene.lean &#167;II). On the one-element ZPSemilattice, as for '
         'the one-element set, the forward case holds trivially. The '
         '<b>monotone</b> face, in posets with monotone maps, runs it in neither direction on the two-element chain: on a complete lattice no monotone '
@@ -485,10 +494,14 @@ def build():
         'so Knaster&#8211;Tarski is not a corollary of Lawvere\'s theorem through a surjection onto a '
         'function space in posets; and Bergman, "On lattices and their ideal lattices, and posets and '
         'their ideal posets," Tbilisi Math. J. 1 (2008) 89&#8211;103 (arXiv:0801.0751), whose Corollary 7 '
-        'states that no isotone map from a subset of a poset P to the lattice of all downsets of P is '
-        'surjective. The '
-        'apophatic, characterize-not-construct treatment of self-referential objects: Aczel, '
-        '<i>Non-Well-Founded Sets</i> (1988); Barwise &amp; Moss, <i>Vicious Circles</i> (1996).'))
+        'in the arXiv numbering (Corollary 3.2 in the journal) states that no isotone map from a subset of a poset P to the lattice of all downsets of P is '
+        'surjective. Non-well-founded sets characterized by unique solutions and by corecursion: Aczel, '
+        '<i>Non-Well-Founded Sets</i> (1988); Barwise &amp; Moss, <i>Vicious Circles</i> (1996), where AFA '
+        'is stated as the Solution Lemma (p. 72) and the Corecursion Theorem (p. 250) is given as their '
+        'version of Aczel\'s Special Final Coalgebra Theorem (their p. 264). Both books also construct: Aczel '
+        'builds a model of ZFC<sup>&#8722;</sup> + AFA (Theorem 3.10, p. 37) and Barwise and Moss a model '
+        'of ZFA (Chapter 9, pp. 103&#8211;115 in their index). Reading the self-referential object as '
+        'characterized rather than constructed is this document\'s reading, not theirs.'))
     E.append(body(
         'Against this, the contribution of ZP-R is not a theorem but a <i>placement</i>: the '
         'per-face placement of the framework\'s self-application role relative to the Lawvere fixed '
@@ -598,8 +611,9 @@ def build():
             'Computability face (ComputableCrossing, Kleene): [propext, Classical.choice, Quot.sound] '
             '&#8212; Classical.choice inherited from Mathlib\'s classical recursion theory (Kleene / '
             'Rogers), disclosed and not claimed otherwise.',
-            'Core choice-free, realization choice-carrying &#8212; the framework\'s standing pattern. '
-            'Zero sorry. Verified: lake build, October 2026.',
+            'Core choice-free, realization choice-carrying &#8212; the framework\'s standing pattern.',
+            'The footprints listed here are copies; to re-measure one, run #print axioms on the named '
+            'declaration.',
         ]
     ))
     E.append(sp(6))

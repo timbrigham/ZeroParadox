@@ -1,12 +1,12 @@
 """
 Zero Paradox — ZP-I: Inside Zero PDF Builder
-Version 1.28 | October 2026
+Version 1.44 | November 2026
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.28'
+VERSION = '1.44'
 FIRST_RELEASED = 'April 2026'
 
 # ZP-I uses justified body text; override the left-aligned zp_utils defaults
@@ -95,14 +95,17 @@ def build():
         'is a separate carrier. No '
         'new axioms are required for what it PROVES, which is that convergence, together with the '
         'separate fact that anything filling the bottom role IS the bottom of its own semilattice. '
-        'Reading the 2-adic limit as the thing filling that role is a modelling commitment, not a '
-        'theorem: the two live in different types, and Q<sub>2</sub>&#8217;s field structure supplies no join and the corpus defines none on Q<sub>2</sub>, so the role '
-        'condition is not statable of the limit at all — they are distinct MEMBERS of the bottom '
+        'Reading the 2-adic limit as the thing filling that role takes a choice, not a '
+        'theorem: the two live in different types, and Q<sub>2</sub>&#8217;s field structure supplies no join and the corpus registers none on Q<sub>2</sub>, so the role '
+        'condition is not statable of the limit until a join on Q<sub>2</sub> is chosen — they are distinct MEMBERS of the bottom '
         'family, not one object, and that identity is retired as ill-typed (MC-1). '
+        'Choosing a join on Q<sub>2</sub> is well-typed, and in the semilattice it makes, anything filling the bottom role is '
+        'that semilattice&#8217;s &#8869; by theorem (t_iz_limit_is_new_null); what is retired is identifying the 2-adic 0 with '
+        '&#8869; of another semilattice. '
         'Reading the bottom so reached as a NEW one '
         'rather than the one already there is a further commitment (C-DA2 in ZP-E), and in the 2-adic '
-        'chart the arc returns to the SAME 0 (snap_arc_z2_loop). T-IZ extends T-SNAP: where T-SNAP fixes the shape of the first transition '
-        '&#8869; &#8594; &#949;<sub>0</sub>, and not that it is taken, T-IZ establishes, for a depth index that climbs at every step, '
+        'chart the arc returns to the SAME 0 (snap_arc_z2_loop). T-IZ and T-SNAP are separate results: T-SNAP fixes the shape of the first transition '
+        '&#8869; &#8594; &#949;<sub>0</sub>, and not that it is taken; T-IZ establishes, for a depth index that climbs at every step, '
         'that the 2-adic chain the IsDepthChain modelling commitment links to it converges to 0, as a Cauchy sequence result.'))
     E.append(body(
         'The key insight: the no-top property is not an obstacle to T-IZ. In a carrier that has it '
@@ -139,8 +142,9 @@ def build():
         'section below); one label over two propositions is a citation nothing can check. What no-top '
         'supplies is ROOM: a chain never halts for want of a strictly greater element. The ascent '
         'itself is IsStrictStateSequence — see the NO-GO gauge in &#167;Ib. Reading the limit as '
-        'occupying the bottom role is a commitment, and calling the occupant a successor null is '
-        'C-DA2, a further one.'))
+        'filling the bottom role takes a choice of join on Q<sub>2</sub> (then it is that semilattice&#8217;s '
+        '&#8869; by theorem, t_iz_limit_is_new_null), and reading the occupant as a successor null is '
+        'C-DA2, a commitment.'))
     E.append(body(
         'The reasoning is direct. An ascending chain (S<sub>n</sub>)<sub>n&lt;&#969;</sub> in L '
         'is a sequence satisfying S<sub>n</sub> &#8804; S<sub>n+1</sub> for all n (ZP-A T3 — monotonicity). '
@@ -174,8 +178,9 @@ def build():
         'the direction of that index is monotonicity (ZP-A T3) and irreversibility (ZP-B C3). '
         'Neither is a clock. '
         'What the chain reaches at the limit ordinal &#969;, after &#969; state changes, is Q<sub>2</sub>&#8217;s 0, '
-        'and not at any clock time. Reading that 0 as filling the bottom role is a commitment, and reading it '
-        'as a NEW bottom rather than the same one is a further commitment (C-DA2).'))
+        'and not at any clock time. Reading that 0 as filling the bottom role takes a choice of join on '
+        'Q<sub>2</sub> (then it is that semilattice&#8217;s &#8869; by theorem, t_iz_limit_is_new_null), and '
+        'reading it as a successor null is C-DA2, a commitment.'))
     E.append(body(
         'Remark R-I.1: &#969; is the first infinite ordinal — the smallest ordinal greater than '
         'every natural number. An ascending chain indexed by &#969; is a countable sequence with '
@@ -239,7 +244,7 @@ def build():
             '(1) The norms &#8214;S(n)&#8214;<sub>2</sub> &#8594; 0 (squeeze between 0 and the '
             'geometric sequence 2<sup>-n</sup>, both tending to 0).',
             '(2) S(n) &#8594; 0 in Q<sub>2</sub> (norm &#8594; 0 iff sequence &#8594; 0 in a normed group).',
-            'Lean: t_iz_cauchy — proved (sorry-free) in SemilatticeInstance.lean; footprint carries Classical.choice inherited from Mathlib&#8217;s p-adic analysis (see &#167; III). This is the topological core of T-IZ.',
+            'Lean: t_iz_cauchy — proved (sorry-free) in SemilatticeInstance.lean; carries Classical.choice (&#167; III). This is the topological core of T-IZ.',
         ]
     ))
     E.append(sp(6))
@@ -306,16 +311,16 @@ def build():
     E.append(sp(6))
     E.append(body(
         'Remark R-II.2: The formal spine of T-IZ is Steps 1 and 6. Step 1 (Cauchy convergence '
-        'to 0 in Q<sub>2</sub>, t_iz_cauchy) is proved in Lean carrying Classical.choice from Mathlib&#8217;s '
-        'p-adic analysis. Step 6 (anything filling the &#8869; ROLE IS that lattice&#8217;s &#8869;) '
+        'to 0 in Q<sub>2</sub>, t_iz_cauchy) is proved in Lean and carries Classical.choice (&#167; III). '
+        'Step 6 (anything filling the &#8869; ROLE IS that lattice&#8217;s &#8869;) '
         'is proved axiom-free in Lean via t_iz_limit_is_new_null &#8212; '
         'which establishes the role identification ONLY and must not be cited as a witness for the '
         'successor reading (t_iz_limit_is_new_null, declared in ZeroParadox/Valuation/SemilatticeInstance.lean and indexed in ZeroParadox/Order/SnapCannotBe.lean). '
         '&#8226; <b>The two steps are not joined.</b> Step 1 is about 0 &#8712; Q<sub>2</sub>; Step 6 is about a '
         'terminal in a semilattice L&#8242;, and takes the role property as its hypothesis h_role. '
         't_iz_complete conjoins them without identifying the two objects, and the identification is '
-        'not merely unproved &#8212; Q<sub>2</sub>&#8217;s field structure supplies no join and the corpus defines none on Q<sub>2</sub>, so the role condition cannot be '
-        'stated of the limit at all. That junction is not an open gap: the 0 of Q<sub>2</sub> and the '
+        'not merely unproved &#8212; Q<sub>2</sub>&#8217;s field structure supplies no join and the corpus registers none on Q<sub>2</sub>, so the role condition cannot be '
+        'stated of the limit until a join on Q<sub>2</sub> is chosen. That junction is not an open gap: the 0 of Q<sub>2</sub> and the '
         'algebraic &#8869; are distinct MEMBERS of the bottom family, and the cross-category identity '
         'is retired as ill-typed rather than outstanding (MC-1, CLAIMS.md). Steps 2–5 describe the original '
         'ZP-E informational argument connecting 2-adic depth to Kolmogorov complexity and DA-1 '
@@ -339,9 +344,9 @@ def build():
             'Statement: Every 2-adic depth chain (S<sub>n</sub>)<sub>n&lt;&#969;</sub> in Q<sub>2</sub>, '
             'nowhere zero, whose valuation equals a depth index in &#8469; that climbs at every step, so that '
             'its 2-adic valuation grows without bound, is a Cauchy sequence that converges, in the 2-adic metric, to 0. '
-            'Reading that limit as an OCCUPANT of the bottom role is a modelling commitment and not '
-            'part of the statement — Q<sub>2</sub>&#8217;s field structure supplies no join and the corpus defines none on Q<sub>2</sub>, so the role condition is not '
-            'statable of it. Reading that occupant as a SUCCESSOR null is C-DA2, a further commitment.',
+            'Reading that limit as an OCCUPANT of the bottom role takes a choice and is not '
+            'part of the statement — Q<sub>2</sub>&#8217;s field structure supplies no join and the corpus registers none on Q<sub>2</sub>, so the role condition is not '
+            'statable of it. Reading that occupant as a SUCCESSOR null is a commitment (C-DA2).',
             'Formal hypotheses (t_iz_complete): S : &#8469; &#8594; Q<sub>2</sub> with '
             '&#8214;S(n)&#8214;<sub>2</sub> &#8804; 2<sup>-n</sup> for all n; for S(n) &#8800; 0 this is v<sub>2</sub>(S(n)) &#8805; n, and at S(n) = 0 it '
             'matches only under the convention v<sub>2</sub>(0) = &#8734; (Mathlib&#8217;s valuation of 0 is 0). '
@@ -373,7 +378,7 @@ def build():
     E += [
         li('Step 1 — Cauchy convergence: The 2-adic depth chain has &#8214;S(n)&#8214;<sub>2</sub> &#8804; 2<sup>-n</sup> '
            '(from v<sub>2</sub>(S(n)) &#8805; n — Lean-derived via h_strict_from_r1_t3 given IsDepthChain; R-IZ-A closed). '
-           'By T-IZ-A (&#167; II.A), S(n) &#8594; 0 in Q<sub>2</sub>. Proved in Lean: t_iz_cauchy (carries Classical.choice from Mathlib p-adic analysis, &#167; III). ✓'),
+           'By T-IZ-A (&#167; II.A), S(n) &#8594; 0 in Q<sub>2</sub>. Proved in Lean: t_iz_cauchy (carries Classical.choice, &#167; III). ✓'),
         li('Step 2 — Valuation-complexity bridge (REFUTED): the claim that v<sub>2</sub>(S(n)) &#8594; &#8734; '
            'gives K(S(n)|n)/|S(n)| &#8594; 1 fails at S(n) = 2<sup>n</sup>, whose valuation is n and whose '
            'complexity given n is bounded (&#167; II.B). '
@@ -381,7 +386,7 @@ def build():
         li('Step 3 — P<sub>0</sub> at the limit (informational context): ZP-C D1&#8217;s threshold '
            'K(c<sub>1</sub>|n)/|c<sub>1</sub>| = 1. Step 2 is this step&#8217;s only route from the chain to that '
            'threshold, and with Step 2 refuted nothing here establishes that the limit meets the threshold.'),
-        li('<b>Occurrence fence.</b> T-SNAP fixes the SHAPE of each step. It does not establish that any step is taken: tsnap_holds_but_nothing_moves exhibits a model in which T-SNAP holds and nothing moves. Throughout this document, "fires" narrates the commitment that instantiation occurs - before this note as well as after it - not a consequence of the theorem.'),
+        li('<b>Occurrence fence.</b> T-SNAP fixes the SHAPE of each step. It does not establish that any step is taken: tsnap_holds_but_nothing_moves exhibits a model in which T-SNAP holds and nothing moves. Throughout this document, "fires" narrates the occurrence commitment - before this note as well as after it - not a consequence of the theorem.'),
         li('Step 4 — DA-1, CONDITIONALLY: DA-1 needs DP-2 and DP-2&#8217;s precondition, that the configuration '
            'reaching P<sub>0</sub> is there in Sense B (a running machine&#8217;s current configuration) and not in '
            'Sense A (an inert string); that precondition is what the occurrence commitment asserts, and DA-1 '
@@ -399,9 +404,12 @@ def build():
            '&#8704; x, S &#8744; x = x IS the &#8869; of its own lattice. '
            'That the Cauchy limit 0 &#8712; Q<sub>2</sub> satisfies that condition is a HYPOTHESIS, never a result: '
            't_iz_complete takes it as the argument h_role, about a terminal in a separate semilattice L&#8242;, '
-           'and does not identify that terminal with the limit. Q<sub>2</sub>&#8217;s field structure supplies no join, and the corpus defines none on Q<sub>2</sub> &#8212; '
-           'its ring structure supplies none with 0 as bottom (ZeroParadox/Valuation/ScaleBridge.lean) &#8212; '
-           'so the condition is not statable there. '
+           'and does not identify that terminal with the limit. Q<sub>2</sub>&#8217;s field structure supplies no join, and the corpus registers none on Q<sub>2</sub>. '
+           'For the 2-adic integers &#8484;<sub>2</sub> one with 0 as bottom is built but not registered, '
+           'where 0 meets the condition because it was chosen as the bottom '
+           '(ZeroParadox/Valuation/Scale.lean &#167; V); on Q<sub>2</sub> the condition is stated of no '
+           'structure the corpus registers (that some join on Q<sub>2</sub> makes any chosen point its bottom is the '
+           'first CONTROL example after c_t_iz_null_balance, ZeroParadox/Valuation/SemilatticeInstance.lean). '
            'Lean: t_iz_limit_is_new_null, proved directly from da2_bottom_characterization. ✓ &#8212; '
            'the checkmark covers the ROLE identification only, and only inside L&#8242;. It is NOT a novelty witness and must not be cited as one; reading the occupant as the &#8869; of a SUCCESSOR instantiation is C-DA2.'),
         sp(4),
@@ -419,7 +427,7 @@ def build():
          '&#8212; a separation result that says nothing about a valuation growing. '
          't_iz_cauchy itself binds none of them, and no lattice at all.',
          'Follows from existing structure — no new axiom',
-         'Lean: t_iz_cauchy ✓ (proved; carries Classical.choice, Mathlib p-adic)'],
+         'Lean: t_iz_cauchy ✓ (proved; carries Classical.choice, &#167; III)'],
         ['‖S(n)‖<sub>2</sub> → 0 (Cauchy limit = 0)',
          'The geometric norm bound alone. Completeness of Q<sub>2</sub> is NOT consumed here: the '
          'limit is exhibited as 0 rather than obtained from a Cauchy criterion, so the proof runs '
@@ -430,7 +438,7 @@ def build():
          'Strict ascent (IsStrictStateSequence) + IsDepthChain (the valuation tracks the depth index). '
          'NOT no-top: a chain can satisfy HasNoTop and IsDepthChain with its valuation BOUNDED.',
          'Follows from strict ascent + T3 — no-top supplies the room, not the growth',
-         'Lean: t_iz_valuation_unbounded ✓ (proved; carries Classical.choice, Mathlib p-adic)'],
+         'Lean: t_iz_valuation_unbounded ✓ (proved; carries Classical.choice, &#167; III)'],
         ['v<sub>2</sub> → ∞ ⟹ K/|S| → 1 (REFUTED)',
          'Counterexample S<sub>n</sub> = 2<sup>n</sup>: valuation n (scaleChain_isDepthChain), '
          'complexity given n bounded by the length of one fixed program printing 2<sup>n</sup> from n (not Lean)',
@@ -448,14 +456,14 @@ def build():
          'Lean: t_snap_derived ✓ (axiom-free)'],
         ['The limit occupies the ⊥ role (READING; ⊥\' a further READING)',
          'DA-2 (ZP-E)',
-         'Role-recognition: already in framework. Occupancy and novelty: COMMITMENTS',
+         'Role-recognition: already in framework. Occupancy: takes a choice of join. Novelty: COMMITMENT (C-DA2)',
          'Lean: t_iz_limit_is_new_null, c_da2_novelty ✓ — these prove role ⟹ identity with the '
          'bottom ALREADY THERE. Neither is a novelty witness and neither may be cited as one.'],
     ]
     E.append(data_table(
         ['Claim', 'Source', 'New axiom?', 'Lean status'],
         proof_rows,
-        [TW*0.26, TW*0.26, TW*0.24, TW*0.24]
+        [TW*0.20, TW*0.36, TW*0.16, TW*0.28]
     ))
     E.append(sp(6))
 
@@ -475,8 +483,12 @@ def build():
         'Polynomial (ZMod 5) is no kind of completion and reports the same footprint, while ZMod 5 '
         'reports [propext, Quot.sound]. Mathlib&#8217;s analytic lemmas (squeeze_zero, the '
         'geometric-limit lemma, tendsto_zero_iff_norm_tendsto_zero) carry it too, so the '
-        'footprint cannot separate the two. ⚠ A footprint is a fact about the PROOF, never about the '
-        'type: the same statement (1 : &#8474;) &#8800; 0 reports Classical.choice through one_ne_zero '
+        'footprint cannot separate the two. ⚠ A footprint follows the STATEMENT and the PROOF. A '
+        'statement whose type carries choice reports it under every proof (the statement control on '
+        'tower_converges_to_zero, ZeroParadox/Ordinal/SyntacticCollapse.md; decoration_unique, '
+        'ZeroParadox/Settheory/APG.lean); a statement that does not can still report it through its proof. '
+        'Switching carrier from Q<sub>2</sub> to the rationals &#8474; for the proof half: the statement '
+        '(1 : &#8474;) &#8800; 0 reports Classical.choice through one_ne_zero '
         'and [propext, Quot.sound] through decide. ⚠ The corpus&#8217;s choice-free valuation facts are NOT a '
         'counterexample here: v2_bot is [propext] because v2 : &#8469; &#8594; &#8469;&#8734; is stated over '
         'the NATURALS, so that contrast is between two carriers and not between algebra and analysis. '
@@ -494,13 +506,13 @@ def build():
     E += [
         li('t_iz_limit_is_new_null: anything satisfying the DA-2 &#8869; role IS that lattice&#8217;s &#8869; '
            '(the structural core of the snap-arc; <b>axiom-free</b>). The role property is its HYPOTHESIS; '
-           'that the Cauchy limit satisfies it is not established here, and is not statable in Q<sub>2</sub>.'),
+           'that the Cauchy limit satisfies it is not established here, and is not statable of the limit until a join on Q<sub>2</sub> is chosen.'),
         li('c_t_iz_null_balance: a non-bottom state cannot satisfy the &#8869; role (choice-free, [propext]).'),
-        li('t_iz_cauchy: a sequence in Q<sub>2</sub> with &#8214;S(n)&#8214;<sub>2</sub> &#8804; 2<sup>-n</sup> converges to 0 (topological core; carries Classical.choice from '
-           'Mathlib&#8217;s p-adic convergence, not a framework commitment).'),
-        li('t_iz_valuation_unbounded: sup v<sub>2</sub>(S(n)) = &#8734; (carries Classical.choice, Mathlib p-adic).'),
+        li('t_iz_cauchy: a sequence in Q<sub>2</sub> with &#8214;S(n)&#8214;<sub>2</sub> &#8804; 2<sup>-n</sup> converges to 0 (topological core; carries Classical.choice, '
+           'as measured above; not a framework commitment).'),
+        li('t_iz_valuation_unbounded: sup v<sub>2</sub>(S(n)) = &#8734; (carries Classical.choice, as measured above).'),
         li('t_iz_c3_compatible: C3 irreversibility is preserved — Cauchy sequences &#8800; continuous paths '
-           '(carries Classical.choice, Mathlib p-adic).'),
+           '(carries Classical.choice, as measured above).'),
         li('t_iz_h_bound_from_depth_chain: h_bound derived from THREE hypotheses, of which exactly one is a '
            'ZP-A lattice condition — IsStrictStateSequence, and it is a condition on the DEPTH INDEX. The '
            'other two live in Q<sub>2</sub>: that the chain is nowhere zero, and IsDepthChain, the BRIDGE '
@@ -517,8 +529,8 @@ def build():
         sp(4),
     ]
     E.append(derived(
-        'Status: DERIVED THEOREM — formal spine: t_iz_cauchy (Step 1, proved; carries Classical.choice '
-        'from Mathlib p-adic analysis) + '
+        'Status: DERIVED THEOREM — formal spine: t_iz_cauchy (Step 1, proved; carries Classical.choice, '
+        '&#167; III) + '
         't_iz_limit_is_new_null (Step 6, axiom-free via DA-2). These two steps '
         'are the formal spine, carried as a conjunction and not joined to one another. '
         't_iz_valuation_unbounded, c_t_iz_null_balance, t_iz_c3_compatible also proved. '
@@ -595,13 +607,16 @@ def build():
         'algebraic subtraction, no continuous topological return, no categorical reversal. '
         'T-IZ governs what happens at the branch\'s ordinal limit: the 2-adic depth chain converges, by Cauchy '
         'convergence, to 0 &#8712; Q<sub>2</sub> — a structure that none of the irreversibility '
-        'results governs or addresses. Reading that 0 as filling the bottom role is a commitment, and '
-        'reading it as a successor null is C-DA2, a further one.'))
+        'results governs or addresses. Reading that 0 as filling the bottom role takes a choice of join on '
+        'Q<sub>2</sub> (then it is that semilattice&#8217;s &#8869; by theorem, t_iz_limit_is_new_null), and '
+        'reading it as a successor null is C-DA2, a commitment.'))
     E.append(callout(
         'The inside approach is not a violation of irreversibility. It is the discovery of a '
         'structure that irreversibility does not reach. Three doors to zero are closed (R1, C3, '
         'AX-G2). T-IZ uses a fourth passage — Cauchy sequence convergence — that none of the '
-        'three irreversibility theorems govern.',
+        'three irreversibility theorems govern. (A picture, not a theorem: the three doors are statements about '
+        'three different objects, and the fourth passage reaches 0 &#8712; Q<sub>2</sub> only as a limit; reading that 0 '
+        'as filling the bottom role takes the choice of join stated above.)',
         bg=GREEN_LITE, border=GREEN_DARK
     ))
     E.append(sp(6))
@@ -645,9 +660,9 @@ def build():
     E.append(body(
         'The null balance 0 + x + (&#8722;x) = 0 is an arithmetic READING of the cycle of an '
         'instantiation branch, never a theorem of the structure: a ZPSemilattice carries join and '
-        '&#8869; and no additive inverse, so the identity is not statable there at all. The cycle it reads '
+        '&#8869; and no additive inverse, so the identity is not statable in that signature. The cycle it reads '
         'is itself a reading; its premises are stated in &#167; V.III. As a reading the balance strings its '
-        'three terms across &#969; state changes: the branch begins at &#8869; (0), generates '
+        'three terms across &#969; state changes: the branch begins at its semilattice&#8217;s &#8869; (read as the 0 of the balance), generates '
         '&#949;<sub>0</sub> and successors (+x), and at the ordinal limit the 2-adic chain converges to '
         'Q<sub>2</sub>&#8217;s 0 (&#8722;x).'))
     E.append(body(
@@ -660,7 +675,7 @@ def build():
         'DISTINCT &#8869;\' rather than the &#8869; it began at is C-DA2, and in the '
         '2-adic realization the arc returns to the same 0 (snap_arc_z2_loop).'))
     E.append(callout(
-        'Null Balance (role-RECOGNITION derived; occupancy and novelty COMMITTED): For every sequence '
+        'Null Balance (role-RECOGNITION derived; occupancy takes a choice of join; novelty COMMITTED): For every sequence '
         '(S<sub>n</sub>)<sub>n&lt;&#969;</sub> in Q<sub>2</sub>, nowhere zero, with &#8214;S(n)&#8214;<sub>2</sub> &#8804; 2<sup>-n</sup> '
         '(derived via t_iz_h_bound_from_depth_chain from IsDepthChain and IsStrictStateSequence on a depth index in &#8469; — R-IZ-A closed): '
         'the sequence converges to 0 in Q<sub>2</sub>. CC-1&#8217;s start at &#8869; belongs to the semilattice chain, not to S. '
@@ -681,8 +696,8 @@ def build():
         't_iz_cauchy), together with the separate implication that anything filling the bottom '
         'role of a semilattice IS that semilattice&#8217;s &#8869; (t_iz_limit_is_new_null). For the cycle to '
         'begin again or close at the limit, it needs every one of the following further premises, and none is '
-        'established here: (a) the reading that the limit fills the &#8869; role, a modelling commitment and a '
-        'reading across two carriers, since the role condition is not statable in Q<sub>2</sub> (MC-1); '
+        'established here: (a) the reading that the limit fills the &#8869; role, which takes a choice of join on '
+        'Q<sub>2</sub> (then the role half is a theorem, t_iz_limit_is_new_null), since the role condition is not statable of the limit until a join on Q<sub>2</sub> is chosen (MC-1); '
         '(b) the limit reaching the incompressibility threshold P<sub>0</sub>, which nothing here establishes, '
         'since its only route in this document, the valuation-complexity bridge, is refuted (&#167; II.B); '
         '(c) what DA-1 needs: DP-2 and DP-2&#8217;s precondition, that the configuration reaching P<sub>0</sub> '
@@ -715,7 +730,7 @@ def build():
         'being nowhere zero (t_iz_h_bound_from_depth_chain, &#167;Ib — R-IZ-A closed). Given that condition, two charts, two carriers. '
         'In Q<sub>2</sub>: the 2-adic depth chain converges to Q<sub>2</sub>&#8217;s 0 (t_iz_cauchy), and 0 is the LIMIT, '
         'not a term, since the chain is nowhere zero. Q<sub>2</sub>&#8217;s field structure supplies no join, and the '
-        'corpus defines no ZPSemilattice on Q<sub>2</sub>, so the role condition is not statable of the limit here. '
+        'corpus registers no ZPSemilattice instance on Q<sub>2</sub>, so the role condition is not statable of the limit here. '
         '(A join could be chosen: every inhabited carrier admits one, ZeroParadox/Order/Lattice.lean. On &#8484;<sub>2</sub>, '
         'the 2-adic integers, the corpus supplies one with 0 as its bottom (the example at '
         'ZeroParadox/Valuation/Scale.lean &#167; V); 0 filling that bottom is a choice of operation, '
@@ -728,11 +743,11 @@ def build():
     E.append(key_result_box([
         'T-SNAP: &#8869; &#8594; &#949;<sub>0</sub>, shape derived and occurrence committed (existence emerges from null).',
         'T-IZ: a nowhere-zero 2-adic depth chain S<sub>0</sub>, S<sub>1</sub>, S<sub>2</sub>, ... &#8594; 0 &#8712; Q<sub>2</sub> at &#969;, '
-        'ROLE-RECOGNITION derived; OCCUPANCY and NOVELTY committed. What is proved is the 2-adic '
+        'ROLE-RECOGNITION derived; OCCUPANCY takes a choice of join; NOVELTY committed. What is proved is the 2-adic '
         'convergence (t_iz_cauchy) and, separately, that anything playing the bottom role IS the '
-        'bottom (t_iz_limit_is_new_null). That the limit is a thing playing that role is a '
-        'commitment, not a theorem — the role condition is not statable in Q<sub>2</sub>; that the '
-        'bottom so reached is a NEW one is a further commitment.',
+        'bottom (t_iz_limit_is_new_null). That the limit is a thing playing that role takes a choice '
+        'of join on Q<sub>2</sub> (then the role half is a theorem, t_iz_limit_is_new_null) — the role condition is not statable of the limit until a join on Q<sub>2</sub> is chosen; that the '
+        'bottom so reached is a NEW one is a commitment (C-DA2).',
         'The cycle and its closure are a reading, not a theorem; its premises are stated in &#167; V.III. '
         'Strict valuation growth is '
         'Lean-derived from IsDepthChain (a modelling commitment) + IsStrictStateSequence (h_strict_from_r1_t3). '
@@ -746,12 +761,13 @@ def build():
 
     oq_rows = [
         ['T-IZ: Inside Zero Theorem',
-         'CONVERGENCE + ROLE-RECOGNITION DERIVED — occupancy and novelty COMMITTED',
+         'CONVERGENCE + ROLE-RECOGNITION DERIVED — occupancy takes a choice of join; novelty COMMITTED',
          'Every nowhere-zero 2-adic depth chain S<sub>0</sub>, S<sub>1</sub>, ... in Q<sub>2</sub> whose '
          'valuation equals a depth index in &#8469; that climbs at every step converges to 0 in '
          'Q<sub>2</sub>; reading that limit as the '
-         'occupant of the bottom role, and that occupant as a successor null, are commitments. '
-         'Formal spine: Step 1 (t_iz_cauchy, carries Mathlib p-adic Classical.choice) + Step 6 '
+         'occupant of the bottom role takes a choice of join on Q<sub>2</sub> (then the role half is a '
+         'theorem, t_iz_limit_is_new_null), and reading that occupant as a successor null is a commitment (C-DA2). '
+         'Formal spine: Step 1 (t_iz_cauchy, carries Classical.choice, &#167; III) + Step 6 '
          '(t_iz_limit_is_new_null, axiom-free via DA-2). Steps 2–5 are informational context — the ZP-E path, whose valuation-complexity bridge is refuted (&#167; II.B); '
          'DA-1 is closed given DP-2 (ZP-E), with ZP-K witnessing Path 1 and carrying Path 3 as a KleeneStructure requirement. No new axioms required.'],
         ['OQ-E2: Cardinality-semilattice correspondence',
@@ -760,11 +776,11 @@ def build():
          'Internal/external perspective relativity is ordinal, not set-theoretically free. '
          'Formal connection to specific CH instances: still open — deferred to future work.'],
         ['Null balance: 0 + x + (&#8722;x) = 0',
-         'CLOSED for ROLE-RECOGNITION — occupancy and novelty COMMITTED',
+         'CLOSED for ROLE-RECOGNITION — occupancy takes a choice of join; novelty COMMITTED',
          'The convergence half is derived from T-IZ: the lattice chain starts at its semilattice&#8217;s &#8869; '
          '(CC-1) and ascends under T3, and the nowhere-zero 2-adic depth chain converges to 0 &#8712; Q<sub>2</sub>. Reading that '
-         'limit as an occupant of the bottom role is a COMMITMENT, not a consequence — the '
-         'join-identity is not statable in Q<sub>2</sub>. On that reading, DA-2 identifies the '
+         'limit as an occupant of the bottom role takes a choice of join on Q<sub>2</sub> (then the role half is a '
+         'theorem, t_iz_limit_is_new_null). On that reading, DA-2 identifies the '
          'occupant with the &#8869; already there. '
          '"&#8722;x" is not subtraction in L — it is the 2-adic approach to 0 by forward motion; reading it as a '
          'return in the cycle is the reading whose premises are stated in &#167; V.III. '
@@ -776,18 +792,18 @@ def build():
          'fails at S<sub>n</sub> = 2<sup>n</sup> (&#167; II.B): valuation n, complexity given n bounded, '
          'ratio &#8594; 0. The valuation half is checked (scaleChain_isDepthChain); the complexity half is '
          'outside Lean scope: one fixed program prints 2<sup>n</sup> from n, which bounds K(2<sup>n</sup> | n) by its length. '
-         'Not a proof dependency for T-IZ: formal spine is Steps 1 + 6 (Step 6 axiom-free; Step 1 carries Mathlib p-adic choice); '
+         'Not a proof dependency for T-IZ: formal spine is Steps 1 + 6 (Step 6 axiom-free; Step 1 carries Classical.choice, &#167; III); '
          'DA-1 is closed given DP-2 (ZP-E), with ZP-K witnessing Path 1 and carrying Path 3 as a KleeneStructure requirement.'],
         ['T-IZ Lean sorry fill',
          'CLOSED — ZeroParadox/Valuation/SemilatticeInstance.lean',
-         't_iz_norm_tendsto_zero and t_iz_conv_zero filled; t_iz_cauchy proved (carries Mathlib p-adic Classical.choice). '
+         't_iz_norm_tendsto_zero and t_iz_conv_zero filled; t_iz_cauchy proved (carries Classical.choice, &#167; III). '
          'All SemilatticeInstance.lean theorems compile with no sorry. '
          'Axiom footprint: standard foundational axioms only (propext, Quot.sound, and Classical.choice '
-         'from Mathlib p-adic analysis on the convergence theorems; the DA-2 step is axiom-free).'],
+         'on the convergence theorems, &#167; III; the DA-2 step is axiom-free).'],
         ['AX-1: Binary Snap Causality',
          'RETIRED — shape proved as T-SNAP (ZP-E); the first snap occurs given the occurrence commitment and DA-1',
-         'AX-1 (Binary Snap Causality) is retired. Its content was split in two: the shape of the snap is proved, as Theorem T-SNAP, and that the first snap occurs is stated separately: it follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2). '
-         'tsnap_holds_but_nothing_moves shows T-SNAP does not carry it. T-SNAP is derived in ZP-E. '
+         'AX-1 (Binary Snap Causality) is retired. Its content was split in two: the shape of the snap is proved, as Theorem T-SNAP, and that the first snap occurs is stated separately: it follows from the occurrence commitment together with DA-1 (closed given DP-2). The occurrence commitment is stated in two charts, execution and slot, in the header of ZeroParadox/Order/Snap.lean (indexed in ZeroParadox/Order/SnapCannotBe.lean &#167; II and CLAIMS.md), the slot chart as the hypothesis hw of t_snap_of_fires_once, that the tape fires at some stage, beside the theorem trials_fires_once that, for independent stages each firing with probability p, 0 &lt; p &#8804; 1, firing at some stage has probability one, which names no tape (ZeroParadox/Information/CrossingTrials.lean &#167; VIII). '
+         'tsnap_holds_but_nothing_moves shows T-SNAP does not carry that the snap occurs. T-SNAP is derived in ZP-E. '
          'A snap at the ordinal limit is the cycle reading, not a consequence of T-IZ; its premises are '
          'stated in &#167; V.III.'],
         ['Remaining axioms',
@@ -810,7 +826,7 @@ def build():
          'here. Also ZP-B T5/C3 for the irreversibility comparison only; ZP-C L-INF, D1; '
          'ZP-E DA-1, T-SNAP, DA-2',
          'None',
-         'Role derived — T-IZ ✓ (formal spine Steps 1+6: Step 6 axiom-free, Step 1 carries Mathlib p-adic choice; bridge: refuted). Novelty of the successor bottom: COMMITMENT, not proved.'],
+         'Role derived — T-IZ ✓ (formal spine Steps 1+6: Step 6 axiom-free, Step 1 carries Classical.choice, &#167; III; bridge: refuted). Novelty of the successor bottom: COMMITMENT, not proved.'],
         ['Null Balance 0 + x + (&#8722;x) = 0',
          'T-IZ + T-SNAP + DA-2 (ZP-E)',
          'None',
@@ -827,7 +843,7 @@ def build():
         ['t_iz_cauchy (Lean)',
          'ZP-B (Q<sub>2</sub> normed field); geometric tendsto; Mathlib.Analysis.SpecificLimits.Basic',
          'None',
-         'Lean: proved ✓ (t_iz_norm_tendsto_zero, t_iz_conv_zero filled; carries Mathlib p-adic Classical.choice)'],
+         'Lean: proved ✓ (t_iz_norm_tendsto_zero, t_iz_conv_zero filled; carries Classical.choice, &#167; III)'],
         ['t_iz_limit_is_new_null (Lean)',
          'da2_bottom_characterization',
          'None',
@@ -843,7 +859,7 @@ def build():
         ['Valuation-complexity bridge',
          'ZP-C D1, L-INF, Remark R-BRIDGE; ZP-B T2; AIT (standard)',
          'N/A',
-         'REFUTED (&#167; II.B; counterexample S<sub>n</sub> = 2<sup>n</sup>) — not load-bearing. DA-1 is closed given DP-2 (ZP-E), with ZP-K witnessing Path 1 and carrying Path 3 as a KleeneStructure requirement. '
+         'REFUTED (&#167; II.B; counterexample S<sub>n</sub> = 2<sup>n</sup>) — not load-bearing, since the convergence T-IZ proves does not pass through it. Separately, DA-1 is closed given DP-2 (ZP-E), with ZP-K witnessing Path 1 and carrying Path 3 as a KleeneStructure requirement. '
          'The complexity half is outside Lean scope.'],
         ['t_iz_h_bound_from_depth_chain (Lean)',
          'h_strict_from_r1_t3 (&#167;Ib); t_iz_r1_t3_geometric_bound; '
@@ -865,7 +881,7 @@ def build():
     E.append(data_table(
         ['Claim', 'Grounded In', 'Bridge Axiom?', 'Status'],
         trace_rows,
-        [TW*0.20, TW*0.32, TW*0.10, TW*0.38]
+        [TW*0.31, TW*0.30, TW*0.08, TW*0.31]
     ))
 
     # ── CLOSING ───────────────────────────────────────────────────────────────
@@ -877,7 +893,7 @@ def build():
             'R-IZ-A closed: strict valuation growth derived from IsDepthChain + IsStrictStateSequence (h_strict_from_r1_t3, &#167;Ib) | '
             'IsDepthChain remains a modelling commitment | '
             'Framework closure: a reading; its premises are stated in &#167; V.III | '
-            'Formal spine: Step 6 axiom-free (t_iz_limit_is_new_null), Step 1 carries Mathlib p-adic Classical.choice (t_iz_cauchy) | '
+            'Formal spine: Step 6 axiom-free (t_iz_limit_is_new_null), Step 1 carries Classical.choice, &#167; III (t_iz_cauchy) | '
             'Valuation-complexity bridge: refuted; not load-bearing, since the convergence T-IZ proves does not pass through it | '
             'DA-1 closed given DP-2 (ZP-E), with ZP-K witnessing Path 1 and carrying Path 3 as a KleeneStructure requirement | '
             'Remaining axioms: AX-B1, AX-G1, AX-G2 | No new axioms required</i>',

@@ -39,13 +39,13 @@ The self-referential content of that fold is here, and it is **a genuine typecla
   AbstractSelfApp End` holds: a self-map whose only fixed point is ⊥. Via `SelfApp.toAFAStructure`, `End`
   thereby also carries the AFA / Quine-atom structure.
 
-**The delta from ℚ₂ (the point of the exercise).** `ZeroParadox/Computability/SelfApp.lean` records (the note beginning "ℚ_[2] is a field, not a ZPSemilattice") that ℚ₂ — *a field, not a
-ZPSemilattice* — could NOT be an `AbstractSelfApp` instance; its ×2/0 fixed point is proved only as a
-standalone parallel. The tree boundary clears exactly that bar: it *is* a semilattice, so the same
+**The delta from ℚ₂ (the point of the exercise).** `ZeroParadox/Computability/SelfApp.lean` (the note
+"no ZPSemilattice ℚ_[2] is DEFINED") gives ℚ₂ no `AbstractSelfApp` instance, not that none could
+exist; its ×2/0 fixed point is proved only as a standalone parallel. The tree boundary clears exactly that bar: it *is* a semilattice, so the same
 fixed-point fact is a **genuine instance**. Self-reference closing at the floor is not merely analogous to
-the Quine atom's **structural** fixed point here — it is one, by the framework's own definition. (The literal
-set-membership `⊥ = {⊥}` stays a metatheoretic commitment, as everywhere; this is the structural
-self-application face, the axiom-free `t_exec` half.)
+the Quine atom's **structural** fixed point here — it is one, by the framework's own definition. (`⊥ = {⊥}` of this floor
+is ill-typed and not asserted; `selfApp_quine_role_iff` (`ZeroParadox/Settheory/QuineDichotomy.lean`) at `instAbstractSelfAppEnd`
+makes the floor the die Quine-atom role's only occupant here (`propext` and `Quot.sound`, choice-free); the axiom-free half is `t_exec`.)
 
 **Honest fence.** The tree↔ℚ₂ digit isomorphism is not formalized in this file, so the mirror to `q2SelfApp`
 is a proved PARALLEL (same map, same unique fixed point), never a Lean `=`; and the "both children at once
@@ -78,16 +78,14 @@ theorem boundaryDouble_unique_fp (x : End) (h : boundaryDouble x = x) : x = botE
 /-- The boundary `End = ℕ → Fin 2` is a `ZPSemilattice` pointwise (join = max, ⊥ = `botEnd`). Unlike ℚ₂
 (a field), the tree boundary IS a semilattice, so it can host a genuine `AbstractSelfApp` instance. -/
 instance instZPSemilatticeEnd : ZPSemilattice End where
-  join x y := fun n => max (x n) (y n)
+  -- [ZP port] Lean 4.35: core's new `Fin.instMax` (`Init/Data/Fin/MinMax.lean`) proves its bound by
+  -- `Std.max_lt_iff`, which carries `Classical.choice`; build the same max (defeq) from `Nat.max_lt`.
+  join x y := fun n => ⟨max (x n).val (y n).val, Nat.max_lt.2 ⟨(x n).isLt, (y n).isLt⟩⟩
   bot := botEnd
-  join_assoc := by intro x y z; funext n; exact max_assoc _ _ _
-  join_comm := by intro x y; funext n; exact max_comm _ _
-  join_idem := by intro x; funext n; exact max_self _
-  bot_join := by
-    intro x; funext n
-    show max (botEnd n) (x n) = x n
-    simp only [botEnd]
-    exact max_eq_right (Fin.zero_le _)
+  join_assoc := by intro x y z; funext n; exact Fin.ext (Nat.max_assoc _ _ _)
+  join_comm := by intro x y; funext n; exact Fin.ext (Nat.max_comm _ _)
+  join_idem := by intro x; funext n; exact Fin.ext (Nat.max_self _)
+  bot_join := by intro x; funext n; exact Fin.ext (Nat.zero_max _)
 
 /-- **The genuine instance.** The tree boundary is an `AbstractSelfApp`: the self-application ×2
 (`boundaryDouble`) has the floor `botEnd` as its unique fixed point. Where ℚ₂ could only be a standalone

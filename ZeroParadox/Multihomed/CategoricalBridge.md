@@ -28,6 +28,8 @@ Key results:
   ill-typed (object equality across categories does not typecheck and is not invariant under equivalence); what
   separates the members is proved property by property (seam_unique_among_named, for the named bottoms, in a lattice with no top).
 - T-H2: Categorical singularity (domain-absent) and ZPC singularity (divergent
-  accumulation) are compatible — jointly derivable (OQ-G4 closed).
+  accumulation) hold together: `th2_singularity_compatibility` pairs the two independently proved
+  theorems (`t3_unreachability`, `t2_diverges`), and neither is derived from the other (OQ-G4 closed in
+  that sense).
 - T-H3: Binary Snap described consistently under all four functors. Fully proved
   by assembling independently proved domain theorems.

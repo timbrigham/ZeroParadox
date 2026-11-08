@@ -134,8 +134,8 @@ TRIGGER  you found a defect, you are choosing what to work on next, or you are a
 RULE     record it in `.claude-local/DEFECTS.md` — never a note, a gate-findings archive,
          or a handoff line, and never a second copy. Verify every entry AT THE ARTIFACT
          before recording it open or closed. GREP LOOSELY. Burn down in FILE-SIZED
-         BATCHES. NO RELEASE IS CUT WHILE THE LEDGER IS NON-EMPTY; release pressure never
-         defers a finding to next-touch debt. The target is ZERO KNOWN defects, not zero.
+         BATCHES. A RELEASE BLOCKS ONLY ON OPEN CONTENT BEDROCK (`check_release_ready.py`);
+         ORDINARY ships as a public erratum issue. Never lower a grade to release.
 COST     a DOI is permanent and four releases already carry latent flaws — a defect fixed
          before a release costs one gate round, one shipped inside a PDF is forever.
 READ     tools/process/defect-ledger.md
@@ -597,10 +597,10 @@ TRIGGER  you can state the claim in one sentence of standard mathematical Englis
 RULE     three steps, ~10 minutes, BEFORE building. (1) grep our own corpus. (2) grep the
          pinned Mathlib for the CONCEPT — and if the claim is a Lean statement, RUN `exact?`;
          it searches statement SHAPE, not names, and reaches attribute-generated siblings
-         that have no source line. (3) one literature search, run as the four-rung LADDER:
-         `.claude-local/papers/` → `theoremsearch` → the open web → RETRIEVE THE FULL
-         DOCUMENT. Three phrasings minimum at rung 2; ignore its similarity score; its null
-         is UNINFORMATIVE. Rungs 1–3 are DISCOVERY, only rung 4 is VERIFICATION — a returned
+         that have no source line. (3) one literature search, run as the LADDER: papers →
+         `theoremsearch` (one phrasing `formality: "formal"`) → Lean libraries (LeanExplore,
+         GitHub `extension:lean`) → open web → RETRIEVE. Three phrasings at `theoremsearch`;
+         ignore its score; every null is UNINFORMATIVE. Only RETRIEVAL is VERIFICATION — a
          theorem body is not a passage in hand. Standard framing, once found, is ADOPTED, not
          noted and worked around; check purity before swapping a proof. `/prior-art-review`
          is the deep gate, a fresh agent, and it records its verdict in the verdictLedger.
@@ -636,12 +636,12 @@ RULE     `python tools/verify/check_release_ready.py <tag>` must EXIT 0 and its 
          deterministic preconditions — Engineer's Takes filled (recursive glob over
          `ZeroParadox/**/*.lean`), build-script hashes against `register.md`, the
          `LEAN_CUSTOM_REGISTRY` invariant, `.zenodo.json` valid and its description current,
-         no conflict markers, a `## <tag>` entry in `RELEASES.md`, every linked PDF present.
-         **NO RELEASE WHILE `DEFECTS.md` IS NON-EMPTY.** Then STOP: creating the release is
-         Tim's command, never an agent's. Major = a new formal layer or a theorem status
-         change; minor = a substantive feedback round or accumulated updates. Never release
-         per-PR. A Lean-only milestone is an explicit QUESTION for Tim, not an automatic
-         trigger either way.
+         no conflict markers, a `## <tag>` entry in `RELEASES.md`, every linked PDF present,
+         **NO OPEN CONTENT BEDROCK IN `DEFECTS.md`** (ordinary ships as erratum issues). Then
+         STOP: creating the release is Tim's command, never an agent's. Major = a new formal
+         layer or a theorem status change; minor = a substantive feedback round or
+         accumulated updates. Never release per-PR. A Lean-only milestone is an explicit
+         QUESTION for Tim, not an automatic trigger either way.
 COST     a release mints a PERMANENT Zenodo DOI and four already carry latent flaws that
          cannot be withdrawn. Deposited FILES are frozen; record METADATA can still be
          corrected in the Zenodo UI, so a wrong release description is fixable and a flaw
@@ -755,7 +755,8 @@ RULE     ask: is this the CENTRAL claim of its section, or infrastructure for so
          holds only given an explicit modelling commitment. **Design Principle (DP)** — chosen,
          not derived. **Remark (R)** — context, no proof.
          Readable names are ADDITIVE, never eliminative: CC-2 is "the Quine atom (CC-2)",
-         glossed once as the self-containing bottom; MC-1 is "the bottom family" and gets NO
+         glossed once as the role of a point that steps to itself and to nothing else, whose
+         occupancy is settled chart by chart; MC-1 is "the bottom family" and gets NO
          new readable name, because its object already has one — the diagonal fixed point.
          Keep every formal handle; never rename or remove an identifier. AX-1 is retired:
          its SHAPE is Theorem T-SNAP (never an axiom); its OCCURRENCE is a separate commitment.

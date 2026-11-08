@@ -134,17 +134,16 @@ CELLS = {
         "MEAS": "na: the empty type carries no distribution at all, so no scalar exists to diverge. ⚠ `IsEmpty (PMF (Fin 0))` elaborates, so the stronger mark - a proved obstruction (✗) rather than a category error - is AVAILABLE and unbuilt as of 2026-08-29. Upgrading it costs one theorem; the mark stays ∅ until that theorem exists, because a cell may not cite a witness the corpus does not contain",
         "INV": "IsInitial.op (Mathlib)",
         "CONC": "na: DEGENERATE on an empty carrier - there are no points, so every endomorphism fixes every "
-            "point vacuously and CONC carries no content here. ⚠ This cell previously cited "
-            "`kleisli_bottom_not_zero` as a refutation; that theorem proves the Kleisli bottom is "
-            "not a ZERO OBJECT (not terminal), which is a mu/nu DIRECTION fact and belongs to DYN. "
-            "It addresses neither of CONC's two propositions",
+            "point vacuously and CONC carries no content here. ⚠ kleisli_bottom_not_zero is not a "
+            "refutation of CONC: it proves the Kleisli bottom is not a ZERO OBJECT (not terminal), "
+            "which is a mu/nu DIRECTION fact and belongs to DYN, and it addresses neither of CONC's "
+            "two propositions",
         "SELF": "na: DEGENERATE, and that is the finding. `Fin 0` is EMPTY, so the Kleisli endomorphism "
             "`Fin 0 -> PMF (Fin 0)` is the unique empty map and every diagonal/self-application "
             "statement about it holds VACUOUSLY, carrying no content about this bottom. "
-            "⚠ Not that no self-map exists - the same correction the TopCat cells took "
-            "2026-08-29. No ZP witness is cited because none is owed for a degeneracy",
+            "⚠ Not that no self-map exists; the TopCat cells say the same. No ZP witness is cited because none is owed for a degeneracy",
         "GEN": "node4_generates_nat",
-        "DYN": "out fC_no_return (initial source; nothing returns to ⊥ - μ)",
+        "DYN": "out fC_no_return (initial source; no later stage n > 0 returns to KleisliCat PMF's floor Fin 0 - μ)",
     },
     "#5 Hilbert (zero obj/seam)": {
         "CANT": "seam_not_mu_colimit_apex",
@@ -194,6 +193,13 @@ CELLS = {
         "CONC": "unique_fp", "SELF": "derived_bot_self_mem",
         "GEN": "na: self-coincident (μ=ν seam, ⊥ = the least fixed point) - carries SELF/CONC, not GEN",
         "DYN": "out* t_snap_derived (inherited; the static seam-point does not itself move)",
+        # NOTE is not a slot: build_dictionary_map.py prints it as a closing line under the cell's
+        # slots, and nothing that iterates SLOTS reads it.
+        "NOTE": "Control: every ZPSemilattice carries an AbstractSelfApp, trivialSelfApp, whose map is "
+            "the constant map to ⊥ of that ZPSemilattice; there ⊥ still occupies the Quine-atom role "
+            "(the CONTROL example after selfApp_quine_role_iff in "
+            "ZeroParadox/Settheory/QuineDichotomy.lean), so that occupancy comes from the class "
+            "fields, whatever the map is",
     },
 }
 

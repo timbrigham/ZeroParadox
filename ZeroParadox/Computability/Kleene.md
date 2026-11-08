@@ -16,12 +16,23 @@ Relates four structural roles of ⊥, of which three are proved equivalent:
   (3) Join identity    — algebraic generator (ZP-A A4)
   (4) Kleene fixed point — computational self-reference (Mathlib: fixed_point₂)
 
-The central result (T-COMP) establishes (1) ↔ (2) ↔ (3) via T-EXEC. Its proof term is
-`t_exec_triple_iff`, a ZP-J result that does not mention computation; ⊥ is then the
-element those three pick out. **(4) is not a clause of that theorem** — it is present
-by typeclass requirement, as the class field `botCode_is_quine`. Reading (1)–(4)
-as naming the same structural role in four formal languages is the motivating commitment
-of the KleeneStructure typeclass; no field asserts it, and no theorem derives it. Note the two
+The central result (T-COMP) establishes (1) ↔ ((2) ∧ (3)) via T-EXEC. Its proof term is
+`t_exec_triple_iff`, a ZP-J result that does not mention computation; (3) ↔ (2) is a second
+theorem, `da2_bottom_characterization` (`ZeroParadox/Order/Snap.lean`), and the two together make
+the three pairwise equivalent (the `example` after `t_comp`); ⊥ is then the element those three
+pick out. **(4) is not a clause of that theorem** — it is present
+by typeclass requirement, as the class field `botCode_is_quine`. The KleeneStructure typeclass
+was motivated by reading (1)–(4) as naming the same structural role in four formal languages. That
+reading splits in two. Its identity half is retired: no code is equated with ⊥, and (4) is compared
+with (1)–(3) through the die's Quine-atom role, which under the `eval` step no single code occupies
+and, for computable `eval`-respecting maps, a class of codes does (Key insight, below). Its running
+half stays a commitment: that ⊥ actually executes is the occurrence commitment. No field asserts
+either half, and no theorem in this corpus relates `botCode` to `bot` (not located as of
+2026-11-01, searched as follows: `ZeroParadox/**/*.lean` for `botCode`, for `KleeneStructure`, and
+for "computational face" / "same structural"; no hit states a relation between `botCode` and
+`bot`). For a generic carrier `L` no Lean `=` between them typechecks, since `botCode` is a `Code`
+and `bot` an element of `L`; at `L := Code`, under an assumed instance (none is declared in this
+corpus), one does (`ZeroParadox/Computability/ComputationCannotBe.lean` § IV, the two `example`s). Note the two
 sides also differ in shape: (1)–(3) pick out a unique element, while the computational
 fixed points form an infinite family (§ VI).
 
@@ -38,26 +49,77 @@ fixed points form an infinite family (§ VI).
 
 ## Key insight (April 26, 2026)
 
-This is the framework's reading, and it is a commitment throughout — no theorem in this
-file establishes it. On that reading, ⊥ in the computational instantiation (ZP-C D7) is
-not a state OF a Turing machine: ⊥ IS the universal Turing machine in its ground state,
-and U is not a description awaiting an external executor but IS the executor.
+The reading this insight recorded was that ⊥ in the computational instantiation (ZP-C D7) is
+not a state OF a Turing machine but the universal Turing machine U in its ground state, and that
+U is not a description awaiting an external executor but its own executor. No theorem in this
+file establishes it, and it splits in two. Its identity half (that ⊥ IS a particular machine or
+code) is retired, below. Its running half splits again: that ⊥ actually executes is the
+occurrence commitment; that, if it executes, nothing outside it is the executor is DA-1's Path 1
+reading (ZP-E § IV), which rules out an external executor and not an inert ⊥.
 
 What Lean supplies underneath: Kleene's second recursion theorem (Mathlib:
 Nat.Partrec.Code.fixed_point₂) guarantees a fixed point exists for any partially
-computable transformation. The KleeneStructure typeclass is built for the reading that the AFA
-Quine atom (⊥ = {⊥}) and the Kleene computational quine (∃ c, eval c = f c) are the same
-structural property. That identification is the motivating commitment, asserted by no field
-of the class and not a theorem proved here, and it is ill-typed as an equation — `Code` and `L` are different
-types.
+computable transformation. The AFA Quine atom (CC-2, a set x = {x}) and the Kleene computational
+quine (`IsComputationalQuine c`, that is `eval c = selfApply c`) are compared through a role, not
+an identity: the die's Quine-atom role `Motion.SelfOnlyAt` (`ZeroParadox/Die.lean`), a point that
+steps to itself and to nothing else, occupied or provably empty chart by chart. On codes, with OVER `a → b` when `eval b = F a`, no
+code occupies it for any `F : Code → ℕ →. ℕ` (`evalStepMotion_not_selfOnlyAt`); on classes of
+codes up to equal `eval`, in the quotient of `evalStepMotion (eval ∘ G)`, some class does for
+computable `eval`-respecting `G : Code → Code` (`codes_vs_classes`); restricted to
+self-printing codes, with `F` the map `selfPrintOrDelegate`, some self-printing universal code does
+(`exists_selfPrintsStepMotion_selfOnlyAt`).
+The set-side charts are in `ZeroParadox/Settheory/Wall.lean` (no `ZFSet` occupies it) and
+`ZeroParadox/Settheory/Coalgebra.lean` (a coalgebra point does). No equation across `Code` and `L`
+is stated; one would be ill-typed. So the reading that the class's `botCode` is ⊥'s computational
+witness keeps no identity half: each code chart has its own occupancy, step by step, as above. What stays a
+commitment is that ⊥ actually executes, the occurrence commitment.
+
+**Prior art for relating hyperset fixed points to self-application** (closest located as of
+2026-11-03). Barwise & Moss 1996, *Vicious Circles*, § 3.4, pp. 42-43: they review Kleene's
+recursion theorem (Theorem 3.2, p. 43), derive from it a program of no inputs that outputs itself
+(Proposition 3.3, p. 43), and write that "there may be applications of the techniques of this book to
+the semantical issues raised by self-application" (p. 42). They write that computability theory does
+not depend on set theory "in any essential way" (p. 42), footnote 5 excepting the semantics of
+computation, where one might choose non-well-founded sets. In Chapter 20 (Proposition 20.1 and the application
+after it, pp. 313-314), in a setting that assumes a strongly inaccessible cardinal κ (p. 312), they use
+a version of the Recursion Theorem, for self-sufficient sets of formulas (their Theorem 5.1, p. 62),
+then the uniqueness part of AFA, to show that each set has a name, a code in the class notation
+system of a self-sufficient set of formulas (p. 313). On those pages they state no comparison of a set-side occupant with a
+code-side one, so the role comparison above is not credited to them. Searched as follows: the book's
+index and contents, § 3.4 and Chapter 20 pp. 311-315 (scans), theoremsearch (three phrasings),
+LeanExplore, GitHub code search and the open web.
+
+**Prior art for a code-side self-singleton** (cited, not claimed). Rogers 1967, § 11.4, "First
+Illustration", p. 185: with `m E n` when `m ∈ W_n` (`W_n` the set of inputs on which code `n` halts), he notes
+"a rough analogy" between `E` and set membership and asks whether a unit set `W_m = {m}` exists,
+answered yes from § 11.2 (the example after Corollary I, p. 181, by the recursion theorem). The same
+page builds an infinite ascending chain of unit sets; his Theorem 11-VII, p. 186, gives an infinite
+descending one, distinct `m_0, m_1, ...` with `W_{m_i} = {m_{i+1}}`; and his Exercise 11-24, p. 215, asks for
+distinct `m`, `n` with `m ∈ W_n` and `n ∈ W_m`. His footnote, p. 185: for `E`, pairing, sum, choice
+and infinity hold, and power, extensionality and foundation fail; the non-recursive-enumerability of
+the complement of `K` "can be viewed as a counterpart to the Russell paradox". This is a further code
+chart beside those above, with OVER `a → b` when `eval a` halts on input `⌜b⌝`, `b`'s Gödel number, the converse
+of `E` (`a → b` iff `⌜b⌝ E ⌜a⌝`): there a code steps to itself only exactly when it is Rogers' unit
+set `W_m = {m}` (read in Mathlib's numbering of codes), and infinitely many codes
+do (the two `example`s after `exists_selfPrintsStepMotion_selfOnlyAt`). Prior art for the infinitely
+many, cited: Rogers' Theorem 11-IV (Kleene), p. 182, whose fixed-point function is one-one and
+which combines his strengthenings (1)-(3) of p. 181, the third being "for any `f`, an infinite set of
+fixed-point values can be recursively enumerated"; applied to the `f` of his example on p. 181,
+`W_{f(x)} = {x}`, it gives infinitely many `m` with `W_m = {m}`. That application is ours; we did not
+locate it in Rogers (Ch. 11 pp. 179-189, 192-196 and Exercises pp. 213-215 read, 2026-11-03). That
+chart is not the `eval`-step chart, where no single code occupies the role, nor the class chart.
 
 ## Dependencies
 
-ZP-J (T-EXEC: IsQuineAtom q ↔ q = ⊥, bot_self_mem).
+ZP-J (T-EXEC, `t_exec`: IsQuineAtom q → q = ⊥, one direction; the biconditional is `t_exec_iff`,
+`ZeroParadox/Settheory/SetTheoryAFA.lean`; bot_self_mem).
 Mathlib: Nat.Partrec.Code.fixed_point₂ (Kleene's second recursion theorem).
 Mathlib: Nat.Partrec.Code.fixed_point (Rogers' fixed-point theorem).
 
-## Axiom footprint (measured 2026-10-09)
+## Axiom footprint
+
+This section's footprints were measured 2026-10-09 (§ VIII dates its own, 2026-10-04); the live record is
+the `PurityCheck` section of `ZeroParadox/Computability/Kleene.lean`.
 
 Not every proved theorem here carries `Classical.choice`: `encodeCode_self` has no axioms.
 A carried footprint is a fact about the statement or proof as written, never evidence that
@@ -113,18 +175,20 @@ distinct — `infinite_quine_family` and `quine_goedel_injective` prove it — w
 set-theoretic side has exactly one self-containing element (`quine_unique`). A unique
 element and an infinite indexed family are different shapes, so the correspondence here
 is between the *succession* of instantiations and the family, not an identification of
-one element with one code. The framework's reading of that correspondence is in § II;
-no theorem in this file identifies a `Code` with an element of a lattice, and the type
-boundary makes such an identification unstatable.
+one element with one code. That identity reading is retired (§ II); no theorem in this file
+identifies a `Code` with an element of a lattice, and the type boundary makes such an
+identification unstatable.
 
 **Prior art, and a distinction that must not be collapsed.** That a computational object
 is named by many indices rather than one is standard: the **Padding Lemma** — every
 partial recursive function has infinitely many indices — is its classical home, and an
 external computability reader mentioned it as possibly related when asked about ZP-K.
 It is the right reference for the direction it actually gives: **a function does not
-determine an index**, since infinitely many indices compute it. (Stated as a named lemma
-without individual attribution; it appears as a hypothesis of Rogers' isomorphism theorem
-rather than as a result of his, so do not attach a name to it.)
+determine an index**, since infinitely many indices compute it. (Rogers 1967 states it as
+Theorem 1-III, p. 22, "Each partial recursive function has ℵ₀ distinct indices", proved by
+adding to a machine instructions for states it can never enter; his Exercise 2-10(d), p. 41,
+gives it for every numbering meeting his condition 2, which by Exercise 2-10(c) is the
+condition for an s-m-n theorem. On p. 83 he calls the technique "padding".)
 It is **not** what `infinite_quine_family` proves, and the two must not be conflated:
 padding supplies infinitely many indices for the *same* function, whereas this family is
 witnessed by the constant codes, and `Code.const 0` and `Code.const 1` compute *different*
@@ -174,7 +238,10 @@ every `n`. `SelfPrints c` says `c` returns its own Gödel number on channel `0`;
 `selfref_universal_exists` and `selfref_universal_infinite` get both at once from fixed
 points of `selfPrintOrDelegate`. These are statements about the partial function `eval c`,
 equalities of `Part ℕ` values; they state presence and existence of such codes, and nothing
-here says a code is run.
+here says a code is run. The self-printing half has a textbook form: Barwise & Moss 1996,
+Proposition 3.3, p. 43, a program of no inputs that outputs itself, obtained from the recursion
+theorem (their Theorem 3.2, Kleene's). Here the code instead returns its own Gödel number on every
+input of channel `0`, and is also universal; Proposition 3.3 states no universal half.
 
 **Where `Classical.choice` enters `selfref_universal_exists`, measured 2026-10-04.** For the
 statement of `selfref_universal_exists` as written, the choice is not removed: that statement
@@ -196,7 +263,8 @@ importing this one.
   triple. Its instance `Primcodable (Code × ℕ)` is `Primcodable.prod` over
   `Primcodable.ofDenumerable Code`, and both `Primcodable.prod` and that instance's
   `Denumerable Code` argument, `Nat.Partrec.Code.instDenumerable`, measure the triple (the
-  `PurityCheck` section of `ZeroParadox/Computability/Kleene.lean`), while `Partrec` measures
+  `example` before the `PurityCheck` section of `ZeroParadox/Computability/Kleene.lean` checks the
+  route by `rfl`; that section prints the footprints), while `Partrec` measures
   `[propext]` and `Nat.Partrec` none. `exists_code`, `eval_part`,
   `eval_curry`, `primrec₂_curry` and `evaln` each carry it. Mathlib's other recursion theorem,
   `fixed_point : Computable f → ∃ c, eval (f c) = eval c` for `f : Code → Code`, avoids
@@ -215,8 +283,16 @@ importing this one.
   the choice enters with the pair instance (`Primcodable.prod`, `Encodable.Prod.encodable`), not
   with having two arguments (`stmtPartrec₂Hyp`, `stmtPartrecHyp`, `stmtPartrecProdHyp`, § V of
   `ZeroParadox/Computability/KleeneChoiceFree.lean`).
-  The measurements above are footprints of named Mathlib declarations; the pin was not searched
-  for a universal code whose correctness is proved without `eval_part`. One is built in this
+  The measurements above are footprints of named Mathlib declarations. A universal code whose
+  correctness is proved without `eval_part` was not located in the Mathlib pin as of 2026-11-03,
+  searched as follows: `Mathlib/Computability/` for `universal` (three hits: the `Halting.lean`
+  header, the docstring calling `eval` a universal partial recursive function in
+  `PartrecCode.lean`, and an unrelated line in `Primrec/List.lean`) and for `eval_part` and
+  `exists_code` (the codes obtained there come from `exists_code.1` applied to a `Partrec` proof
+  built with `eval_part`, as in `Halting.lean`); the nearest object located,
+  `Turing.PartrecToTM2.tr` (`Mathlib/Computability/TuringMachine/ToPartrec.lean`), is one fixed
+  `TM2` machine interpreting `Turing.ToPartrec.Code`, proved correct by `Turing.PartrecToTM2.tr_eval`
+  without `eval_part`; it is not a `Nat.Partrec.Code`. Such a universal code is built in this
   corpus, `universal_code_cf` in `ZeroParadox/Computability/UniversalChoiceFree.lean` (footprint
   in its `PurityCheck` section).
   Every proof of the statement of `selfref_universal_exists`, as written, carries choice.
@@ -226,9 +302,10 @@ importing this one.
   construction is Kleene's own and constructive versions are already machine-checked, in Coq and,
   over an axiomatised naming system, in Lean 4 (prior-art pointers at the end of § V of that file);
   this corpus proves the s-m-n step (`cf_eval_curry`) and the diagonal of Kleene's ψ-form
-  (`cf_eval_diag`) on Mathlib's `Code`, and adds the measurement there; Close's
-  `diag_closure_spec` presupposes a universal code, which `KleeneChoiceFree.lean` does not build;
-  one is built in `ZeroParadox/Computability/UniversalChoiceFree.lean` (`universal_code_cf`).
+  (`cf_eval_diag`) on Mathlib's `Code`, and adds the measurement there. Close's
+  `diag_closure_spec` is an assumed field; its counterpart on Mathlib's `Code`, which evaluates the
+  code `e_f` returns, needs a universal code, which `KleeneChoiceFree.lean` does not build; one is
+  built in `ZeroParadox/Computability/UniversalChoiceFree.lean` (`universal_code_cf`).
 - As of 2026-10-25, `ofNatCodeCF` and both inverse laws (`cf_encodeCode_ofNatCodeCF`,
   `cf_ofNatCodeCF_encodeCode`) carry no `Classical.choice`, and `ofNatCodeCF_eq_ofNatCode` proves
   `ofNatCodeCF = ofNatCode` (§ VI of `ZeroParadox/Computability/KleeneChoiceFree.lean`, footprints
@@ -274,8 +351,9 @@ control beside it shows that `Universal` carries the first half: `Code.zero` is 
 and not universal, and it disagrees with a self-printing universal code on a channel `e + 1`.
 `Reading:` replicas share everything but the address; the next instance adds only the address.
 That is a claim about relative complexity, and it stays a reading while Kolmogorov complexity is
-not in Lean (not located in the Mathlib pin as of 2026-10-04; search record in
-`ZeroParadox/Information/Disjunctive.md`).
+not formalized in this corpus, a scope decision (not located in the Mathlib pin as of 2026-10-04,
+search record in `ZeroParadox/Information/Disjunctive.md`; Lean developments outside Mathlib define
+it, named in the `ZPSurprisal` entry of `LEAN_CUSTOM_REGISTRY.md`).
 
 **Occurrence controls.** `Occurs` (`ZeroParadox/Computability/Occurrence.lean`) is
 `(eval c n).Dom` by `occurs_iff_halts`. `selfprints_occurs` and `zero_occurs` show it holding

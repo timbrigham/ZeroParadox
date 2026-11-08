@@ -1,6 +1,6 @@
 """
 Build ZP-I Illustrated Companion
-Version 1.34 | October 2026
+Version 1.49 | November 2026
 
 Standalone companion for ZP-I: Inside Zero.
 Accessibility target: 2 years of college math.
@@ -81,7 +81,7 @@ def depth_diagram():
     # Rightmost x = 311.1 + 8 = 319.1 ≪ dw = 468 ✓
 
     state_lbls = ['S₀', 'S₁', 'S₂', 'S₃']
-    # S0 is a nonzero 2-adic number (norm 1), not the bottom of anything in Q2: no '= ⊥' label.
+    # S0 is a nonzero 2-adic number (norm at most 1), not the bottom of anything in Q2: no '= ⊥' label.
     state_subs = ['', '',   '',   ''  ]
 
     # Connecting lines between consecutive states
@@ -103,7 +103,7 @@ def depth_diagram():
     # Norm labels: placed BELOW each circle (sy - 8 radius - 3 gap - text baseline).
     # This avoids collision with the "= ⊥" sub-label which sits to the right of the circle.
     # S2 omitted (S3 norm nearby). S3 placed above-left (limit indicator owns the right).
-    norms_below = [(0, '‖S₀‖ = 1'), (1, '‖S₁‖ ≤ 2⁻¹')]
+    norms_below = [(0, '‖S₀‖ ≤ 1'), (1, '‖S₁‖ ≤ 2⁻¹')]
     for i_s, ns in norms_below:
         sx, sy = state_xs[i_s], state_ys[i_s]
         d.add(String(sx - len(ns) * 2.4, sy - 22, ns, fontSize=8, fontName='DV-I',
@@ -276,7 +276,7 @@ def cycle_diagram():
     return d
 
 
-VERSION = '1.34'
+VERSION = '1.49'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -321,8 +321,9 @@ def build():
         Paragraph(
             'This companion explains in plain language how a 2-adic depth chain S₀, S₁, S₂, ... '
             'converges, in the 2-adic metric, to zero  - and why the framework READS that '
-            'limit as filling the bottom role again. Both that reading and whether the result is a '
-            'NEW bottom or the one it started from are commitments of the framework, not things the '
+            'limit as filling the bottom role again. That reading takes a choice of join on Q₂ (then '
+            'the role half is a theorem, t_iz_limit_is_new_null), and whether the result is a '
+            'NEW bottom or the one it started from is a commitment of the framework (C-DA2), not something the '
             'chain proves. This is one result in the '
             'Zero Paradox project (ZP-I), '
             'a formal framework built on lattice algebra and 2-adic topology. '
@@ -345,9 +346,9 @@ def build():
         'not, what comes next?'))
     E.append(cbody(
         'ZP-I answers both questions with a single theorem: <b>T-IZ (Inside Zero)</b>. '
-        'Every 2-adic depth chain S₀, S₁, S₂, ... with no zero term, satisfying the IsDepthChain and IsStrictStateSequence conditions, converges  - in the '
+        'Every 2-adic depth chain S₀, S₁, S₂, ... with no zero term, whose 2-adic valuations track a depth index (IsDepthChain) that climbs at every step (IsStrictStateSequence, a condition on that index), converges  - in the '
         '2-adic metric  - to zero, which the framework reads as the bottom role and then as a successor null. '
-        'The chain does not go on forever; it reaches its limit at the ordinal limit. The '
+        'The chain runs through every finite stage and reaches its limit at &#969;, the first limit ordinal. The '
         'convergence is proved (given the IsDepthChain modelling commitment), and so, separately, is the fact that '
         'anything filling the bottom role IS the bottom already there. That the cycle begins again at the limit '
         'is a reading, not a theorem: see the Note on closure.'))
@@ -392,7 +393,7 @@ def build():
     E.append(cbody(
         'In the 2-adic metric, norms decrease geometrically: ‖S(n)‖ ≤ ‖S(0)‖ · 2<sup>−n</sup>. '
         'As n → ∞, the norm → 0. The chain converges to 0 in the 2-adic sense: '
-        'the point with 2-adic valuation +∞ under the usual convention v₂(0) = ∞. Reading that structural limit as filling the bottom role is the first commitment - the role condition is not statable in Q₂ - and calling the occupant ⊥′, a successor null, is the second; in this very chart the arc returns to the same 0.'))
+        'the point with 2-adic valuation +∞ under the usual convention v₂(0) = ∞. Reading that structural limit as filling the bottom role takes a choice of join on Q₂ - the role condition is not statable of the limit until a join on Q₂ is chosen, and in the semilattice it makes, anything filling the role is that semilattice\'s ⊥ by theorem (<tt>t_iz_limit_is_new_null</tt>) - and calling the occupant ⊥′, a successor null, is C-DA2, a commitment; in this very chart the arc returns to the same 0.'))
 
     E.append(example_box('Real-world analogy  - The deepest point in the well', [
         'Imagine a well that has no bottom  - every level opens onto a deeper one. '
@@ -463,8 +464,8 @@ def build():
         ['2. ⊥-role identification',
          'Anything satisfying the join-identity condition IS that lattice\'s bottom. '
          'That the Cauchy limit 0 ∈ Q₂ satisfies it is the theorem\'s HYPOTHESIS, not '
-         'its conclusion, and Q₂\'s field structure supplies no join (the corpus defines none on Q₂), so the condition is not statable '
-         'there — the two are distinct members of the bottom family, not one object (MC-1). Reading the occupant as a NEW null ⊥′ is a further commitment (C-DA2).',
+         'its conclusion, and Q₂\'s field structure supplies no join (the corpus registers none on Q₂), so the condition is not statable '
+         'there — the two are distinct members of the bottom family, not one object (MC-1). Reading the occupant as a NEW null ⊥′ is a commitment (C-DA2).',
          'ZP-E DA-2  - proved in Lean (t_iz_limit_is_new_null, axiom-free). '
          '✓ (the role only, given the hypothesis; not the novelty)'],
         ['3. ⊥ of L′ is its Quine atom, given a KleeneStructure',
@@ -477,8 +478,9 @@ def build():
         ['4. T-SNAP fires, conditionally',
          'On the reading that the limit fills the ⊥ role, on the limit reaching P₀ (which nothing here '
          'establishes), and on what DA-1 needs (step 3), at the computational fixed point T-SNAP fires: '
-         'join ⊥ ε₀′ = ε₀′. Reading the 2-adic limit as the occupant is one commitment; '
-         'calling that occupant a NEW null ⊥′ rather than the same ⊥ is a second.',
+         'join ⊥ ε₀′ = ε₀′. Reading the 2-adic limit as the occupant takes a choice of join on Q₂ '
+         '(then the role half is a theorem, t_iz_limit_is_new_null); calling that occupant a NEW null ⊥′ '
+         'rather than the same ⊥ is a commitment (C-DA2).',
          'ZP-A bot_join  - proved in Lean. ✓ (the algebra, given the reading; '
          'neither the occupancy nor the novelty)'],
     ]
@@ -509,7 +511,8 @@ def build():
         'converges to zero in the 2-adic metric. Starting at ⊥ and climbing by ZP-A T3 are statements '
         'about the depth index and the lattice chain, not about the 2-adic numbers, which have no order of '
         'that kind. Reading the limit as filling the bottom '
-        'role is a commitment, and reading the occupant as ⊥′ a further one. '
+        'role takes a choice of join on Q₂ (then it is that semilattice\'s ⊥ by theorem, '
+        '<tt>t_iz_limit_is_new_null</tt>), and reading the occupant as a successor null ⊥′ is C-DA2, a commitment. '
         'On the first reading, DA-1 and then T-SNAP are CONDITIONAL on the limit reaching P₀ (which nothing '
         'here establishes) and on what DA-1 needs. DA-1 needs DP-2 and '
         'DP-2\'s precondition, that the configuration reaching the incompressibility threshold P₀ is a running '
@@ -520,7 +523,8 @@ def build():
         'nothing; its DA-1 conjunct, that the semilattice\'s ⊥ is its Quine atom, is the Lean counterpart of '
         'DA-1\'s Path 1, which does not derive the precondition. '
         'The CONVERGENCE needs no new axioms (its Lean proof carries Mathlib\'s Classical.choice) and rests '
-        'on the IsDepthChain modelling commitment; the two readings are commitments rather than consequences of it. '
+        'on the IsDepthChain modelling commitment; the two readings are not consequences of it: the first takes a '
+        'choice of join and the second is a commitment. '
         'That the chain generates a genuinely NEW bottom, rather than arriving back at the '
         'one it started from, is the framework\'s commitment and not something the chain proves - '
         'in the 2-adic picture the arc comes back to the same 0.'))
@@ -531,7 +535,13 @@ def build():
     E.append(cbody(
         'ZP-I does not violate any of the irreversibility results already proved. '
         'The framework established three ways that return to ⊥ is blocked  - three '
-        '"closed doors." T-IZ uses a fourth passage that none of the three doors govern.'))
+        '"closed doors." T-IZ uses a fourth passage that none of the three doors govern. '
+        'The doors are a picture, not a theorem: they are statements about three different objects, and the '
+        'fourth passage reaches 0 in Q₂ only as a limit: no stage of the chain is 0, and the limit is 0, so '
+        'the chain reaches 0 without passing through any of the three doors. In this chart the arc comes back '
+        'to the same 0 (<tt>snap_arc_z2_loop</tt>). Reading that 0 as filling the bottom role takes a choice of '
+        'join on Q₂ (then it is that semilattice\'s ⊥ by theorem, <tt>t_iz_limit_is_new_null</tt>), and reading '
+        'it as a successor null is C-DA2, a commitment.'))
     E.append(cbody(
         '<b>Door 1  - R1 (No subtraction):</b> In the lattice, there is no subtraction. '
         'You cannot join your way back to a smaller state. The ascending chain never '
@@ -547,7 +557,7 @@ def build():
         'continuous function on an interval. C3\'s prohibition covers continuous paths; '
         'it says nothing about Cauchy sequences. Proved in Lean: t_iz_c3_compatible.'))
     E.append(cbody(
-        '<b>Door 3  - AX-G2 (No morphism to initial object):</b> ZP-G proved that no '
+        '<b>Door 3  - AX-G2 (No morphism to initial object):</b> ZP-G&#8217;s axiom AX-G2 states that no '
         'morphism within the categorical structure C leads back to the initial object. '
         'T-IZ is not a morphism within C: it is a convergence statement about 2-adic numbers. Reading '
         'its limit as the termination of C and the opening of a new C\', with its own ⊥′, is the cycle '
@@ -588,7 +598,8 @@ def build():
         '<br/>'
         '<b>Occurrence fence.</b> T-SNAP fixes the SHAPE of each step and does not establish that '
         'any step is taken; a model in which T-SNAP holds and nothing moves is exhibited in the Lean '
-        'source. Throughout this document, "fires" narrates the framework&#8217;s commitment that instantiation occurs - before this note as well as after it. '
+        'source. Throughout this document, "fires" narrates the framework&#8217;s occurrence commitment - before this note as well as after it. The occurrence commitment is stated in two charts, execution and slot, in the header of ZeroParadox/Order/Snap.lean (indexed in ZeroParadox/Order/SnapCannotBe.lean &#167; II and CLAIMS.md), the slot chart as the hypothesis hw of t_snap_of_fires_once, that the tape fires at some stage, beside the theorem trials_fires_once that, for independent stages each firing with probability p, 0 &lt; p &#8804; 1, firing at some stage has probability one, which names no tape (ZeroParadox/Information/CrossingTrials.lean &#167; VIII).'
+        '<br/>'
         '4. <b>T-IZ</b>: the chain\'s unbounded depth forces convergence to 0. That DA-1 and T-SNAP fire '
         'again there, closing the branch, is a reading: see the Note on closure.'
         '<br/>'
@@ -604,7 +615,7 @@ def build():
     E.append(cbody(
         'Two charts, two carriers. In the 2-adic numbers, the chain converges to 2-adic zero: zero is the '
         'LIMIT, not a term, since no term of the chain is zero. The field structure of the 2-adic numbers '
-        'supplies no join, and the corpus defines none on them, so the bottom role is not statable of the limit '
+        'supplies no join, and the corpus registers none on them, so the bottom role is not statable of the limit '
         'here. (A join could be chosen, since every inhabited set admits one; on the 2-adic integers the corpus '
         'supplies one with zero as its bottom (ZeroParadox/Valuation/Scale.lean &#167; V), and zero filling that '
         'bottom is a choice of operation, not something T-IZ derives.) In a join-semilattice, the bottom ROLE is the element that '
@@ -620,7 +631,8 @@ def build():
         't_iz_complete is a conjunction of results, not a chain, and its role step takes its property as the '
         'hypothesis h_role, which nothing here grounds. For the cycle to begin again or close at the limit, it '
         'needs every one of the following further premises, and none is established here: (a) the reading '
-        'that the limit fills the ⊥ role, a commitment and a reading across two carriers (MC-1); (b) the limit '
+        'that the limit fills the ⊥ role, which takes a choice of join on Q₂ (then the role half is a theorem, '
+        't_iz_limit_is_new_null; MC-1); (b) the limit '
         'reaching the incompressibility threshold P₀, which nothing here establishes, since its only route in '
         'ZP-I is refuted (ZP-I &#167; II.B); (c) what DA-1 needs: DP-2 and DP-2\'s precondition, that the '
         'configuration reaching P₀ is a running machine\'s current configuration and not an inert string, which '
@@ -655,7 +667,7 @@ def build():
         't_iz_limit_is_new_null  - anything satisfying the DA-2 null role IS that '
         'lattice\'s bottom (⊥-role identification). The role property is the HYPOTHESIS; '
         'that the Cauchy limit satisfies it is not established here and is not statable '
-        'in Q₂. Reading that occupant as ⊥′ is C-DA2, a further commitment. '
+        'of the limit until a join on Q₂ is chosen. Reading that occupant as ⊥′ is a commitment (C-DA2). '
         'Proved directly from da2_bottom_characterization. ✓ (axiom-free)',
         'da1_computational - proved in Lean, given the KleeneStructure instance ✓',
         't_iz_complete (§III-B)  - carries all four steps in one theorem: convergence, '

@@ -122,13 +122,13 @@ example [Fintype α] : 3 ≤ Fintype.card α := by
   simpa using Fintype.card_le_of_injective _ hinj
 
 /-- `Statement:` a densely ordered carrier carries no `UpAndOver`: density refuses the cover in the
-    corner (Mathlib `not_covBy`; the corpus form of "no cover anywhere" is
+    corner (Mathlib `not_covBy_of_denselyOrdered`; the corpus form of "no cover anywhere" is
     `axb1_fails_everywhere_iff_dense`). Density is sufficient for exclusion, not necessary: `Bool`
     is not densely ordered and is refused too (§ III). -/
 theorem isEmpty_of_denselyOrdered [DenselyOrdered α] : IsEmpty (UpAndOver α) :=
   ⟨fun U => by
     obtain ⟨y, b, -, hb, -⟩ := U.corner
-    exact not_covBy hb⟩
+    exact not_covBy_of_denselyOrdered hb⟩
 
 end UpAndOver
 
@@ -178,7 +178,7 @@ example : ∃ c : ClosureOperator ℝ, (∀ x, c x = (⌈x⌉ : ℝ)) ∧ c (1 /
   let c : ClosureOperator ℝ := ClosureOperator.mk' (fun x => (⌈x⌉ : ℝ))
     (fun _ _ h => Int.cast_mono (Int.ceil_mono h)) (fun x => Int.le_ceil x) (fun x => by simp)
   refine ⟨c, fun _ => rfl, ?_, ?_, c.isClosed_iff.2 ?_, c.isClosed_iff.2 ?_, by norm_num,
-    not_isMax 0, fun _ _ => not_covBy⟩
+    not_isMax 0, fun _ _ => not_covBy_of_denselyOrdered⟩
   · show ((⌈(1 / 2 : ℝ)⌉ : ℤ) : ℝ) ≠ 1 / 2
     norm_num [Int.ceil_eq_iff]
   · intro h
@@ -239,7 +239,7 @@ example : ∃ c : ClosureOperator (WithTop ℚ ⊕ WithTop ℚ),
       | inr _ => exact Sum.LiftRel.inr le_top)
     (fun a => by cases a <;> exact le_rfl)
   refine ⟨c, fun _ => rfl, ⟨Sum.inl ((0 : ℚ) : WithTop ℚ), fun h => ?_⟩, c.isClosed_iff.2 rfl,
-    c.isClosed_iff.2 rfl, Sum.inl_ne_inr, fun y hy b hb => ?_, fun _ _ => not_covBy⟩
+    c.isClosed_iff.2 rfl, Sum.inl_ne_inr, fun y hy b hb => ?_, fun _ _ => not_covBy_of_denselyOrdered⟩
   · have : (Sum.inl ⊤ : WithTop ℚ ⊕ WithTop ℚ) = Sum.inl ((0 : ℚ) : WithTop ℚ) := h
     simp at this
   · have hy' : f y = y := c.isClosed_iff.1 hy
@@ -522,7 +522,7 @@ theorem omega0_opow_succ_ne (a : Ordinal.{u}) :
     Ordinal.omega0 ^ Order.succ a ≠ Order.succ a := by
   intro h
   have hlim := Ordinal.isSuccLimit_opow_left Ordinal.isSuccLimit_omega0
-    (lt_of_le_of_lt (zero_le a) (Order.lt_succ a)).ne'
+    (lt_of_le_of_lt zero_le (Order.lt_succ a)).ne'
   rw [h] at hlim
   exact Order.not_isSuccLimit_succ a hlim
 
@@ -591,6 +591,58 @@ theorem ordinalCornerStep_iterate_strictMono :
   strictMono_nat_of_lt_succ fun n => by
     simp only [Function.iterate_succ_apply']
     exact lt_ordinalCornerStep _
+
+/-- `Statement:` at every floor `f`, the run of `α ↦ ω^α` from `succ f` has `ordinalCornerStep f`, the
+    least fixed point strictly above `f`, as occupant of the die role `PinnedLimitAbove`
+    (`ZeroParadox/Die.lean` § XXIV). -/
+theorem ordinalCornerStep_pinnedLimitAbove (f : Ordinal.{u}) :
+    (Motion.ofFun fun α : Ordinal.{u} => Ordinal.omega0 ^ α).IsRun
+      (fun n => (fun α : Ordinal.{u} => Ordinal.omega0 ^ α)^[n] (Order.succ f)) ∧
+    PinnedLimitAbove (fun α : Ordinal.{u} => Ordinal.omega0 ^ α)
+      (fun n => (fun α : Ordinal.{u} => Ordinal.omega0 ^ α)^[n] (Order.succ f))
+      (ordinalCornerStep f) := by
+  have hn := Ordinal.isNormal_opow (a := Ordinal.omega0.{u}) Ordinal.one_lt_omega0
+  have ha : Order.succ f < Ordinal.omega0 ^ Order.succ f :=
+    lt_of_le_of_ne (hn.strictMono.id_le _) (Ne.symm (omega0_opow_succ_ne f))
+  refine ⟨fun n => ?_, ?_, fun ⟨n, hn'⟩ => (Ordinal.iterate_lt_nfp hn.strictMono ha n).ne hn',
+    ⟨⟨Ordinal.nfp_fp hn _, Ordinal.le_nfp _ _⟩, fun x ⟨hx, hax⟩ =>
+      Ordinal.nfp_le_fp hn.strictMono.monotone hax hx.le⟩,
+    hn.strictMono.monotone.monotone_iterate_of_le_map ha.le⟩
+  · show _ = Ordinal.omega0 ^ _
+    simp only [Function.iterate_succ_apply']
+  · refine ⟨?_, fun b hb => Ordinal.nfp_le fun n => hb ⟨n, rfl⟩⟩
+    rintro _ ⟨n, rfl⟩
+    exact (Ordinal.iterate_lt_nfp hn.strictMono ha n).le
+
+/-- `Statement:` at the floor `ε_o` that occupant is `ε_(o+1)` (Mathlib `Ordinal.epsilon_succ_eq_nfp`):
+    `ε_(o+1)` occupies `PinnedLimitAbove (ω^·)` at the run from `succ ε_o`, for every `o`. -/
+theorem epsilon_succ_pinnedLimitAbove (o : Ordinal.{u}) :
+    (Motion.ofFun fun α : Ordinal.{u} => Ordinal.omega0 ^ α).IsRun
+      (fun n => (fun α : Ordinal.{u} => Ordinal.omega0 ^ α)^[n] (Order.succ (Ordinal.epsilon o))) ∧
+    PinnedLimitAbove (fun α : Ordinal.{u} => Ordinal.omega0 ^ α)
+      (fun n => (fun α : Ordinal.{u} => Ordinal.omega0 ^ α)^[n] (Order.succ (Ordinal.epsilon o)))
+      (Ordinal.epsilon (Order.succ o)) := by
+  rw [Ordinal.epsilon_succ_eq_nfp]
+  exact ordinalCornerStep_pinnedLimitAbove _
+
+-- `Statement:` at the floor `ε_n` the occupant is the corner composite iterated `n + 2` times from 0,
+-- ⊥ of `Ordinal` (`ordinalCornerStep_iterate`).
+example (n : ℕ) : ordinalCornerStep^[n + 2] (0 : Ordinal.{u}) =
+    Ordinal.epsilon (Order.succ (n : Ordinal.{u})) := by
+  rw [ordinalCornerStep_iterate (n + 1), Nat.cast_succ, Order.succ_eq_add_one]
+
+-- `Statement:` CONTROL, the converse of `PinnedLimit.toAbove` fails: at the run from `succ ε₀`, ε₁
+-- occupies `PinnedLimitAbove (ω^·)` and not `PinnedLimit (ω^·)` (`pinnedLimit_opow_eq_epsilon0`).
+example : PinnedLimitAbove (fun α : Ordinal.{u} => Ordinal.omega0 ^ α)
+      (fun n => (fun α : Ordinal.{u} => Ordinal.omega0 ^ α)^[n] (Order.succ (Ordinal.epsilon 0)))
+      (Ordinal.epsilon 1) ∧
+    ¬ PinnedLimit (fun α : Ordinal.{u} => Ordinal.omega0 ^ α)
+      (fun n => (fun α : Ordinal.{u} => Ordinal.omega0 ^ α)^[n] (Order.succ (Ordinal.epsilon 0)))
+      (Ordinal.epsilon 1) := by
+  have h := (epsilon_succ_pinnedLimitAbove (0 : Ordinal.{u})).2
+  rw [show Order.succ (0 : Ordinal.{u}) = 1 from by rw [Order.succ_eq_add_one, zero_add]] at h
+  exact ⟨h, fun hp => (Ordinal.veblen_right_strictMono 1 zero_lt_one).ne
+    (pinnedLimit_opow_eq_epsilon0 _ _ hp).symm⟩
 
 /-- `Statement:` no ordinal steps, under `ordinalSuccMotion`, to an iterate of the corner composite
     from 0: 0 is not a successor, and `ε_n` is fixed by `ω^·` while no successor is. -/
@@ -666,7 +718,7 @@ theorem ordinalView_zero_least_landing (y : Set.Ici (ordinalCornerStep^[0] (0 : 
   rw [Ordinal.epsilon_zero_eq_nfp]
   exact Ordinal.nfp_le_fp
     (Ordinal.isNormal_opow (a := Ordinal.omega0.{u}) Ordinal.one_lt_omega0).strictMono.monotone
-    (zero_le _) hfix.le
+    zero_le hfix.le
 
 /-- `Statement:` every step of `ordinalView n` into its ⊥ starts at that ⊥. -/
 theorem ordinalView_bot_noEntry (n : ℕ) : ∀ a, (ordinalView.{u} n).step a ⊥ → a = ⊥ :=
@@ -799,6 +851,8 @@ open ZeroParadox
 #print axioms ordinalSuccMotion_agree
 #print axioms ordinalSuccMotion_elbow
 #print axioms ordinalCornerStep_iterate_strictMono
+#print axioms ordinalCornerStep_pinnedLimitAbove
+#print axioms epsilon_succ_pinnedLimitAbove
 #print axioms not_step_into_ordinalCornerStep_iterate
 #print axioms ordinalView
 #print axioms ordinalView_bot_isLanding

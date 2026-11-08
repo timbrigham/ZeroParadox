@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-H Addendum: The Snap Floor in Native Categories
-Version 1.7 | October 2026
+Version 1.14 | November 2026
 Reads after ZP-H Categorical Bridge.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.7'
+VERSION = '1.14'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard: route all bare Paragraph() text through Unicode-to-entity conversion ──
@@ -59,20 +59,35 @@ def build():
         'so that depth 0 is the initial object. This addendum does the stronger thing: it '
         'drops the snap floor into each framework\'s own category, taken directly from '
         'Mathlib, where the floor appears in that field\'s native syntax. A topologist, a '
-        'functional analyst, and a probabilist each meet the same bottom, each in their own '
-        'category and their own language.'))
+        'functional analyst, and a probabilist each meet the floor in their own category and '
+        'their own language, in the role that category supports: the zero object, initial and '
+        'terminal, in ModuleCat &#8450; (fD_zero_isInitial, fD_zero_isTerminal); an initial object '
+        'that is not terminal in the Kleisli category of PMF (fC_zero_isInitial, '
+        'kleisli_bottom_not_terminal); in TopCat the floor {0} is terminal, since it has one point '
+        '(padic_bottom_isTerminal), and not initial (padic_bottom_not_initial), and separately the '
+        'inverse limit of the ball tower (floorConeIsLimit, ZeroParadox/Order/PadicLimitCone.lean). '
+        'The three full positions are stated together in floor_positions_full '
+        '(ZeroParadox/Category/TreeSeam.lean: a zero object; initial and not terminal; terminal '
+        'and not initial). They are members of the bottom family (MC-1), and not one '
+        'object, since an equation across categories is ill-typed. mc1_correspondence bundles the '
+        'two initial objects, fC_no_return (no morphism into the floor from any later stage of the '
+        'functor), and the set equation in '
+        'Q<sub>2</sub> fB_bottom_is_limit; floorConeIsLimit sits outside it.'))
     E.append(body(
         'Three genuine Lean functors realize the snap chain inside the standard categories: '
         'F_B into TopCat (topological spaces), F_D into ModuleCat &#8450; (&#8450;-modules), '
         'and F_C into the Kleisli category of the probability monad PMF (stochastic maps). '
-        'Each is sorry-free, and each carries the snap floor to its category\'s categorical '
-        'bottom &#8212; an inverse limit in TopCat, an initial object in ModuleCat &#8450; '
-        'and in the Kleisli category. The bundled witness is mc1_correspondence '
-        '(MC1Bridge.lean).'))
+        'Each is sorry-free. F_D and F_C send depth 0 to an initial object of their categories '
+        '(fD_zero_isInitial, fC_zero_isInitial), and F_D\'s is terminal as well, a zero object '
+        '(fD_zero_isTerminal); for F_B the floor {0} is the inverse limit of '
+        'its ball tower in TopCat (floorConeIsLimit), the limit of the functor\'s diagram rather '
+        'than an object in its image. The bundled witness is mc1_correspondence '
+        '(MC1Bridge.lean); its F_B field is the set equation in Q<sub>2</sub> beneath '
+        'that limit (fB_bottom_is_limit).'))
     E.append(body(
         'Two honesty boundaries hold throughout. <b>The realized claim is correspondence, '
-        'not identity.</b> What is proved is that each bottom is its own category\'s '
-        'categorical bottom, agreeing on the snap; that the four bottoms are <i>numerically '
+        'not identity.</b> What is proved is, category by category, the characterization '
+        'named above, the floors agreeing on the snap; that the four bottoms are <i>numerically '
         'one object</i> is retired as ill-typed (object equality across categories does not typecheck and is not invariant under equivalence); what separates the members is proved property by property (seam_unique_among_named, for the named bottoms, in a lattice with no top). <b>The native '
         'categories are the honest target.</b> Mathlib has no bespoke category of p-adic '
         'spaces, Hilbert spaces, or information spaces, so the general-purpose categories '
@@ -103,8 +118,10 @@ def build():
         'ZeroParadox/Category/TreeSeam.lean). Of the categories on this page, AX-G1 holds only in the three '
         'depth-proxy categories, where the depth index has no maximum. So the snap floor cannot be "the initial object of a '
         'ZPCategory" here. The honest statement is the one each category supports natively: '
-        'in TopCat the floor is the limit of the shrinking system, and in ModuleCat &#8450; '
-        'and the Kleisli category it is the genuine initial object. Each is stated below.'))
+        'in TopCat the floor is terminal, since it has one point, and not initial, and separately '
+        'the limit of the shrinking system; in ModuleCat &#8450; it is the '
+        'zero object (initial and terminal), and in the Kleisli category it is initial and not '
+        'terminal. Each is stated below.'))
     E.append(sp(6))
 
     # ── Section II: F_B / TopCat ──────────────────────────────────────────────────
@@ -131,20 +148,23 @@ def build():
             'larger.',
             '',
             'fB_bottom_is_limit:   &#8745;<sub>n</sub> B(0, 2<sup>&#8722;n</sup>) = {0}',
-            'The snap floor is the inverse limit of the tower &#8212; the one point common '
-            'to every ball.',
+            'The one point common to every ball is 0: a set equation in Q<sub>2</sub>.',
+            'floorConeIsLimit (ZeroParadox/Order/PadicLimitCone.lean): the floor {0}, with the '
+            'inclusions into each ball, is a limit cone, so the snap floor is the inverse limit '
+            'of the tower in TopCat; fB_limit_iso_floor identifies Mathlib\'s limit object with it.',
             'Sorry-free. Purity [propext, Classical.choice, Quot.sound].',
         ]
     ))
     E.append(sp(4))
     E.append(body(
         'TopCat has both a terminal object (the one-point space) and an initial object (the '
-        'empty space). The snap floor {0} is a one-point space, so it is terminal (the first example after '
-        'padic_bottom_not_initial in ZeroParadox/Multihomed/TreeObstructions.lean) and not initial '
+        'empty space). The snap floor {0} is a one-point space, so it is terminal (padic_bottom_isTerminal, '
+        'ZeroParadox/Multihomed/TreeObstructions.lean) and not initial '
         '(padic_bottom_not_initial). It is also the <i>limit</i> of the ball tower '
-        '&#8212; the categorical expression a topologist would expect for "the point '
+        '(floorConeIsLimit) &#8212; the categorical expression a topologist would expect for "the point '
         'everything converges to." This is the honest realization in a category that is not '
-        'a ZPCategory: not an initial object, but a limit.'))
+        'a ZPCategory: not an initial object: terminal, since it has one point, and separately '
+        'a limit.'))
     E.append(sp(6))
 
     # ── Section III: F_D / ModuleCat ℂ ────────────────────────────────────────────
@@ -193,10 +213,13 @@ def build():
     E.append(body(
         'The information layer measures the snap as one bit of divergence between '
         'distributions (ZP-C, JSD = log 2). Its native category is the Kleisli category of '
-        'the finite-distribution monad PMF: objects are finite types, and a morphism A '
-        '&#8594; B is a stochastic map (a Markov kernel), assigning to each a &#8712; A a '
-        'probability distribution on B. Mathlib supplies this category for free, since PMF '
-        'is a lawful monad.'))
+        'the probability-mass-function monad PMF: its objects are types, finite or not (PMF is '
+        'defined on any type), and a morphism A &#8594; B is a stochastic map (a Markov kernel), '
+        'assigning to each a &#8712; A a probability distribution on B; the functor uses only '
+        'finite ones, the types Fin n. Mathlib supplies this category for free, since PMF '
+        'is a lawful monad; it is a Markov category in the sense of Fritz (T. Fritz, A synthetic '
+        'approach to Markov kernels, conditional independence and theorems on sufficient '
+        'statistics, Adv. Math. 370 (2020) 107239, arXiv:1908.07021, Cor. 3.2 and fn. 10).'))
     E.append(result_box(
         'Functor: fC_functor : ℕ → KleisliCat PMF (InfoFunctor.lean)',
         [
@@ -207,7 +230,7 @@ def build():
             'fC_zero_isInitial:   Fin 0 (the empty type) is the initial object.',
             'fC_no_return:   for n &gt; 0 there is NO stochastic map Fin n &#8594; Fin 0.',
             'AX-G2 as a theorem: no probability distribution lives on the empty type, so '
-            'nothing returns to the floor.',
+            'no later stage returns to the floor.',
             'Sorry-free. Purity [propext, Classical.choice, Quot.sound].',
         ]
     ))
@@ -216,8 +239,10 @@ def build():
         'The empty type is the snap floor here, and it carries the snap\'s irreversibility '
         'for free. A stochastic map into Fin 0 would be a probability distribution on the '
         'empty type, and there is none. So while every object has a unique map <i>out</i> of '
-        'Fin 0 (it is initial), no nonempty object has any map <i>back</i> &#8212; AX-G2 '
-        '(source asymmetry) is not assumed but proved, as fC_no_return. Of the three native '
+        'Fin 0 (it is initial), no later stage Fin n with n &gt; 0 has any map <i>back</i> &#8212; AX-G2 '
+        '(source asymmetry) is not assumed but proved, as fC_no_return. For the same reason Fin 0 '
+        'is not terminal: a terminal object needs a map into it from every object, and Fin 1 has '
+        'none (kleisli_bottom_not_terminal). Of the three native '
         'categories, this is the one where the framework\'s irreversibility axiom becomes a '
         'theorem of the ambient mathematics.'))
     E.append(sp(6))
@@ -230,23 +255,30 @@ def build():
         hr(),
     ]
     E.append(body(
-        'The three functors, together with F_A (the join-semilattice &#8469; of the main '
-        'document, where 0 is already the initial object), are bundled as a single witness.'))
+        'The fields below are bundled as a single witness, mc1_correspondence; the TopCat limit '
+        'cone floorConeIsLimit is named beside them, outside the bundle, and F_A (the '
+        'join-semilattice &#8469; of the main document, where 0 is already the initial object) '
+        'is not a field of it.'))
     E.append(result_box(
         'Definition: mc1_correspondence : MC1Correspondence (MC1Bridge.lean)',
         [
             'A record collecting the native-category realizations:',
-            '&#8226;  F_D: StateSpace 0 is initial in ModuleCat &#8450;.',
-            '&#8226;  F_C: Fin 0 is initial in KleisliCat PMF, with no return morphism.',
-            '&#8226;  F_B: the clopen-ball tower has inverse limit {0} in TopCat.',
+            '&#8226;  F_D: StateSpace 0 is initial in ModuleCat &#8450;; it is terminal as well, the '
+            'zero object (fD_zero_isTerminal, outside the bundle).',
+            '&#8226;  F_C: Fin 0 is initial in KleisliCat PMF, with no morphism into it from any '
+            'later stage of the functor (fC_no_return).',
+            '&#8226;  F_B: the clopen balls meet in exactly {0}, a set equation in '
+            'Q<sub>2</sub> (fB_bottom_is_limit); the limit cone in TopCat is floorConeIsLimit, '
+            'outside the bundle.',
             'Sorry-free. Purity [propext, Classical.choice, Quot.sound].',
         ]
     ))
     E.append(sp(4))
     E.append(body(
         'This settles the <b>correspondence</b> half of MC-1: across the native categories, '
-        'the snap floor is each category\'s own categorical bottom, and the four agree on '
-        'the snap. The <b>identity</b> half, that the algebraic &#8869;, the 2-adic 0, the '
+        'the snap floor is realized by each category\'s own characterization (the zero object in '
+        'ModuleCat &#8450;; initial and not terminal in the Kleisli category; in TopCat terminal, since '
+        'it has one point, and not initial, and separately the inverse limit of the ball tower), and the four agree on the snap. The <b>identity</b> half, that the algebraic &#8869;, the 2-adic 0, the '
         'zero module, and the empty type are numerically one object, is retired as ill-typed '
         '(object equality across categories does not typecheck and is not invariant under '
         'equivalence); what separates the members is proved property by property '
@@ -271,11 +303,17 @@ def build():
         'Lean Source Files',
         [
             'TopFunctor.lean  &#8212; fB_functor, fB_bottom_is_limit (F_B into TopCat).',
+            'PadicLimitCone.lean &#8212; floorCone, floorConeIsLimit, fB_limit_iso_floor (the '
+            'TopCat limit cone).',
             'HilbFunctor.lean &#8212; fD_functor, fD_zero_isInitial, fD_embed_inner '
             '(F_D into ModuleCat &#8450;).',
             'InfoFunctor.lean &#8212; fC_functor, fC_zero_isInitial, fC_no_return '
             '(F_C into KleisliCat PMF).',
             'MC1Bridge.lean         &#8212; mc1_correspondence (the bundled witness).',
+            'TreeSeam.lean &#8212; floor_positions_full (the three full positions: a zero '
+            'object; initial and not terminal; terminal and not initial), fork_positions_distinct, '
+            'kleisli_bottom_not_terminal; TreeObstructions.lean &#8212; padic_bottom_isTerminal, '
+            'padic_bottom_not_initial, fD_zero_isTerminal.',
             'All in ZeroParadox/ in the public repository.',
         ]
     ))
@@ -284,9 +322,17 @@ def build():
     E.append(Paragraph(
         'Endnote: This document is an addendum to ZP-H Categorical Bridge and reads after '
         'it. ZP-H locates the snap floor as the categorical bottom across four frameworks '
-        'using depth-index proxy categories; this addendum realizes the same floor inside '
-        'each framework\'s native Mathlib category &#8212; TopCat, ModuleCat &#8450;, and '
-        'the Kleisli category of distributions. All results sorry-free in Lean 4 as of June '
+        'using depth-index proxy categories; this addendum realizes the floor inside each '
+        'framework\'s native Mathlib category by that category\'s own characterization '
+        '&#8212; in TopCat the floor {0}, terminal since it has one point and not initial '
+        '(padic_bottom_isTerminal, padic_bottom_not_initial), and separately the inverse limit of '
+        'the ball tower (floorConeIsLimit, outside the bundle); the zero object in ModuleCat '
+        '&#8450;; and an initial object that is not terminal in the Kleisli category of '
+        'distributions (fC_zero_isInitial, kleisli_bottom_not_terminal); the three full positions '
+        'are stated together in floor_positions_full; mc1_correspondence '
+        'bundles the two initial objects, fC_no_return (no morphism into the floor from a later '
+        'stage), and the set equation in Q<sub>2</sub> fB_bottom_is_limit; '
+        'floorConeIsLimit sits outside it. The floors are not one object, since an equation across categories is ill-typed. All results sorry-free in Lean 4 as of November '
         '2026, footprint [propext, Classical.choice, Quot.sound].',
         S['endnote']))
 

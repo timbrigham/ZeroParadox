@@ -13,6 +13,7 @@ while the ν side (`cofix_nonempty`, the final coalgebra / non-well-founded clos
 `Classical.choice`. The question here: can that split be lifted into a **theorem-level, in-statement
 invariant** — a witnessed result — rather than a measured comment? Long form, beside this file:
 `ZeroParadox/Computability/ChoicePurityInvariant.md`.
+
 ## Engineer's Take
 
 This file is one of a series of iterative attempts on this branch to build a map of how the various
@@ -56,8 +57,9 @@ M-type machinery — recorded in PurityCheck, NOT asserted as a necessity. Measu
 FORMER and constructors are axiom-free while its DESTRUCTOR (`M.children`/`M.dest`) is NOT — that is
 where the axiom originates, and `Cofix` inherits it through the congruence it quotients by. What makes
 the footprint a *quotient-layer* artifact is that `strict_cofix_nonempty` witnesses the same
-inhabitation with no axioms, by only BUILDING and never destructing (see the header for why Veltri is
-background, not support). -/
+inhabitation with no axioms, by only BUILDING and never destructing (see
+`ZeroParadox/Computability/ChoicePurityInvariant.md`, the Veltri entry under Prior art, for why Veltri
+is background, not support). -/
 theorem cofix_nonempty' : Nonempty (Cofix ZeroParadox.idPF_Coalgebra.Obj) :=
   ZeroParadox.cofix_nonempty
 
@@ -80,7 +82,7 @@ theorem root_purity_split :
 example (p : Prop) (P : p → Prop) (h₁ h₂ : p) : P h₁ ↔ P h₂ := Iff.rfl
 
 section PurityCheck
--- Measured footprint (lake build, v4.30.0-rc2):
+-- Measured footprint (lake build, v4.35.0):
 --   w_isEmpty                 : (no axioms)                                   — bare WType eliminator
 --   fix_isEmpty_constructive  : (no axioms)                                   — FULLY AXIOM-FREE
 --   cofix_nonempty'           : [propext, Classical.choice, Quot.sound]       — choice-carrying (ν)
@@ -93,7 +95,7 @@ section PurityCheck
 --   (strictly tighter than the existing `fix_isEmpty`'s [propext, Quot.sound]) and witnesses Fix-emptiness
 --   through the bare inductive `WType.recOn`, not through Fix.ind/Liftp/quotient machinery. That is a real
 --   new term, not a re-export.
---   The ν side CANNOT be upgraded: Lean has no object-level proposition asserting "this term uses
+--   The ν side is not upgraded here, and choice is not claimed load-bearing: Lean has no object-level proposition asserting "this term uses
 --   Classical.choice", and the strongest honest statement (`cofix_nonempty'`) is exactly Mathlib's
 --   corecursion inhabitant. That choice is a quotient-layer artifact, MEASURED: `QPF.Cofix` carries
 --   it in the type (so no proof of a Cofix-mentioning statement is clean), inheriting it from

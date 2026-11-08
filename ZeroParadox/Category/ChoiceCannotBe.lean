@@ -16,6 +16,7 @@ import ZeroParadox.Order.PataraiaFromBourbakiWitt
 import ZeroParadox.Reals.OrderedField
 import ZeroParadox.Valuation.PoleRegistration
 import ZeroParadox.Die
+import ZeroParadox.Information.CrossingTrials
 
 /-!
 # Machine-checked characterization index of the framework's relationship to `Classical.choice`
@@ -76,7 +77,8 @@ footprint; `[propext]` means propositional extensionality only. -/
 -- The ν-side inhabitation witnesses at the root cut: NO axioms. These matter because they REFUTE the
 -- general form of "choice enters precisely where the diagonal fixed point is asserted inhabited."
 -- Inhabiting a non-well-founded (greatest) fixed point can be entirely choice-free. FENCE: the
--- refutation is functor-specific, not universal — the QPF `Cofix` route in `ZeroParadox/Computability/ChoicePurityInvariant.lean`
+-- refutation is functor-specific, not universal — the QPF `Cofix` route in
+-- `ZeroParadox/Computability/ChoicePurityInvariant.lean`
 -- (`cofix_nonempty'`) DOES carry `Classical.choice`. Located exactly, measured 2026-08-03: the M-type
 -- FORMER and its constructors are axiom-free (`PFunctor.M`, `M.mk`, `M.corec`), its DESTRUCTOR is
 -- not
@@ -97,8 +99,17 @@ footprint; `[propext]` means propositional extensionality only. -/
 #check @ZeroParadox.boundaryDouble_selfCopyRef
 -- Statement: along a GIVEN `α ≃ ℕ`, a `SelfCopyRef` map exists on `α`; measured `[propext, Quot.sound]`.
 #check @ZeroParadox.selfCopyRef_of_equiv_nat
--- Statement: an ACCIDENTAL case — over `[Fintype] [DecidableEq]` no `SelfCopyRef` map exists, re-proved at
--- `[propext, Quot.sound]`; Mathlib's `Finite.injective_iff_surjective` route reports `Classical.choice`.
+-- Statement: an ACCIDENTAL case — over `[Finite]` no `SelfCopyRef` map exists, re-proved by list
+-- pigeonhole at `[propext, Quot.sound]`, a statement whose constants measure no axioms;
+-- `no_selfCopyRef_of_finite` takes Mathlib's `Finite.injective_iff_surjective` route and reports
+-- `Classical.choice`. The `example` after the re-proof in its home file derives that statement.
+#check @ZeroParadox.no_selfCopyRef_of_finite_constructive
+-- Statement: the `[Fintype] [DecidableEq]` form, by the same pigeonhole, measured `[propext,
+-- Classical.choice, Quot.sound]`: STATEMENT-CARRIED through the `[Fintype α]` binder, since `Fintype`
+-- itself reports that triple under the pinned Mathlib (printed in the home file's PurityCheck).
+-- Reading: both instance readings, neither denied: under `[Fintype]` the statement carries the choice
+-- and no proof drops it; under `[Finite]` the same pigeonhole runs without it (§ III, STATEMENT-CARRIED
+-- IS INSTANCE-RELATIVE).
 #check @ZeroParadox.no_selfCopyRef_of_fintype
 
 -- Statement: an ACCIDENTAL case — Pataraia's theorem (monotone `f` on `[CompletePartialOrder α]` has a
@@ -128,7 +139,8 @@ footprint; `[propext]` means propositional extensionality only. -/
 /-! ## § II. What choice is NOT to be confused with — the excluded-middle boundary
 
 The modality of §I generates classical LOGIC — excluded middle — which is strictly weaker than **full**
-choice (Cohen 1963). The RESTRICTED fragment is a different matter: see `ZeroParadox/Category/ChoiceCannotBe.md`. This section indexes
+choice (Cohen 1963). The RESTRICTED fragment is a different matter: see
+`ZeroParadox/Category/ChoiceCannotBe.md`. This section indexes
 the boundary and its scope fence. -/
 
 -- What the modality's closed points actually are: the regular elements `aᶜᶜ = a` — the Boolean core.
@@ -141,13 +153,16 @@ the boundary and its scope fence. -/
 -- DIACONESCU, hypothesis form: a choice fragment implies excluded middle. PRIOR ART, not a framework
 -- result: Diaconescu (1975), "Axiom of choice and complementation"; the analogue in intuitionistic set
 -- theory is Goodman–Myhill (1978), "Choice implies excluded middle". The framework contributes only the
--- hypothesis-form packaging (Lean's kernel realizes the arrow as a derivation, not a reusable theorem).
+-- hypothesis-form packaging in Lean: Lean core (`Init/Classical.lean`) proves `Classical.em` from the
+-- axiom `Classical.choice` by the same argument, a theorem about that axiom rather than one taking a
+-- choice principle as a hypothesis; the Rocq hypothesis forms are cited in § IV (`Diaconescu.v`).
 -- DIRECTION, stated precisely. Diaconescu's theorem is an EQUIVALENCE between two topos properties
 -- (p. 176), with choice implying complements as its corollary (p. 178). It already concerns a two-point
 -- shape: his construction (pp. 176-177) is a coequalizer of two disjoint monomorphisms, and such a
--- coequalizer has fibres of at most two points. Goodman–Myhill state the restriction explicitly, choice "for sets B, C of at most two
--- elements" (p. 461). With unique choice into `Bool`, `ChoiceFragment` and `ExcludedMiddle` are
--- inter-derivable (the `example` after `em_of_choiceFragment` in its home file). "The converse fails"
+-- coequalizer has fibres of at most two points. Goodman–Myhill state the restriction explicitly,
+-- choice "for sets B, C of at most two elements" (p. 461). With unique choice into `Bool`,
+-- `ChoiceFragment` and `ExcludedMiddle` are
+-- inter-derivable (see `ZeroParadox/Category/ExcludedMiddleBridge.lean`, the `example` after `em_of_choiceFragment`). "The converse fails"
 -- belongs to FULL AC and is Cohen 1963, not Diaconescu.
 -- Reading: in `ZeroParadox/Category/ExcludedMiddleBridge.lean` the natural construction of the fragment
 -- from `ExcludedMiddle` fails to elaborate without `classical`, and a candidate explanation is Lean's
@@ -181,6 +196,15 @@ example :
     fun ⟨hw, hm⟩ f => (hw f).imp id (hm f)⟩
   rw [heq] at hn; cases hn
 
+-- Statement: the same decision at the same ⊥ (LPO's shape), as continuity rather than logic: no continuous Boolean
+-- test on `ℕ → Bool` (product topology) is `true` exactly on the tapes with a `true`, and any such
+-- test fails to be continuous at ⊥ of `ℕ → Bool`. Home: `ZeroParadox/Information/CrossingTrials.lean`
+-- § IX, with the converse direction (a test fixed by one finite prefix is continuous).
+-- Reading: (cited, not claimed) Weihrauch, *Computable Analysis* (Springer 2000), Thm 2.2.3, p. 30:
+-- computable implies continuous, so no machine computes that total test either.
+#check @ZeroParadox.no_continuous_test_fires_once
+#check @ZeroParadox.not_continuousAt_bot_of_decides_fires_once -- Statement: discontinuous at ⊥
+
 /-! ## § III. What IS established about choice here
 
 Not "what choice is" — that is Lean's, not the framework's. What this corpus has actually measured or
@@ -199,7 +223,7 @@ proved about where choice does work. -/
 -- Reading: the framework therefore attributes this footprint to Mathlib's QPF *quotient layer*
 -- rather than to the mathematics — escaping it means changing the carrier, not cleaning the proof.
 -- (Setting: ACS's construction needs only function extensionality, which Lean has; only its
--- uniqueness half uses univalence. See ZeroParadox/Computability/ChoicePurityInvariant.lean.)
+-- uniqueness half uses univalence. See `ZeroParadox/Computability/ChoicePurityInvariant.md`.)
 -- Contrast `strict_cofix_nonempty` (§ I, NO axioms): same phenomenon, different construction,
 -- opposite footprint. That contrast is the STATEMENT-CARRIED class in one pair: the statement carries
 -- the choice, and a restatement on a choice-free carrier holds without it
@@ -210,20 +234,28 @@ proved about where choice does work. -/
 -- (⊥ of `Ordinal` ↦ ε₀) inherits `Classical.choice` from Mathlib's `Ordinal` fixed-point machinery;
 -- `dnegNucleus` (§ I) is `[propext]`. Both are difference-generators seeded at their carrier's ⊥ —
 -- negation satisfies `a ⇨ ⊥ = aᶜ` (the class law `himp_bot`), and `HeytingAlgebra` extends `OrderBot`,
--- so ⊥ of the Heyting algebra is part of the structure negation lives in. Same role, different carriers, opposite footprints, and
+-- so ⊥ of the Heyting algebra is part of the structure negation lives in. Same role, different
+-- carriers, opposite footprints, and
 -- opposite behaviour AT the seed: `dnegNucleus` fixes ⊥ of the Heyting algebra (⊥ is always regular),
 -- `snapNucleus` provably moves ⊥ of `Ordinal` (`snapNucleus_bot_ne_bot`). On the footprint difference:
 -- `snapNucleus` is STATEMENT-CARRIED (`ZeroParadox/Category/ChoiceCannotBe.md`): `Nonempty (Nucleus
--- Ordinal.{0})` and `snapNucleus ⊥ ≠ ⊥`, each only assumed, already report the choice (statement control,
--- measured 2026-10-08), so no proof of these statements can drop it. What ZP-N re-proved is the ordinal
+-- Ordinal.{0})` and `snapNucleus ⊥ ≠ ⊥`, with no proof attached, already carry the choice (their statement
+-- controls, `#check`ed below and printed in `ZeroParadox/Ordinal/SnapNucleus.lean`'s purity block), so no
+-- proof of these statements can drop it. What ZP-N re-proved is the ordinal
 -- *ascent* (`exp_lt_term`, `omegaPow_no_fixedpoint`, `tower_strictMono` on `ONote`), which is suggestive
 -- for the nucleus and is not the nucleus. Choice is NOT in the `Ordinal` type: `Ordinal` measures
 -- `[propext, Quot.sound]`. The choice
 -- enters through the order instance and the operations (`Ordinal.instLinearOrder`, `nfp`, `omega0`,
--- `epsilon`, each `[propext, Classical.choice, Quot.sound]`). The open question is a restatement on a
--- notation carrier whose statements are choice-free; its current state is the entry below.
+-- `epsilon`, each `[propext, Classical.choice, Quot.sound]`). The remaining question is a restatement on
+-- a carrier whose statements are choice-free, with two readings: a defined one, in Lean on `E0Note`, and
+-- a derived one, on a well-founded carrier, not located as of 2026-10-13; both, with the search record,
+-- are in `ZeroParadox/Ordinal/SnapNucleus.md` § "Axiom footprint".
 #check @ZeroParadox.snapNucleus
 #check @ZeroParadox.snapNucleus_bot_ne_bot
+-- Statement: the two statements above as bare propositions, the statement controls.
+#check @ZeroParadox.snapNucleusNonemptyStatement
+-- Statement: `snapNucleus ⊥ ≠ ⊥` at universe 0, bare.
+#check @ZeroParadox.snapNucleusBotStatement
 
 -- THE SAME LOCATION FOR `Code`, measured 2026-09-19:
 -- `Nat.Partrec.Code` is axiom-free and so is `Nat.Partrec.Code.eval`, so the choice is not "in
@@ -285,10 +317,41 @@ proved about where choice does work. -/
 -- with `Classical.em` and so carries `Classical.choice` IN ITS OWN TERM; `Prop.instHeytingAlgebra` is
 -- `[propext]`. A `Prop`-scoped statement that does not PIN its instance can silently resolve through the
 -- Boolean one and acquire choice — which would make every choice-freeness claim about `Prop` vacuous.
--- Every `Prop`-scoped statement in `ZeroParadox/Category/ExcludedMiddleBridge.lean` pins `@… Prop Prop.instHeytingAlgebra`
--- explicitly for this reason. Pin the instance, or measure nothing.
+-- Every `Prop`-scoped statement in `ZeroParadox/Category/ExcludedMiddleBridge.lean` pins
+-- `@… Prop Prop.instHeytingAlgebra` explicitly for this reason. Pin the instance, or measure nothing.
 #check @Prop.instHeytingAlgebra
 #check @Prop.instBooleanAlgebra
+
+-- STATEMENT-CARRIED IS INSTANCE-RELATIVE — one statement text, two definitionally equal instances,
+-- opposite footprints. The same hazard as the entry above, on `WithTop`: Mathlib's order instances
+-- there go through `WithTop.le_def`, proved by `grind` (`ZeroParadox/Order/ChoiceFreeWithTop.lean`).
+-- Statement: Mathlib's `WithTop` preorder, partial order and least element carry
+-- `[propext, Classical.choice, Quot.sound]` (printed next).
+#print axioms WithTop.instPreorder
+#print axioms WithTop.instPartialOrder
+#print axioms WithTop.instOrderBot
+-- Statement: the corpus's preorder, partial order and least element over the same `≤` and `<`
+-- (`WithTop.instLE`, `WithTop.instLT`) measure no axioms (printed next).
+#check @ZeroParadox.withTopPreorderCF
+#print axioms ZeroParadox.withTopPreorderCF
+#print axioms ZeroParadox.withTopPartialOrderCF
+#print axioms ZeroParadox.withTopOrderBotCF
+-- Statement: on `WithTop ℕ` the two preorders are definitionally equal.
+example : (WithTop.instPreorder : Preorder (WithTop ℕ)) = ZeroParadox.withTopPreorderCF := rfl
+-- Statement: `BotCovered (WithTop σ) ↔ BotCovered σ`, elaborated under the corpus's instances; its
+-- footprint, no axioms, is printed in `ZeroParadox/Die.lean`'s PurityCheck.
+#check @ZeroParadox.botCovered_withTop_iff
+-- Statement: the same proof term proves the same statement text elaborated under Mathlib's instances,
+-- whose elaborated type names `WithTop.instPartialOrder` and `WithTop.instOrderBot`, printed above.
+example {σ : Type} [PartialOrder σ] [OrderBot σ] [NoMaxOrder σ] :
+    ZeroParadox.BotCovered (WithTop σ) ↔ ZeroParadox.BotCovered σ :=
+  ZeroParadox.botCovered_withTop_iff
+-- Reading: both sides, neither denied. Read under Mathlib's instances the statement carries
+-- `Classical.choice`, since `#print axioms` walks the type (`_trivialAboutZ2` in
+-- `ZeroParadox/Valuation/Scale.lean`), and no proof of it can drop it (STATEMENT-CARRIED,
+-- `ZeroParadox/Category/ChoiceCannotBe.md`); read under the corpus's, the same text carries none. So
+-- the bin is a property of the elaborated statement, instances included, and neither reading says the
+-- mathematics needs choice.
 
 /-! ## § IV. The ESSENTIAL cases — reductions to taboos, and the premise they rest on
 
@@ -341,14 +404,16 @@ is essential. -/
 -- AND THE ESCAPE, WHICH IS THE HALF THAT MAKES CASE 2 USEFUL RATHER THAN ALARMING. "Essential" scopes
 -- to the GENERAL principle, quantified over arbitrary `Type`. Restrict the carrier to decidable
 -- equality and the same statement is choice-free — measured `[propext]`, against the general form's
--- `[propext, Classical.choice, Quot.sound]`. `ZeroParadox/Category/DiagonalWitness.lean`'s `no_witnessRel_top_of_nontrivial`
+-- `[propext, Classical.choice, Quot.sound]`. `ZeroParadox/Category/DiagonalWitness.lean`'s
+-- `no_witnessRel_top_of_nontrivial`
 -- carries the same audit for the level-set form. **Where a carrier has `DecidableEq`, the essential
 -- form is not needed** — the taboo makes the general statement non-re-provable constructively, on the
 -- premise in the header above, and the restriction says it does not have to be *there*. Together they
 -- localize the classical content rather than obstruct it: they say where it lives and how far it reaches.
 -- SCOPE: how far the escape reaches is UNSURVEYED. Which carriers in this corpus have `DecidableEq`
 -- was unmeasured as of 2026-08-02, so "the restriction covers what we need" is unverified in general — and a
--- universal over every carrier would be the sentence shape `ZeroParadox/Category/ChoiceCannotBe.md`'s § "No count" warns about.
+-- universal over every carrier would be the sentence shape
+-- `ZeroParadox/Category/ChoiceCannotBe.md`'s § "No count" warns about.
 -- The two `#check`ed declarations are what is established; the reach is not.
 #check @ZeroParadox.fixedPointFree_of_nontrivial_decidable
 
@@ -369,8 +434,11 @@ is essential. -/
 -- for every `c` in D, hence `c = False ∨ c ≠ False` (next `example`); an instance of theirs, not a
 -- generalization.
 -- Statement: the piece at ⊥ of `Prop` gives some `a ≠ False` on whose down-set `{c | c → a}` every
--- `c = False` is decided (`[propext]`).
-example (h : ZeroParadox.BotIntervalTwo Prop) :
+-- `c = False` is decided (`[propext]`); ⊥ of `Prop` is pinned to `Prop.instHeytingAlgebra` (§ III's
+-- instance hazard), since under this file's imports an unpinned `OrderBot Prop` resolves through
+-- `Prop.instCompleteLattice` and the statement then measures `[propext, Quot.sound]`.
+example (h : @ZeroParadox.BotIntervalTwo Prop _
+    (@HeytingAlgebra.toOrderBot Prop Prop.instHeytingAlgebra)) :
     ∃ a : Prop, a ≠ False ∧ ∀ c : {c : Prop // c → a}, c.1 = False ∨ c.1 ≠ False := by
   obtain ⟨a, hlt, h2⟩ := h
   exact ⟨a, hlt.ne', fun c => (h2 c.1 c.2).imp id
@@ -418,7 +486,8 @@ example : ∀ (α : Type) [PartialOrder α] (a b : α), a ⋖ b → Set.Icc a b 
 -- Statement: non-vacuity: the framework's classical proof supplies the hypothesis.
 example : ∀ (β : Type) (M : ZeroParadox.Motion β), M.RegisteredDecidable :=
   fun _ _ => ZeroParadox.Motion.registeredDecidable_of_classical
-#check @ZeroParadox.Motion.registeredDecidable_of_classical -- Statement: every motion has a decision of definedness, proved with `classical`
+-- Statement: every motion has a decision of definedness, proved with `classical`
+#check @ZeroParadox.Motion.registeredDecidable_of_classical
 -- Statement: the escape: an `Option`-presented UP has one with no axiom of choice (`[propext]`).
 #check @ZeroParadox.Motion.ofOption_registeredDecidable
 
@@ -430,7 +499,9 @@ example : ∀ (β : Type) (M : ZeroParadox.Motion β), M.RegisteredDecidable :=
 -- 3's, that theorem is a class-level witness no other framework proof names. Neither hypothesis form
 -- measures any axiom alone (statement control, 2026-10-18).
 -- Reading (cited, not claimed): PRIOR ART, Diaconescu's argument as in the Rocq standard library,
--- `theories/Logic/Diaconescu.v` Part A (`pred_ext_and_rel_choice_imp_EM`), on the same two classes
+-- `theories/Logic/Diaconescu.v` Part A, section `PredExt_RelChoice_imp_EM`, which the file marks "kept
+-- for backwards compatibility" (`pred_ext_and_rel_choice_imp_EM`; the current Part A theorem
+-- `prop_ext_and_rel_choice_imp_EM` uses the pairs `(True, P)`, `(P, True)`), on that section's two classes
 -- `b = true ∨ p`, `b = false ∨ p`, with a selector given as data; an instance of theirs, not a
 -- generalization (`ZeroParadox/DieCannotBe.lean` § X).
 #check @ZeroParadox.Motion.em_of_selectedData
@@ -438,10 +509,12 @@ example : ∀ (β : Type) (M : ZeroParadox.Motion β), M.RegisteredDecidable :=
 example : ∀ (β : Type) (M : ZeroParadox.Motion β), M.SelectedData :=
   fun _ _ => ZeroParadox.Motion.selectedData_of_selectedTotal
     ZeroParadox.Motion.selectedTotal_of_classical
-#check @ZeroParadox.Motion.selectedTotal_of_classical -- Statement: every motion has a total selector, proved with `classical`
+-- Statement: every motion has a total selector, proved with `classical`
+#check @ZeroParadox.Motion.selectedTotal_of_classical
 -- Statement: the escape: a step given by a function is selected with no axioms.
 #check @ZeroParadox.Motion.selectedTotal_of_fun
-#check @ZeroParadox.Motion.selectedTotal_of_option -- Statement: and one given by an `Option`-valued function, with `[propext]`
+-- Statement: and one given by an `Option`-valued function, with `[propext]`
+#check @ZeroParadox.Motion.selectedTotal_of_option
 
 /-! ## § V. Per instance free, uniform a taboo — pointers
 
@@ -451,15 +524,18 @@ uniform legs proved by anonymous `example` are cited by section. -/
 -- Statement: chart selection: free given a point (`chart_selection_is_freeG`, § I); uniform at the
 -- stipulated pole, the fragment (`uniformChartSelection_iff_choiceFragment`, § III).
 #check @ZeroParadox.chart_selection_is_freeG
-#check @ZeroParadox.uniformChartSelection_iff_choiceFragment -- Statement: uniform selection at the stipulated pole is the fragment, `Iff.rfl`
+-- Statement: uniform selection at the stipulated pole is the fragment, `Iff.rfl`
+#check @ZeroParadox.uniformChartSelection_iff_choiceFragment
 -- Statement: pole discrimination: an `Option` decides its own `none` (`registeredDecider`); a total
 -- test of definedness on `Part Unit` gives excluded middle (`em_of_poleDiscriminator`).
 #check @ZeroParadox.registeredDecider
-#check @ZeroParadox.em_of_poleDiscriminator       -- Statement: a total definedness test on `Part Unit` gives excluded middle
+-- Statement: a total definedness test on `Part Unit` gives excluded middle
+#check @ZeroParadox.em_of_poleDiscriminator
 -- Statement: Lawvere's fixed-point-free swap: free with `DecidableEq`; over every `Type`, weak excluded
 -- middle (case 2, § IV).
 #check @ZeroParadox.fixedPointFree_of_nontrivial_decidable
-#check @ZeroParadox.wem_of_fixedPointFree         -- Statement: the general fixed-point-free principle gives weak excluded middle
+-- Statement: the general fixed-point-free principle gives weak excluded middle
+#check @ZeroParadox.wem_of_fixedPointFree
 -- Statement: the die's piece at ⊥: free with `DecidableEq`; over every partial order with a least
 -- element on a `Type`, weak excluded middle (case 3, § IV); for every cover, Mathlib's form, excluded
 -- middle (beside case 3, § IV).

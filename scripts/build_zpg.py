@@ -1,12 +1,12 @@
 """
 Zero Paradox — ZP-G: Category Theory PDF Builder
-Version 1.23 | October 2026
+Version 1.27 | November 2026
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.23'
+VERSION = '1.27'
 FIRST_RELEASED = 'April 2026'
 
 # ZP-G uses a slightly different amber shade; override zp_utils default
@@ -271,8 +271,10 @@ def build():
         'Remark R2 — Categorical Expression of Self-Containment',
         'Status: Remark — connecting note to ZP-A CC-2',
         [
-            'R1 frames the structural inversion of 0. This remark connects that structure to ZP-A CC-2: '
-            '⊥ = {⊥}: read this way, ⊥ is its own extension — a Quine atom. A self-containing object has '
+            'R1 frames the structural inversion of 0. This remark connects that structure to ZP-A CC-2, the Quine atom: '
+            'a role, a point that steps to itself and to nothing else (Motion.SelfOnlyAt, ZeroParadox/Die.lean). Where a set '
+            'steps to its members, a set occupies it exactly when x = {x} (zfset_selfOnlyAt_mem_iff); in a ZP-A lattice under a '
+            'self-application map supplied by AbstractSelfApp, ⊥ of L is its only occupant (selfApp_quine_role_iff). An occupant has '
             'no external interpreter by structure; it IS its own interpretation.',
             'In categorical terms, this corresponds to two conditions together: (1) AX-G2: '
             'hom(X, 0) = ∅ for all X ≠ 0 — no morphism can reach inside 0 from outside; and '
@@ -284,7 +286,7 @@ def build():
             '&#953;<sub>X</sub> is not a choice among alternatives; it is the absence of internal '
             'structure that would allow differentiation among morphisms.',
             'This remark bridges ZP-G to ZP-A CC-2. The formal correspondence between the categorical '
-            'initial object structure and the set-theoretic Quine atom ⊥ = {⊥} is made explicit in ZP-H.',
+            'initial object structure and the Quine-atom role (ZP-A CC-2) is made explicit in ZP-H.',
         ]
     ))
 
@@ -454,7 +456,10 @@ def build():
             '(2) T6-c subadditivity — K(x<sub>n</sub>|x<sub>0</sub>) &#8804; '
             '&#8721; K(x<sub>k+1</sub>|x<sub>k</sub>) + O(n&#183;c) (total surprisal along a chain). '
             'These are standard and correct results from algorithmic information theory, but they require '
-            'a K-formalization that does not exist in Lean 4 / Mathlib.',
+            'a K-formalization this corpus does not have: none was located in the pinned Mathlib as of '
+            '2026-10-04 (search record in ZeroParadox/Information/Disjunctive.md), Lean developments '
+            'outside Mathlib that define K are named at the ZPSurprisal entry of LEAN_CUSTOM_REGISTRY.md, '
+            'and leaving K unformalized here is a scope decision recorded there.',
             'What IS Lean-verified: T6-a (identity morphism has zero surprisal — from surp_id), '
             'T6 Part II (inward surprisal is undefined — from AX-G2 and the absence of morphisms to 0), '
             'and T7 insofar as it depends on Parts II, III, V, VI. T6 Part I (outward accumulation) '
@@ -638,7 +643,7 @@ def build():
         ['R1: Structural inversion',
          'Valid — Remark. Unchanged.'],
         ['R2: Categorical expression of self-containment',
-         'Valid — Remark. Connects T2 + AX-G2 to ZP-A CC-2 (⊥ = {⊥}). '
+         'Valid — Remark. Connects T2 + AX-G2 to ZP-A CC-2 (the Quine atom, a role). '
          'No new derivation; explanatory bridge note.'],
         ['Proposition T4: Chains are forward-only',
          'Valid — Derived. Relabelled Proposition. Unchanged. ✓'],
@@ -653,7 +658,9 @@ def build():
         ['Proposition T6-c: Surprisal accumulates along chains',
          'Valid (PDF-level) — Derived from D5, T6-b, subadditivity of K. '
          'NOT Lean-verified: Lean proof reduces to Nat.zero_le _. '
-         'Subadditivity of K is a standard AIT result but requires K-formalization absent from Mathlib.'],
+         'Subadditivity of K is a standard AIT result but requires a formalization of K, none located '
+         'in the pinned Mathlib as of 2026-10-04 (the search is recorded in '
+         'ZeroParadox/Information/Disjunctive.md).'],
         ['Theorem T6: Informational singularity',
          'Valid — Derived. Does not depend on BA-G1. '
          'Part II: undefined domain (AX-G2) — fully Lean-verified. '

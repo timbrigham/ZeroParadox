@@ -40,6 +40,8 @@ namespace ZeroParadox
 
 /-! ## Setup: Binary States (AX-B1) -/
 
+-- [ZP port] Lean 4.35: Mathlib's `Fintype` deriving handler needs the pre-4.35 defeq transparency.
+set_option backward.isDefEq.respectTransparency false in
 -- [ZP-CUSTOM] replaces: Fin 2 | reason: ZPC is self-contained (no ZPB import); BinaryState is a local copy of the same free-inductive encoding used by OntologicalStates in ZPB. Fin 2 would import ℕ arithmetic into an information-theoretic file whose proofs should not depend on it.
 /-- The two ontological states: non-existence (⊥) and existence.
     A free inductive type — no natural-number dependency. -/
@@ -162,18 +164,26 @@ theorem t2_diverges : ∀ M : ℝ, ∃ n : ℕ, M < circPartial n := by
 
 /-! ## Section III-B: L-INF — Unbounded Surprisal -/
 
-/-- L-INF — Unbounded Surprisal of ⊥.
+/-- L-INF — Unbounded Surprisal, in the depth chart.
 
-    The surprisal I(n) = n at ball-hierarchy depth n is unbounded: for any finite
-    bound M, there exist depths n with I(n) > M. ⊥ of `MachinePhase` (c₀) corresponds
-    to the limit point 0 ∈ Q₂ — the limit of the binary ball hierarchy at infinite
-    depth. At this limit, surprisal is not finite.
+    `Statement:` the surprisal I(n) = n at ball-hierarchy depth n is unbounded above: for any
+    real bound M, some depth n has I(n) > M.
 
-    Formal content: surprisal is unbounded above.
-    Semantic content: ⊥ has unbounded surprisal — it is the compressed limit of
-    all possible binary programs. No finite program bounds its informational content,
-    so no finite external interpreter can hold ⊥ as a static description. This is
-    one argument for DA-1's precondition (ZP-E, Path 2), and it does not derive it.
+    "Surprisal at ⊥" has two charts, and no equation joins them:
+    * Depth chart (this theorem): every depth n has a finite surprisal, I(n) = n, and no
+      finite bound holds of all of them. No depth has infinite surprisal.
+    * Point chart: at the floor 0 of Q₂ the complexity is ⊤ (`infinitude_forces_infinite_complexity`
+      at `q2InfinitudeFloor`, `ZeroParadox/Valuation/InfinitudeFloor.lean`), the supremum of the
+      climbing complexities of the members 2ⁿ⁺¹ (`infinite_complexity_is_infinitude_of_zeros`;
+      `cxQ2_two_pow`: the complexity of 2ᵏ is k).
+    ⊥ of `MachinePhase` (c₀) corresponds to that limit point 0 of Q₂, the limit of the binary
+    ball hierarchy; the correspondence is the framework's reading, not an identity (c₀ and 0
+    are elements of different carriers).
+
+    `Reading:` ⊥ is the compressed limit of all possible binary programs. No finite program
+    bounds its informational content, so no finite external interpreter can hold ⊥ as a
+    static description. This is one argument for DA-1's precondition (ZP-E, Path 2), and it
+    does not derive it.
 
     Note: the step from unbounded surprisal to executing is not a consequence of
     L-INF and is not DA-1: it is a bridge principle of its own, which the framework
@@ -225,10 +235,10 @@ mixture over both. This is the *information-theoretic* forcing of the discrete b
 mechanism from the order forcing (`t_snap_derived`), the incompressibility forcing (`l_inf`), and the
 self-execution route (ZP-K). Every route constrains the same transition — its shape, not its occurrence; none of the four makes
 the step happen, and `tsnap_holds_but_nothing_moves` (`Order/Snap.lean`) exhibits a model in which
-the order route holds and nothing moves. They also do not all rest on the same kind of ground — the README states each one's requirement alongside its witness, and the self-execution
-route's requirement is the load-bearing one: `da1_closed_concrete` proves ⊥ is the unique Quine atom of
-MachinePhase and mentions no `Code` and no execution, so "⊥ must execute itself" rests on ZP-K's
-`KleeneStructure` commitment rather than on that theorem. -/
+the order route holds and nothing moves. The routes rest on different ground (the README gives each requirement
+beside its witness), and the self-execution route's is load-bearing: `da1_closed_concrete` proves ⊥ is the unique
+Quine atom of MachinePhase and mentions no `Code` and no execution, so the retired "⊥ must execute itself" rests on
+no theorem: that ⊥ executes is the occurrence commitment; that, if it does, nothing outside it executes it is DA-1 Path 1. -/
 
 /-- No half-state: every ontological state is `null` or `exist`; there is no third, intermediate value. -/
 theorem binaryState_exhaustive (s : BinaryState) : s = nullSt ∨ s = firstSt := by
@@ -243,7 +253,7 @@ theorem binaryState_card_two : Fintype.card BinaryState = 2 := by decide
 theorem distP_support_singleton : distP.support = {nullSt} := by
   rw [distP, PMF.support_pure]
 
-/-- The first-atomic-state distribution is likewise a point mass, supported on the single outcome `exist`. -/
+/-- The distribution `distQ`, at the state `firstSt` (the `exist` constructor of `BinaryState`, not `null`), is likewise a point mass, supported on the single outcome `exist`. -/
 theorem distQ_support_singleton : distQ.support = {firstSt} := by
   rw [distQ, PMF.support_pure]
 
@@ -272,15 +282,15 @@ non-pureness; **no construction supplying its hypotheses was located in this cor
 `ZeroParadox/Reals/MarkovSpectralGap.lean`, both of which build a specific two-point distribution
 for their own purpose rather than the general constructor). Stated as a dated search result, not as a
 universal negative.
-⚠ **Not missing from Mathlib** — `PMF.uniformOfFinset` with `PMF.support_uniformOfFinset`
-(`Mathlib/Probability/Distributions/Uniform.lean`) constructs the same thing directly. It is cited
-rather than swapped in: that route needs a heavier import and there is no purity gain (both carry
-`Classical.choice`, measured).
+⚠ **Mathlib's uniform distribution on a finset is a `Measure`, not a `PMF`, at the pin.**
+`MeasureTheory.Measure.uniformOfFinset` (`Mathlib/Probability/Distributions/Uniform.lean`) is a
+`Measure α` and carries `Classical.choice` (measured); `PMF.support_uniformOfFinset` is a deprecated
+alias of a lemma about it. A constant `PMF.uniformOfFinset` was not located as of 2026-11-07, searched
+by `#check` with that file imported and by a grep of the pinned Mathlib for `uniformOfFinset`, which
+hits that file only. So that route does not supply the `PMF` constructed here.
 
-⚠ **It is NOT stronger than what is proved here, and a first draft of this paragraph said it was.** The
-three conjuncts below give `p.support = {x, y}` **exactly** — the two memberships supply `⊇` and the
-third supplies `⊆` — so the `⊆` form understates this theorem rather than being understated by
-Mathlib's. -/
+The three conjuncts below give `p.support = {x, y}` **exactly** — the two memberships supply `⊇` and
+the third supplies `⊆`. -/
 theorem exists_spread_pmf {α : Type*} (x y : α) :
     ∃ p : PMF α, x ∈ p.support ∧ y ∈ p.support ∧ p.support ⊆ {x, y} := by
   have hle : (1/2 : NNReal) ≤ 1 := by norm_num

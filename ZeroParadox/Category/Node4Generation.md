@@ -10,9 +10,18 @@ algebra = colimit of the initial chain `0 → F0 → F²0 → …`; J. Adámek, 
 realizations in the language of categories*, Comment. Math. Univ. Carolin. 15 (1974), 589–602). Mathlib
 carries the *order-theoretic* engine
 (`fixedPoints.lfp_eq_sSup_iterate`) and ZP carries the *ordinal* instance (`epsilonZero_eq_nfp`:
-ε₀ = nfp(ω^·)0), but the *categorical* Adámek colimit is not located in Mathlib as of 2026-08-08,
-searched along three axes: the proper name; the nouns `initial algebra` / `terminal coalgebra` (both
-polarities); and the verb `transfinite`. This file builds the canonical instance for node #4's floor.
+ε₀ = nfp(ω^·)0), but the *categorical* Adámek theorem (the initial algebra as the colimit of the initial
+chain) was not located in the Mathlib then pinned (`5450b53`) as of 2026-10-31. Searched by grep along three
+axes, each of which returns material that is near it and is not it: the proper name `Adámek` (citations
+of Adámek–Rosický and Adámek–Rosický–Vitale, as bibliography entries and theorem references, in
+`CategoryTheory/Presentable/`, `Generator/StrongGenerator.lean` and `Limits/Sifted.lean`, none of them the
+initial-chain colimit); the
+nouns `initial algebra` / `terminal coalgebra` (`CategoryTheory/Endofunctor/Algebra.lean`, Lambek's
+lemma that the structure map of an initial algebra or terminal coalgebra is an isomorphism, and the
+polynomial-functor W- and M-types under `Data/PFunctor/` and `Data/QPF/`, with no colimit
+construction); and `transfinite` (`Order/TransfiniteIteration.lean`, the order-theoretic transfinite
+iterate of `φ : I → I`; `CategoryTheory/SmallObject/Iteration/`, transfinite iteration of a successor
+structure for the small object argument, which states no initial-algebra theorem). This file builds the canonical instance for node #4's floor.
 
 **The construction.** Take the endofunctor `F X = X + 1` (whose initial algebra is `ℕ`). Its initial
 chain is `Fⁿ(∅) = Fin n`, with connecting maps the inclusions `Fin n ↪ Fin (n+1)` (`Fin.castSucc`). The

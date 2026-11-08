@@ -49,12 +49,12 @@ Recursive Coalgebras*, § 4. They credit the characterization to **Taylor** and 
 
 ⚠ **Where to verify the Taylor credit.** AMM cite it as their ref [28, Exercise VI.17], and their [28]
 is **Taylor, *Practical Foundations of Mathematics* (CUP 1999)** — which this project does **not**
-hold. The Taylor PDF that *is* in `.claude-local/papers/` is his *Well founded coalgebras and
-recursion*, a **different document, which does not contain Exercise VI.17**; do not send a reader
-there for it.
+hold. The Taylor document this project does hold is Paul Taylor, *Well founded coalgebras and
+recursion* (a preprint; the copy consulted carries no publication details), a **different document,
+which does not contain Exercise VI.17**; do not send a reader there for it.
 
-Source PDF for every quotation below:
-`.claude-local/papers/adamek_milius_moss_wellfounded_recursive_coalgebras.pdf`. Their statements —
+Source for every quotation below: Adámek, Milius, Moss, *On Well-Founded and Recursive Coalgebras*,
+arXiv:1910.09401v2 (16 Feb 2020). Their statements —
 the bulleted ones in quote marks are verbatim; Def 4.1 is their notation transcribed:
 
 * **Def 4.1** — every coalgebra `α : A → F A` induces `⃝ : Sub(A) → Sub(A)`, `⃝(s) = α⁻¹(F s)`.
@@ -75,8 +75,7 @@ Thm 7.6, their coreflection, or recursive coalgebras.**
 This paragraph previously also said *"no claim is made that the framework's categories satisfy their
 hypotheses"*, which § V made false and which sat here contradicting it. **Scope the two apart:** § V
 covers `Type u` with `ofTypeFunctor P.Obj` only, and **says nothing about the MC-1 carriers**
-(`TopCat`, `ModuleCat ℂ`, `KleisliCat PMF`) — those remain unchecked, and that is what
-`.claude-local/notes/future-research/amm_coreflection_requirements_gap_2026-08-04.md` tracks.
+(`TopCat`, `ModuleCat ℂ`, `KleisliCat PMF`) — those remain unchecked.
 
 **What this file adds over restating the definitions:** the two `Statement:` results in § III/§ IV
 place the corpus's own W- and M-types on the fork **intrinsically**, so the μ/ν split stops depending
@@ -242,8 +241,8 @@ built.** Ambient hypotheses: see the table below, all four. Subject: `wtypeFixed
 `ZeroParadox/Category/NextTimeCategorical.lean`'s `isWellFoundedCoalgCat_iff` transports the predicate.
 
 ⚠ **AND THAT IS STILL NOT A PROOF OF Thm 7.6, so read what it does license carefully.** Thm 7.6 is
-**not formalized** anywhere in this corpus, and Mathlib has no well-founded-coalgebra machinery to
-formalize it with. What is now available is its **conclusion, by citation**, for this setting — because
+**not formalized** anywhere in this corpus, and no well-founded-coalgebra machinery to formalize it
+with was located in the Mathlib pin (search record in § V). What is now available is its **conclusion, by citation**, for this setting — because
 its assumptions are discharged and its subject is connected. That is what "instance of" means here and
 it is strictly weaker than a Lean derivation. **Do not write "we proved Thm 7.6."**
 
@@ -265,8 +264,7 @@ monomorphisms" as a single proposition — the paragraph above is the argument t
 written in prose and checkable by reading, not a theorem.
 
 **(2)** The whole table is about **`Type u` with `ofTypeFunctor P.Obj`** and says nothing
-about the MC-1 carriers (`TopCat`, `ModuleCat ℂ`, `KleisliCat PMF`), which remain unchecked — see
-`.claude-local/notes/future-research/amm_coreflection_requirements_gap_2026-08-04.md`. Both smoothness
+about the MC-1 carriers (`TopCat`, `ModuleCat ℂ`, `KleisliCat PMF`), which remain unchecked. Both smoothness
 theorems also take `{J : Type u}`, so they reach λ-chains for `Type u`-small λ; AMM quantify over every
 ordinal.
 
@@ -317,8 +315,8 @@ second attempt named `IsStableUnderTransfiniteComposition` plus cofinality of th
 real route, and longer than the one actually used. **Do not restore either citation.**
 
 ⚠ **Verified hypotheses are not a formalized theorem, and what the citation buys is narrow.** AMM
-Thm 7.6 is **not** proved in Lean here, and Mathlib has no well-founded-coalgebra machinery to prove it
-with. What Thm 7.6 would deliver, given its hypotheses, is that a well-founded fixed point **is the
+Thm 7.6 is **not** proved in Lean here, and no well-founded-coalgebra machinery to prove it with was
+located in the Mathlib pin (search record in § V). What Thm 7.6 would deliver, given its hypotheses, is that a well-founded fixed point **is the
 initial algebra** — i.e. it *concludes* initiality rather than assuming it, which is why the
 `fork_is_intrinsic` fence above ("not proved: that either carrier is initial/final") is consistent with
 citing it. That conclusion is available **by citation only**. Do not upgrade this to "we proved
@@ -333,8 +331,7 @@ was an unverified negative**: `WellPowered (Type 0)` fails on an unimported name
 universe parameter; `PreservesMonomorphisms` "does not synthesize" is true of the *instance database*
 and false of the *fact*; and smooth monomorphisms is **assembled from** pieces in the pin though no
 declaration bears the name. A failed `#synth` is evidence about the probe. See `CLAUDE.md`
-§ *"NOT IN THE LIBRARY" IS A CLAIM*, and
-`.claude-local/notes/future-research/amm_coreflection_requirements_gap_2026-08-04.md` § 4b. -/
+§ R-NOTINLIB. -/
 theorem fork_is_intrinsic :
     IsWellFoundedCoalg (P := idPF_Coalgebra) W.dest ∧
       ¬ IsWellFoundedCoalg (P := idPF_Coalgebra) M.dest :=
@@ -360,17 +357,17 @@ theorem natPF_wtype_wellFounded_and_inhabited :
 
 /-! ### § V. AMM Thm 7.6's hypotheses, VERIFIED for this setting
 
-**What this section is for.** Thm 7.6 holds in *"a complete and well-powered category with smooth
-monomorphisms"* for *"F preserving monomorphisms."* Earlier versions of this file recorded that count
-wrong **four times, in both directions** — see the ⚠ block in the overview for the measured sequence
-and the commits. Most were unverified **negatives** (`CLAUDE.md` § *"NOT IN THE LIBRARY" IS A CLAIM*);
-one was an unverified positive. **All four are now discharged**: complete and well-powered are Mathlib instances, and the
-three theorems below supply `F`-preservation plus smoothness clauses (b) and (c) — clause (a) being
-`Types.hasColimitsOfShape`, and AMM's trailing *"every morphism from 0 is monic"* immediate in `Type u`.
+**What this section is for.** Thm 7.6 holds in *"a complete and well-powered category with smooth monomorphisms"*
+for *"F preserving monomorphisms."* Earlier versions of this file recorded that count wrong **four times, in both
+directions** (the ⚠ block in the overview); most were unverified **negatives** (`CLAUDE.md` § R-NOTINLIB), one an
+unverified positive. **All four are now discharged**: complete and well-powered are Mathlib instances, and the three
+theorems below supply `F`-preservation plus smoothness clauses (b) and (c) — clause (a) being `Types.hasColimitsOfShape`,
+and AMM's trailing *"every morphism from 0 is monic"* immediate in `Type u`.
 
-⚠ **Verifying the hypotheses is NOT proving the theorem.** AMM Thm 7.6 is **not formalized here** and
-Mathlib has no well-founded-coalgebra machinery. What § V establishes is that this setting **satisfies
-the theorem's assumptions**, so its conclusion applies *by citation* — never as a Lean derivation.
+⚠ **Verifying the hypotheses is NOT proving the theorem.** AMM Thm 7.6 is **not formalized here**, and no
+well-founded-coalgebra machinery was located in the Mathlib pin as of 2026-11-03 (grep: `Mathlib/` for `WellFounded`/"well-founded"
+within 40 characters of "coalg", "recursive coalgebra", `IsRecursive`; `Mathlib/CategoryTheory/Endofunctor/` for
+`WellFounded`, `Acc`, "recursive": no hits). Its conclusion applies here *by citation* — never as a Lean derivation.
 
 ⚠ **And satisfying the hypotheses is not, by itself, the whole instance-of claim either.** Thm 7.6 is
 about **fixed points** and **initial algebras**; connecting to that *subject* is a separate axis, closed
@@ -501,8 +498,8 @@ end ZeroParadox
 
 /-! ## Axiom Purity Check
 
-**Measured 2026-08-04, not inferred.** `#print axioms` follows the STATEMENT, so read the split by
-what each statement mentions:
+**Measured 2026-08-04, not inferred.** `#print axioms` follows the statement and the proof: read the
+split first by what each statement mentions, which a proof can add to and never remove:
 
 ```
 nextTime                            no axioms          -- the operator itself

@@ -157,6 +157,37 @@ theorem no_selfCopyRef_of_fintype {α : Type*} [Fintype α] [DecidableEq α] (f 
         List.length_filter_lt_length_iff_exists.mpr ⟨y, hc y, by simp⟩
       omega
 
+/-- `Statement:` over a `Finite` type no `SelfCopyRef` map exists — the same list pigeonhole, on the
+enumeration `α ≃ Fin n` the `Finite` proof carries, deciding equality through `Fin n`. -/
+theorem no_selfCopyRef_of_finite_constructive {α : Type*} [hfin : Finite α] (f : α → α) :
+    ¬ SelfCopyRef f := by
+  rintro ⟨hi, hns, _⟩
+  apply hns
+  intro y
+  cases hfin with
+  | intro e =>
+    let l := (List.finRange _).map e.symm
+    have hnd : l.Nodup := (List.nodup_finRange _).map e.symm.injective
+    have hc : ∀ x, x ∈ l := fun x =>
+      List.mem_map.mpr ⟨e x, List.mem_finRange _, e.symm_apply_apply x⟩
+    rcases Decidable.em (∃ x ∈ l, e (f x) = e y) with h | h
+    · obtain ⟨x, _, hx⟩ := h
+      exact ⟨x, e.injective hx⟩
+    · exfalso
+      have hsub : l.map f ⊆ l.filter (fun x => decide (e x ≠ e y)) := by
+        intro z hz
+        obtain ⟨x, hxl, rfl⟩ := List.mem_map.mp hz
+        exact List.mem_filter.mpr ⟨hc _, decide_eq_true (fun he => h ⟨x, hxl, he⟩)⟩
+      have hle := ((hnd.map hi).subperm hsub).length_le
+      rw [List.length_map] at hle
+      have hlt : (l.filter (fun x => decide (e x ≠ e y))).length < l.length :=
+        List.length_filter_lt_length_iff_exists.mpr ⟨y, hc y, by simp⟩
+      omega
+
+-- Statement: it proves the statement of `no_selfCopyRef_of_finite` as written.
+example {α : Type} [Finite α] (f : α → α) : ¬ SelfCopyRef f :=
+  no_selfCopyRef_of_finite_constructive f
+
 /-- `Statement:` on a finite type, if `b` is the only periodic point of `f`, every orbit lands on `b`
 after finitely many steps. -/
 theorem orbit_reaches_unique_periodic_of_finite {α : Type*} [Finite α] (f : α → α) (b : α)
@@ -246,9 +277,9 @@ example (g : Fin 3 → Fin 3) : ¬ DieSelfCopyRef g :=
 
 /-! ## § IV. Fences
 
-* Proved: the AVAILABILITY of a `SelfCopyRef` map, on infinite carriers only. That the semilattice ⊥ on an
-  INFINITE carrier PERFORMS one is a commitment — see `l_inf` (`ZeroParadox/Information/Surprisal.lean`).
-  `MachinePhase`, the two-phase rounding that carries `machinePhaseKleene`, admits none
+* Proved: the AVAILABILITY of a `SelfCopyRef` map, on infinite carriers only. That ⊥ of a `ZPSemilattice`
+  whose carrier is INFINITE PERFORMS one is a commitment — see `l_inf` (`ZeroParadox/Information/Surprisal.lean`).
+  `MachinePhase`, the two-element carrier of `machinePhaseKleene`, admits none
   (`no_selfCopyRef_of_finite`; the `example` in `ZeroParadox/Computability/ComputationCannotBe.lean` § IX).
 * `#print axioms` on a proof reports that proof's footprint, never a principle's necessity; whether a
   statement as written carries choice is a separate measurement (`ZeroParadox/Category/ChoiceCannotBe.md`). -/
@@ -265,7 +296,8 @@ open ZeroParadox
 -- Measured: the three below carry `Classical.choice` (Mathlib routes). For the ⟹ half it enters
 -- turning bare `Infinite α` into a counting — `Cardinal.aleph0_le_mk`, `Cardinal.mul_aleph0_eq`,
 -- `Cardinal.add_one_eq`, `Cardinal.mk_option` (and `Infinite.natEmbedding`) each report it;
--- `Cardinal.eq` does not. A proof's footprint, never a principle's necessity: UNCLASSIFIED. In set theory
+-- `Cardinal.eq` does not. A proof's footprint, never a principle's necessity: the ⟹ half is
+-- UNCLASSIFIED (the finite half is classified in the note on the list pigeonhole below). In set theory
 -- without choice the ⟹ half is unprovable: infinite Dedekind-finite sets, with no one-to-one, not-onto
 -- self-map, are consistent there (Banakh, arXiv:2006.01613v4, Rem. 43.14, citing Jech 1973 § 4.6).
 -- Dependent choice gives every infinite set such a self-map (Prop. 43.12); the unique fixed point is not
@@ -278,9 +310,18 @@ open ZeroParadox
 #print axioms natSCR_selfCopyRef
 #print axioms selfCopyRef_of_equiv_nat
 #print axioms boundaryDouble_selfCopyRef
--- The finite half re-proved without `Classical.choice` (list pigeonhole over a `Fintype` enumeration):
--- ACCIDENTAL for the `[Fintype] [DecidableEq]` statement, whose Mathlib route reports choice. The
--- `[Finite]` statement `no_selfCopyRef_of_finite` is not re-proved here and stays UNCLASSIFIED.
+-- The finite half by list pigeonhole, under two instance readings. `[Finite]`: the statement's
+-- constants `Finite` and `SelfCopyRef` measure no axioms, and `no_selfCopyRef_of_finite_constructive`
+-- proves it at `[propext, Quot.sound]` (the `example` after it gives `no_selfCopyRef_of_finite`), so
+-- `no_selfCopyRef_of_finite`'s choice is ACCIDENTAL, as in set theory without choice: Banakh,
+-- arXiv:2006.01613v4, Thm 43.3 and Cor. 43.4 (p. 102), and "By Theorem 43.3, every finite set is
+-- Dedekind-finite" (p. 104). `[Fintype] [DecidableEq]`: the proof spends no
+-- choice, and the statement carries it through the `[Fintype α]` binder, since `Fintype` itself reports
+-- it at the pinned Mathlib, so `no_selfCopyRef_of_fintype` is STATEMENT-CARRIED
+-- (`ZeroParadox/Category/ChoiceCannotBe.lean` § III, STATEMENT-CARRIED IS INSTANCE-RELATIVE).
+#print axioms Finite
+#print axioms Fintype
+#print axioms no_selfCopyRef_of_finite_constructive
 #print axioms no_selfCopyRef_of_fintype
 -- The die form: `dieSelfCopyRef_of_selfCopyRef` adds to `fanIn_selfOnlyAt_of_selfCopyRef` only the
 -- step obtaining a point with no predecessor by contradiction from not-onto, and only it reports

@@ -89,6 +89,11 @@
       "scope": [
         "ZeroParadox/*.lean"
       ],
+      "scope_exclude": [
+        "ZeroParadox/Vendored/*",
+        "ZeroParadox/Ordinal/NaturalOpsPow.lean"
+      ],
+      "_scope_exclude_why": "Tim, 2026-11-01 (AskUserQuestion, 'Narrow ledger scope'): the checker skips vendored files by design (`is_vendored`: anything under Vendored/ plus the backports listed in tools/verify/vendored_files.txt) and the pre-push hook reports them exempt, but the registry scope still counted them, so a push changing a vendored header could never be satisfied by any run. This mirrors the existing written exemption; it adds none. ⚠ Keep this list in step with tools/verify/vendored_files.txt — a backport added there must be added here.",
       "reason": "reads the LEAN CORPUS only -- it walks the tree and takes fn.endswith('.lean'), so its verdict is about ZeroParadox/*.lean (218 files) and nothing else. With no declared scope the registry's strict default bound it to all 504 tracked paths, so it recorded ~218 of 504 for ever and re-running reproduced it identically; the gap was a missing DECLARATION, not a producer that skipped work. NB the glob is `ZeroParadox/*.lean` and NOT `ZeroParadox/**/*.lean`: `**/` requires at least one '/' and drops the five files directly under ZeroParadox/ (AxiomProfile, BottomCannotBe, ClaimsMirror, DiagonalFixedPoint, Miniature) -- three of which R-COREOBJ names as authoritative -- while rendering as 213/213 COMPLETE. Measured 2026-08-26."
     },
     "check_pov": {
@@ -129,6 +134,11 @@
       "scope": [
         "ZeroParadox/*.lean"
       ],
+      "scope_exclude": [
+        "ZeroParadox/Vendored/*",
+        "ZeroParadox/Ordinal/NaturalOpsPow.lean"
+      ],
+      "_scope_exclude_why": "Same as check_prose._scope_exclude_why (Tim, 2026-11-01): mirrors the checker's own `is_vendored` exemption; adds none. Keep in step with tools/verify/vendored_files.txt.",
       "reason": "reads the LEAN CORPUS only -- it walks the tree and takes fn.endswith('.lean'), so its verdict is about ZeroParadox/*.lean (218 files) and nothing else. With no declared scope the registry's strict default bound it to all 504 tracked paths, so it recorded ~218 of 504 for ever and re-running reproduced it identically; the gap was a missing DECLARATION, not a producer that skipped work. NB the glob is `ZeroParadox/*.lean` and NOT `ZeroParadox/**/*.lean`: `**/` requires at least one '/' and drops the five files directly under ZeroParadox/ (AxiomProfile, BottomCannotBe, ClaimsMirror, DiagonalFixedPoint, Miniature) -- three of which R-COREOBJ names as authoritative -- while rendering as 213/213 COMPLETE. Measured 2026-08-26."
     },
     "check_invariants": {

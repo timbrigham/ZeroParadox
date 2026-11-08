@@ -44,8 +44,8 @@ a one-step machine instead of `evaln`. -/
 -- iterated and searched) is F. J. Balbach, "Some classical results in inductive inference of
 -- recursive functions", Archive of Formal Proofs (2020), entry `Inductive_Inference`
 -- (https://www.isa-afp.org/entries/Inductive_Inference.html), theory `Universal`, § 1.5, in
--- classical Isabelle/HOL. Constructive universal functions exist in Coq, where no global choice
--- operator (no classical axiom) is available unless one is declared: Forster and Kunze, "A
+-- classical Isabelle/HOL. Constructive universal functions exist in Coq, where neither a global
+-- choice operator nor a classical axiom is available unless one is declared: Forster and Kunze, "A
 -- certifying extraction with time bounds from Coq to call-by-value λ-calculus", arXiv 1904.11818,
 -- a universal L-term extracted from a step-indexed self-interpreter. Carneiro, p. 12:15, on
 -- Mathlib's development: "there was no particular reason to assume LEM except in Theorem 5".
@@ -173,14 +173,14 @@ theorem mem_rfindSem {f : Code} {a m x : ℕ} :
   rw [Part.mem_map_iff]
   constructor
   · rintro ⟨k, hk, rfl⟩
-    rw [Nat.mem_rfind] at hk
-    obtain ⟨h1, h2⟩ := hk
+    obtain ⟨h1, h2⟩ := Nat.mem_rfind.1 hk
+    have h1 : true ∈ (fun x => decide (x = 0)) <$> eval f (Nat.pair a (k + m)) := h1
     rw [Part.map_eq_map, Part.mem_map_iff] at h1
     obtain ⟨v, hv, hv0⟩ := h1
     have : v = 0 := of_decide_eq_true hv0
     subst this
     refine ⟨k, rfl, hv, fun j hj => ?_⟩
-    have h3 := h2 hj
+    have h3 : false ∈ (fun x => decide (x = 0)) <$> eval f (Nat.pair a (j + m)) := h2 hj
     rw [Part.map_eq_map, Part.mem_map_iff] at h3
     obtain ⟨w, hw, hw0⟩ := h3
     cases w with
@@ -188,8 +188,7 @@ theorem mem_rfindSem {f : Code} {a m x : ℕ} :
     | succ w => exact ⟨w, hw⟩
   · rintro ⟨k, rfl, h0, hlt⟩
     refine ⟨k, ?_, rfl⟩
-    rw [Nat.mem_rfind]
-    refine ⟨Part.mem_map_iff _ |>.2 ⟨0, h0, rfl⟩, fun {j} hj => ?_⟩
+    refine Nat.mem_rfind.2 ⟨Part.mem_map_iff _ |>.2 ⟨0, h0, rfl⟩, fun {j} hj => ?_⟩
     obtain ⟨v, hv⟩ := hlt j hj
     exact Part.mem_map_iff _ |>.2 ⟨v + 1, hv, rfl⟩
 
@@ -261,8 +260,7 @@ theorem codeStep_sem : ∀ s, codeSem (codeStep s) = codeSem s
     rw [eval_pair_bind_eq]; rfl
   | .ev (.comp f g) n k => by
     show eval g n >>= codeContSem (.compK f k) = (eval g n >>= eval f) >>= codeContSem k
-    simp only [Part.bind_eq_bind]
-    rw [Part.bind_assoc]; rfl
+    exact (Part.bind_assoc (eval g n) (eval f) (codeContSem k)).symm
   | .ev (.prec f g) n k => by
     show eval f n.unpair.1 >>= codeContSem (.precK g n.unpair.1 0 n.unpair.2 k) =
       eval (prec f g) n >>= codeContSem k
@@ -405,8 +403,7 @@ theorem codeRun_complete :
       ((codeRun_complete g n b hb _).trans (CodeReaches.of_step (CodeReaches.refl _)))))
   | .comp f g, n, x, h, k => by
     have h' : x ∈ (eval g n).bind (eval f) := h
-    rw [Part.mem_bind_iff] at h'
-    obtain ⟨y, hy, hx⟩ := h'
+    obtain ⟨y, hy, hx⟩ := Part.mem_bind_iff.1 h'
     exact CodeReaches.of_step ((codeRun_complete g n y hy _).trans
       (CodeReaches.of_step (codeRun_complete f y x hx _)))
   | .prec f g, n, x, h, k => by
@@ -568,9 +565,25 @@ theorem boddNat_eq : ∀ n, boddNat n = (Nat.bodd n).toNat
 theorem div2Nat_eq : ∀ n, div2Nat n = Nat.div2 n
   | 0 => rfl
   | n + 1 => by
-    show div2Nat n + boddNat n = _
-    rw [div2Nat_eq n, boddNat_eq n, Nat.div2_succ]
-    cases Nat.bodd n <;> rfl
+    have hb : ∀ m, boddNat m = m % 2 := fun m => by
+      induction m with
+      | zero => rfl
+      | succ m ih =>
+        show natSel (boddNat m) 1 0 = (m + 1) % 2
+        rw [ih, Nat.add_mod]
+        rcases Nat.mod_two_eq_zero_or_one m with h | h <;> rw [h] <;> rfl
+    show div2Nat n + boddNat n = (n + 1) / 2
+    rw [div2Nat_eq n, hb n]
+    show n / 2 + n % 2 = (n + 1) / 2
+    have e := (Nat.mod_add_div n 2).symm
+    rcases Nat.mod_two_eq_zero_or_one n with h | h <;> rw [h] at e ⊢ <;>
+      generalize n / 2 = q at e ⊢ <;> subst e
+    · show q + 0 = (0 + 2 * q + 1) / 2
+      rw [Nat.zero_add, Nat.add_comm (2 * q) 1, Nat.add_mul_div_left 1 q (by decide : 0 < 2)]
+      exact (Nat.add_zero q).trans (Nat.zero_add q).symm
+    · show q + 1 = (1 + 2 * q + 1) / 2
+      rw [Nat.add_right_comm 1 (2 * q) 1, Nat.add_mul_div_left (1 + 1) q (by decide : 0 < 2)]
+      exact Nat.add_comm q 1
 
 /-- `Statement:` for `X = x.toNat + 2 * (y.toNat + 2 * P)`, `boddNat` and `div2Nat` read back
 `x`, `y` and `P`. -/
@@ -1008,8 +1021,8 @@ theorem univ_value_eq (a : ℕ) :
     obtain ⟨t0, ht0⟩ := (codeRun_halts_iff _ _ _).2 hx
     have hdom : (Nat.rfind fun t => (fun m => decide (m = 0)) <$>
         (Part.some (haltSearch (Nat.pair a t)))).Dom := by
-      rw [Nat.rfind_dom]
-      refine ⟨t0, ?_, fun _ => trivial⟩
+      refine Nat.rfind_dom.2 ⟨t0, ?_, fun _ => trivial⟩
+      show true ∈ (fun m => decide (m = 0)) <$> Part.some (haltSearch (Nat.pair a t0))
       rw [Part.map_eq_map, Part.mem_map_iff]
       refine ⟨0, ?_, rfl⟩
       rw [hs, ht0, (doneTest_enc _).2 ⟨x, rfl⟩]
@@ -1099,9 +1112,20 @@ theorem zero_not_universal :
 and `ofNatCodeCF`, the bridges to them, and a code meeting both: Kleene's ψ-form (`kleene_cf`)
 applied to a total dispatcher followed by `universal_code_cf'`.
 
-Reading (cited, not claimed): the textbook ψ-form corollary of the recursion theorem; in the framing
-of Bonfante, Kaczmarek, Marion, "On abstract computer virology from a recursion-theoretic
-perspective", J. Computer Virology 1(3-4), 2006, Def. 2 and Thm 3, such a code is a virus. -/
+Reading (cited, not claimed): the textbook ψ-form corollary of the recursion theorem; the
+computer-virology framing is glossed at the `example` below. -/
+
+-- Reading (cited, not claimed): Bonfante, Kaczmarek, Marion, "On abstract computer virology from a
+-- recursion-theoretic perspective" (Def. 2, Thm 3 numbered as in the authors' preprint held here;
+-- the locator J. Computer Virology 1(3-4), 2006, not checked against the publisher's record), call
+-- `v` a virus w.r.t. a computable `B` when `φ_v(p, x) = φ_{B(v,p)}(x)` (Def. 2). With `B` the s-m-n
+-- map their iteration property (1) makes every program a virus, as their Thm 20 itself records
+-- (a `B` built from s-m-n with `V_B = D`), so the label does not single out the code built here;
+-- shared with their Thm 3 is only the shape, a recursion-theorem fixed point `v` with
+-- `φ_v(p, x) = f(v, p, x)`.
+-- Statement: `curry` is computable and every code `v` meets Def. 2 with `B v p = curry v p`.
+example : Primrec₂ curry ∧ ∀ (v : Code) (p x : ℕ), eval v (Nat.pair p x) = eval (curry v p) x :=
+  ⟨primrec₂_curry, fun v p x => (cf_eval_curry v p x).symm⟩
 
 /-- `Statement:` `SelfPrints` with `encodeCode`: channel `0` returns the code's own number. -/
 def SelfPrintsCF (c : Code) : Prop :=
@@ -1514,8 +1538,9 @@ open ZeroParadox
 #print axioms zero_selfPrints_not_universal
 #print axioms universal_not_selfPrints_cf
 #print axioms unshifted_incompatible
--- Mathlib constants that entries above share a type with, then the corpus original
--- `selfref_universal_exists`.
+-- Mathlib constants that entries above share a type with (for the biconditional
+-- `Nat.Partrec.Code.exists_code`, its forward direction only: `cf_exists_code_mp`), then the corpus
+-- original `selfref_universal_exists`.
 #print axioms Nat.Primrec.casesOn'
 #print axioms Nat.Partrec.Code.exists_code
 #print axioms Nat.left_le_pair

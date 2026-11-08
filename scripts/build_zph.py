@@ -1,41 +1,12 @@
 """
 Zero Paradox — ZP-H: Categorical Bridge PDF Builder
-Version 1.27 | October 2026
-v1.23: DECISION BATCH REMEDIATION ROUND 2 (Tim rulings, 2026-09-15): the T-H3 status said 'That the transition is taken remains a framework commitment, not a consequence of any of the four'; now the Snap occurring follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2), not from any of the four.
-v1.22: OCCURRENCE COMMITMENT DEFINED, T5 RESTATED, T-SNAP RESIDUE (Tim decision batch, 2026-09-14): the occurrence commitment is instantiation occurs, and that the Snap occurs follows from it together with DA-1 (closed given DP-2). The ZP-E import line, the Open Items AX-1 row (whose status cell now reads 'the snap occurs given the occurrence commitment and DA-1'), the IR-ZP and IR-2 validation rows and the AX-1 validation row replace 'stated separately, as the occurrence commitment' / 'which ZP-E's DA-1 argues for' / 'occurrence is the occurrence commitment' with that sentence. The Open Items row says 'with no Lean kernel axioms' where it said 'with no axioms' (A4 and AX-B1 are called axioms on the same pages). T-SNAP's readable name 'Binary Snap Causality' is glossed once, at its first use in T-H3: 'Causality' refers to the shape of the step, not to its occurrence.
-v1.21: AX-1 SPLIT (Tim, 2026-09-14): AX-1 bundled the SHAPE of the Snap with its OCCURRENCE. The shape half is Theorem T-SNAP; the occurrence half was never retired and is a framework commitment (tsnap_holds_but_nothing_moves). These sites said AX-1 whole was derived or no longer an axiom: the ZP-E import line, the Open Items AX-1 row ("Derived as Theorem T-SNAP ... No longer an axiom"), the IR-ZP and IR-2 validation rows, and the AX-1 validation row. Each now scopes the derivation to the shape half and names the occurrence half as a commitment. T-H3's own row, which says T-SNAP is inherited as a derived theorem, is unchanged: T-SNAP is the shape theorem. AX-1 WORDING CORRECTED (Tim, 2026-09-14): retired, split into T-SNAP (shape, proved) and the occurrence commitment (stated separately); the earlier 'occurrence half was never retired' was a paraphrase error. ROUND 2 GATES (Tim rulings: title, ZP-C label, DA-1 credit): the Open Items AX-1 row credited the shape to 'the P0 / L-RUN / TQ-IH / DA-1 chain'; DA-1 argues for occurrence, not the shape, so the row now carries Tim's sentence: the shape is proved as T-SNAP from L-RUN, TQ-IH and the bottom law with no axioms, and occurrence is the occurrence commitment, which ZP-E's DA-1 argues for.
-v1.20:CC-1 STATUS SYNC (Tim, 2026-09-13: everything in one arc). "CC-1 derived / closed / no longer a freestanding commitment" collapsed two readings: cc1_derived proves the CONDITIONAL (a state sequence starting at a Quine atom starts at bottom), and with t_exec_iff the converse holds, so the starting-point choice is RESTATED through the Quine-atom role, not forced; every ZP-A lattice carries AFAStructure trivially. Every site now keeps both halves, matching ZP-J v2.7. The AX-G2 verification note no longer places a Lean result 'within the ZF+AFA setting'. ADVERSARY ROUND 1 (FAIL-BEDROCK, D1): that note's 'It remains a stated commitment, not a freestanding one' kept the retracted reading ('freestanding' is CLAIMS.md's word for a free modelling choice, which CC-1 is); it now says the check holds given CC-1.
-v1.19: AX-B1 OVERCLAIM RETRACTED (bedrock). The closing line read "No novel axioms: AX-B1 decidable, AX-G1 and AX-G2 grounded in prior layers". AX-B1 is the framework's ONE substantive modelling commitment - discrete Boolean existence rather than a continuum of partial states - and the `decide` proof only checks the two states are distinct GIVEN the two-element type; it does not verify the commitment. The Foreword retracted this exact wording at v2.12; ZP-H was the surviving twin.
-v1.18: FORCING OVERCLAIM RETRACTED (Remark R-FORCING). F_B was said to "force an irreversible jump at 0"; Valuation/Padic.lean retracts exactly that - the 2-adic topology proves irreversibility and a clopen gap, never a first step, and no metric result could. The closing "structurally forced across all four" now reads as the SHAPE being constrained; occurrence stays a framework commitment.
-v1.16: Rendered version removed from endnote (C1 sweep — no version changelogs in rendered PDF content).
-v1.15: CC-1 framing updated — CC-1 is a derived theorem in ZP-J (cc1_derived, Lean 4),
-no longer a freestanding modelling commitment.
-v1.14: K-13 vocabulary fix — "topological isolation" → "clopen separation" throughout;
-updated DP-1 and related prose to use precise vocabulary.
-v1.13: Version number removed from Open Items Register section header.
-v1.12: Scaffolding note removed from preamble — "ZP-H cannot be written until ZP-G is internally
-closed" was a development artifact not appropriate in a public document.
-v1.11: Remark R-FORCING added between Sections V and VI — addresses the "renaming" concern;
-explains that the four domain functors each independently ground the snap through their own
-domain logic, verified sorry-free in Lean 4; structural forcing, not categorical re-description.
-v1.10: fc_functor and fd_functor added — F_C and F_D now have concrete Lean Functor terms
-(InfoDepth and HilbDimDepth appendices in ZPH.lean). OQ-G3 fully closed for all four functors.
-C-H3/C-H4 status, OQ-G3 register, and Validation table updated to reflect sorry-free status.
-v1.9: C-H3 AX-G1 no-terminal argument corrected — replaced "larger alphabets" appeal with
-Lean-verified argument: ℝ≥0 has no greatest element (t + 1 > t), categorical expression of ZP-A R1.
-v1.8: C-H1 AX-G2 verification note added — ⊥-to-0 identification depends on CC-1/DA-2.
-v1.7: T-H3 consistency note strengthened — independence of null-analog discovery foregrounded.
-v1.5: fb/fc/fd shared witness consolidated into nnreal_initial_grounding.
-v1.4: OQ-G3 register updated — fb/fc/fd share proof term nnrealZPCategory.zpIsInitial.
-v1.3: T-H3 cross-framework consistency caveat expanded.
-v1.1: AX-1 updated to T-SNAP; Import Registry updated to ZP-G v1.1; OQ-G1 closed.
-v1.0: Initial release.
+Version 1.35 | November 2026
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.27'
+VERSION = '1.35'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -158,7 +129,7 @@ def build():
             'From ZP-E: Universal constituent cross-framework (T1). Hamming/JSD consistency (T2). '
             'Landauer bridge BA-1. Processing bounds T3. Unified Snap description T4. '
             'Iterative forcing T5. State representations T6. Zero Paradox T7. '
-            'T-SNAP: the shape of the Binary Snap is a derived theorem — AX-1 is retired, and that the Snap occurs is stated separately: it follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2).',
+            'T-SNAP: the shape of the Binary Snap is a derived theorem — AX-1 is retired, and that the Snap occurs is stated separately: it follows from the occurrence commitment together with DA-1 (closed given DP-2). The occurrence commitment is stated in two charts, execution and slot, in the header of ZeroParadox/Order/Snap.lean (indexed in ZeroParadox/Order/SnapCannotBe.lean &#167; II and CLAIMS.md), the slot chart as the hypothesis hw of t_snap_of_fires_once, that the tape fires at some stage, beside the theorem trials_fires_once that, for independent stages each firing with probability p, 0 &lt; p &#8804; 1, firing at some stage has probability one, which names no tape (ZeroParadox/Information/CrossingTrials.lean &#167; VIII).',
         ]
     ))
     E.append(sp(8))
@@ -235,7 +206,7 @@ def build():
             'which has no greatest element (natZPCategory, ZeroParadox/Multihomed/CategoricalBridge.lean). <font name="DV">&#10003;</font>',
             'AX-G2 respected: No join operation in L can return to &#8869; from a strictly larger state (ZP-A T3, '
             'monotonicity). Therefore F<sub>A</sub> sends no non-initial morphism to a map terminating at &#8869;. '
-            'Note: this verification depends on CC-1 / DA-2 to identify L\'s &#8869; with C\'s initial object 0. '
+            'Note: this verification depends on CC-1 / DA-2 for F<sub>A</sub> to send C\'s initial object 0 to L\'s &#8869;. '
             'CC-1 is restated in ZP-J, not forced: given AFAStructure, starting at a Quine atom and starting at &#8869; are the same condition (cc1_derived, t_exec_iff, Lean 4). The choice of starting point remains a ZP-A modelling commitment, so this check holds given CC-1. <font name="DV">&#10003;</font>',
         ]
     ))
@@ -262,14 +233,14 @@ def build():
             'ZeroParadox/Multihomed/CategoricalBridge.lean). <font name="DV">&#10003;</font>',
             'AX-G1 fails in TopCat: TopCat has a terminal object, the one-point space (the example after kleisli_bottom_not_terminal in '
             'ZeroParadox/Category/TreeSeam.lean). The TopCat realization fB_functor presents 0 as the limit of the shrinking balls, and that '
-            'floor {0} is itself a one-point space, terminal and not initial (padic_bottom_not_initial and the first example after it, '
+            'floor {0} is itself a one-point space, so it is terminal and not initial (padic_bottom_isTerminal and padic_bottom_not_initial, '
             'ZeroParadox/Multihomed/TreeObstructions.lean).',
             'AX-G2 respected in the stand-in category: in Q&#8322;BallDepth a morphism m &#8594; 0 means m &#8804; 0, so m = 0 by antisymmetry '
             '(q2BallZPCat). ZP-B C3, that no continuous path in Q<sub>2</sub> returns to 0 from any non-zero element, is the domain analogue of '
             'this stand-in, proved in its own layer. <font name="DV">&#10003;</font>',
             'AX-G2 in TopCat is stated at the initial object, which is not the floor {0}. TopCat\'s initial object is the empty space, and it '
-            'satisfies the AX-G2 shape: a space with a morphism into the empty space is empty, so it is isomorphic to it (the second example '
-            'after padic_bottom_not_initial in ZeroParadox/Multihomed/TreeObstructions.lean).',
+            'satisfies the AX-G2 shape: a space with a morphism into the empty space is empty, so it is isomorphic to it (the example '
+            'after padic_bottom_isTerminal in ZeroParadox/Multihomed/TreeObstructions.lean).',
         ]
     ))
     E.append(sp(6))
@@ -319,7 +290,7 @@ def build():
         'Status: PDF construction complete — Lean: full functor (fd_functor, sorry-free)',
         [
             'Object map: F<sub>D</sub> sends each object of C to a state space: in Lean, with C realized as &#8469;, object n goes to depth n of '
-            'HilbDimDepth (fd_functor.obj n) and to the module StateSpace n of ModuleCat &#8450; (fD_functor.obj n).The initial object 0 maps to F<sub>D</sub>(0): depth 0 of HilbDimDepth '
+            'HilbDimDepth (fd_functor.obj n) and to the module StateSpace n of ModuleCat &#8450; (fD_functor.obj n). The initial object 0 maps to F<sub>D</sub>(0): depth 0 of HilbDimDepth '
             '(fd_functor.obj 0) and the zero module &#8450;<sup>0</sup> (fD_functor.obj 0). ZP-D\'s vector model reads a point x of Q<sub>2</sub> as the '
             'vector T(x) &#8712; H = &#8450;<sup>n</sup>, through the transition operator T: Q<sub>2</sub> &#8594; H constructed in ZP-D (T2); there 0 of '
             'Q<sub>2</sub> is read as the unit vector T(0) = e<sub>0</sub> (ZP-D D2(i), met by T2), which &#8450;<sup>0</sup> does not contain, so the two '
@@ -334,7 +305,7 @@ def build():
             'fd_functor.map_comp and fD_functor.map_comp. <font name="DV">&#10003;</font>',
             'Remark (ZP-D T5, not composition): every state vector is a unit vector by ZP-D D2(v), so along T(x<sub>A</sub>) &#8594; T(x<sub>B</sub>) &#8594; '
             'T(x<sub>C</sub>) the norms are all 1 and ZP-D T5\'s non-decreasing norms hold with equality.',
-            'Preservation of identity: F<sub>D</sub>(id<sub>A</sub>) maps to the trivial orthogonal extension T(x<sub>A</sub>) &#8594; T(x<sub>A</sub>), which is the identity on the basis vector e<sub>k</sub>. <font name="DV">&#10003;</font>',
+            'Preservation of identity: F<sub>D</sub>(id<sub>A</sub>) is the identity on F<sub>D</sub>(A), the functor law map_id of the Lean functors, fd_functor.map_id and fD_functor.map_id; in the vector model it is the trivial extension T(x<sub>A</sub>) &#8594; T(x<sub>A</sub>). <font name="DV">&#10003;</font>',
             'In the vector model, T(0) = e<sub>0</sub> (ZP-D D2(i), met by T2) is the anchor vector from which all other state vectors are orthogonal extensions.',
             'AX-G1 respected in the stand-in category: the Lean functor fd_functor lands in HilbDimDepth, the &#8469;-indexed dimension-depth '
             'category, which has no terminal object because the depth index has no maximum: n + 1 &gt; n (hilbDimZPCat, '
@@ -375,7 +346,7 @@ def build():
             'F<sub>B</sub>: F<sub>B</sub>(0) = 0 &#8712; Q<sub>2</sub>. For any x &#8712; Q<sub>2</sub>, the unique morphism 0 &#8594; x is the discrete jump from 0 to x '
             'across the clopen boundary. Uniqueness: 0 is clopen-separated from all nonzero elements (ZP-B T3); the only clopen-respecting transition from 0 to x is the direct jump. '
             'This leg holds in the stand-in Q&#8322;BallDepth (fb_preserves_initial, ZeroParadox/Multihomed/CategoricalBridge.lean). In TopCat it '
-            'does not: the floor {0} is terminal and not initial there (padic_bottom_not_initial and the first example after it, '
+            'does not: the floor {0} is a one-point space, so it is terminal and not initial there (padic_bottom_isTerminal and padic_bottom_not_initial, '
             'ZeroParadox/Multihomed/TreeObstructions.lean). <font name="DV">&#10003;</font>',
             'F<sub>C</sub>: F<sub>C</sub>(0) = P = (1, 0). For any distribution P<sub>Y</sub>, the unique morphism P &#8594; P<sub>Y</sub> is the informational '
             'transition with work E = JSD(P &#8741; P<sub>Y</sub>). Uniqueness: JSD is symmetric and uniquely determined by P '
@@ -439,11 +410,13 @@ def build():
             'from 0 irreversible (it does not supply the departure &#8212; ZP-B cannot force the snap, and '
             'the first step is AX-B1); F<sub>C</sub> shows the information-theoretic transition costs exactly 1 bit; '
             'F<sub>D</sub> shows the Hilbert space snap is an orthogonal shift.',
-            'That the same structural singularity appears across four independently grounded domain categories '
-            '— each confirmed sorry-free in Lean 4 (fb_snap_q2_grounded, fc_snap_info_grounded, '
-            'fd_snap_hilb_grounded) — is not re-description. It is the theorem: the phenomenon\'s '
-            '<i>shape</i> is structurally constrained across all four canonical mathematical languages for '
-            'state description. That the transition is taken follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2), not from '
+            'That a transition of the snap\'s shape appears in each of the four domain categories, with the '
+            'groundings sorry-free in Lean 4 (the lattice conjunct join c<sub>0</sub> c<sub>1</sub> = c<sub>1</sub> of '
+            'th3_snap_all_functors for F<sub>A</sub>; fb_snap_q2_grounded, fc_snap_info_grounded and '
+            'fd_snap_hilb_grounded for F<sub>B</sub>, F<sub>C</sub> and F<sub>D</sub>), '
+            'is more than re-description: in each of the four canonical mathematical languages for state '
+            'description, the phenomenon\'s <i>shape</i> is constrained by that domain\'s own structure. That the '
+            'four are one structural singularity is the framework\'s reading, not a theorem. That the transition is taken follows from the occurrence commitment together with DA-1 (closed given DP-2), not from '
             'any of the four.',
         ]
     ))
@@ -475,10 +448,26 @@ def build():
             'framework located its null-analog through its own domain logic — &#8869; through A4 (ZP-A), '
             '0 &#8712; Q<sub>2</sub> through T3 (ZP-B), P = (1,0) through D1/RP-1 (ZP-C) — prior to and without '
             'reference to the others. ZP-D\'s e<sub>0</sub> is not independent in this sense: it is reached by transport '
-            'of ZP-B\'s 0 along T (ZP-D D2(i), T(0) = e<sub>0</sub>). The modeling commitment is the '
-            'identification of these independently-located objects under the functors, not the claim that '
-            'any domain forced the others\' choices. Their agreement confirms coherence across mathematical '
-            'representations of a shared foundation, not external replication. '
+            'of ZP-B\'s 0 along T (ZP-D D2(i), T(0) = e<sub>0</sub>). No identification of these objects is '
+            'made, under the functors or otherwise: they live in different types, and an equation across them '
+            'is ill-typed (MC-1, the bottom family). Where a shared role is checked, it is checked in one '
+            'framework at a time, and the occupant depends on the step chosen there. In the die '
+            '(ZeroParadox/Die.lean) the role Motion.SelfOnlyAt is a point that steps to itself and to nothing '
+            'else. In ZP-A, under a self-application map supplied by AbstractSelfApp, &#8869; is its only '
+            'occupant by that class&#8217;s own fields (selfApp_quine_role_iff, '
+            'ZeroParadox/Settheory/QuineDichotomy.lean), which the constant map onto &#8869; also meets. In ZP-B, '
+            'under doubling, 0 is its only occupant, on the 2-adic integers (z2_double_selfOnlyAt_iff, '
+            'ZeroParadox/Ordinal/Incompleteness.lean) and on Q<sub>2</sub> (the doubling example after '
+            'c_t_iz_null_balance, ZeroParadox/Valuation/SemilatticeInstance.lean). For ZP-C&#8217;s P = (1,0) and ZP-D&#8217;s e<sub>0</sub> no die '
+            'statement was located as of 2026-11-03 (searched: every file under ZeroParadox/ for Motion, '
+            'SelfOnlyAt, NoStepAt and LeavesAt beside those objects). What the categorical bridge checks for '
+            'F<sub>C</sub> and F<sub>D</sub> is a different role, initiality: they send the initial object 0 to '
+            'the empty type Fin 0 and the zero module (fC_zero_isInitial, fD_zero_isInitial). On the empty type '
+            'no point occupies the die role at all (the control in ZeroParadox/Category/SeamComparisonMap.lean); '
+            'on the zero module, which has one point, every endomorphism has exactly one point that steps to itself '
+            'only (hilbert_zero_seam_role_unique), which restates that it is a zero object. '
+            'This is not the claim that any domain forced the others&#8217; choices. Their agreement confirms '
+            'coherence across mathematical representations, not external replication. '
             'T-SNAP (Binary Snap Causality) is a derived '
             'theorem in ZP-E v2.0 and is inherited here with derived status. &#8220;Causality&#8221; in this name refers to the shape of the step, not to its occurrence. DP-1 remains the only design premise. <font name="DV">&#10003;</font>',
         ]
@@ -549,7 +538,7 @@ def build():
          'Retired —\nshape: T-SNAP\n(ZP-E v2.0);\nthe snap occurs\ngiven the occurrence\ncommitment and DA-1',
          'Binary Snap Causality. AX-1 is retired. Its content was split in two: the shape of the Snap is '
          'proved, as Theorem T-SNAP (from L-RUN, TQ-IH and the bottom law, with no Lean axioms), and that the Snap '
-         'occurs is stated separately: it follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2). '
+         'occurs is stated separately: it follows from the occurrence commitment together with DA-1 (closed given DP-2). '
          '(tsnap_holds_but_nothing_moves shows T-SNAP does not carry occurrence.) T-H3 inherits T-SNAP as a derived result. Not a gap.'],
         ['AX-G1',
          'Axiom —\ninitial half\nnot novel',
@@ -620,7 +609,7 @@ def build():
          'Valid — from AX-B1, RP-1; all four requirements verified; AX-G1 and AX-G2 checked in the stand-in InfoDepth (KleisliCat PMF has a '
          'terminal object). Lean: full functor (fc_functor, sorry-free). <font name="DV">&#10003;</font>'],
         ['C-H4: F<sub>D</sub>: C &#8594; Hilb',
-         'Valid — from DP-1; all four requirements verified; AX-G1 and AX-G2 checked in the stand-in HilbDimDepth (both fail in ModuleCat '
+         'Valid — the object map at 0 by assignment (ZP-D D2(i)), the morphism map from ZP-D D2(iii) and D2(iv), D2(iv) under DP-1; all four requirements verified; AX-G1 and AX-G2 checked in the stand-in HilbDimDepth (both fail in ModuleCat '
          '&#8450;). Lean: full functor (fd_functor, sorry-free). <font name="DV">&#10003;</font>'],
         ['T-H1: Universal property preserved',
          'Valid — OQ-G2 closed. ZP-G T5 is now unconditional for all four instantiation functors, for F<sub>B</sub> in its stand-in. <font name="DV">&#10003;</font>'],
@@ -637,7 +626,7 @@ def build():
         ['AX-1 (Binary Snap Causality)',
          'Retired — the shape is derived as T-SNAP in ZP-E v2.0 and is no longer an axiom; '
          'T-H3 and all downstream results inherit the derived status for the shape. '
-         'That the Snap occurs is stated separately: it follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2).'],
+         'That the Snap occurs is stated separately: it follows from the occurrence commitment together with DA-1 (closed given DP-2).'],
         ['AX-G1, AX-G2',
          'AX-G2 and the initial-object half of AX-G1 are grounded, not novel: AX-G2 by antisymmetry in categories built from a partial '
          'order with a least element, and it fails in ModuleCat &#8450; (see the Open Items register). The no-terminal half of AX-G1 is '
@@ -662,7 +651,7 @@ def build():
             'fb_functor (Q&#8322;BallDepth), fc_functor (InfoDepth), fd_functor (HilbDimDepth), F<sub>A</sub> via NatSLat | '
             'OQ-G3 fully closed | '
             'T-SNAP inherited as derived theorem | '
-            'T-H3 independence-of-discovery note: null-analog in each domain located independently | '
+            'T-H3 independence-of-discovery note: the null-analogs of ZP-A, ZP-B and ZP-C located independently, ZP-D&#8217;s e<sub>0</sub> by transport of ZP-B&#8217;s 0 | '
             'AX-G2 and the initial-object half of AX-G1 are grounded in prior layers where they hold, and the no-terminal half of '
             'AX-G1 is ZP-G\'s own commitment; AX-B1 is the framework\'s one '
         'substantive modelling commitment &#8212; discrete Boolean existence rather than a '

@@ -1,13 +1,13 @@
 """
-Build ZP-B: p-Adic Topology (v1.30)
+Build ZP-B: p-Adic Topology (v1.33)
 This document makes no Planck-scale comparison for epsilon-0: an adversary review (2026-05-21)
-flagged that analogy because it makes a document read as a physics grand theory.
+flagged that analogy because it makes the document read as a physics grand theory.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.30'
+VERSION = '1.33'
 FIRST_RELEASED = 'April 2026'
 
 def build():
@@ -27,7 +27,7 @@ def build():
     E.append(label_box('Axiom AX-B1 — Binary Existence', [
         'The foundational distinction of the Zero Paradox framework is binary: a state either exists or it does not. There is no third option at this level.',
         '0 — non-existence (&#8869; in ZP-A; in Lean, &#8869; of OntologicalStates under instOntZPS)',
-        '1 — existence (&#949;<sub>0</sub>, the state off &#8869; of OntologicalStates)',
+        '1 — existence (&#949;<sub>0</sub> of OntologicalStates, the state off &#8869; there; D5 below states the &#949;<sub>0</sub> role in Q<sub>2</sub>, which any nonzero point at the chosen rung occupies)',
         'AX-B1 holds at every state with anything above it: each has a first distinct state above it, with nothing strictly between. A state with nothing above it owes no step. (In this two-state chart, 1 is the top.)',
         'Status: AXIOM. This is the only non-topological commitment in ZP-B. It precedes p-adic analysis and is the premise from which the field selection is derived.',
         'Scope: AX-B1 asserts the structure of the ontological distinction, not its physical realisation. It is invariant across all instantiations.',
@@ -78,9 +78,10 @@ def build():
         'Prior art: Shannon names the base-2 unit of information the bit (a word he credits to J. W. Tukey), '
         'and a device with two stable positions can store one bit (C. E. Shannon, "A Mathematical '
         'Theory of Communication", Bell System Technical Journal 27 (1948), Introduction). '
-        'MP-1 minimises digit values without redundancy and does not use the cost measure that prices a base '
+        'MP-1 minimises the number of digit values without redundancy and does not use the cost measure that prices a base '
         'by the number of digit values times the number of digits it needs, with optimum e, so that 3 is almost always the most '
-        'economical integer base (B. Hayes, "Third Base", American Scientist 89(6), 490 (2001), doi:10.1511/2001.6.490). '
+        'economical integer base (B. Hayes, "Third Base", American Scientist 89(6), November&#8211;December 2001, doi:10.1511/2001.6.490; '
+        'the page, 490, is from the print record and was not checked: the copy read here is the unpaginated web version). '
         'For a given range rounding can tie or reverse that ranking (two values cost 2 in base 2 and 3 in base 3).',
     ]))
 

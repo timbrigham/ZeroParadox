@@ -1,4 +1,5 @@
 import Mathlib.SetTheory.ZFC.Basic
+import ZeroParadox.Die
 
 /-!
 # Zero as a Wall — the self-loop refutation and the diagonal engine (formal object)
@@ -81,8 +82,9 @@ theorem no_self_decider {A : Type*} (g : A → (A → Bool)) : ¬ Function.Surje
   exact bool_not_no_fixedpoint b hb
 
 /-- **THE WALL (general).** A well-founded relation admits no self-loop: no `x` with `r x x`. This is the
-    object-level core the metatheoretic boundary reduces to — the literal self-referential fixed point
-    (`x ∈ x`) cannot exist where the relation is well-founded. -/
+    object-level core the metatheoretic boundary reduces to — no self-loop (`x ∈ x`) exists where the
+    relation is well-founded, and the literal self-referential fixed point `x = {x}` implies `x ∈ x`, so
+    it cannot exist there either. The implication cited runs from `x = {x}` to `x ∈ x`. -/
 theorem wf_no_selfloop {α : Type*} {r : α → α → Prop} (h : WellFounded r) (x : α) : ¬ r x x := by
   have key : ∀ a, Acc r a → ¬ r a a := by
     intro a acc
@@ -90,11 +92,49 @@ theorem wf_no_selfloop {α : Type*} {r : α → α → Prop} (h : WellFounded r)
     | intro y _ ih => exact fun hy => ih y hy hy
   exact key x (h.apply x)
 
-/-- **Set-theoretic face.** Under Foundation (`∈` well-founded on `ZFSet`), no set is self-membered: the
-    literal Quine atom `⊥ = {⊥}` (`x ∈ x`) is refuted in-kernel. The structural shadow of the same object
-    IS realizable choice-free (`AbstractSelfApp`); only the literal membership self-loop is walled off. -/
+/-- **Set-theoretic face.** Under Foundation (`∈` well-founded on `ZFSet`), no set is self-membered
+    (`x ∉ x`). The literal Quine atom `⊥ = {⊥}` (`x = {x}`) would be self-membered, so it is refuted
+    in-kernel too (the `example` below); the implication runs from `x = {x}` to `x ∈ x`; for the converse
+    see `ZeroParadox/Settheory/Wall.md`. The structural shadow of the same object IS realizable choice-free (`AbstractSelfApp`);
+    only the literal membership self-loop is walled off. -/
 theorem no_quine_atom (x : ZFSet) : x ∉ x :=
   wf_no_selfloop ZFSet.mem_wf x
+
+-- Statement: no `ZFSet` is its own singleton, from `no_quine_atom`.
+example (x : ZFSet) : x ≠ {x} := by
+  intro h
+  have hx : x ∈ ({x} : ZFSet) := ZFSet.mem_singleton.2 rfl
+  rw [← h] at hx
+  exact no_quine_atom x hx
+
+/-- `Statement:` in the die motion on `ZFSet` with UP the identity and OVER `a ⟶ b` when `b ∈ a`
+    (a set steps to its members), `x` steps to itself and to nothing else (`Motion.SelfOnlyAt`) iff
+    `x = {x}`; both directions, the forward one by extensionality. `Reading:` the Quine-atom role
+    stated in the die. -/
+theorem zfset_selfOnlyAt_mem_iff (x : ZFSet) :
+    (Motion.ofTotal id (fun _ => rfl) (fun a b : ZFSet => b ∈ a)).SelfOnlyAt x ↔ x = {x} := by
+  refine ⟨fun ⟨hx, hu⟩ => ZFSet.ext fun z => ?_, fun h => ⟨?_, fun b hb => ?_⟩⟩
+  · rw [ZFSet.mem_singleton]; exact ⟨hu z, fun h => h ▸ hx⟩
+  · have hs : x ∈ ({x} : ZFSet) := ZFSet.mem_singleton.2 rfl
+    rw [← h] at hs; exact hs
+  · rw [h] at hb; exact ZFSet.mem_singleton.1 hb
+
+/-- `Statement:` in that motion no `ZFSet` steps to itself and to nothing else, since none steps to
+    itself (`no_quine_atom`). -/
+theorem zfset_quine_role_unoccupied :
+    ¬ ∃ x : ZFSet, (Motion.ofTotal id (fun _ => rfl) (fun a b : ZFSet => b ∈ a)).SelfOnlyAt x :=
+  fun ⟨x, h⟩ => no_quine_atom x h.1
+
+-- Statement: with OVER reversed (`a ⟶ b` when `a ∈ b`), `SelfOnlyAt x` unfolds, by definition, to
+-- `x ∈ x` and `x` belonging to no other set. Reading: a different formula from `x = {x}`.
+example (x : ZFSet) :
+    (Motion.ofTotal id (fun _ => rfl) (fun a b : ZFSet => a ∈ b)).SelfOnlyAt x ↔
+      (x ∈ x ∧ ∀ b, x ∈ b → b = x) := Iff.rfl
+-- Statement: and no `ZFSet` occupies it, since none is its own member (`no_quine_atom`); so on
+-- `ZFSet` this orientation does not separate the two formulas.
+example (x : ZFSet) :
+    ¬ (Motion.ofTotal id (fun _ => rfl) (fun a b : ZFSet => a ∈ b)).SelfOnlyAt x :=
+  fun h => no_quine_atom x h.1
 
 /-- **The wall, full strength.** A well-founded relation has no cycle of ANY length: no `x` is reachable
     from itself by one-or-more `r`-steps (`Relation.TransGen r x x`). `wf_no_selfloop` is the n=1 case;
@@ -121,6 +161,8 @@ open ZeroParadox
 #print axioms no_self_decider
 #print axioms wf_no_selfloop
 #print axioms no_quine_atom
+#print axioms zfset_selfOnlyAt_mem_iff
+#print axioms zfset_quine_role_unoccupied
 #print axioms wf_no_cycle
 #print axioms no_membership_cycle
 end PurityCheck

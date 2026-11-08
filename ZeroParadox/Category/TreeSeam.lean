@@ -1,4 +1,3 @@
--- EXPERIMENTAL (branch scaffolding): bottom-diagram probe campaign, not a finalized layer. Curated/load-bearing results are indexed in ZeroParadox/BottomCannotBe.lean and classified in ZeroParadox/MANIFEST.md.
 import ZeroParadox.State.HilbFunctor
 import ZeroParadox.Multihomed.InfoFunctor
 import ZeroParadox.Multihomed.TreeObstructions
@@ -28,16 +27,16 @@ Hilbert bottom `fD_functor.obj 0 = StateSpace 0`, **straddles**: it is a *zero o
 sits AT the μ/ν seam (the μ=ν coincidence, the [[project_diagonal_fixed_point]]) or it is a defect.
 
 **Resolution: #5 is the seam, not a defect — the only both-sided node among the three categorical
-bottoms** (a three-way separation, not a uniqueness claim over all objects). The others sit strictly
-on one side:
+bottoms** (the three full positions are stated together in `floor_positions_full`; not a uniqueness
+claim over all objects). The others sit strictly on one side:
 
 - `hilbert_bottom_isZero` — #5 `fD_functor.obj 0` is a **zero object** (initial ∧ terminal): the
   μ=ν coincidence, the seam node.
 - `kleisli_bottom_not_terminal` — #4 `fC_functor.obj 0 = Fin 0` is **initial but NOT terminal** (a
   terminal object would need a morphism *into* it from every object, but `fC_no_return` proves the
   hom-set from any nonempty object into `Fin 0` is empty). So #4 is strictly on the μ side.
-- (#3, the p-adic floor, is strictly on the ν side: `padic_bottom_not_initial`
-  — not initial.)
+- (#3, the p-adic floor, is strictly on the ν side: `padic_bottom_isTerminal` and
+  `padic_bottom_not_initial` — terminal and not initial.)
 
 So the μ/ν fork is genuinely populated: #4 strictly μ, #3 strictly ν, #5 the (among-these-three) seam
 where they coincide. That `StateSpace 0` is special this way is exactly what the zero object means — the place
@@ -45,8 +44,8 @@ the two universal properties collapse into one — which is the diagonal-fixed-p
 at a node, not a bug in the tree.
 
 **Honest fence.** "This seam IS the diagonal fixed point / the keystone" is the framework's
-interpretation, not a Lean claim; the Lean content is precisely: #5 is a zero object, #4 is initial
-and not terminal, #3 is not initial. The seam reading is the meaning we attach to that pattern.
+interpretation, not a Lean claim; the Lean content is precisely `floor_positions_full`. The seam
+reading is the meaning we attach to that pattern.
 -/
 
 namespace ZeroParadox
@@ -101,15 +100,36 @@ example :
       { default := fun _ => PMF.pure ()
         uniq := fun _ => funext fun _ => Subsingleton.elim (α := PMF Unit) _ _ })⟩⟩
 
-/-- The three categorical bottoms sit at **distinct positions of the μ/ν fork**, all in one statement:
-    #5 is a zero object (μ ∧ ν — the seam); #4 is not terminal (strictly μ); #3 is not initial
-    (strictly ν). So among these three, #5 is the only both-sided (seam) node. NOTE: this is a
-    three-way separation of the *named* bottoms, NOT a uniqueness claim quantified over all objects. -/
+/-- `Statement:` the `ModuleCat ℂ` floor is a zero object, the `KleisliCat PMF` floor is not
+    terminal, the `TopCat` floor `{0}` is not initial. This separates the zero object from each
+    one-sided floor; the two one-sided floors are told apart only with their positive halves, in
+    `floor_positions_full`. Named floors only, not a claim over all objects. -/
 theorem fork_positions_distinct :
     Limits.IsZero (fD_functor.obj 0)
     ∧ IsEmpty (Limits.IsTerminal (fC_functor.obj 0))
     ∧ IsEmpty (Limits.IsInitial (TopCat.of (↥({(0 : Q₂)} : Set Q₂)))) :=
   ⟨hilbert_bottom_isZero, kleisli_bottom_not_terminal, padic_bottom_not_initial⟩
+
+/-- `Statement:` the three full positions: a zero object in `ModuleCat ℂ`; initial and not terminal
+    in `KleisliCat PMF`; terminal and not initial in `TopCat`. -/
+theorem floor_positions_full :
+    Limits.IsZero (fD_functor.obj 0)
+    ∧ (Nonempty (Limits.IsInitial (fC_functor.obj 0))
+        ∧ IsEmpty (Limits.IsTerminal (fC_functor.obj 0)))
+    ∧ (Nonempty (Limits.IsTerminal (TopCat.of (↥({(0 : Q₂)} : Set Q₂))))
+        ∧ IsEmpty (Limits.IsInitial (TopCat.of (↥({(0 : Q₂)} : Set Q₂))))) :=
+  ⟨fork_positions_distinct.1, ⟨⟨fC_zero_isInitial⟩, fork_positions_distinct.2.1⟩,
+    ⟨padic_bottom_isTerminal, fork_positions_distinct.2.2⟩⟩
+
+-- `Statement:` the three clauses of `floor_positions_full` are pairwise exclusive for any object of
+-- any category, so the three floors occupy three distinct positions.
+example {C : Type*} [Category C] (X : C) :
+    ¬ (Limits.IsZero X ∧ IsEmpty (Limits.IsTerminal X))
+    ∧ ¬ (Limits.IsZero X ∧ IsEmpty (Limits.IsInitial X))
+    ∧ ¬ ((Nonempty (Limits.IsInitial X) ∧ IsEmpty (Limits.IsTerminal X))
+        ∧ (Nonempty (Limits.IsTerminal X) ∧ IsEmpty (Limits.IsInitial X))) :=
+  ⟨fun ⟨hz, ht⟩ => ht.false hz.isTerminal, fun ⟨hz, hi⟩ => hi.false hz.isInitial,
+    fun ⟨⟨⟨hi⟩, _⟩, _, hni⟩ => hni.false hi⟩
 
 end ZeroParadox
 
@@ -121,5 +141,6 @@ open ZeroParadox
 #print axioms hilbert_bottom_isZero
 #print axioms kleisli_bottom_not_terminal
 #print axioms fork_positions_distinct
+#print axioms floor_positions_full
 
 end PurityCheck

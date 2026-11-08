@@ -40,7 +40,7 @@ set_option maxHeartbeats 400000
 /-- An endofunction `g : β → β` "has a Lawvere witness" when the diagonal hypothesis of Lawvere's
     theorem holds: a point-surjection `α → (α → β)`. This is exactly the hypothesis Cantor's theorem
     shows is *impossible* for `β` with a fixed-point-free endomap. -/
--- [ZP-CUSTOM] no Mathlib named predicate | reason: Mathlib proves Lawvere's theorem (Function.exists_fixed_point_of_surjective) but exposes no reusable predicate for the diagonal hypothesis (β admits a point-surjection α → (α → β)). Naming it lets the face-split state, per face, whether the hypothesis holds (Set faces refuted by Cantor; computability face genuine). Naming alias (cf. IsComputationalQuine); every theorem reduces to the Mathlib lemma, no new axiomatic content.
+-- [ZP-CUSTOM] no Mathlib named predicate | reason: Mathlib proves Lawvere's theorem (Function.exists_fixed_point_of_surjective) but exposes no reusable predicate for the diagonal hypothesis (β admits a point-surjection α → (α → β)). Naming it lets the face-split state, per face, whether the hypothesis holds (Set faces refuted by Cantor; computability face genuine up to eval, its Lawvere form cited: Bauer 2017, multi-valued). Naming alias (cf. IsComputationalQuine); every theorem reduces to the Mathlib lemma, no new axiomatic content.
 def HasLawvereWitness (β : Type*) : Prop :=
   ∃ (α : Type*) (f : α → α → β), Function.Surjective f
 
@@ -113,13 +113,24 @@ theorem q2_no_witness : ¬ HasLawvereWitness ℚ_[2] :=
     "endomap" means *computable*, and `Nat.Partrec.Code.fixed_point` gives every such map a fixed
     point **up to `eval`**.
     ⚠ The qualifier is load-bearing: the literal claim is FALSE here too, since
-    `fun c => Code.pair c c` is total, computable, and returns its own input for no `c`. The escape
+    `fun c => Code.pair c c` is total, computable, and returns its own input for no `c`
+    (`code_pair_diag_fixedPointFree`, below). The escape
     restricts which MORPHISMS exist, not which codomain `eval` lands in
     (`no_computable_evalFixedPointFree`). Argument: `ZeroParadox/Category/Lawvere.md`. -/
 
-/-- `Statement:` a fixed point **up to `eval`**, not a literal one (Rogers / Kleene).
-    ⚠ `fun c => Code.pair c c` is a total computable endomap fixing no `c`; the escape is fewer
-    MORPHISMS, not a different codomain (`no_computable_evalFixedPointFree`, § V). -/
+/-- `Statement:` the diagonal pairing `fun c => Code.pair c c` is computable, and fixes no code
+    (`Code.pair c c` is strictly larger than `c` in `sizeOf`; in Gödel numbers the same gap is
+    Mathlib's `Nat.Partrec.Code.encode_lt_pair`). The named witness that a literal
+    fixed point fails in the effective category; cited by name from the sites that state it. -/
+theorem code_pair_diag_fixedPointFree :
+    Computable (fun c : Nat.Partrec.Code => Nat.Partrec.Code.pair c c) ∧
+      ∀ c : Nat.Partrec.Code, Nat.Partrec.Code.pair c c ≠ c :=
+  ⟨(Nat.Partrec.Code.primrec₂_pair.comp Primrec.id Primrec.id).to_comp,
+   fun c h => by have := congrArg sizeOf h; simp at this⟩
+
+/-- `Statement:` a fixed point **up to `eval`**, not a literal one (Rogers / Kleene); no literal
+    one in general (`code_pair_diag_fixedPointFree`). The escape is fewer MORPHISMS, not another
+    codomain (`no_computable_evalFixedPointFree`, `ZeroParadox/Category/DiagonalWitness.lean`). -/
 theorem computability_face_fixedPoint {f : Nat.Partrec.Code → Nat.Partrec.Code} (hf : Computable f) :
     ∃ c, Nat.Partrec.Code.eval (f c) = Nat.Partrec.Code.eval c :=
   Nat.Partrec.Code.fixed_point hf
@@ -142,5 +153,6 @@ open ZeroParadox
 #print axioms no_witness_of_nontrivial
 #print axioms nontrivial_lattice_no_witness
 #print axioms q2_no_witness
+#print axioms code_pair_diag_fixedPointFree
 #print axioms computability_face_fixedPoint
 end PurityCheck

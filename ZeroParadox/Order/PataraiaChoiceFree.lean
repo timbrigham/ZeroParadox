@@ -132,16 +132,16 @@ example (a : Ordinal.{0}) (ha : Ordinal.omega0 ^ a = a) :
     ∃ (f : Set.Icc (0 : Ordinal.{0}) a →o Set.Icc (0 : Ordinal.{0}) a)
       (y : Set.Icc (0 : Ordinal.{0}) a), (∀ x, (f x).1 = Ordinal.omega0 ^ x.1) ∧
       f y = y ∧ (∀ p, f p ≤ p → y ≤ p) ∧ y.1 = epsilonZero := by
-  haveI : Fact ((0 : Ordinal.{0}) ≤ a) := ⟨zero_le _⟩
+  haveI : Fact ((0 : Ordinal.{0}) ≤ a) := ⟨zero_le⟩
   have hmax := epsilon0_min_eq_max.{0, 0}
   let f : Set.Icc (0 : Ordinal.{0}) a →o Set.Icc (0 : Ordinal.{0}) a :=
-    { toFun := fun x => ⟨Ordinal.omega0 ^ x.1, zero_le _,
+    { toFun := fun x => ⟨Ordinal.omega0 ^ x.1, zero_le,
         (Ordinal.opow_le_opow_right Ordinal.omega0_pos x.2.2).trans (le_of_eq ha)⟩
       monotone' := fun _ _ h => Ordinal.opow_le_opow_right Ordinal.omega0_pos h }
   obtain ⟨y, hfy, hy⟩ := pataraia_least_prefixedPoint f
   have hle : epsilonZero ≤ a := hmax.2.2 ha
-  have e : (⟨epsilonZero, zero_le _, hle⟩ : Set.Icc (0 : Ordinal.{0}) a) =
-      f ⟨epsilonZero, zero_le _, hle⟩ := Subtype.ext hmax.2.1.symm
+  have e : (⟨epsilonZero, zero_le, hle⟩ : Set.Icc (0 : Ordinal.{0}) a) =
+      f ⟨epsilonZero, zero_le, hle⟩ := Subtype.ext hmax.2.1.symm
   refine ⟨f, y, fun _ => rfl, hfy, hy, le_antisymm ?_ (hmax.2.2 (congrArg Subtype.val hfy))⟩
   exact hy _ (le_of_eq e.symm)
 

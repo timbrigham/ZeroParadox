@@ -36,8 +36,9 @@ section ComputationCannotBeIndex
 
 -- Statement: for any `g : A → (A → Bool)`, `¬ Function.Surjective g`. Proved from
 --   `lawvere_fixedpoint` and `bool_not_no_fixedpoint` — the Cantor/Lawvere no-surjection fact.
--- Reading: the halting wall. Turing (1936) enters at the NEXT entry,
---   `self_halting_undecidable`; this declaration mentions no machine and no halting.
+-- Reading: the halting wall. The halting problem, conventionally credited to Turing (1936; that
+--   paper was not consulted here), enters at the NEXT entry, `self_halting_undecidable`; this
+--   declaration mentions no machine and no halting.
 #check @ZeroParadox.no_self_decider
 
 -- Statement: `fun c => (eval c (encode c)).Dom` is not a ComputablePred.
@@ -49,7 +50,8 @@ section ComputationCannotBeIndex
 
 -- Statement: no computable map is EVAL-fixed-point-free — `eval (g c) ≠ eval c` cannot hold for
 -- every c. ⚠ LITERAL fixed-point-freeness is a different property and DOES occur on codes:
--- `fun c => Code.pair c c` fixes nothing. The qualifier is in the declaration's own name.
+-- `fun c => Code.pair c c` fixes nothing (`code_pair_diag_fixedPointFree`,
+-- `ZeroParadox/Category/Lawvere.lean`). The qualifier is in the declaration's own name.
 #check @ZeroParadox.no_computable_evalFixedPointFree
 
 -- Statement: on `List Bool`, `partialAddOne w = w ↔ w = []` (`ZeroParadox/Category/LawvereTwoAdic.lean`);
@@ -139,7 +141,8 @@ example (k : ℕ) : ZeroParadox.IsComputationalQuine (Nat.Partrec.Code.const k) 
 #check @ZeroParadox.selfPrints_universal_address
 
 -- Statement: a disjunctive tape `ℕ → Bool` equals its own shift by no `a > 0`: no full copy of
---   itself at any offset.
+--   itself at any offset. "Copy" here is a tape equal to its own shift, not a `SelfCopyRef`
+--   map (§ IX).
 -- Reading: the ⊥-role commitment this bears on, with both sides stated, is
 --   `ZeroParadox/Information/Disjunctive.lean` § VI.
 #check @ZeroParadox.disjunctive_not_periodic
@@ -157,16 +160,43 @@ example (k : ℕ) : ZeroParadox.IsComputationalQuine (Nat.Partrec.Code.const k) 
 
 -- Statement: under `[KleeneStructure L]`, any Quine atom `q : L` equals `bot` of the `ZPSemilattice L`.
 --   No `Code` and no Kleene clause appear; the `[KleeneStructure]` hypothesis is inert on the proof
---   route — though NOT absent from the axiom footprint, since `#print axioms` follows the statement.
--- Reading: the tie of the Kleene quine to `bot` of `L` is the `KleeneStructure` commitment, and not
---   a Lean `=` (`Code` versus `L`).
+--   route — though NOT absent from the axiom footprint: `#print axioms` follows the statement as
+--   well as the proof, and the hypothesis reaches `Nat.Partrec.Code.instDenumerable` through
+--   `IsComputationalQuine` (`ZeroParadox/Computability/Kleene.md`, Axiom footprint).
+-- Reading: the Kleene quine and `bot` of `L` are compared through the die's Quine-atom role
+--   (`ZeroParadox/Computability/Kleene.lean` § II, § IX), and not through a Lean `=` (`Code` versus `L`
+--   for a generic `L`; the `example`s after `botCode_is_quine`).
 #check @ZeroParadox.kleene_quine_is_bot
 
 -- Statement: the class field — the instance's `botCode` satisfies `IsComputationalQuine`, which the
 --   constant codes also satisfy (§ III). No field of `KleeneStructure` relates `botCode` to `bot`.
--- Reading: that `botCode` is the computational face of `bot` is the `KleeneStructure` commitment. No
---   theorem states it, and no `=` can: `botCode` is a `Code` and `bot` an element of `L`.
+-- Reading: that `botCode` is the computational face of `bot` was the reading `KleeneStructure` was
+--   built for; its identity half is retired and its running half is the occurrence commitment
+--   (`ZeroParadox/Computability/Kleene.lean` § II). No theorem states the identity half. For a
+--   generic carrier `L` no `=` can: `botCode` is a `Code` and `bot` an element of `L` (the first
+--   `example` below). At `L := Code`, under an assumed instance (none is
+--   declared in this corpus), the `=` typechecks (the second).
 #check @ZeroParadox.KleeneStructure.botCode_is_quine
+
+-- Statement: for a generic `L`, `botCode = bot` is a type mismatch; this fails to compile if it elaborates.
+/--
+error: Type mismatch
+  bot
+has type
+  L
+but is expected to have type
+  Nat.Partrec.Code
+-/
+#guard_msgs in
+open ZeroParadox ZeroParadox.ZPSemilattice in
+example (L : Type) [ZPSemilattice L] [KleeneStructure L] : Prop :=
+  KleeneStructure.botCode (L := L) = (bot : L)
+
+-- Statement: at `L := Nat.Partrec.Code`, given `ZPSemilattice` and `KleeneStructure` instances on `Code`
+--   as hypotheses, the same `=` is a well-typed proposition.
+open ZeroParadox ZeroParadox.ZPSemilattice in
+example [ZPSemilattice Nat.Partrec.Code] [KleeneStructure Nat.Partrec.Code] : Prop :=
+  KleeneStructure.botCode (L := Nat.Partrec.Code) = (bot : Nat.Partrec.Code)
 
 -- Statement: `IsQuineAtom (bot : MachinePhase)` — c₀, ⊥ of `MachinePhase`, is its unique
 --   self-containing state. Mentions no `Code` and no execution. `machinePhaseAFA` defines
@@ -174,8 +204,8 @@ example (k : ℕ) : ZeroParadox.IsComputationalQuine (Nat.Partrec.Code.const k) 
 --   `example` after this theorem in
 --   `ZeroParadox/Computability/Kleene.lean` proves the same type with no Kleene instance.
 -- Reading: that c₀ is self-EXECUTING is DA-1's claim. DA-1's precondition is the occurrence
---   commitment, which DA-1 consumes; the `KleeneStructure` commitment adds only that `botCode`
---   names ⊥ of `MachinePhase`.
+--   commitment, which DA-1 consumes; no code is read as naming ⊥ of `MachinePhase` (the identity
+--   reading is retired, `ZeroParadox/Computability/Kleene.lean` § II).
 #check @ZeroParadox.da1_closed_concrete
 
 -- Statement: c₀ is a Quine atom of `MachinePhase` AND a state sequence in that carrier starts at c₀
@@ -263,7 +293,9 @@ example {σ : Type*} (f : σ → Option σ) {s t : σ} (h : f s = Option.none)
 -- Reading: `Occurs` is a static property of a (code, input) pair.
 #check @ZeroParadox.zero_occurs
 
--- Statement: `fun c => Occurs c n` is not a ComputablePred. Turing (1936) via Mathlib.
+-- Statement: `fun c => Occurs c n` is not a ComputablePred, via Mathlib's
+--   `ComputablePred.halting_problem`. The halting problem's undecidability is conventionally
+--   credited to Turing (1936; that paper was not consulted here).
 #check @ZeroParadox.occurrence_undecidable
 
 -- Statement: occurrence is an REPred; non-occurrence is not.
@@ -380,8 +412,8 @@ example {σ : Type*} (f : σ → Option σ) {s t : σ} (h : f s = Option.none)
 --   onto, with exactly one fixed point. The infinite-to-map direction is proved with
 --   `Classical.choice` and is not provable in set theory without choice (the `PurityCheck` note in
 --   `ZeroParadox/Computability/SelfCopyReference.lean`).
--- Reading: SCOPE. This is the existence of such a map, not that one is applied. That ⊥ on an
---   infinite carrier performs one is a commitment (`ZeroParadox/Computability/SelfCopyReference.lean`
+-- Reading: SCOPE. This is the existence of such a map, not that one is applied. That ⊥ of a
+--   `ZPSemilattice` whose carrier is infinite performs one is a commitment (`ZeroParadox/Computability/SelfCopyReference.lean`
 --   § IV); `MachinePhase`, which carries `machinePhaseKleene`, admits none
 --   (the `example` below).
 #check @ZeroParadox.infinite_iff_exists_selfCopyRef

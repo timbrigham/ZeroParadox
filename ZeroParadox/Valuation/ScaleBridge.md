@@ -8,8 +8,8 @@ the declarations, the Engineer's Take and the per-declaration glosses.
 `ZeroParadox/Valuation/Scale.lean` defines `ValuationStructure` over `[ZPSemilattice L]`, but the four
 axioms (`scale_bot`, `val_bot`, `val_unique`, `val_scale`) only ever use `bot` — the join `⊔` never
 appears. So `ZPSemilattice` is an over-strong constraint, and no `ValuationStructure` `ℤ_[2]` is
-DEFINED even though all four axioms hold (proved as standalone theorems in
-`ZeroParadox/Valuation/Scale.lean` § V).
+registered as an instance even though all four axioms hold (proved as standalone theorems in
+`ZeroParadox/Valuation/Scale.lean` § V; one is built inside an `example` there, not registered).
 
 ⚠⚠ **Not defined is not the same as not possible, and here the difference decides the answer.**
 `Nonempty (ValuationStructure ℤ_[2])` fails to elaborate only because no `ZPSemilattice ℤ_[2]`
@@ -71,13 +71,12 @@ membership — **do not cite membership as evidence that a witness is non-degene
 ## Prior art
 
 **In this corpus, and it is the general form:** `orbit_dichotomy`
-(`ZeroParadox/Order/OrbitDichotomy.lean`), whose file header already names the framework's scale map as
-the checkable branch of exactly this argument. Cite that for the general pattern.
+(`ZeroParadox/Order/OrbitDichotomy.lean`), whose header notes that the framework's scale map runs the
+same argument (`valBridge_forces_infinite`). Cite that for the general pattern.
 
 ⚠ **`valBridge_forces_infinite` is NOT an instance of it.** That theorem assumes `Function.Injective s`;
-`ValBridge` does not supply it — take `L = {bot} ⊎ (ℕ × Bool)` with `val (n, b) = n` and
-`scale (n, b) = (n+1, false)`, which satisfies all four axioms and collapses `(0, true)` with
-`(0, false)`. `val_scale` buys injectivity *along an orbit*, which is all the argument consumes.
+`ValBridge` does not supply it: the counter-model is `valBridge_scale_not_injective`
+(`ZeroParadox/Valuation/ScaleBridge.lean`). `val_scale` buys injectivity *along an orbit*, which is all the argument consumes.
 
 The two-element case is older still: `ZeroParadox/Settheory/OntBridge.lean` records that
 `OntologicalStates` admits no `ValuationStructure`, by `valuationStructure_forces_infinite` — the
@@ -93,8 +92,9 @@ says nothing about it. Credit points outward.
 
 For the degenerate half, the reason a non-degeneracy condition must be an inequation rather than a
 further equation is cited from Burris & Sankappanavar, *A Course in Universal Algebra*, each passage
-with its own page, in `ZeroParadox/Valuation/InfinitudeFloor.md` § *Prior art*. ⚠ Their p. 250 remark
-"trivial algebras satisfy any quasi-identity" does **not** apply here: `val_scale`'s antecedent
+with its own page, in `ZeroParadox/Valuation/InfinitudeFloor.md` § *Prior art*. ⚠ The clause
+"trivial algebras satisfy any quasi-identity", in the proof of their Thm 2.25 (p. 250), does **not**
+apply here: `val_scale`'s antecedent
 `x ≠ bot` is a negated atom, and a quasi-identity admits only positive ones.
 
 Standard names, for searching: `(L, scale)` is a **mono-unary algebra** (a **unar**), and the mechanism

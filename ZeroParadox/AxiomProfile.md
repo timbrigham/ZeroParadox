@@ -54,13 +54,15 @@ decision of where UP is defined (`Motion.registeredDecidable_of_classical`) and 
 (`Motion.selectedTotal_of_classical`, whose proof also calls `Classical.choose` directly), all in
 `ZeroParadox/Die.lean`.
 
-**Inherited, in the die:** `Motion.RegisteredComputable` (a definition, so its statement),
-`registeredDecidable_of_registeredComputable`, `registeredComputable_of_upTotal` and
-`ofOption_registeredComputable` each measure `[propext, Classical.choice, Quot.sound]`. The choice
-enters through Mathlib's `Bool` encoding instance `Primcodable.bool`, which stating `Computable d`
-for a `Bool`-valued `d` uses; `Computable` itself is choice-free. A theorem that only assumes `M.RegisteredComputable`, or only
-`∃ d : ℕ → Bool, Computable d`, reports the same (statement control, 2026-10-18), so that variant is
-**statement-carried**.
+**Inherited, in the die:** `Motion.RegisteredComputable` and the theorems stated with it; their
+footprints are printed in the purity block of `ZeroParadox/Die.lean`. `Motion.RegisteredComputable`
+is a definition whose value is its statement, so its printed footprint is the statement's. The
+choice enters through `Primcodable.bool`, the encoding of the `Bool` codomain, and not through
+`Computable` itself: a statement assuming only `∃ d : ℕ → Bool, Computable d` carries
+`Classical.choice`, while one assuming `∃ d : ℕ → ℕ, Computable d` is `[propext, Quot.sound]` (the two
+statement-control `example`s after `#print axioms Computable.const` in `ZeroParadox/DieCannotBe.lean`
+§ IX, with the measurement). The `ℕ`-valued variant and the footprint of the proof it uses are there
+too.
 
 ⚠ **Do not read `no_witness_of_fixedPointFree`'s axiom-freedom as evidence the choice is avoidable.**
 It is not a purer proof of the same statement — it *takes* a fixed-point-free map as a hypothesis,
@@ -85,7 +87,7 @@ inherited dependence can be essential**, and *inherited* is not a synonym for *r
 | | own | inherited |
 |---|---|---|
 | **essential** (on § IV's premise) | `fixedPointFree_of_nontrivial`, `botCovered_botIntervalTwo_classical`, `Motion.registeredDecidable_of_classical`, `Motion.selectedTotal_of_classical` | well-order comparability |
-| **statement-carried** (statement control, measured 2026-10-08; the die's row 2026-10-18) | — | `c3_irreversible`, `t4_snap_orthogonal`, `fD_functor`, `fC_functor`, `snap_dichotomy`, `quine_dichotomy`; in the die, `Motion.RegisteredComputable` |
+| **statement-carried** (statement control, measured 2026-10-08; for `Motion.RegisteredComputable`, its printed footprint in `ZeroParadox/Die.lean`) | — | `c3_irreversible`, `t4_snap_orthogonal`, `fD_functor`, `fC_functor`, `snap_dichotomy`, `quine_dichotomy`; in the die, `Motion.RegisteredComputable` |
 | **open** | — | the remaining analytic layers (e.g. `fB_functor`, whose statement is choice-free) |
 
 ⚠ **A proof's footprint never establishes a principle's necessity.** `#print axioms` on a proof
@@ -96,9 +98,14 @@ side needs a **reduction**. So the reductions are the evidence on the necessity 
 becomes "not removable" only on § IV's premise. Provenance ("not inherited") is a separate question,
 settled by the footprint table above read against the source.
 
-For the statement-carried rows no proof can drop the choice (`ZeroParadox/Category/ChoiceCannotBe.md`,
+For the statement-carried row no proof can drop the choice (`ZeroParadox/Category/ChoiceCannotBe.md`,
 STATEMENT-CARRIED); the open question there is a restatement on a carrier whose statements are
-choice-free. Whether the *remaining* analytic-layer dependence is removable is genuinely open — see the README
+choice-free. The ε₀ results of `ZeroParadox/Ordinal/Epsilon0MinMax.lean` and
+`ZeroParadox/Ordinal/SnapNucleus.lean` are statement-carried too, though not rows of the table (their
+statement controls, `epsilon0EqNfpBotStatement`, `epsilon0MinMaxStatement`,
+`snapNucleusNonemptyStatement` and `snapNucleusBotStatement`, are printed in those files); for them
+the restatement's two readings and the search record are in `ZeroParadox/Ordinal/SnapNucleus.md`
+§ "Axiom footprint". Whether the *remaining* analytic-layer dependence is removable is an open question (UNCLASSIFIED) — see the README
 Question Register and the `choice-probe` experiment, which found it mostly incidental in the one layer
 classified so far. None of it is load-bearing for the core claims: those (`ZeroParadox/AxiomProfile.lean`
 § I) are proved without choice.

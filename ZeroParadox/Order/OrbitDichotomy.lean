@@ -1,6 +1,7 @@
 -- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the "1-or-∞, no finite middle" dichotomy as an orbit argument — a sufficient condition for that shape; the shape itself is not universal (§ fpp below). The framework's scale map runs the same argument (`valBridge_forces_infinite`). Curated results indexed in ZeroParadox/MANIFEST.md.
 
 import Mathlib.Tactic
+import Mathlib.NumberTheory.Padics.PadicNumbers
 
 set_option maxHeartbeats 400000
 
@@ -23,13 +24,15 @@ the "one or infinitely many" shape only; for the λ-calculus see § fpp.
 -/
 
 /-! ## § fpp — the λ-calculus name for the shape, where it holds and where it fails
-Reading: there the shape is the **fixed point property (fpp)**: Manzonetto, Polonsky, Saurin & Simonsen,
-*The fixed point property and a technique to harness double fixed point combinators*, J. Logic and
-Computation (2019), doi:10.1093/logcom/exz013, Def. 2.15 (numbering as in the preprint; the journal
-version was not checked). Their Problem 2 restates TLCA #25: "Does λβ satisfy the fixed point property?".
-Holds: λβ satisfies the open fpp (their Thm 3.6); the closed question remains open (their abstract).
-Fails: no sensible λ-theory satisfies the fpp (their Thm 5.4), and in each one, for every k > 0, some
-closed term has exactly k fixed points modulo that theory (their Prop. 5.6). -/
+Reading: there the shape is the **fixed point property (fpp)**: Manzonetto, Polonsky, Saurin & Simonsen, *The fixed point
+property and a technique to harness double fixed point combinators*, J. Logic and Computation (2019),
+doi:10.1093/logcom/exz013, Def. 2.15 (every number cited here is the preprint's; journal not checked). Their Problem 2
+restates TLCA #25, "Does λβ satisfy the fixed point property?", first raised by Intrigila and Biasone, MSCS 10(5):595–615
+(2000) (their p. 1, ref. [17]; not consulted here). Holds: λβ satisfies the open fpp (their Thm 3.6); the closed question
+was open as of that paper (2019, their abstract); a later solution was not located as of 2026-10-31 (one web search; the
+TLCA problem page, last updated 2014, predates the paper and records no status). Fails: no sensible λ-theory satisfies
+the fpp (their Thm 5.4), and in each one, for every k > 0, some closed term has exactly k fixed points modulo that theory
+(their Prop. 5.6). λβ, the least λ-theory, is not sensible (from their p. 6 and Def. 1.8), so the two do not conflict. -/
 
 namespace ZeroParadox
 
@@ -38,14 +41,12 @@ namespace ZeroParadox
 subsingleton or infinite — never a finite set of size ≥ 2. The finite middle is excluded because a
 witness `x ≠ p` in `S` drags its whole (infinite) forward orbit into `S`.
 
-**The framework's scale case is checked** at
 `valBridge_forces_infinite` (`ZeroParadox/Valuation/ScaleBridge.lean`) runs the same argument for
 the framework's scale map and concludes that a `ValBridge` carrier holding any point besides `bot` is
 infinite. ⚠ It is **not** an instance of this theorem, and the reason is the `hs` hypothesis here:
-`ValBridge` does not supply `Function.Injective s`, and cannot be made to (`valBridge_scale_not_injective`,
-`ZeroParadox/Valuation/ScaleBridge.lean`): `L = {bot} ⊎ (ℕ × Bool)` with `val (n, b) = n` and
-`scale (n, b) = (n+1, false)` satisfies all four of its axioms while collapsing `(0, true)` with
-`(0, false)`. There the valuation supplies injectivity **along an orbit**
+`ValBridge` does not supply `Function.Injective s`, and cannot be made to: the counter-model is
+`valBridge_scale_not_injective` (`ZeroParadox/Valuation/ScaleBridge.lean`). There the valuation supplies
+injectivity **along an orbit**
 directly, which is all the argument consumes. Same argument, weaker hypothesis on that axis. -/
 theorem orbit_dichotomy {X : Type*} (s : X → X) (hs : Function.Injective s) (p : X) (_hp : s p = p)
     (hper : ∀ (x : X) (n : ℕ), 0 < n → s^[n] x = x → x = p)
@@ -92,9 +93,11 @@ theorem iterate_smul {k V : Type*} [Monoid k] [MulAction k V] (c : k) (n : ℕ) 
 subsingleton or infinite — the "1 or ∞" dichotomy, no finite middle. Instance of `orbit_dichotomy` via
 the scaling action `v ↦ 2 • v`: its only periodic point is `0` (`2^n ≠ 1`), and `Fix f` is
 scaling-invariant because `f` is linear (`f (2•v) = 2•(f v)`). Stated over an ordered field for a clean
-`2^n ≠ 1`; the framework's scale map `x ↦ 2x` on ℚ₂ (not ordered) obeys the same `orbit_dichotomy` argument
-with `2^n ≠ 1` supplied by the 2-adic valuation (`v₂(2^n x) = n + v₂ x ≠ v₂ x` for `n ≥ 1`, `x ≠ 0`;
-cf. `q2_unique_fp`, the "1" pole). Here the orbit hypothesis is *checkable*; for the λ-calculus see § fpp. -/
+`2^n ≠ 1`. The order is not what the argument consumes: `2^n ≠ 1` (for `n ≥ 1`) holds in every field of
+characteristic zero, so ℚ₂ (not ordered) obeys the same `orbit_dichotomy` argument; the `example` after
+this theorem checks it for ℚ₂-linear self-maps. Read in the 2-adic chart, the same inequality is visible in
+the valuation (`v₂(2^n x) = n + v₂ x ≠ v₂ x` for `n ≥ 1`, `x ≠ 0`; cf. `q2_unique_fp`, the "1" pole). Here
+the orbit hypothesis is *checkable*; for the λ-calculus see § fpp. -/
 theorem linear_fix_dichotomy {k : Type*} [Field k] [LinearOrder k] [IsStrictOrderedRing k] {V : Type*}
     [AddCommGroup V] [Module k V] (f : V →ₗ[k] V) :
     {v : V | f v = v}.Subsingleton ∨ {v : V | f v = v}.Infinite := by
@@ -103,6 +106,22 @@ theorem linear_fix_dichotomy {k : Type*} [Field k] [LinearOrder k] [IsStrictOrde
     rw [iterate_smul] at hx
     have hne1 : (2 : k) ^ n ≠ 1 := ne_of_gt (one_lt_pow₀ one_lt_two (by omega))
     have h2 : ((2 : k) ^ n - 1) • x = 0 := by rw [sub_smul, hx, one_smul, sub_self]
+    exact (smul_eq_zero.mp h2).resolve_left (sub_ne_zero.mpr hne1)
+  · intro x hx
+    simp only [Set.mem_setOf_eq] at hx ⊢
+    rw [map_smul, hx]
+
+-- `Statement:` the same dichotomy for every ℚ₂-linear self-map: ℚ₂ is not an ordered field, and
+-- `2^n ≠ 1` comes from characteristic zero (the cast of `2^n ≠ 1` in ℕ).
+example {V : Type*} [AddCommGroup V] [Module ℚ_[2] V] (f : V →ₗ[ℚ_[2]] V) :
+    {v : V | f v = v}.Subsingleton ∨ {v : V | f v = v}.Infinite := by
+  apply orbit_dichotomy (fun v => (2 : ℚ_[2]) • v) (smul_right_injective V two_ne_zero) 0 (by simp)
+  · intro x n hn hx
+    rw [iterate_smul] at hx
+    have hne1 : (2 : ℚ_[2]) ^ n ≠ 1 := by
+      have h : (2 : ℕ) ^ n ≠ 1 := (Nat.one_lt_two_pow (by omega)).ne'
+      exact_mod_cast h
+    have h2 : ((2 : ℚ_[2]) ^ n - 1) • x = 0 := by rw [sub_smul, hx, one_smul, sub_self]
     exact (smul_eq_zero.mp h2).resolve_left (sub_ne_zero.mpr hne1)
   · intro x hx
     simp only [Set.mem_setOf_eq] at hx ⊢

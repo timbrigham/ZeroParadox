@@ -1,5 +1,5 @@
 """
-Zero Paradox — Foreword PDF Builder (v2.36, revised October 2026)
+Zero Paradox — Foreword PDF Builder (v2.47, revised November 2026)
 Follows all rules in pdf rendering standards.md:
   - All table cells are Paragraph objects
   - No unicode subscripts — use sub/super tags
@@ -9,7 +9,7 @@ Follows all rules in pdf rendering standards.md:
 import os
 from zp_utils import *
 
-VERSION = '2.36'
+VERSION = '2.47'
 FIRST_RELEASED = 'April 2026'
 
 # ── fix() and prose_check() guard on every Paragraph ──
@@ -83,7 +83,9 @@ def commitments_table():
          'not a continuum of partial existence. This is the framework&#8217;s one substantive modeling '
          'commitment: the decide proof (ax_b1_distinct) verifies the two states are distinct given the '
          'two-element type, but the choice of a discrete alphabet over a continuum is the commitment '
-         'itself, not what decide checks (the snap provably fails in the reals, f_snap_impossible).'),
+         'itself, not what decide checks (in the reals 0 has no first step above it, AX-B1&#8217;s form: '
+         'f_snap_impossible, which, despite its name, states that no linearly ordered field has a least '
+         'positive element).'),
         ('AX-G1', 'Axiom',
          'Initial Object Exists, and No Terminal Object. There is a starting point that reaches every object in exactly one way, '
          'and no end point that every object reaches in exactly one way. '
@@ -111,7 +113,11 @@ def commitments_table():
         ('AX-1',  'Retired: shape → Theorem T-SNAP; the snap occurs given the occurrence commitment and DA-1',
          'Binary Snap Causality. Previously an axiom, now retired. Its content was split in two: the shape of the Snap '
          'is proved, as Theorem T-SNAP (from L-RUN, TQ-IH and the bottom law, with no Lean axioms), and that the Snap occurs '
-         'is stated separately: it follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2). '
+         'is stated separately: it follows from the occurrence commitment together with DA-1 (closed given DP-2). '
+         'The occurrence commitment is stated in two charts, execution and slot, in the header of '
+         'ZeroParadox/Order/Snap.lean (indexed in ZeroParadox/Order/SnapCannotBe.lean &#167; II and CLAIMS.md), '
+         'the slot chart as the hypothesis hw of t_snap_of_fires_once, that the tape fires at some stage, beside the theorem trials_fires_once that, for independent stages each firing with probability p, 0 &lt; p &#8804; 1, firing at some stage has probability one, which names no tape '
+         '(ZeroParadox/Information/CrossingTrials.lean &#167; VIII). '
          '(tsnap_holds_but_nothing_moves shows T-SNAP does not carry occurrence.)'),
         ('MC-1',  'The bottom family (not a commitment)',
          'The four domain bottoms (ZP-A semilattice, ZP-B p-adic topology, ZP-C information theory, '
@@ -128,9 +134,16 @@ def commitments_table():
          'lattice a sequence starts at a Quine atom exactly when it starts at ⊥ (cc1_derived, t_exec_iff; '
          'axiom-free, Lean), so the choice of starting point is expressed through the Quine-atom role, not removed.'),
         ('CC-2',  'Forced Metatheoretic Commitment',
-         '⊥ = {⊥}. The bottom element is self-containing, read under ZF+AFA as a Quine atom. '
-         'Foundation cannot host it: ⊥ = {⊥} is a member of itself, which Foundation (the Axiom of '
-         'Regularity) forbids (no_quine_atom). That half is forced, and it runs one way: a host whose '
+         'The Quine atom, a role: a point that steps to itself and to nothing else (the die, '
+         'ZeroParadox/Die.lean; Aczel 1988, Example 1.3, pictures Ω = {Ω} as one node with a loop), whose occupancy each chart settles by its own theorem, with no equation '
+         'across charts. ⊥ of the state semilattice occupies it under a self-application map that fixes ⊥ '
+         'and nothing else (selfApp_quine_role_iff); in a membership host whose distinguished '
+         'element is its own only member and the only element so placed, the profile AFA gives, that '
+         'element occupies it (quineAtomHost_quine_role_iff). '
+         'In Lean&#8217;s model of sets with Foundation, where the role reads '
+         'x = {x}, no set occupies it, since such a set would be a member of itself, which Foundation (the '
+         'Axiom of Regularity) forbids (zfset_quine_role_unoccupied, from no_quine_atom). That half is '
+         'forced, and it runs one way: a host whose '
          'bottom is its own only member is not well-founded (quineAtomHost_not_wellFounded). Run backwards it selects no '
          'theory: which anti-foundation axiom to adopt is a further choice, and the framework adopts AFA as '
          'the canonical host (ZP-E Remark R-AFA). What remains a commitment is that a unique Quine atom is the '
@@ -218,7 +231,9 @@ def build():
     story.append(box(
         'The central claim is this: zero is not the absence of mathematical structure. It is '
         'the unique minimal element of the induced partial order — the element below which '
-        'no other state exists.'
+        'no other state exists. The central theorem built on it is the Binary Snap, T-SNAP, '
+        'proved with no Lean axioms (t_snap_derived, Section V); alongside it, the layers share one '
+        'role, each layer supplying its own occupant (Section IV).'
     ))
     story.append(sp(6))
 
@@ -252,8 +267,8 @@ def build():
             'From the single axiom that the foundational distinction is binary, together with '
             'a minimality principle, it derives that the appropriate field is Q₂, the '
             '2-adic numbers. The field Q₂ forces every ball to be clopen, which forces '
-            'total disconnectedness, which makes the transition from zero to the first state '
-            'topologically irreversible. This is proven, not assumed.',
+            'total disconnectedness, which makes a return from any nonzero point to zero '
+            'impossible along a continuous path (c3_irreversible, a case of Mathlib&#8217;s TotallyDisconnectedSpace.eq_of_continuous: in Q₂ no continuous path joins any two distinct points, so the step out from 0 is blocked as well). This is proven, not assumed.',
             S['body']),
         Paragraph(
             'The information-theoretic layer (ZP-C) works within algorithmic information '
@@ -296,9 +311,10 @@ def build():
         Paragraph(
             'The closure layer (ZP-I) proves T-IZ — the Inside Zero theorem: every '
             'maximal ascending chain in the state space converges, at its limit, to zero. '
-            'Reading that limit as something filling the bottom role again is a commitment '
-            'rather than a consequence; what is proved is the other half, that anything '
-            'filling that role IS the bottom already there. '
+            'Reading that limit as something filling the bottom role again takes a choice of '
+            'join on Q₂, and then the role half is a theorem (t_iz_limit_is_new_null): anything '
+            'filling that role IS the bottom already there (that semilattice&#8217;s ⊥; which point '
+            'fills the role depends on the join chosen). '
             'Read as a closed cycle, the Snap produces states, states accumulate, and the '
             'accumulation returns to the bottom. Whether the bottom it returns to is a NEW one, '
             'rather than the one it began at, is a modelling commitment (C-DA2) and not part of '
@@ -306,11 +322,14 @@ def build():
             S['body']),
         Paragraph(
             'The counterexample layer (ZP-F) establishes the negative boundary: '
-            'the Binary Snap cannot occur in any densely ordered field — '
-            'structures where zero is a limit point of the nonzero elements. '
-            'ℝ and ℚ are canonical instances. The proof is self-contained — '
-            'no dependencies on the other layers — and answers the question of why Q₂ '
-            'is structurally necessary by showing precisely where snap-geometry fails.',
+            'in an ordered field, ℝ and ℚ among them, 0 has no first step above it, AX-B1&#8217;s form '
+            '(f_snap_impossible, which, despite its name, states that no linearly ordered field has a '
+            'least positive element). T-SNAP&#8217;s shape does not need a first step: t_snap_given '
+            'holds at a step taken in a densely ordered join-semilattice (ℚ≥0 under max, whose ⊥ is 0; ZeroParadox/Order/Snap.lean). ZP-F&#8217;s proof is self-contained — '
+            'no dependencies on the other layers. Q₂ does not restore the step: it is totally '
+            'disconnected (padic_snaps, an instance Mathlib already supplies), which removes the topological obstruction to an irreversible step (c3_irreversible: no continuous path in Q₂ from a nonzero point to 0) and supplies no first '
+            'step, since under the norm preorder its 0 is least and has no first step '
+            '(ZeroParadox/BottomCannotBe.lean &#167; ROLE).',
             S['body']),
         Paragraph(
             'The self-reference layer (ZP-J) proves T-EXEC: in any ZP-A lattice carrying the '
@@ -361,10 +380,11 @@ def build():
             '(Zermelo–Fraenkel set theory with Aczel\'s Anti-Foundation Axiom), '
             'not standard ZFC. AFA permits self-containing sets — in particular, sets x '
             'satisfying x = {x}. This matters only for CC-2 in the table below; '
-            'every other result in this framework holds in standard ZF. Standard ZFC (with '
-            'Foundation) is incompatible with CC-2: ⊥ = {⊥} is a member of itself, which the Axiom of '
-            'Regularity forbids (no set is self-membered, no_quine_atom), so a Foundation universe '
-            'cannot host it. The Axiom of Choice is not assumed '
+            'every other result in this framework holds in standard ZF. Lean&#8217;s model of sets '
+            'with Foundation cannot host CC-2&#8217;s set chart: there the Quine-atom role reads x = {x}, such '
+            'a set would be a member of itself, which the Axiom of Regularity forbids (no set is '
+            'self-membered, no_quine_atom), so no set occupies the role (zfset_quine_role_unoccupied). '
+            'The Axiom of Choice is not assumed '
             'as a framework commitment, and the core does not use it: T-SNAP (t_snap_derived) '
             'depends on no Lean axioms at all (#print axioms is empty). Classical.choice does reach the realization '
             'layers, and not only by inheritance from Mathlib — the category-theory layer spends a '
@@ -414,8 +434,11 @@ def build():
         Paragraph(
             'There is a deeper unity here than shared position. In each layer ⊥ plays the same '
             'role, beyond being the starting element: the role of the element that refers to '
-            'itself, with its occupant supplied per layer. In set theory it is the Quine atom, the set whose only member is itself '
-            '(⊥ = {⊥}). In computation the role is filled by a code from the Rogers / Kleene '
+            'itself, with its occupant supplied per layer. In set theory under AFA it is the Quine atom, the '
+            'role a set x = {x} plays, a set whose only member is itself (in the die, a point that steps to '
+            'itself and to nothing else, Section VII); in Lean&#8217;s model of sets with Foundation, a setting that cannot host CC-2&#8217;s set chart '
+            '(Section III) and not one of the framework&#8217;s layers, the role has no occupant '
+            '(zfset_quine_role_unoccupied, Section VII). In computation the role is filled by a code from the Rogers / Kleene '
             'fixed-point theorem: for every computable transform f of codes there is a code c with '
             'eval (f c) = eval c (Rogers\' form, computability_face_fixedPoint, '
             'ZeroParadox/Category/Lawvere.lean). Such a code is a term of another type than ⊥ of the '
@@ -477,14 +500,31 @@ def build():
         Paragraph(
             'The framework lives at that boundary intentionally. '
             'Each layer arrives at the same boundary '
-            'from its own direction. That convergence is the framework\'s central result.',
+            'from its own direction. That convergence is the framework\'s central result. '
+            'Alongside that convergence, the layers share one role, each layer supplying its own '
+            'occupant (Section IV), and that sharing is not one theorem. The framework\'s central theorem is the '
+            'Binary Snap, T-SNAP: in the two-state carrier MachinePhase, the step from its bottom '
+            'element c₀ to c₁ is a valid join step to a different state, proved with no Lean axioms '
+            'at all (t_snap_derived, ZeroParadox/Order/Snap.lean; the general form, which takes the '
+            'start at ⊥ and the occurrence, a first transition to a different state (S 1 ≠ S 0), as hypotheses, is t_snap_given). '
+            'Density rules out a first step, AX-B1&#8217;s form: an order is dense exactly when no element has '
+            'one (axb1_fails_everywhere_iff_dense, ZeroParadox/Reals/OrderedField.lean, the corpus restatement of '
+            'Mathlib&#8217;s denselyOrdered_iff_forall_not_covBy). In MachinePhase, c₁ is a first step '
+            'above c₀ (t_snap_derived_cover, ZeroParadox/Order/Snap.lean); in an ordered field, ℝ and ℚ among '
+            'them, no first step above 0 exists (f_snap_impossible, which, despite its name, states that no '
+            'linearly ordered field has a least positive element); one element without a first step does not '
+            'make an order dense. '
+            'T-SNAP&#8217;s shape does not need it: t_snap_given holds at a step taken in a densely ordered '
+            'join-semilattice too. That '
+            'the step occurs is the occurrence commitment (with DA-1, Section III), not something '
+            'the theorem proves (t_snap_given takes it as a hypothesis).',
             S['body']),
     ]
 
     story.append(box(
-        'Zero, the bottom element ⊥ of the state semilattice, remains indescribable by smooth calculus. It becomes fully '
-        'characterised by discrete calculus. The paradox is the precise boundary between '
-        'these two regimes.'
+        'In a densely ordered field such as ℝ, the field&#8217;s 0 has no first step above it '
+        '(f_snap_impossible). In the two-state carrier MachinePhase it does: '
+        'c₁ is a first step above c₀ (t_snap_derived_cover).'
     ))
     story.append(sp(6))
 
@@ -515,14 +555,81 @@ def build():
             'AX-B1 — binary existence — is the framework&#8217;s one substantive modeling commitment: '
             'that existence is discrete rather than a continuum of partial states. The decide proof '
             '(ax_b1_distinct) checks only that the two states are distinct given the two-element type; '
-            'the discreteness choice itself is the commitment, and the snap provably fails on a '
-            'continuum (f_snap_impossible). The theorems stand on their own axioms regardless.',
+            'the discreteness choice itself is the commitment, and in an ordered field, ℝ among them, 0 '
+            'has no first step above it (f_snap_impossible: no linearly ordered field has a least positive '
+            'element), while T-SNAP&#8217;s shape does not need one (t_snap_given). The theorems stand on their own axioms regardless.',
             S['body']),
     ]
 
-    # ── VII. A NOTE ON READING THE DOCUMENTS ──────────────────────────────────
+    # ── VII. HOW THE ROLE READING GREW (retrospective; Tim's ruled exception, 2026-11-01) ──
     story += [
-        Paragraph('VII. A NOTE ON READING THE DOCUMENTS', S['h1']),
+        Paragraph('VII. HOW THE ROLE READING GREW', S['h1']),
+        Paragraph(
+            'The first paragraph of this Foreword says that the word zero does not name a single '
+            'object, and that it names a role filled differently depending on the framework. That '
+            'sentence has been in the Foreword since 19 April 2026, three days after the Foreword was '
+            'first committed, and it has been in the Foreword of every release since the first, in May '
+            '2026. It is the earliest place we have found in this repository where zero itself is called '
+            'a role, and at the time it was a plain-language observation. Two days later, on 21 April '
+            '2026, the Lean for ZP-E already characterised the ⊥ role inside one semilattice: ⊥ is the '
+            'one element whose join with any element returns that other element unchanged '
+            '(da2_bottom_characterization, now in ZeroParadox/Order/Snap.lean).',
+            S['body']),
+        Paragraph(
+            'The formal corpus took up the general form of the reading later, in three steps; the third, '
+            'chart by chart, ran from October to 1 November 2026. In October 2026 the framework '
+            'stated the general form in Lean: a bottom is a position in an ordered '
+            'structure, a structure has at most one occupant of it and may have none, and one carrier '
+            'with two different orders can have two different occupants (ZeroParadox/BottomCannotBe.lean, '
+            'its ROLE section; for epsilon-zero, ε₀, ZeroParadox/Ordinal/Epsilon0CannotBe.lean, '
+            'sections I-b and I-c). Later that month the die (ZeroParadox/Die.lean), a small common '
+            'language of points and the steps between them, gave these roles one shared vocabulary. '
+            'In it the self-referential role of Section IV is a point that steps to itself and to '
+            'nothing else (in Markov-chain language, an absorbing state), and each setting, called a '
+            'chart, answers by its own theorem whether some point fills that role. Some charts had such '
+            'theorems in October; on 1 November 2026 the set-theoretic, lattice and coalgebra '
+            'charts named next gained theirs. In Lean&#8217;s model of sets, where a set steps to its members and '
+            'Foundation holds, no set occupies the role (zfset_quine_role_unoccupied, '
+            'ZeroParadox/Settheory/Wall.lean). In the final coalgebra of the identity functor, a '
+            'one-element set (Rutten 2000, Example 10.2(1)), a point does (cofix_quine_role_occupied, '
+            'ZeroParadox/Settheory/Coalgebra.lean); since the set has only one element, there the '
+            'theorem restates the carrier rather than separating anything. On a join-semilattice whose '
+            'self-application map is assumed to fix its least element ⊥ and nothing else, exactly one '
+            'point occupies the role (selfApp_seam_role_unique, ZeroParadox/Order/SeamSchema.lean), and '
+            'that point is ⊥ because the map fixes ⊥. For a coalgebra of a polynomial functor, under its '
+            'next-time operator exactly one subset of the carrier occupies the role exactly when the '
+            'coalgebra is well-founded (seam_role_unique_iff_wellFounded, '
+            'ZeroParadox/Category/RootCutDegeneracy.lean); that is how Adámek, Milius and Moss (2020, '
+            'arXiv:1910.09401v2, Definition 4.3, after Taylor) define a well-founded coalgebra, so in that chart the theorem '
+            'restates the definition.',
+            S['body']),
+        Paragraph(
+            'The project&#8217;s releases record the earlier stages of the same reading. A release of '
+            '10 June 2026 described ⊥ as the same self-referential fixed point in every layer, presented '
+            'as an identification; the next release, that same week, kept the literal cross-category identity as '
+            'a chosen commitment; a release in July 2026 fenced the cross-domain identity as a type '
+            'boundary (in ZP-Q). Each of '
+            'those statements had to be written and kept consistent by hand. Stated as a role, there is no '
+            'equation across charts left to fence: an equation between objects of different types does '
+            'not typecheck, and each chart named above answers by a theorem that Lean checks; the '
+            'computational face stays a commitment (Section IV). Each published release is a '
+            'Zenodo snapshot with a permanent DOI, so every stage stays readable as it was published, and '
+            'each correction reaches readers in a later release while the earlier statement stays on the '
+            'record. That self-correction is part of what the releases record.',
+            S['body']),
+        Paragraph(
+            'The role reading retires identity claims across charts, and only those. It does not retire '
+            'the framework&#8217;s commitments about the world. AX-B1, that existence is discrete rather '
+            'than a continuum of partial states, remains the one substantive modeling commitment, and '
+            'that the Binary Snap occurs remains the occurrence commitment (with DA-1, Section III). Whether the '
+            'bottom element of the state space that an ascending chain returns to is a new one also '
+            'remains a commitment (C-DA2, Section II).',
+            S['body']),
+    ]
+
+    # ── VIII. A NOTE ON READING THE DOCUMENTS ─────────────────────────────────
+    story += [
+        Paragraph('VIII. A NOTE ON READING THE DOCUMENTS', S['h1']),
         Paragraph(
             'The technical documents ZP-A through ZP-M are formatted as ontologies, not as '
             'discursive mathematical writing. Each claim appears in a labeled box with its '
@@ -548,7 +655,7 @@ def build():
             'category theory — these are established structures with well-understood '
             'properties. What is new is the conjunction: the claim that these structures, '
             'independently developed within their own disciplines, converge on the same '
-            'foundational point, characterise the same transition, and illuminate the same '
+            'foundational role, each with its own occupant, characterise the same transition, and illuminate the same '
             'paradox from different directions.',
             S['body']),
         Paragraph(

@@ -52,21 +52,23 @@ end AxiomFootprintEvidence
 
 Any computable transformation of a Code has a behavioral fixed point — a code c
 such that eval (f c) = eval c. This is **Rogers' fixed-point theorem**: the fixed-point structure is
-stable under any computable transformation. *(Corrected 2026-08-02: this read "Rogers' fixed-point
-theorem (Kleene's second recursion theorem)", equating the two. Mathlib splits them — `fixed_point` is
-Roger's fixed point theorem, `fixed_point₂` is Kleene's second recursion theorem
-(`Mathlib/Computability/PartrecCode.lean`, the module index and the docstrings on `fixed_point` and
-`fixed_point₂`) — and the
-declaration below wraps the `fixed_point` route. They are inter-derivable, so this was naming rather
-than falsehood.)*
+stable under any computable transformation. The names follow Mathlib, which calls `fixed_point`
+Rogers' fixed-point theorem and `fixed_point₂` Kleene's second recursion theorem
+(`Mathlib/Computability/PartrecCode.lean`); the declaration below wraps `fixed_point`. In Rogers 1967
+`fixed_point` is Theorem 11-I (p. 180), a special case of his Theorem 11-IV, which he notes is
+sometimes called the second recursion theorem (p. 196); "The recursion theorem is due to Kleene"
+(p. 180). The two-place form, Mathlib's `fixed_point₂`, is his Exercise 11-4(i), "Kleene's version
+of Theorem I" (p. 214), where he also asks for the proof that the two are equivalent.
 
 Note on scope: the ZPL architecture initially proposed that eval (f botCode) =
 eval botCode for ALL computable f. This overclaims — botCode is one specific
 Classical.choose witness and carries no special stability under arbitrary f.
 The existential version is the correct formalization. -/
 
-/-- Rogers' fixed-point theorem (Mathlib `Nat.Partrec.Code.fixed_point`; **not** Kleene's second
-    recursion theorem, which Mathlib names `fixed_point₂`): for any computable transformation f,
+/-- Rogers' fixed-point theorem (Mathlib `Nat.Partrec.Code.fixed_point`; Mathlib gives the name
+    Kleene's second recursion theorem to `fixed_point₂`, while Rogers places this one-place form
+    under the theorem sometimes called the second recursion theorem, see § II above): for any
+    computable transformation f,
     some code is behaviorally fixed by f.
     Proved as a wrapper around ZPK's roger_fixed_point_exists. -/
 theorem roger_fixed_point_stability (f : Code → Code) (hf : Computable f) :
@@ -210,7 +212,8 @@ theorem towerNONote_repr (n : ℕ) : NONote.repr (towerNONote n) = fundamentalSe
     -- fundamentalSeq (n+1) = ω^(fundamentalSeq n) by Function.iterate_succ' unfolding.
     have hfund : fundamentalSeq (n + 1) = Ordinal.omega0 ^ fundamentalSeq n := by
       simp only [fundamentalSeq, Function.iterate_succ', Function.comp]
-    rw [hunfold, repr_oadd, ih, hzero, hcast, mul_one, add_zero, ← hfund]
+    rw [hunfold, repr_oadd (towerNONote n) 1 0 ONote.NFBelow.zero, ih, hzero, hcast, mul_one,
+      add_zero, ← hfund]
 
 /-- The valuation of cnfToZp2 at the n-th tower stage equals n. -/
 theorem cnfToZp2_tower_valuation (n : ℕ) : (cnfToZp2 (towerNONote n)).valuation = n := by
@@ -221,13 +224,12 @@ theorem cnfToZp2_tower_valuation (n : ℕ) : (cnfToZp2 (towerNONote n)).valuatio
     -- Similarly, norm_cast handles ↑(1 : ℕ+) : ℤ_[2] = 1.
     have hcast : ((1 : ℕ+) : ℤ_[2]) = 1 := by norm_cast
     have hstep : cnfToZp2 (towerNONote (n + 1)) = (2 : ℤ_[2]) ^ (n + 1) := by
-      rw [hunfold, cnfToZp2_oadd, ih, cnfToZp2_zero, hcast, mul_one, add_zero]
+      rw [hunfold, cnfToZp2_oadd (towerNONote n) 1 0 ONote.NFBelow.zero, ih, cnfToZp2_zero, hcast,
+        mul_one, add_zero]
     rw [hstep, PadicInt.valuation_pow]
-    -- (2 : ℤ_[2]) is a numeral; valuation_p expects the cast form (↑p : ℤ_[p]).
-    -- Nat.cast_ofNat converts the numeral to cast form so valuation_p fires.
-    have hval : (2 : ℤ_[2]).valuation = 1 := by
-      rw [show (2 : ℤ_[2]) = ((2 : ℕ) : ℤ_[2]) from Nat.cast_ofNat.symm]
-      exact PadicInt.valuation_p
+    -- At the pinned Mathlib `valuation_p` closes the numeral goal directly (the `example` before
+    -- `q2Val_scale`, `ZeroParadox/Valuation/Scale.lean`).
+    have hval : (2 : ℤ_[2]).valuation = 1 := PadicInt.valuation_p
     simp [hval]
 
 /-- The 2-adic valuation of cnfToZp2 is unbounded: for every k there is an ordinal
@@ -256,7 +258,8 @@ private theorem cnfToZp2_tower_explicit (n : ℕ) :
     cnfToZp2 (towerNONote (n + 1)) = (2 : ℤ_[2]) ^ (n + 1) := by
   have hunfold : towerNONote (n + 1) = NONote.oadd (towerNONote n) 1 0 ONote.NFBelow.zero := rfl
   have hcast : ((1 : ℕ+) : ℤ_[2]) = 1 := by norm_cast
-  rw [hunfold, cnfToZp2_oadd, cnfToZp2_tower_valuation, cnfToZp2_zero, hcast, mul_one, add_zero]
+  rw [hunfold, cnfToZp2_oadd (towerNONote n) 1 0 ONote.NFBelow.zero, cnfToZp2_tower_valuation,
+    cnfToZp2_zero, hcast, mul_one, add_zero]
 
 /-- The tower images converge to 0 = ⊥ in ℤ_[2].
     Each stage's image cnfToZp2(towerNONote (n+1)) = 2^(n+1) in ℤ_[2], so its 2-adic norm is
@@ -538,6 +541,7 @@ open ZeroParadox
 
 -- § III: fully proved
 #print axioms epsilonZero_fixedPoint
+#print axioms epsilonZero_eq_nfp
 #print axioms epsilonZero_eq_iSup
 #print axioms epsilonZero_tower_lt
 #print axioms epsilonZero_le_fixedPoint

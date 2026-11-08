@@ -8,8 +8,8 @@ set_option maxHeartbeats 400000
 
 `ZeroParadox/Category/LawvereTaboo.lean` proves `wem_of_fixedPointFree`: the general form of the
 diagonal engine's supplier (*every type with two distinct points admits a fixed-point-free endomap*)
-implies **weak excluded middle**, choice-free. The reading recorded alongside it
-(`.claude-local/notes/ambiguity_is_what_choice_buys_2026-07-20.md`) is that the cost is located at
+implies **weak excluded middle**, choice-free. The framework's reading of that result is that the
+cost is located at
 **unresolved identity** — the one step that must decide whether two things are the same.
 
 This file tests a sharpening of that reading: **is the framework's ⊥ (the self-containing Quine atom)
@@ -50,11 +50,11 @@ result stated honestly is worth as much as the positive one it replaces. What is
 ## Why the ⊥-essential version cannot even be posed in Lean (the honest boundary)
 
 The non-termination Tim points at is a property of the *semantic* set-theoretic Quine atom: deciding
-`y = ⊥` unfolds `⊥ = {⊥}` and descends forever. That object is **not a Lean type** — `Set` is
-well-founded, `x = {x}` is forbidden (Cantor), which the framework already proves as
-`quine_no_literal` / `nontrivial_lattice_no_witness` (`ZeroParadox/Category/Lawvere.lean`). The Lean
-encoding `AbstractSelfApp` replaces the infinite descent with a *pinned unique* fixed point, and a
-pinned fixed point has the most decidable identity there is. So the ⊥-essential undecidability is
+`y = ⊥` unfolds `⊥ = {⊥}` (in ZF + AFA) and descends forever. In the well-founded charts that object is **not a Lean
+type**: no `ZFSet` occupies the die's Quine-atom role (`zfset_quine_role_unoccupied`), and a lattice with a second
+element has no Lawvere witness (`quine_no_literal`, `nontrivial_lattice_no_witness`). The coalgebra chart occupies the
+role (`cofix_quine_role_occupied`) at its one point (`cofix_subsingleton`), so no descent is posed there. The Lean encoding
+`AbstractSelfApp` replaces the descent with a *pinned unique* fixed point, the most decidable identity there is. So the ⊥-essential undecidability is
 **unsettled in Lean because it is unposeable in Lean**, and *inessential in the encoding we do have*.
 Reporting it as proved would repeat the MC-1 over-identification the project retracted. It stays a
 rhyme with a mechanism, not a theorem — the fence in the conjecture note, unmoved.
@@ -140,10 +140,12 @@ uniform in `p`, yields weak excluded middle. Choice-free: the decision is the hy
 witness facts (`gx_eq_gb0`, `gx_eq_gb1`, `glue_b0_ne_b1`) carry only `[propext, Quot.sound]`. -/
 theorem wem_of_glue_identity (h : ∀ p : Prop, Decidable (gx p = gb0 p)) : WeakExcludedMiddle := by
   intro p
-  rcases h p with hne | heq
-  · -- `gx p ≠ gb0 p`: were `p` to hold, `gx p = gb0 p` (`gx_eq_gb0`). So `¬p`.
+  cases h p with
+  | isFalse hne =>
+    -- `gx p ≠ gb0 p`: were `p` to hold, `gx p = gb0 p` (`gx_eq_gb0`). So `¬p`.
     exact Or.inl fun hp => hne (gx_eq_gb0 p hp)
-  · -- `gx p = gb0 p`: were `¬p` to hold, `gx p = gb1 p`, forcing `gb0 p = gb1 p`. So `¬¬p`.
+  | isTrue heq =>
+    -- `gx p = gb0 p`: were `¬p` to hold, `gx p = gb1 p`, forcing `gb0 p = gb1 p`. So `¬¬p`.
     exact Or.inr fun hnp => glue_b0_ne_b1 p (heq.symm.trans (gx_eq_gb1 p hnp))
 
 /-! ## § II — Decidable equality of the carrier implies weak excluded middle -/

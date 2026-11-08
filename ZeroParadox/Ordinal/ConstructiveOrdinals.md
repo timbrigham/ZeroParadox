@@ -19,7 +19,9 @@ Key move: ω^x at the notation level is just `oadd x 1 0` (the CNF term with lea
 coefficient 1, remainder 0) — no general `opow` needed. ε₀ itself is NOT an `ONote` element (the
 notations name exactly the ordinals < ε₀); ε₀ is their limit. So the snap threshold is characterised
 *from below*: the ω-tower climbs without bound, and **no notation is a fixed point of ω^·** — the fixed
-point (ε₀) is precisely what the notation system cannot reach.
+point (ε₀) is what the notation system does not name: no notation bounds the tower
+(`tower_no_upper_bound`, `ZeroParadox/Ordinal/SnapNucleusConstructive.lean`), and across the crossing
+every notation denotes below ε₀ (`repr_lt_epsilon0`, `ZeroParadox/Ordinal/PricedInterface.lean`).
 
 ## Result (proved, this build)
 
@@ -31,14 +33,15 @@ notation is a fixed point of `ω^·`).
 
 **It does NOT classify ZP-L's footprint as "representational, not intrinsic"**. That is an
 *eliminability* claim, and
-it cannot be asked of those ε₀ results as stated, because their statements themselves carry the
-choice, as the statement control in the next sentence measured 2026-10-08: they are **STATEMENT-CARRIED**
+the question does not apply to those ε₀ results as stated, because their statements themselves carry
+the choice, as the statement control in the next sentence shows: they are **STATEMENT-CARRIED**
 (`ZeroParadox/Category/ChoiceCannotBe.md`). ZP-L's `epsilonZero_fixedPoint`, `epsilonZero_eq_nfp`,
 `epsilonZero_tower_lt` and `epsilonZero_le_fixedPoint` (`ZeroParadox/Ordinal/Gentzen.lean`), and the
 invariants `epsilon0_ne_zero`, `epsilon0_ne_bot`, `epsilon0_is_fixedpoint`
 (`ZeroParadox/Ordinal/Epsilon0LeastFP.lean`) and `epsilon0_eq_nfp_bot`
 (`ZeroParadox/Ordinal/Epsilon0MinMax.lean`), each only assumed in a theorem that proves `True`, already
-report `Classical.choice` (statement control, measured 2026-10-08), so no re-proof of them can drop it.
+report `Classical.choice` (statement control, measured 2026-10-08; for `epsilon0_eq_nfp_bot` the
+live record is the named statement control `epsilon0EqNfpBotStatement`, printed in that file), so no re-proof of them can drop it.
 
 A restatement cannot be had on `ONote`, which does not name ε₀: inside the carrier no notation bounds
 the tower (`tower_no_upper_bound`, `ZeroParadox/Ordinal/SnapNucleusConstructive.lean`, `[propext]`), and
@@ -48,15 +51,22 @@ across the crossing every notation denotes below ε₀ (`repr_lt_epsilon0`,
 (`ZeroParadox/Ordinal/PricedInterface.lean`), the notations with one top adjoined, the fixed point of
 `e0OmegaPow` (ω^· extended to fix ⊤ by definition) is unique by theorem (`e0OmegaPow_fixedpoint_iff`, `[propext]`) and exists by definition
 (`e0OmegaPow_top`, proved by `rfl`), on an order that is not well-founded (the `example` stating
-`¬ WellFoundedLT E0Note`). The **derived** one is open: a well-founded Lean carrier on which
-ε₀'s fixed point is derived, leastness included, with no `Classical.choice` in the `#print axioms` of
-those declarations, is not located as of 2026-10-08. Leastness is proved on `Ordinal` with choice
-(`epsilon0_min_eq_max`); how such a footprint splits between a statement as written and its proof is
-measured in `ZeroParadox/Ordinal/OrdinalChoiceEssential.lean` § III, with the STATEMENT-CARRIED bin
-defined in `ZeroParadox/Category/ChoiceCannotBe.md`. Searched
-2026-10-08: `ZeroParadox/**/*.lean` for `WellFounded`, `IsWellOrder` and `Acc`; the Mathlib pin's
-notation systems were surveyed 2026-08-02 in `ZeroParadox/Ordinal/SnapNucleusConstructive.md`. The
-crossing into `Ordinal`, `e0Repr`, carries choice. The current state is in `ZeroParadox/Ordinal/SnapNucleus.md` § Axiom footprint.
+`¬ WellFoundedLT E0Note`). The **derived** one is open: a well-founded Lean carrier whose statements
+are choice-free, on which ε₀'s fixed point is derived, by a choice-free derivation, rather than set by definition, leastness included,
+was not located as of 2026-10-13 (the record of that search is `ZeroParadox/Ordinal/SnapNucleus.md`
+§ Axiom footprint), and again as of 2026-11-01, searched as follows: `ZeroParadox/**/*.lean` for
+`WellFounded`, `IsWellOrder` and `Acc` together with ε₀ / `epsilon` / `nfp` (every ε₀ hit is on
+`Ordinal` or on `E0Note`); the pinned Mathlib for `ε₀` / `epsilon0` / `epsilon_zero` (the hits naming the ordinal ε₀, as
+opposed to real-valued variables of that name, are only `SetTheory/Ordinal/Veblen.lean`, on `Ordinal`, and `SetTheory/Ordinal/Notation.lean`, whose
+`fastGrowingε₀` docstring says ε₀ "is not an `ONote`"); and LeanExplore for a well-founded notation carrying a
+fixed point of ω^· (hits on `Ordinal`, `ONote`'s well-foundedness, and generic fixed-point
+theorems). This file's own earlier corpus search for that item as then worded, 2026-10-08, grepped
+`ZeroParadox/**/*.lean` for `WellFounded`, `IsWellOrder` and `Acc`; the Mathlib pin's notation systems
+were surveyed 2026-08-02 in `ZeroParadox/Ordinal/SnapNucleusConstructive.md`. Leastness is proved on
+`Ordinal` with choice (`epsilon0_min_eq_max`); how such a footprint splits between a statement as
+written and its proof is measured in `ZeroParadox/Ordinal/OrdinalChoiceEssential.lean` § III, with the
+STATEMENT-CARRIED bin defined in `ZeroParadox/Category/ChoiceCannotBe.md`. The crossing into
+`Ordinal`, `e0Repr`, carries choice.
 
 The item was checked against two carriers of MaxWellApexLab/OrdinalAnalysis at commit
 `87baec70db931cda0df00167d68bd16defb4f7bf` (namespace `OrdinalAnalysis`, paths under `OrdinalAnalysis/Ordinal/`,
@@ -101,9 +111,9 @@ is carried by its own statement (`ZeroParadox/Ordinal/SnapNucleus.md` § Axiom f
 
 This is the snap *from below* (ε₀ is the unreachable fixed point). On `ONote` the matching
 *minimality* ("ε₀ is the LEAST fixed point") cannot be stated, because it quantifies over the limit,
-which no notation names (`tower_no_upper_bound`; across the crossing, `repr_lt_epsilon0`). Leastness is proved on `Ordinal` (`epsilon0_min_eq_max`, with choice); a
-choice-free proof of it on a well-founded Lean carrier is part of the open item under Result above, where the searched
-scope and its dates are stated. The other carriers
+which no notation names (`tower_no_upper_bound`; across the crossing, `repr_lt_epsilon0`). Leastness is proved on `Ordinal` (`epsilon0_min_eq_max`, with choice); its
+derivation on a well-founded Lean carrier whose statements are choice-free is the derived reading of the open item
+under Result above, where the searched scope and its dates are stated. The other carriers
 are in `ZeroParadox/Ordinal/SnapNucleus.md` § Axiom footprint.
 
 ## Prior art
@@ -140,15 +150,16 @@ Read from the arXiv v2 PDF:
 Two Lean carriers of MaxWellApexLab/OrdinalAnalysis, `ThetaNote` and `Gamma0Note`, are named against the open
 item under Result above.
 
-The Coq precedent on the same carrier is Castéran and Contejean's *hydra-battles*; its credit, including
-the comparator and the order construction, is in `ZeroParadox/Ordinal/SnapNucleusConstructive.md`
-§ Prior art.
+The Coq precedent on the same carrier is *hydra-battles*, credited to the hydra-battles authors, as in
+`ZeroParadox/Ordinal/SnapNucleusConstructive.md` § Prior art, which also holds the credit for the
+comparator and the order construction.
 
 **The delta, stated narrowly.** Their split is decidability and constructive taboos (excluded middle,
 WLPO) in homotopy type theory; ZP-N's is a `Classical.choice` footprint in Lean, measured by
 `#print axioms` against Mathlib's `Ordinal`. The instruments differ: a taboo result says a statement
 implies excluded middle or WLPO, while a footprint is about one proof, or, under the statement control,
-about one statement's type. Their `Cnf` is the binary trees cut out by a predicate `isCNF` (§ 3.1, p. 4), the same shape as
-Mathlib's `NONote`, the notations cut out by `NF`. The side finding above arises because Mathlib's `NF` is
+about one statement's type. Their `Cnf` is the binary trees cut out by a predicate `isCNF` (§ 3.1, p. 4), analogous to
+Mathlib's `NONote`, the notations cut out by `NF`; their trees are binary, while an `ONote` node
+`oadd e n a` also carries a coefficient `n`. The side finding above arises because Mathlib's `NF` is
 defined through `repr` into `Ordinal`; `isCNF` is stated with the lexicographic order on trees. What is ZP-N's is the measurement on these Lean declarations, not the
 mathematics.

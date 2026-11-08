@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP Addendum: The Choice-Free Core
-Version 1.13 | October 2026
+Version 1.19 | November 2026
 Framework-wide note; reads after the Foreword.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.13'
+VERSION = '1.19'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard ──
@@ -52,7 +52,7 @@ def build():
     # ── Preamble (artifact-first) ────────────────────────────────────────────────
     print('[build_zp_choice_free_core] Building preamble...')
     E.append(body(
-        'Build the file ZeroParadox/AxiomProfile.lean and read the Lean kernel\'s output. It reports '
+        'Build the file ZeroParadox/AxiomProfile.lean and read the output of Lean\'s `#print axioms` command. It reports '
         'that the central theorem of this framework &#8212; the Binary Snap, T-SNAP, whose SHAPE is '
         'derived while its occurrence follows from the occurrence commitment together with DA-1 (closed given DP-2), the '
         'transition &#8869; &#8594; &#949;<sub>0</sub> &#8212; depends on <b>no axioms at all</b>: not '
@@ -62,8 +62,9 @@ def build():
         '`lake build ZeroParadox.AxiomProfile` and see it.'))
     E.append(body(
         'Two boundaries are stated up front, because the claim is narrow and exact. <b>The framework '
-        'as a whole is not choice-free.</b> Most of its theorems do depend on `Classical.choice`. '
-        'Most places it appears are places where the framework builds on Mathlib\'s '
+        'as a whole is not choice-free.</b> Many of its theorems depend on `Classical.choice` (no '
+        'proportion is measured here). Many of the places it appears are places where the framework '
+        'builds on Mathlib\'s '
         'classically-built analysis, order, and computability libraries &#8212; the layers that '
         '<i>realize</i> the snap inside standard analytic structures (p-adic topology, Hilbert space, '
         'ordinals), where the dependence is inherited from those libraries. Not all of it is '
@@ -75,7 +76,7 @@ def build():
         'used by the core results above. <b>And dependence is not necessity:</b> that those '
         'realizations <i>use</i> choice as written does not show the mathematics <i>requires</i> it. '
         'Several of their statements carry it as written (Section III), so no proof of those '
-        'statements can drop it; whether a restatement on a choice-free carrier holds is a '
+        'statements can drop it; whether a restatement on a carrier whose statements are choice-free holds is a '
         'separate question.'))
     E.append(hr())
 
@@ -86,7 +87,7 @@ def build():
         hr(),
     ]
     E.append(body(
-        'The Lean kernel\'s `#print axioms` command reports the complete axiom dependency of any '
+        'Lean\'s `#print axioms` command reports the complete axiom dependency of any '
         'result. Run on the framework\'s central results, it returns the following. "Does not depend '
         'on any axioms" is the strongest possible report &#8212; stronger than "choice-free," since '
         'it uses not even propositional extensionality.'))
@@ -104,9 +105,9 @@ def build():
     E.append(sp(4))
     E.append(body(
         'A second tier of results is choice-free but uses propositional extensionality and quotient '
-        'soundness (`[propext, Quot.sound]`), both standard in Lean 4. These include the structural '
-        'floor (PowerSet.ps_structural_floor) and the wheel of fractions '
-        '(WheelFrac.instWheel, inf_ne_bot). No `Classical.choice`.'))
+        'soundness (`[propext, Quot.sound]`), both standard in Lean 4. These include the power set\'s '
+        'depth chart (ps_structural_floor, ZeroParadox/Order/PowerSet.lean) and the wheel of fractions '
+        '(ZeroParadox.instWheel and inf_ne_bot, ZeroParadox/Algebra/WheelFrac.lean). No `Classical.choice`.'))
     E.append(sp(6))
 
     # ── Section II ───────────────────────────────────────────────────────────────
@@ -117,9 +118,10 @@ def build():
         hr(),
     ]
     E.append(body(
-        'The honest contrast. `Classical.choice` does appear across the framework &#8212; in the '
-        'majority of its theorems &#8212; and the same `#print axioms` artifact shows exactly where. '
-        'Most occurrences are in a layer that realizes the snap floor inside a standard analytic '
+        'The honest contrast. `Classical.choice` does appear across the framework, in many of its '
+        'theorems. Each file\'s `#print axioms` block reports, declaration by declaration, which carry '
+        'it, and ZeroParadox/AxiomProfile.lean prints a selection (&#167;&#167; 0&#8211;III). Many '
+        'occurrences are in a layer that realizes the snap floor inside a standard analytic '
         'structure, inheriting choice from the Mathlib library that builds that structure '
         'classically. Not every occurrence is inherited: the framework writes bare classicals of its '
         'own, and ZeroParadox/Category/ChoiceCannotBe.lean &#167; IV collects cases among them whose '
@@ -169,7 +171,8 @@ def build():
         'principle (related prior art, cited not claimed, as recorded in '
         'ZeroParadox/Category/LawvereTaboo.lean: Bauer, "On fixed-point theorems in synthetic '
         'computability", Tbilisi Math. J. 10(3) (2017), Cor 4.3; de Jong&#8211;Escard&#243;, '
-        'arXiv:2102.08812, Cor 39(iii)-(iv); Booij&#8211;Escard&#243;&#8211;Lumsdaine&#8211;Shulman, '
+        '"Predicative Aspects of Order Theory in Univalent Foundations", arXiv:2102.08812, '
+        'Cor 39(iii)-(iv); Booij&#8211;Escard&#243;&#8211;Lumsdaine&#8211;Shulman, '
         '"Parametricity, automorphisms of the universe, and excluded middle", arXiv:1701.05617, '
         'Thm 3, and Thm 5 (Simpson), whose proof technique the reduction uses) &#8212; the latter sitting on the keystone rather than on an imported order '
         'instance; &#167; IV\'s cases 3 to 5 are reductions for principles proved with bare '
@@ -186,8 +189,8 @@ def build():
         'a <i>type</i> rather than a proof, no proof of any statement mentioning that type can be '
         'clean, and removability there means changing the statement, not cleaning the argument. That '
         'case is measured: the statements of c3_irreversible, t4_snap_orthogonal, fD_functor and '
-        'fC_functor, each only assumed, already report Classical.choice (the statement control, '
-        '2026-10-08), so they are statement-carried, and the open question for them is a restatement '
+        'fC_functor, each only assumed, already report Classical.choice (the statement-carried row of '
+        'ZeroParadox/AxiomProfile.md), so they are statement-carried, and the open question for them is a restatement '
         'on a carrier whose statements are choice-free. fB_functor\'s statement is choice-free; its '
         'dependence stays open.'))
     E.append(body(
@@ -208,7 +211,7 @@ def build():
             'central results leaned on the Axiom of Choice &#8212; the canonical free, non-constructive '
             'selection. They do not. T-SNAP is axiom-free; the keystone is choice-free. The '
             '"forced, not chosen" thesis is internally consistent at the level of what the framework '
-            'actually asserts. Where choice appears it is mostly the supporting library\'s classical '
+            'actually asserts. Where choice appears it is often the supporting library\'s classical '
             'foundation showing through the realizations rather than an assumption of the argument. '
             'The reductions Section III points at are the exception on a different axis: they are about '
             '<i>necessity</i>, not provenance. Some of their principles are proved with the '
@@ -236,7 +239,7 @@ def build():
             'collects, and for related declarations; &#167; I prints the choice-free core and &#167; II further choice-free results; '
             '&#167; III prints the analytic-realization results that carry choice, as an honest '
             'contrast. Build with `lake build ZeroParadox.AxiomProfile` and read '
-            'the kernel\'s report. The per-theorem map is in the project repository.',
+            'the `#print axioms` report. The per-theorem map is in the project repository.',
             'Choice-probe (the one-layer classification): branch `choice-probe`; the verdict and the '
             'three decomposed sources are recorded in the project notes.',
         ]
@@ -250,17 +253,19 @@ def build():
             'that the whole framework is choice-free (it is not), nor that the analytic-layer choice '
             'is removable or necessary. Where a statement carries it as written (Section III), no '
             'proof of that statement can drop it and the open question is a restatement on a '
-            'choice-free carrier; elsewhere necessity is open. The fact surfaced here is the '
+            'carrier whose statements are choice-free (for the &#949;<sub>0</sub> results, its two '
+            'readings and the search record are in ZeroParadox/Ordinal/SnapNucleus.md, section Axiom '
+            'footprint); elsewhere necessity is open. The fact surfaced here is the '
             'verified one.',
         ]
     ))
     E.append(sp(6))
 
     E.append(Paragraph(
-        'Endnote: This is a framework-wide note, machine-verified as of October 2026 (lake build; '
-        'statement control measured 2026-10-08). The central '
+        'Endnote: This is a framework-wide note; the footprints it cites are copies, and the live '
+        'record is the #print axioms output of the files it names. The central '
         'theorem T-SNAP depends on no axioms; the conceptual core is free of the Axiom of Choice; '
-        '`Classical.choice` appears mostly where the framework builds on Mathlib\'s classical analysis, '
+        '`Classical.choice` appears in many places where the framework builds on Mathlib\'s classical analysis, '
         'order, and computability libraries, where several statements carry it as written (for '
         'those, the open question is a restatement) and elsewhere whether it is necessary remains '
         'open. It is not only there: the framework carries bare classicals of its own, and the '

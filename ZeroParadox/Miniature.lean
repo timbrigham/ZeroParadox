@@ -60,33 +60,32 @@ It reads top to bottom:
 
 **What the floor stands for — self-reference and the Quine atom.** This file represents the floor as bare
 fixed-point existence (`floor_of_witness`: a witness forces a fixed point; `cZero_has_fp`: the collapse fixes a
-point). In the full framework that fixed point is a *self-referential* object — **the Quine atom** (Quine;
-Aczel): the set that is its own only member, `⊥ = {⊥}`. It is one structural fact in several languages. Three
-of them — the Quine atom (set theory / ZF+AFA), the order-bottom `⊥`, and the algebraic join-identity — are
+point). In the full framework that fixed point is a *self-referential* object — **the Quine atom** (CC-2; Quine;
+Aczel), a role: a point that steps to itself and to nothing else, in set theory a set x = {x}. Three faces — the Quine atom (set theory / ZF+AFA), the order-bottom `⊥`, and the algebraic join-identity — are
 proved to be the *same* element within a single carrier, axiom-free (`Settheory/SetTheoryAFA.lean`
 `t_exec_triple_iff`; its two-face half is `t_exec`);
-the fourth, the Kleene quine (a program that prints itself, computability), is *joined* to them by an explicit
-structural commitment — the `KleeneStructure` typeclass carries the computational fixed point as filling the
-same role, without asserting an identity across types, not derived (`Computability/Kleene.lean`).
+the fourth, the Kleene quine (a program that prints itself, computability), is compared with them through that
+role, never by an identity: no code is equated with ⊥, and under the `eval` step no single code occupies the role
+while, for computable `eval`-respecting maps, a class of codes does (`codes_vs_classes`, `Computability/Kleene.lean`).
 
-**That fourth commitment is where time enters — and it is the easiest thing here to walk past.** The other
+**That fourth face is where time can enter — and it is the easiest thing here to walk past.** The other
 three faces are *static*: order-bottom, self-membered set, algebraic identity are timeless facts that simply
 hold, and nothing about them ever *happens*. The Kleene quine is the only one that *runs*, and running is a
-before and an after. So committing that the self-contained bottom is the self-executing bottom (⊥ is the
-machine in its ground state, which must execute itself) is committing that **time enters the framework as a
-state change**. It is what makes the framework dynamic at all: nothing static occurs on its own, so without
-it ⊥ would rest as a fixed point forever and the snap would never happen. Stated as what it is — a
-*commitment*, never a theorem — which is exactly why the computational face is joined by hand rather than
-derived from the static three. The wall's seed here, `negation_no_fp`
-(`¬(p ↔ ¬p)`), is that same self-reference *failing to close* (Cantor, Turing, Tarski); the floor is it
+before and an after. The framework reads `bot` of the `ZPSemilattice` as its own executor if it executes at all; no
+`KleeneStructure` field asserts it, and `da1_computational` proves only `IsQuineAtom bot` (`Computability/Kleene.lean`).
+That it runs is the occurrence commitment, and with CC-1 it lets **time enter the framework as a state change**
+(`Order/Snap.lean` `t_snap_given`: hypotheses `hcc1` and `hocc`, no `KleeneStructure`); nothing static occurs on its own,
+so without them `bot` would rest as a fixed point forever and the snap would never happen. Stated as what they are —
+*commitments*, never theorems — which is exactly why the running is committed to rather than derived from
+the static three. The wall's seed here, `negation_no_fp` (`¬(p ↔ ¬p)`), is that same self-reference *failing to close* (Cantor, Turing, Tarski); the floor is it
 *closing* — landing on the thing that is its own answer.
 
 We show the *limited* version deliberately. The **shape** — self-reference forced either to a wall or to a
 self-referential floor — is what the minimal core exhibits, and a bare fixed point is enough to carry it. The
-full Quine atom needs a non-well-founded set theory (ZF+AFA) to host `⊥ = {⊥}` literally; that host is the
+full Quine atom needs a non-well-founded set theory (ZF+AFA) to host a set x = {x} literally; that host is the
 *flesh*, cited to its home, not rebuilt here. Honest split: the *structural* self-application fixed point is
-Lean-proved and axiom-free (`t_exec`); the *literal* set-membership `⊥ = {⊥}` is a metatheoretic modeling
-commitment (ZF+AFA), a theorem nowhere — the framework's own fence, kept here.
+Lean-proved and axiom-free (`t_exec`); an equation between a lattice's ⊥ and a set is ill-typed and not asserted: the die's Quine-atom
+role has its occupancy settled chart by chart (`ZeroParadox/Settheory/QuineDichotomy.lean`); hosting x = {x} in ZF+AFA is the commitment.
 
 **Honest status.** The *content* is re-derived, not new: the engine is **Lawvere (1969) / Yanofsky (2003)**
 (`Settheory/Wall.lean`); the classifier is `Category/DiagonalWitness.lean`; the four corners are
@@ -131,8 +130,9 @@ def HasWitnessRel (β : Type u) (M : (β → β) → Prop) : Prop :=
   ∃ (α : Type u) (e : α → (α → β)), ∀ g : β → β, M g → ∃ a, (fun x => g (e x x)) = e a
 
 /-- **The floor condition.** A witness forces every admissible endomap to have a fixed point — self-reference
-*closes*. In the full framework that fixed point is the self-referential **Quine atom** `⊥ = {⊥}` / Kleene
-quine (`Settheory/SetTheoryAFA.lean` `t_exec`); here it is bare existence — see the docstring's
+*closes*. In the full framework that fixed point is the lattice's Quine atom, ⊥ (`Settheory/SetTheoryAFA.lean`
+`t_exec`); the Kleene quine is compared with it through the Quine-atom role, not identified
+(`Computability/Kleene.lean` § IX); here it is bare existence — see the docstring's
 "What the floor stands for". -/
 theorem floor_of_witness {β : Type*} {M : (β → β) → Prop} (h : HasWitnessRel β M)
     {g : β → β} (hg : M g) : ∃ b, g b = b := by
@@ -156,6 +156,8 @@ theorem witness_antitone {β : Type*} {M M' : (β → β) → Prop}
 
 /-! ### § III. The smallest concrete witness — the two-element pole and its four self-maps. -/
 
+-- [ZP port] Lean 4.35: Mathlib's `Fintype` deriving handler needs the pre-4.35 defeq transparency.
+set_option backward.isDefEq.respectTransparency false in
 /-- The pole: the two-element type `{0, ∞}`. -/
 inductive Pole where
   | zero

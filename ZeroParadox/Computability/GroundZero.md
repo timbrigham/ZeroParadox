@@ -1,6 +1,6 @@
 # GroundZero — ride-along documentation
 
-Moved from `ZeroParadox/Computability/GroundZero.lean`. ⚠ **This content was GRANDFATHERED — it was carried in an accepted-defect baseline, which means it was let through UNEXAMINED. Moving it changes that by exactly nothing.** Its claims are unverified until a claim review says otherwise.
+Moved from `ZeroParadox/Computability/GroundZero.lean` on 2026-10-13. ⚠ **At the move this content was GRANDFATHERED — it was carried in an accepted-defect baseline, which means it was let through UNEXAMINED, and moving it changed that by exactly nothing.** The text has been edited since the move; this banner records its state on 2026-10-13 and does not record whether any review has taken place since.
 
 In the sections below, "this file", "here" and every bare § number refer to
 `ZeroParadox/Computability/GroundZero.lean`.
@@ -15,8 +15,8 @@ which is cited there to Jacobs & Rutten (EATCS Bulletin 62, 1997).
 **What it establishes.** Reading a step function as a coalgebra, every configuration is a leaf
 (halted) or a successor (stepping) — the head is `Bool`, so "exists but has not begun" is not
 merely unproved, it is *not expressible* (§ I, axiom-free). And the behaviour that never reaches
-a leaf is **unique**: it is `natInfinity` (§ II, `notEL_unique`). So that non-terminating behaviour, `natInfinity`,
-is pinned by a purely negative description — by what it never does — with no element-hood in any
+a leaf is **unique**: it is `natInfinity` (§ II, `notEL_unique`). So that non-terminating
+behaviour is pinned by a purely negative description — by what it never does — with no element-hood in any
 machine carrier assumed. A self-looping configuration unfolds to exactly that point (§ III).
 
 **Why this shape matters.** The framework's other apophatic characterization with uniqueness is
@@ -35,17 +35,21 @@ itself and hence never terminates"*; Ex. 10.2(4) p. 44 for `(ℕ̄, pred)` final
 **bisimulation technique on that carrier** at §12 pp. 51–52, where it is applied to arithmetic laws
 (addition of naturals and its commutativity), *not* to this uniqueness statement. (Corrected
 2026-07-29: an earlier revision said §12 ran "this exact bisimulation on this exact carrier" — the
-technique and carrier are his, the application is not.) Mathlib itself has no `Conat` and no such
-lemma, so the Lean formalization is a genuine small addition — the mathematics is not.
+technique and carrier are his, the application is not.) No `Conat` type and no such uniqueness
+lemma on one were located in the Mathlib then pinned (`5450b53`) as of 2026-10-31, searched as follows: grep
+of Mathlib for `Conat`, `CoNat` and `coNat` (none), and one LeanExplore query for coinductive naturals
+with infinity as the successor's fixed point (none). So the Lean formalization is a small addition; the
+mathematics is not new.
 
 **And the framework already had it, in another dress:** `Miniature.lean`'s
 `enat_fp_iff : x + 1 = x ↔ x = ⊤` is this same fact in the `ℕ∞ = WithTop ℕ` presentation.
 
 **What is NOT claimed.** That ⊥ of a `ZPSemilattice`, read as a configuration of a step function,
-*is* such a behaviour remains a modelling commitment (the reading is glossed at the
-`loop_unfolds_to_infinity` entry of `ZeroParadox/Computability/ComputationCannotBe.lean` § VIII) —
-the results here are conditional on non-termination, and say nothing about whether that ⊥
-non-terminates. Nothing here makes the snap occur: occurrence is still
+self-loops, and so unfolds to `natInfinity`, the behaviour that never reaches a leaf (§ II), remains
+a modelling commitment (glossed at the `loop_unfolds_to_infinity` entry of
+`ZeroParadox/Computability/ComputationCannotBe.lean` § VIII). The self-loop is the stronger of
+the two: a self-loop implies non-termination, not conversely. The results here are conditional
+on non-termination, and say nothing about whether that ⊥ non-terminates. Nothing here makes the snap occur: occurrence is still
 the halting problem (`occurs_iff_halts`, `occurrence_undecidable`). And the mathematics is not
 new — the final coalgebra of `X ↦ 1 + X` being `ℕ ∪ {∞}` is standard (Jacobs, *Introduction to
 Coalgebra*, Ex. 2.4.1 p. 66). **Note the scope of that citation:** Jacobs supports the *object*,
@@ -65,3 +69,4 @@ coalgebra.
 - § II  The apophatic characterization, and its UNIQUENESS
 - § III The bridge: a self-looping configuration unfolds to `natInfinity`
 - § IV  NO-GO gauge: the forcing needs the binary split (a three-valued counter-model)
+- § V   The well-founded coalgebra is the halting condition

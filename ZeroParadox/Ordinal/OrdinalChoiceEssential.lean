@@ -42,7 +42,7 @@ abbrev Pt : Type := PUnit
 
 instance : Std.Trichotomous (@emptyRelation Pt) := ⟨fun a b _ _ => Subsingleton.elim a b⟩
 instance : IsTrans Pt emptyRelation := ⟨fun _ _ _ h => h.elim⟩
-instance : IsWellFounded Pt emptyRelation := ⟨⟨fun a => ⟨a, fun _ h => h.elim⟩⟩⟩
+instance : WellFounded (@emptyRelation Pt) := ⟨fun a => ⟨a, fun _ h => h.elim⟩⟩
 instance : IsWellOrder Pt emptyRelation where
 
 /-- The Kraus-Nordvall Forsberg-Xu witness: a carrier with **two** elements when `p` holds and
@@ -65,8 +65,8 @@ instance (p : Prop) : Std.Trichotomous (twoRel p) := by
 instance (p : Prop) : IsTrans (Two p) (twoRel p) :=
   ⟨fun _ _ _ h1 h2 => absurd (h1.2.symm.trans h2.1) (by simp)⟩
 
-instance (p : Prop) : IsWellFounded (Two p) (twoRel p) := by
-  refine ⟨⟨fun a => ?_⟩⟩
+instance (p : Prop) : WellFounded (twoRel p) := by
+  refine ⟨fun a => ?_⟩
   have base : ∀ c : Two p, c.2 = false → Acc (twoRel p) c :=
     fun c hc => ⟨c, fun d hd => absurd (hd.2.symm.trans hc) (by simp)⟩
   exact ⟨a, fun d hd => base d hd.1⟩
@@ -117,8 +117,9 @@ theorem em_of_wellOrder_comparable
   · exact Or.inl (p_of_pt_le p h)
 
 /-- **The hypothesis is not vacuous.** Mathlib's `InitialSeg.total` supplies it, so
-`em_of_wellOrder_comparable` cannot be dismissed as an implication with an unsatisfiable
-antecedent (`comparable_of_classical`). Classical by construction — that is the point: this is the source end of the arrow.
+`em_of_wellOrder_comparable` is not an implication with an unsatisfiable antecedent: this
+theorem inhabits that antecedent. Classical by construction — that is the point: this is the
+source end of the arrow.
 
 `InitialSeg.total` (`Mathlib/Order/InitialSeg.lean`) is the **data** form, and spends a literal
 `Classical.choice` application in its final branch. -/
@@ -148,14 +149,14 @@ Traced to source, three independent classical entry points feed that instance:
 * `Ordinal.instLinearOrder`'s own `toDecidableLE := Classical.decRel _` — a data field, classical
   by fiat.
 
-**Consequence for the framework's ledger.** The recorded `[propext, Classical.choice, Quot.sound]`
-readings on `epsilon0_ne_zero`, `epsilon0_ne_bot`, `epsilon0_eq_nfp_bot` and their kin are
-measuring the ambient instance, not those proofs. They are **not evidence** that the ε₀
-mathematics is non-constructive, in either direction. `epsilon0_ne_zero` is the clearest case: its
-own argument is `ω^0 = 1 ≠ 0`, entirely constructive, and its whole footprint is inherited from
-the ε₀ term. Re-proving these choice-free *inside* Mathlib's `Ordinal` is not merely hard, it is
-structurally impossible; a choice-free analogue has to be built on a notation carrier, which is
-ZP-N's programme. -/
+**Consequence for the framework's ledger.** The recorded `[propext, Classical.choice, Quot.sound]` readings
+on `epsilon0_ne_zero`, `epsilon0_ne_bot`, `epsilon0_eq_nfp_bot` and their kin measure the choice-carrying
+constants their statements reach (the order instance and operations such as `Ordinal.omega0`), not those
+proofs: **not evidence** that the ε₀ mathematics is non-constructive, in either direction.
+`epsilon0_ne_zero`'s own argument is `ω^0 = 1 ≠ 0`, entirely constructive; its footprint is inherited
+from the ε₀ term. As written these statements are STATEMENT-CARRIED (`ZeroParadox/Category/ChoiceCannotBe.md`),
+so no proof inside Mathlib's `Ordinal` drops the choice; a choice-free analogue is restated on a notation
+carrier, ZP-N's programme (`ZeroParadox/Ordinal/ConstructiveOrdinals.md` § Result). -/
 
 /-! **The measurement is uninformative for `Ordinal`'s order.** The next two theorems are the
 demonstration, and they are deliberately stated **separately** rather than as one conjunction: a
@@ -193,25 +194,30 @@ example (H : ∀ (α β : Type) (r : α → α → Prop) (s : β → β → Prop
       · exact Or.inl (Ordinal.type_le_iff.mpr h)
       · exact Or.inr (Ordinal.type_le_iff.mpr h)
 
--- `Statement:` the same totality respelled over the bare `le` relation of `Ordinal.partialOrder`
--- (no instance term) is, by `rfl`, the proposition `∀ a b : Ordinal.{0}, a ≤ b ∨ b ≤ a`.
--- Reading: "written through that instance term" above is about the TERM AS WRITTEN;
--- this respelling's own statement measures `[propext, Quot.sound]` (statement control, 2026-10-08).
-example : let ordLe : Ordinal.{0} → Ordinal.{0} → Prop := fun a b =>
-      (Quotient.liftOn₂ a b (fun ⟨_, r, _⟩ ⟨_, s, _⟩ => Nonempty (r ≼i s))
-        fun _ _ _ _ ⟨f⟩ ⟨g⟩ => propext
-          ⟨fun ⟨h⟩ => ⟨f.symm.toInitialSeg.trans <| h.trans g.toInitialSeg⟩, fun ⟨h⟩ =>
-            ⟨f.toInitialSeg.trans <| h.trans g.symm.toInitialSeg⟩⟩)
-    (∀ a b, ordLe a b ∨ ordLe b a) = (∀ a b : Ordinal.{0}, a ≤ b ∨ b ≤ a) := rfl
+/-- `Statement:` totality of `≤` on `Ordinal.{0}` as Mathlib spells it; the statement control. -/
+def ordTotalAsWritten : Prop := ∀ a b : Ordinal.{0}, a ≤ b ∨ b ≤ a
 
--- `Statement:` and that respelled totality implies excluded middle, by `em_of_wellOrder_comparable`.
-example : let ordLe : Ordinal.{0} → Ordinal.{0} → Prop := fun a b =>
+/-- `Statement:` totality of `≤` on `Ordinal.{0}`, respelled over the bare `le` relation of
+`Ordinal.partialOrder` (the `Quotient.liftOn₂` of `Nonempty (r ≼i s)`), with no instance term.
+Named so that its own footprint can be printed: the purity block below measures this statement,
+where an anonymous `example` has no name for `#print axioms` to take. -/
+def ordTotalRespelled : Prop :=
+  let ordLe : Ordinal.{0} → Ordinal.{0} → Prop := fun a b =>
       (Quotient.liftOn₂ a b (fun ⟨_, r, _⟩ ⟨_, s, _⟩ => Nonempty (r ≼i s))
         fun _ _ _ _ ⟨f⟩ ⟨g⟩ => propext
           ⟨fun ⟨h⟩ => ⟨f.symm.toInitialSeg.trans <| h.trans g.toInitialSeg⟩, fun ⟨h⟩ =>
             ⟨f.toInitialSeg.trans <| h.trans g.symm.toInitialSeg⟩⟩)
-    (∀ a b, ordLe a b ∨ ordLe b a) → ExcludedMiddle :=
-  fun h => em_of_wellOrder_comparable fun _ _ r s _ _ => h (Ordinal.type r) (Ordinal.type s)
+  ∀ a b, ordLe a b ∨ ordLe b a
+
+-- `Statement:` the respelling is, by `rfl`, the proposition `∀ a b : Ordinal.{0}, a ≤ b ∨ b ≤ a`.
+-- Reading: "written through that instance term" above is about the TERM AS WRITTEN; the two
+-- spellings are one proposition, and only the first mentions the instance.
+example : ordTotalRespelled = ordTotalAsWritten := rfl
+
+/-- `Statement:` the respelled totality implies excluded middle, by `em_of_wellOrder_comparable`.
+Its footprint, and that of `ordTotalRespelled`, are printed in the purity block below. -/
+theorem em_of_ordTotalRespelled (h : ordTotalRespelled) : ExcludedMiddle :=
+  em_of_wellOrder_comparable fun _ _ r s _ _ => h (Ordinal.type r) (Ordinal.type s)
 
 end ZeroParadox
 
@@ -238,6 +244,12 @@ open ZeroParadox
 #print axioms order_footprint_eq
 #print axioms order_footprint_le
 
+-- § III, the statement control: the same proposition in its two spellings, statements alone, then
+-- the respelling's implication to excluded middle.
+#print axioms ordTotalAsWritten
+#print axioms ordTotalRespelled
+#print axioms em_of_ordTotalRespelled
+
 -- The § III trace, measured rather than asserted.
 -- FIRST: the type itself, which carries NO choice. This one line is the load-bearing measurement
 -- behind the whole correction of record — ZP-N v1.0 asserted the opposite ("choice-saturated") and
@@ -248,7 +260,7 @@ open ZeroParadox
 #print axioms InitialSeg.eq_or_principal
 #print axioms InitialSeg.total
 
--- Two of the operations built on that instance. `nfp`, `deriv` and `epsilon` are named alongside
+-- Two of the choice-carrying operations. `nfp`, `deriv` and `epsilon` are named alongside
 -- these in ZP-N's prose but live in `Mathlib.SetTheory.Ordinal.FixedPoint` / `Veblen`, outside this
 -- file's deliberately minimal import closure; they are printed in
 -- `ZeroParadox/Ordinal/PricedInterface.lean`, which already imports Veblen. Between the two purity

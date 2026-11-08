@@ -49,8 +49,8 @@ theorem dneg_inf_distrib {X : Type*} [HeytingAlgebra X] (a b : X) :
 /-- **The double-negation nucleus** `a ↦ aᶜᶜ` on a Heyting algebra: the canonical predicated difference —
     the modality that collapses the constructive base toward the classical (Boolean) core. A genuine
     `Nucleus` (needs only that meets exist): inflationary (`le_compl_compl`), idempotent
-    (`compl_compl_compl`), meet-preserving (`dneg_inf_distrib`). The double-negation-side parallel of
-    `snapNucleus`. Axiom footprint `[propext]` — choice-free; see the file header. -/
+    (`compl_compl_compl`), meet-preserving (`dneg_inf_distrib`); the parallel of `snapNucleus`.
+    Axiom footprint `[propext]` — choice-free; see `ZeroParadox/Category/DoubleNegationNucleus.md`. -/
 def dnegNucleus (X : Type*) [HeytingAlgebra X] : Nucleus X where
   toFun a := aᶜᶜ
   map_inf' := dneg_inf_distrib
