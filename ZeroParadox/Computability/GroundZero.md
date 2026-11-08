@@ -36,7 +36,7 @@ itself and hence never terminates"*; Ex. 10.2(4) p. 44 for `(ℕ̄, pred)` final
 (addition of naturals and its commutativity), *not* to this uniqueness statement. (Corrected
 2026-07-29: an earlier revision said §12 ran "this exact bisimulation on this exact carrier" — the
 technique and carrier are his, the application is not.) No `Conat` type and no such uniqueness
-lemma on one were located in the pinned Mathlib (`5450b53`) as of 2026-10-31, searched as follows: grep
+lemma on one were located in the Mathlib then pinned (`5450b53`) as of 2026-10-31, searched as follows: grep
 of Mathlib for `Conat`, `CoNat` and `coNat` (none), and one LeanExplore query for coinductive naturals
 with infinity as the successor's fixed point (none). So the Lean formalization is a small addition; the
 mathematics is not new.

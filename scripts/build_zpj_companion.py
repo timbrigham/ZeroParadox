@@ -1,6 +1,6 @@
 """
 Build ZP-J Illustrated Companion
-Version 1.41 | November 2026
+Version 1.42 | November 2026
 """
 
 import os
@@ -159,7 +159,7 @@ def abstraction_chain_table():
     t.setStyle(ts); return t
 
 
-VERSION = '1.41'
+VERSION = '1.42'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -239,7 +239,8 @@ def build():
         'self-containing elements as {&#8869;} without the axiom of choice; it derives the '
         'typeclass laws from stronger structures, ending in a valuation argument; it '
         'demonstrates the structure on two concrete types; and it proves a '
-        'decoration uniqueness theorem for finite APGs into abstract DecorationUniverses.'))
+        'decoration uniqueness theorem for every directed graph, finite or not, into abstract '
+        'DecorationUniverses, with a separate graph-side proof for finite APGs.'))
     E.append(sp(4))
 
     # ── What Is a Quine Atom? ────────────────────────────────────────────────
@@ -543,10 +544,12 @@ def build():
     E.append(cbody(
         'ZP-J proves something different: a uniqueness-only result for abstract DecorationUniverses  - '
         'types carrying the ValuationStructure and a collect operation, without importing AFA axioms. '
-        'The result: for any <b>finite</b> APG, any two valid decorations must agree at every vertex. '
+        'The result: on <b>any</b> directed graph, finite or infinite, any two valid decorations '
+        'must agree at every vertex (decoration_unique_of_val). For finite APGs a separate, '
+        'graph-side proof gives the same (decoration_unique). '
         'Existence is not proved; the ZP-J result is a constraint, not a construction.'))
     E.append(cbody(
-        'The proof follows the same two-direction logic as T-EXEC:'))
+        'The finite, graph-side proof follows the same two-direction logic as T-EXEC:'))
     E.append(cbody(
         '<b>Cyclic vertices:</b> Collecting a set of children always raises depth by at least 1, '
         'so a vertex is at least one step deeper than each of its children. Walk once around a '
@@ -560,14 +563,24 @@ def build():
         'induction. If two decorations agree on all the children of a vertex, they must '
         'agree on the vertex itself  - because the label is assembled from the children\'s '
         'labels and the assembly rule is the same. The induction terminates because the '
-        'set of reachable vertices strictly shrinks at each child.'))
+        'set of reachable vertices strictly shrinks at each child. Counting those vertices is '
+        'what needs the graph to be finite.'))
+    E.append(cbody(
+        '<b>The other reading:</b> instead of sorting vertices into cyclic and acyclic, sort '
+        'the labels by depth. A label of finite depth n is assembled from children whose labels '
+        'have depth below n, so induction on n settles it; the only label of infinite depth is '
+        '&#8869; of the decorating type. Think of a recursion that terminates on the size of its '
+        'output rather than its input: nothing about the graph is counted, so the graph may be '
+        'infinite (decoration_unique_of_val). The two readings are linked one way: a cyclic '
+        'vertex gets infinite depth, and nothing is claimed in reverse.'))
     E.append(sp(4))
     E.append(remember_box(
-        'decoration_unique is the ZP analogue of the uniqueness clause of AFA, which is an axiom. '
+        'decoration_unique_of_val is the ZP analogue of the uniqueness clause of AFA, which is an axiom. '
         'It does not construct a decoration or prove one exists  - it proves that '
         'any two valid decorations must be identical. It is an analogue of the uniqueness half '
         'of what AFA asserts, not that clause itself: it is proved for abstract '
-        'DecorationUniverses over finite graphs, without importing set-theoretic AFA axioms.'))
+        'DecorationUniverses over every graph, finite or not, without importing set-theoretic '
+        'AFA axioms. decoration_unique is its finite form: a graph-side proof for finite APGs.'))
     E.append(sp(8))
 
     # ── Key Result Box ───────────────────────────────────────────────────────
@@ -588,9 +601,12 @@ def build():
         'reduce what must be assumed. '
         'Concrete instances: &#8469;&#8734; satisfies the full ValuationStructure chain; '
         'OntologicalStates connects at the AbstractSelfApp level directly. '
-        'decoration_unique: any two valid decorations of a finite APG into a DecorationUniverse agree. '
+        'decoration_unique_of_val: any two valid decorations of any graph, finite or not, into a '
+        'DecorationUniverse agree, with no finiteness hypothesis. '
+        'decoration_unique: the same for a finite APG, by a graph-side proof. '
         'All stated results sorry-free in Lean 4 '
-        '(decoration_unique proved via strong induction on reach cardinality; '
+        '(decoration_unique proved via strong induction on reach cardinality, '
+        'decoration_unique_of_val via strong induction on the depth of the decorating value; '
         'an auxiliary acyclic_decoration_unique in ZeroParadox/Settheory/APG.lean is sorry\'d and commented out  - '
         'it is not used by decoration_unique). &#10003;'))
     E.append(sp(6))

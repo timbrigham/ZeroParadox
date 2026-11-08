@@ -1,12 +1,12 @@
 """
 Zero Paradox — ZP-J: Executability of Self-Reference PDF Builder
-Version 2.18 | November 2026
+Version 2.19 | November 2026
 """
 
 import os
 from zp_utils import *
 
-VERSION = '2.18'
+VERSION = '2.19'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -46,8 +46,8 @@ def build():
         'it generalises the AFAStructure typeclass into an abstraction chain reaching down to '
         'a pure valuation structure (Section VIII); it instantiates that chain on two concrete '
         'types (Section IX); and it proves global decoration uniqueness, into abstract '
-        'DecorationUniverses, for finite accessible '
-        'pointed graphs (Section X). All results are sorry-free in Lean 4.',
+        'DecorationUniverses, for every quiver, finite or not, and by a finite, graph-side '
+        'proof for finite accessible pointed graphs (Section X). All results are sorry-free in Lean 4.',
         style='bodyI'))
     E.append(hr())
 
@@ -470,15 +470,15 @@ def build():
         'starting point, not a derived one. Sections I&#8211;VI restate that commitment in terms '
         'of the Quine-atom role, where it becomes an equivalence rather than a bare choice. '
         'Sections VII&#8211;X extend the chain further: they derive AFAStructure\'s laws from '
-        'stronger structures, provide concrete models, and prove decoration uniqueness for finite '
-        'graphs over abstract DecorationUniverses &#8212; an analogue of the uniqueness clause of '
+        'stronger structures, provide concrete models, and prove decoration uniqueness for every '
+        'quiver, with a graph-side proof for finite graphs, over abstract DecorationUniverses &#8212; an analogue of the uniqueness clause of '
         'what AFA asserts as an axiom. Every node is either a proved theorem or a typeclass field:'))
     E += [
         li('ZP-A axioms A1&#8211;A4: semilattice structure (ZPSemilattice fields).'),
         li('ZP-B: 2-adic topology and irreversibility (proved from Mathlib).'),
         li('ZP-C: information theory, L-INF, L-RUN (proved axiom-free or from Mathlib).'),
         li('ZP-D: state layer, orthogonality (proved from ZP-A and ZP-B).'),
-        li('ZP-E: T-SNAP, DA-1, DA-2 (T-SNAP and DA-2 proved axiom-free; DA-1 Path 3 outside Lean scope).'),
+        li('ZP-E: T-SNAP, DA-1, DA-2 (T-SNAP and DA-2 proved axiom-free; DA-1 Path 3 not formalized).'),
         li('ZP-J: AFAStructure fields (selfMem, quine_unique, bot_self_mem). '
            'T-EXEC, J1, and CC-1 in conditional form: proved axiom-free. '
            'Sections VII&#8211;X (Aczel connection, abstraction chain, concrete instances, '
@@ -486,9 +486,17 @@ def build():
         sp(4),
     ]
     E.append(body(
-        'DA-1 Path 3 (the AIT/Kolmogorov complexity argument in ZP-E) remains outside this corpus\'s '
-        'Lean scope. That is a statement of scope, not of possibility: uncomputability does not block '
-        'formalising Kolmogorov complexity. A definition of it was not located in the pinned Mathlib '
+        'DA-1 Path 3 (the AIT/Kolmogorov complexity argument in ZP-E) is not formalized in this corpus: '
+        'not located as of 2026-11-07, searched for &#8220;Path 3&#8221; over ZeroParadox/**/*.lean, '
+        'whose hits are a comment in ZeroParadox/Category/Category.lean and the docstring of '
+        'da1_paths_unified (ZeroParadox/Computability/Kleene.lean), neither a proof of the argument. '
+        'Kolmogorov complexity itself is now in the build: plainK and KPPlain come from the Lake '
+        'dependency kolmogorov-complexity-lean (A. Milovanov) at commit 7e71116, and '
+        'ZeroParadox/Information/BrudnoBridge.lean restates its Brudno theorems (brudno_of_MLRandom, '
+        'brudno_ae_trials, brudno_fair_of_MLRandom) and its Levin&#8211;Schnorr theorem '
+        '(MLRandom_fair_iff_le_KPPlain) for this corpus&#8217;s trials and MLRandom. The gap is '
+        'therefore the Path 3 argument itself, not the absence of K. Before that dependency, a '
+        'definition of K was not located in the Mathlib then pinned '
         '(5450b53) as of 2026-11-03, searched for &#8220;Kolmogorov complexity&#8221;, '
         '&#8220;KolmogorovComplexity&#8221;, &#8220;algorithmic information&#8221;, &#8220;shortest '
         'program&#8221; and &#8220;description length&#8221; (no file), and &#8220;Kolmogorov&#8221; '
@@ -818,7 +826,7 @@ def build():
 
     E.append(body(
         '<i>Formalised in ZeroParadox/Settheory/APG.lean as the most recent addition; this section proves '
-        'decoration uniqueness for finite accessible pointed graphs over abstract '
+        'decoration uniqueness for every quiver, with a graph-side proof for finite accessible pointed graphs, over abstract '
         'DecorationUniverses &#8212; an analogue of AFA\'s uniqueness clause, not that clause '
         'and not AFA itself &#8212; '
         'using the typeclass chain established in Sections VIII&#8211;IX.</i>',
@@ -910,6 +918,14 @@ def build():
         'acyclic vertex v, the reach of w is a strict subset of the reach of v (since v cannot '
         'be reached from w without creating a cycle). Reach cardinality is therefore strictly '
         'decreasing, providing a well-founded measure for the induction.'))
+    E.append(body(
+        'That measure is the graph side, and it is where finiteness is spent. The value side needs '
+        'none: decoration_unique_of_val (ZeroParadox/Settheory/APG.lean &#167; IX) inducts on the '
+        'valuation of the decorating value instead. A value of finite valuation m is collected from '
+        'children whose values have valuation below m (collect_val_ge), and a value of valuation '
+        '&#8868; is &#8869; of U (val_unique). It holds on every quiver, finite or not. The two sides '
+        'are related one way: a cyclic vertex&#8217;s value has valuation &#8868; '
+        '(cyclic_decoration_eq_bot with val_bot); no converse is claimed.'))
     E.append(result_box(
         'Acyclic Induction and Global Uniqueness (ZeroParadox/Settheory/APG.lean &#167;&#167; VIII&#8211;IX)',
         [
@@ -921,17 +937,24 @@ def build():
             'decorations d&#8321;, d&#8322; into any DecorationUniverse, d&#8321; = d&#8322;. '
             'Proof: strong induction on |{w | Path u w}|; cyclic case by cyclic_decoration_eq_bot; '
             'acyclic case by acyclic_induction_step with IH on children. &#10003;',
+            'decoration_unique_of_val, the main uniqueness result: for any quiver V, finite or not, with no APG argument, any two '
+            'valid decorations d&#8321;, d&#8322; into any DecorationUniverse are equal. '
+            'Proof: strong induction on a finite valuation; valuation &#8868; is &#8869; of U by '
+            'val_unique. decoration_unique_finite restates decoration_unique with [Finite V] in '
+            'place of [Fintype V], as a corollary. Both [propext, Quot.sound]. &#10003;',
         ]
     ))
     E.append(sp(6))
     E.append(callout(
-        'decoration_unique is the ZP analogue of the uniqueness clause of AFA (an axiom, not a '
-        'theorem): for any '
-        '<b>finite</b> APG, at most one valid decoration exists into any DecorationUniverse. '
-        'The proof consumes collect_val_ge (never collect_singleton), val_unique through '
-        'val_finite_of_ne_bot, and [Fintype V] for the acyclic descent &#8212; it '
-        'gives a sufficient condition for decoration uniqueness, not a characterisation. It does not construct a specific AFA '
-        'model or derive AFA\'s axioms from ZP\'s.',
+        'decoration_unique_of_val is the ZP analogue of the uniqueness clause of AFA (an axiom, not a '
+        'theorem): for <b>any</b> quiver, finite or not, at most one valid decoration exists into '
+        'any DecorationUniverse. Its proof consumes collect_val_ge and val_unique and no finiteness. '
+        'decoration_unique is the finite, graph-side proof, for finite APGs; it consumes '
+        'collect_val_ge (never collect_singleton), val_unique through val_finite_of_ne_bot, and '
+        '[Fintype V] for the acyclic descent, and its statement is a special case of '
+        'decoration_unique_of_val. Each '
+        'gives a sufficient condition for decoration uniqueness, not a characterisation. Neither constructs a specific AFA '
+        'model or derives AFA\'s axioms from ZP\'s.',
         bg=AMBER_LITE, border=AMBER
     ))
     E.append(sp(6))
@@ -979,8 +1002,7 @@ def build():
         ['ValuationStructure &#8594; AbstractSelfApp',
          'ValuationStructure.val_scale + val_unique',
          'None',
-         'Lean: scale_unique_fp, toAbstractSelfApp &#8212; [propext, Classical.choice, Quot.sound], '
-         'already in each STATEMENT (ZP-J AFA Addendum &#167; V) &#10003;'],
+         'Lean: scale_unique_fp, toAbstractSelfApp &#8212; [propext, Classical.choice, Quot.sound] &#10003;'],
         ['&#8469;&#8734; : ValuationStructure',
          '&#8469;&#8734; arithmetic (WithTop.top_add)',
          'None',
@@ -997,6 +1019,14 @@ def build():
          'cyclic_decoration_eq_bot + acyclic_induction_step + Set.ncard',
          '[Fintype V] &#8212; finite graph assumption',
          'Lean: decoration_unique &#8212; propext, Classical.choice, Quot.sound &#10003;'],
+        ['decoration_unique_of_val (any quiver)',
+         'collect_val_ge + val_unique + acyclic_induction_step',
+         'None &#8212; no finiteness, no APG',
+         'Lean: decoration_unique_of_val &#8212; [propext, Quot.sound]; no Classical.choice &#10003;'],
+        ['decoration_unique_finite [Finite V]',
+         'decoration_unique_of_val',
+         '[Finite V] &#8212; in the statement only; the proof does not use it',
+         'Lean: decoration_unique_finite &#8212; [propext, Quot.sound]; no Classical.choice &#10003;'],
         ['AFAStructure.bot_self_mem',
          'The Quine-atom role (CC-2), played in ZF+AFA by the set Q = {Q}',
          'Typeclass field &#8212; a hypothesis; every ZPSemilattice meets it trivially',
@@ -1034,8 +1064,8 @@ def build():
         ['DA-1 Path 1 formalisation',
          'PARTIAL &#8212; APG case proved',
          'DA-1 Path 1 (ZP-E) invokes the Quine atom (CC-2) informally. ZP-J T-EXEC formalises '
-         'the role&#8217;s occupant in the lattice chart; no equation with the set Q = {Q} is stated. decoration_unique (&#167; X) proves uniqueness for finite APGs '
-         'over abstract DecorationUniverses. The full ZF+AFA set-theoretic bridge '
+         'the role&#8217;s occupant in the lattice chart; no equation with the set Q = {Q} is stated. decoration_unique_of_val (&#167; X) proves uniqueness for every quiver '
+         'over abstract DecorationUniverses, and decoration_unique for finite APGs. The full ZF+AFA set-theoretic bridge '
          '&#8212; showing the ZP types literally satisfy the ZF+AFA axioms &#8212; '
          'remains outside Lean scope.'],
         ['ZP-A CC-1 cross-check',
@@ -1065,7 +1095,8 @@ def build():
             'J_self = {&#8869;} with no Classical.choice | '
             'Abstraction chain: ValuationStructure &#8594; AbstractSelfApp &#8594; AFAStructure | '
             'Instances: &#8469;&#8734;, OntologicalStates | '
-            'decoration_unique: any two valid decorations of a finite APG into a DecorationUniverse agree | '
+            'decoration_unique_of_val: any two valid decorations of any quiver, finite or not, into a DecorationUniverse agree | '
+            'decoration_unique: the same for a finite APG, by a graph-side proof | '
             'All results sorry-free in Lean 4</i>',
             S['endnote']),
     ]
