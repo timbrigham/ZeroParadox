@@ -73,7 +73,7 @@ Machine-checked proofs of the formal documents using Lean 4 + Mathlib, with sour
 
 ### Reproducing the Verification
 
-An independent re-check is three commands: `git clone https://github.com/timbrigham/ZeroParadox && cd ZeroParadox && lake build`. `elan` reads the pinned compiler from [lean-toolchain](lean-toolchain) (`leanprover/lean4:v4.30.0-rc2`) automatically, and Mathlib is fetched as a pinned dependency via `lake-manifest.json`; a clean `lake build` means every theorem in `ZeroParadox/` type-checks against the Lean kernel. To inspect the core axiom profile directly: `lake env lean ZeroParadox/AxiomProfile.lean`.
+An independent re-check is three commands: `git clone https://github.com/timbrigham/ZeroParadox && cd ZeroParadox && lake build`. `elan` reads the pinned compiler from [lean-toolchain](lean-toolchain) (`leanprover/lean4:v4.35.0`) automatically, and Mathlib is fetched as a pinned dependency via `lake-manifest.json`; a clean `lake build` means every theorem in `ZeroParadox/` type-checks against the Lean kernel. To inspect the core axiom profile directly: `lake env lean ZeroParadox/AxiomProfile.lean`.
 
 ### Formal Framework Documents
 
@@ -89,8 +89,8 @@ An independent re-check is three commands: `git clone https://github.com/timbrig
 | [Categorical Bridge](ZP-H_Categorical_Bridge.pdf) | ZP-H | v1.35 | The categorical bridge: the snap holding under all four domain functors. |
 | [Native Categories Addendum](ZP-H_Native_Categories_Addendum.pdf) | ZP-H Native Categories Addendum | v1.14 | The snap floor realized inside each framework's native Mathlib category (TopCat, ModuleCat ℂ, KleisliCat PMF). Reads after ZP-H. |
 | [Inside Zero](ZP-I_Inside_Zero.pdf) | ZP-I | v1.44 | Inside zero: each nowhere-zero 2-adic sequence whose valuation equals a depth index in ℕ that climbs at every step converges to 0 in the 2-adics; reading that limit as an occupant of the ⊥ role takes a choice of join, and reading it as a successor ⊥′ is a commitment. |
-| [Self-Reference](ZP-J_Self_Reference.pdf) | ZP-J | v2.18 | Self-reference: ⊥ as the Quine atom, and the AFA structure it requires. |
-| [AFA Addendum](ZP-J_AFA_Addendum.pdf) | ZP-J AFA Addendum | v1.21 | Decoration uniqueness for finite graphs from the valuation structure alone. Reads after ZP-J. |
+| [Self-Reference](ZP-J_Self_Reference.pdf) | ZP-J | v2.19 | Self-reference: ⊥ as the Quine atom, and the AFA structure it requires. |
+| [AFA Addendum](ZP-J_AFA_Addendum.pdf) | ZP-J AFA Addendum | v1.22 | Decoration uniqueness for every graph, finite or not, from the valuation structure and collect's depth bound. Reads after ZP-J. |
 | [Wheel Addendum](ZP-J_Wheel_Addendum.pdf) | ZP-J Wheel Addendum | v1.11 | The wheel of fractions as a wheel: division by zero made total. Reads after ZP-J. |
 | [Keystone Addendum](ZP-J_Keystone_Addendum.pdf) | ZP-J Keystone Addendum | v1.31 | The diagonal-fixed-point keystone: the Lawvere face-split (Set face machine-checked, computability face cited) and the snap as a well-foundedness boundary crossing. Reads after ZP-J. |
 | [Computational Grounding](ZP-K_Computational_Grounding.pdf) | ZP-K | v1.38 | Computational grounding: the bottom's structural self-containment, with the computational reading carried as a commitment. |

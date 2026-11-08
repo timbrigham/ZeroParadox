@@ -11,7 +11,7 @@ realizations in the language of categories*, Comment. Math. Univ. Carolin. 15 (1
 carries the *order-theoretic* engine
 (`fixedPoints.lfp_eq_sSup_iterate`) and ZP carries the *ordinal* instance (`epsilonZero_eq_nfp`:
 ε₀ = nfp(ω^·)0), but the *categorical* Adámek theorem (the initial algebra as the colimit of the initial
-chain) was not located in the pinned Mathlib (`5450b53`) as of 2026-10-31. Searched by grep along three
+chain) was not located in the Mathlib then pinned (`5450b53`) as of 2026-10-31. Searched by grep along three
 axes, each of which returns material that is near it and is not it: the proper name `Adámek` (citations
 of Adámek–Rosický and Adámek–Rosický–Vitale, as bibliography entries and theorem references, in
 `CategoryTheory/Presentable/`, `Generator/StrongGenerator.lean` and `Limits/Sifted.lean`, none of them the

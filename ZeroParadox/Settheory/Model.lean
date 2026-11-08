@@ -88,19 +88,19 @@ noncomputable instance instNatInfVal : ValuationStructure ℕ∞ where
   val_scale  := fun _x _hx => rfl
 
 -- Reading: CARRIER, this model only (not abstract `collect`). Its join, ⊥ and scale are the min-plus
--- semiring's addition, zero and multiplication by `trop 1` in Mathlib's `Tropical ℕ∞`
--- (`Tropical.trop_top`, `Tropical.untrop_add`, `Tropical.untrop_mul`), so `scale_bot` is `zero_mul`:
+-- semiring's addition, zero and multiplication by `trop 1` in Mathlib's `MinTropical ℕ∞`
+-- (`MinTropical.trop_top`, `MinTropical.untrop_add`, `MinTropical.untrop_mul`), so `scale_bot` is `zero_mul`:
 -- "∞ is the zero of this semiring" (Pin, "Tropical Semirings", in *Idempotency* (Cambridge UP 1998);
 -- author's preprint p. 3).
 
 -- Statement: `trop` sends this model's join to tropical `+`, ⊥ to tropical `0` and scale to `* trop 1`,
 -- so `scale_bot` is `zero_mul`.
-example : (∀ x y : ℕ∞, Tropical.trop (join x y) = Tropical.trop x + Tropical.trop y) ∧
-    Tropical.trop (bot : ℕ∞) = 0 ∧
-    (∀ x : ℕ∞, Tropical.trop (ValuationStructure.scale x) =
-      Tropical.trop x * Tropical.trop (1 : ℕ∞)) ∧
-    Tropical.trop (ValuationStructure.scale (bot : ℕ∞)) = 0 :=
-  ⟨fun _ _ => rfl, rfl, fun _ => rfl, zero_mul (Tropical.trop (1 : ℕ∞))⟩
+example : (∀ x y : ℕ∞, MinTropical.trop (join x y) = MinTropical.trop x + MinTropical.trop y) ∧
+    MinTropical.trop (bot : ℕ∞) = 0 ∧
+    (∀ x : ℕ∞, MinTropical.trop (ValuationStructure.scale x) =
+      MinTropical.trop x * MinTropical.trop (1 : ℕ∞)) ∧
+    MinTropical.trop (ValuationStructure.scale (bot : ℕ∞)) = 0 :=
+  ⟨fun _ _ => rfl, rfl, fun _ => rfl, zero_mul (MinTropical.trop (1 : ℕ∞))⟩
 
 -- Statement: scale is deflationary in the ZP order and not inflationary, join is inflationary, and
 -- `scale_bot` follows from deflationarity alone (the arrow beside `t_snap_irreversible`).

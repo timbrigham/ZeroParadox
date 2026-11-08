@@ -35,8 +35,9 @@ open Ordinal
 
 `SynONote` with one point adjoined on top: the shape of hydra-battles' `ON_plus` (sum of notation systems)
 with a one-point right summand, not an instance of it, because `SynONote`'s order is not well-founded
-(the `example` stating `¬ WellFoundedLT E0Note`). The order, lattice and decidability structure below is all
-Mathlib's `WithTop` machinery, not built here. -/
+(the `example` stating `¬ WellFoundedLT E0Note`). The carrier and its `≤`/`<` are Mathlib's `WithTop`
+(`WithTop.instLE`/`instLT`); the decidability of comparison is proved below by cases on that order's
+constructors, and `e0Coe_lt_top` and `e0_le_top` are applications of them. -/
 
 /-- **The carrier: ordinal notations with a single adjoined top.**
 
@@ -50,22 +51,39 @@ abbrev E0Note : Type := WithTop SynONote
 /-- The notations, viewed inside the carrier. -/
 def e0Coe (x : ONote) : E0Note := (toSyn x : SynONote)
 
-/-- Comparison on the carrier is decidable — inherited from Mathlib's `WithTop.decidableLE` applied to
-the comparator-derived order on `SynONote`. This is hydra-battles' `lt_eq_lt_dec` (decidability survives
-adjunction) at instance level; nothing is proved here. -/
-@[reducible] def e0DecidableLE : DecidableLE E0Note := inferInstance
+section
+-- [ZP port] Lean 4.35: Mathlib proves `WithTop.le_def`/`lt_def` by `grind`, so `WithTop.instPreorder`,
+-- `instOrderTop`, `coe_lt_top` and `decidableLE`/`decidableLT` carry `Classical.choice`; pin the bare
+-- choice-free `WithTop.instLE`/`instLT` here and decide and prove from their constructors.
+attribute [local instance high] WithTop.instLE WithTop.instLT
+
+/-- Comparison on the carrier is decidable — by cases on `WithTop.LE`'s constructors, deciding below
+`⊤` with the comparator-derived order on `SynONote`. This is hydra-battles' `lt_eq_lt_dec`
+(decidability survives adjunction), the move Mathlib's `WithTop.decidableLE` makes at instance level. -/
+@[reducible] def e0DecidableLE : DecidableLE E0Note
+  | _, ⊤ => isTrue (WithTop.LE.le_top _)
+  | ⊤, (_ : SynONote) => isFalse (fun h => by cases h)
+  | (a : SynONote), (b : SynONote) =>
+      if h : a ≤ b then isTrue (WithTop.LE.coe_le_coe h)
+      else isFalse (fun h' => by cases h'; contradiction)
 
 /-- Strict comparison on the carrier is decidable. -/
-@[reducible] def e0DecidableLT : DecidableLT E0Note := inferInstance
+@[reducible] def e0DecidableLT : DecidableLT E0Note
+  | ⊤, _ => isFalse (fun h => by cases h)
+  | (a : SynONote), ⊤ => isTrue (WithTop.LT.lt_top a)
+  | (a : SynONote), (b : SynONote) =>
+      if h : a < b then isTrue (WithTop.LT.coe_lt_coe h)
+      else isFalse (fun h' => by cases h'; contradiction)
 
 /-- Equality on the carrier is decidable. -/
 @[reducible] def e0DecidableEq : DecidableEq E0Note := inferInstance
 
 /-- Every notation sits strictly below the adjoined top. -/
-theorem e0Coe_lt_top (x : ONote) : e0Coe x < (⊤ : E0Note) := WithTop.coe_lt_top _
+theorem e0Coe_lt_top (x : ONote) : e0Coe x < (⊤ : E0Note) := WithTop.LT.lt_top _
 
 /-- The adjoined top bounds the whole carrier. -/
-theorem e0_le_top (a : E0Note) : a ≤ (⊤ : E0Note) := le_top
+theorem e0_le_top (a : E0Note) : a ≤ (⊤ : E0Note) := WithTop.LE.le_top _
+end
 
 /-! ### The tower operator, and the stipulated fixed point
 
@@ -325,7 +343,7 @@ example : ¬ WellFoundedLT E0Note := by
       rintro k rfl
       exact ih _ (hlt k) (k + 1) rfl
   intro h
-  exact hacc _ (h.wf.apply _) 0 rfl
+  exact hacc _ (h.apply _) 0 rfl
 
 /-- **`Statement:` the fiber, exhibited.** Two distinct notations with one denotation — the unfolding of
 `e0Repr_not_injective`, with `1 + ω` and `ω` as the underlying witness. -/
@@ -453,7 +471,7 @@ end ZeroParadox
 /-! ## Axiom Purity Check — this block IS the deliverable
 
 The two sides of the interface, measured. Observed: the carrier side is choice-free, ranging from no
-axioms at all up to `[propext, Quot.sound]`; the map side is uniformly
+axioms at all up to `[propext]`; the map side is uniformly
 `[propext, Classical.choice, Quot.sound]`. **The per-declaration numbers live HERE and nowhere else** —
 `ZeroParadox/Ordinal/PricedInterface.md` states only the shape, deliberately, because an enumeration
 duplicated into prose goes stale. If this block ever prints something outside

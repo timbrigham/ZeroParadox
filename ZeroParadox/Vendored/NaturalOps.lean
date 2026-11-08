@@ -13,7 +13,7 @@ WHY THIS FILE IS VENDORED
   `NatOrdinal` type synonym. It was DEPRECATED upstream (2025-08-06, PR #28063) and
   REMOVED from Mathlib entirely on 2026-02-20 (PR #35550, commit 08657ed7f), as part
   of relocating all Combinatorial Game Theory material to the external repository
-  `vihdzp/combinatorial-games`. Our Mathlib pin is `v4.30.0-rc2`, which is AFTER the
+  `vihdzp/combinatorial-games`. Our Mathlib pin is `v4.35.0`, which is AFTER the
   removal, so `Ordinal.nadd` / `NatOrdinal` are not available from Mathlib on our
   toolchain, and the external CGT repo is on an older toolchain (v4.18). Vendoring the
   last-good Mathlib copy and porting it forward is the cleanest way to recover the
@@ -27,9 +27,9 @@ CHANGES FROM THE UPSTREAM v4.28.0 SOURCE (kept minimal, mechanical, NON-semantic
       * removed `@[expose] public section` (declarations are public by default here).
   - Removed the `deprecated_module "…"` block and its `Mathlib.Tactic.Linter.DeprecatedModule`
     import (we do NOT want the deprecation warning; this is an intentional revival).
-  - No mathematical content, definitions, statements, or proofs were altered.
+  - No mathematical content, definitions, or statements were altered; proof bodies were adjusted only for upstream API changes, each marked `[ZP port]`.
   Any further edits below this header are porting fixes for Mathlib API drift between
-  v4.28.0 and v4.30.0-rc2 and are marked inline with `-- [ZP port]`.
+  v4.28.0 and v4.35.0 and are marked inline with `-- [ZP port]`.
 
 This is library code, not Zero Paradox original work. Credit is upstream Mathlib.
 ================================================================================
@@ -43,11 +43,6 @@ Authors: Violeta Hernández Palacios
 
 import Mathlib.SetTheory.Ordinal.Family
 import Mathlib.Tactic.Abel
-
--- [ZP port] This is a v4.28.0 Mathlib snapshot built against v4.30.0-rc2; several lemmas it uses have
--- since been deprecated upstream (the aliases still function). We suppress the deprecation linter rather
--- than rewrite upstream proofs, to keep this file a faithful, verbatim vendored copy.
-set_option linter.deprecated false
 
 /-!
 # Natural operations on ordinals
@@ -81,6 +76,11 @@ between both types, we attempt to prove and state most results on `Ordinal`.
 - Prove the characterizations of natural addition and multiplication in terms of the Cantor normal
   form.
 -/
+
+-- [ZP port] This is a v4.28.0 Mathlib snapshot built against v4.35.0; several lemmas it uses have
+-- since been deprecated upstream (the aliases still function). We suppress the deprecation linter rather
+-- than rewrite upstream proofs, to keep this file a faithful, verbatim vendored copy.
+set_option linter.deprecated false
 
 
 universe u v
@@ -125,7 +125,7 @@ theorem lt_wf : @WellFounded NatOrdinal (· < ·) :=
   Ordinal.lt_wf
 
 instance : WellFoundedLT NatOrdinal :=
-  Ordinal.wellFoundedLT
+  Ordinal.lt_wf -- [ZP port] renamed (v4.35)
 
 instance : ConditionallyCompleteLinearOrderBot NatOrdinal :=
   WellFoundedLT.conditionallyCompleteLinearOrderBot _
@@ -151,14 +151,14 @@ theorem succ_def (a : NatOrdinal) : succ a = toNatOrdinal (toOrdinal a + 1) :=
 
 @[simp]
 protected theorem zero_le (o : NatOrdinal) : 0 ≤ o :=
-  _root_.zero_le (α := Ordinal) o
+  _root_.zero_le (α := Ordinal) (a := o) -- [ZP port] arg now implicit (v4.35)
 
 theorem not_lt_zero (o : NatOrdinal) : ¬ o < 0 :=
   _root_.not_lt_zero (α := Ordinal)
 
 @[simp]
 theorem lt_one_iff_zero {o : NatOrdinal} : o < 1 ↔ o = 0 :=
-  Ordinal.lt_one_iff_zero
+  Order.lt_one_iff (α := Ordinal) -- [ZP port] Ordinal alias removed (v4.35)
 
 /-- A recursor for `NatOrdinal`. Use as `induction x`. -/
 @[elab_as_elim, cases_eliminator, induction_eliminator]
@@ -167,7 +167,7 @@ protected def rec {β : NatOrdinal → Sort*} (h : ∀ a, β (toNatOrdinal a)) :
 
 /-- `Ordinal.induction` but for `NatOrdinal`. -/
 theorem induction {p : NatOrdinal → Prop} : ∀ (i) (_ : ∀ j, (∀ k, k < j → p k) → p j), p i :=
-  Ordinal.induction
+  WellFoundedLT.induction (α := Ordinal) -- [ZP port] Ordinal alias removed (v4.35)
 
 instance small_Iio (a : NatOrdinal.{u}) : Small.{u} (Set.Iio a) := Ordinal.small_Iio a
 instance small_Iic (a : NatOrdinal.{u}) : Small.{u} (Set.Iic a) := Ordinal.small_Iic a
@@ -323,7 +323,7 @@ theorem succ_nadd : succ a ♯ b = succ (a ♯ b) := by rw [← one_nadd (a ♯ 
 theorem nadd_nat (n : ℕ) : a ♯ n = a + n := by
   induction n with
   | zero => simp
-  | succ n hn => rw [Nat.cast_succ, add_one_eq_succ, nadd_succ, add_succ, hn]
+  | succ n hn => rw [Nat.cast_succ, ← add_assoc, ← succ_eq_add_one, ← succ_eq_add_one, nadd_succ, hn] -- [ZP port] add_one_eq_succ, add_succ removed (v4.35)
 
 @[simp]
 theorem nat_nadd (n : ℕ) : ↑n ♯ a = a + n := by rw [nadd_comm, nadd_nat]
@@ -331,8 +331,8 @@ theorem nat_nadd (n : ℕ) : ↑n ♯ a = a + n := by rw [nadd_comm, nadd_nat]
 theorem add_le_nadd : a + b ≤ a ♯ b := by
   induction b using limitRecOn with
   | zero => simp
-  | succ c h =>
-    rwa [add_succ, nadd_succ, succ_le_succ_iff]
+  | add_one c h => -- [ZP port] limitRecOn case renamed (v4.35)
+    rwa [← add_assoc, ← succ_eq_add_one, ← succ_eq_add_one, nadd_succ, succ_le_succ_iff]
   | limit c hc H =>
     rw [(isNormal_add_right a).apply_of_isSuccLimit hc, Ordinal.iSup_le_iff]
     rintro ⟨i, hi⟩
@@ -362,7 +362,7 @@ instance : AddLeftMono NatOrdinal.{u} :=
   ⟨fun a _ _ h => nadd_le_nadd_left h a⟩
 
 instance : AddLeftReflectLE NatOrdinal.{u} :=
-  ⟨fun a b c h => by by_contra! h'; exact h.not_gt (by gcongr)⟩
+  ⟨fun h => by by_contra! h'; exact h.not_gt (by gcongr)⟩ -- [ZP port] binders now implicit (v4.35)
 
 instance : AddCommMonoid NatOrdinal :=
   { add_assoc := nadd_assoc
@@ -408,24 +408,24 @@ theorem toNatOrdinal_natCast (n : ℕ) : toNatOrdinal n = n := by
   rfl
 
 theorem lt_of_nadd_lt_nadd_left : ∀ {a b c}, a ♯ b < a ♯ c → b < c :=
-  @lt_of_add_lt_add_left NatOrdinal _ _ _
+  lt_of_add_lt_add_left (α := NatOrdinal) -- [ZP port] implicit args now precede instances (v4.35)
 
 theorem lt_of_nadd_lt_nadd_right : ∀ {a b c}, b ♯ a < c ♯ a → b < c :=
-  @lt_of_add_lt_add_right NatOrdinal _ _ _
+  lt_of_add_lt_add_right (α := NatOrdinal) -- [ZP port] implicit args now precede instances (v4.35)
 
 theorem le_of_nadd_le_nadd_left : ∀ {a b c}, a ♯ b ≤ a ♯ c → b ≤ c :=
-  @le_of_add_le_add_left NatOrdinal _ _ _
+  le_of_add_le_add_left (α := NatOrdinal) -- [ZP port] implicit args now precede instances (v4.35)
 
 theorem le_of_nadd_le_nadd_right : ∀ {a b c}, b ♯ a ≤ c ♯ a → b ≤ c :=
-  @le_of_add_le_add_right NatOrdinal _ _ _
+  le_of_add_le_add_right (α := NatOrdinal) -- [ZP port] implicit args now precede instances (v4.35)
 
 @[simp]
 theorem nadd_lt_nadd_iff_left : ∀ (a) {b c}, a ♯ b < a ♯ c ↔ b < c :=
-  @add_lt_add_iff_left NatOrdinal _ _ _ _
+  fun a => add_lt_add_iff_left (α := NatOrdinal) a -- [ZP port] implicit args now precede instances (v4.35)
 
 @[simp]
 theorem nadd_lt_nadd_iff_right : ∀ (a) {b c}, b ♯ a < c ♯ a ↔ b < c :=
-  @add_lt_add_iff_right NatOrdinal _ _ _ _
+  fun a => add_lt_add_iff_right (α := NatOrdinal) a -- [ZP port] implicit args now precede instances (v4.35)
 
 @[simp]
 theorem nadd_le_nadd_iff_left : ∀ (a) {b c}, a ♯ b ≤ a ♯ c ↔ b ≤ c :=
@@ -433,19 +433,19 @@ theorem nadd_le_nadd_iff_left : ∀ (a) {b c}, a ♯ b ≤ a ♯ c ↔ b ≤ c :
 
 @[simp]
 theorem nadd_le_nadd_iff_right : ∀ (a) {b c}, b ♯ a ≤ c ♯ a ↔ b ≤ c :=
-  @_root_.add_le_add_iff_right NatOrdinal _ _ _ _
+  fun a => _root_.add_le_add_iff_right (α := NatOrdinal) a -- [ZP port] implicit args now precede instances (v4.35)
 
 theorem nadd_le_nadd : ∀ {a b c d}, a ≤ b → c ≤ d → a ♯ c ≤ b ♯ d :=
-  @add_le_add NatOrdinal _ _ _ _
+  add_le_add (α := NatOrdinal) -- [ZP port] implicit args now precede instances (v4.35)
 
 theorem nadd_lt_nadd : ∀ {a b c d}, a < b → c < d → a ♯ c < b ♯ d :=
-  @add_lt_add NatOrdinal _ _ _ _
+  add_lt_add (α := NatOrdinal) -- [ZP port] implicit args now precede instances (v4.35)
 
 theorem nadd_lt_nadd_of_lt_of_le : ∀ {a b c d}, a < b → c ≤ d → a ♯ c < b ♯ d :=
-  @add_lt_add_of_lt_of_le NatOrdinal _ _ _ _
+  add_lt_add_of_lt_of_le (α := NatOrdinal) -- [ZP port] implicit args now precede instances (v4.35)
 
 theorem nadd_lt_nadd_of_le_of_lt : ∀ {a b c d}, a ≤ b → c < d → a ♯ c < b ♯ d :=
-  @add_lt_add_of_le_of_lt NatOrdinal _ _ _ _
+  add_lt_add_of_le_of_lt (α := NatOrdinal) -- [ZP port] implicit args now precede instances (v4.35)
 
 theorem nadd_left_cancel : ∀ {a b c}, a ♯ b = a ♯ c → b = c :=
   @_root_.add_left_cancel NatOrdinal _ _
@@ -461,12 +461,12 @@ theorem nadd_left_cancel_iff : ∀ {a b c}, a ♯ b = a ♯ c ↔ b = c :=
 theorem nadd_right_cancel_iff : ∀ {a b c}, b ♯ a = c ♯ a ↔ b = c :=
   @add_right_cancel_iff NatOrdinal _ _
 
-theorem le_nadd_self {a b} : a ≤ b ♯ a := by simpa using nadd_le_nadd_right (zero_le _) a
+theorem le_nadd_self {a b} : a ≤ b ♯ a := by simpa using nadd_le_nadd_right zero_le a -- [ZP port]
 
 theorem le_nadd_left {a b c} (h : a ≤ c) : a ≤ b ♯ c :=
   le_nadd_self.trans (nadd_le_nadd_left h b)
 
-theorem le_self_nadd {a b} : a ≤ a ♯ b := by simpa using nadd_le_nadd_left (zero_le _) a
+theorem le_self_nadd {a b} : a ≤ a ♯ b := by simpa using nadd_le_nadd_left zero_le a -- [ZP port]
 
 theorem le_nadd_right {a b c} (h : a ≤ b) : a ≤ b ♯ c :=
   le_self_nadd.trans (nadd_le_nadd_right h c)
@@ -725,7 +725,7 @@ theorem mul_le_nmul (a b : Ordinal.{u}) : a * b ≤ a ⨳ b := by
   refine b.limitRecOn ?_ ?_ ?_
   · simp
   · intro c h
-    rw [mul_succ, nmul_succ]
+    rw [← succ_eq_add_one, mul_succ, nmul_succ] -- [ZP port] limitRecOn now states c + 1 (v4.35)
     exact (add_le_nadd _ a).trans (nadd_le_nadd_right h a)
   · intro c hc H
     rcases eq_zero_or_pos a with (rfl | ha)

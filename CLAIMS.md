@@ -52,7 +52,7 @@ No `Classical.choice`; at most propositional extensionality and quotient soundne
 | Power-set floor | Depth chart in the power-set model: a depth threshold above ∅, not the first-step order property (`ZeroParadox/Order/PowerSet.lean` T-PS6) | `ps_structural_floor` | [propext, Quot.sound] |
 | Wheel instance | Wheel of fractions is a wheel (Carlström Def 1.1) | `instWheel` | [propext, Quot.sound] |
 | ∞ ≠ ⊥ | The wheel's infinity is distinct from its bottom | `inf_ne_bot` | [propext, Quot.sound] |
-| Fixed-point fork | lfp/gfp collapse iff the operator has a unique fixed point | `fork_collapse_iff` (with `fork_le`, `collapse_of_unique`, `unique_of_collapse`) | [propext, Quot.sound] |
+| Fixed-point fork | lfp/gfp collapse iff the operator has a unique fixed point | `fork_collapse_iff` (with `fork_le`, `collapse_of_unique`, `unique_of_collapse`) | [propext, Quot.sound]; `unique_of_collapse` [propext] |
 | Coalgebra fork (μ side) | `Fix` empty — choice-free | `fix_isEmpty` | [propext, Quot.sound] |
 | Quine-atom identity | The self-referential fixed points are exactly {⊥} (unique, and = ⊥) | `quine_self_members_eq_bot` | [propext, Quot.sound] |
 

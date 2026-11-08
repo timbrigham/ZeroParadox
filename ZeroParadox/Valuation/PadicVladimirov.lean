@@ -552,7 +552,7 @@ example (n : ℕ) (a : ℤ_[p]) (ha : (p : ℝ) ^ (-(n : ℤ)) < ‖a‖) :
 
 section ShellControlThree
 
-local instance : Fact (Nat.Prime 3) := ⟨by norm_num⟩
+local instance instFactPrimeThreeShellControl : Fact (Nat.Prime 3) := ⟨by norm_num⟩
 
 -- Statement: control, at `p = 3` the shell-`0` and ball-`1` indicators differ in length.
 example : ‖shellIndicatorL2 (p := 3) 0‖ ≠ ‖ballIndicatorL2 (p := 3) 1‖ := by

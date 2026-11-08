@@ -212,7 +212,8 @@ theorem towerNONote_repr (n : ℕ) : NONote.repr (towerNONote n) = fundamentalSe
     -- fundamentalSeq (n+1) = ω^(fundamentalSeq n) by Function.iterate_succ' unfolding.
     have hfund : fundamentalSeq (n + 1) = Ordinal.omega0 ^ fundamentalSeq n := by
       simp only [fundamentalSeq, Function.iterate_succ', Function.comp]
-    rw [hunfold, repr_oadd, ih, hzero, hcast, mul_one, add_zero, ← hfund]
+    rw [hunfold, repr_oadd (towerNONote n) 1 0 ONote.NFBelow.zero, ih, hzero, hcast, mul_one,
+      add_zero, ← hfund]
 
 /-- The valuation of cnfToZp2 at the n-th tower stage equals n. -/
 theorem cnfToZp2_tower_valuation (n : ℕ) : (cnfToZp2 (towerNONote n)).valuation = n := by
@@ -223,7 +224,8 @@ theorem cnfToZp2_tower_valuation (n : ℕ) : (cnfToZp2 (towerNONote n)).valuatio
     -- Similarly, norm_cast handles ↑(1 : ℕ+) : ℤ_[2] = 1.
     have hcast : ((1 : ℕ+) : ℤ_[2]) = 1 := by norm_cast
     have hstep : cnfToZp2 (towerNONote (n + 1)) = (2 : ℤ_[2]) ^ (n + 1) := by
-      rw [hunfold, cnfToZp2_oadd, ih, cnfToZp2_zero, hcast, mul_one, add_zero]
+      rw [hunfold, cnfToZp2_oadd (towerNONote n) 1 0 ONote.NFBelow.zero, ih, cnfToZp2_zero, hcast,
+        mul_one, add_zero]
     rw [hstep, PadicInt.valuation_pow]
     -- At the pinned Mathlib `valuation_p` closes the numeral goal directly (the `example` before
     -- `q2Val_scale`, `ZeroParadox/Valuation/Scale.lean`).
@@ -256,7 +258,8 @@ private theorem cnfToZp2_tower_explicit (n : ℕ) :
     cnfToZp2 (towerNONote (n + 1)) = (2 : ℤ_[2]) ^ (n + 1) := by
   have hunfold : towerNONote (n + 1) = NONote.oadd (towerNONote n) 1 0 ONote.NFBelow.zero := rfl
   have hcast : ((1 : ℕ+) : ℤ_[2]) = 1 := by norm_cast
-  rw [hunfold, cnfToZp2_oadd, cnfToZp2_tower_valuation, cnfToZp2_zero, hcast, mul_one, add_zero]
+  rw [hunfold, cnfToZp2_oadd (towerNONote n) 1 0 ONote.NFBelow.zero, cnfToZp2_tower_valuation,
+    cnfToZp2_zero, hcast, mul_one, add_zero]
 
 /-- The tower images converge to 0 = ⊥ in ℤ_[2].
     Each stage's image cnfToZp2(towerNONote (n+1)) = 2^(n+1) in ℤ_[2], so its 2-adic norm is

@@ -74,7 +74,8 @@ section AxB1
     **Honest transition note (2026-07-27).** This was first written (2026-07-26) as a bespoke
     predicate carrying a custom-registry tag that asserted Mathlib had no analog. **That was
     wrong.** `CovBy` already existed, is stated over the weaker `[LT α]` rather than
-    `[Preorder α]`, and carries `CovBy.unique_right`, `not_covBy`, and the biconditional below.
+    `[Preorder α]`, and carries `CovBy.unique_right`, `not_covBy_of_denselyOrdered`, and the
+    biconditional below.
     The framework had simply never identified its own one substantive modelling commitment with
     the standard notion. Recorded here rather than quietly corrected, so that the same
     unidentified-notion failure is easier to spot if it appears elsewhere.
@@ -288,7 +289,7 @@ theorem f_snap_impossible : ¬∃ ε₀ : F, 0 < ε₀ ∧ ¬∃ δ : F, 0 < δ 
 
 /-- **AX-B1 FAILS in every ordered field.** Ordered fields are densely ordered in Mathlib
     (`LinearOrderedSemiField.toDenselyOrdered`), and in a dense order nothing covers anything
-    (`not_covBy`). So the commitment is refuted pointwise against its own counterexample: what
+    (`not_covBy_of_denselyOrdered`). So the commitment is refuted pointwise against its own counterexample: what
     the framework commits to is exactly what the reals do not have.
 
     Proved through Mathlib rather than through `f_snap_impossible` — the halving argument above
@@ -296,7 +297,7 @@ theorem f_snap_impossible : ¬∃ ε₀ : F, 0 < ε₀ ∧ ¬∃ δ : F, 0 < δ 
     can check without the order-theory library. -/
 theorem axb1_fails_in_ordered_field : ¬ HasFirstStep (0 : F) := by
   rintro ⟨a, hcov⟩
-  exact not_covBy hcov
+  exact not_covBy_of_denselyOrdered hcov
 
 end General
 

@@ -166,7 +166,7 @@ theorem eventuallyLeaf_ne_infinity : ∀ x, EventuallyLeaf x → x ≠ natInfini
       rw [natCofix_infinity_dest] at hx
       have hc : c = (fun _ => natInfinity) := by
         have := (Sigma.mk.injEq _ _ _ _).mp hx.symm
-        simpa using this.2
+        exact eq_of_heq this.2
       rw [hc]
 
 /-- `natInfinity` never reaches a leaf. -/

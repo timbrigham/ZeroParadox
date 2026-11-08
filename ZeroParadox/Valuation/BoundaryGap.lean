@@ -1,5 +1,6 @@
 -- EXPERIMENTAL (branch scaffolding): bottom-as-boundary pivot, worked through from the ground up; mostly re-derivation of existing framework results, kept for transparency. Curated/load-bearing results are indexed in ZeroParadox/BottomCannotBe.lean and classified in ZeroParadox/MANIFEST.md.
 import ZeroParadox.Valuation.PadicTree
+import ZeroParadox.Order.PowerSet
 import Mathlib.Tactic
 
 set_option maxHeartbeats 400000
@@ -67,6 +68,10 @@ theorem nonroot_has_parent (v : Vtx) (hv : v ≠ []) : tree.Adj v v.dropLast := 
   refine Or.inr ⟨v.getLast hv, ?_⟩
   rw [List.dropLast_append_getLast hv]
 
+section ListMembership
+-- [ZP port] Lean 4.35: Finset `∈` elaborates via `SetLike.instMembership`, whose proof spends `Classical.choice` (`Multiset.Nodup.ext`); scope `ZeroParadox/Order/PowerSet.lean`'s `psListMem`.
+attribute [local instance high] psListMem
+
 /-- **The sharp (non-vacuous) open question.** The real content: `tree` embeds into a tree in which every
 vertex has exactly three neighbours — the Bruhat-Tits tree of ℚ₂. Unlike `EmbedsAsRootedSubtree` this is
 NOT trivially true: `tree` itself is not a witness, because its root has degree 2 (`root_adj_iff`). Stated;
@@ -75,6 +80,7 @@ def EmbedsInThreeRegularTree : Prop :=
   ∃ (W : Type) (T : SimpleGraph W),
     (∀ v : W, ∃ s : Finset W, s.card = 3 ∧ ∀ w, T.Adj v w ↔ w ∈ s) ∧
       T.IsTree ∧ Nonempty (tree ↪g T)
+end ListMembership
 
 end ZeroParadox
 

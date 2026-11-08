@@ -617,9 +617,9 @@ theorem forcedTop_iff_reaches_cycle (G : MemGraph n) (a : Fin n) :
   rw [forcedTop_iff_not_acc, Motion.not_acc_iff_reaches_cycle]
   constructor
   · rintro ⟨c, h1, h2⟩
-    exact ⟨c, Relation.ReflTransGen.swap h1, Relation.TransGen.swap h2⟩
+    exact ⟨c, Relation.ReflTransGen.swap _ _ h1, Relation.TransGen.swap _ _ h2⟩
   · rintro ⟨c, h1, h2⟩
-    exact ⟨c, Relation.ReflTransGen.swap h1, Relation.TransGen.swap h2⟩
+    exact ⟨c, Relation.ReflTransGen.swap _ _ h1, Relation.TransGen.swap _ _ h2⟩
 
 /-- `Statement:` if a bisimulation relates `a` and `b`, `ForcedTop A a ↔ ForcedTop B b`. -/
 theorem forcedTop_bisim {A : MemGraph m} {B : MemGraph n} {R : Fin m → Fin n → Prop}

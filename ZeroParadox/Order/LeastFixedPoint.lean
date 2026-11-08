@@ -235,7 +235,7 @@ example : ¬ IsLeastFixedPointUpTo (fun A B : Type => Nonempty (A ↪ B)) (fun _
     (`IsLeastFixedPointFrom`). -/
 theorem aleph0_isLeastFixedPointFrom :
     IsLeastFixedPointFrom (· ≤ ·) (fun c : Cardinal.{0} => c + 1) 0 Cardinal.aleph0 where
-  seed_le := zero_le _
+  seed_le := zero_le
   fixed := Cardinal.add_one_eq le_rfl
   least := fun b hb _ => by
     by_contra hlt
@@ -296,7 +296,7 @@ theorem quot_optionMotion_step_iff (X Y : Cardinal.{0}) :
     (optionMotion.quot Cardinal.isEquivalent).step X Y ↔ Y = X + 1 := by
   induction X using Quotient.ind with
   | _ a =>
-    rw [Motion.quot_step_mk_iff optionMotion_stepCompat]
+    refine (Motion.quot_step_mk_iff optionMotion_stepCompat a Y).trans ?_
     constructor
     · rintro ⟨b, hb, rfl⟩
       have hb' : b = Option a := hb

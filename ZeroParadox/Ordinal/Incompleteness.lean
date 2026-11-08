@@ -78,7 +78,7 @@ theorem snapEmbed_injective : Function.Injective snapEmbed := by
     Under multiplication, 0 is absorbing — matching c₁ absorbing in MachinePhase. -/
 theorem snapEmbed_mul_morphism (a b : MachinePhase) :
     snapEmbed (join a b) = snapEmbed a * snapEmbed b := by
-  cases a <;> cases b <;> simp [snapEmbed]
+  cases a <;> cases b <;> simp [snapEmbed] <;> rfl
 
 /-- The 2-adic valuation of snapEmbed c₀ is 0 (it is a unit). -/
 theorem snapEmbed_c0_val : (snapEmbed c₀).valuation = 0 := by

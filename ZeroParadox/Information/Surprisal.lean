@@ -40,6 +40,8 @@ namespace ZeroParadox
 
 /-! ## Setup: Binary States (AX-B1) -/
 
+-- [ZP port] Lean 4.35: Mathlib's `Fintype` deriving handler needs the pre-4.35 defeq transparency.
+set_option backward.isDefEq.respectTransparency false in
 -- [ZP-CUSTOM] replaces: Fin 2 | reason: ZPC is self-contained (no ZPB import); BinaryState is a local copy of the same free-inductive encoding used by OntologicalStates in ZPB. Fin 2 would import ℕ arithmetic into an information-theoretic file whose proofs should not depend on it.
 /-- The two ontological states: non-existence (⊥) and existence.
     A free inductive type — no natural-number dependency. -/
@@ -280,15 +282,15 @@ non-pureness; **no construction supplying its hypotheses was located in this cor
 `ZeroParadox/Reals/MarkovSpectralGap.lean`, both of which build a specific two-point distribution
 for their own purpose rather than the general constructor). Stated as a dated search result, not as a
 universal negative.
-⚠ **Not missing from Mathlib** — `PMF.uniformOfFinset` with `PMF.support_uniformOfFinset`
-(`Mathlib/Probability/Distributions/Uniform.lean`) constructs the same thing directly. It is cited
-rather than swapped in: that route needs a heavier import and there is no purity gain (both carry
-`Classical.choice`, measured).
+⚠ **Mathlib's uniform distribution on a finset is a `Measure`, not a `PMF`, at the pin.**
+`MeasureTheory.Measure.uniformOfFinset` (`Mathlib/Probability/Distributions/Uniform.lean`) is a
+`Measure α` and carries `Classical.choice` (measured); `PMF.support_uniformOfFinset` is a deprecated
+alias of a lemma about it. A constant `PMF.uniformOfFinset` was not located as of 2026-11-07, searched
+by `#check` with that file imported and by a grep of the pinned Mathlib for `uniformOfFinset`, which
+hits that file only. So that route does not supply the `PMF` constructed here.
 
-⚠ **It is NOT stronger than what is proved here, and a first draft of this paragraph said it was.** The
-three conjuncts below give `p.support = {x, y}` **exactly** — the two memberships supply `⊇` and the
-third supplies `⊆` — so the `⊆` form understates this theorem rather than being understated by
-Mathlib's. -/
+The three conjuncts below give `p.support = {x, y}` **exactly** — the two memberships supply `⊇` and
+the third supplies `⊆`. -/
 theorem exists_spread_pmf {α : Type*} (x y : α) :
     ∃ p : PMF α, x ∈ p.support ∧ y ∈ p.support ∧ p.support ⊆ {x, y} := by
   have hle : (1/2 : NNReal) ≤ 1 := by norm_num

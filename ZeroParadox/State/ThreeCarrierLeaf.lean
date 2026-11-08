@@ -125,7 +125,7 @@ noncomputable instance padic_floor_unique_ThreeCarrierLeaf : Unique padicFloor_T
 /-- #2 carrier is a one-element space: `stdSimplex ℝ (Fin 1) = {fun _ ↦ 1}`. -/
 noncomputable instance simplex_point_unique_ThreeCarrierLeaf : Unique simplexPoint_ThreeCarrierLeaf := by
   have h : stdSimplex ℝ (Fin 1) = {fun _ ↦ (1 : ℝ)} := stdSimplex_unique ℝ (Fin 1)
-  have e : simplexPoint_ThreeCarrierLeaf ≃ ↥({fun _ ↦ (1 : ℝ)} : Set (Fin 1 → ℝ)) := Equiv.setCongr h
+  have e : simplexPoint_ThreeCarrierLeaf ≃ ↥({fun _ ↦ (1 : ℝ)} : Set (Fin 1 → ℝ)) := Set.equivOfEq h
   exact e.unique
 
 /-- #5 carrier is a one-element space: `EuclideanSpace ℂ (Fin 0)` has only `0`. -/

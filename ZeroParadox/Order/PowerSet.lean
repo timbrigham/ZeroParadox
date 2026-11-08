@@ -44,7 +44,8 @@ theorem ps_bot_depth : psDepth (∅ : Finset α) = 0 := by
 /-! ## T-PS2: The discrete gap — any nonempty finset has depth ≥ 1 -/
 
 theorem ps_nonempty_depth_pos (A : Finset α) (hA : A ≠ ∅) : 0 < psDepth A := by
-  simp [psDepth, Finset.card_pos, Finset.nonempty_iff_ne_empty.mpr hA]
+  -- [ZP port] Lean 4.35: `Finset.card_pos`/`nonempty_iff_ne_empty` now carry `Classical.choice`; `card_eq_zero` does not.
+  exact Nat.pos_of_ne_zero fun h => hA (Finset.card_eq_zero.mp h)
 
 /-! ## T-PS3: Depth 0 iff empty — nothing sits between ∅ and depth 1 -/
 
@@ -86,6 +87,14 @@ theorem ps_structural_floor :
 -- (`ZeroParadox/Reals/OrderedField.lean`).
 example : ∀ a : α, (∅ : Finset α) ⋖ {a} := Finset.empty_covBy_singleton
 
+/-- `Statement:` finset membership read off the underlying multiset, `a ∈ s.val`; not an instance. -/
+abbrev psListMem : Membership α (Finset α) := ⟨fun s a => a ∈ s.val⟩
+
+section ListMembership
+
+-- [ZP port] Lean 4.35: Finset `⊆` elaborates via `SetLike.instMembership`, whose proof spends `Classical.choice` (`Multiset.Nodup.ext`); this route keeps the statement below choice-free (ruling 165).
+attribute [local instance high] psListMem LE.ofMembership
+
 /-- Statement: a descending orbit of finsets that shrinks at every nonempty step (removing an element
     is one) is `∅` from step `(S 0).card` on. Analogs: `descent_with_strict_steps_reaches_floor`
     (`ZeroParadox/Order/WellFoundedObstruct.lean`) and Mathlib's `Finset.lt_wf`; adds `N ≤ (S 0).card`. -/
@@ -93,8 +102,10 @@ theorem ps_descent_reaches_floor (S : ℕ → Finset α) (hsub : ∀ k, S (k + 1
     (hstrict : ∀ k, S k ≠ ∅ → S (k + 1) ≠ S k) :
     ∃ N, N ≤ (S 0).card ∧ ∀ k, N ≤ k → S k = ∅ := by
   -- via cardinality: Mathlib's `Finset.subset_empty` measures `Classical.choice`, this route does not
+  have card_le : ∀ {A B : Finset α}, A ⊆ B → A.card ≤ B.card := fun {A _} h =>
+    Multiset.card_le_card ((Multiset.le_iff_subset A.nodup).mpr fun _ ha => h ha)
   have sub_empty : ∀ {A : Finset α}, A ⊆ ∅ → A = ∅ := fun hA => by
-    have h := Finset.card_le_card hA
+    have h := card_le hA
     rw [Finset.card_empty] at h
     exact Finset.card_eq_zero.mp (Nat.le_zero.mp h)
   have key : ∀ k, S k = ∅ ∨ (S k).card + k ≤ (S 0).card := by
@@ -113,7 +124,10 @@ theorem ps_descent_reaches_floor (S : ℕ → Finset α) (hsub : ∀ k, S (k + 1
         · have hk : S k ≠ ∅ := fun e => by
             rw [e, Finset.card_empty] at hc
             exact lt_irrefl 0 hc
-          have hlt := Finset.card_lt_card (Finset.ssubset_iff_subset_ne.mpr ⟨hsub k, hstrict k hk⟩)
+          have hlt : (S (k + 1)).card < (S k).card := Nat.lt_of_le_of_ne (card_le (hsub k))
+            fun hc => hstrict k hk (Finset.val_inj.mp
+              (Multiset.eq_of_le_of_card_le ((Multiset.le_iff_subset (S (k + 1)).nodup).mpr
+                fun _ ha => hsub k ha) (Nat.le_of_eq hc.symm)))
           exact Or.inr (by omega)
   have stay : ∀ k, S k = ∅ → ∀ j, S (k + j) = ∅ := by
     intro k hk j
@@ -131,6 +145,8 @@ theorem ps_descent_reaches_floor (S : ℕ → Finset α) (hsub : ∀ k, S (k + 1
   obtain ⟨j, rfl⟩ := Nat.exists_eq_add_of_le hk
   exact stay _ hN j
 
+end ListMembership
+
 /-! ## Purity check -/
 
 section PurityCheck
@@ -140,6 +156,7 @@ section PurityCheck
 #print axioms ps_empty_not_limit
 #print axioms ps_no_subgap
 #print axioms ps_structural_floor
+#print axioms psListMem
 #print axioms ps_descent_reaches_floor
 end PurityCheck
 

@@ -113,7 +113,7 @@ def ChoiceFragment : Prop :=
 #check_failure (fun h : True ∨ False =>
   (Or.casesOn (motive := fun _ => Bool) h (fun _ => true) (fun _ => false) : Bool))
 example : Decidable True → Bool := fun h =>
-  Decidable.casesOn (motive := fun _ => Bool) h (fun _ => false) (fun _ => true)
+  Decidable.falseTrueCases (motive := fun _ => Bool) (fun _ => false) (fun _ => true) h
 
 -- Statement: the fragment is equivalent to the propositional truncation of data-valued decidability,
 -- `Nonempty (∀ p, Decidable p)`; the chooser decides `p` on the pair of predicates
@@ -193,9 +193,10 @@ theorem em_of_choiceFragment (h : ChoiceFragment) : ExcludedMiddle := by
     have : A = B := funext fun b => propext ⟨fun _ => Or.inr hp, fun _ => Or.inr hp⟩
     rw [this]
   -- `Bool` equality is decidable with no classical input.
-  rcases Bool.decEq (ch A) (ch B) with hne | heq
-  · exact Or.inr fun hp => hne (hpAB hp)
-  · rcases hA with hAt | hp
+  cases Bool.decEq (ch A) (ch B) with
+  | isFalse hne => exact Or.inr fun hp => hne (hpAB hp)
+  | isTrue heq =>
+    rcases hA with hAt | hp
     · rcases hB with hBf | hp
       · exact absurd (hAt ▸ hBf ▸ heq) (by decide)
       · exact Or.inl hp

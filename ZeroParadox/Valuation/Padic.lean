@@ -49,6 +49,8 @@ the two states is then verified by decidable equality, requiring no classical ax
 AX-B1 itself is the cover of ⊥ with a two-element first interval (`HasFirstStep`,
 `ZeroParadox/Reals/OrderedField.lean`); that this carrier has exactly two states is its own choice. -/
 
+-- [ZP port] Lean 4.35: Mathlib's `Fintype` deriving handler needs the pre-4.35 defeq transparency.
+set_option backward.isDefEq.respectTransparency false in
 /-- The two ontological states: non-existence (⊥ in ZP-A) and existence. -/
 -- [ZP-CUSTOM] replaces: Fin 2 | reason: Fin 2's constructors are ⟨0,_⟩ and ⟨1,_⟩ — natural numbers. nullState ≠ ℕ's 0 by convention; it is a semantic state with no numeric meaning. Free inductive eliminates the ℕ dependency and makes ⊥ ↦ null a structural fact, not a labelling choice.
 inductive OntologicalStates where
@@ -431,8 +433,8 @@ rather than annotated.)*
 
 *(Three corrections, all 2026-08-01, all caught by gates rather than by me. (i) This paragraph once
 cited `f_snap_impossible` as holding "on the Archimedean side", mis-scoping a theorem that covers every
-ordered field. (ii) The fix for (i) then attributed the wrong proof route — "density
-(`LinearOrderedSemiField.toDenselyOrdered`, then `not_covBy`)" — which is the route of
+ordered field. (ii) The fix for (i) then attributed the wrong proof route — density, then no cover
+(`LinearOrderedSemiField.toDenselyOrdered`, then `not_covBy_of_denselyOrdered`) — which is the route of
 `axb1_fails_in_ordered_field` four lines further down, whose own docstring says it is proved through
 Mathlib **rather than** through `f_snap_impossible`. A wrong reason under a true conclusion breaks
 nothing downstream, which is exactly why it needed a gate to find. (iii) The same fix then called the

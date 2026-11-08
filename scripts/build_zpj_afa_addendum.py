@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-J AFA Addendum: Decoration Uniqueness from Valuation Structure
-Version 1.21 | November 2026
+Version 1.22 | November 2026
 Reads after ZP-J Self-Reference.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.21'
+VERSION = '1.22'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -49,10 +49,15 @@ def build():
     E.append(body(
         'This document presents the formal consequences of ZP-J\'s valuation framework '
         'for the central uniqueness CLAUSE of Aczel\'s Anti-Foundation Axiom (AFA). '
-        'The main result is decoration_unique '
-        '(ZeroParadox/Settheory/APG.lean &#167; IX): for any finite '
-        'Accessible Pointed Graph, any two valid decorations must agree at every vertex. '
-        'The proof does not import set-theoretic AFA axioms. It derives the uniqueness '
+        'The main result is decoration_unique_of_val '
+        '(ZeroParadox/Settheory/APG.lean &#167; IX): any two decorations of any quiver, finite or '
+        'not, into a DecorationUniverse are equal, with no APG argument and no finiteness '
+        'hypothesis; it measures [propext, Quot.sound]. '
+        'decoration_unique (same section) is the finite, graph-side proof: for any finite '
+        'Accessible Pointed Graph, any two valid decorations must agree at every vertex. Its '
+        'statement is a special case of the main result (the example after '
+        'decoration_unique_finite in the same section). '
+        'Neither proof imports set-theoretic AFA axioms. Each derives the uniqueness '
         'property from a chain of abstract typeclasses whose root is ValuationStructure, '
         'established in ZP-J.'))
     E.append(body(
@@ -66,7 +71,11 @@ def build():
         'though by bounding rather than by iterating: going once around a cycle forces '
         'a vertex&#8217;s depth to exceed itself, which only infinite depth &#8212; that '
         'is, &#8869; &#8212; can do. Acyclic vertices are handled by strong induction on '
-        'the size of the reachable set. Both cases together give decoration_unique.'))
+        'the size of the reachable set. Both cases together give decoration_unique, the graph-side proof. '
+        'Read from the values instead of the vertices, the same depth does all the work and '
+        'finiteness none: a vertex whose value has finite depth has children whose values have '
+        'smaller depth, and '
+        'the only value of infinite depth is &#8869; of U. That is the main result (&#167;IV.4).'))
     E.append(hr())
 
     # ── Section I: ValuationStructure ──────────────────────────────────────────
@@ -284,9 +293,10 @@ def build():
             'Reach(v)    = { w : V | Nonempty (Quiver.Path v w) }  (reachable from v)',
             '',
             'In a finite APG (Fintype V), every Reach(v) is a finite set. '
-            '|Reach(v)| is the cardinality used in the induction of '
+            '|Reach(v)| is the cardinality used in the graph-side induction of '
             'ZeroParadox/Settheory/APG.lean &#167; IX '
-            '(this document&#8217;s &#167;IV.2).',
+            '(this document&#8217;s &#167;IV.2); the value-side proof (&#167;IV.4) uses no '
+            'cardinality.',
         ]
     ))
     E.append(sp(4))
@@ -324,11 +334,15 @@ def build():
     ]
 
     E.append(body(
-        'The main theorem asserts that any finite APG admits at most one valid '
-        'decoration. The proof splits on whether a vertex lies on a directed cycle.'))
+        'The main theorem, decoration_unique_of_val (&#167;IV.4), asserts that any two valid '
+        'decorations of any quiver, finite or not, are equal; its proof splits on whether the '
+        'decorating value has finite depth. &#167;&#167;IV.1&#8211;IV.3 give the finite, graph-side '
+        'proof, decoration_unique: any finite APG admits at most one valid decoration, by '
+        'splitting on whether a vertex lies on a directed cycle. Its statement is a special case '
+        'of the main theorem.'))
 
     E.append(result_box(
-        'Theorem: decoration_unique (ZeroParadox/Settheory/APG.lean §IX)',
+        'Proposition: decoration_unique (ZeroParadox/Settheory/APG.lean §IX)',
         [
             '&#8704; {V : Type*} [Quiver V] [Fintype V]',
             '  {U : Type*} [ZPSemilattice U] [ValuationStructure U] [DecorationUniverse U]',
@@ -446,7 +460,7 @@ def build():
             'then d&#8321; v = d&#8322; v.',
             'Proof: collect is the same operation for both; d&#8321; and d&#8322; agree '
             'pointwise on children(v) by hypothesis; therefore the assembled labels agree.',
-            'Lean purity: [propext, Classical.choice, Quot.sound]. ✓',
+            'Lean purity: [propext, Quot.sound]. ✓',
         ]
     ))
     E.append(sp(4))
@@ -463,6 +477,50 @@ def build():
         'Function extensionality then closes the global equality d&#8321; = d&#8322; from that '
         'pointwise agreement; finiteness is consumed earlier, by the acyclic case&#8217;s '
         'descent on |Reach(v)|, and plays no part in this last step.'))
+
+    E.append(Paragraph('IV.4 — The Value Side: Any Quiver', S['h2']))
+    E.append(body(
+        'The same uniqueness holds with no finiteness at all, by inducting on the decorating '
+        'value rather than on the graph. Fix a vertex u. If val(d&#8321; u) is a natural number '
+        'm, then for each child w, collect_val_ge gives m &#8805; val(d&#8321; w) + 1, so '
+        'val(d&#8321; w) is a natural number below m; strong induction on m and '
+        'acyclic_induction_step give d&#8321; u = d&#8322; u. If val(d&#8321; u) and '
+        'val(d&#8322; u) are both &#8868;, val_unique makes both equal &#8869; of U; if only val(d&#8322; u) is finite, '
+        'the finite case applies with the roles swapped. No cardinality is counted, so the graph '
+        'may be infinite.'))
+    E.append(result_box(
+        'Theorem: decoration_unique_of_val (ZeroParadox/Settheory/APG.lean &#167;IX)',
+        [
+            '&#8704; {V : Type*} [Quiver V]',
+            '  {U : Type*} [ZPSemilattice U] [ValuationStructure U] [DecorationUniverse U]',
+            '  (d&#8321; d&#8322; : V &#8594; U),',
+            '  IsDecoration d&#8321; &#8594; IsDecoration d&#8322; &#8594; d&#8321; = d&#8322;',
+            '',
+            'On every quiver, finite or not, any two valid decorations into a DecorationUniverse '
+            'are equal. No APG argument, no finiteness binder.',
+            'Prior art: the AFA2 half of a result Aczel sets as an exercise (Non-Well-Founded Sets, '
+            'CSLI 1988, Ex. 2.1 p. 20; AFA1/AFA2 p. 19), by its standard proof, induction on the rank '
+            'of the TARGET. It differs from the exercise by one point of rank &#8868;, &#8869; of U, '
+            'admitted through val_unique.',
+            'Lean purity: [propext, Quot.sound]. ✓',
+        ]
+    ))
+    E.append(sp(4))
+    E.append(result_box(
+        'Corollary: decoration_unique_finite (ZeroParadox/Settheory/APG.lean &#167;IX)',
+        [
+            'decoration_unique with [Finite V] in place of [Fintype V], obtained from '
+            'decoration_unique_of_val; the [Finite V] binder appears in the statement only.',
+            'Lean purity: [propext, Quot.sound]. ✓',
+        ]
+    ))
+    E.append(sp(4))
+    E.append(body(
+        'The two proofs are two charts of one uniqueness, and neither is the structure. The graph '
+        'side splits vertices cyclic/acyclic and spends finiteness on |Reach(v)|; the value side '
+        'splits depth finite/&#8868; and spends none. They are related one way: a cyclic '
+        'vertex&#8217;s value has depth &#8868; (cyclic_decoration_eq_bot with val_bot); no '
+        'converse is claimed.'))
     E.append(sp(6))
 
     # ── Section V: Scope and Purity ─────────────────────────────────────────────
@@ -474,10 +532,10 @@ def build():
     ]
 
     E.append(body(
-        'decoration_unique establishes the <i>uniqueness</i> half of the property AFA '
-        'asserts (an axiom — Remark R-J.A) for abstract DecorationUniverses over finite '
-        'graphs. Two scope '
-        'boundaries are worth stating explicitly.'))
+        'decoration_unique_of_val establishes the <i>uniqueness</i> half of the property AFA '
+        'asserts (an axiom — Remark R-J.A) for abstract DecorationUniverses over every '
+        'quiver, and decoration_unique by a graph-side proof over finite graphs. The scope boundary, and '
+        'where finiteness enters, are stated below.'))
 
     E.append(body(
         '<b>Existence.</b> This document does not prove that every finite APG admits '
@@ -487,10 +545,10 @@ def build():
         'and remains an open question.'))
 
     E.append(body(
-        '<b>Finite graphs.</b> decoration_unique requires Fintype V. The strong '
-        'induction on |Reach(v)| terminates because V is finite. Extending the result '
-        'to infinite APGs would require an ordinal induction or a well-foundedness '
-        'argument on the reachability relation, and is not addressed here.'))
+        '<b>Finiteness.</b> decoration_unique requires Fintype V: its strong '
+        'induction on |Reach(v)| terminates because V is finite. Uniqueness itself does not '
+        'require it: decoration_unique_of_val (&#167;IV.4) holds on every quiver, finite or '
+        'infinite, by induction on the decorating value&#8217;s depth.'))
 
     E.append(body(
         '<b>Commented-out stub.</b> ZeroParadox/Settheory/APG.lean contains a '
@@ -540,7 +598,8 @@ def build():
             'same four axioms.',
             'ZeroParadox/Settheory/APG.lean &#8212; APG, DecorationUniverse, val_iterate, '
             'scale_iterate_unique_fp, cyclic_decoration_eq_bot, '
-            'acyclic_induction_step, decoration_unique',
+            'acyclic_induction_step, decoration_unique, decoration_unique_of_val, '
+            'decoration_unique_finite',
             'All paths are repository-relative, in the public repository.',
         ]
     ))
@@ -551,29 +610,17 @@ def build():
         [
             '[propext, Classical.choice, Quot.sound]',
             'propext          &#8212; propositional extensionality (standard in Lean 4)',
-            # ⚠⚠ THIS LINE NAMED THE WRONG SOURCE AND THEREFORE THE WRONG MODALITY. It read
-            #   "(Mathlib Finset and Fintype machinery)". Measured 2026-09-02 with
-            #   `lake env lean`: `ValuationStructure` — a BARE TYPECLASS mentioning neither —
-            #   carries [propext, Classical.choice, Quot.sound], and so does
-            #   `instAddMonoidWithOneENat`, the instance the numeral `1` in `val x + 1` reaches
-            #   for. The route is that numeral, and Scale.lean's `_VSlit`/`_VScast` pair proves
-            #   it is THE route rather than one of several: respelling the successor as
-            #   `((1 : ℕ) : ℕ∞)` and changing nothing else makes the class report no axioms.
-            #   ⚠ WHY IT MATTERED MORE THAN A CITATION SLIP: the line below says "No ZP-specific
-            #   axioms beyond", so attributing the cost to a library misplaced it: the cost sits in
-            #   this framework's spelling of the numeral, not in a library it cannot avoid. `AxiomProfile.lean` § 0 warns about exactly this —
-            #   *"PROVENANCE and NECESSITY are independent axes, and the first version of this
-            #   heading conflated them"* — and the corrected text keeps them apart: the tainted
-            #   INSTANCE is Mathlib's, the SPELLING that reaches for it is this framework's, and
-            #   a respelling clears it from the class.
+            # ⚠ Route (a) is measured at the pin in the [ZP-CUSTOM] line on `DecorationUniverse`
+            #   (ZeroParadox/Settheory/APG.lean) and in that file's PurityCheck. PROVENANCE and
+            #   NECESSITY are independent axes (`AxiomProfile.lean` § 0): the tainted instances
+            #   are Mathlib's, and the binder that reaches for them is this theorem's.
             'Classical.choice &#8212; AT LEAST FOUR ROUTES, and they are not the same '
-            'claim. (a) THE CLASSES: the numeral `1` in val_scale needs Mathlib&#8217;s '
-            'AddMonoidWithOne &#8469;&#8734; instance, choice-tainted at the INSTANCE '
-            'level, so ValuationStructure carries the axiom as a bare typeclass before any '
-            'theorem, and every statement that binds it is STATEMENT-CARRIED (the bins of '
-            'ZeroParadox/Category/ChoiceCannotBe.md classify statements, not classes; the '
-            'statement control is the ZeroParadox/Settheory/APG.lean record below); DecorationUniverse&#8217;s own `+ 1` in collect_val_ge reaches the same '
-            'instance. (b) A DIRECT CALL: decoration_unique&#8217;s proof takes an edge out '
+            'claim. (a) THE STATEMENT: decoration_unique binds [Fintype V], and Fintype carries '
+            'the axiom under the instances the pinned Mathlib supplies, so the statement reports '
+            'it before any proof and is STATEMENT-CARRIED in the sense of '
+            'ZeroParadox/Category/ChoiceCannotBe.md (the statement controls are the '
+            'ZeroParadox/Settheory/APG.lean record below). ValuationStructure and '
+            'DecorationUniverse themselves report no axioms. (b) A DIRECT CALL: decoration_unique&#8217;s proof takes an edge out '
             'of a Nonempty via hw.some, and Nonempty.some IS Classical.choice &#8212; not '
             'inherited through packaging, invoked. (c) CARDINALITY: the termination measure '
             'runs on Set.ncard, and Set.ncard_lt_ncard and Set.ncard_pos are each '
@@ -582,23 +629,20 @@ def build():
             'triple (with Classical.indefiniteDescription and Classical.ofNonempty) that L. J. Close '
             'identifies in Mathlib&#8217;s choice dependence (The Axiom Profile of Mathlib, Zenodo 2026, '
             'doi:10.5281/zenodo.20710921, pp. 5&#8211;6, measured at Mathlib 8f9d9cf on Lean v4.28.0, '
-            'not the Mathlib 5450b53 on Lean v4.30.0-rc2 this repository pins; cited, not claimed).',
+            'not the Mathlib 56a0058 on Lean v4.35.0 this repository pins; cited, not claimed).',
             'Quot.sound       &#8212; quotient soundness (standard in Lean 4)',
-            '&#8226; A TRANSCRIPTION CLEARS IT FOR THE CLASS; NO PROOF CAN CLEAR IT FOR THE '
-            'THEOREM AS STATED &#8212; and the difference is the whole claim. '
-            'ZeroParadox/Valuation/Scale.lean transcribes ValuationStructure twice, as _VSlit and '
-            '_VScast, differing only in val_scale&#8217;s numeral `1`, which _VScast writes '
-            '((1 : &#8469;) : &#8469;&#8734;): by the #print axioms lines after them, _VSlit reports '
-            '[propext, Classical.choice, Quot.sound] and _VScast reports no axioms. '
-            'DecorationUniverse&#8217;s own `+ 1` is not transcribed there. The declared class still '
-            'reports the axiom; _VScast is a transcription of it, not a proof. '
-            'decoration_unique&#8217;s STATEMENT carries the axiom through its [ValuationStructure U] '
-            'binder, so no proof of decoration_unique as stated can remove it &#8212; the '
-            'STATEMENT-CARRIED class of ZeroParadox/Category/ChoiceCannotBe.md. The record is the '
-            'DecorationUniverse [ZP-CUSTOM] line of ZeroParadox/Settheory/APG.lean (&#8704; {U} '
-            '[ZPSemilattice U] [ValuationStructure U], True reports the three axioms; with '
-            '[ZPSemilattice U] alone, none), which calls the cost NOT REMOVABLE BY ANY PROOF of that '
-            'theorem. Routes (b), (c) and (d) lie in the proof, not the statement.',
+            '&#8226; NO PROOF CAN CLEAR IT FOR THE THEOREM AS STATED, AND THE STATEMENT IS '
+            'READ UNDER THE PINNED INSTANCES &#8212; both halves are the claim. The record is the '
+            'DecorationUniverse [ZP-CUSTOM] line of ZeroParadox/Settheory/APG.lean: the full '
+            'statement of decoration_unique, assumed and used for nothing, reports the three '
+            'axioms; the same statement with [Finite V] in place of [Fintype V] reports none; and '
+            '&#8704; {U} [ZPSemilattice U] [ValuationStructure U], True reports none. So the '
+            '[Fintype V] binder carries the axiom and the [ValuationStructure U] binder does not. '
+            'Which bin a statement falls in is relative to the instances it is elaborated under '
+            '(ZeroParadox/Category/ChoiceCannotBe.lean &#167; III, STATEMENT-CARRIED IS '
+            'INSTANCE-RELATIVE). Routes (b), (c) and (d) lie in the proof. The [Finite V] '
+            'restatement has a proof free of all four: decoration_unique_finite, from '
+            'decoration_unique_of_val, each [propext, Quot.sound] (&#167;IV.4).',
             'No ZP-specific AXIOM is declared anywhere in this chain; the footprint above is '
             'what the Lean reports, not a commitment the framework makes.',
             'No Dependent Choice. No additional set-theoretic assumptions.',
@@ -644,7 +688,8 @@ def build():
         'Endnote: This document is an addendum to ZP-J Self-Reference and reads after '
         'it. The derivation chain (ValuationStructure &#8594; AbstractSelfApp &#8594; '
         'AFAStructure) is established in ZP-J; this document applies it to the APG '
-        'decoration problem. It covers the uniqueness result for finite graphs. '
+        'decoration problem. It covers the uniqueness result for every quiver '
+        '(decoration_unique_of_val) and its finite, graph-side proof for APGs (decoration_unique). '
         'All active theorems are sorry-free in Lean 4 '
         '(one commented-out stub; see §V).',
         S['endnote']))

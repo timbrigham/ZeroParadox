@@ -237,7 +237,6 @@ theorem no_witnessRel_evalClass_top : ¬ HasWitnessRel EvalClass (fun _ => True)
     exact (hd : False)
   refine no_witnessRel_of_admissible_fpf
     (g := fun y => if y = ⟦Code.zero⟧ then ⟦cn⟧ else ⟦Code.zero⟧) trivial (fun y hy => ?_)
-  dsimp only at hy
   by_cases h : y = ⟦Code.zero⟧
   · rw [if_pos h] at hy; exact hne (h ▸ hy.symm)
   · rw [if_neg h] at hy; exact h hy.symm

@@ -64,14 +64,14 @@ these are the numbers it reported, not the numbers that were hoped for).
   `not_apart_of_agree_all` report **no axioms at all**; `v2_bot`, `v2_unique` and `clopen_gap_at_bot`
   report `[propext]`; `v2_scale_nat`, `nScale_unique_fp`, `nScale_ne_self` report `[propext, Quot.sound]`
   and `agree_all_iff` reports `[Quot.sound]` (the `funext`).
-* **One instance-level exception, on the constructive side, reported not hidden.** The ZP-J `val_scale`
-  axiom in its literal form `v2_scale : v2 (2n) = v2 n + 1` reports `[propext, Classical.choice,
-  Quot.sound]` — **and on this carrier (ℕ) it is not the carrier's.** It is the ambient `ℕ∞`
-  NUMERAL: `One ℕ∞` carries it, while `Add ℕ∞`, `Nat.cast : ℕ → ℕ∞` and `(a : ℕ∞) + (b : ℕ∞)`
-  are all axiom-free — measured 2026-08-30, and `(2 : ℕ∞)` is clean too, so it is the `0` and `1`
-  numerals specifically. The content of the axiom is choice-free — `v2_scale_nat` states the same
+* **Two declarations on the constructive side carry `Classical.choice` — `v2_scale` and the exhibit
+  `enat_add_choice` — both through their proofs; each has a choice-free counterpart.** The ZP-J
+  `val_scale` axiom in its literal form `v2_scale : v2 (2n) = v2 n + 1` reports `[propext, Classical.choice, Quot.sound]` —
+  **and on this carrier (ℕ) it is neither the carrier's nor the statement's.** `v2`, the numeral
+  `(1 : ℕ∞)` and `(a : ℕ∞) + 1` all print clean in the Lean file's purity block, so the choice comes
+  from `v2_scale`'s proof. The content of the axiom is choice-free — `v2_scale_nat` states the same
   fact with the successor on `ℕ` and comes out `[propext, Quot.sound]`. ⚠ None of this carries over
-  to `ℤ_[2]`, where the carrier itself is tainted. See "The `ℕ∞`-numeral finding".
+  to `ℤ_[2]`, where the carrier itself is tainted. See "Where the constructive side's two choices arrive".
 * **The crossing — `Classical.choice`.** `natToZ2`, `natToZ2_bot`, `natToZ2_scale` and
   `crossVal_bot_agrees` all report `[propext, Classical.choice, Quot.sound]`.
 
@@ -81,20 +81,18 @@ Mathlib's p-adic results are eliminable, and it does **not** show `padicValNat`'
 *in Mathlib* — that would require re-proving Mathlib's valuation API on a different definition, which is
 not attempted here. `#print axioms` reports how a proof was written, never what a theorem requires.
 
-## The `ℕ∞`-numeral finding — reported, not explained away
+## Where the constructive side's two choices arrive
 
-The one INSTANCE-LEVEL `Classical.choice` on the constructive side was not predicted. On the ℕ side it arrives
-through Mathlib's `ℕ∞` NUMERAL, not the addition and not the valuation — and, on ℕ, not the carrier:
+The Lean file's purity block prints the `ℕ∞` numerals and the bundles they belong to, so where the
+constructive side's two `Classical.choice` footprints arrive is read off the instrument. At the pin the numerals
+`(0 : ℕ∞)` and `(1 : ℕ∞)`, and `(a : ℕ∞) + 1`, measure no axioms; `(2 : ℕ∞)` measures `[propext]`; the
+bundles `instAddMonoidWithOneENat` and `instCommSemiringENat` carry `Classical.choice`.
 `enat_add_choice` (`(a : ℕ∞) + (b : ℕ∞) = ↑(a + b)`) reports `[propext, Classical.choice, Quot.sound]`
 — but that is its PROOF TERM, not an instance: the same proposition proved by induction and `rfl`
-reports no axioms at all. Measured 2026-08-30, `ℕ∞` ADDITION is choice-free and the LITERAL numerals `0` and `1` are what
-is tainted, through DIFFERENT bundles — `1` via `instAddMonoidWithOneENat`, `0` via
-`instCommSemiringENat`. This is the documented instance hazard,
-here located exactly — and it has a consequence for the ZP-J layer: because `ValuationStructure.val`
-targets `ℕ∞` and `val_scale` is stated as `val x + 1`, the *statement* of that axiom carries
-`Classical.choice` on **any** carrier, `ℕ` and `ℤ_[2]` alike. So `q2Val_scale`'s footprint (`ZeroParadox/Valuation/Scale.lean`)
-is not evidence about what the p-adic completion mathematically REQUIRES. This file separates the two contributions: `v2_scale_nat` isolates the choice-free
-valuation content, and the numeral accounts for the rest ON ℕ. ⚠ It does NOT carry over to ℤ_[2]:
+reports no axioms at all. `ValuationStructure` itself measures no axioms (`ZeroParadox/Valuation/Scale.lean`'s
+purity block), so the *statement* of `val_scale`, `val x + 1`, costs no choice on a carrier that costs
+none. This file separates the contributions on ℕ: `v2_scale_nat` isolates the choice-free valuation
+content, and `v2_scale`'s proof accounts for the rest. ⚠ It does NOT carry over to ℤ_[2]:
 `PadicInt` is itself choice-tainted, so nothing there separates. The remaining
 `Classical.choice` in the crossing (`natToZ2`, `crossVal_bot_agrees`) is attributable to the p-adic
 target alone.
@@ -109,14 +107,14 @@ Two faces, matching the two faces of Group A:
   axioms hold choice-free with `scale = (2 * ·)`: `scale_bot` (`nScale_bot`), `val_bot` (`v2_bot`),
   `val_unique` (`v2_unique`); and the fixed-point content `nScale_unique_fp` (the bottom is the unique
   fixed point of doubling) is proved directly. The fourth axiom, `val_scale`, holds choice-free *in
-  content* (`v2_scale_nat`) but carries `Classical.choice` *in its literal `ℕ∞`-successor form*
-  (`v2_scale`) — from the ambient `ℕ∞` NUMERAL, not the addition and, on ℕ, not the carrier
-  (see "The `ℕ∞`-numeral finding").
+  content* (`v2_scale_nat`); its literal `ℕ∞`-successor form `v2_scale` carries `Classical.choice`
+  through its proof, not through the numeral, the addition or, on ℕ, the carrier
+  (see "Where the constructive side's two choices arrive").
   This is the choice-free mirror of `q2Val_bot`, `q2Val_unique`, `q2Scale_bot` and `q2Scale_unique_fp`
   (`ZeroParadox/Valuation/Scale.lean`), which prove the same axioms in `ℤ_[2]` via
   `PadicInt.valuation`; the comparison localizes § V's choice on the ℕ side only. ⚠ On `ℤ_[2]`
   nothing separates: `PadicInt` is itself choice-tainted, so the carrier alone already accounts
-  for it whatever the numeral does.
+  for it.
 * **The ball face — digit streams `Str := ℕ → Fin 2`.** `AgreeTo n x y` ("agree to depth n") is the
   ball relation; `Apart x y := ∃ n, x n ≠ y n` is its positive complement. The ultrametric strong
   triangle (depth form), nested balls, descent to a single point, and total separation all hold
@@ -191,7 +189,7 @@ design, not the tree.
 ## Structure
 
 - § I   The valuation face — `v2` on ℕ, the ZP-J axioms priced (three choice-free; `val_scale`'s
-        content choice-free, its literal `ℕ∞` form carrying the instance choice).
+        content choice-free, its literal `ℕ∞` form's proof carrying choice).
 - § II  The ball face — digit streams, agreement, apartness, separation, choice-free.
 - § III The crossing — one named map ℕ → `ℤ_[2]`, priced.
 - § IV  Axiom Purity Check — the deliverable.

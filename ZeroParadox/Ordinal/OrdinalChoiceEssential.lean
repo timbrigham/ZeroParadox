@@ -42,7 +42,7 @@ abbrev Pt : Type := PUnit
 
 instance : Std.Trichotomous (@emptyRelation Pt) := ⟨fun a b _ _ => Subsingleton.elim a b⟩
 instance : IsTrans Pt emptyRelation := ⟨fun _ _ _ h => h.elim⟩
-instance : IsWellFounded Pt emptyRelation := ⟨⟨fun a => ⟨a, fun _ h => h.elim⟩⟩⟩
+instance : WellFounded (@emptyRelation Pt) := ⟨fun a => ⟨a, fun _ h => h.elim⟩⟩
 instance : IsWellOrder Pt emptyRelation where
 
 /-- The Kraus-Nordvall Forsberg-Xu witness: a carrier with **two** elements when `p` holds and
@@ -65,8 +65,8 @@ instance (p : Prop) : Std.Trichotomous (twoRel p) := by
 instance (p : Prop) : IsTrans (Two p) (twoRel p) :=
   ⟨fun _ _ _ h1 h2 => absurd (h1.2.symm.trans h2.1) (by simp)⟩
 
-instance (p : Prop) : IsWellFounded (Two p) (twoRel p) := by
-  refine ⟨⟨fun a => ?_⟩⟩
+instance (p : Prop) : WellFounded (twoRel p) := by
+  refine ⟨fun a => ?_⟩
   have base : ∀ c : Two p, c.2 = false → Acc (twoRel p) c :=
     fun c hc => ⟨c, fun d hd => absurd (hd.2.symm.trans hc) (by simp)⟩
   exact ⟨a, fun d hd => base d hd.1⟩

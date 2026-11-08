@@ -101,9 +101,8 @@ theorem nScale_bot : 2 * 0 = 0 := rfl
 /-- **The `val_scale` content, choice-free.** Doubling raises the 2-adic count by one, off the bottom —
 here with the successor taken on ℕ (`v2nat n n + 1`) and then cast, so the statement is choice-free.
 This is the mathematical content of ZP-J's `val_scale` on this carrier; the one lemma needing fuel
-saturation. Compare `v2_scale`, which states the same fact in the axiom's literal `+ 1`-in-`ℕ∞` form and
-thereby inherits `Classical.choice` from the ambient `ℕ∞` LITERAL (`AddMonoidWithOne ℕ∞`), not from
-the addition and not from the carrier. -/
+saturation. Compare `v2_scale`, which states the same fact in the axiom's literal `+ 1`-in-`ℕ∞` form
+and carries `Classical.choice` through its proof: `v2` and `(a : ℕ∞) + 1` print clean in § IV. -/
 theorem v2_scale_nat (n : ℕ) (hn : n ≠ 0) : v2 (2 * n) = ((v2nat n n + 1 : ℕ) : ℕ∞) := by
   have h2n : 2 * n ≠ 0 := by omega
   rw [v2, if_neg h2n]
@@ -113,46 +112,38 @@ theorem v2_scale_nat (n : ℕ) (hn : n ≠ 0) : v2 (2 * n) = ((v2nat n n + 1 : �
   rw [e, v2nat_succ, if_neg (by omega : ¬ (2 * n) % 2 = 1), if_neg h2n,
       show (2 * n) / 2 = n from by omega, v2nat_stable (2 * n - 1) n (by omega)]
 
-/-- **The `ℕ∞` numerals `0` and `1` carry `Classical.choice` — the localization instrument,
-corrected twice.** ⚠⚠ EVERY FOOTPRINT HERE IS PIN-RELATIVE, NOT STRUCTURAL, and this one is known
-to have moved: Brasca and Clemente (*Synthetic Differential Geometry in Lean*, arXiv:2603.17457,
+/-- **`(a : ℕ∞) + (b : ℕ∞) = ↑(a + b)`, through Mathlib's `Nat.cast_add` — the localization
+instrument for the `ℕ∞` numerals.** ⚠⚠ EVERY FOOTPRINT HERE IS PIN-RELATIVE, NOT STRUCTURAL:
+Brasca and Clemente (*Synthetic Differential Geometry in Lean*, arXiv:2603.17457,
 §2.2, pp. 7-8) report that writing `(2 : R)` for a ring `R` USED to require choice: the `OfNat R 2`
 instance needs `Nat.AtLeastTwo`, whose proof used the `lia` tactic, which depends on choice; they
-report this fixed in Mathlib. At the pin, numerals ≥ 2 on ℕ∞ resolve through `instOfNatAtLeastTwo`
-and are clean (below). Their constraint forces
+report this fixed in Mathlib. Their constraint forces
 the audit ours only benefits from — the Kock–Lawvere axiom is inconsistent with excluded middle, so
 for them a stray `Classical.choice` is a contradiction rather than a blemish. Read every claim below
-as "measured at the pinned Mathlib, 2026-08-30", never as a fact about the library.
-⚠ Numerals ≥ 2 are CLEAN AT THE PIN: `(2 : ℕ∞)` is `[propext]`, resolving through
-`instOfNatAtLeastTwo` and `Nat.cast`. Only `0` and `1` are tainted, and through DIFFERENT
-bundles: `1` via `instAddMonoidWithOneENat` (the `AddMonoidWithOne ℕ∞`), `0` via
-`instCommSemiringENat` (the `CommSemiring ℕ∞`). ⚠ Cite the INSTANCES, not their projections:
+as "measured at the pinned Mathlib", never as a fact about the library.
+At the pin, § IV prints: `(0 : ℕ∞)`, `(1 : ℕ∞)`, `(a : ℕ∞) + 1` and `(a : ℕ∞) + ((1 : ℕ) : ℕ∞)` measure
+no axioms, and `(2 : ℕ∞)` measures `[propext]` (through `instOfNatAtLeastTwo`); the bundles
+`instAddMonoidWithOneENat` (the `AddMonoidWithOne ℕ∞`) and `instCommSemiringENat` (the
+`CommSemiring ℕ∞`) carry `Classical.choice`. ⚠ Cite the INSTANCES, not their projections:
 `AddMonoidWithOne.toOne` is itself axiom-free.
-⚠⚠ This docstring previously said ℕ∞ ADDITION is classical "regardless of the summands". That is
-FALSE, measured 2026-08-30: `Add ℕ∞`, `HAdd ℕ∞ ℕ∞ ℕ∞`, `NatCast ℕ∞` and `(a : ℕ∞) + (b : ℕ∞)`
-all report NO axioms. What carries choice is the LITERAL: `One ℕ∞`, `OfNat ℕ∞ 1` and the bundled
-`AddMonoidWithOne ℕ∞` — and `Zero ℕ∞` / `OfNat ℕ∞ 0` likewise. Hence `(a : ℕ∞) + 1` carries it
-and `(a : ℕ∞) + ((1 : ℕ) : ℕ∞)` does not.
-The CONCLUSION stands and is confirmed directly — `#print axioms ValuationStructure` reports
-`Classical.choice`, so `val_scale` as spelled costs choice on every carrier — but it follows from
-the numeral, not from the operator. ⚠ And this theorem does not witness it: the same proposition
-proved by `induction b with | zero => rfl | succ n ih => rfl` reports NO axioms, so the footprint
-below comes from THIS proof term, not from any instance in the statement. An instance's footprint
-must be EMITTED, never inferred from a theorem that mentions it. -/
+This theorem carries `Classical.choice` (§ IV) and witnesses nothing about the instances in its
+statement: the same proposition proved by `induction b with | zero => rfl | succ n ih => rfl` reports
+NO axioms, so the footprint comes from THIS proof term. An instance's footprint must be EMITTED, never
+inferred from a theorem that mentions it. -/
 -- ⚠ THE NAME RECORDS THE ORIGINAL, MISTAKEN DIAGNOSIS and is kept as a stable handle (R-NAMING:
--- never rename a formal identifier). The choice is the NUMERAL, not the addition, and this
--- theorem's own footprint is its proof term's — the same proposition proved by induction and
--- `rfl` is axiom-free. Same technique, one domain over: ZeroParadox/Ordinal/SyntacticCollapse.lean
--- pins Mathlib's ℚ instances the same way, by a `rfl` proof that still reports choice.
+-- never rename a formal identifier). At the pin neither the addition nor the numerals carry choice
+-- (§ IV), and this theorem's own footprint is its proof term's — the same proposition proved by
+-- induction and `rfl` is axiom-free. Same technique, one domain over:
+-- ZeroParadox/Ordinal/SyntacticCollapse.lean pins Mathlib's ℚ instances the same way, by a `rfl`
+-- proof that still reports choice.
 theorem enat_add_choice (a b : ℕ) : (a : ℕ∞) + (b : ℕ∞) = ((a + b : ℕ) : ℕ∞) :=
   (Nat.cast_add a b).symm
 
-/-- **ZP-J `val_scale`, literal form — carries the `ℕ∞`-NUMERAL choice.** The same fact as
-`v2_scale_nat`, written with the successor in `ℕ∞` exactly as the ZP-J axiom states it (`val x + 1`).
-Its footprint is `[propext, Classical.choice, Quot.sound]`, from the `ℕ∞` numeral (`One ℕ∞`), NOT from
-the addition. ⚠ On THIS carrier (ℕ) that is the whole story. On ℤ_[2] it is not: `PadicInt` itself
-carries `Classical.choice`, so `q2Val_scale` would be tainted even with a choice-free numeral, and
-the two contributions do NOT separate there. -/
+/-- **ZP-J `val_scale`, literal form.** The same fact as `v2_scale_nat`, written with the successor in
+`ℕ∞` exactly as the ZP-J axiom states it (`val x + 1`). Its footprint is
+`[propext, Classical.choice, Quot.sound]` (§ IV), through its proof: `v2`, the numeral `(1 : ℕ∞)` and
+`(a : ℕ∞) + 1` print clean there. ⚠ On ℤ_[2] `PadicInt` itself carries `Classical.choice`, so every
+statement mentioning that carrier, `q2Val_scale` included, carries it whatever its proof. -/
 theorem v2_scale (n : ℕ) (hn : n ≠ 0) : v2 (2 * n) = v2 n + 1 := by
   rw [v2_scale_nat n hn, v2, if_neg hn, Nat.cast_add_one]
 
@@ -212,9 +203,8 @@ either `x` is in the ball around the bottom stream or it is not — no intermedi
 step-function character of p-adic balls, choice-free via decidability of a bounded quantifier. -/
 theorem clopen_gap_at_bot (n : ℕ) (x : Str) :
     AgreeTo n botStr x ∨ ¬ AgreeTo n botStr x := by
-  rcases decidableAgreeTo n botStr x with h | h
-  · exact Or.inr h
-  · exact Or.inl h
+  exact Decidable.falseTrueCases (motive := fun _ => AgreeTo n botStr x ∨ ¬ AgreeTo n botStr x)
+    (fun h => Or.inr h) (fun h => Or.inl h) (decidableAgreeTo n botStr x)
 
 /-- Agreement at every depth is incompatible with apartness. -/
 theorem not_apart_of_agree_all (x y : Str) (h : ∀ n, AgreeTo n x y) : ¬ Apart x y := by
@@ -255,8 +245,8 @@ section PurityCheck
 open ZeroParadox
 
 -- Constructive side: the valuation face. `v2_scale_nat` (the content) is choice-free; `v2_scale` (the
--- literal `ℕ∞` axiom form) carries `Classical.choice`, from the NUMERAL (`One ℕ∞`), not the addition.
--- ⚠ That localization holds on ℕ only. On ℤ_[2] nothing separates: the choice is INTRODUCED at
+-- literal `ℕ∞` axiom form) carries `Classical.choice` through its proof, the numerals and the
+-- addition printing clean below. ⚠ On ℤ_[2] nothing separates: the choice is INTRODUCED at
 -- layer 0 (`padicValNat`), below the completion, and `Padic`/`PadicInt` INHERIT rather than add
 -- it — which is why both report it. Every statement mentioning that carrier carries it.
 #print axioms v2nat
@@ -270,16 +260,14 @@ open ZeroParadox
 #print axioms nScale_unique_fp
 #print axioms nScale_ne_self
 
--- ⭐ THE NUMERAL CLAIM, EMITTED. The docstring at § I says the ℕ∞ numerals `0` and `1` carry
--- choice and that ≥ 2 do not. These print the three numerals THEMSELVES rather than the bundles
--- they resolve through. ⚠ Three prints settle three numerals; `≥ 2` beyond the `2` shown follows
+-- ⭐ THE NUMERAL CLAIM, EMITTED. These print the three numerals THEMSELVES, then the two bundles
+-- § I's docstring names. ⚠ Three prints settle three numerals; `≥ 2` beyond the `2` shown follows
 -- from the shared `instOfNatAtLeastTwo` route, not from this list.
 private def _enatZero : ℕ∞ := 0
 private def _enatOne : ℕ∞ := 1
 private def _enatTwo : ℕ∞ := 2
--- ⚠ The pair below is the LOAD-BEARING premise of `Scale.lean`'s `_VScast` counterfactual: the
--- addition is clean and only the numeral is not. It was asserted in this file and consumed in
--- that one, and printed at neither end until now.
+-- ⚠ The pair below is the premise of `Scale.lean`'s `_VSlit`/`_VScast` counterfactual: the
+-- successor spelled `+ 1` and spelled `+ ((1 : ℕ) : ℕ∞)`. It is printed here and consumed there.
 private def _addOne (a : ℕ) : ℕ∞ := (a : ℕ∞) + 1
 private def _addOneCast (a : ℕ) : ℕ∞ := (a : ℕ∞) + ((1 : ℕ) : ℕ∞)
 #print axioms _enatZero

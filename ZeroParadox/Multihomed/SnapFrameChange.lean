@@ -43,7 +43,7 @@ theorem snap_frameflip_tower_tendsto_infty :
   have hq : Tendsto (fun k => (((cnf_encode (towerOrd k)) : ℤ_[2]) : ℚ_[2]))
       atTop (𝓝 (0 : ℚ_[2])) := by
     have hc : Continuous (fun z : ℤ_[2] => (z : ℚ_[2])) := continuous_subtype_val
-    simpa using (hc.tendsto (0 : ℤ_[2])).comp h0
+    simpa [Function.comp_def] using (hc.tendsto (0 : ℤ_[2])).comp h0
   -- Push into the sphere `OnePoint ℚ₂`.
   have hs : Tendsto (fun k => OnePoint.some (((cnf_encode (towerOrd k)) : ℤ_[2]) : ℚ_[2]))
       atTop (𝓝 (OnePoint.some (0 : ℚ_[2]))) :=

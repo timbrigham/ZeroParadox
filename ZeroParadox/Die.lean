@@ -1,3 +1,4 @@
+import ZeroParadox.Order.ChoiceFreeWithTop
 import Mathlib.Order.Cover
 import Mathlib.Order.BoundedOrder.Basic
 import Mathlib.Data.PFun
@@ -75,12 +76,12 @@ example {α : Type u} (u : α →. α) : (∀ x y, y ∈ u x → y ∈ u y) ↔ 
     funext x
     apply Part.ext
     intro y
-    rw [PFun.comp_apply, Part.mem_bind_iff]
+    rw [PFun.comp_apply, Part.mem_bind_iff (g := u)] -- [ZP port] Lean 4.35: `g` named through `PFun`
     exact ⟨fun ⟨z, hz, hyz⟩ => (Part.mem_unique (h x z hz) hyz) ▸ hz,
       fun hy => ⟨y, hy, h x y hy⟩⟩
   · intro h x y hy
     have hy' : y ∈ (u.comp u) x := by rw [congrFun h x]; exact hy
-    rw [PFun.comp_apply, Part.mem_bind_iff] at hy'
+    rw [PFun.comp_apply, Part.mem_bind_iff (g := u)] at hy' -- [ZP port] Lean 4.35: as above
     obtain ⟨z, hz, hyz⟩ := hy'
     exact Part.mem_unique hz hy ▸ hyz
 
@@ -667,9 +668,10 @@ theorem overTrichotomy_of_option [DecidableEq α] (f : α → Option α)
   cases hf : f y with
   | none => exact Or.inl fun b hb => by rw [h, hf] at hb; cases hb
   | some b =>
-    rcases decEq b y with hne | heq
-    · exact Or.inr (Or.inr ⟨b, (h y b).2 hf, hne⟩)
-    · subst heq
+    cases decEq b y with -- [ZP port] Lean 4.35: rcases on `Decidable` no longer binds names
+    | isFalse hne => exact Or.inr (Or.inr ⟨b, (h y b).2 hf, hne⟩)
+    | isTrue heq =>
+      subst heq
       exact Or.inr (Or.inl ⟨(h _ _).2 hf,
         fun c hc => (Option.some_injective _ (hf.symm.trans ((h _ c).1 hc))).symm⟩)
 
@@ -1383,16 +1385,21 @@ theorem isBot_and_isTop_iff {X : Type u} [PartialOrder X] (x : X) :
   ⟨fun ⟨hb, ht⟩ y => le_antisymm (ht y) (hb y),
    fun h => ⟨fun y => (h y).symm ▸ le_rfl, fun y => (h y).symm ▸ le_rfl⟩⟩
 
+section
+-- [ZP port] Lean 4.35: Mathlib proves `WithBot`/`WithTop.le_def` by `grind`, so their `Preorder`
+-- carries `Classical.choice`; pin the bare `instLE` here and prove from its constructors.
+attribute [local instance high] WithBot.instLE WithTop.instLE
+
 /-- `Statement:` on `WithBot σ`, ⊥ is also greatest iff `σ` is empty. -/
 theorem withBot_bot_isBot_and_isTop_iff {σ : Type u} [Preorder σ] :
     (IsBot (⊥ : WithBot σ) ∧ IsTop (⊥ : WithBot σ)) ↔ IsEmpty σ := by
   constructor
   · rintro ⟨-, ht⟩
-    exact ⟨fun a => WithBot.not_coe_le_bot a (ht a)⟩
+    exact ⟨fun a => by cases ht a⟩
   · intro h
-    refine ⟨fun _ => bot_le, fun x => ?_⟩
+    refine ⟨fun x => WithBot.LE.bot_le x, fun x => ?_⟩
     induction x using WithBot.recBotCoe with
-    | bot => exact le_rfl
+    | bot => exact WithBot.LE.bot_le _
     | coe a => exact isEmptyElim a
 
 /-- `Statement:` on `WithTop σ`, ⊤ is also least iff `σ` is empty. -/
@@ -1400,12 +1407,14 @@ theorem withTop_top_isBot_and_isTop_iff {σ : Type u} [Preorder σ] :
     (IsBot (⊤ : WithTop σ) ∧ IsTop (⊤ : WithTop σ)) ↔ IsEmpty σ := by
   constructor
   · rintro ⟨hb, -⟩
-    exact ⟨fun a => WithTop.not_top_le_coe a (hb a)⟩
+    exact ⟨fun a => by cases hb a⟩
   · intro h
-    refine ⟨fun x => ?_, fun _ => le_top⟩
+    refine ⟨fun x => ?_, fun x => WithTop.LE.le_top x⟩
     induction x using WithTop.recTopCoe with
-    | top => exact le_rfl
+    | top => exact WithTop.LE.le_top _
     | coe a => exact isEmptyElim a
+
+end
 
 /-- `Statement:` ⊥ of `WithBot σ` has a cover iff `σ` has a minimal point. -/
 theorem botCovered_withBot_iff {σ : Type u} [PartialOrder σ] :
@@ -1418,19 +1427,31 @@ theorem botCovered_withBot_iff {σ : Type u} [PartialOrder σ] :
   · rintro ⟨a, ha⟩
     exact ⟨a, WithBot.bot_covBy_coe.2 ha⟩
 
+section
+-- [ZP port] Lean 4.35: Mathlib's `WithTop` orders carry `Classical.choice`; scope `ZeroParadox/Order/ChoiceFreeWithTop.lean`'s.
+attribute [local instance high] withTopPreorderCF withTopPartialOrderCF withTopOrderBotCF
+
 /-- `Statement:` if `σ` has a least point and no maximal point, ⊥ of `WithTop σ` has a cover iff ⊥
     of `σ` has one. -/
 theorem botCovered_withTop_iff {σ : Type u} [PartialOrder σ] [OrderBot σ] [NoMaxOrder σ] :
     BotCovered (WithTop σ) ↔ BotCovered σ := by
+  have inv : ∀ {x y : σ}, (x : WithTop σ) < y → x < y := fun h => by
+    change WithTop.LT _ _ at h
+    cases h with | coe_lt_coe h => exact h
   constructor
   · rintro ⟨a, h⟩
     induction a using WithTop.recTopCoe with
     | top =>
       obtain ⟨b, hb⟩ := exists_gt (⊥ : σ)
-      exact absurd (WithTop.coe_lt_top b) (h.2 (WithTop.coe_lt_coe.2 hb))
-    | coe a => exact ⟨a, WithTop.coe_covBy_coe.1 h⟩
+      exact (h.2 (WithTop.LT.coe_lt_coe hb) (WithTop.LT.lt_top b)).elim
+    | coe a => exact ⟨a, inv h.1, fun c h1 h2 => h.2 (WithTop.LT.coe_lt_coe h1) (WithTop.LT.coe_lt_coe h2)⟩
   · rintro ⟨a, h⟩
-    exact ⟨a, WithTop.coe_covBy_coe.2 h⟩
+    refine ⟨a, WithTop.LT.coe_lt_coe h.1, fun c h1 h2 => ?_⟩
+    induction c using WithTop.recTopCoe with
+    | top => change WithTop.LT _ _ at h2; cases h2
+    | coe c => exact h.2 (inv h1) (inv h2)
+
+end
 
 /-- `Statement:` under any `≤`, an empty carrier has no least-element and no greatest-element
     structure. -/
@@ -1880,6 +1901,12 @@ def closedSublattice : CompleteSublattice (Set α) :=
     (fun _ hs => ⟨fun x hx y hy t ht => (hs ht).1 x (hx t ht) y hy,
                   fun x hx b hb t ht => (hs ht).2 x (hx t ht) b hb⟩)
 
+section
+-- [ZP port] Lean 4.35: `subset_rfl`/`Subset.trans` on `Set` now go through
+-- `Set.instCompleteAtomicBooleanAlgebra`, which carries `Classical.choice`; erasing the two
+-- Boolean-algebra instances here routes them through the choice-free `Set.instDistribLattice`.
+attribute [-instance] Set.instCompleteAtomicBooleanAlgebra Set.instBooleanAlgebra
+
 /-- `Statement:` `restrictInclusion` along `S ⊆ S` is the identity. -/
 theorem restrictInclusion_refl {S : Set α} (hS : M.UpClosed S) (x : S) :
     M.restrictInclusion hS hS subset_rfl x = x := rfl
@@ -1890,6 +1917,8 @@ theorem restrictInclusion_trans {S T U : Set α} (hS : M.UpClosed S) (hT : M.UpC
     (hU : M.UpClosed U) (hTS : T ⊆ S) (hUT : U ⊆ T) (x : U) :
     M.restrictInclusion hS hT hTS (M.restrictInclusion hT hU hUT x) =
       M.restrictInclusion hS hU (hUT.trans hTS) x := rfl
+
+end
 
 /-- `Statement:` `M ≤ N` when `M` and `N` have the same UP and every step of `M` is a step of `N`. -/
 -- [ZP-CUSTOM] no Mathlib analog | reason: an order on the die's own record `Motion`: equality of the
@@ -3673,15 +3702,13 @@ theorem hmap_ofNat_ne (y : NInf) (n : ℕ) : hmap y (ofNat n) ≠ y := by
   | true =>
     rw [hmap_ofNat_of_true y n hy]
     intro e
-    have := congrArg (fun z : NInf => z.1 n) e
-    simp only at this
+    have := congrArg (fun z : NInf => z.1 n) e -- [ZP port] Lean 4.35: arrives beta-reduced
     rw [hy] at this
     exact absurd this (by rw [show (ofNat n).1 n = false from decide_eq_false (Nat.lt_irrefl n)]; decide)
   | false =>
     rw [hmap_ofNat_of_false y n hy]
     intro e
-    have := congrArg (fun z : NInf => z.1 n) e
-    simp only at this
+    have := congrArg (fun z : NInf => z.1 n) e -- [ZP port] Lean 4.35: arrives beta-reduced
     rw [hy] at this
     exact absurd this (by
       rw [show (ofNat (n + 1)).1 n = true from decide_eq_true (Nat.lt_succ_self n)]; decide)
@@ -3830,17 +3857,19 @@ theorem overTrichotomy_option_boolStep_of_lpo
     (ofTotal id (fun _ => rfl) (fun a b => r a b = true)).OverTrichotomy y := by
   have hb : ∀ b, (r y b && !decide (b = y)) = true → r y b = true ∧ b ≠ y := by
     intro b hb
-    rcases decEq b y with hne | he
-    · cases hr : r y b
+    cases decEq b y with -- [ZP port] Lean 4.35: rcases on `Decidable` no longer binds names
+    | isFalse hne =>
+      cases hr : r y b
       · rw [hr] at hb; cases hb
       · exact ⟨rfl, hne⟩
-    · rw [decide_eq_true he] at hb
+    | isTrue he =>
+      rw [decide_eq_true he] at hb
       cases hr : r y b <;> rw [hr] at hb <;> cases hb
   have hc : ∀ b, (r y b && !decide (b = y)) = false → r y b = true → b = y := by
     intro b hb hr
-    rcases decEq b y with hne | he
-    · rw [hr, decide_eq_false hne] at hb; cases hb
-    · exact he
+    cases decEq b y with -- [ZP port] Lean 4.35: rcases on `Decidable` no longer binds names
+    | isFalse hne => rw [hr, decide_eq_false hne] at hb; cases hb
+    | isTrue he => exact he
   rcases h (fun n => r y (some n) && !decide (some n = y)) with ⟨n, hn⟩ | hall
   · exact Or.inr (Or.inr ⟨some n, hb _ hn⟩)
   · cases hnone : (r y none && !decide (none = y)) with
@@ -4077,7 +4106,7 @@ theorem toPart_injective : Function.Injective toPart := by
       | false =>
         have e := key y x hxy.symm n hy
         have := congrArg (fun z : NInf => z.1 n) e
-        simp only at this; rw [hy, hx] at this; exact this.symm
+        rw [hy, hx] at this; exact this.symm -- [ZP port] Lean 4.35: `congrArg` result arrives beta-reduced
       | true => rfl
 
 /-- `Statement:` `toPart ∘ ofOption = Part.ofOption` on `Option ℕ`. -/
@@ -4753,11 +4782,18 @@ theorem covered_limit_searchable :
     ∃ e : (NInf → Bool) → NInf, ∀ p : NInf → Bool, p (e p) = true → ∀ x, p x = true :=
   ⟨ofNat_covBy, ⟨ofNat 1, ofNat_covBy 0⟩, everyStepCovered, isSuccLimit_infty, ⟨eps, eps_spec⟩⟩
 
+section
+-- [ZP port] Lean 4.35: `WithTop.instPreorder` carries `Classical.choice` (`le_def` by `grind`);
+-- `≃o` needs only `≤`, so pin the bare choice-free `WithTop.instLE` here.
+attribute [local instance high] WithTop.instLE
+
 /-- `Statement:` any order isomorphism `NInf ≃o WithTop ℕ` gives WLPO. `Reading:` by
     `wlpo_of_discrete_tag` at `D = WithTop ℕ`, whose `DecidableEq` is an instance. -/
 theorem wlpo_of_iso (e : NInf ≃o WithTop ℕ) :
     ∀ r : ℕ → Bool, (∀ n, r n = false) ∨ ¬ ∀ n, r n = false :=
   wlpo_of_discrete_tag e fun _ => e.injective.eq_iff
+
+end
 
 -- `Statement:` the order is not used: any injection into `WithTop ℕ` gives WLPO.
 example (e : NInf → WithTop ℕ) (he : Function.Injective e) :
@@ -4769,18 +4805,25 @@ def ofWithTop : WithTop ℕ → NInf
   | ⊤ => infty
   | (n : ℕ) => ofNat n
 
+section
+-- [ZP port] Lean 4.35: Mathlib's `WithTop` `Preorder` carries `Classical.choice`; scope `ZeroParadox/Order/ChoiceFreeWithTop.lean`'s.
+attribute [local instance high] withTopPreorderCF
+
 /-- `Statement:` `ofWithTop` is strictly monotone. -/
 theorem ofWithTop_strictMono : StrictMono ofWithTop := by
   intro a b hab
+  change WithTop.LT a b at hab
   cases a with
-  | top => exact absurd hab not_top_lt
+  | top => cases hab
   | coe m =>
     cases b with
     | top => exact lt_of_le_of_ne le_top (ofNat_ne_infty m)
     | coe n =>
-      have hmn : m < n := by exact_mod_cast hab
+      have hmn : m < n := by cases hab with | coe_lt_coe h => exact h
       refine lt_of_le_of_ne ((ofNat_le_iff _ _).2 hmn.le) fun e => ?_
       have := (ofNat_le_iff n m).1 (le_of_eq (show ofNat n = ofNat m from e.symm)); omega
+
+end
 
 /-- `Statement:` CONTROL: `NInf ≃o WithTop ℕ` from `Classical.propDecidable`, so `wlpo_of_iso`'s
     hypothesis is inhabited classically. -/
@@ -5005,7 +5048,9 @@ theorem no_lower_adjoint : ¬ ∃ g : NInf → ℕ → Bool, ∀ x r, g x ≤ r 
     rw [le_def]; intro i hi
     cases i with
     | zero => rfl
-    | succ j => exact absurd ((detSeq_eq_true_iff _ (j + 1)).1 hi 1 (by omega)) (by decide)
+    | succ j => -- [ZP port] Lean 4.35: tape argument named; no longer inferred through `det`
+      exact absurd ((detSeq_eq_true_iff (fun n => decide (n = 1)) (j + 1)).1 hi 1 (by omega))
+        (by decide)
   have g1 := (tape_le_iff _ _).1 ((hg _ _).2 h1)
   have g2 := (tape_le_iff _ _).1 ((hg _ _).2 h2)
   have hbot : g (ofNat 1) ≤ (fun _ => false) := by
@@ -5119,6 +5164,7 @@ theorem head_also_poles : Antitone firstBitWait ∧ firstBitWait ⊥ = ⊤ ∧
       rw [this]; exact bot_le
   · have := congrArg (fun f => (f (fun n => decide (n = 1))).1 1) e
     simp [firstBitWait, det, detSeq, infty] at this
+    exact absurd this (by decide) -- [ZP port] Lean 4.35: `simp` no longer reduces the `cond`
 
 /-- `Statement:` CONTROL for `det_poles`: no `b : ℕ` is a top of `ℕ`, so no map `(ℕ → Bool) → ℕ` sends
     ⊥ of `ℕ → Bool` to a top, as `det` sends it to ⊤ of `NInf` (example below). -/

@@ -185,9 +185,12 @@ theorem sum_char_multiples_eq_zero (n : ℕ) (φ : AddChar (ZMod (p ^ n)) ℂ) (
     refine Finset.sum_congr rfl (fun r _ => ?_)
     simp only [Equiv.coe_addRight]
     by_cases hr : (p : ZMod (p ^ n)) ^ j ∣ r
-    · rw [if_pos hr, if_pos (dvd_add hr hdvd), φ.map_add_eq_mul, mul_comm]
-    · rw [if_neg hr, if_neg (fun hc => hr (by
-        have := dvd_sub hc hdvd; rwa [add_sub_cancel_right] at this)), mul_zero]
+    · rw [if_pos hr]
+      refine (if_pos (dvd_add hr hdvd)).trans ?_
+      rw [φ.map_add_eq_mul, mul_comm]
+    · rw [if_neg hr, mul_zero]
+      exact if_neg (fun hc => hr (by
+        have := dvd_sub hc hdvd; rwa [add_sub_cancel_right] at this))
   have hne : (1 : ℂ) - φ ((p : ZMod (p ^ n)) ^ j * x) ≠ 0 := sub_ne_zero.mpr (Ne.symm hx)
   have hz : (1 - φ ((p : ZMod (p ^ n)) ^ j * x))
       * ∑ r : ZMod (p ^ n), (if (p : ZMod (p ^ n)) ^ j ∣ r then φ r else 0) = 0 := by
@@ -318,7 +321,7 @@ theorem integral_char_shellLoad (n : ℕ) (φ : AddChar (ZMod (p ^ n)) ℂ) (α 
       = Set.indicator {z : ℤ_[p] | ‖z‖ ≤ (p : ℝ) ^ (-(m : ℤ))} (paChar (p := p) n φ) y
         - Set.indicator {z : ℤ_[p] | ‖z‖ ≤ (p : ℝ) ^ (-((m + 1 : ℕ) : ℤ))} (paChar (p := p) n φ) y := by
     intro y
-    rw [shellSet, Set.indicator_diff hsub, Pi.sub_apply]
+    rw [shellSet, Set.indicator_sdiff hsub, Pi.sub_apply]
   have step1 : ∫ y, paChar (p := p) n φ y * shellLoad (p := p) α m y ∂(haarZp (p := p))
       = (shellConst (p := p) α m : ℂ)
         * ∫ y, Set.indicator (shellSet (p := p) m) (paChar (p := p) n φ) y ∂(haarZp (p := p)) := by

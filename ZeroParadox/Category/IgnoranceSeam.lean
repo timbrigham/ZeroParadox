@@ -145,7 +145,10 @@ def streamVal : List Bool → ℕ
 /-- `Statement:` the lowest `n` binary digits of an integer, least-significant first. -/
 def streamBits : ℕ → ℤ → List Bool
   | 0, _ => []
-  | n + 1, m => (m % 2 == 1) :: streamBits n (m / 2)
+  | n + 1, m => decide (m % 2 = 1) :: streamBits n (m / 2)
+
+-- Statement: the digit test is `m % 2 == 1`, definitionally.
+example (n : ℕ) (m : ℤ) : streamBits (n + 1) m = (m % 2 == 1) :: streamBits n (m / 2) := rfl
 
 /-- `Statement:` `streamBits n m` has length `n`. -/
 theorem streamBits_length (n : ℕ) (m : ℤ) : (streamBits n m).length = n := by
@@ -203,7 +206,7 @@ theorem eq_streamVal_streamBits_add (n : ℕ) (m : ℤ) :
     obtain ⟨t, ht⟩ := ih (m / 2)
     refine ⟨t, ?_⟩
     have hm := Int.emod_add_mul_ediv m 2
-    have hb : (((m % 2 == 1).toNat : ℕ) : ℤ) = m % 2 := by
+    have hb : (((decide (m % 2 = 1)).toNat : ℕ) : ℤ) = m % 2 := by
       rcases Int.emod_two_eq_zero_or_one m with h | h <;> simp [h]
     simp only [streamBits, streamVal, Nat.cast_add, Nat.cast_mul, Nat.cast_ofNat, hb]
     linear_combination hm.symm + 2 * ht

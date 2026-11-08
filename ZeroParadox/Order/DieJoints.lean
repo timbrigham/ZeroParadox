@@ -3,7 +3,7 @@
 import ZeroParadox.Die
 import ZeroParadox.Ordinal.Epsilon0MinMax
 import ZeroParadox.Valuation.Scale
-import Mathlib.Data.ENNReal.Inv
+import Mathlib.Basic.ENNReal.Inv
 import Mathlib.Tactic
 
 set_option maxHeartbeats 400000
@@ -181,7 +181,7 @@ theorem ennreal_top_isJoint : IsJoint {x : ENNReal | x ≠ ⊤} {⊤} (⊤ : ENN
 /-- `Statement:` 0 of `ℝ≥0∞` is a dual joint of (`{0}`, the positive values). -/
 theorem ennreal_zero_isDualJoint : IsDualJoint {(0 : ENNReal)} {x : ENNReal | 0 < x} 0 := by
   refine ⟨⟨fun a ha b hb => ha ▸ hb.le, ⟨fun a ha => ha ▸ le_rfl, fun y hy => hy rfl⟩,
-    ⟨fun b hb => zero_le b, fun y hy => ?_⟩⟩, ⟨1, show (0 : ENNReal) < 1 from zero_lt_one⟩, ?_, rfl⟩
+    ⟨fun b hb => zero_le, fun y hy => ?_⟩⟩, ⟨1, show (0 : ENNReal) < 1 from zero_lt_one⟩, ?_, rfl⟩
   · by_contra h
     have hpos : 0 < y := not_le.1 h
     have hyt : y ≠ ⊤ := fun e => absurd (hy (show (0 : ENNReal) < 1 from zero_lt_one))
@@ -197,7 +197,7 @@ theorem ennreal_zero_isDualJoint : IsDualJoint {(0 : ENNReal)} {x : ENNReal | 0 
         (not_le.2 (ENNReal.half_lt_self hm0 hmt))
 
 -- `Statement:` 0 of `ℝ≥0∞` is ⊥ of `ℝ≥0∞`, so it is a joint of no `(A, B)` (`not_isJoint_of_isBot`).
-example (A B : Set ENNReal) : ¬ IsJoint A B 0 := not_isJoint_of_isBot (fun _ => zero_le _) A B
+example (A B : Set ENNReal) : ¬ IsJoint A B 0 := not_isJoint_of_isBot (fun _ => zero_le) A B
 
 /-- `Statement:` on `ℝ≥0∞`, `x ↦ x⁻¹` reverses the order, sends ⊤ to 0 and 0 to ⊤, and `x⁻¹` is
     positive iff `x ≠ ⊤`. -/

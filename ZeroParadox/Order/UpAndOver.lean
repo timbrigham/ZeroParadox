@@ -122,13 +122,13 @@ example [Fintype α] : 3 ≤ Fintype.card α := by
   simpa using Fintype.card_le_of_injective _ hinj
 
 /-- `Statement:` a densely ordered carrier carries no `UpAndOver`: density refuses the cover in the
-    corner (Mathlib `not_covBy`; the corpus form of "no cover anywhere" is
+    corner (Mathlib `not_covBy_of_denselyOrdered`; the corpus form of "no cover anywhere" is
     `axb1_fails_everywhere_iff_dense`). Density is sufficient for exclusion, not necessary: `Bool`
     is not densely ordered and is refused too (§ III). -/
 theorem isEmpty_of_denselyOrdered [DenselyOrdered α] : IsEmpty (UpAndOver α) :=
   ⟨fun U => by
     obtain ⟨y, b, -, hb, -⟩ := U.corner
-    exact not_covBy hb⟩
+    exact not_covBy_of_denselyOrdered hb⟩
 
 end UpAndOver
 
@@ -178,7 +178,7 @@ example : ∃ c : ClosureOperator ℝ, (∀ x, c x = (⌈x⌉ : ℝ)) ∧ c (1 /
   let c : ClosureOperator ℝ := ClosureOperator.mk' (fun x => (⌈x⌉ : ℝ))
     (fun _ _ h => Int.cast_mono (Int.ceil_mono h)) (fun x => Int.le_ceil x) (fun x => by simp)
   refine ⟨c, fun _ => rfl, ?_, ?_, c.isClosed_iff.2 ?_, c.isClosed_iff.2 ?_, by norm_num,
-    not_isMax 0, fun _ _ => not_covBy⟩
+    not_isMax 0, fun _ _ => not_covBy_of_denselyOrdered⟩
   · show ((⌈(1 / 2 : ℝ)⌉ : ℤ) : ℝ) ≠ 1 / 2
     norm_num [Int.ceil_eq_iff]
   · intro h
@@ -239,7 +239,7 @@ example : ∃ c : ClosureOperator (WithTop ℚ ⊕ WithTop ℚ),
       | inr _ => exact Sum.LiftRel.inr le_top)
     (fun a => by cases a <;> exact le_rfl)
   refine ⟨c, fun _ => rfl, ⟨Sum.inl ((0 : ℚ) : WithTop ℚ), fun h => ?_⟩, c.isClosed_iff.2 rfl,
-    c.isClosed_iff.2 rfl, Sum.inl_ne_inr, fun y hy b hb => ?_, fun _ _ => not_covBy⟩
+    c.isClosed_iff.2 rfl, Sum.inl_ne_inr, fun y hy b hb => ?_, fun _ _ => not_covBy_of_denselyOrdered⟩
   · have : (Sum.inl ⊤ : WithTop ℚ ⊕ WithTop ℚ) = Sum.inl ((0 : ℚ) : WithTop ℚ) := h
     simp at this
   · have hy' : f y = y := c.isClosed_iff.1 hy
@@ -522,7 +522,7 @@ theorem omega0_opow_succ_ne (a : Ordinal.{u}) :
     Ordinal.omega0 ^ Order.succ a ≠ Order.succ a := by
   intro h
   have hlim := Ordinal.isSuccLimit_opow_left Ordinal.isSuccLimit_omega0
-    (lt_of_le_of_lt (zero_le a) (Order.lt_succ a)).ne'
+    (lt_of_le_of_lt zero_le (Order.lt_succ a)).ne'
   rw [h] at hlim
   exact Order.not_isSuccLimit_succ a hlim
 
@@ -718,7 +718,7 @@ theorem ordinalView_zero_least_landing (y : Set.Ici (ordinalCornerStep^[0] (0 : 
   rw [Ordinal.epsilon_zero_eq_nfp]
   exact Ordinal.nfp_le_fp
     (Ordinal.isNormal_opow (a := Ordinal.omega0.{u}) Ordinal.one_lt_omega0).strictMono.monotone
-    (zero_le _) hfix.le
+    zero_le hfix.le
 
 /-- `Statement:` every step of `ordinalView n` into its ⊥ starts at that ⊥. -/
 theorem ordinalView_bot_noEntry (n : ℕ) : ∀ a, (ordinalView.{u} n).step a ⊥ → a = ⊥ :=

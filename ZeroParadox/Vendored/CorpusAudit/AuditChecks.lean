@@ -5,7 +5,7 @@ VENDORED FROM GuardianEngineAI/corpus - provenance (Zero Paradox project)
 Source      : Corpus/AuditChecks.lean
 Upstream    : https://github.com/GuardianEngineAI/corpus (branch main)
 Commit      : 89d2876275ca7e9b935442b4cb20a0e1833225ea (blob 1c5b78bc, verified 2026-10-23)
-Upstream pin: leanprover/lean4:v4.28.0; ported to this repository's v4.30.0-rc2
+Upstream pin: leanprover/lean4:v4.28.0; ported to this repository's v4.35.0
 Author      : Larsen James Close
 License     : Apache 2.0 (unchanged; header retained verbatim below); full text in `LICENSE`
 

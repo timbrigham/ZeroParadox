@@ -163,7 +163,7 @@ example (s : Ordinal) : ∃! o, Ordinal.nfp (fun a => ω ^ a) s = Ordinal.epsilo
   have hr : Ordinal.nfp (fun a => ω ^ a) s ∈ Set.range (Ordinal.veblen 1) := by
     rw [Ordinal.mem_range_veblen one_ne_zero]
     intro b hb
-    have hb0 : b = 0 := Order.lt_one_iff_nonpos.mp hb |>.antisymm (zero_le b)
+    have hb0 : b = 0 := Order.lt_one_iff_nonpos.mp hb |>.antisymm (zero_le (a := b))
     subst hb0
     simpa [Ordinal.veblen_zero] using hfp
   obtain ⟨o, ho⟩ := hr

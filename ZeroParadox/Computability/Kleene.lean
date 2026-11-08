@@ -168,7 +168,7 @@ computational, does not supply one. The form for carrying a commitment as an exp
       computational side has infinitely many fixed points (`infinite_quine_family`).
       No identity relates the unique element to the family; § VI says what that family
       is. -/
--- [ZP-CUSTOM] no Mathlib analog | reason: Bridges AFAStructure (set-theoretic self-containment) with Mathlib's computability library (Nat.Partrec.Code). A Mathlib typeclass connecting AFA and Code was not located in the pinned Mathlib (5450b53) as of 2026-11-05, searched by grep of Mathlib/ for "AFA", "anti-foundation", "Aczel" and "hyperset" (no AFA development found at all). KleeneStructure was built for the reading that botCode is ⊥'s computational witness; no field asserts it, its identity half is retired (no code is equated with ⊥), and its running half, that ⊥ executes, is the occurrence commitment. The AFA Quine atom and the Kleene computational Quine (`IsComputationalQuine`, § I) are compared through the die's Quine-atom role (§ IX), not through an identity: no single code occupies it under `evalStepMotion F` for any F (`evalStepMotion_not_selfOnlyAt`); a class of codes up to equal eval does, for computable eval-respecting maps (`codes_vs_classes`); and a self-printing universal code does under `selfPrintsStepMotion selfPrintOrDelegate` (`exists_selfPrintsStepMotion_selfOnlyAt`).
+-- [ZP-CUSTOM] no Mathlib analog | reason: Bridges AFAStructure (set-theoretic self-containment) with Mathlib's computability library (Nat.Partrec.Code). A Mathlib typeclass connecting AFA and Code was not located in the Mathlib then pinned (5450b53) as of 2026-11-05, searched by grep of Mathlib/ for "AFA", "anti-foundation", "Aczel" and "hyperset" (no AFA development found at all). KleeneStructure was built for the reading that botCode is ⊥'s computational witness; no field asserts it, its identity half is retired (no code is equated with ⊥), and its running half, that ⊥ executes, is the occurrence commitment. The AFA Quine atom and the Kleene computational Quine (`IsComputationalQuine`, § I) are compared through the die's Quine-atom role (§ IX), not through an identity: no single code occupies it under `evalStepMotion F` for any F (`evalStepMotion_not_selfOnlyAt`); a class of codes up to equal eval does, for computable eval-respecting maps (`codes_vs_classes`); and a self-printing universal code does under `selfPrintsStepMotion selfPrintOrDelegate` (`exists_selfPrintsStepMotion_selfOnlyAt`).
 class KleeneStructure (L : Type*) [ZPSemilattice L] extends AFAStructure L where
   /-- A code the instance supplies. Nothing here distinguishes it, and no equation relates it
       to ⊥ of `L` (the identity reading is retired, class docstring). -/
@@ -429,7 +429,8 @@ theorem self_halting_undecidable :
   have φ_eval : ∀ (c : Code) (k : ℕ), eval (Code.comp c (Code.const 0)) k = eval c 0 := by
     intro c k
     change eval (Code.const 0) k >>= eval c = eval c 0
-    simp [eval_const]
+    rw [eval_const]
+    exact Part.bind_some 0 _
   -- Compose h (deciding self-halting) with φ to get ComputablePred for halting-at-0
   -- Use the same DecidablePred instance w that h carries, composed with φ
   obtain ⟨w, hdec⟩ := h
@@ -479,7 +480,8 @@ theorem isComputationalQuine_undecidable :
       -- inner comp evaluates to Part.none
       have hc : eval (Code.comp c (Code.const (Encodable.encode c))) n = Part.none := by
         show eval (Code.const (Encodable.encode c)) n >>= eval c = Part.none
-        simp [eval_const, h]
+        rw [eval_const]
+        exact (Part.bind_some _ _).trans h
       -- pair with Part.none first arg evaluates to Part.none
       have hp : eval (Code.pair (Code.comp c (Code.const (Encodable.encode c)))
                                  (Code.pair Code.left Code.right)) n = Part.none := by
@@ -496,7 +498,8 @@ theorem isComputationalQuine_undecidable :
       rw [h, Part.bind_some]
       have hc : eval (Code.comp c (Code.const (Encodable.encode c))) n = Part.some v := by
         show eval (Code.const (Encodable.encode c)) n >>= eval c = Part.some v
-        simp [eval_const, h]
+        rw [eval_const]
+        exact (Part.bind_some _ _).trans h
       -- eval (pair left right) n = Part.some n (definitional: ↑f applies to give Part.some)
       have h_lr : eval (Code.pair Code.left Code.right) n = Part.some n := by
         show Nat.pair <$> (Part.some n.unpair.1) <*> (Part.some n.unpair.2) = Part.some n
@@ -517,7 +520,8 @@ theorem isComputationalQuine_undecidable :
       -- outer comp: Part.bind (eval pair n) (eval right) = Part.some n
       show Part.bind (eval (Code.pair (Code.comp c (Code.const (Encodable.encode c)))
                                        (Code.pair Code.left Code.right)) n) (eval Code.right) = Part.some n
-      rw [hp, Part.bind_some]
+      rw [hp]
+      refine (Part.bind_some _ _).trans ?_
       show Part.some (Nat.pair v n).unpair.2 = Part.some n
       simp [Nat.unpair_pair]
   -- Encoding: encode (φ c) ≠ 0 for all c
@@ -656,7 +660,7 @@ theorem fixed_point₂_unbounded {F : Code → ℕ →. ℕ} (hF : Partrec₂ F)
     have hL : L.getD (Encodable.encode c) Code.zero = d (Encodable.encode c) := by
       simp [L, List.getD_eq_getElem?_getD, Nat.lt_succ_of_le hN]
     have hev : eval c = eval (d (Encodable.encode c)) := by
-      rw [hc]; funext x; simp only [F', hN, decide_true, cond_true, hL]
+      rw [hc]; funext x; simp only [F', hN, decide_true, Bool.cond_true, hL]
     have h0 := congrFun hev 0
     by_cases hz : eval c 0 = Part.some 0
     · have : d (Encodable.encode c) = Code.const 1 := by
@@ -914,7 +918,9 @@ example : {c : Code | (Motion.ofTotal id (fun _ => rfl)
     by_contra hne
     have : (Encodable.encode b == Encodable.encode c) = false := by
       simpa using fun h => hne (Encodable.encode_injective h)
-    simp [F, this] at hb'
+    change (cond (Encodable.encode b == Encodable.encode c) (Part.some 0) Part.none).Dom at hb'
+    rw [this] at hb'
+    exact hb'
 
 /-- `Statement:` on inputs, UP `n ↦ n % ⌜c⌝` and OVER `n ↦ ⌜c⌝ + n`, where `⌜c⌝` is `c`'s Gödel
     number. `Reading:` OVER is the shift in `quine_period_is_goedel`; UP is a choice of this encoding,
@@ -1096,7 +1102,8 @@ def padId (c : Code) : Code := Code.comp c Code.id
 theorem eval_padId (c : Code) : eval (padId c) = eval c := by
   funext n
   show eval Code.id n >>= eval c = eval c n
-  simp [Code.eval_id]
+  rw [Code.eval_id]
+  exact Part.bind_some n _
 
 /-- `Statement:` `padId c ≠ c`. -/
 theorem padId_ne (c : Code) : padId c ≠ c := by

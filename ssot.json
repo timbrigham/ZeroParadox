@@ -672,8 +672,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 3310,
-        "files": 204
+        "declarations": 3362,
+        "files": 208
       },
       "entries": [
         {
@@ -1996,6 +1996,43 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "02905c5b-1f69-49c5-b546-20bb472fa88a",
+          "new": {
+            "file": "ZeroParadox/Information/SnapEpsilonZero.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.epsilonOrZeroMaxZPS",
+            "short": "epsilonOrZeroMaxZPS"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/SnapEpsilonZero.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.epsilonOrZeroMaxZPS",
+            "short": "epsilonOrZeroMaxZPS",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New experimental files ZeroParadox/Information/BrudnoBridge.lean (trials and MLRandom bridged to Milovanov's kolmogorov-complexity-lean, citing his Brudno and Levin-Schnorr theorems) and ZeroParadox/Information/SnapEpsilonZero.lean (snap_of_firstStep_MLRandom instantiated on WithBot Ordinal and on EpsilonOrZero, with an order isomorphism between them).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -10671,6 +10708,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "13dcfe05-5b1a-4dfe-961f-32bf060dbc64",
+          "new": {
+            "file": "ZeroParadox/Order/ChoiceFreeWithTop.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.withBotOrderTopCF",
+            "short": "withBotOrderTopCF"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/ChoiceFreeWithTop.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.withBotOrderTopCF",
+            "short": "withBotOrderTopCF",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Lean 4.35 upgrade: new choice-free declarations (rulings 165, 168, 190)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "13ea417e-ebcc-4b80-93cb-1fafc0bfdf8e",
           "new": {
             "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
@@ -15943,6 +16017,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "1f504f81-b238-49ca-ada3-f39d4d85b05d",
+          "new": {
+            "file": "ZeroParadox/Information/SnapEpsilonZero.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.epsilonOrZeroToLanding_surjective",
+            "short": "epsilonOrZeroToLanding_surjective"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/SnapEpsilonZero.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.epsilonOrZeroToLanding_surjective",
+            "short": "epsilonOrZeroToLanding_surjective",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New experimental files ZeroParadox/Information/BrudnoBridge.lean (trials and MLRandom bridged to Milovanov's kolmogorov-complexity-lean, citing his Brudno and Levin-Schnorr theorems) and ZeroParadox/Information/SnapEpsilonZero.lean (snap_of_firstStep_MLRandom instantiated on WithBot Ordinal and on EpsilonOrZero, with an order isomorphism between them).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "1f546a72-154c-4656-8f6e-3a4f91d2ff73",
           "new": {
             "file": "ZeroParadox/Category/IgnoranceSeam.lean",
@@ -19337,6 +19448,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "26eec1b1-59b7-4aab-87a7-9b46c4390bea",
+          "new": {
+            "file": "ZeroParadox/Information/BrudnoBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.isMartinLofTest_of_mlTest",
+            "short": "isMartinLofTest_of_mlTest"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/BrudnoBridge.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.isMartinLofTest_of_mlTest",
+            "short": "isMartinLofTest_of_mlTest",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New experimental files ZeroParadox/Information/BrudnoBridge.lean (trials and MLRandom bridged to Milovanov's kolmogorov-complexity-lean, citing his Brudno and Levin-Schnorr theorems) and ZeroParadox/Information/SnapEpsilonZero.lean (snap_of_firstStep_MLRandom instantiated on WithBot Ordinal and on EpsilonOrZero, with an order isomorphism between them).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "26ef3761-ef6d-4522-8d92-339f771b0139",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -20108,6 +20256,43 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "2835cdb0-0dd7-45ac-af7b-9bdde7a6583d",
+          "new": {
+            "file": "ZeroParadox/Information/SnapEpsilonZero.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.epsilonOrZeroToLanding",
+            "short": "epsilonOrZeroToLanding"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/SnapEpsilonZero.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.epsilonOrZeroToLanding",
+            "short": "epsilonOrZeroToLanding",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New experimental files ZeroParadox/Information/BrudnoBridge.lean (trials and MLRandom bridged to Milovanov's kolmogorov-complexity-lean, citing his Brudno and Levin-Schnorr theorems) and ZeroParadox/Information/SnapEpsilonZero.lean (snap_of_firstStep_MLRandom instantiated on WithBot Ordinal and on EpsilonOrZero, with an order isomorphism between them).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -24769,6 +24954,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "31db2020-ad64-4081-a950-c2db1c5bde4b",
+          "new": {
+            "file": "ZeroParadox/Information/SnapEpsilonZero.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.linearMaxZPS",
+            "short": "linearMaxZPS"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/SnapEpsilonZero.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.linearMaxZPS",
+            "short": "linearMaxZPS",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New experimental files ZeroParadox/Information/BrudnoBridge.lean (trials and MLRandom bridged to Milovanov's kolmogorov-complexity-lean, citing his Brudno and Levin-Schnorr theorems) and ZeroParadox/Information/SnapEpsilonZero.lean (snap_of_firstStep_MLRandom instantiated on WithBot Ordinal and on EpsilonOrZero, with an order isomorphism between them).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "31dd59b9-af46-4334-b2b4-7dc14e0076ea",
           "new": {
             "file": "ZeroParadox/Valuation/PoleChartSelection.lean",
@@ -25090,6 +25312,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "32a24bb4-40e1-41e6-bf8e-3d20dd86aaeb",
+          "new": {
+            "file": "ZeroParadox/Information/BrudnoBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.mlTest_of_isMartinLofTest",
+            "short": "mlTest_of_isMartinLofTest"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/BrudnoBridge.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.mlTest_of_isMartinLofTest",
+            "short": "mlTest_of_isMartinLofTest",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New experimental files ZeroParadox/Information/BrudnoBridge.lean (trials and MLRandom bridged to Milovanov's kolmogorov-complexity-lean, citing his Brudno and Levin-Schnorr theorems) and ZeroParadox/Information/SnapEpsilonZero.lean (snap_of_firstStep_MLRandom instantiated on WithBot Ordinal and on EpsilonOrZero, with an order isomorphism between them).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "32a6e4b8-83b5-4311-9651-d946e2d84b80",
           "new": {
             "file": "ZeroParadox/Ordinal/CnfBridge.lean",
@@ -25228,6 +25487,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "32ec191e-ef7d-4d69-9f5f-f649a0bad81a",
+          "new": {
+            "file": "ZeroParadox/Information/BrudnoBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.isMartinLofRandom_of_MLRandom",
+            "short": "isMartinLofRandom_of_MLRandom"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/BrudnoBridge.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.isMartinLofRandom_of_MLRandom",
+            "short": "isMartinLofRandom_of_MLRandom",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New experimental files ZeroParadox/Information/BrudnoBridge.lean (trials and MLRandom bridged to Milovanov's kolmogorov-complexity-lean, citing his Brudno and Levin-Schnorr theorems) and ZeroParadox/Information/SnapEpsilonZero.lean (snap_of_firstStep_MLRandom instantiated on WithBot Ordinal and on EpsilonOrZero, with an order isomorphism between them).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -26144,6 +26440,43 @@
             ]
           },
           "reason": "Occurrence.lean completed to Miniature's shape: pole swap (flipPoles involution), the fan-out finding (determinism is what blocks the snap), uniqueness limit, and the capstone.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "3558ee68-21fa-43cf-8cc1-eba5dce0ce9b",
+          "new": {
+            "file": "ZeroParadox/Information/BrudnoBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.MLRandom_of_isMartinLofRandom",
+            "short": "MLRandom_of_isMartinLofRandom"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/BrudnoBridge.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.MLRandom_of_isMartinLofRandom",
+            "short": "MLRandom_of_isMartinLofRandom",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New experimental files ZeroParadox/Information/BrudnoBridge.lean (trials and MLRandom bridged to Milovanov's kolmogorov-complexity-lean, citing his Brudno and Levin-Schnorr theorems) and ZeroParadox/Information/SnapEpsilonZero.lean (snap_of_firstStep_MLRandom instantiated on WithBot Ordinal and on EpsilonOrZero, with an order isomorphism between them).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -33246,6 +33579,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "453261ce-482f-4f34-a1fc-3f3b28cd9cfe",
+          "new": {
+            "file": "ZeroParadox/Information/SnapEpsilonZero.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.phaseMaxZPS",
+            "short": "phaseMaxZPS"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/SnapEpsilonZero.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.phaseMaxZPS",
+            "short": "phaseMaxZPS",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New experimental files ZeroParadox/Information/BrudnoBridge.lean (trials and MLRandom bridged to Milovanov's kolmogorov-complexity-lean, citing his Brudno and Levin-Schnorr theorems) and ZeroParadox/Information/SnapEpsilonZero.lean (snap_of_firstStep_MLRandom instantiated on WithBot Ordinal and on EpsilonOrZero, with an order isomorphism between them).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "453d5650-98e3-4277-bf05-ceeb2f2b9d2a",
           "new": {
             "file": "ZeroParadox/Computability/SelfCopyReference.lean",
@@ -33382,6 +33752,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "457a4d46-3d3e-4364-86d7-ee28bea2b840",
+          "new": {
+            "file": "ZeroParadox/Information/SnapEpsilonZero.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.epsilonOrZero_bot_le",
+            "short": "epsilonOrZero_bot_le"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/SnapEpsilonZero.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.epsilonOrZero_bot_le",
+            "short": "epsilonOrZero_bot_le",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New experimental files ZeroParadox/Information/BrudnoBridge.lean (trials and MLRandom bridged to Milovanov's kolmogorov-complexity-lean, citing his Brudno and Levin-Schnorr theorems) and ZeroParadox/Information/SnapEpsilonZero.lean (snap_of_firstStep_MLRandom instantiated on WithBot Ordinal and on EpsilonOrZero, with an order isomorphism between them).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -33603,6 +34010,43 @@
             "role": []
           },
           "reason": "die-wpb-1029: weak-pullback preservation for Part x Set (elementwise form) and, for motions, Rutten 5.1, 5.2, 5.4*, the greatest-bisimulation and equivalence clauses of 5.6, the bisimulation half of 5.7*, and 5.9*(2) (Die § XXII); Tim ruling 2026-10-29",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "45d32b49-029f-487a-a1a3-d7af474f02b8",
+          "new": {
+            "file": "ZeroParadox/Settheory/APG.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.enat_lt_of_add_one_le",
+            "short": "enat_lt_of_add_one_le"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/APG.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.enat_lt_of_add_one_le",
+            "short": "enat_lt_of_add_one_le",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "new HEAD declarations (APG decoration uniqueness by valuation; constructive finite no-SelfCopyRef)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -37590,6 +38034,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "4dfb8762-af44-4ce4-8aed-0c79ff74c0fc",
+          "new": {
+            "file": "ZeroParadox/Information/BrudnoBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.prefixCyl_eq_cantorCylinder",
+            "short": "prefixCyl_eq_cantorCylinder"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/BrudnoBridge.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.prefixCyl_eq_cantorCylinder",
+            "short": "prefixCyl_eq_cantorCylinder",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New experimental files ZeroParadox/Information/BrudnoBridge.lean (trials and MLRandom bridged to Milovanov's kolmogorov-complexity-lean, citing his Brudno and Levin-Schnorr theorems) and ZeroParadox/Information/SnapEpsilonZero.lean (snap_of_firstStep_MLRandom instantiated on WithBot Ordinal and on EpsilonOrZero, with an order isomorphism between them).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "4e20affb-e012-43dc-97bc-27174644cd8e",
           "new": {
             "file": "ZeroParadox/Valuation/PoleChartSelection.lean",
@@ -39488,6 +39969,43 @@
             ]
           },
           "reason": "lane K1: ZP-K § VIII (infinitely many fixed points, padding, self-printing universal code, occurrence controls)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "519cff32-e8a7-4ee0-a39f-f14f9dcb03a3",
+          "new": {
+            "file": "ZeroParadox/Information/SnapEpsilonZero.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.EpsilonOrZero",
+            "short": "EpsilonOrZero"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/SnapEpsilonZero.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.EpsilonOrZero",
+            "short": "EpsilonOrZero",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New experimental files ZeroParadox/Information/BrudnoBridge.lean (trials and MLRandom bridged to Milovanov's kolmogorov-complexity-lean, citing his Brudno and Levin-Schnorr theorems) and ZeroParadox/Information/SnapEpsilonZero.lean (snap_of_firstStep_MLRandom instantiated on WithBot Ordinal and on EpsilonOrZero, with an order isomorphism between them).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -43837,6 +44355,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "5af7103c-e766-4967-8a5e-f724688baa5e",
+          "new": {
+            "file": "ZeroParadox/Information/BrudnoBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.brudno_fair_of_MLRandom",
+            "short": "brudno_fair_of_MLRandom"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/BrudnoBridge.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.brudno_fair_of_MLRandom",
+            "short": "brudno_fair_of_MLRandom",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New experimental files ZeroParadox/Information/BrudnoBridge.lean (trials and MLRandom bridged to Milovanov's kolmogorov-complexity-lean, citing his Brudno and Levin-Schnorr theorems) and ZeroParadox/Information/SnapEpsilonZero.lean (snap_of_firstStep_MLRandom instantiated on WithBot Ordinal and on EpsilonOrZero, with an order isomorphism between them).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "5b387e71-8922-48c7-a541-f775e46258c3",
           "new": {
             "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
@@ -46281,6 +46836,43 @@
             ]
           },
           "reason": "New file ZeroParadox/Information/MaxEntropy.lean (experimental, Tim ruling 154): fair coin maximizes entropy, missing information zero iff fair, chain to mlRandom_and_snap_ae under binEntropy p = log 2, Kraft in measure form, almost every fair tape incompressible for any prefix-free decoder. The occurrence commitment is reduced, not discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "60b96dce-09b9-47cf-be1b-97faeffcf2c3",
+          "new": {
+            "file": "ZeroParadox/Information/SnapEpsilonZero.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.PhaseLanding",
+            "short": "PhaseLanding"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/SnapEpsilonZero.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.PhaseLanding",
+            "short": "PhaseLanding",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New experimental files ZeroParadox/Information/BrudnoBridge.lean (trials and MLRandom bridged to Milovanov's kolmogorov-complexity-lean, citing his Brudno and Levin-Schnorr theorems) and ZeroParadox/Information/SnapEpsilonZero.lean (snap_of_firstStep_MLRandom instantiated on WithBot Ordinal and on EpsilonOrZero, with an order isomorphism between them).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -49705,6 +50297,43 @@
           "reason": "PoleChartSelection: NEGATIVE result - chart selection at the built pole is axiom-free, refuting the naive 'choice = chart selection' reading; § II is a labelled conditional model",
           "verify": {
             "axioms": "none",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "688915ea-4c54-4185-a58f-fa30e36d9510",
+          "new": {
+            "file": "ZeroParadox/Information/BrudnoBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.MLRandom_fair_iff_le_KPPlain",
+            "short": "MLRandom_fair_iff_le_KPPlain"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/BrudnoBridge.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.MLRandom_fair_iff_le_KPPlain",
+            "short": "MLRandom_fair_iff_le_KPPlain",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New experimental files ZeroParadox/Information/BrudnoBridge.lean (trials and MLRandom bridged to Milovanov's kolmogorov-complexity-lean, citing his Brudno and Levin-Schnorr theorems) and ZeroParadox/Information/SnapEpsilonZero.lean (snap_of_firstStep_MLRandom instantiated on WithBot Ordinal and on EpsilonOrZero, with an order isomorphism between them).",
+          "verify": {
+            "axioms": null,
             "sorry_free": true
           }
         },
@@ -53532,6 +54161,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "70003017-f623-46f2-8a6a-ccc9207cd927",
+          "new": {
+            "file": "ZeroParadox/Information/SnapEpsilonZero.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.phaseUp_coe",
+            "short": "phaseUp_coe"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/SnapEpsilonZero.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.phaseUp_coe",
+            "short": "phaseUp_coe",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New experimental files ZeroParadox/Information/BrudnoBridge.lean (trials and MLRandom bridged to Milovanov's kolmogorov-complexity-lean, citing his Brudno and Levin-Schnorr theorems) and ZeroParadox/Information/SnapEpsilonZero.lean (snap_of_firstStep_MLRandom instantiated on WithBot Ordinal and on EpsilonOrZero, with an order isomorphism between them).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "700a8e3a-35b6-4397-9a11-25b47a5ce03f",
           "new": {
             "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
@@ -54821,6 +55487,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "735b1231-9413-4d1f-8bb9-407f0bbfb881",
+          "new": {
+            "file": "ZeroParadox/Information/SnapEpsilonZero.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.epsilonOrZeroToLanding_strictMono",
+            "short": "epsilonOrZeroToLanding_strictMono"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/SnapEpsilonZero.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.epsilonOrZeroToLanding_strictMono",
+            "short": "epsilonOrZeroToLanding_strictMono",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New experimental files ZeroParadox/Information/BrudnoBridge.lean (trials and MLRandom bridged to Milovanov's kolmogorov-complexity-lean, citing his Brudno and Levin-Schnorr theorems) and ZeroParadox/Information/SnapEpsilonZero.lean (snap_of_firstStep_MLRandom instantiated on WithBot Ordinal and on EpsilonOrZero, with an order isomorphism between them).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "73723d5e-a21a-4037-ab3b-99c3a38142ea",
           "new": {
@@ -55584,6 +56287,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "74ac1b04-6c28-4ef0-964c-784c933f8815",
+          "new": {
+            "file": "ZeroParadox/Order/PowerSet.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.psListMem",
+            "short": "psListMem"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/PowerSet.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.psListMem",
+            "short": "psListMem",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Lean 4.35 upgrade: new choice-free declarations (rulings 165, 168, 190)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -56904,6 +57644,43 @@
             ]
           },
           "reason": "Succession-as-representation arc: the offset structure, the carrier split, the fiber, and the fiber-supported distribution",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "77f9e3d7-389a-4eab-8d10-69bbe14fd010",
+          "new": {
+            "file": "ZeroParadox/Information/BrudnoBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.iUnion_mem_option_prefixCyl",
+            "short": "iUnion_mem_option_prefixCyl"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/BrudnoBridge.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.iUnion_mem_option_prefixCyl",
+            "short": "iUnion_mem_option_prefixCyl",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New experimental files ZeroParadox/Information/BrudnoBridge.lean (trials and MLRandom bridged to Milovanov's kolmogorov-complexity-lean, citing his Brudno and Levin-Schnorr theorems) and ZeroParadox/Information/SnapEpsilonZero.lean (snap_of_firstStep_MLRandom instantiated on WithBot Ordinal and on EpsilonOrZero, with an order isomorphism between them).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -63111,6 +63888,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "843d87ee-f752-4bdd-a076-2db5e50b5b24",
+          "new": {
+            "file": "ZeroParadox/Reals/MarkovSpectralGap.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fairCoinFin2",
+            "short": "fairCoinFin2"
+          },
+          "old": {
+            "file": "ZeroParadox/Reals/MarkovSpectralGap.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.fairCoinFin2",
+            "short": "fairCoinFin2",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "reals"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Lean 4.35 upgrade: new choice-free declarations (rulings 165, 168, 190)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "8497b152-8e9b-4b89-9694-86f0fcb71af6",
           "new": {
             "file": "ZeroParadox/Settheory/HypersetOrder.lean",
@@ -64140,6 +64954,43 @@
             ]
           },
           "reason": "New file ZeroParadox/Valuation/PricedPadicInterface.lean — p-adic Group A priced carrier (29 decls)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "86c3f939-1128-47bf-bbab-f802a2985c96",
+          "new": {
+            "file": "ZeroParadox/Order/ChoiceFreeWithTop.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.withTopPartialOrderCF",
+            "short": "withTopPartialOrderCF"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/ChoiceFreeWithTop.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.withTopPartialOrderCF",
+            "short": "withTopPartialOrderCF",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Lean 4.35 upgrade: new choice-free declarations (rulings 165, 168, 190)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -65570,6 +66421,43 @@
             ]
           },
           "reason": "Die mining landing (ruled 2026-10-21): trap data (emptiness, rank, monotone), no reversal under <, reverse of an injective step, RelHom maps of motions, wheel as a die face",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "8a723cfe-5226-4fba-9b6b-1492e56ac2e9",
+          "new": {
+            "file": "ZeroParadox/Order/ChoiceFreeWithTop.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.withTopPreorderCF",
+            "short": "withTopPreorderCF"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/ChoiceFreeWithTop.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.withTopPreorderCF",
+            "short": "withTopPreorderCF",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Lean 4.35 upgrade: new choice-free declarations (rulings 165, 168, 190)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -70465,6 +71353,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "95812e5c-cf49-4332-bf83-d7fa6b333244",
+          "new": {
+            "file": "ZeroParadox/Information/BrudnoBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_eq_bernoulliMeasure",
+            "short": "trials_eq_bernoulliMeasure"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/BrudnoBridge.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_eq_bernoulliMeasure",
+            "short": "trials_eq_bernoulliMeasure",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New experimental files ZeroParadox/Information/BrudnoBridge.lean (trials and MLRandom bridged to Milovanov's kolmogorov-complexity-lean, citing his Brudno and Levin-Schnorr theorems) and ZeroParadox/Information/SnapEpsilonZero.lean (snap_of_firstStep_MLRandom instantiated on WithBot Ordinal and on EpsilonOrZero, with an order isomorphism between them).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "95940c02-38e5-40ce-bb7a-45a8f4befe56",
           "new": {
             "file": "ZeroParadox/Category/IgnoranceSeam.lean",
@@ -75345,6 +76270,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "9ea22d6c-3fab-48e7-9d5e-f8570d97c1e2",
+          "new": {
+            "file": "ZeroParadox/Information/SnapEpsilonZero.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.linearMaxZPS_botHasFirstStep_iff",
+            "short": "linearMaxZPS_botHasFirstStep_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/SnapEpsilonZero.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.linearMaxZPS_botHasFirstStep_iff",
+            "short": "linearMaxZPS_botHasFirstStep_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New experimental files ZeroParadox/Information/BrudnoBridge.lean (trials and MLRandom bridged to Milovanov's kolmogorov-complexity-lean, citing his Brudno and Levin-Schnorr theorems) and ZeroParadox/Information/SnapEpsilonZero.lean (snap_of_firstStep_MLRandom instantiated on WithBot Ordinal and on EpsilonOrZero, with an order isomorphism between them).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "9eaf30b1-d365-45aa-a3f8-ef58ced62f88",
           "new": {
             "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
@@ -76759,6 +77721,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "a14d4d7d-9e76-40e5-8c04-d2c6e4a6e506",
+          "new": {
+            "file": "ZeroParadox/Information/SnapEpsilonZero.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.epsilonOrZero_bot_covBy_eps0",
+            "short": "epsilonOrZero_bot_covBy_eps0"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/SnapEpsilonZero.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.epsilonOrZero_bot_covBy_eps0",
+            "short": "epsilonOrZero_bot_covBy_eps0",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New experimental files ZeroParadox/Information/BrudnoBridge.lean (trials and MLRandom bridged to Milovanov's kolmogorov-complexity-lean, citing his Brudno and Levin-Schnorr theorems) and ZeroParadox/Information/SnapEpsilonZero.lean (snap_of_firstStep_MLRandom instantiated on WithBot Ordinal and on EpsilonOrZero, with an order isomorphism between them).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "a1560ac5-8b5a-43f3-9d93-bc77952c7608",
           "new": {
             "file": "ZeroParadox/Settheory/GraphBisim.lean",
@@ -77629,6 +78628,43 @@
             ]
           },
           "reason": "Die computability face (halting as arrival, clock machine), quotients of a motion (drawing vs set: hypersets, codes), carrier-changing steps (wrap, Option), PoleEnds with inhabitation",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a3874253-802f-49a9-99b5-3a99c2154463",
+          "new": {
+            "file": "ZeroParadox/Information/SnapEpsilonZero.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.epsilonOrZero_eps0",
+            "short": "epsilonOrZero_eps0"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/SnapEpsilonZero.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.epsilonOrZero_eps0",
+            "short": "epsilonOrZero_eps0",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New experimental files ZeroParadox/Information/BrudnoBridge.lean (trials and MLRandom bridged to Milovanov's kolmogorov-complexity-lean, citing his Brudno and Levin-Schnorr theorems) and ZeroParadox/Information/SnapEpsilonZero.lean (snap_of_firstStep_MLRandom instantiated on WithBot Ordinal and on EpsilonOrZero, with an order isomorphism between them).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -83482,6 +84518,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "af9ecb45-25fd-4aa8-9103-23e8f55a713b",
+          "new": {
+            "file": "ZeroParadox/Information/SnapEpsilonZero.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.epsilonOrZeroIsoLanding_spec",
+            "short": "epsilonOrZeroIsoLanding_spec"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/SnapEpsilonZero.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.epsilonOrZeroIsoLanding_spec",
+            "short": "epsilonOrZeroIsoLanding_spec",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New experimental files ZeroParadox/Information/BrudnoBridge.lean (trials and MLRandom bridged to Milovanov's kolmogorov-complexity-lean, citing his Brudno and Levin-Schnorr theorems) and ZeroParadox/Information/SnapEpsilonZero.lean (snap_of_firstStep_MLRandom instantiated on WithBot Ordinal and on EpsilonOrZero, with an order isomorphism between them).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "afafd7ba-4dda-45c8-bfa6-bcd5ebbba9e9",
           "new": {
             "file": "ZeroParadox/Category/IgnoranceSeam.lean",
@@ -84207,6 +85280,43 @@
             ]
           },
           "reason": "lane F arc 2: snapEmbed in the die (Incompleteness.lean § I-b)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b1add25d-cbfd-4eb2-bea2-d442be22f57c",
+          "new": {
+            "file": "ZeroParadox/Order/ChoiceFreeWithTop.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.withBotPreorderCF",
+            "short": "withBotPreorderCF"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/ChoiceFreeWithTop.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.withBotPreorderCF",
+            "short": "withBotPreorderCF",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Lean 4.35 upgrade: new choice-free declarations (rulings 165, 168, 190)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -90295,6 +91405,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "bd674da1-1e15-4f53-835f-16649a8c2daa",
+          "new": {
+            "file": "ZeroParadox/Order/ChoiceFreeWithTop.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.withBotPartialOrderCF",
+            "short": "withBotPartialOrderCF"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/ChoiceFreeWithTop.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.withBotPartialOrderCF",
+            "short": "withBotPartialOrderCF",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Lean 4.35 upgrade: new choice-free declarations (rulings 165, 168, 190)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "bd952922-8d45-4e58-b4d9-2714fefdc9c9",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -91027,6 +92174,43 @@
             "role": []
           },
           "reason": "die-tagged-1029: the adjoined point tagged (Option ℕ) or a limit (Escardó's ℕ∞, NInf): uniform Bool-step trichotomy and selector free on NInf, LPO on Option ℕ; WLPO at ∞; the chain Option ℕ → NInf → Part ℕ and NInf ≃ Computation Unit (Die § XXIII); Tim ruling 2026-10-29",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "bf3b2682-ee80-47e4-9bf0-5ab214fcde7f",
+          "new": {
+            "file": "ZeroParadox/Information/BrudnoBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.brudno_ae_trials",
+            "short": "brudno_ae_trials"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/BrudnoBridge.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.brudno_ae_trials",
+            "short": "brudno_ae_trials",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New experimental files ZeroParadox/Information/BrudnoBridge.lean (trials and MLRandom bridged to Milovanov's kolmogorov-complexity-lean, citing his Brudno and Levin-Schnorr theorems) and ZeroParadox/Information/SnapEpsilonZero.lean (snap_of_firstStep_MLRandom instantiated on WithBot Ordinal and on EpsilonOrZero, with an order isomorphism between them).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -92671,6 +93855,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c34e3406-3f90-4fe2-86e4-e8e76410f9a6",
+          "new": {
+            "file": "ZeroParadox/Information/SnapEpsilonZero.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.phase_snap_of_MLRandom",
+            "short": "phase_snap_of_MLRandom"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/SnapEpsilonZero.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.phase_snap_of_MLRandom",
+            "short": "phase_snap_of_MLRandom",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New experimental files ZeroParadox/Information/BrudnoBridge.lean (trials and MLRandom bridged to Milovanov's kolmogorov-complexity-lean, citing his Brudno and Levin-Schnorr theorems) and ZeroParadox/Information/SnapEpsilonZero.lean (snap_of_firstStep_MLRandom instantiated on WithBot Ordinal and on EpsilonOrZero, with an order isomorphism between them).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -94392,6 +95613,43 @@
         {
           "claims": {
             "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c6f47600-70d7-4900-8003-b79dc6e7f548",
+          "new": {
+            "file": "ZeroParadox/Order/ChoiceFreeWithTop.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.withTopOrderTopCF",
+            "short": "withTopOrderTopCF"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/ChoiceFreeWithTop.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.withTopOrderTopCF",
+            "short": "withTopOrderTopCF",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Lean 4.35 upgrade: new choice-free declarations (rulings 165, 168, 190)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
             "witness_of": [
               "node-algebra"
             ]
@@ -94677,6 +95935,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c77157bc-703a-47fa-bca1-c80160967b88",
+          "new": {
+            "file": "ZeroParadox/Computability/SelfCopyReference.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.no_selfCopyRef_of_finite_constructive",
+            "short": "no_selfCopyRef_of_finite_constructive"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/SelfCopyReference.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.no_selfCopyRef_of_finite_constructive",
+            "short": "no_selfCopyRef_of_finite_constructive",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "new HEAD declarations (APG decoration uniqueness by valuation; constructive finite no-SelfCopyRef)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -96127,6 +97422,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "cb206f81-8a45-4551-b98f-3fe21f87b8ef",
+          "new": {
+            "file": "ZeroParadox/Information/SnapEpsilonZero.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.linearMaxZPS_lt_iff",
+            "short": "linearMaxZPS_lt_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/SnapEpsilonZero.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.linearMaxZPS_lt_iff",
+            "short": "linearMaxZPS_lt_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New experimental files ZeroParadox/Information/BrudnoBridge.lean (trials and MLRandom bridged to Milovanov's kolmogorov-complexity-lean, citing his Brudno and Levin-Schnorr theorems) and ZeroParadox/Information/SnapEpsilonZero.lean (snap_of_firstStep_MLRandom instantiated on WithBot Ordinal and on EpsilonOrZero, with an order isomorphism between them).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "cb297a23-d8fb-41b5-ac3f-ecae7e83d522",
           "new": {
             "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
@@ -96592,6 +97924,43 @@
             "role": []
           },
           "reason": "die-coalg-1028: motion as a Part x Set coalgebra (Die § XX) and observation as a parameter of a pair (Die § XXI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "cbe36e29-8b8a-4707-bc99-7ee8232f951c",
+          "new": {
+            "file": "ZeroParadox/Information/SnapEpsilonZero.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.snap_epsilon0_two_faces",
+            "short": "snap_epsilon0_two_faces"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/SnapEpsilonZero.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.snap_epsilon0_two_faces",
+            "short": "snap_epsilon0_two_faces",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New experimental files ZeroParadox/Information/BrudnoBridge.lean (trials and MLRandom bridged to Milovanov's kolmogorov-complexity-lean, citing his Brudno and Levin-Schnorr theorems) and ZeroParadox/Information/SnapEpsilonZero.lean (snap_of_firstStep_MLRandom instantiated on WithBot Ordinal and on EpsilonOrZero, with an order isomorphism between them).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -97476,6 +98845,43 @@
             ]
           },
           "reason": "Sibling faces of the diagonal fixed point, built 2026-07-16: Tarski (truth/wall), Curry (explosion/wall), Rice (computability undecidability, cites Mathlib), Löb (provability, from-scratch ProvabilityLogic typeclass + Gödel 2). Each wired to the bottom element via the family's μ/ν structure.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "cd4a54ab-abd9-42cf-85ca-c8fe3ec5dd4a",
+          "new": {
+            "file": "ZeroParadox/Order/ChoiceFreeWithTop.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.withTopOrderBotCF",
+            "short": "withTopOrderBotCF"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/ChoiceFreeWithTop.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.withTopOrderBotCF",
+            "short": "withTopOrderBotCF",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Lean 4.35 upgrade: new choice-free declarations (rulings 165, 168, 190)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -99248,6 +100654,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "d127d94d-44b1-4d14-82fd-81f281e7a28d",
+          "new": {
+            "file": "ZeroParadox/Information/SnapEpsilonZero.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.phaseMaxZPS_botHasFirstStep",
+            "short": "phaseMaxZPS_botHasFirstStep"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/SnapEpsilonZero.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.phaseMaxZPS_botHasFirstStep",
+            "short": "phaseMaxZPS_botHasFirstStep",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New experimental files ZeroParadox/Information/BrudnoBridge.lean (trials and MLRandom bridged to Milovanov's kolmogorov-complexity-lean, citing his Brudno and Levin-Schnorr theorems) and ZeroParadox/Information/SnapEpsilonZero.lean (snap_of_firstStep_MLRandom instantiated on WithBot Ordinal and on EpsilonOrZero, with an order isomorphism between them).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "d1636ef0-eb21-4bb3-9d95-21f2fc6cbe72",
           "new": {
             "file": "ZeroParadox/Category/DiagonalWitness.lean",
@@ -100424,6 +101867,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "d376b788-d54c-4d9c-90eb-6dc5f8308954",
+          "new": {
+            "file": "ZeroParadox/Information/SnapEpsilonZero.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.epsilonOrZeroIsoLanding",
+            "short": "epsilonOrZeroIsoLanding"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/SnapEpsilonZero.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.epsilonOrZeroIsoLanding",
+            "short": "epsilonOrZeroIsoLanding",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New experimental files ZeroParadox/Information/BrudnoBridge.lean (trials and MLRandom bridged to Milovanov's kolmogorov-complexity-lean, citing his Brudno and Levin-Schnorr theorems) and ZeroParadox/Information/SnapEpsilonZero.lean (snap_of_firstStep_MLRandom instantiated on WithBot Ordinal and on EpsilonOrZero, with an order isomorphism between them).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "d3a03417-f300-40e9-a68a-c1c435d4e775",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -100786,6 +102266,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "d485c35b-20d9-4263-8d7b-49cee291a6d9",
+          "new": {
+            "file": "ZeroParadox/Information/SnapEpsilonZero.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.epsilonOrZero_eps1",
+            "short": "epsilonOrZero_eps1"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/SnapEpsilonZero.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.epsilonOrZero_eps1",
+            "short": "epsilonOrZero_eps1",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New experimental files ZeroParadox/Information/BrudnoBridge.lean (trials and MLRandom bridged to Milovanov's kolmogorov-complexity-lean, citing his Brudno and Levin-Schnorr theorems) and ZeroParadox/Information/SnapEpsilonZero.lean (snap_of_firstStep_MLRandom instantiated on WithBot Ordinal and on EpsilonOrZero, with an order isomorphism between them).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "d48e72f4-9a30-4f87-b894-7a59b3947768",
           "new": {
             "file": "ZeroParadox/Category/BottomUndecidable.lean",
@@ -100955,6 +102472,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d4fc1e2b-f195-4563-a89e-ea1d38793151",
+          "new": {
+            "file": "ZeroParadox/Settheory/APG.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.decoration_unique_of_val",
+            "short": "decoration_unique_of_val"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/APG.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.decoration_unique_of_val",
+            "short": "decoration_unique_of_val",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "new HEAD declarations (APG decoration uniqueness by valuation; constructive finite no-SelfCopyRef)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -101250,6 +102804,43 @@
             ]
           },
           "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d57e33a9-93b5-4749-80ce-6117ea00f590",
+          "new": {
+            "file": "ZeroParadox/Information/SnapEpsilonZero.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.linearMaxZPS_covBy_iff",
+            "short": "linearMaxZPS_covBy_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/SnapEpsilonZero.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.linearMaxZPS_covBy_iff",
+            "short": "linearMaxZPS_covBy_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New experimental files ZeroParadox/Information/BrudnoBridge.lean (trials and MLRandom bridged to Milovanov's kolmogorov-complexity-lean, citing his Brudno and Levin-Schnorr theorems) and ZeroParadox/Information/SnapEpsilonZero.lean (snap_of_firstStep_MLRandom instantiated on WithBot Ordinal and on EpsilonOrZero, with an order isomorphism between them).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -102064,6 +103655,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d7b1d553-fa91-4b5f-9817-e564ae9cc767",
+          "new": {
+            "file": "ZeroParadox/Information/SnapEpsilonZero.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.epsilonOrZero_snap_of_MLRandom",
+            "short": "epsilonOrZero_snap_of_MLRandom"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/SnapEpsilonZero.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.epsilonOrZero_snap_of_MLRandom",
+            "short": "epsilonOrZero_snap_of_MLRandom",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New experimental files ZeroParadox/Information/BrudnoBridge.lean (trials and MLRandom bridged to Milovanov's kolmogorov-complexity-lean, citing his Brudno and Levin-Schnorr theorems) and ZeroParadox/Information/SnapEpsilonZero.lean (snap_of_firstStep_MLRandom instantiated on WithBot Ordinal and on EpsilonOrZero, with an order isomorphism between them).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -105465,6 +107093,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "de7acfe4-88c3-4819-b38d-4fede23a8640",
+          "new": {
+            "file": "ZeroParadox/Settheory/APG.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.decoration_unique_finite",
+            "short": "decoration_unique_finite"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/APG.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.decoration_unique_finite",
+            "short": "decoration_unique_finite",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "new HEAD declarations (APG decoration uniqueness by valuation; constructive finite no-SelfCopyRef)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "de9f73ab-21ea-4fca-8d04-8bc2397f11a8",
           "new": {
             "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
@@ -105720,6 +107385,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "df3ce7d2-59ae-4e57-9dd4-253d655b709e",
+          "new": {
+            "file": "ZeroParadox/Information/BrudnoBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.brudno_of_MLRandom",
+            "short": "brudno_of_MLRandom"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/BrudnoBridge.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.brudno_of_MLRandom",
+            "short": "brudno_of_MLRandom",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New experimental files ZeroParadox/Information/BrudnoBridge.lean (trials and MLRandom bridged to Milovanov's kolmogorov-complexity-lean, citing his Brudno and Levin-Schnorr theorems) and ZeroParadox/Information/SnapEpsilonZero.lean (snap_of_firstStep_MLRandom instantiated on WithBot Ordinal and on EpsilonOrZero, with an order isomorphism between them).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "df50865d-baf7-4af5-8627-eb8a3cd2443f",
           "new": {
@@ -105783,6 +107485,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "df6290ed-be3d-4f2f-98d8-45e4288dfa25",
+          "new": {
+            "file": "ZeroParadox/Information/SnapEpsilonZero.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.linearMaxZPS_snap_target",
+            "short": "linearMaxZPS_snap_target"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/SnapEpsilonZero.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.linearMaxZPS_snap_target",
+            "short": "linearMaxZPS_snap_target",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New experimental files ZeroParadox/Information/BrudnoBridge.lean (trials and MLRandom bridged to Milovanov's kolmogorov-complexity-lean, citing his Brudno and Levin-Schnorr theorems) and ZeroParadox/Information/SnapEpsilonZero.lean (snap_of_firstStep_MLRandom instantiated on WithBot Ordinal and on EpsilonOrZero, with an order isomorphism between them).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -107719,6 +109458,43 @@
             ]
           },
           "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e360c905-cff9-42bd-9433-01b2b32df23c",
+          "new": {
+            "file": "ZeroParadox/Settheory/APG.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.decoration_agree_of_val_coe",
+            "short": "decoration_agree_of_val_coe"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/APG.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.decoration_agree_of_val_coe",
+            "short": "decoration_agree_of_val_coe",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "new HEAD declarations (APG decoration uniqueness by valuation; constructive finite no-SelfCopyRef)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -111454,6 +113230,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e9d4e97c-6084-4f0d-8e73-d1f4413f05fa",
+          "new": {
+            "file": "ZeroParadox/Information/SnapEpsilonZero.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.phaseUp_bot",
+            "short": "phaseUp_bot"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/SnapEpsilonZero.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.phaseUp_bot",
+            "short": "phaseUp_bot",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New experimental files ZeroParadox/Information/BrudnoBridge.lean (trials and MLRandom bridged to Milovanov's kolmogorov-complexity-lean, citing his Brudno and Levin-Schnorr theorems) and ZeroParadox/Information/SnapEpsilonZero.lean (snap_of_firstStep_MLRandom instantiated on WithBot Ordinal and on EpsilonOrZero, with an order isomorphism between them).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -118014,6 +119827,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "f7c91346-5e03-40fb-ab19-679db4e46e7c",
+          "new": {
+            "file": "ZeroParadox/Information/SnapEpsilonZero.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.epsilonOrZeroMaxZPS_botHasFirstStep",
+            "short": "epsilonOrZeroMaxZPS_botHasFirstStep"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/SnapEpsilonZero.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.epsilonOrZeroMaxZPS_botHasFirstStep",
+            "short": "epsilonOrZeroMaxZPS_botHasFirstStep",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New experimental files ZeroParadox/Information/BrudnoBridge.lean (trials and MLRandom bridged to Milovanov's kolmogorov-complexity-lean, citing his Brudno and Levin-Schnorr theorems) and ZeroParadox/Information/SnapEpsilonZero.lean (snap_of_firstStep_MLRandom instantiated on WithBot Ordinal and on EpsilonOrZero, with an order isomorphism between them).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "f7ebbd20-1ec7-409a-a3ee-a5bca575a2f7",
           "new": {
@@ -118691,6 +120541,43 @@
             "role": []
           },
           "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f9c0c5d9-ec33-43cf-a735-22a718d9185a",
+          "new": {
+            "file": "ZeroParadox/Information/SnapEpsilonZero.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.epsilonOrZero_bot",
+            "short": "epsilonOrZero_bot"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/SnapEpsilonZero.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.epsilonOrZero_bot",
+            "short": "epsilonOrZero_bot",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New experimental files ZeroParadox/Information/BrudnoBridge.lean (trials and MLRandom bridged to Milovanov's kolmogorov-complexity-lean, citing his Brudno and Levin-Schnorr theorems) and ZeroParadox/Information/SnapEpsilonZero.lean (snap_of_firstStep_MLRandom instantiated on WithBot Ordinal and on EpsilonOrZero, with an order isomorphism between them).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -121784,6 +123671,43 @@
             ]
           },
           "reason": "Die v2 final batch: drawing vs set (self-steps, accessibility, forced rank), ends of a view, orders on motions, placements as views, relaxed least-fixed-point schema, UP legs as nuclei",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "feafbcd3-46a4-4355-ae75-8dc7d93d4cc3",
+          "new": {
+            "file": "ZeroParadox/Order/ChoiceFreeWithTop.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.withBotOrderBotCF",
+            "short": "withBotOrderBotCF"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/ChoiceFreeWithTop.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.withBotOrderBotCF",
+            "short": "withBotOrderBotCF",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Lean 4.35 upgrade: new choice-free declarations (rulings 165, 168, 190)",
           "verify": {
             "axioms": null,
             "sorry_free": true

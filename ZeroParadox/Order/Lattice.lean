@@ -62,9 +62,9 @@ neither adds a declaration to the corpus. -/
 -- element. So there is no carrier that "fails a law": the laws come with the operations.
 example (L : Type*) [Nonempty L] : Nonempty (ZPSemilattice L) := by
   classical
-  letI : LinearOrder L := IsWellOrder.linearOrder (WellOrderingRel (α := L))
-  letI : WellFoundedLT L := ⟨(IsWellFounded.wf : WellFounded (WellOrderingRel (α := L)))⟩
-  letI : OrderBot L := WellFoundedLT.toOrderBot L
+  let : LinearOrder L := IsWellOrder.linearOrder (WellOrderingRel (α := L))
+  let : WellFoundedLT L := (WellOrderingRel.isWellOrder (α := L)).wf
+  let : OrderBot L := WellFoundedLT.toOrderBot L
   exact ⟨{ join := max, bot := ⊥
          , join_assoc := fun x y z => max_assoc x y z
          , join_comm := fun x y => max_comm x y

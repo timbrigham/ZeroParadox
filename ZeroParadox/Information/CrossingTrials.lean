@@ -234,7 +234,7 @@ theorem trials_zeroBlock_le (p : NNReal) (hp : p ≤ 1) {K : ℕ}
     (hK : ((1 - p : NNReal) : ENNReal) ^ K ≤ 2⁻¹) (N m : ℕ) :
     trials p hp (zeroBlock N (K * m)) ≤ 2⁻¹ ^ m := by
   rw [trials_zeroBlock, pow_mul]
-  exact pow_le_pow_left₀ (zero_le _) hK m
+  exact pow_le_pow_left₀ zero_le hK m
 
 /-- **`Statement:` the tapes that fire at no stage from `N` on.** `silentFrom 0` never fires. -/
 def silentFrom (N : ℕ) : Set (ℕ → Bool) := {w | ∀ k, N ≤ k → w k = false}
