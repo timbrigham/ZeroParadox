@@ -195,8 +195,10 @@ fraction either**; it moves with every commit.
   restatement, on a carrier whose statements are choice-free, holds without choice. Detected by the
   statement control; members are listed in § I/§ III of `ZeroParadox/Category/ChoiceCannotBe.lean`
   where measured there, and otherwise in the file that measures them: `decoration_unique` carries it
-  through its `[ValuationStructure U]` binder, with its statement control in the `DecorationUniverse`
-  `[ZP-CUSTOM]` line of `ZeroParadox/Settheory/APG.lean` (ZP-J AFA Addendum, Section V).
+  through its `[Fintype V]` binder under the instances the pinned Mathlib supplies, with its statement
+  controls in the `DecorationUniverse` `[ZP-CUSTOM]` line of `ZeroParadox/Settheory/APG.lean` (ZP-J AFA
+  Addendum, Section V). Membership is relative to those instances (§ III, STATEMENT-CARRIED IS
+  INSTANCE-RELATIVE).
 
 "The statement" in STATEMENT-CARRIED is the term as written, which is what the statement control
 measures; a definitionally equal respelling whose own statement is choice-free is a restatement in

@@ -174,7 +174,7 @@ end APGBasics
     ZFSet is NOT a valid instance: Foundation forbids x ∈ x, which any cyclic APG requires.
     OntologicalStates (ZeroParadox/Settheory/OntBridge.lean) has AbstractSelfApp but not ValuationStructure,
     which this class takes as a binder. -/
--- [ZP-CUSTOM] no Mathlib analog | reason: Mathlib's ZFSet carries Foundation (ZFSet.mem_wf) — x ∈ x is forbidden, making it invalid as a decoration target for any APG with a self-loop. DecorationUniverse is an abstract type with ValuationStructure + a collect operation and two axioms (collect_singleton, collect_val_ge), providing the structure the decoration-uniqueness proof consumes, without importing ZFSet or any axiomatic set theory. ⚠ NOT axiom-free, and every attribution here was isolated by changing ONE constituent: DecorationUniverse reaches Classical.choice by TWO INDEPENDENT routes — its OWN ℕ∞ numeral (the + 1 in collect_val_ge) and the inherited [ValuationStructure U], whose own route is the numeral in val_scale (pinned by the _VSlit/_VScast pair in ZeroParadox/Valuation/Scale.lean). Removing either route alone leaves Classical.choice in place: with [ValuationStructure U] DELETED and val/scale passed as plain data the class still reports [propext, Classical.choice, Quot.sound]; with [ValuationStructure U] also deleted, respelling its own numeral as ((1 : ℕ) : ℕ∞) makes it report no axioms; respelling only that numeral with the real binders kept leaves it tainted. decoration_unique carries the same three IN ITS STATEMENT — forall {U} [ZPSemilattice U] [ValuationStructure U], True already reports them while the same with [ZPSemilattice U] alone reports none — so the [ValuationStructure U] binder suffices by itself and the cost is NOT REMOVABLE BY ANY PROOF of that theorem. Its proof additionally CALLS Nonempty.some (fun h => Classical.choice h), decides HasSelfCycle u by by_cases through Classical.propDecidable (the proof term names that constant directly, measured 2026-11-01), and reaches choice via Set.ncard_pos and Set.ncard_lt_ncard, further routes to a cost the TYPE already incurred. Provenance and necessity are independent axes (ZeroParadox/AxiomProfile.lean § 0). ⚠ "Minimum" is unproved: the NO-GO gauge below shows this class is inhabited over EVERY ValuationStructure carrier.
+-- [ZP-CUSTOM] no Mathlib analog | reason: Mathlib's ZFSet carries Foundation (ZFSet.mem_wf) — x ∈ x is forbidden, making it invalid as a decoration target for any APG with a self-loop. DecorationUniverse is an abstract type with ValuationStructure + a collect operation and two axioms (collect_singleton, collect_val_ge), providing the structure the decoration-uniqueness proof consumes, without importing ZFSet or any axiomatic set theory. ⚠ The class and its [ValuationStructure U] binder measure no axioms (this file's PurityCheck; ZeroParadox/Valuation/Scale.lean's). decoration_unique measures [propext, Classical.choice, Quot.sound], and under the instances the pinned Mathlib supplies its STATEMENT carries them through the [Fintype V] binder: Fintype measures the three (PurityCheck below), and in statement controls measured 2026-11-07 the full statement reports them, the same statement with [Finite V] in place of [Fintype V] reports none, and forall {U} [ZPSemilattice U] [ValuationStructure U], True reports none. So no proof of decoration_unique as stated can drop them, and the bin is relative to those instances (ZeroParadox/Category/ChoiceCannotBe.lean § III, STATEMENT-CARRIED IS INSTANCE-RELATIVE). Its proof term also names Nonempty.some, Classical.propDecidable (the by_cases on HasSelfCycle u), Set.ncard_pos, Set.ncard_lt_ncard and cyclic_decoration_eq_bot, each measuring Classical.choice (2026-11-07). The [Finite V] restatement has a choice-free proof, decoration_unique_finite, from decoration_unique_of_val, which binds no finiteness at all (§ IX; footprints in PurityCheck below). Provenance and necessity are independent axes (ZeroParadox/AxiomProfile.lean § 0). ⚠ "Minimum" is unproved: the NO-GO gauge below shows this class is inhabited over EVERY ValuationStructure carrier.
 class DecorationUniverse (U : Type*) [ZPSemilattice U] [ValuationStructure U] where
   /-- A map `Set U → U`. ⚠ The two axioms below pin only the SINGLETON case and a lower bound; they
       do not require it to assemble a parent's value from its children's. -/
@@ -611,31 +611,31 @@ theorem acyclic_induction_step
 
 /-! ## § IX. Global Decoration Uniqueness
 
-    Proved directly by strong induction on |{w | Path u w}| (reachable set cardinality).
-    No SCC decomposition needed — the valuation argument handles cyclic vertices directly:
+    Two proofs, one per chart (the `Reading:` on `decoration_unique_of_val`):
 
-    - Cyclic u: d₁ u = ⊥ = d₂ u by cyclic_decoration_eq_bot
-    - Acyclic u: for each child w, reach w ⊊ reach u (since v ∉ reach w by acyclicity),
-      so IH gives d₁ w = d₂ w for all apg_children, and acyclic_induction_step closes the goal.
-
-    Requires [Fintype V] to bound the reachable set cardinality. -/
+    - `decoration_unique`, graph side, `[Fintype V]`: strong induction on |{w | Path u w}|. A cyclic
+      u goes to ⊥ of `U` (`cyclic_decoration_eq_bot`); for an acyclic u each child's reachable set
+      is strictly smaller, which `[Fintype V]` bounds, and `acyclic_induction_step` closes the goal.
+    - `decoration_unique_of_val`, value side, any quiver: strong induction on the finite valuation
+      of the TARGET value; valuation ⊤ is forced to ⊥ of `U` by `val_unique`. -/
 
 /-! ### PRIOR ART — the uniqueness clause of a RECURSIVE COALGEBRA, for ONE SHAPE of algebra.
 
 A coalgebra is **recursive** when *every* algebra admits a unique coalgebra-to-algebra morphism
 (Adámek-Milius-Moss 2020, arXiv:1910.09401v2, Def 3.2 p. 11, crediting Osius for the definition).
-`decoration_unique` gives that clause for algebras of the `DecorationUniverse.collect` shape, not
-for every algebra, and existence not at all. `ZeroParadox/Category/WellFoundedCoalgebra.lean` has
-the well-foundedness side. **The delta:** the standard route to such uniqueness is well-foundedness
-(Taylor's General Recursion Theorem, AMM Thm 7.2 p. 27), unavailable here since these quivers may
-carry cycles. It closes on two branches instead — cyclic vertices to ⊥ (`cyclic_decoration_eq_bot`),
-acyclic ones by strict-subset descent on the reachable set, which is what `[Fintype V]` is for. -/
+`decoration_unique` gives that clause for algebras of the `DecorationUniverse.collect` shape only,
+and existence not at all. Well-foundedness of the GRAPH (Taylor's General Recursion Theorem, AMM
+Thm 7.2 p. 27; `ZeroParadox/Category/WellFoundedCoalgebra.lean`) is unavailable, as these quivers
+may carry cycles. `decoration_unique_of_val` inducts on the TARGET's rank instead: the AFA2 half of
+"the foundation axiom implies AFA2 and the negation of AFA1" (Aczel, *Non-Well-Founded Sets*, CSLI
+1988, Ex. 2.1 p. 20; AFA1/AFA2 p. 19), with one rank-⊤ point, ⊥ of `U`, admitted via `val_unique`. -/
 
 -- Statement: `IsDecoration d` is the coalgebra-to-algebra equation `d = collect ∘ (d '' ·) ∘ apg_children`.
 -- Reading: read from the TARGET, `decoration_unique` is then CRA-uniqueness for the algebra `collect`
 -- (Capretta-Uustalu-Vene, *Corecursive Algebras*, SBMF 2009, LNCS 5902, Def. 1 p. 86), from the
 -- coalgebras `apg_children` of finite APGs; the `example` after `decoration_unique` drops the `APG`
--- argument and gives the same uniqueness for every finite quiver. Also near: Urabe, Hara and Hasuo,
+-- argument and gives the same uniqueness for every finite quiver, `decoration_unique_of_val` for
+-- every quiver. Also near: Urabe, Hara and Hasuo,
 -- *Categorical Liveness Checking by Corecursive Algebras* (arXiv:1704.04872), use a corecursive algebra
 -- "as a classifier for (non-)well-foundedness" (abstract) in their ranking domains (Def. III.10,
 -- p. 7), classically ranking functions into ℕ ∪ {∞} (p. 1); here a cyclic vertex gets valuation ⊤
@@ -645,8 +645,8 @@ example {V : Type*} [Quiver V] {U : Type*} [ZPSemilattice U] [ValuationStructure
     IsDecoration d ↔ d = fun v => DecorationUniverse.collect (d '' apg_children v) :=
   ⟨fun h => funext h, fun h v => congrFun h v⟩
 
--- `[Fintype V]` is not used in the *type* but is essential to the *proof*: it bounds the
--- reachable-set cardinality so the strict-subset descent (`Set.ncard_lt_ncard`) terminates.
+-- `[Fintype V]` is not used in the *type*; THIS proof spends it bounding the reachable-set
+-- cardinality for `Set.ncard_lt_ncard`. Uniqueness needs no finiteness: `decoration_unique_of_val`.
 set_option linter.unusedFintypeInType false in
 /-- Global decoration uniqueness: any two valid decorations of a finite APG are equal. -/
 theorem decoration_unique
@@ -724,6 +724,80 @@ example {V : Type*} [Quiver V] [Fintype V]
       have hlt := Set.ncard_lt_ncard hstrict
       omega
 
+/-- `Statement:` in ℕ∞, `m ≥ x + 1` for a natural `m` gives a natural `k < m` with `x = k`.
+    By cases on Mathlib's inductive `WithTop.LE`, with no order lemma (`WithTop`'s order
+    instances: `ZeroParadox/Category/ChoiceCannotBe.lean` § III). -/
+theorem enat_lt_of_add_one_le {m : ℕ} {x : ℕ∞} (h : (m : ℕ∞) ≥ x + 1) :
+    ∃ k : ℕ, x = (k : ℕ∞) ∧ k < m := by
+  rcases x with _ | k
+  · have h' : WithTop.LE (none : WithTop ℕ) (some m) := h
+    cases h'
+  · have h' : WithTop.LE (some (k + 1) : WithTop ℕ) (some m) := h
+    cases h' with
+    | coe_le_coe hab => exact ⟨k, rfl, hab⟩
+
+/-- `Statement:` two decorations of any quiver agree at every vertex where the first one's value
+    has a finite valuation `m`; strong induction on `m`, each child's valuation strictly smaller
+    by `collect_val_ge`. -/
+theorem decoration_agree_of_val_coe
+    {V : Type*} [Quiver V]
+    {U : Type*} [ZPSemilattice U] [ValuationStructure U] [DecorationUniverse U]
+    (d₁ d₂ : V → U) (hd₁ : IsDecoration d₁) (hd₂ : IsDecoration d₂) :
+    ∀ m : ℕ, ∀ u : V, ValuationStructure.val (d₁ u) = (m : ℕ∞) → d₁ u = d₂ u := by
+  intro m
+  induction m using Nat.strongRecOn with
+  | ind m ih =>
+    intro u hu
+    apply acyclic_induction_step d₁ d₂ hd₁ hd₂ u
+    intro w hw
+    have hmem : d₁ w ∈ d₁ '' apg_children u := ⟨w, hw, rfl⟩
+    have hge := DecorationUniverse.collect_val_ge (d₁ '' apg_children u) (d₁ w) hmem
+    rw [← hd₁ u, hu] at hge
+    obtain ⟨k, hk, hlt⟩ := enat_lt_of_add_one_le hge
+    exact ih k hlt w hk
+
+/-- `Statement:` on EVERY quiver, finite or not, any two decorations into a `DecorationUniverse`
+    are equal; no `APG` argument and no finiteness binder.
+    `Reading:` CARRIER, one uniqueness in two charts, neither of them the structure. The graph side splits
+    vertices acyclic/cyclic (`decoration_unique`); the value side, this proof, splits the valuation
+    finite/⊤, and `val_unique` sends ⊤ to ⊥ of `U`. `collect_val_ge` and `val_unique` relate them,
+    one way: a cyclic vertex's valuation is ⊤ (`cyclic_decoration_eq_bot`); no converse is claimed. -/
+theorem decoration_unique_of_val
+    {V : Type*} [Quiver V]
+    {U : Type*} [ZPSemilattice U] [ValuationStructure U] [DecorationUniverse U]
+    (d₁ d₂ : V → U) (hd₁ : IsDecoration d₁) (hd₂ : IsDecoration d₂) :
+    d₁ = d₂ := by
+  funext u
+  rcases h₁ : ValuationStructure.val (d₁ u) with _ | m
+  · rcases h₂ : ValuationStructure.val (d₂ u) with _ | n
+    · rw [ValuationStructure.val_unique _ h₁, ValuationStructure.val_unique _ h₂]
+    · exact (decoration_agree_of_val_coe d₂ d₁ hd₂ hd₁ n u h₂).symm
+  · exact decoration_agree_of_val_coe d₁ d₂ hd₁ hd₂ m u h₁
+
+-- Statement: it applies on an infinite quiver: ℕ with one edge n ⟶ n + 1.
+example {U : Type} [ZPSemilattice U] [ValuationStructure U] [DecorationUniverse U]
+    (d₁ d₂ : ℕ → U) (hd₁ : @IsDecoration ℕ ⟨fun a b => PLift (b = a + 1)⟩ U _ _ _ d₁)
+    (hd₂ : @IsDecoration ℕ ⟨fun a b => PLift (b = a + 1)⟩ U _ _ _ d₂) : d₁ = d₂ :=
+  @decoration_unique_of_val ℕ ⟨fun a b => PLift (b = a + 1)⟩ U _ _ _ d₁ d₂ hd₁ hd₂
+
+set_option linter.unusedFintypeInType false in
+/-- `Statement:` `decoration_unique` with `[Finite V]` in place of `[Fintype V]`, the restatement
+    `ZeroParadox/Category/ChoiceCannotBe.md` asks of a STATEMENT-CARRIED theorem. -/
+theorem decoration_unique_finite
+    {V : Type*} [Quiver V] [Finite V]
+    {U : Type*} [ZPSemilattice U] [ValuationStructure U] [DecorationUniverse U]
+    (_G : APG V) (d₁ d₂ : V → U) (hd₁ : IsDecoration d₁) (hd₂ : IsDecoration d₂) :
+    d₁ = d₂ :=
+  decoration_unique_of_val d₁ d₂ hd₁ hd₂
+
+-- Statement: `decoration_unique`'s statement, `[Fintype V]` included, is a special case of
+-- `decoration_unique_of_val`; its footprint stays the statement's (PurityCheck).
+set_option linter.unusedFintypeInType false in
+example {V : Type*} [Quiver V] [Fintype V]
+    {U : Type*} [ZPSemilattice U] [ValuationStructure U] [DecorationUniverse U]
+    (_G : APG V) (d₁ d₂ : V → U) (hd₁ : IsDecoration d₁) (hd₂ : IsDecoration d₂) : d₁ = d₂ :=
+  decoration_unique_of_val d₁ d₂ hd₁ hd₂
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -747,5 +821,12 @@ open ZeroParadox
 #print axioms cyclic_decoration_eq_bot
 #print axioms path_decoration_eq_bot
 #print axioms decoration_unique
+#print axioms enat_lt_of_add_one_le
+#print axioms decoration_agree_of_val_coe
+#print axioms decoration_unique_of_val
+#print axioms decoration_unique_finite
+-- The class, and the `[Fintype V]` binder of `decoration_unique` (the custom-registry line above the class).
+#print axioms DecorationUniverse
+#print axioms Fintype
 
 end PurityCheck

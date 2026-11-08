@@ -78,16 +78,14 @@ theorem boundaryDouble_unique_fp (x : End) (h : boundaryDouble x = x) : x = botE
 /-- The boundary `End = ℕ → Fin 2` is a `ZPSemilattice` pointwise (join = max, ⊥ = `botEnd`). Unlike ℚ₂
 (a field), the tree boundary IS a semilattice, so it can host a genuine `AbstractSelfApp` instance. -/
 instance instZPSemilatticeEnd : ZPSemilattice End where
-  join x y := fun n => max (x n) (y n)
+  -- [ZP port] Lean 4.35: core's new `Fin.instMax` (`Init/Data/Fin/MinMax.lean`) proves its bound by
+  -- `Std.max_lt_iff`, which carries `Classical.choice`; build the same max (defeq) from `Nat.max_lt`.
+  join x y := fun n => ⟨max (x n).val (y n).val, Nat.max_lt.2 ⟨(x n).isLt, (y n).isLt⟩⟩
   bot := botEnd
-  join_assoc := by intro x y z; funext n; exact max_assoc _ _ _
-  join_comm := by intro x y; funext n; exact max_comm _ _
-  join_idem := by intro x; funext n; exact max_self _
-  bot_join := by
-    intro x; funext n
-    show max (botEnd n) (x n) = x n
-    simp only [botEnd]
-    exact max_eq_right (Fin.zero_le _)
+  join_assoc := by intro x y z; funext n; exact Fin.ext (Nat.max_assoc _ _ _)
+  join_comm := by intro x y; funext n; exact Fin.ext (Nat.max_comm _ _)
+  join_idem := by intro x; funext n; exact Fin.ext (Nat.max_self _)
+  bot_join := by intro x; funext n; exact Fin.ext (Nat.zero_max _)
 
 /-- **The genuine instance.** The tree boundary is an `AbstractSelfApp`: the self-application ×2
 (`boundaryDouble`) has the floor `botEnd` as its unique fixed point. Where ℚ₂ could only be a standalone

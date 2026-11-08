@@ -672,7 +672,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 3357,
+        "declarations": 3362,
         "files": 208
       },
       "entries": [
@@ -34010,6 +34010,43 @@
             "role": []
           },
           "reason": "die-wpb-1029: weak-pullback preservation for Part x Set (elementwise form) and, for motions, Rutten 5.1, 5.2, 5.4*, the greatest-bisimulation and equivalence clauses of 5.6, the bisimulation half of 5.7*, and 5.9*(2) (Die § XXII); Tim ruling 2026-10-29",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "45d32b49-029f-487a-a1a3-d7af474f02b8",
+          "new": {
+            "file": "ZeroParadox/Settheory/APG.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.enat_lt_of_add_one_le",
+            "short": "enat_lt_of_add_one_le"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/APG.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.enat_lt_of_add_one_le",
+            "short": "enat_lt_of_add_one_le",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "new HEAD declarations (APG decoration uniqueness by valuation; constructive finite no-SelfCopyRef)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -95908,6 +95945,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "c77157bc-703a-47fa-bca1-c80160967b88",
+          "new": {
+            "file": "ZeroParadox/Computability/SelfCopyReference.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.no_selfCopyRef_of_finite_constructive",
+            "short": "no_selfCopyRef_of_finite_constructive"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/SelfCopyReference.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.no_selfCopyRef_of_finite_constructive",
+            "short": "no_selfCopyRef_of_finite_constructive",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "new HEAD declarations (APG decoration uniqueness by valuation; constructive finite no-SelfCopyRef)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "c7bae69a-d406-4662-98be-47948772e7d4",
           "new": {
@@ -102409,6 +102483,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "d4fc1e2b-f195-4563-a89e-ea1d38793151",
+          "new": {
+            "file": "ZeroParadox/Settheory/APG.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.decoration_unique_of_val",
+            "short": "decoration_unique_of_val"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/APG.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.decoration_unique_of_val",
+            "short": "decoration_unique_of_val",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "new HEAD declarations (APG decoration uniqueness by valuation; constructive finite no-SelfCopyRef)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "d5197da9-40d2-4126-8c1f-b53a8e480fd0",
           "new": {
             "file": "ZeroParadox/Valuation/PoleCorners.lean",
@@ -106982,6 +107093,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "de7acfe4-88c3-4819-b38d-4fede23a8640",
+          "new": {
+            "file": "ZeroParadox/Settheory/APG.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.decoration_unique_finite",
+            "short": "decoration_unique_finite"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/APG.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.decoration_unique_finite",
+            "short": "decoration_unique_finite",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "new HEAD declarations (APG decoration uniqueness by valuation; constructive finite no-SelfCopyRef)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "de9f73ab-21ea-4fca-8d04-8bc2397f11a8",
           "new": {
             "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
@@ -109310,6 +109458,43 @@
             ]
           },
           "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e360c905-cff9-42bd-9433-01b2b32df23c",
+          "new": {
+            "file": "ZeroParadox/Settheory/APG.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.decoration_agree_of_val_coe",
+            "short": "decoration_agree_of_val_coe"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/APG.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.decoration_agree_of_val_coe",
+            "short": "decoration_agree_of_val_coe",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "new HEAD declarations (APG decoration uniqueness by valuation; constructive finite no-SelfCopyRef)",
           "verify": {
             "axioms": null,
             "sorry_free": true

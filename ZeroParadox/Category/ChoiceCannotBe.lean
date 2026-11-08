@@ -99,8 +99,17 @@ footprint; `[propext]` means propositional extensionality only. -/
 #check @ZeroParadox.boundaryDouble_selfCopyRef
 -- Statement: along a GIVEN `α ≃ ℕ`, a `SelfCopyRef` map exists on `α`; measured `[propext, Quot.sound]`.
 #check @ZeroParadox.selfCopyRef_of_equiv_nat
--- Statement: an ACCIDENTAL case — over `[Fintype] [DecidableEq]` no `SelfCopyRef` map exists, re-proved at
--- `[propext, Quot.sound]`; Mathlib's `Finite.injective_iff_surjective` route reports `Classical.choice`.
+-- Statement: an ACCIDENTAL case — over `[Finite]` no `SelfCopyRef` map exists, re-proved by list
+-- pigeonhole at `[propext, Quot.sound]`, a statement whose constants measure no axioms;
+-- `no_selfCopyRef_of_finite` takes Mathlib's `Finite.injective_iff_surjective` route and reports
+-- `Classical.choice`. The `example` after the re-proof in its home file derives that statement.
+#check @ZeroParadox.no_selfCopyRef_of_finite_constructive
+-- Statement: the `[Fintype] [DecidableEq]` form, by the same pigeonhole, measured `[propext,
+-- Classical.choice, Quot.sound]`: STATEMENT-CARRIED through the `[Fintype α]` binder, since `Fintype`
+-- itself reports that triple under the pinned Mathlib (printed in the home file's PurityCheck).
+-- Reading: both instance readings, neither denied: under `[Fintype]` the statement carries the choice
+-- and no proof drops it; under `[Finite]` the same pigeonhole runs without it (§ III, STATEMENT-CARRIED
+-- IS INSTANCE-RELATIVE).
 #check @ZeroParadox.no_selfCopyRef_of_fintype
 
 -- Statement: an ACCIDENTAL case — Pataraia's theorem (monotone `f` on `[CompletePartialOrder α]` has a
