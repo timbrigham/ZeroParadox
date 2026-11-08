@@ -64,13 +64,14 @@ these are the numbers it reported, not the numbers that were hoped for).
   `not_apart_of_agree_all` report **no axioms at all**; `v2_bot`, `v2_unique` and `clopen_gap_at_bot`
   report `[propext]`; `v2_scale_nat`, `nScale_unique_fp`, `nScale_ne_self` report `[propext, Quot.sound]`
   and `agree_all_iff` reports `[Quot.sound]` (the `funext`).
-* **One exception on the constructive side, reported not hidden.** The ZP-J `val_scale` axiom in its
-  literal form `v2_scale : v2 (2n) = v2 n + 1` reports `[propext, Classical.choice, Quot.sound]` —
+* **Two declarations on the constructive side carry `Classical.choice` — `v2_scale` and the exhibit
+  `enat_add_choice` — both through their proofs; each has a choice-free counterpart.** The ZP-J
+  `val_scale` axiom in its literal form `v2_scale : v2 (2n) = v2 n + 1` reports `[propext, Classical.choice, Quot.sound]` —
   **and on this carrier (ℕ) it is neither the carrier's nor the statement's.** `v2`, the numeral
   `(1 : ℕ∞)` and `(a : ℕ∞) + 1` all print clean in the Lean file's purity block, so the choice comes
   from `v2_scale`'s proof. The content of the axiom is choice-free — `v2_scale_nat` states the same
   fact with the successor on `ℕ` and comes out `[propext, Quot.sound]`. ⚠ None of this carries over
-  to `ℤ_[2]`, where the carrier itself is tainted. See "The `ℕ∞`-numeral finding".
+  to `ℤ_[2]`, where the carrier itself is tainted. See "Where the constructive side's two choices arrive".
 * **The crossing — `Classical.choice`.** `natToZ2`, `natToZ2_bot`, `natToZ2_scale` and
   `crossVal_bot_agrees` all report `[propext, Classical.choice, Quot.sound]`.
 
@@ -80,10 +81,10 @@ Mathlib's p-adic results are eliminable, and it does **not** show `padicValNat`'
 *in Mathlib* — that would require re-proving Mathlib's valuation API on a different definition, which is
 not attempted here. `#print axioms` reports how a proof was written, never what a theorem requires.
 
-## The `ℕ∞`-numeral finding — reported, not explained away
+## Where the constructive side's two choices arrive
 
 The Lean file's purity block prints the `ℕ∞` numerals and the bundles they belong to, so where the
-constructive side's one `Classical.choice` arrives is read off the instrument. At the pin the numerals
+constructive side's two `Classical.choice` footprints arrive is read off the instrument. At the pin the numerals
 `(0 : ℕ∞)` and `(1 : ℕ∞)`, and `(a : ℕ∞) + 1`, measure no axioms; `(2 : ℕ∞)` measures `[propext]`; the
 bundles `instAddMonoidWithOneENat` and `instCommSemiringENat` carry `Classical.choice`.
 `enat_add_choice` (`(a : ℕ∞) + (b : ℕ∞) = ↑(a + b)`) reports `[propext, Classical.choice, Quot.sound]`
@@ -108,7 +109,7 @@ Two faces, matching the two faces of Group A:
   fixed point of doubling) is proved directly. The fourth axiom, `val_scale`, holds choice-free *in
   content* (`v2_scale_nat`); its literal `ℕ∞`-successor form `v2_scale` carries `Classical.choice`
   through its proof, not through the numeral, the addition or, on ℕ, the carrier
-  (see "The `ℕ∞`-numeral finding").
+  (see "Where the constructive side's two choices arrive").
   This is the choice-free mirror of `q2Val_bot`, `q2Val_unique`, `q2Scale_bot` and `q2Scale_unique_fp`
   (`ZeroParadox/Valuation/Scale.lean`), which prove the same axioms in `ℤ_[2]` via
   `PadicInt.valuation`; the comparison localizes § V's choice on the ℕ side only. ⚠ On `ℤ_[2]`

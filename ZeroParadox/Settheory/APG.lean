@@ -30,8 +30,9 @@ k of a cycle is the zero side; its absence is the infinity side.
 
 The hardness of the acyclic proof is that "infinite period" gives you nothing to induct on. Reach
 cardinality is a finite proxy that encodes it as a strictly decreasing natural number. Proving it
-strictly decreases was where the formalization work lived. It's the absorption and the pole that allow us
-to convert that endless descent into a single point.
+strictly decreases was where the formalization work lived.
+
+It's the absorption and the pole that allow us to convert that endless descent into a single point.
 
 ## The theorem
 

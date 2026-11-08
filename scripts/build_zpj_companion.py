@@ -571,7 +571,10 @@ def build():
         'have depth below n, so induction on n settles it; the only label of infinite depth is '
         '&#8869; of the decorating type. Think of a recursion that terminates on the size of its '
         'output rather than its input: nothing about the graph is counted, so the graph may be '
-        'infinite (decoration_unique_of_val). The two readings are linked one way: a cyclic '
+        'infinite (decoration_unique_of_val). This adapts the standard proof of a result Aczel sets '
+        'as an exercise, that the Foundation axiom gives every graph at most one decoration (Aczel, '
+        'Non-Well-Founded Sets, 1988, Exercise 2.1, p. 20), with one exception admitted: the single '
+        'label of infinite depth. The two readings are linked one way: a cyclic '
         'vertex gets infinite depth, and nothing is claimed in reverse.'))
     E.append(sp(4))
     E.append(remember_box(

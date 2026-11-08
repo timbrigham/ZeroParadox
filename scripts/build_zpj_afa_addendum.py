@@ -498,9 +498,10 @@ def build():
             '',
             'On every quiver, finite or not, any two valid decorations into a DecorationUniverse '
             'are equal. No APG argument, no finiteness binder.',
-            'Prior art: the AFA2 half of Aczel (Non-Well-Founded Sets, CSLI 1988, Ex. 2.1 p. 20; '
-            'AFA1/AFA2 p. 19), induction on the rank of the TARGET, with one point of rank '
-            '&#8868;, &#8869; of U, admitted through val_unique.',
+            'Prior art: the AFA2 half of a result Aczel sets as an exercise (Non-Well-Founded Sets, '
+            'CSLI 1988, Ex. 2.1 p. 20; AFA1/AFA2 p. 19), by its standard proof, induction on the rank '
+            'of the TARGET. It differs from the exercise by one point of rank &#8868;, &#8869; of U, '
+            'admitted through val_unique.',
             'Lean purity: [propext, Quot.sound]. ✓',
         ]
     ))

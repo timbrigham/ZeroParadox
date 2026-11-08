@@ -36,8 +36,8 @@ open Ordinal
 `SynONote` with one point adjoined on top: the shape of hydra-battles' `ON_plus` (sum of notation systems)
 with a one-point right summand, not an instance of it, because `SynONote`'s order is not well-founded
 (the `example` stating `¬ WellFoundedLT E0Note`). The carrier and its `≤`/`<` are Mathlib's `WithTop`
-(`WithTop.instLE`/`instLT`); the decidability of comparison, `e0Coe_lt_top` and `e0_le_top` are proved
-below by cases on that order's constructors. -/
+(`WithTop.instLE`/`instLT`); the decidability of comparison is proved below by cases on that order's
+constructors, and `e0Coe_lt_top` and `e0_le_top` are applications of them. -/
 
 /-- **The carrier: ordinal notations with a single adjoined top.**
 

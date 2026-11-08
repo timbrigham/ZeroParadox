@@ -75,8 +75,9 @@ not copy it.** What is stated here is only the shape it prints, which is the fin
 **The constructive side avoids Mathlib's `WithTop` order instances.** At the pin those instances and
 lemmas (`WithTop.instPreorder`, `WithTop.decidableLE`, `WithTop.decidableLT`, `WithTop.coe_lt_top`)
 carry `Classical.choice`, as does `WithTop.le_def`, which Mathlib proves by `grind`; the bare
-`WithTop.instLE`/`instLT` carry no axioms. The Lean file pins those two and proves decidability,
-`e0Coe_lt_top` and `e0_le_top` by cases on their constructors (the `[ZP port]` comment above them).
+`WithTop.instLE`/`instLT` carry no axioms. The Lean file pins those two, proves decidability by cases
+on their constructors, and proves `e0Coe_lt_top` and `e0_le_top` as applications of those constructors
+(`WithTop.LT.lt_top`, `WithTop.LE.le_top`; the `[ZP port]` comment above them).
 `SynONote`'s own order, `instLinearOrderSynONote`, measures `[propext]`.
 
 So the boundary is *priced*: the notation side's declarations cost at most `[propext]` and
@@ -206,7 +207,8 @@ points of one carrier.
 ## Triviality assessment
 
 The carrier is an `abbrev`. Its `≤` and `<` are Mathlib's `WithTop` relations applied to an order built in
-a sibling file, and the decidability and the top bound are case splits on their constructors —
+a sibling file, the decidability is a case split on their constructors, and the top bound is a
+constructor application —
 `PricedInterface.lean` should get no credit for any of that. `e0OmegaPow_top` is `rfl`. `e0Repr_top` is `rfl`.
 
 Not everything here is free. `repr_lt_epsilon0` — every raw notation denotes strictly below ε₀ — is a

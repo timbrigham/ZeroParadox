@@ -487,14 +487,30 @@ def build():
     ]
     E.append(body(
         'DA-1 Path 3 (the AIT/Kolmogorov complexity argument in ZP-E) is not formalized in this corpus: '
-        'not located as of 2026-11-07, searched for &#8220;Path 3&#8221; over ZeroParadox/**/*.lean, '
-        'whose hits are a comment in ZeroParadox/Category/Category.lean and the docstring of '
-        'da1_paths_unified (ZeroParadox/Computability/Kleene.lean), neither a proof of the argument. '
+        'not located as of 2026-11-07, searched over ZeroParadox/**/*.lean in three phrasings. '
+        '&#8220;Path 3&#8221;: a comment in ZeroParadox/Category/Category.lean and the docstring of '
+        'da1_paths_unified (ZeroParadox/Computability/Kleene.lean). &#8220;incompressib&#8221;: '
+        'ae_incompressible (ZeroParadox/Information/MaxEntropy.lean), a bound on fair-coin tapes for '
+        'each prefix-free decoder, and prose mentions in Surprisal.lean, Disjunctive.lean and '
+        'KleeneChoiceFree.lean. &#8220;shorter&#8221;, &#8220;external&#8221; or &#8220;outside&#8221; '
+        'before &#8220;program&#8221;, &#8220;generator&#8221; or &#8220;description&#8221;, and '
+        '&#8220;shortest program&#8221; or &#8220;shortest description&#8221;: the docstrings of '
+        'IsKleeneFixedPoint, da1_paths_unified and description_instantiation_gap_closed (Kleene.lean; '
+        'the last says &#8220;No external program is prior to &#8869;&#8221; is a requirement the '
+        'framework imposes rather than derives) and prose in Surprisal.lean. None is a '
+        'proof of the argument. '
         'Kolmogorov complexity itself is now in the build: plainK and KPPlain come from the Lake '
         'dependency kolmogorov-complexity-lean (A. Milovanov) at commit 7e71116, and '
-        'ZeroParadox/Information/BrudnoBridge.lean restates its Brudno theorems (brudno_of_MLRandom, '
-        'brudno_ae_trials, brudno_fair_of_MLRandom) and its Levin&#8211;Schnorr theorem '
-        '(MLRandom_fair_iff_le_KPPlain) for this corpus&#8217;s trials and MLRandom. The gap is '
+        'ZeroParadox/Information/BrudnoBridge.lean restates three of its entropy-rate theorems and one '
+        'randomness criterion for this corpus&#8217;s trials and MLRandom. In Shen, Uspensky and '
+        'Vereshchagin, <i>Kolmogorov Complexity and Algorithmic Randomness</i> (AMS 2017; SUV), '
+        'brudno_of_MLRandom and brudno_fair_of_MLRandom are Theorem 148 and Problem 238 (p. 229), '
+        'pointwise forms along Martin-L&#246;f random tapes, and brudno_ae_trials is Problem 239 '
+        '(p. 229), the almost-everywhere Bernoulli case of Brudno&#8217;s theorem; the name Brudno '
+        'is this corpus&#8217;s label, used by neither SUV on those pages nor the dependency. '
+        'MLRandom_fair_iff_le_KPPlain is SUV Theorem 94(d) (p. 151), the prefix-complexity form of '
+        'the Levin&#8211;Schnorr criterion, which SUV states as Theorem 90 (p. 146) in monotone '
+        'complexity. The gap is '
         'therefore the Path 3 argument itself, not the absence of K. Before that dependency, a '
         'definition of K was not located in the Mathlib then pinned '
         '(5450b53) as of 2026-11-03, searched for &#8220;Kolmogorov complexity&#8221;, '
@@ -923,25 +939,30 @@ def build():
         'none: decoration_unique_of_val (ZeroParadox/Settheory/APG.lean &#167; IX) inducts on the '
         'valuation of the decorating value instead. A value of finite valuation m is collected from '
         'children whose values have valuation below m (collect_val_ge), and a value of valuation '
-        '&#8868; is &#8869; of U (val_unique). It holds on every quiver, finite or not. The two sides '
+        '&#8868; is &#8869; of U (val_unique). It holds on every quiver, finite or not. Credit runs one '
+        'way: this adapts the standard proof, by induction on the rank of the target, of a result '
+        'Aczel sets as an exercise, that the Foundation axiom implies AFA2 (every graph has at most '
+        'one decoration) (Aczel, <i>Non-Well-Founded Sets</i>, CSLI 1988, Exercise 2.1, p. 20; AFA1 '
+        'and AFA2 are defined on p. 19). The difference from that exercise is one point of infinite '
+        'depth, &#8869; of U, admitted through val_unique. The two sides '
         'are related one way: a cyclic vertex&#8217;s value has valuation &#8868; '
         '(cyclic_decoration_eq_bot with val_bot); no converse is claimed.'))
     E.append(result_box(
         'Acyclic Induction and Global Uniqueness (ZeroParadox/Settheory/APG.lean &#167;&#167; VIII&#8211;IX)',
         [
             'acyclic_induction_step: if two valid decorations d&#8321;, d&#8322; agree on all '
-            'children of an acyclic vertex v, they agree on v. '
+            'children of a vertex v, they agree on v. '
             '(The two child image sets are equal by Set.ext, then rewrite &#8212; ordinary '
             'congruence, consuming no class axiom.) &#10003;',
-            'decoration_unique [Fintype V]: for any finite APG with root r and any two valid '
-            'decorations d&#8321;, d&#8322; into any DecorationUniverse, d&#8321; = d&#8322;. '
-            'Proof: strong induction on |{w | Path u w}|; cyclic case by cyclic_decoration_eq_bot; '
-            'acyclic case by acyclic_induction_step with IH on children. &#10003;',
             'decoration_unique_of_val, the main uniqueness result: for any quiver V, finite or not, with no APG argument, any two '
             'valid decorations d&#8321;, d&#8322; into any DecorationUniverse are equal. '
             'Proof: strong induction on a finite valuation; valuation &#8868; is &#8869; of U by '
             'val_unique. decoration_unique_finite restates decoration_unique with [Finite V] in '
             'place of [Fintype V], as a corollary. Both [propext, Quot.sound]. &#10003;',
+            'decoration_unique [Fintype V]: for any finite APG with root r and any two valid '
+            'decorations d&#8321;, d&#8322; into any DecorationUniverse, d&#8321; = d&#8322;. '
+            'Proof: strong induction on |{w | Path u w}|; cyclic case by cyclic_decoration_eq_bot; '
+            'acyclic case by acyclic_induction_step with IH on children. &#10003;',
         ]
     ))
     E.append(sp(6))

@@ -1,4 +1,4 @@
--- EXPERIMENTAL (bridge): our `trials` and `MLRandom` against Milovanov's `kolmogorov-complexity-lean` (commit 7e71116), to cite his Brudno and Levin–Schnorr theorems. Curated results indexed in ZeroParadox/MANIFEST.md.
+-- EXPERIMENTAL (bridge): our `trials` and `MLRandom` against Milovanov's `kolmogorov-complexity-lean` (commit 7e71116), to cite its entropy-rate theorems and its prefix-complexity Levin–Schnorr criterion. Curated results indexed in ZeroParadox/MANIFEST.md.
 import ZeroParadox.Information.TwoRequirements
 import KolmogorovMathlib.Entropy.Complexity.RandomSequences
 import KolmogorovMathlib.MonotoneComplexity.LevinSchnorr.Criteria
@@ -16,8 +16,8 @@ There is a specific proof we were aiming to use, written in the new version of L
 ## Formal Overview (AI-assisted)
 § I: `trials p hp` is his `Kolmogorov.bernoulliMeasure p hp`; `prefixCyl` is his `cantorCylinder`.
 § II: `MLTest μ` and his `IsMartinLofTest μ` are the same tests, for every `μ`: both bound level `m`
-by `2⁻ᵐ` and list cylinders by a computable function with no access to `μ` (blind). § III: his
-Brudno (SUV Thm 148, Problems 238, 239) and Levin–Schnorr (SUV Thm 94(d)), restated. -/
+by `2⁻ᵐ` and list cylinders by a computable function with no access to `μ` (blind). § III: its
+entropy-rate theorems (SUV Thm 148, Problems 238, 239) and Levin–Schnorr criterion (SUV Thm 94(d)). -/
 
 set_option maxHeartbeats 400000
 
@@ -87,9 +87,13 @@ theorem MLRandom_of_isMartinLofRandom {μ : Measure (ℕ → Bool)} {w : ℕ →
     (h : Kolmogorov.IsMartinLofRandom μ w) : MLRandom μ w :=
   fun U hU => h U (isMartinLofTest_of_mlTest hU)
 
-/-! ## § III. His theorems in our vocabulary -/
+/-! ## § III. His theorems in our vocabulary
 
-/-- `Statement:` Brudno (SUV Thm 148, binary): at computable `p` with `0 < p < 1`, along every
+SUV: Shen, Uspensky, Vereshchagin, *Kolmogorov Complexity and Algorithmic Randomness*, AMS 2017.
+"Brudno" in the names below is this corpus's label: neither SUV pp. 229-230 nor the library uses it. -/
+
+/-- `Statement:` SUV Thm 148 (p. 229), binary, a pointwise form along Martin-Löf random tapes of the
+Bernoulli case of Brudno's theorem: at computable `p` with `0 < p < 1`, along every
 `MLRandom (trials p hp)` tape, plain complexity per bit tends to the binary entropy in bits. -/
 theorem brudno_of_MLRandom (D : Kolmogorov.Map) (hD : Kolmogorov.isOptimalConditional D)
     {p : NNReal} (hp : p ≤ 1) (hp0 : 0 < p) (hp1 : p < 1)
@@ -101,7 +105,8 @@ theorem brudno_of_MLRandom (D : Kolmogorov.Map) (hD : Kolmogorov.isOptimalCondit
   exact Kolmogorov.tendsto_plainK_cantorPrefix_div D hD hp hp0 hp1 hcomp
     (isMartinLofRandom_of_MLRandom hw)
 
-/-- `Statement:` Brudno almost everywhere (SUV Problem 239, binary): at any `p ≤ 1`, the tapes
+/-- `Statement:` SUV Problem 239 (p. 229), binary, the almost-everywhere Bernoulli case of Brudno's
+theorem: at any `p ≤ 1`, the tapes
 where plain complexity per bit fails to tend to the entropy are `trials p hp`-null. -/
 theorem brudno_ae_trials (D : Kolmogorov.Map) (hD : Kolmogorov.isOptimalConditional D)
     {p : NNReal} (hp : p ≤ 1) :
@@ -111,7 +116,7 @@ theorem brudno_ae_trials (D : Kolmogorov.Map) (hD : Kolmogorov.isOptimalConditio
   rw [trials_eq_bernoulliMeasure]
   exact Kolmogorov.measure_setOf_not_tendsto_plainK_cantorPrefix_div D hD hp
 
-/-- `Statement:` Brudno, fair coin (SUV Problem 238, binary): along every `MLRandom` fair tape,
+/-- `Statement:` SUV Problem 238 (p. 229), binary, Thm 148's pointwise form for the fair coin: along every `MLRandom` fair tape,
 plain complexity per bit tends to 1. -/
 theorem brudno_fair_of_MLRandom (D : Kolmogorov.Map) (hD : Kolmogorov.isOptimalConditional D)
     {w : ℕ → Bool} (hw : MLRandom (trials (1 / 2) (by norm_num)) w) :
@@ -121,7 +126,8 @@ theorem brudno_fair_of_MLRandom (D : Kolmogorov.Map) (hD : Kolmogorov.isOptimalC
   exact Kolmogorov.tendsto_plainK_cantorPrefix_div_uniform D hD _
     (isMartinLofRandom_of_MLRandom hw)
 
-/-- `Statement:` Levin–Schnorr (SUV Thm 94(d)): a tape is `MLRandom` for the fair coin iff its
+/-- `Statement:` the prefix-complexity form of the Levin–Schnorr criterion (SUV Thm 94(d), p. 151;
+SUV's Levin–Schnorr theorem is Thm 90, p. 146, in monotone complexity): a tape is `MLRandom` for the fair coin iff its
 prefix-free complexity stays within a constant of length, `n ≤ K(w↾n) + c` for all `n`. -/
 theorem MLRandom_fair_iff_le_KPPlain {U : Kolmogorov.Map}
     (hU : Kolmogorov.IsOptimalPrefixConditional U) (w : ℕ → Bool) :

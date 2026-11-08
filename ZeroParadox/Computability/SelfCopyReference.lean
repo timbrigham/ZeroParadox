@@ -313,7 +313,9 @@ open ZeroParadox
 -- The finite half by list pigeonhole, under two instance readings. `[Finite]`: the statement's
 -- constants `Finite` and `SelfCopyRef` measure no axioms, and `no_selfCopyRef_of_finite_constructive`
 -- proves it at `[propext, Quot.sound]` (the `example` after it gives `no_selfCopyRef_of_finite`), so
--- `no_selfCopyRef_of_finite`'s choice is ACCIDENTAL. `[Fintype] [DecidableEq]`: the proof spends no
+-- `no_selfCopyRef_of_finite`'s choice is ACCIDENTAL, as in set theory without choice: Banakh,
+-- arXiv:2006.01613v4, Thm 43.3 and Cor. 43.4 (p. 102), and "By Theorem 43.3, every finite set is
+-- Dedekind-finite" (p. 104). `[Fintype] [DecidableEq]`: the proof spends no
 -- choice, and the statement carries it through the `[Fintype α]` binder, since `Fintype` itself reports
 -- it at the pinned Mathlib, so `no_selfCopyRef_of_fintype` is STATEMENT-CARRIED
 -- (`ZeroParadox/Category/ChoiceCannotBe.lean` § III, STATEMENT-CARRIED IS INSTANCE-RELATIVE).

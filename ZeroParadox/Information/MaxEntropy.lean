@@ -427,9 +427,9 @@ example : ¬ fairTape (compressibleTapes appendFalse 1) ≤ 2⁻¹ ^ 1 ∧
 
 A. Milovanov, `kolmogorov-complexity-lean` @7e71116 (Lean 4.35; not compared with our definitions).
 Levin–Schnorr, uniform measure: `isMartinLofRandom_uniform_iff_le_KPPlain_cantorPrefix`, Martin-Löf
-random iff `K(w↾n) ≥ n − c`, prefix-free `K`. Brudno, Bernoulli `p`:
-`tendsto_plainK_cantorPrefix_div` (computable `p`, `0 < p < 1`, every Martin-Löf random tape; entropy
-in bits, ours in nats); almost-every form `measure_setOf_not_tendsto_plainK_cantorPrefix_div` (any
+random iff `K(w↾n) ≥ n − c`, prefix-free `K`. Entropy rate, Bernoulli `p`: `tendsto_plainK_cantorPrefix_div`
+(computable `p`, `0 < p < 1`, every Martin-Löf random tape; entropy in bits, ours in nats); almost-every
+form, the Bernoulli case of Brudno's theorem, `measure_setOf_not_tendsto_plainK_cantorPrefix_div` (any
 `p ≤ 1`). A rate alone does not give Martin-Löf randomness (standard, not proved here). Ergodic
 measures: Hoyrup's effective Shannon–McMillan–Breiman (Cenzer–Porter, arXiv:2103.03971, p. 22,
 Thm 32, retrieved 2026-11-07; primary: Hoyrup, STACS 2012, arXiv:1107.1149, not retrieved). -/

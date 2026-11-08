@@ -6,7 +6,7 @@ import ZeroParadox.Reals.OrderedField
 import Mathlib.Tactic
 
 /-!
-# The snap at ε₀: the corner on one carrier, the cover on another
+# The snap and ε₀ on two carriers: on `WithBot Ordinal` the first step lands at ↑0 and `up` carries it to ↑ε₀ (the corner); on `EpsilonOrZero` the first step is ε₀ (the cover)
 
 ## Engineer's Take
 
