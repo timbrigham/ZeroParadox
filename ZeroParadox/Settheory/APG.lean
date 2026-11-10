@@ -1,4 +1,5 @@
 import ZeroParadox.Valuation.Scale
+import ZeroParadox.Settheory.Model
 import Mathlib.Combinatorics.Quiver.Path
 import Mathlib.Combinatorics.Quiver.ConnectedComponent
 import Mathlib.Combinatorics.Quiver.Arborescence
@@ -191,14 +192,28 @@ class DecorationUniverse (U : Type*) [ZPSemilattice U] [ValuationStructure U] wh
 
 /-! ### NO-GO gauge — `DecorationUniverse` is inhabited over EVERY `ValuationStructure` carrier.
 
-Witness built and elaborated 2026-08-08, **classically** (the `dite` needs `Decidable (∃ x, S = {x})`):
-`collect S := if h : ∃ x, S = {x} then scale h.choose else bot`, so the class constrains nothing
-beyond the `ValuationStructure` it already assumes.
-**Only the non-singleton half is free**, where `val bot` is top and dominates the bound. The singleton
-branch of `collect_val_ge` needs `val_scale` (plus `scale_bot` when `x = bot`), and
-`collect_singleton` needs `Set.singleton_eq_singleton_iff`.
-**Not a carrier-level defect** — every use site takes it as a hypothesis carrying data. It does mean
-`[DecorationUniverse U]` alone licenses no conclusion. -/
+The `example` below emits it; a concrete one on ℕ∞, with a decoration, follows `IsDecoration` (§ V). So `[DecorationUniverse U]` alone licenses no conclusion about `U`
+beyond the `ValuationStructure` it already assumes, classically; every use site takes it as a hypothesis carrying data. -/
+
+-- Statement: every `ValuationStructure` carrier has a `DecorationUniverse`, classically:
+-- `collect S := if h : ∃ x, S = {x} then scale h.choose else bot`.
+example {U : Type*} [ZPSemilattice U] [ValuationStructure U] : Nonempty (DecorationUniverse U) := by
+  classical
+  refine ⟨{ collect := fun S => if h : ∃ x, S = {x} then ValuationStructure.scale h.choose else bot,
+            collect_singleton := fun x => ?_, collect_val_ge := fun S x hx => ?_ }⟩
+  · have h : ∃ y, ({x} : Set U) = {y} := ⟨x, rfl⟩
+    have hx : h.choose = x := (Set.singleton_eq_singleton_iff.mp h.choose_spec).symm
+    rw [dite_eq_left h, hx]
+  · split_ifs with h
+    · have hxe : x = h.choose := by rw [h.choose_spec] at hx; exact hx
+      rw [← hxe]
+      by_cases hb : x = bot
+      · subst hb
+        rw [ValuationStructure.scale_bot, ValuationStructure.val_bot]
+        exact le_top
+      · exact le_of_eq (ValuationStructure.val_scale x hb).symm
+    · rw [ValuationStructure.val_bot]
+      exact le_top
 
 /-! ## § III. val_iterate — The Key Lemma
 
@@ -289,6 +304,35 @@ def IsDecoration {V : Type*} [Quiver V]
     {U : Type*} [ZPSemilattice U] [ValuationStructure U] [DecorationUniverse U]
     (d : V → U) : Prop :=
   ∀ v : V, d v = DecorationUniverse.collect (d '' apg_children v)
+
+-- Statement: on ℕ∞ (join `min`, ⊥ of ℕ∞'s ZP structure is `⊤`, scale `+ 1`, val `id`;
+-- `ZeroParadox/Settheory/Model.lean`) `collect S := sSup S + 1`, `sSup` in ℕ∞'s own order, is a
+-- `DecorationUniverse`, and under it the quiver on `Bool` with the one edge `true ⟶ false` has the
+-- decoration `true ↦ 2`, `false ↦ 1`.
+-- Reading: here the decoration is the well-founded rank plus one (Mathlib's `Acc.rank_eq`,
+-- `WellFounded.rank_eq`, `Mathlib/SetTheory/Ordinal/Rank.lean`).
+example : ∃ D : DecorationUniverse ℕ∞, ∃ d : Bool → ℕ∞,
+    @IsDecoration Bool ⟨fun a b => PLift (a = true ∧ b = false)⟩ ℕ∞ _ _ D d ∧
+      d true = 2 ∧ d false = 1 := by
+  let Q : Quiver Bool := ⟨fun a b => PLift (a = true ∧ b = false)⟩
+  have hc : ∀ a b : Bool, b ∈ @apg_children Bool Q a ↔ (a = true ∧ b = false) :=
+    fun a b => ⟨fun ⟨e⟩ => e.down, fun h => ⟨⟨h⟩⟩⟩
+  refine ⟨⟨fun S => sSup S + 1, fun x => ?_, fun S x hx => ?_⟩, fun b => if b then 2 else 1, ?_, rfl, rfl⟩
+  · show sSup {x} + 1 = x + 1
+    rw [sSup_singleton]
+  · show x + 1 ≤ sSup S + 1
+    exact add_le_add (le_sSup hx) le_rfl
+  · intro v
+    cases v
+    · have he : @apg_children Bool Q false = (∅ : Set Bool) := Set.ext fun b => by rw [hc]; simp
+      show (1 : ℕ∞) = sSup ((fun b : Bool => if b then (2 : ℕ∞) else 1) '' @apg_children Bool Q false) + 1
+      rw [he, Set.image_empty, sSup_empty]
+      simp
+    · have he : @apg_children Bool Q true = ({false} : Set Bool) := Set.ext fun b => by
+        rw [hc, Set.mem_singleton_iff]; simp
+      show (2 : ℕ∞) = sSup ((fun b : Bool => if b then (2 : ℕ∞) else 1) '' @apg_children Bool Q true) + 1
+      rw [he, Set.image_singleton, sSup_singleton]
+      exact one_add_one_eq_two.symm
 
 /-! ## § VI. Self-Loop Uniqueness -/
 
