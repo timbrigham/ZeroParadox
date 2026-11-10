@@ -192,8 +192,8 @@ class DecorationUniverse (U : Type*) [ZPSemilattice U] [ValuationStructure U] wh
 
 /-! ### NO-GO gauge — `DecorationUniverse` is inhabited over EVERY `ValuationStructure` carrier.
 
-The `example` below emits it; a concrete one on ℕ∞, with a decoration, follows `IsDecoration` (§ V). So `[DecorationUniverse U]` alone licenses no conclusion beyond
-the `ValuationStructure` it already assumes; every use site takes it as a hypothesis carrying data. -/
+The `example` below emits it; a concrete one on ℕ∞, with a decoration, follows `IsDecoration` (§ V). So `[DecorationUniverse U]` alone licenses no conclusion about `U`
+beyond the `ValuationStructure` it already assumes, classically; every use site takes it as a hypothesis carrying data. -/
 
 -- Statement: every `ValuationStructure` carrier has a `DecorationUniverse`, classically:
 -- `collect S := if h : ∃ x, S = {x} then scale h.choose else bot`.
@@ -306,8 +306,11 @@ def IsDecoration {V : Type*} [Quiver V]
   ∀ v : V, d v = DecorationUniverse.collect (d '' apg_children v)
 
 -- Statement: on ℕ∞ (join `min`, ⊥ of ℕ∞'s ZP structure is `⊤`, scale `+ 1`, val `id`;
--- `ZeroParadox/Settheory/Model.lean`) `collect S := sSup S + 1` is a `DecorationUniverse`, and under it
--- the quiver on `Bool` with the one edge `true ⟶ false` has the decoration `true ↦ 2`, `false ↦ 1`.
+-- `ZeroParadox/Settheory/Model.lean`) `collect S := sSup S + 1`, `sSup` in ℕ∞'s own order, is a
+-- `DecorationUniverse`, and under it the quiver on `Bool` with the one edge `true ⟶ false` has the
+-- decoration `true ↦ 2`, `false ↦ 1`.
+-- Reading: here the decoration is the well-founded rank plus one (Mathlib's `Acc.rank_eq`,
+-- `WellFounded.rank_eq`, `Mathlib/SetTheory/Ordinal/Rank.lean`).
 example : ∃ D : DecorationUniverse ℕ∞, ∃ d : Bool → ℕ∞,
     @IsDecoration Bool ⟨fun a b => PLift (a = true ∧ b = false)⟩ ℕ∞ _ _ D d ∧
       d true = 2 ∧ d false = 1 := by
