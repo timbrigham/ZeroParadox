@@ -1,12 +1,12 @@
 """
 Zero Paradox — ZP-J: Executability of Self-Reference PDF Builder
-Version 2.19 | November 2026
+Version 2.20 | November 2026
 """
 
 import os
 from zp_utils import *
 
-VERSION = '2.19'
+VERSION = '2.20'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -497,15 +497,15 @@ def build():
         '&#8220;shortest program&#8221; or &#8220;shortest description&#8221;: the docstrings of '
         'IsKleeneFixedPoint, da1_paths_unified and description_instantiation_gap_closed (Kleene.lean; '
         'the last says &#8220;No external program is prior to &#8869;&#8221; is a requirement the '
-        'framework imposes rather than derives) and prose in Surprisal.lean. None is a '
+        'framework imposes &#8220;rather than derives here&#8221;) and prose in Surprisal.lean. None is a '
         'proof of the argument. '
         'Kolmogorov complexity itself is now in the build: plainK and KPPlain come from the Lake '
         'dependency kolmogorov-complexity-lean (A. Milovanov) at commit 7e71116, and '
         'ZeroParadox/Information/BrudnoBridge.lean restates three of its entropy-rate theorems and one '
         'randomness criterion for this corpus&#8217;s trials and MLRandom. In Shen, Uspensky and '
         'Vereshchagin, <i>Kolmogorov Complexity and Algorithmic Randomness</i> (AMS 2017; SUV), '
-        'brudno_of_MLRandom and brudno_fair_of_MLRandom are Theorem 148 and Problem 238 (p. 229), '
-        'pointwise forms along Martin-L&#246;f random tapes, and brudno_ae_trials is Problem 239 '
+        'brudno_of_MLRandom and brudno_fair_of_MLRandom are the binary cases of Theorem 148 and Problem 238 (p. 229), '
+        'pointwise forms along Martin-L&#246;f random tapes, and brudno_ae_trials is the binary case of Problem 239 '
         '(p. 229), the almost-everywhere Bernoulli case of Brudno&#8217;s theorem; the name Brudno '
         'is this corpus&#8217;s label, used by neither SUV on those pages nor the dependency. '
         'MLRandom_fair_iff_le_KPPlain is SUV Theorem 94(d) (p. 151), the prefix-complexity form of '
@@ -940,10 +940,10 @@ def build():
         'valuation of the decorating value instead. A value of finite valuation m is collected from '
         'children whose values have valuation below m (collect_val_ge), and a value of valuation '
         '&#8868; is &#8869; of U (val_unique). It holds on every quiver, finite or not. Credit runs one '
-        'way: this adapts the standard proof, by induction on the rank of the target, of a result '
+        'way: this adapts a result '
         'Aczel sets as an exercise, that the Foundation axiom implies AFA2 (every graph has at most '
         'one decoration) (Aczel, <i>Non-Well-Founded Sets</i>, CSLI 1988, Exercise 2.1, p. 20; AFA1 '
-        'and AFA2 are defined on p. 19). The difference from that exercise is one point of infinite '
+        'and AFA2 are defined on p. 19). One difference from that exercise is a point of infinite '
         'depth, &#8869; of U, admitted through val_unique. The two sides '
         'are related one way: a cyclic vertex&#8217;s value has valuation &#8868; '
         '(cyclic_decoration_eq_bot with val_bot); no converse is claimed.'))
