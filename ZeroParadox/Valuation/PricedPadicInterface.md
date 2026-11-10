@@ -32,7 +32,7 @@ The `Valuation/` cluster splits, and the split is the whole scoping finding:
 * **Group A — needs only the valuation and its order.** The ZP-J `ValuationStructure` axioms, the ZP-B
   ultrametric/clopen-ball content, the descent to a single point, total separation. Their mathematical
   content is *agreement to depth n* and *the valuation of the least element (`bot` of the carrier's
-`ZPSemilattice`) is the top of the value monoid* —
+  `ZPSemilattice`) is the top of the value monoid* —
   combinatorial and valuative statements that use neither division, nor completeness, nor ℝ. **This is
   the slice built here.**
 * **Group B — genuinely needs the complete field.** `ZeroParadox/Valuation/RiemannSphere.lean` /
@@ -67,7 +67,7 @@ these are the numbers it reported, not the numbers that were hoped for).
   and `agree_all_iff` reports `[Quot.sound]` (the `funext`).
 * **Two declarations on the constructive side carry `Classical.choice` — `v2_scale` and the exhibit
   `enat_add_choice` — both through their proofs; each has a choice-free counterpart.** `v2_scale`'s
-  is `v2_scale_nat`, printed in § IV; `enat_add_choice`'s is an induction-and-`rfl` proof of the same
+  is `v2_scale_nat`, the same equation with the successor taken on ℕ before the cast, printed in § IV; `enat_add_choice`'s is an induction-and-`rfl` proof of the same
   proposition, stated in its docstring and not printed. The ZP-J
   `val_scale` axiom in its literal form `v2_scale : v2 (2n) = v2 n + 1` reports `[propext, Classical.choice, Quot.sound]` —
   **and on this carrier (ℕ) it is neither the carrier's nor the statement's.** `v2`, the numeral
