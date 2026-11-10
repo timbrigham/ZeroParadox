@@ -672,7 +672,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 3365,
+        "declarations": 3379,
         "files": 208
       },
       "entries": [
@@ -3943,6 +3943,43 @@
             ]
           },
           "reason": "Die v2 final batch: drawing vs set (self-steps, accessibility, forced rank), ends of a view, orders on motions, placements as views, relaxed least-fixed-point schema, UP legs as nuclei",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "06105bef-ffea-40c2-bc95-1cfbb5d22239",
+          "new": {
+            "file": "ZeroParadox/Settheory/APG.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.accDec_eq",
+            "short": "accDec_eq"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/APG.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.accDec_eq",
+            "short": "accDec_eq",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "new HEAD declarations (APG decoration existence, choice-free; fan control)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -7559,6 +7596,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "0cbc59d6-9791-4ff9-a259-1f45e44b1daf",
+          "new": {
+            "file": "ZeroParadox/Settheory/APG.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.decor_isDecoration",
+            "short": "decor_isDecoration"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/APG.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.decor_isDecoration",
+            "short": "decor_isDecoration",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "new HEAD declarations (APG decoration existence, choice-free; fan control)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "0d12deab-03e4-416f-8127-704971f04c31",
           "new": {
             "file": "ZeroParadox/Information/MaxEntropy.lean",
@@ -8721,6 +8795,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "0f1adb97-30f0-4b34-b906-252cfff71c5f",
+          "new": {
+            "file": "ZeroParadox/Settheory/APG.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.exists_decoration",
+            "short": "exists_decoration"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/APG.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.exists_decoration",
+            "short": "exists_decoration",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "new HEAD declarations (APG decoration existence, choice-free; fan control)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "0f5318e9-3789-4bd7-85bd-515ab4d61798",
           "new": {
             "file": "ZeroParadox/Settheory/MetaFork.lean",
@@ -9347,6 +9458,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "10b0dccb-5d32-4cf1-9c99-9079128ca244",
+          "new": {
+            "file": "ZeroParadox/Settheory/APG.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.existsUnique_decoration",
+            "short": "existsUnique_decoration"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/APG.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.existsUnique_decoration",
+            "short": "existsUnique_decoration",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "new HEAD declarations (APG decoration existence, choice-free; fan control)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "10b9bd38-d022-4fe9-8eda-a8805137e1fa",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -9521,6 +9669,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "111c9fbd-c6f7-4874-ba67-6d8665fae0ac",
+          "new": {
+            "file": "ZeroParadox/Settheory/APG.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.decoration_eq_bot_of_not_acc",
+            "short": "decoration_eq_bot_of_not_acc"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/APG.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.decoration_eq_bot_of_not_acc",
+            "short": "decoration_eq_bot_of_not_acc",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "new HEAD declarations (APG decoration existence, choice-free; fan control)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -25609,6 +25794,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "32fb623d-9025-49a5-820c-8a5862e3d654",
+          "new": {
+            "file": "ZeroParadox/Settheory/APG.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.accDec",
+            "short": "accDec"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/APG.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.accDec",
+            "short": "accDec",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "new HEAD declarations (APG decoration existence, choice-free; fan control)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "32fb7584-7e42-404e-aa56-a34f9d923ce3",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -31974,6 +32196,43 @@
             ]
           },
           "reason": "Die views batch: views (order as data), restriction to an up-closed set, adjoined points and the empty carrier, arrival and fan-in",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "4299331e-84b6-40fe-bdd1-4a7f4b257ca9",
+          "new": {
+            "file": "ZeroParadox/Settheory/APG.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ValRel",
+            "short": "ValRel"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/APG.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ValRel",
+            "short": "ValRel",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "new HEAD declarations (APG decoration existence, choice-free; fan control)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -41400,6 +41659,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "553d3d55-7550-45fa-9f55-e020551f10ac",
+          "new": {
+            "file": "ZeroParadox/Settheory/APG.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fan_root_acc_and_eq_bot",
+            "short": "fan_root_acc_and_eq_bot"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/APG.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.fan_root_acc_and_eq_bot",
+            "short": "fan_root_acc_and_eq_bot",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "new HEAD declarations (APG decoration existence, choice-free; fan control)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -62967,6 +63263,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "824f602a-d578-4868-88ce-f4b21f9c1278",
+          "new": {
+            "file": "ZeroParadox/Settheory/APG.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fanEdge",
+            "short": "fanEdge"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/APG.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.fanEdge",
+            "short": "fanEdge",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "new HEAD declarations (APG decoration existence, choice-free; fan control)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "8253a6cb-b24e-460d-bd2e-f4f67bb15f82",
           "new": {
             "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
@@ -77966,6 +78299,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a1ae53e8-362f-4a1a-b0df-2194e1c1fce9",
+          "new": {
+            "file": "ZeroParadox/Settheory/APG.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ChildRel",
+            "short": "ChildRel"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/APG.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ChildRel",
+            "short": "ChildRel",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "new HEAD declarations (APG decoration existence, choice-free; fan control)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -96688,6 +97058,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "c915ef5a-af88-4d19-906e-cdd5c9180ada",
+          "new": {
+            "file": "ZeroParadox/Settheory/APG.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.decor_eq_accDec",
+            "short": "decor_eq_accDec"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/APG.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.decor_eq_accDec",
+            "short": "decor_eq_accDec",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "new HEAD declarations (APG decoration existence, choice-free; fan control)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "c929ce03-3ff8-4381-a52d-121994f97a9d",
           "new": {
@@ -105651,6 +106058,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "daaa38e5-697e-4c84-8dc8-4f9587cf0b34",
+          "new": {
+            "file": "ZeroParadox/Settheory/APG.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.acc_of_val_coe",
+            "short": "acc_of_val_coe"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/APG.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.acc_of_val_coe",
+            "short": "acc_of_val_coe",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "new HEAD declarations (APG decoration existence, choice-free; fan control)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "daaaa388-7c7c-4217-a54e-f6a1eea2514a",
           "new": {
@@ -113417,6 +113861,43 @@
           "reason": "IgnoranceSeam.lean: fills, semiconjugacy, prepends, affine stream motions, negation, complement (2026-10-07)",
           "verify": {
             "axioms": "[propext]",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ea0b1438-92a6-407b-aaad-39488c1cf95c",
+          "new": {
+            "file": "ZeroParadox/Settheory/APG.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.decor_eq_collect_of_acc",
+            "short": "decor_eq_collect_of_acc"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/APG.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.decor_eq_collect_of_acc",
+            "short": "decor_eq_collect_of_acc",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "new HEAD declarations (APG decoration existence, choice-free; fan control)",
+          "verify": {
+            "axioms": null,
             "sorry_free": true
           }
         },
@@ -124444,6 +124925,43 @@
             ]
           },
           "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "fff9a8c0-17ec-4947-9f36-2c352452b7a5",
+          "new": {
+            "file": "ZeroParadox/Settheory/APG.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.decor",
+            "short": "decor"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/APG.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.decor",
+            "short": "decor",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "new HEAD declarations (APG decoration existence, choice-free; fan control)",
           "verify": {
             "axioms": null,
             "sorry_free": true

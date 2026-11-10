@@ -1,12 +1,12 @@
 """
 Zero Paradox — ZP-J: Executability of Self-Reference PDF Builder
-Version 2.21 | November 2026
+Version 2.22 | November 2026
 """
 
 import os
 from zp_utils import *
 
-VERSION = '2.21'
+VERSION = '2.22'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -471,7 +471,8 @@ def build():
         'of the Quine-atom role, where it becomes an equivalence rather than a bare choice. '
         'Sections VII&#8211;X extend the chain further: they derive AFAStructure\'s laws from '
         'stronger structures, provide concrete models, and prove decoration uniqueness for every '
-        'quiver, with a graph-side proof for finite graphs, over abstract DecorationUniverses &#8212; an analogue of the uniqueness clause of '
+        'quiver, with a graph-side proof for finite graphs, and decoration existence for every quiver, '
+        'over abstract DecorationUniverses &#8212; analogues of the uniqueness and existence clauses of '
         'what AFA asserts as an axiom. Every node is either a proved theorem or a typeclass field:'))
     E += [
         li('ZP-A axioms A1&#8211;A4: semilattice structure (ZPSemilattice fields).'),
@@ -842,8 +843,9 @@ def build():
 
     E.append(body(
         '<i>Formalised in ZeroParadox/Settheory/APG.lean as the most recent addition; this section proves '
-        'decoration uniqueness for every quiver, with a graph-side proof for finite accessible pointed graphs, over abstract '
-        'DecorationUniverses &#8212; an analogue of AFA\'s uniqueness clause, not that clause '
+        'decoration uniqueness for every quiver, with a graph-side proof for finite accessible pointed graphs, and '
+        'decoration existence for every quiver, over abstract '
+        'DecorationUniverses &#8212; analogues of AFA\'s uniqueness and existence clauses, not those clauses '
         'and not AFA itself &#8212; '
         'using the typeclass chain established in Sections VIII&#8211;IX.</i>',
         style='bodyI'))
@@ -943,8 +945,9 @@ def build():
         'this adapts a result '
         'Aczel sets as an exercise, that the Foundation axiom implies AFA2 (every graph has at most '
         'one decoration) (Aczel, <i>Non-Well-Founded Sets</i>, CSLI 1988, Exercise 2.1, p. 20; AFA1 '
-        'and AFA2 are defined on p. 19), and the argument Aczel indicates on p. 19 for '
-        'well-founded sets, transfinite induction on the membership relation. One difference from that exercise is a point of infinite '
+        'and AFA2 are defined on p. 19), and the argument Aczel indicates on p. 19 that equality '
+        'between well-founded sets is uniquely determined, by transfinite induction on the '
+        'membership relation. One difference from that exercise is a point of infinite '
         'depth, &#8869; of U, admitted through val_unique. The two sides '
         'are related one way: a cyclic vertex&#8217;s value has valuation &#8868; '
         '(cyclic_decoration_eq_bot with val_bot); no converse is claimed.'))
@@ -964,6 +967,10 @@ def build():
             'decorations d&#8321;, d&#8322; into any DecorationUniverse, d&#8321; = d&#8322;. '
             'Proof: strong induction on |{w | Path u w}|; cyclic case by cyclic_decoration_eq_bot; '
             'acyclic case by acyclic_induction_step with IH on children. &#10003;',
+            'exists_decoration and existsUnique_decoration (&#167; X): every quiver has exactly one '
+            'valid decoration into every DecorationUniverse. Recursion on the accessible part, '
+            '&#8869; of U elsewhere, with the case split on the valuation, not on accessibility. '
+            '[propext, Quot.sound]. &#10003;',
         ]
     ))
     E.append(sp(6))
@@ -971,12 +978,15 @@ def build():
         'decoration_unique_of_val is the ZP analogue of the uniqueness clause of AFA (an axiom, not a '
         'theorem): for <b>any</b> quiver, finite or not, at most one valid decoration exists into '
         'any DecorationUniverse. Its proof consumes collect_val_ge and val_unique and no finiteness. '
+        'exists_decoration is the analogue of the existence clause: at least one exists, so '
+        'existsUnique_decoration gives exactly one. '
         'decoration_unique is the finite, graph-side proof, for finite APGs; it consumes '
         'collect_val_ge (never collect_singleton), val_unique through val_finite_of_ne_bot, and '
         '[Fintype V] for the acyclic descent, and its statement is a special case of '
         'decoration_unique_of_val. Each '
-        'gives a sufficient condition for decoration uniqueness, not a characterisation. Neither constructs a specific AFA '
-        'model or derives AFA\'s axioms from ZP\'s.',
+        'gives a sufficient condition for decoration uniqueness, not a characterisation. None of these '
+        'constructs a specific AFA model or derives AFA\'s axioms from ZP\'s: a decoration into an '
+        'abstract DecorationUniverse is not a model of AFA.',
         bg=AMBER_LITE, border=AMBER
     ))
     E.append(sp(6))
