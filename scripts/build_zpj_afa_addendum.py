@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-J AFA Addendum: Decoration Uniqueness from Valuation Structure
-Version 1.23 | November 2026
+Version 1.24 | November 2026
 Reads after ZP-J Self-Reference.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.23'
+VERSION = '1.24'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -499,8 +499,10 @@ def build():
             'On every quiver, finite or not, any two valid decorations into a DecorationUniverse '
             'are equal. No APG argument, no finiteness binder.',
             'Prior art: the AFA2 half of a result Aczel sets as an exercise (Non-Well-Founded Sets, '
-            'CSLI 1988, Ex. 2.1 p. 20; AFA1/AFA2 p. 19), proved here by induction on the rank '
-            'of the TARGET. One difference from the exercise is a point of rank &#8868;, &#8869; of U, '
+            'CSLI 1988, Ex. 2.1 p. 20; AFA1/AFA2 p. 19), proved here by strong induction on the finite '
+            'valuation (depth) of the decorating value, adapting the argument Aczel indicates on '
+            'p. 19 for well-founded sets, transfinite induction on the membership relation. One '
+            'difference from the exercise is a point of valuation &#8868;, &#8869; of U, '
             'admitted through val_unique.',
             'Lean purity: [propext, Quot.sound]. ✓',
         ]
@@ -527,7 +529,7 @@ def build():
     print('[build_zpj_afa_addendum] Building Section V...')
     E += [
         hr(),
-        Paragraph('Section V: Scope, Purity, and Open Questions', S['h1']),
+        Paragraph('Section V: Scope and Purity', S['h1']),
         hr(),
     ]
 
@@ -541,7 +543,7 @@ def build():
         '<b>Existence.</b> This document does not prove that every finite APG admits '
         'a valid decoration. Uniqueness and existence are independent: one can show '
         'that no two decorations can differ without showing that any decoration exists. '
-        'The existence half is not formalised here for abstract DecorationUniverses.'))
+        'The existence half is not formalised in this corpus.'))
 
     E.append(body(
         '<b>Finiteness.</b> decoration_unique requires Fintype V: its strong '
@@ -675,14 +677,19 @@ def build():
             'The objects are different: Aczel\'s target is a specific set-theoretic '
             'universe; the target here is any type carrying ValuationStructure and a '
             'collect operation, with no set-membership semantics required. '
-            'What differs is the target: decoration uniqueness holds for any '
+            'So decoration uniqueness holds for any '
             'abstract DecorationUniverse satisfying the depth-measure axioms, independently '
-            'of set-theoretic content. Read from the target, this is the uniqueness clause of a '
-            'corecursive algebra (Capretta, Uustalu and Vene, Corecursive Algebras, SBMF 2009, '
-            'LNCS 5902, Def. 1 p. 86); Urabe, Hara and Hasuo (Categorical Liveness Checking by '
-            'Corecursive Algebras, arXiv:1704.04872) use a corecursive algebra as a classifier for '
+            'of set-theoretic content. Read from the target (a reading, as ZeroParadox/Settheory/APG.lean '
+            'labels it), this is CRA-uniqueness for the algebra collect '
+            '(Capretta, Uustalu and Vene, Corecursive Algebras: A Study of General Structured '
+            'Corecursion, SBMF 2009, LNCS 5902, Def. 1 p. 86); Urabe, Hara and Hasuo (Categorical '
+            'Liveness Checking by Corecursive Algebras, arXiv:1704.04872, Def. II.16 p. 5) use a '
+            'corecursive algebra as a classifier for '
             '(non-)well-foundedness in their ranking domains, classically ranking functions into '
-            '&#8469; &#8746; {&#8734;}. '
+            '&#8469; &#8746; {&#8734;}, and prove both halves for one such ranking algebra, '
+            'uniqueness by transfinite induction on the value below the cap (Lemma A.6, p. 15); '
+            'here a cyclic vertex&#8217;s value has valuation &#8868; (cyclic_decoration_eq_bot '
+            'with val_bot). '
             'The existence half of Aczel\'s axiom is not addressed here.',
         ]
     ))

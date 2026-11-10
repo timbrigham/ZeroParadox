@@ -1,12 +1,12 @@
 """
 Zero Paradox — ZP-J: Executability of Self-Reference PDF Builder
-Version 2.20 | November 2026
+Version 2.21 | November 2026
 """
 
 import os
 from zp_utils import *
 
-VERSION = '2.20'
+VERSION = '2.21'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -939,11 +939,12 @@ def build():
         'none: decoration_unique_of_val (ZeroParadox/Settheory/APG.lean &#167; IX) inducts on the '
         'valuation of the decorating value instead. A value of finite valuation m is collected from '
         'children whose values have valuation below m (collect_val_ge), and a value of valuation '
-        '&#8868; is &#8869; of U (val_unique). It holds on every quiver, finite or not. Credit runs one '
-        'way: this adapts a result '
+        '&#8868; is &#8869; of U (val_unique). It holds on every quiver, finite or not. Credit: '
+        'this adapts a result '
         'Aczel sets as an exercise, that the Foundation axiom implies AFA2 (every graph has at most '
         'one decoration) (Aczel, <i>Non-Well-Founded Sets</i>, CSLI 1988, Exercise 2.1, p. 20; AFA1 '
-        'and AFA2 are defined on p. 19). One difference from that exercise is a point of infinite '
+        'and AFA2 are defined on p. 19), and the argument Aczel indicates on p. 19 for '
+        'well-founded sets, transfinite induction on the membership relation. One difference from that exercise is a point of infinite '
         'depth, &#8869; of U, admitted through val_unique. The two sides '
         'are related one way: a cyclic vertex&#8217;s value has valuation &#8868; '
         '(cyclic_decoration_eq_bot with val_bot); no converse is claimed.'))
