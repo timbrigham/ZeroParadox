@@ -672,7 +672,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 3362,
+        "declarations": 3364,
         "files": 208
       },
       "entries": [
@@ -17897,6 +17897,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "231e6737-6669-47a5-b946-95d5db38c2a2",
+          "new": {
+            "file": "ZeroParadox/Settheory/APG.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.absorb_of_unique_top",
+            "short": "absorb_of_unique_top"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/APG.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.absorb_of_unique_top",
+            "short": "absorb_of_unique_top",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Name the absorption lemma in APG.lean (Tim, 2026-11-09: \"Name it\")",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "236575b2-76e7-40f2-8274-b5dba9240eca",
           "new": {
             "file": "ZeroParadox/Meta/ExtractDeps.lean",
@@ -23879,6 +23916,43 @@
             ]
           },
           "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "2f6a5653-ddac-4cf8-aa51-76686f9cae6d",
+          "new": {
+            "file": "ZeroParadox/Settheory/APG.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.collect_absorbs_bot",
+            "short": "collect_absorbs_bot"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/APG.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.collect_absorbs_bot",
+            "short": "collect_absorbs_bot",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Name the absorption lemma in APG.lean (Tim, 2026-11-09: \"Name it\")",
           "verify": {
             "axioms": null,
             "sorry_free": true

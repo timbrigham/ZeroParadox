@@ -462,12 +462,10 @@ example {V : Type*} [Quiver V] {U : Type*} [ZPSemilattice U] [ValuationStructure
 
 Here `v : U → ℕ∞` and `c : Set U → U` are bare data. -/
 
--- Statement: absorption needs no join and no `val_bot`: a lower bound `v (c S) ≥ v x + 1` on members
--- and a unique `v`-⊤ point `b` force `v b = ⊤` and `c S = b` whenever `b ∈ S`.
--- Reading: a rank into On ∪ {∞} with `∞ + 1 = ∞` (Pakhomov–Walsh, Remark 5.1); the uniqueness of
--- the ∞ point is the corpus's own hypothesis.
-example {U : Type*} (v : U → ℕ∞) (c : Set U → U) (hc : ∀ S x, x ∈ S → v (c S) ≥ v x + 1)
-    (b : U) (hu : ∀ x, v x = ⊤ → x = b) : v b = ⊤ ∧ ∀ S, b ∈ S → c S = b := by
+/-- `Statement:` under `hc` and `hu` (bare data, no class), `v b = ⊤` and `c S = b` whenever `b ∈ S`. -/
+theorem absorb_of_unique_top {U : Type*} (v : U → ℕ∞) (c : Set U → U)
+    (hc : ∀ S x, x ∈ S → v (c S) ≥ v x + 1) (b : U) (hu : ∀ x, v x = ⊤ → x = b) :
+    v b = ⊤ ∧ ∀ S, b ∈ S → c S = b := by
   have htop : v (c Set.univ) = ⊤ := by
     have h := hc Set.univ (c Set.univ) trivial
     rcases hv : v (c Set.univ) with _ | m
@@ -479,12 +477,32 @@ example {U : Type*} (v : U → ℕ∞) (c : Set U → U) (hc : ∀ S x, x ∈ S 
   refine ⟨hb, fun S hS => hu _ (top_le_iff.mp ?_)⟩
   exact le_trans (hb ▸ le_self_add) (hc S b hS)
 
+-- Statement: absorption needs no join and no `val_bot`: a lower bound `v (c S) ≥ v x + 1` on members
+-- and a unique `v`-⊤ point `b` force `v b = ⊤` and `c S = b` whenever `b ∈ S`.
+-- Reading: a rank into On ∪ {∞} with `∞ + 1 = ∞` (Pakhomov–Walsh, Remark 5.1); the uniqueness of
+-- the ∞ point is the corpus's own hypothesis.
+example {U : Type*} (v : U → ℕ∞) (c : Set U → U) (hc : ∀ S x, x ∈ S → v (c S) ≥ v x + 1)
+    (b : U) (hu : ∀ x, v x = ⊤ → x = b) : v b = ⊤ ∧ ∀ S, b ∈ S → c S = b :=
+  absorb_of_unique_top v c hc b hu
+
+/-- `Statement:` ⊥ of `U` absorbs `collect`: `collect S = bot` whenever `bot ∈ S`. By cases on
+    `WithTop.LE`, with no order lemma. -/
+theorem collect_absorbs_bot {U : Type*} [ZPSemilattice U] [ValuationStructure U]
+    [DecorationUniverse U] (S : Set U) (h : (bot : U) ∈ S) :
+    DecorationUniverse.collect S = bot := by
+  have hge := DecorationUniverse.collect_val_ge S bot h
+  rw [ValuationStructure.val_bot] at hge
+  apply ValuationStructure.val_unique
+  rcases hv : ValuationStructure.val (DecorationUniverse.collect S) with _ | m
+  · rfl
+  · rw [hv] at hge
+    have h' : WithTop.LE (none : WithTop ℕ) (some m) := hge
+    cases h'
+
 -- Statement: its instance: ⊥ of `U` absorbs `collect` in every `DecorationUniverse`.
 example {U : Type*} [ZPSemilattice U] [ValuationStructure U] [DecorationUniverse U]
-    (S : Set U) (h : (bot : U) ∈ S) : DecorationUniverse.collect S = bot := by
-  have hge := DecorationUniverse.collect_val_ge S bot h
-  rw [ValuationStructure.val_bot, top_add] at hge
-  exact ValuationStructure.val_unique _ (top_le_iff.mp hge)
+    (S : Set U) (h : (bot : U) ∈ S) : DecorationUniverse.collect S = bot :=
+  collect_absorbs_bot S h
 
 -- Statement: `v` reverses the ZP order into ℕ∞'s iff `v (join x y) ≤ min (v x) (v y)`; Mathlib's
 -- `Antitone.map_sup_le` and `Monotone.of_le_map_sup` (through `OrderDual`), restated because the ZP
@@ -822,6 +840,8 @@ open ZeroParadox
 #print axioms acyclic_induction_step
 #print axioms cyclic_decoration_eq_bot
 #print axioms path_decoration_eq_bot
+#print axioms absorb_of_unique_top
+#print axioms collect_absorbs_bot
 #print axioms decoration_unique
 #print axioms enat_lt_of_add_one_le
 #print axioms decoration_agree_of_val_coe
