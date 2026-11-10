@@ -1,6 +1,6 @@
 """
 Build ZP-J Illustrated Companion
-Version 1.42 | November 2026
+Version 1.44 | November 2026
 """
 
 import os
@@ -10,11 +10,11 @@ from reportlab.graphics import renderPDF
 
 def quine_atom_diagram():
     """Diagram showing ⊥ ∈ ⊥ — the self-containing bottom element."""
-    dw, dh = TW, 2.8 * inch
+    dw, dh = TW, 2.9 * inch  # 208.8 pts; content top ~192 (the braces), bottom ~10 (caption)
     d = Drawing(dw, dh)
 
     cx = dw / 2
-    cy = 110  # fixed — do not derive from dh; label at cy-r_outer-18 = 20 > 0
+    cy = 110  # fixed, not derived from dh; Q = {Q} label at cy-r_outer-18 = 20, caption at y = 10
 
     # Outer circle (the set {⊥})
     r_outer = 72
@@ -159,7 +159,7 @@ def abstraction_chain_table():
     t.setStyle(ts); return t
 
 
-VERSION = '1.42'
+VERSION = '1.44'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -571,10 +571,11 @@ def build():
         'have depth below n, so induction on n settles it; the only label of infinite depth is '
         '&#8869; of the decorating type. Think of a recursion that terminates on the size of its '
         'output rather than its input: nothing about the graph is counted, so the graph may be '
-        'infinite (decoration_unique_of_val). This adapts the standard proof of a result Aczel sets '
+        'infinite (decoration_unique_of_val). This adapts a result Aczel sets '
         'as an exercise, that the Foundation axiom gives every graph at most one decoration (Aczel, '
-        'Non-Well-Founded Sets, 1988, Exercise 2.1, p. 20), with one exception admitted: the single '
-        'label of infinite depth. The two readings are linked one way: a cyclic '
+        'Non-Well-Founded Sets, 1988, Exercise 2.1, p. 20), and the argument he indicates on p. 19 for '
+        'well-founded sets, transfinite induction on the membership relation. One difference is that this version admits the single '
+        'label of infinite depth. The two readings are linked one way: under any valid decoration, a cyclic '
         'vertex gets infinite depth, and nothing is claimed in reverse.'))
     E.append(sp(4))
     E.append(remember_box(
