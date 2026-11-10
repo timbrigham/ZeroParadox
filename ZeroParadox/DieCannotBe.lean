@@ -49,6 +49,7 @@ import ZeroParadox.Order.LeastFixedPoint
 import ZeroParadox.Valuation.SemilatticeInstance
 import ZeroParadox.Settheory.OntBridge
 import ZeroParadox.Settheory.Model
+import ZeroParadox.Settheory.APG
 import ZeroParadox.Order.SeamSchema
 import ZeroParadox.Information.CrossingTrials
 import ZeroParadox.Order.DieJoints
@@ -873,6 +874,14 @@ example (u : ℤ_[2]ˣ) : PadicInt.valuation (u : ℤ_[2]) = 0 := by
 #check @ZeroParadox.t_snap_given                -- Statement: CC-1 `hcc1` and occurrence `hocc` as hypotheses
 #check @ZeroParadox.t_snap_given_cover          -- Statement: and the cover `hcov` as a third
 #check @ZeroParadox.tsnap_holds_but_nothing_moves -- Statement: the shape holds where nothing moves
+#check @ZeroParadox.natInf_not_botHasFirstStep  -- Statement: CONTROL: on ℕ∞ under `instNatInfZPS` (join `min`), ⊥ of that semilattice has no first step (`BotHasFirstStep`)
+-- Statement: CONTROL, the same carrier: ⊥ of ℕ∞ under `min` is the unique point of valuation ⊤ and has
+-- no first step, so the first step does not follow from a unique valuation-⊤ point.
+example : (ZeroParadox.ValuationStructure.val (ZeroParadox.ZPSemilattice.bot : ℕ∞) = ⊤ ∧
+      ∀ x : ℕ∞, ZeroParadox.ValuationStructure.val x = ⊤ → x = ZeroParadox.ZPSemilattice.bot) ∧
+    ¬ ZeroParadox.BotHasFirstStep ℕ∞ :=
+  ⟨⟨ZeroParadox.ValuationStructure.val_bot, ZeroParadox.ValuationStructure.val_unique⟩,
+    ZeroParadox.natInf_not_botHasFirstStep⟩
 
 /-! ### § VIII. Stages and one shared closure — two faces, co-witnesses -/
 #check @ZeroParadox.Motion.StageClosure         -- Statement: no stage is a landing, and UP sends every stage to one value `c`, possibly undefined
@@ -2957,6 +2966,8 @@ example {L : Type} [ZeroParadox.ZPSemilattice L] (a : L) :
     (ZeroParadox.Motion.ofTotal (id : L → L) (fun _ => rfl)
       (fun x y => ∃ z, y = ZeroParadox.ZPSemilattice.join x z)).step ZeroParadox.ZPSemilattice.bot a :=
   ⟨a, (ZeroParadox.ZPSemilattice.bot_join a).symm⟩
+#check @ZeroParadox.collect_absorbs_bot          -- Statement: ⊥ of `U` absorbs `collect` in every `DecorationUniverse U`: `collect S = bot` whenever `bot ∈ S`
+#check @ZeroParadox.absorb_of_unique_top         -- Statement: from bare data, a `v`-raising `c` and a unique `v`-⊤ point `b`: `v b = ⊤` and `c S = b` whenever `b ∈ S`
 -- Statement: at most one predecessor, on the reversed motion: ⊤ of ℕ∞ steps only to itself in the
 -- reverse of `ofFun (· + 1)` (`selfOnlyAt_of_step_self` there, since `x + 1 = ⊤` only at `x = ⊤`), so ⊤
 -- of ℕ∞ is in the first set of `ofFun (· + 1)`. In ℕ∞'s own order the step raises, and that datum puts

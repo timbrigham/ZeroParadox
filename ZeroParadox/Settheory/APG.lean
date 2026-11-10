@@ -471,11 +471,18 @@ theorem absorb_of_unique_top {U : Type*} (v : U → ℕ∞) (c : Set U → U)
     rcases hv : v (c Set.univ) with _ | m
     · rfl
     · rw [hv] at h
-      change (m : ℕ∞) ≥ (m : ℕ∞) + 1 at h
-      exact absurd (show m ≥ m + 1 by exact_mod_cast h) (by omega)
+      have h' : WithTop.LE (some (m + 1) : WithTop ℕ) (some m) := h
+      cases h' with
+      | coe_le_coe hle => exact absurd hle (Nat.not_succ_le_self m)
   have hb : v b = ⊤ := hu _ htop ▸ htop
-  refine ⟨hb, fun S hS => hu _ (top_le_iff.mp ?_)⟩
-  exact le_trans (hb ▸ le_self_add) (hc S b hS)
+  refine ⟨hb, fun S hS => hu _ ?_⟩
+  have h := hc S b hS
+  rw [hb] at h
+  rcases hv : v (c S) with _ | m
+  · rfl
+  · rw [hv] at h
+    have h' : WithTop.LE (none : WithTop ℕ) (some m) := h
+    cases h'
 
 -- Statement: absorption needs no join and no `val_bot`: a lower bound `v (c S) ≥ v x + 1` on members
 -- and a unique `v`-⊤ point `b` force `v b = ⊤` and `c S = b` whenever `b ∈ S`.

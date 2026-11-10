@@ -672,7 +672,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 3364,
+        "declarations": 3365,
         "files": 208
       },
       "entries": [
@@ -45259,6 +45259,43 @@
             "role": []
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "5ce4a952-f365-4012-8bbc-6b7db2e2b2b1",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natInf_not_botHasFirstStep",
+            "short": "natInf_not_botHasFirstStep"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natInf_not_botHasFirstStep",
+            "short": "natInf_not_botHasFirstStep",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Occurrence control: on ℕ∞ under min, the unique valuation-⊤ point (⊥ of that semilattice) has no first step (BotHasFirstStep fails)",
           "verify": {
             "axioms": null,
             "sorry_free": true
