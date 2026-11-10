@@ -1,6 +1,7 @@
 -- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): a first step at ⊥ of a ZP-A semilattice and a typical tape, as two hypotheses giving the snap's cover and its slot-chart firing (`hw`). Curated results indexed in ZeroParadox/MANIFEST.md.
 import ZeroParadox.Information.Disjunctive
 import ZeroParadox.Reals.OrderedField
+import ZeroParadox.Settheory.Model
 import Mathlib.Probability.StrongLaw
 import Mathlib.Analysis.Real.OfDigits
 import Mathlib.Order.Filter.EventuallyConst
@@ -201,6 +202,17 @@ example [ZPSemilattice Unit] : ¬ BotHasFirstStep Unit := by
   rintro ⟨a, ha⟩
   letI := zpSemilatticeSup Unit
   exact @LT.lt.ne Unit (zpSemilatticeSup Unit).toPreorder _ _ ha.1 (Subsingleton.elim _ _)
+
+/-- `Statement:` CONTROL, `ℕ∞` under `instNatInfZPS` (join `min`, ⊥ = ⊤ of `ℕ∞`): ⊥ has no first
+step in ZP-A's induced order; Mathlib's `WithTop.not_covBy_top` read through the order reversal. -/
+theorem natInf_not_botHasFirstStep : ¬ BotHasFirstStep ℕ∞ := by
+  rintro ⟨a, hlt, hno⟩
+  have key : ∀ x y : ℕ∞, @LT.lt ℕ∞ (zpSemilatticeSup ℕ∞).toLT x y ↔ y < x := fun x y => by
+    show (min x y = y ∧ ¬ min y x = x) ↔ _
+    rw [min_eq_right_iff, min_eq_right_iff]
+    exact ⟨fun h => lt_of_le_not_ge h.1 h.2, fun h => ⟨h.le, not_le.2 h⟩⟩
+  exact WithTop.not_covBy_top (α := ℕ) (a := a)
+    ⟨(key _ _).1 hlt, fun c h1 h2 => hno ((key _ _).2 h2) ((key _ _).2 h1)⟩
 
 /-! ## § II. Martin-Löf randomness, defined locally
 
@@ -846,6 +858,7 @@ open ZeroParadox
 #print axioms nnreal_not_botHasFirstStep
 #print axioms boolOrZPS
 #print axioms bool_botHasFirstStep
+#print axioms natInf_not_botHasFirstStep
 #print axioms prefixCyl
 #print axioms MLTest
 #print axioms MLRandom
