@@ -1,4 +1,4 @@
--- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the glb, first-step, atom and strong-atomicity hypotheses at ⊥ do not force a binary tree above it; depth at every element with strong atomicity does, one way. Curated results indexed in ZeroParadox/MANIFEST.md.
+-- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the glb, first-step and atom hypotheses at ⊥, with strong atomicity of the whole order, do not force a binary tree above it; depth at every element with strong atomicity does, one way. Curated results indexed in ZeroParadox/MANIFEST.md.
 import ZeroParadox.Valuation.CellsJoint
 import Mathlib.Order.WellQuasiOrder
 import Mathlib.Order.Atoms
@@ -7,7 +7,7 @@ import Mathlib.Data.Finset.Grade
 import Mathlib.Tactic
 
 /-!
-# The binary tree above ⊥ of a join-semilattice: not forced by ⊥ as glb of non-⊥ members, a first step, infinitely many atoms and strong atomicity; forced, one way, by depth at every element with strong atomicity
+# The binary tree above ⊥ of a join-semilattice: not forced by ⊥ as greatest lower bound of non-⊥ members, a first step, infinitely many atoms and strong atomicity of the whole order; forced, one way, by depth at every element with strong atomicity
 
 ## Engineer's Take
 
@@ -19,7 +19,7 @@ defer to my AI assistant regarding the specifics of how the internals work.
 ---
 
 ## Formal Overview (AI-assisted)
-`Comb` has ⊥ as the glb of non-⊥ members, a first step, infinitely many atoms and `IsStronglyAtomic`, and no order embedding of `End` or of the binary tree `BTree` (`comb_no_End`, `comb_no_BTree`): these hypotheses at ⊥ do NOT force the tree.
+`Comb` has ⊥ as the glb of non-⊥ members, a first step and infinitely many atoms at ⊥, is `IsStronglyAtomic` as a whole order, and has no order embedding of `End` or of the binary tree `BTree` (`comb_no_End`, `comb_no_BTree`): these hypotheses do NOT force the tree.
 Depth at every element with `IsStronglyAtomic` does, one way (`btree_embeds_of_hereditary_depth`; ZP-A's order, `zp_btree_embeds_of_hereditary_depth`), through the weaker "every element has infinitely many covers" (`btree_embeds_of_covers_infinite`), which `Finset ℕ` meets without depth (`finset_covers_infinite`); `End` embeds the tree and fails depth at its top (`end_top_no_depth`), so sufficient, not necessary. An independent sequence is also sufficient (`btree_embeds_of_independent`), one direction of Chakir–Pouzet, arXiv:0812.2300, Thm 1.4.
 Each such hypothesis is explicit on the theorem that uses it, never a class field. Complementary case: Mathlib's Kőnig lemma `exists_seq_covby_of_forall_covby_finite` (`Mathlib/Order/KonigLemma.lean`); topological analogue: `Perfect.exists_nat_bool_injection` (`Mathlib/Topology/MetricSpace/Perfect.lean`).
 -/

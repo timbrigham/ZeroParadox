@@ -672,8 +672,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 3712,
-        "files": 217
+        "declarations": 3794,
+        "files": 218
       },
       "entries": [
         {
@@ -1411,6 +1411,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "01347023-2d6d-4e96-a230-7cb7a4641b05",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.combShift_le_iff",
+            "short": "combShift_le_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.combShift_le_iff",
+            "short": "combShift_le_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -3191,6 +3230,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "0480a5a3-163c-40e9-a1d0-4a89218556fe",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.q11Hi",
+            "short": "q11Hi"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.q11Hi",
+            "short": "q11Hi",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "04adaf70-fef6-46ff-8bab-25f10636d2a8",
           "new": {
             "file": "ZeroParadox/Category/DiagonalWitness.lean",
@@ -4651,6 +4729,45 @@
             ]
           },
           "reason": "Seed-independence measured: every seed at or below epsilon-0 reaches it; iterative bottoms in the ordinal carrier",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "06cd132b-3155-4161-8400-1a7b507fdc4d",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.comb_coverHost",
+            "short": "comb_coverHost"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.comb_coverHost",
+            "short": "comb_coverHost",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -7055,6 +7172,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "0ac7e0aa-514c-48a8-be65-b764408fdd48",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.comb_local_pair_no_tree",
+            "short": "comb_local_pair_no_tree"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.comb_local_pair_no_tree",
+            "short": "comb_local_pair_no_tree",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "0aded3b5-c6e8-4405-9eb4-4e34906c7972",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -8171,6 +8327,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "0cd162f7-7d2f-4659-be4e-dcd8e84ce61a",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.twoChartCode",
+            "short": "twoChartCode"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.twoChartCode",
+            "short": "twoChartCode",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "0d12deab-03e4-416f-8127-704971f04c31",
           "new": {
             "file": "ZeroParadox/Information/MaxEntropy.lean",
@@ -8269,6 +8464,45 @@
             ]
           },
           "reason": "twin de-scar: <base>_<FileBasename> file-suffix rename",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0d4d5e59-7612-4087-8213-7ce2ef6e02d3",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.combShiftEmb",
+            "short": "combShiftEmb"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.combShiftEmb",
+            "short": "combShiftEmb",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -8855,6 +9089,45 @@
             "role": []
           },
           "reason": "die-pinnedlimit-1103: Tim's die role PinnedLimit (Die.lean § XXIV: role, NInf order + occupant, link, WLPO separation, WithTop control) and the ε₀ occupant (Epsilon0MinMax § III); Tim ruled 2026-11-03",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0e4c72ef-b09c-4b9a-954a-b4f9e4013788",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.combSq",
+            "short": "combSq"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.combSq",
+            "short": "combSq",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -11290,6 +11563,45 @@
             ]
           },
           "reason": "Die stage/closure shape and registration switch (Die.lean § VI-VII), with its two face maps in their existing homes (Epsilon0LeastFP, Occurrence)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "12d1612c-1c10-451d-9bb6-252e223178f2",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.wbf_btree",
+            "short": "wbf_btree"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.wbf_btree",
+            "short": "wbf_btree",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -17740,6 +18052,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "1f2033a5-bded-4f88-a047-e0530fd41031",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.q11Neg",
+            "short": "q11Neg"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.q11Neg",
+            "short": "q11Neg",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "1f2ec770-5b67-4d76-884b-f8c67c784799",
           "new": {
             "file": "ZeroParadox/Settheory/GraphBisim.lean",
@@ -19110,6 +19461,84 @@
             "role": []
           },
           "reason": "die-coalg-1028: motion as a Part x Set coalgebra (Die § XX) and observation as a parameter of a pair (Die § XXI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "214d24a0-9f48-4adf-be17-918e393eb84f",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.chainFan_no_btree",
+            "short": "chainFan_no_btree"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.chainFan_no_btree",
+            "short": "chainFan_no_btree",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "21b51719-f01a-4b62-93d7-2addce2471a8",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.comb_not_doubling",
+            "short": "comb_not_doubling"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.comb_not_doubling",
+            "short": "comb_not_doubling",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -22934,6 +23363,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "2930d889-34ee-49a9-83f7-ceef621fe5a8",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.comb_quine_and_no_tree",
+            "short": "comb_quine_and_no_tree"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.comb_quine_and_no_tree",
+            "short": "comb_quine_and_no_tree",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "293354c5-c97c-45f7-84a5-699720928c85",
           "new": {
             "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
@@ -24675,6 +25143,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "2c48857c-7f2d-44cf-805e-f9d362944c72",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dblProj_mono",
+            "short": "dblProj_mono"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.dblProj_mono",
+            "short": "dblProj_mono",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "2c4b2f74-8076-4ac8-b4b5-11a5b3db1591",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -24973,6 +25480,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "2cd70e1b-fb2c-43d0-a6fd-6344ec13bc41",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.q11_exchange_no_tree",
+            "short": "q11_exchange_no_tree"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.q11_exchange_no_tree",
+            "short": "q11_exchange_no_tree",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "2ce1be8f-8b6e-437d-b9f6-3f3a34c78568",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -25067,6 +25613,45 @@
             "role": []
           },
           "reason": "SyntacticCollapse: choice-free syntactic surrogate for the 2-adic metric collapse (evidence the choice in tower_converges_to_zero is Mathlib-imposed)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "2cfc0c6d-0e14-443b-aa2f-56c09cb79291",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.combShift_selfCopyRef",
+            "short": "combShift_selfCopyRef"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.combShift_selfCopyRef",
+            "short": "combShift_selfCopyRef",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -27117,6 +27702,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "30eea3ce-fd13-4892-84cf-1ecb65341c2e",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.poleCellDouble",
+            "short": "poleCellDouble"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.poleCellDouble",
+            "short": "poleCellDouble",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "30fc4d3a-22f4-46bb-aea3-360db67c59f8",
           "new": {
@@ -28754,6 +29378,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "349a83eb-7526-4fe1-bc45-660b846444ca",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dblSeq_independent",
+            "short": "dblSeq_independent"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.dblSeq_independent",
+            "short": "dblSeq_independent",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "34c93bb7-4a63-4166-9334-e32bb6b56f3f",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -29563,6 +30226,45 @@
             ]
           },
           "reason": "Land 2026-11-10 cells-joint, local-towers, interleave probes and the new one-way-flow results into ZeroParadox/Valuation (CellsJoint, Interleave, LocalTowers, OneWayFlow).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "36347e23-6ab8-422d-b617-6997b2fe7bb0",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.chartSwap",
+            "short": "chartSwap"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.chartSwap",
+            "short": "chartSwap",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -31115,6 +31817,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "395f3212-4d8a-43d6-a7f3-b6de994483ce",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.unit_control",
+            "short": "unit_control"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.unit_control",
+            "short": "unit_control",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "396088c8-d117-4b45-ab19-2ab746a0f90e",
           "new": {
             "file": "ZeroParadox/Valuation/PadicErgodic.lean",
@@ -32517,6 +33258,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "3bd94288-948f-4869-95c6-222fe57a876f",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dblShift_bot",
+            "short": "dblShift_bot"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.dblShift_bot",
+            "short": "dblShift_bot",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "3bf9be5b-f998-4a0a-9d23-d0d4b35bfa02",
           "new": {
             "file": "ZeroParadox/Computability/Occurrence.lean",
@@ -32766,6 +33546,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "3c8c8158-a13e-4e96-94e4-989d454da044",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ternRev_bounds",
+            "short": "ternRev_bounds"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ternRev_bounds",
+            "short": "ternRev_bounds",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -33924,6 +34743,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "3f045aa2-5586-4f87-91d9-c97da88b1a64",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.sqTree_le_iff",
+            "short": "sqTree_le_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.sqTree_le_iff",
+            "short": "sqTree_le_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "3f0d513e-115b-40cc-96c5-7e5e8f7977f6",
           "new": {
@@ -35028,6 +35886,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "4214d6f5-ab1c-418b-b498-25b9572977cb",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.square_embed_forces_btree",
+            "short": "square_embed_forces_btree"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.square_embed_forces_btree",
+            "short": "square_embed_forces_btree",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "4227b37b-2ddc-4cc2-9d0f-aa7f221d6045",
           "new": {
             "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
@@ -35685,6 +36582,45 @@
             ]
           },
           "reason": "Given a point at valuation 0, nothing maps onto it under scale: bot is a fixed point carrying top, and any other predecessor would force 0 = val y + 1, which the extended naturals refuse. The hypothesis is load-bearing.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "4301b974-af92-49d8-8b7a-f826e74a6a86",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Q11",
+            "short": "Q11"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Q11",
+            "short": "Q11",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -38284,6 +39220,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "4703d914-d8e5-4692-ad0a-52d33cd9ace3",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.oneInTwo",
+            "short": "oneInTwo"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.oneInTwo",
+            "short": "oneInTwo",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "470fab4d-d799-4abb-aea2-8a21a51ad094",
           "new": {
             "file": "ZeroParadox/Category/LawvereTwoAdic.lean",
@@ -39801,6 +40776,45 @@
             ]
           },
           "reason": "D-22: promote the involutive-fork witnesses from private/physics-bridge into a tracked file so Wall.lean's NO-GO table row is citable",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "49a59ee6-a765-4ec3-97d7-4e43d3647fad",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ternRev",
+            "short": "ternRev"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ternRev",
+            "short": "ternRev",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -41753,6 +42767,45 @@
             ]
           },
           "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "4d7e2172-047f-4670-abc7-a71b5b546b4a",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.chainFanToWedge_surj",
+            "short": "chainFanToWedge_surj"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.chainFanToWedge_surj",
+            "short": "chainFanToWedge_surj",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -44037,6 +45090,45 @@
             ]
           },
           "reason": "The hard bridge located: reflexive object refuted in Type (Cantor), escape is the fork/domain regime",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "5199efee-b0c9-487a-a12b-d8539a188af7",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.combSq_le_iff",
+            "short": "combSq_le_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.combSq_le_iff",
+            "short": "combSq_le_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -46740,6 +47832,45 @@
             ]
           },
           "reason": "§ I-b, 2026-08-09: freeNat is not the zero object, completing the BCB-19 counterexample - biprod_diagonal_only_zero genuinely fails without its finiteness hypothesis.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "575ae720-533b-4441-8d75-8129515e414c",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dblProj_bot",
+            "short": "dblProj_bot"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.dblProj_bot",
+            "short": "dblProj_bot",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -52731,6 +53862,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "62b11281-19f6-4279-8cad-38a9348097c0",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.wbf_min",
+            "short": "wbf_min"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.wbf_min",
+            "short": "wbf_min",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "62d93d1c-7e23-4cc6-93a4-20fa454b65ce",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -53362,6 +54532,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "64406cb8-e00c-4993-8b20-609fd85db755",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.pole_is_pair",
+            "short": "pole_is_pair"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.pole_is_pair",
+            "short": "pole_is_pair",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -57896,6 +59105,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "6d13d011-1395-4428-b6b1-6d82591234ac",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.linear_no_btree",
+            "short": "linear_no_btree"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.linear_no_btree",
+            "short": "linear_no_btree",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "6d19b272-5e12-4de0-964c-f8fa275b0843",
           "new": {
             "file": "ZeroParadox/Valuation/TreeNotForced.lean",
@@ -62121,6 +63369,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "751feded-c27d-4c82-bcdf-3830e4545698",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.end_doubling_btree",
+            "short": "end_doubling_btree"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.end_doubling_btree",
+            "short": "end_doubling_btree",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "7528fc11-809e-44d7-bbd3-c9f91e4f1aff",
           "new": {
             "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
@@ -62553,6 +63840,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "75c55fb4-9ca0-48a7-97dd-5627da0d795b",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.wbf_not_doubling",
+            "short": "wbf_not_doubling"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.wbf_not_doubling",
+            "short": "wbf_not_doubling",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -66524,6 +67850,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "7d974e53-909f-4bba-8540-0b9cdbaedda3",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.selfCopy_at_bot_not_forcing",
+            "short": "selfCopy_at_bot_not_forcing"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.selfCopy_at_bot_not_forcing",
+            "short": "selfCopy_at_bot_not_forcing",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "7d9f1dbe-26f6-48cc-8a34-999007c7b2a9",
           "new": {
@@ -66626,6 +67991,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "7db94623-0d88-47ce-80bb-46a0c25d06c1",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.chainFanToWedge_le_iff",
+            "short": "chainFanToWedge_le_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.chainFanToWedge_le_iff",
+            "short": "chainFanToWedge_le_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -69490,6 +70894,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "82a05fb7-c93f-431c-9000-7e67099853ad",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.wedge_double_impossible_of_sup",
+            "short": "wedge_double_impossible_of_sup"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.wedge_double_impossible_of_sup",
+            "short": "wedge_double_impossible_of_sup",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "82a81d64-b0eb-4b86-8186-b1584d089330",
           "new": {
             "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
@@ -71599,6 +73042,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "86c9e52e-c9ac-4451-95e3-a41b21fdadf7",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.combSelfApp",
+            "short": "combSelfApp"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.combSelfApp",
+            "short": "combSelfApp",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "86ffe717-515c-4344-a05b-9581462f853a",
           "new": {
             "file": "ZeroParadox/Multihomed/Boundary.lean",
@@ -72850,6 +74332,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "89929a18-78bd-4632-82ba-44774e583fdb",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.wedge_double_no_tree",
+            "short": "wedge_double_no_tree"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.wedge_double_no_tree",
+            "short": "wedge_double_no_tree",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "89af8682-a8f5-4efd-a0d5-2a9fcac11f74",
           "new": {
@@ -73733,6 +75254,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "8b4eda7f-50e0-48f2-9e69-918f951a3c92",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.q11Lo",
+            "short": "q11Lo"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.q11Lo",
+            "short": "q11Lo",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "8b5f8e64-b624-4309-9a2a-d89f17306936",
           "new": {
             "file": "ZeroParadox/Order/UpAndOver.lean",
@@ -74287,6 +75847,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "8c40a046-6cdd-4d84-91be-ec9e17bd062f",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.subsingletonDouble",
+            "short": "subsingletonDouble"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.subsingletonDouble",
+            "short": "subsingletonDouble",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "8c5f938a-8a91-4296-bca8-9a93e0e683f6",
           "new": {
             "file": "ZeroParadox/Valuation/PoleCompletion.lean",
@@ -74464,6 +76063,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "8d39339f-eeb6-43c4-9667-e37285a78406",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.chainFanWedge_bot",
+            "short": "chainFanWedge_bot"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.chainFanWedge_bot",
+            "short": "chainFanWedge_bot",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -74773,6 +76411,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "8e5591cd-9c6f-4c84-a927-b7a03df291c8",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.sqC_not_le_bot",
+            "short": "sqC_not_le_bot"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.sqC_not_le_bot",
+            "short": "sqC_not_le_bot",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "8e5d89b6-9622-4c34-bc55-25b9908b8597",
           "new": {
             "file": "ZeroParadox/Settheory/GraphBisim.lean",
@@ -74799,6 +76476,45 @@
             ]
           },
           "reason": "New file GraphBisim.lean: finite membership graphs, Aczel bisimulation, dropLoops (control) vs wfPart (bisimulation-invariant), Omega/empty/zero-star/one/two-cycle examples",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "8eafbb47-b2c4-444d-8c9d-1ad5702c780c",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.setNat_exchange_tree",
+            "short": "setNat_exchange_tree"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.setNat_exchange_tree",
+            "short": "setNat_exchange_tree",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -75614,6 +77330,45 @@
             ]
           },
           "reason": "Land PoleWithinEnsemble and TowerTape: ⊥ of ℕ → Bool null yet in the support of trials p hp (iff p < 1) and in the closure of random firing tapes; local floors as subtape poles; a local tower as one tape; limit and value forms (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "903038c7-83fe-492f-8b95-08871e5b696f",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.wbf_independent",
+            "short": "wbf_independent"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.wbf_independent",
+            "short": "wbf_independent",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -77101,6 +78856,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "92663553-bf77-4b98-802b-f1a41d1d208f",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dblProj_seq",
+            "short": "dblProj_seq"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.dblProj_seq",
+            "short": "dblProj_seq",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "92801b7e-1031-4f56-90b5-d45a7c0527d7",
           "new": {
             "file": "ZeroParadox/Valuation/SemilatticeInstance.lean",
@@ -78262,6 +80056,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "94dc64d5-c6cf-4dd3-a79c-6b3f77e19db8",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.doubling_forces_btree",
+            "short": "doubling_forces_btree"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.doubling_forces_btree",
+            "short": "doubling_forces_btree",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -80335,6 +82168,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "9895ed82-09a5-4557-aea1-43a63f78c697",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.q11_twoChart_tree",
+            "short": "q11_twoChart_tree"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.q11_twoChart_tree",
+            "short": "q11_twoChart_tree",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "98a1e320-e2ad-4701-9d95-da9179f13284",
           "new": {
             "file": "ZeroParadox/Information/TwoRequirements.lean",
@@ -81467,6 +83339,45 @@
             ]
           },
           "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "9a836699-ecf2-4c6f-9c12-2447d8889706",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.sqC_le_iff",
+            "short": "sqC_le_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.sqC_le_iff",
+            "short": "sqC_le_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -83753,6 +85664,45 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "9e180e8a-6628-43cd-b81c-22fb078fb0d7",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dblShift",
+            "short": "dblShift"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.dblShift",
+            "short": "dblShift",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -86238,6 +88188,45 @@
             ]
           },
           "reason": "UniversalChoiceFree § IX: a self-printing universal code at [propext, Quot.sound] (restated SelfPrints ∧ Universal via encodeCode/ofNatCodeCF), faithfulness bridges, statement controls, controls zero_selfPrints_not_universal / universal_not_selfPrints_cf / unshifted_incompatible",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a28812a5-586f-4328-b55c-f4d2abf8db9d",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.pole_identity_collapses",
+            "short": "pole_identity_collapses"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.pole_identity_collapses",
+            "short": "pole_identity_collapses",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -89041,6 +91030,45 @@
             "role": []
           },
           "reason": "PoleChartSelection: NEGATIVE result - chart selection at the built pole is axiom-free, refuting the naive 'choice = chart selection' reading; § II is a labelled conditional model",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a8d6ed6b-181b-4457-8e21-3fb356250452",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.chainFan_upchains",
+            "short": "chainFan_upchains"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.chainFan_upchains",
+            "short": "chainFan_upchains",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -91987,6 +94015,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "ada8780f-0c7f-471b-a56c-eca631b00717",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.chainFanToWedge",
+            "short": "chainFanToWedge"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.chainFanToWedge",
+            "short": "chainFanToWedge",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "adb02e9a-515b-4272-a409-5cadee415923",
           "new": {
             "file": "ZeroParadox/Settheory/QuineHost.lean",
@@ -93589,6 +95656,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "b0414b4d-fc2e-45f1-8d19-62b12ed92ff2",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.coverQuineAtomHost",
+            "short": "coverQuineAtomHost"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.coverQuineAtomHost",
+            "short": "coverQuineAtomHost",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "b0431e2d-977a-4cce-ab88-5629c1814280",
           "new": {
             "file": "ZeroParadox/Valuation/Interleave.lean",
@@ -93689,6 +95795,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b0966c5d-75df-46a3-8885-0f742ce452ac",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.botWedge_orderBot",
+            "short": "botWedge_orderBot"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.botWedge_orderBot",
+            "short": "botWedge_orderBot",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -95083,6 +97228,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "b2cb44f7-effc-4187-a0fb-2928f9f139e3",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ternFwd",
+            "short": "ternFwd"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ternFwd",
+            "short": "ternFwd",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "b2d9f2bf-9113-4e1e-af1a-2c63e8c4a251",
           "new": {
@@ -95145,6 +97329,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b320cb48-3480-4c54-b76c-7f3175db41e5",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dblProj_finset_sup",
+            "short": "dblProj_finset_sup"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.dblProj_finset_sup",
+            "short": "dblProj_finset_sup",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -95450,6 +97673,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "b38f8e95-258b-436f-b561-9283e9c56397",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.sqC",
+            "short": "sqC"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.sqC",
+            "short": "sqC",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "b39ad380-f7c4-4aec-9410-18a73f9aaadf",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -95547,6 +97809,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b3c7831b-7b95-4755-96cd-12259fb3b9a4",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ternFwd_bounds",
+            "short": "ternFwd_bounds"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ternFwd_bounds",
+            "short": "ternFwd_bounds",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -96152,6 +98453,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "b4909dd3-5177-4648-bae7-4615f463aa38",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dblProj",
+            "short": "dblProj"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.dblProj",
+            "short": "dblProj",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "b497ae9e-a8aa-4dbb-8c09-bd62556970a6",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -96250,6 +98590,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b4da931a-3150-42a7-bdcf-8303fd397ee0",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fin3_twoChart_no_tree",
+            "short": "fin3_twoChart_no_tree"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.fin3_twoChart_no_tree",
+            "short": "fin3_twoChart_no_tree",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -97152,6 +99531,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "b6badda2-c899-4773-a41b-b9a5207dc391",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.sqTree",
+            "short": "sqTree"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.sqTree",
+            "short": "sqTree",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "b6cf3987-eee0-40c5-b615-8626cf7b2001",
           "new": {
             "file": "ZeroParadox/Category/ExcludedMiddleBridge.lean",
@@ -97594,6 +100012,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "b758ee50-5d54-4a3f-953d-9f866c2d8586",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.chartSwap_props",
+            "short": "chartSwap_props"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.chartSwap_props",
+            "short": "chartSwap_props",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "b75becb3-6e87-4b28-9bbf-0b765ad2f7a5",
           "new": {
             "file": "ZeroParadox/Information/CrossingTrials.lean",
@@ -97989,6 +100446,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b7fb0025-da3e-4874-b5b2-51c3de2b193e",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dblShift_not_surj",
+            "short": "dblShift_not_surj"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.dblShift_not_surj",
+            "short": "dblShift_not_surj",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -99467,6 +101963,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "bad4bf83-e7c8-466f-924b-309a11063f19",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.combShift",
+            "short": "combShift"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.combShift",
+            "short": "combShift",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -105863,6 +108398,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "c7034d4d-5a80-4274-ac0b-eea80145ba67",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fin3_exchange_no_tree",
+            "short": "fin3_exchange_no_tree"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.fin3_exchange_no_tree",
+            "short": "fin3_exchange_no_tree",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "c70c6050-024a-489a-b0ba-bd194ca3254c",
           "new": {
             "file": "ZeroParadox/Valuation/TreeNotForced.lean",
@@ -111078,6 +113652,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "cf97e9ce-7e77-4265-81ed-ce325ab727a2",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.combSqEmb",
+            "short": "combSqEmb"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.combSqEmb",
+            "short": "combSqEmb",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "cfa25ada-03c4-43c6-92bb-f17e4e8b37d1",
           "new": {
             "file": "ZeroParadox/Valuation/PadicVladimirov.lean",
@@ -112428,6 +115041,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d2a798d1-3363-46ed-b19d-f90146f11de1",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.tern_le_iff",
+            "short": "tern_le_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.tern_le_iff",
+            "short": "tern_le_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -114207,6 +116859,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "d5b59ec6-c864-40d0-b619-bab69ffe5ebd",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.end_not_wedge_double",
+            "short": "end_not_wedge_double"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.end_not_wedge_double",
+            "short": "end_not_wedge_double",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "d5bfa7dc-6752-42e2-a7e3-bd1bc482ec60",
           "new": {
@@ -114459,6 +117150,45 @@
             ]
           },
           "reason": "2026-07-26 ZP-K occurrence arc: NO-GO gauges (SelfApp, Snap) + new Occurrence.lean (machine model, trap, trilemma, inversion, occurrence-is-halting). ComputationCannotBe.lean is #check-only, 0 decls.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d5f2d8f1-83b6-4e82-897d-a110c27bf08e",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.chainFanWedge",
+            "short": "chainFanWedge"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.chainFanWedge",
+            "short": "chainFanWedge",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -115232,6 +117962,45 @@
             "role": []
           },
           "reason": "PoleChartSelection: NEGATIVE result - chart selection at the built pole is axiom-free, refuting the naive 'choice = chart selection' reading; § II is a labelled conditional model",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d810ad78-4083-46ce-adbb-986385102c85",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ChainFan",
+            "short": "ChainFan"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ChainFan",
+            "short": "ChainFan",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -118265,6 +121034,45 @@
             ]
           },
           "reason": "Land PoleWithinEnsemble and TowerTape: ⊥ of ℕ → Bool null yet in the support of trials p hp (iff p < 1) and in the closure of random firing tapes; local floors as subtape poles; a local tower as one tape; limit and value forms (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "dd6751a1-fa5b-4499-afc3-2a84cc67cdc5",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dblProj_sup",
+            "short": "dblProj_sup"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.dblProj_sup",
+            "short": "dblProj_sup",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -123060,6 +125868,84 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "e5932215-e131-4d00-9006-df6017f51e19",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.btree_no_square_embed",
+            "short": "btree_no_square_embed"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.btree_no_square_embed",
+            "short": "btree_no_square_embed",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e59ba1bf-c004-470e-96d6-0a728b635970",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.comb_bot_quine",
+            "short": "comb_bot_quine"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.comb_bot_quine",
+            "short": "comb_bot_quine",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "e59f65fa-4f72-4f7e-8d52-eedcf7865b58",
           "new": {
             "file": "ZeroParadox/Settheory/MetaFork.lean",
@@ -124589,6 +127475,45 @@
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": "[propext, Classical.choice, Quot.sound]",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e8b8cf47-dc9e-4f24-ab79-ce4710b54736",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dblSeq",
+            "short": "dblSeq"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.dblSeq",
+            "short": "dblSeq",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
+          "verify": {
+            "axioms": null,
             "sorry_free": true
           }
         },
@@ -127738,6 +130663,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "edfc293b-8259-4a65-b523-83e2d8daf158",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox.ChainFan",
+            "qualified": "ZeroParadox.ChainFan.le",
+            "short": "le"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.ChainFan",
+            "qualified": "ZeroParadox.ChainFan.le",
+            "short": "le",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "edfca929-a117-4ef9-8ea5-753ae041cc82",
           "new": {
@@ -128514,6 +131478,45 @@
             ]
           },
           "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ef96d28c-d9e8-4c35-92be-7c05260291d9",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natSCR_strictMono",
+            "short": "natSCR_strictMono"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natSCR_strictMono",
+            "short": "natSCR_strictMono",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -129527,6 +132530,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "f1a29292-e835-4953-9041-1a88f8456be0",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.WBF",
+            "short": "WBF"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.WBF",
+            "short": "WBF",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "f1b22c6a-525a-42e1-beb1-bb1b5f19dc18",
           "new": {
             "file": "ZeroParadox/Computability/Occurrence.lean",
@@ -129627,6 +132669,45 @@
             ]
           },
           "reason": "Die v2 final batch: drawing vs set (self-steps, accessibility, forced rank), ends of a view, orders on motions, placements as views, relaxed least-fixed-point schema, UP legs as nuclei",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f1f54675-0c5c-4fdb-9cbf-6384a24cac5a",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.btree_down_chain",
+            "short": "btree_down_chain"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.btree_down_chain",
+            "short": "btree_down_chain",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -130001,6 +133082,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f2779ab1-e2a3-4d77-a024-085c39edb814",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.combShift_sup",
+            "short": "combShift_sup"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.combShift_sup",
+            "short": "combShift_sup",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -132321,6 +135441,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f6c98a3c-6b00-4e02-bdf6-11f819bf9759",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox.ChainFan",
+            "qualified": "ZeroParadox.ChainFan.le_def",
+            "short": "le_def"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.ChainFan",
+            "qualified": "ZeroParadox.ChainFan.le_def",
+            "short": "le_def",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -137207,6 +140366,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ff0bc071-a223-4be1-ae5d-48d08261b625",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.BotWedge",
+            "short": "BotWedge"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.BotWedge",
+            "short": "BotWedge",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true

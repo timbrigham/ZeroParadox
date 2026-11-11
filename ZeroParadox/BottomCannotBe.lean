@@ -58,6 +58,7 @@ import ZeroParadox.Valuation.OneWayFlow
 import ZeroParadox.Information.TapeHalting
 import ZeroParadox.Valuation.TowerTape
 import ZeroParadox.Valuation.TreeNotForced
+import ZeroParadox.Valuation.DoublingAndTree
 import Mathlib.RingTheory.Valuation.PrimeMultiplicity
 import Mathlib.Order.FixedPoints
 import Mathlib.SetTheory.Ordinal.FixedPoint
@@ -548,6 +549,16 @@ example (k : ℕ) : ∀ n, Nat.Partrec.Code.eval (Nat.Partrec.Code.const k) n =
 -- Statement: CONTROL: the fan's root is accessible and still decorated ⊥ of `U` by every decoration.
 -- Reading: decorated ⊥ of `U` does not mean non-well-founded; the converse above fails.
 #check @ZeroParadox.fan_root_acc_and_eq_bot
+-- Reading: a self-referential ⊥ says nothing about what is above it (no `BTree` in `Comb`).
+#check @ZeroParadox.comb_quine_and_no_tree
+-- Reading: two inside one, everywhere, forces forks; at ⊥ only it holds in every carrier (`poleCellDouble`).
+#check @ZeroParadox.square_embed_forces_btree
+-- Reading: why the pole ⊥ = 0 = ∞ is a chart claim, not a point identity: ⊥ = ⊤ collapses a bounded order.
+#check @ZeroParadox.pole_identity_collapses
+-- Reading: the 0 ↔ ∞ exchange is independent of the tree: `Set ℕ` carries both.
+#check @ZeroParadox.setNat_exchange_tree
+-- Reading: and `Fin 3` carries the exchange without the tree.
+#check @ZeroParadox.fin3_exchange_no_tree
 
 /-! ### GENERATION — the floor generates its first step -/
 
@@ -640,8 +651,8 @@ noncomputable example : Ordinal.{0} →o Ordinal.{0} :=
 #check @ZeroParadox.comb_no_End
 -- Statement: an independent `a : ℕ → L` gives `BTree ↪o L` with root at ⊥ of `L`; one way, one
 -- direction of Chakir–Pouzet, arXiv:0812.2300, Thm 1.4.
--- Reading: self-similarity is a hypothesis, not a consequence of the glb, first-step, atom and
--- strong-atomicity hypotheses at ⊥ that `Comb` meets.
+-- Reading: self-similarity is a hypothesis, not a consequence of the glb, first-step and atom
+-- hypotheses at ⊥, or of strong atomicity of the whole order, all of which `Comb` meets.
 #check @ZeroParadox.btree_embeds_of_independent
 -- Statement: in ZP-A's order, depth at every element and `IsStronglyAtomic` give `BTree ↪o L` with
 -- root at ⊥ of `L`; one way, `End` embeds the tree and fails depth at its top (`end_top_no_depth`).
