@@ -4897,7 +4897,9 @@ example : IsLeast {x : NInf | id x = x} (NInf.ofNat 0) ∧
 /-! ### § XXV. First-occurrence time as a Galois insertion: tapes onto `NInf`, order reversed
 `Reading:` Tim's "bend" (2026-11-03): one tape read two ways, as a firing record in `ℕ → Bool`
 (pointwise order, Mathlib's `Pi` instance) and as its waiting time `det` in `NInf`. "Time" is his
-reading only; nothing here is a claim about physics. -/
+reading only; nothing here is a claim about physics. The waiting time is the 2-adic depth on `End`
+(`endVal_eq_wait`, `ZeroParadox/Valuation/DepthIsWait.lean`) and the step at which `toComp (det w)`
+halts (`toComp_det_results_iff`, `toComp_det_results_iff_slotRun`, `ZeroParadox/Information/TapeHalting.lean`). -/
 
 namespace NInf
 
@@ -5023,6 +5025,7 @@ example (r : ℕ → Bool) (hw : ∃ k, r k = true) : det r = ofNat (Nat.find hw
     symm; refine decide_eq_true ?_
     by_contra hc
     have := h (Nat.find hw) (by omega); rw [Nat.find_spec hw] at this; cases this
+-- `Statement:` both directions at every `n`: `det_eq_ofNat_iff` (`ZeroParadox/Information/TapeHalting.lean` § II).
 
 -- `Statement:` `det r` satisfies TypeTopology's two `force-decreasing` equations at `β = !r`: `!r 0` at
 -- `0`, and `min₂ (β (n + 1)) (force-decreasing β n)` at `n + 1`, with `&&` for `min₂`.
