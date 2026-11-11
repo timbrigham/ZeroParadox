@@ -238,9 +238,9 @@ def build():
         'ZP-J extends the T-EXEC result in four directions: it identifies the set of '
         'self-containing elements as {&#8869;} without the axiom of choice; it derives the '
         'typeclass laws from stronger structures, ending in a valuation argument; it '
-        'demonstrates the structure on two concrete types; and it proves a '
-        'decoration uniqueness theorem for every directed graph, finite or not, into abstract '
-        'DecorationUniverses, with a separate graph-side proof for finite APGs.'))
+        'demonstrates the structure on two concrete types; and it proves '
+        'decoration uniqueness and existence for every directed graph, finite or not, into abstract '
+        'DecorationUniverses, with a separate graph-side proof of uniqueness for finite APGs.'))
     E.append(sp(4))
 
     # ── What Is a Quine Atom? ────────────────────────────────────────────────
@@ -542,7 +542,7 @@ def build():
         'no infinite descending path the same uniqueness holds without it, by Corollary 1.1 (p. 5), '
         'which follows from Mostowski\'s Collapsing Lemma (p. 4).'))
     E.append(cbody(
-        'ZP-J proves both halves for abstract DecorationUniverses  - '
+        'ZP-J proves something different: analogues of both halves, for abstract DecorationUniverses  - '
         'types carrying the ValuationStructure and a collect operation, without importing AFA axioms. '
         'Uniqueness: on <b>any</b> directed graph, finite or infinite, any two valid decorations '
         'must agree at every vertex (decoration_unique_of_val). For finite APGs a separate, '
@@ -580,15 +580,16 @@ def build():
         'label of infinite depth. The two readings are linked one way: under any valid decoration, a cyclic '
         'vertex gets infinite depth, and nothing is claimed in reverse.'))
     E.append(cbody(
-        '<b>Existence:</b> build the decoration as a recursion that may not terminate. Where every '
-        'chain of children bottoms out (the vertex is accessible), the label is computed from the '
-        'children&#8217;s labels as usual; everywhere else it is &#8869; of the decorating type, the one label of infinite '
+        '<b>Existence:</b> build the decoration by recursion on the accessible vertices, those where every '
+        'chain of children ends; that recursion is total, because it runs only where the chains end. '
+        'There the label is computed from the '
+        'children&#8217;s labels as usual; everywhere else no recursion applies and the label is &#8869; of the decorating type, the one label of infinite '
         'depth, which absorbs any collection it enters, like a strict function returning '
-        'divergence. The construction never tests whether a vertex terminates: it collects, for each '
-        'child, the value the child terminates with or &#8869; if it does not, and the proof then '
+        'divergence. The construction never tests whether a vertex is accessible: it collects, for each '
+        'child, the recursive value if the child is accessible or &#8869; of the decorating type if it is not, and the proof then '
         'inspects the depth of the result, which is plain data. One direction only: a vertex that '
-        'is not accessible gets &#8869; (decoration_eq_bot_of_not_acc), but an accessible vertex '
-        'with children of every finite height gets &#8869; too (fan_root_acc_and_eq_bot).'))
+        'is not accessible gets &#8869; of the decorating type (decoration_eq_bot_of_not_acc), but an accessible vertex '
+        'with children of every finite height gets &#8869; of the decorating type too (fan_root_acc_and_eq_bot).'))
     E.append(sp(4))
     E.append(remember_box(
         'decoration_unique_of_val is the ZP analogue of the uniqueness clause of AFA, which is an axiom: '
@@ -621,6 +622,8 @@ def build():
         'decoration_unique_of_val: any two valid decorations of any graph, finite or not, into a '
         'DecorationUniverse agree, with no finiteness hypothesis. '
         'decoration_unique: the same for a finite APG, by a graph-side proof. '
+        'exists_decoration: every graph, finite or not, has a valid decoration into a '
+        'DecorationUniverse, so it has exactly one (existsUnique_decoration). '
         'All stated results sorry-free in Lean 4 '
         '(decoration_unique proved via strong induction on reach cardinality, '
         'decoration_unique_of_val via strong induction on the depth of the decorating value; '
