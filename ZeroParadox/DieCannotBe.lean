@@ -4885,6 +4885,11 @@ example : (∀ n, ZeroParadox.slotRun (fun _ => false) n = false) ∧
 #check @ZeroParadox.bot_not_MLRandom           -- Statement: if `0 < p`, ⊥ of `ℕ → Bool` is not Martin-Löf random for `trials p hp`
 #check @ZeroParadox.dense_MLRandom             -- Statement: if `0 < p < 1`, the Martin-Löf random tapes for `trials p hp` are dense. Reading: dense, not every: ⊥ of `ℕ → Bool` is a limit of them and not one of them
 #check @ZeroParadox.pole_within_ensemble_limit -- Statement: if `0 < p < 1`, random firing tapes with halting runs approach ⊥ of `ℕ → Bool` pointwise, `det` passing every `ofNat N`, and ⊥'s run does not halt. Reading: no map from ⊥ of a `ZPSemilattice` to this tape or to `trials p hp` is claimed (`mlRandom_and_snap_ae`)
+#check @ZeroParadox.bot_support_three          -- Statement: the support of `trials p hp` is `{⊥}` of `ℕ → Bool` at `p = 0`, all of `ℕ → Bool` for `0 < p < 1`, and `{⊤}` at `p = 1`
+#check @ZeroParadox.botMass_not_continuousAt_zero -- Statement: the `trials` mass of `{⊥}` of `ℕ → Bool`, with `p` clamped to `[0, 1]`, is not continuous at `p = 0`: 1 there, 0 for every `p > 0` (`trials_bot_mass_jump`)
+#check @ZeroParadox.botMass_eq_iInf            -- Statement: that mass is the infimum over `n` of the mass of the length-`n` cylinder at ⊥, each continuous in `p` (`cylMass_continuous`). Reading: the jump is at infinity: every cylinder's mass is continuous in `p`
+#check @ZeroParadox.pole_limit_explicit        -- Statement: the explicit tapes `fireAt n`, firing exactly at `n`, have halting runs and approach ⊥ of `ℕ → Bool` pointwise, `det` passing every `ofNat N`; ⊥'s run does not halt. Reading: choice attaches to typicality: the random limit `pole_within_ensemble_limit` measures `Classical.choice`, this one `[propext, Quot.sound]` (`ZeroParadox/Category/ChoiceCannotBe.lean` § III)
+#check @ZeroParadox.fireAt_not_MLRandom        -- Statement: CONTROL, for `0 < p`, no `fireAt n` is Martin-Löf random for `trials p hp`
 
 /-! ### § XXIX. A limit pinned from two directions: `PinnedLimit` -/
 -- Reading: Tim's role, "squishy" in his word: pinned from below by the stages of a run and from the

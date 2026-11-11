@@ -57,6 +57,7 @@ import ZeroParadox.Settheory.APG
 import ZeroParadox.Valuation.OneWayFlow
 import ZeroParadox.Information.TapeHalting
 import ZeroParadox.Valuation.TowerTape
+import ZeroParadox.Valuation.TreeNotForced
 import Mathlib.RingTheory.Valuation.PrimeMultiplicity
 import Mathlib.Order.FixedPoints
 import Mathlib.SetTheory.Ordinal.FixedPoint
@@ -626,8 +627,25 @@ noncomputable example : Ordinal.{0} →o Ordinal.{0} :=
 -- Reading: CONCURRENT, not alternatives: one map gives the nested depth and the width at once.
 #check @ZeroParadox.cells_concurrent
 -- Statement: ⊥ the glb of non-⊥ members (`hglb`) and `BotHasFirstStep L` give a non-linear order.
--- Reading: depth and a first step together force branching; each alone has a linear control.
+-- Reading: the glb condition and a first step together force branching; each alone has a linear
+-- control. `End`'s depth meets the glb condition (`end_glb_unitEnd`), and so does a finite carrier
+-- (`diamond_meets_hglb`), so depth is sufficient for it, not required.
 #check @ZeroParadox.branching_forced
+-- Statement: CONTROL, finite `Bool × Bool` meets `hmem`, `hglb` and `BotHasFirstStep`, and embeds
+-- neither `End` nor the binary tree `BTree`.
+#check @ZeroParadox.diamond_meets_hglb
+-- Statement: no order embedding `End ↪o Comb`, where ⊥ of `Comb` is the glb of non-⊥ members
+-- (`comb_depth`) with a first step, infinitely many atoms and `IsStronglyAtomic`.
+-- Reading: infinitely many first steps and depth do not force forks above ⊥.
+#check @ZeroParadox.comb_no_End
+-- Statement: an independent `a : ℕ → L` gives `BTree ↪o L` with root at ⊥ of `L`; one way.
+-- Reading: self-similarity is a hypothesis, not a consequence of the hypotheses at ⊥.
+#check @ZeroParadox.btree_embeds_of_independent
+-- Statement: in ZP-A's order, depth at every element and `IsStronglyAtomic` give `BTree ↪o L` with
+-- root at ⊥ of `L`; one way, `End` embeds the tree and fails depth at its top (`end_top_no_depth`).
+-- Reading: a pole within every pole (depth at every point) forces forks everywhere; depth only at ⊥
+-- does not (`comb_no_End`).
+#check @ZeroParadox.zp_btree_embeds_of_hereditary_depth
 -- Statement: `d (boundaryDouble x) = d x + 1` and `d = 0` where `x 0 ≠ 0` force `d = endVal`.
 #check @ZeroParadox.depth_forced_everywhere
 -- Statement: `endVal x = waitENat (det (tapeIso x))`, the first `true` on the digit tape, in `ℕ∞`.

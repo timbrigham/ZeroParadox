@@ -19,6 +19,7 @@ import ZeroParadox.Die
 import ZeroParadox.Information.CrossingTrials
 import ZeroParadox.Information.TapeHalting
 import ZeroParadox.Valuation.TowerTape
+import ZeroParadox.Information.PoleWithinEnsemble
 
 /-!
 # Machine-checked characterization index of the framework's relationship to `Classical.choice`
@@ -384,8 +385,20 @@ example {σ : Type} [PartialOrder σ] [OrderBot σ] [NoMaxOrder σ] :
 #print axioms ZeroParadox.localCx
 -- Reading: the same divergence, two bins: as a limit in `NInf`, no choice; as a value in `ℕ∞`, through
 -- `localCx` (an `endVal`, equal to a `waitENat` value by `endVal_eq_wait`; any `NInf ≃o ℕ∞` gives WLPO,
--- `wlpo_of_iso` above). Not measured: whether `pole_within_ensemble_limit`, which uses closure and
--- measure and measures choice, can drop it.
+-- `wlpo_of_iso` above).
+
+-- The random limit against the explicit limit, footprints from the home file's PurityCheck.
+-- Statement: random firing tapes with halting runs approach ⊥ of `ℕ → Bool` pointwise, `det` passing
+-- every `ofNat N`; measured `[propext, Classical.choice, Quot.sound]`.
+#check @ZeroParadox.pole_within_ensemble_limit
+-- Statement: the same limit along the explicit tapes `fireAt n`; measured `[propext, Quot.sound]`.
+#check @ZeroParadox.pole_limit_explicit
+-- Statement: `MLRandom` and `randFiring`, named in the random limit's statement, carry
+-- `Classical.choice` (printed next), so no proof of that statement can drop it.
+#print axioms ZeroParadox.MLRandom
+#print axioms ZeroParadox.randFiring
+-- Reading: choice attaches to typicality, not to the limit: `MLRandom`'s type carries it (it takes a
+-- `Measure`), and the explicit statement, which names no measure, does not.
 
 /-! ## § IV. The ESSENTIAL cases — reductions to taboos, and the premise they rest on
 

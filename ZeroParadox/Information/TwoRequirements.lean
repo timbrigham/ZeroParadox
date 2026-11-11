@@ -83,7 +83,8 @@ theorem snap_of_firstStep_fires_once {L : Type*} [ZPSemilattice L] (hR1 : BotHas
 `0 < p`, then `w` fires (`hw`) and `snap_of_firstStep_fires_once`'s conclusion holds. One way.
 `Reading:` CARRIER: the occurrence commitment's slot-chart hypothesis `hw` comes from typicality of
 one tape, the cover from AX-B1's form on `L`; neither is discharged, and a firing is not proved to
-be an execution event (`ZeroParadox/Order/Snap.lean`). -/
+be an execution event (`ZeroParadox/Order/Snap.lean`). The firing step is the step at which the
+waiting computation `toComp (det w)` halts (`toComp_det_results_iff_slotRun`); that is when, not what. -/
 theorem snap_of_two_requirements {L : Type*} [ZPSemilattice L] (hR1 : BotHasFirstStep L)
     (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p) (w : ℕ → Bool) (hR2 : ZeroBlockTypical p hp w) :
     ∃ (φ : Bool → L) (hw : ∃ k, w k = true),
@@ -440,7 +441,7 @@ Martin-Löf random for `trials p hp` and carries `snap_ae_of_firstStep`'s conclu
 (all tapes under `trials p hp`) and the point reading (one Martin-Löf random tape) agree almost
 everywhere: the ensemble's typical member is a random tape that gives the snap. That ⊥ of `L` is the
 ensemble or a random tape is not proved here; `BotHasFirstStep L` stays a hypothesis, and a firing
-is not proved to be an execution event. Prior art for the pattern (`snap_ae_of_firstStep` the
+is not proved to be an execution event. The firing step is the step at which the waiting computation `toComp (det w)` halts (`toComp_det_results_iff_slotRun`); that is when, not what. Prior art for the pattern (`snap_ae_of_firstStep` the
 almost-every form, `snap_of_firstStep_MLRandom` the every-random form): Landsman, *Typical = random*,
 arXiv:2306.09226, § 4, p. 16; the credit runs from Landsman to here. -/
 theorem mlRandom_and_snap_ae {L : Type*} [ZPSemilattice L] (hR1 : BotHasFirstStep L)
@@ -766,7 +767,8 @@ example : tapeReal (fun _ => false) = 0 ∧ tapeReal (fun _ => true) = 1 := by
   refine ⟨by simp [tapeReal, Real.ofDigits, Real.ofDigitsTerm, bitDigit], ?_⟩
   exact Real.ofDigits_const_last_eq_one 1
 
--- Statement: `trials 1` is the point mass on the all-`true` tape.
+-- Statement: `trials 1` is the point mass on the all-`true` tape; named form `trials_one_eq_dirac`
+-- (`ZeroParadox/Information/PoleWithinEnsemble.lean` § VI).
 example : trials 1 le_rfl = Measure.dirac (fun _ => true) := by
   have hb : PMF.bernoulli (1 : NNReal) le_rfl = PMF.pure true := by
     ext b; cases b <;> simp [PMF.bernoulli_apply, PMF.pure_apply]
