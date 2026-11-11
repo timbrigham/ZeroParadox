@@ -17,6 +17,7 @@ import ZeroParadox.Reals.OrderedField
 import ZeroParadox.Valuation.PoleRegistration
 import ZeroParadox.Die
 import ZeroParadox.Information.CrossingTrials
+import ZeroParadox.Information.TapeHalting
 
 /-!
 # Machine-checked characterization index of the framework's relationship to `Classical.choice`
@@ -352,6 +353,20 @@ example {σ : Type} [PartialOrder σ] [OrderBot σ] [NoMaxOrder σ] :
 -- `ZeroParadox/Category/ChoiceCannotBe.md`); read under the corpus's, the same text carries none. So
 -- the bin is a property of the elaborated statement, instances included, and neither reading says the
 -- mathematics needs choice.
+
+-- THAT a tape's first hitting time halts, against WHEN, footprints from the home files' PurityChecks.
+-- Statement: `toComp (det w)` terminates iff some `w k = true`; measured `[propext, Quot.sound]`.
+#check @ZeroParadox.toComp_det_terminates_iff
+-- Statement: the exact halting step is the first firing; measured `[propext, Classical.choice, Quot.sound]`.
+-- Reading: it enters at `toComp_results_iff` (Mathlib's `Computation.Results`); `det_eq_ofNat_iff`,
+-- the same step on the `NInf` side, measures `[propext, Quot.sound]`. Statement-carried: not measured.
+#check @ZeroParadox.toComp_det_results_iff
+#check @ZeroParadox.det_eq_ofNat_iff -- Statement: `det w = ofNat n` iff `n` is the first `true`
+-- Statement: `NInf ≃o ℕ∞` (`orderIsoWithTopClassical`), the map depth in `ℕ∞` is read through.
+-- Reading: a separate cost from the one above: any order isomorphism `NInf ≃o WithTop ℕ` gives WLPO
+-- (`NInf.wlpo_of_iso`), so reading the waiting time as a value of `ℕ∞` carries a taboo.
+#check @ZeroParadox.waitENat
+#check @ZeroParadox.NInf.wlpo_of_iso -- Statement: an order isomorphism `NInf ≃o WithTop ℕ` gives WLPO
 
 /-! ## § IV. The ESSENTIAL cases — reductions to taboos, and the premise they rest on
 

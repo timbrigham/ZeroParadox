@@ -8,6 +8,7 @@ import ZeroParadox.Category.LawvereTwoAdic
 import ZeroParadox.Category.IgnoranceSeam
 import ZeroParadox.Settheory.Wall
 import ZeroParadox.Information.Disjunctive
+import ZeroParadox.Information.TapeHalting
 
 /-!
 # Machine-checked characterization index of COMPUTATION — what it can and cannot be
@@ -429,5 +430,23 @@ example (f : ZeroParadox.MachinePhase → ZeroParadox.MachinePhase) : ¬ ZeroPar
     Finite.of_surjective (fun b : Bool => if b then ZeroParadox.c₁ else ZeroParadox.c₀)
       (fun x => by cases x; exacts [⟨false, rfl⟩, ⟨true, rfl⟩])
   ZeroParadox.no_selfCopyRef_of_finite f
+
+/-! ### § X. Halting of a tape's first hitting time — THAT and WHEN, not WHAT
+
+`ZeroParadox/Information/TapeHalting.lean`: a tape `w : ℕ → Bool`, its first hitting time `det w`,
+run as Mathlib's delay type `Computation Unit` through `toComp`. -/
+
+-- Statement: `toComp (det w)` terminates iff `w k = true` for some `k`; both directions.
+#check @ZeroParadox.toComp_det_terminates_iff
+-- Statement: `toComp (det w)` halts at exactly step `n` iff `w n = true` and `w k = false` for `k < n`.
+-- Reading: halting says THAT and WHEN (the first firing, not the last), not WHAT runs; the
+-- content chart is `code_occurs_of_disjunctive` (`ZeroParadox/Information/Disjunctive.lean`).
+#check @ZeroParadox.toComp_det_results_iff
+-- Statement: the digit-tape run of `x : End` halts at exactly step `n` iff `endVal x = n`.
+-- Reading: finite depth on `End` and halting step are one number, not two.
+#check @ZeroParadox.endVal_results_iff
+-- Statement: if `0 < p` and `p ≤ 1`, `trials p hp`-almost every `w` fires and halts at `Nat.find hw`.
+-- Reading: almost every, not every: ⊥ of `ℕ → Bool` never halts (`NInf.toComp_infty`); one way.
+#check @ZeroParadox.toComp_det_halts_ae
 
 end ComputationCannotBeIndex

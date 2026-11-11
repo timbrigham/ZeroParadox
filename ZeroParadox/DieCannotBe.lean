@@ -54,6 +54,7 @@ import ZeroParadox.Order.SeamSchema
 import ZeroParadox.Information.CrossingTrials
 import ZeroParadox.Order.DieJoints
 import ZeroParadox.Information.SnapEpsilonZero
+import ZeroParadox.Information.TapeHalting
 
 set_option maxHeartbeats 400000
 
@@ -4874,6 +4875,9 @@ example : (∀ n, ZeroParadox.slotRun (fun _ => false) n = false) ∧
 #check @ZeroParadox.t_snap_of_avoids           -- Statement: § VI's hypotheses on a tape give its `hw` and `t_snap_of_fires_once`'s conclusion; one way
 -- Reading: `hw` is the occurrence commitment in its slot chart (`ZeroParadox/Order/SnapCannotBe.lean` § II).
 -- Statement: if ⊥ of `L` has a first step and the tape is Martin-Löf random for `trials p hp` with `0 < p`, some run from it also carries the cover `hcov`, one way: `snap_of_firstStep_MLRandom`, the carrier-to-run bridge in § XXIII.
+-- Halting of the tape's first hitting time: `ZeroParadox/Information/TapeHalting.lean`.
+#check @ZeroParadox.toComp_det_results_iff_slotRun -- Statement: `toComp (det w)` halts at exactly step `n` iff `slotRun w` is `false` at `n` and `true` at `n + 1`; both directions. Reading: the delay-type chart and the slot chart count one step, not two
+#check @ZeroParadox.toComp_det_halts_ae         -- Statement: if `0 < p` and `p ≤ 1`, for `trials p hp`-almost every `w`, `w` fires and `toComp (det w)` halts at step `Nat.find hw`; one way. Reading: almost every, not every: ⊥ of `ℕ → Bool` never halts, and under `trials 0` the claim fails (TapeHalting § V)
 
 /-! ### § XXIX. A limit pinned from two directions: `PinnedLimit` -/
 -- Reading: Tim's role, "squishy" in his word: pinned from below by the stages of a run and from the
@@ -4913,6 +4917,7 @@ example : (∀ n, ZeroParadox.slotRun (fun _ => false) n = false) ∧
 #check @ZeroParadox.epsilon0_isJoint           -- Statement: ε₀ is a joint of (the ω-tower from ⊥ of `Ordinal`, the fixed points of `ω^·`), by `epsilon0_pinnedLimit`; CONTROLs in the home file: ω is a joint too, and against the fixed points at or above ε₁ the tower has no cut point at ε₀
 #check @ZeroParadox.NInf.wlpo_of_iso           -- Statement: identifying the two carriers by an order isomorphism `NInf ≃o WithTop ℕ` gives WLPO (`[propext, Quot.sound]`)
 #check @ZeroParadox.NInf.orderIsoWithTopClassical -- Statement: CONTROL: such an isomorphism from `Classical.propDecidable`, with no WLPO hypothesis
+#check @ZeroParadox.waitENat                    -- Statement: `orderIsoWithTopClassical` as `NInf ≃o ℕ∞`, the map `endVal_eq_wait` (§ XXX) reads waiting times through. Reading: the exact depth in `ℕ∞` is paid for in WLPO, by `wlpo_of_iso` above, not by the tape
 
 /-! ### § XXX. First-occurrence time as a Galois insertion: tapes onto `NInf`, order reversed -/
 -- Reading: Tim's "bend" (2026-11-03): one tape, a firing record in `ℕ → Bool` (pointwise order) and a
@@ -4948,5 +4953,12 @@ example : (∀ n, ZeroParadox.slotRun (fun _ => false) n = false) ∧
 -- `force-decreasing` and section `ι` (retrieved 2026-11-04). `det` is `ℕ→𝟚-to-ℕ∞` after bitwise
 -- complement: `det r` satisfies `force-decreasing`'s two defining equations at `β = !r` (the `example`
 -- in `ZeroParadox/Die.lean` § XXV). `negS` is complement after `ι`, by its definition.
+#check @ZeroParadox.det_eq_ofNat_iff            -- Statement: `det w = ofNat n` iff `w n = true` and `w k = false` for every `k < n`; both directions
+#check @ZeroParadox.det_tapeCons_false          -- Statement: prepending `false` delays the waiting time by one: `det (tapeCons false r) = succ (det r)`
+-- The bend on ⊥ of `End`: `ZeroParadox/Valuation/DepthIsWait.lean`.
+#check @ZeroParadox.endVal_eq_wait              -- Statement: `endVal x = waitENat (det (tapeIso x))`. Reading: the 2-adic depth on `End` and the waiting time of its digit tape are one number, not two quantities
+#check @ZeroParadox.endVal_gi                    -- Statement: `toDual ∘ endVal` is the lower adjoint of a Galois insertion (Mathlib `GaloisInsertion`), transported from `det_gi`
+#check @ZeroParadox.endVal_no_lower_adjoint     -- Statement: no `g : ℕ∞ → End` has `g v ≤ x ↔ endVal x ≤ v`. Reading: a section on one side, no adjoint on the other, as for `det`
+#check @ZeroParadox.endVal_not_injective        -- Statement: `endVal` is not injective. Reading: depth forgets the tape after its first nonzero digit, as halting does (the last CONTROL in `ZeroParadox/Information/TapeHalting.lean`)
 
 end DieCannotBeIndex
