@@ -17,8 +17,8 @@ defer to my AI assistant regarding the specifics of how the internals work.
 ---
 
 ## Formal Overview (AI-assisted)
-For `0 < p < 1`, ⊥ of `ℕ → Bool` is `trials p hp`-null, in its support, and a limit of random firing
-tapes whose waits diverge (`pole_within_ensemble` in `ℕ∞`; `pole_within_ensemble_limit` in `NInf`).
+For `0 < p < 1`, ⊥ of `ℕ → Bool` is `trials p hp`-null, in its support, and a limit of random firing tapes whose waits diverge (`pole_within_ensemble` in `ℕ∞`; `pole_within_ensemble_limit` in `NInf`).
+At `p = 0` the mass of `{⊥}` jumps while every cylinder's mass is continuous (§ VI); explicit non-random tapes give the limit with no measure in the statement (§ VII).
 Nothing here identifies ⊥ of a `ZPSemilattice` with a tape or with `trials p hp`.
 -/
 
@@ -305,6 +305,182 @@ theorem trials_localFloor_null (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p) (k : �
   rw [← Measure.map_apply (measurable_shiftTape k) (measurableSet_singleton _),
     trials_map_shift, trials_bot_null p hp hp0]
 
+/-! ### § VI. The `p = 0` end: the mass of `{⊥}` jumps, every cylinder's mass does not -/
+
+/-- `Statement:` `trials 0 hp` is the point mass at ⊥ of `ℕ → Bool`. -/
+theorem trials_zero_eq_dirac (hp : (0 : NNReal) ≤ 1) :
+    trials 0 hp = Measure.dirac (⊥ : ℕ → Bool) := by
+  have hb : PMF.bernoulli (0 : NNReal) hp = PMF.pure false := by
+    ext b; cases b <;> simp [PMF.bernoulli_apply, PMF.pure_apply]
+  rw [trials, hb, PMF.toMeasure_pure, Measure.infinitePi_dirac]; rfl
+
+/-- `Statement:` `trials 1 hp` is the point mass at ⊤ of `ℕ → Bool`; the named form of the
+`example` after `interior_of_MLRandom` in `ZeroParadox/Information/TwoRequirements.lean`. -/
+theorem trials_one_eq_dirac (hp : (1 : NNReal) ≤ 1) :
+    trials 1 hp = Measure.dirac (⊤ : ℕ → Bool) := by
+  have hb : PMF.bernoulli (1 : NNReal) hp = PMF.pure true := by
+    ext b; cases b <;> simp [PMF.bernoulli_apply, PMF.pure_apply]
+  rw [trials, hb, PMF.toMeasure_pure, Measure.infinitePi_dirac]; rfl
+
+/-- `Statement:` `{⊥}` of `ℕ → Bool` has `trials 0 hp` mass one. -/
+theorem trials_zero_bot (hp : (0 : NNReal) ≤ 1) : trials 0 hp {(⊥ : ℕ → Bool)} = 1 := by
+  rw [trials_zero_eq_dirac]; simp
+
+/-- `Statement:` the support of the point mass at a tape `x` is `{x}`. -/
+theorem support_dirac_tape (x : ℕ → Bool) : (Measure.dirac x).support = {x} := by
+  ext y
+  rw [Measure.mem_support_iff_forall, Set.mem_singleton_iff]
+  constructor
+  · intro h
+    by_contra hne
+    have hU : ({x}ᶜ : Set (ℕ → Bool)) ∈ 𝓝 y := isOpen_compl_singleton.mem_nhds hne
+    have := h _ hU
+    simp at this
+  · rintro rfl U hU
+    rw [Measure.dirac_apply_of_mem (mem_of_mem_nhds hU)]; exact zero_lt_one
+
+/-- `Statement:` the support of `trials 0 hp` is `{⊥}` of `ℕ → Bool`. -/
+theorem trials_zero_support (hp : (0 : NNReal) ≤ 1) :
+    (trials 0 hp).support = {(⊥ : ℕ → Bool)} := by
+  rw [trials_zero_eq_dirac, support_dirac_tape]
+
+/-- `Statement:` the support of `trials 1 hp` is `{⊤}` of `ℕ → Bool`. -/
+theorem trials_one_support (hp : (1 : NNReal) ≤ 1) :
+    (trials 1 hp).support = {(⊤ : ℕ → Bool)} := by
+  rw [trials_one_eq_dirac, support_dirac_tape]
+
+/-- `Statement:` `{⊥}` of `ℕ → Bool` has mass one at `p = 0` and mass zero at every `p > 0`. -/
+theorem trials_bot_mass_jump :
+    (∀ hp : (0 : NNReal) ≤ 1, trials 0 hp {(⊥ : ℕ → Bool)} = 1) ∧
+    (∀ (p : NNReal) (hp : p ≤ 1), 0 < p → trials p hp {(⊥ : ℕ → Bool)} = 0) :=
+  ⟨trials_zero_bot, fun p hp hp0 => trials_bot_null p hp hp0⟩
+
+/-- `Statement:` the mass of `{⊥}` of `ℕ → Bool`, total on `NNReal` by clamping `p` to `[0, 1]`. -/
+noncomputable def botMass (p : NNReal) : ENNReal :=
+  trials (min p 1) (min_le_right _ _) {(⊥ : ℕ → Bool)}
+
+/-- `Statement:` `botMass 0 = 1`. -/
+theorem botMass_zero : botMass 0 = 1 := by
+  unfold botMass
+  have e : min (0 : NNReal) 1 = 0 := min_eq_left zero_le_one
+  simp only [e]
+  exact trials_zero_bot _
+
+/-- `Statement:` `botMass p = 0` for `0 < p`. -/
+theorem botMass_pos {p : NNReal} (hp0 : 0 < p) : botMass p = 0 :=
+  trials_bot_null _ _ (lt_min hp0 zero_lt_one)
+
+/-- `Statement:` `botMass` tends to 0 from the right of `p = 0`, and `botMass 0 = 1`. -/
+theorem botMass_tendsto_right :
+    Tendsto botMass (𝓝[>] 0) (𝓝 0) ∧ botMass 0 = 1 := by
+  refine ⟨tendsto_const_nhds.congr' ?_, botMass_zero⟩
+  filter_upwards [self_mem_nhdsWithin] with p hp
+  exact (botMass_pos hp).symm
+
+/-- `Statement:` `botMass` is not continuous at `p = 0`. -/
+theorem botMass_not_continuousAt_zero : ¬ ContinuousAt botMass 0 := by
+  intro hc
+  have hcl : (0 : NNReal) ∈ closure (Set.Ioi 0) := by
+    rw [closure_Ioi' ⟨1, zero_lt_one⟩]; exact Set.mem_Ici.2 le_rfl
+  have h := mem_closure_image hc hcl
+  have himg : botMass '' Set.Ioi 0 ⊆ {0} := by
+    rintro _ ⟨p, hp, rfl⟩; exact botMass_pos hp
+  have := closure_mono himg h
+  rw [closure_singleton, botMass_zero] at this
+  simp at this
+
+/-- `Statement:` the support of `trials p hp` is `{⊥}` at `p = 0`, all of `ℕ → Bool` for
+`0 < p < 1`, and `{⊤}` at `p = 1`. -/
+theorem bot_support_three :
+    (∀ hp : (0 : NNReal) ≤ 1, (trials 0 hp).support = {(⊥ : ℕ → Bool)}) ∧
+    (∀ (p : NNReal) (hp : p ≤ 1), 0 < p → p < 1 → (trials p hp).support = Set.univ) ∧
+    (∀ hp : (1 : NNReal) ≤ 1, (trials 1 hp).support = {(⊤ : ℕ → Bool)}) :=
+  ⟨trials_zero_support, fun p hp h0 h1 => trials_support_univ p hp h0 h1, trials_one_support⟩
+
+/-- `Statement:` CONTROL, at `p = 1` `{⊥}` of `ℕ → Bool` is null and ⊥ is outside the support. -/
+theorem p_one_control (hp : (1 : NNReal) ≤ 1) :
+    trials 1 hp {(⊥ : ℕ → Bool)} = 0 ∧ (⊥ : ℕ → Bool) ∉ (trials 1 hp).support :=
+  ⟨trials_bot_null 1 hp zero_lt_one, by rw [bot_mem_support_iff]; exact lt_irrefl 1⟩
+
+/-- `Statement:` ⊥ of `ℕ → Bool` is in the support of the clamped `trials` iff `p < 1`; both
+directions. -/
+theorem bot_mem_support_clamped (p : NNReal) :
+    (⊥ : ℕ → Bool) ∈ (trials (min p 1) (min_le_right _ _)).support ↔ p < 1 := by
+  rw [bot_mem_support_iff]
+  constructor
+  · intro h; by_contra h'; push Not at h'; rw [min_eq_right h'] at h; exact lt_irrefl _ h
+  · intro h; rwa [min_eq_left h.le]
+
+/-- `Statement:` the clamped `trials` mass of the length-`n` cylinder at ⊥ of `ℕ → Bool`. -/
+noncomputable def cylMass (n : ℕ) (p : NNReal) : ENNReal :=
+  trials (min p 1) (min_le_right _ _) (PiNat.cylinder (⊥ : ℕ → Bool) n)
+
+/-- `Statement:` `cylMass n p = (1 - min p 1) ^ n`. -/
+theorem cylMass_eq (n : ℕ) (p : NNReal) :
+    cylMass n p = (((1 - min p 1 : NNReal)) : ENNReal) ^ n := by
+  unfold cylMass
+  rw [trials_cyl]
+  have hb : ∀ i, (⊥ : ℕ → Bool) i = false := fun _ => rfl
+  simp only [hb, Bool.false_eq_true, ite_false, Finset.prod_const, Finset.card_range]
+
+/-- `Statement:` `cylMass n` is continuous in `p`. -/
+theorem cylMass_continuous (n : ℕ) : Continuous (cylMass n) := by
+  have : cylMass n = fun p => (((1 - min p 1 : NNReal)) : ENNReal) ^ n := funext (cylMass_eq n)
+  rw [this]
+  exact (ENNReal.continuous_pow n).comp
+    (ENNReal.continuous_coe.comp (continuous_const.sub (continuous_id.min continuous_const)))
+
+/-- `Statement:` `botMass p` is the infimum over `n` of `cylMass n p`. `Reading:` each term is
+continuous in `p` (`cylMass_continuous`) and the infimum is not (`botMass_not_continuousAt_zero`). -/
+theorem botMass_eq_iInf (p : NNReal) : botMass p = ⨅ n, cylMass n p := by
+  unfold botMass cylMass
+  have e : {(⊥ : ℕ → Bool)} = ⋂ n, PiNat.cylinder (⊥ : ℕ → Bool) n := by
+    ext y; simp only [Set.mem_singleton_iff, Set.mem_iInter]
+    constructor
+    · rintro rfl n; exact PiNat.self_mem_cylinder _ _
+    · intro h; funext k; exact h (k + 1) k (Nat.lt_succ_self k)
+  rw [e]
+  refine Antitone.measure_iInter (fun a b hab y hy i hi => hy i (lt_of_lt_of_le hi hab))
+    (fun n => (PiNat.isOpen_cylinder (fun _ : ℕ => Bool) ⊥ n).measurableSet.nullMeasurableSet)
+    ⟨0, measure_ne_top _ _⟩
+
+/-! ### § VII. The limit with explicit witnesses: no measure in the statement -/
+
+/-- `Statement:` the tape firing exactly at stage `n`. -/
+def fireAt (n : ℕ) : ℕ → Bool := fun k => decide (k = n)
+
+/-- `Statement:` `det (fireAt n) = ofNat n`, each `fireAt n` fires and its run halts, the family
+approaches ⊥ of `ℕ → Bool` pointwise with `det` passing every `ofNat N`, and ⊥'s run does not halt. -/
+theorem pole_limit_explicit :
+    (∀ n, det (fireAt n) = ofNat n) ∧ (∀ n, ∃ k, fireAt n k = true) ∧
+      (∀ n, (toComp (det (fireAt n))).Terminates) ∧
+      (∀ m, ∃ n0, ∀ n ≥ n0, fireAt n m = false) ∧
+      (∀ N, ∃ n0, ∀ n ≥ n0, ofNat N ≤ det (fireAt n)) ∧
+      ¬ (toComp (det (⊥ : ℕ → Bool))).Terminates := by
+  have hf : ∀ n, ∃ k, fireAt n k = true := fun n => ⟨n, decide_eq_true rfl⟩
+  have hu : ∀ m, ∃ n0, ∀ n ≥ n0, fireAt n m = false :=
+    fun m => ⟨m + 1, fun n hn => decide_eq_false (Nat.ne_of_lt hn)⟩
+  exact ⟨det_fire, hf, fun n => (toComp_det_terminates_iff _).2 (hf n), hu,
+    det_ge_of_approach fireAt hu, (comp_bot_and_firing ⊤ ⟨0, rfl⟩).1⟩
+
+/-- `Statement:` `pole_within_ensemble_limit`'s conclusion with `u n ∈ randFiring p hp` weakened to
+"`u n` fires somewhere": no `trials`, no `MLRandom` in the statement. -/
+theorem stmtLimitNoRand_holds :
+    ∃ u : ℕ → (ℕ → Bool), (∀ n, ∃ k, u n k = true) ∧
+      (∀ n, (toComp (det (u n))).Terminates) ∧ (∀ m, ∃ n0, ∀ n ≥ n0, u n m = false) ∧
+      (∀ N, ∃ n0, ∀ n ≥ n0, ofNat N ≤ det (u n)) ∧ ¬ (toComp (det (⊥ : ℕ → Bool))).Terminates :=
+  let h := pole_limit_explicit
+  ⟨fireAt, h.2.1, h.2.2.1, h.2.2.2.1, h.2.2.2.2.1, h.2.2.2.2.2⟩
+
+/-- `Statement:` CONTROL, for `0 < p`, no `fireAt n` is Martin-Löf random for `trials p hp`: each
+is silent from `n + 1` on. -/
+theorem fireAt_not_MLRandom (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p) (n : ℕ) :
+    ¬ MLRandom (trials p hp) (fireAt n) := fun h => by
+  have h1 := fires_io_of_avoids p hp hp0 _ (fun _ hU => hU) (fireAt n)
+    (zeroBlockTypical_of_MLRandom p hp _ h)
+  refine (not_mem_limsup_fires_iff _).2 ⟨n + 1, fun k hk => ?_⟩ h1
+  exact decide_eq_false (by omega)
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -334,4 +510,27 @@ open ZeroParadox
 #print axioms measurable_shiftTape
 #print axioms trials_map_shift
 #print axioms trials_localFloor_null
+#print axioms trials_zero_eq_dirac
+#print axioms trials_one_eq_dirac
+#print axioms trials_zero_bot
+#print axioms support_dirac_tape
+#print axioms trials_zero_support
+#print axioms trials_one_support
+#print axioms trials_bot_mass_jump
+#print axioms botMass
+#print axioms botMass_zero
+#print axioms botMass_pos
+#print axioms botMass_tendsto_right
+#print axioms botMass_not_continuousAt_zero
+#print axioms bot_support_three
+#print axioms p_one_control
+#print axioms bot_mem_support_clamped
+#print axioms cylMass
+#print axioms cylMass_eq
+#print axioms cylMass_continuous
+#print axioms botMass_eq_iInf
+#print axioms fireAt
+#print axioms pole_limit_explicit
+#print axioms stmtLimitNoRand_holds
+#print axioms fireAt_not_MLRandom
 end PurityCheck

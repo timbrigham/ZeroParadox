@@ -672,8 +672,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 3612,
-        "files": 216
+        "declarations": 3712,
+        "files": 217
       },
       "entries": [
         {
@@ -782,6 +782,43 @@
             ]
           },
           "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "004fef1f-2af4-4b38-8d6f-da75d2f2e4d2",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.btree_split_witness",
+            "short": "btree_split_witness"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.btree_split_witness",
+            "short": "btree_split_witness",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -2444,6 +2481,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "034abfb8-6143-4ae3-b403-0eac7a6110f7",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bot_mem_support_clamped",
+            "short": "bot_mem_support_clamped"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bot_mem_support_clamped",
+            "short": "bot_mem_support_clamped",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "034d42a0-fce6-49e3-858b-735591504ede",
           "new": {
             "file": "ZeroParadox/Valuation/ScaleBridge.lean",
@@ -2920,6 +2996,43 @@
             ]
           },
           "reason": "New file ZeroParadox/Information/MaxEntropy.lean (experimental, Tim ruling 154): fair coin maximizes entropy, missing information zero iff fair, chain to mlRandom_and_snap_ae under binEntropy p = log 2, Kraft in measure form, almost every fair tape incompressible for any prefix-free decoder. The occurrence commitment is reduced, not discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0438c23f-93ff-4a4b-bfd6-8bfea7e16eaa",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.treeGo_le",
+            "short": "treeGo_le"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.treeGo_le",
+            "short": "treeGo_le",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -7497,6 +7610,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "0c32953b-b1ce-4f32-9038-c76bd1a37cc3",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.comb_no_End",
+            "short": "comb_no_End"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.comb_no_End",
+            "short": "comb_no_End",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "0c3ac611-4323-43bf-81d1-93713d59091f",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -8127,6 +8279,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "0d5a394b-c1a1-43d6-9283-19dd65d4644d",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox.Comb",
+            "qualified": "ZeroParadox.Comb.mem_strictAnti",
+            "short": "mem_strictAnti"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.Comb",
+            "qualified": "ZeroParadox.Comb.mem_strictAnti",
+            "short": "mem_strictAnti",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "withdrawn",
           "id": "0d6dd94c-0a97-40a4-9383-024a2abe98bb",
           "new": {
@@ -8263,6 +8452,45 @@
             ]
           },
           "reason": "New experimental probe MetaFork.lean — meta-level of the instance-vs-requirements fork (conjecture step c, iterations 1-5)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0d9afe67-d5d6-45d2-82d4-167e2a85be0d",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.comb_atoms_infinite",
+            "short": "comb_atoms_infinite"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.comb_atoms_infinite",
+            "short": "comb_atoms_infinite",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -9181,6 +9409,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "0f0f3a5d-6808-4d8f-b8a0-5b0b240fd41d",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.treeGo_reflect",
+            "short": "treeGo_reflect"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.treeGo_reflect",
+            "short": "treeGo_reflect",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "0f1adb97-30f0-4b34-b906-252cfff71c5f",
           "new": {
             "file": "ZeroParadox/Settheory/APG.lean",
@@ -9693,6 +9958,43 @@
             ]
           },
           "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "1047ae15-977a-414c-9054-745dc06140b0",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.diamondZPS",
+            "short": "diamondZPS"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.diamondZPS",
+            "short": "diamondZPS",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -10741,6 +11043,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "1239976e-056c-4bca-ae21-bda281a58fe5",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.finComb_depth",
+            "short": "finComb_depth"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.finComb_depth",
+            "short": "finComb_depth",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "123e8717-5425-4ab9-9def-abf7e0a8afbc",
           "new": {
             "file": "ZeroParadox/Order/UpAndOver.lean",
@@ -11259,6 +11598,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "133320f3-f3b4-413e-b755-1eb757cb0a41",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.btree_embeds_of_covers_infinite",
+            "short": "btree_embeds_of_covers_infinite"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.btree_embeds_of_covers_infinite",
+            "short": "btree_embeds_of_covers_infinite",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "1338350a-e288-455f-bc9b-9399fb18ae4d",
           "new": {
             "file": "ZeroParadox/Category/DieNucleus.lean",
@@ -11285,6 +11663,45 @@
             ]
           },
           "reason": "Die v2 final batch: drawing vs set (self-steps, accessibility, forced rank), ends of a view, orders on motions, placements as views, relaxed least-fixed-point schema, UP legs as nuclei",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "13785c5a-2db0-465c-80de-e90071369306",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.diamond_meets_hglb",
+            "short": "diamond_meets_hglb"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.diamond_meets_hglb",
+            "short": "diamond_meets_hglb",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -12061,6 +12478,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "15109890-e406-4dd5-9454-47fafab659a5",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natSq_no_End",
+            "short": "natSq_no_End"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natSq_no_End",
+            "short": "natSq_no_End",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "151c45aa-4e01-492d-ad3e-2be5b3e9b304",
           "new": {
@@ -12526,6 +12980,43 @@
             ]
           },
           "reason": "Sibling faces of the diagonal fixed point, built 2026-07-16: Tarski (truth/wall), Curry (explosion/wall), Rice (computability undecidability, cites Mathlib), Löb (provability, from-scratch ProvabilityLogic typeclass + Gödel 2). Each wired to the bottom element via the family's μ/ν structure.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "15f08110-d852-4766-b121-13d9f9f51ff4",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fireAt",
+            "short": "fireAt"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.fireAt",
+            "short": "fireAt",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -13120,6 +13611,43 @@
             ]
           },
           "reason": "Section VI: the scaling parameter as a valuation coordinate, the group identity, and the action packaged as a homeomorphism",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "16ca939d-174d-4dca-b605-2d0f0f8f27a7",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox.Comb",
+            "qualified": "ZeroParadox.Comb.sup",
+            "short": "sup"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.Comb",
+            "qualified": "ZeroParadox.Comb.sup",
+            "short": "sup",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -15507,6 +16035,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "1b8d1bbc-5424-4d17-a25b-d9e8aec251a1",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.prefixCodes",
+            "short": "prefixCodes"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.prefixCodes",
+            "short": "prefixCodes",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "1b9e0ed6-13fb-47c0-a941-8bd279793710",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -17091,6 +17656,43 @@
             ]
           },
           "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "1f1023fb-c189-405f-af27-709a7d552864",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.exists_two_covers",
+            "short": "exists_two_covers"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.exists_two_covers",
+            "short": "exists_two_covers",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -22293,6 +22895,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "292e3ec1-9e2b-4739-9a9d-bd58c375063d",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.zp_btree_embeds_of_hereditary_depth",
+            "short": "zp_btree_embeds_of_hereditary_depth"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.zp_btree_embeds_of_hereditary_depth",
+            "short": "zp_btree_embeds_of_hereditary_depth",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "293354c5-c97c-45f7-84a5-699720928c85",
           "new": {
             "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
@@ -23700,6 +24341,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "2ba984eb-e400-4c7e-a6bd-02f0df1424ec",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox.Bowtie",
+            "qualified": "ZeroParadox.Bowtie.cov_iff",
+            "short": "cov_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.Bowtie",
+            "qualified": "ZeroParadox.Bowtie.cov_iff",
+            "short": "cov_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "2bb2a026-add4-4a2f-abec-c7cb1837351a",
           "new": {
@@ -24466,6 +25144,45 @@
             ]
           },
           "reason": "twin de-scar: <base>_<FileBasename> file-suffix rename",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "2d6070f0-ae26-486d-bd7d-97a1eb1f2184",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.no_embed_of_upchains",
+            "short": "no_embed_of_upchains"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.no_embed_of_upchains",
+            "short": "no_embed_of_upchains",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -26725,6 +27442,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "31bcf8c8-e27b-44ef-b95d-95f54950bcf7",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.unitEnd_independent",
+            "short": "unitEnd_independent"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.unitEnd_independent",
+            "short": "unitEnd_independent",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "31db2020-ad64-4081-a950-c2db1c5bde4b",
           "new": {
             "file": "ZeroParadox/Information/SnapEpsilonZero.lean",
@@ -27220,6 +27974,43 @@
             ]
           },
           "reason": "RiemannSphere § IX: rounding the 2-adic valuation to an even landing (UP/DOWN), the flip conjugating one into the other, and rInv conjugating multiplication by u into multiplication by u^-1",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "32b893e0-2897-4c58-b522-dfc4949e04b9",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.treeGo_avoids",
+            "short": "treeGo_avoids"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.treeGo_avoids",
+            "short": "treeGo_avoids",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -28097,6 +28888,43 @@
             ]
           },
           "reason": "Land 2026-11-10 cells-joint, local-towers, interleave probes and the new one-way-flow results into ZeroParadox/Valuation (CellsJoint, Interleave, LocalTowers, OneWayFlow).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "34d93470-5081-4471-8d84-8f38d75bb5a7",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Comb",
+            "short": "Comb"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Comb",
+            "short": "Comb",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -31875,6 +32703,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "3c792426-d6bc-483f-b0ea-b510f570f1a9",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox.Bowtie",
+            "qualified": "ZeroParadox.Bowtie.le",
+            "short": "le"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.Bowtie",
+            "qualified": "ZeroParadox.Bowtie.le",
+            "short": "le",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "3c7f6539-0acd-4948-ad41-9762e8d01b77",
           "new": {
@@ -33463,6 +34328,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "4019e76e-27c8-4d56-b86b-ec670a173f48",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.comb_atom_covBy",
+            "short": "comb_atom_covBy"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.comb_atom_covBy",
+            "short": "comb_atom_covBy",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "401c8d78-0f4b-46b6-ac1f-3e834e2c8bb4",
           "new": {
             "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
@@ -33858,6 +34762,43 @@
             "role": []
           },
           "reason": "PricedInterface: the constructive/classical boundary with its cost measured - carrier choice-free, crossing carries Classical.choice at every declaration. The carrier has the shape of Casteran's ON_plus with a one-point right summand and is not an instance of it (its order is not well-founded); the map has two of ON_correct's three fields (into, onto) and not the comparator field. Cited; the measurement is the delta.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "4137ca49-af58-4e7a-805d-cda0c5e00503",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.finComb_update",
+            "short": "finComb_update"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.finComb_update",
+            "short": "finComb_update",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -35219,6 +36160,43 @@
             ]
           },
           "reason": "New file GraphBisim.lean: finite membership graphs, Aczel bisimulation, dropLoops (control) vs wfPart (bisimulation-invariant), Omega/empty/zero-star/one/two-cycle examples",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "439f7271-4402-45d9-83b6-df5d5c6a6a3a",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.prefixCodes_nil",
+            "short": "prefixCodes_nil"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.prefixCodes_nil",
+            "short": "prefixCodes_nil",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -37516,6 +38494,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "4770a47d-380c-4d85-8bde-4f7c2dd1e278",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.comb_botHasFirstStep",
+            "short": "comb_botHasFirstStep"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.comb_botHasFirstStep",
+            "short": "comb_botHasFirstStep",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -40710,6 +41727,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "4d769a68-99bb-4c6a-92ce-61ba10381906",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.diamondMember",
+            "short": "diamondMember"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.diamondMember",
+            "short": "diamondMember",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "4d8040f4-0f6e-4904-a36c-1ce72b72e9a1",
           "new": {
             "file": "ZeroParadox/Category/IgnoranceSeam.lean",
@@ -41587,6 +42641,43 @@
             "role": []
           },
           "reason": "PricedInterface: the constructive/classical boundary with its cost measured - carrier choice-free, crossing carries Classical.choice at every declaration. The carrier has the shape of Casteran's ON_plus with a one-point right summand and is not an instance of it (its order is not well-founded); the map has two of ON_correct's three fields (into, onto) and not the comparator field. Cited; the measurement is the delta.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "4f5e1acd-26cc-4d8e-be00-79d0a20de697",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.btree_le_iff",
+            "short": "btree_le_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.btree_le_iff",
+            "short": "btree_le_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -43550,6 +44641,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "5255f628-c01e-4a60-b0a8-5f021a01d39e",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.treeStep_lt",
+            "short": "treeStep_lt"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.treeStep_lt",
+            "short": "treeStep_lt",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "525c4c32-2b4f-4837-8fe4-c49df58249f9",
           "new": {
             "file": "ZeroParadox/Category/IgnoranceSeam.lean",
@@ -44536,6 +45664,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "5539462d-ccb7-4253-8cd1-9b5cbe57a3cc",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.comb_no_BTree",
+            "short": "comb_no_BTree"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.comb_no_BTree",
+            "short": "comb_no_BTree",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -46699,6 +47866,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "5923b711-def2-4153-bd9c-29ab8e2d0a1e",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.comb_zps_eq",
+            "short": "comb_zps_eq"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.comb_zps_eq",
+            "short": "comb_zps_eq",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "59276a24-a932-4fa5-898a-e7243f2c7bfc",
           "new": {
             "file": "ZeroParadox/Ordinal/Epsilon0LeastFP.lean",
@@ -48674,6 +49878,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "5cbd6b91-46b9-4b11-b19a-da047d28364f",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Bowtie",
+            "short": "Bowtie"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Bowtie",
+            "short": "Bowtie",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -51881,6 +53122,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "63a84aed-eaeb-4fec-bf69-ed0661992947",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.TreeInv",
+            "short": "TreeInv"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.TreeInv",
+            "short": "TreeInv",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "63f2a3a5-de5f-440c-b534-61346f99b4ec",
           "new": {
             "file": "ZeroParadox/Category/LawvereTaboo.lean",
@@ -52711,6 +53989,43 @@
             ]
           },
           "reason": "Die arc 3 2026-11-01: the seam role (exactly one SelfOnlyAt occupant) per chart: next-time chart of QPF coalgebras, lattice selfApp, module elements / zero object",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "65deca68-bb3e-416d-8fc4-4b7629258718",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.treeStep",
+            "short": "treeStep"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.treeStep",
+            "short": "treeStep",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -56580,6 +57895,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "6d19b272-5e12-4de0-964c-f8fa275b0843",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox.Comb",
+            "qualified": "ZeroParadox.Comb.glb_mem",
+            "short": "glb_mem"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.Comb",
+            "qualified": "ZeroParadox.Comb.glb_mem",
+            "short": "glb_mem",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "6d19f312-4dd7-44b1-b342-f9ca5c81efc6",
           "new": {
@@ -58838,6 +60190,82 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "7180d6bd-9159-41c9-b0fb-a9c7ead0aab1",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fireAt_not_MLRandom",
+            "short": "fireAt_not_MLRandom"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.fireAt_not_MLRandom",
+            "short": "fireAt_not_MLRandom",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "71a0ab83-8dab-40b4-91cb-dab1c6472c83",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.botMass_eq_iInf",
+            "short": "botMass_eq_iInf"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.botMass_eq_iInf",
+            "short": "botMass_eq_iInf",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "71b3148d-29f4-4bc9-bf5f-62c2505ff392",
           "new": {
             "file": "ZeroParadox/Valuation/CellsJoint.lean",
@@ -59795,6 +61223,43 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "739f829e-f920-4bae-89e2-43d4a5efa3e7",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox.Comb",
+            "qualified": "ZeroParadox.Comb.atom0_no_depth",
+            "short": "atom0_no_depth"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.Comb",
+            "qualified": "ZeroParadox.Comb.atom0_no_depth",
+            "short": "atom0_no_depth",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -61946,6 +63411,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "77d39b2f-783b-4c8e-a425-5a315e52d4ac",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_zero_support",
+            "short": "trials_zero_support"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_zero_support",
+            "short": "trials_zero_support",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "77e80842-9030-4661-b64d-33bda90aa2d4",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -62641,6 +64145,43 @@
             ]
           },
           "reason": "Land 2026-11-10 cells-joint, local-towers, interleave probes and the new one-way-flow results into ZeroParadox/Valuation (CellsJoint, Interleave, LocalTowers, OneWayFlow).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "78fc790d-13f0-4a25-84e8-eb1e36d1ef18",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_one_eq_dirac",
+            "short": "trials_one_eq_dirac"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_one_eq_dirac",
+            "short": "trials_one_eq_dirac",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -64331,6 +65872,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "7c720922-11f0-48bf-a94a-169f2e5a58db",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.p_one_control",
+            "short": "p_one_control"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.p_one_control",
+            "short": "p_one_control",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "7c755b15-56cc-4330-aeb5-31bda30ae26e",
           "new": {
             "file": "ZeroParadox/Computability/SelfCopyReference.lean",
@@ -65710,6 +67290,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "7efc5962-757d-4646-ac63-28cc822d594e",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.btree_embeds_End",
+            "short": "btree_embeds_End"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.btree_embeds_End",
+            "short": "btree_embeds_End",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "7f075639-a82c-4dce-97d4-8feac22fcfdd",
           "new": {
@@ -66305,6 +67924,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "8013fff0-a74f-45b0-9868-c111cf87dd4b",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.covers_infinite_of_depth",
+            "short": "covers_infinite_of_depth"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.covers_infinite_of_depth",
+            "short": "covers_infinite_of_depth",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "803d4f38-be92-4ef4-989c-e00ff27273d1",
           "new": {
             "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
@@ -66700,6 +68356,43 @@
             ]
           },
           "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "80cd1ad6-fcdb-4ec9-b53b-505b54f26f6f",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.prefixCodes_subset_iff",
+            "short": "prefixCodes_subset_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.prefixCodes_subset_iff",
+            "short": "prefixCodes_subset_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -69164,6 +70857,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "855e9895-0ae4-4370-a12d-b22d9f0be627",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.combZPS",
+            "short": "combZPS"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.combZPS",
+            "short": "combZPS",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "857c819e-3d43-4a20-9852-352fb29ac529",
           "new": {
             "file": "ZeroParadox/Category/DieNucleus.lean",
@@ -69932,6 +71662,43 @@
           "reason": "ExcludedMiddleBridge: choice fragment -> EM -> Prop nucleus trivial, plus the Fin 3 non-Boolean fence",
           "verify": {
             "axioms": "propext, Quot.sound",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "87276285-a34b-4aba-a74c-7d0922448c4a",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_one_support",
+            "short": "trials_one_support"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_one_support",
+            "short": "trials_one_support",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
             "sorry_free": true
           }
         },
@@ -72225,6 +73992,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "8bed90de-adcc-4da9-ae19-0dfa03ae4116",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.support_dirac_tape",
+            "short": "support_dirac_tape"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.support_dirac_tape",
+            "short": "support_dirac_tape",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "8bf58463-2a99-4d4b-873e-7e8917b1aa9e",
           "new": {
@@ -72253,6 +74057,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "8bf7c82a-4385-42ac-8765-ac783951a903",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.finComb_sup",
+            "short": "finComb_sup"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.finComb_sup",
+            "short": "finComb_sup",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -74231,6 +76072,80 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "90d1941e-e830-4ede-a9c9-0399000c4056",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.comb_stronglyAtomic",
+            "short": "comb_stronglyAtomic"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.comb_stronglyAtomic",
+            "short": "comb_stronglyAtomic",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "90d29c39-71b4-46c5-a8a2-0f96d2e57ebd",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.botMass",
+            "short": "botMass"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.botMass",
+            "short": "botMass",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "90d8fd71-0cbc-43be-ab3c-ae2f5ede9e41",
           "new": {
@@ -75917,6 +77832,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "93e1ba81-ee37-4d9f-b80e-7fdc2bd1f5ab",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.comb_upchains",
+            "short": "comb_upchains"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.comb_upchains",
+            "short": "comb_upchains",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "93eacceb-3d3b-4c87-a667-b472e95099de",
           "new": {
             "file": "ZeroParadox/Computability/Rice.lean",
@@ -76489,6 +78441,45 @@
             ]
           },
           "reason": "Die computability face (halting as arrival, clock machine), quotients of a motion (drawing vs set: hypersets, codes), carrier-changing steps (wrap, Option), PoleEnds with inhabitation",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "9556a849-4abc-495e-bd33-8b5c84ecf016",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.combFloor",
+            "short": "combFloor"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.combFloor",
+            "short": "combFloor",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -77791,6 +79782,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "97ddb508-3afe-4966-a65b-346b2d497d2e",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.treeGo",
+            "short": "treeGo"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.treeGo",
+            "short": "treeGo",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "97f77756-8cf0-4408-ae95-e2f7d3dfa521",
           "new": {
             "file": "ZeroParadox/Valuation/LocalTowers.lean",
@@ -78002,6 +80030,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "984252a7-79c5-43cd-a2cd-9ca939316919",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cylMass_continuous",
+            "short": "cylMass_continuous"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cylMass_continuous",
+            "short": "cylMass_continuous",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -78443,6 +80508,43 @@
             "role": []
           },
           "reason": "die-joints-1106: ruling 147 (Tim, 2026-11-06), cut points / joints / dual joints of an order and their instances (ZeroParadox/Order/DieJoints.lean), indexed in DieCannotBe § I, § XXVII, § XXIX",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "98ee7453-754b-4d01-adad-57c813fa08da",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.botMass_pos",
+            "short": "botMass_pos"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.botMass_pos",
+            "short": "botMass_pos",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -80859,6 +82961,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "9cefc1a6-53b7-4786-8388-2962fb059383",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.no_strictAnti_of_wf",
+            "short": "no_strictAnti_of_wf"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.no_strictAnti_of_wf",
+            "short": "no_strictAnti_of_wf",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "9cf0eb72-e6c2-4575-9258-18948280c687",
           "new": {
             "file": "ZeroParadox/Order/DieJoints.lean",
@@ -81287,6 +83426,43 @@
             ]
           },
           "reason": "Die views batch: views (order as data), restriction to an up-closed set, adjoined points and the empty carrier, arrival and fan-in",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "9d8afd3c-7f4f-43a8-b651-74646fe5a71c",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.botMass_zero",
+            "short": "botMass_zero"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.botMass_zero",
+            "short": "botMass_zero",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -81758,6 +83934,46 @@
             ]
           },
           "reason": "D-22: promote the involutive-fork witnesses from private/physics-bridge into a tracked file so Wall.lean's NO-GO table row is citable",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "9e785d8f-d7d4-411e-bcc8-24c6d9c35292",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.pole_limit_explicit",
+            "short": "pole_limit_explicit"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.pole_limit_explicit",
+            "short": "pole_limit_explicit",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -83065,6 +85281,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "a03d187e-e8be-49e0-a8cc-ec2b56804a05",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.finComb_btree",
+            "short": "finComb_btree"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.finComb_btree",
+            "short": "finComb_btree",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "a03ebacf-7778-46c7-a45e-37cf8be7f773",
           "new": {
             "file": "ZeroParadox/Information/TapeHalting.lean",
@@ -83431,6 +85684,82 @@
             ]
           },
           "reason": "UniversalChoiceFree § IX: a self-printing universal code at [propext, Quot.sound] (restated SelfPrints ∧ Universal via encodeCode/ofNatCodeCF), faithfulness bridges, statement controls, controls zero_selfPrints_not_universal / universal_not_selfPrints_cf / unshifted_incompatible",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a113cb1b-5c23-4208-92c8-0cae28448539",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.finComb_stronglyAtomic",
+            "short": "finComb_stronglyAtomic"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.finComb_stronglyAtomic",
+            "short": "finComb_stronglyAtomic",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a12f150c-6d18-45e9-b389-2e0b2ec5576d",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_bot_mass_jump",
+            "short": "trials_bot_mass_jump"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_bot_mass_jump",
+            "short": "trials_bot_mass_jump",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -84953,6 +87282,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "a49aaa02-fcc8-464a-bc58-be44f5e214f5",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox.Comb",
+            "qualified": "ZeroParadox.Comb.le",
+            "short": "le"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.Comb",
+            "qualified": "ZeroParadox.Comb.le",
+            "short": "le",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "a4fb8336-281e-4b90-aff4-387d3fe71d79",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -85868,6 +88234,43 @@
             ]
           },
           "reason": "Die v2 final batch: drawing vs set (self-steps, accessibility, forced rank), ends of a view, orders on motions, placements as views, relaxed least-fixed-point schema, UP legs as nuclei",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a729ee5e-e6c2-44e9-9d38-ef63a674bc28",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.covBy_not_le_of_ne",
+            "short": "covBy_not_le_of_ne"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.covBy_not_le_of_ne",
+            "short": "covBy_not_le_of_ne",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -87653,6 +90056,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "aa830ec8-4d76-48d3-b06e-d2efd38f6f73",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.no_BTree_embed_of_upchains",
+            "short": "no_BTree_embed_of_upchains"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.no_BTree_embed_of_upchains",
+            "short": "no_BTree_embed_of_upchains",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "aa8749e8-b923-4403-b448-4c27edbe5633",
           "new": {
@@ -87980,6 +90422,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "aae36452-9885-4bc6-b962-8358b86e0990",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.botMass_not_continuousAt_zero",
+            "short": "botMass_not_continuousAt_zero"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.botMass_not_continuousAt_zero",
+            "short": "botMass_not_continuousAt_zero",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "aae6af49-3f61-4500-96f5-661141ee8711",
           "new": {
             "file": "ZeroParadox/Valuation/Interleave.lean",
@@ -88008,6 +90489,43 @@
             ]
           },
           "reason": "Land 2026-11-10 cells-joint, local-towers, interleave probes and the new one-way-flow results into ZeroParadox/Valuation (CellsJoint, Interleave, LocalTowers, OneWayFlow).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "aaf1cdb2-05eb-4d21-a4cf-36cf8f2922f1",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.treeStep_sub",
+            "short": "treeStep_sub"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.treeStep_sub",
+            "short": "treeStep_sub",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -88085,6 +90603,43 @@
             ]
           },
           "reason": "Die views batch: views (order as data), restriction to an up-closed set, adjoined points and the empty carrier, arrival and fan-in",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ab3ed7c4-2c94-4eef-b12b-6f224e6280b2",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cylMass",
+            "short": "cylMass"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cylMass",
+            "short": "cylMass",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -88341,6 +90896,43 @@
             ]
           },
           "reason": "Sibling faces of the diagonal fixed point, built 2026-07-16: Tarski (truth/wall), Curry (explosion/wall), Rice (computability undecidability, cites Mathlib), Löb (provability, from-scratch ProvabilityLogic typeclass + Gödel 2). Each wired to the bottom element via the family's μ/ν structure.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "aba550e4-6c3d-4555-af15-5c0d02471ed0",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.comb_zle_iff",
+            "short": "comb_zle_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.comb_zle_iff",
+            "short": "comb_zle_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -88975,6 +91567,46 @@
             ]
           },
           "reason": "Round-3 claim revalidation: a spread fiber-confined distribution refutes injectivity — the collision is necessary, not decorative.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ac9a05e7-dfe2-4224-a93c-bd4d4a878b33",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.stmtLimitNoRand_holds",
+            "short": "stmtLimitNoRand_holds"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.stmtLimitNoRand_holds",
+            "short": "stmtLimitNoRand_holds",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -93483,6 +96115,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "b48a4987-ddc9-459a-a93f-d8a3c0c4c3d6",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natSq_hereditary",
+            "short": "natSq_hereditary"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natSq_hereditary",
+            "short": "natSq_hereditary",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "b497ae9e-a8aa-4dbb-8c09-bd62556970a6",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -94690,6 +97359,43 @@
             ]
           },
           "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b70c39a9-3b75-463d-a5b1-cecb4404465e",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.endPair01",
+            "short": "endPair01"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.endPair01",
+            "short": "endPair01",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -96464,6 +99170,43 @@
             ]
           },
           "reason": "New file GraphBisim.lean: finite membership graphs, Aczel bisimulation, dropLoops (control) vs wfPart (bisimulation-invariant), Omega/empty/zero-star/one/two-cycle examples",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ba4277b5-06e2-49b4-8188-2fc946bb6c7f",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.end_split_witness",
+            "short": "end_split_witness"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.end_split_witness",
+            "short": "end_split_witness",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -98571,6 +101314,45 @@
             "role": []
           },
           "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "be1491f9-4973-490c-8d37-146bb8f9ba3e",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.btree_embeds_of_hereditary_depth",
+            "short": "btree_embeds_of_hereditary_depth"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.btree_embeds_of_hereditary_depth",
+            "short": "btree_embeds_of_hereditary_depth",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -101975,6 +104757,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "c5550a26-9416-4588-93a5-194cbab9b69c",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.comb_depth",
+            "short": "comb_depth"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.comb_depth",
+            "short": "comb_depth",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "c566ffb2-d5ef-45f2-a879-3c99967d4928",
           "new": {
             "file": "ZeroParadox/Category/BottomUndecidable.lean",
@@ -103031,6 +105852,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c70c6050-024a-489a-b0ba-bd194ca3254c",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.treeGo_cons",
+            "short": "treeGo_cons"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.treeGo_cons",
+            "short": "treeGo_cons",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -104447,6 +107305,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "ca6cc7ee-aea5-4a88-b3db-a6f6ca50f82b",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.botMass_tendsto_right",
+            "short": "botMass_tendsto_right"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.botMass_tendsto_right",
+            "short": "botMass_tendsto_right",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "ca6d69ed-0725-4b2d-83df-5fa19e1067b7",
           "new": {
             "file": "ZeroParadox/Order/LeastFixedPoint.lean",
@@ -105595,6 +108492,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "cbe0f5f0-c52c-41cb-a5ec-2fcf5315b088",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cylMass_eq",
+            "short": "cylMass_eq"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cylMass_eq",
+            "short": "cylMass_eq",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "cbe36e29-8b8a-4707-bc99-7ee8232f951c",
           "new": {
             "file": "ZeroParadox/Information/SnapEpsilonZero.lean",
@@ -105729,6 +108663,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "cc0e9106-5232-4952-8579-425f8df86e1c",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox.Comb",
+            "qualified": "ZeroParadox.Comb.le_def",
+            "short": "le_def"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.Comb",
+            "qualified": "ZeroParadox.Comb.le_def",
+            "short": "le_def",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -106897,6 +109868,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "cdcc07ff-3bb6-4ea4-ba0d-901f791337df",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.atoms_infinite_of_depth",
+            "short": "atoms_infinite_of_depth"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.atoms_infinite_of_depth",
+            "short": "atoms_infinite_of_depth",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "cdf7c1ff-747e-40c0-95ec-7b50c2e20d1f",
           "new": {
@@ -107957,6 +110967,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "cf459f8b-8e06-46e5-ab5a-d1e1be790537",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.endPair02",
+            "short": "endPair02"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.endPair02",
+            "short": "endPair02",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "cf714fd5-4c76-4cdb-8e3f-f0b4c828f5cf",
           "new": {
@@ -108172,6 +111219,43 @@
             ]
           },
           "reason": "Die computability face (halting as arrival, clock machine), quotients of a motion (drawing vs set: hypersets, codes), carrier-changing steps (wrap, Option), PoleEnds with inhabitation",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d0224d21-7418-4460-baf0-715c7dadfd8f",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.finComb_le_iff",
+            "short": "finComb_le_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.finComb_le_iff",
+            "short": "finComb_le_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -108611,6 +111695,43 @@
             "role": []
           },
           "reason": "die-tagged-1029: the adjoined point tagged (Option ℕ) or a limit (Escardó's ℕ∞, NInf): uniform Bool-step trichotomy and selector free on NInf, LPO on Option ℕ; WLPO at ∞; the chain Option ℕ → NInf → Part ℕ and NInf ≃ Computation Unit (Die § XXIII); Tim ruling 2026-10-29",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d11a4f20-8d21-41ec-8d26-5c7ca35a0e01",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.end_infinite",
+            "short": "end_infinite"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.end_infinite",
+            "short": "end_infinite",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -110596,6 +113717,45 @@
             ]
           },
           "reason": "Land 2026-11-10 cells-joint, local-towers, interleave probes and the new one-way-flow results into ZeroParadox/Valuation (CellsJoint, Interleave, LocalTowers, OneWayFlow).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d4f4135a-3e0f-4a1b-aa4f-7b5b213af138",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.no_End_embed_of_upchains",
+            "short": "no_End_embed_of_upchains"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.no_End_embed_of_upchains",
+            "short": "no_End_embed_of_upchains",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -116836,6 +119996,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "e1006638-9614-4210-916e-acfcd3cf058c",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.btree_infinite",
+            "short": "btree_infinite"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.btree_infinite",
+            "short": "btree_infinite",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "e1147f29-d402-4c79-8d03-5dbff6d3dbd8",
           "new": {
             "file": "ZeroParadox/Computability/SelfCopyReference.lean",
@@ -117168,6 +120365,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "e147c113-2d62-43a9-a2a7-6ecd5839becd",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.treeStep_inv",
+            "short": "treeStep_inv"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.treeStep_inv",
+            "short": "treeStep_inv",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "e156248d-69e6-4a42-be7f-6093ec7c9798",
           "new": {
@@ -117303,6 +120537,43 @@
             ]
           },
           "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e1b19603-17ee-454c-abd9-9e30fd8a92de",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.comb_lt_iff",
+            "short": "comb_lt_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.comb_lt_iff",
+            "short": "comb_lt_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -119378,6 +122649,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "e523f564-18e0-4eaa-ac81-27131e92a4ce",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_zero_eq_dirac",
+            "short": "trials_zero_eq_dirac"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_zero_eq_dirac",
+            "short": "trials_zero_eq_dirac",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "e524d378-06ef-4ce4-9fda-cb6f40c47f1e",
           "new": {
@@ -119593,6 +122903,43 @@
             ]
           },
           "reason": "Die arc 3 2026-11-01: the seam role (exactly one SelfOnlyAt occupant) per chart: next-time chart of QPF coalgebras, lattice selfApp, module elements / zero object",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e579ff49-fe53-4394-a203-fc1e9ff2cc05",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.finset_covers_infinite",
+            "short": "finset_covers_infinite"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.finset_covers_infinite",
+            "short": "finset_covers_infinite",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -119956,6 +123303,43 @@
             ]
           },
           "reason": "Land 2026-11-10 cells-joint, local-towers, interleave probes and the new one-way-flow results into ZeroParadox/Valuation (CellsJoint, Interleave, LocalTowers, OneWayFlow).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e66daa68-0284-4b25-acd4-cdff644edc65",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.covBy_eq_sup_of_le",
+            "short": "covBy_eq_sup_of_le"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.covBy_eq_sup_of_le",
+            "short": "covBy_eq_sup_of_le",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -120501,6 +123885,43 @@
             "role": []
           },
           "reason": "die-tagged-1101: Prop-step trichotomy/selector reductions (EM, WEM), Rosolini lifting RosPart with toRos onto iff LPO, wlpo_of_discrete_tag (Die §§ VIII, IX, XXIII); Tim authorised 2026-11-01",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e791761d-5e1a-4c5d-9250-06f0c58fddbc",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.combCx",
+            "short": "combCx"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.combCx",
+            "short": "combCx",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -122352,6 +125773,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "ea95ba20-d9b2-41c1-9e5c-0bb1fb10a9e4",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.sup_unitEnd_apply",
+            "short": "sup_unitEnd_apply"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.sup_unitEnd_apply",
+            "short": "sup_unitEnd_apply",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "ea9b39b8-b415-4501-bd6c-32d39c3ff50f",
           "new": {
             "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
@@ -123058,6 +126516,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "eb8d9ec9-1c60-4f4d-b63a-71c4d6ba0387",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_zero_bot",
+            "short": "trials_zero_bot"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_zero_bot",
+            "short": "trials_zero_bot",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "eb998389-e404-453b-a765-b7233185b36c",
           "new": {
@@ -123266,6 +126763,84 @@
             ]
           },
           "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ebf90910-bfb6-49c4-aa5e-1a9cba9a838a",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bot_support_three",
+            "short": "bot_support_three"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bot_support_three",
+            "short": "bot_support_three",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ec0f9885-56bc-4d75-80f0-47e239a27be9",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.btree_embeds_of_independent",
+            "short": "btree_embeds_of_independent"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.btree_embeds_of_independent",
+            "short": "btree_embeds_of_independent",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -123672,6 +127247,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ed347a01-71e2-4081-8fba-637f84899c64",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox.Bowtie",
+            "qualified": "ZeroParadox.Bowtie.two_killed",
+            "short": "two_killed"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.Bowtie",
+            "qualified": "ZeroParadox.Bowtie.two_killed",
+            "short": "two_killed",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -124194,6 +127806,43 @@
             ]
           },
           "reason": "Die stage/closure shape and registration switch (Die.lean § VI-VII), with its two face maps in their existing homes (Epsilon0LeastFP, Occurrence)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ee02462d-df2b-4fa8-8501-5ccbc237f5fd",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.FinComb",
+            "short": "FinComb"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.FinComb",
+            "short": "FinComb",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -124828,6 +128477,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ef931093-212f-4093-aa1f-37bd0e52048b",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.treeGo_mono",
+            "short": "treeGo_mono"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.treeGo_mono",
+            "short": "treeGo_mono",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -128057,6 +131743,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "f601d3bb-ba28-424e-9767-0a11d3ddc6b7",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.end_top_no_depth",
+            "short": "end_top_no_depth"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.end_top_no_depth",
+            "short": "end_top_no_depth",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "f61d5539-0b9c-4f78-83fd-f94df0a28516",
           "new": {
@@ -131156,6 +134879,43 @@
             ]
           },
           "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "fb2b8984-ca0f-44cd-945b-93adb72da32c",
+          "new": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.BTree",
+            "short": "BTree"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TreeNotForced.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.BTree",
+            "short": "BTree",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true

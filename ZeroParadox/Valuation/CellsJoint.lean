@@ -23,7 +23,7 @@ cells are for."
 ## Formal Overview (AI-assisted)
 The covers (atoms) of ⊥ of `End` are the unit vectors `unitEnd k` (`covers_bot_iff`), the
 `boundaryDouble`-orbit of `unitEnd 0`; `unitEnd k` lies in `boundaryCell k` only, depth is `endVal`
-(`mem_boundaryCell_iff`), and both together force branching (`branching_forced`).
+(`mem_boundaryCell_iff`). ⊥ as the glb of non-⊥ members and a first step together force branching (`branching_forced`); `End`'s depth meets that glb condition (`end_glb_unitEnd`), and so does a finite carrier (`diamond_meets_hglb`, `ZeroParadox/Valuation/TreeNotForced.lean`), so depth is sufficient, not required.
 -/
 
 set_option maxHeartbeats 400000
@@ -522,7 +522,7 @@ end Controls
 section Controls
 attribute [local instance] boolOrZPS
 
--- Statement: control, drop the depth side: `Bool` under `or` is linear with a first step, and no
+-- Statement: control, drop the glb side: `Bool` under `or` is linear with a first step, and no
 -- sequence of non-⊥ members has glb ⊥.
 example :
     (∀ x y : Bool, ZPSemilattice.le x y ∨ ZPSemilattice.le y x) ∧ BotHasFirstStep Bool ∧
