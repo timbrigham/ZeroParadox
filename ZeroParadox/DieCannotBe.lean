@@ -56,6 +56,7 @@ import ZeroParadox.Order.DieJoints
 import ZeroParadox.Information.SnapEpsilonZero
 import ZeroParadox.Information.TapeHalting
 import ZeroParadox.Information.PoleWithinEnsemble
+import ZeroParadox.Valuation.DoublingAndTree
 
 set_option maxHeartbeats 400000
 
@@ -4976,5 +4977,34 @@ example : (∀ n, ZeroParadox.slotRun (fun _ => false) n = false) ∧
 #check @ZeroParadox.endVal_gi                    -- Statement: `toDual ∘ endVal` is the lower adjoint of a Galois insertion (Mathlib `GaloisInsertion`), transported from `det_gi`
 #check @ZeroParadox.endVal_no_lower_adjoint     -- Statement: no `g : ℕ∞ → End` has `g v ≤ x ↔ endVal x ≤ v`. Reading: a section on one side, no adjoint on the other, as for `det`
 #check @ZeroParadox.endVal_not_injective        -- Statement: `endVal` is not injective. Reading: depth forgets the tape after its first nonzero digit, as halting does (the last CONTROL in `ZeroParadox/Information/TapeHalting.lean`)
+
+/-! ### § XXXI. Two copies of a motion: pairing, doubling, and the tree -/
+-- Reading: Tim's rulings (2026-11-11): the doubling premise uses the interleaving pairing; doubling, a
+-- fixed pole and non-degeneracy are three separate premises, each provisional. Definitions and proofs:
+-- `ZeroParadox/Die.lean` § XXVI; carrier controls: `ZeroParadox/Valuation/DoublingAndTree.lean` § IX.
+#check @ZeroParadox.Motion.prod                -- Statement: the lockstep pairing: UP componentwise, a step moves both coordinates
+#check @ZeroParadox.Motion.aprod               -- Statement: the interleaving pairing: UP componentwise, a step moves one coordinate (Mathlib `Prod.GameAdd`)
+#check @ZeroParadox.Motion.StrictIso.equivCoalgIso -- Statement: isomorphisms of motions from `M` to `N` are equivalent (Mathlib `Equiv`) to isomorphisms from `M.toCoalgebra` to `N.toCoalgebra` in Mathlib's `Endofunctor.Coalgebra` category
+#check @ZeroParadox.Motion.ADoubling           -- Statement: PREMISE, `M` is isomorphic to `M.aprod M`; `Doubling` is the same for `M.prod M`
+#check @ZeroParadox.Motion.FixedPole           -- Statement: PREMISE, the isomorphism sends `r` to `(r, r)`
+#check @ZeroParadox.Motion.NonDegenerateAt     -- Statement: PREMISE, `r` reaches some `a` that does not reach `r` back
+#check @ZeroParadox.Motion.tree_of_aDoubling   -- Statement: an isomorphism `M ≅ M.aprod M`, `r` reaching `e⁻¹ (r, r)`, and `NonDegenerateAt r` give a map from `Bool` words, `[]` at `r`, along which reachability is the prefix order; one way
+#check @ZeroParadox.Motion.tree_of_aDoubling_pole -- Reading: if a motion doubles by interleaving, with a fixed pole at `r` and a point reachable from `r` that cannot reach `r` back, then reachability forks at every node of a copy of the binary tree rooted at `r`; one way, and the converse is not claimed
+#check @ZeroParadox.sync_no_bridge             -- Reading: with the lockstep pairing in place of the interleaving one, the same three premises give no such tree: the lockstep square does not carry reachability coordinatewise (`sync_rtg_not_product`)
+#check @ZeroParadox.sync_rtg_not_product       -- Statement: in `endTopMotion`, ⊥ of `End` reaches itself and `topEnd`, and in the lockstep square (⊥, ⊥) does not reach (⊥, `topEnd`)
+#check @ZeroParadox.Motion.fin3_doubling_control -- Reading: loop, climb and corner together do not force doubling: `fin3Motion` has all three and doubles in neither pairing
+#check @ZeroParadox.endFlip_doubling_control   -- Reading: interleaving doubling with a loop and a corner and no climb, and its reachability carries the tree at ⊥ of `End`; with `unitMotion_not_corner` below, doubling forces none of corner, loop, climb
+#check @ZeroParadox.Motion.unit_doubling_degenerate -- Reading: non-degeneracy is load-bearing: `unitMotion` meets both doublings, fails only `NonDegenerate`, and carries no tree (next `example`)
+-- Statement: on `unitMotion` no map from `Bool` words carries reachability as the prefix order.
+example : ¬ ∃ f : List Bool → Unit, ∀ l l',
+    Relation.ReflTransGen ZeroParadox.Motion.unitMotion.step (f l) (f l') ↔ l <+: l' :=
+  fun ⟨f, hf⟩ => absurd ((hf [false] []).1 (.single trivial)) (by decide)
+#check @ZeroParadox.Motion.unitMotion_not_corner -- Statement: the corner of `unitMotion` does not fire
+#check @ZeroParadox.comb_not_aDoubling         -- Statement: `combLeMotion` (UP the identity, a step `≤` on `Comb`) does not meet `ADoubling`
+#check @ZeroParadox.nn_tree                    -- Reading: doubling forces the tree without discreteness: `ℕ → ℝ≥0` doubles (`nnDouble`), ⊥ of it has no cover, it is not strongly atomic, and `BTree` embeds at ⊥
+#check @ZeroParadox.comb_atomic_no_tree        -- Reading: and discreteness does not force the tree: `Comb` is strongly atomic and embeds no `BTree`
+#check @ZeroParadox.epsilon0_control           -- Reading: the second point the tree theorem uses supplies only non-degeneracy; ε₀ ≠ ⊥ of `Ordinal` (`epsilon0_ne_bot`) is such a point, and `Ordinal` neither doubles nor embeds `BTree`, so naming that point ε₀ adds nothing
+-- Statement: `square_embed_forces_btree` is the order case of `Motion.tree_of_square` (the `example` in
+-- `ZeroParadox/Valuation/DoublingAndTree.lean` § IX).
 
 end DieCannotBeIndex
