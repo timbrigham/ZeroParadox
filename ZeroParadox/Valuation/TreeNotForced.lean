@@ -635,7 +635,8 @@ theorem btree_embeds_of_hereditary_depth {P : Type*} [SemilatticeSup P] [OrderBo
     hglb.2 (by rintro _ ⟨n, rfl⟩; exact hc n)
 
 /-- `Statement:` the same in ZP-A's induced order on a `ZPSemilattice`, root at ⊥ of `L`; one way.
-`Reading:` depth at every point forces forks everywhere; depth only at ⊥ does not (`comb_no_End`). -/
+`Reading:` depth at every point, with strong atomicity, forces forks everywhere, one way; depth only
+at ⊥ does not (`comb_no_End`). -/
 theorem zp_btree_embeds_of_hereditary_depth {L : Type*} [ZPSemilattice L]
     (hatom : @IsStronglyAtomic L (zpSemilatticeSup L).toPreorder)
     (hdepth : ∀ x : L, ∃ m : ℕ → L, @StrictAnti ℕ L _ (zpSemilatticeSup L).toPreorder m ∧
