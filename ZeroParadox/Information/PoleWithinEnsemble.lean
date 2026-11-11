@@ -444,6 +444,12 @@ theorem botMass_eq_iInf (p : NNReal) : botMass p = ⨅ n, cylMass n p := by
     (fun n => (PiNat.isOpen_cylinder (fun _ : ℕ => Bool) ⊥ n).measurableSet.nullMeasurableSet)
     ⟨0, measure_ne_top _ _⟩
 
+-- `Statement:` `botMass` is upper semicontinuous: an infimum of continuous functions is upper
+-- semicontinuous and need not be continuous (Mathlib `upperSemicontinuous_iInf`).
+example : UpperSemicontinuous botMass := by
+  rw [show botMass = fun p => ⨅ n, cylMass n p from funext botMass_eq_iInf]
+  exact upperSemicontinuous_iInf fun n => (cylMass_continuous n).upperSemicontinuous
+
 /-! ### § VII. The limit with explicit witnesses: no measure in the statement -/
 
 /-- `Statement:` the tape firing exactly at stage `n`. -/

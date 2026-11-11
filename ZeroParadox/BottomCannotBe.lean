@@ -638,13 +638,15 @@ noncomputable example : Ordinal.{0} →o Ordinal.{0} :=
 -- (`comb_depth`) with a first step, infinitely many atoms and `IsStronglyAtomic`.
 -- Reading: infinitely many first steps and depth do not force forks above ⊥.
 #check @ZeroParadox.comb_no_End
--- Statement: an independent `a : ℕ → L` gives `BTree ↪o L` with root at ⊥ of `L`; one way.
--- Reading: self-similarity is a hypothesis, not a consequence of the hypotheses at ⊥.
+-- Statement: an independent `a : ℕ → L` gives `BTree ↪o L` with root at ⊥ of `L`; one way, one
+-- direction of Chakir–Pouzet, arXiv:0812.2300, Thm 1.4.
+-- Reading: self-similarity is a hypothesis, not a consequence of the glb, first-step, atom and
+-- strong-atomicity hypotheses at ⊥ that `Comb` meets.
 #check @ZeroParadox.btree_embeds_of_independent
 -- Statement: in ZP-A's order, depth at every element and `IsStronglyAtomic` give `BTree ↪o L` with
 -- root at ⊥ of `L`; one way, `End` embeds the tree and fails depth at its top (`end_top_no_depth`).
--- Reading: a pole within every pole (depth at every point) forces forks everywhere; depth only at ⊥
--- does not (`comb_no_End`).
+-- Reading: a pole within every pole (depth at every point), with strong atomicity, forces forks
+-- everywhere, one way; depth only at ⊥ does not (`comb_no_End`).
 #check @ZeroParadox.zp_btree_embeds_of_hereditary_depth
 -- Statement: `d (boundaryDouble x) = d x + 1` and `d = 0` where `x 0 ≠ 0` force `d = endVal`.
 #check @ZeroParadox.depth_forced_everywhere

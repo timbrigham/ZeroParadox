@@ -329,7 +329,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Valuation/TowerHeightFloor.lean` - Height meets floor: the tower's 2-adic images as an InfinitudeFloor, norm order reversed from stage 1 — ε₀ ≠ ⊥ of `Ordinal` preserved
   - ride-along docs: `ZeroParadox/Valuation/TowerHeightFloor.md` - Height meets floor — the tower's 2-adic images as an InfinitudeFloor, norm order reversed from stage 1
 - `ZeroParadox/Valuation/TowerTape.lean` - Local floors as subtape poles, and a tower as one tape
-- `ZeroParadox/Valuation/TreeNotForced.lean` - The tree above ⊥: not forced by hypotheses at ⊥ alone, forced by depth at every element
+- `ZeroParadox/Valuation/TreeNotForced.lean` - The binary tree above ⊥ of a join-semilattice: not forced by ⊥ as glb of non-⊥ members, a first step, infinitely many atoms and strong atomicity; forced, one way, by depth at every element with strong atomicity
 
 ### Information (ZP-C)
 
