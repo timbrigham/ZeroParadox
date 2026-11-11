@@ -18,6 +18,7 @@ import ZeroParadox.Valuation.PoleRegistration
 import ZeroParadox.Die
 import ZeroParadox.Information.CrossingTrials
 import ZeroParadox.Information.TapeHalting
+import ZeroParadox.Valuation.TowerTape
 
 /-!
 # Machine-checked characterization index of the framework's relationship to `Classical.choice`
@@ -367,6 +368,24 @@ example {σ : Type} [PartialOrder σ] [OrderBot σ] [NoMaxOrder σ] :
 -- (`NInf.wlpo_of_iso`), so reading the waiting time as a value of `ℕ∞` carries a taboo.
 #check @ZeroParadox.waitENat
 #check @ZeroParadox.NInf.wlpo_of_iso -- Statement: an order isomorphism `NInf ≃o WithTop ℕ` gives WLPO
+
+-- The pole within a pole, limit form against value form, footprints from the home files' PurityChecks.
+-- Statement: the local floor's subtape is ⊥ of `ℕ → Bool`, `det` ⊤ of `NInf`; measured `[propext, Quot.sound]`.
+#check @ZeroParadox.localFloor_subtape_pole_limit
+-- Statement: the same plus `localCx v (localBotEnd v) = ⊤` in `ℕ∞`; measured `[propext, Classical.choice, Quot.sound]`.
+#check @ZeroParadox.localFloor_subtape_pole
+-- Statement: tower members' subtape waits are `ofNat n` in `NInf`; measured `[propext, Quot.sound]`.
+#check @ZeroParadox.tower_pole_within_pole_limit
+-- Statement: their `localCx` is `n`, tending to ⊤ of `ℕ∞`; measured `[propext, Classical.choice, Quot.sound]`.
+#check @ZeroParadox.tower_pole_within_pole
+-- Statement: along a pointwise approach to ⊥ of `ℕ → Bool`, `det` passes every `ofNat N`; measured `[propext, Quot.sound]`.
+#check @ZeroParadox.det_ge_of_approach
+-- Statement: `localCx`, named in the value forms' statements, carries `Classical.choice` (printed next).
+#print axioms ZeroParadox.localCx
+-- Reading: the same divergence, two bins: as a limit in `NInf`, no choice; as a value in `ℕ∞`, through
+-- `localCx` (an `endVal`, equal to a `waitENat` value by `endVal_eq_wait`; any `NInf ≃o ℕ∞` gives WLPO,
+-- `wlpo_of_iso` above). Not measured: whether `pole_within_ensemble_limit`, which uses closure and
+-- measure and measures choice, can drop it.
 
 /-! ## § IV. The ESSENTIAL cases — reductions to taboos, and the premise they rest on
 

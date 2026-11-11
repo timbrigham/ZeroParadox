@@ -55,6 +55,7 @@ import ZeroParadox.Information.CrossingTrials
 import ZeroParadox.Order.DieJoints
 import ZeroParadox.Information.SnapEpsilonZero
 import ZeroParadox.Information.TapeHalting
+import ZeroParadox.Information.PoleWithinEnsemble
 
 set_option maxHeartbeats 400000
 
@@ -4878,6 +4879,12 @@ example : (∀ n, ZeroParadox.slotRun (fun _ => false) n = false) ∧
 -- Halting of the tape's first hitting time: `ZeroParadox/Information/TapeHalting.lean`.
 #check @ZeroParadox.toComp_det_results_iff_slotRun -- Statement: `toComp (det w)` halts at exactly step `n` iff `slotRun w` is `false` at `n` and `true` at `n + 1`; both directions. Reading: the delay-type chart and the slot chart count one step, not two
 #check @ZeroParadox.toComp_det_halts_ae         -- Statement: if `0 < p` and `p ≤ 1`, for `trials p hp`-almost every `w`, `w` fires and `toComp (det w)` halts at step `Nat.find hw`; one way. Reading: almost every, not every: ⊥ of `ℕ → Bool` never halts, and under `trials 0` the claim fails (TapeHalting § V)
+-- The never-firing tape inside the ensemble: `ZeroParadox/Information/PoleWithinEnsemble.lean`.
+#check @ZeroParadox.trials_bot_null            -- Statement: if `0 < p`, `{⊥}` of `ℕ → Bool` is `trials p hp`-null. Reading: almost surely, not surely: the only non-firing tape is ⊥ of `ℕ → Bool` (the CONTROL after it in the home file)
+#check @ZeroParadox.bot_mem_support_iff        -- Statement: ⊥ of `ℕ → Bool` is in the support of `trials p hp` iff `p < 1`; both directions. Reading: COINCIDENCE for `0 < p < 1`: null and in the support at once; null is not absent
+#check @ZeroParadox.bot_not_MLRandom           -- Statement: if `0 < p`, ⊥ of `ℕ → Bool` is not Martin-Löf random for `trials p hp`
+#check @ZeroParadox.dense_MLRandom             -- Statement: if `0 < p < 1`, the Martin-Löf random tapes for `trials p hp` are dense. Reading: dense, not every: ⊥ of `ℕ → Bool` is a limit of them and not one of them
+#check @ZeroParadox.pole_within_ensemble_limit -- Statement: if `0 < p < 1`, random firing tapes with halting runs approach ⊥ of `ℕ → Bool` pointwise, `det` passing every `ofNat N`, and ⊥'s run does not halt. Reading: no map from ⊥ of a `ZPSemilattice` to this tape or to `trials p hp` is claimed (`mlRandom_and_snap_ae`)
 
 /-! ### § XXIX. A limit pinned from two directions: `PinnedLimit` -/
 -- Reading: Tim's role, "squishy" in his word: pinned from below by the stages of a run and from the

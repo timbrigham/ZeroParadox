@@ -56,6 +56,7 @@ import ZeroParadox.Settheory.HypersetOrder
 import ZeroParadox.Settheory.APG
 import ZeroParadox.Valuation.OneWayFlow
 import ZeroParadox.Information.TapeHalting
+import ZeroParadox.Valuation.TowerTape
 import Mathlib.RingTheory.Valuation.PrimeMultiplicity
 import Mathlib.Order.FixedPoints
 import Mathlib.SetTheory.Ordinal.FixedPoint
@@ -659,6 +660,18 @@ noncomputable example : Ordinal.{0} →o Ordinal.{0} :=
 -- Statement: the `InfinitudeFloorInversion End`: floor `botEnd`, members `unitEnd k`, `cx := endVal`.
 -- Reading: CARRIER for `pole_inversion` (§ INVERSION) at ⊥ of `End`.
 #check @ZeroParadox.cellsFloorInversion
+-- Statement: the subtape of `localBotEnd v` after `v` is ⊥ of `ℕ → Bool`, with `det` ⊤ of `NInf`.
+#check @ZeroParadox.localFloor_subtape_pole_limit
+-- Statement: for `v = u ++ [1]`, that subtape wait is ⊤ of `NInf` and the whole tape's run halts.
+-- Reading: CARRIER: the local floor is the never-firing pole of its subtape and a firing tape
+-- globally; chart-relative, not a point identity.
+#check @ZeroParadox.localFloor_two_charts_limit
+-- Statement: `towerTape v` packs the `localPush v`-orbit of a seed into one end, a closed embedding.
+#check @ZeroParadox.towerTape_isClosedEmbedding
+-- Statement: the orbit of `localMember v 0` tends to `localBotEnd v`; `localCx` is `n` at step `n`,
+-- ⊤ of `ℕ∞` at the floor. Limit form: `tower_pole_within_pole_limit`.
+-- Reading: a pole within a pole; no identity of ⊥ of a `ZPSemilattice` with any tape is stated.
+#check @ZeroParadox.tower_pole_within_pole
 
 /-! ### The infinitude in two charts: content and self -/
 
