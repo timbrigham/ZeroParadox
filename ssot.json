@@ -672,8 +672,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 3563,
-        "files": 214
+        "declarations": 3612,
+        "files": 216
       },
       "entries": [
         {
@@ -3991,6 +3991,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "061e9fc4-4e11-4365-8f8f-e0e43d3f4a1d",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_map_shift",
+            "short": "trials_map_shift"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_map_shift",
+            "short": "trials_map_shift",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land PoleWithinEnsemble and TowerTape: ⊥ of ℕ → Bool null yet in the support of trials p hp (iff p < 1) and in the closure of random firing tapes; local floors as subtape poles; a local tower as one tape; limit and value forms (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "062b753c-63a8-4f7f-a07b-464e2c271a95",
           "new": {
             "file": "ZeroParadox/Order/UpAndOver.lean",
@@ -5414,6 +5451,45 @@
             ]
           },
           "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "08c4ac02-8cbf-4503-a356-41243f99e95a",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bot_not_MLRandom",
+            "short": "bot_not_MLRandom"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bot_not_MLRandom",
+            "short": "bot_not_MLRandom",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land PoleWithinEnsemble and TowerTape: ⊥ of ℕ → Bool null yet in the support of trials p hp (iff p < 1) and in the closure of random firing tapes; local floors as subtape poles; a local tower as one tape; limit and value forms (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -7117,6 +7193,43 @@
             ]
           },
           "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0baa2081-759d-4ccc-9647-c41a6d1004be",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_isOpenPos",
+            "short": "trials_isOpenPos"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_isOpenPos",
+            "short": "trials_isOpenPos",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land PoleWithinEnsemble and TowerTape: ⊥ of ℕ → Bool null yet in the support of trials p hp (iff p < 1) and in the closure of random firing tapes; local floors as subtape poles; a local tower as one tape; limit and value forms (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -9169,6 +9282,45 @@
             ]
           },
           "reason": "Die quotients carrying UP: UpCompat, quotUp, landing transfer, identity-UP reduction to quot",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0f5a622c-294d-4c31-9ad7-8957e322af4a",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.det_tendsto_top_at_bot_limit",
+            "short": "det_tendsto_top_at_bot_limit"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.det_tendsto_top_at_bot_limit",
+            "short": "det_tendsto_top_at_bot_limit",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land PoleWithinEnsemble and TowerTape: ⊥ of ℕ → Bool null yet in the support of trials p hp (iff p < 1) and in the closure of random firing tapes; local floors as subtape poles; a local tower as one tape; limit and value forms (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -11466,6 +11618,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "1419c5e2-7d44-45af-9210-de79d002d010",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_cyl",
+            "short": "trials_cyl"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_cyl",
+            "short": "trials_cyl",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land PoleWithinEnsemble and TowerTape: ⊥ of ℕ → Bool null yet in the support of trials p hp (iff p < 1) and in the closure of random firing tapes; local floors as subtape poles; a local tower as one tape; limit and value forms (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "1424f787-01e2-4553-bcd9-ae5a33e09812",
           "new": {
             "file": "ZeroParadox/Order/LeastFixedPoint.lean",
@@ -12667,6 +12856,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "16434c99-99d8-4c34-b38b-aeeeef0f069f",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dense_MLRandom",
+            "short": "dense_MLRandom"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.dense_MLRandom",
+            "short": "dense_MLRandom",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land PoleWithinEnsemble and TowerTape: ⊥ of ℕ → Bool null yet in the support of trials p hp (iff p < 1) and in the closure of random firing tapes; local floors as subtape poles; a local tower as one tape; limit and value forms (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -17985,6 +18211,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "20ec1a21-cec4-46a0-b827-40507f9af642",
+          "new": {
+            "file": "ZeroParadox/Valuation/TowerTape.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.tower_pole_within_pole",
+            "short": "tower_pole_within_pole"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TowerTape.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.tower_pole_within_pole",
+            "short": "tower_pole_within_pole",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land PoleWithinEnsemble and TowerTape: ⊥ of ℕ → Bool null yet in the support of trials p hp (iff p < 1) and in the closure of random firing tapes; local floors as subtape poles; a local tower as one tape; limit and value forms (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -25799,6 +26064,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "30385571-9de5-4ab9-8831-200b44b3de0a",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.wait_tendsto_top_at_bot",
+            "short": "wait_tendsto_top_at_bot"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.wait_tendsto_top_at_bot",
+            "short": "wait_tendsto_top_at_bot",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land PoleWithinEnsemble and TowerTape: ⊥ of ℕ → Bool null yet in the support of trials p hp (iff p < 1) and in the closure of random firing tapes; local floors as subtape poles; a local tower as one tape; limit and value forms (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "303db497-a622-4ed7-b533-5d9bd5ac6538",
           "new": {
@@ -30453,6 +30757,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "3a3c396a-3391-485c-a70a-cf37f9f2b4e9",
+          "new": {
+            "file": "ZeroParadox/Valuation/TowerTape.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.towerTape_floor",
+            "short": "towerTape_floor"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TowerTape.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.towerTape_floor",
+            "short": "towerTape_floor",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land PoleWithinEnsemble and TowerTape: ⊥ of ℕ → Bool null yet in the support of trials p hp (iff p < 1) and in the closure of random firing tapes; local floors as subtape poles; a local tower as one tape; limit and value forms (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "3a482caf-a045-4410-996c-ccc417647165",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -31677,6 +32020,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "3cd95b90-93b2-4112-abe1-4593fe7733bb",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cyl_eq_pi",
+            "short": "cyl_eq_pi"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cyl_eq_pi",
+            "short": "cyl_eq_pi",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land PoleWithinEnsemble and TowerTape: ⊥ of ℕ → Bool null yet in the support of trials p hp (iff p < 1) and in the closure of random firing tapes; local floors as subtape poles; a local tower as one tape; limit and value forms (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "3ce47fd2-7dd7-4750-a883-cb78993f2e99",
           "new": {
             "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
@@ -32593,6 +32973,46 @@
             ]
           },
           "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "3ef37dfa-6e68-4d56-8c8a-5b3f99de49e7",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.comp_bot_and_firing",
+            "short": "comp_bot_and_firing"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.comp_bot_and_firing",
+            "short": "comp_bot_and_firing",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land PoleWithinEnsemble and TowerTape: ⊥ of ℕ → Bool null yet in the support of trials p hp (iff p < 1) and in the closure of random firing tapes; local floors as subtape poles; a local tower as one tape; limit and value forms (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -34871,6 +35291,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "43c408fe-5d16-4875-abed-39ebfa057443",
+          "new": {
+            "file": "ZeroParadox/Valuation/TowerTape.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.localCx_tendsto_top_at_floor",
+            "short": "localCx_tendsto_top_at_floor"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TowerTape.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.localCx_tendsto_top_at_floor",
+            "short": "localCx_tendsto_top_at_floor",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land PoleWithinEnsemble and TowerTape: ⊥ of ℕ → Bool null yet in the support of trials p hp (iff p < 1) and in the closure of random firing tapes; local floors as subtape poles; a local tower as one tape; limit and value forms (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -38173,6 +38632,45 @@
             "role": []
           },
           "reason": "die-joints-1106: ruling 147 (Tim, 2026-11-06), cut points / joints / dual joints of an order and their instances (ZeroParadox/Order/DieJoints.lean), indexed in DieCannotBe § I, § XXVII, § XXIX",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "494af07e-f537-4c0c-be53-deb5fc67d3cb",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.pole_within_ensemble",
+            "short": "pole_within_ensemble"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.pole_within_ensemble",
+            "short": "pole_within_ensemble",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land PoleWithinEnsemble and TowerTape: ⊥ of ℕ → Bool null yet in the support of trials p hp (iff p < 1) and in the closure of random firing tapes; local floors as subtape poles; a local tower as one tape; limit and value forms (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -42593,6 +43091,45 @@
             "role": []
           },
           "reason": "die-tagged-1101: Prop-step trichotomy/selector reductions (EM, WEM), Rosolini lifting RosPart with toRos onto iff LPO, wlpo_of_discrete_tag (Die §§ VIII, IX, XXIII); Tim authorised 2026-11-01",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "51bb96d7-7745-474e-8c5d-ea241c0cbe46",
+          "new": {
+            "file": "ZeroParadox/Valuation/TowerTape.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.towerTape_root_pole",
+            "short": "towerTape_root_pole"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TowerTape.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.towerTape_root_pole",
+            "short": "towerTape_root_pole",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land PoleWithinEnsemble and TowerTape: ⊥ of ℕ → Bool null yet in the support of trials p hp (iff p < 1) and in the closure of random firing tapes; local floors as subtape poles; a local tower as one tape; limit and value forms (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -47593,6 +48130,46 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "5be0d87a-22fb-463c-9017-969a4091f991",
+          "new": {
+            "file": "ZeroParadox/Valuation/TowerTape.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.localFloor_two_charts_limit",
+            "short": "localFloor_two_charts_limit"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TowerTape.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.localFloor_two_charts_limit",
+            "short": "localFloor_two_charts_limit",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation",
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land PoleWithinEnsemble and TowerTape: ⊥ of ℕ → Bool null yet in the support of trials p hp (iff p < 1) and in the closure of random firing tapes; local floors as subtape poles; a local tower as one tape; limit and value forms (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "5bf0305d-aa89-4274-9059-ee4a5f4168d2",
           "new": {
             "file": "ZeroParadox/Computability/Kleene.lean",
@@ -48239,6 +48816,43 @@
             ]
           },
           "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "5d0f9106-d9f3-4f20-baf3-52c6b61958d3",
+          "new": {
+            "file": "ZeroParadox/Valuation/TowerTape.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.det_localPush",
+            "short": "det_localPush"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TowerTape.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.det_localPush",
+            "short": "det_localPush",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land PoleWithinEnsemble and TowerTape: ⊥ of ℕ → Bool null yet in the support of trials p hp (iff p < 1) and in the closure of random firing tapes; local floors as subtape poles; a local tower as one tape; limit and value forms (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -49466,6 +50080,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "5f63aca0-f963-49df-bcfc-f0fd0ac8806e",
+          "new": {
+            "file": "ZeroParadox/Valuation/TowerTape.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.towerTape_le_iff",
+            "short": "towerTape_le_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TowerTape.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.towerTape_le_iff",
+            "short": "towerTape_le_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land PoleWithinEnsemble and TowerTape: ⊥ of ℕ → Bool null yet in the support of trials p hp (iff p < 1) and in the closure of random firing tapes; local floors as subtape poles; a local tower as one tape; limit and value forms (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "5f641004-2012-4339-bcd1-fcfec0922e4c",
           "new": {
@@ -50567,6 +51218,43 @@
             ]
           },
           "reason": "Pole-passage probe landed (experimental PolePassage): the snap arc on the 2-adic sphere, its inversion, the clopen separation of 0 and infinity, and the q2Val return",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "621cb968-0835-4773-ba42-469c2cd7cfea",
+          "new": {
+            "file": "ZeroParadox/Valuation/TowerTape.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.localCx_eq_wait",
+            "short": "localCx_eq_wait"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TowerTape.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.localCx_eq_wait",
+            "short": "localCx_eq_wait",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land PoleWithinEnsemble and TowerTape: ⊥ of ℕ → Bool null yet in the support of trials p hp (iff p < 1) and in the closure of random firing tapes; local floors as subtape poles; a local tower as one tape; limit and value forms (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -55596,6 +56284,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "6c731bab-2b56-4968-b8a9-43cc07e80136",
+          "new": {
+            "file": "ZeroParadox/Valuation/TowerTape.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.towerTape_col",
+            "short": "towerTape_col"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TowerTape.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.towerTape_col",
+            "short": "towerTape_col",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land PoleWithinEnsemble and TowerTape: ⊥ of ℕ → Bool null yet in the support of trials p hp (iff p < 1) and in the closure of random firing tapes; local floors as subtape poles; a local tower as one tape; limit and value forms (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "6c7a775b-9f18-464d-84bb-62cc99dbfa44",
           "new": {
@@ -58188,6 +58913,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "7204b885-4020-46d1-ac98-fefa60181aac",
+          "new": {
+            "file": "ZeroParadox/Valuation/TowerTape.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.towerTape",
+            "short": "towerTape"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TowerTape.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.towerTape",
+            "short": "towerTape",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land PoleWithinEnsemble and TowerTape: ⊥ of ℕ → Bool null yet in the support of trials p hp (iff p < 1) and in the closure of random firing tapes; local floors as subtape poles; a local tower as one tape; limit and value forms (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "7239846e-5bb6-4e7e-8405-bfbf079bdcc0",
           "new": {
             "file": "ZeroParadox/Valuation/PoleCornersBridge.lean",
@@ -58442,6 +59204,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "729904df-5500-49f1-8c0e-bf71ccd52e61",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.shiftTape",
+            "short": "shiftTape"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.shiftTape",
+            "short": "shiftTape",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land PoleWithinEnsemble and TowerTape: ⊥ of ℕ → Bool null yet in the support of trials p hp (iff p < 1) and in the closure of random firing tapes; local floors as subtape poles; a local tower as one tape; limit and value forms (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -65506,6 +66305,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "803d4f38-be92-4ef4-989c-e00ff27273d1",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bot_mem_support_iff",
+            "short": "bot_mem_support_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bot_mem_support_iff",
+            "short": "bot_mem_support_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land PoleWithinEnsemble and TowerTape: ⊥ of ℕ → Bool null yet in the support of trials p hp (iff p < 1) and in the closure of random firing tapes; local floors as subtape poles; a local tower as one tape; limit and value forms (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "8040fdb2-0619-42ae-95eb-33b10da351e0",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -66324,6 +67162,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "8185c9de-ecc8-453a-b5fa-3cc3e58f1c38",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bot_mem_closure_randFiring",
+            "short": "bot_mem_closure_randFiring"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bot_mem_closure_randFiring",
+            "short": "bot_mem_closure_randFiring",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land PoleWithinEnsemble and TowerTape: ⊥ of ℕ → Bool null yet in the support of trials p hp (iff p < 1) and in the closure of random firing tapes; local floors as subtape poles; a local tower as one tape; limit and value forms (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "818bb0fd-85d2-4815-b446-510f29a413b3",
           "new": {
             "file": "ZeroParadox/Information/CrossingTrials.lean",
@@ -66457,6 +67334,43 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "81f66d51-6047-44c0-9363-4c4c191de376",
+          "new": {
+            "file": "ZeroParadox/Valuation/TowerTape.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.localCx_localPush",
+            "short": "localCx_localPush"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TowerTape.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.localCx_localPush",
+            "short": "localCx_localPush",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land PoleWithinEnsemble and TowerTape: ⊥ of ℕ → Bool null yet in the support of trials p hp (iff p < 1) and in the closure of random firing tapes; local floors as subtape poles; a local tower as one tape; limit and value forms (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -67546,6 +68460,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "83d5105c-8ef4-4c67-af34-5c1c6cedc99b",
+          "new": {
+            "file": "ZeroParadox/Valuation/TowerTape.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natDirsHomeo",
+            "short": "natDirsHomeo"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TowerTape.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natDirsHomeo",
+            "short": "natDirsHomeo",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land PoleWithinEnsemble and TowerTape: ⊥ of ℕ → Bool null yet in the support of trials p hp (iff p < 1) and in the closure of random firing tapes; local floors as subtape poles; a local tower as one tape; limit and value forms (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "83dcd934-8bfd-4459-92b1-38a6f3dac85f",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -68426,6 +69377,45 @@
             "role": []
           },
           "reason": "die-tagged-1029: the adjoined point tagged (Option ℕ) or a limit (Escardó's ℕ∞, NInf): uniform Bool-step trichotomy and selector free on NInf, LPO on Option ℕ; WLPO at ∞; the chain Option ℕ → NInf → Part ℕ and NInf ≃ Computation Unit (Die § XXIII); Tim ruling 2026-10-29",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "860ec91f-a1f1-4e2d-9da2-ff7ce505a6ee",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_localFloor_null",
+            "short": "trials_localFloor_null"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_localFloor_null",
+            "short": "trials_localFloor_null",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land PoleWithinEnsemble and TowerTape: ⊥ of ℕ → Bool null yet in the support of trials p hp (iff p < 1) and in the closure of random firing tapes; local floors as subtape poles; a local tower as one tape; limit and value forms (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -72757,6 +73747,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "90138548-0b9a-49fc-b5ec-768dea2547df",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ae_firesOnce",
+            "short": "ae_firesOnce"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ae_firesOnce",
+            "short": "ae_firesOnce",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land PoleWithinEnsemble and TowerTape: ⊥ of ℕ → Bool null yet in the support of trials p hp (iff p < 1) and in the closure of random firing tapes; local floors as subtape poles; a local tower as one tape; limit and value forms (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "903f0560-3519-4803-9a7b-e2ca3061cea9",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -73558,6 +74585,46 @@
             ]
           },
           "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "91606d09-2521-48ff-9282-96eb5a0659c7",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.pole_within_ensemble_limit",
+            "short": "pole_within_ensemble_limit"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.pole_within_ensemble_limit",
+            "short": "pole_within_ensemble_limit",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land PoleWithinEnsemble and TowerTape: ⊥ of ℕ → Bool null yet in the support of trials p hp (iff p < 1) and in the closure of random firing tapes; local floors as subtape poles; a local tower as one tape; limit and value forms (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -77306,6 +78373,43 @@
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": "[propext, Classical.choice, Quot.sound]",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "98ba1606-54d6-4415-900b-7b09ecdd0a45",
+          "new": {
+            "file": "ZeroParadox/Valuation/TowerTape.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.towerTape_continuous",
+            "short": "towerTape_continuous"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TowerTape.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.towerTape_continuous",
+            "short": "towerTape_continuous",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land PoleWithinEnsemble and TowerTape: ⊥ of ℕ → Bool null yet in the support of trials p hp (iff p < 1) and in the closure of random firing tapes; local floors as subtape poles; a local tower as one tape; limit and value forms (2026-11-11).",
+          "verify": {
+            "axioms": null,
             "sorry_free": true
           }
         },
@@ -81544,6 +82648,43 @@
             ]
           },
           "reason": "Die views batch: views (order as data), restriction to an up-closed set, adjoined points and the empty carrier, arrival and fan-in",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "9fb8747a-d6ee-4a4d-9e20-ea0efbbbeb0e",
+          "new": {
+            "file": "ZeroParadox/Valuation/TowerTape.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.localPush_monotone",
+            "short": "localPush_monotone"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TowerTape.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.localPush_monotone",
+            "short": "localPush_monotone",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land PoleWithinEnsemble and TowerTape: ⊥ of ℕ → Bool null yet in the support of trials p hp (iff p < 1) and in the closure of random firing tapes; local floors as subtape poles; a local tower as one tape; limit and value forms (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -87211,6 +88352,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "abacdc21-4314-4acd-8dc0-bf1da0962f79",
+          "new": {
+            "file": "ZeroParadox/Valuation/TowerTape.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.towerTape_isClosedEmbedding",
+            "short": "towerTape_isClosedEmbedding"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TowerTape.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.towerTape_isClosedEmbedding",
+            "short": "towerTape_isClosedEmbedding",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land PoleWithinEnsemble and TowerTape: ⊥ of ℕ → Bool null yet in the support of trials p hp (iff p < 1) and in the closure of random firing tapes; local floors as subtape poles; a local tower as one tape; limit and value forms (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "abace68f-c00d-443b-be89-dfa305e36182",
           "new": {
             "file": "ZeroParadox/Valuation/PadicStillPoint.lean",
@@ -87309,6 +88487,43 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "abf5154f-92e2-48a5-a052-cdf90cfca57f",
+          "new": {
+            "file": "ZeroParadox/Valuation/TowerTape.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natDirs_symm_continuous",
+            "short": "natDirs_symm_continuous"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TowerTape.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natDirs_symm_continuous",
+            "short": "natDirs_symm_continuous",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land PoleWithinEnsemble and TowerTape: ⊥ of ℕ → Bool null yet in the support of trials p hp (iff p < 1) and in the closure of random firing tapes; local floors as subtape poles; a local tower as one tape; limit and value forms (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -101491,6 +102706,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "c6b240c7-4b76-4813-ba26-7fec589e8193",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_bot_null",
+            "short": "trials_bot_null"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_bot_null",
+            "short": "trials_bot_null",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land PoleWithinEnsemble and TowerTape: ⊥ of ℕ → Bool null yet in the support of trials p hp (iff p < 1) and in the closure of random firing tapes; local floors as subtape poles; a local tower as one tape; limit and value forms (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "c6b26607-285c-417b-b71a-b28662fa373f",
           "new": {
             "file": "ZeroParadox/Meta/AxiomLedger.lean",
@@ -102031,6 +103285,45 @@
             ]
           },
           "reason": "new HEAD declarations (APG decoration uniqueness by valuation; constructive finite no-SelfCopyRef)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c79c9bc3-c00a-4449-b1f7-9fc9e67792d0",
+          "new": {
+            "file": "ZeroParadox/Valuation/TowerTape.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.tower_pole_within_pole_limit",
+            "short": "tower_pole_within_pole_limit"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TowerTape.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.tower_pole_within_pole_limit",
+            "short": "tower_pole_within_pole_limit",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land PoleWithinEnsemble and TowerTape: ⊥ of ℕ → Bool null yet in the support of trials p hp (iff p < 1) and in the closure of random firing tapes; local floors as subtape poles; a local tower as one tape; limit and value forms (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -104082,6 +105375,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "cba2582d-a086-4123-896a-db71288d092c",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_cyl_pos",
+            "short": "trials_cyl_pos"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_cyl_pos",
+            "short": "trials_cyl_pos",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land PoleWithinEnsemble and TowerTape: ⊥ of ℕ → Bool null yet in the support of trials p hp (iff p < 1) and in the closure of random firing tapes; local floors as subtape poles; a local tower as one tape; limit and value forms (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "cba5aac7-24a4-4276-b31f-5408ec004658",
           "new": {
             "file": "ZeroParadox/Order/SeamSchema.lean",
@@ -105604,6 +106934,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "ce0b9bd5-ac17-4d39-b778-f2186e74c694",
+          "new": {
+            "file": "ZeroParadox/Valuation/TowerTape.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.towerTape_injective",
+            "short": "towerTape_injective"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TowerTape.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.towerTape_injective",
+            "short": "towerTape_injective",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land PoleWithinEnsemble and TowerTape: ⊥ of ℕ → Bool null yet in the support of trials p hp (iff p < 1) and in the closure of random firing tapes; local floors as subtape poles; a local tower as one tape; limit and value forms (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "ce248044-25f2-4b27-ae25-560c687e0b9a",
           "new": {
             "file": "ZeroParadox/Valuation/RiemannSphere.lean",
@@ -106513,6 +107880,46 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "cf4168f3-b2d2-4c80-8024-41cd376c4521",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.det_ge_of_approach",
+            "short": "det_ge_of_approach"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.det_ge_of_approach",
+            "short": "det_ge_of_approach",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land PoleWithinEnsemble and TowerTape: ⊥ of ℕ → Bool null yet in the support of trials p hp (iff p < 1) and in the closure of random firing tapes; local floors as subtape poles; a local tower as one tape; limit and value forms (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "cf42ab93-32f6-4664-a443-6feffc9b3c3c",
           "new": {
             "file": "ZeroParadox/Order/LeastFixedPoint.lean",
@@ -107021,6 +108428,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d09e00ba-8092-4af4-8ce6-a5e4f79dc704",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.wait_ne_top_of_fires",
+            "short": "wait_ne_top_of_fires"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.wait_ne_top_of_fires",
+            "short": "wait_ne_top_of_fires",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land PoleWithinEnsemble and TowerTape: ⊥ of ℕ → Bool null yet in the support of trials p hp (iff p < 1) and in the closure of random firing tapes; local floors as subtape poles; a local tower as one tape; limit and value forms (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -110012,6 +111456,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "d6e7e201-349f-48b0-b0ad-cbf8fe5e59a3",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.measurable_shiftTape",
+            "short": "measurable_shiftTape"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.measurable_shiftTape",
+            "short": "measurable_shiftTape",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land PoleWithinEnsemble and TowerTape: ⊥ of ℕ → Bool null yet in the support of trials p hp (iff p < 1) and in the closure of random firing tapes; local floors as subtape poles; a local tower as one tape; limit and value forms (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "d6ea72d3-ee78-4d02-b948-ea5c5186f77e",
           "new": {
             "file": "ZeroParadox/Valuation/RiemannSphere.lean",
@@ -110411,6 +111892,43 @@
             ]
           },
           "reason": "New experimental files ZeroParadox/Information/BrudnoBridge.lean (trials and MLRandom bridged to Milovanov's kolmogorov-complexity-lean, citing his Brudno and Levin-Schnorr theorems) and ZeroParadox/Information/SnapEpsilonZero.lean (snap_of_firstStep_MLRandom instantiated on WithBot Ordinal and on EpsilonOrZero, with an order isomorphism between them).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d7ba20f9-5425-4a70-92be-0b2186752cb2",
+          "new": {
+            "file": "ZeroParadox/Valuation/TowerTape.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natDirs_continuous",
+            "short": "natDirs_continuous"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TowerTape.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natDirs_continuous",
+            "short": "natDirs_continuous",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land PoleWithinEnsemble and TowerTape: ⊥ of ℕ → Bool null yet in the support of trials p hp (iff p < 1) and in the closure of random firing tapes; local floors as subtape poles; a local tower as one tape; limit and value forms (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -113408,6 +114926,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "dd1af33a-731a-4016-bc99-eb86fbcb2cd7",
+          "new": {
+            "file": "ZeroParadox/Valuation/TowerTape.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natDirs_bot_iff",
+            "short": "natDirs_bot_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TowerTape.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natDirs_bot_iff",
+            "short": "natDirs_bot_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land PoleWithinEnsemble and TowerTape: ⊥ of ℕ → Bool null yet in the support of trials p hp (iff p < 1) and in the closure of random firing tapes; local floors as subtape poles; a local tower as one tape; limit and value forms (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "dd1eb387-f73b-4fd8-b21d-8adf49ab74d2",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -113511,6 +115068,43 @@
             "role": []
           },
           "reason": "die-pinnedlimit-1103: Tim's die role PinnedLimit (Die.lean § XXIV: role, NInf order + occupant, link, WLPO separation, WithTop control) and the ε₀ occupant (Epsilon0MinMax § III); Tim ruled 2026-11-03",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "dd55f87f-7ae6-4eef-903b-7fab66f0f999",
+          "new": {
+            "file": "ZeroParadox/Valuation/TowerTape.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.towerTape_member",
+            "short": "towerTape_member"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TowerTape.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.towerTape_member",
+            "short": "towerTape_member",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land PoleWithinEnsemble and TowerTape: ⊥ of ℕ → Bool null yet in the support of trials p hp (iff p < 1) and in the closure of random firing tapes; local floors as subtape poles; a local tower as one tape; limit and value forms (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -114868,6 +116462,43 @@
             ]
           },
           "reason": "Die v2 final batch: drawing vs set (self-steps, accessibility, forced rank), ends of a view, orders on motions, placements as views, relaxed least-fixed-point schema, UP legs as nuclei",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e0422d21-0232-408a-b113-bca0e8b28916",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_support_univ",
+            "short": "trials_support_univ"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_support_univ",
+            "short": "trials_support_univ",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land PoleWithinEnsemble and TowerTape: ⊥ of ℕ → Bool null yet in the support of trials p hp (iff p < 1) and in the closure of random firing tapes; local floors as subtape poles; a local tower as one tape; limit and value forms (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -118444,6 +120075,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "e695abca-9f8e-4b16-b75a-9d2b4f34aec4",
+          "new": {
+            "file": "ZeroParadox/Valuation/TowerTape.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.localFloor_two_charts",
+            "short": "localFloor_two_charts"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TowerTape.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.localFloor_two_charts",
+            "short": "localFloor_two_charts",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land PoleWithinEnsemble and TowerTape: ⊥ of ℕ → Bool null yet in the support of trials p hp (iff p < 1) and in the closure of random firing tapes; local floors as subtape poles; a local tower as one tape; limit and value forms (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "e69b77fe-a321-4554-ab87-dcc0eb365284",
           "new": {
@@ -120671,6 +122341,43 @@
             ]
           },
           "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ea9b39b8-b415-4501-bd6c-32d39c3ff50f",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.randFiring",
+            "short": "randFiring"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.randFiring",
+            "short": "randFiring",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land PoleWithinEnsemble and TowerTape: ⊥ of ℕ → Bool null yet in the support of trials p hp (iff p < 1) and in the closure of random firing tapes; local floors as subtape poles; a local tower as one tape; limit and value forms (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -125611,6 +127318,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "f4de494c-803e-4c0d-82f9-9437b618fc9d",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.wait_bot",
+            "short": "wait_bot"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.wait_bot",
+            "short": "wait_bot",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land PoleWithinEnsemble and TowerTape: ⊥ of ℕ → Bool null yet in the support of trials p hp (iff p < 1) and in the closure of random firing tapes; local floors as subtape poles; a local tower as one tape; limit and value forms (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "f5380a16-40dd-4f9d-8c9e-ec123f2d1d45",
           "new": {
@@ -126152,6 +127898,43 @@
             ]
           },
           "reason": "UniversalChoiceFree § IX: a self-printing universal code at [propext, Quot.sound] (restated SelfPrints ∧ Universal via encodeCode/ofNatCodeCF), faithfulness bridges, statement controls, controls zero_selfPrints_not_universal / universal_not_selfPrints_cf / unshifted_incompatible",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f5ddac39-6ada-49b4-a940-41d3a9a1e758",
+          "new": {
+            "file": "ZeroParadox/Valuation/TowerTape.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.localPush_continuous",
+            "short": "localPush_continuous"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TowerTape.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.localPush_continuous",
+            "short": "localPush_continuous",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land PoleWithinEnsemble and TowerTape: ⊥ of ℕ → Bool null yet in the support of trials p hp (iff p < 1) and in the closure of random firing tapes; local floors as subtape poles; a local tower as one tape; limit and value forms (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -129308,6 +131091,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "fb15953d-2847-41b4-803b-0ebc204258f3",
+          "new": {
+            "file": "ZeroParadox/Valuation/TowerTape.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.localFloor_subtape_pole",
+            "short": "localFloor_subtape_pole"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TowerTape.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.localFloor_subtape_pole",
+            "short": "localFloor_subtape_pole",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land PoleWithinEnsemble and TowerTape: ⊥ of ℕ → Bool null yet in the support of trials p hp (iff p < 1) and in the closure of random firing tapes; local floors as subtape poles; a local tower as one tape; limit and value forms (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "fb15a62f-f04e-45e3-aa83-56933e77eea8",
           "new": {
             "file": "ZeroParadox/Information/TwoRequirements.lean",
@@ -129371,6 +131193,45 @@
             ]
           },
           "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "fb49a256-a1af-4f31-a2de-e699af94b47d",
+          "new": {
+            "file": "ZeroParadox/Valuation/TowerTape.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.localFloor_subtape_pole_limit",
+            "short": "localFloor_subtape_pole_limit"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TowerTape.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.localFloor_subtape_pole_limit",
+            "short": "localFloor_subtape_pole_limit",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land PoleWithinEnsemble and TowerTape: ⊥ of ℕ → Bool null yet in the support of trials p hp (iff p < 1) and in the closure of random firing tapes; local floors as subtape poles; a local tower as one tape; limit and value forms (2026-11-11).",
           "verify": {
             "axioms": null,
             "sorry_free": true
