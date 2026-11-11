@@ -672,8 +672,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 3553,
-        "files": 213
+        "declarations": 3563,
+        "files": 214
       },
       "entries": [
         {
@@ -25570,6 +25570,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "2febcee1-856d-4307-aa4e-5d66c3b59f76",
+          "new": {
+            "file": "ZeroParadox/Information/TapeHalting.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.toComp_det_results_find",
+            "short": "toComp_det_results_find"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TapeHalting.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.toComp_det_results_find",
+            "short": "toComp_det_results_find",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land TapeHalting: toComp (det w) halts exactly at the first firing, equals the slot run's crossing step, a.s. under trials p with 0 < p, and depth endVal (2026-11-10).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "300c9811-a9a0-43bd-af90-40bab6b4958c",
           "new": {
             "file": "ZeroParadox/Ordinal/Epsilon0LeastFP.lean",
@@ -33114,6 +33152,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "404bdbb9-7bd6-4c43-8be3-ce093d90c34c",
+          "new": {
+            "file": "ZeroParadox/Information/TapeHalting.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.toComp_results_iff",
+            "short": "toComp_results_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TapeHalting.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.toComp_results_iff",
+            "short": "toComp_results_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land TapeHalting: toComp (det w) halts exactly at the first firing, equals the slot run's crossing step, a.s. under trials p with 0 < p, and depth endVal (2026-11-10).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "40594b88-b750-4572-8e73-8fa35012051a",
           "new": {
@@ -40537,6 +40613,46 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "4e9aeada-6e4e-40f6-85fb-04e1bc20e8b8",
+          "new": {
+            "file": "ZeroParadox/Information/TapeHalting.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.toComp_det_halts_ae",
+            "short": "toComp_det_halts_ae"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TapeHalting.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.toComp_det_halts_ae",
+            "short": "toComp_det_halts_ae",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land TapeHalting: toComp (det w) halts exactly at the first firing, equals the slot run's crossing step, a.s. under trials p with 0 < p, and depth endVal (2026-11-10).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "4eb4e1c8-2445-4c13-877a-574f11107622",
           "new": {
             "file": "ZeroParadox/Valuation/BallLine.lean",
@@ -43508,6 +43624,46 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "53bd8caf-c122-4951-a22d-cfc4035f463d",
+          "new": {
+            "file": "ZeroParadox/Information/TapeHalting.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.toComp_det_terminates_iff",
+            "short": "toComp_det_terminates_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TapeHalting.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.toComp_det_terminates_iff",
+            "short": "toComp_det_terminates_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land TapeHalting: toComp (det w) halts exactly at the first firing, equals the slot run's crossing step, a.s. under trials p with 0 < p, and depth endVal (2026-11-10).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -64573,6 +64729,46 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "7ea9824c-9354-47b9-bdd1-6a354262b74b",
+          "new": {
+            "file": "ZeroParadox/Information/TapeHalting.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.endVal_results_iff",
+            "short": "endVal_results_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TapeHalting.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.endVal_results_iff",
+            "short": "endVal_results_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation",
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land TapeHalting: toComp (det w) halts exactly at the first firing, equals the slot run's crossing step, a.s. under trials p with 0 < p, and depth endVal (2026-11-10).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "7eb81867-3290-454f-b18f-58d77390ef1b",
           "new": {
@@ -81728,6 +81924,46 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "a03ebacf-7778-46c7-a45e-37cf8be7f773",
+          "new": {
+            "file": "ZeroParadox/Information/TapeHalting.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.toComp_det_results_iff_slotRun",
+            "short": "toComp_det_results_iff_slotRun"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TapeHalting.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.toComp_det_results_iff_slotRun",
+            "short": "toComp_det_results_iff_slotRun",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land TapeHalting: toComp (det w) halts exactly at the first firing, equals the slot run's crossing step, a.s. under trials p with 0 < p, and depth endVal (2026-11-10).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "a04c7ba3-1e74-45b7-95c4-077856f1bbb0",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -88568,6 +88804,44 @@
             ]
           },
           "reason": "New files Die.lean + DieCannotBe.lean — the die: order-free Motion, switches, existence premises (provisional)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "aed7eade-e32e-4968-86ca-d05aed5b1963",
+          "new": {
+            "file": "ZeroParadox/Information/TapeHalting.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.toComp_isSome",
+            "short": "toComp_isSome"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TapeHalting.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.toComp_isSome",
+            "short": "toComp_isSome",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land TapeHalting: toComp (det w) halts exactly at the first firing, equals the slot run's crossing step, a.s. under trials p with 0 < p, and depth endVal (2026-11-10).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -105253,6 +105527,46 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "cdc5c2ed-75ec-4924-a459-a7c28544b6a6",
+          "new": {
+            "file": "ZeroParadox/Information/TapeHalting.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.toComp_det_results_iff",
+            "short": "toComp_det_results_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TapeHalting.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.toComp_det_results_iff",
+            "short": "toComp_det_results_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land TapeHalting: toComp (det w) halts exactly at the first firing, equals the slot run's crossing step, a.s. under trials p with 0 < p, and depth endVal (2026-11-10).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "cdf7c1ff-747e-40c0-95ec-7b50c2e20d1f",
           "new": {
@@ -105572,6 +105886,43 @@
             ]
           },
           "reason": "Typicality bridge (2026-11-01): CrossingTrials § IV-VII — almost surely gives some run; zero-block tests; typicality as an explicit hypothesis; the slot machine as a die motion.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ce4960a8-daf7-402e-9e43-0b0dddeffbb8",
+          "new": {
+            "file": "ZeroParadox/Information/TapeHalting.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.det_eq_ofNat_iff",
+            "short": "det_eq_ofNat_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TapeHalting.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.det_eq_ofNat_iff",
+            "short": "det_eq_ofNat_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land TapeHalting: toComp (det w) halts exactly at the first firing, equals the slot run's crossing step, a.s. under trials p with 0 < p, and depth endVal (2026-11-10).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -123288,6 +123639,46 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f10df3d0-c8f4-47e2-946f-b90e122751c2",
+          "new": {
+            "file": "ZeroParadox/Information/TapeHalting.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.endVal_not_terminates_iff",
+            "short": "endVal_not_terminates_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TapeHalting.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.endVal_not_terminates_iff",
+            "short": "endVal_not_terminates_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation",
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land TapeHalting: toComp (det w) halts exactly at the first firing, equals the slot run's crossing step, a.s. under trials p with 0 < p, and depth endVal (2026-11-10).",
           "verify": {
             "axioms": null,
             "sorry_free": true
