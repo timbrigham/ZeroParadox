@@ -453,6 +453,12 @@ The concrete model confirming that `ValuationStructure`'s abstract axioms have a
 
 **Reason:** A lax map of motions: steps to steps, and every value of UP at `x` sent to a value of UP at `f x` (`UpLax`), equivalently `(M.up x).map f ≤ N.up (f x)` in `Part`'s order (`upLax_iff_le`), the restriction order of Cockett and Lack, TCS 270 (2002), § 2.1.4, p. 230. Strict iff lax with UP-definedness reflected (`upStrict_iff`). The search recorded under `Motion.Hom` covers this entry.
 
+### `Motion.StrictIso` — `ZeroParadox/Die.lean`
+
+**Relationship to Mathlib:** Equivalent to an isomorphism in Mathlib's `CategoryTheory.Endofunctor.Coalgebra` category for `FunctorToTypes.prod (ofTypeFunctor Part) (ofTypeFunctor Set)`: `StrictIso.equivCoalgIso` (`ZeroParadox/Die.lean` § XXVI), without `Classical.choice` (its `#print axioms` line, `section PurityCheck`, `ZeroParadox/Die.lean`)
+
+**Reason:** The wrapper is kept for its named fields, a pair of `Motion.Hom`s inverse on the underlying maps, which `FixedPole`, `StrictIso.rtg_iff` and the tree theorems `tree_of_aDoubling` and `tree_of_aDoubling_pole` read directly, and over which the doubling premises (`Doubling`, `ADoubling`) are stated; the back clause `Motion.StepBack` that a coalgebra homomorphism carries is derived for both maps (`StrictIso.stepBack_hom`, `StrictIso.stepBack_inv`) rather than stored.
+
 ### `IsWeakPullback` — `ZeroParadox/Die.lean`
 
 **Relationship to Mathlib:** Mathlib's `IsPullback` with the uniqueness of the mediating map dropped; no Mathlib analog

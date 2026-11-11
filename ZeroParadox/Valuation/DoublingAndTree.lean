@@ -4,6 +4,8 @@ import ZeroParadox.Valuation.Interleave
 import ZeroParadox.Computability.SelfCopyReference
 import ZeroParadox.Computability.SelfApp
 import ZeroParadox.Settheory.QuineHost
+import ZeroParadox.Ordinal.Epsilon0LeastFP
+import Mathlib.Basic.NNReal.Basic
 import Mathlib.Order.Hom.WithTopBot
 import Mathlib.Order.Interval.Set.Infinite
 import Mathlib.Order.Fin.Basic
@@ -22,9 +24,9 @@ defer to my AI assistant regarding the specifics of how the internals work.
 ---
 
 ## Formal Overview (AI-assisted)
-One-point self-reference at ⊥ does not force the binary tree `BTree` (`comb_quine_and_no_tree`); an
-order embedding `X × X ↪o X` and one point other than ⊥ of `X` do, one way (`square_embed_forces_btree`).
-Four readings of "⊥ is one point and two" are measured in §§ V–VIII. Doubling is always a hypothesis.
+One-point self-reference at ⊥ does not force the binary tree `BTree` (`comb_quine_and_no_tree`); an order embedding `X × X ↪o X` and
+one point other than ⊥ of `X` do, one way (`square_embed_forces_btree`). Four readings of "⊥ is one point and two" are measured in
+§§ V–VIII. Doubling is always a hypothesis. § IX holds carrier controls for the die's doubling premises (`ZeroParadox/Die.lean` § XXVI).
 -/
 
 set_option maxHeartbeats 400000
@@ -718,6 +720,269 @@ theorem q11_twoChart_tree : Nonempty (BTree ↪o Q11 × Q11ᵒᵈ) := by
   show (ternFwd t.val ≤ ternFwd t'.val ∧ -ternRev t'.val ≤ -ternRev t.val) ↔ _
   rw [neg_le_neg_iff]
 
+/-! ### § IX. The die's doubling premises on carriers; the tree without discreteness. -/
+
+-- Statement: `square_embed_forces_btree` is the order case of `Motion.tree_of_square`
+-- (`ZeroParadox/Die.lean` § XXVI), `L` the order `≤` and the root ⊥ of `X`.
+example {X : Type} [PartialOrder X] [OrderBot X] (j : X × X ↪o X) (a : X) (ha : a ≠ ⊥) :
+    ∃ f : BTree ↪o X, f (BTree.mk []) = ⊥ := by
+  obtain ⟨f, hf0, hf⟩ := Motion.tree_of_square (α := X) (· ≤ ·) (fun _ => le_rfl)
+    (fun _ _ _ => le_trans) j (fun p q => by rw [j.le_iff_le]; rfl) ⊥ a bot_le bot_le
+    (fun h => ha (le_bot_iff.1 h))
+  exact ⟨OrderEmbedding.ofMapLEIff (fun t => f t.val)
+    (fun t t' => (hf t.val t'.val).trans (btree_le_iff t t').symm), hf0⟩
+
+open Motion
+
+/-- `Statement:` on `End`, set one `0` digit to `1`. -/
+def endBitFlip (x y : End) : Prop := ∃ k, x k = 0 ∧ y = Function.update x k 1
+
+/-- `Statement:` the motion on `End`: UP constant ⊥ of `End`, a step `endBitFlip`. -/
+def endFlipMotion : Motion End := ofTotal (fun _ => botEnd) (fun _ => rfl) endBitFlip
+
+/-- `Statement:` the first component of `interleaveEnd x` reads the even digits of `x`. -/
+theorem interleaveEnd_fst_eval (x : End) (m : ℕ) : (interleaveEnd x).1 m = x (2 * m) := by
+  rw [interleaveEnd_apply]
+
+/-- `Statement:` the second component of `interleaveEnd x` reads the odd digits of `x`. -/
+theorem interleaveEnd_snd_eval (x : End) (m : ℕ) : (interleaveEnd x).2 m = x (2 * m + 1) := by
+  rw [interleaveEnd_apply]
+
+/-- `Statement:` setting digit `2 m` to `1` sets digit `m` of the first component. -/
+theorem interleaveEnd_update_even (x : End) (m : ℕ) :
+    interleaveEnd (Function.update x (2 * m) 1) =
+      (Function.update (interleaveEnd x).1 m 1, (interleaveEnd x).2) := by
+  rw [interleaveEnd_apply, interleaveEnd_apply]
+  refine Prod.ext (funext fun n => ?_) (funext fun n => ?_)
+  · by_cases h : n = m
+    · subst h; simp
+    · have h2 : 2 * n ≠ 2 * m := by omega
+      simp [h, h2]
+  · have h2 : 2 * n + 1 ≠ 2 * m := by omega
+    simp [h2]
+
+/-- `Statement:` setting digit `2 m + 1` to `1` sets digit `m` of the second component. -/
+theorem interleaveEnd_update_odd (x : End) (m : ℕ) :
+    interleaveEnd (Function.update x (2 * m + 1) 1) =
+      ((interleaveEnd x).1, Function.update (interleaveEnd x).2 m 1) := by
+  rw [interleaveEnd_apply, interleaveEnd_apply]
+  refine Prod.ext (funext fun n => ?_) (funext fun n => ?_)
+  · have h2 : 2 * n ≠ 2 * m + 1 := by omega
+    simp [h2]
+  · by_cases h : n = m
+    · subst h; simp
+    · simp [h]
+
+/-- `Statement:` `interleaveEnd` is an isomorphism of `endFlipMotion` onto its interleaving square. -/
+def endFlipIsoAProd : StrictIso endFlipMotion (endFlipMotion.aprod endFlipMotion) where
+  hom := ⟨interleaveEnd, fun {x y} h => by
+      obtain ⟨k, hk, rfl⟩ := h
+      obtain ⟨m, rfl | rfl⟩ := Nat.even_or_odd' k
+      · rw [interleaveEnd_update_even]
+        exact Prod.gameAdd_iff.2 (Or.inl ⟨⟨m, by rw [interleaveEnd_fst_eval]; exact hk, rfl⟩, rfl⟩)
+      · rw [interleaveEnd_update_odd]
+        exact Prod.gameAdd_iff.2 (Or.inr ⟨⟨m, by rw [interleaveEnd_snd_eval]; exact hk, rfl⟩, rfl⟩),
+    fun x => by
+      show upPair (Part.some botEnd) (Part.some botEnd) = (Part.some botEnd).map _
+      rw [upPair_some, Part.map_some, interleaveEnd_bot]⟩
+  inv := ⟨interleaveEnd.symm, fun {p q} h => by
+      rcases Prod.gameAdd_iff.1 h with ⟨⟨m, hm, hq1⟩, hq2⟩ | ⟨⟨m, hm, hq2⟩, hq1⟩
+      · refine ⟨2 * m, ?_, ?_⟩
+        · rw [← interleaveEnd_fst_eval (interleaveEnd.symm p) m, OrderIso.apply_symm_apply]
+          exact hm
+        · apply interleaveEnd.injective
+          rw [OrderIso.apply_symm_apply, interleaveEnd_update_even, OrderIso.apply_symm_apply,
+            ← hq1, hq2]
+      · refine ⟨2 * m + 1, ?_, ?_⟩
+        · rw [← interleaveEnd_snd_eval (interleaveEnd.symm p) m, OrderIso.apply_symm_apply]
+          exact hm
+        · apply interleaveEnd.injective
+          rw [OrderIso.apply_symm_apply, interleaveEnd_update_odd, OrderIso.apply_symm_apply,
+            ← hq2, hq1],
+    fun p => by
+      show Part.some botEnd = (upPair (Part.some botEnd) (Part.some botEnd)).map _
+      rw [upPair_some, Part.map_some, ← interleaveEnd_bot, OrderIso.symm_apply_apply]⟩
+  left_inv x := interleaveEnd.symm_apply_apply x
+  right_inv p := interleaveEnd.apply_symm_apply p
+
+/-- `Statement:` an `endBitFlip` step rises in the pointwise order. -/
+theorem endBitFlip_le {x y : End} (h : endBitFlip x y) : x ≤ y := by
+  obtain ⟨k, hk, rfl⟩ := h
+  intro n
+  by_cases hn : n = k
+  · subst hn; simp [hk]
+  · simp [hn]
+
+/-- `Statement:` reachability under `endBitFlip` rises in the pointwise order. -/
+theorem rtg_endBitFlip_le {x y : End} (h : Relation.ReflTransGen endBitFlip x y) : x ≤ y := by
+  induction h with
+  | refl => exact le_rfl
+  | tail _ hbc ih => exact ih.trans (endBitFlip_le hbc)
+
+/-- `Statement:` CONTROL: `endFlipMotion` meets `ADoubling`, loops, fires the corner and does not
+    climb; with ⊥ of `End` a fixed pole and one flip above it, reachability carries the prefix order
+    on `Bool` words, `[]` at ⊥ of `End`. -/
+theorem endFlip_doubling_control : endFlipMotion.ADoubling ∧ endFlipMotion.Loop ∧
+    endFlipMotion.Corner ∧ ¬ endFlipMotion.Climb ∧
+    ∃ f : List Bool → End, f [] = botEnd ∧
+      ∀ l l', Relation.ReflTransGen endFlipMotion.step (f l) (f l') ↔ l <+: l' := by
+  have hloop : endFlipMotion.Loop :=
+    ⟨botEnd, Function.update botEnd 0 1, Part.mem_some _, ⟨0, rfl, rfl⟩,
+      fun h => by have := congrFun h 0; simp [botEnd] at this, Part.mem_some _⟩
+  refine ⟨⟨endFlipIsoAProd⟩, hloop, loop_corner _ hloop, ?_, ?_⟩
+  · rintro ⟨y, b, z, hy, -, hz, -, hzy⟩
+    exact hzy ((Part.mem_some_iff.1 hz).trans (Part.mem_some_iff.1 hy).symm)
+  · refine tree_of_aDoubling_pole endFlipIsoAProd botEnd interleaveEnd_bot
+      ⟨Function.update botEnd 0 1, .single ⟨0, rfl, rfl⟩, fun h => ?_⟩
+    have := rtg_endBitFlip_le h 0
+    simp [botEnd] at this
+
+/-- `Statement:` the motion on `Comb`: UP the identity, a step `≤`. -/
+def combLeMotion : Motion Comb := ofTotal id (fun _ => rfl) (· ≤ ·)
+
+/-- `Statement:` in a preorder, reachability under `≤` is `≤`; both directions. -/
+theorem rtg_le_iff_le {P : Type} [Preorder P] (x y : P) :
+    Relation.ReflTransGen (· ≤ ·) x y ↔ x ≤ y :=
+  ⟨fun h => by
+    induction h with
+    | refl => exact le_rfl
+    | tail _ hbc ih => exact ih.trans hbc, fun h => .single h⟩
+
+/-- `Statement:` CONTROL: `combLeMotion` does not meet `ADoubling`. -/
+theorem comb_not_aDoubling : ¬ combLeMotion.ADoubling := by
+  rintro ⟨e⟩
+  obtain ⟨f, -, hf⟩ := tree_of_aDoubling_root e ⊥ (fun x => (rtg_le_iff_le _ _).2 bot_le)
+    (Comb.atom 0) (fun h => Comb.noConfusion (le_bot_iff.1 ((rtg_le_iff_le _ _).1 h)))
+  exact comb_no_BTree.false (OrderEmbedding.ofMapLEIff (fun t => f t.val) fun t t' =>
+    ((rtg_le_iff_le _ _).symm.trans (hf t.val t'.val)).trans (btree_le_iff t t').symm)
+
+/-- `Statement:` the all-`1` point of `End`. -/
+def topEnd : End := fun _ => 1
+
+/-- `Statement:` the motion on `End` in which every point steps to `topEnd`. -/
+def endTopMotion : Motion End := ofFun (fun _ => topEnd)
+
+/-- `Statement:` `interleaveEnd topEnd = (topEnd, topEnd)`. -/
+theorem interleaveEnd_topEnd : interleaveEnd topEnd = (topEnd, topEnd) := by
+  rw [interleaveEnd_apply]; rfl
+
+/-- `Statement:` `interleaveEnd` is an isomorphism of `endTopMotion` onto its lockstep square. -/
+def endTopIsoProd : StrictIso endTopMotion (endTopMotion.prod endTopMotion) where
+  hom := ⟨interleaveEnd, fun {x y} (h : y = topEnd) => by
+      subst h; rw [interleaveEnd_topEnd]; exact ⟨rfl, rfl⟩,
+    fun x => by
+      show upPair (Part.some _) (Part.some _) = (Part.some x).map _
+      rw [upPair_some, Part.map_some]; rfl⟩
+  inv := ⟨interleaveEnd.symm, fun {p q} (h : q.1 = topEnd ∧ q.2 = topEnd) => by
+      show interleaveEnd.symm q = topEnd
+      rw [OrderIso.symm_apply_eq, interleaveEnd_topEnd]; exact Prod.ext h.1 h.2,
+    fun p => by
+      show Part.some _ = (upPair (Part.some p.1) (Part.some p.2)).map _
+      rw [upPair_some, Part.map_some]; rfl⟩
+  left_inv x := interleaveEnd.symm_apply_apply x
+  right_inv p := interleaveEnd.apply_symm_apply p
+
+/-- `Statement:` in `endTopMotion`, `x` reaches only `x` and `topEnd`. -/
+theorem rtg_endTop {x y : End} (h : Relation.ReflTransGen endTopMotion.step x y) :
+    y = x ∨ y = topEnd := by
+  induction h with
+  | refl => exact Or.inl rfl
+  | tail _ hbc _ => exact Or.inr hbc
+
+/-- `Statement:` ⊥ of `End` is not `topEnd`. -/
+theorem botEnd_ne_topEnd : botEnd ≠ topEnd := fun h => by
+  have := congrFun h 0; simp [botEnd, topEnd] at this
+
+/-- `Statement:` CONTROL: `endTopMotion` meets `Doubling` (lockstep) with ⊥ of `End` a fixed pole and
+    `NonDegenerateAt` ⊥ of `End`, and no map from `Bool` words carries reachability as the prefix
+    order. -/
+theorem sync_no_bridge :
+    endTopMotion.Doubling ∧ FixedPole endTopIsoProd botEnd ∧ endTopMotion.NonDegenerateAt botEnd ∧
+    ¬ ∃ f : List Bool → End,
+      ∀ l l', Relation.ReflTransGen endTopMotion.step (f l) (f l') ↔ l <+: l' := by
+  refine ⟨⟨endTopIsoProd⟩, interleaveEnd_bot, ⟨topEnd, .single rfl, fun h => ?_⟩, ?_⟩
+  · rcases rtg_endTop h with h | h
+    · exact botEnd_ne_topEnd h
+    · exact botEnd_ne_topEnd h
+  · rintro ⟨f, hf⟩
+    have h01 : ¬ Relation.ReflTransGen endTopMotion.step (f [false]) (f []) :=
+      fun h => absurd ((hf _ _).1 h) (by decide)
+    have h12 : ¬ Relation.ReflTransGen endTopMotion.step (f [false, false]) (f [false]) :=
+      fun h => absurd ((hf _ _).1 h) (by decide)
+    have r01 := (hf [] [false]).2 (by decide)
+    have r12 := (hf [false] [false, false]).2 (by decide)
+    rcases rtg_endTop r01 with e1 | e1
+    · exact h01 (e1 ▸ .refl)
+    · rcases rtg_endTop r12 with e2 | e2
+      · exact h12 (e2 ▸ .refl)
+      · exact h12 (by rw [e1, e2])
+
+/-- `Statement:` in `endTopMotion`, ⊥ of `End` reaches itself and `topEnd`, and in its lockstep square
+    (⊥, ⊥) does not reach (⊥, `topEnd`): lockstep reachability is not the product of reachabilities. -/
+theorem sync_rtg_not_product :
+    (Relation.ReflTransGen endTopMotion.step botEnd botEnd ∧
+      Relation.ReflTransGen endTopMotion.step botEnd topEnd) ∧
+    ¬ Relation.ReflTransGen (endTopMotion.prod endTopMotion).step (botEnd, botEnd)
+      (botEnd, topEnd) := by
+  refine ⟨⟨.refl, .single rfl⟩, fun h => ?_⟩
+  have key : ∀ q, Relation.ReflTransGen (endTopMotion.prod endTopMotion).step (botEnd, botEnd) q →
+      q = (botEnd, botEnd) ∨ q = (topEnd, topEnd) := by
+    intro q hq
+    induction hq with
+    | refl => exact Or.inl rfl
+    | tail _ hbc _ => exact Or.inr (Prod.ext hbc.1 hbc.2)
+  rcases key _ h with e | e
+  · exact botEnd_ne_topEnd (congrArg Prod.snd e).symm
+  · exact botEnd_ne_topEnd (congrArg Prod.fst e)
+
+open NNReal
+
+/-- `Statement:` `ℕ → ℝ≥0` is order-isomorphic to its square, by the even/odd split. -/
+def nnDouble : (ℕ → ℝ≥0) ≃o (ℕ → ℝ≥0) × (ℕ → ℝ≥0) :=
+  (reindexOrderIso ℝ≥0 Equiv.natSumNatEquivNat).trans (sumSplitOrderIso ℝ≥0 ℕ ℕ)
+
+/-- `Statement:` ⊥ of `ℕ → ℝ≥0` has no cover. -/
+theorem nn_not_botCovered : ¬ BotCovered (ℕ → ℝ≥0) := by
+  rintro ⟨a, ha⟩
+  obtain ⟨n, hn⟩ : ∃ n, (⊥ : ℕ → ℝ≥0) n < a n := (Pi.lt_def.1 ha.lt).2
+  have hpos : 0 < a n := hn
+  refine ha.2 (c := fun i => a i / 2) ?_ ?_
+  · exact Pi.lt_def.2 ⟨fun i => zero_le, n, by simpa using half_pos hpos⟩
+  · exact Pi.lt_def.2 ⟨fun i => half_le_self (zero_le), n, half_lt_self hpos⟩
+
+/-- `Statement:` `ℕ → ℝ≥0` is not strongly atomic. -/
+theorem nn_not_stronglyAtomic : ¬ IsStronglyAtomic (ℕ → ℝ≥0) := by
+  intro h
+  have hlt : (⊥ : ℕ → ℝ≥0) < fun _ => 1 :=
+    Pi.lt_def.2 ⟨fun _ => zero_le, 0, by simp⟩
+  obtain ⟨x, hx, -⟩ := h.exists_covBy_le_of_lt ⊥ _ hlt
+  exact nn_not_botCovered ⟨x, hx⟩
+
+/-- `Statement:` `ℕ → ℝ≥0` is not strongly atomic and ⊥ of it has no cover, and `BTree` order-embeds
+    with root at ⊥, by `doubling_forces_btree` at `nnDouble`. -/
+theorem nn_tree : ¬ IsStronglyAtomic (ℕ → ℝ≥0) ∧ ¬ BotCovered (ℕ → ℝ≥0) ∧
+    ∃ f : BTree ↪o (ℕ → ℝ≥0), f (BTree.mk []) = ⊥ :=
+  ⟨nn_not_stronglyAtomic, nn_not_botCovered, doubling_forces_btree nnDouble (fun _ => 1)
+    (fun h => by have := congrFun h 0; simp at this)⟩
+
+/-- `Statement:` `Comb` is strongly atomic and embeds no `BTree`. -/
+theorem comb_atomic_no_tree : IsStronglyAtomic Comb ∧ IsEmpty (BTree ↪o Comb) :=
+  ⟨comb_stronglyAtomic, comb_no_BTree⟩
+
+open Ordinal in
+/-- `Statement:` ε₀ is not ⊥ of `Ordinal` (`epsilon0_ne_bot`), and `Ordinal` embeds no `BTree`, no
+    order embedding of its square, and is not order-isomorphic to its square. -/
+theorem epsilon0_control :
+    (ε₀ : Ordinal.{0}) ≠ ⊥ ∧ IsEmpty (BTree ↪o Ordinal.{0}) ∧
+      IsEmpty (Ordinal.{0} × Ordinal.{0} ↪o Ordinal.{0}) ∧
+      IsEmpty (Ordinal.{0} ≃o Ordinal.{0} × Ordinal.{0}) := by
+  have hne : (ε₀ : Ordinal.{0}) ≠ ⊥ := epsilon0_ne_bot
+  have hnt : IsEmpty (BTree ↪o Ordinal.{0}) := linear_no_btree
+  have hemb : IsEmpty (Ordinal.{0} × Ordinal.{0} ↪o Ordinal.{0}) := ⟨fun j => by
+    obtain ⟨f, -⟩ := square_embed_forces_btree j ε₀ hne
+    exact hnt.false f⟩
+  exact ⟨hne, hnt, hemb, ⟨fun e => hemb.false e.symm.toOrderEmbedding⟩⟩
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -805,4 +1070,31 @@ open ZeroParadox
 #print axioms tern_le_iff
 #print axioms twoChartCode
 #print axioms q11_twoChart_tree
+#print axioms endBitFlip
+#print axioms endFlipMotion
+#print axioms interleaveEnd_fst_eval
+#print axioms interleaveEnd_snd_eval
+#print axioms interleaveEnd_update_even
+#print axioms interleaveEnd_update_odd
+#print axioms endFlipIsoAProd
+#print axioms endBitFlip_le
+#print axioms rtg_endBitFlip_le
+#print axioms endFlip_doubling_control
+#print axioms combLeMotion
+#print axioms rtg_le_iff_le
+#print axioms comb_not_aDoubling
+#print axioms topEnd
+#print axioms endTopMotion
+#print axioms interleaveEnd_topEnd
+#print axioms endTopIsoProd
+#print axioms rtg_endTop
+#print axioms botEnd_ne_topEnd
+#print axioms sync_no_bridge
+#print axioms sync_rtg_not_product
+#print axioms nnDouble
+#print axioms nn_not_botCovered
+#print axioms nn_not_stronglyAtomic
+#print axioms nn_tree
+#print axioms comb_atomic_no_tree
+#print axioms epsilon0_control
 end PurityCheck

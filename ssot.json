@@ -672,7 +672,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 3794,
+        "declarations": 3879,
         "files": 218
       },
       "entries": [
@@ -6018,6 +6018,41 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "091dc7ff-5152-47cd-95cd-42c6fe7b1fbf",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.StrictIso.rtg_iff",
+            "short": "rtg_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.StrictIso.rtg_iff",
+            "short": "rtg_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -11534,6 +11569,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "12a8b6d7-b30b-4f03-b311-392d563188d5",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.ofCoalgHom",
+            "short": "ofCoalgHom"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.ofCoalgHom",
+            "short": "ofCoalgHom",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-double-1111: Motion.StrictIso is equivalent to an iso in Mathlib's Endofunctor.Coalgebra (StrictIso.equivCoalgIso, choice-free, Die § XXVI); R-PRIORART adoption of the standard framing",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "12ad61e5-b8b2-4090-ade1-b5e18ffd2b36",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -12704,6 +12774,41 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "14c23752-dda3-4e5b-a1e9-249330850154",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.unitMotionIsoProd",
+            "short": "unitMotionIsoProd"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.unitMotionIsoProd",
+            "short": "unitMotionIsoProd",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -14007,6 +14112,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "16d933da-42a5-4e2c-8740-7174419f4eb4",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.Hom.toCoalgHom",
+            "short": "toCoalgHom"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.Hom.toCoalgHom",
+            "short": "toCoalgHom",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-double-1111: Motion.StrictIso is equivalent to an iso in Mathlib's Endofunctor.Coalgebra (StrictIso.equivCoalgIso, choice-free, Die § XXVI); R-PRIORART adoption of the standard framing",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "16ebc53d-4895-4d29-b484-d354b3471456",
           "new": {
             "file": "ZeroParadox/Valuation/LocalTowers.lean",
@@ -14740,6 +14880,41 @@
             ]
           },
           "reason": "New file ZeroParadox/Category/WellFoundedCoalgebra.lean: AMM next-time operator + intrinsic well-foundedness for PFunctor coalgebras",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "1858e603-2c0b-4abb-b244-3a6effec3267",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.aDoublingEmb_of_aDoubling",
+            "short": "aDoublingEmb_of_aDoubling"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.aDoublingEmb_of_aDoubling",
+            "short": "aDoublingEmb_of_aDoubling",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -17232,6 +17407,41 @@
             "role": []
           },
           "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "1d2a5e37-9dfb-493c-b10b-fb3345f3d3f9",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.tree_of_aDoubling_pole",
+            "short": "tree_of_aDoubling_pole"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.tree_of_aDoubling_pole",
+            "short": "tree_of_aDoubling_pole",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -21104,6 +21314,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "255efae8-d335-483d-9c39-033e5dda6a4a",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.endTopMotion",
+            "short": "endTopMotion"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.endTopMotion",
+            "short": "endTopMotion",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "256a4a01-6da2-4fe6-af91-c5a1e54b73ec",
           "new": {
             "file": "ZeroParadox/Valuation/BottomInvariant.lean",
@@ -21456,6 +21705,45 @@
             ]
           },
           "reason": "AMM Def 2.14(1) clause (b): the colimit cocone of a chain of monos has monic legs",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "25e2c406-652e-4c4b-98ea-68f7ff85db97",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.endFlip_doubling_control",
+            "short": "endFlip_doubling_control"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.endFlip_doubling_control",
+            "short": "endFlip_doubling_control",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -22117,6 +22405,41 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "2707c340-8275-4f12-8cb4-30e817751795",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.NonDegenerateAt",
+            "short": "NonDegenerateAt"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.NonDegenerateAt",
+            "short": "NonDegenerateAt",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -23990,6 +24313,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "2a59c46b-fd4a-422f-923c-3206cb0a1fde",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.fin3Motion",
+            "short": "fin3Motion"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.fin3Motion",
+            "short": "fin3Motion",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "2a5c4b35-cf78-4b09-925d-d7e90f4d43cf",
           "new": {
             "file": "ZeroParadox/Information/CrossingTrials.lean",
@@ -25662,6 +26020,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "2d071713-420f-4176-83dc-2ba664ace997",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.sync_no_bridge",
+            "short": "sync_no_bridge"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.sync_no_bridge",
+            "short": "sync_no_bridge",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "2d09079f-7725-450b-b7d6-fa65fdb94db5",
           "new": {
@@ -26325,6 +26722,41 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "2e76aca9-4891-4cd9-9d54-6635bc395e9c",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.ADoublingEmb",
+            "short": "ADoublingEmb"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.ADoublingEmb",
+            "short": "ADoublingEmb",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -35449,6 +35881,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "40b6a06b-d1d2-4605-91ff-46373d23cdfd",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.StrictIso.equivCoalgIso",
+            "short": "equivCoalgIso"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.StrictIso.equivCoalgIso",
+            "short": "equivCoalgIso",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-double-1111: Motion.StrictIso is equivalent to an iso in Mathlib's Endofunctor.Coalgebra (StrictIso.equivCoalgIso, choice-free, Die § XXVI); R-PRIORART adoption of the standard framing",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "40cf6a6a-1f74-4d32-ad36-c40fb8859da4",
           "new": {
             "file": "ZeroParadox/Information/CrossingTrials.lean",
@@ -35693,6 +36160,41 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "417be58f-6db8-42d1-9861-5dddba16dbd7",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.pair_unique",
+            "short": "pair_unique"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.pair_unique",
+            "short": "pair_unique",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -38669,6 +39171,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "45fa1a9f-4743-4cc0-83e6-fea8745ee115",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.unitMotionIsoAProd",
+            "short": "unitMotionIsoAProd"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.unitMotionIsoAProd",
+            "short": "unitMotionIsoAProd",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "46032566-85f6-4841-a61e-50051ef26bf6",
           "new": {
             "file": "ZeroParadox/Order/UpAndOver.lean",
@@ -41270,6 +41807,41 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "4aa41195-7e5b-488a-a8c1-a02d8e6c5ebf",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.rtg_gameAdd_iff",
+            "short": "rtg_gameAdd_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.rtg_gameAdd_iff",
+            "short": "rtg_gameAdd_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "4ad3bd56-5379-4368-bb81-2952d900c45d",
           "new": {
@@ -42632,6 +43204,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "4d3171f1-ab11-4c3b-becb-a6b39a74a2f6",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.upPair",
+            "short": "upPair"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.upPair",
+            "short": "upPair",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "4d3c85e1-2542-478a-8d1c-51a255a5bf76",
           "new": {
             "file": "ZeroParadox/Valuation/PadicVladimirov.lean",
@@ -43817,6 +44424,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "4f89c320-315d-4cd0-a50c-42f928a3fbc2",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.root_le_sqWord",
+            "short": "root_le_sqWord"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.root_le_sqWord",
+            "short": "root_le_sqWord",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "4faa9b74-d729-43dc-866b-03b8af11a41b",
           "new": {
             "file": "ZeroParadox/Information/MaxEntropy.lean",
@@ -44024,6 +44666,41 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "4ff90e77-218d-4476-8d2f-8f598aa7ab25",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.StrictIso.ofCoalgIso",
+            "short": "ofCoalgIso"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.StrictIso.ofCoalgIso",
+            "short": "ofCoalgIso",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-double-1111: Motion.StrictIso is equivalent to an iso in Mathlib's Endofunctor.Coalgebra (StrictIso.equivCoalgIso, choice-free, Die § XXVI); R-PRIORART adoption of the standard framing",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -45846,6 +46523,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "52824fa1-7e35-47cd-9322-e1430df5a99e",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.interleaveEnd_update_even",
+            "short": "interleaveEnd_update_even"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.interleaveEnd_update_even",
+            "short": "interleaveEnd_update_even",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "withdrawn",
           "id": "52887614-7041-401e-8b21-fab5daedd32d",
           "new": {
@@ -46582,6 +47298,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "547ae7a3-0fe7-410b-b67c-ba35fb534a8b",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.interleaveEnd_topEnd",
+            "short": "interleaveEnd_topEnd"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.interleaveEnd_topEnd",
+            "short": "interleaveEnd_topEnd",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "547ec6b8-461d-4297-aa9e-78a4ca8c5856",
           "new": {
             "file": "ZeroParadox/Computability/Occurrence.lean",
@@ -46881,6 +47636,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "55526654-8f6e-414e-a304-ef1506f6bc6a",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.endTopIsoProd",
+            "short": "endTopIsoProd"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.endTopIsoProd",
+            "short": "endTopIsoProd",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "556c247b-8749-43e4-ae2d-25f78ea402a3",
           "new": {
@@ -46944,6 +47738,45 @@
             ]
           },
           "reason": "Die views batch: views (order as data), restriction to an up-closed set, adjoined points and the empty carrier, arrival and fan-in",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "55bd4546-d3f4-46c0-8e5b-144f914eea23",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.rtg_endBitFlip_le",
+            "short": "rtg_endBitFlip_le"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.rtg_endBitFlip_le",
+            "short": "rtg_endBitFlip_le",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -47353,6 +48186,41 @@
             ]
           },
           "reason": "K2 motion-level ends (bijOn_sources_sinks) and EM23-CARRY-1k: the die's registration and selection classicals reduced to excluded middle (ChoiceCannotBe § IV cases 4-5)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "5699d893-4608-4ec0-ad87-e248eab4b82a",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.sqCell_le_iff",
+            "short": "sqCell_le_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.sqCell_le_iff",
+            "short": "sqCell_le_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -47983,6 +48851,41 @@
             ]
           },
           "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "57773a21-d993-44c6-bc03-86bcbd9d4c73",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.nonempty_strictIso_iff",
+            "short": "nonempty_strictIso_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.nonempty_strictIso_iff",
+            "short": "nonempty_strictIso_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-double-1111: Motion.StrictIso is equivalent to an iso in Mathlib's Endofunctor.Coalgebra (StrictIso.equivCoalgIso, choice-free, Die § XXVI); R-PRIORART adoption of the standard framing",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -49908,6 +50811,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "5a808fff-a147-44c9-8044-997edc29faf1",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.StrictIso",
+            "short": "StrictIso"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.StrictIso",
+            "short": "StrictIso",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "5a8e3b26-ac7b-48e4-b042-6b8c8ef9f130",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -50121,6 +51059,41 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "5ad47ce5-aed5-4d71-9e67-6ae33d9b18f0",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.fin3_not_strictIso_square",
+            "short": "fin3_not_strictIso_square"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.fin3_not_strictIso_square",
+            "short": "fin3_not_strictIso_square",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -50494,6 +51467,45 @@
             ]
           },
           "reason": "Land PoleWithinEnsemble and TowerTape: ⊥ of ℕ → Bool null yet in the support of trials p hp (iff p < 1) and in the closure of random firing tapes; local floors as subtape poles; a local tower as one tape; limit and value forms (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "5be3eeb8-9227-49a7-b69c-34715c287e33",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.rtg_le_iff_le",
+            "short": "rtg_le_iff_le"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.rtg_le_iff_le",
+            "short": "rtg_le_iff_le",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -52049,6 +53061,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "5e8d9e83-60ea-43c9-9a84-b0595abec0fa",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.epsilon0_control",
+            "short": "epsilon0_control"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.epsilon0_control",
+            "short": "epsilon0_control",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "5eaa349e-e976-4414-84a1-b177266b1416",
           "new": {
@@ -52803,6 +53854,41 @@
             ]
           },
           "reason": "New file ZeroParadox/Valuation/PricedPadicInterface.lean — p-adic Group A priced carrier (29 decls)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "60134fa1-a8ec-4572-8f61-7891d2c509cd",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.fin3_doubling_control",
+            "short": "fin3_doubling_control"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.fin3_doubling_control",
+            "short": "fin3_doubling_control",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -53851,6 +54937,41 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "627808e8-9f56-4c59-8ac6-45ecffc810ad",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.prod_fst_not_upStrict",
+            "short": "prod_fst_not_upStrict"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.prod_fst_not_upStrict",
+            "short": "prod_fst_not_upStrict",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -56543,6 +57664,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "687a1200-2036-46cd-95db-7484c3539cbe",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.sqWord",
+            "short": "sqWord"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.sqWord",
+            "short": "sqWord",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "6881b2ad-cdd2-4ab5-8b7f-3629c944fb94",
           "new": {
             "file": "ZeroParadox/Valuation/PoleChartSelection.lean",
@@ -56603,6 +57759,41 @@
             ]
           },
           "reason": "New experimental files ZeroParadox/Information/BrudnoBridge.lean (trials and MLRandom bridged to Milovanov's kolmogorov-complexity-lean, citing his Brudno and Levin-Schnorr theorems) and ZeroParadox/Information/SnapEpsilonZero.lean (snap_of_firstStep_MLRandom instantiated on WithBot Ordinal and on EpsilonOrZero, with an order isomorphism between them).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "68ab826d-7b7d-4652-9c92-01c3b217235e",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.unit_doubling_degenerate",
+            "short": "unit_doubling_degenerate"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.unit_doubling_degenerate",
+            "short": "unit_doubling_degenerate",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -59068,6 +60259,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "6cfb9ecb-2d33-4031-b09a-77d4ca73949f",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.ofCoalgHom_stepBack",
+            "short": "ofCoalgHom_stepBack"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.ofCoalgHom_stepBack",
+            "short": "ofCoalgHom_stepBack",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-double-1111: Motion.StrictIso is equivalent to an iso in Mathlib's Endofunctor.Coalgebra (StrictIso.equivCoalgIso, choice-free, Die § XXVI); R-PRIORART adoption of the standard framing",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "6d11c409-7df9-4031-a4ef-159eb33a3c9c",
           "new": {
             "file": "ZeroParadox/Information/TwoRequirements.lean",
@@ -59990,6 +61216,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "6e4a8ac0-f2bb-4c8c-a8de-88bbb8ce610c",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.NonDegenerate",
+            "short": "NonDegenerate"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.NonDegenerate",
+            "short": "NonDegenerate",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "6e51d24b-27d3-44c8-9b7d-47d7e7002ebf",
           "new": {
             "file": "ZeroParadox/Category/IgnoranceSeam.lean",
@@ -60162,6 +61423,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "6ee581b4-576c-48df-80a3-ce4191b88292",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.nn_tree",
+            "short": "nn_tree"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.nn_tree",
+            "short": "nn_tree",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -61589,6 +62889,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "72021e56-dc7c-46a3-a2dd-413b93362e44",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.unitMotion_not_corner",
+            "short": "unitMotion_not_corner"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.unitMotion_not_corner",
+            "short": "unitMotion_not_corner",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "7204b885-4020-46d1-ac98-fefa60181aac",
           "new": {
             "file": "ZeroParadox/Valuation/TowerTape.lean",
@@ -62853,6 +64188,41 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "7418513b-7f1a-462d-82cb-5d8b0008bc81",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.StrictIso.toCoalgIso_hom_f",
+            "short": "toCoalgIso_hom_f"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.StrictIso.toCoalgIso_hom_f",
+            "short": "toCoalgIso_hom_f",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-double-1111: Motion.StrictIso is equivalent to an iso in Mathlib's Endofunctor.Coalgebra (StrictIso.equivCoalgIso, choice-free, Die § XXVI); R-PRIORART adoption of the standard framing",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "7424e6ec-9c01-4363-9fc6-90dc1adc879a",
           "new": {
@@ -64064,6 +65434,41 @@
           "reason": "IgnoranceSeam.lean: fills, semiconjugacy, prepends, affine stream motions, negation, complement (2026-10-07)",
           "verify": {
             "axioms": "[propext, Quot.sound]",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "7634482f-68ab-4709-8bc2-9e5c781a4fd1",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.prod_fst_stepBack",
+            "short": "prod_fst_stepBack"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.prod_fst_stepBack",
+            "short": "prod_fst_stepBack",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
+          "verify": {
+            "axioms": null,
             "sorry_free": true
           }
         },
@@ -66744,6 +68149,41 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "7b7e2452-8d86-47f9-8c6c-cbd655aa89df",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.aprod_fst_not_step",
+            "short": "aprod_fst_not_step"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.aprod_fst_not_step",
+            "short": "aprod_fst_not_step",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "7bb041d2-9cf0-45d4-b0c2-3c22b835f39a",
           "new": {
@@ -67039,6 +68479,45 @@
             ]
           },
           "reason": "Bridge 1: AMM Def 4.1/4.3 categorically, plus the transport to the concrete Set-based predicate",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "7c3767e6-5bc2-4337-bc5d-2d400b85e14b",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.interleaveEnd_fst_eval",
+            "short": "interleaveEnd_fst_eval"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.interleaveEnd_fst_eval",
+            "short": "interleaveEnd_fst_eval",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -67661,6 +69140,45 @@
             ]
           },
           "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "7d4e8479-619e-4b59-9d45-0e69b1da1236",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.endBitFlip_le",
+            "short": "endBitFlip_le"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.endBitFlip_le",
+            "short": "endBitFlip_le",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -69289,6 +70807,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "800b12ec-7204-4083-8e19-36bfd6be3796",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.ADoubling",
+            "short": "ADoubling"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.ADoubling",
+            "short": "ADoubling",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "8013e49f-c680-4346-b0de-0f0cd6321d0e",
           "new": {
             "file": "ZeroParadox/Valuation/Interleave.lean",
@@ -70769,6 +72322,41 @@
             ]
           },
           "reason": "Succession-as-representation arc: the offset structure, the carrier split, the fiber, and the fiber-supported distribution",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "82714f83-3c2a-4b00-8aae-409fb880e7ee",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.pairLax",
+            "short": "pairLax"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.pairLax",
+            "short": "pairLax",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -74741,6 +76329,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "8a8b7777-e404-4632-b533-471ca2a7e81a",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.tree_of_aDoubling_root",
+            "short": "tree_of_aDoubling_root"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.tree_of_aDoubling_root",
+            "short": "tree_of_aDoubling_root",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "8a8d0842-89eb-406a-befb-8d9eb8f1e607",
           "new": {
             "file": "ZeroParadox/Settheory/HypersetOrder.lean",
@@ -75773,6 +77396,41 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "8c30a09f-37b7-4942-b0eb-4e29a3c415ee",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.sqCell",
+            "short": "sqCell"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.sqCell",
+            "short": "sqCell",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "8c3c3aad-afad-4729-874f-d1eec8e3238b",
           "new": {
@@ -76637,6 +78295,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "8f305cbd-b173-4c1f-83a9-d37bb3b58b27",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.botEnd_ne_topEnd",
+            "short": "botEnd_ne_topEnd"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.botEnd_ne_topEnd",
+            "short": "botEnd_ne_topEnd",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "8f4190c3-ef8e-4a04-a3f7-a853e50601bd",
           "new": {
@@ -76924,6 +78621,41 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "8f8cf095-abcc-4a27-8a10-16122b379400",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.FixedPole",
+            "short": "FixedPole"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.FixedPole",
+            "short": "FixedPole",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -79882,6 +81614,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "9466432a-6e76-42ed-9a7c-4c132a04e47e",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.prod",
+            "short": "prod"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.prod",
+            "short": "prod",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "94767077-535b-4de0-99ef-69e9139f123b",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -80237,6 +82004,45 @@
             ]
           },
           "reason": "Land DepthIsWait: endVal on End is the first hitting time det of its digit tape, read in ENat (2026-11-10).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "95419d67-8509-4e91-8be8-cee917b1eb8b",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.endFlipIsoAProd",
+            "short": "endFlipIsoAProd"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.endFlipIsoAProd",
+            "short": "endFlipIsoAProd",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -81604,6 +83410,41 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "97c804eb-1ba8-467f-b11c-127f380c8ad0",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.StrictIso.toEquiv",
+            "short": "toEquiv"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.StrictIso.toEquiv",
+            "short": "toEquiv",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -83724,6 +85565,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "9ad46815-9e27-432d-a75a-a132e36fc66f",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.nn_not_stronglyAtomic",
+            "short": "nn_not_stronglyAtomic"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.nn_not_stronglyAtomic",
+            "short": "nn_not_stronglyAtomic",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "9ad826a1-4ba1-4a2b-bc93-0db1c09c27e9",
           "new": {
             "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
@@ -84449,6 +86329,41 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "9c4ddb0b-84fb-4485-bc87-223a0a9e408b",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.tree_of_aDoubling",
+            "short": "tree_of_aDoubling"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.tree_of_aDoubling",
+            "short": "tree_of_aDoubling",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -86596,6 +88511,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "9f5c9703-9715-4f45-a152-887e3049b6a1",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.sync_rtg_not_product",
+            "short": "sync_rtg_not_product"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.sync_rtg_not_product",
+            "short": "sync_rtg_not_product",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "9f5f467a-f09b-4b33-a1b3-ee29a9de1638",
           "new": {
@@ -87108,6 +89062,45 @@
             ]
           },
           "reason": "Round-3 claim revalidation: injectivity collapses any fiber-confined PMF support to one point.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a010351d-a699-4343-bcdc-7d1ec283ab8e",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.interleaveEnd_snd_eval",
+            "short": "interleaveEnd_snd_eval"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.interleaveEnd_snd_eval",
+            "short": "interleaveEnd_snd_eval",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -88039,6 +90032,41 @@
             ]
           },
           "reason": "lane P: Disjunctive § V, no full self-copy (periodic tape is not disjunctive)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a209ef48-c642-4257-83cf-f4445cdec1b4",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.root_le_sqCell",
+            "short": "root_le_sqCell"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.root_le_sqCell",
+            "short": "root_le_sqCell",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -89224,6 +91252,41 @@
             ]
           },
           "reason": "Die v2 carry: nucleus bridge at a meet-semilattice (landing-inclusion iff, the bare-Ordinal member toNucleus ordinalTowerMotion = snapNucleus with its three hypotheses), and the Arrives converse under a step at every point other than y",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a48a0079-1709-4968-9458-2053242a37be",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.prodFstHom",
+            "short": "prodFstHom"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.prodFstHom",
+            "short": "prodFstHom",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -91566,6 +93629,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "a9ad60c5-2fc2-4c5a-a608-a1fc35dc2640",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.sqWord_le_iff",
+            "short": "sqWord_le_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.sqWord_le_iff",
+            "short": "sqWord_le_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "a9b1b59f-d831-4565-a86a-7f39f2c4c5fb",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -93782,6 +95880,41 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "acd9ae49-b219-4597-bba9-a42b1552a451",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.mem_upPair",
+            "short": "mem_upPair"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.mem_upPair",
+            "short": "mem_upPair",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -101974,6 +104107,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "bad45ae0-5e95-4bb7-ba3a-13237cd49625",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.endBitFlip",
+            "short": "endBitFlip"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.endBitFlip",
+            "short": "endBitFlip",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "bad4bf83-e7c8-466f-924b-309a11063f19",
           "new": {
             "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
@@ -103448,6 +105620,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "bd68a0da-c840-400a-86ed-9d645d7c7ff2",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.prodSndLax",
+            "short": "prodSndLax"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.prodSndLax",
+            "short": "prodSndLax",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "bd952922-8d45-4e58-b4d9-2714fefdc9c9",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -103474,6 +105681,41 @@
             ]
           },
           "reason": "Die v2 final batch: drawing vs set (self-steps, accessibility, forced rank), ends of a view, orders on motions, placements as views, relaxed least-fixed-point schema, UP legs as nuclei",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "bdb85eae-5710-40ea-8625-b2419fdbf633",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.StrictIso.toCoalgIso",
+            "short": "toCoalgIso"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.StrictIso.toCoalgIso",
+            "short": "toCoalgIso",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-double-1111: Motion.StrictIso is equivalent to an iso in Mathlib's Endofunctor.Coalgebra (StrictIso.equivCoalgIso, choice-free, Die § XXVI); R-PRIORART adoption of the standard framing",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -104262,6 +106504,45 @@
             ]
           },
           "reason": "Hyperset/die round-1 fold-in: node-count poles of pruning, fixed-point characterisation, upLowers_reverse",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "beef608e-0119-4752-b674-39f944714a5a",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.nnDouble",
+            "short": "nnDouble"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.nnDouble",
+            "short": "nnDouble",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -105219,6 +107500,41 @@
             ]
           },
           "reason": "Die computability face (halting as arrival, clock machine), quotients of a motion (drawing vs set: hypersets, codes), carrier-changing steps (wrap, Option), PoleEnds with inhabitation",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c1305d9b-a9fa-41b8-b963-11299f167568",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.prod_fst_not_coalgHom",
+            "short": "prod_fst_not_coalgHom"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.prod_fst_not_coalgHom",
+            "short": "prod_fst_not_coalgHom",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -106210,6 +108526,45 @@
             ]
           },
           "reason": "New experimental files ZeroParadox/Information/BrudnoBridge.lean (trials and MLRandom bridged to Milovanov's kolmogorov-complexity-lean, citing his Brudno and Levin-Schnorr theorems) and ZeroParadox/Information/SnapEpsilonZero.lean (snap_of_firstStep_MLRandom instantiated on WithBot Ordinal and on EpsilonOrZero, with an order isomorphism between them).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c35938d4-f78f-45b6-8ce5-f72556c8eae3",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.comb_not_aDoubling",
+            "short": "comb_not_aDoubling"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.comb_not_aDoubling",
+            "short": "comb_not_aDoubling",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -109061,6 +111416,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "c8448981-e21d-4b4a-a19a-c7e225646d46",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.aprod",
+            "short": "aprod"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.aprod",
+            "short": "aprod",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "c8591537-b570-447a-966a-39852956a6b1",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -109427,6 +111817,41 @@
             ]
           },
           "reason": "new HEAD declarations (APG decoration existence, choice-free; fan control)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c922e792-8343-4601-9783-1d6c959e38a3",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.tree_of_aDoublingEmb",
+            "short": "tree_of_aDoublingEmb"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.tree_of_aDoublingEmb",
+            "short": "tree_of_aDoublingEmb",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -113950,6 +116375,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "d0401dd0-34cd-4b60-8ac6-6bb50727a136",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.partBool",
+            "short": "partBool"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.partBool",
+            "short": "partBool",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "d0443fa6-9d36-4944-8d96-774714ae688a",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -115229,6 +117689,41 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d2d13722-49c4-42c7-9cc7-4d45ad13fd4e",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.prodFstLax",
+            "short": "prodFstLax"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.prodFstLax",
+            "short": "prodFstLax",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -116788,6 +119283,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "d588c982-e05d-40d5-93f5-4f737eabaa28",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.prod_fst_upStrict",
+            "short": "prod_fst_upStrict"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.prod_fst_upStrict",
+            "short": "prod_fst_upStrict",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "d58eedf8-b7ba-4df2-a110-2be2c3fb8a13",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -117601,6 +120131,41 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d76aba67-3cab-422c-82fc-69110a24076f",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.upPair_some",
+            "short": "upPair_some"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.upPair_some",
+            "short": "upPair_some",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -119346,6 +121911,41 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "da1c6222-6b23-474a-96c0-86a839429e1f",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.Doubling",
+            "short": "Doubling"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.Doubling",
+            "short": "Doubling",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "da1cdb27-8be6-4567-b2fd-7e5db5074194",
           "new": {
@@ -120118,6 +122718,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "db318fc9-dfc8-4b1a-bafa-06467c7f1fe9",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.rtg_endTop",
+            "short": "rtg_endTop"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.rtg_endTop",
+            "short": "rtg_endTop",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "db54910b-9983-4c54-8a5c-068c9cb84168",
           "new": {
             "file": "ZeroParadox/Ordinal/PricedInterface.lean",
@@ -120404,6 +123043,41 @@
             ]
           },
           "reason": "New 2026-09-16. The hypothesis: a uniform Bool test correct about Part.Dom, stated at Unit so the hypothesis is weaker and em_of_poleDiscriminator is stronger. Axiom-free.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "dc2f792e-6b2f-43a3-8799-ec012c8f1f50",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.tree_of_square",
+            "short": "tree_of_square"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.tree_of_square",
+            "short": "tree_of_square",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -121110,6 +123784,41 @@
             ]
           },
           "reason": "UniversalChoiceFree § IX: a self-printing universal code at [propext, Quot.sound] (restated SelfPrints ∧ Universal via encodeCode/ofNatCodeCF), faithfulness bridges, statement controls, controls zero_selfPrints_not_universal / universal_not_selfPrints_cf / unshifted_incompatible",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "dd8f5aec-48ba-4134-b5ec-88638d3e43ce",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.StrictIso.stepBack_hom",
+            "short": "stepBack_hom"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.StrictIso.stepBack_hom",
+            "short": "stepBack_hom",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-double-1111: Motion.StrictIso is equivalent to an iso in Mathlib's Endofunctor.Coalgebra (StrictIso.equivCoalgIso, choice-free, Die § XXVI); R-PRIORART adoption of the standard framing",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -122138,6 +124847,41 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "dfa0184c-c4b5-4c9c-9f4a-af830b4967f3",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.unitMotion",
+            "short": "unitMotion"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.unitMotion",
+            "short": "unitMotion",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -124169,6 +126913,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "e33f8e96-74b1-4599-b94f-f1122b7c3e3e",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.nn_not_botCovered",
+            "short": "nn_not_botCovered"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.nn_not_botCovered",
+            "short": "nn_not_botCovered",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "e360c905-cff9-42bd-9433-01b2b32df23c",
           "new": {
             "file": "ZeroParadox/Settheory/APG.lean",
@@ -124350,6 +127133,41 @@
         {
           "claims": {
             "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e397eec9-34f1-4068-a3a4-8c71196ea212",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.pairHom",
+            "short": "pairHom"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.pairHom",
+            "short": "pairHom",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
             "witness_of": [
               "node-order"
             ]
@@ -124421,6 +127239,45 @@
           "reason": "IgnoranceSeam.lean: fills, semiconjugacy, prepends, affine stream motions, negation, complement (2026-10-07)",
           "verify": {
             "axioms": [],
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e3ac7b5e-67a2-4f40-a926-8d303bf60c78",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.endFlipMotion",
+            "short": "endFlipMotion"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.endFlipMotion",
+            "short": "endFlipMotion",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
+          "verify": {
+            "axioms": null,
             "sorry_free": true
           }
         },
@@ -126495,6 +129352,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "e6ac9d9b-2399-4c69-986d-1787ef453a00",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.sqCell_not_le_root",
+            "short": "sqCell_not_le_root"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.sqCell_not_le_root",
+            "short": "sqCell_not_le_root",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "e6b030a5-6fa6-46cb-979c-4f2cbf56ab1c",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -126629,6 +129521,45 @@
             ]
           },
           "reason": "Die computability face (halting as arrival, clock machine), quotients of a motion (drawing vs set: hypersets, codes), carrier-changing steps (wrap, Option), PoleEnds with inhabitation",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e712ff47-0a74-4995-8d38-5cc9047dc3c5",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.combLeMotion",
+            "short": "combLeMotion"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.combLeMotion",
+            "short": "combLeMotion",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -127475,6 +130406,45 @@
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": "[propext, Classical.choice, Quot.sound]",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e8758f64-ba7d-4fe6-9ba6-84a3899fcff2",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.comb_atomic_no_tree",
+            "short": "comb_atomic_no_tree"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.comb_atomic_no_tree",
+            "short": "comb_atomic_no_tree",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
+          "verify": {
+            "axioms": null,
             "sorry_free": true
           }
         },
@@ -132911,6 +135881,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "f20ba8ac-0821-4705-b86a-005028bb3f46",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.topEnd",
+            "short": "topEnd"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.topEnd",
+            "short": "topEnd",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "f24705f5-ee8f-4bf6-a8a3-2cf8aad06ad1",
           "new": {
             "file": "ZeroParadox/Valuation/PadicCharacter.lean",
@@ -132972,6 +135981,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f249c388-dfe2-4c80-aceb-a1baebeb1d75",
+          "new": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.interleaveEnd_update_odd",
+            "short": "interleaveEnd_update_odd"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.interleaveEnd_update_odd",
+            "short": "interleaveEnd_update_odd",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -135110,6 +138158,41 @@
             "role": []
           },
           "reason": "PoleChartSelection: NEGATIVE result - chart selection at the built pole is axiom-free, refuting the naive 'choice = chart selection' reading; § II is a labelled conditional model",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f660efce-ce61-4429-9369-72c85522f403",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.StrictIso.stepBack_inv",
+            "short": "stepBack_inv"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.StrictIso.stepBack_inv",
+            "short": "stepBack_inv",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-double-1111: Motion.StrictIso is equivalent to an iso in Mathlib's Endofunctor.Coalgebra (StrictIso.equivCoalgIso, choice-free, Die § XXVI); R-PRIORART adoption of the standard framing",
           "verify": {
             "axioms": null,
             "sorry_free": true
