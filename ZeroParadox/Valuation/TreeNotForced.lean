@@ -1,4 +1,4 @@
--- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the hypotheses at ⊥ alone do not force a binary tree above it; depth at every element with strong atomicity does, one way. Curated results indexed in ZeroParadox/MANIFEST.md.
+-- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the glb, first-step, atom and strong-atomicity hypotheses at ⊥ do not force a binary tree above it; depth at every element with strong atomicity does, one way. Curated results indexed in ZeroParadox/MANIFEST.md.
 import ZeroParadox.Valuation.CellsJoint
 import Mathlib.Order.WellQuasiOrder
 import Mathlib.Order.Atoms
@@ -7,7 +7,7 @@ import Mathlib.Data.Finset.Grade
 import Mathlib.Tactic
 
 /-!
-# The tree above ⊥: not forced by hypotheses at ⊥ alone, forced by depth at every element
+# The binary tree above ⊥ of a join-semilattice: not forced by ⊥ as glb of non-⊥ members, a first step, infinitely many atoms and strong atomicity; forced, one way, by depth at every element with strong atomicity
 
 ## Engineer's Take
 
@@ -19,9 +19,9 @@ defer to my AI assistant regarding the specifics of how the internals work.
 ---
 
 ## Formal Overview (AI-assisted)
-`Comb` has ⊥ as the glb of non-⊥ members, a first step, infinitely many atoms and `IsStronglyAtomic`, and no order embedding of `End` or of the binary tree `BTree` (`comb_no_End`, `comb_no_BTree`): the hypotheses at ⊥ alone do NOT force the tree.
-Depth at every element with `IsStronglyAtomic` does, one way (`btree_embeds_of_hereditary_depth`; ZP-A's order, `zp_btree_embeds_of_hereditary_depth`), through the weaker "every element has infinitely many covers" (`btree_embeds_of_covers_infinite`), which `Finset ℕ` meets without depth (`finset_covers_infinite`); `End` embeds the tree and fails depth at its top (`end_top_no_depth`), so sufficient, not necessary. An independent sequence is also sufficient (`btree_embeds_of_independent`).
-Each such hypothesis is explicit on the theorem that uses it, never a class field. Finitely branching dual: Mathlib's Kőnig lemma `exists_seq_covby_of_forall_covby_finite` (`Mathlib/Order/KonigLemma.lean`); topological analogue: `Perfect.exists_nat_bool_injection` (`Mathlib/Topology/MetricSpace/Perfect.lean`).
+`Comb` has ⊥ as the glb of non-⊥ members, a first step, infinitely many atoms and `IsStronglyAtomic`, and no order embedding of `End` or of the binary tree `BTree` (`comb_no_End`, `comb_no_BTree`): these hypotheses at ⊥ do NOT force the tree.
+Depth at every element with `IsStronglyAtomic` does, one way (`btree_embeds_of_hereditary_depth`; ZP-A's order, `zp_btree_embeds_of_hereditary_depth`), through the weaker "every element has infinitely many covers" (`btree_embeds_of_covers_infinite`), which `Finset ℕ` meets without depth (`finset_covers_infinite`); `End` embeds the tree and fails depth at its top (`end_top_no_depth`), so sufficient, not necessary. An independent sequence is also sufficient (`btree_embeds_of_independent`), one direction of Chakir–Pouzet, arXiv:0812.2300, Thm 1.4.
+Each such hypothesis is explicit on the theorem that uses it, never a class field. Complementary case: Mathlib's Kőnig lemma `exists_seq_covby_of_forall_covby_finite` (`Mathlib/Order/KonigLemma.lean`); topological analogue: `Perfect.exists_nat_bool_injection` (`Mathlib/Topology/MetricSpace/Perfect.lean`).
 -/
 
 set_option maxHeartbeats 400000
@@ -255,7 +255,8 @@ instance comb_stronglyAtomic : IsStronglyAtomic Comb where
       · exact h1.1
       · simp only [Comb.le] at h1 h2; omega
 
-/-- `Statement:` every non-⊥ point of `Comb` has a linearly ordered up-set. -/
+/-- `Statement:` every non-⊥ point of `Comb` has a linearly ordered up-set, so `Comb` minus ⊥ is the
+dual of an ordered forest (terminology of Laflamme–Pouzet–Sauer, arXiv:1508.01123v2 § 2). -/
 theorem comb_upchains : ∀ z : Comb, z ≠ ⊥ → ∀ u v, z ≤ u → z ≤ v → u ≤ v ∨ v ≤ u := by
   intro z hz u v hu hv
   rcases z with _ | j | m
@@ -411,7 +412,10 @@ theorem prefixCodes_subset_iff (l l' : List Bool) :
 theorem prefixCodes_nil : prefixCodes [] = ∅ := by decide
 
 /-- `Statement:` if `a : ℕ → L` is independent (`S.sup a ≤ T.sup a ↔ S ⊆ T` for finite `S`, `T`),
-`BTree` order-embeds in `L` with root at ⊥ of `L`; one way. -/
+`BTree` order-embeds in `L` with root at ⊥ of `L`; one way. This is the (i)⇒(iii) direction of
+Chakir–Pouzet, arXiv:0812.2300, Thm 1.4 (an independent set of size ω gives a copy of the finite subsets
+of ω; credited there to Chakir–Pouzet, Algebra Universalis 53(2) (2005) 211–225, and Lawson–Mislove–
+Priestley, Discrete Math. 63 (1987) 225–230), composed with the prefix-code embedding of `BTree`. -/
 theorem btree_embeds_of_independent {L : Type*} [SemilatticeSup L] [OrderBot L] (a : ℕ → L)
     (ha : ∀ S T : Finset ℕ, S.sup a ≤ T.sup a ↔ S ⊆ T) :
     ∃ f : BTree ↪o L, f (BTree.mk []) = ⊥ := by

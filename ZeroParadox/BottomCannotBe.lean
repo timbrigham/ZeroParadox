@@ -638,7 +638,8 @@ noncomputable example : Ordinal.{0} →o Ordinal.{0} :=
 -- (`comb_depth`) with a first step, infinitely many atoms and `IsStronglyAtomic`.
 -- Reading: infinitely many first steps and depth do not force forks above ⊥.
 #check @ZeroParadox.comb_no_End
--- Statement: an independent `a : ℕ → L` gives `BTree ↪o L` with root at ⊥ of `L`; one way.
+-- Statement: an independent `a : ℕ → L` gives `BTree ↪o L` with root at ⊥ of `L`; one way, one
+-- direction of Chakir–Pouzet, arXiv:0812.2300, Thm 1.4.
 -- Reading: self-similarity is a hypothesis, not a consequence of the hypotheses at ⊥.
 #check @ZeroParadox.btree_embeds_of_independent
 -- Statement: in ZP-A's order, depth at every element and `IsStronglyAtomic` give `BTree ↪o L` with
