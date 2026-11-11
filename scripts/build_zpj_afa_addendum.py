@@ -1,5 +1,5 @@
 """
-Zero Paradox — ZP-J AFA Addendum: Decoration Uniqueness from Valuation Structure
+Zero Paradox — ZP-J AFA Addendum: Decoration Uniqueness and Existence from Valuation Structure
 Version 1.25 | November 2026
 Reads after ZP-J Self-Reference.
 """
@@ -38,7 +38,7 @@ def build():
         sp(4),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-J AFA Addendum', S['title']),
-        Paragraph('Decoration Uniqueness from Valuation Structure', S['subtitle']),
+        Paragraph('Decoration Uniqueness and Existence from Valuation Structure', S['subtitle']),
         Paragraph(version_line(FIRST_RELEASED, VERSION), S['subtitle']),
         sp(10),
         hr(),
@@ -60,7 +60,7 @@ def build():
         'decoration_unique_finite in the same section). '
         'Neither proof imports set-theoretic AFA axioms. Each derives the uniqueness '
         'property from a chain of abstract typeclasses whose root is ValuationStructure, '
-        'established in ZP-J. The existence clause is proved too (&#167;IV.5): every quiver has '
+        'established in ZP-J. The analogue of AFA\'s existence clause is proved too (&#167;IV.5): every quiver has '
         'exactly one valid decoration into every DecorationUniverse (existsUnique_decoration), '
         'measuring [propext, Quot.sound].'))
     E.append(body(
@@ -328,7 +328,7 @@ def build():
     ))
     E.append(sp(6))
 
-    # ── Section IV: Decoration Uniqueness ──────────────────────────────────────
+    # ── Section IV: Decoration Uniqueness and Existence ──────────────────────────────────────
     print('[build_zpj_afa_addendum] Building Section IV...')
     E += [
         hr(),

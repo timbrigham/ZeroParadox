@@ -1,5 +1,8 @@
 -- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): Morton (Z-order) interleaving of `End` with its square, and the seed count of a push as an order-conjugacy invariant. Curated results indexed in ZeroParadox/MANIFEST.md.
 import ZeroParadox.Valuation.CellsJoint
+import ZeroParadox.Valuation.DepthIsWait
+import Mathlib.Data.Stream.Init
+import Mathlib.Topology.Instances.CantorSet
 import Mathlib.Order.Cover
 import Mathlib.Logic.Equiv.Nat
 import Mathlib.Data.Nat.Pairing
@@ -154,7 +157,8 @@ def curryOrderIso (D : Type*) [Preorder D] (ι κ : Type*) : (ι × κ → D) �
     · intro h p; exact h p.1 p.2
     · intro h i n; exact h (i, n)
 
-/-- Morton (Z-order) interleaving: even digits to the first factor, odd digits to the second. -/
+/-- Morton (Z-order) interleaving: even digits to the first factor, odd digits to the second; the
+    halves are Mathlib's `Stream'.even`, `Stream'.odd` (`Mathlib/Data/Stream/Defs.lean`). -/
 def interleaveEnd : End ≃o End × End :=
   (reindexOrderIso (Fin 2) Equiv.natSumNatEquivNat).trans (sumSplitOrderIso (Fin 2) ℕ ℕ)
 
@@ -164,6 +168,14 @@ theorem interleaveEnd_apply (x : End) :
   refine Prod.ext (funext fun m => ?_) (funext fun m => ?_)
   · exact congrArg x (congrFun Equiv.natSumNatEquivNat_apply (Sum.inl m))
   · exact congrArg x (congrFun Equiv.natSumNatEquivNat_apply (Sum.inr m))
+
+-- Statement: the first component of `interleaveEnd` is Mathlib's `Stream'.even`.
+example (x : End) : (interleaveEnd x).1 = Stream'.even x := by
+  rw [interleaveEnd_apply]; funext m; exact (Stream'.get_even m x).symm
+
+-- Statement: the second component of `interleaveEnd` is Mathlib's `Stream'.odd`.
+example (x : End) : (interleaveEnd x).2 = Stream'.odd x := by
+  rw [interleaveEnd_apply]; funext m; exact (Stream'.get_odd m x).symm
 
 /-- `Statement:` `interleaveEnd botEnd = (botEnd, botEnd)`. -/
 theorem interleaveEnd_bot : interleaveEnd botEnd = (botEnd, botEnd) := by
@@ -223,7 +235,8 @@ def finMulNatEquiv (m : ℕ) (hm : 0 < m) : Fin m × ℕ ≃ ℕ where
 def dirsOrderIso (m : ℕ) (hm : 0 < m) : End ≃o (Fin m → End) :=
   (reindexOrderIso (Fin 2) (finMulNatEquiv m hm)).trans (curryOrderIso (Fin 2) (Fin m) ℕ)
 
-/-- ℕ-many directions, through Mathlib's Cantor pairing `Nat.pairEquiv`. -/
+/-- ℕ-many directions via `Nat.pairEquiv`: through `tapeIso`, Mathlib's `cantorSpaceHomeomorphNatToCantorSpace`
+    (`Mathlib/Topology/Instances/CantorSet.lean`) plus the order, which that map does not carry. -/
 def natDirsOrderIso : End ≃o (ℕ → End) :=
   (reindexOrderIso (Fin 2) Nat.pairEquiv).trans (curryOrderIso (Fin 2) ℕ ℕ)
 
@@ -233,6 +246,14 @@ theorem dirsOrderIso_apply (m : ℕ) (hm : 0 < m) (x : End) (i : Fin m) (j : ℕ
 
 /-- `Statement:` `natDirsOrderIso x i j = x (Nat.pair i j)`. -/
 theorem natDirsOrderIso_apply (x : End) (i j : ℕ) : natDirsOrderIso x i j = x (Nat.pair i j) := rfl
+
+-- Statement: through `tapeIso`, `natDirsOrderIso` is Mathlib's `cantorSpaceHomeomorphNatToCantorSpace`.
+example (x : End) (i j : ℕ) :
+    cantorSpaceHomeomorphNatToCantorSpace (tapeIso x) i j = tapeIso (natDirsOrderIso x i) j := by
+  have h : ((i, j) : ℕ × ℕ) = Nat.pairEquiv.symm (Nat.pair i j) := (Nat.unpair_pair i j).symm
+  show (Homeomorph.piCongrLeft (Y := fun _ => Bool) Nat.pairEquiv.symm) (tapeIso x) (i, j) = _
+  rw [h, Homeomorph.piCongrLeft_apply_apply]
+  rfl
 
 /-! ### § III. Digit width IS an order invariant. -/
 

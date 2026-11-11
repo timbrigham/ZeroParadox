@@ -67,8 +67,7 @@ these are the numbers it reported, not the numbers that were hoped for).
   and `agree_all_iff` reports `[Quot.sound]` (the `funext`).
 * **Two declarations on the constructive side carry `Classical.choice` — `v2_scale` and the exhibit
   `enat_add_choice` — both through their proofs; each has a choice-free counterpart.** `v2_scale`'s
-  is `v2_scale_nat`, `v2 (2 * n) = ((v2nat n n + 1 : ℕ) : ℕ∞)` for `n ≠ 0`: the same equation with
-  `v2 n` unfolded to `v2nat n n` and the successor taken on ℕ before the cast, printed in § IV; `enat_add_choice`'s is an induction-and-`rfl` proof of the same
+  is `v2_scale_nat` (statement: `ZeroParadox/Valuation/PricedPadicInterface.lean` § I; footprint printed in § IV); `enat_add_choice`'s is an induction-and-`rfl` proof of the same
   proposition, stated in its docstring and not printed. The ZP-J
   `val_scale` axiom in its literal form `v2_scale : v2 (2n) = v2 n + 1` reports `[propext, Classical.choice, Quot.sound]` —
   **and on this carrier (ℕ) it is neither the carrier's nor the statement's.** `v2`, the numeral

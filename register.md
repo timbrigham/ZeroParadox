@@ -14,8 +14,8 @@ Update this file first on any version bump. README.md Framework table is verifie
 | ZP-H Categorical Bridge | v1.35 | ZP-H_Categorical_Bridge.pdf | v1.26 | N/— | formal:95dad22c comp:7d801305 |
 | ZP-H Native Categories Addendum | v1.14 | ZP-H_Native_Categories_Addendum.pdf | N/A | N/— | formal:b961348b |
 | ZP-I Inside Zero | v1.44 | ZP-I_Inside_Zero.pdf | v1.49 | N/— | formal:e7223686 comp:c5105dc3 |
-| ZP-J Self-Reference | v2.22 | ZP-J_Self_Reference.pdf | v1.45 | N/— | formal:b7958e55 comp:0bd2a6ad |
-| ZP-J AFA Addendum | v1.25 | ZP-J_AFA_Addendum.pdf | N/A | N/— | formal:d49b5247 |
+| ZP-J Self-Reference | v2.22 | ZP-J_Self_Reference.pdf | v1.45 | N/— | formal:60a9d274 comp:63d4155e |
+| ZP-J AFA Addendum | v1.25 | ZP-J_AFA_Addendum.pdf | N/A | N/— | formal:9d0dd049 |
 | ZP-J Wheel Addendum | v1.11 | ZP-J_Wheel_Addendum.pdf | v1.15 | N/— | formal:849e279d comp:7812acd4 |
 | ZP-J Keystone Addendum | v1.31 | ZP-J_Keystone_Addendum.pdf | N/A | N/— | formal:f97b62dd |
 | ZP-K Computational Grounding | v1.38 | ZP-K_Computational_Grounding.pdf | v1.34 | N/— | formal:45418ad4 comp:8180bfc8 |

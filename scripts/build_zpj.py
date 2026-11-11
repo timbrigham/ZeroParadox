@@ -45,8 +45,8 @@ def build():
         'bear on Aczel\'s question about Dependent Choice (Section VII); '
         'it generalises the AFAStructure typeclass into an abstraction chain reaching down to '
         'a pure valuation structure (Section VIII); it instantiates that chain on two concrete '
-        'types (Section IX); and it proves global decoration uniqueness, into abstract '
-        'DecorationUniverses, for every quiver, finite or not, and by a finite, graph-side '
+        'types (Section IX); and it proves global decoration uniqueness and existence, into abstract '
+        'DecorationUniverses, for every quiver, finite or not, with uniqueness also by a finite, graph-side '
         'proof for finite accessible pointed graphs (Section X). All results are sorry-free in Lean 4.',
         style='bodyI'))
     E.append(hr())
@@ -837,7 +837,7 @@ def build():
     print('[build_zpj] Building Section X...')
     E += [
         hr(),
-        Paragraph('Section X: APG Decoration Uniqueness', S['h1']),
+        Paragraph('Section X: APG Decoration Uniqueness and Existence', S['h1']),
         hr(),
     ]
 
@@ -952,7 +952,7 @@ def build():
         'are related one way: a cyclic vertex&#8217;s value has valuation &#8868; '
         '(cyclic_decoration_eq_bot with val_bot); no converse is claimed.'))
     E.append(result_box(
-        'Acyclic Induction and Global Uniqueness (ZeroParadox/Settheory/APG.lean &#167;&#167; VIII&#8211;IX)',
+        'Acyclic Induction, Global Uniqueness and Existence (ZeroParadox/Settheory/APG.lean &#167;&#167; VIII&#8211;X)',
         [
             'acyclic_induction_step: if two valid decorations d&#8321;, d&#8322; agree on all '
             'children of a vertex v, they agree on v. '
@@ -983,8 +983,8 @@ def build():
         'decoration_unique is the finite, graph-side proof, for finite APGs; it consumes '
         'collect_val_ge (never collect_singleton), val_unique through val_finite_of_ne_bot, and '
         '[Fintype V] for the acyclic descent, and its statement is a special case of '
-        'decoration_unique_of_val. Each '
-        'gives a sufficient condition for decoration uniqueness, not a characterisation. None of these '
+        'decoration_unique_of_val. decoration_unique_of_val and decoration_unique each '
+        'give a sufficient condition for decoration uniqueness, not a characterisation. None of these '
         'constructs a specific AFA model or derives AFA\'s axioms from ZP\'s: a decoration into an '
         'abstract DecorationUniverse is not a model of AFA.',
         bg=AMBER_LITE, border=AMBER
@@ -1059,6 +1059,10 @@ def build():
          'decoration_unique_of_val',
          '[Finite V] &#8212; in the statement only; the proof does not use it',
          'Lean: decoration_unique_finite &#8212; [propext, Quot.sound]; no Classical.choice &#10003;'],
+        ['exists_decoration, existsUnique_decoration (any quiver)',
+         'accDec (Acc.rec) + collect_val_ge + val_unique + decoration_unique_of_val',
+         'None &#8212; no finiteness, no APG',
+         'Lean: exists_decoration, existsUnique_decoration &#8212; [propext, Quot.sound]; no Classical.choice &#10003;'],
         ['AFAStructure.bot_self_mem',
          'The Quine-atom role (CC-2), played in ZF+AFA by the set Q = {Q}',
          'Typeclass field &#8212; a hypothesis; every ZPSemilattice meets it trivially',
@@ -1097,7 +1101,8 @@ def build():
          'PARTIAL &#8212; APG case proved',
          'DA-1 Path 1 (ZP-E) invokes the Quine atom (CC-2) informally. ZP-J T-EXEC formalises '
          'the role&#8217;s occupant in the lattice chart; no equation with the set Q = {Q} is stated. decoration_unique_of_val (&#167; X) proves uniqueness for every quiver '
-         'over abstract DecorationUniverses, and decoration_unique for finite APGs. The full ZF+AFA set-theoretic bridge '
+         'over abstract DecorationUniverses, existsUnique_decoration (&#167; X) existence and uniqueness for every quiver, '
+         'and decoration_unique uniqueness for finite APGs. The full ZF+AFA set-theoretic bridge '
          '&#8212; showing the ZP types literally satisfy the ZF+AFA axioms &#8212; '
          'remains outside Lean scope.'],
         ['ZP-A CC-1 cross-check',
@@ -1129,6 +1134,7 @@ def build():
             'Instances: &#8469;&#8734;, OntologicalStates | '
             'decoration_unique_of_val: any two valid decorations of any quiver, finite or not, into a DecorationUniverse agree | '
             'decoration_unique: the same for a finite APG, by a graph-side proof | '
+            'existsUnique_decoration: every quiver has exactly one valid decoration into a DecorationUniverse | '
             'All results sorry-free in Lean 4</i>',
             S['endnote']),
     ]
