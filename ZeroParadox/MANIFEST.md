@@ -334,6 +334,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Information/BrudnoBridge.lean` - Brudno bridge: `trials` and `MLRandom` against `kolmogorov-complexity-lean`
 - `ZeroParadox/Information/MaxEntropy.lean` - Maximum entropy: the fair coin, missing information, and incompressible tapes
 - `ZeroParadox/Information/SnapEpsilonZero.lean` - The snap and ε₀ on two carriers: on `WithBot Ordinal` the first step lands at ↑0 and `up` carries it to ↑ε₀ (the corner); on `EpsilonOrZero` the first step is ε₀ (the cover)
+- `ZeroParadox/Information/TapeHalting.lean` - A tape's first hitting time, run as a computation: `toComp (det w)` halts exactly at the first `true`, the slot run's crossing step, almost surely when `0 < p`
 - `ZeroParadox/Information/TwoRequirements.lean` - Two requirements: a first step at ⊥ of `L`, and a typical tape
 
 ### State / Hilbert (ZP-D)
