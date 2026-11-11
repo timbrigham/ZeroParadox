@@ -53,6 +53,9 @@ import ZeroParadox.Valuation.Scale
 import ZeroParadox.Information.Disjunctive
 import ZeroParadox.Settheory.GraphBisim
 import ZeroParadox.Settheory.HypersetOrder
+import ZeroParadox.Settheory.APG
+import ZeroParadox.Valuation.OneWayFlow
+import ZeroParadox.Information.TapeHalting
 import Mathlib.RingTheory.Valuation.PrimeMultiplicity
 import Mathlib.Order.FixedPoints
 import Mathlib.SetTheory.Ordinal.FixedPoint
@@ -535,6 +538,14 @@ example (k : ℕ) : ∀ n, Nat.Partrec.Code.eval (Nat.Partrec.Code.const k) n =
 -- `ZeroParadox/` for `MemGraph.` and `omegaLoop` (four files, no declaration in them taking both a
 -- `MemGraph` and a `QuineAtomHost`) and of `QuineHost.lean` for `MemGraph`, `omegaLoop`, `omegaPair`
 -- (no hit).
+-- Statement: every quiver has exactly one decoration into every `DecorationUniverse U`.
+-- Reading: existence and uniqueness for an abstract `U`, not an AFA model (`APG.lean` header).
+#check @ZeroParadox.existsUnique_decoration
+-- Statement: ONE WAY: a vertex not accessible for `ChildRel` is decorated ⊥ of `U`.
+#check @ZeroParadox.decoration_eq_bot_of_not_acc
+-- Statement: CONTROL: the fan's root is accessible and still decorated ⊥ of `U` by every decoration.
+-- Reading: decorated ⊥ of `U` does not mean non-well-founded; the converse above fails.
+#check @ZeroParadox.fan_root_acc_and_eq_bot
 
 /-! ### GENERATION — the floor generates its first step -/
 
@@ -601,6 +612,53 @@ noncomputable example : Ordinal.{0} →o Ordinal.{0} :=
 #check @ZeroParadox.fullMix_not_injective
 -- Statement: an eigenmode with `|λ| < 1` has `‖(T f)^[m] v‖ → 0`.
 #check @ZeroParadox.tendsto_norm_iterate_zero
+
+/-! ### ⊥ of `End` — one tape read as depth and as width, and the one-way flow -/
+
+-- Statement: the covers of ⊥ of `End` in ZP-A's order are exactly the unit vectors `unitEnd k`.
+#check @ZeroParadox.covers_bot_iff
+-- Statement: every neighbourhood `U ∈ 𝓝 botEnd` holds infinitely many covers of ⊥ of `End`.
+-- Reading: infinitely many first steps at every scale, not one first step.
+#check @ZeroParadox.nhds_botEnd_covers_infinite
+-- Statement: fixed points of `boundaryDouble` are `{botEnd}`; its ranges nest, meet in `{botEnd}`.
+-- Statement: and the covers are its orbit from `unitEnd 0`, the `k`-th in range `k`, not `k + 1`.
+-- Reading: CONCURRENT, not alternatives: one map gives the nested depth and the width at once.
+#check @ZeroParadox.cells_concurrent
+-- Statement: ⊥ the glb of non-⊥ members (`hglb`) and `BotHasFirstStep L` give a non-linear order.
+-- Reading: depth and a first step together force branching; each alone has a linear control.
+#check @ZeroParadox.branching_forced
+-- Statement: `d (boundaryDouble x) = d x + 1` and `d = 0` where `x 0 ≠ 0` force `d = endVal`.
+#check @ZeroParadox.depth_forced_everywhere
+-- Statement: `endVal x = waitENat (det (tapeIso x))`, the first `true` on the digit tape, in `ℕ∞`.
+-- Reading: depth and width are one tape read two ways, not two separate facts.
+#check @ZeroParadox.endVal_eq_wait
+-- Statement: ⊥ of `End` goes to ⊥ of `ℕ → Bool`, waiting time ⊤ of `NInf`, depth ⊤ of `ℕ∞`.
+-- Statement: ⊤ of `End` goes to ⊤ of `ℕ → Bool`, waiting time ⊥ of `NInf`, depth `0`.
+#check @ZeroParadox.depth_wait_poles
+-- Statement: the digit-tape run of `x` never halts iff `x = botEnd` iff `endVal x = ⊤`.
+-- Reading: COINCIDENCE: never halting and infinite depth are one point, ⊥ of `End`.
+#check @ZeroParadox.endVal_not_terminates_iff
+-- Statement: every `boundaryDouble`-orbit tends to `botEnd`; only `botEnd` has an infinite backward one.
+-- Reading: forward-attracting AND backward-repelling, one map.
+#check @ZeroParadox.one_way_flow
+-- Statement: for `x ≠ botEnd`, no iterate `boundaryDouble^[n] x` is `botEnd`.
+-- Reading: with `one_way_flow`, ⊥ of `End` is reached in the limit, never at a finite step.
+#check @ZeroParadox.iterate_boundaryDouble_ne_bot
+-- Statement: for `x ≠ botEnd`, the `endVal x`-th undo-step `(shiftEnd 1)^[m] x` has no preimage.
+#check @ZeroParadox.backward_orbit_exits
+-- Statement: every fixed point of `localPush v` is `localBotEnd v`.
+#check @ZeroParadox.localPush_unique_fp
+-- Statement: there are infinitely many distinct local floors `localBotEnd v`.
+-- Reading: ⊥ of `End` is one local floor among infinitely many, not the only one.
+#check @ZeroParadox.localFloors_infinite
+-- Statement: every tower member is a local floor: `localMember v n = localBotEnd (v ++ 0ⁿ ++ [1])`.
+#check @ZeroParadox.localMember_is_floor
+-- Statement: no order isomorphism `End ≃o (ℕ → Fin 3)`.
+-- Reading: digit width is an order invariant, not a choice of presentation.
+#check @ZeroParadox.no_orderIso_end_fin3
+-- Statement: the `InfinitudeFloorInversion End`: floor `botEnd`, members `unitEnd k`, `cx := endVal`.
+-- Reading: CARRIER for `pole_inversion` (§ INVERSION) at ⊥ of `End`.
+#check @ZeroParadox.cellsFloorInversion
 
 /-! ### The infinitude in two charts: content and self -/
 
