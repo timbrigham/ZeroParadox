@@ -11,6 +11,7 @@ import ZeroParadox.Reals.ConnectedNoFirstStep
 import ZeroParadox.Information.TwoRequirements
 import ZeroParadox.Information.MaxEntropy
 import ZeroParadox.Information.SnapEpsilonZero
+import ZeroParadox.Information.TapeHalting
 
 /-!
 # Machine-checked characterization index of the snap ⊥ → ε₀ — what the snap IS and IS NOT
@@ -58,6 +59,7 @@ example {L : Type*} [ZeroParadox.ZPSemilattice L] (φ : Bool → L) (w : ℕ →
   exact h.2 1 (show φ (ZeroParadox.firedRun w hw 1) = φ (ZeroParadox.firedRun w hw 2) by rw [a, b])
 -- Reading: CARRIER — the two charts correspond: a firing is read as an instantiation. That correspondence is
 --   not proved; a firing is not shown to be an execution event.
+#check @ZeroParadox.toComp_det_results_iff_slotRun   -- Statement: `toComp (det w)` halts at exactly step `n` iff `slotRun w` is `false` at `n` and `true` at `n + 1`; both directions. Reading: the computation chart, a firing step as a halting step (`ZeroParadox/Information/TapeHalting.lean`)
 -- Reading: CARRIER. "⊥ → ε₀" in the lines that use c₁ (`t_snap_derived`, `t_snap_machine`) is the
 --   discrete-state chart, where ε₀ names the first state above ⊥ (c₁ in `MachinePhase`), and "atom above
 --   ⊥" is a claim in that chart only. `t_snap_join`, `t_snap_irreversible` and

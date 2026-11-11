@@ -4923,6 +4923,9 @@ example : (∀ n, ZeroParadox.slotRun (fun _ => false) n = false) ∧
 -- Reading: Tim's "bend" (2026-11-03): one tape, a firing record in `ℕ → Bool` (pointwise order) and a
 -- waiting time `NInf.det` in `NInf`. "Time" is his reading, not a claim. Definitions and proofs:
 -- `ZeroParadox/Die.lean` § XXV.
+-- Statement: the waiting time is the 2-adic depth on `End` (`endVal_eq_wait`, below) and the step at
+-- which `toComp (det w)` halts (`toComp_det_results_iff`, `ZeroParadox/Information/TapeHalting.lean`;
+-- `toComp_det_results_iff_slotRun`, § XXVIII).
 #check @ZeroParadox.NInf.det_antitone          -- Statement: `det` is antitone: `r ≤ r'` gives `det r' ≤ det r`
 #check @ZeroParadox.NInf.det_poles             -- Statement: `det ⊥ = ⊤` and `det ⊤ = ⊥`, ⊥ and ⊤ of `ℕ → Bool` to ⊤ and ⊥ of `NInf`
 -- Statement: CARRIER. The all-`false` tape is ⊥ of `ℕ → Bool`; its waiting time is ⊤ of `NInf`, `∞`
@@ -4933,7 +4936,8 @@ example : (∀ n, ZeroParadox.slotRun (fun _ => false) n = false) ∧
 -- Statement: `(det r).1 n = !(partialSups r n)` at every `n`, pointwise against Mathlib's `partialSups`
 -- (the `example` after `det_gi`, `ZeroParadox/Die.lean` § XXV). Axioms: `det_gi` `[propext, Quot.sound]`,
 -- Mathlib's `partialSups.gi` `[propext, Classical.choice, Quot.sound]`.
--- Statement: `det r = ofNat (Nat.find hw)` when `r` fires (the `example` in `ZeroParadox/Die.lean` § XXV)
+-- Statement: `det r = ofNat n` iff `n` is the first `k` with `r k = true` (`det_eq_ofNat_iff`, below; the
+-- `example` in `ZeroParadox/Die.lean` § XXV is its instance at `Nat.find hw`)
 -- and `det r = infty` iff it never does (`NInf.det_eq_infty_iff`): `det r` is the first hitting time
 -- of `true` in `r`, as `Nat.find` is in `firedRun` (`ZeroParadox/Information/CrossingTrials.lean`).
 #check @ZeroParadox.NInf.detHom                -- Statement: `det` as a `BoundedOrderHom` from `ℕ → Bool` into `NInfᵒᵈ`
