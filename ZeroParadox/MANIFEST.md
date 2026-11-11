@@ -288,6 +288,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Valuation/CompletenessCriticProbe.lean` - Completeness-critic probe: what property of the generic object do the four axes NOT capture?
 - `ZeroParadox/Valuation/ComplexityLadder.lean` - The complexity ladder: the arity is the variable-count, and it climbs without bound
 - `ZeroParadox/Valuation/ContractionRate.lean` - The contraction-rate dichotomy at the p-adic floor #3
+- `ZeroParadox/Valuation/DepthIsWait.lean` - Depth on `End` is the waiting time of its digit tape
 - `ZeroParadox/Valuation/ForkPoleProbe.lean` - Experimental probe: is the μ/ν fork independent of the pole?
 - `ZeroParadox/Valuation/IndependenceProbe.lean` - Experimental probe: are the chain axis and the branching axis independent?
 - `ZeroParadox/Valuation/InfinitudeFloor.lean` - The floor's infinite complexity AS an infinitude of zeros (research spike)

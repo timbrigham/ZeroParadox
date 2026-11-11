@@ -672,8 +672,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 3535,
-        "files": 212
+        "declarations": 3553,
+        "files": 213
       },
       "entries": [
         {
@@ -14537,6 +14537,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "1a0d9792-91b6-43ec-bf9f-2d3f602fb709",
+          "new": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.endVal_antitone",
+            "short": "endVal_antitone"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.endVal_antitone",
+            "short": "endVal_antitone",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DepthIsWait: endVal on End is the first hitting time det of its digit tape, read in ENat (2026-11-10).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "1a229763-0c56-45bf-bdd0-e552dc4d5169",
           "new": {
@@ -15277,6 +15316,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "1bafe6e8-8b7f-49ef-b039-3bfd575e833a",
+          "new": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.det_tapeCons_false",
+            "short": "det_tapeCons_false"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.det_tapeCons_false",
+            "short": "det_tapeCons_false",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DepthIsWait: endVal on End is the first hitting time det of its digit tape, read in ENat (2026-11-10).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "1bb2aabe-ebe7-4e26-a79e-a182e8747c45",
           "new": {
             "file": "ZeroParadox/Settheory/Coalgebra.lean",
@@ -15754,6 +15832,45 @@
             ]
           },
           "reason": "Land 2026-11-10 cells-joint, local-towers, interleave probes and the new one-way-flow results into ZeroParadox/Valuation (CellsJoint, Interleave, LocalTowers, OneWayFlow).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "1ccb36e4-7796-4de2-a8cd-0df6abba406c",
+          "new": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.tapeIso",
+            "short": "tapeIso"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.tapeIso",
+            "short": "tapeIso",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DepthIsWait: endVal on End is the first hitting time det of its digit tape, read in ENat (2026-11-10).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -16602,6 +16719,45 @@
             "role": []
           },
           "reason": "die-tagged-1029: the adjoined point tagged (Option ℕ) or a limit (Escardó's ℕ∞, NInf): uniform Bool-step trichotomy and selector free on NInf, LPO on Option ℕ; WLPO at ∞; the chain Option ℕ → NInf → Part ℕ and NInf ≃ Computation Unit (Die § XXIII); Tim ruling 2026-10-29",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "1eb3b464-c64b-484e-9a21-23788451e592",
+          "new": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.waitENat",
+            "short": "waitENat"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.waitENat",
+            "short": "waitENat",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DepthIsWait: endVal on End is the first hitting time det of its digit tape, read in ENat (2026-11-10).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -18752,6 +18908,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "23119e72-506c-4147-944c-113152958f92",
+          "new": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.tapeIso_boundaryDouble",
+            "short": "tapeIso_boundaryDouble"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.tapeIso_boundaryDouble",
+            "short": "tapeIso_boundaryDouble",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DepthIsWait: endVal on End is the first hitting time det of its digit tape, read in ENat (2026-11-10).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "23192d37-2109-4c20-9bcc-ad704e3332ff",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -19039,6 +19234,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "23f053f1-6749-43d0-a99a-7194ecb4b5ec",
+          "new": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.depth_wait_poles",
+            "short": "depth_wait_poles"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.depth_wait_poles",
+            "short": "depth_wait_poles",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DepthIsWait: endVal on End is the first hitting time det of its digit tape, read in ENat (2026-11-10).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -25674,6 +25908,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "308ff6a9-ce80-4e36-94b3-494efe377c11",
+          "new": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.waitENat_ofNat",
+            "short": "waitENat_ofNat"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.waitENat_ofNat",
+            "short": "waitENat_ofNat",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DepthIsWait: endVal on End is the first hitting time det of its digit tape, read in ENat (2026-11-10).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "30a39b8c-933c-44dd-a020-64b70d5f69d5",
           "new": {
@@ -29073,6 +29346,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "3839b3ec-6db7-43a3-a40c-83a3f307de6b",
+          "new": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natCast_le_endVal_iff",
+            "short": "natCast_le_endVal_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natCast_le_endVal_iff",
+            "short": "natCast_le_endVal_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DepthIsWait: endVal on End is the first hitting time det of its digit tape, read in ENat (2026-11-10).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -42398,6 +42710,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "52280ecd-85f7-4ee6-817e-f49382d3134b",
+          "new": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.endVal_gi",
+            "short": "endVal_gi"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.endVal_gi",
+            "short": "endVal_gi",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DepthIsWait: endVal on End is the first hitting time det of its digit tape, read in ENat (2026-11-10).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "52295db2-7b22-49a4-a023-6e4755121db1",
           "new": {
             "file": "ZeroParadox/Computability/Occurrence.lean",
@@ -44934,6 +45285,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "57e9ef22-4421-40cb-bebd-a1cf1ed671e4",
+          "new": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.depth_wait_unitEnd",
+            "short": "depth_wait_unitEnd"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.depth_wait_unitEnd",
+            "short": "depth_wait_unitEnd",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DepthIsWait: endVal on End is the first hitting time det of its digit tape, read in ENat (2026-11-10).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -57202,6 +57592,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "707e3720-cc04-4428-8b5e-fb9d0c83bfce",
+          "new": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.endVal_no_lower_adjoint",
+            "short": "endVal_no_lower_adjoint"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.endVal_no_lower_adjoint",
+            "short": "endVal_no_lower_adjoint",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DepthIsWait: endVal on End is the first hitting time det of its digit tape, read in ENat (2026-11-10).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "7082fcf0-d7a0-4670-af7d-e4076fa42424",
           "new": {
             "file": "ZeroParadox/Multihomed/BoundaryOrder.lean",
@@ -66144,6 +66573,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "827585c4-8a73-4b73-b5cb-2598c4e9207b",
+          "new": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.endVal_not_injective",
+            "short": "endVal_not_injective"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.endVal_not_injective",
+            "short": "endVal_not_injective",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DepthIsWait: endVal on End is the first hitting time det of its digit tape, read in ENat (2026-11-10).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "828e71a0-9952-4a48-932e-1ea5e5c7cd78",
           "new": {
             "file": "ZeroParadox/Computability/Occurrence.lean",
@@ -71500,6 +71968,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "8f46b277-525e-42c3-b183-e2044aba8b5d",
+          "new": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.digitBool",
+            "short": "digitBool"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.digitBool",
+            "short": "digitBool",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DepthIsWait: endVal on End is the first hitting time det of its digit tape, read in ENat (2026-11-10).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "8f4dc0fc-8c30-41b6-b0cb-a440448b1cfd",
           "new": {
@@ -74643,6 +75150,45 @@
             "role": []
           },
           "reason": "PoleChartSelection: NEGATIVE result - chart selection at the built pole is axiom-free, refuting the naive 'choice = chart selection' reading; § II is a labelled conditional model",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "9539b078-60ab-4edc-b7f4-00c3b52d6c86",
+          "new": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.waitENat_succ",
+            "short": "waitENat_succ"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.waitENat_succ",
+            "short": "waitENat_succ",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DepthIsWait: endVal on End is the first hitting time det of its digit tape, read in ENat (2026-11-10).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -87657,6 +88203,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "ae605a04-176a-4c58-a851-433e320839bb",
+          "new": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natCast_le_waitENat_iff",
+            "short": "natCast_le_waitENat_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natCast_le_waitENat_iff",
+            "short": "natCast_le_waitENat_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DepthIsWait: endVal on End is the first hitting time det of its digit tape, read in ENat (2026-11-10).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "ae61f33f-57d3-4a8d-8fc5-14e66e9d0736",
           "new": {
             "file": "ZeroParadox/Information/TwoRequirements.lean",
@@ -89581,6 +90166,45 @@
             ]
           },
           "reason": "Lean 4.35 upgrade: new choice-free declarations (rulings 165, 168, 190)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b1c624ac-8809-4c64-b784-c4a28be68280",
+          "new": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.endVal_eq_wait",
+            "short": "endVal_eq_wait"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.endVal_eq_wait",
+            "short": "endVal_eq_wait",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DepthIsWait: endVal on End is the first hitting time det of its digit tape, read in ENat (2026-11-10).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -119486,6 +120110,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "ea00c556-1033-4b8c-8127-0cb7acc21b9c",
+          "new": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.endVal_gc",
+            "short": "endVal_gc"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.endVal_gc",
+            "short": "endVal_gc",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DepthIsWait: endVal on End is the first hitting time det of its digit tape, read in ENat (2026-11-10).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "ea0b1438-92a6-407b-aaad-39488c1cf95c",
           "new": {
             "file": "ZeroParadox/Settheory/APG.lean",
@@ -127359,6 +128022,45 @@
             "role": []
           },
           "reason": "die-pinnedlimit-1103: Tim's die role PinnedLimit (Die.lean § XXIV: role, NInf order + occupant, link, WLPO separation, WithTop control) and the ε₀ occupant (Epsilon0MinMax § III); Tim ruled 2026-11-03",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f9f46294-1e52-4b77-abdf-6a18924e332b",
+          "new": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.tapeIso_apply",
+            "short": "tapeIso_apply"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.tapeIso_apply",
+            "short": "tapeIso_apply",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land DepthIsWait: endVal on End is the first hitting time det of its digit tape, read in ENat (2026-11-10).",
           "verify": {
             "axioms": null,
             "sorry_free": true
