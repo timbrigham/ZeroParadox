@@ -33,6 +33,14 @@ the topic list for `$ARGUMENTS`):
 - READ-ONLY. Do not create, modify or delete any file anywhere. No scratch files in the repository.
 - Search `ZeroParadox/**/*.lean`, never `**/*.lean`: `.lake/` holds the whole of Mathlib.
 - Windows: use the Grep and Glob tools; never `find`. Direct `git` and `gh` are blocked and not needed.
+- `.claude-local/` is gitignored and Grep honours `.gitignore`. A Grep from the repository root, or
+  one given `.claude-local/**` as its `glob`, returns NOTHING from the private notes (measured
+  2026-11-11: 0 hits that way, 381 with `path` set to `.claude-local`). Pass each place in the list
+  below as Grep's `path`, never as its `glob`.
+- Before reporting any claim as not located, run a positive control in each place: a Grep with that
+  place as `path` for a token known to be there (`DC-53` in `.claude-local`, `theorem` in
+  `ZeroParadox`, `Tim` in the memory folder). A place whose control returns nothing was not searched; say so instead of
+  reporting "not located".
 - Read every hit before you report it. A grep line you have not opened is not a finding.
 - An unfound topic is "not located as of <date>, searched as follows", with the searches listed. A
   failed grep is evidence about the search, never about the corpus.
