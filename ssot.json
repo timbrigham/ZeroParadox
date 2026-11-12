@@ -672,7 +672,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 3883,
+        "declarations": 3908,
         "files": 218
       },
       "entries": [
@@ -12056,6 +12056,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "135051a9-e8a7-4901-9737-6e6d7556eba6",
+          "new": {
+            "file": "ZeroParadox/Valuation/PoleCorners.lean",
+            "namespace": "ZeroParadox.Pole",
+            "qualified": "ZeroParadox.Pole.dnegLayer_injective_exclusive",
+            "short": "dnegLayer_injective_exclusive"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PoleCorners.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.Pole",
+            "qualified": "ZeroParadox.Pole.dnegLayer_injective_exclusive",
+            "short": "dnegLayer_injective_exclusive",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "die-negswap-1111: negation on the double-negation layer as the pole swap (PoleCorners § VI); the corner's DNE reduction to excluded middle (Die § III); Escardó searchability against Bool-valued OVER (Die § XXIII); Tim 'Land it' 2026-11-11",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "13785c5a-2db0-465c-80de-e90071369306",
           "new": {
             "file": "ZeroParadox/Valuation/TreeNotForced.lean",
@@ -14147,6 +14184,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "16e5d83e-f94c-42b2-be14-541eca325c59",
+          "new": {
+            "file": "ZeroParadox/Valuation/PoleCorners.lean",
+            "namespace": "ZeroParadox.Pole",
+            "qualified": "ZeroParadox.Pole.not_dnegLayer_conj",
+            "short": "not_dnegLayer_conj"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PoleCorners.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.Pole",
+            "qualified": "ZeroParadox.Pole.not_dnegLayer_conj",
+            "short": "not_dnegLayer_conj",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "die-negswap-1111: negation on the double-negation layer as the pole swap (PoleCorners § VI); the corner's DNE reduction to excluded middle (Die § III); Escardó searchability against Bool-valued OVER (Die § XXIII); Tim 'Land it' 2026-11-11",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "16ebc53d-4895-4d29-b484-d354b3471456",
           "new": {
             "file": "ZeroParadox/Valuation/LocalTowers.lean",
@@ -14394,6 +14468,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "175b98d6-b65e-4e9e-b4a7-2a0a95eb9db7",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.omniscient_of_omniscientAway",
+            "short": "omniscient_of_omniscientAway"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.omniscient_of_omniscientAway",
+            "short": "omniscient_of_omniscientAway",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "die-negswap-1111: negation on the double-negation layer as the pole swap (PoleCorners § VI); the corner's DNE reduction to excluded middle (Die § III); Escardó searchability against Bool-valued OVER (Die § XXIII); Tim 'Land it' 2026-11-11",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -23114,6 +23225,43 @@
             ]
           },
           "reason": "Land 2026-11-10 cells-joint, local-towers, interleave probes and the new one-way-flow results into ZeroParadox/Valuation (CellsJoint, Interleave, LocalTowers, OneWayFlow).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "28274b99-30bd-4a0d-9752-acc5085a76f3",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.BoolStepSelected",
+            "short": "BoolStepSelected"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.BoolStepSelected",
+            "short": "BoolStepSelected",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "die-negswap-1111: negation on the double-negation layer as the pole swap (PoleCorners § VI); the corner's DNE reduction to excluded middle (Die § III); Escardó searchability against Bool-valued OVER (Die § XXIII); Tim 'Land it' 2026-11-11",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -34726,6 +34874,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "3dcfe2cb-e807-43e9-9cae-bbfd1d5c8caf",
+          "new": {
+            "file": "ZeroParadox/Valuation/PoleCorners.lean",
+            "namespace": "ZeroParadox.Pole",
+            "qualified": "ZeroParadox.Pole.not_not_dnegLayer_iff",
+            "short": "not_not_dnegLayer_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PoleCorners.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.Pole",
+            "qualified": "ZeroParadox.Pole.not_not_dnegLayer_iff",
+            "short": "not_not_dnegLayer_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "die-negswap-1111: negation on the double-negation layer as the pole swap (PoleCorners § VI); the corner's DNE reduction to excluded middle (Die § III); Escardó searchability against Bool-valued OVER (Die § XXIII); Tim 'Land it' 2026-11-11",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "3e2ef3df-5ef0-47d0-9b5c-29b1918a1eff",
           "new": {
             "file": "ZeroParadox/Valuation/CellsJoint.lean",
@@ -45516,6 +45701,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "512fc85b-b94d-409b-b44d-499c58b7ec5a",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.em_of_omniscient_imp_boolStepTrichotomy",
+            "short": "em_of_omniscient_imp_boolStepTrichotomy"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.em_of_omniscient_imp_boolStepTrichotomy",
+            "short": "em_of_omniscient_imp_boolStepTrichotomy",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "die-negswap-1111: negation on the double-negation layer as the pole swap (PoleCorners § VI); the corner's DNE reduction to excluded middle (Die § III); Escardó searchability against Bool-valued OVER (Die § XXIII); Tim 'Land it' 2026-11-11",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "513aa892-fee3-4cfa-829c-1275a9caa313",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -52285,6 +52507,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "5d2d5624-d436-43df-8ae4-fa1851cd4a77",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.PointwiseSearchable",
+            "short": "PointwiseSearchable"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.PointwiseSearchable",
+            "short": "PointwiseSearchable",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "die-negswap-1111: negation on the double-negation layer as the pole swap (PoleCorners § VI); the corner's DNE reduction to excluded middle (Die § III); Escardó searchability against Bool-valued OVER (Die § XXIII); Tim 'Land it' 2026-11-11",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "5d43ad6c-338c-4963-bdb1-1e358b881f54",
           "new": {
             "file": "ZeroParadox/Valuation/Scale.lean",
@@ -53237,6 +53496,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "5ed29068-661e-413a-880e-6781a4fbdba5",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Searchable",
+            "short": "Searchable"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Searchable",
+            "short": "Searchable",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "die-negswap-1111: negation on the double-negation layer as the pole swap (PoleCorners § VI); the corner's DNE reduction to excluded middle (Die § III); Escardó searchability against Bool-valued OVER (Die § XXIII); Tim 'Land it' 2026-11-11",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -62546,6 +62842,43 @@
             "role": []
           },
           "reason": "RiemannSphere § VIII: private helper, norm 1 implies valuation 0 on Q_[2], shared by unitDouble_reach_mono and the units-only control",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "70eb4208-406e-4289-88a3-07cd40608dca",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.boolStepTrichotomy_of_omniscient",
+            "short": "boolStepTrichotomy_of_omniscient"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.boolStepTrichotomy_of_omniscient",
+            "short": "boolStepTrichotomy_of_omniscient",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "die-negswap-1111: negation on the double-negation layer as the pole swap (PoleCorners § VI); the corner's DNE reduction to excluded middle (Die § III); Escardó searchability against Bool-valued OVER (Die § XXIII); Tim 'Land it' 2026-11-11",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -77657,6 +77990,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "8c98f961-8f0e-4d74-aab2-ffc1ba6ef800",
+          "new": {
+            "file": "ZeroParadox/Valuation/PoleCorners.lean",
+            "namespace": "ZeroParadox.Pole",
+            "qualified": "ZeroParadox.Pole.dnegLayer",
+            "short": "dnegLayer"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PoleCorners.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.Pole",
+            "qualified": "ZeroParadox.Pole.dnegLayer",
+            "short": "dnegLayer",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "die-negswap-1111: negation on the double-negation layer as the pole swap (PoleCorners § VI); the corner's DNE reduction to excluded middle (Die § III); Escardó searchability against Bool-valued OVER (Die § XXIII); Tim 'Land it' 2026-11-11",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "8cb8c208-9132-4981-83a4-090639428747",
           "new": {
             "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
@@ -79947,6 +80317,43 @@
             ]
           },
           "reason": "Die v2 final batch: drawing vs set (self-steps, accessibility, forced rank), ends of a view, orders on motions, placements as views, relaxed least-fixed-point schema, UP legs as nuclei",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "911c9bb9-1c5f-491e-ba99-2a1c82ce8876",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.corner_of_not_not_classical",
+            "short": "corner_of_not_not_classical"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.corner_of_not_not_classical",
+            "short": "corner_of_not_not_classical",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "die-negswap-1111: negation on the double-negation layer as the pole swap (PoleCorners § VI); the corner's DNE reduction to excluded middle (Die § III); Escardó searchability against Bool-valued OVER (Die § XXIII); Tim 'Land it' 2026-11-11",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -86673,6 +87080,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "9c928d32-a8cb-479f-ab02-4c4a84e5aea6",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Omniscient",
+            "short": "Omniscient"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Omniscient",
+            "short": "Omniscient",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "die-negswap-1111: negation on the double-negation layer as the pole swap (PoleCorners § VI); the corner's DNE reduction to excluded middle (Die § III); Escardó searchability against Bool-valued OVER (Die § XXIII); Tim 'Land it' 2026-11-11",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "9c96070f-1cc7-4e32-83f1-f158d05530fe",
           "new": {
             "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
@@ -89373,6 +89817,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "a07a7aa9-f0ed-4d48-bdc8-c8bf738f4cab",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.boolStepSelected_empty_not_searchable",
+            "short": "boolStepSelected_empty_not_searchable"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.boolStepSelected_empty_not_searchable",
+            "short": "boolStepSelected_empty_not_searchable",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "die-negswap-1111: negation on the double-negation layer as the pole swap (PoleCorners § VI); the corner's DNE reduction to excluded middle (Die § III); Escardó searchability against Bool-valued OVER (Die § XXIII); Tim 'Land it' 2026-11-11",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "a07b4fcc-7a17-4f50-a98b-5a064745ec77",
           "new": {
             "file": "ZeroParadox/Settheory/QuineHost.lean",
@@ -89625,6 +90106,43 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a0d439cc-54bc-45fe-a818-bc36c4d0ee46",
+          "new": {
+            "file": "ZeroParadox/Valuation/PoleCorners.lean",
+            "namespace": "ZeroParadox.Pole",
+            "qualified": "ZeroParadox.Pole.not_dnegLayer_iff",
+            "short": "not_dnegLayer_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PoleCorners.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.Pole",
+            "qualified": "ZeroParadox.Pole.not_dnegLayer_iff",
+            "short": "not_dnegLayer_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "die-negswap-1111: negation on the double-negation layer as the pole swap (PoleCorners § VI); the corner's DNE reduction to excluded middle (Die § III); Escardó searchability against Bool-valued OVER (Die § XXIII); Tim 'Land it' 2026-11-11",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -92948,6 +93466,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a8853efc-b59e-45ce-a12d-75bcaae95639",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.omniscient_option_iff",
+            "short": "omniscient_option_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.omniscient_option_iff",
+            "short": "omniscient_option_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "die-negswap-1111: negation on the double-negation layer as the pole swap (PoleCorners § VI); the corner's DNE reduction to excluded middle (Die § III); Escardó searchability against Bool-valued OVER (Die § XXIII); Tim 'Land it' 2026-11-11",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -98600,6 +99155,43 @@
             ]
           },
           "reason": "Lean 4.35 upgrade: new choice-free declarations (rulings 165, 168, 190)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b1c236d5-c121-4b42-a016-7679da9d815f",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.boolStepSelected_of_searchable",
+            "short": "boolStepSelected_of_searchable"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.boolStepSelected_of_searchable",
+            "short": "boolStepSelected_of_searchable",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "die-negswap-1111: negation on the double-negation layer as the pole swap (PoleCorners § VI); the corner's DNE reduction to excluded middle (Die § III); Escardó searchability against Bool-valued OVER (Die § XXIII); Tim 'Land it' 2026-11-11",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -107910,6 +108502,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "c1fe3f2c-e859-4617-9723-12e7aefe18cc",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.pointwiseSearchable_of_boolStepSelected",
+            "short": "pointwiseSearchable_of_boolStepSelected"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.pointwiseSearchable_of_boolStepSelected",
+            "short": "pointwiseSearchable_of_boolStepSelected",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "die-negswap-1111: negation on the double-negation layer as the pole swap (PoleCorners § VI); the corner's DNE reduction to excluded middle (Die § III); Escardó searchability against Bool-valued OVER (Die § XXIII); Tim 'Land it' 2026-11-11",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "c2242892-f0c3-4639-96a2-6160beae41fe",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -114560,6 +115189,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "cd3c979e-4923-41ca-9ff7-b4ddcb2f3eaf",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.boolStepTrichotomy_of_subsingleton",
+            "short": "boolStepTrichotomy_of_subsingleton"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.boolStepTrichotomy_of_subsingleton",
+            "short": "boolStepTrichotomy_of_subsingleton",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "die-negswap-1111: negation on the double-negation layer as the pole swap (PoleCorners § VI); the corner's DNE reduction to excluded middle (Die § III); Escardó searchability against Bool-valued OVER (Die § XXIII); Tim 'Land it' 2026-11-11",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "cd42b3bd-0f5f-4e14-bc21-3a248b9ff901",
           "new": {
             "file": "ZeroParadox/Settheory/Curry.lean",
@@ -114776,6 +115442,43 @@
             ]
           },
           "reason": "New experimental probe RequirementsGap.lean — instance-vs-requirements gap as a fork instance (object-level of Tim's conjecture)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "cdac200d-962f-424c-95a0-3675fcf691b1",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.omniscient_of_boolStepTrichotomy",
+            "short": "omniscient_of_boolStepTrichotomy"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.omniscient_of_boolStepTrichotomy",
+            "short": "omniscient_of_boolStepTrichotomy",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "die-negswap-1111: negation on the double-negation layer as the pole swap (PoleCorners § VI); the corner's DNE reduction to excluded middle (Die § III); Escardó searchability against Bool-valued OVER (Die § XXIII); Tim 'Land it' 2026-11-11",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -118242,6 +118945,43 @@
             ]
           },
           "reason": "New experimental files ZeroParadox/Information/BrudnoBridge.lean (trials and MLRandom bridged to Milovanov's kolmogorov-complexity-lean, citing his Brudno and Levin-Schnorr theorems) and ZeroParadox/Information/SnapEpsilonZero.lean (snap_of_firstStep_MLRandom instantiated on WithBot Ordinal and on EpsilonOrZero, with an order isomorphism between them).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d37d318b-b7eb-4ec6-a435-0e8d44c13790",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.em_of_dne_corner",
+            "short": "em_of_dne_corner"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.em_of_dne_corner",
+            "short": "em_of_dne_corner",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "die-negswap-1111: negation on the double-negation layer as the pole swap (PoleCorners § VI); the corner's DNE reduction to excluded middle (Die § III); Escardó searchability against Bool-valued OVER (Die § XXIII); Tim 'Land it' 2026-11-11",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -122978,6 +123718,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "db961f4d-81e6-47b7-b14c-531919ed5c9e",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.BoolStepTrichotomy",
+            "short": "BoolStepTrichotomy"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.BoolStepTrichotomy",
+            "short": "BoolStepTrichotomy",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "die-negswap-1111: negation on the double-negation layer as the pole swap (PoleCorners § VI); the corner's DNE reduction to excluded middle (Die § III); Escardó searchability against Bool-valued OVER (Die § XXIII); Tim 'Land it' 2026-11-11",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "dbbb3174-4324-484d-9977-397ae14eba85",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -123938,6 +124715,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "de091ab2-df83-4ee5-a84f-4a7bcec5b8ac",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.em_of_boolStepTrichotomy_imp_omniscient",
+            "short": "em_of_boolStepTrichotomy_imp_omniscient"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.em_of_boolStepTrichotomy_imp_omniscient",
+            "short": "em_of_boolStepTrichotomy_imp_omniscient",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "die-negswap-1111: negation on the double-negation layer as the pole swap (PoleCorners § VI); the corner's DNE reduction to excluded middle (Die § III); Escardó searchability against Bool-valued OVER (Die § XXIII); Tim 'Land it' 2026-11-11",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "de11ff48-010f-4518-8299-cf828bcd5179",
           "new": {
             "file": "ZeroParadox/Settheory/GraphBisim.lean",
@@ -124371,6 +125185,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "deb62e27-4230-4fa0-be58-aca9c8907c90",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.pointwiseSearchable_iff_omniscient",
+            "short": "pointwiseSearchable_iff_omniscient"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.pointwiseSearchable_iff_omniscient",
+            "short": "pointwiseSearchable_iff_omniscient",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "die-negswap-1111: negation on the double-negation layer as the pole swap (PoleCorners § VI); the corner's DNE reduction to excluded middle (Die § III); Escardó searchability against Bool-valued OVER (Die § XXIII); Tim 'Land it' 2026-11-11",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -128186,6 +129037,43 @@
             ]
           },
           "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e5080880-224a-4caa-886f-1e858afe0abd",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.OmniscientAway",
+            "short": "OmniscientAway"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.OmniscientAway",
+            "short": "OmniscientAway",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "die-negswap-1111: negation on the double-negation layer as the pole swap (PoleCorners § VI); the corner's DNE reduction to excluded middle (Die § III); Escardó searchability against Bool-valued OVER (Die § XXIII); Tim 'Land it' 2026-11-11",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -135979,6 +136867,43 @@
             ]
           },
           "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f2216645-02b3-4014-96d5-e5b2e1526191",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.boolStepTrichotomy_iff_omniscientAway",
+            "short": "boolStepTrichotomy_iff_omniscientAway"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.boolStepTrichotomy_iff_omniscientAway",
+            "short": "boolStepTrichotomy_iff_omniscientAway",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "die-negswap-1111: negation on the double-negation layer as the pole swap (PoleCorners § VI); the corner's DNE reduction to excluded middle (Die § III); Escardó searchability against Bool-valued OVER (Die § XXIII); Tim 'Land it' 2026-11-11",
           "verify": {
             "axioms": null,
             "sorry_free": true
