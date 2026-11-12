@@ -30,8 +30,8 @@ actual inversion map, at the finite level.
   for `PadicInt.valuation` on the whole tower, `cornerId`'s shape; at the seed step that rests on
   Mathlib's totalizing value `PadicInt.valuation 0 = 0`, and under the standard convention that the
   valuation of `0` is `∞` (the convention `q2Val` follows) the seed step runs the other way, as the
-  `q2Val` conjunct of `tower_polarity` records. Order-reversing for the norm on
-  stages `n ≥ 1`, the inversion corner's shape, `swap` / `rInv` at the abstract level. On `Pole` itself
+  `q2Val` conjunct of `tower_polarity` records. For the norm on stages `n ≥ 1` the map is
+  order-reversing, the inversion corner's shape, `swap` / `rInv` at the abstract level. On `Pole` itself
   the characterization is proved, and needs bijectivity: a bijection monotone for `poleView` is
   `cornerId`, an antitone one `swap` (`eq_cornerId_of_monotone_bijective`,
   `eq_swap_of_antitone_bijective`, `ZeroParadox/Valuation/PoleCorners.lean` § VII).
@@ -76,7 +76,7 @@ not prose — it is a class with theorems:
   missing. Complexity-ascent: `towerCx_zero : towerCx (0 : ℤ_[2]) = ⊤` and
   `towerCx_member (n) : towerCx (cnfToZp2 (towerNONote (n+1))) = ((n+1 : ℕ) : ℕ∞)`
   (`ZeroParadox/Valuation/TowerHeightFloor.lean`). Element-descent: `tower_converges_to_zero`
-  (`ZeroParadox/Ordinal/Gentzen.lean`), cited in § III of the Lean file. ⚠ Cite the right witness for the
+  (`ZeroParadox/Ordinal/Gentzen.lean`), cited in § III of `ZeroParadox/Valuation/PoleCornersBridge.lean`. ⚠ Cite the right witness for the
   infinity corner: `towerCx_zero` alone says only `towerCx (0 : ℤ_[2]) = ⊤`, with no `cnfToZp2` and no
   `towerNONote` in its statement. What ties the top to *this tower* is `towerInfinitudeFloor`'s
   `cx_floor_eq_iSup` field — which shows `towerCx 0 = ⨆ n, towerCx (cnfToZp2 (towerNONote (n+1)))` —
