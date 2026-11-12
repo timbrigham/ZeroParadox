@@ -5342,7 +5342,8 @@ theorem aprod_fst_not_step :
 /-- `Statement:` an isomorphism of motions: strict maps both ways, mutually inverse. -/
 -- [ZP-CUSTOM] equivalent to: an isomorphism in Mathlib's `Endofunctor.Coalgebra` category
 -- (`StrictIso.equivCoalgIso`) | reason: named fields, a pair of `Hom`s (§ XIX) inverse on the
--- underlying maps, which `FixedPole` and the tree theorems below read directly.
+-- underlying maps, which `FixedPole`, `StrictIso.rtg_iff`, `tree_of_aDoubling` and
+-- `tree_of_aDoubling_pole` read directly.
 structure StrictIso (M : Motion α) (N : Motion β) where
   /-- The forward strict map. -/
   hom : Hom M N
@@ -5676,6 +5677,23 @@ theorem fin3_doubling_control : fin3Motion.Loop ∧ fin3Motion.Climb ∧ fin3Mot
     ⟨0, 1, 0, Part.mem_some_iff.2 (by decide), Or.inl ⟨rfl, rfl⟩, Part.mem_some_iff.2 (by decide),
       by decide⟩,
     fun ⟨e⟩ => fin3_not_strictIso_square e, fun ⟨e⟩ => fin3_not_strictIso_square e⟩
+
+/-- `Statement:` on a finite carrier with two distinct points no motion meets `ADoublingEmb`. -/
+theorem not_aDoublingEmb_of_finite {α : Type u} [Finite α] [Nontrivial α] (M : Motion α) :
+    ¬ M.ADoublingEmb := by
+  rintro ⟨φ, hφ⟩
+  have h := Nat.card_le_card_of_injective _ hφ
+  rw [Nat.card_prod] at h
+  have h1 := Finite.one_lt_card (α := α)
+  nlinarith
+
+/-- `Statement:` CONTROL: `fin3Motion` does not meet `ADoublingEmb`. -/
+theorem fin3_not_aDoublingEmb : ¬ fin3Motion.ADoublingEmb :=
+  not_aDoublingEmb_of_finite fin3Motion
+
+/-- `Statement:` `1` has two distinct predecessors in `fin3Motion`, `0` and `2`. -/
+theorem fin3Motion_fanIn_one : fin3Motion.FanIn 1 :=
+  ⟨0, 2, by decide, Or.inl ⟨rfl, rfl⟩, Or.inr ⟨rfl, rfl⟩⟩
 
 end Motion
 
@@ -6246,5 +6264,8 @@ open ZeroParadox
 #print axioms Motion.fin3Motion
 #print axioms Motion.fin3_not_strictIso_square
 #print axioms Motion.fin3_doubling_control
+#print axioms Motion.not_aDoublingEmb_of_finite
+#print axioms Motion.fin3_not_aDoublingEmb
+#print axioms Motion.fin3Motion_fanIn_one
 
 end PurityCheck
