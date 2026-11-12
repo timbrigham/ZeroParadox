@@ -527,6 +527,10 @@ example : @Monotone Pole Pole poleView poleView cornerZero ∧
   ⟨fun _ _ _ => Nat.le_refl _, fun _ _ _ => Nat.le_refl _,
     fun _ _ _ => Nat.le_refl _, fun _ _ _ => Nat.le_refl _⟩
 
+-- Reading: a case of the rigidity of well-ordered (so finite) chains, Mathlib
+-- `OrderIso.unique_of_wellFoundedLT` and `OrderIso.subsingleton_of_wellFoundedLT'`; here for the
+-- non-instance order `poleView`, as bijective plus a direction, with the CONTROL above pricing bijectivity.
+
 -- Reading: an order-reversing map undone on its closed part (Mathlib `Concept.swapEquiv`, from
 -- `gc_upperPolar_lowerPolar`, `Mathlib/Order/Concept.lean`) has `swap`'s shape at another level, never
 -- an identity. `NInf.det_gi` (`ZeroParadox/Die.lean` § XXV) holds in both charts: between `ℕ → Bool`

@@ -165,7 +165,9 @@ lattices and the round trip is monotone (Mathlib `gc_upperPolar_lowerPolar`,
 `upperPolar_lowerPolar_upperPolar`), so Knaster-Tarski applies to it. On `Pole` under `poleView` an
 antitone bijection is `swap` (`Pole.eq_swap_of_antitone_bijective`,
 `ZeroParadox/Valuation/PoleCorners.lean` § VII), fixed-point-free on `Miniature`'s own pole
-(`Miniature.Pole.swap_is_the_wall`). Still open: the space of witnessing THEORIES as objects (candidate
+(`Miniature.Pole.swap_is_the_wall`). The standard companion fact: an antitone map's square is
+monotone, and the map sends the least fixed point of its square to the least fixed point of the
+square in the dual order (Mathlib `OrderHom.map_lfp_comp`, the map as `α →o αᵒᵈ`). Still open: the space of witnessing THEORIES as objects (candidate
 2, "AFA vs any unique-Quine-atom theory", the apophatic gap). Within the monotone tower the gap is
 uniqueness-only and self-similar; the wall is where you leave it. -/
 theorem instance_always_exists : ∃ x, f x = x :=

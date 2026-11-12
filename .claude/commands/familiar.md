@@ -43,7 +43,9 @@ list for `$ARGUMENTS`:
   place as `path` for a token known to be there (`DC-53` with `path` set to `.claude-local/notes`,
   `theorem` in `ZeroParadox`, and in the memory folder a Glob for `feedback_verify_pointer_status.md`,
   a file only this project's memory holds). A place whose control returns nothing was not searched;
-  say so instead of reporting "not located".
+  say so instead of reporting "not located". A Grep that reports it stopped before finishing (a time
+  limit, "results are incomplete") also counts as NOT searched, even when its control hit: a partial
+  search passes the control. Re-run it over a narrower `path` until it completes.
 - Read every hit before you report it. A grep line you have not opened is not a finding.
 - An unfound topic is "not located as of <date>, searched as follows", with the searches listed. A
   failed grep is evidence about the search, never about the corpus.
@@ -67,8 +69,10 @@ Search all four places:
    `.claude-local/DEFECT_CLASSES.md`, `.claude-local/handoff.md`, `.claude-local/outreach/`,
    `.claude-local/autobiography/`;
 3. Tim's rulings: `.claude-local/notes/tim_rulings_*.md`;
-4. the memory files: `C:\Users\timbr\.claude\projects\C--Workspace-ZeroParadox\memory\` (its index is
-   `MEMORY.md`; the other project memory folders beside it are not this one).
+4. the memory files: this project's Claude Code auto-memory folder, the `memory/` folder under
+   `.claude/projects/` in the user's home directory whose project folder is named after this
+   repository's path (its index is `MEMORY.md`; the other project memory folders beside it are not
+   this one, and the Glob control above is what tells them apart).
 
 Use at least three phrasings per claim, varied by POLARITY (how the corpus would say it if it
 DISAGREED), PART OF SPEECH (the verb that builds it, not the noun), and VOCABULARY (the standard
