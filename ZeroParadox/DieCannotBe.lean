@@ -3468,6 +3468,8 @@ example : (fun i : Fin 3 => i + 1) ≠ (fun i => i + 2) ∧
 -- so this is `swap`'s shape at another level, never an identity.
 #check @ZeroParadox.Pole.corner_polarity        -- Statement: under `poleView`, `cornerZero` lowers, `cornerInfty` raises, `cornerId` does both, `swap` neither
 #check @ZeroParadox.Pole.pole_polarity_swap      -- Statement: for every motion on `Pole`, raising under `poleViewSwap` is lowering under `poleView`
+#check @ZeroParadox.Pole.eq_cornerId_of_monotone_bijective -- Statement: a bijection of `Pole` monotone for `poleView` is `cornerId`
+#check @ZeroParadox.Pole.eq_swap_of_antitone_bijective -- Statement: a bijection of `Pole` antitone for `poleView` is `swap`; CONTROL in the home file: both collapses are monotone and antitone
 #check @ZeroParadox.towerToZp2Hom                -- Statement: `cnfToZp2` maps the steps of `ofFun omegaPowNote` on `NONote` to those of `ofFun towerImageStep` on ℤ_[2]
 #check @ZeroParadox.towerToOrdHom                -- Statement: `NONote.repr` maps the same steps to those of `ofFun (ω^·)` on `Ordinal`
 #check @ZeroParadox.towerNONote_orbits           -- Statement: the `n`-th stage maps to `towerImageStep^[n] 0` and to `fundamentalSeq n`
@@ -4495,7 +4497,7 @@ example : ZeroParadox.BoolStepTrichotomy (Option ℕ) ↔ ZeroParadox.LPO :=
    fun h => ZeroParadox.boolStepTrichotomy_of_omniscient (ZeroParadox.omniscient_option_iff.2 h)⟩
 -- Reading: for a `Bool`-valued step the trichotomy's cost is the carrier's search away from a point:
 -- none on `Bool` (§ XI) and `NInf`, LPO on `Option ℕ` and on `ℕ`. Escardó grades omniscience by the
--- set searched (preprint of JSL 78(3) (2013), p. 1; § XIII).
+-- set searched (preprint of JSL 78(3) (2013), p. 1); this file's § XIII.
 -- Reading: the converse of the selector reduction, LPO to a total selector on `Option ℕ`, was not
 -- located in the corpus as of 2026-10-29, searched by case-insensitive greps of
 -- `ZeroParadox/**/*.lean` for `selectedtotal`, for `selector` and `lpo` on one line in either order,
@@ -4991,6 +4993,8 @@ example : (∀ n, ZeroParadox.slotRun (fun _ => false) n = false) ∧
 #check @ZeroParadox.NInf.det_bot_pinnedLimitUnique
 #check @ZeroParadox.NInf.le_det_iff            -- Statement: `x ≤ det r ↔ r ≤ negS x`; both directions
 #check @ZeroParadox.NInf.det_gi                -- Statement: `det` into `NInfᵒᵈ` and `negS` form a Galois insertion (Mathlib `GaloisInsertion`)
+-- Reading: collapsed to the two poles of each carrier, an order-reversing bijection is `swap`
+-- (`Pole.eq_swap_of_antitone_bijective`, `ZeroParadox/Valuation/PoleCorners.lean` § VII); the CARRIER line stands.
 -- Statement: `(det r).1 n = !(partialSups r n)` at every `n`, pointwise against Mathlib's `partialSups`
 -- (the `example` after `det_gi`, `ZeroParadox/Die.lean` § XXV). Axioms: `det_gi` `[propext, Quot.sound]`,
 -- Mathlib's `partialSups.gi` `[propext, Classical.choice, Quot.sound]`.

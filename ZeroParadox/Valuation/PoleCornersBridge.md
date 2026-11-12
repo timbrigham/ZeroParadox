@@ -20,8 +20,11 @@ actual inversion map, at the finite level.
 `cnf_bridge_type_boundary`). The tower ↔ tree link is already built in `CnfBridge`:
 * the ω-tower `towerNONote` ascends (via `NONote.repr`) to **ε₀**, and its 2-adic images (via `cnfToZp2`)
   **descend in norm to `0 = ⊥`** — one construction, two carrier closures (`mu_construction_correspondence`);
-* `cnfToZp2` is order-reflecting along the tower: ordinal height climbs = 2-adic norm falls. **That
-  order-reversal is exactly the inversion corner** — `swap` / `rInv` at the abstract level.
+* `cnfToZp2` is order-reflecting along the tower: ordinal height climbs = 2-adic norm falls. `Reading:` that
+  order-reversal has the inversion corner's shape, `swap` / `rInv` at the abstract level, never an
+  identity. On `Pole` itself the fact is proved: a bijection antitone for `poleView` is `swap`, a
+  monotone one `cornerId` (`eq_swap_of_antitone_bijective`, `eq_cornerId_of_monotone_bijective`,
+  `ZeroParadox/Valuation/PoleCorners.lean` § VII).
 
 So the four corners map onto the tower's corners: the **zero** corner is the tower's seed and the tree's
 `botEnd` (`seed_maps_to_bot_both`: `cnfToZp2 (towerNONote 0) = 0`); the **infinity** corner is that seed's

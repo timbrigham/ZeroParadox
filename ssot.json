@@ -672,7 +672,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 3908,
+        "declarations": 3910,
         "files": 218
       },
       "entries": [
@@ -4841,6 +4841,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "06d28fce-aa7f-48fd-868a-42686666a9ad",
+          "new": {
+            "file": "ZeroParadox/Valuation/PoleCorners.lean",
+            "namespace": "ZeroParadox.Pole",
+            "qualified": "ZeroParadox.Pole.eq_cornerId_of_monotone_bijective",
+            "short": "eq_cornerId_of_monotone_bijective"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PoleCorners.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.Pole",
+            "qualified": "ZeroParadox.Pole.eq_cornerId_of_monotone_bijective",
+            "short": "eq_cornerId_of_monotone_bijective",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "galois-corner-1112: order direction and bijectivity decide the corner (PoleCorners § VII); a poleView-antitone bijection is swap, a monotone one cornerId",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -60432,6 +60469,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "6c8bd287-2e29-44e7-a034-894eddf81bf5",
+          "new": {
+            "file": "ZeroParadox/Valuation/PoleCorners.lean",
+            "namespace": "ZeroParadox.Pole",
+            "qualified": "ZeroParadox.Pole.eq_swap_of_antitone_bijective",
+            "short": "eq_swap_of_antitone_bijective"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PoleCorners.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.Pole",
+            "qualified": "ZeroParadox.Pole.eq_swap_of_antitone_bijective",
+            "short": "eq_swap_of_antitone_bijective",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "galois-corner-1112: order direction and bijectivity decide the corner (PoleCorners § VII); a poleView-antitone bijection is swap, a monotone one cornerId",
           "verify": {
             "axioms": null,
             "sorry_free": true

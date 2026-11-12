@@ -1,4 +1,4 @@
--- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the glb, first-step and atom hypotheses at ⊥, with strong atomicity of the whole order, do not force a binary tree above it; depth at every element with strong atomicity does, one way. Curated results indexed in ZeroParadox/MANIFEST.md.
+-- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the glb, first-step and atom hypotheses at ⊥, with strong atomicity of the whole order, do not force a binary tree above it; depth at every element with strong atomicity does, one way (sufficient, not necessary). Curated results indexed in ZeroParadox/MANIFEST.md.
 import ZeroParadox.Valuation.CellsJoint
 import Mathlib.Order.WellQuasiOrder
 import Mathlib.Order.Atoms
@@ -7,7 +7,7 @@ import Mathlib.Data.Finset.Grade
 import Mathlib.Tactic
 
 /-!
-# The binary tree above ⊥ of a join-semilattice: not forced by ⊥ as greatest lower bound of non-⊥ members, a first step, infinitely many atoms and strong atomicity of the whole order; forced, one way, by depth at every element with strong atomicity
+# The binary tree above ⊥ of a join-semilattice: not forced by ⊥ as greatest lower bound of non-⊥ members, a first step, infinitely many atoms and strong atomicity of the whole order; forced, one way (sufficient, not necessary), by depth at every element with strong atomicity
 
 ## Engineer's Take
 

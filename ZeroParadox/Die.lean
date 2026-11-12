@@ -4615,7 +4615,8 @@ theorem em_of_boolStepTrichotomy_imp_omniscient
 
 /-- `Statement:` if `Omniscient X → BoolStepTrichotomy X` on every inhabited `X : Type`, the
     `DecidableEq` premise dropped, excluded middle holds; one way, on `Bool` with `true` and `false`
-    identified exactly when `P`. -/
+    identified exactly when `P`. `Reading:` the quotient is Diaconescu's (`em_of_choiceFragment`,
+    `ZeroParadox/Category/ExcludedMiddleBridge.lean` § II). -/
 theorem em_of_omniscient_imp_boolStepTrichotomy
     (H : ∀ X : Type, Nonempty X → Omniscient X → BoolStepTrichotomy X) :
     ∀ P : Prop, P ∨ ¬ P := by
@@ -4648,7 +4649,8 @@ theorem em_of_omniscient_imp_boolStepTrichotomy
     exact Quotient.ind (motive := fun b => b = Quotient.mk s true)
       (fun _ => Quotient.sound (Or.inr hp)) b
 
-/-- `Statement:` `Searchable X` gives `BoolStepSelected X`, the selector `a ↦ ε (r a)`. -/
+/-- `Statement:` `Searchable X` gives `BoolStepSelected X`, the selector `a ↦ ε (r a)`: Escardó's
+    Proposition 2.4 (JSL 78(3) (2013), preprint p. 3), `f(x) = ε(y ↦ a(x, y))`, its case `Y = X`. -/
 theorem boolStepSelected_of_searchable {X : Type u} (h : Searchable X) : BoolStepSelected X := by
   obtain ⟨ε, hε⟩ := h
   intro r
@@ -4677,7 +4679,9 @@ theorem pointwiseSearchable_of_boolStepSelected {X : Type u} (hn : Nonempty X)
       rw [hp] at h'
       exact h'.symm
 
-/-- `Statement:` on an inhabited `X`, `PointwiseSearchable X ↔ Omniscient X`; both directions. -/
+/-- `Statement:` on an inhabited `X`, `PointwiseSearchable X ↔ Omniscient X`; both directions. With
+    `boolStepSelected_of_searchable` and `pointwiseSearchable_of_boolStepSelected` it recovers Escardó's
+    Lemma 2.2 (searchable implies omniscient; JSL 78(3) (2013), preprint p. 3). -/
 theorem pointwiseSearchable_iff_omniscient {X : Type u} (hn : Nonempty X) :
     PointwiseSearchable X ↔ Omniscient X := by
   refine ⟨fun h p => ?_, fun h p => ?_⟩
