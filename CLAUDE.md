@@ -591,9 +591,9 @@ READ     tools/process/review-gates.md
 
 ## R-PRIORART  Search BEFORE you build, and the gate runs after.
 TRIGGER  you can state the claim in one sentence of standard mathematical English and are
-         about to write Lean; or a synthesis layer is created, its central claim revised, a
-         layer prepared for outreach, a reviewer asks "have you seen X?", or a new `.lean`
-         file / >=50 net new lines lands.
+         about to write Lean, a SCRATCH PROBE included; Tim says it feels "familiar" or anyone
+         asks "have you seen X?"; a synthesis layer is created, revised or prepared for
+         outreach; or a new `.lean` file / >=50 net new lines lands.
 RULE     three steps, ~10 minutes, BEFORE building. (1) grep our own corpus. (2) grep the
          pinned Mathlib for the CONCEPT — and if the claim is a Lean statement, RUN `exact?`;
          it searches statement SHAPE, not names, and reaches attribute-generated siblings
