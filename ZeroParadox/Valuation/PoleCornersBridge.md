@@ -19,23 +19,27 @@ actual inversion map, at the finite level.
 **The tower correspondence is SHARED-SHAPE, not identity** (honoring the type fence
 `cnf_bridge_type_boundary`). The tower ↔ tree link is already built in `CnfBridge`:
 * the ω-tower `towerNONote` ascends (via `NONote.repr`) to **ε₀**, and its 2-adic images (via `cnfToZp2`)
-  **descend in norm to ℤ_[2]'s `0`**, least under the 2-adic norm preorder and greatest under the
-  valuation preorder (`z2_two_views`) — one construction, two carrier closures (`mu_construction_correspondence`);
-* along the tower, ordinal order and the 2-adic valuation order of the `cnfToZp2` images agree
-  (`tower_orders_agree`, `tower_valuation_orderEmbedding`): ordinal height climbs as the valuation
-  climbs, and so as the 2-adic norm falls. `Reading:` the tower map has a corner's shape in each chart,
-  never an identity. Measured by the valuation it is order-PRESERVING, `cornerId`'s shape; measured by
-  the norm it is order-REVERSING, the inversion corner's shape, `swap` / `rInv` at the abstract level.
-  On `Pole` itself the characterization is proved: a bijection monotone for `poleView` is `cornerId`,
-  an antitone one `swap` (`eq_cornerId_of_monotone_bijective`, `eq_swap_of_antitone_bijective`,
-  `ZeroParadox/Valuation/PoleCorners.lean` § VII).
+  **tend in norm to ℤ_[2]'s `0`**, least under the 2-adic norm preorder and greatest under the
+  `q2Val` valuation preorder (`z2_two_views`) — one construction, two carrier closures
+  (`mu_construction_correspondence`);
+* stage by stage, the direction of each measure is `tower_polarity` (§ V): ordinal height and Mathlib's
+  `PadicInt.valuation` (which sends ℤ_[2]'s `0` to `0`) rise at every step (`tower_orders_agree`,
+  `tower_valuation_orderEmbedding`), while the 2-adic norm and `q2Val` rise and fall respectively at
+  the seed step, the snap arc's departure (`snap_arc_z2_loop`), and reverse only for stages `n ≥ 1`.
+  `Reading:` the tower map has a corner's shape in each chart, never an identity: order-preserving
+  for `PadicInt.valuation` on the whole tower, `cornerId`'s shape; order-reversing for the norm on
+  stages `n ≥ 1`, the inversion corner's shape, `swap` / `rInv` at the abstract level. On `Pole` itself
+  the characterization is proved, and needs bijectivity: a bijection monotone for `poleView` is
+  `cornerId`, an antitone one `swap` (`eq_cornerId_of_monotone_bijective`,
+  `eq_swap_of_antitone_bijective`, `ZeroParadox/Valuation/PoleCorners.lean` § VII).
 
 So the four corners map onto the tower's corners: the **zero** corner is the tower's seed and the tree's
 `botEnd` (`seed_maps_to_bot_both`: `cnfToZp2 (towerNONote 0) = 0`); the **infinity** corner is that seed's
 image under the inversion; **concurrent** is the pole `0 = ∞ = ⊥`, a chart claim with ⊥ that of the
 2-adic norm preorder on ℤ_[2] (`z2_two_views`), where ascent and descent meet; and the **inversion**
-corner shares its shape with `cnfToZp2`'s ordinal-ascent-↔-2-adic-norm-descent reversal (the norm chart
-of the `Reading:` above), never an identity between `swap : Pole → Pole` and the tower→tree map. No cross-type `ε₀ = 0` is asserted anywhere — the corners and the tower are connected by MAPS
+corner shares its shape with `cnfToZp2`'s ordinal-ascent-↔-2-adic-norm-descent reversal on stages
+`n ≥ 1` (the norm chart of the `Reading:` above), never an identity between `swap : Pole → Pole` and
+the tower→tree map. No cross-type `ε₀ = 0` is asserted anywhere — the corners and the tower are connected by MAPS
 (`poleToSphere`, `rInv`, `cnfToZp2`), never by `=`.
 
 **The INFINITY corner is measured elsewhere, and the Lean file did not say so** (pointer added 2026-08-04;
