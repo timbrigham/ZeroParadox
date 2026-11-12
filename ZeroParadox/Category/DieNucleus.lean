@@ -99,7 +99,9 @@ theorem isLanding_ofNucleus_anti {n m : Nucleus X} (hnm : n ≤ m) (s : X → X 
     iff `n ≤ m`; `isLanding_ofNucleus_anti` is the `←` half, and the `→` half takes `n` monotone from
     `map_inf'` at `y ⊓ m y = y`. The order on UP legs runs opposite to the inclusion of landing sets.
     `Reading:` on a frame the same iff is Mathlib's `Nucleus.range_subset_range` with
-    `Nucleus.mem_range`, which Mathlib files in its frame section; a meet-semilattice suffices here. -/
+    `Nucleus.mem_range`, which Mathlib files in its frame section; a meet-semilattice suffices here.
+    On a frame the reversal also follows from Picado and Pultr, *Frames and Locales* (2012),
+    Proposition III.5.3.2, p. 32, whose nucleus for a sublocale `S` is `a ↦ ⋀ {s ∈ S | a ≤ s}`. -/
 theorem isLanding_ofNucleus_subset_iff (n m : Nucleus X) (s : X → X → Prop) :
     (∀ y, (ofNucleus m s).IsLanding y → (ofNucleus n s).IsLanding y) ↔ n ≤ m := by
   constructor

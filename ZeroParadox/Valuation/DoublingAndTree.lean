@@ -225,6 +225,16 @@ theorem btree_no_square_embed : IsEmpty (BTree × BTree ↪o BTree) := ⟨fun j 
     simp only [Prod.mk_le_mk, btree_le_iff] at this
     exact absurd this.2 (by decide)⟩
 
+/-- `Statement:` CONTROL, with a local `OrderBot BTree` whose bottom is `BTree.mk []`: `BTree` embeds
+`BTree` with root at that bottom, has a point other than it, and admits no `BTree × BTree ↪o BTree`. -/
+example :
+    letI : OrderBot BTree :=
+      { bot := BTree.mk [], bot_le := fun _ => (btree_le_iff _ _).2 List.nil_prefix }
+    (∃ f : BTree ↪o BTree, f (BTree.mk []) = ⊥) ∧ BTree.mk [false] ≠ ⊥ ∧
+      IsEmpty (BTree × BTree ↪o BTree) :=
+  ⟨⟨RelEmbedding.refl _, rfl⟩, fun h => List.cons_ne_nil _ _ (congrArg BTree.val h),
+    btree_no_square_embed⟩
+
 /-! ### § III. Doubling makes an independent sequence (the Chakir–Pouzet route). -/
 
 section Doubling

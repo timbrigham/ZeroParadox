@@ -1,6 +1,6 @@
 """
 Build ZP-K Illustrated Companion
-Version 1.34 | November 2026
+Version 1.35 | November 2026
 """
 
 import os
@@ -109,7 +109,7 @@ def four_way_table():
     t = Table(data, colWidths=[TW*0.22, TW*0.30, TW*0.48])
     t.setStyle(ts); return t
 
-VERSION = '1.34'
+VERSION = '1.35'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -262,7 +262,10 @@ def build():
         'not something ZP-K derives: the bridge is built because the reading is held, not the '
         'other way round. The identity half of that reading is retired: what the descriptions '
         'share is the Quine-atom role (Motion.SelfOnlyAt, a point that steps to itself and to '
-        'nothing else), and each chart proves its own occupancy of it.'))
+        'nothing else), and each chart proves its own occupancy of it. Reading the shared '
+        'position as a role that each chart fills on its own terms, rather than as one '
+        'object, is an instance of the structuralist reading of Benacerraf, "What Numbers Could Not Be," <i>Philosophical Review</i> 74(1) (1965) 47&#8211;73, p. 70, '
+        'not its source.'))
     E.append(sp(4))
     E.append(remember_box(
         'Remember: T-COMP is not saying that set theory and computability theory are the same. '
