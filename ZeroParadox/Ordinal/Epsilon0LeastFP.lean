@@ -334,6 +334,11 @@ theorem ordinalTowerMotion_runClosure :
       (Part.some ε₀) :=
   ⟨ordinalTowerMotion_isRun, ordinalTowerMotion_stageClosure⟩
 
+/-- `Statement:` UP does not lower: at 0, ⊥ of `Ordinal`, it gives ε₀, and `ε₀ ≤ 0` fails. -/
+theorem ordinalTowerMotion_not_upLowers : ¬ ordinalTowerMotion.{u}.UpLowers := fun h =>
+  epsilon0_ne_zero (nonpos_iff_eq_zero.1
+    (h 0 ε₀ (Part.mem_some_iff.2 Ordinal.epsilon_zero_eq_nfp)))
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -364,4 +369,5 @@ open ZeroParadox
 #print axioms ordinalTowerMotion_isRun
 #print axioms ordinalTowerMotion_stageClosure
 #print axioms ordinalTowerMotion_runClosure
+#print axioms ordinalTowerMotion_not_upLowers
 end PurityCheck

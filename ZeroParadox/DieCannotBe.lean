@@ -1588,6 +1588,7 @@ example (x : PFunctor.M ZeroParadox.idPF_Coalgebra) :
 example : (ZeroParadox.Motion.ofTotal (id : Bool → Bool) (fun _ => rfl) (fun _ b => b = true)).FanIn
     true :=
   ⟨false, true, by decide, rfl, rfl⟩
+#check @ZeroParadox.Motion.fin3Motion_fanIn_one  -- Statement: member: in `fin3Motion`, `1` has predecessors `0` and `2`
 #check @ZeroParadox.Motion.not_fanIn_of_injective -- Statement: non-members: every point of a step given by a one-to-one function
 -- Statement: non-member: every motion on `Unit`.
 example (M : ZeroParadox.Motion Unit) (y : Unit) : ¬ M.FanIn y :=
@@ -2757,6 +2758,7 @@ example {α : Type*} (M : ZeroParadox.Motion α) :
 #check @ZeroParadox.shiftMotion_elbow_iff        -- Statement: `shiftMotion c` has an elbow iff `⌜c⌝ ≠ 0`, as with the corner (`shiftMotion_corner_iff`)
 #check @ZeroParadox.Motion.UpRaises              -- Statement: every value of `up x` is `≥ x`
 #check @ZeroParadox.Motion.UpLowers              -- Statement: every value of `up x` is `≤ x`
+#check @ZeroParadox.ordinalTowerMotion_not_upLowers -- Statement: non-member: `ordinalTowerMotion`'s UP sends 0, ⊥ of `Ordinal`, to ε₀, and `ε₀ ≤ 0` fails (`epsilon0_ne_zero`)
 #check @ZeroParadox.Motion.StepRaises            -- Statement: every step `x → y` has `x ≤ y`
 #check @ZeroParadox.Motion.StepLowers            -- Statement: every step `x → y` has `y ≤ x`
 #check @ZeroParadox.Motion.Agree                 -- Statement: UP raises and OVER raises
@@ -4992,6 +4994,9 @@ example : (∀ n, ZeroParadox.slotRun (fun _ => false) n = false) ∧
 #check @ZeroParadox.Motion.tree_of_aDoubling_pole -- Reading: if a motion doubles by interleaving, with a fixed pole at `r` and a point reachable from `r` that cannot reach `r` back, then reachability forks at every node of a copy of the binary tree rooted at `r`; one way, and the converse is not claimed
 #check @ZeroParadox.sync_no_bridge             -- Reading: with the lockstep pairing in place of the interleaving one, the same three premises give no such tree: the lockstep square does not carry reachability coordinatewise (`sync_rtg_not_product`)
 #check @ZeroParadox.sync_rtg_not_product       -- Statement: in `endTopMotion`, ⊥ of `End` reaches itself and `topEnd`, and in the lockstep square (⊥, ⊥) does not reach (⊥, `topEnd`)
+#check @ZeroParadox.Motion.ADoublingEmb        -- Statement: PREMISE, a one-to-one strict map `M.aprod M → M`; implied by `ADoubling` (`aDoublingEmb_of_aDoubling`)
+#check @ZeroParadox.Motion.not_aDoublingEmb_of_finite -- Statement: non-members: every motion on a finite carrier with two distinct points
+#check @ZeroParadox.Motion.fin3_not_aDoublingEmb -- Statement: non-member: `fin3Motion`
 #check @ZeroParadox.Motion.fin3_doubling_control -- Reading: loop, climb and corner together do not force doubling: `fin3Motion` has all three and doubles in neither pairing
 #check @ZeroParadox.endFlip_doubling_control   -- Reading: interleaving doubling with a loop and a corner and no climb, and its reachability carries the tree at ⊥ of `End`; with `unitMotion_not_corner` below, doubling forces none of corner, loop, climb
 #check @ZeroParadox.Motion.unit_doubling_degenerate -- Reading: non-degeneracy is load-bearing: `unitMotion` meets both doublings, fails only `NonDegenerate`, and carries no tree (next `example`)
