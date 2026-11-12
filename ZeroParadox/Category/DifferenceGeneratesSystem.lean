@@ -24,7 +24,7 @@ correspondence is its rigorous home, not a verbatim restatement of it. This file
 — it *identifies* the conjecture with recognized structure and routes Mathlib's theorems.
 
 **Credit (both directions recognized):** the machinery is nucleus/sublocale theory (nLab: *nucleus*,
-*sublocale*; the point-free Lawvere–Tierney topology). The *reading* of it as "opposition / difference
+*sublocale*; Picado–Pultr 2012, Prop. III.5.3.2 p. 32, in the ride-along). The *reading* of it as "opposition / difference
 generates structure" is **Lawvere's categorical dialectics** — adjoint functors and the Aufhebung as the
 unity of opposites (F. W. Lawvere, "Unity and identity of opposites in calculus and physics", *Applied
 Categorical Structures* 4 (1996)). The Zero Paradox framework **joins** this program, it does not own it.

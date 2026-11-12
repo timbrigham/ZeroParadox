@@ -1,13 +1,13 @@
 """
 Build ZP-J Wheel Illustrated Companion
-Version 1.15 | November 2026
+Version 1.16 | November 2026
 """
 
 import os
 from zp_utils import *
 from reportlab.graphics.shapes import Drawing, Line, String, Circle, Ellipse
 
-VERSION = '1.15'
+VERSION = '1.16'
 FIRST_RELEASED = 'June 2026'
 
 
@@ -293,7 +293,9 @@ def build():
         'also steps only to itself under inversion (winv_one, the inverse of 1 is 1), and in any '
         'wheel with more than one element 1 and 0&#183;/0 differ (Carlstr&#246;m, Proposition '
         '4.4). Occupants in the framework\'s other carriers fill the same role and are not one '
-        'object with it, since an equation across carriers is ill-typed.'))
+        'object with it, since an equation across carriers is ill-typed. Reading the role as '
+        'filled per carrier, rather than by one object, is an instance of the structuralist '
+        'reading of Benacerraf, "What Numbers Could Not Be," <i>Philosophical Review</i> 74(1) (1965) 47&#8211;73, p. 70, not its source.'))
     E.append(sp(6))
 
     print(f'[build_zpj_wheel_companion] Assembling document ({len(E)} elements)...')

@@ -35,7 +35,7 @@ list for `$ARGUMENTS`:
 - Windows: use the Grep and Glob tools; never `find`. Direct `git` and `gh` are blocked and not needed.
 - `.claude-local/` is gitignored and Grep honours `.gitignore`. A Grep from the repository root, or
   one given `.claude-local/**` as its `glob`, returns NOTHING from the private notes (measured
-  2026-11-11: 0 hits that way, 381 occurrences of `DC-53` with `path` set to `.claude-local`). Pass
+  2026-11-12: 0 hits that way, 340 occurrences of `DC-53` with `path` set to `.claude-local/notes`). Pass
   each place in the list below as Grep's `path`, never as its `glob`. A Grep over the whole of
   `.claude-local` timed out on 2026-11-12: search `.claude-local/notes` and `.claude-local/queue` as
   separate paths.

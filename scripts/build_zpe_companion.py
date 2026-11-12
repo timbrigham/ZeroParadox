@@ -1,6 +1,6 @@
 """
 Build ZP-E Illustrated Companion
-Version 1.41 | November 2026
+Version 1.42 | November 2026
 """
 
 import os
@@ -175,7 +175,7 @@ def axioms_table():
     t = Table(data, colWidths=[TW*0.18, TW*0.82])
     t.setStyle(ts); return t
 
-VERSION = '1.41'
+VERSION = '1.42'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -334,6 +334,9 @@ def build():
         'is settled chart by chart — read as interpreting itself, it leaves no '
         'external position from which it could be read as a static description. As shown above, '
         'that rules out an external executor, not an inert ⊥. '
+        'Treating CC-2 as a role whose occupant is settled per chart, rather than as one '
+        'object, is an instance of the structuralist reading of Benacerraf, "What Numbers Could Not Be," <i>Philosophical Review</i> 74(1) (1965) 47&#8211;73, p. 70, '
+        'not its source. '
         '(2) Informational, in two charts: surprisal grows without bound with depth in the ball hierarchy, '
         'each value finite (ZP-C L-INF, l_inf); and at 0 of ℚ₂, the one point in every ball of the chain centred '
         'at 0, the 2-adic additive valuation is ⊤ (padic_addVal_bot). ⊥ of the machine-state type, c₀, corresponds to '

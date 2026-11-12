@@ -1,5 +1,5 @@
 """
-Zero Paradox — Foreword PDF Builder (v2.47, revised November 2026)
+Zero Paradox — Foreword PDF Builder (v2.48, revised November 2026)
 Follows all rules in pdf rendering standards.md:
   - All table cells are Paragraph objects
   - No unicode subscripts — use sub/super tags
@@ -9,7 +9,7 @@ Follows all rules in pdf rendering standards.md:
 import os
 from zp_utils import *
 
-VERSION = '2.47'
+VERSION = '2.48'
 FIRST_RELEASED = 'April 2026'
 
 # ── fix() and prose_check() guard on every Paragraph ──
@@ -210,7 +210,12 @@ def build():
             'of addition, inheriting whatever structure the framework provides. '
             'In logic, the corresponding element is falsehood: the proposition that implies '
             'everything and is implied by nothing. '
-            'In every case, zero occupies the same structural position: it is where things start.',
+            'In every case, zero occupies the same structural position: it is where things start. '
+            'That zero names a role rather than an object is not a new reading: it is the '
+            'structuralist view of number in Paul Benacerraf&#8217;s "What Numbers Could Not Be" '
+            '(<i>Philosophical Review</i> 74(1), 1965, 47&#8211;73; p. 70: "Any object can play the '
+            'role of 3"), and the framework&#8217;s chart-by-chart results are an instance of it, not '
+            'its source.',
             S['body']),
         Paragraph(
             'This raises two questions that are easy to state and surprisingly hard to answer. '
