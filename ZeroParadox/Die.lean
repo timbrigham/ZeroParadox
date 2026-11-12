@@ -4615,8 +4615,10 @@ theorem em_of_boolStepTrichotomy_imp_omniscient
 
 /-- `Statement:` if `Omniscient X → BoolStepTrichotomy X` on every inhabited `X : Type`, the
     `DecidableEq` premise dropped, excluded middle holds; one way, on `Bool` with `true` and `false`
-    identified exactly when `P`. `Reading:` the quotient is Diaconescu's (`em_of_choiceFragment`,
-    `ZeroParadox/Category/ExcludedMiddleBridge.lean` § II). -/
+    identified exactly when `P`. `Reading:` the quotient is Diaconescu's (Diaconescu 1975, Proc. AMS
+    51(1), p. 177, the coequalizer of the two injections into `A + A`); the corpus's own § II version,
+    `em_of_choiceFragment` (`ZeroParadox/Category/ExcludedMiddleBridge.lean`), is the two-predicate
+    form and builds no quotient. -/
 theorem em_of_omniscient_imp_boolStepTrichotomy
     (H : ∀ X : Type, Nonempty X → Omniscient X → BoolStepTrichotomy X) :
     ∀ P : Prop, P ∨ ¬ P := by
