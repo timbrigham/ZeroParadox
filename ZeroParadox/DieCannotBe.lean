@@ -246,7 +246,13 @@ example : ∃ M : ZeroParadox.Motion (Fin 4),
 #check @ZeroParadox.Motion.corner_iff_loop_or_climb_classical -- Statement: the same with no binder, proved with `classical`
 #check @ZeroParadox.Motion.not_not_loop_or_climb_of_corner -- Statement: with no binder, a corner gives `¬¬ (Loop ∨ Climb)`
 #check @ZeroParadox.Motion.em_of_corner_loop_or_climb -- Statement: if a corner gives a loop or a climb on every motion on every `β : Type`, excluded middle holds (`[propext]`); so a choice-free proof of the binder-free twin's forward direction at `Type` would be a choice-free proof of excluded middle (ESSENTIAL on the premise of `ZeroParadox/Category/ChoiceCannotBe.lean` § IV)
-#check @ZeroParadox.UpAndOver.toMotion_climb    -- Statement: the die motion of an `UpAndOver` (UP its closure, OVER the covers) climbs
+#check @ZeroParadox.Motion.em_of_dne_corner     -- Statement: if `¬¬ Corner → Corner` on every motion on `Bool`, excluded middle holds (`[propext]`); one way
+#check @ZeroParadox.Motion.corner_of_not_not_classical -- Statement: `¬¬ Corner → Corner` on every motion, proved with `classical`
+-- Statement: `¬¬ Corner → Corner` on every motion on `Bool` and excluded middle are inter-derivable;
+-- both directions.
+example : (∀ M : ZeroParadox.Motion Bool, ¬¬ M.Corner → M.Corner) ↔ ZeroParadox.ExcludedMiddle :=
+  ⟨ZeroParadox.Motion.em_of_dne_corner, fun hem M h => (hem M.Corner).resolve_right h⟩
+#check @ZeroParadox.UpAndOver.toMotion_climb   -- Statement: the die motion of an `UpAndOver` (UP its closure, OVER the covers) climbs
 #check @ZeroParadox.UpAndOver.toMotion_not_loop -- Statement: and does not loop, its legs agreeing (`toMotion_agree`, `not_loop_of_agree`)
 #check @ZeroParadox.UpAndOver.toMotion_ne_of_loop -- Statement: so a motion that loops is the die motion of no `UpAndOver`
 -- Reading (Tim, 2026-10-22, verbatim): "I do think that that shape can represent a self loop which by
@@ -3452,7 +3458,15 @@ example : (fun i : Fin 3 => i + 1) ≠ (fun i => i + 2) ∧
 -- Reading: EXCHANGE, not coincidence: `zeroInftyIso` carries the distinct collapse targets `zero` and
 -- `infty` onto each other, as `rInv_swaps` exchanges 0 and ∞; the coincidence witness of the pole
 -- stays `infinitude_forces_infinite_complexity` (`ZeroParadox/BottomCannotBe.lean` § INVERSION).
-#check @ZeroParadox.Pole.corner_polarity         -- Statement: under `poleView`, `cornerZero` lowers, `cornerInfty` raises, `cornerId` does both, `swap` neither
+#check @ZeroParadox.Pole.dnegLayer              -- Statement: `zero ↦ ¬¬P`, `infty ↦ ¬¬¬P`
+#check @ZeroParadox.Pole.not_dnegLayer_iff      -- Statement: negating `dnegLayer P q` gives `dnegLayer P (swap q)`
+#check @ZeroParadox.Pole.dnegLayer_injective_exclusive -- Statement: `¬¬P ≠ ¬¬¬P`, and the two do not both hold
+#check @ZeroParadox.Pole.not_dnegLayer_conj     -- Statement: conjugating a map of the layer by negation is conjugating the corner by `swap`
+#check @ZeroParadox.Pole.not_not_dnegLayer_iff  -- Statement: on the layer, negation twice is equivalent to the identity
+-- Reading: EXCHANGE, as `zeroInftyIso`: negation carries the distinct `¬¬P` and `¬¬¬P` onto each
+-- other, on the two-element regular layer only; on `Prop`, `P ↦ ¬¬P` is one-way (`dnegNucleus`),
+-- so this is `swap`'s shape at another level, never an identity.
+#check @ZeroParadox.Pole.corner_polarity        -- Statement: under `poleView`, `cornerZero` lowers, `cornerInfty` raises, `cornerId` does both, `swap` neither
 #check @ZeroParadox.Pole.pole_polarity_swap      -- Statement: for every motion on `Pole`, raising under `poleViewSwap` is lowering under `poleView`
 #check @ZeroParadox.towerToZp2Hom                -- Statement: `cnfToZp2` maps the steps of `ofFun omegaPowNote` on `NONote` to those of `ofFun towerImageStep` on ℤ_[2]
 #check @ZeroParadox.towerToOrdHom                -- Statement: `NONote.repr` maps the same steps to those of `ofFun (ω^·)` on `Ordinal`
@@ -4453,6 +4467,35 @@ example : (∀ (r : Option ℕ → Option ℕ → Bool) (y : Option ℕ),
     ZeroParadox.LPO :=
   ⟨ZeroParadox.Motion.lpo_of_trichotomy_option_boolStep,
     ZeroParadox.Motion.overTrichotomy_option_boolStep_of_lpo⟩
+#check @ZeroParadox.Omniscient                 -- Statement: every `p : X → Bool` is `true` somewhere or `false` everywhere
+#check @ZeroParadox.Searchable                 -- Statement: a selection function: `p (ε p) = true` or `p` is `false` everywhere
+#check @ZeroParadox.PointwiseSearchable        -- Statement: per `p`, some `x` with `p x = true`, or `p` `false` everywhere
+#check @ZeroParadox.OmniscientAway             -- Statement: every `p` is `true` at a point other than `y`, or `true` at `y` only
+#check @ZeroParadox.BoolStepTrichotomy         -- Statement: every `Bool`-valued step on `X` meets the trichotomy at every point
+#check @ZeroParadox.BoolStepSelected           -- Statement: every `Bool`-valued step on `X` has a total selector
+#check @ZeroParadox.boolStepTrichotomy_iff_omniscientAway -- Statement: `BoolStepTrichotomy X` iff `OmniscientAway X y` at every `y`
+#check @ZeroParadox.omniscient_of_omniscientAway -- Statement: `OmniscientAway X y` at one `y` gives `Omniscient X`
+#check @ZeroParadox.omniscient_of_boolStepTrichotomy -- Statement: on an inhabited `X`, the trichotomy gives `Omniscient X`
+#check @ZeroParadox.boolStepTrichotomy_of_omniscient -- Statement: with `DecidableEq`, `Omniscient X` gives the trichotomy
+#check @ZeroParadox.boolStepTrichotomy_of_subsingleton -- Statement: a carrier with all points equal has the trichotomy
+#check @ZeroParadox.em_of_boolStepTrichotomy_imp_omniscient -- Statement: CONTROL: the trichotomy-to-omniscience arrow without `Nonempty`, on every `Type`, gives excluded middle
+#check @ZeroParadox.em_of_omniscient_imp_boolStepTrichotomy -- Statement: CONTROL: the converse without `DecidableEq`, on every inhabited `Type`, gives excluded middle
+#check @ZeroParadox.boolStepSelected_of_searchable -- Statement: `Searchable X` gives `BoolStepSelected X`
+#check @ZeroParadox.pointwiseSearchable_of_boolStepSelected -- Statement: on an inhabited `X`, `BoolStepSelected X` gives `PointwiseSearchable X`
+#check @ZeroParadox.pointwiseSearchable_iff_omniscient -- Statement: on an inhabited `X`, `PointwiseSearchable X ↔ Omniscient X`
+#check @ZeroParadox.boolStepSelected_empty_not_searchable -- Statement: CONTROL: `Empty` has `BoolStepSelected` and is not `Searchable`
+#check @ZeroParadox.omniscient_option_iff      -- Statement: `Omniscient (Option X) ↔ Omniscient X`
+-- Statement: `NInf` is searchable away from every point, from `overTrichotomy_ninf_boolStep`.
+example (y : ZeroParadox.NInf) : ZeroParadox.OmniscientAway ZeroParadox.NInf y :=
+  ZeroParadox.boolStepTrichotomy_iff_omniscientAway.1
+    (fun r y => ZeroParadox.Motion.overTrichotomy_ninf_boolStep r y) y
+-- Statement: the `Option ℕ` iff above, again, through the general theorems.
+example : ZeroParadox.BoolStepTrichotomy (Option ℕ) ↔ ZeroParadox.LPO :=
+  ⟨fun h => ZeroParadox.omniscient_option_iff.1 (ZeroParadox.omniscient_of_boolStepTrichotomy ⟨none⟩ h),
+   fun h => ZeroParadox.boolStepTrichotomy_of_omniscient (ZeroParadox.omniscient_option_iff.2 h)⟩
+-- Reading: for a `Bool`-valued step the trichotomy's cost is the carrier's search away from a point:
+-- none on `Bool` (§ XI) and `NInf`, LPO on `Option ℕ` and on `ℕ`. Escardó grades omniscience by the
+-- set searched (preprint of JSL 78(3) (2013), p. 1; § XIII).
 -- Reading: the converse of the selector reduction, LPO to a total selector on `Option ℕ`, was not
 -- located in the corpus as of 2026-10-29, searched by case-insensitive greps of
 -- `ZeroParadox/**/*.lean` for `selectedtotal`, for `selector` and `lpo` on one line in either order,

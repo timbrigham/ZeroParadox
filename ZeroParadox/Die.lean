@@ -228,6 +228,22 @@ theorem not_not_loop_or_climb_of_corner (h : M.Corner) : ¬¬ (M.Loop ∨ M.Clim
   subst hzy
   exact ⟨z, b, hy, hs, fun e => hzb e.symm, hz⟩
 
+/-- `Statement:` if, on every motion on `Bool`, `¬¬ Corner` gives `Corner`, excluded middle holds;
+    one way. The reduction runs on `ofTotal (fun _ => false) _ (fun _ _ => q)`, whose corner fires
+    iff `q`, at `q := p ∨ ¬ p`. -/
+theorem em_of_dne_corner (H : ∀ M : Motion Bool, ¬¬ M.Corner → M.Corner) :
+    ∀ p : Prop, p ∨ ¬ p := by
+  have key : ∀ q : Prop,
+      (ofTotal (fun _ : Bool => false) (fun _ => rfl) (fun _ _ => q)).Corner ↔ q := fun q =>
+    ⟨fun ⟨_, _, _, _, hs, _, _⟩ => hs,
+     fun hq => ⟨false, true, false, Part.mem_some _, hq, Part.mem_some _, by decide⟩⟩
+  intro p
+  exact (key _).1 (H _ fun n => n ((key _).2 (Or.inr fun hp => n ((key _).2 (Or.inl hp)))))
+
+/-- `Statement:` on every motion, `¬¬ Corner` gives `Corner`, proved with `Classical.byContradiction`. -/
+theorem corner_of_not_not_classical : ¬¬ M.Corner → M.Corner :=
+  fun h => Classical.byContradiction h
+
 /-- `Statement:` if the corner fires, OVER exists from some landing; one way. -/
 theorem corner_overAtLanding : M.Corner → M.OverAtLanding :=
   fun ⟨y, b, _, hy, hs, _, _⟩ => ⟨y, b, hy, hs⟩
@@ -4479,6 +4495,225 @@ theorem lpo_of_loopAt_image (r : NInf → Option ℕ)
 
 end Motion
 
+/-! Searchability of the carrier against the `Bool`-valued OVER leg. `Omniscient` and `Searchable`
+are Escardó's (preprint of JSL 78(3) (2013), p. 1 and Definition 2.1, p. 3) in the polarity of LPO
+(`ZeroParadox/Category/LawvereTaboo.lean`): a `true` point, or `false` everywhere. `NInf.omniscient`
+and `NInf.eps_spec` (with `NInf.covered_limit_searchable`) state the same for `NInf` in the other
+polarity, `p` replaced by `!p`. The instances on `ℕ`, `Option ℕ` and `NInf`
+(`Motion.lpo_of_trichotomy_nat_boolStep`, `Motion.lpo_of_trichotomy_option_boolStep`,
+`Motion.overTrichotomy_ninf_boolStep`) are cases of the theorems below, not proved through them. -/
+
+/-- `Statement:` every `p : X → Bool` is `true` somewhere or `false` everywhere. -/
+def Omniscient (X : Type u) : Prop := ∀ p : X → Bool, (∃ x, p x = true) ∨ ∀ x, p x = false
+
+/-- `Statement:` a selection function `ε`: `p (ε p) = true` or `p` is `false` everywhere. -/
+def Searchable (X : Type u) : Prop :=
+  ∃ ε : (X → Bool) → X, ∀ p : X → Bool, p (ε p) = true ∨ ∀ x, p x = false
+
+/-- `Statement:` for each `p : X → Bool`, some `x` has `p x = true` or `p` is `false` everywhere. -/
+def PointwiseSearchable (X : Type u) : Prop :=
+  ∀ p : X → Bool, ∃ x, p x = true ∨ ∀ y, p y = false
+
+/-- `Statement:` every `p : X → Bool` is `true` at some point other than `y`, or `true` at `y` only. -/
+def OmniscientAway (X : Type u) (y : X) : Prop :=
+  ∀ p : X → Bool, (∃ b, p b = true ∧ b ≠ y) ∨ ∀ b, p b = true → b = y
+
+/-- `Statement:` every `Bool`-valued step on `X`, with identity UP, meets the trichotomy at every
+    point. -/
+def BoolStepTrichotomy (X : Type u) : Prop :=
+  ∀ (r : X → X → Bool) (y : X),
+    (Motion.ofTotal id (fun _ => rfl) (fun a b => r a b = true)).OverTrichotomy y
+
+/-- `Statement:` every `Bool`-valued step on `X`, with identity UP, has a total selector. -/
+def BoolStepSelected (X : Type u) : Prop :=
+  ∀ r : X → X → Bool, (Motion.ofTotal id (fun _ => rfl) (fun a b => r a b = true)).SelectedTotal
+
+/-- `Statement:` `BoolStepTrichotomy X` iff `OmniscientAway X y` at every `y`; both directions. -/
+theorem boolStepTrichotomy_iff_omniscientAway {X : Type u} :
+    BoolStepTrichotomy X ↔ ∀ y, OmniscientAway X y := by
+  constructor
+  · intro H y p
+    rcases H (fun _ b => p b) y with h | ⟨_, hu⟩ | ⟨b, hb, hne⟩
+    · exact Or.inr fun b hb => absurd hb (h b)
+    · exact Or.inr fun b hb => hu b hb
+    · exact Or.inl ⟨b, hb, hne⟩
+  · intro H r y
+    rcases H y (r y) with ⟨b, hb, hne⟩ | h
+    · exact Or.inr (Or.inr ⟨b, hb, hne⟩)
+    · cases hyy : r y y with
+      | false =>
+        refine Or.inl fun b hb => ?_
+        have hb' : r y b = true := hb
+        have e := h b hb'
+        subst e
+        rw [hyy] at hb'
+        cases hb'
+      | true => exact Or.inr (Or.inl ⟨hyy, fun b hb => h b hb⟩)
+
+/-- `Statement:` `OmniscientAway X y` at one `y` gives `Omniscient X`. -/
+theorem omniscient_of_omniscientAway {X : Type u} {y : X} (h : OmniscientAway X y) :
+    Omniscient X := by
+  intro p
+  rcases h p with ⟨b, hb, _⟩ | h
+  · exact Or.inl ⟨b, hb⟩
+  · cases hy : p y with
+    | true => exact Or.inl ⟨y, hy⟩
+    | false =>
+      refine Or.inr fun b => ?_
+      cases hb : p b with
+      | false => rfl
+      | true =>
+        have e := h b hb
+        subst e
+        rw [hy] at hb
+        exact hb.symm
+
+/-- `Statement:` on an inhabited `X`, `BoolStepTrichotomy X` gives `Omniscient X`. -/
+theorem omniscient_of_boolStepTrichotomy {X : Type u} (hn : Nonempty X)
+    (h : BoolStepTrichotomy X) : Omniscient X :=
+  let ⟨y⟩ := hn
+  omniscient_of_omniscientAway (boolStepTrichotomy_iff_omniscientAway.1 h y)
+
+-- The `DecidableEq` binder is kept in the type on purpose: `em_of_omniscient_imp_boolStepTrichotomy`
+-- below prices dropping it.
+set_option linter.unusedDecidableInType false in
+/-- `Statement:` with decidable equality, `Omniscient X` gives `BoolStepTrichotomy X`. -/
+theorem boolStepTrichotomy_of_omniscient {X : Type u} [DecidableEq X] (h : Omniscient X) :
+    BoolStepTrichotomy X := by
+  refine boolStepTrichotomy_iff_omniscientAway.2 fun y p => ?_
+  rcases h (fun b => p b && !decide (b = y)) with ⟨b, hb⟩ | hall
+  · have h1 : p b = true ∧ decide (b = y) = false := by
+      revert hb; cases p b <;> cases decide (b = y) <;> decide
+    exact Or.inl ⟨b, h1.1, of_decide_eq_false h1.2⟩
+  · refine Or.inr fun b hb => ?_
+    have h3 : (p b && !decide (b = y)) = false := hall b
+    rw [hb] at h3
+    have h2 : decide (b = y) = true := by revert h3; cases decide (b = y) <;> decide
+    exact of_decide_eq_true h2
+
+/-- `Statement:` a carrier whose points are all equal has `BoolStepTrichotomy`. -/
+theorem boolStepTrichotomy_of_subsingleton {X : Type u} (hs : ∀ a b : X, a = b) :
+    BoolStepTrichotomy X := by
+  intro r y
+  cases hyy : r y y with
+  | false =>
+    refine Or.inl fun b hb => ?_
+    have hb' : r y b = true := hb
+    rw [hs b y, hyy] at hb'
+    cases hb'
+  | true => exact Or.inr (Or.inl ⟨hyy, fun b _ => hs b y⟩)
+
+/-- `Statement:` if `BoolStepTrichotomy X → Omniscient X` on every `X : Type`, the `Nonempty`
+    premise dropped, excluded middle holds; one way, on `{_u : Unit // P}`. -/
+theorem em_of_boolStepTrichotomy_imp_omniscient
+    (H : ∀ X : Type, BoolStepTrichotomy X → Omniscient X) : ∀ P : Prop, P ∨ ¬ P := by
+  intro P
+  rcases H {_u : Unit // P} (boolStepTrichotomy_of_subsingleton fun _ _ => Subtype.ext rfl)
+    (fun _ => true) with ⟨⟨_, hp⟩, _⟩ | h
+  · exact Or.inl hp
+  · exact Or.inr fun hp => absurd (h ⟨(), hp⟩) (by decide)
+
+/-- `Statement:` if `Omniscient X → BoolStepTrichotomy X` on every inhabited `X : Type`, the
+    `DecidableEq` premise dropped, excluded middle holds; one way, on `Bool` with `true` and `false`
+    identified exactly when `P`. -/
+theorem em_of_omniscient_imp_boolStepTrichotomy
+    (H : ∀ X : Type, Nonempty X → Omniscient X → BoolStepTrichotomy X) :
+    ∀ P : Prop, P ∨ ¬ P := by
+  intro P
+  let s : Setoid Bool :=
+    { r := fun a b => a = b ∨ P
+      iseqv := ⟨fun _ => Or.inl rfl, fun h => h.elim (fun e => Or.inl e.symm) Or.inr,
+        fun h1 h2 => h1.elim (fun e => h2.elim (fun e' => Or.inl (e.trans e')) Or.inr) Or.inr⟩ }
+  have hom : Omniscient (Quotient s) := by
+    intro p
+    cases h1 : p (Quotient.mk s true) with
+    | true => exact Or.inl ⟨_, h1⟩
+    | false =>
+      cases h2 : p (Quotient.mk s false) with
+      | true => exact Or.inl ⟨_, h2⟩
+      | false =>
+        refine Or.inr fun x => Quotient.ind (motive := fun x => p x = false) (fun b => ?_) x
+        cases b
+        · exact h2
+        · exact h1
+  have T := H (Quotient s) ⟨Quotient.mk s true⟩ hom
+  rcases T (fun _ _ => true) (Quotient.mk s true) with h | ⟨_, h⟩ | ⟨b, _, hne⟩
+  · exact (h (Quotient.mk s true) rfl).elim
+  · have e := h (Quotient.mk s false) rfl
+    have hr : false = true ∨ P := Quotient.exact e
+    rcases hr with hr | hp
+    · cases hr
+    · exact Or.inl hp
+  · refine Or.inr fun hp => hne ?_
+    exact Quotient.ind (motive := fun b => b = Quotient.mk s true)
+      (fun _ => Quotient.sound (Or.inr hp)) b
+
+/-- `Statement:` `Searchable X` gives `BoolStepSelected X`, the selector `a ↦ ε (r a)`. -/
+theorem boolStepSelected_of_searchable {X : Type u} (h : Searchable X) : BoolStepSelected X := by
+  obtain ⟨ε, hε⟩ := h
+  intro r
+  refine ⟨fun a => ε (r a), fun a ⟨b, hb⟩ => ?_⟩
+  rcases hε (r a) with h | h
+  · exact h
+  · have hb' : r a b = true := hb
+    rw [h b] at hb'
+    cases hb'
+
+/-- `Statement:` on an inhabited `X`, `BoolStepSelected X` gives `PointwiseSearchable X`. -/
+theorem pointwiseSearchable_of_boolStepSelected {X : Type u} (hn : Nonempty X)
+    (h : BoolStepSelected X) : PointwiseSearchable X := by
+  obtain ⟨x0⟩ := hn
+  intro p
+  obtain ⟨f, hf⟩ := h (fun _ b => p b)
+  refine ⟨f x0, ?_⟩
+  cases hp : p (f x0) with
+  | true => exact Or.inl rfl
+  | false =>
+    refine Or.inr fun b => ?_
+    cases hb : p b with
+    | false => rfl
+    | true =>
+      have h' : p (f x0) = true := hf x0 ⟨b, hb⟩
+      rw [hp] at h'
+      exact h'.symm
+
+/-- `Statement:` on an inhabited `X`, `PointwiseSearchable X ↔ Omniscient X`; both directions. -/
+theorem pointwiseSearchable_iff_omniscient {X : Type u} (hn : Nonempty X) :
+    PointwiseSearchable X ↔ Omniscient X := by
+  refine ⟨fun h p => ?_, fun h p => ?_⟩
+  · obtain ⟨x, hx | hx⟩ := h p
+    · exact Or.inl ⟨x, hx⟩
+    · exact Or.inr hx
+  · rcases h p with ⟨x, hx⟩ | h
+    · exact ⟨x, Or.inl hx⟩
+    · obtain ⟨x0⟩ := hn
+      exact ⟨x0, Or.inr h⟩
+
+/-- `Statement:` `Empty` has `BoolStepSelected` and is not `Searchable`. -/
+theorem boolStepSelected_empty_not_searchable :
+    BoolStepSelected Empty ∧ ¬ Searchable Empty :=
+  ⟨fun _ => ⟨id, fun a => a.elim⟩, fun ⟨ε, _⟩ => (ε fun _ => true).elim⟩
+
+/-- `Statement:` `Omniscient (Option X) ↔ Omniscient X`; both directions. -/
+theorem omniscient_option_iff {X : Type u} : Omniscient (Option X) ↔ Omniscient X := by
+  constructor
+  · intro h p
+    rcases h (fun o => o.elim false p) with ⟨x, hx⟩ | hall
+    · cases x with
+      | none => cases hx
+      | some x => exact Or.inl ⟨x, hx⟩
+    · exact Or.inr fun x => hall (some x)
+  · intro h p
+    cases hn : p none with
+    | true => exact Or.inl ⟨none, hn⟩
+    | false =>
+      rcases h (fun x => p (some x)) with ⟨x, hx⟩ | hall
+      · exact Or.inl ⟨some x, hx⟩
+      · exact Or.inr fun o => by
+          cases o with
+          | none => exact hn
+          | some x => exact hall x
+
 /-! ### § XXIV. A limit pinned from two directions: `PinnedLimit`
 `Reading:` Tim's role (2026-11-03), "squishy" in his word: a value pinned from below as the least
 upper bound of the stages of a climbing run (`Monotone s`) it is not a stage of, and from the step
@@ -5942,6 +6177,8 @@ open ZeroParadox
 #print axioms Motion.quotUp_eq_quot
 #print axioms Motion.upCompat_ofTotal
 #print axioms Motion.em_of_corner_loop_or_climb
+#print axioms Motion.em_of_dne_corner
+#print axioms Motion.corner_of_not_not_classical
 #print axioms everyStepCovered_of_finite
 #print axioms botCovered_of_finite
 #print axioms Motion.three_of_not_runClose
@@ -6267,5 +6504,23 @@ open ZeroParadox
 #print axioms Motion.not_aDoublingEmb_of_finite
 #print axioms Motion.fin3_not_aDoublingEmb
 #print axioms Motion.fin3Motion_fanIn_one
+#print axioms Omniscient
+#print axioms Searchable
+#print axioms PointwiseSearchable
+#print axioms OmniscientAway
+#print axioms BoolStepTrichotomy
+#print axioms BoolStepSelected
+#print axioms boolStepTrichotomy_iff_omniscientAway
+#print axioms omniscient_of_omniscientAway
+#print axioms omniscient_of_boolStepTrichotomy
+#print axioms boolStepTrichotomy_of_omniscient
+#print axioms boolStepTrichotomy_of_subsingleton
+#print axioms em_of_boolStepTrichotomy_imp_omniscient
+#print axioms em_of_omniscient_imp_boolStepTrichotomy
+#print axioms boolStepSelected_of_searchable
+#print axioms pointwiseSearchable_of_boolStepSelected
+#print axioms pointwiseSearchable_iff_omniscient
+#print axioms boolStepSelected_empty_not_searchable
+#print axioms omniscient_option_iff
 
 end PurityCheck

@@ -604,6 +604,10 @@ uniform legs proved by anonymous `example` are cited by section. -/
 -- at every point of every motion on every `α : Type` it gives excluded middle
 -- (`ZeroParadox/DieCannotBe.lean` § XI).
 #check @ZeroParadox.Motion.overTrichotomy_of_option
+-- Statement: the die's corner under double negation: `¬¬ Corner → Corner` on every motion on `Bool`
+-- gives excluded middle; classically it holds (`ZeroParadox/DieCannotBe.lean` § I). Not counted in § IV.
+#check @ZeroParadox.Motion.em_of_dne_corner
+#check @ZeroParadox.Motion.corner_of_not_not_classical -- Statement: `¬¬ Corner → Corner`, proved with `classical`
 -- Reading: these reductions are what constructive reverse mathematics calls Brouwerian
 -- counterexamples, "T ⟹ P, where P is a general, constructively dubious statement such as LPO" (Diener,
 -- *Constructive Reverse Mathematics*, arXiv:1804.05495v3, p. 6, PDF page 7; cited, not claimed). No count of rows is

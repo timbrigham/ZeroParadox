@@ -427,6 +427,60 @@ theorem two_point_both_ends_is_poleView {α : Type*} [PartialOrder α] [Decidabl
       exact ⟨fun h => absurd (le_antisymm (hb _) h) hab, fun h => absurd h (by decide)⟩
     · rw [hfb]; exact ⟨fun _ => le_rfl, fun _ => le_rfl⟩
 
+/-! ### § VI. Negation on the double-negation layer
+
+`dnegLayer P` places `¬¬P` at `zero` and `¬¬¬P` at `infty`, the two regular elements over `P`
+(`dnegNucleus_isClosed_iff`, `ZeroParadox/Category/DoubleNegationNucleus.lean`); the layer is the
+image of the double-negation modality `dnegNucleus`. -/
+
+/-- `Statement:` `zero ↦ ¬¬P`, `infty ↦ ¬¬¬P`. -/
+def dnegLayer (P : Prop) : Pole → Prop
+  | zero => ¬¬P
+  | infty => ¬¬¬P
+
+/-- `Statement:` the negation of `dnegLayer P q` is equivalent to `dnegLayer P (swap q)`.
+    `Reading:` on the two-element regular layer ONLY. Negation on `Prop` is not an involution there
+    (`P ↦ ¬¬P` is one-way, `dnegNucleus`); this is `swap`'s shape at a different level, never an
+    identity, as `ZeroParadox/Computability/Occurrence.lean` § IV-c fences `flipPoles`. -/
+theorem not_dnegLayer_iff (P : Prop) (q : Pole) : ¬ dnegLayer P q ↔ dnegLayer P (swap q) := by
+  cases q
+  · exact Iff.rfl
+  · exact ⟨fun h hn => h (fun hnn => hnn hn), fun h hnnn => hnnn h⟩
+
+/-- `Statement:` `dnegLayer P` is one-to-one (`¬¬P ≠ ¬¬¬P`, by `iff_not_self`), and `¬¬P` and `¬¬¬P`
+    do not both hold. `Reading:` EXCHANGE, as `zeroInftyIso`: `not_dnegLayer_iff` carries two
+    distinct propositions onto each other; not a coincidence witness. -/
+theorem dnegLayer_injective_exclusive (P : Prop) :
+    Function.Injective (dnegLayer P) ∧ ¬ (dnegLayer P zero ∧ dnegLayer P infty) := by
+  refine ⟨fun a b h => ?_, fun ⟨h2, h3⟩ => h3 h2⟩
+  cases a <;> cases b
+  · rfl
+  · exact absurd (iff_of_eq (h : (¬¬P) = ¬(¬¬P))) iff_not_self
+  · exact absurd (iff_of_eq (h.symm : (¬¬P) = ¬(¬¬P))) iff_not_self
+  · rfl
+
+/-- `Statement:` for `f : Pole → Pole`, the negation of `dnegLayer P (f (swap q))` is equivalent to
+    `dnegLayer P ((swap ∘ f ∘ swap) q)`: conjugating a map of the layer by negation is conjugating
+    the corner by `swap` (`swap_conj`). -/
+theorem not_dnegLayer_conj (P : Prop) (f : Pole → Pole) (q : Pole) :
+    ¬ dnegLayer P (f (swap q)) ↔ dnegLayer P ((swap ∘ f ∘ swap) q) :=
+  not_dnegLayer_iff P (f (swap q))
+
+-- Statement: conjugated by negation, the collapse onto `¬¬P` (`cornerZero`) is the collapse onto
+-- `¬¬¬P` (`cornerInfty`).
+example (P : Prop) (q : Pole) :
+    ¬ dnegLayer P (cornerZero (swap q)) ↔ dnegLayer P (cornerInfty q) := by
+  rw [not_dnegLayer_conj, swap_conj.1]
+
+/-- `Statement:` on the layer, negation applied twice is equivalent to the identity. -/
+theorem not_not_dnegLayer_iff (P : Prop) (q : Pole) : ¬¬ dnegLayer P q ↔ dnegLayer P q :=
+  (not_congr (not_dnegLayer_iff P q)).trans
+    ((not_dnegLayer_iff P (swap q)).trans (by rw [swap_involutive q]))
+
+-- Reading: off the layer, the way back `¬¬P → P` is `Decidable.of_not_not` for a decided `P`, and
+-- for every `P` it is excluded middle (`em_iff_all_props_regular`, `em_iff_dnegNucleus_trivial`,
+-- `ZeroParadox/Category/ExcludedMiddleBridge.lean`; scoped to `Prop`).
+
 end Pole
 end ZeroParadox
 
@@ -458,4 +512,9 @@ open ZeroParadox.Pole
 #print axioms poleView_ends
 #print axioms poleView_swap_ends
 #print axioms two_point_both_ends_is_poleView
+#print axioms dnegLayer
+#print axioms not_dnegLayer_iff
+#print axioms dnegLayer_injective_exclusive
+#print axioms not_dnegLayer_conj
+#print axioms not_not_dnegLayer_iff
 end PurityCheck
