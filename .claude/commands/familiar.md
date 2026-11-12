@@ -11,7 +11,7 @@ conclusion and not the file dumps. Run it at the FIRST familiar-sounding turn, n
 
 **What an old ruling or "never say X" line is, when the sweep finds one.** A tripwire, not a ban
 (Tim, 2026-11-11: *"those old claims are a warning to do exactly that right research what we already
-have before continuing"*). No idea is off-limits to explore. What the sweep decides is whether the
+have before continuing?"*). No idea is off-limits to explore. What the sweep decides is whether the
 work is new, partly new, or already done, and which of the old lines are Tim's own words.
 
 **Caller's job before spawning:** write `$ARGUMENTS` as the topic in one or two plain sentences, plus
@@ -19,12 +19,12 @@ the claims made in this session that you want checked, one per line. If `$ARGUME
 that list yourself from the conversation; never spawn with an empty topic.
 
 **Caller's job after:** relay the verdicts in plain language, name anything the session would
-DUPLICATE, and turn duplicated work into pointers at the existing declarations, never second copies
-(`R-TOLEAN` step 1). Carry Tim's verbatim rulings to him; revise a Claude-authored line when a
+DUPLICATE, and never write a second copy of an existing declaration; in prose, one line and a
+pointer (`R-TOLEAN` step 1). Carry Tim's verbatim rulings to him; revise a Claude-authored line when a
 measurement contradicts it.
 
-Spawn the Agent with this prompt (`subagent_type: Explore`, thoroughness "very thorough"; substitute
-the topic list for `$ARGUMENTS`):
+Spawn the general-purpose Agent (omit `subagent_type`) with this prompt, substituting the topic
+list for `$ARGUMENTS`:
 
 ---
 
@@ -33,6 +33,14 @@ the topic list for `$ARGUMENTS`):
 - READ-ONLY. Do not create, modify or delete any file anywhere. No scratch files in the repository.
 - Search `ZeroParadox/**/*.lean`, never `**/*.lean`: `.lake/` holds the whole of Mathlib.
 - Windows: use the Grep and Glob tools; never `find`. Direct `git` and `gh` are blocked and not needed.
+- `.claude-local/` is gitignored and Grep honours `.gitignore`. A Grep from the repository root, or
+  one given `.claude-local/**` as its `glob`, returns NOTHING from the private notes (measured
+  2026-11-11: 0 hits that way, 381 with `path` set to `.claude-local`). Pass each place in the list
+  below as Grep's `path`, never as its `glob`.
+- Before reporting any claim as not located, run a positive control in each place: a Grep with that
+  place as `path` for a token known to be there (`DC-53` in `.claude-local`, `theorem` in
+  `ZeroParadox`, `Tim` in the memory folder). A place whose control returns nothing was not searched; say so instead of
+  reporting "not located".
 - Read every hit before you report it. A grep line you have not opened is not a finding.
 - An unfound topic is "not located as of <date>, searched as follows", with the searches listed. A
   failed grep is evidence about the search, never about the corpus.
@@ -44,16 +52,22 @@ repository at the current working directory:
 
 $ARGUMENTS
 
+If the topic above is empty or only a placeholder, do not search: report "SCOPE UNKNOWN — no topic
+given" and stop. Be exhaustive: every place below, every phrasing below.
+
 Search all four places:
 1. the public corpus: `ZeroParadox/**/*.lean`, `ZeroParadox/**/*.md`, root `*.md`;
 2. the private notes: `.claude-local/notes/**` (including `future-research/` and `archive/`),
    `.claude-local/queue/**`, `.claude-local/DEFECTS.md`, `.claude-local/DEFECT_CLASSES.md`;
 3. Tim's rulings: `.claude-local/notes/tim_rulings_*.md`;
-4. the memory files: `C:\Users\timbr\.claude\projects\C--Workspace-ZeroParadox\memory\*.md`.
+4. the memory files: this project's auto-memory directory (the `memory/` folder of the Claude Code
+   project for this repository; its index is `MEMORY.md`).
 
 Use at least three phrasings per claim, varied by POLARITY (how the corpus would say it if it
 DISAGREED), PART OF SPEECH (the verb that builds it, not the noun), and VOCABULARY (the standard
-mathematical term and the ZP shorthand both). Search declaration NAMES as well as wording.
+mathematical term and the ZP shorthand both), and by DISPLAY: never conclude absence from truncated
+output (Grep's default `head_limit` truncates; re-run with `head_limit: 0` or a higher limit before
+reporting a count or an absence). Search declaration NAMES as well as wording.
 
 ## Report
 
