@@ -70,7 +70,7 @@ Search all four places:
    `.claude-local/autobiography/`;
 3. Tim's rulings: `.claude-local/notes/tim_rulings_*.md`;
 4. the memory files: this project's Claude Code auto-memory folder, the `memory/` folder under
-   `.claude/projects/` in the user's home directory whose project folder is named after this
+   `~/.claude/projects/` in the user's home directory whose project folder is named after this
    repository's path (its index is `MEMORY.md`; the other project memory folders beside it are not
    this one, and the Glob control above is what tells them apart).
 
