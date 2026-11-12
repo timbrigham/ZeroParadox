@@ -23,10 +23,10 @@ Update this file first on any version bump. README.md Framework table is verifie
 | ZP-M Kleene-Ordinal Bridge | v1.20 | ZP-M_Kleene_Ordinal_Bridge.pdf | v1.14 | N/— | formal:502353c3 comp:9888babd |
 | ZP-N The Constructive Snap | v2.9 | ZP-N_The_Constructive_Snap.pdf | N/A | N/— | formal:625a4d4e |
 | ZP-P The Fixed-Point Fork | v1.37 | ZP-P_The_Fixed_Point_Fork.pdf | N/A | N/— | formal:794df5a8 |
-| ZP-R Cross-Category Fixed Point | v1.28 | ZP-R_Cross_Category_Fixed_Point.pdf | N/A | N/— | formal:e77c7aad |
+| ZP-R Cross-Category Fixed Point | v1.29 | ZP-R_Cross_Category_Fixed_Point.pdf | N/A | N/— | formal:10d00cb2 |
 | ZP-R Diagonal Family Addendum | v1.25 | ZP-R_Diagonal_Family_Addendum.pdf | N/A | N/— | formal:126a51c7 |
 | ZP-Q The Frame-Change | v1.25 | ZP-Q_The_Frame_Change.pdf | N/A | N/— | formal:355f4257 |
-| Zero Paradox Foreword | v2.48 | Zero_Paradox_Foreword.pdf | N/A | N/A | formal:b37f26ba |
+| Zero Paradox Foreword | v2.49 | Zero_Paradox_Foreword.pdf | N/A | N/A | formal:02c4c31d |
 | ZP Tools | N/A | ZP_Tools_and_Methods.pdf | N/A | N/A | formal:7d101f1d |
 | ZP Choice-Free Core Addendum | v1.19 | ZP_Choice_Free_Core_Addendum.pdf | N/A | N/A | formal:825920cd |
 
