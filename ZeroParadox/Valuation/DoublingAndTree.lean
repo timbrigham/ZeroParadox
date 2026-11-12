@@ -1,4 +1,4 @@
--- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): one-point self-reference at ⊥ does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of "⊥ is one point and two" measured against the tree. Curated results indexed in ZeroParadox/MANIFEST.md.
+-- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): one-point self-reference at ⊥ does not force the binary tree; an order embedding of the square into the carrier and a point other than ⊥ of the carrier do, one way (sufficient, not necessary); four formalizations of "⊥ is one point and two" measured against the tree. Curated results indexed in ZeroParadox/MANIFEST.md.
 import ZeroParadox.Valuation.TreeNotForced
 import ZeroParadox.Valuation.Interleave
 import ZeroParadox.Computability.SelfCopyReference
@@ -12,7 +12,7 @@ import Mathlib.Order.Fin.Basic
 import Mathlib.Tactic
 
 /-!
-# Doubling and the binary tree: one-point self-reference does not force it, the square embedded in the carrier does, one way
+# Doubling and the binary tree: one-point self-reference does not force it, the square embedded in the carrier and a point other than ⊥ of the carrier do, one way (sufficient, not necessary)
 
 ## Engineer's Take
 

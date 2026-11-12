@@ -7,7 +7,7 @@ description: Sweep the corpus, the notes and the memory for earlier work on the 
 **Invoke this when** Tim says something feels familiar, when anyone asks "have you seen X?", or
 before any scratch probe or `.lean` work on an idea you can state in one sentence. It is step (1) of
 `R-PRIORART` ("grep our own corpus"), run as a delegated sweep so the main thread keeps the
-conclusion and not the file dumps. Run it at the FIRST familiar-sounding turn, never after building.
+conclusion and not the file dumps. Run it at the FIRST familiar-sounding turn, not after building on it; and again before promoting.
 
 **What an old ruling or "never say X" line is, when the sweep finds one.** A tripwire, not a ban
 (Tim, 2026-11-11: *"those old claims are a warning to do exactly that right research what we already
@@ -35,12 +35,15 @@ list for `$ARGUMENTS`:
 - Windows: use the Grep and Glob tools; never `find`. Direct `git` and `gh` are blocked and not needed.
 - `.claude-local/` is gitignored and Grep honours `.gitignore`. A Grep from the repository root, or
   one given `.claude-local/**` as its `glob`, returns NOTHING from the private notes (measured
-  2026-11-11: 0 hits that way, 381 with `path` set to `.claude-local`). Pass each place in the list
-  below as Grep's `path`, never as its `glob`.
+  2026-11-11: 0 hits that way, 381 occurrences of `DC-53` with `path` set to `.claude-local`). Pass
+  each place in the list below as Grep's `path`, never as its `glob`. A Grep over the whole of
+  `.claude-local` timed out on 2026-11-12: search `.claude-local/notes` and `.claude-local/queue` as
+  separate paths.
 - Before reporting any claim as not located, run a positive control in each place: a Grep with that
-  place as `path` for a token known to be there (`DC-53` in `.claude-local`, `theorem` in
-  `ZeroParadox`, `Tim` in the memory folder). A place whose control returns nothing was not searched; say so instead of
-  reporting "not located".
+  place as `path` for a token known to be there (`DC-53` with `path` set to `.claude-local/notes`,
+  `theorem` in `ZeroParadox`, and in the memory folder a Glob for `feedback_verify_pointer_status.md`,
+  a file only this project's memory holds). A place whose control returns nothing was not searched;
+  say so instead of reporting "not located".
 - Read every hit before you report it. A grep line you have not opened is not a finding.
 - An unfound topic is "not located as of <date>, searched as follows", with the searches listed. A
   failed grep is evidence about the search, never about the corpus.
@@ -56,12 +59,16 @@ If the topic above is empty or only a placeholder, do not search: report "SCOPE 
 given" and stop. Be exhaustive: every place below, every phrasing below.
 
 Search all four places:
-1. the public corpus: `ZeroParadox/**/*.lean`, `ZeroParadox/**/*.md`, root `*.md`;
+1. the public corpus: `ZeroParadox/**/*.lean`, `ZeroParadox/**/*.md`, the Markdown files at the
+   repository root (list them with Glob, then pass each as Grep's `path`), and the PDF build scripts
+   `scripts/*.py`, which carry the shipped PDF prose;
 2. the private notes: `.claude-local/notes/**` (including `future-research/` and `archive/`),
-   `.claude-local/queue/**`, `.claude-local/DEFECTS.md`, `.claude-local/DEFECT_CLASSES.md`;
+   `.claude-local/queue/**` (including `queue/wip/`), `.claude-local/DEFECTS.md`,
+   `.claude-local/DEFECT_CLASSES.md`, `.claude-local/handoff.md`, `.claude-local/outreach/`,
+   `.claude-local/autobiography/`;
 3. Tim's rulings: `.claude-local/notes/tim_rulings_*.md`;
-4. the memory files: this project's auto-memory directory (the `memory/` folder of the Claude Code
-   project for this repository; its index is `MEMORY.md`).
+4. the memory files: `C:\Users\timbr\.claude\projects\C--Workspace-ZeroParadox\memory\` (its index is
+   `MEMORY.md`; the other project memory folders beside it are not this one).
 
 Use at least three phrasings per claim, varied by POLARITY (how the corpus would say it if it
 DISAGREED), PART OF SPEECH (the verb that builds it, not the noun), and VOCABULARY (the standard
@@ -78,7 +85,7 @@ one line on what it says), then ONE verdict:
 - **(b) PARTIALLY** — say exactly what is new.
 - **(c) DISCUSSED IN NOTES ONLY** — the earlier conclusion, and whether the current work agrees with
   it or contradicts it.
-- **(d) NOT LOCATED** — with the searches run.
+- **(d) NOT LOCATED** — name the set of places searched and the searches run.
 
 Then two lists:
 - **Would duplicate:** existing declarations the current work would re-declare.

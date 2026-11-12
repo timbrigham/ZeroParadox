@@ -289,7 +289,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Valuation/ComplexityLadder.lean` - The complexity ladder: the arity is the variable-count, and it climbs without bound
 - `ZeroParadox/Valuation/ContractionRate.lean` - The contraction-rate dichotomy at the p-adic floor #3
 - `ZeroParadox/Valuation/DepthIsWait.lean` - Depth on `End` is the waiting time of its digit tape
-- `ZeroParadox/Valuation/DoublingAndTree.lean` - Doubling and the binary tree: one-point self-reference does not force it, the square embedded in the carrier does, one way
+- `ZeroParadox/Valuation/DoublingAndTree.lean` - Doubling and the binary tree: one-point self-reference does not force it, the square embedded in the carrier and a point other than ⊥ of the carrier do, one way (sufficient, not necessary)
 - `ZeroParadox/Valuation/ForkPoleProbe.lean` - Experimental probe: is the μ/ν fork independent of the pole?
 - `ZeroParadox/Valuation/IndependenceProbe.lean` - Experimental probe: are the chain axis and the branching axis independent?
 - `ZeroParadox/Valuation/InfinitudeFloor.lean` - The floor's infinite complexity AS an infinitude of zeros (research spike)
@@ -330,7 +330,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Valuation/TowerHeightFloor.lean` - Height meets floor: the tower's 2-adic images as an InfinitudeFloor, norm order reversed from stage 1 — ε₀ ≠ ⊥ of `Ordinal` preserved
   - ride-along docs: `ZeroParadox/Valuation/TowerHeightFloor.md` - Height meets floor — the tower's 2-adic images as an InfinitudeFloor, norm order reversed from stage 1
 - `ZeroParadox/Valuation/TowerTape.lean` - Local floors as subtape poles, and a tower as one tape
-- `ZeroParadox/Valuation/TreeNotForced.lean` - The binary tree above ⊥ of a join-semilattice: not forced by ⊥ as greatest lower bound of non-⊥ members, a first step, infinitely many atoms and strong atomicity of the whole order; forced, one way, by depth at every element with strong atomicity
+- `ZeroParadox/Valuation/TreeNotForced.lean` - The binary tree above ⊥ of a join-semilattice: not forced by ⊥ as greatest lower bound of non-⊥ members, a first step, infinitely many atoms and strong atomicity of the whole order; forced, one way (sufficient, not necessary), by depth at every element with strong atomicity
 
 ### Information (ZP-C)
 

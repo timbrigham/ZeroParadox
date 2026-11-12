@@ -455,7 +455,7 @@ The concrete model confirming that `ValuationStructure`'s abstract axioms have a
 
 ### `Motion.StrictIso` — `ZeroParadox/Die.lean`
 
-**Relationship to Mathlib:** Equivalent to an isomorphism in Mathlib's `CategoryTheory.Endofunctor.Coalgebra` category for `FunctorToTypes.prod (ofTypeFunctor Part) (ofTypeFunctor Set)`: `StrictIso.equivCoalgIso` (`ZeroParadox/Die.lean` § XXVI), without `Classical.choice` (its `#print axioms` line, `section PurityCheck`, `ZeroParadox/Die.lean`)
+**Relationship to Mathlib:** For carriers in one universe, equivalent to an isomorphism in Mathlib's `CategoryTheory.Endofunctor.Coalgebra` category for `FunctorToTypes.prod (ofTypeFunctor Part) (ofTypeFunctor Set)`: `StrictIso.equivCoalgIso` (`ZeroParadox/Die.lean` § XXVI), without `Classical.choice` (its `#print axioms` line, `section PurityCheck`, `ZeroParadox/Die.lean`)
 
 **Reason:** The wrapper is kept for its named fields, a pair of `Motion.Hom`s inverse on the underlying maps, which `FixedPole`, `StrictIso.rtg_iff` and the tree theorems `tree_of_aDoubling` and `tree_of_aDoubling_pole` read directly, and over which the doubling premises (`Doubling`, `ADoubling`) are stated; the back clause `Motion.StepBack` that a coalgebra homomorphism carries is derived for both maps (`StrictIso.stepBack_hom`, `StrictIso.stepBack_inv`) rather than stored.
 
