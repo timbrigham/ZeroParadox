@@ -1,13 +1,13 @@
 """
 Build ZP-J Wheel Illustrated Companion
-Version 1.17 | November 2026
+Version 1.18 | November 2026
 """
 
 import os
 from zp_utils import *
 from reportlab.graphics.shapes import Drawing, Line, String, Circle, Ellipse
 
-VERSION = '1.17'
+VERSION = '1.18'
 FIRST_RELEASED = 'June 2026'
 
 
@@ -294,9 +294,9 @@ def build():
         'wheel with more than one element 1 and 0&#183;/0 differ (Carlstr&#246;m, Proposition '
         '4.4). Occupants in the framework\'s other carriers fill the same role and are not one '
         'object with it, since an equation across carriers is ill-typed. Reading the role as '
-        'filled per carrier, rather than by one object, is an instance of the structuralist '
-        'reading of Benacerraf, "What Numbers Could Not Be," <i>Philosophical Review</i> 74(1) (1965) 47&#8211;73, p. 70, not its source; '
-        'his subject is numbers, and extending his point to the Quine-atom role is ours.'))
+        'filled per carrier, rather than by one object, applies the structuralist '
+        'reading of Benacerraf, "What Numbers Could Not Be," <i>Philosophical Review</i> 74(1) (1965) 47&#8211;73, p. 70 '
+        '(his subject is numbers) to the Quine-atom role; the per-carrier results are an instance of that reading, not its source.'))
     E.append(sp(6))
 
     print(f'[build_zpj_wheel_companion] Assembling document ({len(E)} elements)...')

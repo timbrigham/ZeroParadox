@@ -60,10 +60,9 @@ not prose — it is a class with theorems:
   *the floor has complexity `⊤`*, never as *the point of infinite complexity is the bottom*. And note
   what it rests on — the proof is `rw [I.cx_floor_eq_iSup]` and only then the chain condition, so it
   needs the identity field first; a climbing chain alone constrains `cx floor` not at all.
-* `Reading:` **COINCIDENCE**, conjectural — the framework reads that co-location of floor and `⊤` as a
-  face of `⊥ = 0 = ∞`. `CLAUDE.md` fences the pole identity as a CHART claim, *stated, not proved*,
-  whose actual witnesses are `pole_inversion` (coincidence/drift) and `rInv_swaps` (inversion). This
-  theorem is not a proof of that identity and must not be cited as one.
+* `Reading:` **COINCIDENCE**: the framework reads this co-location of the floor and `⊤` as one face of
+  the pole ⊥ = 0 = ∞, a chart claim; this theorem is its coincidence witness, with `pole_inversion`
+  (drift) and `rInv_swaps` (inversion) the other two (`ZeroParadox/BottomCannotBe.lean`, § INVERSION).
 * `Statement:` **DRIFT.** `pole_inversion` — members descend to the floor **as elements** while their
   complexity ascends to `⊤` (two measures running opposite along one sequence). ⚠ It needs the
   *extending* class `InfinitudeFloorInversion` plus a topology, and its "members descend" half is a

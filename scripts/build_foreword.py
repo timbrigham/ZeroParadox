@@ -1,5 +1,5 @@
 """
-Zero Paradox — Foreword PDF Builder (v2.50, revised November 2026)
+Zero Paradox — Foreword PDF Builder (v2.51, revised November 2026)
 Follows all rules in pdf rendering standards.md:
   - All table cells are Paragraph objects
   - No unicode subscripts — use sub/super tags
@@ -9,7 +9,7 @@ Follows all rules in pdf rendering standards.md:
 import os
 from zp_utils import *
 
-VERSION = '2.50'
+VERSION = '2.51'
 FIRST_RELEASED = 'April 2026'
 
 # ── fix() and prose_check() guard on every Paragraph ──
@@ -209,13 +209,13 @@ def build():
             'In algebra — vector spaces, rings, modules — zero is the neutral element '
             'of addition, inheriting whatever structure the framework provides. '
             'In logic, the corresponding element is falsehood: the proposition that implies '
-            'everything and is implied by nothing. '
+            'everything. '
             'In every case, zero occupies the same structural position: it is where things start. '
             'That zero names a role rather than an object is not a new reading: it is the '
             'structuralist view of number in Paul Benacerraf&#8217;s "What Numbers Could Not Be" '
             '(<i>Philosophical Review</i> 74(1), 1965, 47&#8211;73; p. 70: "Any object can play the '
-            'role of 3"). His subject is numbers; extending his point to the starting elements of the '
-            'other settings above is ours, and the framework&#8217;s chart-by-chart results are an '
+            'role of 3"). His subject is numbers; the framework applies the same reading to the '
+            'starting elements of the other settings above, and its chart-by-chart results are an '
             'instance of that reading, not its source.',
             S['body']),
         Paragraph(
@@ -582,8 +582,8 @@ def build():
             '(da2_bottom_characterization, now in ZeroParadox/Order/Snap.lean).',
             S['body']),
         Paragraph(
-            'The reading itself is older than the project: it is Benacerraf&#8217;s structuralist view '
-            'of number, cited in Section I.',
+            'The reading has a history older than the project: Benacerraf&#8217;s structuralist view '
+            'of number, cited with its scope in Section I.',
             S['body']),
         Paragraph(
             'The formal corpus took up the general form of the reading later, in three steps; the third, '
