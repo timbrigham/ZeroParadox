@@ -10,7 +10,7 @@ authoritative**.
 Ties the abstract four corners (`PoleCorners`) to the framework's 2-adic inversion and, through it, to the
 ω-tower to ε₀ (`Ordinal/CnfBridge.lean`).
 
-**The genuine Lean content is `swap_is_rInv`:** under the pole embedding `poleToSphere : Pole → Sphere`
+**The inversion corner, `swap_is_rInv` (§ II):** under the pole embedding `poleToSphere : Pole → Sphere`
 (`zero ↦ 0`, `infty ↦ ∞`), the abstract inversion corner `Pole.swap` commutes with the Riemann-sphere
 inversion `rInv` — the four-corner inversion **is** the framework's `z ↦ 1/z`, swapping the floor `0` and
 the point at infinity. So the corner that flips the two poles is not decoration: it is the framework's
@@ -28,8 +28,8 @@ actual inversion map, at the finite level.
   the 2-adic norm rises and `q2Val` falls, and for stages `n ≥ 1` the norm falls and `q2Val` rises.
   `Reading:` the tower map has a corner's shape in each chart, never an identity: order-preserving
   for `PadicInt.valuation` on the whole tower, `cornerId`'s shape; at the seed step that rests on
-  Mathlib's totalizing value `PadicInt.valuation 0 = 0`, and under the standard convention that the
-  valuation of `0` is `∞` (the convention `q2Val` follows) the seed step runs the other way, as the
+  Mathlib's totalizing value `PadicInt.valuation 0 = 0` (`PadicInt.valuation_zero`), and under the standard convention that the
+  valuation of `0` is `∞`, which `q2Val` follows (`q2Val_bot`), the seed step runs the other way, as the
   `q2Val` conjunct of `tower_polarity` records. For the norm on stages `n ≥ 1` the map is
   order-reversing, the inversion corner's shape, `swap` / `rInv` at the abstract level. On `Pole` itself
   the characterization is proved, and needs bijectivity: a bijection monotone for `poleView` is
@@ -126,7 +126,7 @@ admits that is **open and untried here**.
 
 ## Structure
 - § I   `poleToSphere` — the pole embedding into the 2-adic Riemann sphere.
-- § II  `swap_is_rInv` — the inversion corner is `rInv` (the genuine bridge content).
+- § II  `swap_is_rInv` — the inversion corner is `rInv`.
 - § III `point_and_field_at_the_poles` — the point/field inversion at the two poles.
 - § IV  `irreversible_direction_is_the_snap` — the one-way direction, co-witnessed with `t_snap_irreversible`.
 - § V   `tower_polarity` — the tower as one motion on `NONote` with maps to `Ordinal` and ℤ_[2] (a span, never `=`).

@@ -1,5 +1,5 @@
 """
-Build ZP-A Illustrated Companion (v1.24)
+Build ZP-A Illustrated Companion (v1.25)
 Covers: join-semilattice, partial order, Hasse diagram, one-directional transitions,
 monotonicity (T3), bottom-as-constituent (T2), four concrete examples, and CC-2.
 """
@@ -89,7 +89,7 @@ def transition_diagram():
                  fontName='DV-B', fillColor=RED))
     return d
 
-VERSION = '1.24'
+VERSION = '1.25'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -276,10 +276,7 @@ def build():
         'only point filling it. No ordinary, well-founded set fills '
         'it at all. No equation between &#8869; and a set is stated, since the two live in '
         'different types. Where the role is filled here it is filled once, so there is no '
-        'multiplicity. Reading a position as a role that each structure fills on its own '
-        'terms, rather than as one object, is the structuralist reading of Benacerraf, "What Numbers Could Not Be," <i>Philosophical Review</i> 74(1) (1965) 47&#8211;73 '
-        '(p. 70: "Any object can play the role of 3"); the per-setting results here are an '
-        'instance of that reading, not its source.'))
+        'multiplicity.'))
     E.append(example_box('Why this matters', [
         'Can there be two "copies" of &#8869; that are somehow different? A Quine atom '
         'says no. Any object identical to &#8869; in all structural respects IS &#8869;. '
@@ -303,6 +300,12 @@ def build():
         'its own only member, '
         'see the ZP-J Illustrated Companion; for why AFA is adopted rather than forced, see ZP-E '
         'Remark R-AFA.'))
+    E.append(cbody(
+        'Reading a position as a role that each structure fills on its own terms, rather than as '
+        'one object, is the structuralist reading of Benacerraf, "What Numbers Could Not Be," '
+        '<i>Philosophical Review</i> 74(1) (1965) 47&#8211;73 (p. 70: "Any object can play the role '
+        'of 3"). His subject is numbers; extending his point to the Quine-atom role is ours, and the '
+        'per-setting results above are an instance of that reading, not its source.'))
     E.append(sp(8))
 
     E.append(remember_box(
