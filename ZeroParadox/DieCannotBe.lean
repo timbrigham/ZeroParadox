@@ -58,6 +58,7 @@ import ZeroParadox.Information.TapeHalting
 import ZeroParadox.Information.PoleWithinEnsemble
 import ZeroParadox.Valuation.DoublingAndTree
 import ZeroParadox.State.DieProjection
+import ZeroParadox.State.QubitDie
 
 set_option maxHeartbeats 400000
 
@@ -3419,7 +3420,7 @@ example : let M := ZeroParadox.Motion.ofTotal (id : Option ℕ → Option ℕ) (
     · exact bot_le
     · exact WithBot.coe_le_coe.2 (Nat.le_succ n)
   · change none = some _ at ha; exact nomatch ha
--- Reading: an inner product as the argument, in place of an order (`ZeroParadox/State/DieProjection.lean`).
+-- Reading: `UpOrthogonal` takes an inner product as its argument where `UpRaises` takes an order (`ZeroParadox/State/DieProjection.lean`).
 #check @ZeroParadox.Motion.UpOrthogonal          -- Statement: PREMISE, every displacement `x - y`, `y ∈ up x`, is orthogonal to every landing
 #check @ZeroParadox.Motion.upOrthogonal_ofStarProjection -- Statement: member: the orthogonal projection onto `K`, whose landings are `K` (`isLanding_ofStarProjection_iff`)
 #check @ZeroParadox.Motion.starProjection_eq_of_upOrthogonal -- Statement: with `UpOrthogonal` and landings exactly `K`, every value of `up x` is `K.starProjection x`
@@ -3427,6 +3428,18 @@ example : let M := ZeroParadox.Motion.ofTotal (id : Option ℕ → Option ℕ) (
 #check @ZeroParadox.obliqueOrthoIso              -- Statement: a `Motion.StrictIso` between those two motions
 #check @ZeroParadox.obliqueOrthoIso_not_norm_preserving -- Statement: its map does not preserve the norm
 #check @ZeroParadox.upOrthogonal_not_iso_invariant -- Statement: `UpOrthogonal` is not invariant under `Motion.StrictIso`
+#check @ZeroParadox.Motion.up_eq_starProjection_of_upOrthogonal -- Statement: with `UpOrthogonal`, landings exactly `K` and UP total, `up x = Part.some (K.starProjection x)`
+#check @ZeroParadox.upOrthogonal_values_not_domain -- Statement: CONTROL: UP the identity on the line only: same landings and OVER as `orthoLineMotion`, both in `UpOrthogonal`, not total, a different motion
+#check @ZeroParadox.Motion.upOrthogonal_of_isometric_iso -- Statement: a `Motion.StrictIso` whose map preserves the real inner product carries `UpOrthogonal`
+#check @ZeroParadox.qubitMeasure                 -- Statement: measurement on ℂ² as a real inner-product space: UP the orthogonal projection onto `K`, OVER empty (`ZeroParadox/State/QubitDie.lean`)
+#check @ZeroParadox.upOrthogonal_qubitMeasure    -- Statement: member: every `qubitMeasure K`, whose landings are `K` (`isLanding_qubitMeasure_iff`)
+#check @ZeroParadox.bitFlipIso                   -- Statement: σ_x as a `Motion.StrictIso` from measure-`|0⟩` to measure-`|1⟩`
+#check @ZeroParadox.upOrthogonal_qubitMeasure_line1_of_bitFlip -- Statement: the test carried by `bitFlipIso`
+#check @ZeroParadox.qubit_poles_flip_eq_perp     -- Statement: the orthocomplement of the line through `|0⟩` is the line through `|1⟩`
+#check @ZeroParadox.qubit_poles_flip_eq_perp'    -- Statement: the orthocomplement of the line through `|1⟩` is the line through `|0⟩`
+#check @ZeroParadox.qubit_flip_fixes_plus        -- Statement: σ_x fixes `|0⟩ + |1⟩`
+#check @ZeroParadox.qubit_perp_moves_plus        -- Statement: `|0⟩ + |1⟩` is not in the orthocomplement of its own line
+#check @ZeroParadox.qubit_flip_perp_agree_at_poles -- Statement: on complex lines, σ_x-image equals orthocomplement at `|0⟩` and `|1⟩`; at `|0⟩ + |1⟩` σ_x fixes the line and the orthocomplement differs from it
 
 /-! ### § XIX. Two points and their views: the four corners, the tower span, the ends of a view -/
 #check @ZeroParadox.Pole.cornerZero_cells        -- Statement: the cells of `ofFun cornerZero` at `zero` and `infty`: trap sets, fan-in, arrival
