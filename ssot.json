@@ -672,8 +672,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 3910,
-        "files": 218
+        "declarations": 3927,
+        "files": 219
       },
       "entries": [
         {
@@ -5571,6 +5571,43 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "085c10fa-0f82-43d5-8844-a208415b25df",
+          "new": {
+            "file": "ZeroParadox/State/DieProjection.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.planeE0",
+            "short": "planeE0"
+          },
+          "old": {
+            "file": "ZeroParadox/State/DieProjection.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.planeE0",
+            "short": "planeE0",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Die: orthogonal projection as a motion; UpOrthogonal premise, landings determine UP with it, oblique control without it, StrictIso blind to the angle (Tim approved 2026-11-13)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -17969,6 +18006,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "1ddb1c97-d31b-43c6-a962-adbf9e85842a",
+          "new": {
+            "file": "ZeroParadox/State/DieProjection.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.ofStarProjection",
+            "short": "ofStarProjection"
+          },
+          "old": {
+            "file": "ZeroParadox/State/DieProjection.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.ofStarProjection",
+            "short": "ofStarProjection",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die: orthogonal projection as a motion; UpOrthogonal premise, landings determine UP with it, oblique control without it, StrictIso blind to the angle (Tim approved 2026-11-13)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "1df4ac94-e7f7-420c-9128-f9f5c6630383",
           "new": {
             "file": "ZeroParadox/Multihomed/SnapFrameChange.lean",
@@ -28283,6 +28357,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "30c3edba-2870-42db-b209-2870bba826fe",
+          "new": {
+            "file": "ZeroParadox/State/DieProjection.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.upOrthogonal_not_iso_invariant",
+            "short": "upOrthogonal_not_iso_invariant"
+          },
+          "old": {
+            "file": "ZeroParadox/State/DieProjection.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.upOrthogonal_not_iso_invariant",
+            "short": "upOrthogonal_not_iso_invariant",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die: orthogonal projection as a motion; UpOrthogonal premise, landings determine UP with it, oblique control without it, StrictIso blind to the angle (Tim approved 2026-11-13)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "30d8cbf2-309f-4bcd-bf2d-cacd10300a3d",
           "new": {
@@ -32943,6 +33054,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "3a39a6cb-0c61-4c05-92b7-683c23b7d14a",
+          "new": {
+            "file": "ZeroParadox/State/DieProjection.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.UpOrthogonal",
+            "short": "UpOrthogonal"
+          },
+          "old": {
+            "file": "ZeroParadox/State/DieProjection.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.UpOrthogonal",
+            "short": "UpOrthogonal",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die: orthogonal projection as a motion; UpOrthogonal premise, landings determine UP with it, oblique control without it, StrictIso blind to the angle (Tim approved 2026-11-13)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "3a3c396a-3391-485c-a70a-cf37f9f2b4e9",
           "new": {
             "file": "ZeroParadox/Valuation/TowerTape.lean",
@@ -35473,6 +35621,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "3f27d3b9-4149-4abb-9cd6-5b561552332c",
+          "new": {
+            "file": "ZeroParadox/State/DieProjection.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.landings_not_determine_up",
+            "short": "landings_not_determine_up"
+          },
+          "old": {
+            "file": "ZeroParadox/State/DieProjection.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.landings_not_determine_up",
+            "short": "landings_not_determine_up",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die: orthogonal projection as a motion; UpOrthogonal premise, landings determine UP with it, oblique control without it, StrictIso blind to the angle (Tim approved 2026-11-13)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "3f28ff0b-646a-4b83-9d54-829aaba642e3",
           "new": {
             "file": "ZeroParadox/Ordinal/SnapSuccession.lean",
@@ -37940,6 +38125,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "43c29e7a-c3ab-4b52-b035-6a699653c36c",
+          "new": {
+            "file": "ZeroParadox/State/DieProjection.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.obliqueOrthoIso_not_norm_preserving",
+            "short": "obliqueOrthoIso_not_norm_preserving"
+          },
+          "old": {
+            "file": "ZeroParadox/State/DieProjection.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.obliqueOrthoIso_not_norm_preserving",
+            "short": "obliqueOrthoIso_not_norm_preserving",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die: orthogonal projection as a motion; UpOrthogonal premise, landings determine UP with it, oblique control without it, StrictIso blind to the angle (Tim approved 2026-11-13)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "43c408fe-5d16-4875-abed-39ebfa057443",
           "new": {
             "file": "ZeroParadox/Valuation/TowerTape.lean",
@@ -38531,6 +38753,43 @@
             ]
           },
           "reason": "HostVerdict.lean reverted in full (7b997fa, 4a56da4) after a prior-art failure. File absent at HEAD; identifier resolves 0 times in the corpus. No claims links, no deps edges, no claim references. Tim confirmed 2026-08-22 the 7 are defects.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "44a8c0f5-c87f-4cb6-8182-be5ce1e04e3a",
+          "new": {
+            "file": "ZeroParadox/State/DieProjection.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.obliqueProj",
+            "short": "obliqueProj"
+          },
+          "old": {
+            "file": "ZeroParadox/State/DieProjection.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.obliqueProj",
+            "short": "obliqueProj",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Die: orthogonal projection as a motion; UpOrthogonal premise, landings determine UP with it, oblique control without it, StrictIso blind to the angle (Tim approved 2026-11-13)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -43743,6 +44002,43 @@
             "role": []
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "4dec32e0-ca32-421e-85cc-f23d74792a3d",
+          "new": {
+            "file": "ZeroParadox/State/DieProjection.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.obliqueOrthoIso",
+            "short": "obliqueOrthoIso"
+          },
+          "old": {
+            "file": "ZeroParadox/State/DieProjection.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.obliqueOrthoIso",
+            "short": "obliqueOrthoIso",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die: orthogonal projection as a motion; UpOrthogonal premise, landings determine UP with it, oblique control without it, StrictIso blind to the angle (Tim approved 2026-11-13)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -53837,6 +54133,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "5f56b45e-9ea4-4e3f-8e6d-a0a757dd41ad",
+          "new": {
+            "file": "ZeroParadox/State/DieProjection.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.planeE1",
+            "short": "planeE1"
+          },
+          "old": {
+            "file": "ZeroParadox/State/DieProjection.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.planeE1",
+            "short": "planeE1",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Die: orthogonal projection as a motion; UpOrthogonal premise, landings determine UP with it, oblique control without it, StrictIso blind to the angle (Tim approved 2026-11-13)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "5f63aca0-f963-49df-bcfc-f0fd0ac8806e",
           "new": {
             "file": "ZeroParadox/Valuation/TowerTape.lean",
@@ -58573,6 +58906,43 @@
             ]
           },
           "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "693fd22a-3276-4db1-beb6-071d6c0811f8",
+          "new": {
+            "file": "ZeroParadox/State/DieProjection.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.upOrthogonal_ofStarProjection",
+            "short": "upOrthogonal_ofStarProjection"
+          },
+          "old": {
+            "file": "ZeroParadox/State/DieProjection.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.upOrthogonal_ofStarProjection",
+            "short": "upOrthogonal_ofStarProjection",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die: orthogonal projection as a motion; UpOrthogonal premise, landings determine UP with it, oblique control without it, StrictIso blind to the angle (Tim approved 2026-11-13)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -67205,6 +67575,43 @@
             ]
           },
           "reason": "Typicality bridge (2026-11-01): CrossingTrials § IV-VII — almost surely gives some run; zero-block tests; typicality as an explicit hypothesis; the slot machine as a die motion.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "78cef15b-081a-4ed7-b830-0008e3565347",
+          "new": {
+            "file": "ZeroParadox/State/DieProjection.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.orthoLineMotion",
+            "short": "orthoLineMotion"
+          },
+          "old": {
+            "file": "ZeroParadox/State/DieProjection.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.orthoLineMotion",
+            "short": "orthoLineMotion",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Die: orthogonal projection as a motion; UpOrthogonal premise, landings determine UP with it, oblique control without it, StrictIso blind to the angle (Tim approved 2026-11-13)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -81764,6 +82171,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "9374985b-d5e0-4e89-b39c-db7c51c893f2",
+          "new": {
+            "file": "ZeroParadox/State/DieProjection.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.starProjection_planeLine",
+            "short": "starProjection_planeLine"
+          },
+          "old": {
+            "file": "ZeroParadox/State/DieProjection.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.starProjection_planeLine",
+            "short": "starProjection_planeLine",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Die: orthogonal projection as a motion; UpOrthogonal premise, landings determine UP with it, oblique control without it, StrictIso blind to the angle (Tim approved 2026-11-13)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "93d9ed2e-af66-4ef9-bae9-6e60b53585c3",
           "new": {
@@ -91299,6 +91743,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "a34de42c-2211-417e-98f1-3ffb7e70f731",
+          "new": {
+            "file": "ZeroParadox/State/DieProjection.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.planeLine",
+            "short": "planeLine"
+          },
+          "old": {
+            "file": "ZeroParadox/State/DieProjection.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.planeLine",
+            "short": "planeLine",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Die: orthogonal projection as a motion; UpOrthogonal premise, landings determine UP with it, oblique control without it, StrictIso blind to the angle (Tim approved 2026-11-13)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "a35a019d-9163-48af-b520-c928ffaf354b",
           "new": {
@@ -94055,6 +94536,43 @@
             "role": []
           },
           "reason": "die-wpb-1029: bridge Motion.IsBisim to Rutten's bisimulation (TCS 249 p. 11) for the Part x Set functor of Die § XX, via Endofunctor.Coalgebra.Hom (Die § XXII)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a91d693b-c783-45d0-9edf-cf55b43f63ec",
+          "new": {
+            "file": "ZeroParadox/State/DieProjection.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.obliqueMotion",
+            "short": "obliqueMotion"
+          },
+          "old": {
+            "file": "ZeroParadox/State/DieProjection.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.obliqueMotion",
+            "short": "obliqueMotion",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Die: orthogonal projection as a motion; UpOrthogonal premise, landings determine UP with it, oblique control without it, StrictIso blind to the angle (Tim approved 2026-11-13)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -98219,6 +98737,43 @@
             ]
           },
           "reason": "RiemannSphere § 0: inversion on OnePoint K over any proper normed field, with ℚ₂ and ℝ instances (ZPQ-REALS-NO-REPAIR-1 evidence, ruling 64)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "afd3cd20-30de-4b92-bf42-8d9fa62a0a4b",
+          "new": {
+            "file": "ZeroParadox/State/DieProjection.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.obliqueProj_eq_self_iff",
+            "short": "obliqueProj_eq_self_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/State/DieProjection.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.obliqueProj_eq_self_iff",
+            "short": "obliqueProj_eq_self_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Die: orthogonal projection as a motion; UpOrthogonal premise, landings determine UP with it, oblique control without it, StrictIso blind to the angle (Tim approved 2026-11-13)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -107987,6 +108542,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c089ae96-055b-4ae6-9857-1baa229b3967",
+          "new": {
+            "file": "ZeroParadox/State/DieProjection.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.starProjection_eq_of_upOrthogonal",
+            "short": "starProjection_eq_of_upOrthogonal"
+          },
+          "old": {
+            "file": "ZeroParadox/State/DieProjection.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.starProjection_eq_of_upOrthogonal",
+            "short": "starProjection_eq_of_upOrthogonal",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die: orthogonal projection as a motion; UpOrthogonal premise, landings determine UP with it, oblique control without it, StrictIso blind to the angle (Tim approved 2026-11-13)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -122007,6 +122599,43 @@
             ]
           },
           "reason": "Die quotients carrying UP: UpCompat, quotUp, landing transfer, identity-UP reduction to quot",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d8ff3cc9-3fdc-45b2-a682-63565071992d",
+          "new": {
+            "file": "ZeroParadox/State/DieProjection.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.isLanding_ofStarProjection_iff",
+            "short": "isLanding_ofStarProjection_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/State/DieProjection.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.isLanding_ofStarProjection_iff",
+            "short": "isLanding_ofStarProjection_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die: orthogonal projection as a motion; UpOrthogonal premise, landings determine UP with it, oblique control without it, StrictIso blind to the angle (Tim approved 2026-11-13)",
           "verify": {
             "axioms": null,
             "sorry_free": true

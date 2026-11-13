@@ -57,6 +57,7 @@ import ZeroParadox.Information.SnapEpsilonZero
 import ZeroParadox.Information.TapeHalting
 import ZeroParadox.Information.PoleWithinEnsemble
 import ZeroParadox.Valuation.DoublingAndTree
+import ZeroParadox.State.DieProjection
 
 set_option maxHeartbeats 400000
 
@@ -3418,6 +3419,14 @@ example : let M := ZeroParadox.Motion.ofTotal (id : Option ℕ → Option ℕ) (
     · exact bot_le
     · exact WithBot.coe_le_coe.2 (Nat.le_succ n)
   · change none = some _ at ha; exact nomatch ha
+-- Reading: an inner product as the argument, in place of an order (`ZeroParadox/State/DieProjection.lean`).
+#check @ZeroParadox.Motion.UpOrthogonal          -- Statement: PREMISE, every displacement `x - y`, `y ∈ up x`, is orthogonal to every landing
+#check @ZeroParadox.Motion.upOrthogonal_ofStarProjection -- Statement: member: the orthogonal projection onto `K`, whose landings are `K` (`isLanding_ofStarProjection_iff`)
+#check @ZeroParadox.Motion.starProjection_eq_of_upOrthogonal -- Statement: with `UpOrthogonal` and landings exactly `K`, every value of `up x` is `K.starProjection x`
+#check @ZeroParadox.landings_not_determine_up    -- Statement: CONTROL: an oblique and the orthogonal projection onto one line in ℝ²: same landings and OVER, both total, different motions, only the orthogonal one in `UpOrthogonal`
+#check @ZeroParadox.obliqueOrthoIso              -- Statement: a `Motion.StrictIso` between those two motions
+#check @ZeroParadox.obliqueOrthoIso_not_norm_preserving -- Statement: its map does not preserve the norm
+#check @ZeroParadox.upOrthogonal_not_iso_invariant -- Statement: `UpOrthogonal` is not invariant under `Motion.StrictIso`
 
 /-! ### § XIX. Two points and their views: the four corners, the tower span, the ends of a view -/
 #check @ZeroParadox.Pole.cornerZero_cells        -- Statement: the cells of `ofFun cornerZero` at `zero` and `infty`: trap sets, fan-in, arrival
