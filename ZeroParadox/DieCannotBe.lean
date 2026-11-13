@@ -3431,6 +3431,15 @@ example : let M := ZeroParadox.Motion.ofTotal (id : Option ℕ → Option ℕ) (
 #check @ZeroParadox.Motion.up_eq_starProjection_of_upOrthogonal -- Statement: with `UpOrthogonal`, landings exactly `K` and UP total, `up x = Part.some (K.starProjection x)`
 #check @ZeroParadox.upOrthogonal_values_not_domain -- Statement: CONTROL: UP the identity on the line only: same landings and OVER as `orthoLineMotion`, both in `UpOrthogonal`, not total, a different motion
 #check @ZeroParadox.Motion.upOrthogonal_of_isometric_iso -- Statement: a `Motion.StrictIso` whose map preserves the real inner product carries `UpOrthogonal`
+-- Reading: the collapse by the kernel of UP, Tim's simplification action (`ZeroParadox/Die.lean` § XXI).
+#check @ZeroParadox.Motion.upCompat_ker_up       -- Statement: the kernel of `r` is UP-compatible for `ofTotal r hr st`
+#check @ZeroParadox.Motion.collapse_all_landings -- Statement: in `quotUp` of `ofTotal r hr st` by the kernel of `r`, every class is a landing
+#check @ZeroParadox.Motion.collapseEquiv         -- Statement: the classes of the kernel of `r` are in bijection with the fixed points of `r`
+#check @ZeroParadox.Motion.collapseEquiv_mk      -- Statement: `collapseEquiv` sends the class of `a` to `r a`
+#check @ZeroParadox.orthoCollapseEquiv           -- Statement: the classes of the kernel of `K.starProjection` are in bijection with `K`
+#check @ZeroParadox.ortho_classes                -- Statement: `x`, `y` share a class of the kernel of `K.starProjection` iff `x - y ∈ Kᗮ`; both directions
+#check @ZeroParadox.obliqueCollapseEquiv         -- Statement: CONTROL: the classes of the kernel of `obliqueProj` are in bijection with `planeLine`
+#check @ZeroParadox.collapses_differ             -- Statement: `planeE1`, `-planeE0` share a class of the kernel of `obliqueProj`, not of `planeLine.starProjection`
 #check @ZeroParadox.qubitMeasure                 -- Statement: measurement on ℂ² as a real inner-product space: UP the orthogonal projection onto `K`, OVER empty (`ZeroParadox/State/QubitDie.lean`)
 #check @ZeroParadox.upOrthogonal_qubitMeasure    -- Statement: member: every `qubitMeasure K`, whose landings are `K` (`isLanding_qubitMeasure_iff`)
 #check @ZeroParadox.bitFlipIso                   -- Statement: σ_x as a `Motion.StrictIso` from measure-`|0⟩` to measure-`|1⟩`
@@ -4960,6 +4969,10 @@ example : (∀ n, ZeroParadox.slotRun (fun _ => false) n = false) ∧
 #check @ZeroParadox.botMass_eq_iInf            -- Statement: that mass is the infimum over `n` of the mass of the length-`n` cylinder at ⊥, each continuous in `p` (`cylMass_continuous`). Reading: the jump is at infinity: every cylinder's mass is continuous in `p`
 #check @ZeroParadox.pole_limit_explicit        -- Statement: the explicit tapes `fireAt n`, firing exactly at `n`, have halting runs and approach ⊥ of `ℕ → Bool` pointwise, `det` passing every `ofNat N`; ⊥'s run does not halt. Reading: choice attaches to typicality: the random limit `pole_within_ensemble_limit` measures `Classical.choice`, this one `[propext, Quot.sound]` (`ZeroParadox/Category/ChoiceCannotBe.lean` § III)
 #check @ZeroParadox.fireAt_not_MLRandom        -- Statement: CONTROL, for `0 < p`, no `fireAt n` is Martin-Löf random for `trials p hp`
+-- Reading: a heat-bath rate relocates `0 < p` to "Glauber-type rates at `T > 0`"; it does not remove it (PoleWithinEnsemble § VIII).
+#check @ZeroParadox.glauber_fires_once         -- Statement: at every `ΔE`, `T`, the firing tapes have `trials (glauberExciteNN ΔE T)` measure one
+#check @ZeroParadox.glauber_botMass            -- Statement: at every `ΔE`, `T`, `botMass (glauberExciteNN ΔE T) = 0`
+#check @ZeroParadox.glauber_jump               -- Statement: if `0 < ΔE`: `botMass` 0 at every `T`, `glauberExcite ΔE T → 0` as `T → 0⁺`, and `botMass 0 = 1`
 
 /-! ### § XXIX. A limit pinned from two directions: `PinnedLimit` -/
 -- Reading: Tim's role, "squishy" in his word: pinned from below by the stages of a run and from the

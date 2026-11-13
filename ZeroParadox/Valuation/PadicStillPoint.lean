@@ -155,6 +155,137 @@ theorem stillPoint_is_spectral_floor (α : ℝ) {n : ℕ} (hn : 0 < n)
    fun x => vladimirov_paChar_eigenvalue n hn φ hφ α x,
    stillPoint_eigenvalue_positive α hn⟩
 
+/-! ## § V — The gap above the still-point
+`Reading:` the eigenvalues of the Vladimirov operator on the characters of `ℤ_p` are textbook
+(Vladimirov, Volovich and Zelenov, *p-adic Analysis and Mathematical Physics*, World Scientific,
+1994). That the characters are complete in `L²(ℤ_p)` is not proved here. -/
+
+section Gap
+
+open Filter
+
+/-- `Statement:` `(1 - p⁻¹) ∑_{k<n} (p^α)^k + (p^α)^(n-1) p⁻¹`, the eigenvalue expression of
+    `stillPoint_is_spectral_floor`. -/
+noncomputable def vladLam (p : ℕ) (α : ℝ) (n : ℕ) : ℝ :=
+  (1 - (p : ℝ)⁻¹) * ∑ k ∈ Finset.range n, ((p : ℝ) ^ α) ^ k
+    + ((p : ℝ) ^ α) ^ (n - 1) * (p : ℝ)⁻¹
+
+omit [Fact p.Prime] in
+/-- `Statement:` `vladLam p α 1 = 1`, for every `α`. -/
+theorem vladLam_one (α : ℝ) : vladLam p α 1 = 1 := by
+  simp [vladLam]
+
+omit [Fact p.Prime] in
+/-- `Statement:` for `n ≥ 1`, `vladLam p α (n + 1) - vladLam p α n = (p^α)^(n-1) (p^α - p⁻¹)`. -/
+theorem vladLam_succ_sub (α : ℝ) {n : ℕ} (hn : 1 ≤ n) :
+    vladLam p α (n + 1) - vladLam p α n
+      = ((p : ℝ) ^ α) ^ (n - 1) * ((p : ℝ) ^ α - (p : ℝ)⁻¹) := by
+  obtain ⟨m, rfl⟩ : ∃ m, n = m + 1 := ⟨n - 1, by omega⟩
+  simp only [vladLam, Finset.sum_range_succ, Nat.add_sub_cancel]
+  ring
+
+/-- `Statement:` for `α ≥ 0` and `n ≥ 1`, `vladLam p α n < vladLam p α (n + 1)`. -/
+theorem vladLam_lt_succ (α : ℝ) (hα : 0 ≤ α) {n : ℕ} (hn : 1 ≤ n) :
+    vladLam p α n < vladLam p α (n + 1) := by
+  have hp1 : (1 : ℝ) < p := by exact_mod_cast (Fact.out : p.Prime).one_lt
+  have hinv : (p : ℝ)⁻¹ < 1 := inv_lt_one_of_one_lt₀ hp1
+  have hr : 1 ≤ (p : ℝ) ^ α := Real.one_le_rpow hp1.le hα
+  have h := vladLam_succ_sub (p := p) α hn
+  have hpos : 0 < ((p : ℝ) ^ α) ^ (n - 1) * ((p : ℝ) ^ α - (p : ℝ)⁻¹) := by
+    apply mul_pos (pow_pos (by linarith) _)
+    linarith
+  linarith
+
+/-- `Statement:` for `α ≥ 0` and `n ≥ 1`, `1 ≤ vladLam p α n`. -/
+theorem one_le_vladLam (α : ℝ) (hα : 0 ≤ α) : ∀ n, 1 ≤ n → 1 ≤ vladLam p α n := by
+  intro n hn
+  induction n with
+  | zero => omega
+  | succ m ih =>
+    rcases Nat.eq_zero_or_pos m with rfl | hm
+    · simp [vladLam_one]
+    · have := vladLam_lt_succ (p := p) α hα (n := m) hm
+      linarith [ih hm]
+
+/-- `Statement:` for `α ≥ 0`, `vladLam p α n → ∞` as `n → ∞`. -/
+theorem vladLam_tendsto_atTop (α : ℝ) (hα : 0 ≤ α) : Tendsto (vladLam p α) atTop atTop := by
+  have hp1 : (1 : ℝ) < p := by exact_mod_cast (Fact.out : p.Prime).one_lt
+  have hinv : (p : ℝ)⁻¹ < 1 := inv_lt_one_of_one_lt₀ hp1
+  have hr : 1 ≤ (p : ℝ) ^ α := Real.one_le_rpow hp1.le hα
+  set c := 1 - (p : ℝ)⁻¹ with hc
+  have hc0 : 0 < c := by linarith
+  have key : ∀ n : ℕ, 1 ≤ n → 1 + c * ((n : ℝ) - 1) ≤ vladLam p α n := by
+    intro n hn
+    induction n with
+    | zero => omega
+    | succ m ih =>
+      rcases Nat.eq_zero_or_pos m with rfl | hm
+      · simp [vladLam_one]
+      · have hs := vladLam_succ_sub (p := p) α (n := m) hm
+        have hpow : 1 ≤ ((p : ℝ) ^ α) ^ (m - 1) := one_le_pow₀ hr
+        have hinc : c ≤ ((p : ℝ) ^ α) ^ (m - 1) * ((p : ℝ) ^ α - (p : ℝ)⁻¹) := by
+          have h1 : c ≤ (p : ℝ) ^ α - (p : ℝ)⁻¹ := by rw [hc]; linarith
+          calc c ≤ (p : ℝ) ^ α - (p : ℝ)⁻¹ := h1
+            _ = 1 * ((p : ℝ) ^ α - (p : ℝ)⁻¹) := by ring
+            _ ≤ _ := mul_le_mul_of_nonneg_right hpow (by linarith)
+        have := ih hm
+        push_cast
+        nlinarith
+  refine tendsto_atTop_mono' atTop ?_ (tendsto_atTop_add_const_left _ 1
+    (Tendsto.const_mul_atTop hc0 (tendsto_atTop_add_const_right _ (-1)
+      tendsto_natCast_atTop_atTop)))
+  filter_upwards [eventually_ge_atTop 1] with n hn
+  have := key n hn
+  simpa [sub_eq_add_neg] using this
+
+omit [Fact p.Prime] in
+/-- `Statement:` CONTROL, for `n ≥ 1`, `vladLam p (-1) n = 1`. -/
+theorem vladLam_neg_one : ∀ n, 1 ≤ n → vladLam p (-1) n = 1 := by
+  have hr : (p : ℝ) ^ (-1 : ℝ) = (p : ℝ)⁻¹ := by
+    rw [Real.rpow_neg_one]
+  intro n hn
+  induction n with
+  | zero => omega
+  | succ m ih =>
+    rcases Nat.eq_zero_or_pos m with rfl | hm
+    · simp [vladLam_one]
+    · have hs := vladLam_succ_sub (p := p) (-1) (n := m) hm
+      rw [hr, sub_self, mul_zero] at hs
+      linarith [ih hm]
+
+/-- `Statement:` CONTROL, for `α < 0`, `vladLam p α` is bounded above. -/
+theorem vladLam_bounded_of_neg (α : ℝ) (hα : α < 0) : ∃ B, ∀ n, vladLam p α n ≤ B := by
+  have hp1 : (1 : ℝ) < p := by exact_mod_cast (Fact.out : p.Prime).one_lt
+  have hinv : (p : ℝ)⁻¹ < 1 := inv_lt_one_of_one_lt₀ hp1
+  set r := (p : ℝ) ^ α with hr
+  have hr0 : 0 < r := Real.rpow_pos_of_pos (by linarith) α
+  have hr1 : r < 1 := Real.rpow_lt_one_of_one_lt_of_neg hp1 hα
+  refine ⟨(1 - (p : ℝ)⁻¹) * (1 - r)⁻¹ + (p : ℝ)⁻¹, fun n => ?_⟩
+  have hsum : ∑ k ∈ Finset.range n, r ^ k ≤ (1 - r)⁻¹ := by
+    have h1r : (1 - r) ≠ 0 := by linarith
+    rw [geom_sum_eq hr1.ne, div_le_iff_of_neg (by linarith)]
+    rw [show r - 1 = -(1 - r) by ring, mul_neg, inv_mul_cancel₀ h1r]
+    linarith [pow_nonneg hr0.le n]
+  have hpow : r ^ (n - 1) ≤ 1 := pow_le_one₀ hr0.le hr1.le
+  have hc : 0 ≤ 1 - (p : ℝ)⁻¹ := by linarith
+  have hpinv : 0 ≤ (p : ℝ)⁻¹ := by positivity
+  simp only [vladLam]
+  rw [← hr]
+  nlinarith [mul_le_mul_of_nonneg_left hsum hc, mul_le_mul_of_nonneg_right hpow hpinv]
+
+/-- `Statement:` for `α ≥ 0`, `n ≥ 1` and a primitive `φ`: `vladimirov α` sends the trivial
+    character to `0` and `paChar n φ` to `vladLam p α n` times itself, and `1 ≤ vladLam p α n`. -/
+theorem vladimirov_gap (α : ℝ) (hα : 0 ≤ α) {n : ℕ} (hn : 0 < n)
+    (φ : AddChar (ZMod (p ^ n)) ℂ) (hφ : φ.IsPrimitive) :
+    (∀ x : ℤ_[p], vladimirov α (paChar (p := p) n 0) x = 0)
+      ∧ (∀ x : ℤ_[p], vladimirov α (paChar (p := p) n φ) x
+          = ((vladLam p α n : ℝ) : ℂ) * paChar (p := p) n φ x)
+      ∧ 1 ≤ vladLam p α n :=
+  let h := stillPoint_is_spectral_floor (p := p) α hn φ hφ
+  ⟨h.1, h.2.1, one_le_vladLam α hα n hn⟩
+
+end Gap
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -165,4 +296,13 @@ open ZeroParadox
 #print axioms stillPoint_vladimirov_zero
 #print axioms stillPoint_eigenvalue_positive
 #print axioms stillPoint_is_spectral_floor
+#print axioms vladLam
+#print axioms vladLam_one
+#print axioms vladLam_succ_sub
+#print axioms vladLam_lt_succ
+#print axioms one_le_vladLam
+#print axioms vladLam_tendsto_atTop
+#print axioms vladLam_neg_one
+#print axioms vladLam_bounded_of_neg
+#print axioms vladimirov_gap
 end PurityCheck

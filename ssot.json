@@ -672,8 +672,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 3954,
-        "files": 220
+        "declarations": 3981,
+        "files": 221
       },
       "entries": [
         {
@@ -2000,6 +2000,45 @@
             ]
           },
           "reason": "Die stage/closure shape and registration switch (Die.lean § VI-VII), with its two face maps in their existing homes (Epsilon0LeastFP, Occurrence)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "026f7689-6c57-4aca-81fc-d6e1e571972c",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicStillPoint.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.vladimirov_gap",
+            "short": "vladimirov_gap"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicStillPoint.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.vladimirov_gap",
+            "short": "vladimirov_gap",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Land the die collapse (simplification action, Die § XXI + DieProjection § VI), the Vladimirov gap on Z_p (PadicStillPoint § V), and the Glauber-type hand-off to occurrence (PoleWithinEnsemble § VIII) (Tim approved 2026-11-13)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -4665,6 +4704,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "06ad7dc0-2334-4182-a1e2-4e9d34be1184",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicStillPoint.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.vladLam",
+            "short": "vladLam"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicStillPoint.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.vladLam",
+            "short": "vladLam",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Land the die collapse (simplification action, Die § XXI + DieProjection § VI), the Vladimirov gap on Z_p (PadicStillPoint § V), and the Glauber-type hand-off to occurrence (PoleWithinEnsemble § VIII) (Tim approved 2026-11-13)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "06bd0366-2b61-45e9-afc7-ca2c928a881c",
           "new": {
@@ -5535,6 +5611,43 @@
             "role": []
           },
           "reason": "die-coalg-1028: motion as a Part x Set coalgebra (Die § XX) and observation as a parameter of a pair (Die § XXI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0856538b-6af1-4894-a878-054614fff39b",
+          "new": {
+            "file": "ZeroParadox/State/DieProjection.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ortho_classes",
+            "short": "ortho_classes"
+          },
+          "old": {
+            "file": "ZeroParadox/State/DieProjection.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ortho_classes",
+            "short": "ortho_classes",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the die collapse (simplification action, Die § XXI + DieProjection § VI), the Vladimirov gap on Z_p (PadicStillPoint § V), and the Glauber-type hand-off to occurrence (PoleWithinEnsemble § VIII) (Tim approved 2026-11-13)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -18414,6 +18527,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "1ee94568-4cd6-494d-aa7f-5b458dd7c970",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.glauberExcite_tendsto_zero",
+            "short": "glauberExcite_tendsto_zero"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.glauberExcite_tendsto_zero",
+            "short": "glauberExcite_tendsto_zero",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the die collapse (simplification action, Die § XXI + DieProjection § VI), the Vladimirov gap on Z_p (PadicStillPoint § V), and the Glauber-type hand-off to occurrence (PoleWithinEnsemble § VIII) (Tim approved 2026-11-13)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "1ef47329-81f7-4a27-a84d-a21401276ace",
           "new": {
             "file": "ZeroParadox/Category/DoubleNegationNucleus.lean",
@@ -24352,6 +24502,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "29acf7ad-0926-4c3b-9ac4-0de6351795ca",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.collapse_all_landings",
+            "short": "collapse_all_landings"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.collapse_all_landings",
+            "short": "collapse_all_landings",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the die collapse (simplification action, Die § XXI + DieProjection § VI), the Vladimirov gap on Z_p (PadicStillPoint § V), and the Glauber-type hand-off to occurrence (PoleWithinEnsemble § VIII) (Tim approved 2026-11-13)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "29c17702-5f3f-49ce-951a-f6e243646283",
           "new": {
             "file": "ZeroParadox/Category/DiagonalWitness.lean",
@@ -26431,6 +26618,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "2d0d88b6-6a81-4ac1-b33b-287d2754d917",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.collapseEquiv_mk",
+            "short": "collapseEquiv_mk"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.collapseEquiv_mk",
+            "short": "collapseEquiv_mk",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the die collapse (simplification action, Die § XXI + DieProjection § VI), the Vladimirov gap on Z_p (PadicStillPoint § V), and the Glauber-type hand-off to occurrence (PoleWithinEnsemble § VIII) (Tim approved 2026-11-13)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "2d5511fc-26de-4650-aff2-193896a85e0d",
           "new": {
@@ -28230,6 +28454,43 @@
             "role": []
           },
           "reason": "ExcludedMiddleBridge: choice fragment -> EM -> Prop nucleus trivial, plus the Fin 3 non-Boolean fence",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "304e97e3-b515-48a1-abed-6b07a6b542b5",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.glauberExciteNN_le_one",
+            "short": "glauberExciteNN_le_one"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.glauberExciteNN_le_one",
+            "short": "glauberExciteNN_le_one",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the die collapse (simplification action, Die § XXI + DieProjection § VI), the Vladimirov gap on Z_p (PadicStillPoint § V), and the Glauber-type hand-off to occurrence (PoleWithinEnsemble § VIII) (Tim approved 2026-11-13)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -32511,6 +32772,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "38ea305d-a50f-48ae-873d-18553b8df796",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.glauber_jump",
+            "short": "glauber_jump"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.glauber_jump",
+            "short": "glauber_jump",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the die collapse (simplification action, Die § XXI + DieProjection § VI), the Vladimirov gap on Z_p (PadicStillPoint § V), and the Glauber-type hand-off to occurrence (PoleWithinEnsemble § VIII) (Tim approved 2026-11-13)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "38fbc233-6c65-4926-a93e-6e418771cc54",
           "new": {
@@ -34727,6 +35025,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "3cf18b8b-805e-44f7-83cc-6eba23a2ab20",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.glauberExciteNN_pos",
+            "short": "glauberExciteNN_pos"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.glauberExciteNN_pos",
+            "short": "glauberExciteNN_pos",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the die collapse (simplification action, Die § XXI + DieProjection § VI), the Vladimirov gap on Z_p (PadicStillPoint § V), and the Glauber-type hand-off to occurrence (PoleWithinEnsemble § VIII) (Tim approved 2026-11-13)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "3cf2e43d-fd92-41b7-96c2-7e008b0fd5f8",
           "new": {
@@ -36726,6 +37061,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "415e1f11-06c0-461d-b4b3-ab6fd6f5eb8c",
+          "new": {
+            "file": "ZeroParadox/State/DieProjection.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.orthoCollapseEquiv",
+            "short": "orthoCollapseEquiv"
+          },
+          "old": {
+            "file": "ZeroParadox/State/DieProjection.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.orthoCollapseEquiv",
+            "short": "orthoCollapseEquiv",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the die collapse (simplification action, Die § XXI + DieProjection § VI), the Vladimirov gap on Z_p (PadicStillPoint § V), and the Glauber-type hand-off to occurrence (PoleWithinEnsemble § VIII) (Tim approved 2026-11-13)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "4175d24b-ed71-4228-95b5-d5001c74a6a2",
           "new": {
@@ -38044,6 +38416,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "4370fe1d-296b-4b11-b7de-b00b1dc8dc70",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.glauber_fires_once",
+            "short": "glauber_fires_once"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.glauber_fires_once",
+            "short": "glauber_fires_once",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the die collapse (simplification action, Die § XXI + DieProjection § VI), the Vladimirov gap on Z_p (PadicStillPoint § V), and the Glauber-type hand-off to occurrence (PoleWithinEnsemble § VIII) (Tim approved 2026-11-13)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -50334,6 +50743,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "58732850-e532-4439-aba5-d7eaf15aa6d2",
+          "new": {
+            "file": "ZeroParadox/State/DieProjection.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.obliqueCollapseEquiv",
+            "short": "obliqueCollapseEquiv"
+          },
+          "old": {
+            "file": "ZeroParadox/State/DieProjection.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.obliqueCollapseEquiv",
+            "short": "obliqueCollapseEquiv",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the die collapse (simplification action, Die § XXI + DieProjection § VI), the Vladimirov gap on Z_p (PadicStillPoint § V), and the Glauber-type hand-off to occurrence (PoleWithinEnsemble § VIII) (Tim approved 2026-11-13)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "5881c8a1-5519-4977-87e2-915e3d69e8c8",
           "new": {
@@ -54752,6 +55198,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "5ff5dd90-5c5b-41d2-afa8-ff9e60c12d14",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicStillPoint.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.vladLam_tendsto_atTop",
+            "short": "vladLam_tendsto_atTop"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicStillPoint.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.vladLam_tendsto_atTop",
+            "short": "vladLam_tendsto_atTop",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Land the die collapse (simplification action, Die § XXI + DieProjection § VI), the Vladimirov gap on Z_p (PadicStillPoint § V), and the Glauber-type hand-off to occurrence (PoleWithinEnsemble § VIII) (Tim approved 2026-11-13)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "601173af-2d2c-451a-8bd4-c95e9b80966a",
           "new": {
             "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
@@ -58325,6 +58808,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "67d7dcf2-f0a5-4946-86c8-b5e4feeb6702",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.collapseEquiv",
+            "short": "collapseEquiv"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.collapseEquiv",
+            "short": "collapseEquiv",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the die collapse (simplification action, Die § XXI + DieProjection § VI), the Vladimirov gap on Z_p (PadicStillPoint § V), and the Glauber-type hand-off to occurrence (PoleWithinEnsemble § VIII) (Tim approved 2026-11-13)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "67dee84e-502b-4f96-ab2b-1c95107fb213",
           "new": {
@@ -60875,6 +61395,43 @@
             ]
           },
           "reason": "Added in error: e0Repr_fiber_at_top_singleton duplicated e0Repr_eq_epsilon0_iff and was deleted from ZeroParadox/Ordinal/PricedInterface.lean; it does not exist at HEAD.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "6c170e9a-b562-410d-b8ef-3c53a0508429",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.glauber_ae_fires",
+            "short": "glauber_ae_fires"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.glauber_ae_fires",
+            "short": "glauber_ae_fires",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the die collapse (simplification action, Die § XXI + DieProjection § VI), the Vladimirov gap on Z_p (PadicStillPoint § V), and the Glauber-type hand-off to occurrence (PoleWithinEnsemble § VIII) (Tim approved 2026-11-13)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -66762,6 +67319,43 @@
             ]
           },
           "reason": "Die extension: OVER selection (data/total), OVER trichotomy at a point, fan-in and reversal (Die.lean § VIII-X)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "76760f50-a6cc-4c7b-bfc0-7950ac0a8b39",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicStillPoint.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.vladLam_bounded_of_neg",
+            "short": "vladLam_bounded_of_neg"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicStillPoint.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.vladLam_bounded_of_neg",
+            "short": "vladLam_bounded_of_neg",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Land the die collapse (simplification action, Die § XXI + DieProjection § VI), the Vladimirov gap on Z_p (PadicStillPoint § V), and the Glauber-type hand-off to occurrence (PoleWithinEnsemble § VIII) (Tim approved 2026-11-13)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -86041,6 +86635,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "99512ba7-6054-4dd8-ad37-a2d3e398614d",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicStillPoint.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.vladLam_neg_one",
+            "short": "vladLam_neg_one"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicStillPoint.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.vladLam_neg_one",
+            "short": "vladLam_neg_one",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Land the die collapse (simplification action, Die § XXI + DieProjection § VI), the Vladimirov gap on Z_p (PadicStillPoint § V), and the Glauber-type hand-off to occurrence (PoleWithinEnsemble § VIII) (Tim approved 2026-11-13)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "99640b46-9af2-4505-b346-a281c2ebbd01",
           "new": {
             "file": "ZeroParadox/Computability/SelfCopyReference.lean",
@@ -90964,6 +91595,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "a06fb3d4-917b-4f80-8e44-19d5b68f0349",
+          "new": {
+            "file": "ZeroParadox/State/DieProjection.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.collapses_differ",
+            "short": "collapses_differ"
+          },
+          "old": {
+            "file": "ZeroParadox/State/DieProjection.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.collapses_differ",
+            "short": "collapses_differ",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the die collapse (simplification action, Die § XXI + DieProjection § VI), the Vladimirov gap on Z_p (PadicStillPoint § V), and the Glauber-type hand-off to occurrence (PoleWithinEnsemble § VIII) (Tim approved 2026-11-13)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "a07a7aa9-f0ed-4d48-bdc8-c8bf738f4cab",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -91403,6 +92071,43 @@
             ]
           },
           "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a1369ffd-637c-4044-86c1-823ddb65c957",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicStillPoint.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.one_le_vladLam",
+            "short": "one_le_vladLam"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicStillPoint.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.one_le_vladLam",
+            "short": "one_le_vladLam",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Land the die collapse (simplification action, Die § XXI + DieProjection § VI), the Vladimirov gap on Z_p (PadicStillPoint § V), and the Glauber-type hand-off to occurrence (PoleWithinEnsemble § VIII) (Tim approved 2026-11-13)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -92545,6 +93250,43 @@
             ]
           },
           "reason": "New experimental files ZeroParadox/Information/BrudnoBridge.lean (trials and MLRandom bridged to Milovanov's kolmogorov-complexity-lean, citing his Brudno and Levin-Schnorr theorems) and ZeroParadox/Information/SnapEpsilonZero.lean (snap_of_firstStep_MLRandom instantiated on WithBot Ordinal and on EpsilonOrZero, with an order isomorphism between them).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a38f696b-d69a-4735-bbfe-4068cded6b53",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicStillPoint.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.vladLam_lt_succ",
+            "short": "vladLam_lt_succ"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicStillPoint.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.vladLam_lt_succ",
+            "short": "vladLam_lt_succ",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Land the die collapse (simplification action, Die § XXI + DieProjection § VI), the Vladimirov gap on Z_p (PadicStillPoint § V), and the Glauber-type hand-off to occurrence (PoleWithinEnsemble § VIII) (Tim approved 2026-11-13)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -108401,6 +109143,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "be6e70fc-2698-47d5-8e33-c8a2fb604927",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.glauber_botMass",
+            "short": "glauber_botMass"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.glauber_botMass",
+            "short": "glauber_botMass",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the die collapse (simplification action, Die § XXI + DieProjection § VI), the Vladimirov gap on Z_p (PadicStillPoint § V), and the Glauber-type hand-off to occurrence (PoleWithinEnsemble § VIII) (Tim approved 2026-11-13)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "be9e25a6-9b09-4ad7-abd4-bad1737615e6",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -113860,6 +114639,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "c8dbbf1c-163f-4879-bcce-a5a16536104a",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.glauberExciteNN",
+            "short": "glauberExciteNN"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.glauberExciteNN",
+            "short": "glauberExciteNN",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the die collapse (simplification action, Die § XXI + DieProjection § VI), the Vladimirov gap on Z_p (PadicStillPoint § V), and the Glauber-type hand-off to occurrence (PoleWithinEnsemble § VIII) (Tim approved 2026-11-13)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "c8e3bd41-cf84-482b-b6e1-020b4b224c72",
           "new": {
@@ -118000,6 +118816,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "ced5c0a7-a71b-4d98-b010-e18e3f8702b0",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.glauberExcite",
+            "short": "glauberExcite"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.glauberExcite",
+            "short": "glauberExcite",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the die collapse (simplification action, Die § XXI + DieProjection § VI), the Vladimirov gap on Z_p (PadicStillPoint § V), and the Glauber-type hand-off to occurrence (PoleWithinEnsemble § VIII) (Tim approved 2026-11-13)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "cee3a51a-e76e-4702-82b1-1cd2f1d9a396",
           "new": {
@@ -118248,6 +119101,43 @@
             ]
           },
           "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "cf5df4c7-8d82-45e4-bce6-ebc7dc475c2d",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.isLanding_ofTotal_iff",
+            "short": "isLanding_ofTotal_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.isLanding_ofTotal_iff",
+            "short": "isLanding_ofTotal_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the die collapse (simplification action, Die § XXI + DieProjection § VI), the Vladimirov gap on Z_p (PadicStillPoint § V), and the Glauber-type hand-off to occurrence (PoleWithinEnsemble § VIII) (Tim approved 2026-11-13)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -119979,6 +120869,43 @@
             "role": []
           },
           "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d2d95f90-991a-44e1-aef6-bae56cfa26d0",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.upCompat_ker_up",
+            "short": "upCompat_ker_up"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.upCompat_ker_up",
+            "short": "upCompat_ker_up",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land the die collapse (simplification action, Die § XXI + DieProjection § VI), the Vladimirov gap on Z_p (PadicStillPoint § V), and the Glauber-type hand-off to occurrence (PoleWithinEnsemble § VIII) (Tim approved 2026-11-13)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -124082,6 +125009,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d9f3cf2d-52c9-4544-ba1c-795a8dbc1d6e",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicStillPoint.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.vladLam_one",
+            "short": "vladLam_one"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicStillPoint.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.vladLam_one",
+            "short": "vladLam_one",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Land the die collapse (simplification action, Die § XXI + DieProjection § VI), the Vladimirov gap on Z_p (PadicStillPoint § V), and the Glauber-type hand-off to occurrence (PoleWithinEnsemble § VIII) (Tim approved 2026-11-13)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -136026,6 +136990,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ed86ac8f-7113-4675-8952-7cca93e24b8d",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicStillPoint.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.vladLam_succ_sub",
+            "short": "vladLam_succ_sub"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicStillPoint.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.vladLam_succ_sub",
+            "short": "vladLam_succ_sub",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Land the die collapse (simplification action, Die § XXI + DieProjection § VI), the Vladimirov gap on Z_p (PadicStillPoint § V), and the Glauber-type hand-off to occurrence (PoleWithinEnsemble § VIII) (Tim approved 2026-11-13)",
           "verify": {
             "axioms": null,
             "sorry_free": true
