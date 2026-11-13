@@ -672,8 +672,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 3927,
-        "files": 219
+        "declarations": 3954,
+        "files": 220
       },
       "entries": [
         {
@@ -9357,6 +9357,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "0e8cf0de-f670-41e1-ae7d-c05837a3f93e",
+          "new": {
+            "file": "ZeroParadox/State/QubitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.qubit_flip_fixes_plus",
+            "short": "qubit_flip_fixes_plus"
+          },
+          "old": {
+            "file": "ZeroParadox/State/QubitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.qubit_flip_fixes_plus",
+            "short": "qubit_flip_fixes_plus",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "DS1113-1 fix (values-not-domain control, total corollary, isometric iso carries UpOrthogonal) and the qubit as a die: measurement, bit flip as isometric StrictIso, flip vs orthocomplement on lines (Tim approved 2026-11-13)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "0e912e48-a267-4f7b-974f-ccb24937b46b",
           "new": {
             "file": "ZeroParadox/Settheory/ForkFrameChange.lean",
@@ -10005,6 +10042,43 @@
             ]
           },
           "reason": "Pole-passage probe landed (experimental PolePassage): the snap arc on the 2-adic sphere, its inversion, the clopen separation of 0 and infinity, and the q2Val return",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0f9e023b-cd8d-4b6d-948f-37cc5c5d4904",
+          "new": {
+            "file": "ZeroParadox/State/QubitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bitFlip_ket1",
+            "short": "bitFlip_ket1"
+          },
+          "old": {
+            "file": "ZeroParadox/State/QubitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bitFlip_ket1",
+            "short": "bitFlip_ket1",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "DS1113-1 fix (values-not-domain control, total corollary, isometric iso carries UpOrthogonal) and the qubit as a die: measurement, bit flip as isometric StrictIso, flip vs orthocomplement on lines (Tim approved 2026-11-13)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -32328,6 +32402,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "389952cb-fd33-4ef8-a176-fbe88140efc7",
+          "new": {
+            "file": "ZeroParadox/State/QubitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.qubitLine1",
+            "short": "qubitLine1"
+          },
+          "old": {
+            "file": "ZeroParadox/State/QubitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.qubitLine1",
+            "short": "qubitLine1",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "DS1113-1 fix (values-not-domain control, total corollary, isometric iso carries UpOrthogonal) and the qubit as a die: measurement, bit flip as isometric StrictIso, flip vs orthocomplement on lines (Tim approved 2026-11-13)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "38c8bd0d-2917-46f7-942a-775aa0696d4d",
           "new": {
             "file": "ZeroParadox/Valuation/RiemannSphere.lean",
@@ -32825,6 +32936,43 @@
             ]
           },
           "reason": "KleeneChoiceFree § VI: choice-free decoder ofNatCodeCF for Nat.Partrec.Code, both inverse laws at [propext, Quot.sound], and its equality with Mathlib's ofNatCode",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "39e168a6-e4aa-48a5-ab18-4e224b3b59a0",
+          "new": {
+            "file": "ZeroParadox/State/QubitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.qubitKet0",
+            "short": "qubitKet0"
+          },
+          "old": {
+            "file": "ZeroParadox/State/QubitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.qubitKet0",
+            "short": "qubitKet0",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "DS1113-1 fix (values-not-domain control, total corollary, isometric iso carries UpOrthogonal) and the qubit as a die: measurement, bit flip as isometric StrictIso, flip vs orthocomplement on lines (Tim approved 2026-11-13)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -34162,6 +34310,43 @@
             ]
           },
           "reason": "New files Die.lean + DieCannotBe.lean — the die: order-free Motion, switches, existence premises (provisional)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "3c0e8436-00b6-47c1-bc40-f029dbd753bb",
+          "new": {
+            "file": "ZeroParadox/State/QubitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.qubit_flip_perp_agree_at_poles",
+            "short": "qubit_flip_perp_agree_at_poles"
+          },
+          "old": {
+            "file": "ZeroParadox/State/QubitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.qubit_flip_perp_agree_at_poles",
+            "short": "qubit_flip_perp_agree_at_poles",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "DS1113-1 fix (values-not-domain control, total corollary, isometric iso carries UpOrthogonal) and the qubit as a die: measurement, bit flip as isometric StrictIso, flip vs orthocomplement on lines (Tim approved 2026-11-13)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -46778,6 +46963,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "521ff82a-4093-4569-8e5a-efe8a613301c",
+          "new": {
+            "file": "ZeroParadox/State/QubitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.isLanding_qubitMeasure_iff",
+            "short": "isLanding_qubitMeasure_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/State/QubitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.isLanding_qubitMeasure_iff",
+            "short": "isLanding_qubitMeasure_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "DS1113-1 fix (values-not-domain control, total corollary, isometric iso carries UpOrthogonal) and the qubit as a die: measurement, bit flip as isometric StrictIso, flip vs orthocomplement on lines (Tim approved 2026-11-13)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "52280ecd-85f7-4ee6-817e-f49382d3134b",
           "new": {
             "file": "ZeroParadox/Valuation/DepthIsWait.lean",
@@ -47806,6 +48028,43 @@
             ]
           },
           "reason": "Section V of GroundZero: the well-founded coalgebra predicate applied to step functions = halting",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "546da64d-c888-460e-950a-42dad7d0de42",
+          "new": {
+            "file": "ZeroParadox/State/DieProjection.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.upOrthogonal_values_not_domain",
+            "short": "upOrthogonal_values_not_domain"
+          },
+          "old": {
+            "file": "ZeroParadox/State/DieProjection.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.upOrthogonal_values_not_domain",
+            "short": "upOrthogonal_values_not_domain",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "DS1113-1 fix (values-not-domain control, total corollary, isometric iso carries UpOrthogonal) and the qubit as a die: measurement, bit flip as isometric StrictIso, flip vs orthocomplement on lines (Tim approved 2026-11-13)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -57549,6 +57808,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "66d2d512-9d48-4c0b-b57f-d723378f531c",
+          "new": {
+            "file": "ZeroParadox/State/QubitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.qubitKet1",
+            "short": "qubitKet1"
+          },
+          "old": {
+            "file": "ZeroParadox/State/QubitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.qubitKet1",
+            "short": "qubitKet1",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "DS1113-1 fix (values-not-domain control, total corollary, isometric iso carries UpOrthogonal) and the qubit as a die: measurement, bit flip as isometric StrictIso, flip vs orthocomplement on lines (Tim approved 2026-11-13)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "66eaab80-c142-4a1d-bfc9-924e71f4d1cb",
           "new": {
             "file": "ZeroParadox/Information/MaxEntropy.lean",
@@ -62477,6 +62773,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "6f61fe9b-83cc-493c-bfec-a22d97e6493a",
+          "new": {
+            "file": "ZeroParadox/State/QubitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bitFlip_bitFlip",
+            "short": "bitFlip_bitFlip"
+          },
+          "old": {
+            "file": "ZeroParadox/State/QubitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bitFlip_bitFlip",
+            "short": "bitFlip_bitFlip",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "DS1113-1 fix (values-not-domain control, total corollary, isometric iso carries UpOrthogonal) and the qubit as a die: measurement, bit flip as isometric StrictIso, flip vs orthocomplement on lines (Tim approved 2026-11-13)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "6f788611-86b9-42b8-a4fc-5bbe05a2ed8f",
           "new": {
             "file": "ZeroParadox/Settheory/LawvereBridge.lean",
@@ -64256,6 +64589,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "72ea5b05-ed9d-4eea-a395-46f8c28aa6d3",
+          "new": {
+            "file": "ZeroParadox/State/QubitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.qubit_perp_moves_plus",
+            "short": "qubit_perp_moves_plus"
+          },
+          "old": {
+            "file": "ZeroParadox/State/QubitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.qubit_perp_moves_plus",
+            "short": "qubit_perp_moves_plus",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "DS1113-1 fix (values-not-domain control, total corollary, isometric iso carries UpOrthogonal) and the qubit as a die: measurement, bit flip as isometric StrictIso, flip vs orthocomplement on lines (Tim approved 2026-11-13)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "7305bc58-14a0-4ffa-bbdc-2a6b62f276c8",
           "new": {
@@ -65884,6 +66254,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "756eb032-01ef-4395-b389-95cbd846af1a",
+          "new": {
+            "file": "ZeroParadox/State/DieProjection.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.partialLineMotion",
+            "short": "partialLineMotion"
+          },
+          "old": {
+            "file": "ZeroParadox/State/DieProjection.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.partialLineMotion",
+            "short": "partialLineMotion",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "DS1113-1 fix (values-not-domain control, total corollary, isometric iso carries UpOrthogonal) and the qubit as a die: measurement, bit flip as isometric StrictIso, flip vs orthocomplement on lines (Tim approved 2026-11-13)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "7586c4d8-23c9-4bb4-a718-9a6f1872dc87",
           "new": {
             "file": "ZeroParadox/Multihomed/BoundaryOrder.lean",
@@ -66022,6 +66429,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "759096f4-5e30-47f9-a8d3-c2ec43c1077f",
+          "new": {
+            "file": "ZeroParadox/State/DieProjection.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.upOrthogonal_of_isometric_iso",
+            "short": "upOrthogonal_of_isometric_iso"
+          },
+          "old": {
+            "file": "ZeroParadox/State/DieProjection.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.upOrthogonal_of_isometric_iso",
+            "short": "upOrthogonal_of_isometric_iso",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "DS1113-1 fix (values-not-domain control, total corollary, isometric iso carries UpOrthogonal) and the qubit as a die: measurement, bit flip as isometric StrictIso, flip vs orthocomplement on lines (Tim approved 2026-11-13)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -82537,6 +82981,80 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "9412edc7-8fb0-4792-a881-fb8997c60f6b",
+          "new": {
+            "file": "ZeroParadox/State/QubitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bitFlip_starProjection",
+            "short": "bitFlip_starProjection"
+          },
+          "old": {
+            "file": "ZeroParadox/State/QubitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bitFlip_starProjection",
+            "short": "bitFlip_starProjection",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "DS1113-1 fix (values-not-domain control, total corollary, isometric iso carries UpOrthogonal) and the qubit as a die: measurement, bit flip as isometric StrictIso, flip vs orthocomplement on lines (Tim approved 2026-11-13)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "944efcc5-f079-4b10-be4f-825f5dffcf29",
+          "new": {
+            "file": "ZeroParadox/State/QubitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bitFlipIso",
+            "short": "bitFlipIso"
+          },
+          "old": {
+            "file": "ZeroParadox/State/QubitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bitFlipIso",
+            "short": "bitFlipIso",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "DS1113-1 fix (values-not-domain control, total corollary, isometric iso carries UpOrthogonal) and the qubit as a die: measurement, bit flip as isometric StrictIso, flip vs orthocomplement on lines (Tim approved 2026-11-13)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "9458615e-782f-4b3d-9b88-0e7b035782cc",
           "new": {
@@ -83557,6 +84075,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "960ce6b5-019f-4c95-8bdc-030cabf3ba73",
+          "new": {
+            "file": "ZeroParadox/State/QubitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.qubitLine0",
+            "short": "qubitLine0"
+          },
+          "old": {
+            "file": "ZeroParadox/State/QubitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.qubitLine0",
+            "short": "qubitLine0",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "DS1113-1 fix (values-not-domain control, total corollary, isometric iso carries UpOrthogonal) and the qubit as a die: measurement, bit flip as isometric StrictIso, flip vs orthocomplement on lines (Tim approved 2026-11-13)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -85784,6 +86339,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "99d5a268-b2fb-450a-add3-57aca3da1f8d",
+          "new": {
+            "file": "ZeroParadox/State/QubitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bitFlip_real_inner",
+            "short": "bitFlip_real_inner"
+          },
+          "old": {
+            "file": "ZeroParadox/State/QubitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bitFlip_real_inner",
+            "short": "bitFlip_real_inner",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "DS1113-1 fix (values-not-domain control, total corollary, isometric iso carries UpOrthogonal) and the qubit as a die: measurement, bit flip as isometric StrictIso, flip vs orthocomplement on lines (Tim approved 2026-11-13)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "99d87dfd-8dd6-4271-9b75-977faafad27d",
           "new": {
@@ -87882,6 +88474,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "9cf344ff-3af9-4289-8a1a-42b95b0edfce",
+          "new": {
+            "file": "ZeroParadox/State/QubitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.qubitMeasure",
+            "short": "qubitMeasure"
+          },
+          "old": {
+            "file": "ZeroParadox/State/QubitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.qubitMeasure",
+            "short": "qubitMeasure",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "DS1113-1 fix (values-not-domain control, total corollary, isometric iso carries UpOrthogonal) and the qubit as a die: measurement, bit flip as isometric StrictIso, flip vs orthocomplement on lines (Tim approved 2026-11-13)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -92587,6 +93216,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "a53ef1fe-44c7-4f27-9335-32c3cf7adbe9",
+          "new": {
+            "file": "ZeroParadox/State/QubitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Qubit",
+            "short": "Qubit"
+          },
+          "old": {
+            "file": "ZeroParadox/State/QubitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Qubit",
+            "short": "Qubit",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "DS1113-1 fix (values-not-domain control, total corollary, isometric iso carries UpOrthogonal) and the qubit as a die: measurement, bit flip as isometric StrictIso, flip vs orthocomplement on lines (Tim approved 2026-11-13)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "a55a1530-7867-4d92-87c2-b64b96752889",
           "new": {
@@ -95621,6 +96287,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "aabcbd58-e99f-4aa9-ab90-2035234224ac",
+          "new": {
+            "file": "ZeroParadox/State/QubitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.qubit_poles_flip_eq_perp'",
+            "short": "qubit_poles_flip_eq_perp'"
+          },
+          "old": {
+            "file": "ZeroParadox/State/QubitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.qubit_poles_flip_eq_perp'",
+            "short": "qubit_poles_flip_eq_perp'",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "DS1113-1 fix (values-not-domain control, total corollary, isometric iso carries UpOrthogonal) and the qubit as a die: measurement, bit flip as isometric StrictIso, flip vs orthocomplement on lines (Tim approved 2026-11-13)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "aac42f3e-ae8e-4ed7-a728-e53eb9df9656",
           "new": {
             "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
@@ -98301,6 +99004,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "af1f6733-eed5-4ea6-bd9d-3a47c5b95dc2",
+          "new": {
+            "file": "ZeroParadox/State/QubitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bitFlip_apply",
+            "short": "bitFlip_apply"
+          },
+          "old": {
+            "file": "ZeroParadox/State/QubitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bitFlip_apply",
+            "short": "bitFlip_apply",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "DS1113-1 fix (values-not-domain control, total corollary, isometric iso carries UpOrthogonal) and the qubit as a die: measurement, bit flip as isometric StrictIso, flip vs orthocomplement on lines (Tim approved 2026-11-13)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "af2b10fa-ab17-45ef-ae57-2d8739711fc0",
           "new": {
@@ -98737,6 +99477,43 @@
             ]
           },
           "reason": "RiemannSphere § 0: inversion on OnePoint K over any proper normed field, with ℚ₂ and ℝ instances (ZPQ-REALS-NO-REPAIR-1 evidence, ruling 64)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "afc7d073-ac7d-4835-bfa8-a2570aaed111",
+          "new": {
+            "file": "ZeroParadox/State/DieProjection.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.up_eq_starProjection_of_upOrthogonal",
+            "short": "up_eq_starProjection_of_upOrthogonal"
+          },
+          "old": {
+            "file": "ZeroParadox/State/DieProjection.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.up_eq_starProjection_of_upOrthogonal",
+            "short": "up_eq_starProjection_of_upOrthogonal",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "DS1113-1 fix (values-not-domain control, total corollary, isometric iso carries UpOrthogonal) and the qubit as a die: measurement, bit flip as isometric StrictIso, flip vs orthocomplement on lines (Tim approved 2026-11-13)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -105179,6 +105956,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "ba601c34-eab2-4918-9adf-72c2de7aa769",
+          "new": {
+            "file": "ZeroParadox/State/QubitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bitFlip_ket0",
+            "short": "bitFlip_ket0"
+          },
+          "old": {
+            "file": "ZeroParadox/State/QubitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bitFlip_ket0",
+            "short": "bitFlip_ket0",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "DS1113-1 fix (values-not-domain control, total corollary, isometric iso carries UpOrthogonal) and the qubit as a die: measurement, bit flip as isometric StrictIso, flip vs orthocomplement on lines (Tim approved 2026-11-13)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "ba665a46-a40e-41ac-be7f-86ce138a2947",
           "new": {
             "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
@@ -109967,6 +110781,43 @@
             ]
           },
           "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c37a52f5-37d2-40a2-bdf0-e66fdc33db1a",
+          "new": {
+            "file": "ZeroParadox/State/QubitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.qubitKetPlus",
+            "short": "qubitKetPlus"
+          },
+          "old": {
+            "file": "ZeroParadox/State/QubitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.qubitKetPlus",
+            "short": "qubitKetPlus",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "DS1113-1 fix (values-not-domain control, total corollary, isometric iso carries UpOrthogonal) and the qubit as a die: measurement, bit flip as isometric StrictIso, flip vs orthocomplement on lines (Tim approved 2026-11-13)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -119829,6 +120680,43 @@
             ]
           },
           "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d4532d90-1cb8-4486-b93a-d6d9461814e4",
+          "new": {
+            "file": "ZeroParadox/State/QubitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.qubit_poles_flip_eq_perp",
+            "short": "qubit_poles_flip_eq_perp"
+          },
+          "old": {
+            "file": "ZeroParadox/State/QubitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.qubit_poles_flip_eq_perp",
+            "short": "qubit_poles_flip_eq_perp",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "DS1113-1 fix (values-not-domain control, total corollary, isometric iso carries UpOrthogonal) and the qubit as a die: measurement, bit flip as isometric StrictIso, flip vs orthocomplement on lines (Tim approved 2026-11-13)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -132594,6 +133482,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "e9151c28-3750-4d75-9e29-47a763eb0ff6",
+          "new": {
+            "file": "ZeroParadox/State/QubitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.upOrthogonal_qubitMeasure",
+            "short": "upOrthogonal_qubitMeasure"
+          },
+          "old": {
+            "file": "ZeroParadox/State/QubitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.upOrthogonal_qubitMeasure",
+            "short": "upOrthogonal_qubitMeasure",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "DS1113-1 fix (values-not-domain control, total corollary, isometric iso carries UpOrthogonal) and the qubit as a die: measurement, bit flip as isometric StrictIso, flip vs orthocomplement on lines (Tim approved 2026-11-13)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "e92f0670-c714-49b2-9901-f28b2042d31c",
           "new": {
@@ -135210,6 +136135,43 @@
             "role": []
           },
           "reason": "die-bend-1104: Tim's \"bend\" (ruling 38): first-occurrence time det as a Galois insertion of tapes onto NInf, order reversed (Die.lean § XXV)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "edeb42cd-ba57-4b01-86d0-2f8de25c1b14",
+          "new": {
+            "file": "ZeroParadox/State/QubitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.upOrthogonal_qubitMeasure_line1_of_bitFlip",
+            "short": "upOrthogonal_qubitMeasure_line1_of_bitFlip"
+          },
+          "old": {
+            "file": "ZeroParadox/State/QubitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.upOrthogonal_qubitMeasure_line1_of_bitFlip",
+            "short": "upOrthogonal_qubitMeasure_line1_of_bitFlip",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "DS1113-1 fix (values-not-domain control, total corollary, isometric iso carries UpOrthogonal) and the qubit as a die: measurement, bit flip as isometric StrictIso, flip vs orthocomplement on lines (Tim approved 2026-11-13)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -144110,6 +145072,43 @@
             ]
           },
           "reason": "New file ZeroParadox/Information/Disjunctive.lean: disjunctive (rich) sequences; all-false control; choice-free primitive recursive Champernowne-style witness; fair-coin tape disjunctive a.s. (infinite monkey, 2nd Borel-Cantelli); hypothesis-form presence of every Code's word. PRESENCE only, no execution.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "fd13c7dc-21e9-434e-a038-14eb24fc8d0d",
+          "new": {
+            "file": "ZeroParadox/State/QubitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bitFlip",
+            "short": "bitFlip"
+          },
+          "old": {
+            "file": "ZeroParadox/State/QubitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bitFlip",
+            "short": "bitFlip",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "DS1113-1 fix (values-not-domain control, total corollary, isometric iso carries UpOrthogonal) and the qubit as a die: measurement, bit flip as isometric StrictIso, flip vs orthocomplement on lines (Tim approved 2026-11-13)",
           "verify": {
             "axioms": null,
             "sorry_free": true

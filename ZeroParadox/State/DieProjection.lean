@@ -5,19 +5,21 @@ import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.Tactic
 
 /-!
-# Orthogonal projection as a die motion: with an inner-product test on UP the landings fix UP; without it they do not, and strict isomorphism does not preserve the test
+# Orthogonal projection as a die motion: with an inner-product test on UP, landings forming a subspace with an orthogonal projection determine every value of UP; without the test they do not; strict isomorphism does not preserve the test, isometric strict isomorphism does
 
 ## Engineer's Take
 
 ---
 ## Formal Overview (AI-assisted)
 `UpOrthogonal` relates UP (`ZeroParadox/Die.lean`) to a real inner product, as `UpRaises` does to an
-order. The orthogonal projection onto `K` meets it (§ II); with it the landings determine UP (§ III);
-without it an oblique projection has the same landings and a different UP (§ IV); a `StrictIso` joins
-the two, so the predicate is not invariant under the die's isomorphism (§ V).
+order. The orthogonal projection meets it (§ II); with it the landings determine every value of UP,
+not its domain (§ III); without it an oblique projection has the same landings (§ IV); a `StrictIso`
+need not carry the test, and one preserving the inner product does (§ V).
 -/
 
 set_option maxHeartbeats 400000
+
+universe u
 
 namespace ZeroParadox
 
@@ -57,7 +59,7 @@ theorem upOrthogonal_ofStarProjection (K : Submodule ℝ E) [K.HasOrthogonalProj
   obtain rfl : y = K.starProjection x := Part.mem_some_iff.1 hy
   exact Submodule.starProjection_inner_eq_zero x z hz
 
-/-! ### § III. With `UpOrthogonal`, the landings determine UP -/
+/-! ### § III. With `UpOrthogonal`, the landings determine every value of UP -/
 
 /-- `Statement:` if UP is orthogonal and the landings are exactly `K`, every value of `up x` is
     `K.starProjection x`. Proof: Mathlib's `Submodule.eq_starProjection_of_mem_of_inner_eq_zero`;
@@ -68,6 +70,14 @@ theorem starProjection_eq_of_upOrthogonal (M : Motion E) (K : Submodule ℝ E)
     {x y : E} (hy : y ∈ M.up x) : K.starProjection x = y :=
   Submodule.eq_starProjection_of_mem_of_inner_eq_zero ((hK y).1 (M.up_idem x y hy))
     (fun w hw => ho x y hy w ((hK w).2 hw))
+
+/-- `Statement:` with `UpOrthogonal`, landings exactly `K` and UP total, `up x` is
+    `Part.some (K.starProjection x)` at every `x`. -/
+theorem up_eq_starProjection_of_upOrthogonal (M : Motion E) (K : Submodule ℝ E)
+    [K.HasOrthogonalProjection] (ho : M.UpOrthogonal) (hK : ∀ z, M.IsLanding z ↔ z ∈ K)
+    (ht : M.UpTotal) (x : E) : M.up x = Part.some (K.starProjection x) :=
+  Part.eq_some_iff.2 (starProjection_eq_of_upOrthogonal M K ho hK (Part.get_mem (ht x)) ▸
+    Part.get_mem (ht x))
 
 end Motion
 
@@ -134,10 +144,38 @@ theorem landings_not_determine_up :
       ((hland planeE0).2 (Submodule.mem_span_singleton_self _))
     simp [obliqueProj, planeE0, planeE1, EuclideanSpace.inner_single_right] at this
 
+/-- `Statement:` UP the identity defined only on `planeLine`, OVER empty. -/
+noncomputable def partialLineMotion : Motion (EuclideanSpace ℝ (Fin 2)) where
+  up x := ⟨x ∈ planeLine, fun _ => x⟩
+  up_idem _ _ h := by obtain ⟨hx, rfl⟩ := h; exact ⟨hx, rfl⟩
+  step _ _ := False
+
+/-- `Statement:` CONTROL, § III fixes UP's values and not its domain: `partialLineMotion` and
+    `orthoLineMotion` have the same landings and OVER, both meet `UpOrthogonal`, the first UP is not
+    total, and the motions differ. -/
+theorem upOrthogonal_values_not_domain :
+    (∀ z, partialLineMotion.IsLanding z ↔ orthoLineMotion.IsLanding z) ∧
+    partialLineMotion.step = orthoLineMotion.step ∧
+    partialLineMotion.UpOrthogonal ∧ orthoLineMotion.UpOrthogonal ∧
+    ¬ partialLineMotion.UpTotal ∧ partialLineMotion ≠ orthoLineMotion := by
+  have h1 : planeE1 ∉ planeLine := fun h => by
+    obtain ⟨a, ha⟩ := Submodule.mem_span_singleton.1 h
+    have := congrArg (fun v : EuclideanSpace ℝ (Fin 2) => v 1) ha
+    simp [planeE0, planeE1] at this
+  refine ⟨fun z => ?_, rfl, ?_, Motion.upOrthogonal_ofStarProjection _ _, fun h => h1 (h planeE1),
+    fun h => h1 ?_⟩
+  · rw [orthoLineMotion, Motion.isLanding_ofStarProjection_iff]
+    exact ⟨fun ⟨hz, _⟩ => hz, fun hz => ⟨hz, rfl⟩⟩
+  · intro x y hy z _
+    obtain ⟨_, hxy⟩ := hy
+    rw [show y = x from hxy.symm, sub_self, inner_zero_left]
+  · have : (partialLineMotion.up planeE1).Dom := by rw [h]; trivial
+    exact this
+
 /-! ### § V. The die's isomorphism does not see the angle
 `Reading:` a real-plane counterpart of a fact for unital C*-algebras: every idempotent is similar to a
 projection, and two projections are similar iff unitarily equivalent (Giordano and Sierakowski,
-arXiv:1403.4385, Lemma 3.2, called well known there, citing Blackadar, *K-Theory for Operator
+arXiv:1403.4385v2, Lemma 3.2, called well known there, citing Blackadar, *K-Theory for Operator
 Algebras*, Props 4.6.2 and 4.6.5); `obliqueOrthoIso` is a similarity that is not unitary. -/
 
 /-- `Statement:` a strict isomorphism of motions from `obliqueMotion` to `orthoLineMotion`, by the
@@ -180,6 +218,30 @@ theorem upOrthogonal_not_iso_invariant :
   ⟨obliqueMotion, orthoLineMotion, ⟨obliqueOrthoIso⟩, landings_not_determine_up.2.2.2.2.2.1,
     landings_not_determine_up.2.2.2.2.2.2⟩
 
+/-- `Statement:` an isometric strict isomorphism carries `UpOrthogonal`: if the forward map preserves
+    the real inner product and `M` meets the test, `N` meets it. -/
+theorem Motion.upOrthogonal_of_isometric_iso {E F : Type u} [NormedAddCommGroup E]
+    [InnerProductSpace ℝ E] [NormedAddCommGroup F] [InnerProductSpace ℝ F] {M : Motion E}
+    {N : Motion F} (e : Motion.StrictIso M N)
+    (hinner : ∀ a b, ⟪e.hom.toFun a, e.hom.toFun b⟫_ℝ = ⟪a, b⟫_ℝ) (hM : M.UpOrthogonal) :
+    N.UpOrthogonal := by
+  have hsub : ∀ a b, e.hom.toFun (a - b) = e.hom.toFun a - e.hom.toFun b := fun a b => by
+    rw [← sub_eq_zero, ← inner_self_eq_zero (𝕜 := ℝ)]
+    simp only [inner_sub_left, inner_sub_right, hinner]
+    rw [real_inner_comm a b]
+    ring
+  intro x y hy z hz
+  obtain ⟨x, rfl⟩ : ∃ a, e.hom.toFun a = x := ⟨_, e.right_inv x⟩
+  obtain ⟨z, rfl⟩ : ∃ a, e.hom.toFun a = z := ⟨_, e.right_inv z⟩
+  rw [e.hom.map_up] at hy
+  obtain ⟨y', hy', rfl⟩ := (Part.mem_map_iff _).1 hy
+  have hz2 : e.hom.toFun z ∈ N.up (e.hom.toFun z) := hz
+  rw [e.hom.map_up] at hz2
+  obtain ⟨w, hw, hwz⟩ := (Part.mem_map_iff _).1 hz2
+  obtain rfl : w = z := by rw [← e.left_inv w, ← e.left_inv z, hwz]
+  rw [← hsub, hinner]
+  exact hM _ y' hy' _ hw
+
 end ZeroParadox
 
 section PurityCheck
@@ -202,5 +264,9 @@ open ZeroParadox
 #print axioms obliqueOrthoIso
 #print axioms obliqueOrthoIso_not_norm_preserving
 #print axioms upOrthogonal_not_iso_invariant
+#print axioms Motion.up_eq_starProjection_of_upOrthogonal
+#print axioms partialLineMotion
+#print axioms upOrthogonal_values_not_domain
+#print axioms Motion.upOrthogonal_of_isometric_iso
 
 end PurityCheck
