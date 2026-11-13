@@ -253,7 +253,8 @@ theorem Motion.upOrthogonal_of_isometric_iso {E F : Type u} [NormedAddCommGroup 
 `Reading:` the general collapse is `Motion.collapseEquiv` (`ZeroParadox/Die.lean`) and needs no
 inner product; here the inner product decides which points share a class (`collapses_differ`).
 `Reading:` the linear counterparts are Mathlib's `Submodule.quotientEquivOfIsCompl` and
-`Submodule.ker_orthogonalProjectionOnto`. -/
+`Submodule.ker_starProjection` (`ker = Kᗮ`); `Submodule.ker_orthogonalProjectionOnto` is its
+codomain-restricted form. -/
 
 section Collapse
 

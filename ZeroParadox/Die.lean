@@ -2829,8 +2829,8 @@ theorem collapse_all_landings {r : α → α} (hr : ∀ x, r (r x) = r x) (st : 
 /-- `Statement:` the classes of the kernel of `r` are in bijection with the fixed points of `r`.
     `Reading:` the idempotent case of Mathlib's `Setoid.quotientKerEquivRange`
     (`Mathlib/Order/Setoid/Basic.lean`), with the fixed points in place of the range; the choice-free
-    match is `Setoid.quotientKerEquivOfRightInverse`, and `r` is a split idempotent
-    (`CategoryTheory.IsIdempotentComplete`). -/
+    match is `Setoid.quotientKerEquivOfRightInverse`, and `collapseEquiv` splits `r` (a split
+    idempotent, in the sense of `CategoryTheory.IsIdempotentComplete`). -/
 def collapseEquiv {r : α → α} (hr : ∀ x, r (r x) = r x) :
     Quotient (Setoid.ker r) ≃ {y // r y = y} where
   toFun := Quotient.lift (fun a => (⟨r a, hr a⟩ : {y // r y = y}))
