@@ -2,7 +2,7 @@ import ZeroParadox.State.DieProjection
 import Mathlib.Tactic
 
 /-!
-# The qubit as a die: measurement is an orthogonal-projection motion, the bit flip is an isometric strict isomorphism between the two measurements, and on lines the bit flip and the orthocomplement agree at the basis lines and differ at |0⟩ + |1⟩
+# The qubit as a die: projection onto a basis line is an orthogonal-projection motion, the bit flip is an inner-product-preserving strict isomorphism between the projections onto the two basis lines, and on lines the bit flip and the orthocomplement agree at the basis lines and differ at |0⟩ + |1⟩
 
 ## Engineer's Take
 

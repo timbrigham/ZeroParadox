@@ -5,7 +5,7 @@ import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.Tactic
 
 /-!
-# Orthogonal projection as a die motion: with an inner-product test on UP, landings forming a subspace with an orthogonal projection determine every value of UP; without the test they do not; strict isomorphism does not preserve the test, isometric strict isomorphism does
+# Orthogonal projection as a die motion: with an inner-product test on UP, landings forming a subspace with an orthogonal projection determine every value of UP; without the test they do not; strict isomorphism does not preserve the test, an inner-product-preserving one does
 
 ## Engineer's Take
 

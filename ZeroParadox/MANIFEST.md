@@ -90,10 +90,10 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 
 ### State / Hilbert (ZP-D)
 
-- `ZeroParadox/State/DieProjection.lean` - Orthogonal projection as a die motion: with an inner-product test on UP, landings forming a subspace with an orthogonal projection determine every value of UP; without the test they do not; strict isomorphism does not preserve the test, isometric strict isomorphism does
+- `ZeroParadox/State/DieProjection.lean` - Orthogonal projection as a die motion: with an inner-product test on UP, landings forming a subspace with an orthogonal projection determine every value of UP; without the test they do not; strict isomorphism does not preserve the test, an inner-product-preserving one does
 - `ZeroParadox/State/HilbFunctor.lean` - ZP-H Hilbert Functor: F_D into the real category `ModuleCat ℂ` (MC-1 remediation)
 - `ZeroParadox/State/MeanErgodic.lean` - Mean ergodic convergence for doubly-stochastic kernels (STRETCH)
-- `ZeroParadox/State/QubitDie.lean` - The qubit as a die: measurement is an orthogonal-projection motion, the bit flip is an isometric strict isomorphism between the two measurements, and on lines the bit flip and the orthocomplement agree at the basis lines and differ at |0⟩ + |1⟩
+- `ZeroParadox/State/QubitDie.lean` - The qubit as a die: projection onto a basis line is an orthogonal-projection motion, the bit flip is an inner-product-preserving strict isomorphism between the projections onto the two basis lines, and on lines the bit flip and the orthocomplement agree at the basis lines and differ at |0⟩ + |1⟩
 - `ZeroParadox/State/ReversibleSpectrum.lean` - Reversible chains have real spectrum (genuine Hilbert / self-adjoint content)
 - `ZeroParadox/State/StateSpace.lean` - ZP-D: State Layer (Hilbert Space)
 
