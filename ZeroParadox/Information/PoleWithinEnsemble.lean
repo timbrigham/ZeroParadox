@@ -2,6 +2,7 @@
 import ZeroParadox.Information.TapeHalting
 import Mathlib.MeasureTheory.Measure.Support
 import Mathlib.Topology.Instances.ENat
+import Mathlib.Analysis.SpecialFunctions.Sigmoid
 import Mathlib.Tactic
 
 /-!
@@ -487,6 +488,63 @@ theorem fireAt_not_MLRandom (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p) (n : ℕ) 
   refine (not_mem_limsup_fires_iff _).2 ⟨n + 1, fun k hk => ?_⟩ h1
   exact decide_eq_false (by omega)
 
+/-! ### § VIII. A heat-bath rate supplies `0 < p`
+`Reading:` this RELOCATES the residual hypothesis `0 < p` of `trials_fires_once` to the modelling
+choice "Glauber-type rates at `T > 0`"; it does not remove it. Any rate with `p ∈ (0, 1]` at
+`T > 0` does the same job, so the sigmoid has no special role. The form is the heat-bath (Glauber-type)
+occupation of one site (Levin, Peres and Wilmer, *Markov Chains and Mixing Times*, 2nd ed., § 3.3.5,
+eq. (3.11), p. 45, with `ΔE = 2S`); after R. J. Glauber, J. Math. Phys. 4, 294 (1963). -/
+
+/-- `Statement:` `Real.sigmoid (-(ΔE / T))`: excitation across a gap `ΔE` at temperature `T`. -/
+noncomputable def glauberExcite (ΔE T : ℝ) : ℝ := Real.sigmoid (-(ΔE / T))
+
+/-- `Statement:` `glauberExcite ΔE T` as an `NNReal`. -/
+noncomputable def glauberExciteNN (ΔE T : ℝ) : NNReal :=
+  ⟨glauberExcite ΔE T, (Real.sigmoid_pos _).le⟩
+
+/-- `Statement:` `glauberExciteNN ΔE T ≤ 1`. -/
+theorem glauberExciteNN_le_one (ΔE T : ℝ) : glauberExciteNN ΔE T ≤ 1 :=
+  show glauberExcite ΔE T ≤ 1 from (Real.sigmoid_lt_one _).le
+
+/-- `Statement:` `0 < glauberExciteNN ΔE T`. -/
+theorem glauberExciteNN_pos (ΔE T : ℝ) : 0 < glauberExciteNN ΔE T :=
+  show 0 < glauberExcite ΔE T from Real.sigmoid_pos _
+
+/-- `Statement:` at every `ΔE` and `T`, the tapes that fire somewhere have
+    `trials (glauberExciteNN ΔE T)` measure one. -/
+theorem glauber_fires_once (ΔE T : ℝ) :
+    trials (glauberExciteNN ΔE T) (glauberExciteNN_le_one ΔE T) {w | ∃ k, w k = true} = 1 :=
+  trials_fires_once _ _ (glauberExciteNN_pos ΔE T)
+
+/-- `Statement:` at every `ΔE` and `T`, `trials (glauberExciteNN ΔE T)`-almost every tape fires. -/
+theorem glauber_ae_fires (ΔE T : ℝ) :
+    ∀ᵐ w ∂(trials (glauberExciteNN ΔE T) (glauberExciteNN_le_one ΔE T)), ∃ k, w k = true :=
+  ae_firesOnce _ _ (glauberExciteNN_pos ΔE T)
+
+/-- `Statement:` at every `ΔE` and `T`, `botMass (glauberExciteNN ΔE T) = 0`. -/
+theorem glauber_botMass (ΔE T : ℝ) : botMass (glauberExciteNN ΔE T) = 0 :=
+  botMass_pos (glauberExciteNN_pos ΔE T)
+
+/-- `Statement:` if `0 < ΔE`, `glauberExcite ΔE T → 0` as `T → 0⁺`. -/
+theorem glauberExcite_tendsto_zero {ΔE : ℝ} (hΔ : 0 < ΔE) :
+    Tendsto (glauberExcite ΔE) (𝓝[>] 0) (𝓝 0) := by
+  have h1 : Tendsto (fun T : ℝ => ΔE / T) (𝓝[>] 0) atTop :=
+    Tendsto.const_mul_atTop hΔ tendsto_inv_nhdsGT_zero |>.congr (fun T => by ring)
+  exact Real.tendsto_sigmoid_atBot.comp (tendsto_neg_atTop_atBot.comp h1)
+
+/-- `Statement:` if `0 < ΔE`: `botMass (glauberExciteNN ΔE T) = 0` at every `T`,
+    `glauberExcite ΔE T → 0` as `T → 0⁺`, and `botMass 0 = 1`. -/
+theorem glauber_jump {ΔE : ℝ} (hΔ : 0 < ΔE) :
+    (∀ T, botMass (glauberExciteNN ΔE T) = 0) ∧ Tendsto (glauberExcite ΔE) (𝓝[>] 0) (𝓝 0)
+      ∧ botMass 0 = 1 :=
+  ⟨glauber_botMass ΔE, glauberExcite_tendsto_zero hΔ, botMass_zero⟩
+
+-- Statement: CONTROL, `glauberExcite ΔE 0 = 1 / 2`: Lean's `x / 0 = 0`, so `T = 0` is reached
+-- only as the limit `T → 0⁺` of `glauberExcite_tendsto_zero`, never by substitution.
+example (ΔE : ℝ) : glauberExcite ΔE 0 = 1 / 2 := by
+  simp [glauberExcite, Real.sigmoid]
+  norm_num
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -539,4 +597,13 @@ open ZeroParadox
 #print axioms pole_limit_explicit
 #print axioms stmtLimitNoRand_holds
 #print axioms fireAt_not_MLRandom
+#print axioms glauberExcite
+#print axioms glauberExciteNN
+#print axioms glauberExciteNN_le_one
+#print axioms glauberExciteNN_pos
+#print axioms glauber_fires_once
+#print axioms glauber_ae_fires
+#print axioms glauber_botMass
+#print axioms glauberExcite_tendsto_zero
+#print axioms glauber_jump
 end PurityCheck

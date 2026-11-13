@@ -2804,6 +2804,45 @@ theorem mkHom_stepBack (s : Setoid α) (hu : M.UpCompat s) (hc : M.StepCompat s)
 theorem mkHom_surjective (s : Setoid α) (hu : M.UpCompat s) :
     Function.Surjective (mkHom M s hu).toFun := Quotient.mk_surjective
 
+/-! `Reading:` the collapse of a total die by "same landing", the kernel of UP: Tim's simplification
+action (2026-11-13). `mkHom` and `mkHom_surjective` give its class map. -/
+
+/-- `Statement:` the landings of `ofTotal r hr st` are the fixed points of `r`; both directions. -/
+theorem isLanding_ofTotal_iff {r : α → α} (hr : ∀ x, r (r x) = r x) (st : α → α → Prop) (y : α) :
+    (ofTotal r hr st).IsLanding y ↔ r y = y := by
+  show y ∈ Part.some (r y) ↔ _
+  rw [Part.mem_some_iff, eq_comm]
+
+/-- `Statement:` the kernel of `r` is UP-compatible for `ofTotal r hr st`. -/
+theorem upCompat_ker_up {r : α → α} (hr : ∀ x, r (r x) = r x) (st : α → α → Prop) :
+    (ofTotal r hr st).UpCompat (Setoid.ker r) :=
+  upCompat_ofTotal hr st (fun a b (h : r a = r b) => by
+    show r (r a) = r (r b); rw [hr, hr]; exact h)
+
+/-- `Statement:` in `quotUp` of `ofTotal r hr st` by the kernel of `r`, every class is a landing. -/
+theorem collapse_all_landings {r : α → α} (hr : ∀ x, r (r x) = r x) (st : α → α → Prop) :
+    ∀ X, ((ofTotal r hr st).quotUp (Setoid.ker r) (upCompat_ker_up hr st)).IsLanding X := by
+  rintro ⟨a⟩
+  exact (isLanding_quotUp_mk_iff (upCompat_ker_up hr st) a).2
+    ⟨r a, Part.mem_some _, (hr a : r (r a) = r a)⟩
+
+/-- `Statement:` the classes of the kernel of `r` are in bijection with the fixed points of `r`.
+    `Reading:` the idempotent case of Mathlib's `Setoid.quotientKerEquivRange`
+    (`Mathlib/Order/Setoid/Basic.lean`), with the fixed points in place of the range. -/
+def collapseEquiv {r : α → α} (hr : ∀ x, r (r x) = r x) :
+    Quotient (Setoid.ker r) ≃ {y // r y = y} where
+  toFun := Quotient.lift (fun a => (⟨r a, hr a⟩ : {y // r y = y}))
+    (fun a b (h : r a = r b) => Subtype.ext h)
+  invFun y := Quotient.mk _ y.1
+  left_inv := by
+    rintro ⟨a⟩
+    exact Quotient.sound (show r (r a) = r a from hr a)
+  right_inv y := Subtype.ext y.2
+
+/-- `Statement:` `collapseEquiv` sends the class of `a` to `r a`. -/
+theorem collapseEquiv_mk {r : α → α} (hr : ∀ x, r (r x) = r x) (a : α) :
+    ((collapseEquiv hr (Quotient.mk _ a)) : α) = r a := rfl
+
 /-- `Statement:` along an onto strict map, UP of `M` is total iff UP of `N` is; both directions. -/
 theorem Hom.upTotal_iff (φ : Hom M N) (hs : Function.Surjective φ.toFun) : M.UpTotal ↔ N.UpTotal :=
   ⟨φ.toLax.upTotal hs, φ.upTotal_of⟩
@@ -6249,6 +6288,11 @@ open ZeroParadox
 #print axioms Motion.mkHom
 #print axioms Motion.mkHom_stepBack
 #print axioms Motion.mkHom_surjective
+#print axioms Motion.isLanding_ofTotal_iff
+#print axioms Motion.upCompat_ker_up
+#print axioms Motion.collapse_all_landings
+#print axioms Motion.collapseEquiv
+#print axioms Motion.collapseEquiv_mk
 #print axioms Motion.Hom.upTotal_iff
 #print axioms Motion.Hom.hasLanding_iff
 #print axioms Motion.LaxHom.noStepAt_iff

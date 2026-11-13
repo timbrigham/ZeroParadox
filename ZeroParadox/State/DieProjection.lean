@@ -11,16 +11,17 @@ import Mathlib.Tactic
 
 A complete lit up tree and the actualized path through it are another level of being at right
 angles to each other. I had to chase the dark as the choices were made at each node to see that.
-The orthogonal projection is the lossy view the die uses exactly when we go to a simpler carrier.
-We should be able to tell it apart in the die. My question was whether that is a new slot, or an
-argument being passed to an existing slot.
+The orthogonal projection is the lossy view the die uses when we go to a simpler carrier. We
+should be able to tell it apart in the die. My question was whether that is a new slot, or an
+argument being passed to an existing slot. That simplification action is going to be pretty
+universal.
 
 ---
 ## Formal Overview (AI-assisted)
 `UpOrthogonal` relates UP (`ZeroParadox/Die.lean`) to a real inner product, as `UpRaises` does to an
 order. The orthogonal projection meets it (§ II); with it the landings determine every value of UP,
 not its domain (§ III); without it an oblique projection has the same landings (§ IV); a `StrictIso`
-need not carry the test, and one preserving the inner product does (§ V).
+need not carry the test, and one preserving the inner product does (§ V); the collapse (§ VI).
 -/
 
 set_option maxHeartbeats 400000
@@ -248,6 +249,57 @@ theorem Motion.upOrthogonal_of_isometric_iso {E F : Type u} [NormedAddCommGroup 
   rw [← hsub, hinner]
   exact hM _ y' hy' _ hw
 
+/-! ### § VI. The collapse by the kernel of UP: the orthogonal instance and an oblique control
+`Reading:` the general collapse is `Motion.collapseEquiv` (`ZeroParadox/Die.lean`) and needs no
+inner product; here the inner product decides which points share a class (`collapses_differ`). -/
+
+section Collapse
+
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+
+/-- `Statement:` the classes of the kernel of `K.starProjection` are in bijection with `K`. -/
+noncomputable def orthoCollapseEquiv (K : Submodule ℝ E) [K.HasOrthogonalProjection] :
+    Quotient (Setoid.ker K.starProjection) ≃ K :=
+  (Motion.collapseEquiv (r := K.starProjection)
+      (fun x => congrArg (fun f : E →L[ℝ] E => f x) K.isIdempotentElem_starProjection)).trans
+    { toFun := fun y => ⟨y.1, (Submodule.starProjection_eq_self_iff).1 y.2⟩
+      invFun := fun y => ⟨y.1, (Submodule.starProjection_eq_self_iff).2 y.2⟩
+      left_inv := fun _ => rfl
+      right_inv := fun _ => rfl }
+
+/-- `Statement:` `x` and `y` share a class of the kernel of `K.starProjection` iff `x - y ∈ Kᗮ`;
+    both directions. -/
+theorem ortho_classes (K : Submodule ℝ E) [K.HasOrthogonalProjection] (x y : E) :
+    (Setoid.ker K.starProjection).r x y ↔ x - y ∈ Kᗮ := by
+  show K.starProjection x = K.starProjection y ↔ _
+  rw [← sub_eq_zero, ← map_sub, Submodule.starProjection_apply_eq_zero_iff]
+
+end Collapse
+
+/-- `Statement:` CONTROL, the classes of the kernel of `obliqueProj` are in bijection with
+    `planeLine`, the line of `orthoCollapseEquiv planeLine`. -/
+noncomputable def obliqueCollapseEquiv :
+    Quotient (Setoid.ker obliqueProj) ≃ planeLine :=
+  (Motion.collapseEquiv (r := obliqueProj) (fun v => by simp [obliqueProj, planeE0])).trans
+    { toFun := fun y => ⟨y.1, (obliqueProj_eq_self_iff y.1).1 y.2⟩
+      invFun := fun y => ⟨y.1, (obliqueProj_eq_self_iff y.1).2 y.2⟩
+      left_inv := fun _ => rfl
+      right_inv := fun _ => rfl }
+
+/-- `Statement:` `planeE1` and `-planeE0` share a class of the kernel of `obliqueProj` and not of
+    the kernel of `planeLine.starProjection`. -/
+theorem collapses_differ :
+    (Setoid.ker obliqueProj).r planeE1 (-planeE0) ∧
+      ¬ (Setoid.ker planeLine.starProjection).r planeE1 (-planeE0) := by
+  refine ⟨?_, ?_⟩
+  · show obliqueProj planeE1 = obliqueProj (-planeE0)
+    ext i; fin_cases i <;> simp [obliqueProj, planeE0, planeE1]
+  · rw [ortho_classes]
+    intro h
+    have hm : planeE0 ∈ planeLine := Submodule.mem_span_singleton_self _
+    have := Submodule.inner_right_of_mem_orthogonal hm h
+    simp [planeE0, planeE1, EuclideanSpace.inner_single_left] at this
+
 end ZeroParadox
 
 section PurityCheck
@@ -274,5 +326,9 @@ open ZeroParadox
 #print axioms partialLineMotion
 #print axioms upOrthogonal_values_not_domain
 #print axioms Motion.upOrthogonal_of_isometric_iso
+#print axioms orthoCollapseEquiv
+#print axioms ortho_classes
+#print axioms obliqueCollapseEquiv
+#print axioms collapses_differ
 
 end PurityCheck
