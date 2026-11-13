@@ -69,8 +69,8 @@ import Mathlib.Order.BoundedOrder.Basic
 /-!
 # Index of declarations characterizing ⊥
 
-Curated, not exhaustive. An INDEXED name is `#check`ed, so this file fails to build if that name is
-removed or renamed; a name occurring only inside a gloss is not checked. `Statement:` restates what a declaration proves; `Reading:` is interpretation,
+Curated, not exhaustive. An INDEXED name is `#check`ed, so removing it breaks this build; a name only
+inside a gloss is not. `Statement:` restates what a declaration proves; `Reading:` is interpretation,
 not a claim about the theorem. Where a `Reading:` asserts strength, scope or genericity it should
 carry an `example` that fails to compile if it is wrong; those are the only things proved here, and
 not every such `Reading:` has one yet. Sections: what ⊥ cannot be, must be, and how it is reached.

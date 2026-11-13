@@ -944,10 +944,10 @@ example :
 #check @ZeroParadox.Motion.RunClosure           -- Statement: the run form: `s` is a run and its range has the shape
 #check @ZeroParadox.Motion.RunClosure.stageClosure -- Statement: run form ⇒ set form; one way
 -- Statement: CONTROL: with the empty step on ℕ, `id` is not a run, so the run form fails at every
--- `c`, `Part.none` included.
-example : ¬ (ZeroParadox.Motion.ofTotal (id : ℕ → ℕ) (fun _ => rfl) (fun _ _ => False)).RunClosure id
-    Part.none :=
-  fun ⟨h, _⟩ => h 0
+-- `c`.
+example : ∀ c : Part ℕ, ¬ (ZeroParadox.Motion.ofTotal (id : ℕ → ℕ) (fun _ => rfl)
+    (fun _ _ => False)).RunClosure id c :=
+  fun _ ⟨h, _⟩ => h 0
 #check @ZeroParadox.Motion.three_of_not_runClose -- Statement: if no stage of `s` is a landing and `up (s n) ≠ up (s 0)` for some `n`, the carrier has three distinct points (`[propext, Classical.choice, Quot.sound]`, the choice in a case split on definedness; not statement-carried, control measured 2026-10-28)
 #check @ZeroParadox.Motion.four_of_not_runClose -- Statement: with UP total, four distinct points (`[propext, Quot.sound]`)
 -- Statement: the bounds are met: on `Fin 3`, UP `0, 2 ↦ 2`, undefined at `1`, OVER `0 ↔ 1`, the run
