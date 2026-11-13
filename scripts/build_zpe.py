@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-E: Bridge Document PDF Builder
-Version 3.81 | November 2026
+Version 3.82 | November 2026
 Follows all rules in pdf rendering standards:
   - DejaVu fonts only
   - Checkmark always wrapped in <font name="DV">
@@ -12,7 +12,7 @@ Follows all rules in pdf rendering standards:
 import os
 from zp_utils import *
 
-VERSION = '3.81'
+VERSION = '3.82'
 FIRST_RELEASED = 'April 2026'
 
 # ── Local overrides: ZP-E uses justified body text ────────────────────────────
@@ -413,8 +413,12 @@ def build():
                 'strictly below ε₀, which Gentzen reports as already known, crediting Hilbert-Bernays, '
                 'together with G&#246;del\'s second incompleteness theorem, by which PA cannot prove '
                 'Con(PA) from within. Gentzen gave a G&#246;del-based argument of this kind himself, stated '
-                'with hedges and for his own assignment of ordinals to derivations (1938, &#167; 4.4; '
-                'pp. 284&#8211;285 in Szabo\'s 1969 translation). The '
+                'with hedges and for his own assignment of ordinals to derivations (Gentzen 1938, '
+                '"Neue Fassung des Widerspruchsfreiheitsbeweises f&#252;r die reine Zahlentheorie," '
+                '<i>Forschungen zur Logik und zur Grundlegung der exakten Wissenschaften</i>, neue Folge 4, '
+                '19&#8211;44, &#167; 4.4; English translation "New version of the consistency proof for '
+                'elementary number theory," in M. E. Szabo (ed.), <i>The Collected Papers of Gerhard '
+                'Gentzen</i>, North-Holland, 1969, 252&#8211;286, here pp. 284&#8211;285). The '
                 'ordinal ε₀ is therefore the minimum threshold at which finite arithmetic exhausts its own '
                 'generative capacity.',
                 '<b>The structural analogy.</b> ZP\'s ε₀ occupies an analogous position in the state '
