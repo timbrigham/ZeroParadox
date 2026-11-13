@@ -5,7 +5,7 @@ import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.Tactic
 
 /-!
-# Orthogonal projection as a die motion: the inner product as an argument to UP
+# Orthogonal projection as a die motion: with an inner-product test on UP the landings fix UP; without it they do not, and strict isomorphism does not preserve the test
 
 ## Engineer's Take
 
@@ -31,7 +31,7 @@ variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
 `LinearMap.IsIdempotentElem.isSymmetric_iff_isOrtho_range_ker`. -/
 
 /-- `Statement:` for every `y ∈ up x` and every landing `z`, `x - y` is orthogonal to `z`.
-    `Reading:` the inner product is an argument, as the order is in `UpRaises`, not a field. -/
+    `Reading:` the inner product is an instance argument of this test, not of `Motion.up`. -/
 def UpOrthogonal (M : Motion E) : Prop :=
   ∀ x y, y ∈ M.up x → ∀ z, M.IsLanding z → ⟪x - y, z⟫_ℝ = 0
 
@@ -134,7 +134,11 @@ theorem landings_not_determine_up :
       ((hland planeE0).2 (Submodule.mem_span_singleton_self _))
     simp [obliqueProj, planeE0, planeE1, EuclideanSpace.inner_single_right] at this
 
-/-! ### § V. The die's isomorphism does not see the angle -/
+/-! ### § V. The die's isomorphism does not see the angle
+`Reading:` a real-plane counterpart of a fact for unital C*-algebras: every idempotent is similar to a
+projection, and two projections are similar iff unitarily equivalent (Giordano and Sierakowski,
+arXiv:1403.4385, Lemma 3.2, called well known there, citing Blackadar, *K-Theory for Operator
+Algebras*, Props 4.6.2 and 4.6.5); `obliqueOrthoIso` is a similarity that is not unitary. -/
 
 /-- `Statement:` a strict isomorphism of motions from `obliqueMotion` to `orthoLineMotion`, by the
     linear map `v ↦ (v 0 - v 1) • planeE0 + v 1 • planeE1`. -/
