@@ -89,6 +89,27 @@ theorem quineAtomHost_quine_role_iff {L : Type*} [QuineAtomHost L] (y : L) :
   · rintro rfl
     exact ⟨(QuineAtomHost.bot_mem_iff _).2 rfl, fun b hb => (QuineAtomHost.bot_mem_iff b).1 hb⟩
 
+-- Statement: the converse: for any `mem` and `bot`, (Y') and (Z') together hold iff, with OVER
+-- `a ⟶ b` when `mem b a`, every `y` occupies the role iff `y = bot`; both directions.
+example {L : Type} (mem : L → L → Prop) (bot : L) :
+    ((∀ y, mem y bot ↔ y = bot) ∧ (∀ x, (∀ y, mem y x ↔ y = x) → x = bot)) ↔
+    (∀ y, (Motion.ofTotal (id : L → L) (fun _ => rfl) (fun a b => mem b a)).SelfOnlyAt y ↔
+      y = bot) := by
+  constructor
+  · rintro ⟨hY, hZ⟩ y
+    let _ : QuineAtomHost L := ⟨mem, bot, hY, hZ⟩
+    exact quineAtomHost_quine_role_iff y
+  · intro h
+    have hb := (h bot).2 rfl
+    refine ⟨fun y => ⟨fun hy => hb.2 y hy, fun hy => hy ▸ hb.1⟩, fun x hx => ?_⟩
+    exact (h x).1 ⟨(hx x).2 rfl, fun b hb => (hx b).1 hb⟩
+
+-- Statement: CONTROL: on `Bool` with membership `=`, both points occupy the role, so (Y') at a point
+-- does not make it the only occupant; no `QuineAtomHost` has this membership (`boffa_fails_reflexive_unique`).
+example : (Motion.ofTotal (id : Bool → Bool) (fun _ => rfl) (fun a b => b = a)).SelfOnlyAt true ∧
+    (Motion.ofTotal (id : Bool → Bool) (fun _ => rfl) (fun a b => b = a)).SelfOnlyAt false :=
+  ⟨⟨rfl, fun _ h => h⟩, ⟨rfl, fun _ h => h⟩⟩
+
 -- Statement: for any `QuineAtomHost` on a `ZPSemilattice` `L`, ⊥ of `L` occupies the membership
 -- chart iff the host's `bot` is ⊥ of `L`; both directions, from `quineAtomHost_quine_role_iff`.
 example (L : Type) [ZPSemilattice L] (S : QuineAtomHost L) :

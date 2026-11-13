@@ -79,11 +79,11 @@ An independent re-check is three commands: `git clone https://github.com/timbrig
 
 | File | Document | Version | Focus |
 |------|----------|---------|-------|
-| [Lattice Algebra](ZP-A_Lattice_Algebra.pdf) | ZP-A | v1.38 | The lattice-algebra foundation: the bottom element ⊥ and the order it induces. |
+| [Lattice Algebra](ZP-A_Lattice_Algebra.pdf) | ZP-A | v1.39 | The lattice-algebra foundation: the bottom element ⊥ and the order it induces. |
 | [p-adic Topology](ZP-B_pAdic_Topology.pdf) | ZP-B | v1.33 | The 2-adic topology: why p = 2, and why no continuous path in Q₂ joins two distinct points, so none returns from a nonzero point to 0 of Q₂. |
 | [Information Theory](ZP-C_Information_Theory.pdf) | ZP-C | v1.39 | The information layer: state distributions, 1-bit cost, surprisal unbounded in depth, and the 2-adic additive valuation ⊤ at the point to which c₀, ⊥ of MachinePhase, corresponds. |
 | [State Layer](ZP-D_State_Layer.pdf) | ZP-D | v1.21 | The Hilbert-space layer: the snap as an orthogonal shift between states. |
-| [Bridge Document](ZP-E_Bridge_Document.pdf) | ZP-E | v3.84 | The bridge: the snap assembled as a derived theorem across the layers. |
+| [Bridge Document](ZP-E_Bridge_Document.pdf) | ZP-E | v3.85 | The bridge: the snap assembled as a derived theorem across the layers. |
 | [The Counterexamples](ZP-F_The_Counterexamples.pdf) | ZP-F | v1.26 | The counterexamples: ordered fields (ℝ, ℚ), where 0 has no first step above it. |
 | [Category Theory](ZP-G_Category_Theory.pdf) | ZP-G | v1.27 | The categorical layer: ⊥ as initial object, the informational singularity. |
 | [Categorical Bridge](ZP-H_Categorical_Bridge.pdf) | ZP-H | v1.35 | The categorical bridge: the snap holding under all four domain functors. |

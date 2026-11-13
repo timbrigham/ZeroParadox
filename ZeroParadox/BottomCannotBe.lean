@@ -69,11 +69,11 @@ import Mathlib.Order.BoundedOrder.Basic
 /-!
 # Index of declarations characterizing ⊥
 
-Curated, not exhaustive. An INDEXED name is `#check`ed, so removing it breaks this build; a name only
-inside a gloss is not. `Statement:` restates what a declaration proves; `Reading:` is interpretation,
-not a claim about the theorem. Where a `Reading:` asserts strength, scope or genericity it should
-carry an `example` that fails to compile if it is wrong; those are the only things proved here, and
-not every such `Reading:` has one yet. Sections: what ⊥ cannot be, must be, and how it is reached.
+Curated, not exhaustive. An INDEXED name is `#check`ed, so deleting or renaming its declaration breaks
+this build; a name only inside a gloss is not. `Statement:` restates what a declaration proves; `Reading:`
+is interpretation, not a claim about the theorem. Where a `Reading:` asserts strength, scope or genericity
+it should carry an `example` that fails to compile if it is wrong; those are the only things proved here,
+and not every such `Reading:` has one yet. Sections: what ⊥ cannot be, must be, and how it is reached.
 ⊥ is a ROLE, not one object: the first section names its occupant per structure, or its absence.
 
 ## Engineer's Take
