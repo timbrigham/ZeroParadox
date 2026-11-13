@@ -59,6 +59,7 @@ import ZeroParadox.Information.PoleWithinEnsemble
 import ZeroParadox.Valuation.DoublingAndTree
 import ZeroParadox.State.DieProjection
 import ZeroParadox.State.QubitDie
+import ZeroParadox.State.FermiStepDie
 
 set_option maxHeartbeats 400000
 
@@ -3449,6 +3450,13 @@ example : let M := ZeroParadox.Motion.ofTotal (id : Option ℕ → Option ℕ) (
 #check @ZeroParadox.qubit_flip_fixes_plus        -- Statement: σ_x fixes `|0⟩ + |1⟩`
 #check @ZeroParadox.qubit_perp_moves_plus        -- Statement: `|0⟩ + |1⟩` is not in the orthocomplement of its own line
 #check @ZeroParadox.qubit_flip_perp_agree_at_poles -- Statement: on complex lines, σ_x-image equals orthocomplement at `|0⟩` and `|1⟩`; at `|0⟩ + |1⟩` σ_x fixes the line and the orthocomplement differs from it
+#check @ZeroParadox.signDie                      -- Statement: the die on ℝ with UP `Real.sign` (idempotent: `real_sign_idem`) and OVER `st` (`ZeroParadox/State/FermiStepDie.lean`)
+#check @ZeroParadox.isLanding_signDie_iff        -- Statement: its landings are exactly `-1`, `0`, `1`; both directions
+#check @ZeroParadox.sigmoid_cold_limit_is_sign   -- Statement: `Real.sigmoid (β * x) → (Real.sign x + 1) / 2` as `β → ∞`, at every `x`
+#check @ZeroParadox.signDieMirrorAuto            -- Statement: with OVER `≠`, negation is a strict self-isomorphism of `signDie`
+#check @ZeroParadox.signDieMirrorReverse         -- Statement: with OVER `<`, negation is a strict isomorphism onto `Motion.reverse`
+#check @ZeroParadox.signDie_mirror_not_self_hom  -- Statement: CONTROL: with OVER `<`, no strict self-map of `signDie` has negation as its map
+#check @ZeroParadox.signDie_mirror_on_landings   -- Statement: negation fixes `0`, swaps `-1` and `1`, and fixes no other real
 
 /-! ### § XIX. Two points and their views: the four corners, the tower span, the ends of a view -/
 #check @ZeroParadox.Pole.cornerZero_cells        -- Statement: the cells of `ofFun cornerZero` at `zero` and `infty`: trap sets, fan-in, arrival
@@ -4969,7 +4977,7 @@ example : (∀ n, ZeroParadox.slotRun (fun _ => false) n = false) ∧
 #check @ZeroParadox.botMass_eq_iInf            -- Statement: that mass is the infimum over `n` of the mass of the length-`n` cylinder at ⊥, each continuous in `p` (`cylMass_continuous`). Reading: the jump is at infinity: every cylinder's mass is continuous in `p`
 #check @ZeroParadox.pole_limit_explicit        -- Statement: the explicit tapes `fireAt n`, firing exactly at `n`, have halting runs and approach ⊥ of `ℕ → Bool` pointwise, `det` passing every `ofNat N`; ⊥'s run does not halt. Reading: choice attaches to typicality: the random limit `pole_within_ensemble_limit` measures `Classical.choice`, this one `[propext, Quot.sound]` (`ZeroParadox/Category/ChoiceCannotBe.lean` § III)
 #check @ZeroParadox.fireAt_not_MLRandom        -- Statement: CONTROL, for `0 < p`, no `fireAt n` is Martin-Löf random for `trials p hp`
--- Reading: a heat-bath rate relocates `0 < p` to "Glauber-type rates at `T > 0`"; it does not remove it (PoleWithinEnsemble § VIII).
+-- Reading: a heat-bath rate relocates `0 < p` into the choice of the rate's form (the sigmoid's codomain, at every `T`); it does not remove it, and no theorem consumes `T > 0` (PoleWithinEnsemble § VIII).
 #check @ZeroParadox.glauber_fires_once         -- Statement: at every `ΔE`, `T`, the firing tapes have `trials (glauberExciteNN ΔE T)` measure one
 #check @ZeroParadox.glauber_botMass            -- Statement: at every `ΔE`, `T`, `botMass (glauberExciteNN ΔE T) = 0`
 #check @ZeroParadox.glauber_jump               -- Statement: if `0 < ΔE`: `botMass` 0 at every `T`, `glauberExcite ΔE T → 0` as `T → 0⁺`, and `botMass 0 = 1`

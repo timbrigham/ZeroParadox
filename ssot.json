@@ -672,8 +672,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 3981,
-        "files": 221
+        "declarations": 3991,
+        "files": 222
       },
       "entries": [
         {
@@ -29024,6 +29024,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "3172fc0f-3a63-4ddc-aa0a-0e1d30344793",
+          "new": {
+            "file": "ZeroParadox/State/FermiStepDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.isLanding_signDie_iff",
+            "short": "isLanding_signDie_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/State/FermiStepDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.isLanding_signDie_iff",
+            "short": "isLanding_signDie_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "FermiStepDie: the cold logistic step as a die (sign as total UP, landings -1/0/1, sigmoid cold limit) and negation as a die symmetry (self-iso under symmetric OVER, iso onto reverse under <, control) (Tim approved Take 2026-11-13)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "31750884-7e6d-4e72-88e9-4a4097f1998d",
           "new": {
             "file": "ZeroParadox/Category/BottomUndecidable.lean",
@@ -35756,6 +35793,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "3e7e1f86-e69b-4fea-a931-be988039a5e4",
+          "new": {
+            "file": "ZeroParadox/State/FermiStepDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.signDieMirrorReverse",
+            "short": "signDieMirrorReverse"
+          },
+          "old": {
+            "file": "ZeroParadox/State/FermiStepDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.signDieMirrorReverse",
+            "short": "signDieMirrorReverse",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "FermiStepDie: the cold logistic step as a die (sign as total UP, landings -1/0/1, sigmoid cold limit) and negation as a die symmetry (self-iso under symmetric OVER, iso onto reverse under <, control) (Tim approved Take 2026-11-13)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -48398,6 +48472,43 @@
             "role": []
           },
           "reason": "die-bend-1104: Tim's \"bend\" (ruling 38): first-occurrence time det as a Galois insertion of tapes onto NInf, order reversed (Die.lean § XXV)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "53e4ad3e-9879-41ed-b0f3-7ff2643710f7",
+          "new": {
+            "file": "ZeroParadox/State/FermiStepDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.signDie_mirrors_agree",
+            "short": "signDie_mirrors_agree"
+          },
+          "old": {
+            "file": "ZeroParadox/State/FermiStepDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.signDie_mirrors_agree",
+            "short": "signDie_mirrors_agree",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "FermiStepDie: the cold logistic step as a die (sign as total UP, landings -1/0/1, sigmoid cold limit) and negation as a die symmetry (self-iso under symmetric OVER, iso onto reverse under <, control) (Tim approved Take 2026-11-13)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -92557,6 +92668,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "a2538d67-cb81-4330-9984-604af4bd2f1d",
+          "new": {
+            "file": "ZeroParadox/State/FermiStepDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.signDie_mirror_on_landings",
+            "short": "signDie_mirror_on_landings"
+          },
+          "old": {
+            "file": "ZeroParadox/State/FermiStepDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.signDie_mirror_on_landings",
+            "short": "signDie_mirror_on_landings",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "FermiStepDie: the cold logistic step as a die (sign as total UP, landings -1/0/1, sigmoid cold limit) and negation as a die symmetry (self-iso under symmetric OVER, iso onto reverse under <, control) (Tim approved Take 2026-11-13)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "a25c6d6c-ed57-487f-8ffd-40d7ca9207e7",
           "new": {
             "file": "ZeroParadox/Information/Surprisal.lean",
@@ -97203,6 +97351,43 @@
             ]
           },
           "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "aae59727-0607-452f-8591-19c87858b953",
+          "new": {
+            "file": "ZeroParadox/State/FermiStepDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.real_sign_idem",
+            "short": "real_sign_idem"
+          },
+          "old": {
+            "file": "ZeroParadox/State/FermiStepDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.real_sign_idem",
+            "short": "real_sign_idem",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "FermiStepDie: the cold logistic step as a die (sign as total UP, landings -1/0/1, sigmoid cold limit) and negation as a die symmetry (self-iso under symmetric OVER, iso onto reverse under <, control) (Tim approved Take 2026-11-13)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -105245,6 +105430,43 @@
             ]
           },
           "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b7df4509-dbba-4905-a9e0-e67155fd4883",
+          "new": {
+            "file": "ZeroParadox/State/FermiStepDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.signDieMirrorHom",
+            "short": "signDieMirrorHom"
+          },
+          "old": {
+            "file": "ZeroParadox/State/FermiStepDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.signDieMirrorHom",
+            "short": "signDieMirrorHom",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "FermiStepDie: the cold logistic step as a die (sign as total UP, landings -1/0/1, sigmoid cold limit) and negation as a die symmetry (self-iso under symmetric OVER, iso onto reverse under <, control) (Tim approved Take 2026-11-13)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -115962,6 +116184,43 @@
             ]
           },
           "reason": "Land 2026-11-10 cells-joint, local-towers, interleave probes and the new one-way-flow results into ZeroParadox/Valuation (CellsJoint, Interleave, LocalTowers, OneWayFlow).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "cb32288e-3c44-43da-82e3-02bb4bd56dad",
+          "new": {
+            "file": "ZeroParadox/State/FermiStepDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.sigmoid_cold_limit_is_sign",
+            "short": "sigmoid_cold_limit_is_sign"
+          },
+          "old": {
+            "file": "ZeroParadox/State/FermiStepDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.sigmoid_cold_limit_is_sign",
+            "short": "sigmoid_cold_limit_is_sign",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "FermiStepDie: the cold logistic step as a die (sign as total UP, landings -1/0/1, sigmoid cold limit) and negation as a die symmetry (self-iso under symmetric OVER, iso onto reverse under <, control) (Tim approved Take 2026-11-13)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -133632,6 +133891,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "e82774c3-2f58-45ea-8f16-67af445a1a4e",
+          "new": {
+            "file": "ZeroParadox/State/FermiStepDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.signDie_mirror_not_self_hom",
+            "short": "signDie_mirror_not_self_hom"
+          },
+          "old": {
+            "file": "ZeroParadox/State/FermiStepDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.signDie_mirror_not_self_hom",
+            "short": "signDie_mirror_not_self_hom",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "FermiStepDie: the cold logistic step as a die (sign as total UP, landings -1/0/1, sigmoid cold limit) and negation as a die symmetry (self-iso under symmetric OVER, iso onto reverse under <, control) (Tim approved Take 2026-11-13)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "e8297b31-cba0-4c94-9d2a-ee461460a084",
           "new": {
@@ -134990,6 +135286,43 @@
             ]
           },
           "reason": "Land DepthIsWait: endVal on End is the first hitting time det of its digit tape, read in ENat (2026-11-10).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ea06925d-607a-4185-b086-5ce0f2a0a4fa",
+          "new": {
+            "file": "ZeroParadox/State/FermiStepDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.signDie",
+            "short": "signDie"
+          },
+          "old": {
+            "file": "ZeroParadox/State/FermiStepDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.signDie",
+            "short": "signDie",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "FermiStepDie: the cold logistic step as a die (sign as total UP, landings -1/0/1, sigmoid cold limit) and negation as a die symmetry (self-iso under symmetric OVER, iso onto reverse under <, control) (Tim approved Take 2026-11-13)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -140932,6 +141265,43 @@
             ]
           },
           "reason": "Land PoleWithinEnsemble and TowerTape: ⊥ of ℕ → Bool null yet in the support of trials p hp (iff p < 1) and in the closure of random firing tapes; local floors as subtape poles; a local tower as one tape; limit and value forms (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f4f128dc-aab8-43ab-9bf4-cf26f96152d7",
+          "new": {
+            "file": "ZeroParadox/State/FermiStepDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.signDieMirrorAuto",
+            "short": "signDieMirrorAuto"
+          },
+          "old": {
+            "file": "ZeroParadox/State/FermiStepDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.signDieMirrorAuto",
+            "short": "signDieMirrorAuto",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "FermiStepDie: the cold logistic step as a die (sign as total UP, landings -1/0/1, sigmoid cold limit) and negation as a die symmetry (self-iso under symmetric OVER, iso onto reverse under <, control) (Tim approved Take 2026-11-13)",
           "verify": {
             "axioms": null,
             "sorry_free": true
