@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-E: Bridge Document PDF Builder
-Version 3.80 | November 2026
+Version 3.83 | November 2026
 Follows all rules in pdf rendering standards:
   - DejaVu fonts only
   - Checkmark always wrapped in <font name="DV">
@@ -12,7 +12,7 @@ Follows all rules in pdf rendering standards:
 import os
 from zp_utils import *
 
-VERSION = '3.80'
+VERSION = '3.83'
 FIRST_RELEASED = 'April 2026'
 
 # ── Local overrides: ZP-E uses justified body text ────────────────────────────
@@ -404,17 +404,24 @@ def build():
                 'with ε₀, the proof-theoretic ordinal of Peano Arithmetic.',
                 '<b>The ordinal ε₀ (Cantor 1897, Math. Ann. 49, §20, Satz B).</b> In ordinal arithmetic, ε₀ is the smallest fixed '
                 'point of the map α → ω<sup>α</sup>: equivalently, ε₀ = sup{ω, ω<sup>ω</sup>, '
-                'ω<sup>ω<sup>ω</sup></sup>, ...}. No finite ω-tower reaches it. Gentzen (1936), '
+                'ω<sup>ω<sup>ω</sup></sup>, ...}. No finite ω-tower reaches it. Gentzen (1936, 1938), '
                 'in the form stated by Rathjen (arXiv:1405.4484, Theorem 2.8(i), p. 10): primitive recursive '
                 'arithmetic, PRA, proves the implication from PRWO(ε₀) (that no primitive recursive '
                 'sequence of ordinals below ε₀ descends forever) to Con(PA). '
                 'Necessity — that no smaller ordinal would do — is the other direction, and it rests on '
                 'different ground: the provability in PA of transfinite induction at every ordinal '
-                'strictly below ε₀, which Gentzen reports as already known, crediting Hilbert-Bernays, '
+                'strictly below ε₀, which Gentzen reports as already known, crediting Hilbert-Bernays '
+                '(Gentzen 1943, Math. Ann. 119, p. 140 and its footnote 3), '
                 'together with G&#246;del\'s second incompleteness theorem, by which PA cannot prove '
-                'Con(PA) from within. The '
-                'ordinal ε₀ is therefore the minimum threshold at which finite arithmetic exhausts its own '
-                'generative capacity.',
+                'Con(PA) from within. Gentzen gave a G&#246;del-based argument of this kind himself, stated '
+                'with hedges and for his own assignment of ordinals to derivations (Gentzen 1938, '
+                '"Neue Fassung des Widerspruchsfreiheitsbeweises f&#252;r die reine Zahlentheorie," '
+                '<i>Forschungen zur Logik und zur Grundlegung der exakten Wissenschaften</i>, neue Folge, Heft 4, '
+                '19&#8211;44, &#167; 4.4; English translation "New version of the consistency proof for '
+                'elementary number theory," in M. E. Szabo (ed.), <i>The Collected Papers of Gerhard '
+                'Gentzen</i>, North-Holland, 1969, 252&#8211;286, here pp. 284&#8211;285). The '
+                'ordinal ε₀ is therefore the least ordinal at which the transfinite induction PA can '
+                'prove stops.',
                 '<b>The structural analogy.</b> ZP\'s ε₀ occupies an analogous position in the state '
                 'lattice. At P₀, c₁ satisfies K(c₁|n) ≥ |c₁|, the finite-string form of T-SNAP Step 1: it is algorithmically '
                 'incompressible. Just as the '

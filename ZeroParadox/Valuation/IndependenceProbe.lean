@@ -66,6 +66,10 @@ theorem chain_and_branching_independent :
     ((¬ (((false, true) : Bool × Bool) ≤ (true, false)) ∧
       ¬ (((true, false) : Bool × Bool) ≤ (false, true))) ∧ Finite (Bool × Bool)) :=
   ⟨chain_no_branching, branching_no_infinite_chain⟩
+-- `Statement:` the witnesses above are arbitrary carriers. At ⊥ of a `ZPSemilattice`, ⊥ the glb of
+-- non-⊥ members plus `BotHasFirstStep` forces a non-linear order (`branching_forced`,
+-- `ZeroParadox/Valuation/CellsJoint.lean`); on `End`, depth is the digit tape's waiting time
+-- (`endVal_eq_wait`, `ZeroParadox/Valuation/DepthIsWait.lean`).
 
 end ZeroParadox
 

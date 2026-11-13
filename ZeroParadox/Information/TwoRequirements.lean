@@ -1,6 +1,7 @@
 -- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): a first step at ⊥ of a ZP-A semilattice and a typical tape, as two hypotheses giving the snap's cover and its slot-chart firing (`hw`). Curated results indexed in ZeroParadox/MANIFEST.md.
 import ZeroParadox.Information.Disjunctive
 import ZeroParadox.Reals.OrderedField
+import ZeroParadox.Settheory.Model
 import Mathlib.Probability.StrongLaw
 import Mathlib.Analysis.Real.OfDigits
 import Mathlib.Order.Filter.EventuallyConst
@@ -82,7 +83,8 @@ theorem snap_of_firstStep_fires_once {L : Type*} [ZPSemilattice L] (hR1 : BotHas
 `0 < p`, then `w` fires (`hw`) and `snap_of_firstStep_fires_once`'s conclusion holds. One way.
 `Reading:` CARRIER: the occurrence commitment's slot-chart hypothesis `hw` comes from typicality of
 one tape, the cover from AX-B1's form on `L`; neither is discharged, and a firing is not proved to
-be an execution event (`ZeroParadox/Order/Snap.lean`). -/
+be an execution event (`ZeroParadox/Order/Snap.lean`). The firing step is the step at which the
+waiting computation `toComp (det w)` halts (`toComp_det_results_iff_slotRun`); that is when, not what. -/
 theorem snap_of_two_requirements {L : Type*} [ZPSemilattice L] (hR1 : BotHasFirstStep L)
     (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p) (w : ℕ → Bool) (hR2 : ZeroBlockTypical p hp w) :
     ∃ (φ : Bool → L) (hw : ∃ k, w k = true),
@@ -201,6 +203,17 @@ example [ZPSemilattice Unit] : ¬ BotHasFirstStep Unit := by
   rintro ⟨a, ha⟩
   letI := zpSemilatticeSup Unit
   exact @LT.lt.ne Unit (zpSemilatticeSup Unit).toPreorder _ _ ha.1 (Subsingleton.elim _ _)
+
+/-- `Statement:` CONTROL, `ℕ∞` under `instNatInfZPS` (join `min`, ⊥ = ⊤ of `ℕ∞`): ⊥ has no first
+step in ZP-A's induced order; Mathlib's `WithTop.not_covBy_top` read through the order reversal. -/
+theorem natInf_not_botHasFirstStep : ¬ BotHasFirstStep ℕ∞ := by
+  rintro ⟨a, hlt, hno⟩
+  have key : ∀ x y : ℕ∞, @LT.lt ℕ∞ (zpSemilatticeSup ℕ∞).toLT x y ↔ y < x := fun x y => by
+    show (min x y = y ∧ ¬ min y x = x) ↔ _
+    rw [min_eq_right_iff, min_eq_right_iff]
+    exact ⟨fun h => lt_of_le_not_ge h.1 h.2, fun h => ⟨h.le, not_le.2 h⟩⟩
+  exact WithTop.not_covBy_top (α := ℕ) (a := a)
+    ⟨(key _ _).1 hlt, fun c h1 h2 => hno ((key _ _).2 h2) ((key _ _).2 h1)⟩
 
 /-! ## § II. Martin-Löf randomness, defined locally
 
@@ -428,7 +441,7 @@ Martin-Löf random for `trials p hp` and carries `snap_ae_of_firstStep`'s conclu
 (all tapes under `trials p hp`) and the point reading (one Martin-Löf random tape) agree almost
 everywhere: the ensemble's typical member is a random tape that gives the snap. That ⊥ of `L` is the
 ensemble or a random tape is not proved here; `BotHasFirstStep L` stays a hypothesis, and a firing
-is not proved to be an execution event. Prior art for the pattern (`snap_ae_of_firstStep` the
+is not proved to be an execution event. The firing step is the step at which the waiting computation `toComp (det w)` halts (`toComp_det_results_iff_slotRun`); that is when, not what. Prior art for the pattern (`snap_ae_of_firstStep` the
 almost-every form, `snap_of_firstStep_MLRandom` the every-random form): Landsman, *Typical = random*,
 arXiv:2306.09226, § 4, p. 16; the credit runs from Landsman to here. -/
 theorem mlRandom_and_snap_ae {L : Type*} [ZPSemilattice L] (hR1 : BotHasFirstStep L)
@@ -754,7 +767,8 @@ example : tapeReal (fun _ => false) = 0 ∧ tapeReal (fun _ => true) = 1 := by
   refine ⟨by simp [tapeReal, Real.ofDigits, Real.ofDigitsTerm, bitDigit], ?_⟩
   exact Real.ofDigits_const_last_eq_one 1
 
--- Statement: `trials 1` is the point mass on the all-`true` tape.
+-- Statement: `trials 1` is the point mass on the all-`true` tape; named form `trials_one_eq_dirac`
+-- (`ZeroParadox/Information/PoleWithinEnsemble.lean` § VI).
 example : trials 1 le_rfl = Measure.dirac (fun _ => true) := by
   have hb : PMF.bernoulli (1 : NNReal) le_rfl = PMF.pure true := by
     ext b; cases b <;> simp [PMF.bernoulli_apply, PMF.pure_apply]
@@ -846,6 +860,7 @@ open ZeroParadox
 #print axioms nnreal_not_botHasFirstStep
 #print axioms boolOrZPS
 #print axioms bool_botHasFirstStep
+#print axioms natInf_not_botHasFirstStep
 #print axioms prefixCyl
 #print axioms MLTest
 #print axioms MLRandom

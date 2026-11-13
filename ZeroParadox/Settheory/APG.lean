@@ -1,4 +1,5 @@
 import ZeroParadox.Valuation.Scale
+import ZeroParadox.Settheory.Model
 import Mathlib.Combinatorics.Quiver.Path
 import Mathlib.Combinatorics.Quiver.ConnectedComponent
 import Mathlib.Combinatorics.Quiver.Arborescence
@@ -80,7 +81,9 @@ operation that assembles a parent's value from its children's values.
 `decoration_unique` consumes `collect_val_ge` and never `collect_singleton`, and it gives a
 SUFFICIENT condition for uniqueness, not a characterization (no converse is proved). § IV settles
 periodic points of `scale`, not an APG cycle — the cyclic case is `cyclic_decoration_eq_bot` (§ VII').
-For "x ∈ x is forbidden" the named theorem is `ZFSet.mem_irrefl`, not `ZFSet.regularity`. -/
+For "x ∈ x is forbidden" the named theorem is `ZFSet.mem_irrefl`, not `ZFSet.regularity`.
+Existence is proved too (§ X): every quiver has exactly one decoration into every
+`DecorationUniverse` (`existsUnique_decoration`); a decoration into an abstract `U` is still no AFA model. -/
 
 namespace ZeroParadox
 
@@ -191,14 +194,28 @@ class DecorationUniverse (U : Type*) [ZPSemilattice U] [ValuationStructure U] wh
 
 /-! ### NO-GO gauge — `DecorationUniverse` is inhabited over EVERY `ValuationStructure` carrier.
 
-Witness built and elaborated 2026-08-08, **classically** (the `dite` needs `Decidable (∃ x, S = {x})`):
-`collect S := if h : ∃ x, S = {x} then scale h.choose else bot`, so the class constrains nothing
-beyond the `ValuationStructure` it already assumes.
-**Only the non-singleton half is free**, where `val bot` is top and dominates the bound. The singleton
-branch of `collect_val_ge` needs `val_scale` (plus `scale_bot` when `x = bot`), and
-`collect_singleton` needs `Set.singleton_eq_singleton_iff`.
-**Not a carrier-level defect** — every use site takes it as a hypothesis carrying data. It does mean
-`[DecorationUniverse U]` alone licenses no conclusion. -/
+The `example` below emits it; a concrete one on ℕ∞, with a decoration, follows `IsDecoration` (§ V). So `[DecorationUniverse U]` alone licenses no conclusion about `U`
+beyond the `ValuationStructure` it already assumes, classically; every use site takes it as a hypothesis carrying data. -/
+
+-- Statement: every `ValuationStructure` carrier has a `DecorationUniverse`, classically:
+-- `collect S := if h : ∃ x, S = {x} then scale h.choose else bot`.
+example {U : Type*} [ZPSemilattice U] [ValuationStructure U] : Nonempty (DecorationUniverse U) := by
+  classical
+  refine ⟨{ collect := fun S => if h : ∃ x, S = {x} then ValuationStructure.scale h.choose else bot,
+            collect_singleton := fun x => ?_, collect_val_ge := fun S x hx => ?_ }⟩
+  · have h : ∃ y, ({x} : Set U) = {y} := ⟨x, rfl⟩
+    have hx : h.choose = x := (Set.singleton_eq_singleton_iff.mp h.choose_spec).symm
+    rw [dite_eq_left h, hx]
+  · split_ifs with h
+    · have hxe : x = h.choose := by rw [h.choose_spec] at hx; exact hx
+      rw [← hxe]
+      by_cases hb : x = bot
+      · subst hb
+        rw [ValuationStructure.scale_bot, ValuationStructure.val_bot]
+        exact le_top
+      · exact le_of_eq (ValuationStructure.val_scale x hb).symm
+    · rw [ValuationStructure.val_bot]
+      exact le_top
 
 /-! ## § III. val_iterate — The Key Lemma
 
@@ -289,6 +306,36 @@ def IsDecoration {V : Type*} [Quiver V]
     {U : Type*} [ZPSemilattice U] [ValuationStructure U] [DecorationUniverse U]
     (d : V → U) : Prop :=
   ∀ v : V, d v = DecorationUniverse.collect (d '' apg_children v)
+
+-- Statement: on ℕ∞ (join `min`, ⊥ of ℕ∞'s ZP structure is `⊤`, scale `+ 1`, val `id`;
+-- `ZeroParadox/Settheory/Model.lean`) `collect S := sSup S + 1`, `sSup` in ℕ∞'s own order, is a
+-- `DecorationUniverse`, and under it the quiver on `Bool` with the one edge `true ⟶ false` has the
+-- decoration `true ↦ 2`, `false ↦ 1`.
+-- Reading: here the decoration is the well-founded rank plus one, ranked by the CHILD relation
+-- `ChildRel` (§ X: `w` below `v` when `v ⟶ w`), so the leaf `false` has rank 0; under the reversed
+-- relation the ranks reverse (Mathlib's `Acc.rank_eq`, `Mathlib/SetTheory/Ordinal/Rank.lean`).
+example : ∃ D : DecorationUniverse ℕ∞, ∃ d : Bool → ℕ∞,
+    @IsDecoration Bool ⟨fun a b => PLift (a = true ∧ b = false)⟩ ℕ∞ _ _ D d ∧
+      d true = 2 ∧ d false = 1 := by
+  let Q : Quiver Bool := ⟨fun a b => PLift (a = true ∧ b = false)⟩
+  have hc : ∀ a b : Bool, b ∈ @apg_children Bool Q a ↔ (a = true ∧ b = false) :=
+    fun a b => ⟨fun ⟨e⟩ => e.down, fun h => ⟨⟨h⟩⟩⟩
+  refine ⟨⟨fun S => sSup S + 1, fun x => ?_, fun S x hx => ?_⟩, fun b => if b then 2 else 1, ?_, rfl, rfl⟩
+  · show sSup {x} + 1 = x + 1
+    rw [sSup_singleton]
+  · show x + 1 ≤ sSup S + 1
+    exact add_le_add (le_sSup hx) le_rfl
+  · intro v
+    cases v
+    · have he : @apg_children Bool Q false = (∅ : Set Bool) := Set.ext fun b => by rw [hc]; simp
+      show (1 : ℕ∞) = sSup ((fun b : Bool => if b then (2 : ℕ∞) else 1) '' @apg_children Bool Q false) + 1
+      rw [he, Set.image_empty, sSup_empty]
+      simp
+    · have he : @apg_children Bool Q true = ({false} : Set Bool) := Set.ext fun b => by
+        rw [hc, Set.mem_singleton_iff]; simp
+      show (2 : ℕ∞) = sSup ((fun b : Bool => if b then (2 : ℕ∞) else 1) '' @apg_children Bool Q true) + 1
+      rw [he, Set.image_singleton, sSup_singleton]
+      exact one_add_one_eq_two.symm
 
 /-! ## § VI. Self-Loop Uniqueness -/
 
@@ -462,29 +509,54 @@ example {V : Type*} [Quiver V] {U : Type*} [ZPSemilattice U] [ValuationStructure
 
 Here `v : U → ℕ∞` and `c : Set U → U` are bare data. -/
 
--- Statement: absorption needs no join and no `val_bot`: a lower bound `v (c S) ≥ v x + 1` on members
--- and a unique `v`-⊤ point `b` force `v b = ⊤` and `c S = b` whenever `b ∈ S`.
--- Reading: a rank into On ∪ {∞} with `∞ + 1 = ∞` (Pakhomov–Walsh, Remark 5.1); the uniqueness of
--- the ∞ point is the corpus's own hypothesis.
-example {U : Type*} (v : U → ℕ∞) (c : Set U → U) (hc : ∀ S x, x ∈ S → v (c S) ≥ v x + 1)
-    (b : U) (hu : ∀ x, v x = ⊤ → x = b) : v b = ⊤ ∧ ∀ S, b ∈ S → c S = b := by
+/-- `Statement:` under `hc` and `hu` (bare data, no class), `v b = ⊤` and `c S = b` whenever `b ∈ S`. -/
+theorem absorb_of_unique_top {U : Type*} (v : U → ℕ∞) (c : Set U → U)
+    (hc : ∀ S x, x ∈ S → v (c S) ≥ v x + 1) (b : U) (hu : ∀ x, v x = ⊤ → x = b) :
+    v b = ⊤ ∧ ∀ S, b ∈ S → c S = b := by
   have htop : v (c Set.univ) = ⊤ := by
     have h := hc Set.univ (c Set.univ) trivial
     rcases hv : v (c Set.univ) with _ | m
     · rfl
     · rw [hv] at h
-      change (m : ℕ∞) ≥ (m : ℕ∞) + 1 at h
-      exact absurd (show m ≥ m + 1 by exact_mod_cast h) (by omega)
+      have h' : WithTop.LE (some (m + 1) : WithTop ℕ) (some m) := h
+      cases h' with
+      | coe_le_coe hle => exact absurd hle (Nat.not_succ_le_self m)
   have hb : v b = ⊤ := hu _ htop ▸ htop
-  refine ⟨hb, fun S hS => hu _ (top_le_iff.mp ?_)⟩
-  exact le_trans (hb ▸ le_self_add) (hc S b hS)
+  refine ⟨hb, fun S hS => hu _ ?_⟩
+  have h := hc S b hS
+  rw [hb] at h
+  rcases hv : v (c S) with _ | m
+  · rfl
+  · rw [hv] at h
+    have h' : WithTop.LE (none : WithTop ℕ) (some m) := h
+    cases h'
+
+-- Statement: absorption needs no join and no `val_bot`: a lower bound `v (c S) ≥ v x + 1` on members
+-- and a unique `v`-⊤ point `b` force `v b = ⊤` and `c S = b` whenever `b ∈ S`.
+-- Reading: a rank into On ∪ {∞} with `∞ + 1 = ∞` (Pakhomov–Walsh, Remark 5.1); the uniqueness of
+-- the ∞ point is the corpus's own hypothesis.
+example {U : Type*} (v : U → ℕ∞) (c : Set U → U) (hc : ∀ S x, x ∈ S → v (c S) ≥ v x + 1)
+    (b : U) (hu : ∀ x, v x = ⊤ → x = b) : v b = ⊤ ∧ ∀ S, b ∈ S → c S = b :=
+  absorb_of_unique_top v c hc b hu
+
+/-- `Statement:` ⊥ of `U` absorbs `collect`: `collect S = bot` whenever `bot ∈ S`. By cases on
+    `WithTop.LE`, with no order lemma. -/
+theorem collect_absorbs_bot {U : Type*} [ZPSemilattice U] [ValuationStructure U]
+    [DecorationUniverse U] (S : Set U) (h : (bot : U) ∈ S) :
+    DecorationUniverse.collect S = bot := by
+  have hge := DecorationUniverse.collect_val_ge S bot h
+  rw [ValuationStructure.val_bot] at hge
+  apply ValuationStructure.val_unique
+  rcases hv : ValuationStructure.val (DecorationUniverse.collect S) with _ | m
+  · rfl
+  · rw [hv] at hge
+    have h' : WithTop.LE (none : WithTop ℕ) (some m) := hge
+    cases h'
 
 -- Statement: its instance: ⊥ of `U` absorbs `collect` in every `DecorationUniverse`.
 example {U : Type*} [ZPSemilattice U] [ValuationStructure U] [DecorationUniverse U]
-    (S : Set U) (h : (bot : U) ∈ S) : DecorationUniverse.collect S = bot := by
-  have hge := DecorationUniverse.collect_val_ge S bot h
-  rw [ValuationStructure.val_bot, top_add] at hge
-  exact ValuationStructure.val_unique _ (top_le_iff.mp hge)
+    (S : Set U) (h : (bot : U) ∈ S) : DecorationUniverse.collect S = bot :=
+  collect_absorbs_bot S h
 
 -- Statement: `v` reverses the ZP order into ℕ∞'s iff `v (join x y) ≤ min (v x) (v y)`; Mathlib's
 -- `Antitone.map_sup_le` and `Monotone.of_le_map_sup` (through `OrderDual`), restated because the ZP
@@ -621,23 +693,24 @@ theorem acyclic_induction_step
     - `decoration_unique_of_val`, value side, any quiver: strong induction on the finite valuation
       of the TARGET value; valuation ⊤ is forced to ⊥ of `U` by `val_unique`. -/
 
-/-! ### PRIOR ART — the uniqueness clause of a RECURSIVE COALGEBRA, for ONE SHAPE of algebra.
+/-! ### PRIOR ART — both clauses of a RECURSIVE COALGEBRA, for ONE SHAPE of algebra.
 
 A coalgebra is **recursive** when *every* algebra admits a unique coalgebra-to-algebra morphism
 (Adámek-Milius-Moss 2020, arXiv:1910.09401v2, Def 3.2 p. 11, crediting Osius for the definition).
-`decoration_unique` gives that clause for algebras of the `DecorationUniverse.collect` shape only,
-and existence not at all. Well-foundedness of the GRAPH (Taylor's General Recursion Theorem, AMM
-Thm 7.2 p. 27; `ZeroParadox/Category/WellFoundedCoalgebra.lean`) is unavailable, as these quivers
-may carry cycles. `decoration_unique_of_val` inducts on the TARGET's rank instead: the AFA2 half of
-"the foundation axiom implies AFA2 and the negation of AFA1" (Aczel, *Non-Well-Founded Sets*, CSLI
-1988, Ex. 2.1 p. 20; AFA1/AFA2 p. 19), with one rank-⊤ point, ⊥ of `U`, admitted via `val_unique`. -/
+For `DecorationUniverse.collect`-shaped algebras only, `decoration_unique_of_val` gives uniqueness
+and `exists_decoration` (§ X) existence. Graph well-foundedness (Taylor's General Recursion Theorem,
+AMM Thm 7.2 p. 27; `ZeroParadox/Category/WellFoundedCoalgebra.lean`) is unavailable, as these quivers
+may carry cycles. `decoration_unique_of_val` inducts on the TARGET's valuation (depth) instead: the
+AFA2 half of "the foundation axiom implies AFA2 and the negation of AFA1" (Aczel, CSLI 1988, Ex. 2.1
+p. 20; AFA1/AFA2 p. 19), with one valuation-⊤ point, ⊥ of `U`, admitted via `val_unique`. -/
 
 -- Statement: `IsDecoration d` is the coalgebra-to-algebra equation `d = collect ∘ (d '' ·) ∘ apg_children`.
 -- Reading: read from the TARGET, `decoration_unique` is then CRA-uniqueness for the algebra `collect`
 -- (Capretta-Uustalu-Vene, *Corecursive Algebras*, SBMF 2009, LNCS 5902, Def. 1 p. 86), from the
 -- coalgebras `apg_children` of finite APGs; the `example` after `decoration_unique` drops the `APG`
 -- argument and gives the same uniqueness for every finite quiver, `decoration_unique_of_val` for
--- every quiver. Also near: Urabe, Hara and Hasuo,
+-- every quiver, and `exists_decoration` (§ X) is CRA-existence for every quiver. Also near: Urabe,
+-- Hara and Hasuo,
 -- *Categorical Liveness Checking by Corecursive Algebras* (arXiv:1704.04872), use a corecursive algebra
 -- "as a classifier for (non-)well-foundedness" (abstract) in their ranking domains (Def. III.10,
 -- p. 7), classically ranking functions into ℕ ∪ {∞} (p. 1); here a cyclic vertex gets valuation ⊤
@@ -800,6 +873,219 @@ example {V : Type*} [Quiver V] [Fintype V]
     (_G : APG V) (d₁ d₂ : V → U) (hd₁ : IsDecoration d₁) (hd₂ : IsDecoration d₂) : d₁ = d₂ :=
   decoration_unique_of_val d₁ d₂ hd₁ hd₂
 
+/-! ## § X. Decoration Existence
+
+Every quiver has a decoration into every `DecorationUniverse`, so with `decoration_unique_of_val`
+exactly one. Recursion on the accessible part (`accDec`); off it, ⊥ of `U`. The split is on the
+valuation, which is data in ℕ∞, never on `Acc`, which is a Prop, so no case is decided by choice.
+Credit runs to: AFA1, "every graph has at least one decoration" (Aczel 1988, p. 19);
+CRA-existence and CRA-uniqueness (Capretta-Uustalu-Vene, SBMF 2009, Def. 1 p. 86); both halves
+for one ranking algebra (Urabe-Hara-Hasuo, arXiv:1704.04872, Lemma A.6 p. 15). The abstraction
+over carriers was not located as of 2026-11-10, by the survey of 2026-11-09 (Aczel, CUV, UHH, AMM,
+AHM 2014; theoremsearch, LeanExplore, GitHub, web; pinned Mathlib grep and `exact?`). -/
+
+/-- `Statement:` `ChildRel V w v` iff `w ∈ apg_children v`: `w` is below its parent `v`. -/
+def ChildRel (V : Type*) [Quiver V] : V → V → Prop := fun w v => Nonempty (v ⟶ w)
+
+section Existence
+
+variable {V : Type*} [Quiver V] {U : Type*} [ZPSemilattice U] [ValuationStructure U]
+  [DecorationUniverse U]
+
+/-- `Statement:` structural recursion on the accessible part: `collect` of the children's values. -/
+noncomputable def accDec (v : V) (h : Acc (ChildRel V) v) : U :=
+  Acc.rec (motive := fun _ _ => U)
+    (fun v _ ih => DecorationUniverse.collect {u | ∃ (w : V) (hw : ChildRel V w v), ih w hw = u}) h
+
+/-- `Statement:` the defining equation of `accDec`. -/
+theorem accDec_eq (v : V) (h : Acc (ChildRel V) v) :
+    (accDec v h : U) = DecorationUniverse.collect
+      {u | ∃ (w : V) (hw : ChildRel V w v), accDec w (h.inv hw) = u} := by
+  cases h; rfl
+
+/-- `Statement:` accessible `w` relates to `accDec w`, non-accessible `w` to ⊥ of `U`. -/
+def ValRel (w : V) (u : U) : Prop :=
+  (∃ h : Acc (ChildRel V) w, accDec w h = u) ∨ (¬ Acc (ChildRel V) w ∧ u = bot)
+
+/-- `Statement:` the candidate: `collect` of every value the children are `ValRel`-related to. -/
+noncomputable def decor (v : V) : U :=
+  DecorationUniverse.collect {u | ∃ w ∈ apg_children v, ValRel w u}
+
+/-- `Statement:` on an accessible vertex, `decor` is the recursive value. -/
+theorem decor_eq_accDec (v : V) (h : Acc (ChildRel V) v) : (decor v : U) = accDec v h := by
+  rw [accDec_eq]
+  unfold decor
+  congr 1
+  ext u
+  constructor
+  · rintro ⟨w, hw, ⟨h', rfl⟩ | ⟨hn, rfl⟩⟩
+    · exact ⟨w, hw, rfl⟩
+    · exact absurd (h.inv hw) hn
+  · rintro ⟨w, hw, rfl⟩
+    exact ⟨w, hw, Or.inl ⟨h.inv hw, rfl⟩⟩
+
+/-- `Statement:` a finite valuation of `decor v` makes `v` accessible; strong induction on it. -/
+theorem acc_of_val_coe :
+    ∀ m : ℕ, ∀ v : V, ValuationStructure.val (decor v : U) = (m : ℕ∞) → Acc (ChildRel V) v := by
+  intro m
+  induction m using Nat.strongRecOn with
+  | ind m ih =>
+    intro v hv
+    refine Acc.intro v fun w hw => ?_
+    have key : Acc (ChildRel V) w →
+        ∃ k : ℕ, ValuationStructure.val (decor w : U) = (k : ℕ∞) ∧ k < m := by
+      intro ha
+      have hmem : (decor w : U) ∈ {u | ∃ w' ∈ apg_children v, ValRel w' u} :=
+        ⟨w, hw, Or.inl ⟨ha, (decor_eq_accDec w ha).symm⟩⟩
+      have hge := DecorationUniverse.collect_val_ge _ _ hmem
+      rw [← show (decor v : U) = DecorationUniverse.collect _ from rfl, hv] at hge
+      exact enat_lt_of_add_one_le hge
+    have nn : ¬¬ Acc (ChildRel V) w := fun hn => by
+      have hmem : (bot : U) ∈ {u | ∃ w' ∈ apg_children v, ValRel w' u} :=
+        ⟨w, hw, Or.inr ⟨hn, rfl⟩⟩
+      have hge := DecorationUniverse.collect_val_ge _ _ hmem
+      rw [← show (decor v : U) = DecorationUniverse.collect _ from rfl, hv,
+        ValuationStructure.val_bot] at hge
+      have h' : WithTop.LE (none : WithTop ℕ) (some m) := hge
+      cases h'
+    rcases hw' : ValuationStructure.val (decor w : U) with _ | k
+    · exact (nn fun ha => by
+        obtain ⟨k, hk, _⟩ := key ha
+        rw [hw'] at hk
+        cases hk).elim
+    · rcases Nat.lt_or_ge k m with hk | hk
+      · exact ih k hk w hw'
+      · exact (nn fun ha => by
+          obtain ⟨k', hk', hlt⟩ := key ha
+          rw [hw'] at hk'
+          have hkk : k = k' := Option.some.inj hk'
+          subst hkk
+          exact Nat.lt_irrefl k (Nat.lt_of_lt_of_le hlt hk)).elim
+
+/-- `Statement:` on an accessible vertex, `decor` satisfies the decoration equation. -/
+theorem decor_eq_collect_of_acc (v : V) (h : Acc (ChildRel V) v) :
+    DecorationUniverse.collect ((decor : V → U) '' apg_children v) = decor v := by
+  rw [decor_eq_accDec v h, accDec_eq]
+  congr 1
+  ext u
+  constructor
+  · rintro ⟨w, hw, rfl⟩
+    exact ⟨w, hw, (decor_eq_accDec w (h.inv hw)).symm⟩
+  · rintro ⟨w, hw, rfl⟩
+    exact ⟨w, hw, decor_eq_accDec w (h.inv hw)⟩
+
+/-- `Statement:` `decor` is a decoration; the case split is on the valuation, never on `Acc`. -/
+theorem decor_isDecoration : IsDecoration (decor : V → U) := by
+  intro v
+  rcases hR :
+      ValuationStructure.val (DecorationUniverse.collect ((decor : V → U) '' apg_children v))
+    with _ | m
+  · rw [ValuationStructure.val_unique _ hR]
+    rcases hL : ValuationStructure.val (decor v : U) with _ | n
+    · exact ValuationStructure.val_unique _ hL
+    · have hacc := acc_of_val_coe n v hL
+      rw [decor_eq_collect_of_acc v hacc, hL] at hR
+      cases hR
+  · have hacc : Acc (ChildRel V) v := Acc.intro v fun w hw => by
+      have hmem : (decor w : U) ∈ (decor : V → U) '' apg_children v := ⟨w, hw, rfl⟩
+      have hge := DecorationUniverse.collect_val_ge _ _ hmem
+      rw [hR] at hge
+      obtain ⟨k, hk, _⟩ := enat_lt_of_add_one_le hge
+      exact acc_of_val_coe k w hk
+    exact (decor_eq_collect_of_acc v hacc).symm
+
+/-- `Statement:` every quiver has a decoration into every `DecorationUniverse`. -/
+theorem exists_decoration : ∃ d : V → U, IsDecoration d :=
+  ⟨decor, decor_isDecoration⟩
+
+/-- `Statement:` every quiver has exactly one decoration into every `DecorationUniverse`. -/
+theorem existsUnique_decoration : ∃! d : V → U, IsDecoration d :=
+  ⟨decor, decor_isDecoration, fun d hd => decoration_unique_of_val d decor hd decor_isDecoration⟩
+
+/-- `Statement:` ONE WAY: a vertex not accessible for `ChildRel` is decorated ⊥ of `U`. The
+    converse fails: `fan_root_acc_and_eq_bot`. -/
+theorem decoration_eq_bot_of_not_acc (d : V → U) (hd : IsDecoration d) (v : V)
+    (h : ¬ Acc (ChildRel V) v) : d v = bot := by
+  rw [decoration_unique_of_val d decor hd decor_isDecoration]
+  rcases hL : ValuationStructure.val (decor v : U) with _ | n
+  · exact ValuationStructure.val_unique _ hL
+  · exact (h (acc_of_val_coe n v hL)).elim
+
+end Existence
+
+-- Statement: on ℕ with one edge n ⟶ n + 1 (no cycle anywhere) no vertex is accessible, so every
+-- decoration is ⊥ of `U` at every vertex.
+example {U : Type} [ZPSemilattice U] [ValuationStructure U] [DecorationUniverse U]
+    (d : ℕ → U) (hd : @IsDecoration ℕ ⟨fun a b => PLift (b = a + 1)⟩ U _ _ _ d) (n : ℕ) :
+    d n = bot := by
+  let _ : Quiver ℕ := ⟨fun a b => PLift (b = a + 1)⟩
+  refine decoration_eq_bot_of_not_acc d hd n ?_
+  intro hm
+  induction hm with
+  | intro x _ ih => exact ih (x + 1) ⟨⟨rfl⟩⟩
+
+/-- `Statement:` the fan's edges: `none` to every `some n`, and `some (n + 1)` to `some n`. -/
+abbrev fanEdge (a b : Option ℕ) : Prop :=
+  (a = none ∧ b ≠ none) ∨ ∃ n, a = some (n + 1) ∧ b = some n
+
+/-- `Statement:` the fan's root is accessible for `ChildRel` and still decorated ⊥ of `U` by every
+    decoration: the converse of `decoration_eq_bot_of_not_acc` fails. -/
+theorem fan_root_acc_and_eq_bot {U : Type*} [ZPSemilattice U] [ValuationStructure U]
+    [DecorationUniverse U] :
+    @Acc (Option ℕ) (@ChildRel (Option ℕ) ⟨fun a b => PLift (fanEdge a b)⟩) none ∧
+      ∀ d : Option ℕ → U,
+        @IsDecoration (Option ℕ) ⟨fun a b => PLift (fanEdge a b)⟩ U _ _ _ d → d none = bot := by
+  let _ : Quiver (Option ℕ) := ⟨fun a b => PLift (fanEdge a b)⟩
+  refine ⟨?_, fun d hd => ?_⟩
+  · have hs : ∀ n : ℕ, Acc (ChildRel (Option ℕ)) (some n) := by
+      intro n
+      induction n with
+      | zero =>
+        refine Acc.intro _ fun w hw => ?_
+        obtain ⟨⟨h⟩⟩ := hw
+        rcases h with ⟨h, _⟩ | ⟨m, h, _⟩
+        · cases h
+        · exact absurd (Option.some.inj h) (Nat.succ_ne_zero m).symm
+      | succ n ih =>
+        refine Acc.intro _ fun w hw => ?_
+        obtain ⟨⟨h⟩⟩ := hw
+        rcases h with ⟨h, _⟩ | ⟨m, h, hw⟩
+        · cases h
+        · have hm : m = n := Nat.succ.inj (Option.some.inj h).symm
+          subst hm
+          subst hw
+          exact ih
+    refine Acc.intro _ fun w hw => ?_
+    obtain ⟨⟨h⟩⟩ := hw
+    rcases h with ⟨_, hw⟩ | ⟨m, h, _⟩
+    · cases w with
+      | none => exact absurd rfl hw
+      | some k => exact hs k
+    · cases h
+  · have hge : ∀ n k : ℕ, ValuationStructure.val (d (some n)) = (k : ℕ∞) → n ≤ k := by
+      intro n
+      induction n with
+      | zero => intro k _; exact Nat.zero_le k
+      | succ n ih =>
+        intro k hk
+        have hmem : d (some n) ∈ d '' apg_children (some (n + 1)) :=
+          ⟨some n, ⟨⟨Or.inr ⟨n, rfl, rfl⟩⟩⟩, rfl⟩
+        have h := DecorationUniverse.collect_val_ge _ _ hmem
+        rw [← hd (some (n + 1)), hk] at h
+        obtain ⟨j, hj, hlt⟩ := enat_lt_of_add_one_le h
+        have := ih j hj
+        omega
+    rcases hv : ValuationStructure.val (d none) with _ | m
+    · exact ValuationStructure.val_unique _ hv
+    · exfalso
+      have hmem : d (some m) ∈ d '' apg_children none :=
+        ⟨some m, ⟨⟨Or.inl ⟨rfl, Option.some_ne_none m⟩⟩⟩, rfl⟩
+      have h := DecorationUniverse.collect_val_ge _ _ hmem
+      rw [← hd none, hv] at h
+      obtain ⟨j, hj, hlt⟩ := enat_lt_of_add_one_le h
+      have := hge m j hj
+      omega
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -822,11 +1108,27 @@ open ZeroParadox
 #print axioms acyclic_induction_step
 #print axioms cyclic_decoration_eq_bot
 #print axioms path_decoration_eq_bot
+#print axioms absorb_of_unique_top
+#print axioms collect_absorbs_bot
 #print axioms decoration_unique
 #print axioms enat_lt_of_add_one_le
 #print axioms decoration_agree_of_val_coe
 #print axioms decoration_unique_of_val
 #print axioms decoration_unique_finite
+#print axioms ChildRel
+#print axioms accDec
+#print axioms accDec_eq
+#print axioms ValRel
+#print axioms decor
+#print axioms decor_eq_accDec
+#print axioms acc_of_val_coe
+#print axioms decor_eq_collect_of_acc
+#print axioms decor_isDecoration
+#print axioms exists_decoration
+#print axioms existsUnique_decoration
+#print axioms decoration_eq_bot_of_not_acc
+#print axioms fanEdge
+#print axioms fan_root_acc_and_eq_bot
 -- The class, and the `[Fintype V]` binder of `decoration_unique` (the custom-registry line above the class).
 #print axioms DecorationUniverse
 #print axioms Fintype

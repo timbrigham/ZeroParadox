@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-R: A Cross-Category Account of the Self-Referential Fixed Point — PDF Builder
-Version 1.27 | November 2026
+Version 1.29 | November 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.27'
+VERSION = '1.29'
 FIRST_RELEASED = 'July 2026'
 
 
@@ -95,7 +95,7 @@ def build():
     E.append(body(
         'Begin in order theory, where the picture is cleanest and constructive. Over a complete '
         'lattice, a monotone self-map f has a least fixed point (lfp f) and a greatest fixed point '
-        '(gfp f) &#8212; Knaster&#8211;Tarski (Tarski 1955). Existence of a fixed point is therefore '
+        '(gfp f) &#8212; Knaster&#8211;Tarski (Knaster 1928, existence in the power-set case; Tarski 1955). Existence of a fixed point is therefore '
         '<i>free</i>: it is never in question. What can vary is <i>uniqueness</i>, and there is a clean '
         'equivalence, the &#956;/&#957; <b>fork</b>: a specification pins a unique object exactly when '
         'the fork collapses. When the fork is open, the specification is met by more than one object; '
@@ -469,7 +469,9 @@ def build():
         'Cartesian Closed Categories," LNM 92 (1969) 134&#8211;145, cited by page in its reprint, '
         'Reprints in Theory and Applications of Categories 15 (2006); Yanofsky, Bull. Symbolic Logic '
         '9(3) (2003), cited by page in arXiv:math/0305282v1. '
-        'Lattice fixed points: Tarski, "A lattice-theoretical fixpoint theorem and its applications," '
+        'Lattice fixed points: Knaster, "Un th&#233;or&#232;me sur les fonctions d\'ensembles," '
+        'Ann. Soc. Polon. Math. 6 (1928) 133&#8211;134, existence of a fixed point for a monotone set function, the power-set case (Lemma (L), p. 133), '
+        'reporting results obtained jointly with Tarski; Tarski, "A lattice-theoretical fixpoint theorem and its applications," '
         'Pacific J. Math. 5(2) (1955) 285&#8211;309; Davis, "A characterization of complete lattices," '
         'Pacific J. Math. 5(2) (1955) 311&#8211;319. The computability fixed points: Rogers, <i>Theory of Recursive Functions and '
         'Effective Computability</i> (1967); Kleene\'s second recursion theorem; a version of '
@@ -550,7 +552,7 @@ def build():
         'theorem, sorry-free, except the one marked cited: that the computability fixed point is an '
         'instance of Lawvere\'s theorem (Section II). F2\'s first mathematical sentence rests on '
         'reflexive_object_refuted (the R3-neg row), and its second, on the least fixed point of a '
-        'monotone map, on Knaster&#8211;Tarski (Tarski 1955, cited); sentences marked Reading are interpretation and '
+        'monotone map, on Knaster&#8211;Tarski (Knaster 1928, existence in the power-set case; Tarski 1955; both cited); sentences marked Reading are interpretation and '
         'have no row. The fork schema (R1, monotone_regime_derives_pinned) is choice-free; the anonymous '
         'example after no_reflexive_object_bool in LawvereBridge.lean &#167; VI, fixedPointFree_of_nontrivial and '
         'nontrivial_lattice_no_witness (both in ZeroParadox/Category/Lawvere.lean), and the examples using Bool\'s complete-lattice instance carry Classical.choice; the computability material inherits '

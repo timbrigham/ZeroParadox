@@ -32,3 +32,11 @@ inter-derivable (see `ZeroParadox/Category/ExcludedMiddleBridge.lean`, the `exam
 difference that generates the classical core, and full choice sits above it. See
 `ZeroParadox/Category/ChoiceCannotBe.lean` for the precise attributions. Stated below
 with `example`s only (no new declarations) — this file *identifies*, it does not add a result.
+
+## Textbook home of the nucleus/sublocale correspondence
+
+Picado and Pultr, *Frames and Locales* (2012), Chapter III: the sublocales of a locale form a coframe
+(Theorem 3.2.1, p. 28), and sublocales and nuclei are in one-one correspondence (Proposition 5.3.2,
+p. 32); the book's statement located is the bijection. The order reversal that `nucleusIsoSublocale`
+records is stated in Mathlib in both directions: `Sublocale.toNucleus_le_toNucleus` and
+`Nucleus.toSublocale_le_toSublocale` (`Mathlib/Order/Sublocale.lean`).

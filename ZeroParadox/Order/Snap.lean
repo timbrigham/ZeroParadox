@@ -27,7 +27,7 @@ from the occurrence commitment together with DA-1, not from T-SNAP (`tsnap_holds
 running configuration). Slot chart: the realized run has fired at least once, the hypothesis `hw` of
 `t_snap_of_fires_once` (`ZeroParadox/Information/CrossingTrials.lean` § VIII), which, with `φ` sending `false` to ⊥ of
 `L` and `true` to a point other than ⊥ of `L`, gives `t_snap_given`'s `hcc1` and `hocc`; if `0 < p ≤ 1` firing has probability one (`trials_fires_once`), and a particular tape need not fire (the
-all-`false` tape). `Reading:` CARRIER — the two charts correspond; a firing is not proved to be an execution event.
+all-`false` tape). `Reading:` CARRIER — the two charts correspond; a firing is not proved to be an execution event. The firing step is the step at which the waiting computation `toComp (det w)` halts (`toComp_det_results_iff_slotRun`); that is when, not what.
 The inserts DA-1, DA-2, DA-3 and the cross-framework link: `ZeroParadox/Order/Snap.md`.
 -/
 

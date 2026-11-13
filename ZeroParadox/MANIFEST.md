@@ -284,19 +284,25 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Valuation/BranchingRequirement.lean` - A further requirement — the branching axis: branches are incomparable (the tower does not stack)
 - `ZeroParadox/Valuation/BranchingSnapChain.lean` - The single chain: branching → disconnectedness → the forbidden return
 - `ZeroParadox/Valuation/CantorPropertiesProbe.lean` - Completeness-critic, final pass: homogeneity and ultrametric are derived; compactness is AX-B1
+- `ZeroParadox/Valuation/CellsJoint.lean` - Cells and covers at ⊥ of `End`: depth and starting location carried by one index
 - `ZeroParadox/Valuation/CompletenessCriticProbe.lean` - Completeness-critic probe: what property of the generic object do the four axes NOT capture?
 - `ZeroParadox/Valuation/ComplexityLadder.lean` - The complexity ladder: the arity is the variable-count, and it climbs without bound
 - `ZeroParadox/Valuation/ContractionRate.lean` - The contraction-rate dichotomy at the p-adic floor #3
+- `ZeroParadox/Valuation/DepthIsWait.lean` - Depth on `End` is the waiting time of its digit tape
+- `ZeroParadox/Valuation/DoublingAndTree.lean` - Doubling and the binary tree: one-point self-reference does not force it, the square embedded in the carrier and a point other than ⊥ of the carrier do, one way (sufficient, not necessary)
 - `ZeroParadox/Valuation/ForkPoleProbe.lean` - Experimental probe: is the μ/ν fork independent of the pole?
 - `ZeroParadox/Valuation/IndependenceProbe.lean` - Experimental probe: are the chain axis and the branching axis independent?
 - `ZeroParadox/Valuation/InfinitudeFloor.lean` - The floor's infinite complexity AS an infinitude of zeros (research spike)
   - ride-along docs: `ZeroParadox/Valuation/InfinitudeFloor.md` - What the requirements class pins down, and why non-degeneracy must be an inequation
+- `ZeroParadox/Valuation/Interleave.lean` - Directions inside ⊥ of `End`: interleaving, and seeds as the invariant
 - `ZeroParadox/Valuation/IrreversibilityProbe.lean` - Experimental probe: is irreversibility (the snap direction) a fifth independent requirement?
 - `ZeroParadox/Valuation/LocalFloor.lean` - Every node is a floor, literally: a genuine InfinitudeFloor at each node of the generic tree
   - ride-along docs: `ZeroParadox/Valuation/LocalFloor.md` - Why the 0-spine is standing still, and whose result this already is
+- `ZeroParadox/Valuation/LocalTowers.lean` - Local towers: the local push at every node, and which nodes give distinct towers
 - `ZeroParadox/Valuation/NuLeafReconcile.lean` - The within-ν edge reconciles at the LEAF, not the ambient
 - `ZeroParadox/Valuation/NuRateEdge.lean` - The within-ν edge at the orbit-RATE level (#3 ↔ #2)
 - `ZeroParadox/Valuation/NuRateMatch.lean` - Within-ν geometric-rate match: #2 (irreducible Markov) and #3 (p-adic) share rate 1/2
+- `ZeroParadox/Valuation/OneWayFlow.lean` - The one-way flow: forward attraction and backward exit, two charts of `boundaryDouble`
 - `ZeroParadox/Valuation/PadicAttractor.lean` - The p-adic floor #3 as a dynamical attractor
 - `ZeroParadox/Valuation/PadicBallIndicator.lean` - The p-adic ball indicator in L²(ℤ_p)
 - `ZeroParadox/Valuation/PadicCharacter.lean` - p-adic additive characters and their orthogonality on ℤ_p
@@ -323,12 +329,16 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Valuation/StrippedBottom.lean` - ⊥ by inversion of attribute-classes — the "typecast" stand-in (Tim, 2026-06-30)
 - `ZeroParadox/Valuation/TowerHeightFloor.lean` - Height meets floor: the tower's 2-adic images as an InfinitudeFloor, norm order reversed from stage 1 — ε₀ ≠ ⊥ of `Ordinal` preserved
   - ride-along docs: `ZeroParadox/Valuation/TowerHeightFloor.md` - Height meets floor — the tower's 2-adic images as an InfinitudeFloor, norm order reversed from stage 1
+- `ZeroParadox/Valuation/TowerTape.lean` - Local floors as subtape poles, and a tower as one tape
+- `ZeroParadox/Valuation/TreeNotForced.lean` - The binary tree above ⊥ of a join-semilattice: not forced by ⊥ as greatest lower bound of non-⊥ members, a first step, infinitely many atoms and strong atomicity of the whole order; forced, one way (sufficient, not necessary), by depth at every element with strong atomicity
 
 ### Information (ZP-C)
 
 - `ZeroParadox/Information/BrudnoBridge.lean` - Brudno bridge: `trials` and `MLRandom` against `kolmogorov-complexity-lean`
 - `ZeroParadox/Information/MaxEntropy.lean` - Maximum entropy: the fair coin, missing information, and incompressible tapes
+- `ZeroParadox/Information/PoleWithinEnsemble.lean` - The never-firing tape inside the firing ensemble
 - `ZeroParadox/Information/SnapEpsilonZero.lean` - The snap and ε₀ on two carriers: on `WithBot Ordinal` the first step lands at ↑0 and `up` carries it to ↑ε₀ (the corner); on `EpsilonOrZero` the first step is ε₀ (the cover)
+- `ZeroParadox/Information/TapeHalting.lean` - A tape's first hitting time, run as a computation
 - `ZeroParadox/Information/TwoRequirements.lean` - Two requirements: a first step at ⊥ of `L`, and a typical tape
 
 ### State / Hilbert (ZP-D)
@@ -423,4 +433,4 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 
 ---
 
-*Generated by `build_manifest.py` from the Lean tree + each file's `-- EXPERIMENTAL` header. Rerun after adding, moving, or renaming a file. (138 core, 111 experimental.)*
+*Generated by `build_manifest.py` from the Lean tree + each file's `-- EXPERIMENTAL` header. Rerun after adding, moving, or renaming a file. (138 core, 121 experimental.)*

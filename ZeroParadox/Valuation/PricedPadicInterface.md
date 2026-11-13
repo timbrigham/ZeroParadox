@@ -31,7 +31,8 @@ The `Valuation/` cluster splits, and the split is the whole scoping finding:
 
 * **Group A — needs only the valuation and its order.** The ZP-J `ValuationStructure` axioms, the ZP-B
   ultrametric/clopen-ball content, the descent to a single point, total separation. Their mathematical
-  content is *agreement to depth n* and *the valuation of the bottom is the top of the value monoid* —
+  content is *agreement to depth n* and *the valuation of the least element (`bot` of the carrier's
+  `ZPSemilattice`) is the top of the value monoid* —
   combinatorial and valuative statements that use neither division, nor completeness, nor ℝ. **This is
   the slice built here.**
 * **Group B — genuinely needs the complete field.** `ZeroParadox/Valuation/RiemannSphere.lean` /
@@ -59,13 +60,15 @@ same layer-0 valuation, so dropping the field for the ring of integers buys noth
 Measured by the `#print axioms` block at the bottom of the Lean file (the instrument is the deliverable;
 these are the numbers it reported, not the numbers that were hoped for).
 
-* **Constructive side — choice-free.** The carrier carries no `Classical.choice`. `v2nat`, `v2`,
+* **Constructive side — a choice-free carrier.** The carrier carries no `Classical.choice`. `v2nat`, `v2`,
   `nScale_bot`, `AgreeTo`, `Apart`, `agree_trans`, `agree_mono`, `separated_of_apart` and
   `not_apart_of_agree_all` report **no axioms at all**; `v2_bot`, `v2_unique` and `clopen_gap_at_bot`
   report `[propext]`; `v2_scale_nat`, `nScale_unique_fp`, `nScale_ne_self` report `[propext, Quot.sound]`
   and `agree_all_iff` reports `[Quot.sound]` (the `funext`).
 * **Two declarations on the constructive side carry `Classical.choice` — `v2_scale` and the exhibit
-  `enat_add_choice` — both through their proofs; each has a choice-free counterpart.** The ZP-J
+  `enat_add_choice` — both through their proofs; each has a choice-free counterpart.** `v2_scale`'s
+  is `v2_scale_nat` (statement: `ZeroParadox/Valuation/PricedPadicInterface.lean` § I; footprint printed in § IV); `enat_add_choice`'s is an induction-and-`rfl` proof of the same
+  proposition, stated in its docstring and not printed. The ZP-J
   `val_scale` axiom in its literal form `v2_scale : v2 (2n) = v2 n + 1` reports `[propext, Classical.choice, Quot.sound]` —
   **and on this carrier (ℕ) it is neither the carrier's nor the statement's.** `v2`, the numeral
   `(1 : ℕ∞)` and `(a : ℕ∞) + 1` all print clean in the Lean file's purity block, so the choice comes
@@ -89,7 +92,7 @@ constructive side's two `Classical.choice` footprints arrive is read off the ins
 bundles `instAddMonoidWithOneENat` and `instCommSemiringENat` carry `Classical.choice`.
 `enat_add_choice` (`(a : ℕ∞) + (b : ℕ∞) = ↑(a + b)`) reports `[propext, Classical.choice, Quot.sound]`
 — but that is its PROOF TERM, not an instance: the same proposition proved by induction and `rfl`
-reports no axioms at all. `ValuationStructure` itself measures no axioms (`ZeroParadox/Valuation/Scale.lean`'s
+reports no axioms at all (probed, not printed in § IV). `ValuationStructure` itself measures no axioms (`ZeroParadox/Valuation/Scale.lean`'s
 purity block), so the *statement* of `val_scale`, `val x + 1`, costs no choice on a carrier that costs
 none. This file separates the contributions on ℕ: `v2_scale_nat` isolates the choice-free valuation
 content, and `v2_scale`'s proof accounts for the rest. ⚠ It does NOT carry over to ℤ_[2]:
@@ -105,8 +108,8 @@ Two faces, matching the two faces of Group A:
   recursion (`v2nat`), not well-founded recursion, so it is computable and choice-free. `v2 0 = ⊤`; on
   nonzero inputs it counts factors of 2. On this carrier three of the four ZP-J `ValuationStructure`
   axioms hold choice-free with `scale = (2 * ·)`: `scale_bot` (`nScale_bot`), `val_bot` (`v2_bot`),
-  `val_unique` (`v2_unique`); and the fixed-point content `nScale_unique_fp` (the bottom is the unique
-  fixed point of doubling) is proved directly. The fourth axiom, `val_scale`, holds choice-free *in
+  `val_unique` (`v2_unique`); and the fixed-point content `nScale_unique_fp` (0 of ℕ, the carrier's least element, is the
+  unique fixed point of doubling) is proved directly. The fourth axiom, `val_scale`, holds choice-free *in
   content* (`v2_scale_nat`); its literal `ℕ∞`-successor form `v2_scale` carries `Classical.choice`
   through its proof, not through the numeral, the addition or, on ℕ, the carrier
   (see "Where the constructive side's two choices arrive").
@@ -141,8 +144,8 @@ is the right one — and the credit is theirs, not ours.
   `ℤ_[2]`; it is a carrier for the Group A *content*.
 * **Locating choice is not eliminating it.** Nothing here re-proves any Mathlib p-adic result, and no
   failed or avoided elaboration in the Lean file is an independence result or may be upgraded to one.
-* **`v₂(0) = ⊤` is a *valuative* property** — the valuation of the bottom is the top of the value
-  monoid. Never describe it with topological vocabulary; "isolated" in particular is wrong and is on
+* **`v₂(0) = ⊤` is a *valuative* property** — the valuation of 0 of ℕ, the carrier's least element, is
+  ⊤ of the value monoid `ℕ∞`. Never describe it with topological vocabulary; "isolated" in particular is wrong and is on
   the project's vocabulary watch list.
 
 ## Triviality assessment
@@ -151,7 +154,7 @@ The valuation face is elementary: `v2nat` is a short structural recursion, and i
 lemma is fuel saturation (the value stabilizes once the fuel exceeds the input), used once to prove
 `v2_scale_nat`. The ball face is pure combinatorics on `ℕ → Fin 2`; `agree_all_iff` is `funext` in one
 direction (hence its `Quot.sound`), and `clopen_gap_at_bot` is the decidability of a bounded quantifier.
-The crossing is `Nat.cast` into `ℤ_[2]` and one comparison at the bottom. Nothing here is deep. The
+The crossing is `Nat.cast` into `ℤ_[2]` and one comparison at 0 of ℕ and its image, 0 of `ℤ_[2]`. Nothing here is deep. The
 value, if any, is the same as its ordinal sibling's: the boundary is *stated as a price* on a specific
 named map, on a carrier where the classical target is a real library type, rather than left as the
 general impression that "the p-adic side is classical".

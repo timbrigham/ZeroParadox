@@ -161,9 +161,11 @@ had — the three written phrasings walked past it because every pattern enumera
 the bridge-shaped one cleared `no such <qual> in the corpus` **by one word**. `CLAIMS.md`,
 `ClaimsMirror`, `ill-typed` and `retired` are EVIDENCE forms, so citing the register discharges.
 
-⚠ **The first draft was too broad and fired on NINE standing sites, every one honest** — *"Whether
-the existence half of Aczel's theorem generalises to abstract DecorationUniverses is an open
-question."* **Stating that a QUESTION is open is this project's epistemic honesty; asserting an open
+⚠ **The first draft was too broad and fired on NINE standing sites, every one honest when measured**
+— *"Whether the existence half of Aczel's theorem generalises to abstract DecorationUniverses is an
+open question."* That question has since been ANSWERED (`exists_decoration`,
+`ZeroParadox/Settheory/APG.lean` § X, 2026-11-10) and the sentence is gone from the addendum; it stays
+a control because the control tests the PATTERN, not the claim. **Stating that a QUESTION is open is this project's epistemic honesty; asserting an open
 BRIDGE, GAP or JUNCTION asserts a MISSING CONSTRUCTION.** Only the second is the defect. It
 was narrowed to that, with all nine pinned as MUST_SUPPRESS controls so a future widening cannot
 silently re-break them.

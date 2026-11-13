@@ -1,5 +1,5 @@
 """
-Zero Paradox — Foreword PDF Builder (v2.47, revised November 2026)
+Zero Paradox — Foreword PDF Builder (v2.51, revised November 2026)
 Follows all rules in pdf rendering standards.md:
   - All table cells are Paragraph objects
   - No unicode subscripts — use sub/super tags
@@ -9,7 +9,7 @@ Follows all rules in pdf rendering standards.md:
 import os
 from zp_utils import *
 
-VERSION = '2.47'
+VERSION = '2.51'
 FIRST_RELEASED = 'April 2026'
 
 # ── fix() and prose_check() guard on every Paragraph ──
@@ -209,8 +209,14 @@ def build():
             'In algebra — vector spaces, rings, modules — zero is the neutral element '
             'of addition, inheriting whatever structure the framework provides. '
             'In logic, the corresponding element is falsehood: the proposition that implies '
-            'everything and is implied by nothing. '
-            'In every case, zero occupies the same structural position: it is where things start.',
+            'everything. '
+            'In every case, zero occupies the same structural position: it is where things start. '
+            'That zero names a role rather than an object is not a new reading: it is the '
+            'structuralist view of number in Paul Benacerraf&#8217;s "What Numbers Could Not Be" '
+            '(<i>Philosophical Review</i> 74(1), 1965, 47&#8211;73; p. 70: "Any object can play the '
+            'role of 3"). His subject is numbers; the framework applies the same reading to the '
+            'starting elements of the other settings above, and its chart-by-chart results are an '
+            'instance of that reading, not its source.',
             S['body']),
         Paragraph(
             'This raises two questions that are easy to state and surprisingly hard to answer. '
@@ -574,6 +580,10 @@ def build():
             '2026, the Lean for ZP-E already characterised the ⊥ role inside one semilattice: ⊥ is the '
             'one element whose join with any element returns that other element unchanged '
             '(da2_bottom_characterization, now in ZeroParadox/Order/Snap.lean).',
+            S['body']),
+        Paragraph(
+            'The reading has a history older than the project: Benacerraf&#8217;s structuralist view '
+            'of number, cited with its scope in Section I.',
             S['body']),
         Paragraph(
             'The formal corpus took up the general form of the reading later, in three steps; the third, '

@@ -15,6 +15,7 @@ import Mathlib.CategoryTheory.Types.Basic
 import Mathlib.CategoryTheory.Limits.Shapes.FunctorToTypes
 import Mathlib.CategoryTheory.Limits.Types.Pullbacks
 import Mathlib.Data.Seq.Computation
+import Mathlib.Order.GameAdd
 import Mathlib.Tactic
 
 set_option maxHeartbeats 400000
@@ -38,9 +39,9 @@ The die has evolved, and it is on version two now. I think what we are describin
 ---
 
 ## Formal Overview (AI-assisted)
-Version 2; the index `ZeroParadox/DieCannotBe.lean` numbers its sections differently. Here: MOTION (§ I–IV; no order);
-VIEWS (§ XII, § XIV–XV; an order as data); CELLS (§ IX–XI, § XVI; arrival, fan-in); TRAP SETS (§ XII–XIII, § XVI);
-the DATUM behind a cell (§ V–VIII, § XIII); MAPS, ORDERS, QUOTIENTS, BISIMULATIONS (§ XIII, XVII–XXII).
+Version 2; the index `ZeroParadox/DieCannotBe.lean` numbers its sections differently. Here: MOTION (§ I–IV; no order); VIEWS
+(§ XII, § XIV–XV; an order as data); CELLS (§ IX–XI, § XVI; arrival, fan-in); TRAP SETS (§ XII–XIII, § XVI); the DATUM behind a
+cell (§ V–VIII, § XIII); MAPS, ORDERS, QUOTIENTS, BISIMULATIONS (§ XIII, XVII–XXII); TWO COPIES of a motion, pairing and doubling (§ XXVI).
 -/
 
 namespace ZeroParadox
@@ -226,6 +227,22 @@ theorem not_not_loop_or_climb_of_corner (h : M.Corner) : ¬¬ (M.Loop ∨ M.Clim
   refine hn (Or.inr ⟨y, b, z, hy, hs, hz, hzb, fun hzy => hn (Or.inl ?_)⟩)
   subst hzy
   exact ⟨z, b, hy, hs, fun e => hzb e.symm, hz⟩
+
+/-- `Statement:` if, on every motion on `Bool`, `¬¬ Corner` gives `Corner`, excluded middle holds;
+    one way. The reduction runs on `ofTotal (fun _ => false) _ (fun _ _ => q)`, whose corner fires
+    iff `q`, at `q := p ∨ ¬ p`. -/
+theorem em_of_dne_corner (H : ∀ M : Motion Bool, ¬¬ M.Corner → M.Corner) :
+    ∀ p : Prop, p ∨ ¬ p := by
+  have key : ∀ q : Prop,
+      (ofTotal (fun _ : Bool => false) (fun _ => rfl) (fun _ _ => q)).Corner ↔ q := fun q =>
+    ⟨fun ⟨_, _, _, _, hs, _, _⟩ => hs,
+     fun hq => ⟨false, true, false, Part.mem_some _, hq, Part.mem_some _, by decide⟩⟩
+  intro p
+  exact (key _).1 (H _ fun n => n ((key _).2 (Or.inr fun hp => n ((key _).2 (Or.inl hp)))))
+
+/-- `Statement:` on every motion, `¬¬ Corner` gives `Corner`, proved with `Classical.byContradiction`. -/
+theorem corner_of_not_not_classical : ¬¬ M.Corner → M.Corner :=
+  fun h => Classical.byContradiction h
 
 /-- `Statement:` if the corner fires, OVER exists from some landing; one way. -/
 theorem corner_overAtLanding : M.Corner → M.OverAtLanding :=
@@ -4478,6 +4495,233 @@ theorem lpo_of_loopAt_image (r : NInf → Option ℕ)
 
 end Motion
 
+/-! Searchability of the carrier against the `Bool`-valued OVER leg. `Omniscient` and `Searchable`
+are Escardó's (preprint of JSL 78(3) (2013), p. 1 and Definition 2.1, p. 3) in the polarity of LPO
+(`ZeroParadox/Category/LawvereTaboo.lean`): a `true` point, or `false` everywhere. `NInf.omniscient`
+and `NInf.eps_spec` (with `NInf.covered_limit_searchable`) state the same for `NInf` in the other
+polarity, `p` replaced by `!p`. The instances on `ℕ`, `Option ℕ` and `NInf`
+(`Motion.lpo_of_trichotomy_nat_boolStep`, `Motion.lpo_of_trichotomy_option_boolStep`,
+`Motion.overTrichotomy_ninf_boolStep`) are cases of the theorems below, not proved through them. -/
+
+/-- `Statement:` every `p : X → Bool` is `true` somewhere or `false` everywhere. -/
+def Omniscient (X : Type u) : Prop := ∀ p : X → Bool, (∃ x, p x = true) ∨ ∀ x, p x = false
+
+/-- `Statement:` a selection function `ε`: `p (ε p) = true` or `p` is `false` everywhere. -/
+def Searchable (X : Type u) : Prop :=
+  ∃ ε : (X → Bool) → X, ∀ p : X → Bool, p (ε p) = true ∨ ∀ x, p x = false
+
+/-- `Statement:` for each `p : X → Bool`, some `x` has `p x = true` or `p` is `false` everywhere. -/
+def PointwiseSearchable (X : Type u) : Prop :=
+  ∀ p : X → Bool, ∃ x, p x = true ∨ ∀ y, p y = false
+
+/-- `Statement:` every `p : X → Bool` is `true` at some point other than `y`, or `true` at `y` only. -/
+def OmniscientAway (X : Type u) (y : X) : Prop :=
+  ∀ p : X → Bool, (∃ b, p b = true ∧ b ≠ y) ∨ ∀ b, p b = true → b = y
+
+/-- `Statement:` every `Bool`-valued step on `X`, with identity UP, meets the trichotomy at every
+    point. -/
+def BoolStepTrichotomy (X : Type u) : Prop :=
+  ∀ (r : X → X → Bool) (y : X),
+    (Motion.ofTotal id (fun _ => rfl) (fun a b => r a b = true)).OverTrichotomy y
+
+/-- `Statement:` every `Bool`-valued step on `X`, with identity UP, has a total selector. -/
+def BoolStepSelected (X : Type u) : Prop :=
+  ∀ r : X → X → Bool, (Motion.ofTotal id (fun _ => rfl) (fun a b => r a b = true)).SelectedTotal
+
+/-- `Statement:` `BoolStepTrichotomy X` iff `OmniscientAway X y` at every `y`; both directions. -/
+theorem boolStepTrichotomy_iff_omniscientAway {X : Type u} :
+    BoolStepTrichotomy X ↔ ∀ y, OmniscientAway X y := by
+  constructor
+  · intro H y p
+    rcases H (fun _ b => p b) y with h | ⟨_, hu⟩ | ⟨b, hb, hne⟩
+    · exact Or.inr fun b hb => absurd hb (h b)
+    · exact Or.inr fun b hb => hu b hb
+    · exact Or.inl ⟨b, hb, hne⟩
+  · intro H r y
+    rcases H y (r y) with ⟨b, hb, hne⟩ | h
+    · exact Or.inr (Or.inr ⟨b, hb, hne⟩)
+    · cases hyy : r y y with
+      | false =>
+        refine Or.inl fun b hb => ?_
+        have hb' : r y b = true := hb
+        have e := h b hb'
+        subst e
+        rw [hyy] at hb'
+        cases hb'
+      | true => exact Or.inr (Or.inl ⟨hyy, fun b hb => h b hb⟩)
+
+/-- `Statement:` `OmniscientAway X y` at one `y` gives `Omniscient X`. -/
+theorem omniscient_of_omniscientAway {X : Type u} {y : X} (h : OmniscientAway X y) :
+    Omniscient X := by
+  intro p
+  rcases h p with ⟨b, hb, _⟩ | h
+  · exact Or.inl ⟨b, hb⟩
+  · cases hy : p y with
+    | true => exact Or.inl ⟨y, hy⟩
+    | false =>
+      refine Or.inr fun b => ?_
+      cases hb : p b with
+      | false => rfl
+      | true =>
+        have e := h b hb
+        subst e
+        rw [hy] at hb
+        exact hb.symm
+
+/-- `Statement:` on an inhabited `X`, `BoolStepTrichotomy X` gives `Omniscient X`. -/
+theorem omniscient_of_boolStepTrichotomy {X : Type u} (hn : Nonempty X)
+    (h : BoolStepTrichotomy X) : Omniscient X :=
+  let ⟨y⟩ := hn
+  omniscient_of_omniscientAway (boolStepTrichotomy_iff_omniscientAway.1 h y)
+
+-- The `DecidableEq` binder is kept in the type on purpose: `em_of_omniscient_imp_boolStepTrichotomy`
+-- below prices dropping it.
+set_option linter.unusedDecidableInType false in
+/-- `Statement:` with decidable equality, `Omniscient X` gives `BoolStepTrichotomy X`. -/
+theorem boolStepTrichotomy_of_omniscient {X : Type u} [DecidableEq X] (h : Omniscient X) :
+    BoolStepTrichotomy X := by
+  refine boolStepTrichotomy_iff_omniscientAway.2 fun y p => ?_
+  rcases h (fun b => p b && !decide (b = y)) with ⟨b, hb⟩ | hall
+  · have h1 : p b = true ∧ decide (b = y) = false := by
+      revert hb; cases p b <;> cases decide (b = y) <;> decide
+    exact Or.inl ⟨b, h1.1, of_decide_eq_false h1.2⟩
+  · refine Or.inr fun b hb => ?_
+    have h3 : (p b && !decide (b = y)) = false := hall b
+    rw [hb] at h3
+    have h2 : decide (b = y) = true := by revert h3; cases decide (b = y) <;> decide
+    exact of_decide_eq_true h2
+
+/-- `Statement:` a carrier whose points are all equal has `BoolStepTrichotomy`. -/
+theorem boolStepTrichotomy_of_subsingleton {X : Type u} (hs : ∀ a b : X, a = b) :
+    BoolStepTrichotomy X := by
+  intro r y
+  cases hyy : r y y with
+  | false =>
+    refine Or.inl fun b hb => ?_
+    have hb' : r y b = true := hb
+    rw [hs b y, hyy] at hb'
+    cases hb'
+  | true => exact Or.inr (Or.inl ⟨hyy, fun b _ => hs b y⟩)
+
+/-- `Statement:` if `BoolStepTrichotomy X → Omniscient X` on every `X : Type`, the `Nonempty`
+    premise dropped, excluded middle holds; one way, on `{_u : Unit // P}`. -/
+theorem em_of_boolStepTrichotomy_imp_omniscient
+    (H : ∀ X : Type, BoolStepTrichotomy X → Omniscient X) : ∀ P : Prop, P ∨ ¬ P := by
+  intro P
+  rcases H {_u : Unit // P} (boolStepTrichotomy_of_subsingleton fun _ _ => Subtype.ext rfl)
+    (fun _ => true) with ⟨⟨_, hp⟩, _⟩ | h
+  · exact Or.inl hp
+  · exact Or.inr fun hp => absurd (h ⟨(), hp⟩) (by decide)
+
+/-- `Statement:` if `Omniscient X → BoolStepTrichotomy X` on every inhabited `X : Type`, the
+    `DecidableEq` premise dropped, excluded middle holds; one way, on `Bool` with `true` and `false`
+    identified exactly when `P`. `Reading:` the quotient is Diaconescu's (Diaconescu 1975, Proc. AMS
+    51(1), p. 177, diagram (1): the coequalizer of the composites `i₁ ∘ m, i₂ ∘ m : A' ⇉ A + A` for a
+    mono `m : A' ↪ A`; here `A = 1` and `A'` is the subobject `P` of `1`, so `A + A` is `Bool`); the
+    corpus's own § II version,
+    `em_of_choiceFragment` (`ZeroParadox/Category/ExcludedMiddleBridge.lean`), is the two-predicate
+    form and builds no quotient. -/
+theorem em_of_omniscient_imp_boolStepTrichotomy
+    (H : ∀ X : Type, Nonempty X → Omniscient X → BoolStepTrichotomy X) :
+    ∀ P : Prop, P ∨ ¬ P := by
+  intro P
+  let s : Setoid Bool :=
+    { r := fun a b => a = b ∨ P
+      iseqv := ⟨fun _ => Or.inl rfl, fun h => h.elim (fun e => Or.inl e.symm) Or.inr,
+        fun h1 h2 => h1.elim (fun e => h2.elim (fun e' => Or.inl (e.trans e')) Or.inr) Or.inr⟩ }
+  have hom : Omniscient (Quotient s) := by
+    intro p
+    cases h1 : p (Quotient.mk s true) with
+    | true => exact Or.inl ⟨_, h1⟩
+    | false =>
+      cases h2 : p (Quotient.mk s false) with
+      | true => exact Or.inl ⟨_, h2⟩
+      | false =>
+        refine Or.inr fun x => Quotient.ind (motive := fun x => p x = false) (fun b => ?_) x
+        cases b
+        · exact h2
+        · exact h1
+  have T := H (Quotient s) ⟨Quotient.mk s true⟩ hom
+  rcases T (fun _ _ => true) (Quotient.mk s true) with h | ⟨_, h⟩ | ⟨b, _, hne⟩
+  · exact (h (Quotient.mk s true) rfl).elim
+  · have e := h (Quotient.mk s false) rfl
+    have hr : false = true ∨ P := Quotient.exact e
+    rcases hr with hr | hp
+    · cases hr
+    · exact Or.inl hp
+  · refine Or.inr fun hp => hne ?_
+    exact Quotient.ind (motive := fun b => b = Quotient.mk s true)
+      (fun _ => Quotient.sound (Or.inr hp)) b
+
+/-- `Statement:` `Searchable X` gives `BoolStepSelected X`, the selector `a ↦ ε (r a)`: Escardó's
+    Proposition 2.4 (JSL 78(3) (2013), preprint p. 3), `f(x) = ε(y ↦ a(x, y))`, its case `Y = X`. -/
+theorem boolStepSelected_of_searchable {X : Type u} (h : Searchable X) : BoolStepSelected X := by
+  obtain ⟨ε, hε⟩ := h
+  intro r
+  refine ⟨fun a => ε (r a), fun a ⟨b, hb⟩ => ?_⟩
+  rcases hε (r a) with h | h
+  · exact h
+  · have hb' : r a b = true := hb
+    rw [h b] at hb'
+    cases hb'
+
+/-- `Statement:` on an inhabited `X`, `BoolStepSelected X` gives `PointwiseSearchable X`. -/
+theorem pointwiseSearchable_of_boolStepSelected {X : Type u} (hn : Nonempty X)
+    (h : BoolStepSelected X) : PointwiseSearchable X := by
+  obtain ⟨x0⟩ := hn
+  intro p
+  obtain ⟨f, hf⟩ := h (fun _ b => p b)
+  refine ⟨f x0, ?_⟩
+  cases hp : p (f x0) with
+  | true => exact Or.inl rfl
+  | false =>
+    refine Or.inr fun b => ?_
+    cases hb : p b with
+    | false => rfl
+    | true =>
+      have h' : p (f x0) = true := hf x0 ⟨b, hb⟩
+      rw [hp] at h'
+      exact h'.symm
+
+/-- `Statement:` on an inhabited `X`, `PointwiseSearchable X ↔ Omniscient X`; both directions. With
+    `boolStepSelected_of_searchable` and `pointwiseSearchable_of_boolStepSelected` it recovers Escardó's
+    Lemma 2.2 (searchable implies omniscient; JSL 78(3) (2013), preprint p. 3). -/
+theorem pointwiseSearchable_iff_omniscient {X : Type u} (hn : Nonempty X) :
+    PointwiseSearchable X ↔ Omniscient X := by
+  refine ⟨fun h p => ?_, fun h p => ?_⟩
+  · obtain ⟨x, hx | hx⟩ := h p
+    · exact Or.inl ⟨x, hx⟩
+    · exact Or.inr hx
+  · rcases h p with ⟨x, hx⟩ | h
+    · exact ⟨x, Or.inl hx⟩
+    · obtain ⟨x0⟩ := hn
+      exact ⟨x0, Or.inr h⟩
+
+/-- `Statement:` `Empty` has `BoolStepSelected` and is not `Searchable`. -/
+theorem boolStepSelected_empty_not_searchable :
+    BoolStepSelected Empty ∧ ¬ Searchable Empty :=
+  ⟨fun _ => ⟨id, fun a => a.elim⟩, fun ⟨ε, _⟩ => (ε fun _ => true).elim⟩
+
+/-- `Statement:` `Omniscient (Option X) ↔ Omniscient X`; both directions. -/
+theorem omniscient_option_iff {X : Type u} : Omniscient (Option X) ↔ Omniscient X := by
+  constructor
+  · intro h p
+    rcases h (fun o => o.elim false p) with ⟨x, hx⟩ | hall
+    · cases x with
+      | none => cases hx
+      | some x => exact Or.inl ⟨x, hx⟩
+    · exact Or.inr fun x => hall (some x)
+  · intro h p
+    cases hn : p none with
+    | true => exact Or.inl ⟨none, hn⟩
+    | false =>
+      rcases h (fun x => p (some x)) with ⟨x, hx⟩ | hall
+      · exact Or.inl ⟨some x, hx⟩
+      · exact Or.inr fun o => by
+          cases o with
+          | none => exact hn
+          | some x => exact hall x
+
 /-! ### § XXIV. A limit pinned from two directions: `PinnedLimit`
 `Reading:` Tim's role (2026-11-03), "squishy" in his word: a value pinned from below as the least
 upper bound of the stages of a climbing run (`Monotone s`) it is not a stage of, and from the step
@@ -4897,7 +5141,9 @@ example : IsLeast {x : NInf | id x = x} (NInf.ofNat 0) ∧
 /-! ### § XXV. First-occurrence time as a Galois insertion: tapes onto `NInf`, order reversed
 `Reading:` Tim's "bend" (2026-11-03): one tape read two ways, as a firing record in `ℕ → Bool`
 (pointwise order, Mathlib's `Pi` instance) and as its waiting time `det` in `NInf`. "Time" is his
-reading only; nothing here is a claim about physics. -/
+reading only; nothing here is a claim about physics. The waiting time is the 2-adic depth on `End`
+(`endVal_eq_wait`, `ZeroParadox/Valuation/DepthIsWait.lean`) and the step at which `toComp (det w)`
+halts (`toComp_det_results_iff`, `toComp_det_results_iff_slotRun`, `ZeroParadox/Information/TapeHalting.lean`). -/
 
 namespace NInf
 
@@ -5023,6 +5269,7 @@ example (r : ℕ → Bool) (hw : ∃ k, r k = true) : det r = ofNat (Nat.find hw
     symm; refine decide_eq_true ?_
     by_contra hc
     have := h (Nat.find hw) (by omega); rw [Nat.find_spec hw] at this; cases this
+-- `Statement:` both directions at every `n`: `det_eq_ofNat_iff` (`ZeroParadox/Information/TapeHalting.lean` § II).
 
 -- `Statement:` `det r` satisfies TypeTopology's two `force-decreasing` equations at `β = !r`: `!r 0` at
 -- `0`, and `min₂ (β (n + 1)) (force-decreasing β n)` at `n + 1`, with `&&` for `min₂`.
@@ -5187,6 +5434,511 @@ theorem det_bot_pinnedLimitUnique : PinnedLimitUnique succ ofNat (det ⊥) :=
   det_poles.1 ▸ pinnedLimitUnique_succ.2
 
 end NInf
+
+/-! ### § XXVI. Two copies of a motion: pairing, doubling, and the tree
+Two pairings of a motion with itself: LOCKSTEP (`prod`, a step moves both coordinates) and
+INTERLEAVING (`aprod`, Mathlib `Prod.GameAdd`, a step moves one). Doubling, a fixed pole and
+non-degeneracy are three separate premises, combined only on the theorems that use them. Index:
+`ZeroParadox/DieCannotBe.lean` § XXXI; carrier controls: `ZeroParadox/Valuation/DoublingAndTree.lean` § IX. -/
+
+namespace Motion
+
+section TwoCopies
+
+variable {α β γ : Type u}
+
+/-- `Statement:` UP on a pair: defined iff both components are defined, value the pair of values. -/
+def upPair (p : Part α) (q : Part β) : Part (α × β) :=
+  p.bind fun x => q.map fun y => (x, y)
+
+/-- `Statement:` `z ∈ upPair p q` iff `z.1 ∈ p` and `z.2 ∈ q`; both directions. -/
+theorem mem_upPair {p : Part α} {q : Part β} {z : α × β} :
+    z ∈ upPair p q ↔ z.1 ∈ p ∧ z.2 ∈ q := by
+  unfold upPair
+  constructor
+  · intro h
+    obtain ⟨x, hx, hz⟩ := (Part.mem_bind_iff (g := fun x => q.map fun y => (x, y))).1 h
+    obtain ⟨y, hy, rfl⟩ := (Part.mem_map_iff _).1 hz
+    exact ⟨hx, hy⟩
+  · rintro ⟨h1, h2⟩
+    exact (Part.mem_bind_iff (g := fun x => q.map fun y => (x, y))).2
+      ⟨z.1, h1, (Part.mem_map_iff _).2 ⟨z.2, h2, rfl⟩⟩
+
+/-- `Statement:` `upPair (some a) (some b) = some (a, b)`. -/
+theorem upPair_some (a : α) (b : β) : upPair (Part.some a) (Part.some b) = Part.some (a, b) := by
+  apply Part.ext; intro z
+  rw [mem_upPair, Part.mem_some_iff, Part.mem_some_iff, Part.mem_some_iff]
+  exact ⟨fun ⟨h1, h2⟩ => Prod.ext h1 h2, fun h => h ▸ ⟨rfl, rfl⟩⟩
+
+/-- `Statement:` the LOCKSTEP pairing: UP componentwise, a step moves both coordinates. -/
+def prod (M : Motion α) (N : Motion β) : Motion (α × β) where
+  up p := upPair (M.up p.1) (N.up p.2)
+  up_idem p z h := by
+    rw [mem_upPair] at h ⊢
+    exact ⟨M.up_idem _ _ h.1, N.up_idem _ _ h.2⟩
+  step p q := M.step p.1 q.1 ∧ N.step p.2 q.2
+
+/-- `Statement:` the INTERLEAVING pairing: UP componentwise, a step moves one coordinate and fixes
+    the other (Mathlib `Prod.GameAdd`). -/
+def aprod (M : Motion α) (N : Motion β) : Motion (α × β) where
+  up p := upPair (M.up p.1) (N.up p.2)
+  up_idem p z h := by
+    rw [mem_upPair] at h ⊢
+    exact ⟨M.up_idem _ _ h.1, N.up_idem _ _ h.2⟩
+  step := Prod.GameAdd M.step N.step
+
+/-- `Statement:` the first projection of the lockstep pairing is a lax map. -/
+def prodFstLax (M : Motion α) (N : Motion β) : LaxHom (M.prod N) M :=
+  ⟨Prod.fst, fun h => h.1, fun _ _ h => (mem_upPair.1 h).1⟩
+
+/-- `Statement:` the second projection of the lockstep pairing is a lax map. -/
+def prodSndLax (M : Motion α) (N : Motion β) : LaxHom (M.prod N) N :=
+  ⟨Prod.snd, fun h => h.2, fun _ _ h => (mem_upPair.1 h).2⟩
+
+/-- `Statement:` the pairing of two strict maps is a strict map into the lockstep pairing. -/
+def pairHom {P : Motion γ} {M : Motion α} {N : Motion β} (φ : Hom P M) (ψ : Hom P N) :
+    Hom P (M.prod N) :=
+  ⟨fun q => (φ.toFun q, ψ.toFun q), fun h => ⟨φ.map_step h, ψ.map_step h⟩, fun q => by
+    show upPair (M.up (φ.toFun q)) (N.up (ψ.toFun q)) = _
+    rw [φ.map_up, ψ.map_up]
+    apply Part.ext; intro z
+    rw [mem_upPair, Part.mem_map_iff, Part.mem_map_iff, Part.mem_map_iff]
+    constructor
+    · rintro ⟨⟨w, hw, h1⟩, ⟨w', hw', h2⟩⟩
+      have : w' = w := Part.mem_unique hw' hw
+      subst this
+      exact ⟨w', hw, Prod.ext h1 h2⟩
+    · rintro ⟨w, hw, rfl⟩
+      exact ⟨⟨w, hw, rfl⟩, ⟨w, hw, rfl⟩⟩⟩
+
+/-- `Statement:` the pairing of two lax maps is a lax map into the lockstep pairing. -/
+def pairLax {P : Motion γ} {M : Motion α} {N : Motion β} (φ : LaxHom P M) (ψ : LaxHom P N) :
+    LaxHom P (M.prod N) :=
+  ⟨fun q => (φ.toFun q, ψ.toFun q), fun h => ⟨φ.map_step h, ψ.map_step h⟩,
+    fun x y hy => mem_upPair.2 ⟨φ.map_up x y hy, ψ.map_up x y hy⟩⟩
+
+/-- `Statement:` a map into `α × β` whose two projections are `g₁` and `g₂` is `q ↦ (g₁ q, g₂ q)`. -/
+theorem pair_unique (f : γ → α × β) (g₁ : γ → α) (g₂ : γ → β)
+    (h1 : Prod.fst ∘ f = g₁) (h2 : Prod.snd ∘ f = g₂) : f = fun q => (g₁ q, g₂ q) := by
+  funext q; exact Prod.ext (congrFun h1 q) (congrFun h2 q)
+
+/-- `Statement:` if UP of `N` is total, the first projection of `M.prod N` has `UpStrict`. -/
+theorem prod_fst_upStrict (M : Motion α) (N : Motion β) (hN : N.UpTotal) :
+    UpStrict (M.prod N) M Prod.fst := fun p => by
+  apply Part.ext; intro z
+  rw [Part.mem_map_iff]
+  constructor
+  · intro hz
+    exact ⟨(z, (N.up p.2).get (hN p.2)), mem_upPair.2 ⟨hz, Part.get_mem _⟩, rfl⟩
+  · rintro ⟨w, hw, rfl⟩
+    exact (mem_upPair.1 hw).1
+
+/-- `Statement:` if UP of `N` is total, the first projection of `M.prod N` is a strict map. -/
+def prodFstHom (M : Motion α) (N : Motion β) (hN : N.UpTotal) : Hom (M.prod N) M :=
+  ⟨Prod.fst, fun h => h.1, prod_fst_upStrict M N hN⟩
+
+/-- `Statement:` a motion on `Bool`: UP sends `true` to `true` and is undefined at `false`; no step. -/
+def partBool : Motion Bool where
+  up b := cond b (Part.some true) Part.none
+  up_idem x y h := by
+    cases x
+    · exact absurd h (Part.notMem_none _)
+    · have : y = true := Part.mem_some_iff.1 h
+      subst this; exact Part.mem_some _
+  step _ _ := False
+
+/-- `Statement:` CONTROL: the first projection of `partBool.prod partBool` does not have `UpStrict`. -/
+theorem prod_fst_not_upStrict : ¬ UpStrict (partBool.prod partBool) partBool Prod.fst := by
+  intro h
+  have hm : true ∈ Part.map Prod.fst ((partBool.prod partBool).up (true, false)) := by
+    rw [← h (true, false)]; exact Part.mem_some true
+  obtain ⟨w, hw, -⟩ := (Part.mem_map_iff _).1 hm
+  exact Part.notMem_none _ (mem_upPair.1 hw).2
+
+/-- `Statement:` if every point of `N` steps somewhere, the first projection of `M.prod N` has the
+    back clause `StepBack` (§ XIX). -/
+theorem prod_fst_stepBack (M : Motion α) (N : Motion β) (hN : ∀ b, ∃ b', N.step b b') :
+    StepBack (M.prod N) M Prod.fst := fun p c hc => by
+  obtain ⟨b', hb'⟩ := hN p.2
+  exact ⟨(c, b'), ⟨hc, hb'⟩, rfl⟩
+
+/-- `Statement:` CONTROL: with `N` a one-point motion with no step, the first projection of
+    `M.prod N` is not a coalgebra homomorphism (`coalgHom_iff`, § XX). -/
+theorem prod_fst_not_coalgHom :
+    let M := ofTotal (id : Unit → Unit) (fun _ => rfl) (fun _ _ => True)
+    let N := ofTotal (id : Unit → Unit) (fun _ => rfl) (fun _ _ => False)
+    ¬ ∃ h : CategoryTheory.Endofunctor.Coalgebra.Hom (M.prod N).toCoalgebra M.toCoalgebra,
+      h.f = TypeCat.ofHom Prod.fst := by
+  intro M N h
+  obtain ⟨-, hb, -⟩ := (coalgHom_iff (M.prod N) M Prod.fst).1 h
+  obtain ⟨_, hs, -⟩ := hb ((), ()) () trivial
+  exact hs.2
+
+/-- `Statement:` CONTROL: a step of `M.aprod N` whose first coordinate is not a step of `M`. -/
+theorem aprod_fst_not_step :
+    let M := ofTotal (id : Unit → Unit) (fun _ => rfl) (fun _ _ => False)
+    let N := ofTotal (id : Unit → Unit) (fun _ => rfl) (fun _ _ => True)
+    (M.aprod N).step ((), ()) ((), ()) ∧ ¬ M.step ((), ()).1 ((), ()).1 := by
+  intro M N
+  exact ⟨Prod.GameAdd.snd (a := ()) (b₁ := ()) (b₂ := ()) trivial, fun h => h⟩
+
+/-- `Statement:` an isomorphism of motions: strict maps both ways, mutually inverse. -/
+-- [ZP-CUSTOM] equivalent to: an isomorphism in Mathlib's `Endofunctor.Coalgebra` category
+-- (`StrictIso.equivCoalgIso`) | reason: named fields, a pair of `Hom`s (§ XIX) inverse on the
+-- underlying maps, which `FixedPole`, `StrictIso.rtg_iff`, `tree_of_aDoubling` and
+-- `tree_of_aDoubling_pole` read directly.
+structure StrictIso (M : Motion α) (N : Motion β) where
+  /-- The forward strict map. -/
+  hom : Hom M N
+  /-- The backward strict map. -/
+  inv : Hom N M
+  /-- Backward after forward is the identity. -/
+  left_inv : ∀ x, inv.toFun (hom.toFun x) = x
+  /-- Forward after backward is the identity. -/
+  right_inv : ∀ y, hom.toFun (inv.toFun y) = y
+
+/-- `Statement:` the underlying equivalence of carriers. -/
+def StrictIso.toEquiv {M : Motion α} {N : Motion β} (e : StrictIso M N) : α ≃ β :=
+  ⟨e.hom.toFun, e.inv.toFun, e.left_inv, e.right_inv⟩
+
+section CoalgIso
+
+open CategoryTheory
+
+/-- `Statement:` the forward map of an isomorphism of motions has the back clause `StepBack`. -/
+theorem StrictIso.stepBack_hom {M : Motion α} {N : Motion β} (e : StrictIso M N) :
+    StepBack M N e.hom.toFun := by
+  intro a c hc
+  refine ⟨e.inv.toFun c, ?_, e.right_inv c⟩
+  have h := e.inv.map_step hc
+  rwa [e.left_inv] at h
+
+/-- `Statement:` the backward map of an isomorphism of motions has the back clause `StepBack`. -/
+theorem StrictIso.stepBack_inv {M : Motion α} {N : Motion β} (e : StrictIso M N) :
+    StepBack N M e.inv.toFun := by
+  intro a c hc
+  refine ⟨e.hom.toFun c, ?_, e.left_inv c⟩
+  have h := e.hom.map_step hc
+  rwa [e.right_inv] at h
+
+/-- `Statement:` a strict map with the back clause gives a coalgebra homomorphism (Mathlib
+    `Endofunctor.Coalgebra.Hom`) from `M.toCoalgebra` to `N.toCoalgebra` with underlying map
+    `φ.toFun`; the right-to-left direction of `coalgHom_iff` (§ XX). -/
+def Hom.toCoalgHom {M : Motion α} {N : Motion β} (φ : Hom M N) (hb : StepBack M N φ.toFun) :
+    M.toCoalgebra ⟶ N.toCoalgebra :=
+  ⟨TypeCat.ofHom φ.toFun, by
+    obtain ⟨g, hg⟩ := (coalgHom_iff M N φ.toFun).2 ⟨fun _ _ h => φ.map_step h, hb, φ.map_up⟩
+    have := g.h
+    rw [hg] at this
+    exact this⟩
+
+/-- `Statement:` a coalgebra homomorphism from `M.toCoalgebra` to `N.toCoalgebra` gives a strict
+    map with the same underlying map; the left-to-right direction of `coalgHom_iff` (§ XX). -/
+def ofCoalgHom {M : Motion α} {N : Motion β} (h : M.toCoalgebra ⟶ N.toCoalgebra) : Hom M N :=
+  have k := (coalgHom_iff M N (fun a => h.f a)).1 ⟨h, rfl⟩
+  ⟨fun a => h.f a, fun hs => k.1 _ _ hs, k.2.2⟩
+
+/-- `Statement:` the strict map `ofCoalgHom h` has the back clause `StepBack`. -/
+theorem ofCoalgHom_stepBack {M : Motion α} {N : Motion β} (h : M.toCoalgebra ⟶ N.toCoalgebra) :
+    StepBack M N (ofCoalgHom h).toFun :=
+  ((coalgHom_iff M N (fun a => h.f a)).1 ⟨h, rfl⟩).2.1
+
+/-- `Statement:` an isomorphism of motions gives an isomorphism (Mathlib `Iso`) from `M.toCoalgebra`
+    to `N.toCoalgebra` in Mathlib's `Endofunctor.Coalgebra` category. -/
+def StrictIso.toCoalgIso {M : Motion α} {N : Motion β} (e : StrictIso M N) :
+    M.toCoalgebra ≅ N.toCoalgebra where
+  hom := e.hom.toCoalgHom e.stepBack_hom
+  inv := e.inv.toCoalgHom e.stepBack_inv
+  hom_inv_id := by
+    ext x
+    exact e.left_inv x
+  inv_hom_id := by
+    ext y
+    exact e.right_inv y
+
+/-- `Statement:` the forward map of `e.toCoalgIso` is `e.hom.toFun`, by `rfl`. -/
+theorem StrictIso.toCoalgIso_hom_f {M : Motion α} {N : Motion β} (e : StrictIso M N) (x : α) :
+    e.toCoalgIso.hom.f x = e.hom.toFun x := rfl
+
+/-- `Statement:` an isomorphism from `M.toCoalgebra` to `N.toCoalgebra` gives an isomorphism of
+    motions. -/
+def StrictIso.ofCoalgIso {M : Motion α} {N : Motion β} (I : M.toCoalgebra ≅ N.toCoalgebra) :
+    StrictIso M N where
+  hom := ofCoalgHom I.hom
+  inv := ofCoalgHom I.inv
+  left_inv x := ConcreteCategory.congr_hom (congrArg Endofunctor.Coalgebra.Hom.f I.hom_inv_id) x
+  right_inv y := ConcreteCategory.congr_hom (congrArg Endofunctor.Coalgebra.Hom.f I.inv_hom_id) y
+
+/-- `Statement:` an equivalence (Mathlib `Equiv`) between isomorphisms of motions from `M` to `N` and
+    isomorphisms from `M.toCoalgebra` to `N.toCoalgebra`, forward `toCoalgIso`, backward
+    `ofCoalgIso`, both round trips by `rfl`. The carriers of `M` and `N` lie in one universe `u`,
+    as `toCoalgebra` puts both in one category. -/
+def StrictIso.equivCoalgIso {M : Motion α} {N : Motion β} :
+    StrictIso M N ≃ (M.toCoalgebra ≅ N.toCoalgebra) where
+  toFun := StrictIso.toCoalgIso
+  invFun := StrictIso.ofCoalgIso
+  left_inv e := by
+    obtain ⟨⟨f, _, _⟩, ⟨g, _, _⟩, _, _⟩ := e
+    rfl
+  right_inv I := by
+    obtain ⟨⟨f, _⟩, ⟨g, _⟩, _, _⟩ := I
+    rfl
+
+/-- `Statement:` `M` and `N` are isomorphic as motions iff `M.toCoalgebra` and `N.toCoalgebra` are
+    isomorphic as coalgebras; both directions. -/
+theorem nonempty_strictIso_iff {M : Motion α} {N : Motion β} :
+    Nonempty (StrictIso M N) ↔ Nonempty (M.toCoalgebra ≅ N.toCoalgebra) :=
+  StrictIso.equivCoalgIso.nonempty_congr
+
+end CoalgIso
+
+/-- `Statement:` PREMISE, lockstep doubling: `M` is isomorphic to `M.prod M`. -/
+def Doubling (M : Motion α) : Prop := Nonempty (StrictIso M (M.prod M))
+
+/-- `Statement:` PREMISE, interleaving doubling: `M` is isomorphic to `M.aprod M`. -/
+def ADoubling (M : Motion α) : Prop := Nonempty (StrictIso M (M.aprod M))
+
+/-- `Statement:` PREMISE, weak interleaving doubling: a one-to-one strict map `M.aprod M → M`. -/
+def ADoublingEmb (M : Motion α) : Prop := ∃ φ : Hom (M.aprod M) M, Function.Injective φ.toFun
+
+/-- `Statement:` PREMISE, a fixed pole of an isomorphism onto a square: `e` sends `r` to `(r, r)`. -/
+def FixedPole {M : Motion α} {N : Motion (α × α)} (e : StrictIso M N) (r : α) : Prop :=
+  e.hom.toFun r = (r, r)
+
+/-- `Statement:` PREMISE, non-degeneracy at `r`: `r` reaches some `a` that does not reach `r` back,
+    the shape of `hback` in `unique_succ_covBy` (§ IV). -/
+def NonDegenerateAt (M : Motion α) (r : α) : Prop :=
+  ∃ a, Relation.ReflTransGen M.step r a ∧ ¬ Relation.ReflTransGen M.step a r
+
+/-- `Statement:` PREMISE, non-degeneracy: `NonDegenerateAt` at some point. -/
+def NonDegenerate (M : Motion α) : Prop := ∃ r, M.NonDegenerateAt r
+
+/-- `Statement:` interleaving doubling gives its weak form; one way. -/
+theorem aDoublingEmb_of_aDoubling {M : Motion α} : M.ADoubling → M.ADoublingEmb :=
+  fun ⟨e⟩ => ⟨e.inv, fun p q h => by
+    have := congrArg e.hom.toFun h; rwa [e.right_inv, e.right_inv] at this⟩
+
+/-- `Statement:` reachability under `Prod.GameAdd R S` is reachability in each coordinate; both
+    directions. -/
+theorem rtg_gameAdd_iff {R : α → α → Prop} {S : β → β → Prop} {p q : α × β} :
+    Relation.ReflTransGen (Prod.GameAdd R S) p q ↔
+      Relation.ReflTransGen R p.1 q.1 ∧ Relation.ReflTransGen S p.2 q.2 := by
+  constructor
+  · intro h
+    induction h with
+    | refl => exact ⟨.refl, .refl⟩
+    | tail _ hbc ih =>
+      rcases Prod.gameAdd_iff.1 hbc with ⟨h1, h2⟩ | ⟨h1, h2⟩
+      · exact ⟨ih.1.tail h1, h2 ▸ ih.2⟩
+      · exact ⟨h2 ▸ ih.1, ih.2.tail h1⟩
+  · rintro ⟨h1, h2⟩
+    obtain ⟨a, b⟩ := p
+    obtain ⟨a', b'⟩ := q
+    have k1 : Relation.ReflTransGen (Prod.GameAdd R S) (a, b) (a', b) :=
+      h1.lift (fun x => (x, b)) (fun _ _ h => Prod.GameAdd.fst h)
+    have k2 : Relation.ReflTransGen (Prod.GameAdd R S) (a', b) (a', b') :=
+      h2.lift (fun y => (a', y)) (fun _ _ h => Prod.GameAdd.snd h)
+    exact k1.trans k2
+
+/-- `Statement:` an isomorphism of motions preserves and reflects reachability; both directions. -/
+theorem StrictIso.rtg_iff {M : Motion α} {N : Motion β} (e : StrictIso M N) (x y : α) :
+    Relation.ReflTransGen M.step x y ↔
+      Relation.ReflTransGen N.step (e.hom.toFun x) (e.hom.toFun y) := by
+  constructor
+  · exact fun h => h.lift e.hom.toFun (fun _ _ h => e.hom.map_step h)
+  · intro h
+    have k : Relation.ReflTransGen M.step (e.inv.toFun (e.hom.toFun x)) (e.inv.toFun (e.hom.toFun y)) :=
+      h.lift e.inv.toFun (fun _ _ h => e.inv.map_step h)
+    rwa [e.left_inv, e.left_inv] at k
+
+section Core
+variable (L : α → α → Prop) (hrefl : ∀ x, L x x) (htr : ∀ x y z, L x y → L y z → L x z)
+  (j : α × α → α) (hj : ∀ p q, L (j p) (j q) ↔ L p.1 q.1 ∧ L p.2 q.2)
+  (r a : α) (hr : L r (j (r, r))) (hra : L r a) (hna : ¬ L a r)
+
+/-- `Statement:` the two cells `j (a, r)` and `j (r, a)`. -/
+def sqCell : Bool → α
+  | false => j (a, r)
+  | true => j (r, a)
+
+/-- `Statement:` the node of a word: `[]` to `r`, `b :: l` to `j (sqCell b, sqWord l)`. -/
+def sqWord : List Bool → α
+  | [] => r
+  | b :: l => j (sqCell j r a b, sqWord l)
+
+include hrefl htr hj hr hra in
+/-- `Statement:` `r` lies below each cell. -/
+theorem root_le_sqCell (b : Bool) : L r (sqCell j r a b) := by
+  cases b
+  · exact htr _ _ _ hr ((hj _ _).2 ⟨hra, hrefl r⟩)
+  · exact htr _ _ _ hr ((hj _ _).2 ⟨hrefl r, hra⟩)
+
+include hrefl htr hj hr hra in
+/-- `Statement:` `r` lies below every node. -/
+theorem root_le_sqWord : ∀ l, L r (sqWord j r a l)
+  | [] => hrefl r
+  | b :: l => htr _ _ _ hr ((hj _ _).2
+      ⟨root_le_sqCell L hrefl htr j hj r a hr hra b, root_le_sqWord l⟩)
+
+include hrefl hj hna in
+/-- `Statement:` the two cells are incomparable: `L` between cells iff the same cell. -/
+theorem sqCell_le_iff (b b' : Bool) : L (sqCell j r a b) (sqCell j r a b') ↔ b = b' := by
+  cases b <;> cases b'
+  · exact ⟨fun _ => rfl, fun _ => hrefl _⟩
+  · exact ⟨fun h => absurd ((hj _ _).1 h).1 hna, fun h => by cases h⟩
+  · exact ⟨fun h => absurd ((hj _ _).1 h).2 hna, fun h => by cases h⟩
+  · exact ⟨fun _ => rfl, fun _ => hrefl _⟩
+
+include htr hj hr hna in
+/-- `Statement:` no cell lies below `r`. -/
+theorem sqCell_not_le_root (b : Bool) : ¬ L (sqCell j r a b) r := fun h => by
+  cases b
+  · exact hna ((hj (a, r) (r, r)).1 (htr _ _ _ h hr)).1
+  · exact hna ((hj (r, a) (r, r)).1 (htr _ _ _ h hr)).2
+
+include hrefl htr hj hr hra hna in
+/-- `Statement:` `L (sqWord l) (sqWord l')` iff `l` is a prefix of `l'`; both directions. -/
+theorem sqWord_le_iff : ∀ l l' : List Bool, L (sqWord j r a l) (sqWord j r a l') ↔ l <+: l'
+  | [], l' => ⟨fun _ => List.nil_prefix, fun _ => root_le_sqWord L hrefl htr j hj r a hr hra l'⟩
+  | b :: l, [] => by
+    refine ⟨fun h => ?_, fun h => absurd (List.prefix_nil.1 h) (List.cons_ne_nil _ _)⟩
+    have h' := (hj (sqCell j r a b, sqWord j r a l) (r, r)).1 (htr _ _ _ h hr)
+    exact absurd h'.1 (sqCell_not_le_root L htr j hj r a hr hna b)
+  | b :: l, b' :: l' => by
+    show L (j _) (j _) ↔ _
+    rw [hj, sqCell_le_iff L hrefl j hj r a hna, sqWord_le_iff l l', List.cons_prefix_cons]
+
+include hrefl htr j hj a hr hra hna in
+/-- `Statement:` a reflexive transitive `L`, a map `j` with `L (j p) (j q) ↔ L p.1 q.1 ∧ L p.2 q.2`,
+    a point `r` with `L r (j (r, r))`, and an `a` with `L r a` and not `L a r`, give a map from
+    `Bool` words, `[]` to `r`, along which `L` is the prefix order; one way. -/
+theorem tree_of_square :
+    ∃ f : List Bool → α, f [] = r ∧ ∀ l l', L (f l) (f l') ↔ l <+: l' :=
+  ⟨sqWord j r a, rfl, sqWord_le_iff L hrefl htr j hj r a hr hra hna⟩
+
+end Core
+
+/-- `Statement:` if `e : M ≅ M.aprod M`, `r` reaches `e⁻¹ (r, r)`, and `M` is `NonDegenerateAt r`,
+    then reachability carries the prefix order on `Bool` words, `[]` at `r`; one way. -/
+theorem tree_of_aDoubling {M : Motion α} (e : StrictIso M (M.aprod M)) (r : α)
+    (hr : Relation.ReflTransGen M.step r (e.inv.toFun (r, r))) (hnd : M.NonDegenerateAt r) :
+    ∃ f : List Bool → α, f [] = r ∧
+      ∀ l l', Relation.ReflTransGen M.step (f l) (f l') ↔ l <+: l' :=
+  let ⟨a, hra, hna⟩ := hnd
+  tree_of_square (Relation.ReflTransGen M.step) (fun _ => .refl) (fun _ _ _ h1 h2 => h1.trans h2)
+    e.inv.toFun (fun p q => by
+      rw [e.rtg_iff, e.right_inv, e.right_inv]
+      exact rtg_gameAdd_iff) r a hr hra hna
+
+/-- `Statement:` the same with `FixedPole e r` in place of the reachability hypothesis at `r`. -/
+theorem tree_of_aDoubling_pole {M : Motion α} (e : StrictIso M (M.aprod M)) (r : α)
+    (hp : FixedPole e r) (hnd : M.NonDegenerateAt r) :
+    ∃ f : List Bool → α, f [] = r ∧
+      ∀ l l', Relation.ReflTransGen M.step (f l) (f l') ↔ l <+: l' := by
+  have hp' : e.hom.toFun r = (r, r) := hp
+  exact tree_of_aDoubling e r (by rw [← hp', e.left_inv]) hnd
+
+/-- `Statement:` the same when `r` reaches every point and some `a` does not reach `r`. -/
+theorem tree_of_aDoubling_root {M : Motion α} (e : StrictIso M (M.aprod M)) (r : α)
+    (hroot : ∀ x, Relation.ReflTransGen M.step r x) (a : α)
+    (hna : ¬ Relation.ReflTransGen M.step a r) :
+    ∃ f : List Bool → α, f [] = r ∧
+      ∀ l l', Relation.ReflTransGen M.step (f l) (f l') ↔ l <+: l' :=
+  tree_of_aDoubling e r (hroot _) ⟨a, hroot a, hna⟩
+
+/-- `Statement:` the same from a strict map `φ : M.aprod M → M` that also reflects reachability;
+    one-to-one is not used. -/
+theorem tree_of_aDoublingEmb {M : Motion α} (φ : Hom (M.aprod M) M)
+    (hrefl : ∀ p q, Relation.ReflTransGen M.step (φ.toFun p) (φ.toFun q) →
+      Relation.ReflTransGen (M.aprod M).step p q) (r : α)
+    (hr : Relation.ReflTransGen M.step r (φ.toFun (r, r))) (hnd : M.NonDegenerateAt r) :
+    ∃ f : List Bool → α, f [] = r ∧
+      ∀ l l', Relation.ReflTransGen M.step (f l) (f l') ↔ l <+: l' :=
+  let ⟨a, hra, hna⟩ := hnd
+  tree_of_square (Relation.ReflTransGen M.step) (fun _ => .refl) (fun _ _ _ h1 h2 => h1.trans h2)
+    φ.toFun (fun p q => ⟨fun h => rtg_gameAdd_iff.1 (hrefl p q h),
+      fun h => (rtg_gameAdd_iff.2 h).lift φ.toFun (fun _ _ h => φ.map_step h)⟩)
+    r a hr hra hna
+
+end TwoCopies
+
+/-- `Statement:` the one-point motion: UP the identity, every step allowed. -/
+def unitMotion : Motion Unit := ofTotal id (fun _ => rfl) (fun _ _ => True)
+
+/-- `Statement:` `unitMotion` is isomorphic to its lockstep square. -/
+def unitMotionIsoProd : StrictIso unitMotion (unitMotion.prod unitMotion) where
+  hom := ⟨fun _ => ((), ()), fun _ => ⟨trivial, trivial⟩, fun _ => by
+    show upPair (Part.some ()) (Part.some ()) = _
+    rw [upPair_some]; rfl⟩
+  inv := ⟨fun _ => (), fun _ => trivial, fun p => by
+    show Part.some () = (upPair (Part.some p.1) (Part.some p.2)).map _
+    rw [upPair_some, Part.map_some]⟩
+  left_inv _ := rfl
+  right_inv _ := rfl
+
+/-- `Statement:` `unitMotion` is isomorphic to its interleaving square. -/
+def unitMotionIsoAProd : StrictIso unitMotion (unitMotion.aprod unitMotion) where
+  hom := ⟨fun _ => ((), ()), fun _ => Prod.GameAdd.fst (a₁ := ()) (a₂ := ()) (b := ()) trivial,
+    fun _ => by
+      show upPair (Part.some ()) (Part.some ()) = _
+      rw [upPair_some]; rfl⟩
+  inv := ⟨fun _ => (), fun _ => trivial, fun p => by
+    show Part.some () = (upPair (Part.some p.1) (Part.some p.2)).map _
+    rw [upPair_some, Part.map_some]⟩
+  left_inv _ := rfl
+  right_inv _ := rfl
+
+/-- `Statement:` CONTROL: `unitMotion` meets `Doubling` and `ADoubling` and is not `NonDegenerate`. -/
+theorem unit_doubling_degenerate :
+    unitMotion.Doubling ∧ unitMotion.ADoubling ∧ ¬ unitMotion.NonDegenerate :=
+  ⟨⟨unitMotionIsoProd⟩, ⟨unitMotionIsoAProd⟩, fun ⟨_, _, _, h⟩ => h .refl⟩
+
+/-- `Statement:` CONTROL: the corner of `unitMotion` does not fire. -/
+theorem unitMotion_not_corner : ¬ unitMotion.Corner :=
+  fun ⟨_, _, _, _, _, _, h⟩ => h rfl
+
+/-- `Statement:` a motion on `Fin 3`: UP sends `1` to `0` and fixes `0` and `2`; steps `0 → 1` and
+    `2 → 1`. -/
+def fin3Motion : Motion (Fin 3) :=
+  ofTotal (fun x => if x = 1 then 0 else x) (by decide)
+    (fun a b => (a = 0 ∧ b = 1) ∨ (a = 2 ∧ b = 1))
+
+/-- `Statement:` no motion on `Fin 3` is isomorphic to any motion on `Fin 3 × Fin 3`. -/
+theorem fin3_not_strictIso_square {M : Motion (Fin 3)} {N : Motion (Fin 3 × Fin 3)}
+    (e : StrictIso M N) : False := by
+  have := Fintype.card_congr e.toEquiv
+  simp at this
+
+/-- `Statement:` CONTROL: `fin3Motion` loops, climbs and fires the corner, and meets neither
+    `Doubling` nor `ADoubling`. -/
+theorem fin3_doubling_control : fin3Motion.Loop ∧ fin3Motion.Climb ∧ fin3Motion.Corner ∧
+    ¬ fin3Motion.Doubling ∧ ¬ fin3Motion.ADoubling :=
+  ⟨⟨0, 1, Part.mem_some_iff.2 (by decide), Or.inl ⟨rfl, rfl⟩, by decide,
+      Part.mem_some_iff.2 (by decide)⟩,
+    ⟨2, 1, 0, Part.mem_some_iff.2 (by decide), Or.inr ⟨rfl, rfl⟩, Part.mem_some_iff.2 (by decide),
+      by decide, by decide⟩,
+    ⟨0, 1, 0, Part.mem_some_iff.2 (by decide), Or.inl ⟨rfl, rfl⟩, Part.mem_some_iff.2 (by decide),
+      by decide⟩,
+    fun ⟨e⟩ => fin3_not_strictIso_square e, fun ⟨e⟩ => fin3_not_strictIso_square e⟩
+
+/-- `Statement:` on a finite carrier with two distinct points no motion meets `ADoublingEmb`. -/
+theorem not_aDoublingEmb_of_finite {α : Type u} [Finite α] [Nontrivial α] (M : Motion α) :
+    ¬ M.ADoublingEmb := by
+  rintro ⟨φ, hφ⟩
+  have h := Nat.card_le_card_of_injective _ hφ
+  rw [Nat.card_prod] at h
+  have h1 := Finite.one_lt_card (α := α)
+  nlinarith
+
+/-- `Statement:` CONTROL: `fin3Motion` does not meet `ADoublingEmb`. -/
+theorem fin3_not_aDoublingEmb : ¬ fin3Motion.ADoublingEmb :=
+  not_aDoublingEmb_of_finite fin3Motion
+
+/-- `Statement:` `1` has two distinct predecessors in `fin3Motion`, `0` and `2`. -/
+theorem fin3Motion_fanIn_one : fin3Motion.FanIn 1 :=
+  ⟨0, 2, by decide, Or.inl ⟨rfl, rfl⟩, Or.inr ⟨rfl, rfl⟩⟩
+
+end Motion
 
 end ZeroParadox
 
@@ -5433,6 +6185,8 @@ open ZeroParadox
 #print axioms Motion.quotUp_eq_quot
 #print axioms Motion.upCompat_ofTotal
 #print axioms Motion.em_of_corner_loop_or_climb
+#print axioms Motion.em_of_dne_corner
+#print axioms Motion.corner_of_not_not_classical
 #print axioms everyStepCovered_of_finite
 #print axioms botCovered_of_finite
 #print axioms Motion.three_of_not_runClose
@@ -5697,5 +6451,84 @@ open ZeroParadox
 #print axioms NInf.nat_no_top
 #print axioms NInf.no_nat_wait
 #print axioms NInf.det_bot_pinnedLimitUnique
+#print axioms Motion.upPair
+#print axioms Motion.mem_upPair
+#print axioms Motion.upPair_some
+#print axioms Motion.prod
+#print axioms Motion.aprod
+#print axioms Motion.prodFstLax
+#print axioms Motion.prodSndLax
+#print axioms Motion.pairHom
+#print axioms Motion.pairLax
+#print axioms Motion.pair_unique
+#print axioms Motion.prod_fst_upStrict
+#print axioms Motion.prodFstHom
+#print axioms Motion.partBool
+#print axioms Motion.prod_fst_not_upStrict
+#print axioms Motion.prod_fst_stepBack
+#print axioms Motion.prod_fst_not_coalgHom
+#print axioms Motion.aprod_fst_not_step
+#print axioms Motion.StrictIso
+#print axioms Motion.StrictIso.toEquiv
+#print axioms Motion.StrictIso.stepBack_hom
+#print axioms Motion.StrictIso.stepBack_inv
+#print axioms Motion.Hom.toCoalgHom
+#print axioms Motion.ofCoalgHom
+#print axioms Motion.ofCoalgHom_stepBack
+#print axioms Motion.StrictIso.toCoalgIso
+#print axioms Motion.StrictIso.toCoalgIso_hom_f
+#print axioms Motion.StrictIso.ofCoalgIso
+#print axioms Motion.StrictIso.equivCoalgIso
+#print axioms Motion.nonempty_strictIso_iff
+#print axioms Motion.Doubling
+#print axioms Motion.ADoubling
+#print axioms Motion.ADoublingEmb
+#print axioms Motion.FixedPole
+#print axioms Motion.NonDegenerateAt
+#print axioms Motion.NonDegenerate
+#print axioms Motion.aDoublingEmb_of_aDoubling
+#print axioms Motion.rtg_gameAdd_iff
+#print axioms Motion.StrictIso.rtg_iff
+#print axioms Motion.sqCell
+#print axioms Motion.sqWord
+#print axioms Motion.root_le_sqCell
+#print axioms Motion.root_le_sqWord
+#print axioms Motion.sqCell_le_iff
+#print axioms Motion.sqCell_not_le_root
+#print axioms Motion.sqWord_le_iff
+#print axioms Motion.tree_of_square
+#print axioms Motion.tree_of_aDoubling
+#print axioms Motion.tree_of_aDoubling_pole
+#print axioms Motion.tree_of_aDoubling_root
+#print axioms Motion.tree_of_aDoublingEmb
+#print axioms Motion.unitMotion
+#print axioms Motion.unitMotionIsoProd
+#print axioms Motion.unitMotionIsoAProd
+#print axioms Motion.unit_doubling_degenerate
+#print axioms Motion.unitMotion_not_corner
+#print axioms Motion.fin3Motion
+#print axioms Motion.fin3_not_strictIso_square
+#print axioms Motion.fin3_doubling_control
+#print axioms Motion.not_aDoublingEmb_of_finite
+#print axioms Motion.fin3_not_aDoublingEmb
+#print axioms Motion.fin3Motion_fanIn_one
+#print axioms Omniscient
+#print axioms Searchable
+#print axioms PointwiseSearchable
+#print axioms OmniscientAway
+#print axioms BoolStepTrichotomy
+#print axioms BoolStepSelected
+#print axioms boolStepTrichotomy_iff_omniscientAway
+#print axioms omniscient_of_omniscientAway
+#print axioms omniscient_of_boolStepTrichotomy
+#print axioms boolStepTrichotomy_of_omniscient
+#print axioms boolStepTrichotomy_of_subsingleton
+#print axioms em_of_boolStepTrichotomy_imp_omniscient
+#print axioms em_of_omniscient_imp_boolStepTrichotomy
+#print axioms boolStepSelected_of_searchable
+#print axioms pointwiseSearchable_of_boolStepSelected
+#print axioms pointwiseSearchable_iff_omniscient
+#print axioms boolStepSelected_empty_not_searchable
+#print axioms omniscient_option_iff
 
 end PurityCheck

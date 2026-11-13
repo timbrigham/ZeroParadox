@@ -53,6 +53,12 @@ import ZeroParadox.Valuation.Scale
 import ZeroParadox.Information.Disjunctive
 import ZeroParadox.Settheory.GraphBisim
 import ZeroParadox.Settheory.HypersetOrder
+import ZeroParadox.Settheory.APG
+import ZeroParadox.Valuation.OneWayFlow
+import ZeroParadox.Information.TapeHalting
+import ZeroParadox.Valuation.TowerTape
+import ZeroParadox.Valuation.TreeNotForced
+import ZeroParadox.Valuation.DoublingAndTree
 import Mathlib.RingTheory.Valuation.PrimeMultiplicity
 import Mathlib.Order.FixedPoints
 import Mathlib.SetTheory.Ordinal.FixedPoint
@@ -535,6 +541,24 @@ example (k : ℕ) : ∀ n, Nat.Partrec.Code.eval (Nat.Partrec.Code.const k) n =
 -- `ZeroParadox/` for `MemGraph.` and `omegaLoop` (four files, no declaration in them taking both a
 -- `MemGraph` and a `QuineAtomHost`) and of `QuineHost.lean` for `MemGraph`, `omegaLoop`, `omegaPair`
 -- (no hit).
+-- Statement: every quiver has exactly one decoration into every `DecorationUniverse U`.
+-- Reading: existence and uniqueness for an abstract `U`, not an AFA model (`APG.lean` header).
+#check @ZeroParadox.existsUnique_decoration
+-- Statement: ONE WAY: a vertex not accessible for `ChildRel` is decorated ⊥ of `U`.
+#check @ZeroParadox.decoration_eq_bot_of_not_acc
+-- Statement: CONTROL: the fan's root is accessible and still decorated ⊥ of `U` by every decoration.
+-- Reading: decorated ⊥ of `U` does not mean non-well-founded; the converse above fails.
+#check @ZeroParadox.fan_root_acc_and_eq_bot
+-- Reading: a self-referential ⊥ says nothing about what is above it (no `BTree` in `Comb`).
+#check @ZeroParadox.comb_quine_and_no_tree
+-- Reading: two inside one, everywhere, forces forks; at ⊥ only it holds in every carrier (`poleCellDouble`).
+#check @ZeroParadox.square_embed_forces_btree
+-- Reading: why the pole ⊥ = 0 = ∞ is a chart claim, not a point identity: ⊥ = ⊤ collapses a bounded order.
+#check @ZeroParadox.pole_identity_collapses
+-- Reading: the 0 ↔ ∞ exchange is independent of the tree: `Set ℕ` carries both.
+#check @ZeroParadox.setNat_exchange_tree
+-- Reading: and `Fin 3` carries the exchange without the tree.
+#check @ZeroParadox.fin3_exchange_no_tree
 
 /-! ### GENERATION — the floor generates its first step -/
 
@@ -601,6 +625,84 @@ noncomputable example : Ordinal.{0} →o Ordinal.{0} :=
 #check @ZeroParadox.fullMix_not_injective
 -- Statement: an eigenmode with `|λ| < 1` has `‖(T f)^[m] v‖ → 0`.
 #check @ZeroParadox.tendsto_norm_iterate_zero
+
+/-! ### ⊥ of `End` — one tape read as depth and as width, and the one-way flow -/
+
+-- Statement: the covers of ⊥ of `End` in ZP-A's order are exactly the unit vectors `unitEnd k`.
+#check @ZeroParadox.covers_bot_iff
+-- Statement: every neighbourhood `U ∈ 𝓝 botEnd` holds infinitely many covers of ⊥ of `End`.
+-- Reading: infinitely many first steps at every scale, not one first step.
+#check @ZeroParadox.nhds_botEnd_covers_infinite
+-- Statement: fixed points of `boundaryDouble` are `{botEnd}`; its ranges nest, meet in `{botEnd}`.
+-- Statement: and the covers are its orbit from `unitEnd 0`, the `k`-th in range `k`, not `k + 1`.
+-- Reading: CONCURRENT, not alternatives: one map gives the nested depth and the width at once.
+#check @ZeroParadox.cells_concurrent
+-- Statement: ⊥ the glb of non-⊥ members (`hglb`) and `BotHasFirstStep L` give a non-linear order.
+-- Reading: the glb condition and a first step together force branching; each alone has a linear
+-- control. `End`'s depth meets the glb condition (`end_glb_unitEnd`), and so does a finite carrier
+-- (`diamond_meets_hglb`), so depth is sufficient for it, not required.
+#check @ZeroParadox.branching_forced
+-- Statement: CONTROL, finite `Bool × Bool` meets `hmem`, `hglb` and `BotHasFirstStep`, and embeds
+-- neither `End` nor the binary tree `BTree`.
+#check @ZeroParadox.diamond_meets_hglb
+-- Statement: no order embedding `End ↪o Comb`, where ⊥ of `Comb` is the glb of non-⊥ members
+-- (`comb_depth`) with a first step, infinitely many atoms and `IsStronglyAtomic`.
+-- Reading: infinitely many first steps and depth do not force forks above ⊥.
+#check @ZeroParadox.comb_no_End
+-- Statement: an independent `a : ℕ → L` gives `BTree ↪o L` with root at ⊥ of `L`; one way, one
+-- direction of Chakir–Pouzet, arXiv:0812.2300, Thm 1.4.
+-- Reading: self-similarity is a hypothesis, not a consequence of the glb, first-step and atom
+-- hypotheses at ⊥, or of strong atomicity of the whole order, all of which `Comb` meets.
+#check @ZeroParadox.btree_embeds_of_independent
+-- Statement: in ZP-A's order, depth at every element and `IsStronglyAtomic` give `BTree ↪o L` with
+-- root at ⊥ of `L`; one way, `End` embeds the tree and fails depth at its top (`end_top_no_depth`).
+-- Reading: a pole within every pole (depth at every point), with strong atomicity, forces forks
+-- everywhere, one way; depth only at ⊥ does not (`comb_no_End`).
+#check @ZeroParadox.zp_btree_embeds_of_hereditary_depth
+-- Statement: `d (boundaryDouble x) = d x + 1` and `d = 0` where `x 0 ≠ 0` force `d = endVal`.
+#check @ZeroParadox.depth_forced_everywhere
+-- Statement: `endVal x = waitENat (det (tapeIso x))`, the first `true` on the digit tape, in `ℕ∞`.
+-- Reading: depth and width are one tape read two ways, not two separate facts.
+#check @ZeroParadox.endVal_eq_wait
+-- Statement: ⊥ of `End` goes to ⊥ of `ℕ → Bool`, waiting time ⊤ of `NInf`, depth ⊤ of `ℕ∞`.
+-- Statement: ⊤ of `End` goes to ⊤ of `ℕ → Bool`, waiting time ⊥ of `NInf`, depth `0`.
+#check @ZeroParadox.depth_wait_poles
+-- Statement: the digit-tape run of `x` never halts iff `x = botEnd` iff `endVal x = ⊤`.
+-- Reading: COINCIDENCE: never halting and infinite depth are one point, ⊥ of `End`.
+#check @ZeroParadox.endVal_not_terminates_iff
+-- Statement: every `boundaryDouble`-orbit tends to `botEnd`; only `botEnd` has an infinite backward one.
+-- Reading: forward-attracting AND backward-repelling, one map.
+#check @ZeroParadox.one_way_flow
+-- Statement: for `x ≠ botEnd`, no iterate `boundaryDouble^[n] x` is `botEnd`.
+-- Reading: with `one_way_flow`, ⊥ of `End` is reached in the limit, never at a finite step.
+#check @ZeroParadox.iterate_boundaryDouble_ne_bot
+-- Statement: for `x ≠ botEnd`, the `endVal x`-th undo-step `(shiftEnd 1)^[m] x` has no preimage.
+#check @ZeroParadox.backward_orbit_exits
+-- Statement: every fixed point of `localPush v` is `localBotEnd v`.
+#check @ZeroParadox.localPush_unique_fp
+-- Statement: there are infinitely many distinct local floors `localBotEnd v`.
+-- Reading: ⊥ of `End` is one local floor among infinitely many, not the only one.
+#check @ZeroParadox.localFloors_infinite
+-- Statement: every tower member is a local floor: `localMember v n = localBotEnd (v ++ 0ⁿ ++ [1])`.
+#check @ZeroParadox.localMember_is_floor
+-- Statement: no order isomorphism `End ≃o (ℕ → Fin 3)`.
+-- Reading: digit width is an order invariant, not a choice of presentation.
+#check @ZeroParadox.no_orderIso_end_fin3
+-- Statement: the `InfinitudeFloorInversion End`: floor `botEnd`, members `unitEnd k`, `cx := endVal`.
+-- Reading: CARRIER for `pole_inversion` (§ INVERSION) at ⊥ of `End`.
+#check @ZeroParadox.cellsFloorInversion
+-- Statement: the subtape of `localBotEnd v` after `v` is ⊥ of `ℕ → Bool`, with `det` ⊤ of `NInf`.
+#check @ZeroParadox.localFloor_subtape_pole_limit
+-- Statement: for `v = u ++ [1]`, that subtape wait is ⊤ of `NInf` and the whole tape's run halts.
+-- Reading: CARRIER: the local floor is the never-firing pole of its subtape and a firing tape
+-- globally; chart-relative, not a point identity.
+#check @ZeroParadox.localFloor_two_charts_limit
+-- Statement: `towerTape v` packs the `localPush v`-orbit of a seed into one end, a closed embedding.
+#check @ZeroParadox.towerTape_isClosedEmbedding
+-- Statement: the orbit of `localMember v 0` tends to `localBotEnd v`; `localCx` is `n` at step `n`,
+-- ⊤ of `ℕ∞` at the floor. Limit form: `tower_pole_within_pole_limit`.
+-- Reading: a pole within a pole; no identity of ⊥ of a `ZPSemilattice` with any tape is stated.
+#check @ZeroParadox.tower_pole_within_pole
 
 /-! ### The infinitude in two charts: content and self -/
 

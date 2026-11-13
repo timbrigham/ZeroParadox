@@ -427,6 +427,115 @@ theorem two_point_both_ends_is_poleView {α : Type*} [PartialOrder α] [Decidabl
       exact ⟨fun h => absurd (le_antisymm (hb _) h) hab, fun h => absurd h (by decide)⟩
     · rw [hfb]; exact ⟨fun _ => le_rfl, fun _ => le_rfl⟩
 
+/-! ### § VI. Negation on the double-negation layer
+
+`dnegLayer P` places `¬¬P` at `zero` and `¬¬¬P` at `infty`, the two regular elements over `P`
+(`dnegNucleus_isClosed_iff`, `ZeroParadox/Category/DoubleNegationNucleus.lean`); the layer is the
+image of the double-negation modality `dnegNucleus`. -/
+
+/-- `Statement:` `zero ↦ ¬¬P`, `infty ↦ ¬¬¬P`. -/
+def dnegLayer (P : Prop) : Pole → Prop
+  | zero => ¬¬P
+  | infty => ¬¬¬P
+
+/-- `Statement:` the negation of `dnegLayer P q` is equivalent to `dnegLayer P (swap q)`.
+    `Reading:` on the two-element regular layer ONLY. Negation on `Prop` is not an involution there
+    (`P ↦ ¬¬P` is one-way, `dnegNucleus`); this is `swap`'s shape at a different level, never an
+    identity, as `ZeroParadox/Computability/Occurrence.lean` § IV-c fences `flipPoles`. -/
+theorem not_dnegLayer_iff (P : Prop) (q : Pole) : ¬ dnegLayer P q ↔ dnegLayer P (swap q) := by
+  cases q
+  · exact Iff.rfl
+  · exact ⟨fun h hn => h (fun hnn => hnn hn), fun h hnnn => hnnn h⟩
+
+/-- `Statement:` `dnegLayer P` is one-to-one (`¬¬P ≠ ¬¬¬P`, by `iff_not_self`), and `¬¬P` and `¬¬¬P`
+    do not both hold. `Reading:` EXCHANGE, as `zeroInftyIso`: `not_dnegLayer_iff` carries two
+    distinct propositions onto each other; not a coincidence witness. -/
+theorem dnegLayer_injective_exclusive (P : Prop) :
+    Function.Injective (dnegLayer P) ∧ ¬ (dnegLayer P zero ∧ dnegLayer P infty) := by
+  refine ⟨fun a b h => ?_, fun ⟨h2, h3⟩ => h3 h2⟩
+  cases a <;> cases b
+  · rfl
+  · exact absurd (iff_of_eq (h : (¬¬P) = ¬(¬¬P))) iff_not_self
+  · exact absurd (iff_of_eq (h.symm : (¬¬P) = ¬(¬¬P))) iff_not_self
+  · rfl
+
+/-- `Statement:` for `f : Pole → Pole`, the negation of `dnegLayer P (f (swap q))` is equivalent to
+    `dnegLayer P ((swap ∘ f ∘ swap) q)`: conjugating a map of the layer by negation is conjugating
+    the corner by `swap` (`swap_conj`). -/
+theorem not_dnegLayer_conj (P : Prop) (f : Pole → Pole) (q : Pole) :
+    ¬ dnegLayer P (f (swap q)) ↔ dnegLayer P ((swap ∘ f ∘ swap) q) :=
+  not_dnegLayer_iff P (f (swap q))
+
+-- Statement: conjugated by negation, the collapse onto `¬¬P` (`cornerZero`) is the collapse onto
+-- `¬¬¬P` (`cornerInfty`).
+example (P : Prop) (q : Pole) :
+    ¬ dnegLayer P (cornerZero (swap q)) ↔ dnegLayer P (cornerInfty q) := by
+  rw [not_dnegLayer_conj, swap_conj.1]
+
+/-- `Statement:` on the layer, negation applied twice is equivalent to the identity. -/
+theorem not_not_dnegLayer_iff (P : Prop) (q : Pole) : ¬¬ dnegLayer P q ↔ dnegLayer P q :=
+  (not_congr (not_dnegLayer_iff P q)).trans
+    ((not_dnegLayer_iff P (swap q)).trans (by rw [swap_involutive q]))
+
+-- Statement: negation is an order-reversing Galois connection of `Prop` with itself, from Mathlib's
+-- Heyting-algebra `le_compl_comm` (no named `GaloisConnection` for it located by `exact?`, 2026-11-12).
+example : GaloisConnection (OrderDual.toDual ∘ Not) (Not ∘ OrderDual.ofDual : Propᵒᵈ → Prop) :=
+  fun a b => le_compl_comm (a := OrderDual.ofDual b) (b := a)
+
+-- Statement: its `l_u_l_eq_l` is `¬¬¬a = ¬a` (Mathlib `compl_compl_compl`). Reading: the layer's two
+-- points `¬¬P`, `¬¬¬P` lie in the image of this self-polarity's round trip `¬¬`.
+example (a : Prop) : (¬¬¬a) = ¬a :=
+  congrArg OrderDual.ofDual (GaloisConnection.l_u_l_eq_l
+    (fun a b => le_compl_comm (a := OrderDual.ofDual b) (b := a) :
+      GaloisConnection (OrderDual.toDual ∘ Not) (Not ∘ OrderDual.ofDual : Propᵒᵈ → Prop)) a)
+
+-- Reading: off the layer, the way back `¬¬P → P` is `Decidable.of_not_not` for a decided `P`, and
+-- for every `P` it is excluded middle (`em_iff_all_props_regular`, `em_iff_dnegNucleus_trivial`,
+-- `ZeroParadox/Category/ExcludedMiddleBridge.lean`; scoped to `Prop`).
+
+/-! ### § VII. Order direction and reversibility decide the corner -/
+
+/-- `Statement:` a bijection of `Pole` monotone for `poleView` is `cornerId`. -/
+theorem eq_cornerId_of_monotone_bijective (f : Pole → Pole) (hb : Function.Bijective f)
+    (hm : @Monotone Pole Pole poleView poleView f) : f = cornerId := by
+  rcases four_corners_exhaustive f with rfl | rfl | rfl | rfl
+  · exact absurd hb.1 cornerZero_not_injective
+  · exact absurd hb.1 cornerInfty_not_injective
+  · rfl
+  · exact absurd (hm (a := zero) (b := infty) (by decide)) (by decide)
+
+/-- `Statement:` a bijection of `Pole` antitone for `poleView` is `swap`. -/
+theorem eq_swap_of_antitone_bijective (f : Pole → Pole) (hb : Function.Bijective f)
+    (ha : @Antitone Pole Pole poleView poleView f) : f = swap := by
+  rcases four_corners_exhaustive f with rfl | rfl | rfl | rfl
+  · exact absurd hb.1 cornerZero_not_injective
+  · exact absurd hb.1 cornerInfty_not_injective
+  · exact absurd (ha (a := zero) (b := infty) (by decide)) (by decide)
+  · rfl
+
+-- Statement: the converses: `cornerId` is monotone and `swap` antitone for `poleView`.
+example : @Monotone Pole Pole poleView poleView cornerId ∧
+    @Antitone Pole Pole poleView poleView swap :=
+  ⟨fun _ _ h => h, fun x y h => by cases x <;> cases y <;> first | exact h | decide⟩
+
+-- Statement: CONTROL: `cornerZero` and `cornerInfty` are both monotone AND antitone, so direction
+-- alone does not decide the corner; bijectivity is load-bearing (`reversibility_split`).
+example : @Monotone Pole Pole poleView poleView cornerZero ∧
+    @Antitone Pole Pole poleView poleView cornerZero ∧
+    @Monotone Pole Pole poleView poleView cornerInfty ∧
+    @Antitone Pole Pole poleView poleView cornerInfty :=
+  ⟨fun _ _ _ => Nat.le_refl _, fun _ _ _ => Nat.le_refl _,
+    fun _ _ _ => Nat.le_refl _, fun _ _ _ => Nat.le_refl _⟩
+
+-- Reading: a case of the rigidity of well-ordered (so finite) chains, Mathlib
+-- `OrderIso.unique_of_wellFoundedLT` and `OrderIso.subsingleton_of_wellFoundedLT'`; here for the
+-- non-instance order `poleView`, as bijective plus a direction, with the CONTROL above pricing bijectivity.
+
+-- Reading: an order-reversing map undone on its closed part (Mathlib `Concept.swapEquiv`, from
+-- `gc_upperPolar_lowerPolar`, `Mathlib/Order/Concept.lean`) has `swap`'s shape at another level, never
+-- an identity. `NInf.det_gi` (`ZeroParadox/Die.lean` § XXV) holds in both charts: between `ℕ → Bool`
+-- and `NInf` a CARRIER change; on the two poles of each, `swap`'s shape.
+
 end Pole
 end ZeroParadox
 
@@ -458,4 +567,11 @@ open ZeroParadox.Pole
 #print axioms poleView_ends
 #print axioms poleView_swap_ends
 #print axioms two_point_both_ends_is_poleView
+#print axioms dnegLayer
+#print axioms not_dnegLayer_iff
+#print axioms dnegLayer_injective_exclusive
+#print axioms not_dnegLayer_conj
+#print axioms not_not_dnegLayer_iff
+#print axioms eq_cornerId_of_monotone_bijective
+#print axioms eq_swap_of_antitone_bijective
 end PurityCheck

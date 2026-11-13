@@ -1,6 +1,6 @@
 """
 Build ZP-J Illustrated Companion
-Version 1.42 | November 2026
+Version 1.45 | November 2026
 """
 
 import os
@@ -10,11 +10,11 @@ from reportlab.graphics import renderPDF
 
 def quine_atom_diagram():
     """Diagram showing ⊥ ∈ ⊥ — the self-containing bottom element."""
-    dw, dh = TW, 2.8 * inch
+    dw, dh = TW, 2.9 * inch  # 208.8 pts; content top ~192 (the braces), bottom ~10 (caption)
     d = Drawing(dw, dh)
 
     cx = dw / 2
-    cy = 110  # fixed — do not derive from dh; label at cy-r_outer-18 = 20 > 0
+    cy = 110  # fixed, not derived from dh; Q = {Q} label at cy-r_outer-18 = 20, caption at y = 10
 
     # Outer circle (the set {⊥})
     r_outer = 72
@@ -159,7 +159,7 @@ def abstraction_chain_table():
     t.setStyle(ts); return t
 
 
-VERSION = '1.42'
+VERSION = '1.45'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -238,9 +238,9 @@ def build():
         'ZP-J extends the T-EXEC result in four directions: it identifies the set of '
         'self-containing elements as {&#8869;} without the axiom of choice; it derives the '
         'typeclass laws from stronger structures, ending in a valuation argument; it '
-        'demonstrates the structure on two concrete types; and it proves a '
-        'decoration uniqueness theorem for every directed graph, finite or not, into abstract '
-        'DecorationUniverses, with a separate graph-side proof for finite APGs.'))
+        'demonstrates the structure on two concrete types; and it proves '
+        'decoration uniqueness and existence for every directed graph, finite or not, into abstract '
+        'DecorationUniverses, with a separate graph-side proof of uniqueness for finite APGs.'))
     E.append(sp(4))
 
     # ── What Is a Quine Atom? ────────────────────────────────────────────────
@@ -542,12 +542,13 @@ def build():
         'no infinite descending path the same uniqueness holds without it, by Corollary 1.1 (p. 5), '
         'which follows from Mostowski\'s Collapsing Lemma (p. 4).'))
     E.append(cbody(
-        'ZP-J proves something different: a uniqueness-only result for abstract DecorationUniverses  - '
+        'ZP-J proves something different: analogues of both halves, for abstract DecorationUniverses  - '
         'types carrying the ValuationStructure and a collect operation, without importing AFA axioms. '
-        'The result: on <b>any</b> directed graph, finite or infinite, any two valid decorations '
+        'Uniqueness: on <b>any</b> directed graph, finite or infinite, any two valid decorations '
         'must agree at every vertex (decoration_unique_of_val). For finite APGs a separate, '
         'graph-side proof gives the same (decoration_unique). '
-        'Existence is not proved; the ZP-J result is a constraint, not a construction.'))
+        'Existence: every directed graph has a valid decoration (exists_decoration), so it has '
+        'exactly one (existsUnique_decoration).'))
     E.append(cbody(
         'The finite, graph-side proof follows the same two-direction logic as T-EXEC:'))
     E.append(cbody(
@@ -571,19 +572,33 @@ def build():
         'have depth below n, so induction on n settles it; the only label of infinite depth is '
         '&#8869; of the decorating type. Think of a recursion that terminates on the size of its '
         'output rather than its input: nothing about the graph is counted, so the graph may be '
-        'infinite (decoration_unique_of_val). This adapts the standard proof of a result Aczel sets '
+        'infinite (decoration_unique_of_val). This adapts a result Aczel sets '
         'as an exercise, that the Foundation axiom gives every graph at most one decoration (Aczel, '
-        'Non-Well-Founded Sets, 1988, Exercise 2.1, p. 20), with one exception admitted: the single '
-        'label of infinite depth. The two readings are linked one way: a cyclic '
+        'Non-Well-Founded Sets, 1988, Exercise 2.1, p. 20), and the argument he indicates on p. 19 '
+        'that equality between well-founded sets is uniquely determined, by transfinite induction on '
+        'the membership relation. One difference is that this version admits the single '
+        'label of infinite depth. The two readings are linked one way: under any valid decoration, a cyclic '
         'vertex gets infinite depth, and nothing is claimed in reverse.'))
+    E.append(cbody(
+        '<b>Existence:</b> build the decoration by recursion on the accessible vertices, those where every '
+        'chain of children ends; that recursion is total, because it runs only where the chains end. '
+        'There the label is computed from the '
+        'children&#8217;s labels as usual; everywhere else no recursion applies and the label is &#8869; of the decorating type, the one label of infinite '
+        'depth, which absorbs any collection it enters, like a strict function returning '
+        'divergence. The construction never tests whether a vertex is accessible: it collects, for each '
+        'child, the recursive value if the child is accessible or &#8869; of the decorating type if it is not, and the proof then '
+        'inspects the depth of the result, which is plain data. One direction only: a vertex that '
+        'is not accessible gets &#8869; of the decorating type (decoration_eq_bot_of_not_acc), but an accessible vertex '
+        'with children of every finite height gets &#8869; of the decorating type too (fan_root_acc_and_eq_bot).'))
     E.append(sp(4))
     E.append(remember_box(
-        'decoration_unique_of_val is the ZP analogue of the uniqueness clause of AFA, which is an axiom. '
-        'It does not construct a decoration or prove one exists  - it proves that '
-        'any two valid decorations must be identical. It is an analogue of the uniqueness half '
-        'of what AFA asserts, not that clause itself: it is proved for abstract '
-        'DecorationUniverses over every graph, finite or not, without importing set-theoretic '
-        'AFA axioms. decoration_unique is its finite form: a graph-side proof for finite APGs.'))
+        'decoration_unique_of_val is the ZP analogue of the uniqueness clause of AFA, which is an axiom: '
+        'any two valid decorations must be identical. exists_decoration is the analogue of the '
+        'existence clause: a valid decoration exists. Together, existsUnique_decoration: exactly one. '
+        'They are analogues of what AFA asserts, not its clauses themselves: they are proved for '
+        'abstract DecorationUniverses over every graph, finite or not, without importing '
+        'set-theoretic AFA axioms. decoration_unique is a finite form of uniqueness: a graph-side '
+        'proof for finite APGs.'))
     E.append(sp(8))
 
     # ── Key Result Box ───────────────────────────────────────────────────────
@@ -607,6 +622,8 @@ def build():
         'decoration_unique_of_val: any two valid decorations of any graph, finite or not, into a '
         'DecorationUniverse agree, with no finiteness hypothesis. '
         'decoration_unique: the same for a finite APG, by a graph-side proof. '
+        'exists_decoration: every graph, finite or not, has a valid decoration into a '
+        'DecorationUniverse, so it has exactly one (existsUnique_decoration). '
         'All stated results sorry-free in Lean 4 '
         '(decoration_unique proved via strong induction on reach cardinality, '
         'decoration_unique_of_val via strong induction on the depth of the decorating value; '

@@ -17,6 +17,9 @@ import ZeroParadox.Reals.OrderedField
 import ZeroParadox.Valuation.PoleRegistration
 import ZeroParadox.Die
 import ZeroParadox.Information.CrossingTrials
+import ZeroParadox.Information.TapeHalting
+import ZeroParadox.Valuation.TowerTape
+import ZeroParadox.Information.PoleWithinEnsemble
 
 /-!
 # Machine-checked characterization index of the framework's relationship to `Classical.choice`
@@ -353,6 +356,50 @@ example {σ : Type} [PartialOrder σ] [OrderBot σ] [NoMaxOrder σ] :
 -- the bin is a property of the elaborated statement, instances included, and neither reading says the
 -- mathematics needs choice.
 
+-- THAT a tape's first hitting time halts, against WHEN, footprints from the home files' PurityChecks.
+-- Statement: `toComp (det w)` terminates iff some `w k = true`; measured `[propext, Quot.sound]`.
+#check @ZeroParadox.toComp_det_terminates_iff
+-- Statement: the exact halting step is the first firing; measured `[propext, Classical.choice, Quot.sound]`.
+-- Reading: it enters at `toComp_results_iff` (Mathlib's `Computation.Results`); `det_eq_ofNat_iff`,
+-- the same step on the `NInf` side, measures `[propext, Quot.sound]`. Statement-carried: not measured.
+#check @ZeroParadox.toComp_det_results_iff
+#check @ZeroParadox.det_eq_ofNat_iff -- Statement: `det w = ofNat n` iff `n` is the first `true`
+-- Statement: `NInf ≃o ℕ∞` (`orderIsoWithTopClassical`), the map depth in `ℕ∞` is read through.
+-- Reading: a separate cost from the one above: any order isomorphism `NInf ≃o WithTop ℕ` gives WLPO
+-- (`NInf.wlpo_of_iso`), so reading the waiting time as a value of `ℕ∞` carries a taboo.
+#check @ZeroParadox.waitENat
+#check @ZeroParadox.NInf.wlpo_of_iso -- Statement: an order isomorphism `NInf ≃o WithTop ℕ` gives WLPO
+
+-- The pole within a pole, limit form against value form, footprints from the home files' PurityChecks.
+-- Statement: the local floor's subtape is ⊥ of `ℕ → Bool`, `det` ⊤ of `NInf`; measured `[propext, Quot.sound]`.
+#check @ZeroParadox.localFloor_subtape_pole_limit
+-- Statement: the same plus `localCx v (localBotEnd v) = ⊤` in `ℕ∞`; measured `[propext, Classical.choice, Quot.sound]`.
+#check @ZeroParadox.localFloor_subtape_pole
+-- Statement: tower members' subtape waits are `ofNat n` in `NInf`; measured `[propext, Quot.sound]`.
+#check @ZeroParadox.tower_pole_within_pole_limit
+-- Statement: their `localCx` is `n`, tending to ⊤ of `ℕ∞`; measured `[propext, Classical.choice, Quot.sound]`.
+#check @ZeroParadox.tower_pole_within_pole
+-- Statement: along a pointwise approach to ⊥ of `ℕ → Bool`, `det` passes every `ofNat N`; measured `[propext, Quot.sound]`.
+#check @ZeroParadox.det_ge_of_approach
+-- Statement: `localCx`, named in the value forms' statements, carries `Classical.choice` (printed next).
+#print axioms ZeroParadox.localCx
+-- Reading: the same divergence, two bins: as a limit in `NInf`, no choice; as a value in `ℕ∞`, through
+-- `localCx` (an `endVal`, equal to a `waitENat` value by `endVal_eq_wait`; any `NInf ≃o ℕ∞` gives WLPO,
+-- `wlpo_of_iso` above).
+
+-- The random limit against the explicit limit, footprints from the home file's PurityCheck.
+-- Statement: random firing tapes with halting runs approach ⊥ of `ℕ → Bool` pointwise, `det` passing
+-- every `ofNat N`; measured `[propext, Classical.choice, Quot.sound]`.
+#check @ZeroParadox.pole_within_ensemble_limit
+-- Statement: the same limit along the explicit tapes `fireAt n`; measured `[propext, Quot.sound]`.
+#check @ZeroParadox.pole_limit_explicit
+-- Statement: `MLRandom` and `randFiring`, named in the random limit's statement, carry
+-- `Classical.choice` (printed next), so no proof of that statement can drop it.
+#print axioms ZeroParadox.MLRandom
+#print axioms ZeroParadox.randFiring
+-- Reading: choice attaches to typicality, not to the limit: `MLRandom`'s type carries it (it takes a
+-- `Measure`), and the explicit statement, which names no measure, does not.
+
 /-! ## § IV. The ESSENTIAL cases — reductions to taboos, and the premise they rest on
 
 The arrow runs from each principle (cases 1 to 5 below) to its taboo, so each theorem speaks of the
@@ -557,6 +604,10 @@ uniform legs proved by anonymous `example` are cited by section. -/
 -- at every point of every motion on every `α : Type` it gives excluded middle
 -- (`ZeroParadox/DieCannotBe.lean` § XI).
 #check @ZeroParadox.Motion.overTrichotomy_of_option
+-- Statement: the die's corner under double negation: `¬¬ Corner → Corner` on every motion on `Bool`
+-- gives excluded middle; classically it holds (`ZeroParadox/DieCannotBe.lean` § I). Not counted in § IV.
+#check @ZeroParadox.Motion.em_of_dne_corner
+#check @ZeroParadox.Motion.corner_of_not_not_classical -- Statement: `¬¬ Corner → Corner`, proved with `classical`
 -- Reading: these reductions are what constructive reverse mathematics calls Brouwerian
 -- counterexamples, "T ⟹ P, where P is a general, constructively dubious statement such as LPO" (Diener,
 -- *Constructive Reverse Mathematics*, arXiv:1804.05495v3, p. 6, PDF page 7; cited, not claimed). No count of rows is

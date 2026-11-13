@@ -158,9 +158,17 @@ occur anywhere in the meta-tower. The self-referential fixed point is always pre
 only its *uniqueness* (`fork_collapse_iff`). This is the precise reason the double dereference is
 scale-invariant and hits no wall: monotonicity + completeness forbid the very obstruction the keystone
 diagonal (Lawvere/Cantor/Russell, `Wall.lean`) is built from. The diagonal edge therefore lives strictly
-OUTSIDE complete-lattice-land — in the well-foundedness / negation setting (`wf_no_selfloop`, where a
-self-loop is *refuted*) and in the space of theories/models (candidate 2 — not a complete lattice, so no
-fork law applies; the genuine apophatic "AFA vs any theory" gap). Within the lattice tower the gap is
+OUTSIDE the monotone hypothesis — in the well-foundedness / negation setting (`wf_no_selfloop`, where a
+self-loop is *refuted*). What that hypothesis excludes is the diagonal's ANTITONE hop (negation; the
+theory map `Th` of a theory/model polarity), not completeness: there both sides are powerset complete
+lattices and the round trip is monotone (Mathlib `gc_upperPolar_lowerPolar`,
+`upperPolar_lowerPolar_upperPolar`), so Knaster-Tarski applies to it. On `Pole` under `poleView` an
+antitone bijection is `swap` (`Pole.eq_swap_of_antitone_bijective`,
+`ZeroParadox/Valuation/PoleCorners.lean` § VII), fixed-point-free on `Miniature`'s own pole
+(`Miniature.Pole.swap_is_the_wall`). The standard companion fact, the rolling rule (so named in Mathlib's source): an antitone map's square is
+monotone, and the map sends the least fixed point of its square to the least fixed point of the
+square in the dual order (Mathlib `OrderHom.map_lfp_comp`, the map as `α →o αᵒᵈ`). Still open: the space of witnessing THEORIES as objects (candidate
+2, "AFA vs any unique-Quine-atom theory", the apophatic gap). Within the monotone tower the gap is
 uniqueness-only and self-similar; the wall is where you leave it. -/
 theorem instance_always_exists : ∃ x, f x = x :=
   ⟨f.lfp, f.map_lfp⟩

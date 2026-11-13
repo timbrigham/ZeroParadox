@@ -1,13 +1,14 @@
 """
-Zero Paradox — ZP-J AFA Addendum: Decoration Uniqueness from Valuation Structure
-Version 1.22 | November 2026
+Zero Paradox — ZP-J AFA Addendum: Decoration Uniqueness and Existence from Valuation Structure
+Version 1.25 | November 2026
 Reads after ZP-J Self-Reference.
 """
 
 import os
 from zp_utils import *
+from reportlab.platypus import KeepTogether
 
-VERSION = '1.22'
+VERSION = '1.25'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -37,7 +38,7 @@ def build():
         sp(4),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-J AFA Addendum', S['title']),
-        Paragraph('Decoration Uniqueness from Valuation Structure', S['subtitle']),
+        Paragraph('Decoration Uniqueness and Existence from Valuation Structure', S['subtitle']),
         Paragraph(version_line(FIRST_RELEASED, VERSION), S['subtitle']),
         sp(10),
         hr(),
@@ -50,7 +51,7 @@ def build():
         'This document presents the formal consequences of ZP-J\'s valuation framework '
         'for the central uniqueness CLAUSE of Aczel\'s Anti-Foundation Axiom (AFA). '
         'The main result is decoration_unique_of_val '
-        '(ZeroParadox/Settheory/APG.lean &#167; IX): any two decorations of any quiver, finite or '
+        '(ZeroParadox/Settheory/APG.lean &#167; IX): any two valid decorations of any quiver, finite or '
         'not, into a DecorationUniverse are equal, with no APG argument and no finiteness '
         'hypothesis; it measures [propext, Quot.sound]. '
         'decoration_unique (same section) is the finite, graph-side proof: for any finite '
@@ -59,7 +60,9 @@ def build():
         'decoration_unique_finite in the same section). '
         'Neither proof imports set-theoretic AFA axioms. Each derives the uniqueness '
         'property from a chain of abstract typeclasses whose root is ValuationStructure, '
-        'established in ZP-J.'))
+        'established in ZP-J. The analogue of AFA\'s existence clause is proved too (&#167;IV.5): every quiver has '
+        'exactly one valid decoration into every DecorationUniverse (existsUnique_decoration), '
+        'measuring [propext, Quot.sound].'))
     E.append(body(
         # ⚠ "The same argument, iterated k times" was the § IV.1 overclaim restated in the
         #   preamble, and the v1.11 sweep of § IV.1 would have left it standing. Swept by the
@@ -325,11 +328,11 @@ def build():
     ))
     E.append(sp(6))
 
-    # ── Section IV: Decoration Uniqueness ──────────────────────────────────────
+    # ── Section IV: Decoration Uniqueness and Existence ──────────────────────────────────────
     print('[build_zpj_afa_addendum] Building Section IV...')
     E += [
         hr(),
-        Paragraph('Section IV: Decoration Uniqueness', S['h1']),
+        Paragraph('Section IV: Decoration Uniqueness and Existence', S['h1']),
         hr(),
     ]
 
@@ -339,7 +342,7 @@ def build():
         'decorating value has finite depth. &#167;&#167;IV.1&#8211;IV.3 give the finite, graph-side '
         'proof, decoration_unique: any finite APG admits at most one valid decoration, by '
         'splitting on whether a vertex lies on a directed cycle. Its statement is a special case '
-        'of the main theorem.'))
+        'of the main theorem. &#167;IV.5 proves existence: every quiver has a valid decoration.'))
 
     E.append(result_box(
         'Proposition: decoration_unique (ZeroParadox/Settheory/APG.lean §IX)',
@@ -499,8 +502,11 @@ def build():
             'On every quiver, finite or not, any two valid decorations into a DecorationUniverse '
             'are equal. No APG argument, no finiteness binder.',
             'Prior art: the AFA2 half of a result Aczel sets as an exercise (Non-Well-Founded Sets, '
-            'CSLI 1988, Ex. 2.1 p. 20; AFA1/AFA2 p. 19), by its standard proof, induction on the rank '
-            'of the TARGET. It differs from the exercise by one point of rank &#8868;, &#8869; of U, '
+            'CSLI 1988, Ex. 2.1 p. 20; AFA1/AFA2 p. 19), proved here by strong induction on the finite '
+            'valuation (depth) of the decorating value, adapting the argument Aczel indicates on '
+            'p. 19 that equality between well-founded sets is uniquely determined, by transfinite '
+            'induction on the membership relation. One '
+            'difference from the exercise is a point of valuation &#8868;, &#8869; of U, '
             'admitted through val_unique.',
             'Lean purity: [propext, Quot.sound]. ✓',
         ]
@@ -523,26 +529,70 @@ def build():
         'converse is claimed.'))
     E.append(sp(6))
 
+    E.append(Paragraph('IV.5 &#8212; Existence: Any Quiver', S['h2']))
+    E.append(body(
+        'Uniqueness has a partner: every quiver has a valid decoration into every '
+        'DecorationUniverse, so it has exactly one. On a vertex that is accessible for the child '
+        'relation ChildRel (Lean&#8217;s Acc, the inductive form of well-foundedness below the '
+        'vertex), the value is defined by recursion on that accessibility: collect of the '
+        'children&#8217;s values (accDec). On every other vertex it is &#8869; of U. The '
+        'construction never asks whether a vertex is accessible. It collects every value a child '
+        'is related to (ValRel: an accessible child to its recursive value, any other child to '
+        '&#8869; of U), and the proof then splits on the valuation of the collected value, which '
+        'is a natural number or &#8868;, so no case is decided by Classical.choice.'))
+    E.append(result_box(
+        'Theorem: existsUnique_decoration (ZeroParadox/Settheory/APG.lean &#167;X)',
+        [
+            '&#8704; {V : Type*} [Quiver V]',
+            '  {U : Type*} [ZPSemilattice U] [ValuationStructure U] [DecorationUniverse U],',
+            '  &#8707;! d : V &#8594; U, IsDecoration d',
+            '',
+            'Every quiver, finite or not, has exactly one valid decoration into a '
+            'DecorationUniverse: exists_decoration gives existence, decoration_unique_of_val '
+            'uniqueness.',
+            'Prior art: AFA1, &#8220;every graph has at least one decoration&#8221; (Aczel, '
+            'Non-Well-Founded Sets, CSLI 1988, p. 19); CRA-existence and CRA-uniqueness for an '
+            'algebra (Capretta, Uustalu and Vene, SBMF 2009, LNCS 5902, Def. 1 p. 86); both halves '
+            'for one ranking algebra (Urabe, Hara and Hasuo, arXiv:1704.04872, Lemma A.6 p. 15). '
+            'The abstraction over carriers was not located as of 2026-11-10, searched in those '
+            'papers, theorem-search engines, Lean libraries and the pinned Mathlib.',
+            'Lean purity: [propext, Quot.sound]. ✓',
+        ]
+    ))
+    E.append(sp(4))
+    E.append(result_box(
+        'Proposition: decoration_eq_bot_of_not_acc (ZeroParadox/Settheory/APG.lean &#167;X)',
+        [
+            '&#8704; (d : V &#8594; U), IsDecoration d &#8594; &#8704; v, '
+            '&#172; Acc (ChildRel V) v &#8594; d v = ZPSemilattice.bot',
+            'One way only: a vertex that is not accessible is decorated &#8869; of U. The '
+            'converse fails: in the fan, a root with a child of every finite height, the root is '
+            'accessible and every decoration still sends it to &#8869; of U '
+            '(fan_root_acc_and_eq_bot).',
+            'Lean purity: [propext, Quot.sound]. ✓',
+        ]
+    ))
+    E.append(sp(6))
+
     # ── Section V: Scope and Purity ─────────────────────────────────────────────
     print('[build_zpj_afa_addendum] Building Section V...')
     E += [
         hr(),
-        Paragraph('Section V: Scope, Purity, and Open Questions', S['h1']),
+        Paragraph('Section V: Scope and Purity', S['h1']),
         hr(),
     ]
 
     E.append(body(
         'decoration_unique_of_val establishes the <i>uniqueness</i> half of the property AFA '
         'asserts (an axiom — Remark R-J.A) for abstract DecorationUniverses over every '
-        'quiver, and decoration_unique by a graph-side proof over finite graphs. The scope boundary, and '
-        'where finiteness enters, are stated below.'))
+        'quiver, and decoration_unique by a graph-side proof over finite graphs; '
+        'exists_decoration establishes the <i>existence</i> half over every quiver (&#167;IV.5). '
+        'The scope boundary, and where finiteness enters, are stated below.'))
 
     E.append(body(
-        '<b>Existence.</b> This document does not prove that every finite APG admits '
-        'a valid decoration. Uniqueness and existence are independent: one can show '
-        'that no two decorations can differ without showing that any decoration exists. '
-        'The existence half is not formalised here for abstract DecorationUniverses '
-        'and remains an open question.'))
+        '<b>Existence.</b> Every quiver has a valid decoration into every DecorationUniverse: '
+        'exists_decoration (ZeroParadox/Settheory/APG.lean &#167;X; this document&#8217;s '
+        '&#167;IV.5).'))
 
     E.append(body(
         '<b>Finiteness.</b> decoration_unique requires Fintype V: its strong '
@@ -599,7 +649,8 @@ def build():
             'ZeroParadox/Settheory/APG.lean &#8212; APG, DecorationUniverse, val_iterate, '
             'scale_iterate_unique_fp, cyclic_decoration_eq_bot, '
             'acyclic_induction_step, decoration_unique, decoration_unique_of_val, '
-            'decoration_unique_finite',
+            'decoration_unique_finite, exists_decoration, existsUnique_decoration, '
+            'decoration_eq_bot_of_not_acc, fan_root_acc_and_eq_bot',
             'All paths are repository-relative, in the public repository.',
         ]
     ))
@@ -643,6 +694,9 @@ def build():
             'INSTANCE-RELATIVE). Routes (b), (c) and (d) lie in the proof. The [Finite V] '
             'restatement has a proof free of all four: decoration_unique_finite, from '
             'decoration_unique_of_val, each [propext, Quot.sound] (&#167;IV.4).',
+            'The existence results of &#167;IV.5 (exists_decoration, existsUnique_decoration, '
+            'decoration_eq_bot_of_not_acc) measure [propext, Quot.sound]: none of the four routes '
+            'occurs in them.',
             'No ZP-specific AXIOM is declared anywhere in this chain; the footprint above is '
             'what the Lean reports, not a commitment the framework makes.',
             'No Dependent Choice. No additional set-theoretic assumptions.',
@@ -676,10 +730,23 @@ def build():
             'The objects are different: Aczel\'s target is a specific set-theoretic '
             'universe; the target here is any type carrying ValuationStructure and a '
             'collect operation, with no set-membership semantics required. '
-            'The contribution is the generalisation: decoration uniqueness holds for any '
+            'So decoration uniqueness holds for any '
             'abstract DecorationUniverse satisfying the depth-measure axioms, independently '
-            'of set-theoretic content. Whether the existence half of Aczel\'s axiom '
-            'generalises to abstract DecorationUniverses is an open question.',
+            'of set-theoretic content. Read from the target (a reading, as ZeroParadox/Settheory/APG.lean '
+            'labels it), this is CRA-uniqueness for the algebra collect '
+            '(Capretta, Uustalu and Vene, Corecursive Algebras: A Study of General Structured '
+            'Corecursion, SBMF 2009, LNCS 5902, Def. 1 p. 86); Urabe, Hara and Hasuo (Categorical '
+            'Liveness Checking by Corecursive Algebras, arXiv:1704.04872, Def. II.16 p. 5) use a '
+            'corecursive algebra as a classifier for '
+            '(non-)well-foundedness in their ranking domains, classically ranking functions into '
+            '&#8469; &#8746; {&#8734;}, and prove both halves for one such ranking algebra, '
+            'into the ordinals up to a cap z, uniqueness by transfinite induction on values below '
+            'z (Lemma A.6, p. 15); '
+            'here a cyclic vertex&#8217;s value has valuation &#8868; (cyclic_decoration_eq_bot '
+            'with val_bot). '
+            'The existence half has its analogue too: every quiver has a decoration into every '
+            'DecorationUniverse (exists_decoration, &#167;IV.5), AFA1&#8217;s shape and '
+            'CRA-existence for collect.',
         ]
     ))
     E.append(sp(6))
@@ -689,11 +756,15 @@ def build():
         'it. The derivation chain (ValuationStructure &#8594; AbstractSelfApp &#8594; '
         'AFAStructure) is established in ZP-J; this document applies it to the APG '
         'decoration problem. It covers the uniqueness result for every quiver '
-        '(decoration_unique_of_val) and its finite, graph-side proof for APGs (decoration_unique). '
+        '(decoration_unique_of_val), its finite, graph-side proof for APGs (decoration_unique), '
+        'and existence for every quiver (exists_decoration). '
         'All active theorems are sorry-free in Lean 4 '
         '(one commented-out stub; see §V).',
         S['endnote']))
 
+    # Boxes move whole to the next page rather than split; a box taller than a frame still
+    # splits, and then its header row repeats as the continuation cue.
+    E = [KeepTogether([e]) if isinstance(e, Table) else e for e in E]
     print(f'[build_zpj_afa_addendum] Assembling document ({len(E)} elements)...')
     doc.build(E)
     print(f'Done. File size: {os.path.getsize(out_path) // 1024} KB')
