@@ -4,12 +4,12 @@ Update this file first on any version bump. README.md Framework table is verifie
 
 | Document | Formal Version | Filename | Companion Version | Comp AR | Notes |
 |----------|---------------|----------|-------------------|---------|-------|
-| ZP-A Lattice Algebra | v1.37 | ZP-A_Lattice_Algebra.pdf | v1.26 | N/— | formal:8ac90a09 comp:68070ba6 |
+| ZP-A Lattice Algebra | v1.38 | ZP-A_Lattice_Algebra.pdf | v1.26 | N/— | formal:e8d958d1 comp:68070ba6 |
 | ZP-B p-Adic Topology | v1.33 | ZP-B_pAdic_Topology.pdf | v1.21 | N/— | formal:f932756c comp:4d3ce35e |
 | ZP-F The Counterexamples | v1.26 | ZP-F_The_Counterexamples.pdf | v1.24 | N/— | formal:ed9832ca comp:43e4294e |
 | ZP-C Information Theory | v1.39 | ZP-C_Information_Theory.pdf | v2.14 | N/— | formal:4a46b049 comp:10cbc861 |
 | ZP-D State Layer | v1.21 | ZP-D_State_Layer.pdf | v1.18 | N/— | formal:af01d656 comp:6be72c57 |
-| ZP-E Bridge Document | v3.83 | ZP-E_Bridge_Document.pdf | v1.44 | Y/Y | formal:caafda4c comp:d7824002 |
+| ZP-E Bridge Document | v3.84 | ZP-E_Bridge_Document.pdf | v1.44 | Y/Y | formal:bdf79333 comp:d7824002 |
 | ZP-G Category Theory | v1.27 | ZP-G_Category_Theory.pdf | v1.16 | N/— | formal:e901301e comp:668a9008 |
 | ZP-H Categorical Bridge | v1.35 | ZP-H_Categorical_Bridge.pdf | v1.26 | N/— | formal:95dad22c comp:7d801305 |
 | ZP-H Native Categories Addendum | v1.14 | ZP-H_Native_Categories_Addendum.pdf | N/A | N/— | formal:b961348b |
@@ -26,7 +26,7 @@ Update this file first on any version bump. README.md Framework table is verifie
 | ZP-R Cross-Category Fixed Point | v1.29 | ZP-R_Cross_Category_Fixed_Point.pdf | N/A | N/— | formal:10d00cb2 |
 | ZP-R Diagonal Family Addendum | v1.25 | ZP-R_Diagonal_Family_Addendum.pdf | N/A | N/— | formal:126a51c7 |
 | ZP-Q The Frame-Change | v1.25 | ZP-Q_The_Frame_Change.pdf | N/A | N/— | formal:355f4257 |
-| Zero Paradox Foreword | v2.51 | Zero_Paradox_Foreword.pdf | N/A | N/A | formal:0fd5d9a1 |
+| Zero Paradox Foreword | v2.52 | Zero_Paradox_Foreword.pdf | N/A | N/A | formal:dd0164fe |
 | ZP Tools | N/A | ZP_Tools_and_Methods.pdf | N/A | N/A | formal:7d101f1d |
 | ZP Choice-Free Core Addendum | v1.19 | ZP_Choice_Free_Core_Addendum.pdf | N/A | N/A | formal:825920cd |
 

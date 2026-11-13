@@ -1,5 +1,5 @@
 """
-Zero Paradox — Foreword PDF Builder (v2.51, revised November 2026)
+Zero Paradox — Foreword PDF Builder (v2.52, revised November 2026)
 Follows all rules in pdf rendering standards.md:
   - All table cells are Paragraph objects
   - No unicode subscripts — use sub/super tags
@@ -9,7 +9,7 @@ Follows all rules in pdf rendering standards.md:
 import os
 from zp_utils import *
 
-VERSION = '2.51'
+VERSION = '2.52'
 FIRST_RELEASED = 'April 2026'
 
 # ── fix() and prose_check() guard on every Paragraph ──
@@ -582,8 +582,10 @@ def build():
             '(da2_bottom_characterization, now in ZeroParadox/Order/Snap.lean).',
             S['body']),
         Paragraph(
-            'The reading has a history older than the project: Benacerraf&#8217;s structuralist view '
-            'of number, cited with its scope in Section I.',
+            'The reading itself is older than the project: for numbers, it is the structuralist view of '
+            'number in Paul Benacerraf&#8217;s "What Numbers Could Not Be" (<i>Philosophical Review</i> '
+            '74(1), 1965, 47&#8211;73; p. 70), and the chart-by-chart theorems below are an instance of '
+            'it, not its source.',
             S['body']),
         Paragraph(
             'The formal corpus took up the general form of the reading later, in three steps; the third, '
