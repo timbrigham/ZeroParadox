@@ -672,7 +672,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 3991,
+        "declarations": 3992,
         "files": 222
       },
       "entries": [
@@ -29192,6 +29192,45 @@
             ]
           },
           "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "31cdeab5-13ca-4700-a3d2-c3a5ac768e7b",
+          "new": {
+            "file": "ZeroParadox/Order/UpAndOver.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.UpAndOver.exists_next_landing_of_cover_at",
+            "short": "exists_next_landing_of_cover_at"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/UpAndOver.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.UpAndOver.exists_next_landing_of_cover_at",
+            "short": "exists_next_landing_of_cover_at",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [
+              "ceiling"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 263 (Q-B3): hypothesis form of UpAndOver's cover field; companion to exists_next_landing over a bare ClosureOperator",
           "verify": {
             "axioms": null,
             "sorry_free": true

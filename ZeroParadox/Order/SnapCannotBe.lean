@@ -207,6 +207,7 @@ owes no step. -/
 -- `Statement:` the `cover` field is `HasFirstStep`, asked at each non-maximal closed point of `up` (a landing).
 example {α : Type} [PartialOrder α] (U : ZeroParadox.UpAndOver α) {y : α} (hy : U.up.IsClosed y)
     (hmax : ¬ IsMax y) : ZeroParadox.HasFirstStep y := U.cover y hy hmax
+#check @ZeroParadox.UpAndOver.exists_next_landing_of_cover_at -- Statement: for a closure operator `c` and `HasFirstStep y`, some cover `b` of `y` has `c b` closed and `y < c b`. Reading: the hypothesis form of the `cover` field, which `UpAndOver.exists_next_landing` reads off the structure
 #check @ZeroParadox.UpAndOver.isEmpty_of_denselyOrdered -- Statement: no densely ordered carrier carries an `UpAndOver`; the corner's cover is refused. Reading: as § V refuses ℝ a first step
 example : IsEmpty (ZeroParadox.UpAndOver ℝ) := ZeroParadox.UpAndOver.isEmpty_of_denselyOrdered
 #check @ZeroParadox.ordinalUpAndOver                  -- Statement: `Ordinal` carries it: `up` is `nfp (ω^·)` (`snapNucleus`), covers by `Order.succ`, the corner at ε₀ and `succ ε₀`
