@@ -90,7 +90,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 
 ### State / Hilbert (ZP-D)
 
-- `ZeroParadox/State/DieProjection.lean` - Orthogonal projection as a die motion: the inner product as an argument to UP
+- `ZeroParadox/State/DieProjection.lean` - Orthogonal projection as a die motion: with an inner-product test on UP the landings fix UP; without it they do not, and strict isomorphism does not preserve the test
 - `ZeroParadox/State/HilbFunctor.lean` - ZP-H Hilbert Functor: F_D into the real category `ModuleCat ℂ` (MC-1 remediation)
 - `ZeroParadox/State/MeanErgodic.lean` - Mean ergodic convergence for doubly-stochastic kernels (STRETCH)
 - `ZeroParadox/State/ReversibleSpectrum.lean` - Reversible chains have real spectrum (genuine Hilbert / self-adjoint content)
