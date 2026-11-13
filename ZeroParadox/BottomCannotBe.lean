@@ -59,6 +59,7 @@ import ZeroParadox.Information.TapeHalting
 import ZeroParadox.Valuation.TowerTape
 import ZeroParadox.Valuation.TreeNotForced
 import ZeroParadox.Valuation.DoublingAndTree
+import ZeroParadox.Valuation.PadicStillPoint
 import Mathlib.RingTheory.Valuation.PrimeMultiplicity
 import Mathlib.Order.FixedPoints
 import Mathlib.SetTheory.Ordinal.FixedPoint
@@ -68,8 +69,8 @@ import Mathlib.Order.BoundedOrder.Basic
 /-!
 # Index of declarations characterizing ⊥
 
-Curated, not exhaustive. An INDEXED name is `#check`ed, so it cannot be dead; a name occurring only
-inside a gloss is not. `Statement:` restates what a declaration proves; `Reading:` is interpretation,
+Curated, not exhaustive. An INDEXED name is `#check`ed, so this file fails to build if that name is
+removed or renamed; a name occurring only inside a gloss is not checked. `Statement:` restates what a declaration proves; `Reading:` is interpretation,
 not a claim about the theorem. Where a `Reading:` asserts strength, scope or genericity it should
 carry an `example` that fails to compile if it is wrong; those are the only things proved here, and
 not every such `Reading:` has one yet. Sections: what ⊥ cannot be, must be, and how it is reached.
@@ -625,6 +626,18 @@ noncomputable example : Ordinal.{0} →o Ordinal.{0} :=
 #check @ZeroParadox.fullMix_not_injective
 -- Statement: an eigenmode with `|λ| < 1` has `‖(T f)^[m] v‖ → 0`.
 #check @ZeroParadox.tendsto_norm_iterate_zero
+-- Statement: for `α ≥ 0`, `n ≥ 1` and a primitive character `φ` of `ZMod (p ^ n)`, `vladimirov α` sends
+-- the trivial character `paChar n 0` to `0` and `paChar n φ` to `vladLam p α n` times itself, pointwise
+-- on ℤ_[p], and `1 ≤ vladLam p α n` (`ZeroParadox/Valuation/PadicStillPoint.lean` § V).
+#check @ZeroParadox.vladimirov_gap
+-- Statement: for `α ≥ 0`, `vladLam p α n` tends to `∞` as `n → ∞`.
+#check @ZeroParadox.vladLam_tendsto_atTop
+-- Statement: CONTROL, for `n ≥ 1`, `vladLam p (-1) n = 1`.
+#check @ZeroParadox.vladLam_neg_one
+-- Statement: CONTROL, for `α < 0`, `vladLam p α` is bounded above.
+#check @ZeroParadox.vladLam_bounded_of_neg
+-- Reading: eigen-equations on characters only; completeness of the characters in `L²(ℤ_p)` is not
+-- claimed here (§ V header of that file).
 
 /-! ### ⊥ of `End` — one tape read as depth and as width, and the one-way flow -/
 
