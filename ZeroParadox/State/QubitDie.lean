@@ -6,6 +6,11 @@ import Mathlib.Tactic
 
 ## Engineer's Take
 
+We had an old physics branch from a couple of months ago. Some of its content was migrated into the
+repo, and a lot of it stayed in the isolated branch. We've covered a lot of new ground since then
+that might make some of our earlier thoughts more viable. The qubit is what I was after. I have to
+admit the physics coming in here is a little bit scary, not that it's wrong, just scary.
+
 ---
 ## Formal Overview (AI-assisted)
 ℂ² is a real inner-product space by a local `InnerProductSpace.complexToReal`. Measurement onto a
