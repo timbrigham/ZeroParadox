@@ -9,6 +9,12 @@ import Mathlib.Tactic
 
 ## Engineer's Take
 
+A complete lit up tree and the actualized path through it are another level of being at right
+angles to each other. I had to chase the dark as the choices were made at each node to see that.
+The orthogonal projection is the lossy view the die uses exactly when we go to a simpler carrier.
+We should be able to tell it apart in the die. My question was whether that is a new slot, or an
+argument being passed to an existing slot.
+
 ---
 ## Formal Overview (AI-assisted)
 `UpOrthogonal` relates UP (`ZeroParadox/Die.lean`) to a real inner product, as `UpRaises` does to an
