@@ -19,7 +19,7 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 ## Formal Overview (AI-assisted)
 For `0 < p < 1`, ⊥ of `ℕ → Bool` is `trials p hp`-null, in its support, and a limit of random firing tapes whose waits diverge (`pole_within_ensemble` in `ℕ∞`; `pole_within_ensemble_limit` in `NInf`).
-At `p = 0` the mass of `{⊥}` jumps while every cylinder's mass is continuous (§ VI); explicit non-random tapes give the limit with no measure in the statement (§ VII).
+At `p = 0` the mass of `{⊥}` jumps while every cylinder's mass is continuous (§ VI); explicit non-random tapes give the limit with no measure in the statement (§ VII). A heat-bath rate `glauberExciteNN ΔE T`, positive at every `ΔE` and `T`, feeds `trials` (§ VIII).
 Nothing here identifies ⊥ of a `ZPSemilattice` with a tape or with `trials p hp`.
 -/
 
@@ -489,13 +489,17 @@ theorem fireAt_not_MLRandom (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p) (n : ℕ) 
   exact decide_eq_false (by omega)
 
 /-! ### § VIII. A heat-bath rate supplies `0 < p`
-`Reading:` this RELOCATES the residual hypothesis `0 < p` of `trials_fires_once` to the modelling
-choice "Glauber-type rates at `T > 0`"; it does not remove it. Any rate with `p ∈ (0, 1]` at
-`T > 0` does the same job, so the sigmoid has no special role. The form is the heat-bath (Glauber-type)
-occupation of one site (Levin, Peres and Wilmer, *Markov Chains and Mixing Times*, 2nd ed., § 3.3.5,
-eq. (3.11), p. 45, with `ΔE = 2S`); after R. J. Glauber, J. Math. Phys. 4, 294 (1963). -/
+`Reading:` this RELOCATES the residual hypothesis `0 < p` of `trials_fires_once` into the choice of
+the rate's form; it does not remove it. `glauberExciteNN_pos` is `Real.sigmoid_pos`: positivity comes
+from the sigmoid's codomain `(0, 1)` at every `ΔE` and `T`, and no theorem here consumes `T > 0`. At
+`T = 0` Lean's `x / 0 = 0` gives the junk rate `1 / 2` (the CONTROL below); `T > 0` enters only as
+the filter `𝓝[>] 0` of `glauberExcite_tendsto_zero`. Any rate with values in `(0, 1]` does the same
+job, so the sigmoid has no special role. The form is the heat-bath (Glauber-type) occupation of one
+site: `glauberExcite ΔE T` is `1 − p(σ, w)` of Levin, Peres and Wilmer, *Markov Chains and Mixing
+Times*, 2nd ed., § 3.3.5, eq. (3.11), p. 45, with `ΔE = 2S` and `β = 1 / T`; after R. J. Glauber,
+J. Math. Phys. 4, 294 (1963). -/
 
-/-- `Statement:` `Real.sigmoid (-(ΔE / T))`: excitation across a gap `ΔE` at temperature `T`. -/
+/-- `Statement:` `Real.sigmoid (-(ΔE / T))`. `Reading:` excitation across a gap `ΔE` at temperature `T`. -/
 noncomputable def glauberExcite (ΔE T : ℝ) : ℝ := Real.sigmoid (-(ΔE / T))
 
 /-- `Statement:` `glauberExcite ΔE T` as an `NNReal`. -/

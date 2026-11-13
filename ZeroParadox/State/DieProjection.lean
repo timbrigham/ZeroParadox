@@ -251,7 +251,9 @@ theorem Motion.upOrthogonal_of_isometric_iso {E F : Type u} [NormedAddCommGroup 
 
 /-! ### § VI. The collapse by the kernel of UP: the orthogonal instance and an oblique control
 `Reading:` the general collapse is `Motion.collapseEquiv` (`ZeroParadox/Die.lean`) and needs no
-inner product; here the inner product decides which points share a class (`collapses_differ`). -/
+inner product; here the inner product decides which points share a class (`collapses_differ`).
+`Reading:` the linear counterparts are Mathlib's `Submodule.quotientEquivOfIsCompl` and
+`Submodule.ker_orthogonalProjectionOnto`. -/
 
 section Collapse
 
