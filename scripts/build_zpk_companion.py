@@ -1,6 +1,6 @@
 """
 Build ZP-K Illustrated Companion
-Version 1.36 | November 2026
+Version 1.37 | November 2026
 """
 
 import os
@@ -109,7 +109,7 @@ def four_way_table():
     t = Table(data, colWidths=[TW*0.22, TW*0.30, TW*0.48])
     t.setStyle(ts); return t
 
-VERSION = '1.36'
+VERSION = '1.37'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -264,8 +264,8 @@ def build():
         'share is the Quine-atom role (Motion.SelfOnlyAt, a point that steps to itself and to '
         'nothing else), and each chart proves its own occupancy of it. Reading the shared '
         'position as a role that each chart fills on its own terms, rather than as one '
-        'object, is an instance of the structuralist reading of Benacerraf, "What Numbers Could Not Be," <i>Philosophical Review</i> 74(1) (1965) 47&#8211;73, p. 70, '
-        'not its source; his subject is numbers, and extending his point to the Quine-atom role is ours.'))
+        'object, applies the structuralist reading of Benacerraf, "What Numbers Could Not Be," <i>Philosophical Review</i> 74(1) (1965) 47&#8211;73, p. 70 '
+        '(his subject is numbers) to the Quine-atom role; the per-chart results are an instance of that reading, not its source.'))
     E.append(sp(4))
     E.append(remember_box(
         'Remember: T-COMP is not saying that set theory and computability theory are the same. '

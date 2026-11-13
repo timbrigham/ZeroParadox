@@ -1,5 +1,5 @@
 """
-Build ZP-A Illustrated Companion (v1.25)
+Build ZP-A Illustrated Companion (v1.26)
 Covers: join-semilattice, partial order, Hasse diagram, one-directional transitions,
 monotonicity (T3), bottom-as-constituent (T2), four concrete examples, and CC-2.
 """
@@ -89,7 +89,7 @@ def transition_diagram():
                  fontName='DV-B', fillColor=RED))
     return d
 
-VERSION = '1.25'
+VERSION = '1.26'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -302,10 +302,11 @@ def build():
         'Remark R-AFA.'))
     E.append(cbody(
         'Reading a position as a role that each structure fills on its own terms, rather than as '
-        'one object, is the structuralist reading of Benacerraf, "What Numbers Could Not Be," '
+        'one object, applies the structuralist reading of Benacerraf, "What Numbers Could Not Be," '
         '<i>Philosophical Review</i> 74(1) (1965) 47&#8211;73 (p. 70: "Any object can play the role '
-        'of 3"). His subject is numbers; extending his point to the Quine-atom role is ours, and the '
-        'per-setting results above are an instance of that reading, not its source.'))
+        'of 3"; his subject is numbers) to the Quine-atom role; the per-setting results stated at '
+        'the start of this section, for a self-application map and for membership, are an instance '
+        'of that reading, not its source.'))
     E.append(sp(8))
 
     E.append(remember_box(
