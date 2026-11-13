@@ -160,7 +160,7 @@ theorem stillPoint_is_spectral_floor (α : ℝ) {n : ℕ} (hn : 0 < n)
 `ZeroParadox/Valuation/PadicKozyrev.lean`), for `vladimirov` on `ℤ_p` with no normalising constant.
 With `X = ℤ_p`, Haar `ν` and `T(J) = diam(J)^(-(α+1))`, the wavelet eigenvalue of Albeverio and
 Kozyrev, "Multidimensional ultrametric pseudodifferential equations", Proc. Steklov Inst. Math. 265
-(2009) 13–29, arXiv:0708.2074, Theorem 13, eq. (19), p. 17, at a ball of measure `p^(-(n-1))`
+(2009) 13–29, arXiv:0708.2074, Theorem 13, eq. (19), arXiv v1, p. 17, at a ball of measure `p^(-(n-1))`
 evaluates to `vladLam p α n`. That the
 characters are complete in `L²(ℤ_p)` is not proved here. -/
 

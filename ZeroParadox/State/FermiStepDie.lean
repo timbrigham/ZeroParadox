@@ -4,7 +4,7 @@ import Mathlib.Analysis.SpecialFunctions.Sigmoid
 import Mathlib.Tactic
 
 /-!
-# The cold logistic step as a die: the zero-temperature limit of the sigmoid is the UP of a three-landing die, and the sigmoid's point symmetry is a strict isomorphism of that die, onto the reversed die when OVER is ordered
+# The cold logistic step as a die: the zero-temperature limit of the sigmoid is the sign map followed by y ↦ (y + 1)/2, the sign map is the UP of a three-landing die, and the sigmoid's point symmetry is negation, a strict isomorphism of that die, onto the reversed die when OVER is ordered
 
 ## Engineer's Take
 
@@ -74,7 +74,7 @@ theorem signDie_mirrors_agree (s : ℝ) : (-s + 1) / 2 = 1 - (s + 1) / 2 := by r
 /-! ### § III. The mirror `x ↦ -x` as a symmetry of the die
 `Reading:` `Real.sigmoid_neg` is the Fermi–Dirac symmetry around the chemical potential,
 f(µ + δ) = 1 − f(µ − δ), usually interpreted as particle–hole symmetry (Grabsch, Majumdar, Schehr,
-Texier, arXiv:1711.07770v2, § 3, eq. (59), p. 14). `Real.sign` is an odd (Z/2-equivariant)
+Texier, arXiv:1711.07770v2, § 3.3, eq. (59), p. 14). `Real.sign` is an odd (Z/2-equivariant)
 idempotent (`Real.sign_neg`). -/
 
 /-- `Statement:` negation as a strict map `signDie st → signDie st'`, for any `st` it carries into
