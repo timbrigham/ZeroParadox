@@ -4,7 +4,7 @@ import Mathlib.Analysis.SpecialFunctions.Sigmoid
 import Mathlib.Tactic
 
 /-!
-# The cold logistic step as a die: the zero-temperature limit of the sigmoid is the sign map followed by y ↦ (y + 1)/2, the sign map is the UP of a three-landing die, and the sigmoid's point symmetry is negation, a strict isomorphism of that die, onto the reversed die when OVER is ordered
+# The cold logistic step as a die: the zero-temperature limit of the sigmoid is the sign map followed by y ↦ (y + 1)/2, the sign map is the UP of a three-landing die, and negation, which that relabelling carries to the sigmoid's point symmetry σ(−x) = 1 − σ(x), is a strict self-isomorphism of the die when OVER is ≠ and a strict isomorphism onto the reversed die when OVER is <
 
 ## Engineer's Take
 
@@ -14,10 +14,10 @@ it's the same shape as something regularly described.
 
 ---
 ## Formal Overview (AI-assisted)
-`Real.sign` is idempotent, so it is the UP of a die on ℝ whose landings are `-1`, `0`, `1` (§ I).
-`Real.sigmoid (β * x)` tends to `(Real.sign x + 1) / 2` as `β → ∞`, at every `x` (§ II). Negation
-commutes with that UP: a strict self-isomorphism under a symmetric OVER, a strict isomorphism onto
-`Motion.reverse` under OVER `<`, and not a strict self-map under `<` (§ III).
+`Real.sign` is idempotent, so it is the UP of a die on ℝ with landings `-1`, `0`, `1` (§ I). `Real.sigmoid (β * x)`
+tends to `(Real.sign x + 1) / 2` as `β → ∞`, at every `x` (§ II). Negation commutes with that UP: a strict
+self-isomorphism under OVER `≠` (a strict map `signDie st → signDie st'` whenever negation carries `st` into `st'`,
+`signDieMirrorHom`), and under OVER `<` a strict isomorphism onto `Motion.reverse` and not a strict self-map (§ III).
 -/
 
 set_option maxHeartbeats 400000

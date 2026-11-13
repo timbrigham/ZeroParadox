@@ -91,7 +91,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 ### State / Hilbert (ZP-D)
 
 - `ZeroParadox/State/DieProjection.lean` - Orthogonal projection as a die motion: with an inner-product test on UP, landings forming a subspace with an orthogonal projection determine every value of UP; without the test they do not; strict isomorphism does not preserve the test, an inner-product-preserving one does
-- `ZeroParadox/State/FermiStepDie.lean` - The cold logistic step as a die: the zero-temperature limit of the sigmoid is the sign map followed by y ↦ (y + 1)/2, the sign map is the UP of a three-landing die, and the sigmoid's point symmetry is negation, a strict isomorphism of that die, onto the reversed die when OVER is ordered
+- `ZeroParadox/State/FermiStepDie.lean` - The cold logistic step as a die: the zero-temperature limit of the sigmoid is the sign map followed by y ↦ (y + 1)/2, the sign map is the UP of a three-landing die, and negation, which that relabelling carries to the sigmoid's point symmetry σ(−x) = 1 − σ(x), is a strict self-isomorphism of the die when OVER is ≠ and a strict isomorphism onto the reversed die when OVER is <
 - `ZeroParadox/State/HilbFunctor.lean` - ZP-H Hilbert Functor: F_D into the real category `ModuleCat ℂ` (MC-1 remediation)
 - `ZeroParadox/State/MeanErgodic.lean` - Mean ergodic convergence for doubly-stochastic kernels (STRETCH)
 - `ZeroParadox/State/QubitDie.lean` - The qubit as a die: projection onto a basis line is an orthogonal-projection motion, the bit flip is an inner-product-preserving strict isomorphism between the projections onto the two basis lines, and on lines the bit flip and the orthocomplement agree at the basis lines and differ at |0⟩ + |1⟩
