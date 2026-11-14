@@ -321,7 +321,7 @@ theorem snap_state_zp2_is_zero :
 
 /-- The full triangle: all three objects co-occur and are formally connected.
     Left edge  (A ↔ C): tower stages below ε₀ map to c₀; ε₀ maps to c₁.
-    Right edge (B ↔ C): snapEmbed maps c₁ to 0 = 2-adic limit.
+    Right edge (B ↔ C): snapEmbed maps c₁ to 0 of ℤ_[2], the limit of the tower's `cnfToZp2` images.
     Base edge  (A ↔ B): tower images converge to 0 in ℤ_[2] (from ZP-L). -/
 theorem zpm_triangle :
     -- A ↔ C: ordinal snap

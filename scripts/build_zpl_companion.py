@@ -1,6 +1,6 @@
 """
 Build ZP-L Illustrated Companion
-Version 1.23 | November 2026
+Version 1.24 | November 2026
 Citation fence (Gentzen): the Convergence section's credits follow CLAIMS.md's Gentzen rows and are
 taken from Gentzen 1943 (Math. Ann. 119), the one primary paper filed here, never from a secondary
 source's labels. The 1936 consistency credit rests on Gentzen 1943, p. 140, footnote 2: the 1936
@@ -25,8 +25,8 @@ def snap_tower_diagram():
     """Horizontal: tower stages (c0) climbing toward ε₀; snap to c1 at ε₀."""
     # dh = 155 pts (≈ 2.15 × 72); box_cy = 88 fixed.
     # Box top = 88+17 = 105. SNAP label at 105+8 = 113. Header at 105+20 = 125.
-    # Encoding labels at 71-18 = 53. Caption at 10.
-    # Content: top = 125 < 145 (dh-10). Bottom = 10 > 5. ✓
+    # Box bottom = 71. The caption is external (ccaption).
+    # Content: top = 125 < 145 (dh-10). Bottom = 71 > 5. ✓
     dw, dh = TW, 155
     d = Drawing(dw, dh)
 
@@ -90,12 +90,6 @@ def snap_tower_diagram():
     d.add(String(snap_label_x, box_by + bh + 8, 'SNAP',
                  fontSize=7.5, fontName='DV-B', fillColor=AMBER))
 
-    # ── Caption (raw Unicode — no HTML entities) ──────────────────────────────
-    d.add(String(14, 10,
-                 'Each tower stage is strictly below ε-zero and maps to c0. '
-                 'The snap to c1 occurs exactly at ε-zero.',
-                 fontSize=7.5, fontName='DV-I', fillColor=GREY_TEXT))
-
     return d
 
 
@@ -103,7 +97,7 @@ def dual_convergence_diagram():
     """Two rows: ordinal tower approaching ε₀ (top) and 2-adic norms converging to 0 (bottom)."""
     # dh = 190 pts. row_top = 148 fixed, row_bot = 68 fixed.
     # Top box top = 148+16 = 164. Top row label at 164+8 = 172 < 180 (dh-10). ✓
-    # Bottom box bottom = 68-16 = 52. Caption at 10. ✓
+    # Bottom box bottom = 68-16 = 52 > 5; the caption is external (ccaption). ✓
     dw, dh = TW, 190
     d = Drawing(dw, dh)
 
@@ -215,16 +209,10 @@ def dual_convergence_diagram():
                strokeColor=colors.HexColor('#BBBBBB'), strokeWidth=0.8,
                strokeDashArray=[3, 3]))
 
-    # Caption
-    d.add(String(14, 10,
-                 'Same tower, two views. Top: ordinal stages approach ε-zero. '
-                 'Bottom: their images\' 2-adic norms approach 0.',
-                 fontSize=7.5, fontName='DV-I', fillColor=GREY_TEXT))
-
     return d
 
 
-VERSION = '1.23'
+VERSION = '1.24'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -444,7 +432,7 @@ def build():
         'structure: the same diagonal argument, the same kind of fixed-point existence '
         'result.',
         'ZPM maps each side into the 2-adics by its own map, the ordinal notations by cnfToZp2 '
-        'and the two machine phases by snapEmbed; a bridge between the settings '
+        'and the two machine phases, the states c&#8320; and c&#8321; of the type MachinePhase, by snapEmbed; a bridge between the settings '
         'themselves is still open. The two rooms share a floor plan.',
     ]))
     E.append(sp(8))
@@ -532,7 +520,7 @@ def build():
         'ordinal approach to &#949;&#8320; and the 2-adic convergence to 0 in &#8484;&#8322;. '
         'All theorems proved without sorry. ZPM places both sides in &#8484;&#8322;: cnfToZp2 '
         'sends the tower\'s ordinal notations there, snapEmbed sends the machine phases there, '
-        'and the tower\'s images converge to snapEmbed\'s value at c&#8321; (zpm_triangle).'))
+        'and the tower\'s images converge to snapEmbed\'s value at c&#8321; (zpm_triangle, with snapEmbed_c1).'))
 
     print(f'Building: {out_path}')
     doc.build(E)

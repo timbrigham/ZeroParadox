@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-M: Kleene-Ordinal Bridge PDF Builder
-Version 1.20 | November 2026
+Version 1.21 | November 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.20'
+VERSION = '1.21'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -45,7 +45,7 @@ def build():
         'formalizes the structural triangle connecting the pre-snap state c&#8320; '
         '(&#8869; of MachinePhase; reading it as the Kleene quine is not an equation, since a Code and a MachinePhase state '
         'are different types, and that it runs is the occurrence commitment), the ordinal snap at &#949;&#8320; (ZP-L), and the '
-        '2-adic limit 0 (ZP-B).'))
+        '0 of &#8484;&#8322; (ZP-B), the limit of the tower&#8217;s 2-adic images (ZP-L).'))
     E.append(body(
         'The closing result (§IV) proves two existence statements together: a code c with eval c n = eval c (encode c + n) '
         'for every n (a periodicity condition, proved via the recursion theorem, which constant codes also meet) and the least '
@@ -66,7 +66,7 @@ def build():
     E.append(body(
         'snapEmbed is the canonical type bridge from ZP-E\'s machine-phase state space '
         'to ZP-B\'s 2-adic integers. The pre-snap state c&#8320; maps to 1 (a 2-adic unit); '
-        'the snap state c&#8321; maps to 0 (the 2-adic limit of the tower images). '
+        'the snap state c&#8321; maps to 0 (the limit of the tower&#8217;s 2-adic images). '
         'Under multiplication on &#8484;&#8322;, 0 is absorbing — mirroring exactly the '
         'join structure on MachinePhase, where c&#8321; is the absorbing element.'))
     E.append(body(
@@ -88,7 +88,7 @@ def build():
         [
             'snapEmbed : MachinePhase &#8594; &#8484;&#8322;',
             '  snapEmbed c&#8320; = 1    (pre-snap: 2-adic unit)',
-            '  snapEmbed c&#8321; = 0    (snap state: 2-adic zero = 2-adic limit of tower)',
+            '  snapEmbed c&#8321; = 0    (snap state: the 2-adic zero, the limit of the tower&#8217;s 2-adic images)',
             '',
             'The morphism property: join on MachinePhase (c&#8321; is absorbing under join) '
             'corresponds to multiplication on &#8484;&#8322; (0 is absorbing under &#215;). '
@@ -185,7 +185,7 @@ def build():
             'and stage n &#8805; 1 maps to 2^n, which is neither '
             '(ZeroParadox/Ordinal/Incompleteness.lean &#167; II).',
             'What the bridge achieves: c&#8321; (the snap state assigned at &#949;&#8320;) '
-            'maps to 0 (the 2-adic limit) under snapEmbed. The triangle is formally exhibited. '
+            'maps to 0 of &#8484;&#8322;, the limit of the tower&#8217;s 2-adic images, under snapEmbed. The triangle is formally exhibited. '
             'Whether Classical.choice is forced by the ZP metric collapse is a separate open '
             'question (ZeroParadox/Ordinal/SyntacticCollapse.md).',
         ]
@@ -309,8 +309,8 @@ def build():
             '&#949;&#8320; = c&#8321;',
             '(A &#8596; B)  Filter.Tendsto (&#955; n, cnfToZp2 (towerNONote n)) '
             'Filter.atTop (nhds 0)',
-            '(B &#8596; C)  snapEmbed (&#955; &#945;, if &#945; < &#949;&#8320; then c&#8320; '
-            'else c&#8321;) &#949;&#8320; = 0',
+            '(B &#8596; C)  snapEmbed ((&#955; &#945;, if &#945; < &#949;&#8320; then c&#8320; '
+            'else c&#8321;) &#949;&#8320;) = 0',
             'Proof: &#10216;epsilonZero_tower_lt, if_neg (lt_irrefl &#949;&#8320;), '
             'tower_converges_to_zero, snap_state_zp2_is_zero&#10217;.',
             'Lean purity: [propext, Classical.choice, Quot.sound]. ✓',
