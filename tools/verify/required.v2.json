@@ -83,10 +83,9 @@
       ],
       "module": "tools/verify/check_prose.py",
       "approved_modules": [
-        "4c24c5e38525f45ffe4ae3b2376a56f0603d8f40",
         "4708479404f9831c8f328cf34178a6f325330620"
       ],
-      "_rollout_window_2026_11_14": "Two-blob window for the check_prose title-keying fix (Tim's ruling 277, tooling lane; main session edits the registry per the standing route): `47084794…` adds a same-position fallback so a retitled grandfathered block pairs with its baseline entry when the file's block count is unchanged (growth still fires). Close by narrowing to `[47084794…]` once the fix is merged and no worktree based before it remains. Blobs re-derived with `record.module_evidence`.",
+      "_repinned_2026_11_14": "`47084794…` REPLACES `4c24c5e3…`: the check_prose title-keying fix (Tim's ruling 277, tooling lane), a same-position fallback so a retitled grandfathered block pairs with its baseline entry when the file's block count is unchanged (growth still fires). Two-blob window opened in dcf10348 and narrowed after the run-277 push landed, with no worktree remaining.",
       "_repinned_2026_10_14b": "`4c24c5e3…` REPLACES `6857f14f…`; same repin as `check_encoding._repinned_2026_10_14b`.",
       "scope": [
         "ZeroParadox/*.lean"
