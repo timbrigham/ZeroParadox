@@ -1,12 +1,12 @@
 """
 Zero Paradox — ZP-H: Categorical Bridge PDF Builder
-Version 1.36 | November 2026
+Version 1.37 | November 2026
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.36'
+VERSION = '1.37'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -381,7 +381,7 @@ def build():
         [
             'Claim: The categorical singularity (undefined domain, ZP-G T6) and the ZP-C singularity (infinite '
             'accumulation, ZP-C T2) hold together: a conjunction, and neither is derived from the other.',
-            'Setup: Let {X<sub>n</sub>} be a sequence of objects in C such that the corresponding sequence {F<sub>C</sub>(X<sub>n</sub>)} = '
+            'Setup (motivation only; th2_singularity_compatibility involves neither F<sub>C</sub> nor F<sub>B</sub>): Let {X<sub>n</sub>} be a sequence of objects in C such that the corresponding sequence {F<sub>C</sub>(X<sub>n</sub>)} = '
             '{P<sub>n</sub>} in InfoSp approaches F<sub>C</sub>(0) = P = (1, 0) in distribution. Under F<sub>B</sub>, the corresponding '
             'sequence {x<sub>n</sub>} in Q<sub>2</sub> approaches 0 &#8712; Q<sub>2</sub>.',
             'ZP-C side: By ZP-C T2, the discrete surprisal DF along the infinite sequence {x<sub>n</sub>} approaching 0 in '
@@ -392,9 +392,9 @@ def build():
             'answer is divergence — the accumulation is unbounded. In ZP-G, we ask: can we reach 0 by a '
             'morphism from outside? The answer is no — the morphism does not exist. Read informally, if the '
             'accumulation required to reach 0 is infinite, then no finite morphism can accomplish it; that link '
-            'runs from divergence toward absence and is a reading, not a theorem. <font name="DV">&#10003;</font>',
+            'runs from divergence toward absence and is a reading, not a theorem.',
             'Lean: th2_singularity_compatibility pairs t3_unreachability (the ZP-G side) with t2_diverges (the '
-            'ZP-C side). The ZP-C conjunct mentions no object of C, so neither is derived from the other. '
+            'ZP-C side): the proof term is the pair of these two separately proved lemmas, so neither is derived from the other. '
             'OQ-G4 is closed in that sense. <font name="DV">&#10003;</font>',
         ]
     ))

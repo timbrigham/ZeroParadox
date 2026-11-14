@@ -249,16 +249,16 @@ carries choice, so no proof of it is choice-free. The channel spelling of the st
 bullet) is choice-free, and as of 2026-10-04 no proof of it without choice was found; see the
 last bullet for the 2026-10-27 result. Measured as follows, by `#print axioms` in a scratch file
 importing this one.
-- The statement carries choice. `SelfPrints` and `Universal` each measure
+- The statement carries choice (measured 2026-10-04). `SelfPrints` and `Universal` each measure
   `[propext, Classical.choice, Quot.sound]`. `Universal` names `Denumerable.ofNat Code`, which is
   `Nat.Partrec.Code.ofNatCode` by `rfl` (`ofNatCode_eq`); `ofNatCode` carries choice, and its
   well-founded recursion is justified by `Nat.unpair_left_le`, `Nat.unpair_right_le` and
   `Nat.div2_val`, each carrying it. `Nat.Partrec.Code.instDenumerable` carries it, while
   `encodeCode`, `eval`, `Nat.pair`, `Nat.unpair` and `Denumerable.ofNat` itself do not.
-- The channel spelling of the statement is choice-free: with `encodeCode` for the Gödel number
+- The channel spelling of the statement is choice-free (measured 2026-10-04): with `encodeCode` for the Gödel number
   and the channel of code `d` written `Nat.pair (encodeCode d + 1) n`, the predicate pair and the
   existence statement measure no axioms.
-- As of 2026-10-04, no proof of the channel spelling was found without choice. Mathlib's
+- As of 2026-10-04, no proof of the channel spelling was found without choice. Measured 2026-10-04: Mathlib's
   `fixed_point₂` carries choice in its statement: its hypothesis `Partrec₂ f` measures the
   triple. Its instance `Primcodable (Code × ℕ)` is `Primcodable.prod` over
   `Primcodable.ofDenumerable Code`, and both `Primcodable.prod` and that instance's

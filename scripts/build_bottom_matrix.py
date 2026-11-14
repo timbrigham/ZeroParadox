@@ -294,7 +294,7 @@ because the simplex carries no 0↔∞ POLE for an inversion to swap ⚠ (NOT be
 contradicted until round 3 caught it);
 MEAS not applicable (a probability distribution, no value diverges at it); SELF absent (no self-application;
 its fixed point is CONC, no self-similarity characterization). Its inbound-dynamics (↓) irreversibility is
-one chain's eigenvalue-0 mode (2026-06-30, cold-audit SOLID): `fullMix_not_injective` - `fullMix`'s relaxation
+one chain's eigenvalue-0 mode: `fullMix_not_injective` - `fullMix`'s relaxation
 operator is non-injective (loses the mean-zero mode); mixing alone does not give this (the lazy-chain `example`
 in `MarkovSpectralGap.lean`), with
 `fullMix_mode_decays` from the general `tendsto_norm_iterate_zero`. FENCED: one chain - permutation/cyclic
