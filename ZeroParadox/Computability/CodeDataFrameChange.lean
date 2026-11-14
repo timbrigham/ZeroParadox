@@ -1,4 +1,4 @@
--- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the computability-frame realization of the POLE EXCHANGE (the snap-as-instance reading is ZP-Q's conjecture, not established here) — the code↔data (Gödel) involution swaps a configuration's program-role and data-role (both Gödel-numbered as ℕ); its fixed locus is the self-application diagonal (code = data), on which every code's self-configuration lies, the Kleene/Rogers quine's included. The computability analog of RiemannSphere's rInv (0↔∞) and Category's op (initial↔terminal). Curated results indexed in ZeroParadox/MANIFEST.md.
+-- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): a computability-frame reading of the POLE EXCHANGE (an interpretation: code and data are not shown to be poles; the snap-as-instance reading is ZP-Q's conjecture, not established here) — the code↔data (Gödel) involution swaps a configuration's program-role and data-role (both Gödel-numbered as ℕ); its fixed locus is the self-application diagonal (code = data), on which every code's self-configuration lies, the Kleene/Rogers quine's included. The computability analog of RiemannSphere's rInv (0↔∞) and Category's op (initial↔terminal). Curated results indexed in ZeroParadox/MANIFEST.md.
 
 import ZeroParadox.Computability.Kleene
 import Mathlib.Tactic
@@ -26,17 +26,18 @@ The valuation frame's frame-change is `rInv` (swaps the poles `0 ↔ ∞`); the 
 (swaps `initial ↔ terminal`). The computability frame's is the **code↔data swap**: a configuration is a
 pair `(program, datum)`, both Gödel-numbered as `ℕ`, and the frame-change exchanges the program-role and
 the data-role — `codeDataSwap := Prod.swap` on `ℕ × ℕ`. This is a genuine involution
-(`codeDataSwap_involutive`), and — exactly as `rInv` fixes the seam `‖x‖ = 1` and `op` fixes the zero
-object — its **fixed locus is the self-application diagonal**: `codeDataSwap p = p ↔ p.1 = p.2`
-(`codeDataSwap_fixed_iff`), i.e. the configurations where a program's code equals its datum, a program
-run on its own code.
+(`codeDataSwap_involutive`), and its **fixed locus is the self-application diagonal**:
+`codeDataSwap p = p ↔ p.1 = p.2` (`codeDataSwap_fixed_iff`), i.e. the configurations where a program's
+code equals its datum, a program run on its own code. The diagonal is fixed pointwise; `rInv` instead
+maps its seam `‖x‖ = 1` onto itself (`sNorm_rInv`, `rInv_involutive`) and fixes on it only the points
+with `x⁻¹ = x` (`rInv_coe_ne`).
 
 `Statement:` INVERSION — the code/data involution exchanges the two roles, and its fixed locus is the
 self-application diagonal (`codedata_is_frameflip`). Every code's self-configuration lies on it
 (`selfConfig_on_fixedLocus`, for every `c : Code`), so face (iii) adds the existence of a Rogers
 fixed-point code (`roger_fixed_point_exists`), not its position.
-`Reading:` INVERSION — the framework reads the snap as an instance of this exchange. Conjectural: no snap
-transition appears in these statements. See `Multihomed/SnapFrameChange.lean`'s declaration docstring.
+`Reading:` INVERSION, conjecture (ZP-Q), not proved here — the framework reads the snap as an instance
+of this exchange. No snap transition appears in these statements. See `Multihomed/SnapFrameChange.lean`'s declaration docstring.
 
 Content: a bundling of Mathlib's `Prod.swap` involution with Rogers' fixed-point theorem; no
 mathematical novelty.
@@ -71,8 +72,9 @@ theorem codeDataSwap_involutive : Function.Involutive codeDataSwap := by
   exact Prod.swap_swap p
 
 /-- The **fixed locus of the frame-change is the self-application diagonal**: a configuration is
-    swap-fixed iff its code and datum coincide — a program run on its own code. The computability
-    analog of `rInv` fixing the seam `‖x‖ = 1`. -/
+    swap-fixed iff its code and datum coincide — a program run on its own code. Fixed pointwise;
+    `rInv` maps its seam `‖x‖ = 1` onto itself and fixes on it only the points with `x⁻¹ = x`
+    (`sNorm_rInv`, `rInv_coe_ne`). -/
 theorem codeDataSwap_fixed_iff (p : ℕ × ℕ) : codeDataSwap p = p ↔ p.1 = p.2 := by
   unfold codeDataSwap
   rw [Prod.ext_iff]
@@ -92,7 +94,8 @@ theorem selfConfig_on_fixedLocus (c : Code) :
     exactly the self-application diagonal; (iii) for any computable `f` some code `c` has
     `eval (f c) = eval c` and a swap-fixed self-configuration, as every code's is
     (`selfConfig_on_fixedLocus`): (iii)'s content is the existence of `c`, not its position.
-    `Reading:` INVERSION — the computability realization of the POLE EXCHANGE; the snap-as-instance
+    `Reading:` INVERSION — read as the computability parallel of the POLE EXCHANGE, an interpretation
+    (code and data are not shown to be poles); the snap-as-instance
     reading is ZP-Q's conjecture, not established here (no snap transition appears in this statement). -/
 theorem codedata_is_frameflip :
     Function.Involutive codeDataSwap

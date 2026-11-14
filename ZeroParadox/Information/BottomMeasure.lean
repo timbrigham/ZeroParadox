@@ -4,23 +4,23 @@ import ZeroParadox.Information.Surprisal
 # P6: measure = +∞ at the bottom — per-domain bundle, and the type-boundary finding
 
 The zero-infinity premise tabulates "+∞ at the floor" across domains: v₂(0)=∞ (p-adic), surprisal
-unbounded (information), ε₀ = sup tower (ordinal). MC-1 now pins the three categorical bottoms, so the
-parked goal was ONE uniform cross-functor "measure(bottom) = ⊤" invariant.
+unbounded (information); the ordinal carrier supplies no member. MC-1 now pins the three categorical
+bottoms, so the parked goal was ONE uniform cross-functor "measure(bottom) = ⊤" invariant.
 
-**Finding (the honest scope).** That uniform invariant is NOT a single theorem: the three measures are
-heterogeneous — a `WithTop`-valued additive valuation (`v 0 = ⊤`), an ℝ-valued surprisal that is
-*unbounded above* (no single ⊤ value — a divergence), and an ordinal supremum. They are functions of
-different types into different codomains, so "measure(bottom) = ⊤" is not well-formed uniformly — the
-SAME type boundary as MC-1's identity half, now at the MEASURE level. The honest form is a per-domain
-bundle of the divergence facts, each in its own measure type:
+**Finding (the honest scope).** That uniform invariant is NOT a single theorem: the two measures are
+heterogeneous — a `WithTop`-valued additive valuation (`v 0 = ⊤`) and an ℝ-valued surprisal that is
+*unbounded above* (no single ⊤ value — a divergence). They are functions of different types into
+different codomains, so "measure(bottom) = ⊤" is not well-formed uniformly — the SAME type boundary
+as MC-1's identity half, now at the MEASURE level. The honest form is a per-domain bundle:
 
-* valuation domains (incl. every p-adic field): `ZeroParadox.addVal_bot` (P7) — `v 0 = ⊤`,
-  choice-free;
+* valuation domains (incl. every p-adic field): `ZeroParadox.addVal_bot` (P7) — `v 0 = ⊤`, choice-free;
 * information: `info_bottom_diverges` here (= ZP-C `l_inf`) — surprisal unbounded above;
-* ordinal: ε₀ = sup of the ω-tower (ZP-N), the order-theoretic divergence.
+* ordinal: no member. ε₀ ≠ ⊥ of `Ordinal` (`epsilon0_ne_bot`); it is the ω-tower's supremum AND least
+  fixed point of `ω^·` (`epsilon0_min_eq_max`), the minimum step next to the pole, never the pole. The
+  tower's 2-adic images tend to ℤ_[2]'s 0 (`tower_converges_to_zero`), where `v 0 = ⊤` above applies.
 
-So "+∞ at every bottom" is real per-domain but is a BUNDLE, not a uniform invariant. P6 thus EXTENDS the
-MC-1 type-boundary finding from the bottoms (different objects) to their measures (different functions).
+So "+∞ at the floor" is real in those two domains but is a BUNDLE, not a uniform invariant. P6 thus
+EXTENDS the MC-1 type-boundary finding from the bottoms to their measures (different functions).
 
 ## Engineer's Take
 
