@@ -24,7 +24,7 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 ## Formal Overview (AI-assisted)
 
-This file closes the two **cross-root** (μ↔ν) edges of the bottom-diagram tree
+This file tests the two **cross-root** (μ↔ν) edges of the bottom-diagram tree
 (`thread_obstruction_table_2026-06-29.md` §7) that the earlier obstruction core left untested:
 
 - **(a) #1 proof-theory floor (μ, well-founded order) ↔ #3 p-adic floor (ν, inverse limit).**
@@ -72,7 +72,7 @@ open CategoryTheory
 open ZeroParadox ZeroParadox
 open ZeroParadox ZeroParadox
 
-/-! ## Edge (a) — #1 (μ, well-founded) vs #3 (ν, non-well-founded inverse limit) -/
+/-! ## Edge (a) — #1 vs #3: two descent facts that hold together (no separator) -/
 
 /-- The radii `2⁻ⁿ` of the p-adic descent (`q2Ball n = closedBall 0 (2⁻ⁿ)`) are strictly decreasing
     for all `n`. `Statement:` a fact about a real sequence; it does not mention `Q₂`, its balls or
@@ -127,7 +127,7 @@ end ZeroParadox
 /-! ## Axiom Purity Check
 
 `Classical.choice` is expected via the Mathlib ordinal / `TopCat` / `ModuleCat` / p-adic libraries —
-a library dependency, not a new commitment of these obstruction results. -/
+a library dependency, not a new commitment of these results. -/
 
 section PurityCheck
 open ZeroParadox
