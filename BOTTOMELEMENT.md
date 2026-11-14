@@ -87,9 +87,9 @@ valuation) come from other layers. The partial numbering is scoped, not missing 
 | a Lean term or otherwise finitely written down - this is the *apophatic* ⊥, the descriptionless limit-notion, distinct from the algebraic bottom element the Lean manipulates as a finite, decidable term. The two share the symbol ⊥, not an identity: any written form is a description, so it captures an interpretation of ⊥, never the descriptionless limit itself | *meta (no Lean witness)* |
 | anything that keeps time, space, description, measure or structure (that would be an *interpretation* of ⊥, not ⊥) | *meta (no Lean witness)* |
 | finite: ⊥ is by definition the point where every finite measure diverges to infinity | *meta (no Lean witness)* |
-| the same object as both the proof-theory floor and the attractor floor (one is well-founded, the other is not) | [`no_strictMono_real_to_ordinal`](ZeroParadox/Multihomed/TreeObstructions.lean), [`simplex_antichain`](ZeroParadox/Multihomed/TreeObstructions.lean) |
+| the same object as both the proof-theory floor and the attractor floor (the ordinals are well-founded; ℝ, taken as the attractor's carrier, is not - a modelling choice, since under the coordinate order the simplex itself is an antichain, so well-founded) | [`no_strictMono_real_to_ordinal`](ZeroParadox/Multihomed/TreeObstructions.lean), [`simplex_antichain`](ZeroParadox/Multihomed/TreeObstructions.lean) |
 | the same object as a categorical initial bottom, if it is a topological limit bottom (their universal properties point opposite ways) | [`padic_bottom_not_initial`](ZeroParadox/Multihomed/TreeObstructions.lean), [`split_kleisli_vs_hilbert`](ZeroParadox/Multihomed/TreeObstructions.lean) |
-| reached by a comparison that preserves the 'closed-down' (ν) structure - you can only get to ⊥ by forgetting that structure | [`faithful_iff_descending`](ZeroParadox/Multihomed/WallSpanRobust.lean) |
+| reached by an order-preserving map into the ordinals from a carrier whose order is not well-founded, such as ℝ under `<` - such a map exists exactly when the carrier's order is well-founded | [`faithful_iff_descending`](ZeroParadox/Multihomed/WallSpanRobust.lean) |
 | unified with its self-referential face in a structure-preserving way - the two coincide only as a bare point | [`faces_iso_unique`](ZeroParadox/Multihomed/TwoFacesBot.lean) |
 | forced to a single point as a Markov bottom (#2): a reducible chain settles into a whole family of distributions, not one | [`markov_node_no_universal_property`](ZeroParadox/Computability/MarkovNuUniversal.lean) |
 | an *initial* object of the category of spaces (the p-adic floor behaves like a limit / terminal object, the opposite) | [`padic_bottom_not_initial`](ZeroParadox/Multihomed/TreeObstructions.lean) |
@@ -199,7 +199,7 @@ level above rather than sitting at one point.
 **The correction that reading forced.** Two constructions, p-adic and Markov, *looked* two-directional because
 two irreversibility theorems sat in the outbound column and do not belong there. `c3_irreversible` says there is
 no continuous path *to* 0 - that is the **arrival** being a discontinuous jump, an inbound fact.
-`fullMix_not_injective` says mixing *toward* the stationary state loses information - again inbound. Re-sorted,
+`fullMix_not_injective` says the relaxation of one chain, `fullMix`, loses information - again inbound. Re-sorted,
 both are pure sinks, and `↕` becomes a seam diagnostic. The reach-in / cannot-return-out asymmetry is ⊥'s
 one-way irreversibility: you can reach ⊥, and the snap off it does not reverse. (Physics calls one-wayness an
 arrow of time; the framework is inspired by the analogy and claims nothing about physics - the irreversibility
@@ -276,7 +276,7 @@ lemmas are the statements, the analogy is not one.)
 - `CONC` ✓ - [`exists_stationary`](ZeroParadox/Reals/PerronFrobenius.lean)
 - `SELF` ∅ - no self-application; its fixed point is CONC, no self-similarity
 - `GEN` ∅ - ν-attractor - carries inbound dynamics, not GEN (μ/ν fork)
-- `DYN` ↓ - [`doubly_stochastic_mean_ergodic`](ZeroParadox/State/MeanErgodic.lean) (converge) + [`fullMix_not_injective`](ZeroParadox/Reals/MarkovSpectralGap.lean) (mixing is lossy) - sink/ν
+- `DYN` ↓ - [`doubly_stochastic_mean_ergodic`](ZeroParadox/State/MeanErgodic.lean) (converge) + [`fullMix_not_injective`](ZeroParadox/Reals/MarkovSpectralGap.lean) (that one chain is lossy) - sink/ν
 
 **Kleene (quine, ZPK)**
 - `CANT` ✓ - [`self_halting_undecidable`](ZeroParadox/Computability/Kleene.lean)

@@ -215,7 +215,7 @@ example : ∀ o : Ordinal, ((⊥ : Set.Ici o) : Ordinal) = o := fun _ => rfl
 -- Statement: that emptiness, plus any two maps `Fix → Cofix` being equal.
 #check @ZeroParadox.root_cut_strict_asymmetric
 
-/-! ### ⊥ cannot be reached by a structure-preserving (descending/ν) comparison -/
+/-! ### an order-preserving map into `Ordinal` exists only from a well-founded relation -/
 
 -- Statement: if `r` is not well-founded, no `f : S → Ordinal` is strictly increasing along `r`.
 #check @ZeroParadox.no_faithful_span_to_ordinal_and_descending
@@ -245,14 +245,15 @@ example (α : Type) : Subsingleton (α ≃ PUnit) := inferInstance
 -- Statement: so stationarity under doubly-stochastic `Fin 4` chains is not subsingleton-valued.
 #check @ZeroParadox.doublyStochastic_stationary_not_subsingleton
 
-/-! ### the p-adic floor cannot be reached from within, nor matched to `markovRate` -/
+/-! ### the doubling orbit from `x ≠ 0` never lands on the p-adic floor, and does not match `markovRate` -/
 
 -- Statement: for `x ≠ 0` in ℚ₂, `2ⁿ * x ≠ 0` at every finite `n` — the orbit never lands on ℚ₂'s 0.
 -- Reading: other chart, the 2-adic metric: the same orbit converges to that 0
 -- (`doubling_orbit_tendsto_zero`, § DYNAMICS). Reached in the limit, never at a finite step.
 #check @ZeroParadox.padic_orbit_never_reaches_zero
 -- Statement: for `x ≠ 0`, no reindexing `φ : ℕ → ℕ` matches the p-adic rate to `markovRate`, the
--- absorbing chain's rate (`ZeroParadox/Valuation/NuRateEdge.lean`), at every step.
+-- constant `0` distance of a chain started at its absorbing state (`ZeroParadox/Valuation/NuRateEdge.lean`),
+-- at every step. From `x = 0` the two agree; that file's scope fence: the mismatch is set by the starts.
 #check @ZeroParadox.no_rate_conjugacy
 -- Statement: for `x ≠ 0`, indeed no single pair of indices makes those two rates agree.
 #check @ZeroParadox.no_rate_orderIso

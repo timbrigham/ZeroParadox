@@ -22,12 +22,12 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 This file tests **within-Axis-I positive rate-transport**: although the proof-theory floor (#1, `0 : ℕ`, a μ / well-founded-descent
 bottom) and the p-adic floor (#3, `{0} = ⋂ q2Ball n ⊆ Q₂`, a ν / inverse-limit bottom) sit on
-**opposite roots** of the bottom-diagram tree (the cross-root wall `ZeroParadox/Multihomed/CrossRootCompleteness.lean`/E4 stands — this file does not
-touch it), they nevertheless share a **common quantitative invariant**: the same geometric rate
+**opposite roots** of the bottom-diagram tree (no Lean statement separates them: edge (a) of `ZeroParadox/Multihomed/CrossRootCompleteness.lean` pairs
+two facts with no separator; this file does not touch it), they nevertheless share a **common quantitative invariant**: the same geometric rate
 `n ↦ 2^(-n)` (ratio `c = 1/2 < 1`) bounds the distance-to-floor of a canonical orbit on each side.
 
-This refines `ZeroParadox/Valuation/NuRateEdge.lean`: where #3↔#2 (p-adic vs Markov absorbing) was a rate-level **mismatch**
-(the absorbing state's distance is *constant* `1` away from the geometric envelope), #3↔#1 is a
+Compare `ZeroParadox/Valuation/NuRateEdge.lean`, whose #3↔#2 (p-adic vs Markov absorbing) mismatch is
+set by the two orbits' starts, not their dynamics (that file's scope fence). Here #3↔#1 is a
 rate-level **match** — both descend to their floor at rate `1/2`.
 
 **What is proved (load-bearing, in the theorem statements):**
@@ -44,8 +44,8 @@ rate-level **match** — both descend to their floor at rate `1/2`.
   shared across the μ/ν root.
 
 **Honest scope — what this is NOT.**
-- This is **not** a structure-preserving map between the two orbits, and it does **not** dissolve the
-  cross-root wall. The orbits live in different categories (a totally-disconnected normed field vs the
+- This is **not** a structure-preserving map between the two orbits, and it says nothing about
+  separating the two floors. The orbits live in different categories (a totally-disconnected normed field vs the
   discrete order ℕ); only the *real-valued rate function* is shared.
 - The shared rate is a **bound/envelope match**, not an orbit isomorphism. On the p-adic side the bound
   is an exact equality; on the ℕ side it is an inequality (Nat floor-halving can drop faster, and — see
@@ -157,8 +157,8 @@ theorem shared_rate_envelope_bound
     not a shared *orbit profile*: for `x ≠ 0` the p-adic orbit is strictly positive at every step,
     while a terminating ℕ-descent (any orbit that ever hits `0`, e.g. via `a (n+1) ≤ a n / 2`) is
     eventually identically `0`. So no step-for-step geometric-rate *correspondence* exists between the
-    two orbits — only the common upper bound does. This is the `ZeroParadox/Valuation/NuRateEdge.lean` obstruction, localized: rate-MATCH
-    at the envelope level, rate-MISMATCH at the orbit level. -/
+    two orbits — only the common upper bound does: rate-MATCH at the envelope level, rate-MISMATCH
+    at the orbit level. -/
 theorem padic_nat_no_orbit_correspondence (x : Q₂) (hx : x ≠ 0) :
     (∀ n, 0 < ‖(2 : Q₂) ^ n * x‖) ∧
     (∀ a : ℕ → ℕ, (∀ n, a (n + 1) ≤ a n / 2) → ∀ k, a k = 0 → ∀ m, a (k + m) = 0) := by

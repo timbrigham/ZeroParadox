@@ -127,7 +127,7 @@ admits that is **open and untried here**.
 - § I   `poleToSphere` — the pole embedding into the 2-adic Riemann sphere.
 - § II  `swap_is_rInv` — the inversion corner is `rInv`.
 - § III `point_and_field_at_the_poles` — the point/field inversion at the two poles.
-- § IV  `irreversible_direction_is_the_snap` — the one-way direction, co-witnessed with `t_snap_irreversible`.
+- § IV  `irreversible_direction_is_the_snap` — two one-way facts side by side, the corner's and `t_snap_irreversible`'s; a conjunction, not an identification.
 - § V   `tower_polarity` — the tower as one motion on `NONote` with maps to `Ordinal` and ℤ_[2] (a span, never `=`).
 
 *(Each entry names the headline declaration of its section and is not a census; the Lean file holds

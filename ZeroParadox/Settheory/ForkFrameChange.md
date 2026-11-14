@@ -7,12 +7,13 @@ Moved from `ZeroParadox/Settheory/ForkFrameChange.lean`. ⚠ **This content was 
 `Statement:` COINCIDENCE (`fork_collapse_iff`) and INVERSION (`lfp_dual_eq_gfp`, `gfp_dual_eq_lfp`).
 `fork_collapse_iff` (`Settheory/FixedPointFork.lean`) is the P1 spine: over a complete lattice a monotone
 self-map's least fixed point `lfp` (μ, well-founded closure) and greatest fixed point `gfp` (ν,
-non-well-founded closure) collapse to one point iff the map has a unique fixed point (the diagonal fixed
-point). `ZeroParadox/Settheory/ForkFrameChange.lean` adds the P2 face — the **frame-change** — in its domain-independent form: the
+non-well-founded closure) collapse to one point iff the map has a unique fixed point. `ZeroParadox/Settheory/ForkFrameChange.lean` adds the P2 face — the **frame-change** — in its domain-independent form: the
 **order-duality** (the abstract analog of `rInv` swapping `0 ↔ ∞` and `op` swapping initial ↔ terminal)
-**swaps the two closures**: `lfp (dual f) = gfp f` and `gfp (dual f) = lfp f`. So the μ-closure and the
-ν-closure are the two charts, order-duality is the frame-change between them, and the fork collapses at
-the diagonal fixed point.
+**swaps the two closures**: `lfp (dual f) = gfp f` and `gfp (dual f) = lfp f`. `Reading:` INVERSION — the μ-closure and
+the ν-closure are the two charts, order-duality is the frame-change between them, and the fork collapses
+exactly when the map has a unique fixed point. Reading that point as the diagonal fixed point is analogy:
+`ZPSemilattice` and `AbstractSelfApp` do not supply the hypotheses, and on `OntologicalStates` the collapse
+holds degenerately, through a constant map (the `example`s after `fork_collapse_iff`).
 
 `Statement:` INVERSION and COINCIDENCE, bundled (`fork_is_frameflip`). `Reading:` INVERSION, conjectural: that
 the valuation and category frame-flips share its exchange; the category face also proves the COINCIDENCE (`catseam_is_frameflip`).

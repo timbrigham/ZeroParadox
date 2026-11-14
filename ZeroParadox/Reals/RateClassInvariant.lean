@@ -20,8 +20,8 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 ## Formal Overview (AI-assisted)
 
-`ZeroParadox/Valuation/NuRateEdge.lean` and `ZeroParadox/Valuation/RateTransport.lean` established that the p-adic ν-floor (#3, geometric orbit `2⁻ⁿ`) and the Markov
-attractor (#2, absorbing) are *rate*-obstructed. This file probes a finer question: among
+`ZeroParadox/Valuation/NuRateEdge.lean` compared the p-adic ν-floor (#3, geometric orbit `2⁻ⁿ`) with the Markov attractor (#2) started at its
+absorbing state, a mismatch set by the two starts (its scope fence); `ZeroParadox/Valuation/RateTransport.lean` gives #3 and #1 a shared envelope. This file probes a finer question: among
 sequences that all reach the floor, is **convergence-rate class** (geometric vs linear) a
 separating invariant that cuts *across* the well-founded/non-well-founded root (Axis I)?
 
