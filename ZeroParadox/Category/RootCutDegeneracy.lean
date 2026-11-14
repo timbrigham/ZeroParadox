@@ -34,8 +34,8 @@ not reproved; no novelty is claimed for any of them.
 The dichotomy theorem `root_cut_dichotomy` records both halves for two single-shape functors: the
 constant functor (its one shape a leaf, no recursive position) gives `Fix ≃ Cofix`, while the identity
 functor (one recursive position, no leaf) gives `IsEmpty (Fix) ∧ Nonempty (Cofix)` — i.e. they are
-*not* equivalent (`idPF_no_seam`). A recursive position alone does not make the cut strict: beside a
-leaf the least fixed point is inhabited (`mixed_fix_nonempty`, `ZeroParadox/Computability/RootCutTrichotomy.lean`).
+*not* equivalent (`idPF_no_seam`). A recursive position alone does not empty the least fixed point: beside a
+leaf it is inhabited (`mixed_fix_nonempty`, a W-type statement, `ZeroParadox/Computability/RootCutTrichotomy.lean`).
 The seam case parallels the zero-object seam at node #5 (Hilbert bottom).
 
 ## Formal Overview
@@ -180,8 +180,8 @@ theorem idPF_no_seam : IsEmpty (Fix ZeroParadox.idPF_Coalgebra.Obj ≃ Cofix Zer
 * one-shape **identity** functor `idPF_Coalgebra` (child type `PUnit`, one recursive position, no
   leaf): `IsEmpty (Fix ≃ Cofix)` (strict, no seam) — second component.
 
-A recursive position alone does not decide the cut: beside a leaf the least fixed point is inhabited
-(`mixed_fix_nonempty`). -/
+A recursive position alone does not empty the least fixed point: beside a leaf it is inhabited
+(`mixed_fix_nonempty`, stated for the W-type). -/
 theorem root_cut_dichotomy :
     (Nonempty (Fix (constPF Unit).Obj ≃ Cofix (constPF Unit).Obj)) ∧
     IsEmpty (Fix ZeroParadox.idPF_Coalgebra.Obj ≃ Cofix ZeroParadox.idPF_Coalgebra.Obj) :=

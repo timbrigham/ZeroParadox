@@ -28,7 +28,8 @@ singleton, card ≤ 1). This file asks whether the **proof-theory floor #1** —
 of the `ℕ` **preorder category** (`nat_floor_isInitial`, the base of the Goodstein/KP/Kruskal descent)
 — extends that ledger or breaks it.
 
-**The honest finding is a two-part split, both halves IN the theorem statements.**
+**The honest finding is a two-part split: the GO half is in the theorem statements, the carrier
+dependence in the anonymous `example`s after `floor_has_no_forgetful_carrier`.**
 
 ### Thinness: #1's carrier is set by a choice of functor
 
@@ -60,7 +61,10 @@ it separates #5 from #4, and adds **no new cardinality value** (the {0,1} dichot
 hom-set carrier is a singleton, card-equal to a point and card-distinct from `Fin 0`. The delta over
 `ZeroParadox/Category/PointednessSharp.lean`: that file covered the two Type-carried endpoints; this
 file adds #1 to the ledger under the hom-set convention, where it lands on an existing value of the
-{0,1} dichotomy. Under the `Fin` functor it lands on the other value; neither adds a third.
+{0,1} dichotomy. Under the `Fin` functor it lands on the other value. The {0,1} placement holds for
+these two conventions, not for every carrier choice: the constant functor at `Fin 2` is also faithful
+and gives `0 : ℕ` a two-element carrier, and a constant functor gives it any carrier at all (the
+second `example` after `floor_has_no_forgetful_carrier`).
 
 **Honest fence — Lean vs interpretation.** The Lean content is exactly: (a) the `ℕ` preorder hom-sets
 are subsingletons (thinness); (b) `(0 ⟶ n)` is a singleton for all `n`; (c) it is `PUnit`-equivalent
@@ -91,6 +95,11 @@ example : (∃ F : ℕ ⥤ Type, F.Faithful ∧ IsEmpty (F.obj 0)) ∧
       ⟨fun {_ _} _ _ _ => Subsingleton.elim _ _⟩, by exact inferInstanceAs (IsEmpty (Fin 0))⟩,
     ⟨(Functor.const ℕ).obj PUnit, ⟨fun {_ _} _ _ _ => Subsingleton.elim _ _⟩,
       ⟨by exact inferInstanceAs (Unique PUnit)⟩⟩⟩
+
+-- `Statement:` for every type `T`, the constant functor at `T` is faithful and gives `0 : ℕ` the
+-- carrier `T`; at `T = Fin 2` that carrier has two elements.
+example (T : Type) : ∃ F : ℕ ⥤ Type, F.Faithful ∧ Nonempty (F.obj 0 ≃ T) :=
+  ⟨(Functor.const ℕ).obj T, ⟨fun {_ _} _ _ _ => Subsingleton.elim _ _⟩, ⟨Equiv.refl _⟩⟩
 
 /-! ## GO half: the hom-set carrier of #1 is a singleton (card 1, pointed endpoint) -/
 

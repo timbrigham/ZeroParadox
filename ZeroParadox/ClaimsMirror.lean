@@ -92,9 +92,9 @@ example (L : Type*) [ZPSemilattice L] :
 
 /-- Claim `DA-1` (proved). Statement: "DA-1 (instantiation is execution) is closed given DP-2
     (da1_minimal_path); ZP-K witnesses its Path 1: ⊥ is the unique Quine atom of the machine-phase
-    semilattice (da1_closed_concrete)." Exact representation: DA-1's minimal path, the pre- and
+    semilattice (da1_closed_concrete)." Representation of the minimal-path half only: the pre- and
     post-instantiation configurations share the output value ⊥ and differ in machine state, c₀ then c₁.
-    Backing: `da1_minimal_path`. -/
+    The Path 1 witness `da1_closed_concrete` is not represented here. Backing: `da1_minimal_path`. -/
 theorem claim_DA1 :
     let before := preInstantiation
     let after  := postInstantiation
@@ -193,8 +193,8 @@ theorem claim_MC1_cat_valuation :
 /-! ## § V. Category bottom and the floor-reaching correspondence (E-series, Perron) -/
 
 /-- Claim `node-category` (proved). Statement: "In category theory, ⊥ is realized as the initial object
-    (the universal constituent of ZP-G)." Representation by class-field projection: the class field is
-    the claim, so no category is shown to realize it. Backing: `ZPCategory.zpIsInitial`. -/
+    (the universal constituent of ZP-G)." Representation by class-field projection; this entry exhibits no
+    category, and `forkZPCategory` (`ZeroParadox/Category/Category.lean`) is one instance realizing it. Backing: `ZPCategory.zpIsInitial`. -/
 theorem claim_node_category {C : Type*} [Category C] [ZPCategory C] :
     Nonempty (Limits.IsInitial (ZPCategory.zpInitial : C)) :=
   ⟨ZPCategory.zpIsInitial⟩
