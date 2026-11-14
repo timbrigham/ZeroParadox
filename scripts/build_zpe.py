@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-E: Bridge Document PDF Builder
-Version 3.85 | November 2026
+Version 3.86 | November 2026
 Follows all rules in pdf rendering standards:
   - DejaVu fonts only
   - Checkmark always wrapped in <font name="DV">
@@ -12,7 +12,7 @@ Follows all rules in pdf rendering standards:
 import os
 from zp_utils import *
 
-VERSION = '3.85'
+VERSION = '3.86'
 FIRST_RELEASED = 'April 2026'
 
 # ── Local overrides: ZP-E uses justified body text ────────────────────────────
@@ -474,8 +474,8 @@ def build():
                 '<b>The framework\'s readings of &#8869; support the premise that the role is occupied under membership; the '
                 'exclusion itself is a theorem.</b> R3 '
                 '(ZP-A) &#8212; an occupant of the Quine-atom role has no describer position external to itself &#8212; and '
-                'L-INF (ZP-C) &#8212; the 2-adic surprisal I(n) = n is unbounded, so no finite interpreter '
-                'can hold &#8869; &#8212; each describe an object with no external vantage and unbounded '
+                'L-INF (ZP-C) &#8212; surprisal I(n) = n unbounded in the ball-hierarchy depth (l_inf), which DA-1 '
+                'Path 2 reads, without deriving it, as no finite interpreter holding &#8869; &#8212; each describe an object with no external vantage and unbounded '
                 'self-referential depth. That is exactly the profile of a non-well-founded, self-membered '
                 'set: the two readings motivate why the role must be occupied under membership, which Foundation excludes, '
                 'rather than serving as independent proofs of the exclusion.',
