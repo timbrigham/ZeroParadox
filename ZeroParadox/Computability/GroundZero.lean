@@ -30,7 +30,7 @@ open QPF
 
 variable {σ : Type} (f : σ → Option σ)
 
-/-! ## § I. The head is `Bool` — already executing, by definition -/
+/-! ## § I. The head is `Bool` — a configuration that has not halted is taking a step -/
 
 /-- The step function read as a coalgebra for `X ↦ 1 + X`: halted is a leaf, stepping is a
     successor whose unique child is the next configuration. -/
@@ -50,8 +50,10 @@ theorem head_is_leaf_or_step (s : σ) :
   · exact Or.inl rfl
   · exact Or.inr rfl
 
-/-- A configuration that has not halted has head `true`: it is taking a step. Nothing starts it,
-    because there is no prior state for it to start from. -/
+/-- `Statement:` given `f s ≠ none`, the head of `stepCoalg f s` is `true`: the configuration is
+    taking a step, possibly to itself. A self-looping configuration also has head `true` and changes
+    nothing (`loop_is_a_trap`, `ZeroParadox/Computability/Occurrence.lean`). The statement says
+    nothing about prior states and nothing about what causes the step. -/
 theorem not_halted_is_stepping_head (s : σ) (h : f s ≠ none) :
     (stepCoalg f s).1 = true := by
   unfold stepCoalg
@@ -296,12 +298,12 @@ theorem isWellFoundedCoalg_stepCoalg_iff :
 /-- **`Statement:` THE INFORMATION FACE — `wfPart` IS THE HALTING SET.** The least fixed point of the
 next-time operator on a step function is exactly the set of states from which the machine terminates.
 
-`Reading:` **COINCIDENCE kind**, conjectural — one object, two poles read simultaneously: `wfPart` is
-the halting set and its **complement is the divergent set**, the states from which the machine runs
-forever.
-That is the INFINITE pole of `CLAUDE.md`'s Two-Pole rule, obtained as a **construction** (a least fixed
-point) rather than as a description. ⚠ The complement itself is not characterized here; naming it is
-next work, not a result of this theorem. -/
+`Reading:` conjecture, not proved here (**COINCIDENCE kind**) — one object, two poles read
+simultaneously: `wfPart` is the halting set and its **complement would be the divergent set**, the
+states from which the machine runs forever.
+If so, that is the INFINITE pole of `CLAUDE.md`'s Two-Pole rule, reached as the complement of a
+**construction** (a least fixed point) rather than as a description. ⚠ The complement itself is not
+characterized here; naming it is next work, not a result of this theorem. -/
 theorem wfPart_stepCoalg :
     wfPart (P := natPF_NatListRegime) (stepCoalg f) = {s | Acc (stepRel f) s} := by
   apply le_antisymm

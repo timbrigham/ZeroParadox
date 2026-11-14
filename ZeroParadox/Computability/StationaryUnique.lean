@@ -55,9 +55,9 @@ The capstone `markov_node_irreducible_rescue` packages both halves of the bounda
 1. the same kernel is doubly-stochastic and **not** the identity (it moves mass), yet
 2. its stationary predicate **is** a subsingleton.
 
-Paired with `doublyStochastic_stationary_not_subsingleton`, this draws the boundary exactly:
-the antichain / non-uniqueness obstruction on #2 is an **irreducibility phenomenon**, not absolute.
-Reducible ⇒ non-unique (`ZeroParadox/Computability/MarkovNuUniversal.lean`); irreducible (cyclic) ⇒ unique (here).
+With `doublyStochastic_stationary_not_subsingleton` (one reducible kernel on `Fin 4`, two stationary
+distributions) this is one witness per side: doubly-stochasticity alone does not settle uniqueness.
+`Reading:` non-uniqueness on #2 tracks reducibility; neither general implication is proved in Lean.
 
 **Honest scope.** The Lean proves uniqueness *for this one concrete irreducible kernel*, by an
 elementary argument special to the cyclic shift (stationarity forces invariance under a generator of
@@ -65,7 +65,7 @@ the cyclic group, hence constancy). It does **not** prove the general theorem "e
 finite chain has a unique stationary distribution" — that is the Perron–Frobenius statement the pin
 does not supply. So the result is: a *witnessed* example where irreducibility delivers the unique
 stationary distribution `ZeroParadox/Computability/MarkovNuUniversal.lean`'s reducible witness denied. Verdict: **GO** — the rescue is buildable;
-node #2's stationary fixed point becomes unique once the class is made irreducible. (The categorical
+node #2's stationary fixed point is unique for this one irreducible kernel. (The categorical
 reading — calling a unique fixed point a terminal / final-coalgebra (ν) universal object — is an
 interpretation only; no category, terminal object, or coalgebra is constructed in this file.)
 -/
@@ -251,10 +251,11 @@ theorem cyc_stationary_subsingleton
        reducible witness), yet
     2. its stationary predicate **is** a subsingleton (a genuine **unique** fixed point).
 
-    Together with `doublyStochastic_stationary_not_subsingleton` (a reducible doubly-stochastic
-    kernel whose stationary predicate is *not* a subsingleton), this pins the boundary: the failure of
-    *stationary-distribution uniqueness* for node #2 is an **irreducibility phenomenon**, not absolute.
-    Reducible ⇒ non-unique; irreducible (cyclic) ⇒ unique.
+    Together with `doublyStochastic_stationary_not_subsingleton` (one reducible doubly-stochastic
+    kernel on `Fin 4` whose stationary predicate is *not* a subsingleton), this gives one witness on
+    each side: doubly-stochasticity alone does not settle uniqueness for node #2. `Reading:` the
+    failure tracks reducibility; neither "reducible ⇒ non-unique" nor "irreducible ⇒ unique" is proved
+    in general here.
 
     Interpretation note (NOT proved here): uniqueness of the fixed point is what one would *read* as
     the ν / final-coalgebra universal property, but this file constructs no category or coalgebra; the

@@ -185,8 +185,10 @@ theorem the_live_bottom_is_coherent (s : σ) (hfix : f s = some s) :
     object.
 
     This is the computability face's version of the framework's pole coincidence. The
-    valuation face's is `pole_inversion` (`ZeroParadox/Valuation/InfinitudeFloor.lean`): one sequence
-    converging to the floor while its complexity ascends to `⊤`.
+    valuation face's coincidence is `infinitude_forces_infinite_complexity`
+    (`ZeroParadox/Valuation/InfinitudeFloor.lean`): the floor's complexity is `⊤`, at the floor
+    itself. Its drift, one sequence converging to the floor while its complexity ascends to `⊤`,
+    is `pole_inversion`, which is not the coincidence witness.
 
     **Note what this does NOT contradict.** Halted and looping are exclusive *within the step
     chart* — `f s` is single-valued, and no amount of non-determinism changes that (halting
@@ -245,8 +247,8 @@ theorem loops_not_unique : ∃ g : Bool → Option Bool, ∃ a b : Bool,
 
 `Miniature.lean` § IV carries `swap_involutive` and `collapse_irreversible` over the
 two-element pole. The computational pole (halted / loops-in-place) carries the same pair. The
-involution below has `rInv`'s full signature: it fixes an interior, preserves the pole as a
-set, and exchanges its two elements.
+involution below preserves the pole as a set, exchanges its two elements, and fixes its interior
+pointwise; `rInv` maps its seam `‖x‖ = 1` to itself, fixing only `x⁻¹ = x` (`sNorm_rInv`, `rInv_coe_ne`).
 
 **Level fence (load-bearing).** `rInv` is an automorphism *of the sphere* — one object moved
 within itself. `flipPoles` is an automorphism *of the space of machines*: a halting machine
@@ -290,8 +292,9 @@ theorem flip_live_to_dead (g : σ → Option σ) (s : σ) (h : LoopsInPlace g s)
     flipPoles g s = none := by
   unfold flipPoles; rw [h]; simp
 
-/-- **The interior is fixed.** A configuration stepping onward to something else is untouched
-    — the analogue of the unit circle being fixed under `rInv`. -/
+/-- **The interior is fixed.** A configuration stepping onward to something else is untouched,
+    pointwise. `rInv` maps its seam `‖x‖ = 1` onto itself (`sNorm_rInv`, `rInv_involutive`) and
+    fixes on it only the points with `x⁻¹ = x` (`rInv_coe_ne`). -/
 theorem flipPoles_fixes_progress (g : σ → Option σ) (s t : σ)
     (h : g s = some t) (hne : t ≠ s) : flipPoles g s = g s := by
   unfold flipPoles; rw [h]; simp [hne, Option.some_ne_none]
@@ -470,10 +473,11 @@ trichotomy's THIRD case — stepping onward to something genuinely different —
 reachable from it ever shows anything new. Deterministic, never halting, no fixed point, observably
 stationary.
 
-`Reading:` (Tim, 2026-08-06, conjectural) the framework reads this as the honest shape of a
-divergent bottom: not a machine trapped at a fixed point, but one whose state advances forever while
-what it presents does not. Whether the bottom's *own* observable ever changes is untouched by this
-and remains the open commitment (`l_inf`). -/
+`Reading:` conjecture (Tim, 2026-08-06), not proved here: the framework reads this as the honest
+shape of a divergent bottom: not a machine trapped at a fixed point, but one whose state advances
+forever while what it presents does not. The theorem is about `carry` only. Whether the bottom's
+*own* observable ever changes is untouched by this and is not settled anywhere in this file;
+`l_inf`'s docstring records that unbounded surprisal does not settle it either. -/
 theorem carry_steps_onward_forever_yet_shows_nothing (p : Bool × ℕ) :
     (∃ q, carry p = some q ∧ q ≠ p)
       ∧ (∀ t, StateTransition.Reaches carry p t → t.1 = p.1) := by
