@@ -25,8 +25,8 @@ The conjecture (`structureless_point_is_bottom_2026-06-30.md`): ⊥'s two faces 
 set of `selfApp`, `{⊥}` with ⊥ of `L`, by `AbstractSelfApp.unique_fp`). Are they the same object via a
 *structure-respecting* identification, or only as generic singletons? `Statement:` CARRIER — the domain
 bottoms' carriers differ: Kleisli `Fin 0` is empty, Hilbert `StateSpace 0` is inhabited
-(`split_kleisli_vs_hilbert`) and zero-dimensional (one point), the p-adic floor `{0} ⊆ Q₂` is one
-point (the two `example`s after this header), and #2's stationary set need not be one point (below).
+(`split_kleisli_vs_hilbert`) and zero-dimensional, one point (the first `example` after this
+header), the p-adic floor `{0} ⊆ Q₂` is one point (the second `example`), and #2's stationary set need not be one point (below).
 
 **What this actually proves — and the honest verdict: VACUOUS.**
 (Up front: the three lemmas below are *generic singleton plumbing* — `{⊥}` is uniquely iso to `PUnit`,

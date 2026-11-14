@@ -56,9 +56,10 @@ categorical-polarity clash:
   `padic_bottom_isTerminal`, `ZeroParadox/Multihomed/TreeObstructions.lean`), so the ν half is
   shared and #5 straddles the μ/ν root rather than sitting opposite #3.
 
-**Cardinality does NOT separate (b).** Both `#5 = StateSpace 0` and `#3 = {0} ⊆ Q₂` are *singletons*
-(`bots_both_subsingleton`), so the Axis-III invariant that split #4 from #5 is silent here: the genuine
-separator for the #5↔#3 edge is polarity (initial vs not), not cardinality. Recorded in-statement so the
+**Cardinality does NOT separate (b).** Both `#5 = StateSpace 0` and `#3 = {0} ⊆ Q₂` are *subsingletons*,
+at most one point (`bots_both_subsingleton`), and each is inhabited (the two `example`s after the
+header of `ZeroParadox/Multihomed/TwoFacesBot.lean`), so each has exactly one point and the Axis-III
+invariant that split #4 from #5 is silent here: the genuine separator for the #5↔#3 edge is polarity (initial vs not), not cardinality. Recorded in-statement so the
 finding is honest about *which* wall does the work.
 
 Edge (b) is an **obstruction (no-go) result** on the initial half: it proves a *separation*, not a
@@ -110,9 +111,10 @@ theorem seam_initial_padic_not_initial :
     IsEmpty (Limits.IsInitial (TopCat.of (↥({(0 : Q₂)} : Set Q₂)))) :=
   ⟨⟨fD_zero_isInitial⟩, ZeroParadox.padic_bottom_not_initial⟩
 
-/-- Cardinality does NOT separate edge (b): both bottoms are singletons. `#5 = StateSpace 0` is a
-    subsingleton and `#3 = {0} ⊆ Q₂` is a singleton, so the Axis-III (cardinality) invariant is silent
-    here — the genuine separator for #5↔#3 is polarity (`seam_initial_padic_not_initial`), not cardinality. -/
+/-- Cardinality does NOT separate edge (b). `Statement:` `#5 = StateSpace 0` and `#3 = {0} ⊆ Q₂` are
+    both subsingletons, at most one point each; that each is inhabited is not part of this statement
+    (one-point witnesses: the two `example`s in `ZeroParadox/Multihomed/TwoFacesBot.lean`). So the
+    Axis-III (cardinality) invariant is silent here — the genuine separator for #5↔#3 is polarity (`seam_initial_padic_not_initial`), not cardinality. -/
 theorem bots_both_subsingleton :
     Subsingleton (StateSpace 0) ∧ Subsingleton (↥({(0 : Q₂)} : Set Q₂)) := by
   refine ⟨⟨fun a b => ?_⟩, ?_⟩
