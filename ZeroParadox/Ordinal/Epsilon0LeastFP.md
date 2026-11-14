@@ -8,8 +8,7 @@ declarations, the Engineer's Take and the per-declaration glosses.
 Experiment G1 (T6 compute-the-invariant), independent of the MC-1 arc. ε₀ is where the ω-tower closes —
 its **minimal** closure. It has two faces at once (`epsilon0_min_eq_max`): the **least fixed point** of
 `α ↦ ω^α` — `Ordinal.epsilon 0`, index zero in the epsilon enumeration, Veblen coordinates (1,0) — and
-the **supremum** of the ω-tower (`epsilonZero_eq_iSup`). It is not "a large ordinal": ε₀ is countable
-(`card_epsilon0`) and sits at index zero, the first step. `epsilon0_least_fixedpoint` proves the
+the **supremum** of the ω-tower (`epsilonZero_eq_iSup`). `epsilon0_least_fixedpoint` proves the
 lower-bound half of the first face.
 
 ⚠ **"Minimum step" means a STABLE LANDING** — a fixed point of `α ↦ ω^α` — and in that sense ε₀ IS the
