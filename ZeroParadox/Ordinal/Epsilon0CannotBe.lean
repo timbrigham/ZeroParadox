@@ -184,7 +184,7 @@ example : (∀ a : Ordinal.{u}, Ordinal.nfp (fun α => Ordinal.omega0 ^ α) a =
 -- above, the pole ⊥ = 0 = ∞ a chart claim (`ZeroParadox/BottomCannotBe.lean` § INVERSION), "never"
 -- `epsilon0_ne_bot` (§ I). Scopes: `ZeroParadox/Ordinal/Epsilon0CannotBe.md`.
 
-/-! ### § IV. ε₀ as the snap threshold ⊥ of `Ordinal` → ε₀, co-witnessed with the 2-adic limit and the machine snap -/
+/-! ### § IV. ε₀ as the snap threshold ⊥ of `Ordinal` → ε₀, co-witnessed with the limit of the tower's 2-adic images and the machine snap -/
 #check @ZeroParadox.epsilonZero_fixedPoint    -- Statement: ω ^ ε₀ = ε₀ (the `epsilonZero` spelling). Reading: the fixed point the snap lands the ascent on
 #check @ZeroParadox.snap_exactly_at_epsilon_zero
 #check @ZeroParadox.c1_epsilon_zero_identification

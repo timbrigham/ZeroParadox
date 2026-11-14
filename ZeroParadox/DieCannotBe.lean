@@ -2399,7 +2399,7 @@ example : (ZeroParadox.Motion.ofFun (Inv.inv : ℚ → ℚ)).SelfOnlyAt 0 :=
 #check @ZeroParadox.cm_a_absorbs                 -- Statement: with OVER `x → x + z`, `a` steps only to itself and every point steps to it
 -- Reading: comparing the totalisations of division on ℚ by the values they adjoin outside ℚ is
 -- Bergstra's frame (J. A. Bergstra, "Division by Zero: A Survey of Options", Transmathematica 1(1),
--- 2019, § 3, pp. 9–16: the common meadow § 3.1, `0⁻¹ = 0` § 3.2, `0⁻¹ = 1` § 3.3, one added point `∞`
+-- 2019, § 3, pp. 9–18: the common meadow § 3.1, `0⁻¹ = 0` § 3.2, `0⁻¹ = 1` § 3.3, one added point `∞`
 -- with `0⁻¹ = ∞` and `∞⁻¹ = 0` § 3.4, the wheel § 3.5, the transrationals § 3.6; J. A. Bergstra and
 -- J. V. Tucker, "The Wheel of Rational Numbers as an Abstract Data Type", WADT 2020, LNCS 12669,
 -- pp. 13–30, § 1 pp. 13–14 and p. 29). The corpus reads three of the structures his survey compares

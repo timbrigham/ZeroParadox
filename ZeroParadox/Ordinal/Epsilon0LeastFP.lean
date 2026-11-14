@@ -264,7 +264,7 @@ theorem epsilon0_ne_zero : ε₀ ≠ 0 := by
   rw [h, opow_zero] at hf
   exact one_ne_zero hf
 
-/-- **Invariant — ε₀ ≠ ⊥.** Since `(⊥ : Ordinal) = 0` (`Ordinal.bot_eq_zero`) and ε₀ ≠ 0, ε₀ is never
+/-- **Invariant — ε₀ ≠ ⊥ of `Ordinal`.** Since `(⊥ : Ordinal) = 0` (`Ordinal.bot_eq_zero`) and ε₀ ≠ 0, ε₀ is never
     ⊥ of `Ordinal`. That ⊥ is *a* base the ε₀-tower is seeded at (`epsilon0_eq_nfp_bot`), never its closure.
     It is the *least* such base and not the only one: for **normal** `F`, every seed at or below the
     closure reaches the same closure (`isLeastFixedPointFrom_nfp`). The invariant does not depend

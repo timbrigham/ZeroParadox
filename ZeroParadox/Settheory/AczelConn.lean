@@ -15,7 +15,8 @@ self-containing elements, with no `Classical.choice`. `Reading:` `J_self` is sha
 (Non-Well-Founded Sets, 1988, Theorem 6.5), not an instance: no set-continuous operator is defined, so
 the step where his proof of 6.5(2) uses Dependent Choice has no counterpart here (pp. 76–77). The
 shape is that of 6.5 at his constant operator `K_A` (p. 74, `K_A X = A`), with `A` the self-containing
-elements: there `J = A`, and parts (1) and (2) reduce to `A ⊆ A`, which is why the proofs below are one line.
+elements: there `J = A`, part (1) reduces to `A ⊆ A` and part (2) to `X ⊆ A → X ⊆ A`, which is why the
+proofs below are one line.
 -/
 
 namespace ZeroParadox

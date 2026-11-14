@@ -22,8 +22,8 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 This file tests **within-Axis-I positive rate-transport**: although the proof-theory floor (#1, `0 : ℕ`, a μ / well-founded-descent
 bottom) and the p-adic floor (#3, `{0} = ⋂ q2Ball n ⊆ Q₂`, a ν / inverse-limit bottom) sit on
-**opposite roots** of the bottom-diagram tree (no Lean statement separates them: edge (a) of `ZeroParadox/Multihomed/CrossRootCompleteness.lean` pairs
-two facts with no separator; this file does not touch it), they nevertheless share a **common quantitative invariant**: the same geometric rate
+**opposite roots** of the bottom-diagram tree (edge (a) of `ZeroParadox/Multihomed/CrossRootCompleteness.lean` proves no separator of the two floors;
+this file does not touch that edge and contrasts only their orbits, `padic_nat_no_orbit_correspondence`), they nevertheless share a **common quantitative invariant**: the same geometric rate
 `n ↦ 2^(-n)` (ratio `c = 1/2 < 1`) bounds the distance-to-floor of a canonical orbit on each side.
 
 Compare `ZeroParadox/Valuation/NuRateEdge.lean`, whose #3↔#2 (p-adic vs Markov absorbing) mismatch is
@@ -44,8 +44,8 @@ rate-level **match** — both descend to their floor at rate `1/2`.
   shared across the μ/ν root.
 
 **Honest scope — what this is NOT.**
-- This is **not** a structure-preserving map between the two orbits, and it says nothing about
-  separating the two floors. The orbits live in different categories (a totally-disconnected normed field vs the
+- This is **not** a structure-preserving map between the two orbits, and it proves no
+  separator of the two floors (its orbit-level contrast is `padic_nat_no_orbit_correspondence`). The orbits live in different categories (a totally-disconnected normed field vs the
   discrete order ℕ); only the *real-valued rate function* is shared.
 - The shared rate is a **bound/envelope match**, not an orbit isomorphism. On the p-adic side the bound
   is an exact equality; on the ℕ side it is an inequality (Nat floor-halving can drop faster, and — see
