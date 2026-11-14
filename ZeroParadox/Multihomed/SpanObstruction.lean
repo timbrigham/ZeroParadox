@@ -54,19 +54,18 @@ T1's carries a universal role; this file's is the trivial floor of the strength 
 span existing does **not** show the cross-root cut is a method artifact, because it does not match
 T1's role-preserving span.
 
-**What is honestly proved.** Two facts, both true, witnessed in `apex_span_no_ambient_strictMono`:
+**What is proved.** Two facts, both true, paired in `apex_span_no_ambient_strictMono`:
 1. a singleton-apex span exists for the two bottom *points* (vacuous: they are singletons), and
-2. the *direct* ambient obstruction survives — `no_strictMono_real_to_ordinal` (in
-   `ZeroParadox/Multihomed/TreeObstructions.lean`) still rules out a strict-mono embedding of the attractor ambient `ℝ`
-   into the well-order. ℝ's `<` is not well-founded; the ordinal's is. That is the real content.
+2. `no_strictMono_real_to_ordinal` (`ZeroParadox/Multihomed/TreeObstructions.lean`): no strict-mono
+   map `ℝ → Ordinal`. ℝ is #2's carrier there (the Markov attractor), not #3's: an #1↔#2 fact. #3's
+   ambient `Q₂` appears nowhere in it, so the file has no ambient-level content for #3.
 
-**Honest scope (interpretation vs Lean).** The Lean fact is: the singleton bottom *points* admit a
-trivial common-apex span, while the *ambient/descent-carrier* direct map remains obstructed. The
-*interpretation* this file does NOT support: that the GO/NO-GO asymmetry is a method artifact. To
+**Honest scope (interpretation vs Lean).** The *interpretation* this file does NOT support: that the GO/NO-GO asymmetry is a method artifact. To
 support that, the apex legs would have to carry a universal role matching T1's (transporting a
 descent/initiality morphism); a singleton-iso does not. The tree's μ/ν cross-root cut therefore
-stands; this file neither strengthens nor refutes it, it only records that the obstruction is genuinely
-about the ambient carriers, not the bare bottom points.
+stands; this file neither strengthens nor refutes it. The #1↔#3 separation the corpus does carry is
+`padic_bottom_not_initial` (against `nat_floor_isInitial`, `ZeroParadox/Multihomed/TreeT1.lean`): a
+fact about the one-point space `{0} ⊆ Q₂` itself as a `TopCat` object, not about an ambient carrier.
 -/
 
 namespace ZeroParadox
@@ -106,20 +105,19 @@ def span_apex_to_ordinal_floor : PUnit.{1} ≃o ↥({(0 : Ordinal)} : Set Ordina
     one-point sets are isomorphic to a one-point apex — it carries NO structural content specific to
     #1 or #3. It does NOT match T1's GO span, whose legs transport a descent/initiality morphism
     (a universal role, in `t1_mu_cluster_glue`'s statement). The apex legs here transport nothing.
-    So this does NOT show the cross-root cut is a method artifact; see `apex_span_no_ambient_strictMono`
-    for the real content (the ambient direct-map obstruction survives). -/
+    So this does NOT show the cross-root cut is a method artifact. `apex_span_no_ambient_strictMono`
+    pairs it with an #1↔#2 fact about ℝ; that adds no content about #3. -/
 theorem apex_iso_padic_ordinal_floor :
     Nonempty (PUnit.{1} ≃ₜ ↥({(0 : Q₂)} : Set Q₂)) ∧
     Nonempty (PUnit.{1} ≃o ↥({(0 : Ordinal)} : Set Ordinal)) :=
   ⟨⟨span_apex_to_padic_floor⟩, ⟨span_apex_to_ordinal_floor⟩⟩
 
-/-- **The real content, in-statement.** Two facts hold simultaneously: (1) the singleton bottom
-    *points* admit the trivial common-apex span above, and (2) the *direct* ambient obstruction
-    survives — `no_strictMono_real_to_ordinal` still holds: there is no strict-mono embedding of the
-    attractor ambient `ℝ` into the well-order (ℝ's `<` is not well-founded; the ordinal's is). The
-    honest finding is just this simultaneity: the cross-root obstruction is genuinely about the
-    ambient/descent carriers, and the bare bottom *points* being singletons does not touch it. This
-    is NOT a method-artifact result — see the capstone docstring and Formal Overview. -/
+/-- `Statement:` (1) the singleton bottom *points* admit the trivial common-apex span above, and
+    (2) `no_strictMono_real_to_ordinal`: there is no strict-mono map `ℝ → Ordinal`. ℝ is #2's
+    carrier (the Markov attractor, `ZeroParadox/Multihomed/TreeObstructions.lean`), not #3's, so (2)
+    is an #1↔#2 fact and nothing in the statement concerns #3's ambient `Q₂`. The #1↔#3 separation
+    the corpus carries is `padic_bottom_not_initial`, a fact about the one-point space `{0} ⊆ Q₂`
+    itself. This is NOT a method-artifact result — see the capstone docstring and Formal Overview. -/
 theorem apex_span_no_ambient_strictMono :
     (Nonempty (PUnit.{1} ≃ₜ ↥({(0 : Q₂)} : Set Q₂)) ∧
       Nonempty (PUnit.{1} ≃o ↥({(0 : Ordinal)} : Set Ordinal))) ∧
