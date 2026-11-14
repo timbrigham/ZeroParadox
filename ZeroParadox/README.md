@@ -46,7 +46,7 @@ Each file contains a `section PurityCheck ... end PurityCheck` block with `#prin
 
 - **Lattice–Category:** `propext`, `Quot.sound` only, or fully axiom-free for computable results (e.g. `l_run` proved by `decide`)
 - **CategoricalBridge, Kleene:** `[propext, Classical.choice, Quot.sound]` — `Classical.choice` enters through Mathlib's Kleene/computability machinery (`Code`, `Partrec`), not through `ZPSemilattice` or `AFAStructure`
-- **WheelFrac (wheel of fractions `⊙_S A`):** `[propext, Quot.sound]` — `Classical.choice`-free. The Carlström wheel-of-fractions construction (`⊙_S A = (A × A)/≡_S` is a `Wheel` for any commutative ring `A` and multiplicative submonoid `S`) is fully constructive; no choice needed. This proves the construction half of the §VIII wheel conjecture of `Wheel.lean`; the pinning half, that the 0/∞ exchange with val(0) = ⊤ forces the wheel axioms, stays open. The common-meadow declarations in the same file (`cmAdd`, `cmMul` and those through them) report `Classical.choice`, as `Rat.add` and `Rat.mul` do.
+- **WheelFrac (wheel of fractions `⊙_S A`), two profiles in one file:** `instWheel`, `inf_ne_bot` and the other wheel and fork declarations report at most `[propext, Quot.sound]`, `Classical.choice`-free; the common-meadow declarations `cmAdd`, `cmMul` and those through them report `[propext, Classical.choice, Quot.sound]`, as `Rat.add` and `Rat.mul` do. The Carlström wheel-of-fractions construction (`⊙_S A = (A × A)/≡_S` is a `Wheel` for any commutative ring `A` and multiplicative submonoid `S`) is fully constructive; no choice needed. This proves the construction half of the wheel conjecture in `ZeroParadox/Algebra/Wheel.lean` §VIII; the pinning half, stated there, stays open.
 
 ## Honest Scope Boundaries
 

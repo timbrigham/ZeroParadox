@@ -254,9 +254,10 @@ Bergstra & Ponse, *Division by Zero in Common Meadows*, arXiv:1406.6878v4 (cited
 (p. 4) defines `ℚ_a` with `|ℚ_a| = |ℚ| ∪ {â}`, where *"Application of any function to the additional
 value returns that same value"*; Table 2 (p. 5) gives axioms (13) `0⁻¹ = a` and (14) `x + a = a`;
 Prop. 2.2.1 (pp. 5-6) derives (e13) `(x⁻¹)⁻¹ = x + 0·x⁻¹`, (e14) `x·a = a` and (e16) `a⁻¹ = a`. The
-carrier here is `Option ℚ`, ℚ with one adjoined point, `none` the additional value `a`.
-⚠ A common meadow is not a collapsed wheel, and nothing here relates the two structures: BP §4 (p. 14)
-write *"we have not yet found a structural connection between both constructions"*. -/
+carrier here is `Option ℚ`, ℚ with one adjoined point, `none` the additional value `a`. Bergstra &
+Tucker, *The Wheel of Rational Numbers as an Abstract Data Type*, WADT 2020, LNCS 12669, §1 (pp. 13-14)
+set common meadows beside the wheel. ⚠ `ℚ_a` under its own inverse is not a wheel (`cm_not_involutive`),
+and nothing here relates the two structures (BP §4, p. 14: *"we have not yet found a structural connection"*). -/
 
 section CommonMeadow
 

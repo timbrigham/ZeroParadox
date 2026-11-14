@@ -43,11 +43,10 @@ a defined first-class operation. The resulting structure has two special element
   - `∞ = /0`       — the multiplicative inverse of zero
   - `⊥ₗ = 0 · /0`  — the absorbing "undefined" element
 
-**The ZP Conjecture, in two halves (see §VIII).** *Construction, proved:* the wheel axioms for /0
-follow from ring structure — any commutative ring with a multiplicative submonoid gives a wheel
-(`instWheel`, `ZeroParadox/Algebra/WheelFrac.lean`). *Pinning, open:* the 0/∞ exchange with
-`val(0) = ⊤` (`wvs_val_zero`) and `⊥ = {⊥}` (ZFC⁻ + AFA) force the wheel axioms and pin the special
-element — making wheel theory the algebraic representation of the 0/∞ exchange, not a coincidence.
+**The ZP Conjecture, in two halves; §VIII holds the canonical statement.** *Construction, proved:*
+any commutative ring with a multiplicative submonoid gives a wheel, Carlström 2001:11's wheel of
+fractions (pp. 4-5, 10), formalized as `instWheel` (`ZeroParadox/Algebra/WheelFrac.lean`).
+*Pinning, open:* as stated in §VIII.
 
 **Structural alignment (not proof):**
 - In ZFC+Foundation: division by zero is undefined; the Axiom of Regularity prohibits
@@ -77,8 +76,7 @@ Status: Sorry-free. Construction half proved: `instWheel` (`ZeroParadox/Algebra/
 theorem object. §VII defines WheelValuationStructure — the bridge typeclass: a commutative ring +
 multiplicative valuation, with val(0) = ⊤ pinning the special element (motivated by the ZFC⁻ + AFA
 Quine atom `⊥ = {⊥}`; nothing in the Lean derives it from the Quine atom). `instWheel` takes the ring
-as an input, so it does not prove the pinning half, whose inputs are the 0/∞ exchange and
-val(0) = ⊤; §VI checks the identification on `ZPWheelElem` only.
+as an input, so it does not prove the pinning half (§VIII); §VI checks the identification on `ZPWheelElem` only.
 See notes/wheel_conjecture_proof_gap_2026-05-31.md for the original three-tier diagnosis.
 -/
 
