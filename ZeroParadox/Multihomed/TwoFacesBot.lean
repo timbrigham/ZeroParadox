@@ -19,14 +19,12 @@ defer to my AI assistant regarding the specifics of how the internals work.
 ## Formal Overview (AI-assisted)
 
 The conjecture (`structureless_point_is_bottom_2026-06-30.md`): ⊥'s two faces meet at the seam — the
-**structureless** face (the bare point ≅ `PUnit`; domain bottoms are empty or one-point, `Fin 0` empty
-by `split_kleisli_vs_hilbert`) and the **self-referential** face (the fixed-point set of `selfApp`, which `AbstractSelfApp.unique_fp` makes
-`{⊥}`). Are they the same object via a *structure-respecting* identification, or only as generic singletons?
-
-**Correction to a first attempt (cold audit caught it).** An earlier version "refuted" this with the
-observation that `x↦2x` and `x↦3x` both fix `0` in `ℚ_[2]` — but that is banal (every linear map fixes 0)
-and never engaged the actual `selfApp` or the two faces. It tested nothing. This version engages the real
-objects.
+**structureless** face (the bare point ≅ `PUnit`) and the **self-referential** face (the fixed-point
+set of `selfApp`, `{⊥}` with ⊥ of `L`, by `AbstractSelfApp.unique_fp`). Are they the same object via a
+*structure-respecting* identification, or only as generic singletons? `Statement:` CARRIER — the domain
+bottoms' carriers differ: Kleisli `Fin 0` is empty, Hilbert `StateSpace 0` is inhabited
+(`split_kleisli_vs_hilbert`) and zero-dimensional (one point), the p-adic floor `{0} ⊆ Q₂` is one
+point, and #2's stationary set is not one point (below).
 
 **What this actually proves — and the honest verdict: VACUOUS.**
 (Up front: the three lemmas below are *generic singleton plumbing* — `{⊥}` is uniquely iso to `PUnit`,
@@ -40,21 +38,20 @@ For any `AbstractSelfApp L`:
 - `faces_iso_unique` — but that iso is the **unique** one (the equiv type is a subsingleton): there is
   no choice, no structure to respect or fail. The identification carries zero information.
 
-**Verdict (corrected 2026-06-30 — see `reaching_bottom_vs_interpreting_it_2026-06-30.md`): the
-coincidence is at the ACTUAL-⊥ layer, and it is REAL, not vacuous.** The two faces coincide as the
-structureless point (`{⊥} ≅ PUnit`). This was first mislabeled VACUOUS for failing *structure-respect* —
-but that is the WRONG test at ⊥. `Reading:` ⊥ is taken (not defined in Lean) as timeless / spaceless /
-descriptionless / measurementless / **structureless**; structure marks an *interpretation* of ⊥.
-**Structurelessness is the signature of having reached actual ⊥** — so the two faces reaching the same
-conditionless point IS the genuine unification, in the only form ⊥ admits.
-
-Two layers: at the **interpretation layer** the bottoms are distinct (their retained structure differs —
-the campaign's walls); at the **actual-⊥ layer** all structure is stripped and the inhabited ones are one point (`ZeroParadox/Computability/MarkovNuUniversal.lean`'s
-"keep vs forget structure" is the boundary). Honest fence: the bare iso `{⊥} ≅ PUnit` is *generic*; the
-non-generic content is the **uniqueness** theorem `AbstractSelfApp.unique_fp` (the fixed-point set is a
-*single* point — a priori it needn't be), and the proven exception **#2** (the Markov bottom is a
-simplex/set, `ZeroParadox/Computability/MarkovNuUniversal.lean` — an interpretation that has NOT bottomed out unless collapsed, `ZeroParadox/Computability/StationaryUnique.lean`). This is the
-unification specifically at actual ⊥; it does NOT reopen the falsified identity-of-interpretations thesis.
+**Verdict — a `Reading:` (conjecture), not a theorem** (`reaching_bottom_vs_interpreting_it_2026-06-30.md`).
+Proved: the faces coincide as the point, by the only iso (`selfApp_face_equiv_punit`, `faces_iso_unique`).
+`Reading:` the coincidence is REAL, not vacuous, at the actual-⊥ layer: ⊥ is taken (not defined in
+Lean) as timeless / spaceless / descriptionless / measurementless / **structureless**, so structure
+marks an *interpretation*, structure-respect is the wrong test there, and reaching the same
+conditionless point is the unification in the only form ⊥ admits. The Lean does not choose between this
+reading and the title's VACUOUS one; both read the same three lemmas. Also a `Reading:`: at the
+**interpretation layer** the bottoms are distinct (the campaign's walls); at the **actual-⊥ layer** all
+structure is stripped. Non-generic content: `AbstractSelfApp.unique_fp` (a *single* fixed point), and
+the proven exception **#2** — `markov_node_no_universal_property` gives a doubly-stochastic kernel with
+two distinct stationary distributions (a simplex for reducible chains, per the Levin–Peres citation in
+`ZeroParadox/Computability/MarkovNuUniversal.lean`), collapsing to one point for an irreducible kernel
+(`markov_node_irreducible_rescue`, `ZeroParadox/Computability/StationaryUnique.lean`). This does NOT
+reopen the falsified identity-of-interpretations thesis.
 -/
 
 namespace ZeroParadox
