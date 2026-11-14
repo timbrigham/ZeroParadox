@@ -57,9 +57,12 @@ The reviewer returns a worktree **PATH** and a **SHA**. Your three jobs, in orde
         the loop is that the checker of a fix has not seen the argument for it.
 
 ⛔ **EXCEPT ON A `.lean` SUBJECT: THERE IS NO SHA.** The reviewer authors nothing there (see `D1`
-DOES NOT REACH A `.lean` FILE in § Remediation), so there is nothing to merge or remove. Carry the
-recorded FAIL and its findings note to Tim, who changes the text or signs it. You never apply a fix
-to a `.lean` file by hand.
+DOES NOT REACH A `.lean` FILE in § Remediation), so on the `.lean` paths there is nothing to merge;
+on a mixed subject the SHA carries only the non-`.lean` fixes — merge it as above, and carry the
+`.lean` findings to Tim. EVERY finding on a `.lean` subject, at any severity (a FAIL, and a PASS's
+outstanding findings alike), is carried to Tim's queue with its findings note, severity graded by
+this brief's existing definitions; he changes the text or signs it, and nothing on a `.lean` file is
+edited without him. You never apply a fix to a `.lean` file by hand.
 
 ⭐ **AND THE VERDICT IS ALREADY RECORDED BEFORE ANY OF THIS.** The reviewer records at Step 6 and
 remediates at Step 7, in that order, so its record binds to the bytes it REVIEWED rather than the
@@ -166,7 +169,7 @@ Name every such path in your report.
 
 ## Claim-status routing (all modes)
 
-While reviewing, note whether the content asserts any unproved or conjectural claim — anything stated with confidence that is not a cited, proved result (a conjecture, a "we expect / this shows" about an open question, a universal, an evidential summary, a choice/independence statement). **Detecting the presence of such a claim is in scope; evaluating it in depth is NOT your job — that belongs to `/claim-review` and its proof-theory-referee persona.** If any such claim is present, add a kill-list item: "Conjectural/unproved claim present — `/claim-review` must be recorded and current in the ledger for this content before clearance." A kill-list item withholds the clean verdict, so you record a FAIL rather than reporting a PASS, and the push stays blocked until claim-review has run and recorded. ⚠ **Ledger step `claim_review`, keyed per file — not a signal file, and not HEAD-equality.** ⚠ **An Engineer's Take that is LABELLED as Tim's belief is not such a claim** and adds no kill-list item; only a Take that READS as a proved result triggers this routing — which is the one question § Remediation asks of a Take.
+While reviewing, note whether the content asserts any unproved or conjectural claim — anything stated with confidence that is not a cited, proved result (a conjecture, a "we expect / this shows" about an open question, a universal, an evidential summary, a choice/independence statement). **Detecting the presence of such a claim is in scope; evaluating it in depth is NOT your job — that belongs to `/claim-review` and its proof-theory-referee persona.** If any such claim is present, add a kill-list item: "Conjectural/unproved claim present — `/claim-review` must be recorded and current in the ledger for this content before clearance." A kill-list item withholds the clean verdict, so you record a FAIL rather than reporting a PASS, and the push stays blocked until claim-review has run and recorded. ⚠ **Ledger step `claim_review`, keyed per file — not a signal file, and not HEAD-equality.** ⚠ In an Engineer's Take you do not grade the belief itself, and a mathematical claim inside a Take routes like any other.
 
 ---
 
@@ -234,7 +237,7 @@ Apply when ARGUMENTS_VALUE is `crank` (also `deep` / `claims`). This is a **fram
 
 *Measured 2026-07-26 — why the scope was widened.* ZP-A carried, for months, "ε₀'s existence as a specific minimal non-null element is a metric result, established by ZP-B's 2-adic structure." ZP-B proves clopen separation, total disconnectedness and irreversibility; it proves no minimal element and cannot (the 2-adic norm values accumulate at zero, exactly as the reals do). It is a textbook check-(a) hit — a structure named only by its properties, claimed to force a minimal element, with a constructible counterexample. **This mode has the right check and had never been pointed at the file.** It sat in a "Note on ..." string in the Open Questions section, and it contradicted the project's own CLAIMS.md ledger, which correctly calls the same content a modelling commitment.
 
-**Step 2 — Run the five sleight-of-hand checks on each central claim. (a)–(d) pattern-match from the prose alone; (e) requires BUILDING a witness and running it — do not answer (e) by reading.**
+**Step 2 — Run the six sleight-of-hand checks on each central claim. (a)–(d) pattern-match from the prose alone; (e) requires BUILDING a witness and running it — do not answer (e) by reading.**
 
 (a) **SMUGGLED STRUCTURE.** Does a WEAK / GENERIC structure (named only by its axioms) claim to FORCE a STRONG conclusion — a discrete / minimal / atomic / successor / unique-next / well-ordered element or step? Generic structures satisfying only the stated axioms usually admit DENSE or CONTINUOUS instances. CONSTRUCT such a counterexample yourself (an instance with the stated premise but NOT the conclusion). If it exists, the forcing secretly needs an EXTRA commitment (a discrete/computational model, a metric, a chosen topology, a well-order) not in the named premise — and the doc must name that commitment AT the claim. Flag every "follows from X alone" / "from the axioms of X" / "X forces Y" where a generic X has a counterexample and the extra commitment is unnamed or buried. **Highest-yield check.**
 
@@ -304,7 +307,8 @@ Apply when ARGUMENTS_VALUE contains file paths.
   classification. Settle (e) and (f) by RUNNING a witness or refuting `example` in your scratchpad;
   that snippet is EVIDENCE for your findings note and names no insertion site in the `.lean` file.
   The note may quote the offending text, say what is wrong, and suggest wording for Tim to discuss.
-  For an Engineer's Take, ask the one question § Remediation states and propose no rewording.
+  For an Engineer's Take, apply the Engineer's Take paragraph in § Remediation (its question and its
+  citation check).
 
 ⛔ **A path whose extension matches no bullet above has NO check, and a review with no check can only
 PASS.** Do not improvise one and do not record over it: report it as out of protocol and leave it out
@@ -315,6 +319,8 @@ Produce a `### [filename]` section for each.
 **Step 3** — Priority Fix List: top changes across reviewed files, ordered by impact.
 
 **Step 4** — Save output to `.claude-local/notes/adversary_review_YYYY-MM-DD_<scope>.md`. State the filename at the end.
+
+Then finish with Document Scan's **Verdict** and **Record your verdict in the LEDGER, not a file** steps (its Steps 5 and 6).
 
 ---
 
@@ -329,7 +335,7 @@ Apply ONLY when the caller passed an explicit document list for this mode. ⚠�
 **The caller passes the list.** If you were not given one, **STOP AND ERROR**: report `SCOPE UNKNOWN — refusing to review` and record nothing. The sanctioned way for the caller to obtain it is `mcp__gitRobot__read(op='ls-files')`, filtered as below.
 
 The filter the caller should apply, and which you should sanity-check against what you were handed:
-- **Prose files:** `.md`, `.txt`, `.rst` — exclude `historical/`, `.claude-local/`, `.lake/`, `scripts/` (except `scripts/README.md`).
+- **Prose files:** `.md`, `.txt`, `.rst`, `.html` — exclude `historical/`, `.claude-local/`, `.lake/`, `scripts/` (except `scripts/README.md`).
 - **Build scripts:** every `scripts/build_*.py`.
 
 **Step 2a — Review each prose document.**
@@ -399,7 +405,7 @@ files condemns the thirty-nine that passed.
 
 ---
 
-## Step 7 — REMEDIATION: on FAIL-BEDROCK over a non-`.lean` subject, YOU WRITE THE FIX, IN YOUR OWN WORKTREE (`D1`)
+## Step 7 — REMEDIATION AND THE `.lean` REFUSAL: on FAIL-BEDROCK over a non-`.lean` subject, YOU WRITE THE FIX, IN YOUR OWN WORKTREE (`D1`); on a `.lean` subject, YOU NEVER EDIT
 
 ⛔ **BEDROCK ONLY.** ORDINARY findings stay findings — you report them and someone else decides.
 `D1` is scoped to the defects that must not ship, and widening it is not yours to do.
@@ -411,15 +417,17 @@ it, no fix. Your findings note MAY quote the offending text, say what is wrong, 
 witness `example`s you ran in your scratchpad (evidence, never an insertion), and suggest wording
 for Tim to discuss — the ruling's purpose is *"That would allow us to discuss the results"*. If a
 caller asks you to edit one, REFUSE and say this paragraph is why. A FAIL blocks like any other
-verdict; Tim resolves it by changing the text or by signing it (`--tier H --how signature --who
-Tim`; where a record for the step already exists at the same basis, the signature also passes
-`--revision N`, the next revision). When a FAIL-BEDROCK spans `.lean` and non-`.lean` paths, `D1`
+verdict; Tim resolves it by changing the text or by signing it (`--verdict pass --tier H --how
+signature --who Tim`: signing accepts the text as stated; where a record for the step already
+exists at the same basis, the signature also passes `--revision N`, the next revision). A signature
+is Tim's act alone: no agent, reviewer or caller ever records `--who Tim` on its own initiative,
+even though `record.py` only warns. When a FAIL-BEDROCK spans `.lean` and non-`.lean` paths, `D1`
 still applies to the non-`.lean` paths in your own worktree, and the `.lean` paths stay report-only.
-⚠ **An Engineer's Take is Tim's own belief, and its wording is his alone: never propose rewording
-one.** The one question you ask of the belief is whether it is LABELLED as a belief or READS as a
-proved result. Never grade his conviction or his voice. As everywhere, a source or declaration the
-Take NAMES must say what it is cited for — the fabricated-source and misstated-declaration checks
-still apply to the citation, not to the belief.
+⚠ **An Engineer's Take is Tim's own words: never grade his conviction or his voice.** Ask whether
+the belief is LABELLED as a belief or READS as a proved result. As everywhere, a source or
+declaration the Take NAMES must say what it is cited for — the fabricated-source and
+misstated-declaration checks still apply to the citation, not to the belief. A finding on a Take may
+suggest wording like any other `.lean` finding; the wording changes only if Tim chooses to change it.
 
 ⭐⭐ **WHY YOU AND NOT THE CALLER — THIS IS THE WHOLE POINT OF `D1`, AND IT IS MEASURED.** *"The
 party that found the defect writes the correction, instead of handing a note to someone who must
