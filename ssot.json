@@ -672,8 +672,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 3992,
-        "files": 222
+        "declarations": 4007,
+        "files": 223
       },
       "entries": [
         {
@@ -5842,6 +5842,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "0889c833-6804-4da1-a33c-2fd291a4838b",
+          "new": {
+            "file": "ZeroParadox/Algebra/WheelFrac.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cm_inv_inv",
+            "short": "cm_inv_inv"
+          },
+          "old": {
+            "file": "ZeroParadox/Algebra/WheelFrac.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cm_inv_inv",
+            "short": "cm_inv_inv",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "algebra"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "common meadow Q_a + wheel_three_distinct in WheelFrac.lean (2026-11-14)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "08c0ba70-0911-4c25-a0b9-b8aa391ace39",
           "new": {
             "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
@@ -6724,6 +6761,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "09cabec8-54b5-4487-ae4a-6f16d2b9cd65",
+          "new": {
+            "file": "ZeroParadox/Algebra/WheelFrac.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cm_preimage_a",
+            "short": "cm_preimage_a"
+          },
+          "old": {
+            "file": "ZeroParadox/Algebra/WheelFrac.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cm_preimage_a",
+            "short": "cm_preimage_a",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "algebra"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "common meadow Q_a + wheel_three_distinct in WheelFrac.lean (2026-11-14)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -41950,6 +42026,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "48b9b902-571e-43bd-bd66-a39b946f7f63",
+          "new": {
+            "file": "ZeroParadox/Algebra/WheelFrac.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.wheel_three_distinct",
+            "short": "wheel_three_distinct"
+          },
+          "old": {
+            "file": "ZeroParadox/Algebra/WheelFrac.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.wheel_three_distinct",
+            "short": "wheel_three_distinct",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "algebra"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "common meadow Q_a + wheel_three_distinct in WheelFrac.lean (2026-11-14)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "48c0f8b6-7219-4ef3-9ba2-011ea7436253",
           "new": {
             "file": "ZeroParadox/Valuation/CellsJoint.lean",
@@ -56890,6 +57005,43 @@
             "role": []
           },
           "reason": "die-tagged-1029: the adjoined point tagged (Option ℕ) or a limit (Escardó's ℕ∞, NInf): uniform Bool-step trichotomy and selector free on NInf, LPO on Option ℕ; WLPO at ∞; the chain Option ℕ → NInf → Part ℕ and NInf ≃ Computation Unit (Die § XXIII); Tim ruling 2026-10-29",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "635de215-c220-47ee-9035-6444fe772496",
+          "new": {
+            "file": "ZeroParadox/Algebra/WheelFrac.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cm_inv_zero",
+            "short": "cm_inv_zero"
+          },
+          "old": {
+            "file": "ZeroParadox/Algebra/WheelFrac.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cm_inv_zero",
+            "short": "cm_inv_zero",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "algebra"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "common meadow Q_a + wheel_three_distinct in WheelFrac.lean (2026-11-14)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -72278,6 +72430,43 @@
             ]
           },
           "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "7f03eeb7-c7e4-4dc7-90cf-4998c42b830e",
+          "new": {
+            "file": "ZeroParadox/Algebra/WheelFrac.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cmAdd",
+            "short": "cmAdd"
+          },
+          "old": {
+            "file": "ZeroParadox/Algebra/WheelFrac.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cmAdd",
+            "short": "cmAdd",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "algebra"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "common meadow Q_a + wheel_three_distinct in WheelFrac.lean (2026-11-14)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -92343,6 +92532,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "a18cddf9-5e60-4b6f-bd69-2d03994145e1",
+          "new": {
+            "file": "ZeroParadox/Algebra/WheelFrac.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cm_a_selfOnly",
+            "short": "cm_a_selfOnly"
+          },
+          "old": {
+            "file": "ZeroParadox/Algebra/WheelFrac.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cm_a_selfOnly",
+            "short": "cm_a_selfOnly",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "algebra"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "common meadow Q_a + wheel_three_distinct in WheelFrac.lean (2026-11-14)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "a19c9f6f-64ef-4b54-aed5-a4080a3c69eb",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -95394,6 +95622,43 @@
             ]
           },
           "reason": "Die stage/closure shape and registration switch (Die.lean § VI-VII), with its two face maps in their existing homes (Epsilon0LeastFP, Occurrence)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a82cb33a-7145-4210-9980-294f346953a0",
+          "new": {
+            "file": "ZeroParadox/Algebra/WheelFrac.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cmMul",
+            "short": "cmMul"
+          },
+          "old": {
+            "file": "ZeroParadox/Algebra/WheelFrac.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cmMul",
+            "short": "cmMul",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "algebra"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "common meadow Q_a + wheel_three_distinct in WheelFrac.lean (2026-11-14)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -109873,6 +110138,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "bf687e83-e312-4c3d-aa04-e1021b18219d",
+          "new": {
+            "file": "ZeroParadox/Algebra/WheelFrac.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cm_not_involutive",
+            "short": "cm_not_involutive"
+          },
+          "old": {
+            "file": "ZeroParadox/Algebra/WheelFrac.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cm_not_involutive",
+            "short": "cm_not_involutive",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "algebra"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "common meadow Q_a + wheel_three_distinct in WheelFrac.lean (2026-11-14)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -127347,6 +127651,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "dd462d30-2de5-4196-8ec6-134f7d560d07",
+          "new": {
+            "file": "ZeroParadox/Algebra/WheelFrac.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.wheel_trivial_of_bot_eq_zero",
+            "short": "wheel_trivial_of_bot_eq_zero"
+          },
+          "old": {
+            "file": "ZeroParadox/Algebra/WheelFrac.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.wheel_trivial_of_bot_eq_zero",
+            "short": "wheel_trivial_of_bot_eq_zero",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "algebra"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "common meadow Q_a + wheel_three_distinct in WheelFrac.lean (2026-11-14)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "dd55f87f-7ae6-4eef-903b-7fab66f0f999",
           "new": {
             "file": "ZeroParadox/Valuation/TowerTape.lean",
@@ -134782,6 +135125,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "e90c25a9-3fa6-4efe-8a3b-d75f6467454a",
+          "new": {
+            "file": "ZeroParadox/Algebra/WheelFrac.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cm_inv_a",
+            "short": "cm_inv_a"
+          },
+          "old": {
+            "file": "ZeroParadox/Algebra/WheelFrac.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cm_inv_a",
+            "short": "cm_inv_a",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "algebra"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "common meadow Q_a + wheel_three_distinct in WheelFrac.lean (2026-11-14)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "e9151c28-3750-4d75-9e29-47a763eb0ff6",
           "new": {
             "file": "ZeroParadox/State/QubitDie.lean",
@@ -135805,6 +136185,43 @@
             ]
           },
           "reason": "AxiomLedger: axiom-profile ledger gate over KleeneChoiceFree (sqrt projections, 14 same-statement bridges, ledger data)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "eb1ac70e-0558-49b4-9d44-4cac659a3e22",
+          "new": {
+            "file": "ZeroParadox/Algebra/WheelFrac.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cm_add_a",
+            "short": "cm_add_a"
+          },
+          "old": {
+            "file": "ZeroParadox/Algebra/WheelFrac.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cm_add_a",
+            "short": "cm_add_a",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "algebra"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "common meadow Q_a + wheel_three_distinct in WheelFrac.lean (2026-11-14)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -139646,6 +140063,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "f1e0035b-1065-47c3-93e0-4166f484a775",
+          "new": {
+            "file": "ZeroParadox/Algebra/WheelFrac.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cm_zero_one_way",
+            "short": "cm_zero_one_way"
+          },
+          "old": {
+            "file": "ZeroParadox/Algebra/WheelFrac.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cm_zero_one_way",
+            "short": "cm_zero_one_way",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "algebra"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "common meadow Q_a + wheel_three_distinct in WheelFrac.lean (2026-11-14)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "f1f54675-0c5c-4fdb-9cbf-6384a24cac5a",
           "new": {
             "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
@@ -141351,6 +141807,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "f5043c63-cd36-498c-9984-7d33b5921659",
+          "new": {
+            "file": "ZeroParadox/Algebra/WheelFrac.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cmInv",
+            "short": "cmInv"
+          },
+          "old": {
+            "file": "ZeroParadox/Algebra/WheelFrac.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cmInv",
+            "short": "cmInv",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "algebra"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "common meadow Q_a + wheel_three_distinct in WheelFrac.lean (2026-11-14)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "f5380a16-40dd-4f9d-8c9e-ec123f2d1d45",
           "new": {
@@ -142041,6 +142534,45 @@
             ]
           },
           "reason": "ignorance-seam-viii: the bend NInf.det on 2-adic digit tapes is the 2-adic valuation (IgnoranceSeam.lean § VIII)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f6011a68-3ae1-4baf-b238-9fdda2375d12",
+          "new": {
+            "file": "ZeroParadox/Algebra/WheelFrac.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cm_a_absorbs",
+            "short": "cm_a_absorbs"
+          },
+          "old": {
+            "file": "ZeroParadox/Algebra/WheelFrac.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cm_a_absorbs",
+            "short": "cm_a_absorbs",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "algebra"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "common meadow Q_a + wheel_three_distinct in WheelFrac.lean (2026-11-14)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -143870,6 +144402,43 @@
             ]
           },
           "reason": "UniversalChoiceFree § IX: a self-printing universal code at [propext, Quot.sound] (restated SelfPrints ∧ Universal via encodeCode/ofNatCodeCF), faithfulness bridges, statement controls, controls zero_selfPrints_not_universal / universal_not_selfPrints_cf / unshifted_incompatible",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f8c0f170-ece8-4ec4-a575-ce0dbae00089",
+          "new": {
+            "file": "ZeroParadox/Algebra/WheelFrac.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cm_mul_a",
+            "short": "cm_mul_a"
+          },
+          "old": {
+            "file": "ZeroParadox/Algebra/WheelFrac.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cm_mul_a",
+            "short": "cm_mul_a",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "algebra"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "common meadow Q_a + wheel_three_distinct in WheelFrac.lean (2026-11-14)",
           "verify": {
             "axioms": null,
             "sorry_free": true

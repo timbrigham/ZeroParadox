@@ -34,6 +34,7 @@ import ZeroParadox.Settheory.QuineHost
 import ZeroParadox.Settheory.HypersetOrder
 import ZeroParadox.Computability.SelfCopyReference
 import ZeroParadox.Algebra.Wheel
+import ZeroParadox.Algebra.WheelFrac
 import ZeroParadox.Category.WellFoundedCoalgebra
 import ZeroParadox.Category.ExcludedMiddleBridge
 import ZeroParadox.Category.IgnoranceSeam
@@ -2387,9 +2388,21 @@ example : (ZeroParadox.Motion.ofFun ZeroParadox.zpwInv).SelfOnlyAt ZeroParadox.Z
 -- `0` steps only to itself.
 example : (ZeroParadox.Motion.ofFun (Inv.inv : ℚ → ℚ)).SelfOnlyAt 0 :=
   (ZeroParadox.Motion.selfOnlyAt_ofFun_iff _ _).2 inv_zero
--- Reading: with two adjoined points, `∞` is exchanged with `0` and `0·/0` is the involution's fixed
--- centre, not an end; with none, `0` is fixed and nothing is exchanged with it. The one-point case
--- between them is not measured here.
+#check @ZeroParadox.wheel_three_distinct         -- Statement: in a non-trivial wheel, `0`, `/0`, `0·/0` are pairwise distinct
+#check @ZeroParadox.wheel_trivial_of_bot_eq_zero -- Statement: in a wheel, `0·/0 = 0` makes every two elements equal
+-- The common meadow `ℚ_a` (Bergstra & Ponse, arXiv:1406.6878v4) on `Option ℚ`, ℚ with one adjoined point:
+#check @ZeroParadox.cm_inv_inv                   -- Statement: their (e13), `(x⁻¹)⁻¹ = x + 0·x⁻¹`, on the model
+#check @ZeroParadox.cm_a_selfOnly                -- Statement: under inversion, `a` steps only to itself
+#check @ZeroParadox.cm_zero_one_way              -- Statement: under inversion, `0` steps to `a` and `a` not to `0`
+#check @ZeroParadox.cm_not_involutive            -- Statement: inversion is not an involution, `(0⁻¹)⁻¹ = a ≠ 0`
+#check @ZeroParadox.cm_preimage_a                -- Statement: exactly `a` and `0` step into `a` under inversion
+#check @ZeroParadox.cm_a_absorbs                 -- Statement: with OVER `x → x + z`, `a` steps only to itself and every point steps to it
+-- Reading: along the adjoined-points switch, the inversion of total division takes three shapes. No
+-- adjoined point (the involutive meadow ℚ₀, the ℚ control above): `0` is fixed and inversion is an
+-- involution. One (the common meadow): inversion is a one-way arrow `0 → a` and not an involution,
+-- and `a` absorbs addition. Two (the wheel): `0` and `∞` are exchanged and `0·/0` is the fixed centre. This is a
+-- reading of three separate results, not a theorem; no structural connection between the three
+-- structures is claimed, and a meadow of either kind is not a collapsed wheel.
 #check @ZeroParadox.rInv_conj_rScale            -- Statement: on `OnePoint ℚ_[2]`, `rInv ∘ rScale n ∘ rInv = rScale (-n)`
 -- Statement: `OnePoint ℚ_[2]` under `rScale n`: `rInv` reverses the motion, `0` and `∞` each step only
 -- to themselves, and there is no source and no sink (`[propext, Classical.choice, Quot.sound]`).

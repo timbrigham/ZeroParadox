@@ -43,12 +43,11 @@ a defined first-class operation. The resulting structure has two special element
   - `∞ = /0`       — the multiplicative inverse of zero
   - `⊥ₗ = 0 · /0`  — the absorbing "undefined" element
 
-**The ZP Conjecture (open, see §VIII; the wheel-of-fractions construction is formalized in
-`ZeroParadox/Algebra/WheelFrac.lean`, and the conjecture is not):**
-The wheel axioms for /0 are derivable from ring structure rather than independently
-assumed, with the valuation condition `val(0) = ⊤` (`wvs_val_zero`) and `⊥ = {⊥}` (ZFC⁻ + AFA) pinning the
-special element — making wheel theory the algebraic representation of the 0/∞ exchange rather than a
-coincidence.
+**The ZP Conjecture, in two halves (see §VIII).** *Construction, proved:* the wheel axioms for /0
+follow from ring structure — any commutative ring with a multiplicative submonoid gives a wheel
+(`instWheel`, `ZeroParadox/Algebra/WheelFrac.lean`). *Pinning, open:* the 0/∞ exchange with
+`val(0) = ⊤` (`wvs_val_zero`) and `⊥ = {⊥}` (ZFC⁻ + AFA) force the wheel axioms and pin the special
+element — making wheel theory the algebraic representation of the 0/∞ exchange, not a coincidence.
 
 **Structural alignment (not proof):**
 - In ZFC+Foundation: division by zero is undefined; the Axiom of Regularity prohibits
@@ -69,18 +68,17 @@ This file:
   § VI.  Connection to ValuationStructure: val(⊥) = ∞ ↔ /0 = ∞ (proved)
   § VII.  WheelValuationStructure: the algebraic bridge (typeclass)
   § VII-b. NO-GO gauge: the class is degenerately inhabited; nondegeneracy as an explicit predicate
-  § VIII. Main conjecture: open (the construction from a ring is formalized in `ZeroParadox/Algebra/WheelFrac.lean`)
+  § VIII. Main conjecture: construction half proved (`ZeroParadox/Algebra/WheelFrac.lean`), pinning half open
   § IX.   Purity check
 
-Status: Sorry-free. §VIII is now a documentation anchor with no theorem object; the
-construction it points to is proved in `ZeroParadox/Algebra/WheelFrac.lean` — `instWheel` shows
-the wheel of fractions `⊙_S A = (A × A)/≡_S` is a `Wheel` for any commutative ring `A` and
-multiplicative submonoid `S` (sorry-free, `Classical.choice`-free, `[propext, Quot.sound]`).
-§VII defines WheelValuationStructure — the typeclass identifying the bridge: a commutative
-ring + multiplicative valuation, with val(0) = ⊤ pinning the special element (motivated by the
-ZFC⁻ + AFA Quine atom `⊥ = {⊥}`, see § VIII; nothing in the Lean derives it from the Quine atom). `instWheel`
-takes the ring as an input, so it does not prove the conjecture above, whose inputs are the 0/∞
-exchange and val(0) = ⊤; §VI checks the identification on `ZPWheelElem` only.
+Status: Sorry-free. Construction half proved: `instWheel` (`ZeroParadox/Algebra/WheelFrac.lean`) shows
+`⊙_S A = (A × A)/≡_S` is a `Wheel` for any commutative ring `A` and multiplicative submonoid `S`
+(`Classical.choice`-free, `[propext, Quot.sound]`). Pinning half open: §VIII anchors it, with no
+theorem object. §VII defines WheelValuationStructure — the bridge typeclass: a commutative ring +
+multiplicative valuation, with val(0) = ⊤ pinning the special element (motivated by the ZFC⁻ + AFA
+Quine atom `⊥ = {⊥}`; nothing in the Lean derives it from the Quine atom). `instWheel` takes the ring
+as an input, so it does not prove the pinning half, whose inputs are the 0/∞ exchange and
+val(0) = ⊤; §VI checks the identification on `ZPWheelElem` only.
 See notes/wheel_conjecture_proof_gap_2026-05-31.md for the original three-tier diagnosis.
 -/
 
@@ -543,7 +541,7 @@ theorem zpwVal_inv_zero : zpwVal (zpwInv (.fin 0)) = 0 := by
     whose wheel-inverse is ∞ (inf). This ties val(0) = ⊤ to the 0/∞ exchange concretely:
     val(x) = ⊤  ↔  winv(x) = ∞  holds in ZPWheelElem.
     The abstract version — that this holds in any wheel satisfying the ZP structural
-    constraints — is the content of the §VIII conjecture. -/
+    constraints — is the content of the §VIII conjecture's open pinning half. -/
 theorem zpw_top_val_iff_inv_is_inf (x : ZPWheelElem) :
     zpwVal x = ⊤ ↔ zpwInv x = .inf := by
   cases x with
@@ -625,7 +623,8 @@ theorem zpw_top_val_iff_inv_is_inf (x : ZPWheelElem) :
       - wmul([a,b],[c,d]) = [a·c, b·d] — inherited from ring multiplication
     The wheel axioms (Carlström Def 1.1) follow from the ring axioms on L plus the submonoid structure of S.
     This construction is formalized in `ZeroParadox/Algebra/WheelFrac.lean` (`instWheel`). It takes
-    the ring as an input, so it is not the §VIII conjecture. -/
+    the ring as an input, so it proves the §VIII conjecture's construction half and not its pinning
+    half. -/
 -- [ZP-CUSTOM] incomparable with: Mathlib `AddValuation A ℕ∞` (RingTheory/Valuation/Basic.lean) | reason:
 -- INCOMPARABLE, not ordered — it drops `map_one'` AND the ultrametric `map_add_le_max'`, so it is not a
 -- reduct by one axiom; but `AddValuation` needs only `[Ring R]` while this class
@@ -814,19 +813,19 @@ At the pinned Mathlib the numerals `(0 : ℕ∞)` and `(1 : ℕ∞)` measure no 
 for the difference between the two footprints. -/
 
 -- ============================================================
--- § VIII. The Main Conjecture (Open)
+-- § VIII. The Main Conjecture (construction half proved, pinning half open)
 -- ============================================================
 
 /-! ### Status
-The conjecture, that the 0/∞ exchange with val(0) = ⊤ forces the wheel axioms, is not proved; this anchor
-has no theorem object. `Statement:` `ZeroParadox/Algebra/WheelFrac.lean` (not importable here without a
-cycle) proves the construction from a ring: `instWheel`, any commutative ring with a submonoid `S` gives a
-wheel, and `inf_ne_bot`, ∞ ≠ ⊥ₗ there when `0 ∉ S`. Neither mentions a valuation. On `ZPWheelElem` only,
+**Construction half, proved:** `Statement:` `ZeroParadox/Algebra/WheelFrac.lean` (not importable here
+without a cycle) has `instWheel`, any commutative ring with a submonoid `S` gives a wheel, and
+`inf_ne_bot`, ∞ ≠ ⊥ₗ there when `0 ∉ S`; neither mentions a valuation. **Pinning half, open:** that the
+0/∞ exchange with val(0) = ⊤ forces the wheel axioms has no theorem object. On `ZPWheelElem` only,
 `zpw_top_val_iff_inv_is_inf` (§VI) ties val = ⊤ to the element the inverse sends to ∞. "Infinitudes of
 zero" closes the IDENTIFICATION gap, leaving `wvs_val 0 = ⊤` an assumed field (§VII), recoverable from
 `wvs_val_mul` once some element has valuation other than `0` (the `example`s after
-`nondegenerate_iff_map_one`). It does not close the CONSTRUCTION gap: `scale` is unary and `wmul` binary,
-so ring structure is the missing hypothesis (`WithTop L` + `selfApp` does not close it). See § VII-b. -/
+`nondegenerate_iff_map_one`). It does not supply the ring: `scale` is unary and `wmul` binary, so ring
+structure is the missing hypothesis (`WithTop L` + `selfApp` does not close it). See § VII-b. -/
 
 -- ============================================================
 -- § IX. Purity Check
