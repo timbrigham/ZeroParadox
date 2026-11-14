@@ -219,7 +219,7 @@ example : ∀ o : Ordinal, ((⊥ : Set.Ici o) : Ordinal) = o := fun _ => rfl
 
 -- Statement: if `r` is not well-founded, no `f : S → Ordinal` is strictly increasing along `r`.
 #check @ZeroParadox.no_faithful_span_to_ordinal_and_descending
--- Statement: the converse biconditional — such an `f` exists iff `r` is well-founded.
+-- Statement: the converse biconditional — such an `f` into `Ordinal` of `S`'s own universe exists iff `r` is well-founded.
 #check @ZeroParadox.faithful_iff_descending
 
 /-! ### the two faces at `selfApp`'s fixed points: a generic subsingleton and one equivalence -/
