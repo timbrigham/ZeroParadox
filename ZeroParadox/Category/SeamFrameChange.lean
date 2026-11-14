@@ -64,11 +64,12 @@ noncomputable abbrev Z_seamFC : ModuleCat ℂ := fD_functor.obj 0
     MC-1 convention — do not rename — but it OVERCLAIMS: the seam is not a frame flip.** No snap appears in this statement either.
 
     `Statement:` COINCIDENCE — the seam is **initial AND terminal** at once, a zero object (conjuncts
-    (i) and (ii)), and so is its opposite — four `Nonempty` witnesses. That is `op`-self-duality.
+    (i) and (ii)).
     `Statement:` INVERSION — `op` exchanges the two characterisations, initial and terminal, that the
     seam already carries: its opposite is terminal and initial (conjuncts (iii) and (iv)). Its opposite
     is again a zero object, as every zero object's is (`IsZero.op`), so `op` singles out no object here.
-    On the sphere the exchange is of two distinct points: `rInv` swaps `0` and `∞` (`rInv_swaps`).
+    `Reading:` INVERSION — by contrast, on the sphere (a different carrier, a different theorem) the
+    exchange is of two distinct points: `rInv` swaps `0` and `∞` (`rInv_swaps`).
 
     `Reading:` COINCIDENCE and INVERSION — this is "the bottom is **concurrently both poles**" in categorical dress — μ-bottom in one
     chart, ν-top in the other, **simultaneously**. **The frame change is the exchange of the two

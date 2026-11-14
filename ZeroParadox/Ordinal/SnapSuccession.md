@@ -20,7 +20,8 @@ seeded strictly above the last.
 a rung IS a bottom is its up-set `Set.Ici rung`: the rung is ⊥ of `Set.Ici rung`, and never ⊥ of `Ordinal`
 itself (`Ordinal.epsilon_pos`). The *next* iteration seeds at succ(rung), the least element of
 `Set.Ioi rung`, and closes at the next ε-number, which fills the ε₀ role, the closure, at that
-iteration (`epsilon_add_one_eq_nfp`, with `succ o = o + 1`; `ZeroParadox/Ordinal/Epsilon0CannotBe.lean` § I-b).
+iteration (`epsilon_add_one_eq_nfp`, with `succ ε_o = ε_o + 1`; `ZeroParadox/Ordinal/Epsilon0CannotBe.lean`
+§ I-b).
 The qualifier is load-bearing: "iterative bottom" names the role, where the bare noun would assert
 the identity.
 
@@ -46,8 +47,8 @@ A nucleus is a **closure** — idempotent — so iterating `snapNucleus` alone d
 already run to completion. The succession comes instead from **re-seeding one step above the current
 target**: the next target is the snap applied just above the last. That operation is exactly
 Mathlib's fixed-point enumerator, `ε_ = Ordinal.epsilon = deriv (α ↦ ω^α)`, whose successor step is
-`ε_ (o + 1) = nfp (ω^·) (ε_ o + 1)` (`epsilon_add_one_eq_nfp`, with `succ o = o + 1`) — "snap from just past the current
-rung."
+`ε_ (o + 1) = nfp (ω^·) (ε_ o + 1)` (`epsilon_add_one_eq_nfp`, with `succ (ε_ o) = ε_ o + 1`) — "snap from
+just past the current rung."
 
 So the succession of snap targets is the **ε-hierarchy** `ε₀ < ε₁ < ε₂ < …`, and:
 

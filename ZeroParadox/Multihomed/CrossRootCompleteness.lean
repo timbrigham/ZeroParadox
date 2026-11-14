@@ -59,8 +59,9 @@ categorical-polarity clash:
 **Cardinality does NOT separate (b).** Both `#5 = StateSpace 0` and `#3 = {0} ⊆ Q₂` are *subsingletons*,
 at most one point (`bots_both_subsingleton`), and each is inhabited (the two `example`s after the
 header of `ZeroParadox/Multihomed/TwoFacesBot.lean`), so each has exactly one point and the Axis-III
-invariant that split #4 from #5 is silent here: the genuine separator for the #5↔#3 edge is polarity (initial vs not), not cardinality. Recorded in-statement so the
-finding is honest about *which* wall does the work.
+invariant that split #4 from #5 is silent here: the genuine separator for the #5↔#3 edge is polarity (initial vs not), not cardinality. Recorded by `bots_both_subsingleton` (at most one point
+each) with the two one-point `example`s in `ZeroParadox/Multihomed/TwoFacesBot.lean`, so the finding is
+honest about *which* wall does the work.
 
 Edge (b) is an **obstruction (no-go) result** on the initial half: it proves a *separation*, not a
 cross-domain identity. Edge (a) is not: no separating statement is proved for it, so of the two

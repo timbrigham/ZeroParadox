@@ -172,11 +172,11 @@ section WheelBasic
 variable {W : Type*} [Wheel W]
 
 /-- wheelInf: the infinite element /0. Conjectured ZP counterpart: the algebraic
-    expression of `val(⊥) = ∞` — see §VIII for status. -/
+    expression of `val(⊥) = ∞`; on `ZPWheelElem` only, see `zpw_top_val_iff_inv_is_inf` (§VI). -/
 def wheelInf : W := Wheel.winv (Wheel.wzero)
 
 /-- wheelBot: the absorbing bottom element 0·/0. Conjectured ZP counterpart: the
-    algebraic expression of `⊥ = {⊥}` (ZFC⁻ + AFA) — see §VIII for status. -/
+    algebraic expression of `⊥ = {⊥}` (ZFC⁻ + AFA; scoped by the header's ⚠ SCOPE note). -/
 def wheelBot : W := Wheel.wmul (Wheel.wzero) (Wheel.winv (Wheel.wzero))
 
 /-- /(∞) = 0: applying / to wheelInf returns wzero. -/
@@ -345,13 +345,13 @@ instance : Wheel ZPWheelElem where
 -- § V. The 0/∞ Exchange and the Absorbing Element (proved without sorry)
 -- ============================================================
 
-/-- /0 = ∞: the 0/∞ exchange in algebraic form, proved for ZPWheelElem.
-    Conjectured ZP counterpart: corresponds to val(⊥) = ∞ — see §VIII for status. -/
+/-- /0 = ∞: the 0/∞ exchange in algebraic form, proved for ZPWheelElem. Conjectured ZP counterpart:
+    corresponds to val(⊥) = ∞; on this carrier, see `zpw_top_val_iff_inv_is_inf` (§VI). -/
 theorem zpw_inv_zero_eq_inf : zpwInv (.fin 0) = .inf := by
   simp [zpwInv]
 
-/-- 0 · ∞ = ⊥ₗ: the absorbing-element identity, proved for ZPWheelElem.
-    Conjectured ZP counterpart: algebraic expression of ⊥ = {⊥} — see §VIII for status. -/
+/-- 0 · ∞ = ⊥ₗ: the absorbing-element identity, proved for ZPWheelElem. Conjectured ZP counterpart:
+    algebraic expression of ⊥ = {⊥} (ZFC⁻ + AFA; scoped by the header's ⚠ SCOPE note). -/
 theorem zpw_zero_mul_inf_eq_bot : zpwMul (.fin 0) .inf = .bot := by
   simp [zpwMul]
 
@@ -538,8 +538,7 @@ theorem zpwVal_inv_zero : zpwVal (zpwInv (.fin 0)) = 0 := by
 /-- For ZPWheelElem: the element with infinite valuation (fin 0) is exactly the element
     whose wheel-inverse is ∞ (inf). This ties val(0) = ⊤ to the 0/∞ exchange concretely:
     val(x) = ⊤  ↔  winv(x) = ∞  holds in ZPWheelElem.
-    The abstract version — that this holds in any wheel satisfying the ZP structural
-    constraints — is the content of the §VIII conjecture's open pinning half. -/
+    A concrete instance of the kind the open pinning half (§VIII) is about. -/
 theorem zpw_top_val_iff_inv_is_inf (x : ZPWheelElem) :
     zpwVal x = ⊤ ↔ zpwInv x = .inf := by
   cases x with
