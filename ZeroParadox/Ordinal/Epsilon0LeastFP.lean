@@ -255,7 +255,7 @@ example : Ordinal.card (Ordinal.epsilon (Order.succ (Cardinal.aleph.{0} 1).ord))
   rw [Cardinal.card_ord, h] at hle
   exact absurd hle (not_le.mpr Cardinal.aleph0_lt_aleph_one)
 
-/-- **Invariant — ε₀ ≠ 0.** ε₀ can never be zero, in any reading. It is a fixed point of `α ↦ ω^α`
+/-- **Invariant — ε₀ ≠ 0 of `Ordinal`.** ε₀ is never the ordinal 0. It is a fixed point of `α ↦ ω^α`
     (`epsilon0_is_fixedpoint`); were it 0, that would say `ω^0 = 0`, i.e. `1 = 0`. This is the bedrock
     guard beneath every ε₀ characterization. -/
 theorem epsilon0_ne_zero : ε₀ ≠ 0 := by
@@ -265,7 +265,7 @@ theorem epsilon0_ne_zero : ε₀ ≠ 0 := by
   exact one_ne_zero hf
 
 /-- **Invariant — ε₀ ≠ ⊥.** Since `(⊥ : Ordinal) = 0` (`Ordinal.bot_eq_zero`) and ε₀ ≠ 0, ε₀ is never
-    the bottom ⊥. ⊥ is *a* base the ε₀-tower is seeded at (`epsilon0_eq_nfp_bot`), never its closure.
+    ⊥ of `Ordinal`. That ⊥ is *a* base the ε₀-tower is seeded at (`epsilon0_eq_nfp_bot`), never its closure.
     It is the *least* such base and not the only one: for **normal** `F`, every seed at or below the
     closure reaches the same closure (`isLeastFixedPointFrom_nfp`). The invariant does not depend
     on that. -/

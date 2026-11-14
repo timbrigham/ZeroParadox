@@ -6,7 +6,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# The CNF/ℤ₂ value bridge, at the construction level (Gentzen.lean item 4)
+# The CNF/ℤ₂ value bridge, at the construction level (`ZeroParadox/Ordinal/Gentzen.md` item 4)
 
 One sequence `towerNONote` has two realizations, connected by maps and never by `=`: `NONote.repr`
 into `Ordinal`, closing at the least fixed point ε₀, and `cnfToZp2` into `ℤ_[2]`, with norm-limit 0
@@ -75,7 +75,7 @@ theorem seed_maps_to_bot_both :
     *value* 0 in `ℤ_[2]`. So the ordinal ascent from ⊥ of `Ordinal` to ε₀ realizes as a `ℤ_[2]` path departing 0 and
     whose norm returns to 0. This is a value coincidence at 0, NOT an identity: ⊥ of `Ordinal` is never ε₀ (ε₀ is the least fixed
     point of `α ↦ ω^α`, never the same as ⊥ — and **not** order-adjacent to it, see
-    `epsilonZero_tower_lt`), and the images of the finite stages n ≥ 1 are all ≠ 0 (next to the floor, never it; `snap_arc_z2_loop`). `ε₀ = 0` with 0 the 2-adic zero stays ill-typed: it fails to elaborate. -/
+    `epsilonZero_tower_lt`), and the images of the finite stages n ≥ 1 are all ≠ 0 (next to the floor, never it; `snap_arc_z2_loop`). `ε₀ = (0 : ℤ_[2])` stays ill-typed: it fails to elaborate. -/
 theorem tower_image_loops_to_seed :
     cnfToZp2 (towerNONote 0) = 0 ∧
     Filter.Tendsto (fun n => cnfToZp2 (towerNONote n)) Filter.atTop
@@ -145,7 +145,7 @@ example : epsilonZero ≠ (0 : Ordinal) := epsilon0_ne_zero
     because ⊥ of `Ordinal` and ε₀ are one point: **⊥ of `Ordinal` is never ε₀** (ε₀ is the least fixed point of `α ↦ ω^α`), never identical — and **not** order-adjacent, see
     `epsilonZero_tower_lt` — and
     the images of the finite stages n ≥ 1 never even reach 0 (always next to, never the same). Honest fence: this is the
-    `ℤ_[2]` realization *via the map*, NOT a proof of `ε₀ = 0` with 0 the 2-adic zero, which stays ill-typed: it fails
+    `ℤ_[2]` realization *via the map*, NOT a proof of `ε₀ = (0 : ℤ_[2])`, which stays ill-typed: it fails
     to elaborate (MC-1 / ZP-P). -/
 theorem snap_arc_z2_loop :
     cnfToZp2 (towerNONote 0) = 0 ∧
