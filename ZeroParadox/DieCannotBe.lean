@@ -2397,12 +2397,19 @@ example : (ZeroParadox.Motion.ofFun (Inv.inv : ℚ → ℚ)).SelfOnlyAt 0 :=
 #check @ZeroParadox.cm_not_involutive            -- Statement: inversion is not an involution, `(0⁻¹)⁻¹ = a ≠ 0`
 #check @ZeroParadox.cm_preimage_a                -- Statement: exactly `a` and `0` step into `a` under inversion
 #check @ZeroParadox.cm_a_absorbs                 -- Statement: with OVER `x → x + z`, `a` steps only to itself and every point steps to it
--- Reading: along the adjoined-points switch, the inversion of total division takes three shapes. No
--- adjoined point (the involutive meadow ℚ₀, the ℚ control above): `0` is fixed and inversion is an
--- involution. One (the common meadow): inversion is a one-way arrow `0 → a` and not an involution,
--- and `a` absorbs addition. Two (the wheel): `0` and `∞` are exchanged and `0·/0` is the fixed centre. This is a
--- reading of three separate results, not a theorem; no structural connection between the three
--- structures is claimed, and a meadow of either kind is not a collapsed wheel.
+-- Reading: comparing the totalisations of division on ℚ by the values they adjoin outside ℚ is
+-- Bergstra's frame (J. A. Bergstra, "Division by Zero: A Survey of Options", Transmathematica 1(1),
+-- 2019, § 3, pp. 10–15: the common meadow § 3.1, `0⁻¹ = 0` § 3.2, `0⁻¹ = 1` § 3.3, one added point `∞`
+-- with `0⁻¹ = ∞` and `∞⁻¹ = 0` § 3.4, the wheel § 3.5, the transrationals § 3.6; J. A. Bergstra and
+-- J. V. Tucker, "The Wheel of Rational Numbers as an Abstract Data Type", WADT 2020, LNCS 12669,
+-- pp. 13–30, § 1 pp. 13–14 and p. 29). The corpus reads three of his structures through the die, an
+-- instance of his frame and not the reverse, each by the shape of its inversion: the involutive meadow
+-- ℚ₀ (the ℚ control above), where `0` is fixed and inversion is an involution; the common meadow ℚ_a,
+-- where inversion is a one-way arrow `0 → a`, not an involution, and `a` absorbs addition; the wheel,
+-- where `0` and `∞` are exchanged and `0·/0` is the fixed centre. The number of adjoined points does
+-- not decide the shape: the survey's ℚ∞ adds one point and its inversion exchanges `0` and `∞` (§ 3.4),
+-- and its ℚ₁ adds none and its inversion is not an involution (§ 3.3). This is a reading of separate
+-- results, not a theorem; no structural connection between the three structures is claimed.
 #check @ZeroParadox.rInv_conj_rScale            -- Statement: on `OnePoint ℚ_[2]`, `rInv ∘ rScale n ∘ rInv = rScale (-n)`
 -- Statement: `OnePoint ℚ_[2]` under `rScale n`: `rInv` reverses the motion, `0` and `∞` each step only
 -- to themselves, and there is no source and no sink (`[propext, Classical.choice, Quot.sound]`).
