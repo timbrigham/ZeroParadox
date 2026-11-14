@@ -35,30 +35,23 @@ conjugacy** of their convergence orbits. The two orbits compared are:
 - **absorbing Markov orbit** (a chain started at its absorbing/stationary state): its
   distance-to-limit is `markovRate n := 0` — **at the limit from step 0** (`markovRate_zero`).
 
-**Race outcome: NO-GO (the pre-registered obstruction proves).** The two convergence
-*profiles* are value-incompatible:
+**What is proved: a strictly positive sequence is never the zero sequence.**
 
-- `no_rate_conjugacy` — for `x ≠ 0` there is **no reparametrization** `φ : ℕ → ℕ` matching the
-  two orbit value-sequences, i.e. no `φ` with `∀ n, padicRate x n = markovRate (φ n)`. The
-  p-adic value is positive at every step while every Markov value is `0`. This is the honest
-  load-bearing statement: a rate-preserving conjugacy of the orbits cannot exist.
-- `no_rate_orderIso` — even at one step the "is-at-limit" predicate clashes: there is no `n, m`
-  with `padicRate x n = markovRate m` (`x ≠ 0`). So the orbits do not even share a single rate
-  *value*, hence no order-isomorphism of their value-sets can exist.
+- `no_rate_conjugacy` — for `x ≠ 0` there is no `φ : ℕ → ℕ` with
+  `∀ n, padicRate x n = markovRate (φ n)`: the p-adic value is positive at every step and every
+  `markovRate` value is `0`.
+- `no_rate_orderIso` — for `x ≠ 0` no pair `n, m` has `padicRate x n = markovRate m`.
 
-**WITNESS / SCOPE FENCE.** The load-bearing content is *in* the theorem statements (the
-non-existence of a value-matching reparametrization `φ`, and the per-step value clash), not in
-the docstring. What this proves is precisely: **the doubling orbit's geometric-positive rate
-profile is incompatible with an absorbing chain's at-the-limit-from-step-0 profile** — they
-cannot be put in rate-preserving correspondence. What it does NOT claim: that *every* Markov
-attractor fails (this is the absorbing/stationary-start representative, the natural ν extreme),
-nor that #2 and #3 fail to *glue* in some non-rate sense (T2's singleton-bottoms caveat stands).
-It refines the within-ν wall **at the dynamical rate level**: the deterministic-ν orbit and the
-stochastic-ν orbit do not share a convergence-rate structure.
+**SCOPE FENCE: the mismatch is set by the two STARTS, not by the two dynamics.** The chain started
+at its absorbing state is at its limit from step 0, and the p-adic orbit from `x ≠ 0` is not.
+Started at its floor, the p-adic orbit has the identical profile, `padicRate 0 n = markovRate n`
+(the `example` after `no_rate_orderIso`). The rate comparison of the two dynamics is
+`padic_markov_shared_rate_envelope` (`ZeroParadox/Valuation/NuRateMatch.lean`): an irreducible
+chain whose imbalance decays at the p-adic envelope `(1/2)ⁿ`. So this file is no evidence that the
+within-ν edge #3↔#2 is obstructed at the rate level, and it does not change T2's status.
 
-`markovRate` is the concrete distance-to-limit sequence of the absorbing chain (constantly `0`);
-it is a *representative* of #2's attractor, chosen as the natural extreme (limit reached
-immediately). The p-adic side is the genuine doubling-map orbit on `Q₂`.
+`markovRate` is the distance-to-limit of one start of one chain (constantly `0`), not #2's
+convergence-rate sequence. The p-adic side is the doubling-map orbit on `Q₂` from `x`.
 -/
 
 namespace ZeroParadox
@@ -71,8 +64,8 @@ noncomputable def padicRate (x : Q₂) (n : ℕ) : ℝ := ‖(2 : Q₂) ^ n * x�
 
 /-- The absorbing/stationary Markov orbit's **distance-to-limit** at step `n`: `0`.
     Started at its absorbing state, the chain is at its limit from step `0` onward.
-    This is the stochastic-ν (#2) convergence-rate sequence (the natural extreme
-    representative — limit reached immediately). -/
+    This records the START, not a rate of #2: the chain of `padic_markov_shared_rate_envelope`
+    decays at `(1/2)ⁿ` off balance and is `0` throughout from a balanced start. -/
 def markovRate (_n : ℕ) : ℝ := 0
 
 /-- Closed form: the p-adic rate is the geometric sequence `2⁻ⁿ ‖x‖`. -/
@@ -103,36 +96,32 @@ theorem padicRate_strictAnti {x : Q₂} (hx : x ≠ 0) : StrictAnti (padicRate x
 /-- Every Markov rate value is `0` — at the limit from step `0` onward. -/
 theorem markovRate_zero (n : ℕ) : markovRate n = 0 := rfl
 
-/-- **The per-step value clash (the obstruction core).** For `x ≠ 0`, no p-adic-orbit step
-    value equals any Markov-orbit step value: the deterministic-ν orbit is strictly positive
-    at every finite step while the stochastic-ν (absorbing) orbit is `0` at every step. So the
-    two ν-orbits do not share even a single convergence-rate value. -/
+/-- **The per-step value clash.** For `x ≠ 0`, no `padicRate x n` equals any `markovRate m`:
+    the first is positive (`padicRate_pos`), the second `0`. The two starts differ, `x ≠ 0`
+    against the absorbing state; at `x = 0` the values agree. -/
 theorem padic_ne_markov {x : Q₂} (hx : x ≠ 0) (n m : ℕ) :
     padicRate x n ≠ markovRate m := by
   rw [markovRate_zero]
   exact ne_of_gt (padicRate_pos hx n)
 
-/-- **NO-GO (pre-registered): no rate-matching conjugacy.** For `x ≠ 0` there is no
-    reparametrization `φ : ℕ → ℕ` carrying the p-adic doubling orbit's rate sequence onto the
-    absorbing Markov orbit's rate sequence. A rate-preserving conjugacy of the two ν-attractor
-    orbits would require exactly such a `φ` (matching distance-to-limit step by step); the
-    geometric-positive p-adic profile cannot be matched to the at-the-limit Markov profile.
-
-    This is the load-bearing refinement of T2 at the dynamical rate level: the within-ν edge
-    #3↔#2 is **obstructed** when compared by orbit rate, not merely by global ambient topology. -/
+/-- `Statement:` for `x ≠ 0` there is no `φ : ℕ → ℕ` with `padicRate x n = markovRate (φ n)`
+    at every `n`. `Reading:` the pre-registered no-go proves for these two STARTS only; from
+    `x = 0` the match holds with `φ = id` (the `example` below), and the two dynamics share the
+    envelope `(1/2)ⁿ` (`padic_markov_shared_rate_envelope`). Not an obstruction of edge #3↔#2. -/
 theorem no_rate_conjugacy {x : Q₂} (hx : x ≠ 0) :
     ¬ ∃ φ : ℕ → ℕ, ∀ n, padicRate x n = markovRate (φ n) := by
   rintro ⟨φ, hφ⟩
   exact padic_ne_markov hx 0 (φ 0) (hφ 0)
 
-/-- **No order-isomorphism of the rate value-sets.** Since the two ν-orbits share no rate
-    value (`padic_ne_markov`), there is no `(n, m)` placing a p-adic rate equal to a Markov
-    rate — a fortiori no order-isomorphism between the two orbits' value-sequences can exist.
-    Stated as the non-existence of a single common value. -/
+/-- `Statement:` for `x ≠ 0`, no `(n, m)` has `padicRate x n = markovRate m`
+    (`padic_ne_markov`): the two sequences share no value. -/
 theorem no_rate_orderIso {x : Q₂} (hx : x ≠ 0) :
     ¬ ∃ (n m : ℕ), padicRate x n = markovRate m := by
   rintro ⟨n, m, h⟩
   exact padic_ne_markov hx n m h
+
+-- Statement: CONTROL: started at its floor, the p-adic orbit has `markovRate`'s profile, step by step.
+example (n : ℕ) : padicRate 0 n = markovRate n := by simp [padicRate, markovRate]
 
 end ZeroParadox
 

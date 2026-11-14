@@ -109,15 +109,15 @@ theorem swap_involutive : Function.Involutive swap := by
 /-- The inversion swaps the two poles — the finite shadow of `rInv_swaps` (`0 ↔ ∞`). -/
 theorem swap_swaps : swap zero = infty ∧ swap infty = zero := ⟨rfl, rfl⟩
 
-/-! ### § IV. The reversibility split — the symmetries reverse, the collapses do not (the snap direction)
+/-! ### § IV. The reversibility split — the symmetries reverse, the collapses do not
 
-The four corners are not on equal footing. The two **symmetries** (`cornerId`, `swap`) are bijections — you
-can undo them; they are the ν-side, the reversible inversion. The two **collapses** (`cornerZero`,
-`cornerInfty`) send both poles to one pole: they are **not injective**, the input is forgotten, there is no
-inverse — the μ-side, the **one-way direction**. This is the finite shape of the snap's irreversibility:
-you can fall to the floor, you cannot climb back out the way you came (`t_snap_irreversible` — no join from
-ε₀ returns to ⊥; `PoleCornersBridge` co-witnesses the identification). The forbidden direction is not a gap
-in the structure; it is the snap. -/
+The two **symmetries** (`cornerId`, `swap`) are bijections. The two **collapses** (`cornerZero`,
+`cornerInfty`) are **not injective**: a collapse to a pole is a legal motion, and it cannot be undone.
+`Reading:` `t_snap_irreversible` is a different one-way fact: in a ZP semilattice no join from a state
+above ⊥ of that semilattice returns to ⊥, so there the fall itself is unavailable. Under `poleView`
+(`zero` least) the collapse to `zero` is a fall (`corner_polarity`), the opposite arrow, as
+`ZeroParadox/Valuation/ScaleBridge.lean` § VI sorts them; under `poleViewSwap` it is a rise
+(`pole_polarity_swap`), the snap's direction. Non-injectivity holds in both views. -/
 
 /-- The concurrent corner is **reversible**: `cornerId` is a bijection. -/
 theorem cornerId_bijective : Function.Bijective cornerId := by
@@ -127,7 +127,7 @@ theorem cornerId_bijective : Function.Bijective cornerId := by
 theorem swap_bijective : Function.Bijective swap := swap_involutive.bijective
 
 /-- The zero corner is **irreversible**: `cornerZero` collapses both poles to `0`, so it is not injective —
-the origin is forgotten, no inverse exists. The one-way direction. -/
+the origin is forgotten, no inverse exists; the collapse cannot be undone. -/
 theorem cornerZero_not_injective : ¬ Function.Injective cornerZero := by
   intro h
   exact absurd (@h zero infty rfl) (by decide)
@@ -138,8 +138,8 @@ theorem cornerInfty_not_injective : ¬ Function.Injective cornerInfty := by
   exact absurd (@h zero infty rfl) (by decide)
 
 /-- **The reversibility split.** Of the four corners, the two symmetries (`cornerId`, `swap`) are bijections
-— reversible (the ν-inversion); the two collapses (`cornerZero`, `cornerInfty`) are not injective —
-irreversible (the μ-collapse to a pole, the one-way snap direction). -/
+— reversible; the two collapses (`cornerZero`, `cornerInfty`) are not injective — a collapse to a pole
+cannot be undone. Not the fact `t_snap_irreversible` states (§ IV). -/
 theorem reversibility_split :
     Function.Bijective cornerId ∧ Function.Bijective swap ∧
       ¬ Function.Injective cornerZero ∧ ¬ Function.Injective cornerInfty :=

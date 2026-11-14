@@ -85,18 +85,18 @@ theorem point_and_field_at_the_poles :
   · simp [poleToSphere, rInv_zero]
   · simp [poleToSphere, rInv_infty]
 
-/-! ### § IV. The forbidden direction is the snap (co-witness, shared-shape) -/
+/-! ### § IV. Two one-way facts side by side (a conjunction, not an identification) -/
 
-/-- **The irreversible direction is the snap.** The two proved one-way facts, sharing one shape:
-* **corner side** — `cornerZero` is not injective: falling to a pole forgets the origin, there is no inverse
+/-- `Statement:` the conjunction of two one-way facts:
+* **corner side** — `cornerZero` is not injective: the collapse to a pole is legal and cannot be undone
   (the forbidden transition among the four corners is *un-collapsing*);
-* **snap side** — `t_snap_irreversible`: once `x ≼ y` with `x ≠ y`, no join from `y` returns to `x` (the
-  forbidden transition of the snap is *returning to the same ⊥*).
+* **snap side** — `t_snap_irreversible`: once `x ≼ y` with `x ≠ y`, no join from `y` returns to `x`; at
+  `x := ⊥` of the semilattice the fall back to ⊥ by a join is unavailable.
 
-These are the same one-way shape on two structures. It is the wall the whole abstraction is bounded by:
-everything reversible is free (the ν-symmetries `cornerId`, `swap`); the one thing you cannot reverse is the
-fall to the floor. The forbidden direction is not a gap — it is the definition of the snap. Co-witnessed,
-never a cross-type `=`. -/
+`Reading:` under `poleView` the collapse to `zero` is a fall (`corner_polarity`): one fact forbids
+undoing a fall, the other forbids the fall, opposite arrows (`ZeroParadox/Valuation/ScaleBridge.lean`
+§ VI: inbound against outbound). Under `poleViewSwap` the collapse is a rise (`pole_polarity_swap`), the
+snap's direction. The corner's irreversibility is non-injectivity in both views. Never a cross-type `=`. -/
 theorem irreversible_direction_is_the_snap {L : Type*} [ZPSemilattice L] {x y : L}
     (hle : ZPSemilattice.join x y = y) (hne : x ≠ y) :
     ¬ Function.Injective Pole.cornerZero ∧ ¬ ∃ z : L, ZPSemilattice.join y z = x :=
