@@ -118,7 +118,7 @@ Mathlib: Nat.Partrec.Code.fixed_point (Rogers' fixed-point theorem).
 
 ## Axiom footprint
 
-This section's footprints were measured 2026-10-09 (§ VIII dates its own, 2026-10-04); the live record is
+This section's footprints were measured 2026-10-09 (§ VIII dates each of its own); the live record is
 the `PurityCheck` section of `ZeroParadox/Computability/Kleene.lean`.
 
 Not every proved theorem here carries `Classical.choice`: `encodeCode_self` has no axioms.
@@ -243,7 +243,7 @@ Proposition 3.3, p. 43, a program of no inputs that outputs itself, obtained fro
 theorem (their Theorem 3.2, Kleene's). Here the code instead returns its own Gödel number on every
 input of channel `0`, and is also universal; Proposition 3.3 states no universal half.
 
-**Where `Classical.choice` enters `selfref_universal_exists`, measured 2026-10-04.** For the
+**Where `Classical.choice` enters `selfref_universal_exists`; each bullet dates its measurement.** For the
 statement of `selfref_universal_exists` as written, the choice is not removed: that statement
 carries choice, so no proof of it is choice-free. The channel spelling of the statement (second
 bullet) is choice-free, and as of 2026-10-04 no proof of it without choice was found; see the

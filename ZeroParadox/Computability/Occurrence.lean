@@ -54,9 +54,9 @@ theorem step_dichotomy (s : σ) : f s = none ∨ ∃ s', f s = some s' := by
 theorem not_halted_means_stepping (s : σ) (h : f s ≠ none) : ∃ s', f s = some s' :=
   (step_dichotomy f s).resolve_left h
 
-/-- There is no unstarted state: not-halted and no-next-configuration cannot both hold.
-    This is the case DA-1 rejects when it says ⊥ is not a static description awaiting an
-    external executor — here it is not rejected by argument, it is absent from the type. -/
+/-- There is no unstarted state: not-halted and no-next-configuration cannot both hold. DA-1 rejects
+    this case (⊥ as a static description awaiting an external executor); here the two-valued head of
+    `σ → Option σ` excludes it, and a third head value admits it (`forcing_needs_the_binary_split`). -/
 theorem no_unstarted_state (s : σ) : ¬ (f s ≠ none ∧ ¬ ∃ s', f s = some s') := by
   rintro ⟨hne, hnex⟩
   exact hnex (not_halted_means_stepping f s hne)
