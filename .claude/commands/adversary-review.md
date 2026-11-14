@@ -293,6 +293,16 @@ Apply when ARGUMENTS_VALUE contains file paths.
 **Step 2** — Review each file:
 - For `.md`, `.txt`, `.rst` files: apply Document Scan Step 2a checks.
 - For `.py` build scripts: apply Document Scan Step 2b checks.
+- For `.lean` files: REPORT ONLY — see `D1` DOES NOT REACH A `.lean` FILE in § Remediation. Apply the
+  Central-Claim Crank Audit's Step 2 checks (a)–(f) to the file's docstrings, `Statement:` /
+  `Reading:` glosses and comments, then its Step 3 and Step 3a classification. Settle (e) and (f) by
+  RUNNING a witness or refuting `example` in your scratchpad; that snippet is EVIDENCE for your
+  findings note, never replacement text, and names no insertion site in the `.lean` file. For an
+  Engineer's Take ask only whether it is LABELLED as a belief or READS as a proved result.
+
+⛔ **A path whose extension matches no bullet above has NO check, and a review with no check can only
+PASS.** Do not improvise one and do not record over it: report it as out of protocol and leave it out
+of `--files`.
 
 Produce a `### [filename]` section for each.
 
