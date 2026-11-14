@@ -2573,10 +2573,12 @@ example : let M := (ZeroParadox.Motion.ofTotal (id : Fin 3 → Fin 3) (fun _ => 
   have e1 := hu 1 (ZeroParadox.Motion.rank_eq_top_of_cycle v hv c1)
   have e2 := hu 2 (ZeroParadox.Motion.rank_eq_top_of_cycle v hv c2)
   exact absurd (e1.trans e2.symm) (by decide)
--- Reading: the three ℕ∞-valued rank theorems print `[propext, Classical.choice, Quot.sound]`, as does
--- the bare statement `(∀ x : ℕ∞, x + 1 ≤ x → x = ⊤) → True` (statement control, measured 2026-10-21):
--- their footprint is carried by ℕ∞ in the statement. `not_cycle_of_nat_rank` states no ℕ∞ and is
--- proved directly over ℕ: `[propext, Quot.sound]`. It covers ℕ-valued ranks only; an ordinal-valued
+-- Reading: the three ℕ∞-valued rank theorems print `[propext, Classical.choice, Quot.sound]`; the
+-- bare statement `(∀ x : ℕ∞, x + 1 ≤ x → x = ⊤) → True` prints no axioms (statement control, measured
+-- 2026-11-13), so the choice is not carried by the statement and enters through their proofs, by
+-- Mathlib's ℕ∞ order lemmas (`le_top` at ℕ∞ alone measures the same three); no choice-free proof was
+-- attempted and no reduction to a taboo, so the class is open between accidental and essential.
+-- `not_cycle_of_nat_rank` states no ℕ∞ and is proved directly over ℕ: `[propext, Quot.sound]`. It covers ℕ-valued ranks only; an ordinal-valued
 -- form, for well-founded relations in general, is not built here. A rank dropping along every step is
 -- a well-foundedness argument, the kind a liveness proof rests on (Alpern and Schneider, IPL 21 (1985),
 -- p. 181).
