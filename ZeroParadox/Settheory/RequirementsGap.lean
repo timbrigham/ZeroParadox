@@ -25,8 +25,8 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 The framework keeps hitting a pattern: a structure provably meets a general schema's criteria, but we
 may only say "it is *one witness* of [any object meeting the criteria]," never "it *is* the object."
-(QuineAtomHost: AFA's pattern is a witness, not the forced theory. MC-1: a family, not one object. ⊥ itself:
-apophatic, never canonical.) The conjecture being probed is that the gap between *this one instance*
+(QuineAtomHost: AFA's pattern is a witness, not the forced theory. MC-1: a family, not one object. The
+bottom as a role: each carrier names its own ⊥, and `Reading:` none is canonical.) The conjecture being probed is that the gap between *this one instance*
 and *any object meeting the requirements* is the same self-referential 0↔∞ gap as everywhere else —
 the diagonal fixed point.
 
@@ -40,13 +40,13 @@ itself*) and that *every* such gap is a fork — is fenced in § V and never ass
 Read "you can pin the instance" as `∃! x, P x`. For a fixed-point characterization `P x := f x = x`,
 `fork_collapse_iff` says that is exactly the fork collapsing (`lfp = gfp`). So:
 - **instance pinnable ⟺ fork collapses ⟺ the operator has a unique fixed point** (§ I),
-- the fork's own detectors (`lfp`, `gfp`) are themselves fixed points — the measuring tool is an
-  instance of the measured thing (§ II, the self-similar "right angle inside a right angle" seed),
+- the fork's own detectors (`lfp`, `gfp`) are themselves fixed points; `Reading:` the measuring tool is
+  an instance of the measured thing (§ II, the self-similar "right angle inside a right angle" seed),
 - the identity operator flings the fork fully open — every object a witness, none *the* instance —
   the maximal gap, the fork image of "self-membership without a uniqueness clause admits everything"
   (§ III),
-- the two open ends swap under the order dual (`ForkFrameChange`) — the "0" (μ, `lfp`) and "∞" (ν,
-  `gfp`) poles of the gap are one structure seen from opposite sides (§ IV).
+- the two open ends swap under the order dual (`ForkFrameChange`): the "0" (μ, `lfp`) and "∞" (ν, `gfp`)
+  poles are the two ends of one fork, exchanged by the dual, coinciding only on collapse (§ IV).
 
 ## Structure
 - § I   The identification: instance pinnable ⟺ fork collapses
@@ -78,9 +78,9 @@ theorem no_pinnable_instance_iff_fork_open (f : α →o α) :
 
 /-! ## § II. Self-similarity — the detectors are themselves instances -/
 
-/-- **The right angle inside a right angle.** The fork's detectors `lfp` and `gfp` — the tools that
-*measure* the gap — are themselves fixed points of `f`, i.e. instances of the very characterization
-they measure. The gap detector is built out of the thing it detects: self-reference at the floor. -/
+/-- **The right angle inside a right angle.** `Statement:` the fork's detectors `lfp` and `gfp` are
+themselves fixed points of `f`, instances of the characterization they measure. `Reading:` the gap
+detector is built out of the thing it detects: self-reference at the floor. -/
 theorem detectors_are_instances (f : α →o α) :
     f f.lfp = f.lfp ∧ f f.gfp = f.gfp :=
   ⟨f.map_lfp, f.map_gfp⟩
@@ -120,10 +120,11 @@ theorem id_no_pinnable_instance [Nontrivial α] :
 
 /-! ## § IV. The two poles — 0 (μ / lfp) and ∞ (ν / gfp) swap under the dual -/
 
-/-- **The gap's two poles are one structure, dually.** The μ-floor (`lfp`) of `f` is the ν-ceiling
-(`gfp`) of the order-dual operator, and vice versa. So the "0" and "∞" ends of the gap are the same
-fork seen from opposite poles — the rInv / frame-change of `ForkFrameChange`, read here as: the
-located-instance side and the unbounded-witness side are one object. -/
+/-- **The gap's two poles exchange under the dual.** `Statement:` INVERSION — the μ-floor (`lfp`) of
+`f` is the ν-ceiling (`gfp`) of the order-dual operator, and vice versa (`lfp_dual_eq_gfp`,
+`gfp_dual_eq_lfp`). Order duality EXCHANGES the located-instance end and the unbounded-witness end of
+one fork; it does not identify them. They COINCIDE only when the fork collapses (`fork_collapse_iff`),
+and for the identity on a nontrivial complete lattice they are distinct (`id_fork_open`). -/
 theorem gap_poles_swap_under_dual (f : α →o α) :
     (OrderHom.dual f).lfp = f.gfp ∧ (OrderHom.dual f).gfp = f.lfp :=
   ⟨lfp_dual_eq_gfp f, gfp_dual_eq_lfp f⟩

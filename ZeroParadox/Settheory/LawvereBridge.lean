@@ -47,8 +47,10 @@ variable {L : Type*} [ZPSemilattice L] [AbstractSelfApp L]
 /-- **The framework's self-application fixed point is pinned (`∃!`).** `AbstractSelfApp` supplies
 both `fixed_bot` (existence, located at ⊥ of the `ZPSemilattice`) and `unique_fp` (uniqueness), so the
 fixed point is unique; neither comes from Lawvere's engine, whose hypothesis fails on a `ZPSemilattice`
-with a point other than ⊥ (`nontrivial_lattice_no_witness`). This `∃!` is exactly the "instance pinnable" / collapsed-fork
-condition of `RequirementsGap` (`instance_pinnable_iff_fork_collapse`), one dereference down. -/
+with a point other than ⊥ (`nontrivial_lattice_no_witness`). `Reading:` COINCIDENCE: this `∃!` has the
+SHAPE of `RequirementsGap`'s "instance pinnable" (`∃! x, f x = x`); `instance_pinnable_iff_fork_collapse`
+itself does not apply, since it needs a monotone map on a complete lattice, and a `ZPSemilattice` need
+not be one nor `selfApp` monotone (`fork_is_frameflip`'s docstring, `ZeroParadox/Settheory/ForkFrameChange.lean`). -/
 theorem selfApp_pinnable : ∃! x : L, AbstractSelfApp.selfApp x = x :=
   ⟨bot, AbstractSelfApp.fixed_bot, fun y hy => AbstractSelfApp.unique_fp y hy⟩
 
@@ -57,7 +59,7 @@ theorem selfApp_pinnable : ∃! x : L, AbstractSelfApp.selfApp x = x :=
 omit [AbstractSelfApp L] in
 /-- **Existence does not force uniqueness.** A self-map can have a fixed point yet not a unique one — the
 identity fixes everything. So the framework's `unique_fp` is content that no existence result
-supplies, whatever its source: it is the fork collapse / `(Z)`. -/
+supplies, whatever its source: it is the uniqueness clause `(Z)`. -/
 theorem existence_without_uniqueness [Nontrivial L] :
     ∃ g : L → L, (∃ x, g x = x) ∧ ¬ ∃! x, g x = x := by
   refine ⟨id, ⟨bot, rfl⟩, ?_⟩
@@ -81,7 +83,7 @@ theorem lawvere_trigger_refuted {A : Type*} (e : A → (A → Prop)) :
 /-- **The branch discriminator (the unification).** A self-reference relation cannot be both
 well-founded (the **μ** branch — the wall: Foundation, `wf_no_selfloop`) and carry a diagonal
 fixed point / self-loop (the **ν** branch — the self-referential object: the Quine atom, `selfApp`'s
-`fixed_bot`). The diagonal fixed point is exactly what discriminates the two branches of the fork: it
+`fixed_bot`). `Reading:` the diagonal fixed point is exactly what discriminates the two branches: it
 lands on ν and is refuted on μ. Together with `selfApp_pinnable` (ν: the fixed point exists, uniquely)
 and `lawvere_trigger_refuted` (regime-independent: the engine's trigger at `B = Prop` is Cantor-blocked
 for every type), this is the μ/ν picture

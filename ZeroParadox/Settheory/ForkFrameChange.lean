@@ -1,4 +1,4 @@
--- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the ORDER-THEORETIC universal form of the POLE EXCHANGE (the snap-as-instance reading is ZP-Q's conjecture, not established here) — over any complete lattice, the frame-change (order-duality) swaps the fork's two closures (lfp ↔ gfp), and the fork collapses to the diagonal fixed point exactly when the two coincide (fork_collapse_iff). The domain-independent snap_is_frameflip; choice-free. The CATEGORICAL universal is a proven wall (category-relative, Cantor — see Category/Lawvere.lean); this is the order-level universal that does hold. Curated results indexed in ZeroParadox/MANIFEST.md.
+-- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the ORDER-THEORETIC form of the POLE EXCHANGE (the snap-as-instance reading is ZP-Q's conjecture, not established here) — over any complete lattice, the frame-change (order-duality) swaps the fork's two closures (lfp ↔ gfp), and the two coincide exactly when the map has a unique fixed point (fork_collapse_iff). Not an instance-of relation with snap_is_frameflip, whose statement contains no snap; choice-free. The CATEGORICAL universal is a proven wall (category-relative, Cantor — see Category/Lawvere.lean); this is the order-level universal that does hold. Curated results indexed in ZeroParadox/MANIFEST.md.
 import ZeroParadox.Settheory.FixedPointFork
 import Mathlib.Tactic
 
@@ -40,18 +40,20 @@ theorem gfp_dual_eq_lfp : (OrderHom.dual f).gfp = f.lfp := rfl
 
 /-- **The order-theoretic universal frame-flip.** Over any complete lattice: (i)-(ii) the order-duality
     frame-change swaps the fork's two closures `lfp ↔ gfp`, and (iii) the fork collapses to a single
-    contact point iff the self-map has a unique fixed point (the diagonal fixed point) — `fork_collapse_iff`.
-    The domain-independent shape realized concretely by the valuation (`snap_is_frameflip`) and category
-    (`catseam_is_frameflip`) frame-flips. Choice-free.
+    contact point iff the self-map has a unique fixed point — `fork_collapse_iff`. Choice-free.
+    `Reading:` INVERSION, conjectural: the valuation (`snap_is_frameflip`) and category
+    (`catseam_is_frameflip`) frame-flips are read as sharing this shape; neither is an instance of it.
 
     **Scope note (2026-07-30).** Of the three `*_is_frameflip` handles this is the only one whose name
     matches its statement: duality genuinely does exchange the fork's two ends. The other two overclaim and
     carry corrections in their own docstrings — `snap_is_frameflip` proves the tower limit's two
-    chart-readings (**no snap appears in it**), and `catseam_is_frameflip` proves the seam is a **fixed
-    point** of the flip, not a flip. **Taken together, the three establish the exchange of the two poles
-    and the point where they coincide; `catseam_is_frameflip` gives both, this theorem gives the
-    exchange and the condition under which the two closures coincide ((iii), `fork_collapse_iff`), and
-    `snap_is_frameflip` gives only the exchange.** `Statement:` **INVERSION** — the exchange: (i)-(ii)
+    chart-readings (**no snap appears in it**), and `Statement:` COINCIDENCE and INVERSION,
+    `catseam_is_frameflip` proves the seam carries both characterizations, initial and terminal, which
+    `op` exchanges (`terminalOpOfInitial`, `initialOpOfTerminal`): at a zero object the flip exchanges two
+    characterizations one object already carries. **Each of the three establishes an exchange on its own carrier: `catseam_is_frameflip` also
+    gives a coincidence (one object both initial and terminal), this theorem gives the condition under
+    which the two closures coincide ((iii), `fork_collapse_iff`), and `snap_is_frameflip` gives only the
+    exchange, of two distinct points (`rInv_swaps`).** `Statement:` **INVERSION** — the exchange: (i)-(ii)
     here, `catseam_is_frameflip` (iii)-(iv) (`op` swaps initial and terminal), and `snap_is_frameflip`'s
     `rInv` swap of `0` and `∞`. `Statement:` **COINCIDENCE** — the condition for it, (iii) here
     (`fork_collapse_iff`), and a coincidence point in `catseam_is_frameflip` (i)-(ii), the

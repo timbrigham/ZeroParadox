@@ -29,8 +29,9 @@ defer to my AI assistant regarding the specifics of how the internals work.
 namespace ZeroParadox
 
 /-- **The load-bearing hypothesis is well-foundedness, not the engine.** Absent `WellFounded`, self-loops
-    are PERMITTED — the negation engine alone does not forbid `r x x`. Since the engine theorems carry no
-    well-foundedness, they cannot supply what `wf_no_selfloop` requires: the two roots are distinct. -/
+    are PERMITTED — the negation engine alone does not forbid `r x x`. Neither theorem's hypotheses
+    mention the other's; whether one reduces to the other is not stated or proved here (the header's
+    conjecture). -/
 theorem selfloop_permitted : ∃ (A : Type) (r : A → A → Prop) (x : A), r x x :=
   ⟨Unit, fun _ _ => True, (), trivial⟩
 

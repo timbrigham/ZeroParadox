@@ -16,14 +16,14 @@ self-membering set the kernel won't allow.
 
 ## Overview
 
-The set-theory FACE of the same μ/ν bottom-fork that `ZeroParadox/Valuation/SnapDichotomy.lean` is the number-system face of.
+`Reading:` the set-theory analogue of the dichotomy `ZeroParadox/Valuation/SnapDichotomy.lean` proves for number systems; the two share a shape, not a fork (the Ostrowski instance is not claimed to be μ/ν, `ZeroParadox/Settheory/FixedPointFork.lean` fences).
 Assembled from pieces already proved across the ZPJ family + ZP-P's coalgebra:
 
 - **Existence fork (ν admits / μ forbids):** the self-referential object exists on the non-well-founded
   (greatest-fixed-point) side and not on the well-founded (least-fixed-point) side.
   (`ZeroParadox.categorical_fork_strict`: `Fix idPF_Coalgebra.Obj` empty, `Cofix idPF_Coalgebra.Obj` inhabited.)
-- **Uniqueness + identity:** wherever the self-referential fixed point lives, it is unique and IS the
-  bottom. (`ZeroParadox.selfMem_eq_singleton_bot`: the self-members are exactly `{⊥}`.)
+- **Uniqueness + identity:** in any `AbstractSelfApp` carrier `L`, the fixed points of `selfApp` are
+  exactly `{⊥ of L}`, by the class fields `fixed_bot` and `unique_fp`. (`ZeroParadox.selfMem_eq_singleton_bot`.)
 - **Cantor obstruction (no literal):** a nontrivial lattice face admits no Lawvere witness
   (`nontrivial_lattice_no_witness`); a literal self-singleton needs `T ≃ Set T`, and no `T → Set T` is surjective (`cantor_via_engine`, `ZeroParadox/Settheory/Wall.lean`), so no such `≃` exists.
 
@@ -32,7 +32,7 @@ The snap's classifier (Ostrowski) is a theorem INSIDE one foundation, so "snap �
 machine-checkable. The Quine atom's classifier (Foundation vs AFA) is a choice of METATHEORY, which Lean cannot
 adjudicate from inside. `Statement:` **CARRIER** — no `ZFSet` is its own member (`no_quine_atom`) and no `T ≃ Set T` exists (Cantor, above), while the coalgebra chart hosts a self-unfolding element (`Cofix`, the existence fork above).
 So what is PROVED here is the STRUCTURAL dichotomy (the self-referential fixed point exists on the ν side,
-not the μ side, and where it exists it is the unique bottom). The Quine atom (CC-2) is the die role `Motion.SelfOnlyAt`, whose occupancy
+not the μ side, and in an `AbstractSelfApp` carrier it is ⊥ of that carrier, by the class fields `fixed_bot` and `unique_fp`). The Quine atom (CC-2) is the die role `Motion.SelfOnlyAt`, whose occupancy
 is settled chart by chart (`selfApp_quine_role_iff`, `quineAtomHost_quine_role_iff`, `zfset_quine_role_unoccupied`), no cross-chart equation.
 "Quine atom ⟺ AFA" concerns the set chart's host: Foundation-freeness is forced (`quineAtomHost_not_wellFounded`), adopting AFA stays the FMC / CC-2 (ZP-E R-AFA); AFA is not machine-checked here.
 
