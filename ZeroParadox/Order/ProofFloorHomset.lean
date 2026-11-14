@@ -30,20 +30,18 @@ of the `ℕ` **preorder category** (`nat_floor_isInitial`, the base of the Goods
 
 **The honest finding is a two-part split, both halves IN the theorem statements.**
 
-### NO-GO half (the primary structural finding): #1 has no Type-valued carrier
+### Thinness: #1's carrier is set by a choice of functor
 
 `floor_has_no_forgetful_carrier` — the `ℕ` preorder category is **thin** (every hom-set is a
-subsingleton: at most one morphism between any two objects). An object of a thin category has no
-underlying set the way #4 (`Fin 0`, the carrier of `fC_functor.obj 0`) and #5 (`StateSpace 0`, the
-carrier of `fD_functor.obj 0`) do — there is no faithful Type-valued forgetful functor reading off a
-"carrier" of `0 : ℕ`. So the naive Axis-III question ("what is the cardinality of #1's carrier?") is a
-**category error**: the cardinality axis, as a forgetful-carrier invariant, does not extend to #1.
-This is itself a structural result — Axis III is *not* a tree-wide invariant; it is an invariant of
-the genuinely set-carried (Type-forgetful) bottoms only.
+subsingleton: at most one morphism between any two objects). So every functor out of it is faithful,
+and faithful functors to `Type` give `0 : ℕ` different carriers: `n ↦ Fin n` gives it an empty one
+(card 0, #4's value) and the constant functor at `PUnit` a singleton (card 1, #5's value); the
+`example` after `floor_has_no_forgetful_carrier` builds both. So #1's carrier cardinality is not
+read off the object: it is fixed only once a carrier convention is chosen.
 
-### GO half (the recovery under the right convention): the hom-set carrier puts #1 at card 1
+### GO half: the hom-set carrier puts #1 at card 1
 
-The convention that *does* extend to a thin category is the **hom-set carrier**: for an initial object
+One convention that extends to a thin category is the **hom-set carrier**: for an initial object
 `I`, the canonical set attached to `I` is its hom-set `I ⟶ Y` (the descent morphism set). For #1 this
 is `(0 ⟶ n)`, which is **inhabited and a subsingleton**, hence a singleton (card exactly 1) for every
 `n`:
@@ -58,20 +56,18 @@ it separates #5 from #4, and adds **no new cardinality value** (the {0,1} dichot
 
 ### Capstone
 
-`nat_floor_initial_singleton_homs` bundles both halves: (NO-GO) the floor is thin, so it has no
-Type-forgetful carrier; (GO) its hom-set carrier is a singleton, card-equal to a point and
-card-distinct from `Fin 0`. The delta over `ZeroParadox/Category/PointednessSharp.lean`: that file
-covered the two Type-forgetful endpoints; this file
-adds #1 to the ledger and shows it does *not* break the {0,1} dichotomy — but only once the carrier
-notion is corrected from "forgetful set" to "hom-set", which is the price #1's thinness exacts.
+`nat_floor_initial_singleton_homs` bundles both halves: the floor's category is thin; (GO) its
+hom-set carrier is a singleton, card-equal to a point and card-distinct from `Fin 0`. The delta over
+`ZeroParadox/Category/PointednessSharp.lean`: that file covered the two Type-carried endpoints; this
+file adds #1 to the ledger under the hom-set convention, where it lands on an existing value of the
+{0,1} dichotomy. Under the `Fin` functor it lands on the other value; neither adds a third.
 
 **Honest fence — Lean vs interpretation.** The Lean content is exactly: (a) the `ℕ` preorder hom-sets
 are subsingletons (thinness); (b) `(0 ⟶ n)` is a singleton for all `n`; (c) it is `PUnit`-equivalent
 and not `Fin 0`-equivalent. That this *is* the canonically right carrier for a thin bottom (rather
 than a fix-up that rescues the dichotomy by fiat) is the framework's reading: the Lean proves the
-hom-set is card 1, not that the hom-set is the unique legitimate carrier. The NO-GO half — that no
-Type-forgetful carrier exists — is the genuinely forced part; the GO half is "the surviving Axis-III
-reading once you accept the thin-category carrier convention".
+hom-set is card 1, not that the hom-set is the unique legitimate carrier: the `Fin` functor is another
+faithful choice and gives card 0. The GO half is the Axis-III reading under the hom-set convention.
 -/
 
 namespace ZeroParadox
@@ -79,16 +75,22 @@ namespace ZeroParadox
 open CategoryTheory
 open ZeroParadox ZeroParadox ZeroParadox
 
-/-! ## NO-GO half: the proof-theory floor lives in a thin category (no Type-valued carrier) -/
+/-! ## Thinness: the proof-theory floor lives in a thin category -/
 
-/-- **NO-GO (structural).** The `ℕ` preorder category is **thin**: every hom-set is a subsingleton
-    (at most one morphism between any two objects). An object of a thin category — in particular the
-    floor `0 : ℕ` — has no underlying set the way #4 (`Fin 0`) and #5 (`StateSpace 0`) do; there is no
-    Type-forgetful carrier to read a cardinality off. So the Axis-III carrier-cardinality question, as
-    posed for #4/#5, is a category error for #1: the axis does not extend to thin bottoms as a
-    forgetful-carrier invariant. -/
+/-- `Statement:` the `ℕ` preorder category is **thin**: every hom-set is a subsingleton (at most one
+    morphism between any two objects). Thinness only; it does not say the floor `0 : ℕ` lacks a
+    carrier (the `example` below). -/
 theorem floor_has_no_forgetful_carrier (x y : ℕ) : Subsingleton (x ⟶ y) :=
   ⟨fun a b => Subsingleton.elim a b⟩
+
+-- `Statement:` so every functor `ℕ ⥤ Type` is faithful, and two such functors give `0 : ℕ` an empty
+-- carrier (`n ↦ Fin n`, card 0) and a singleton carrier (constant `PUnit`, card 1).
+example : (∃ F : ℕ ⥤ Type, F.Faithful ∧ IsEmpty (F.obj 0)) ∧
+    (∃ F : ℕ ⥤ Type, F.Faithful ∧ Nonempty (Unique (F.obj 0))) :=
+  ⟨⟨{ obj := fun n => Fin n, map := fun f => TypeCat.ofHom (Fin.castLE (leOfHom f)) },
+      ⟨fun {_ _} _ _ _ => Subsingleton.elim _ _⟩, by exact inferInstanceAs (IsEmpty (Fin 0))⟩,
+    ⟨(Functor.const ℕ).obj PUnit, ⟨fun {_ _} _ _ _ => Subsingleton.elim _ _⟩,
+      ⟨by exact inferInstanceAs (Unique PUnit)⟩⟩⟩
 
 /-! ## GO half: the hom-set carrier of #1 is a singleton (card 1, pointed endpoint) -/
 
@@ -118,17 +120,17 @@ theorem floor_homset_not_equiv_fin0 (n : ℕ) :
 
 /-- **capstone — Axis III over the proof-theory floor #1, both halves in-statement.**
 
-    1. **NO-GO** — `∀ x y, Subsingleton (x ⟶ y)`: the floor's category is thin, so #1 has no
-       Type-forgetful carrier (the cardinality axis is *not* a tree-wide invariant; it is confined to
-       the genuinely set-carried bottoms #4/#5).
+    1. **Thin** — `∀ x y, Subsingleton (x ⟶ y)`: the floor's category is thin, so every functor to
+       `Type` is faithful and #1's carrier depends on which one is chosen (the `example` after
+       `floor_has_no_forgetful_carrier`).
     2. **GO, card 1** — `Unique (0 ⟶ n)`: under the hom-set carrier convention, #1's carrier is a
        singleton.
     3. **GO, = #5** — `(0 ⟶ n) ≃ PUnit`: card-equal to the pointed (card-1) endpoint.
     4. **GO, ≠ #4** — `¬ Nonempty ((0 ⟶ n) ≃ Fin 0)`: card-distinct from the empty bottom.
 
-    Together: once the carrier notion is corrected to "hom-set" (the price of #1's thinness), #1 joins
-    the Axis-III ledger at the existing pointed endpoint and introduces **no new cardinality value** —
-    the {0,1} pointedness dichotomy of `ZeroParadox/Category/PointednessSharp.lean` survives the addition of the proof-theory floor. The floor
+    Together: under the hom-set carrier convention, #1 joins the Axis-III ledger at the existing
+    pointed endpoint and introduces **no new cardinality value** — the {0,1} pointedness dichotomy of
+    `ZeroParadox/Category/PointednessSharp.lean` survives the addition of the proof-theory floor. The floor
     `0 : ℕ` is the genuine initial object of its category (`nat_floor_isInitial`), so this is the
     Axis-III reading of a real μ-bottom, not a contrived element. -/
 theorem nat_floor_initial_singleton_homs :

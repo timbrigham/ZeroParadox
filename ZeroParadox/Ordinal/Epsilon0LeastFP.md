@@ -6,9 +6,10 @@ declarations, the Engineer's Take and the per-declaration glosses.
 ## What is confirmed, and what "least" means
 
 Experiment G1 (T6 compute-the-invariant), independent of the MC-1 arc. ε₀ is where the ω-tower closes —
-its **minimal** closure. **Do not call it a "ceiling" or "a large ordinal"**: positionally ε₀ is the
-FIRST — `Ordinal.epsilon 0`, index zero in the epsilon enumeration, Veblen coordinates (1,0), the
-**least fixed point** of `α ↦ ω^α` — and that is exactly what `epsilon0_least_fixedpoint` proves.
+its **minimal** closure. It has two faces at once (`epsilon0_min_eq_max`): the **least fixed point** of
+`α ↦ ω^α` — `Ordinal.epsilon 0`, index zero in the epsilon enumeration, Veblen coordinates (1,0) — and
+the **supremum** of the ω-tower (`epsilonZero_eq_iSup`), the tower's ceiling. `epsilon0_least_fixedpoint`
+proves the lower-bound half of the first face.
 
 ⚠ **"Minimum step" means a STABLE LANDING** — a fixed point of `α ↦ ω^α` — and in that sense ε₀ IS the
 minimum distinct step above ⊥. `nothing_between_is_a_step` makes it checkable: **no** ordinal strictly
