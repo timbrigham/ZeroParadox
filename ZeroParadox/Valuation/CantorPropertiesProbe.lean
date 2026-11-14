@@ -5,7 +5,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# Completeness-critic, final pass: homogeneity and ultrametric are derived; compactness is AX-B1
+# Completeness-critic, final pass: a shared node profile and ultrametric agreement; compactness assigned to the arity commitment
 
 ## Engineer's Take
 
@@ -51,7 +51,7 @@ That no further property is a fifth structural axis is conjectured, not proved.
 
 namespace ZeroParadox
 
-/-! ### § I. Homogeneity — every node's floor has the identical profile. -/
+/-! ### § I. A shared node profile, not topological homogeneity. -/
 
 /-- `Statement:` `localCx v (localMember v n) = localCx w (localMember w n)`, both sides `n` (`localCx_member`).
 `Reading:` the same local profile at every node; topological homogeneity (a self-homeomorphism carrying any

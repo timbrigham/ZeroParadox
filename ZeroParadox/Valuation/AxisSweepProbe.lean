@@ -67,19 +67,20 @@ theorem structured_fork_trivially_satisfiable (L : Type*) [ZPSemilattice L] :
       ∀ x : L, (fun _ : L => (ZPSemilattice.bot : L)) x = x → x = ZPSemilattice.bot :=
   ⟨rfl, fun _x hx => hx.symm⟩
 
-/-! ### § II. Pole vs chain — independent. -/
+/-! ### § II. Pole vs chain — a finite two-element type beside an infinite total order. -/
 
 theorem pole_no_chain : Fintype.card Pole = 2 ∧ Finite Pole := ⟨by decide, inferInstance⟩
 
 theorem chain_no_pole : Infinite ℕ ∧ (∀ a b : ℕ, a ≤ b ∨ b ≤ a) := ⟨inferInstance, le_total⟩
 
 /-- `Statement:` `Pole` has two elements and is finite; `ℕ` is infinite and totally ordered. `Reading:`
-the pole and chain axes are independent; `Pole` has no order instance, so its half is finiteness. -/
+the pole and chain axes come apart on these two carriers (no axis is a predicate, so independence is not
+stated); `Pole` has no order instance, so its half is finiteness. -/
 theorem pole_and_chain_independent :
     (Fintype.card Pole = 2 ∧ Finite Pole) ∧ (Infinite ℕ ∧ (∀ a b : ℕ, a ≤ b ∨ b ≤ a)) :=
   ⟨pole_no_chain, chain_no_pole⟩
 
-/-! ### § III. Pole vs branching — independent, and the cardinality ladder. -/
+/-! ### § III. Pole vs branching — no branch on two elements, and the cardinality ladder. -/
 
 /-- **A branch forces three distinct elements.** A node `c` with two `≤`-incomparable successors `a`, `b`
 has `a`, `b`, `c` pairwise distinct — branching needs at least three elements. -/

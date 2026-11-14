@@ -7,7 +7,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# ZP-H: Spectral-gap irreversibility of the Markov transfer operator (the #2 DYN witness)
+# ZP-H: Mode decay, and information loss at eigenvalue 0 for `fullMix` (the #2 DYN witness)
 
 ## Engineer's Take
 
@@ -134,9 +134,10 @@ theorem v0_ne_zero : v0 ≠ 0 := by
   have h0 : v0 0 = (0 : Fin 2 → ℝ) 0 := by rw [h]
   simp [v0] at h0
 
-/-- **Theorem — irreversibility (the DYN witness).** The relaxation operator of the mixing chain
-    `fullMix` is **not injective**: it sends the nonzero mean-zero mode `v₀` to `0`, so the mixing
-    relaxation provably loses information and cannot be reversed. -/
+/-- **Theorem — irreversibility (the DYN witness).** The relaxation operator of the chain
+    `fullMix` is **not injective**: it sends the nonzero mean-zero mode `v₀` to `0` (eigenvalue `0`,
+    `fullMix_eigen_zero`), so `fullMix`'s relaxation loses information and cannot be reversed. Mixing
+    alone does not do this: the lazy two-state chain in the `example` below mixes and stays injective. -/
 theorem fullMix_not_injective : ¬ Function.Injective (T fullMix) := by
   intro hinj
   -- T fullMix v0 = 0 = T fullMix 0, but v0 ≠ 0
