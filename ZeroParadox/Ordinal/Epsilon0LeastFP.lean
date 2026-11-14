@@ -17,9 +17,9 @@ defer to my AI assistant regarding the specifics of how the internals work.
 ---
 
 ## Formal Overview
-**Result: CONFIRMED.** ε₀ is the least fixed point of `α ↦ ω^α` — positionally the FIRST, never a
-"ceiling" or "a large ordinal". ⚠ Least in the FIXED-POINT order, **not** order-adjacency: ordinals sit
-strictly between ⊥ and ε₀. Which order, Veblen's Corollary 1 to Theorem 4, and the traps: `ZeroParadox/Ordinal/Epsilon0LeastFP.md`.
+**Result: CONFIRMED.** ε₀ is the least fixed point of `α ↦ ω^α` and, at once, the ω-tower's supremum
+(`epsilon0_min_eq_max`); this file proves the least face. ⚠ Least in the FIXED-POINT order, **not**
+order-adjacency: ordinals sit strictly between ⊥ of `Ordinal` and ε₀. Which order, Veblen's Corollary 1 to Theorem 4, and the traps: `ZeroParadox/Ordinal/Epsilon0LeastFP.md`.
 -/
 
 namespace ZeroParadox
