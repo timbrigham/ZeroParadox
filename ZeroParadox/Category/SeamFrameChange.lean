@@ -27,20 +27,20 @@ The categorical analog of `RiemannSphere.rInv` (which swaps the poles `0 ↔ ∞
 which swaps the poles **initial ↔ terminal**. The zero-object seam `Z = fD_functor.obj 0`
 (`hilbert_bottom_isZero`) is the μ-bottom (initial) in one chart and the ν-top (terminal) in the other;
 this file bundles that P1 coincidence with the P2 frame-change: `op` carries the seam's initial-ness to
-its op's terminal-ness and its terminal-ness to its op's initial-ness. The seam is the fixed point of
-the frame-change — an `op`-self-dual zero object — the category-frame realization of the POLE EXCHANGE.
+its op's terminal-ness and its terminal-ness to its op's initial-ness: an `op`-self-dual zero object,
+as every zero object is (`IsZero.op`), the category-frame realization of the POLE EXCHANGE.
 `Statement:` COINCIDENCE — the seam is initial AND terminal in `ModuleCat ℂ`, both at once
 (`catseam_is_frameflip` (i) and (ii)). This is the KIND `CLAUDE.md`'s table lists it under.
-`Statement:` INVERSION — and `op`-duality exchanges those two characterisations, fixing the seam
-(`catseam_is_frameflip` (iii)). The theorem bundles both KINDs; that is what makes it a *self-dual*
-zero object rather than either fact alone.
+`Statement:` INVERSION — and `op`-duality exchanges those two characterisations: the seam's opposite
+is terminal and initial in `(ModuleCat ℂ)ᵒᵖ` (`catseam_is_frameflip` (iii) and (iv)). The theorem
+bundles both KINDs; that is what makes it a *self-dual* zero object rather than either fact alone.
 `Reading:` INVERSION — the framework reads the snap as an instance of that exchange. Conjectural: no snap
 appears in `catseam_is_frameflip`, and ZP-Q holds the identification open.
 
 `catseam_is_frameflip`: the seam is (i) initial and (ii) terminal in `ModuleCat ℂ` (the two charts), and
-under the `op` frame-change it is (iii) terminal and (iv) initial in `(ModuleCat ℂ)ᵒᵖ` (the swap). Off
-the zero object the coincidence fails (`generic_object_empty_lim_ne_colim`, `SeamLimColim`), so — as with
-`0` on the sphere — the frame-change fixes only the bottom.
+under the `op` frame-change it is (iii) terminal and (iv) initial in `(ModuleCat ℂ)ᵒᵖ` (the swap). On
+the sphere `rInv` exchanges two distinct points `0`, `∞` (`rInv_swaps`); `op` exchanges two characterisations
+a zero object carries at once. Off it the coincidence fails at `ModuleCat.of ℂ ℂ` (`generic_object_empty_lim_ne_colim`).
 
 **Fences.** Category point-of-view's shape of the frame-change; the abstract cross-domain "snap = frame
 change" stays conjectural (type boundary).

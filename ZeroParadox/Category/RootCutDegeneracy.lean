@@ -31,11 +31,12 @@ gives a subsingleton; `A = 2, B = 1` gives the `Bool`-streams), and together the
 **head type**, not the arity, is what decides whether the final coalgebra is a single point. Cited,
 not reproved; no novelty is claimed for any of them.
 
-The dichotomy theorem `root_cut_dichotomy` records both halves with the discriminating structural
-feature stated in the type: the constant functor (no recursive position) gives `Fix ≃ Cofix`, while
-the identity functor (one recursive position) gives `IsEmpty (Fix) ∧ Nonempty (Cofix)` — i.e. they are
-*not* equivalent (`idPF_no_seam`). The seam therefore recurs at the root level exactly when the
-functor has no recursive position, paralleling the zero-object seam at node #5 (Hilbert bottom).
+The dichotomy theorem `root_cut_dichotomy` records both halves for two single-shape functors: the
+constant functor (its one shape a leaf, no recursive position) gives `Fix ≃ Cofix`, while the identity
+functor (one recursive position, no leaf) gives `IsEmpty (Fix) ∧ Nonempty (Cofix)` — i.e. they are
+*not* equivalent (`idPF_no_seam`). A recursive position alone does not make the cut strict: beside a
+leaf the least fixed point is inhabited (`mixed_fix_nonempty`, `ZeroParadox/Computability/RootCutTrichotomy.lean`).
+The seam case parallels the zero-object seam at node #5 (Hilbert bottom).
 
 ## Formal Overview
 
@@ -172,13 +173,15 @@ theorem idPF_no_seam : IsEmpty (Fix ZeroParadox.idPF_Coalgebra.Obj ≃ Cofix Zer
   obtain ⟨c⟩ := ZeroParadox.cofix_nonempty
   exact ZeroParadox.fix_isEmpty.false (e.symm c)
 
-/-- **The root-cut degeneracy dichotomy.** The μ/ν root cut is strict exactly when the functor has a
-recursive position and collapses to a seam exactly when it has none:
+/-- **The root-cut degeneracy dichotomy.** `Statement:` the μ/ν root cut at two single-shape functors:
 
-* all-leaf **constant** functor `constPF A` (child type `PEmpty`, no recursive position):
+* all-leaf **constant** functor `constPF Unit` (child type `PEmpty`, no recursive position):
   `Fix ≃ Cofix` (a seam) — first component;
-* one-shape **identity** functor `idPF_Coalgebra` (child type `PUnit`, one recursive position):
-  `IsEmpty (Fix ≃ Cofix)` (strict, no seam) — second component. -/
+* one-shape **identity** functor `idPF_Coalgebra` (child type `PUnit`, one recursive position, no
+  leaf): `IsEmpty (Fix ≃ Cofix)` (strict, no seam) — second component.
+
+A recursive position alone does not decide the cut: beside a leaf the least fixed point is inhabited
+(`mixed_fix_nonempty`). -/
 theorem root_cut_dichotomy :
     (Nonempty (Fix (constPF Unit).Obj ≃ Cofix (constPF Unit).Obj)) ∧
     IsEmpty (Fix ZeroParadox.idPF_Coalgebra.Obj ≃ Cofix ZeroParadox.idPF_Coalgebra.Obj) :=
