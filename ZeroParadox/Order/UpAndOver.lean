@@ -564,7 +564,7 @@ theorem ordinalSuccMotion_climb : ordinalSuccMotion.{u}.Climb := by
 theorem ordinalSuccMotion_up_succ_epsilon0 :
     Ordinal.nfp (fun a => Ordinal.omega0 ^ a) (Order.succ (Ordinal.epsilon 0)) =
       Ordinal.epsilon.{u} 1 := by
-  rw [← Ordinal.epsilon_succ_eq_nfp, Order.succ_eq_add_one, zero_add]
+  rw [Order.succ_eq_add_one, ← Ordinal.epsilon_add_one_eq_nfp, zero_add]
 
 /-- `Statement:` the corner composite of `ordinalSuccMotion`: OVER `Order.succ`, then UP
     `nfp (ω^·)`, as one map on `Ordinal`. -/
@@ -597,7 +597,7 @@ theorem ordinalCornerStep_iterate (n : ℕ) :
   | succ n ih =>
     rw [Function.iterate_succ_apply', ih]
     show Ordinal.nfp _ (Order.succ (Ordinal.epsilon (n : Ordinal.{u}))) = _
-    rw [← Ordinal.epsilon_succ_eq_nfp, Order.succ_eq_add_one]
+    rw [Order.succ_eq_add_one, ← Ordinal.epsilon_add_one_eq_nfp]
     push_cast; rfl
 
 /-- `Statement:` the iterates of the corner composite from 0, ⊥ of `Ordinal`, strictly increase. -/
@@ -629,7 +629,7 @@ theorem ordinalCornerStep_pinnedLimitAbove (f : Ordinal.{u}) :
     rintro _ ⟨n, rfl⟩
     exact (Ordinal.iterate_lt_nfp hn.strictMono ha n).le
 
-/-- `Statement:` at the floor `ε_o` that occupant is `ε_(o+1)` (Mathlib `Ordinal.epsilon_succ_eq_nfp`):
+/-- `Statement:` at the floor `ε_o` that occupant is `ε_(o+1)` (Mathlib `Ordinal.epsilon_add_one_eq_nfp`):
     `ε_(o+1)` occupies `PinnedLimitAbove (ω^·)` at the run from `succ ε_o`, for every `o`. -/
 theorem epsilon_succ_pinnedLimitAbove (o : Ordinal.{u}) :
     (Motion.ofFun fun α : Ordinal.{u} => Ordinal.omega0 ^ α).IsRun
@@ -637,7 +637,9 @@ theorem epsilon_succ_pinnedLimitAbove (o : Ordinal.{u}) :
     PinnedLimitAbove (fun α : Ordinal.{u} => Ordinal.omega0 ^ α)
       (fun n => (fun α : Ordinal.{u} => Ordinal.omega0 ^ α)^[n] (Order.succ (Ordinal.epsilon o)))
       (Ordinal.epsilon (Order.succ o)) := by
-  rw [Ordinal.epsilon_succ_eq_nfp]
+  rw [show Ordinal.epsilon (Order.succ o) =
+      Ordinal.nfp (fun α => Ordinal.omega0 ^ α) (Order.succ (Ordinal.epsilon o)) by
+    simpa only [Order.succ_eq_add_one] using Ordinal.epsilon_add_one_eq_nfp o]
   exact ordinalCornerStep_pinnedLimitAbove _
 
 -- `Statement:` at the floor `ε_n` the occupant is the corner composite iterated `n + 2` times from 0,

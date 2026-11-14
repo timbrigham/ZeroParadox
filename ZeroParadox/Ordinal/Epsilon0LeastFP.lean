@@ -88,8 +88,8 @@ theorem nfp_seed_successor_cell (o s : Ordinal) (h1 : Ordinal.epsilon o < s)
     Ordinal.nfp (fun α => ω ^ α) s = Ordinal.epsilon (Order.succ o) := by
   have hmono := (Ordinal.isNormal_opow Ordinal.one_lt_omega0).strictMono.monotone
   refine le_antisymm (Ordinal.nfp_le_fp hmono h2 (le_of_eq (omega0_opow_epsilon _))) ?_
-  rw [epsilon_succ_eq_nfp]
-  exact Ordinal.nfp_monotone hmono (Order.succ_le_of_lt h1)
+  rw [Order.succ_eq_add_one, epsilon_add_one_eq_nfp]
+  exact Ordinal.nfp_monotone hmono (Order.add_one_le_of_lt h1)
 
 /-- **`Statement:` at a limit index `o`, the only seed reaching `ε_o` is `ε_o` itself.** -/
 theorem seed_eq_of_nfp_eq_epsilon_limit (o s : Ordinal) (ho : Order.IsSuccLimit o)

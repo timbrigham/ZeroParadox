@@ -55,7 +55,7 @@ point) on a complete lattice — the schema is recognized order theory, not ZP-i
 `nfp_seed_one_eq_seed_bot` as the concrete witness.
 
 ⚠ **Scope: at or below ε₀ only.** The general fact is that `nfp (ω^·) a` is the **least ε-number `≥ a`**
-— e.g. `nfp (ω^·) (succ ε₀) = ε₁` (Mathlib `epsilon_succ_eq_nfp`). ⚠ Above ε₀ the answer **is** the seed
+— e.g. `nfp (ω^·) (succ ε₀) = ε₁` (Mathlib `epsilon_add_one_eq_nfp`, with `succ ε₀ = ε₀ + 1`). ⚠ Above ε₀ the answer **is** the seed
 at every ε-number, so no fixed point can distinguish *least-ε-number-≥-`a`* from the false *"the seed
 does all the work"*; use a non-fixed point such as `succ ε₀`. ⚠ **Normality is load-bearing.**
 
@@ -78,8 +78,8 @@ against it. Mathlib carries the same shape for `+` and `*` (`Ordinal.nfp_add_eq_
 
 `Statement:` each ε-number rung is ⊥ of `Set.Ici rung` and **never ⊥ of `Ordinal`**
 (`Ordinal.epsilon_pos`); the iteration that re-seeds just above a rung starts at succ(rung), the least
-element of `Set.Ioi rung`, and closes at the next ε-number: `ε_(succ o) = nfp (ω^·) (succ ε_o)`
-(`epsilon_succ_eq_nfp`; `ZeroParadox/Ordinal/Epsilon0CannotBe.lean` § I-b).
+element of `Set.Ioi rung`, and closes at the next ε-number: `ε_(o + 1) = nfp (ω^·) (ε_o + 1)`
+(`epsilon_add_one_eq_nfp`; `ZeroParadox/Ordinal/Epsilon0CannotBe.lean` § I-b).
 
 `Reading:` **INVARIANT** (conjectural) — read the seed as a **role**, not an origin: the ratified
 *"iterative bottoms"* picture, in which a rung is the floor the next iteration re-seeds just above

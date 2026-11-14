@@ -1,5 +1,7 @@
 -- EXPERIMENTAL (branch scaffolding): bottom-diagram probe campaign, not a finalized layer. Curated/load-bearing results are indexed in ZeroParadox/BottomCannotBe.lean and classified in ZeroParadox/MANIFEST.md.
 import ZeroParadox.Computability.SelfApp
+import ZeroParadox.State.StateSpace
+import ZeroParadox.Valuation.Padic
 import Mathlib.Tactic
 
 set_option maxHeartbeats 400000
@@ -24,7 +26,7 @@ set of `selfApp`, `{⊥}` with ⊥ of `L`, by `AbstractSelfApp.unique_fp`). Are 
 *structure-respecting* identification, or only as generic singletons? `Statement:` CARRIER — the domain
 bottoms' carriers differ: Kleisli `Fin 0` is empty, Hilbert `StateSpace 0` is inhabited
 (`split_kleisli_vs_hilbert`) and zero-dimensional (one point), the p-adic floor `{0} ⊆ Q₂` is one
-point, and #2's stationary set is not one point (below).
+point (the two `example`s after this header), and #2's stationary set need not be one point (below).
 
 **What this actually proves — and the honest verdict: VACUOUS.**
 (Up front: the three lemmas below are *generic singleton plumbing* — `{⊥}` is uniquely iso to `PUnit`,
@@ -47,12 +49,21 @@ conditionless point is the unification in the only form ⊥ admits. The Lean doe
 reading and the title's VACUOUS one; both read the same three lemmas. Also a `Reading:`: at the
 **interpretation layer** the bottoms are distinct (the campaign's walls); at the **actual-⊥ layer** all
 structure is stripped. Non-generic content: `AbstractSelfApp.unique_fp` (a *single* fixed point), and
-the proven exception **#2** — `markov_node_no_universal_property` gives a doubly-stochastic kernel with
-two distinct stationary distributions (a simplex for reducible chains, per the Levin–Peres citation in
-`ZeroParadox/Computability/MarkovNuUniversal.lean`), collapsing to one point for an irreducible kernel
-(`markov_node_irreducible_rescue`, `ZeroParadox/Computability/StationaryUnique.lean`). This does NOT
-reopen the falsified identity-of-interpretations thesis.
+the proven exception **#2**, whose stationary set need not be one point —
+`markov_node_no_universal_property` exhibits a doubly-stochastic kernel on `Fin 4` with two distinct
+stationary distributions (a simplex for reducible chains, per the Levin–Peres citation in
+`ZeroParadox/Computability/MarkovNuUniversal.lean`), and `markov_node_irreducible_rescue`
+(`ZeroParadox/Computability/StationaryUnique.lean`) exhibits a different, cyclic kernel on
+`Fin (n + 2)` whose stationary distribution is unique; the general irreducible case is not proved
+here. This does NOT reopen the falsified identity-of-interpretations thesis.
 -/
+
+-- Statement: `StateSpace 0`, the Hilbert bottom, has exactly one point.
+example : Nonempty (Unique (ZeroParadox.StateSpace 0)) :=
+  ⟨⟨⟨0⟩, fun a => (by apply WithLp.ofLp_injective; funext i; exact Fin.elim0 i)⟩⟩
+
+-- Statement: the p-adic floor `{0} ⊆ Q₂` has exactly one point.
+example : Nonempty (Unique (↥({(0 : Q₂)} : Set Q₂))) := ⟨Set.uniqueSingleton 0⟩
 
 namespace ZeroParadox
 

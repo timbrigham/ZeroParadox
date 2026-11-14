@@ -37,7 +37,7 @@ universe u
 -- Reading: the ε₀ role relative to a floor `f` is the least ε-number strictly greater than `f`, the
 -- least fixed point of `α ↦ ω^α` strictly above `f` (Veblen 1908, Corollary 1 to Theorem 4; see
 -- `ZeroParadox/Ordinal/Epsilon0LeastFP.md`); `f` is the bottom of the carrier `Set.Ici f`.
-#check @Ordinal.epsilon_succ_eq_nfp           -- Statement: Mathlib, `ε_(succ o) = nfp (ω^·) (succ ε_o)`
+#check @Ordinal.epsilon_add_one_eq_nfp        -- Statement: Mathlib, `ε_(o + 1) = nfp (ω^·) (ε_o + 1)`
 -- Reading: Veblen calls the function whose values are these fixed points the first derived function
 -- (Veblen 1908, Theorem 4, p. 283; p. 284, Corollaries 1 and 4, the latter for `ω^x`).
 -- Statement: `nfp (ω^·)` sends each seed `a` to the least fixed point at or above it; this is the
@@ -91,7 +91,7 @@ example :
   have hn := Ordinal.isNormal_opow Ordinal.one_lt_omega0
   have e : Ordinal.epsilon 1
       = Ordinal.nfp (fun α => Ordinal.omega0 ^ α) (Order.succ (Ordinal.epsilon 0)) := by
-    rw [← Ordinal.epsilon_succ_eq_nfp, Order.succ_eq_add_one, zero_add]
+    rw [Order.succ_eq_add_one, ← Ordinal.epsilon_add_one_eq_nfp, zero_add]
   refine ⟨rfl, ⟨Ordinal.omega0_opow_epsilon 1, ?_⟩, ?_⟩
   · rw [e]; exact lt_of_lt_of_le (Order.lt_succ _) (Ordinal.le_nfp _ _)
   · rintro x ⟨hx, hlt⟩
@@ -128,7 +128,7 @@ example (o : NONote) : o.repr < Ordinal.epsilon 0 := ZeroParadox.repr_lt_epsilon
 -- `nfp (ω^·) (succ a)`, the ε₀ role above the floor `a`. They part exactly at the fixed points of
 -- `α ↦ ω^α`: at a fixed-point floor such as `ε_o` the schema returns that floor (§ I-b,
 -- `nfp f = f`), so the ε₀ role is taken strictly above it, at `ε_(o+1)`
--- (`Ordinal.epsilon_succ_eq_nfp`). At the seed ε₀ the first holds at ε₀ and the second climbs to
+-- (`Ordinal.epsilon_add_one_eq_nfp`). At the seed ε₀ the first holds at ε₀ and the second climbs to
 -- ε₁: one point, two branches, both at once. Kind: INVARIANT off the fixed points; the parting is
 -- the content. Not CARRIER: the carrier never changes. Not the dynamical-systems sense (a
 -- qualitative change as a parameter of the map varies): only the seed varies; the map does not.
