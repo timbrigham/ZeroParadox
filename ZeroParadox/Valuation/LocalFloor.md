@@ -21,7 +21,8 @@ is the single-digit case, and nothing here treats an arbitrary branching pattern
 
 **What it settles for the framework.** It QUALIFIES the commitment that the snap-arc returns to a new
 bottom — neither confirming nor refuting it. A new bottom is obtained exactly when the step branches
-away. `ε₀ ≠ ⊥` is untouched bedrock (`epsilon0_ne_bot`), and nothing here identifies any rung with ⊥.
+away. `ε₀ ≠ ⊥` of `Ordinal` is untouched bedrock (`epsilon0_ne_bot`), and nothing here identifies any rung
+with ⊥ of `Ordinal`.
 
 ## Prior art — neither statement is new, and the closest forms are in the pinned Mathlib
 

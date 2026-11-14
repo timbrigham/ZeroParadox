@@ -197,7 +197,7 @@ example : ∃ c : Nat.Partrec.Code, ∀ n, c.eval n = c.eval (Encodable.encode c
 /-! ### § V. The 2-adic realization (along the tower: valuation order agrees, norm order reverses from stage 1; ε₀ ≠ 0 preserved, no identity) -/
 #check @ZeroParadox.snap_arc_z2_loop          -- Statement: the images start at ℤ_[2]'s 0, are ≠ 0 for every stage n ≥ 1, and tend to that 0 (the loop)
 #check @ZeroParadox.mu_construction_correspondence  -- Statement: one tower, two carrier closures: ε₀ in `Ordinal`, ℤ_[2]'s 0 as the images' limit
-#check @ZeroParadox.cnf_bridge_type_boundary  -- Statement: ε₀ is the least fixed point at or above ⊥ of `Ordinal` ∧ the images tend to ℤ_[2]'s 0 ∧ each stage's `repr` is its tower stage. Reading: a co-witness; ε₀ = 0 with 0 of ℤ_[2] fails to elaborate, `Ordinal` vs `ℤ_[2]`
+#check @ZeroParadox.cnf_bridge_type_boundary  -- Statement: ε₀ is the least fixed point at or above ⊥ of `Ordinal` ∧ the images tend to ℤ_[2]'s 0 ∧ each stage's `repr` is its tower stage. Reading: a co-witness; `ε₀ = (0 : ℤ_[2])` fails to elaborate, `Ordinal` vs `ℤ_[2]`
 #check @ZeroParadox.tower_orders_agree        -- Statement: on the tower stages, ordinal `<` iff `<` on the 2-adic valuations of the images; at the seed this rests on Mathlib's `valuation 0 = 0`
 -- Statement: DRIFT. Read by the norm, the order reverses only from stage 1 on: at the seed the norm
 -- rises from 0 (first example), and for 1 ≤ m < n it falls (second example).

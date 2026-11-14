@@ -25,8 +25,8 @@ closures and holds them apart.
 On the members the **order-reversal is visible in the numbers**: as `n` rises, the 2-adic *valuation* of
 `member n` rises (`= n+1`) while its *norm* falls toward 0. Valuation-up ⟺ norm-down is a fact about
 the 2-adic norm (`‖x‖ = 2^(-v(x))` for `x ≠ 0`), not a property of `cnfToZp2`; across the seed the norm
-rises from 0 (`ZeroParadox/Ordinal/Epsilon0CannotBe.lean` § V). The SAME index sequence ascends on the
-ordinal side to ε₀.
+rises from 0 (`ZeroParadox/Ordinal/Epsilon0CannotBe.lean` § V). The SAME stages `towerNONote n`, read
+through `NONote.repr`, ascend on the ordinal side to ε₀ (`mu_construction_correspondence`).
 
 `tower_height_floor_reconciliation` bundles the reconciliation and **proves `ε₀ ≠ 0` in the same statement
 that connects the two closures**: (1) the InfinitudeFloor's floor, ℤ_[2]'s 0, has infinite complexity
