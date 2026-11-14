@@ -7,7 +7,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# Axis IV probe: termination separates these descents; convergence-rate class is not shown to
+# Axis IV probe: termination separates these descents; convergence-rate class is not shown to separate them
 
 ## Engineer's Take
 
@@ -57,7 +57,7 @@ one direction.
   orbit are rate-separated *below* even when they share the base ½. Well-foundedness reasserts
   itself as a tail phenomenon: terminating descent cannot two-sidedly track a non-terminating orbit.
 
-### Honest verdict — termination separates; rate class is not shown to
+### Honest verdict — termination separates; rate class is not shown to separate them
 
 The pre-registered GO ("a geometric ℕ-descent rate-MATCHES the geometric orbit") holds only as an
 *upper* envelope; the literal two-sided match is **false** because the ℕ-descent terminates. The

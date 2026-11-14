@@ -1,12 +1,12 @@
 """
 Zero Paradox — ZP-G: Category Theory PDF Builder
-Version 1.28 | November 2026
+Version 1.29 | November 2026
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.28'
+VERSION = '1.29'
 FIRST_RELEASED = 'April 2026'
 
 # ZP-G uses a slightly different amber shade; override zp_utils default
@@ -487,7 +487,7 @@ def build():
             'Part II — Inward surprisal is undefined (from AX-G2): For any X ≠ 0, hom(X, 0) = ∅ (AX-G2). '
             'Therefore D7\' cannot be applied to any morphism f: X → 0 from outside 0 — no such morphism '
             'exists. I(X → 0) is undefined not because K diverges to infinity, but because there is no morphism '
-            'to apply D7\' to. The undefined-domain condition is strictly stronger than divergence. ✓',
+            'to apply D7\' to. ✓',
             'Part III — The singularity: 0 is the unique object in C for which outward surprisal is defined and '
             'accumulates (Part I) while inward surprisal is undefined by absence of morphisms (Part II). This '
             'is the informational singularity: the initial object is informationally accessible in the outward '
@@ -496,7 +496,7 @@ def build():
             'Comparison with ZP-C (to be reconciled in ZP-H T-H2): ZP-C establishes that the discrete surprisal '
             'DF diverges (numerically, to &#8734;) along infinite sequences approaching 0 in Q<sub>2</sub>. T6 Part II '
             'establishes that I(X → 0) is undefined (domain-absent) for any X ≠ 0 in C. These are compatible: '
-            'undefined is stronger than infinite. ZP-H T-H2 shows that the two hold together, a conjunction; '
+            'ZP-H T-H2 shows that the two hold together, a conjunction; '
             'neither is derived from the other (th2_singularity_compatibility).',
             'Status: DERIVED. Depends on AX-G1, AX-G2, D3, D5, D7\', I-KC, T6-a, T6-b, T6-c. OQ-G1 is closed. '
             'BA-G1 is no longer a premise of T6. ✓',

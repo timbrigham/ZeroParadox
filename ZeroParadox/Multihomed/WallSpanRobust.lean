@@ -8,7 +8,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# Spans into the ordinals: the wall bites exactly on non-well-founded apexes (#1 vs #2, #2 taken as ℝ)
+# Spans into the ordinals: the wall bites on non-well-founded apexes (#1 vs #2, #2 taken as ℝ)
 
 ## Engineer's Take
 
@@ -35,7 +35,7 @@ the root cut is only an obstruction-to-direct-maps; an obstruction even to spans
 wall is a genuine invariant.
 
 **Verdict: the wall bites on every apex whose relation is not well-founded, such as ℝ under `<`, and
-every well-founded apex escapes it (`faithful_iff_descending`).**
+every well-founded apex in the same universe as the ordinals escapes it (`faithful_iff_descending`).**
 
 The load-bearing content is in the statements (not the prose):
 
@@ -55,13 +55,13 @@ The load-bearing content is in the statements (not the prose):
 
 **The escapes, also in-statement.** `trivial_bottoms_only_span` exhibits the single-point apex
 `S = PUnit` over the one-point simplex `stdSimplex ℝ (Fin 1)`: a **degenerate** escape.
-`faithful_iff_descending` makes the dividing line precise: a span escapes the wall **iff** its apex is
-well-founded. The Markov simplex `stdSimplex ℝ (Fin 2)` under the coordinate order is such an apex
+`faithful_iff_descending` makes the dividing line precise: with the apex and the ordinals in the same
+universe, a span escapes the wall **iff** its apex is well-founded. The Markov simplex `stdSimplex ℝ (Fin 2)` under the coordinate order is such an apex
 (the `example` after `faithful_iff_descending`): the attractor's own ambient escapes.
 
 **Net reading.** For apexes whose relation is not well-founded, such as ℝ under `<`, the
 well-foundedness invariant survives the span construction, not only direct maps. Every well-founded
-apex escapes it, the simplex the attractor lives in included. So the wall separates #1 from #2 only
+apex in the same universe as the ordinals escapes it, the simplex the attractor lives in included. So the wall separates #1 from #2 only
 under the modelling choice that #2's descent is ℝ-valued.
 -/
 

@@ -352,7 +352,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 ### Reals (counterexamples)
 
 - `ZeroParadox/Reals/ConnectedNoFirstStep.lean` - Connectedness and the first step on a linear order with its order topology
-- `ZeroParadox/Reals/RateClassInvariant.lean` - Axis IV probe: termination separates these descents; convergence-rate class is not shown to
+- `ZeroParadox/Reals/RateClassInvariant.lean` - Axis IV probe: termination separates these descents; convergence-rate class is not shown to separate them
 
 ### Category theory (ZP-G, ZP-H)
 
@@ -405,7 +405,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Multihomed/TreeT1.lean` - ZP-H tree, edge T1 — the within-μ edge: proof-theory floor ↔ categorical-initial bottoms
 - `ZeroParadox/Multihomed/TreeT2.lean` - ZP-H tree, edge T2 — the within-ν edge: Markov attractor ↔ p-adic inverse-limit
 - `ZeroParadox/Multihomed/TwoFacesBot.lean` - Direction B — the two faces of ⊥ at the seam: VACUOUS (they coincide, but only as a bare singleton)
-- `ZeroParadox/Multihomed/WallSpanRobust.lean` - Spans into the ordinals: the wall bites exactly on non-well-founded apexes (#1 vs #2, #2 taken as ℝ)
+- `ZeroParadox/Multihomed/WallSpanRobust.lean` - Spans into the ordinals: the wall bites on non-well-founded apexes (#1 vs #2, #2 taken as ℝ)
 
 ### Set theory / AFA (ZP-J)
 
