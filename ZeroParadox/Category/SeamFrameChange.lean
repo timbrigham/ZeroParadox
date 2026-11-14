@@ -61,18 +61,17 @@ noncomputable abbrev Z_seamFC : ModuleCat ℂ := fD_functor.obj 0
 /-- **The seam and its opposite are both zero objects (category frame, `op`-self-duality).**
 
     ⚠ **NAME CORRECTION (Tim, 2026-07-30). The handle `catseam_is_frameflip` is retained per the CC-2 /
-    MC-1 convention — do not rename — but it OVERCLAIMS: the seam is not a frame flip.** `Statement:`
-    INVERSION, `op` exchanges the two characterisations, initial and terminal, that the seam already
-    carries ((iii) and (iv) below). No snap appears in this statement either.
+    MC-1 convention — do not rename — but it OVERCLAIMS: the seam is not a frame flip.** No snap appears in this statement either.
 
-    `Statement:` the seam is **initial AND terminal** (a zero object), and so is its opposite — four
-    `Nonempty` witnesses. That is `op`-self-duality.
+    `Statement:` COINCIDENCE — the seam is **initial AND terminal** at once, a zero object (conjuncts
+    (i) and (ii)), and so is its opposite — four `Nonempty` witnesses. That is `op`-self-duality.
+    `Statement:` INVERSION — `op` exchanges the two characterisations, initial and terminal, that the
+    seam already carries: its opposite is terminal and initial (conjuncts (iii) and (iv)). Its opposite
+    is again a zero object, as every zero object's is (`IsZero.op`), so `op` singles out no object here.
+    On the sphere the exchange is of two distinct points: `rInv` swaps `0` and `∞` (`rInv_swaps`).
 
     `Reading:` COINCIDENCE and INVERSION — this is "the bottom is **concurrently both poles**" in categorical dress — μ-bottom in one
-    chart, ν-top in the other, **simultaneously**, with `op`-duality exchanging the two characterisations
-    the zero object carries at once. Its opposite is again a zero object, as every zero object's is
-    (`IsZero.op`), so `op` singles out no object here. On the sphere the exchange is of two distinct
-    points: `rInv` swaps `0` and `∞` (`rInv_swaps`). **The frame change is the exchange of the two
+    chart, ν-top in the other, **simultaneously**. **The frame change is the exchange of the two
     characterisations; the seam is the object that carries both.** No snap transition appears in the
     statement, so the snap-as-instance reading stays ZP-Q's conjecture.
 

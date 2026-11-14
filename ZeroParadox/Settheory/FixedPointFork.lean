@@ -11,8 +11,8 @@ self-referential operator's least fixed point is its inductive / well-founded cl
 fixed point its coinductive / non-well-founded closure; that reading is the initial-algebra /
 final-coalgebra picture (a categorical setting; the μ/ν theory of functor fixed points - Lambek 1968,
 Rutten 2000, Adámek-Milius-Moss), offered here as analogy — what is *proved* below is
-purely the order-theoretic lfp/gfp statement. `Reading:` COINCIDENCE, the collapse point as the diagonal
-fixed point, is analogy: `ZPSemilattice`/`AbstractSelfApp` do not supply its hypotheses; a carrier can (`fork_collapse_iff`).
+purely the order-theoretic lfp/gfp statement. `Reading:` COINCIDENCE, the collapse point as the diagonal fixed point:
+`ZPSemilattice`/`AbstractSelfApp` do not supply its hypotheses; on `OntologicalStates` it is the image of that carrier's ⊥, degenerately (`example`s after `fork_collapse_iff`).
 
 Naming note: this layer's informal nickname is "the fork." The word *porthole* is used elsewhere in
 this repo (ZP-J Wheel) for a different, narrower thing — the `∞ ≠ ⊥` separation (`inf_ne_bot`). To
@@ -96,10 +96,17 @@ theorem fork_collapse_iff :
 
 -- `Statement:` the constant-`False` map on the complete lattice `Prop` is monotone and its
 -- fork collapses. `Reading:` it is `instOntSelfApp`'s constant-to-`null` map
--- (`ZeroParadox/Settheory/OntBridge.lean`) read through the order isomorphism `null ↦ False`, `exist ↦ True`.
+-- (`ZeroParadox/Settheory/OntBridge.lean`) read through the order isomorphism `null ↦ False`, `exist ↦ True`;
+-- the map is constant, so the instance is degenerate (the CONTROL below).
 example : let g : Prop →o Prop := ⟨fun _ => False, fun _ _ _ => le_rfl⟩; g.lfp = g.gfp := by
   intro g
   exact (fork_collapse_iff g).mpr ⟨False, rfl, fun _ hy => hy.symm⟩
+
+-- `Statement:` CONTROL: every constant map on a complete lattice is monotone and its fork collapses.
+example {β : Type*} [CompleteLattice β] (c : β) :
+    let g : β →o β := ⟨fun _ => c, fun _ _ _ => le_rfl⟩; g.lfp = g.gfp := by
+  intro g
+  exact (fork_collapse_iff g).mpr ⟨c, rfl, fun _ hy => hy.symm⟩
 
 /-! ## Engineer's Take
 

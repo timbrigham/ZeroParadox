@@ -115,8 +115,9 @@ theorem claim_T_SNAP : c₀ ≠ c₁ ∧ c₁ ≠ c₀ ∧ join c₀ c₁ = c₁
 /-- Claim `node-information` (proved). Statement: "In information theory, L-INF gives unbounded
     surprisal: for every bound M some ball depth n has surprisal I(n) = n > M." (the claim graph adds:
     n is a natural number, the ball-depth reading a design identification, `surprisal_eq_binary_info`;
-    and the second, point-mass reading, `pmf_subsingleton_isPure`). Exact representation: the surprisal is unbounded
-    (no finite bound holds), the L-INF divergence (`l_inf`: ∀ M, ∃ n, M < surprisal n). Backing: `info_bottom_diverges`.
+    and the second, point-mass reading, `pmf_subsingleton_isPure`). Representation of the L-INF half only: the surprisal is unbounded
+    (no finite bound holds), the L-INF divergence (`l_inf`: ∀ M, ∃ n, M < surprisal n). The point-mass
+    reading (`pmf_subsingleton_isPure`) is not represented here. Backing: `info_bottom_diverges`.
     Measure-theoretic home of the depth reading: the depth-n ball of ℤ_[p] has Haar measure p⁻ⁿ
     (`haarZp_ball`, `ZeroParadox/Valuation/PadicHaar.lean`), and the balls of ℚ₂ meet in `{0}`
     (`topfloor_singleton`, `ZeroParadox/Valuation/PadicAttractor.lean`). -/
