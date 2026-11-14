@@ -2761,7 +2761,7 @@ end Motion
 `Reading:` an observation is an explicit second argument (a strict map `φ`, or a map `obs` into any
 type); each result here is about the pair, none about the motion alone. The observer is the map and
 the observed motion is its source; when the map is a strict onto map with the back clause, the motion
-it maps onto is the image motion (what the observer shows). -/
+it maps onto is its homomorphic image (what the observer shows). -/
 
 namespace Motion
 

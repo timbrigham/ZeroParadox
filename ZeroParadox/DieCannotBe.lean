@@ -1934,9 +1934,9 @@ example (h : ∀ (β : Type) [PartialOrder β] [OrderBot β], ZeroParadox.BotCov
 -- sources read, as of 2026-10-28. Decidable equality frees the corner split
 -- (`Motion.corner_iff_loop_or_climb`) and the cut (`botCovered_botIntervalTwo`); it does not free
 -- registration. Registration's taboo comes from a `Prop`-valued UP-definedness and is reached on
--- `Unit` (`Motion.em_of_registeredDecidable`); UP-definedness itself is decided when UP is total or
--- presented as an `Option` (`registeredDecidable_of_upTotal`,
--- `ofOption_registeredDecidable`). On `ℕ`, the quantifier in the trichotomy, the selector and fan-in
+-- `Unit` (`Motion.em_of_registeredDecidable`); UP-definedness itself is decided when UP is total
+-- or presented as an `Option` (`registeredDecidable_of_upTotal`, `ofOption_registeredDecidable`).
+-- On `ℕ`, the quantifier in the trichotomy, the selector and fan-in
 -- returns as LPO or Markov's principle; this is measured for `ℕ`, and for the trichotomy and the
 -- selector also on `Option ℕ` (§ XXVII). Escardó (preprint of JSL 78(3) (2013), p. 1) grades the
 -- same principle by the set searched, "For X finite this is trivial, and for X = ℕ, this is LPO",
@@ -4438,8 +4438,8 @@ example :
 #check @ZeroParadox.Motion.mkHom_stepBack        -- Statement: if the setoid is also step-compatible, the class map has the back clause
 #check @ZeroParadox.Motion.mkHom_surjective      -- Statement: the class map is onto
 -- Reading: a strict map with the back clause (the observer) gives a compatible kernel, and a
--- compatible setoid gives such a map onto its quotient (the image motion, what the observer shows;
--- the observed motion is the source; Rutten's homomorphic image, or quotient, TCS 249 (2000), p. 10).
+-- compatible setoid gives such a map onto its quotient (what the observer shows; the observed
+-- motion is the source; Rutten's homomorphic image, or quotient, TCS 249 (2000), p. 10).
 -- How this relates to Rutten's Proposition* 5.7 and Proposition 5.8
 -- (pp. 33–34) is in the Readings on `Hom.stepCompat_ker` and `mkHom_stepBack`
 -- (`ZeroParadox/Die.lean` § XXI); the bisimulation half of 5.7 for `Part × Set` is `isBisim_ker`, § XXVI below.
