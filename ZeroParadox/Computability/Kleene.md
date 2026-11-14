@@ -273,10 +273,10 @@ importing this one.
   the instance `Primcodable.ofDenumerable Code` (`#synth Primcodable Code`), and the choice comes
   from its `Denumerable Code` argument, `Nat.Partrec.Code.instDenumerable`, which measures the
   triple (as does `ofNatCode`, above). `Primcodable.ofDenumerable` itself measures
-  `[propext, Quot.sound]`. `Partrec₂` is stated through `Primcodable.prod`, which measures the
-  triple (above), and the constant `Partrec₂` itself measures the triple
+  `[propext, Quot.sound]`. Measured 2026-10-22: `Partrec₂` is stated through `Primcodable.prod`,
+  which measures the triple (above), and the constant `Partrec₂` itself measures the triple
   (`#print axioms Partrec₂` in the `PurityCheck` section of
-  `ZeroParadox/Computability/KleeneChoiceFree.lean`). Measured
+  `ZeroParadox/Computability/KleeneChoiceFree.lean`). Measured 2026-10-22
   with no `Code` in it: a statement whose only content is a `Partrec₂` hypothesis at
   `ℕ → ℕ →. ℕ` carries the triple, and the same with a unary `Partrec` hypothesis at `ℕ →. ℕ`
   does not; a unary `Partrec` hypothesis at the pair carrier `ℕ × ℕ →. ℕ` carries the triple, so

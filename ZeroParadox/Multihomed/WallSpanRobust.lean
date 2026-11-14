@@ -45,7 +45,7 @@ The load-bearing content is in the statements (not the prose):
 
 - `no_faithful_span_to_ordinal_and_descending` — the **robust wall**, in-statement: there is NO apex
   `S` carrying a non-well-founded relation `r` (such as `<` on ℝ, `real_carrier_not_wellFounded`)
-  that ALSO admits an order-preserving leg `f : S → Ordinal`. So, with #2's carrier taken to be ℝ,
+  that ALSO admits a strictly order-preserving leg `f : S → Ordinal`. So, with #2's carrier taken to be ℝ,
   no span whose apex carries that infinite descent reconciles #1 and #2. This is strictly stronger than `no_strictMono_real_to_ordinal` (a direct map is the special
   case `S = ℝ`, `r = (· < ·)`, `f` the embedding): it rules out the entire span shape, not just the
   direct edge.
@@ -83,8 +83,8 @@ theorem apex_wf_of_strictMono_to_ordinal {S : Type*} (r : S → S → Prop)
 /-! ## The robust wall: no span with a non-well-founded apex reconciles #1 and #2 -/
 
 /-- **robust wall (in-statement).** There is no apex `S` carrying a *non-well-founded* relation
-    `r` (such as `<` on ℝ, the carrier this file takes for #2) that also admits an order-preserving
-    leg `f : S → Ordinal` to the #1 well-founded floor. So, with #2's carrier taken to be ℝ, no span
+    `r` (such as `<` on ℝ, the carrier this file takes for #2) that also admits a strictly
+    order-preserving leg `f : S → Ordinal` to the #1 well-founded floor. So, with #2's carrier taken to be ℝ, no span
     whose apex carries that descent can reconcile #1 with #2.
 
     Strictly stronger than `no_strictMono_real_to_ordinal`: that is the special case
@@ -95,21 +95,21 @@ theorem no_faithful_span_to_ordinal_and_descending {S : Type*} (r : S → S → 
   rintro ⟨f, hf⟩
   exact hr (apex_wf_of_strictMono_to_ordinal r f hf)
 
-/-- The robust wall at ℝ with `<` (this file's carrier for #2): no order-preserving leg to the #1
+/-- The robust wall at ℝ with `<` (this file's carrier for #2): no strictly order-preserving leg to the #1
     ordinal floor. Despite the identifier, the statement concerns ℝ, not the p-adics; it is
     `no_strictMono_real_to_ordinal` in span form. -/
 theorem descending_apex_obstructs_padic_span :
     ¬ ∃ f : ℝ → Ordinal, ∀ a b : ℝ, a < b → f a < f b :=
   no_faithful_span_to_ordinal_and_descending (· < ·) real_carrier_not_wellFounded
 
-/-! ## One escape: the trivial bottoms-only span (degenerate; every well-founded apex also escapes) -/
+/-! ## One escape: the trivial bottoms-only span (degenerate; every well-founded apex in the same universe as the ordinals also escapes) -/
 
 /-- **The NO-GO escape, in-statement.** The single-point apex `PUnit` DOES span #1 and #2: its `<`
     maps order-preservingly to `0 : Ordinal` (vacuously — `PUnit` has no `<`-pair) and its unique
     point lands at a chosen simplex point (here the one point of `stdSimplex ℝ (Fin 1)`, not the
     Markov node's simplex). So the cross-root obstruction does dissolve under *this* span. The escape
-    is degenerate, and it is not the only one: every well-founded apex escapes — see
-    `faithful_iff_descending`. -/
+    is degenerate, and it is not the only one: every well-founded apex in the same universe as the
+    ordinals escapes — see `faithful_iff_descending`. -/
 theorem trivial_bottoms_only_span :
     (∃ f : PUnit → Ordinal, ∀ a b : PUnit, (a < b) → f a < f b) ∧
     (∃ g : PUnit → (Fin 1 → ℝ), ∀ x, g x ∈ stdSimplex ℝ (Fin 1)) := by
@@ -119,12 +119,13 @@ theorem trivial_bottoms_only_span :
     · intro i; exact zero_le_one
     · simp
 
-/-- **The dividing line, in-statement.** A span's apex `S` (with relation `r`) admits an
-    order-preserving leg to the #1 ordinal floor **iff** it is well-founded (despite the identifier,
-    the right-hand side is well-foundedness, not descent). Combined with
-    `apex_wf_of_strictMono_to_ordinal`: the existence of *any* order-preserving leg forces
-    well-foundedness, and conversely a well-founded apex always has one (its own rank map). So
-    "escapes the wall" ⟺ "well-founded apex". The trivial bottoms-only span is one instance; the
+/-- **The dividing line, in-statement.** A span's apex `S : Type u` (with relation `r`) admits a
+    strictly order-preserving leg to the #1 ordinal floor `Ordinal.{u}`, in the apex's own universe,
+    **iff** it is well-founded (despite the identifier, the right-hand side is well-foundedness, not
+    descent). Combined with `apex_wf_of_strictMono_to_ordinal`: the existence of *any* strictly
+    order-preserving leg into `Ordinal` forces well-foundedness, and conversely a well-founded apex
+    always has one into the ordinals of its own universe (its own rank map). So, with the apex and the
+    ordinals in the same universe, "escapes the wall" ⟺ "well-founded apex". The trivial bottoms-only span is one instance; the
     Markov simplex under the coordinate order is another (the `example` below). -/
 theorem faithful_iff_descending {S : Type u} (r : S → S → Prop) :
     (∃ f : S → Ordinal.{u}, ∀ a b, r a b → f a < f b) ↔ WellFounded r := by
