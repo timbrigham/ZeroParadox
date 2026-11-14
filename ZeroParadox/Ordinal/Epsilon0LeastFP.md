@@ -9,8 +9,8 @@ Experiment G1 (T6 compute-the-invariant), independent of the MC-1 arc. ε₀ is 
 `Ordinal` in the fixed-point order: the **least fixed point** of `α ↦ ω^α`, `Ordinal.epsilon 0`, index
 zero in the epsilon enumeration, Veblen coordinates (1,0). ⊥ of `Ordinal` is not itself a fixed point
 (`bot_is_not_a_step`), so that order starts above it; "step" there means a stable landing (the first ⚠
-below), not the order successor of ⊥ of `Ordinal`, which is `1` (the second ⚠ below). That
-first step is also the **supremum** of the ω-tower (`epsilonZero_eq_iSup`); the two faces hold at once
+below), not the order successor of ⊥ of `Ordinal`, which is `1` (the second ⚠ below). ε₀, that
+first step in the fixed-point order, is also the **supremum** of the ω-tower (`epsilonZero_eq_iSup`); the two faces hold at once
 (`epsilon0_min_eq_max`). `epsilon0_least_fixedpoint` proves the lower-bound half of the first face.
 
 ⚠ **"Minimum step" means a STABLE LANDING** — a fixed point of `α ↦ ω^α` — and in that sense ε₀ IS the
@@ -83,8 +83,9 @@ markers as `t` / `I`** (other `§` on the page survive), so a literal pattern mi
 same `le_antisymm` + `nfp_le_fp` route. ⚠ **Absent from the pin is the SEED-RANGED ω-power entry**
 (searched 2026-08-07): `Ordinal.epsilon_zero_eq_nfp` (seed `0`) and `Ordinal.epsilon_succ_eq_nfp` (successor
 seeds) both exist. At the current pin the latter is deprecated in favour of
-`Ordinal.epsilon_add_one_eq_nfp`, `ε_(o + 1) = nfp (ω^·) (ε_o + 1)`. **So this closes a FORMALIZATION gap in Mathlib, not a mathematical one** — the
-classical anchor is clause (A) of Corollary 1 to Theorem 4 plus monotonicity, and the declaration is that in Lean.
+`Ordinal.epsilon_add_one_eq_nfp`, `ε_(o + 1) = nfp (ω^·) (ε_o + 1)`. **So this closes a FORMALIZATION
+gap in Mathlib, not a mathematical one** — the classical anchor is clause (A) of Corollary 1 to
+Theorem 4 plus monotonicity, and the declaration is that in Lean.
 
 Lemma locations: `FixedPoint.lean` supplies `nfp_le_fp` and `nfp_fp`; `isNormal_opow` is in
 `Exponential.lean`; the ε₀ lemmas are in `Veblen.lean`.

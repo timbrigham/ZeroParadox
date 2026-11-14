@@ -79,7 +79,7 @@ against it. Mathlib carries the same shape for `+` and `*` (`Ordinal.nfp_add_eq_
 `Statement:` each ε-number rung is ⊥ of `Set.Ici rung` and **never ⊥ of `Ordinal`**
 (`Ordinal.epsilon_pos`); the iteration that re-seeds just above a rung starts at succ(rung), the least
 element of `Set.Ioi rung`, and closes at the next ε-number: `ε_(o + 1) = nfp (ω^·) (ε_o + 1)`
-(`epsilon_add_one_eq_nfp`, with `succ o = o + 1`; `ZeroParadox/Ordinal/Epsilon0CannotBe.lean` § I-b).
+(`epsilon_add_one_eq_nfp`, with `succ ε_o = ε_o + 1`; `ZeroParadox/Ordinal/Epsilon0CannotBe.lean` § I-b).
 
 `Reading:` **INVARIANT** (conjectural) — read the seed as a **role**, not an origin: the ratified
 *"iterative bottoms"* picture, in which a rung is the floor the next iteration re-seeds just above

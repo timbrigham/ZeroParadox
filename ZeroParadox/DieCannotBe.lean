@@ -2399,17 +2399,30 @@ example : (ZeroParadox.Motion.ofFun (Inv.inv : ℚ → ℚ)).SelfOnlyAt 0 :=
 #check @ZeroParadox.cm_a_absorbs                 -- Statement: with OVER `x → x + z`, `a` steps only to itself and every point steps to it
 -- Reading: comparing the totalisations of division on ℚ by the values they adjoin outside ℚ is
 -- Bergstra's frame (J. A. Bergstra, "Division by Zero: A Survey of Options", Transmathematica 1(1),
--- 2019, § 3, pp. 10–15: the common meadow § 3.1, `0⁻¹ = 0` § 3.2, `0⁻¹ = 1` § 3.3, one added point `∞`
+-- 2019, § 3, pp. 9–16: the common meadow § 3.1, `0⁻¹ = 0` § 3.2, `0⁻¹ = 1` § 3.3, one added point `∞`
 -- with `0⁻¹ = ∞` and `∞⁻¹ = 0` § 3.4, the wheel § 3.5, the transrationals § 3.6; J. A. Bergstra and
 -- J. V. Tucker, "The Wheel of Rational Numbers as an Abstract Data Type", WADT 2020, LNCS 12669,
--- pp. 13–30, § 1 pp. 13–14 and p. 29). The corpus reads three of his structures through the die, an
--- instance of his frame and not the reverse, each by the shape of its inversion: the involutive meadow
+-- pp. 13–30, § 1 pp. 13–14 and p. 29). The corpus reads three of the structures his survey compares
+-- through the die, an instance of his frame and not the reverse, each by the shape of its inversion: the involutive meadow
 -- ℚ₀ (the ℚ control above), where `0` is fixed and inversion is an involution; the common meadow ℚ_a,
 -- where inversion is a one-way arrow `0 → a`, not an involution, and `a` absorbs addition; the wheel,
 -- where `0` and `∞` are exchanged and `0·/0` is the fixed centre. The number of adjoined points does
 -- not decide the shape: the survey's ℚ∞ adds one point and its inversion exchanges `0` and `∞` (§ 3.4),
 -- and its ℚ₁ adds none and its inversion is not an involution (§ 3.3). This is a reading of separate
 -- results, not a theorem; no structural connection between the three structures is claimed.
+-- Statement: the two counter-instances' inversions alone, on their carriers: on `Option ℚ` (`none`
+-- for `∞`), `0⁻¹ = ∞` with `∞⁻¹ = 0` is an involution; on ℚ, `0⁻¹ = 1` is not.
+example : (∀ x : Option ℚ,
+      (fun y : Option ℚ => match y with | none => some 0 | some q => if q = 0 then none else some q⁻¹)
+        ((fun y : Option ℚ => match y with | none => some 0 | some q => if q = 0 then none else some q⁻¹) x)
+        = x) ∧
+    (fun q : ℚ => if q = 0 then (1 : ℚ) else q⁻¹) ((fun q : ℚ => if q = 0 then (1 : ℚ) else q⁻¹) 0) ≠ 0 := by
+  refine ⟨fun x => ?_, by simp⟩
+  rcases x with _ | q
+  · simp
+  · by_cases hq : q = 0
+    · subst hq; simp
+    · simp [hq]
 #check @ZeroParadox.rInv_conj_rScale            -- Statement: on `OnePoint ℚ_[2]`, `rInv ∘ rScale n ∘ rInv = rScale (-n)`
 -- Statement: `OnePoint ℚ_[2]` under `rScale n`: `rInv` reverses the motion, `0` and `∞` each step only
 -- to themselves, and there is no source and no sink (`[propext, Classical.choice, Quot.sound]`).
