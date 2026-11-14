@@ -441,8 +441,8 @@ is essential. -/
 -- `fun _ _ _ hne => P hne` (`fixedPointFree_of_classical` is that instantiation of the classical
 -- proof), so that theorem's `classical` is essential in the sense of the header above, and on its
 -- premise.
--- Reading (cited, not claimed): PRIOR ART, Booij–Escardó–Lumsdaine–Shulman, arXiv:1701.05617, Thm 3
--- and Thm 5 (Simpson's proof technique); their statements and the difference from this case are in the
+-- Reading (cited, not claimed): related prior art with different statements, Booij–Escardó–Lumsdaine–Shulman,
+-- arXiv:1701.05617, Thm 3 and Thm 5 (Simpson's proof technique); their statements and the difference from this case are in the
 -- comment above `wem_of_fixedPointFree` in `ZeroParadox/Category/LawvereTaboo.lean`.
 #check @ZeroParadox.wem_of_fixedPointFree
 

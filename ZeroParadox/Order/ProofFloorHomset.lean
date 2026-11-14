@@ -57,7 +57,7 @@ it separates #5 from #4, and adds **no new cardinality value** (the {0,1} dichot
 
 ### Capstone
 
-`nat_floor_initial_singleton_homs` bundles thinness with the GO half: the floor's category is thin; (GO) its
+`nat_floor_initial_singleton_homs` bundles thinness, the GO half and `IsInitial (0 : ℕ)`: the floor's category is thin; (GO) its
 hom-set carrier is a singleton, card-equal to a point and card-distinct from `Fin 0`. The delta over
 `ZeroParadox/Category/PointednessSharp.lean`: that file covered the two Type-carried endpoints; this
 file adds #1 to the ledger under the hom-set convention, where it lands on an existing value of the

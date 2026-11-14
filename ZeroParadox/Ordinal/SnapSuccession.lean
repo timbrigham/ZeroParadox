@@ -84,7 +84,8 @@ theorem snapNucleus_fixes_epsilon (o : Ordinal) :
 
 /-- **Re-seeding — the next rung is the snap from just past the current one.** `ε_ (succ o)` is the
     snap-closure seeded at `succ (ε_ o)`: when one instance ends at `ε_ o`, the next begins by snapping
-    from one step above it. (Mathlib `epsilon_add_one_eq_nfp`, with `succ (ε_ o) = ε_ o + 1`.)
+    from one step above it. (Mathlib `epsilon_add_one_eq_nfp`, with `succ o = o + 1` at the index and
+    `succ (ε_ o) = ε_ o + 1` at the seed.)
 
     NOT to be read as "the successor null": `ε_ o` *plays the bottom role* for this next step without
     *being* ⊥, and the ⊥-ROLE fact (`t_iz_limit_is_new_null`, the role half only; reading its occupant

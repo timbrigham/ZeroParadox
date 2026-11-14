@@ -325,7 +325,7 @@ example {σ : Type*} (f : σ → Option σ) {s t : σ} (h : f s = Option.none)
 
 -- Statement: a configuration stepping onward to something else is left unchanged by the swap.
 -- Reading: the interior is fixed pointwise. `rInv` differs: it maps its seam `‖x‖ = 1` onto itself
---   (`sNorm_rInv`) and fixes on it only the points with `x⁻¹ = x` (`rInv_coe_ne`).
+--   (`sNorm_rInv` for into, `rInv_involutive` for onto) and fixes on it only the points with `x⁻¹ = x` (`rInv_coe_ne`).
 #check @ZeroParadox.flipPoles_fixes_progress
 
 -- Statement: a self-looping configuration makes the step relation non-well-founded.

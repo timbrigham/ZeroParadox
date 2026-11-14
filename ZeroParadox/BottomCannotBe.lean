@@ -215,12 +215,14 @@ example : ∀ o : Ordinal, ((⊥ : Set.Ici o) : Ordinal) = o := fun _ => rfl
 -- Statement: that emptiness, plus any two maps `Fix → Cofix` being equal.
 #check @ZeroParadox.root_cut_strict_asymmetric
 
-/-! ### an order-preserving map into `Ordinal` exists only from a well-founded relation -/
+/-! ### a strictly increasing map into `Ordinal` exists only from a well-founded relation -/
 
 -- Statement: if `r` is not well-founded, no `f : S → Ordinal` is strictly increasing along `r`.
 #check @ZeroParadox.no_faithful_span_to_ordinal_and_descending
 -- Statement: the converse biconditional — such an `f` exists iff `r` is well-founded.
 #check @ZeroParadox.faithful_iff_descending
+
+/-! ### the two faces at `selfApp`'s fixed points: a generic subsingleton and one equivalence -/
 
 -- Statement: the equivalences `{x // selfApp x = x} ≃ PUnit` form a subsingleton.
 -- Reading: GENERIC — indexed to fence a misreading, not to carry one. `Subsingleton (α ≃ PUnit)`
