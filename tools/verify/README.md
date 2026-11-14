@@ -44,6 +44,7 @@ the source was already stale.**
 | `check_classes.py` | **BLOCK** at commit and at push | a new requirements class records a degeneracy verdict |
 | `check_prose.py` | **BLOCK** at commit and at push | prose caps: block size, docstring vs declaration, gloss labels |
 | `guards.py` | **BLOCK** at push | every enumerated ROUTE to a guarded property still behaves |
+| `union_inputs.py` | helper, never gates, never records | merges N parallel review batches into ONE set of `record.py` input files (later batch wins per path; a missing input is an error); `selftest` for its controls |
 
 Each prints its own invocation path; run with no arguments for a report.
 
