@@ -12,7 +12,7 @@ fixed point its coinductive / non-well-founded closure; that reading is the init
 final-coalgebra picture (a categorical setting; the μ/ν theory of functor fixed points - Lambek 1968,
 Rutten 2000, Adámek-Milius-Moss), offered here as analogy — what is *proved* below is
 purely the order-theoretic lfp/gfp statement. `Reading:` COINCIDENCE, the collapse point as the diagonal
-fixed point, is analogy; the framework's diagonal fixed points do not meet these hypotheses (`fork_is_frameflip`).
+fixed point, is analogy: `ZPSemilattice`/`AbstractSelfApp` do not supply its hypotheses; a carrier can (`fork_collapse_iff`).
 
 Naming note: this layer's informal nickname is "the fork." The word *porthole* is used elsewhere in
 this repo (ZP-J Wheel) for a different, narrower thing — the `∞ ≠ ⊥` separation (`inf_ne_bot`). To
@@ -83,8 +83,8 @@ theorem unique_of_collapse (h : f.lfp = f.gfp) :
 
 /-- **Fork theorem (the schema's spine).** The fork collapses to a single contact point *iff* the
 self-referential operator has a unique fixed point. `Reading:` COINCIDENCE, the abstract form of "the framework
-forks, and the two closures meet at one point"; the framework's diagonal fixed points are not instances
-of it (`fork_is_frameflip`'s docstring). -/
+forks, and the two closures meet at one point"; the classes `ZPSemilattice` and `AbstractSelfApp` do not
+supply its hypotheses (`fork_is_frameflip`'s docstring), and a particular carrier can (the `example` below). -/
 theorem fork_collapse_iff :
     f.lfp = f.gfp ↔ ∃! x, f x = x := by
   constructor
@@ -93,6 +93,13 @@ theorem fork_collapse_iff :
   · rintro ⟨x, hx, huniq⟩
     obtain ⟨hlfp, hgfp⟩ := collapse_of_unique f x hx huniq
     rw [hlfp, hgfp]
+
+-- `Statement:` the constant-`False` map on the complete lattice `Prop` is monotone and its
+-- fork collapses. `Reading:` it is `instOntSelfApp`'s constant-to-`null` map
+-- (`ZeroParadox/Settheory/OntBridge.lean`) read through the order isomorphism `null ↦ False`, `exist ↦ True`.
+example : let g : Prop →o Prop := ⟨fun _ => False, fun _ _ _ => le_rfl⟩; g.lfp = g.gfp := by
+  intro g
+  exact (fork_collapse_iff g).mpr ⟨False, rfl, fun _ hy => hy.symm⟩
 
 /-! ## Engineer's Take
 

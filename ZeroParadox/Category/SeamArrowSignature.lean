@@ -46,8 +46,10 @@ This is a statement about hom-sets only (no object-level data), and:
 - `hom_into_bot_separates` — P_in(#5) ∧ ¬P_in(#4). In `ModuleCat ℂ` P_in holds at EVERY object,
   because that category has zero morphisms (the `example` after `hom_into_bot_separates`); in
   `KleisliCat PMF` hom-sets into `Fin 0` from nonempty objects are empty. So P_in separates the two
-  ambient categories, not the zero object from the bare-initial object, and terminality plays no
-  role in where it holds. It is not a seam signature.
+  ambient categories, not the zero object from the bare-initial object. Terminality implies P_in in
+  any category, one way (`seam_has_Pin` is proved that way); the converse fails (`Fin 2` in
+  `KleisliCat PMF`, the `example` after `bare_initial_fails_Pin`). P_in fails at #4 because `Fin 0`
+  is empty. It is not a seam signature.
 
 **The control — the deflation `ZeroParadox/Category/SeamArrowLevel.lean` was right about.** The endomorphism-subsingleton property is
 NOT a separator (it is the property `ZeroParadox/Category/SeamArrowLevel.lean` and `ZeroParadox/Category/SeamComparisonMap.lean` over-read):
@@ -85,11 +87,26 @@ theorem seam_has_Pin :
 /-- **P_in FAILS at the bare-initial bottom (#4).** The in-hom-set
     `Hom(fC_functor.obj 1, fC_functor.obj 0)` is *empty* (`fC_no_return`: no stochastic map returns
     into `Fin 0` from the nonempty `Fin 1`). So there is an object `Y` with `Hom(Y, #4)` empty —
-    P_in is false. This is exactly the failure of terminality at #4. -/
+    P_in is false. Terminality implies P_in in any category, one way only: `Fin 2` in `KleisliCat PMF`
+    satisfies P_in and is not terminal (the `example` below). P_in fails at #4 because its carrier
+    `Fin 0` is empty. -/
 theorem bare_initial_fails_Pin :
     ¬ (∀ Y : KleisliCat PMF, Nonempty (Y ⟶ fC_functor.obj 0)) := by
   intro h
   exact (fC_no_return (by norm_num : 0 < 1)).false (h (fC_functor.obj 1)).some
+
+-- `Statement:` CONTROL: in `KleisliCat PMF`, `Fin 2` satisfies P_in and is not terminal, so P_in does
+-- not imply terminality.
+example : (∀ Y : KleisliCat PMF, Nonempty (Y ⟶ KleisliCat.mk PMF (Fin 2))) ∧
+    IsEmpty (Limits.IsTerminal (KleisliCat.mk PMF (Fin 2))) := by
+  refine ⟨fun _ => ⟨fun _ => PMF.pure (0 : Fin 2)⟩, ⟨fun h => ?_⟩⟩
+  have h1 := congrFun (h.hom_ext
+    (show KleisliCat.mk PMF (Fin 1) ⟶ KleisliCat.mk PMF (Fin 2) from fun _ => PMF.pure (0 : Fin 2))
+    (show KleisliCat.mk PMF (Fin 1) ⟶ KleisliCat.mk PMF (Fin 2) from fun _ => PMF.pure (1 : Fin 2)))
+    (0 : Fin 1)
+  change PMF.pure (0 : Fin 2) = PMF.pure (1 : Fin 2) at h1
+  have h2 := congrArg (fun p : PMF (Fin 2) => p (0 : Fin 2)) h1
+  simp [PMF.pure_apply] at h2
 
 /-- `Statement:` P_in (every in-hom-set nonempty) holds at #5 (the zero object of `ModuleCat ℂ`)
     and fails at #4 (initial-only in `KleisliCat PMF`). It separates the two ambient categories,
