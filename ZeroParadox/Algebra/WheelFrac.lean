@@ -248,6 +248,130 @@ example (G : Type*) [GroupWithZero G] :
   ⟨{ dual := Inv.inv, dual_invol := inv_inv, pole₀ := 0, pole₁ := (0 : G)⁻¹, swap := rfl },
     rfl, rfl, (InvolutiveFork.collapsed_iff_fixed _).mpr inv_zero⟩
 
+/-! ## § The common meadow `ℚ_a`, beside the wheel
+
+Bergstra & Ponse, *Division by Zero in Common Meadows*, arXiv:1406.6878v4 (cited below as BP): §2.1
+(p. 4) defines `ℚ_a` with `|ℚ_a| = |ℚ| ∪ {â}`, where *"Application of any function to the additional
+value returns that same value"*; Table 2 (p. 5) gives axioms (13) `0⁻¹ = a` and (14) `x + a = a`;
+Prop. 2.2.1 (pp. 5-6) derives (e13) `(x⁻¹)⁻¹ = x + 0·x⁻¹`, (e14) `x·a = a` and (e16) `a⁻¹ = a`. The
+carrier here is `Option ℚ`, ℚ with one adjoined point, `none` the additional value `a`.
+⚠ A common meadow is not a collapsed wheel, and nothing here relates the two structures: BP §4 (p. 14)
+write *"we have not yet found a structural connection between both constructions"*. -/
+
+section CommonMeadow
+
+/-- Inverse on `ℚ_a`: `a ↦ a`, `0 ↦ a`, `q ↦ q⁻¹` otherwise. -/
+def cmInv : Option ℚ → Option ℚ
+  | none => none
+  | some q => if q = 0 then none else some q⁻¹
+
+/-- Addition on `ℚ_a`: rational addition, and `a` whenever either argument is `a`. -/
+def cmAdd : Option ℚ → Option ℚ → Option ℚ
+  | some p, some q => some (p + q)
+  | _, _ => none
+
+/-- Multiplication on `ℚ_a`: rational multiplication, and `a` whenever either argument is `a`. -/
+def cmMul : Option ℚ → Option ℚ → Option ℚ
+  | some p, some q => some (p * q)
+  | _, _ => none
+
+/-- `Statement:` BP axiom (13), Table 2 p. 5, on this model: `0⁻¹ = a`. -/
+theorem cm_inv_zero : cmInv (some 0) = none := by simp [cmInv]
+
+/-- `Statement:` BP axiom (14), Table 2 p. 5, on this model: `x + a = a`. -/
+theorem cm_add_a (x : Option ℚ) : cmAdd x none = none := by cases x <;> rfl
+
+/-- `Statement:` BP (e14), Prop. 2.2.1 p. 6, on this model: `x · a = a`. -/
+theorem cm_mul_a (x : Option ℚ) : cmMul x none = none := by cases x <;> rfl
+
+/-- `Statement:` BP (e16), Prop. 2.2.1 p. 6, on this model: `a⁻¹ = a`. -/
+theorem cm_inv_a : cmInv none = none := rfl
+
+/-- `Statement:` BP (e13), Prop. 2.2.1 p. 5, on this model: `(x⁻¹)⁻¹ = x + 0·x⁻¹`. -/
+theorem cm_inv_inv (x : Option ℚ) : cmInv (cmInv x) = cmAdd x (cmMul (some 0) (cmInv x)) := by
+  rcases x with _ | q
+  · rfl
+  · by_cases hq : q = 0
+    · subst hq; simp [cmInv, cmAdd, cmMul]
+    · simp [cmInv, cmAdd, cmMul, hq]
+
+/-- `Statement:` under `Motion.ofFun cmInv`, `a` steps only to itself. -/
+theorem cm_a_selfOnly : (Motion.ofFun cmInv).SelfOnlyAt none :=
+  (Motion.selfOnlyAt_ofFun_iff _ _).2 rfl
+
+/-- `Statement:` under `Motion.ofFun cmInv`, `0` steps to `a` and `a` does not step to `0`.
+    `Reading:` a one-way arrow, where the wheel's inversion exchanges `0` and `∞`. -/
+theorem cm_zero_one_way : (Motion.ofFun cmInv).step (some 0) none ∧
+    ¬ (Motion.ofFun cmInv).step none (some 0) := by
+  refine ⟨by simp [Motion.ofFun, Motion.ofTotal, cmInv], ?_⟩
+  simp [Motion.ofFun, Motion.ofTotal, cmInv]
+
+/-- `Statement:` `cmInv` is not an involution: `(0⁻¹)⁻¹ = a ≠ 0` (BP §1, p. 2). -/
+theorem cm_not_involutive : cmInv (cmInv (some 0)) ≠ some 0 := by simp [cmInv]
+
+/-- `Statement:` exactly two points step into `a` under `cmInv`: `a` itself and `0`. -/
+theorem cm_preimage_a (x : Option ℚ) : cmInv x = none ↔ x = none ∨ x = some 0 := by
+  rcases x with _ | q
+  · simp [cmInv]
+  · by_cases hq : q = 0 <;> simp [cmInv, hq]
+
+/-- `Statement:` with OVER `x → x + z` for some `z` (`cmAdd`), `a` steps only to itself and every
+    point steps to `a`. -/
+theorem cm_a_absorbs :
+    (Motion.ofTotal (id : Option ℚ → Option ℚ) (fun _ => rfl)
+      (fun x y => ∃ z, y = cmAdd x z)).SelfOnlyAt none ∧
+    ∀ x : Option ℚ, (Motion.ofTotal (id : Option ℚ → Option ℚ) (fun _ => rfl)
+      (fun x y => ∃ z, y = cmAdd x z)).step x none := by
+  refine ⟨⟨⟨none, rfl⟩, fun b ⟨z, hz⟩ => by rw [hz]; cases z <;> rfl⟩, fun x => ⟨none, ?_⟩⟩
+  cases x <;> rfl
+
+end CommonMeadow
+
+/-! ## § Three distinct points in a non-trivial wheel
+
+Carlström 2001:11, Prop. 4.4 (PDF p. 27, printed p. 25): *"If any two of the elements 0, 1, /0 and
+0/0 are equal in a wheel H, then H is trivial."* The statement below is three of its six pairs, those
+not involving `1`; the Lean proofs are ours, and every route passes through `0·/0 = 0`.
+`ZeroParadox/Algebra/Wheel.lean` § V carries the `/0 = 0·/0` and `/0 = 0` legs as anonymous examples. -/
+
+section WheelDistinct
+
+variable {W : Type*} [Wheel W]
+
+/-- `Statement:` in any wheel, `0·/0 = 0` makes every two elements equal (W14 then W3). -/
+theorem wheel_trivial_of_bot_eq_zero (h : (wheelBot : W) = Wheel.wzero) : ∀ x y : W, x = y := by
+  have hz : ∀ x : W, x = Wheel.wzero := by
+    intro x
+    have h14 : Wheel.wadd x (wheelBot (W := W)) = wheelBot := Wheel.wadd_zeroinv_absorb x
+    rw [h, Wheel.wadd_zero] at h14
+    exact h14
+  intro x y; rw [hz x, hz y]
+
+/-- `Statement:` in a wheel with two distinct elements, `0`, `/0` and `0·/0` are pairwise distinct. -/
+theorem wheel_three_distinct (hnt : ∃ x y : W, x ≠ y) :
+    (wheelInf : W) ≠ Wheel.wzero ∧ (wheelBot : W) ≠ Wheel.wzero ∧ (wheelInf : W) ≠ wheelBot := by
+  obtain ⟨x, y, hxy⟩ := hnt
+  have hb : Wheel.winv (wheelBot (W := W)) = wheelBot := by
+    show Wheel.winv (Wheel.wmul (Wheel.wzero : W) (Wheel.winv Wheel.wzero))
+        = Wheel.wmul (Wheel.wzero : W) (Wheel.winv Wheel.wzero)
+    rw [Wheel.winv_wmul, Wheel.winv_winv, Wheel.wmul_comm]
+  refine ⟨fun h => hxy ?_, fun h => hxy (wheel_trivial_of_bot_eq_zero h x y), fun h => hxy ?_⟩
+  · refine wheel_trivial_of_bot_eq_zero ?_ x y
+    show Wheel.wmul (Wheel.wzero : W) (Wheel.winv Wheel.wzero) = Wheel.wzero
+    have h' : Wheel.winv (Wheel.wzero : W) = Wheel.wzero := h
+    rw [h', Wheel.wzero_mul_wzero]
+  · refine wheel_trivial_of_bot_eq_zero ?_ x y
+    have hc := congrArg Wheel.winv h
+    rw [hb, winv_wheelInf] at hc
+    exact hc.symm
+
+-- Statement: control, the concrete wheel `ZPWheelElem` is non-trivial, so the theorem bites there.
+example : (wheelInf : ZPWheelElem) ≠ Wheel.wzero ∧ (wheelBot : ZPWheelElem) ≠ Wheel.wzero ∧
+    (wheelInf : ZPWheelElem) ≠ wheelBot :=
+  wheel_three_distinct ⟨.inf, .bot, zpw_inf_ne_bot⟩
+
+end WheelDistinct
+
 /-! ## Purity check -/
 
 section PurityCheck
@@ -257,6 +381,23 @@ section PurityCheck
 #print axioms wheelFrac_fork_open
 #print axioms wheelFork_not_collapsed
 #print axioms fixed_pole_forces_collapse
+-- `cmAdd`, `cmMul` and the declarations through them report `Classical.choice`; at the pinned
+-- Mathlib `#print axioms Rat.add` and `#print axioms Rat.mul` report it too, and `cmInv` does not.
+#print axioms cmInv
+#print axioms cmAdd
+#print axioms cmMul
+#print axioms cm_inv_zero
+#print axioms cm_add_a
+#print axioms cm_mul_a
+#print axioms cm_inv_a
+#print axioms cm_inv_inv
+#print axioms cm_a_selfOnly
+#print axioms cm_zero_one_way
+#print axioms cm_not_involutive
+#print axioms cm_preimage_a
+#print axioms cm_a_absorbs
+#print axioms wheel_trivial_of_bot_eq_zero
+#print axioms wheel_three_distinct
 end PurityCheck
 
 end ZeroParadox
