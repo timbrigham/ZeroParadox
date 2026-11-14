@@ -100,7 +100,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 
 ### Reals (counterexamples)
 
-- `ZeroParadox/Reals/MarkovSpectralGap.lean` - ZP-H: Spectral-gap irreversibility of the Markov transfer operator (the #2 DYN witness)
+- `ZeroParadox/Reals/MarkovSpectralGap.lean` - ZP-H: Mode decay, and information loss at eigenvalue 0 for `fullMix` (the #2 DYN witness)
 - `ZeroParadox/Reals/OrderedField.lean` - ZP-F: The Real Numbers as Counterexample
 - `ZeroParadox/Reals/PerronFrobenius.lean` - Perron–Frobenius: existence of a stationary distribution (the first NON-thin dictionary entry)
 - `ZeroParadox/Reals/SpectralRadius.lean` - Spectral side: the transfer operator is ℓ¹-nonexpansive, so every eigenvalue has |λ| ≤ 1
@@ -286,7 +286,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Valuation/BoundaryGap.lean` - The boundary embedding: the exact gap to the Bruhat-Tits tree
 - `ZeroParadox/Valuation/BranchingRequirement.lean` - A further requirement — the branching axis: branches are incomparable (the tower does not stack)
 - `ZeroParadox/Valuation/BranchingSnapChain.lean` - The single chain: branching → disconnectedness → the forbidden return
-- `ZeroParadox/Valuation/CantorPropertiesProbe.lean` - Completeness-critic, final pass: homogeneity and ultrametric are derived; compactness is AX-B1
+- `ZeroParadox/Valuation/CantorPropertiesProbe.lean` - Completeness-critic, final pass: a shared node profile and ultrametric agreement; compactness assigned to the arity commitment
 - `ZeroParadox/Valuation/CellsJoint.lean` - Cells and covers at ⊥ of `End`: depth and starting location carried by one index
 - `ZeroParadox/Valuation/CompletenessCriticProbe.lean` - Completeness-critic probe: what property of the generic object do the four axes NOT capture?
 - `ZeroParadox/Valuation/ComplexityLadder.lean` - The complexity ladder: the arity is the variable-count, and it climbs without bound
@@ -352,7 +352,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 ### Reals (counterexamples)
 
 - `ZeroParadox/Reals/ConnectedNoFirstStep.lean` - Connectedness and the first step on a linear order with its order topology
-- `ZeroParadox/Reals/RateClassInvariant.lean` - Axis IV: convergence-rate class as a cross-root invariant
+- `ZeroParadox/Reals/RateClassInvariant.lean` - Axis IV probe: termination separates these descents; convergence-rate class is not shown to
 
 ### Category theory (ZP-G, ZP-H)
 
@@ -405,7 +405,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Multihomed/TreeT1.lean` - ZP-H tree, edge T1 — the within-μ edge: proof-theory floor ↔ categorical-initial bottoms
 - `ZeroParadox/Multihomed/TreeT2.lean` - ZP-H tree, edge T2 — the within-ν edge: Markov attractor ↔ p-adic inverse-limit
 - `ZeroParadox/Multihomed/TwoFacesBot.lean` - Direction B — the two faces of ⊥ at the seam: VACUOUS (they coincide, but only as a bare singleton)
-- `ZeroParadox/Multihomed/WallSpanRobust.lean` - Span-robustness of the well-founded cross-root wall (#1 vs #2)
+- `ZeroParadox/Multihomed/WallSpanRobust.lean` - Spans into the ordinals: the wall bites exactly on non-well-founded apexes (#1 vs #2, #2 taken as ℝ)
 
 ### Set theory / AFA (ZP-J)
 
@@ -428,7 +428,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Computability/OutputSeparates.lean` - The head decides, the arity does not: two instances of Rutten's final-system formula
   - ride-along docs: `ZeroParadox/Computability/OutputSeparates.md` - Which Rutten example governs which family, and a discriminator that fails
 - `ZeroParadox/Computability/RootCutTrichotomy.lean` - The root cut is a TRICHOTOMY (leaf × recursive position)
-- `ZeroParadox/Computability/StationaryUnique.lean` - Irreducibility forces a unique stationary distribution for node #2
+- `ZeroParadox/Computability/StationaryUnique.lean` - One irreducible kernel, the cyclic shift, has a unique stationary distribution (node #2)
 
 ### Ordinals / proof theory (ZP-L, ZP-M, ZP-N)
 

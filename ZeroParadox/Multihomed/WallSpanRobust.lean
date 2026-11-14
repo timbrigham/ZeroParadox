@@ -8,7 +8,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# Span-robustness of the well-founded cross-root wall (#1 vs #2)
+# Spans into the ordinals: the wall bites exactly on non-well-founded apexes (#1 vs #2, #2 taken as ℝ)
 
 ## Engineer's Take
 
@@ -30,7 +30,7 @@ itself is an antichain (`simplex_antichain`), hence well-founded.
 `no_strictMono_real_to_ordinal` (E4) already proved there is **no direct** order map ℝ → Ordinal.
 This file asks the strictly stronger question the framework's own G-construction would face: is the wall
 robust against a **span** — a common apex object `S` mapping order-preservingly to *both* the
-well-founded Ordinal leg and the non-well-founded attractor carrier? A span that reconciled would mean
+well-founded Ordinal leg and the non-well-founded carrier taken for the attractor (ℝ)? A span that reconciled would mean
 the root cut is only an obstruction-to-direct-maps; an obstruction even to spans means the well-founded
 wall is a genuine invariant.
 
@@ -80,7 +80,7 @@ theorem apex_wf_of_strictMono_to_ordinal {S : Type*} (r : S → S → Prop)
   have hsub : Subrelation r (InvImage (· < ·) f) := fun {a b} hab => hf a b hab
   exact hsub.wf (InvImage.wf f ordinal_carrier_wellFounded)
 
-/-! ## The robust wall: no faithful span reconciles #1 and #2 -/
+/-! ## The robust wall: no span with a non-well-founded apex reconciles #1 and #2 -/
 
 /-- **robust wall (in-statement).** There is no apex `S` carrying a *non-well-founded* relation
     `r` (such as `<` on ℝ, the carrier this file takes for #2) that also admits an order-preserving
@@ -102,7 +102,7 @@ theorem descending_apex_obstructs_padic_span :
     ¬ ∃ f : ℝ → Ordinal, ∀ a b : ℝ, a < b → f a < f b :=
   no_faithful_span_to_ordinal_and_descending (· < ·) real_carrier_not_wellFounded
 
-/-! ## The honest escape: the trivial bottoms-only span (degenerate, transports no ν-content) -/
+/-! ## One escape: the trivial bottoms-only span (degenerate; every well-founded apex also escapes) -/
 
 /-- **The NO-GO escape, in-statement.** The single-point apex `PUnit` DOES span #1 and #2: its `<`
     maps order-preservingly to `0 : Ordinal` (vacuously — `PUnit` has no `<`-pair) and its unique

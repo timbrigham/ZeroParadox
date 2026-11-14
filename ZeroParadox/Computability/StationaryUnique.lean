@@ -9,7 +9,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# Irreducibility forces a unique stationary distribution for node #2
+# One irreducible kernel, the cyclic shift, has a unique stationary distribution (node #2)
 
 ## Engineer's Take
 

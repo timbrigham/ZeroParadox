@@ -1,12 +1,12 @@
 """
 Zero Paradox — ZP-H: Categorical Bridge PDF Builder
-Version 1.35 | November 2026
+Version 1.36 | November 2026
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.35'
+VERSION = '1.36'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -380,23 +380,22 @@ def build():
         'Status: Derived — OQ-G4 closed',
         [
             'Claim: The categorical singularity (undefined domain, ZP-G T6) and the ZP-C singularity (infinite '
-            'accumulation, ZP-C T2) are compatible characterizations of the same structural fact under the functor F<sub>C</sub>.',
+            'accumulation, ZP-C T2) hold together: a conjunction, and neither is derived from the other.',
             'Setup: Let {X<sub>n</sub>} be a sequence of objects in C such that the corresponding sequence {F<sub>C</sub>(X<sub>n</sub>)} = '
             '{P<sub>n</sub>} in InfoSp approaches F<sub>C</sub>(0) = P = (1, 0) in distribution. Under F<sub>B</sub>, the corresponding '
             'sequence {x<sub>n</sub>} in Q<sub>2</sub> approaches 0 &#8712; Q<sub>2</sub>.',
             'ZP-C side: By ZP-C T2, the discrete surprisal DF along the infinite sequence {x<sub>n</sub>} approaching 0 in '
             'Q<sub>2</sub> is non-conservative: the accumulated surprisal &#8721; DF(x<sub>k</sub> &#8594; x<sub>k+1</sub>) diverges as n &#8594; &#8734;. The singularity is infinite accumulation.',
             'ZP-G side: By ZP-G T6(ii), I(X &#8594; 0) is undefined for all X &#8800; 0 because hom(X, 0) = <font name="DV">&#8709;</font> (AX-G2). The singularity is undefined domain.',
-            'Reconciliation: These are two descriptions of the same obstruction from different vantage points. '
+            'Reconciliation: The two characterizations are compatible: both hold. '
             'In ZP-C, we ask: what happens to surprisal as we approach 0 along an infinite sequence? The '
             'answer is divergence — the accumulation is unbounded. In ZP-G, we ask: can we reach 0 by a '
-            'morphism from outside? The answer is no — the morphism does not exist. Divergence and '
-            'non-existence are consistent: if the accumulation required to reach 0 is infinite, then no finite '
-            'morphism can accomplish it, which is exactly the statement hom(X, 0) = <font name="DV">&#8709;</font>. The undefined-domain '
-            'condition in ZP-G is the categorical expression of the infinite-accumulation condition in ZP-C. <font name="DV">&#10003;</font>',
-            'Precise statement: Under F<sub>C</sub>, the statement hom(X, 0) = <font name="DV">&#8709;</font> in C corresponds to the statement that '
-            'no finite informational path from P<sub>X</sub> to P = (1, 0) has finite total surprisal — which is exactly the '
-            'content of ZP-C T2 restricted to finite paths. OQ-G4 is closed. <font name="DV">&#10003;</font>',
+            'morphism from outside? The answer is no — the morphism does not exist. Read informally, if the '
+            'accumulation required to reach 0 is infinite, then no finite morphism can accomplish it; that link '
+            'runs from divergence toward absence and is a reading, not a theorem. <font name="DV">&#10003;</font>',
+            'Lean: th2_singularity_compatibility pairs t3_unreachability (the ZP-G side) with t2_diverges (the '
+            'ZP-C side). The ZP-C conjunct mentions no object of C, so neither is derived from the other. '
+            'OQ-G4 is closed in that sense. <font name="DV">&#10003;</font>',
         ]
     ))
 
@@ -533,7 +532,7 @@ def build():
          'Closed — T-H2',
          'Reconciliation of categorical (undefined domain) and ZP-C (infinite accumulation) '
          'singularity characterizations. Resolved in Section V. The two characterizations '
-         'are shown to be the same obstruction described from different vantage points.'],
+         'are shown to hold together, a conjunction; neither is derived from the other.'],
         ['AX-1',
          'Retired —\nshape: T-SNAP\n(ZP-E v2.0);\nthe snap occurs\ngiven the occurrence\ncommitment and DA-1',
          'Binary Snap Causality. AX-1 is retired. Its content was split in two: the shape of the Snap is '
@@ -615,7 +614,7 @@ def build():
          'Valid — OQ-G2 closed. ZP-G T5 is now unconditional for all four instantiation functors, for F<sub>B</sub> in its stand-in. <font name="DV">&#10003;</font>'],
         ['T-H2: Singularity reconciliation',
          'Valid — OQ-G4 closed. Categorical (undefined domain) and ZP-C (infinite accumulation) '
-         'shown to be the same obstruction under F<sub>C</sub>. <font name="DV">&#10003;</font>'],
+         'shown to hold together, a conjunction; neither is derived from the other. <font name="DV">&#10003;</font>'],
         ['T-H3: Snap under all four functors',
          'Valid — Derived; cross-framework. T-SNAP inherited as derived theorem (ZP-E v2.0). '
          'DP-1 labelled as design premise. <font name="DV">&#10003;</font>'],

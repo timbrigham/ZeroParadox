@@ -10,8 +10,8 @@ Update this file first on any version bump. README.md Framework table is verifie
 | ZP-C Information Theory | v1.39 | ZP-C_Information_Theory.pdf | v2.14 | N/— | formal:4a46b049 comp:10cbc861 |
 | ZP-D State Layer | v1.21 | ZP-D_State_Layer.pdf | v1.18 | N/— | formal:af01d656 comp:6be72c57 |
 | ZP-E Bridge Document | v3.86 | ZP-E_Bridge_Document.pdf | v1.44 | Y/Y | formal:9c8fae60 comp:d7824002 |
-| ZP-G Category Theory | v1.27 | ZP-G_Category_Theory.pdf | v1.16 | N/— | formal:e901301e comp:668a9008 |
-| ZP-H Categorical Bridge | v1.35 | ZP-H_Categorical_Bridge.pdf | v1.26 | N/— | formal:95dad22c comp:7d801305 |
+| ZP-G Category Theory | v1.28 | ZP-G_Category_Theory.pdf | v1.16 | N/— | formal:b7de480d comp:668a9008 |
+| ZP-H Categorical Bridge | v1.36 | ZP-H_Categorical_Bridge.pdf | v1.27 | N/— | formal:263fe1e3 comp:fc8d810f |
 | ZP-H Native Categories Addendum | v1.14 | ZP-H_Native_Categories_Addendum.pdf | N/A | N/— | formal:b961348b |
 | ZP-I Inside Zero | v1.44 | ZP-I_Inside_Zero.pdf | v1.49 | N/— | formal:e7223686 comp:c5105dc3 |
 | ZP-J Self-Reference | v2.22 | ZP-J_Self_Reference.pdf | v1.45 | N/— | formal:60a9d274 comp:63d4155e |

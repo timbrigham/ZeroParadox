@@ -7,7 +7,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# Axis IV: convergence-rate class as a cross-root invariant
+# Axis IV probe: termination separates these descents; convergence-rate class is not shown to
 
 ## Engineer's Take
 
