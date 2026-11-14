@@ -31,10 +31,10 @@ two of them), so no well-founded finite tree exists — the same base-case obstr
   `ZeroParadox.categorical_fork_strict` for `idPF_Coalgebra`)
 - `binPF_no_seam`    : `IsEmpty (Fix binPF.Obj ≃ Cofix binPF.Obj)`
 
-The capstone `arity_collapse` records the trichotomy of child types `{empty, one, two}` collapsing to
-the **binary** dichotomy `{no recursive position ⇒ seam | ≥ 1 recursive position ⇒ strict}`: the
-zero-position `constPF Unit` seams, while both the one-position `idPF_Coalgebra` and the two-position `binPF` are
-strict. The cut is presence-vs-absence, not multiplicity.
+The capstone `arity_collapse` records three single-shape functors, child types empty, one and two: `constPF Unit`
+seams, while the one-position `idPF_Coalgebra` and two-position `binPF` are strict, so at these three multiplicity
+does not grade the cut. It is not a dichotomy over all functors: beside a leaf a recursive position leaves the least
+fixed point inhabited (`mixed_fix_nonempty`); the two strict cases share the absence of a leaf, which the argument below uses.
 
 ## Formal Overview (AI-assisted)
 
@@ -47,8 +47,8 @@ from the single head shape, exactly as for `idPF_Coalgebra`. `binPF_no_seam` is 
 an equivalence would carry the ν inhabitant into the empty μ.
 
 What is PROVED is exactly the four theorems and the capstone bundle below. The reading of "two
-positions behaves like one" as a confirmation that the framework's root cut is binary (a structural
-fact about presence of self-reference, not its count) is the interpretation; the Lean content is the
+positions behaves like one" as a confirmation that the root cut among single-shape functors is
+binary (a structural fact about presence of self-reference, not its count) is the interpretation; the Lean content is the
 emptiness/inhabitedness pair for the arity-two functor and its juxtaposition with the arity-zero and
 arity-one cases.
 
@@ -114,16 +114,16 @@ theorem binPF_no_seam : IsEmpty (Fix binPF.Obj ≃ Cofix binPF.Obj) := by
   obtain ⟨c⟩ := binCofix_nonempty
   exact binFix_isEmpty.false (e.symm c)
 
-/-- **Arity collapse: the root cut is binary, not graded.** The trichotomy of child-type sizes
-`{empty, one, two}` collapses to the binary dichotomy `{no recursive position ⇒ seam | ≥ 1 recursive
-position ⇒ strict}`:
+/-- **Arity collapse.** `Statement:` three single-shape functors, child types empty, one and two:
 
 * `constPF Unit` (child `PEmpty`, **zero** positions): `Nonempty (Fix ≃ Cofix)` — a seam;
 * `idPF_Coalgebra`         (child `PUnit`,  **one**  position):  `IsEmpty (Fix ≃ Cofix)` — strict;
 * `binPF`        (child `Bool`,   **two**  positions): `IsEmpty (Fix ≃ Cofix)` — strict.
 
-The one-position and two-position cases agree (both strict), so the discriminator is presence vs
-absence of a recursive position, not its multiplicity. -/
+The one-position and two-position cases agree (both strict), so at these functors the multiplicity
+of recursive positions does not grade the cut. Presence of a recursive position is not the
+discriminator over all functors: beside a leaf the least fixed point is inhabited
+(`mixed_fix_nonempty`). -/
 theorem arity_collapse :
     Nonempty (Fix (ZeroParadox.constPF Unit).Obj ≃
         Cofix (ZeroParadox.constPF Unit).Obj) ∧

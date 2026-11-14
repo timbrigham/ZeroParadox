@@ -51,10 +51,12 @@ statement — is an isomorphism for the no-recursive-position functor. That is s
 "root-seam ≅ node-seam" is a structural identity. An equation between the two settings is ill-typed;
 two facts, stated in Lean, show that each seam has its own governing condition:
 
-1. `seam_iff_no_recursive_position` — the canonical comparison is an iso for `constPF` (no recursive
-   position) and is *not* even a bijection for `idPF_Coalgebra` (one recursive position): there `Fix` is empty
-   and `Cofix` is inhabited, so **no** function `Fix → Cofix` is surjective. The root-seam is governed
-   by *absence of a recursive position* in the functor.
+1. `seam_iff_no_recursive_position` — the canonical comparison is an iso for `constPF Unit` (no
+   recursive position) and is *not* even a bijection for `idPF_Coalgebra` (one recursive position, no
+   leaf): there `Fix` is empty and `Cofix` is inhabited, so **no** function `Fix → Cofix` is
+   surjective. The statement covers these two functors, not every functor: a recursive position beside
+   a leaf leaves the least fixed point inhabited (`mixed_fix_nonempty`,
+   `ZeroParadox/Computability/RootCutTrichotomy.lean`).
 
 2. `node_seam_arrow_collapse_is_generic` — re-exporting `ZeroParadox/Category/SeamArrowLevel.lean`: the node-#5 "seam" arrow coincidence
    `IsInitial.to = IsTerminal.from` is **generic** to any initial-alone / terminal-alone object and
@@ -142,11 +144,11 @@ theorem canonicalCmp_bijective :
 
 /-! ## Root-seam and node-seam: each governed by its own condition -/
 
-/-- **The root-seam is governed by absence of a recursive position.** For `constPF` (no recursive
-position) the canonical comparison is a bijection; for `idPF_Coalgebra` (one recursive position) NO function
-`Fix → Cofix` can be surjective, because `Fix idPF_Coalgebra.Obj` is empty while `Cofix idPF_Coalgebra.Obj` is inhabited.
-So the seam at the root level is the coincidence of μ and ν constructions, and it happens exactly when
-the functor has no recursive position. -/
+/-- `Statement:` for `constPF Unit` (no recursive position) the canonical comparison is a bijection;
+for `idPF_Coalgebra` (one recursive position, no leaf) NO function `Fix → Cofix` can be surjective,
+because `Fix idPF_Coalgebra.Obj` is empty while `Cofix idPF_Coalgebra.Obj` is inhabited. Two functors,
+not a characterisation over functors: a recursive position does not by itself empty the least fixed
+point (with a leaf beside it, `mixed_fix_nonempty`). -/
 theorem seam_iff_no_recursive_position :
     Function.Bijective (canonicalCmp : Fix (constPF Unit).Obj → Cofix (constPF Unit).Obj)
     ∧ (∀ g : Fix ZeroParadox.idPF_Coalgebra.Obj → Cofix ZeroParadox.idPF_Coalgebra.Obj,
@@ -170,8 +172,8 @@ theorem node_seam_arrow_collapse_is_generic :
           = 𝟙 (ZeroParadox.fC_functor.obj 0) :=
   ZeroParadox.collapse_fires_off_seam
 
-/-- **Capstone (content IN the statement).** The root-level seam (canonical μ→ν comparison is an iso,
-governed by absence of a recursive position) and the node-#5 seam (arrow coincidence at a zero object,
+/-- **Capstone (content IN the statement).** The root-level seam (canonical μ→ν comparison is an iso
+for `constPF Unit`) and the node-#5 seam (arrow coincidence at a zero object,
 governed by the zero-object universal property and itself generic) are recorded side by side, each in
 its own setting:
 
