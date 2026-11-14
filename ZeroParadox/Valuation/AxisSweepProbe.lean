@@ -34,21 +34,20 @@ it is *which operation* is the witness: the domain's own canonical self-applicat
 reading: the axis is satisfied by the canonical instance, and the trivial witness (`const ⊥`) is why the axis
 constrains *the operation*, not *the carrier*.
 
-**§ II — Pole and chain are independent.** `pole_no_chain`: the pole is finite (two elements), no infinite
-ascending chain. `chain_no_pole`: `ℕ` is an infinite chain and not two-element. Neither entails the other.
+**§ II — Pole and chain.** `pole_no_chain`: `Pole` is finite, two elements; `Pole` has no order instance,
+so this is finiteness, not a chain fact. `chain_no_pole`: `ℕ` is infinite and totally ordered.
 
-**§ III — Pole and branching are independent, and they sit at different cardinalities.** `branching_needs_three`:
+**§ III — Pole and branching sit at different cardinalities.** `branching_needs_three`:
 a branch (a node `c` with two `≤`-incomparable successors `a`, `b`) forces **three distinct** elements. The
-pole has exactly **two** (`Fintype.card Pole = 2`), so it **cannot host a branch**; a branch is realized at
-**four** in `Bool × Bool` (`pole_and_branching_independent`). So the two axes are independent, and a
-**cardinality ladder** appears: **two** is the pole (where the `IrreversibilityProbe` found a unique
+pole has exactly **two** (`Fintype.card Pole = 2`), so no preorder on it hosts a branch (the `example` after
+`pole_and_branching_independent`); `Bool × Bool` has two incomparable elements. A **cardinality ladder**
+appears: **two** is the pole (where the `IrreversibilityProbe` found a unique
 fixed point already costs injectivity - irreversibility, not occurrence), **three** is the minimum for branching (the field), so the pole is strictly below the
 branching threshold — the minimal snap sits under the minimal field.
 
-**Running tally (completeness).** No fifth axis (height, iterative-bottoms, irreversibility — all forced).
-Non-redundant pairs so far: chain⊥branching, fork⊥pole, pole⊥chain, pole⊥branching; and the fork is exposed
-as trivially-satisfiable (content in the canonical witness, not existence). The four axes keep behaving as
-four distinct things.
+**Running tally.** `Reading:` conjecture: no fifth axis has turned up (candidates height, iterative-bottoms,
+irreversibility judged forced), and the four axes have behaved as distinct in pairs chain/branching,
+fork/pole, pole/chain, pole/branching. No axis is a predicate, so independence and completeness are unstated.
 -/
 
 namespace ZeroParadox
@@ -74,8 +73,8 @@ theorem pole_no_chain : Fintype.card Pole = 2 ∧ Finite Pole := ⟨by decide, i
 
 theorem chain_no_pole : Infinite ℕ ∧ (∀ a b : ℕ, a ≤ b ∨ b ≤ a) := ⟨inferInstance, le_total⟩
 
-/-- **Pole and chain are independent.** The pole is finite (no infinite chain); `ℕ` is an infinite chain and
-not the two-element pole. Neither entails the other. -/
+/-- `Statement:` `Pole` has two elements and is finite; `ℕ` is infinite and totally ordered. `Reading:`
+the pole and chain axes are independent; `Pole` has no order instance, so its half is finiteness. -/
 theorem pole_and_chain_independent :
     (Fintype.card Pole = 2 ∧ Finite Pole) ∧ (Infinite ℕ ∧ (∀ a b : ℕ, a ≤ b ∨ b ≤ a)) :=
   ⟨pole_no_chain, chain_no_pole⟩
@@ -92,15 +91,21 @@ theorem branching_needs_three {α : Type*} [Preorder α] {c a b : α}
   · rintro rfl; exact hab hcb
   · rintro rfl; exact hba hca
 
-/-- **Pole and branching are independent.** The pole has two elements, so it cannot host a branch (which
-needs three, `branching_needs_three`); a branch is realized at four in `Bool × Bool`. The cardinality ladder:
-two (pole / snap threshold) below three (branching minimum). -/
+/-- `Statement:` `Pole` has two elements; `Bool × Bool` has four, two of them incomparable. `Reading:` no
+preorder on a two-element type hosts a branch (`branching_needs_three`); `Pole` has no order instance of its
+own. The cardinality ladder: two (pole / snap threshold) below three (branching minimum). -/
 theorem pole_and_branching_independent :
     Fintype.card Pole = 2 ∧
     (Fintype.card (Bool × Bool) = 4 ∧
       ¬ (((false, true) : Bool × Bool) ≤ (true, false)) ∧
       ¬ (((true, false) : Bool × Bool) ≤ (false, true))) :=
   ⟨by decide, by decide, by decide, by decide⟩
+
+-- Statement: under any preorder on `Pole`, no node has two incomparable successors.
+example [Preorder Pole] : ¬ ∃ c a b : Pole, c ≤ a ∧ c ≤ b ∧ ¬ a ≤ b ∧ ¬ b ≤ a := by
+  rintro ⟨c, a, b, hca, hcb, hab, hba⟩
+  obtain ⟨h1, h2, h3⟩ := branching_needs_three hca hcb hab hba
+  cases a <;> cases b <;> cases c <;> simp_all
 
 end ZeroParadox
 

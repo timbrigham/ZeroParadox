@@ -27,7 +27,7 @@ object (the 2-adic tree boundary — a compact, totally disconnected, perfect Ca
 Brouwer's 1910 topological characterization) that the four axes do
 **not** pin down? If yes, that is a candidate fifth requirement.
 
-**The finding: the four axes do not fix the tree's arity.** The branching axis says "there is a node with
+**The finding: the branching axis does not fix the arity.** The branching axis says "there is a node with
 `≤`-incomparable successors" — it does **not** say *how many*. Two witnesses:
 
 * `binary_branch`: in `Bool × Bool`, the node `(false, false)` has **two** incomparable successors
@@ -35,18 +35,18 @@ Brouwer's 1910 topological characterization) that the four axes do
 * `ternary_branch`: in `Bool × Bool × Bool`, the node `(false, false, false)` has **three** pairwise
   incomparable successors `(true,false,false)`, `(false,true,false)`, `(false,false,true)`.
 
-Both satisfy the branching axis; they differ only in **arity** (2 vs. 3). So `arity_is_uncaptured`: the four
-axes leave the arity **free** — a `p`-ary tree satisfies all four for any `p ≥ 2`.
+These are finite lattices, not trees, with no infinite chain, so they fail the chain axis: `arity_is_uncaptured`
+shows only that branching leaves the arity **free**. `Reading:` conjecture: a `p`-ary tree meets all four, `p ≥ 2`.
 
 **What the un-captured freedom IS.** The framework already names it: **AX-B1**, "binary / discrete existence,"
 the framework's *one substantive modeling commitment* (a discrete alphabet, and specifically the binary
-alphabet, over a continuum). The completeness-critic hunt independently re-surfaces exactly this: arity is the
-degree of freedom the structural axes cannot force, so fixing it (to two) is a **commitment, not a theorem** —
+alphabet, over a continuum). The completeness-critic hunt independently re-surfaces exactly this: arity is a
+degree of freedom the branching axis does not force, so fixing it (to two) is a **commitment, not a theorem** —
 which is precisely AX-B1's status. The `IrreversibilityProbe` cardinality result complements this: two is the
 *value-pole* threshold (a unique fixed point already costs injectivity there - irreversibility, not
 occurrence); binary *arity* is the separate branching choice.
 
-So the completeness picture: no forced fifth *structural* axis, the four are mutually independent, and the one
+`Reading:` the completeness picture, a conjecture: no forced fifth *structural* axis, the four are mutually independent, and the one
 thing left open is the arity — recovered here as AX-B1, a modeling commitment rather than a derived axis. This
 is evidence the four structural axes plus the single AX-B1 commitment are the whole story.
 
@@ -86,11 +86,11 @@ theorem ternary_branch :
     ¬ (((false, true, false) : Bool × Bool × Bool) ≤ (false, false, true)) ∧
     ¬ (((false, false, true) : Bool × Bool × Bool) ≤ (true, false, false)) := by decide
 
-/-! ### § III. The four axes do not fix the arity — it is AX-B1. -/
+/-! ### § III. The branching axis does not fix the arity. -/
 
-/-- **Arity is un-captured.** Branching holds at arity two (`Bool × Bool`) and at arity three
-(`Bool × Bool × Bool`); the branching axis (and the other three) do not fix which. So the arity is a free
-parameter — the framework's binary choice is the modeling commitment **AX-B1**, not a derived axis. -/
+/-- `Statement:` the conjunction of `binary_branch` and `ternary_branch`: a node with two incomparable
+successors in `Bool × Bool`, and one with three in `Bool × Bool × Bool`. `Reading:` the branching axis does not
+fix the arity. Both are finite lattices with no infinite chain, so the other three axes are not tested. -/
 theorem arity_is_uncaptured :
     ((((false, false) : Bool × Bool) ≤ (true, false)) ∧
       (((false, false) : Bool × Bool) ≤ (false, true)) ∧

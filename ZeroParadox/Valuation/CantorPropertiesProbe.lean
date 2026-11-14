@@ -24,13 +24,10 @@ the thought process itself was what I needed.
 The generic object is a **Cantor set** (compact, totally disconnected, perfect, homogeneous, ultrametric; the
 compact/perfect/totally-disconnected core is Brouwer's 1910 topological characterization).
 Earlier probes settled *perfect* (derived from branching) and *arity* (un-captured = AX-B1). This last pass
-clears the remaining named properties, to make the completeness verdict airtight.
+probes the remaining named properties; the completeness verdict at the end is a conjecture.
 
-**§ I — Homogeneity is derived.** A Cantor set is *homogeneous*: every point looks like every other. Here that
-is `LocalFloor.boundaryFloor` (every node roots a genuine `InfinitudeFloor`) plus `homogeneous_profile`: at
-**every** node `v`, the local complexity profile is identical — `localCx v (localMember v n) = n`, the same
-for all `v`. So any two nodes carry the same floor structure; homogeneity follows from self-similarity
-(branching), not a new axis.
+**§ I — A shared node profile, not homogeneity** (a self-homeomorphism carrying any point to any other,
+unstated here). `homogeneous_profile` is `localCx_member` (`localCx v (localMember v n) = n`) at two nodes.
 
 **§ II — The ultrametric is derived.** The boundary metric is an *ultrametric* (strong triangle inequality),
 whose combinatorial heart is `ultrametric_agreement`: if `x` and `y` agree on the first `n` digits and `y`
@@ -45,19 +42,20 @@ successors in `Set ℕ`). So compactness is not forced by the four axes — it r
 binary) arity, which is `AX-B1`. Compactness is therefore a consequence of the one modeling commitment, not an
 independent fifth axis.
 
-**Completeness verdict, for the named properties.** Every named Cantor-set property is accounted for: *perfect*,
-*homogeneous*, *ultrametric*, *totally disconnected* — all **derived** from the four structural axes (pole,
-fork, chain, branching); *compact* and the *arity* — the **one modeling commitment** AX-B1. No un-captured
-property remains that would be a fifth structural axis. The generic object = four structural axes + AX-B1.
+**Completeness verdict, for the named properties.** `Reading:` a conjecture. No theorem here takes the four
+structural axes (pole, fork, chain, branching) as hypotheses; the results are facts about the concrete `End`.
+*Perfect* (`boundary_perfect`) and prefix-transitivity (`ultrametric_agreement`) are proved of `End`,
+homogeneity only as § I's profile equation; *compact* and the *arity* are assigned to § III's commitment.
+That no further property is a fifth structural axis is conjectured, not proved.
 -/
 
 namespace ZeroParadox
 
 /-! ### § I. Homogeneity — every node's floor has the identical profile. -/
 
-/-- **Homogeneity.** At every node the local complexity profile is the same: `localCx v (localMember v n) = n`
-for all `v`. So any two nodes carry the identical floor structure — the boundary is homogeneous, derived from
-self-similarity, not a new axis. -/
+/-- `Statement:` `localCx v (localMember v n) = localCx w (localMember w n)`, both sides `n` (`localCx_member`).
+`Reading:` the same local profile at every node; topological homogeneity (a self-homeomorphism carrying any
+point to any other) is not stated. -/
 theorem homogeneous_profile (v w : List (Fin 2)) (n : ℕ) :
     localCx v (localMember v n) = localCx w (localMember w n) := by
   rw [localCx_member, localCx_member]
