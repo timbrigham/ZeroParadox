@@ -37,7 +37,7 @@ dependence in the anonymous `example`s after `floor_has_no_forgetful_carrier`.**
 subsingleton: at most one morphism between any two objects). So every functor out of it is faithful,
 and faithful functors to `Type` give `0 : ℕ` different carriers: `n ↦ Fin n` gives it an empty one
 (card 0, #4's value) and the constant functor at `PUnit` a singleton (card 1, #5's value); the
-`example` after `floor_has_no_forgetful_carrier` builds both. So #1's carrier cardinality is not
+first `example` after `floor_has_no_forgetful_carrier` builds both. So #1's carrier cardinality is not
 read off the object: it is fixed only once a carrier convention is chosen.
 
 ### GO half: the hom-set carrier puts #1 at card 1
@@ -83,7 +83,7 @@ open ZeroParadox ZeroParadox ZeroParadox
 
 /-- `Statement:` the `ℕ` preorder category is **thin**: every hom-set is a subsingleton (at most one
     morphism between any two objects). Thinness only; it does not say the floor `0 : ℕ` lacks a
-    carrier (the `example` below). -/
+    carrier (the two `example`s below). -/
 theorem floor_has_no_forgetful_carrier (x y : ℕ) : Subsingleton (x ⟶ y) :=
   ⟨fun a b => Subsingleton.elim a b⟩
 
@@ -125,12 +125,13 @@ theorem floor_homset_not_equiv_fin0 (n : ℕ) :
   rintro ⟨e⟩
   exact (e default).elim0
 
-/-! ## Capstone: #1 added to the Axis-III ledger, dichotomy unbroken -/
+/-! ## Capstone: #1 under the hom-set convention -/
 
-/-- **capstone — Axis III over the proof-theory floor #1, both halves in-statement.**
+/-- **capstone — Axis III over the proof-theory floor #1: the GO half in-statement, the carrier
+    dependence in the `example`s after `floor_has_no_forgetful_carrier`.**
 
     1. **Thin** — `∀ x y, Subsingleton (x ⟶ y)`: the floor's category is thin, so every functor to
-       `Type` is faithful and #1's carrier depends on which one is chosen (the `example` after
+       `Type` is faithful and #1's carrier depends on which one is chosen (the two `example`s after
        `floor_has_no_forgetful_carrier`).
     2. **GO, card 1** — `Unique (0 ⟶ n)`: under the hom-set carrier convention, #1's carrier is a
        singleton.
