@@ -33,11 +33,11 @@ which is the **precondition** for the local-global reading (distinct local piece
 
 **E4 cluster — Axis I (well-founded vs not).** Separates the proof-theory bottom (the ordinal floor,
 base of a well-order) from the Markov-dynamical bottom (a stationary attractor in the compact
-probability simplex):
+probability simplex), taking ℝ as its carrier, a modelling choice: the simplex itself is well-founded under the coordinate order (the `example` after `faithful_iff_descending`, `ZeroParadox/Multihomed/WallSpanRobust.lean`):
 - `ordinal_carrier_wellFounded` — the ordinals are well-founded under `<`.
 - `real_carrier_not_wellFounded` — ℝ is not well-founded under `<`.
-- `no_strictMono_real_to_ordinal` — there is no order embedding ℝ ↪ Ordinal (a descent map from the
-  attractor carrier to the well-order carrier cannot exist).
+- `no_strictMono_real_to_ordinal` — there is no order embedding ℝ ↪ Ordinal (a descent map from ℝ,
+  the carrier taken for the attractor, to the well-order carrier cannot exist).
 - `simplex_antichain` — on the standard simplex, `p ≤ q` (componentwise) forces `p = q`: the simplex
   is an antichain for the coordinate order, so it carries no nontrivial order to descend along.
 
@@ -70,7 +70,7 @@ open ZeroParadox ZeroParadox ZeroParadox ZeroParadox
 theorem ordinal_carrier_wellFounded :
     WellFounded ((· < ·) : Ordinal → Ordinal → Prop) := Ordinal.lt_wf
 
-/-- ℝ is not well-founded under `<` (the Markov-attractor bottom's carrier). -/
+/-- ℝ is not well-founded under `<` (the carrier this file takes for the Markov-attractor bottom). -/
 theorem real_carrier_not_wellFounded :
     ¬ WellFounded ((· < ·) : ℝ → ℝ → Prop) := by
   intro h
@@ -81,8 +81,8 @@ theorem real_carrier_not_wellFounded :
   · push_cast; ring
   · show -((n : ℝ) + 1) < -(n : ℝ); linarith
 
-/-- No strictly monotone map ℝ → Ordinal: the attractor carrier does not order-embed into the
-    well-order carrier. The cross-cluster (E4) obstruction in order language. -/
+/-- No strictly monotone map ℝ → Ordinal: ℝ, the carrier taken for the attractor, does not
+    order-embed into the well-order carrier. The cross-cluster (E4) obstruction in order language. -/
 theorem no_strictMono_real_to_ordinal :
     ¬ ∃ f : ℝ → Ordinal, StrictMono f := by
   rintro ⟨f, hf⟩
