@@ -19,8 +19,8 @@ defer to my AI assistant regarding the specifics of how the internals work.
 ## Formal Overview (AI-assisted)
 
 The conjecture (`structureless_point_is_bottom_2026-06-30.md`): ⊥'s two faces meet at the seam — the
-**structureless** face (the bare point all domain bottoms collapse to, ≅ `PUnit`) and the
-**self-referential** face (the fixed-point set of `selfApp`, which `AbstractSelfApp.unique_fp` makes
+**structureless** face (the bare point ≅ `PUnit`; domain bottoms are empty or one-point, `Fin 0` empty
+by `split_kleisli_vs_hilbert`) and the **self-referential** face (the fixed-point set of `selfApp`, which `AbstractSelfApp.unique_fp` makes
 `{⊥}`). Are they the same object via a *structure-respecting* identification, or only as generic singletons?
 
 **Correction to a first attempt (cold audit caught it).** An earlier version "refuted" this with the
@@ -43,13 +43,13 @@ For any `AbstractSelfApp L`:
 **Verdict (corrected 2026-06-30 — see `reaching_bottom_vs_interpreting_it_2026-06-30.md`): the
 coincidence is at the ACTUAL-⊥ layer, and it is REAL, not vacuous.** The two faces coincide as the
 structureless point (`{⊥} ≅ PUnit`). This was first mislabeled VACUOUS for failing *structure-respect* —
-but that is the WRONG test at ⊥. By definition ⊥ is timeless / spaceless / descriptionless /
-measurementless / **structureless**; structure is the mark of an *interpretation* of ⊥, not of ⊥ itself.
+but that is the WRONG test at ⊥. `Reading:` ⊥ is taken (not defined in Lean) as timeless / spaceless /
+descriptionless / measurementless / **structureless**; structure marks an *interpretation* of ⊥.
 **Structurelessness is the signature of having reached actual ⊥** — so the two faces reaching the same
 conditionless point IS the genuine unification, in the only form ⊥ admits.
 
 Two layers: at the **interpretation layer** the bottoms are distinct (their retained structure differs —
-the campaign's walls); at the **actual-⊥ layer** all structure is stripped and they are one point (`ZeroParadox/Computability/MarkovNuUniversal.lean`'s
+the campaign's walls); at the **actual-⊥ layer** all structure is stripped and the inhabited ones are one point (`ZeroParadox/Computability/MarkovNuUniversal.lean`'s
 "keep vs forget structure" is the boundary). Honest fence: the bare iso `{⊥} ≅ PUnit` is *generic*; the
 non-generic content is the **uniqueness** theorem `AbstractSelfApp.unique_fp` (the fixed-point set is a
 *single* point — a priori it needn't be), and the proven exception **#2** (the Markov bottom is a

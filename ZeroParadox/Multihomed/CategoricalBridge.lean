@@ -118,9 +118,10 @@ theorem th1_fd (n : ℕ) (hn : 2 ≤ n) :
 
 ZPG characterizes the singularity as domain absence: hom(X, 0) = ∅ for X ≇ 0 (T3/AX-G2).
 ZPC characterizes it as infinite accumulation: ∑ I(X_k → X_{k+1}) diverges along any
-sequence approaching 0 (t2_diverges). These are compatible: domain-absence is strictly
-stronger than divergence — if infinite accumulation is required to reach 0, no finite
-morphism can accomplish it, which is exactly hom(X, 0) = ∅. Both sides are independently
+sequence approaching 0 (t2_diverges). These are compatible: both hold. No comparison of
+strength between them is proved, since neither is derived from the other. `Reading:` if
+infinite accumulation is required to reach 0, no finite morphism reaches it — an informal
+link running from divergence toward absence, not a theorem. Both sides are independently
 derived. That both hold together (a conjunction, not a derivation of one from the other) closes OQ-G4. -/
 
 /-- T-H2: Both singularity characterizations hold together.

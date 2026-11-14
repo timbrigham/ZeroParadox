@@ -76,14 +76,13 @@ theorem info_points_enter_every_ball (n : ℕ) :
   ZeroParadox.two_pow_tendsto_zero.eventually (Metric.closedBall_mem_nhds 0 (by positivity))
 
 /-- CORRESPONDENCE — co-location at the shared floor. Proof-theory (tower, B6), computation (quines, B2),
-    and information (depth points, B3) ALL enter every ball around the single floor `0 ∈ ℤ₂`, via their real
-    structural encodings. With E1 (ball = valuation sublevel) and `fB_bottom_is_limit` (⋂ balls = {0}), all
-    of {proof, computation, information, topology, number-theory} co-locate at the one floor — the p-adic
-    cluster as a COMPLETE correspondence subgraph (every pair meets at the floor): CORRESPONDENCE inside
-    one carrier, ℤ_[2]; no identity of the domains' bottoms across their own carriers is stated (ill-typed,
-    MC-1). Separately, 0 is the only point stepping to itself only under doubling
-    (`z2_double_selfOnlyAt_iff`, `ZeroParadox/Ordinal/Incompleteness.lean`). The encodings hit 0
-    because the bottoms are floors. -/
+    and information (depth points, B3) ALL enter every ball around the single floor `0 ∈ ℤ₂`. Each is
+    `2` raised to an unbounded natural (tower rank, `encode c`, `k`), so they enter every ball because
+    they are encoded as powers of 2: the co-location is a property of that encoding choice, not a
+    consequence of the bottoms being floors. With E1 and `fB_bottom_is_limit` (⋂ balls = {0}), it is a
+    CORRESPONDENCE inside one carrier, ℤ_[2]; no identity of the domains' bottoms across their own
+    carriers is stated (ill-typed, MC-1). Separately, 0 is the only point stepping to itself only under
+    doubling (`z2_double_selfOnlyAt_iff`, `ZeroParadox/Ordinal/Incompleteness.lean`). -/
 theorem padic_cluster_colocates_at_floor (n : ℕ) :
     (∀ᶠ k in Filter.atTop,
         ZeroParadox.cnf_encode (ZeroParadox.towerOrd k)
