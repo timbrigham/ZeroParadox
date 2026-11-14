@@ -6,8 +6,10 @@ declarations, the Engineer's Take and the per-declaration glosses.
 ## What is confirmed, and what "least" means
 
 Experiment G1 (T6 compute-the-invariant), independent of the MC-1 arc. ε₀ is the first step from ⊥ of
-`Ordinal`, the minimum step in the FIXED-POINT order (the first ⚠ below): the **least fixed point** of
-`α ↦ ω^α`, `Ordinal.epsilon 0`, index zero in the epsilon enumeration, Veblen coordinates (1,0). That
+`Ordinal` in the fixed-point order: the **least fixed point** of `α ↦ ω^α`, `Ordinal.epsilon 0`, index
+zero in the epsilon enumeration, Veblen coordinates (1,0). ⊥ of `Ordinal` is not itself a fixed point
+(`bot_is_not_a_step`), so that order starts above it; "step" there means a stable landing (the first ⚠
+below), not the order successor of ⊥ of `Ordinal`, which is `1` (the second ⚠ below). That
 first step is also the **supremum** of the ω-tower (`epsilonZero_eq_iSup`); the two faces hold at once
 (`epsilon0_min_eq_max`). `epsilon0_least_fixedpoint` proves the lower-bound half of the first face.
 
@@ -79,8 +81,9 @@ markers as `t` / `I`** (other `§` on the page survive), so a literal pattern mi
 **Mathlib carries this statement shape twice** — `Ordinal.nfp_add_eq_mul_omega0` and
 `Ordinal.nfp_mul_eq_opow_omega0` (`Mathlib/SetTheory/Ordinal/FixedPoint.lean`), same naming idiom and
 same `le_antisymm` + `nfp_le_fp` route. ⚠ **Absent from the pin is the SEED-RANGED ω-power entry**
-(searched 2026-08-07): `Ordinal.epsilon_zero_eq_nfp` (seed `0`) and `Ordinal.epsilon_add_one_eq_nfp` (successor
-seeds) both exist. **So this closes a FORMALIZATION gap in Mathlib, not a mathematical one** — the
+(searched 2026-08-07): `Ordinal.epsilon_zero_eq_nfp` (seed `0`) and `Ordinal.epsilon_succ_eq_nfp` (successor
+seeds) both exist. At the current pin the latter is deprecated in favour of
+`Ordinal.epsilon_add_one_eq_nfp`, `ε_(o + 1) = nfp (ω^·) (ε_o + 1)`. **So this closes a FORMALIZATION gap in Mathlib, not a mathematical one** — the
 classical anchor is clause (A) of Corollary 1 to Theorem 4 plus monotonicity, and the declaration is that in Lean.
 
 Lemma locations: `FixedPoint.lean` supplies `nfp_le_fp` and `nfp_fp`; `isNormal_opow` is in
