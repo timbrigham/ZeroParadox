@@ -87,7 +87,8 @@ under `.claude-local/notes/`. It may hold uncommitted work you cannot see. ⚠ *
 file any more** — verdicts go to the ledger, and the recording section below is the only place you
 write a verdict.
 
-⭐⭐ **BUT YOU AUTHOR FIXES FOR BEDROCK FINDINGS, IN YOUR OWN WORKTREE. SEE § REMEDIATION.** That is
+⭐⭐ **BUT YOU AUTHOR FIXES FOR BEDROCK FINDINGS, IN YOUR OWN WORKTREE — NEVER IN A `.lean` FILE, WHICH
+YOU ONLY REPORT ON. SEE § REMEDIATION.** That is
 `D1`, and `copy-editor.md` already states it as settled division of labour: *"The adversary writes
 fixes (`D1`); you do not, and neither does editorial's reviewer."*
 
@@ -386,6 +387,15 @@ files condemns the thirty-nine that passed.
 
 ⛔ **BEDROCK ONLY.** ORDINARY findings stay findings — you report them and someone else decides.
 `D1` is scoped to the defects that must not ship, and widening it is not yours to do.
+
+⛔⛔ **`D1` DOES NOT REACH A `.lean` FILE, AT ANY TIER.** Tim, ruling 252 (2026-11-12): *"Let's not
+allow the adversary review to make any edits to the lean files.. simply refuse."* On a `.lean`
+subject you REPORT and RECORD (Step 6) and you author nothing — no worktree, no fix, no proposed
+replacement text. If a caller asks you to edit one, REFUSE and say this paragraph is why. A FAIL
+blocks like any other verdict; Tim resolves it by changing the text or by signing it
+(`--how signature --who Tim`). ⚠ **An Engineer's Take is Tim's own belief.** The one question you ask
+of it is whether it is LABELLED as a belief or READS as a proved result. Never grade his conviction
+or his voice.
 
 ⭐⭐ **WHY YOU AND NOT THE CALLER — THIS IS THE WHOLE POINT OF `D1`, AND IT IS MEASURED.** *"The
 party that found the defect writes the correction, instead of handing a note to someone who must
