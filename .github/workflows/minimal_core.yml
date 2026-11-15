@@ -4,7 +4,7 @@ name: Minimal Core
 # self-contained minimal core — and writes a dual-audience verification report
 # to the run summary. workflow_dispatch fires it by hand against any branch. It also
 # runs on every pull request into main and every push to main or illustrated, with no
-# path filter: the four gating workflows (Complete Project, Verification suite, Axiom
+# path filter: the four CI workflows (Complete Project, Verification suite, Axiom
 # Ledger, Minimal Core) share one cadence on main.
 on:
   workflow_dispatch:

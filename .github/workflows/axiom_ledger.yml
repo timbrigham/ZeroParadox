@@ -8,11 +8,11 @@ name: Axiom Ledger (choice-free computability)
 # checks the gate fails closed: a ledger with one planted wrong profile must come out red.
 # It runs on every pull request into main and every push to main or illustrated, with no path
 # filter, so a change anywhere in the ledgered files' import closure (Kleene.lean and its imports,
-# for one), and a toolchain or Mathlib bump, re-checks the ledger. The four gating workflows
+# for one), and a toolchain or Mathlib bump, re-checks the ledger. The four CI workflows
 # (Complete Project, Verification suite, Axiom Ledger, Minimal Core) share that cadence on main.
-# The weekly scheduled run re-checks the default branch with no commit at all: the actions it uses
-# are pinned to major-version tags (`actions/checkout@v5`, `leanprover/lean-action@v1`), which move
-# without a commit here. GitHub disables scheduled runs after 60 days with no repository activity.
+# The weekly scheduled run re-checks the default branch with no commit at all: two of the actions
+# it uses are pinned to major-version tags (`actions/checkout@v5`, `leanprover/lean-action@v1`),
+# which move without a commit here; the cache restore is pinned to a commit. GitHub disables scheduled runs after 60 days with no repository activity.
 on:
   workflow_dispatch:
   schedule:

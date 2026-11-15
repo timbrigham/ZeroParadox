@@ -32,6 +32,11 @@ DESIGN NOTE - three detectors, none of them sufficient alone, all measured.
    fails the report. The floor is a number someone lowers deliberately when
    declarations are removed; it is never derived from the run it judges.
 
+5. A COLD CHECK. The floor is only as good as the build it was read from, so a run that
+   is meant to be cold says so with `--require-cold`, and then any `Replayed
+   ZeroParadox.` line fails the report: "cold" is measured from the log, not assumed
+   from the workflow's cache settings.
+
 Exits 0 if the build verified, 1 otherwise, so the report doubles as a gate -
 but only because the caller passes the real exit code in. Wire it as:
 
@@ -41,7 +46,8 @@ but only because the caller passes the real exit code in. Wire it as:
     python3 scripts/corpus_verification_report.py build.log "$BUILD_RC" "$FLOOR" \
       | tee -a "$GITHUB_STEP_SUMMARY"
 
-Usage: corpus_verification_report.py <lake-build-log> <build-exit-code> [<footprint-floor>]
+Usage: corpus_verification_report.py <lake-build-log> <build-exit-code> [<footprint-floor>
+       [--require-cold]]
 """
 import sys
 import re
@@ -73,6 +79,14 @@ if len(sys.argv) > 3:
     except ValueError:
         sys.stderr.write(f"footprint-floor must be an integer, got {sys.argv[3]!r}\n")
         sys.exit(2)
+# The only accepted fourth argument. Anything else is refused rather than ignored, so a
+# misspelled flag cannot turn the cold check off unnoticed.
+require_cold = False
+if len(sys.argv) > 4:
+    if sys.argv[4] != "--require-cold" or len(sys.argv) > 5:
+        sys.stderr.write(f"unexpected arguments after the floor: {sys.argv[4:]!r}\n")
+        sys.exit(2)
+    require_cold = True
 
 print(f"[report] reading {path}, build exit code {build_rc}", file=sys.stderr)
 log = open(path, encoding="utf-8", errors="replace").read()
@@ -117,12 +131,15 @@ has_sorry_warning = (SORRY_WARNING in log) or ("sorryAx" in log)
 built = len(re.findall(r"\] Built ", log))
 replayed = len(re.findall(r"\] Replayed ", log))
 below_floor = floor is not None and total < floor
+replayed_corpus = len(re.findall(r"\] Replayed ZeroParadox\.", log))
+not_cold = require_cold and replayed_corpus > 0
 
 ok = ((build_rc == 0) and not sorried and not has_sorry_warning and not no_evidence
-      and not below_floor)
+      and not below_floor and not not_cold)
 print(f"[report] rc={build_rc} sorried={len(sorried)} warn={has_sorry_warning} "
       f"evidence={not no_evidence} total={total} floor={floor} built={built} "
-      f"replayed={replayed} -> ok={ok}", file=sys.stderr)
+      f"replayed={replayed} replayed_corpus={replayed_corpus} "
+      f"require_cold={require_cold} -> ok={ok}", file=sys.stderr)
 print(f"[report] {len(axfree)} axiom-free, {len(axdep)} with a footprint", file=sys.stderr)
 
 by_footprint = Counter(ax for _n, ax in axdep)
@@ -160,6 +177,10 @@ if not ok:
                    "either the cache replay dropped them or declarations were removed. If "
                    "they were removed on purpose, lower the floor in "
                    "`.github/workflows/lean_action_ci.yml` in the same change.")
+    if not_cold:
+        out.append(f"**This run was meant to be a cold build, and the log shows "
+                   f"{replayed_corpus} corpus module(s) `Replayed` from a build cache.** "
+                   "Its count cannot be used to set or check the floor.")
 else:
     out.append(
         "Don't take our word for it. Lake exited 0, no declaration depends on `sorryAx`, "

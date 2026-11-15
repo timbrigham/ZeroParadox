@@ -23,7 +23,7 @@ name: Verification suite
 # noticing the dependency.
 
 # Runs on every pull request into main and every push to main, with no path filter: the four
-# gating workflows (Complete Project, Verification suite, Axiom Ledger, Minimal Core) share one
+# CI workflows (Complete Project, Verification suite, Axiom Ledger, Minimal Core) share one
 # cadence there, so a pull request into main always carries all four results.
 on:
   push:
