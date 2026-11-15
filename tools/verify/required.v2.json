@@ -295,10 +295,9 @@
       "family": "mechanical",
       "module": "tools/verify/batch.py",
       "approved_modules": [
-        "2a7fb63754a77711547c075444dca8e232bcbbed",
         "49fdb05cd01a4dca5b7caf73b98551479bc07bd1"
       ],
-      "_rollout_window": "OPEN 2026-11-15 (Tim-approved route, reference_registry_rollout_window): `49fdb05c…` is batch.py with the precommit `decls` line printing a COUNT and writing the full list to a temp file outside the repository (CI-1 follow-up item 5). Closes when the change merges: narrow to `[\"49fdb05c…\"]` and delete this key in the same commit. Expires 2026-11-22 whatever happens.",
+      "_repinned_2026_11_15": "`49fdb05c…` REPLACES `2a7fb637…`, closing the two-blob window opened the commit before. The precommit `decls` line prints a COUNT and writes the full list to a temp file outside the repository (CI-1 follow-up item 5); a missing baseline keeps its own fail-closed branch, distinct from an empty list. Blob re-derived with `record.module_evidence` in this tree.",
       "_repinned_2026_10_14b": "`2a7fb637…` REPLACES `5daf912e…`; same repin as `check_encoding._repinned_2026_10_14b`.",
       "_repinned_2026_10_14": "`5daf912e…` REPLACES `58ed751d…`, closing the 0f0ff48 window. Comments and one printed string only (hard-coded admission counts replaced by a pointer to `gitRobot admission`'s live `count`, DEFECTS `RLY56-1`); AST-equal otherwise per /rely. Narrowed after the tooling-b2 merge.",
       "_repinned_2026_10_04": "`58ed751d…` REPLACES `8e3aa9e3…`, closing the two-blob rollout window opened in 9224772 (Tim-approved). batch.py now resolves the INDEX tree once per hook run and never sends an empty basis (DEFECTS `BASIS-EMPTY-1`, lane T, /rely PASS `rely@69bad69e…`). Narrowed after every lane worktree of the 2026-10-04 batch had merged, so no worktree still needed the old build. Blob re-derived with `record.module_evidence('tools/verify/batch.py', repo='.')` in the main checkout after the merge.",
@@ -322,10 +321,9 @@
       "reason": "only meaningful when a PDF changed",
       "module": "tools/verify/batch.py",
       "approved_modules": [
-        "2a7fb63754a77711547c075444dca8e232bcbbed",
         "49fdb05cd01a4dca5b7caf73b98551479bc07bd1"
       ],
-      "_rollout_window": "OPEN 2026-11-15 (Tim-approved route, reference_registry_rollout_window): `49fdb05c…` is batch.py with the precommit `decls` line printing a COUNT and writing the full list to a temp file outside the repository (CI-1 follow-up item 5). Closes when the change merges: narrow to `[\"49fdb05c…\"]` and delete this key in the same commit. Expires 2026-11-22 whatever happens.",
+      "_repinned_2026_11_15": "`49fdb05c…` REPLACES `2a7fb637…`, closing the two-blob window opened the commit before. The precommit `decls` line prints a COUNT and writes the full list to a temp file outside the repository (CI-1 follow-up item 5); a missing baseline keeps its own fail-closed branch, distinct from an empty list. Blob re-derived with `record.module_evidence` in this tree.",
       "_repinned_2026_10_14b": "`2a7fb637…` REPLACES `5daf912e…`; same repin as `check_encoding._repinned_2026_10_14b`.",
       "_repinned_2026_10_14": "Same repin as `decls._repinned_2026_10_14`, same blob.",
       "_repinned_2026_10_04": "Same repin as `decls._repinned_2026_10_04`, same blob, same cause.",
