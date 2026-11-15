@@ -1,11 +1,11 @@
 """
-Build ZP-F: The Counterexamples (v1.28)
+Build ZP-F: The Counterexamples (v1.29)
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.28'
+VERSION = '1.29'
 FIRST_RELEASED = 'April 2026'
 
 def build():
@@ -342,7 +342,11 @@ def build():
             '&#949;&#8320; is located from above as the least fixed point of '
             '&#945; &#8614; &#969;^&#945; and from below as the limit of the CNF tower (the classical '
             'fact that the least fixed point of a normal function is the supremum of its iterates: '
-            'Veblen 1908, Corollary 1 to Theorem 4; Mathlib Ordinal.iSup_iterate_eq_nfp); '
+            'Veblen, Continuous increasing functions of finite and transfinite ordinals, Trans. Amer. '
+            'Math. Soc. 9 (1908), p. 284, Corollary 1 to Theorem 4, clause (A), seed 1 in his indexing '
+            '(clause label: ZeroParadox/Ordinal/Epsilon0LeastFP.md); in Mathlib, '
+            'Ordinal.iSup_iterate_eq_nfp for the supremum, Ordinal.nfp_fp and Ordinal.nfp_le_fp for '
+            'the least fixed point, Ordinal.epsilon_zero_eq_nfp for &#949;&#8320; at seed 0); '
             'in ZP-M, &#949;&#8320; is sent through the threshold map and snapEmbed to the 0 of '
             '&#8484;&#8322; named above (snap_state_zp2_is_zero), the point the tower\'s cnfToZp2 images tend to (zpm_triangle; '
             'snapEmbed is defined to send c&#8321; to that 0). Reading: this recurrence is not coincidental. The snap is the point '
