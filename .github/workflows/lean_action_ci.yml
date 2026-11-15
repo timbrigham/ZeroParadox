@@ -4,9 +4,10 @@ name: Complete Project
 # CI workflows (Complete Project, Verification suite, Axiom Ledger, Minimal Core) share one
 # cadence there, so a pull request into main always carries all four results.
 # The weekly scheduled run is the COLD BUILD: it skips the Lake build cache restore below, and
-# the report is passed `--require-cold`, so the run fails if its log shows any corpus module
-# `Replayed`. Its footprint count is the one to hold cached runs against (see
-# CORPUS_FOOTPRINT_FLOOR).
+# the report is passed `--require-cold` with the number of `.lean` files under `ZeroParadox/`,
+# so the run fails if its log shows any corpus module `Replayed`, or a number of distinct
+# `ZeroParadox.*` modules `Built` other than that file count. Its footprint count is the one to
+# hold cached runs against (see CORPUS_FOOTPRINT_FLOOR).
 on:
   push:
     branches:
@@ -107,9 +108,17 @@ jobs:
           # pipefail IS required here: without it the step inherits tee's status and a
           # failing report is silently green.
           # On the weekly cold build only, the report also fails if any corpus module was
-          # `Replayed`, so "cold" is read from the log rather than assumed.
+          # `Replayed`, or if the distinct `ZeroParadox.*` modules `Built` do not number the
+          # `.lean` files under `ZeroParadox/` (the submodules lakefile.toml's
+          # `globs = ["ZeroParadox.+"]` builds; the root module ZeroParadox.lean printed no
+          # `Built` line in cold job 131631685723, so it is not counted). "Cold" is read
+          # from the log rather than assumed.
           COLD=()
-          if [ "${{ github.event_name }}" = "schedule" ]; then COLD=(--require-cold); fi
+          if [ "${{ github.event_name }}" = "schedule" ]; then
+            CORPUS_MODULES=$(find ZeroParadox -type f -name '*.lean' | wc -l)
+            echo "corpus submodules in the checkout: ${CORPUS_MODULES}"
+            COLD=(--require-cold "${CORPUS_MODULES}")
+          fi
           set -o pipefail
           python3 scripts/corpus_verification_report.py build.log "${BUILD_RC}" \
             "${CORPUS_FOOTPRINT_FLOOR}" "${COLD[@]}" | tee -a "$GITHUB_STEP_SUMMARY"
