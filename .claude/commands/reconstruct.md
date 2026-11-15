@@ -91,9 +91,13 @@ elaborated and discarded; it never enters the environment, so `#check` has no na
 enumeration has no constant to list. Measured 2026-11-15: a planted false gloss sitting on an
 `example` was the one planted error the blind reading missed. So, for each module in scope, also:
 
-1. Copy the module to your scratchpad. Where a line BEGINS with `example` at column 0, replace that
-   word with `theorem zpExample_L<n>`, `<n>` the SOURCE line number. Grep `^\s+example\b` too: an
-   indented `example` declaration is not rewritten by this rule, so look at each hit. Append:
+1. Copy the module to your scratchpad. Where a line BEGINS at column 0 with `example`, or with
+   declaration modifiers and then `example` (`noncomputable`, `private`, `protected`, an attribute
+   `@[...]`), replace the word `example` with `theorem zpExample_L<n>`, keeping the modifiers, `<n>`
+   the SOURCE line number. A `noncomputable example` carries data and `theorem` rejects that
+   modifier, so write `def zpExample_L<n>` there. Grep
+   `^\s+((@\[[^\]]*\]|noncomputable|private|protected)\s+)*example\b` too: an indented `example`
+   declaration is not rewritten by this rule, so look at each hit. Append:
 
 ```lean
 open Lean in
@@ -115,12 +119,17 @@ run_cmd do
    error, never drop the line.
 4. Hand the `EXAMPLE` lines over in the declaration-name list, MARKED as examples with their source
    lines; the names exist only in your copy, so the agent falsifies them against the source line.
-   ⚠ **The header line is the evidence the probe RAN.** `EXAMPLES PROBE RAN: 0` means the module has
-   no `example`; NO header line means the probe did not run. Never report the two alike.
+   ⚠ **The header line is the evidence the probe RAN;** NO header line means the probe did not run.
+   `EXAMPLES PROBE RAN: 0` says only that no rewritten line produced a constant. Read it as "this
+   module has no `example`" ONLY after step 3 has accounted for every rewritten line by name as
+   prose AND a line-start grep for `example` at any indentation, with or without modifiers
+   (`^\s*((@\[[^\]]*\]|noncomputable|private|protected)\s+)*example\b`), returns nothing or only
+   those prose lines. Never report the not-run and the zero states alike.
 
 CONTROL: on `ZeroParadox/Ordinal/UniverseZoom.lean` every column-0 `example` line comes back by name
-with its elaborated type; on `ZeroParadox/Ordinal/Goodstein.lean` (no `example`) the header prints
-with nothing under it.
+with its elaborated type; on `ZeroParadox/Ordinal/SnapMetaLattice.lean` the six `noncomputable
+example` lines come back by name too, beside the two plain ones; on
+`ZeroParadox/Ordinal/Goodstein.lean` (no `example`) the header prints with nothing under it.
 
 If you did not enumerate by name, **say so plainly** — the agent's job is then to scope its answer,
 not to guess a denominator.
