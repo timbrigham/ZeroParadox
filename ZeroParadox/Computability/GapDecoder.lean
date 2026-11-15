@@ -137,9 +137,9 @@ theorem gapDecode_poles :
 
 `Reading:` Tim (2026-11-15): "So it's not just one program. It's all programs"; and "once you have
 one you have evidence that a class exists, right?" His tree reading ("the same chasing the darkness
-kind of routing", Tim, 2026-11-15) is not stated here: `t4_snap_orthogonal` covers cells 0 and 1; a
-theorem on the right angle of the actual path against the untaken branches is not located in the
-corpus as of 2026-11-15 (nearest: orthogonal projection as a die motion, `ZeroParadox/State/DieProjection.lean`).
+kind of routing", Tim, 2026-11-15) is not stated here: `t4_snap_orthogonal` covers cells 0 and 1;
+the right angle of the actual path against the untaken branches is not stated in this file (beside
+it: orthogonal projection as a die motion, `ZeroParadox/State/DieProjection.lean`).
 The class removes § II's dependence on one decoder, not the choice to read programs off tapes, which
 stays a commitment carried as the hypothesis. Prior art: Shen, Uspensky, Vereshchagin § 4.1
 (`trials_gapDecode_pos`); the broader home is algorithmic probability (Solomonoff, Levin, Chaitin). -/
@@ -152,15 +152,16 @@ def ReachesEveryCode (μ : Measure (ℕ → Bool)) (D : (ℕ → Bool) → Optio
 def DecodesAlmostSurely (μ : Measure (ℕ → Bool)) (D : (ℕ → Bool) → Option Code) : Prop :=
   μ {w | D w = Option.none} = 0
 
-/-- `Statement:` the self-printing universal codes form an infinite set, unconditionally
-(`selfref_universal_infinite`); every code's event is pairwise disjoint from every other's; and if
-`D` reaches every code for `μ`, each self-printing universal code has positive `μ`-mass under `D`
-and so does their union.
+/-- `Statement:` if `D` reaches every code for `μ`: the self-printing universal codes form an
+infinite set; every code's event is pairwise disjoint from every other's; each self-printing
+universal code has positive `μ`-mass under `D`, and so does their union. The first two hold without
+`hD` (`selfref_universal_infinite`; the disjointness `example` in
+`ZeroParadox/Computability/ComputationCannotBe.lean` § X).
 `Reading:` beside the machine of Shen, Uspensky, Vereshchagin § 4.1 (`trials_gapDecode_pos`), whose
 every output has positive probability: here positivity under an arbitrary measure is the hypothesis
 `hD`, not a result. Added: the start bit, the biased coin, Mathlib `Code`, closure under `Code ≃ Code`
 (`ReachesEveryCode.map_equiv`), and the infinite set of self-printing universal codes
-(`selfref_universal_infinite`) these reach. -/
+(`selfref_universal_infinite`), each with positive `μ`-mass under `D` given `hD`. -/
 theorem selfref_universal_reached {μ : Measure (ℕ → Bool)} {D : (ℕ → Bool) → Option Code}
     (hD : ReachesEveryCode μ D) :
     {c : Code | SelfPrints c ∧ Universal c}.Infinite ∧

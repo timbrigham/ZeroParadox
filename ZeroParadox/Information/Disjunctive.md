@@ -97,6 +97,7 @@ block (`#print axioms`, 2026-10-04):
    never fires (uniqueness: `ZeroParadox/Information/PoleWithinEnsemble.lean` § II control), and for
    every `φ` no `φ ∘ firedRun` from it steps at index 1 (`snap_fails_at_allFalse`). Modulo
    `trials p hp`-null sets, for `0 < p ≤ 1` the predicate "fires somewhere" IS the top element, ⊤ of
-   `Germ (ae (trials p hp)) Prop` (`fires_germ_eq_top`). Both charts are stated in
+   `Germ (ae (trials p hp)) Prop` (`fires_germ_eq_top`); at `p = 0` it is ⊥ of
+   `Germ (ae (trials 0 hp)) Prop` (`fires_germ_eq_bot_zero`). Both charts are stated in
    `ZeroParadox/Information/PoleWithinEnsemble.lean` § IX. Nothing here says any framework object IS a
    fair-coin tape.
