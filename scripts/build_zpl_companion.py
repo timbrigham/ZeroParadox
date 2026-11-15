@@ -1,6 +1,6 @@
 """
 Build ZP-L Illustrated Companion
-Version 1.26 | November 2026
+Version 1.27 | November 2026
 Citation fence (Gentzen): the Convergence section's credits follow CLAIMS.md's Gentzen rows and are
 taken from Gentzen 1943 (Math. Ann. 119), the one primary paper filed here, never from a secondary
 source's labels. The 1936 consistency credit rests on Gentzen 1943, p. 140, footnote 2: the 1936
@@ -198,21 +198,23 @@ def dual_convergence_diagram():
                  fontSize=8, fontName='DV-I', fillColor=GREY_TEXT))
 
     # ── Vertical dashed connectors between rows ───────────────────────────────
+    # They stop at y = 62, above the bottom-row label (baseline 52, glyph top 60), so they never cross it.
+    conn_bot = bot_by + bh + 18   # = 62
     for i in range(n):
         bx_mid = x0 + i * (bw + spacing) + bw / 2
-        d.add(Line(bx_mid, top_by - 2, bx_mid, bot_by + bh + 2,
+        d.add(Line(bx_mid, top_by - 2, bx_mid, conn_bot,
                    strokeColor=colors.HexColor('#BBBBBB'), strokeWidth=0.8,
                    strokeDashArray=[3, 3]))
     # End column connector
     bx_mid = end_bx + end_bw / 2
-    d.add(Line(bx_mid, top_by - 2, bx_mid, bot_by + bh + 2,
+    d.add(Line(bx_mid, top_by - 2, bx_mid, conn_bot,
                strokeColor=colors.HexColor('#BBBBBB'), strokeWidth=0.8,
                strokeDashArray=[3, 3]))
 
     return d
 
 
-VERSION = '1.26'
+VERSION = '1.27'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -256,8 +258,9 @@ def build():
         Paragraph('ZP Companion | ' + version_line(FIRST_RELEASED, VERSION), CS['meta']),
         Paragraph(
             'This companion explains the ideas in plain language with diagrams and examples. '
-            'It is not the formal document &#8212; every claim here restates a result already '
-            'proved in ZP-L Incomputability Convergence. Consult that document for the '
+            'It is not the formal document &#8212; its results are proved in ZP-L Incomputability '
+            'Convergence or in the other documents and papers it names, and the occurrence '
+            'commitment it mentions is a commitment, not a result. Consult that document for the '
             'authoritative mathematics.',
             CS['disc']),
     ]
@@ -271,8 +274,10 @@ def build():
         'No equation makes c&#8320; that program: the identity reading is retired, and what stays a '
         'commitment is that c&#8320; actually runs, the occurrence commitment. ZP-L picks up the thread from a different '
         'direction: the ordinal direction. If a map &#981; assigns machine phases to ordinals '
-        '&#8212; sending c&#8320; to everything below a certain point and c&#8321; above it '
-        '&#8212; what is that threshold ordinal? ZP-L establishes the answer: &#949;&#8320;, '
+        '&#8212; never stepping back from c&#8321; to c&#8320;, sending every stage of the tower '
+        '0, 1, &#969;, &#969;^&#969;, &#8230; to c&#8320; and every fixed point of '
+        '&#945; &#8614; &#969;^&#945; to c&#8321; &#8212; where does it first take c&#8321;? '
+        'ZP-L establishes the answer: &#949;&#8320;, '
         'the first fixed point of the map &#945; &#8614; &#969;^&#945;.'))
     E.append(cbody(
         'This is not an arbitrary choice. ZP-L proves that &#949;&#8320; is the minimal '
@@ -288,11 +293,12 @@ def build():
         'Imagine a path where each step is longer than the last: you walk 1 mile, then '
         '2, then 4, then 8, ... You are always getting further from the start, but you '
         'are also always somewhere on the path &#8212; never at the horizon. The horizon '
-        '(&#949;&#8320;) is the limit of all those steps combined. It exists as a '
-        'mathematical object, but no finite number of steps reaches it.',
+        'is the limit of all those steps combined, and no finite number of steps reaches it. '
+        'The analogy is for that shape only, a limit no step reaches: the walk grows without '
+        'bound, while &#949;&#8320; is a specific countable ordinal (the Remember box below).',
         'The ordinal tower works the same way. The snap that the canonical map takes at &#949;&#8320; (ZP-L) '
-        'is not a step you can take from inside the tower. It is the point where the tower '
-        'stops and something new begins.',
+        'is not a step you can take from inside the tower. It happens at the least point above every '
+        'stage of the tower, where something new begins.',
     ]))
     E.append(sp(8))
 
@@ -314,7 +320,7 @@ def build():
     E.append(snap_tower_diagram())
     E.append(ccaption(
         'The tower stages 0, 1, &#969;, &#969;^&#969;, &#8230; all lie strictly below &#949;&#8320; '
-        'and map to c&#8320;. The snap transition to c&#8321; occurs at the threshold &#949;&#8320; itself. '
+        'and the canonical map sends them to c&#8320;. That map takes its snap to c&#8321; at the threshold &#949;&#8320; itself. '
         'The arrow marks the snap. ZP-L &#167;VII: epsilon_zero_snap_canonical.'))
     E.append(sp(4))
     E.append(remember_box(

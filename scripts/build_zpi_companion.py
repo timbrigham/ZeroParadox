@@ -1,6 +1,6 @@
 """
 Build ZP-I Illustrated Companion
-Version 1.49 | November 2026
+Version 1.50 | November 2026
 
 Standalone companion for ZP-I: Inside Zero.
 Accessibility target: 2 years of college math.
@@ -276,7 +276,7 @@ def cycle_diagram():
     return d
 
 
-VERSION = '1.49'
+VERSION = '1.50'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -339,7 +339,7 @@ def build():
     # ── What ZP-I Is Doing ─────────────────────────────────────────────────────
     E.append(Paragraph('What Is ZP-I Doing?', CS['h1']))
     E.append(cbody(
-        'ZP-E proved that the transition from ⊥ to ε₀ (c₀ to c₁ on MachinePhase) '
+        'ZP-E proved that the transition from c₀, ⊥ of MachinePhase, to c₁ (the state this discrete chart names ε₀) '
         'has its SHAPE fixed by the lattice axioms  - derived, not assumed; that the transition is taken is a further commitment. But '
         'ZP-E left a question open: what happens '
         'after the Snap? The chain of states ascends  - but does it ascend forever? And if '
@@ -583,7 +583,7 @@ def build():
     # ── The Complete Cycle ─────────────────────────────────────────────────────
     E.append(Paragraph('The Cycle Reading', CS['h1']))
     E.append(cbody(
-        'ZP-E gave us the beginning: T-SNAP (⊥ → ε₀ - shape derived, occurrence committed to). ZP-I gives us '
+        'ZP-E gave us the beginning: T-SNAP (⊥ → ε₀ on MachinePhase, c₀ to c₁ - shape derived, occurrence committed to). ZP-I gives us '
         'the convergence: T-IZ (the chain → 0, read as the bottom role, and as ⊥′ only on a commitment). The '
         'framework reads the two together as a repeating cycle. That cycle is a reading, not a theorem: see '
         'the Note on closure below.'))
