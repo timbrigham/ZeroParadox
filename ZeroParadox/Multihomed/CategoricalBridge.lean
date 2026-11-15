@@ -479,8 +479,8 @@ noncomputable instance infoDepthZPCat : ZPCategory InfoDepth where
     T1b (ZPC) establishes that the P → Q snap costs exactly log 2 (1 bit of JSD).
     This is the informational analogue of AX-G2 in InfoDepth, where no morphism returns to
     depth 0 (`infoDepthZPCat`, by antisymmetry): the snap advances from zero surprisal to one bit.
-    `Statement:` a pair: the first conjunct is the morphism `⟨⟨Nat.zero_le 1⟩⟩ : 0 ⟶ ⟨1⟩` in
-    InfoDepth, the second is `t1b_jsd`, and the theorem only pairs them. -/
+    `Statement:` a pair: the first conjunct, `Nonempty (0 ⟶ ⟨1⟩)` in InfoDepth, is witnessed by
+    `⟨⟨Nat.zero_le 1⟩⟩`, the second is proved by `t1b_jsd`, and the theorem only pairs them. -/
 theorem fc_snap_info_grounded :
     Nonempty ((0 : InfoDepth) ⟶ ⟨1⟩) ∧ jsdPQ = Real.log 2 :=
   ⟨⟨⟨⟨Nat.zero_le 1⟩⟩⟩, t1b_jsd⟩
@@ -570,8 +570,8 @@ noncomputable instance hilbDimZPCat : ZPCategory HilbDimDepth where
 
 /-- Semantic grounding of fd_functor's snap morphism 0 → ⟨1⟩: T4 (ZPD) gives an orthogonal shift
     in StateSpace n (n ≥ 2), ⟪T(0), T(ε₀)⟫_ℂ = 0, read as the dimension advance 0 → 1 here.
-    `Statement:` a pair: the first conjunct is the morphism `⟨⟨Nat.zero_le 1⟩⟩ : 0 ⟶ ⟨1⟩` in
-    HilbDimDepth, the second is `t4_snap_orthogonal n hn`, and the theorem only pairs them. -/
+    `Statement:` a pair: the first conjunct, `Nonempty (0 ⟶ ⟨1⟩)` in HilbDimDepth, is witnessed by
+    `⟨⟨Nat.zero_le 1⟩⟩`, the second is proved by `t4_snap_orthogonal n hn`, and the theorem only pairs them. -/
 theorem fd_snap_hilb_grounded (n : ℕ) (hn : 2 ≤ n) :
     Nonempty ((0 : HilbDimDepth) ⟶ ⟨1⟩) ∧
     @inner ℂ (StateSpace n) _
