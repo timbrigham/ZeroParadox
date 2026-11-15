@@ -468,10 +468,11 @@ run as Mathlib's delay type `Computation Unit` through `toComp`. -/
 -- Reading: Tim (2026-11-15): "So it's not just one program. It's all programs".
 #check @ZeroParadox.selfref_universal_reached
 -- Statement: for every decoder `D`, with no hypothesis on it, the events `{w | D w = some c}` of
---   distinct codes are pairwise disjoint.
+--   distinct codes are pairwise disjoint: Mathlib's `pairwise_disjoint_fiber` along
+--   `Option.some_injective`.
 example (D : (ℕ → Bool) → Option Nat.Partrec.Code) :
     Pairwise (fun c c' : Nat.Partrec.Code => Disjoint {w | D w = some c} {w | D w = some c'}) :=
-  fun _ _ hne => Set.disjoint_left.2 fun _ h h' => hne (Option.some.inj (h.symm.trans h'))
+  (pairwise_disjoint_fiber D).comp_of_injective (Option.some_injective _)
 -- Statement: WITNESS, for `0 < p < 1`, `gapDecode` reaches every code for `trials p hp`, and is
 --   `none` on a `trials p hp`-null set.
 #check @ZeroParadox.gapDecode_mem

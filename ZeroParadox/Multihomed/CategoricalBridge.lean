@@ -40,7 +40,7 @@ open CategoryTheory
 
 A morphism f: A → B in C is a state transition satisfying:
 (i) Forward direction: every morphism represents a net addition of informational content.
-(ii) Compatibility with AX-G2: no morphism X → 0 exists for X ≠ 0.
+(ii) Compatibility with AX-G2: no morphism X → 0 exists for X not isomorphic to 0.
 (iii) Composition: composition corresponds to sequential state accumulation.
 D-H1 is a design commitment, not a derivation. No Lean theorem — the choice is what
 makes the instantiation functors well-defined. A different morphism structure would
