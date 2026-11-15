@@ -461,8 +461,10 @@ run as Mathlib's delay type `Computation Unit` through `toComp`. -/
 --   `D`. A predicate (`def … : Prop`), not a class field; the theorems that need it take it as a
 --   hypothesis.
 #check @ZeroParadox.ReachesEveryCode
--- Statement: the self-printing universal codes form an infinite set, unconditionally; and if `D`
---   reaches every code for `μ`, each has positive `μ`-mass under `D`, through pairwise disjoint events.
+-- Statement: the self-printing universal codes form an infinite set, and the events
+--   `{w | D w = some c}` of distinct codes are pairwise disjoint, both unconditionally; and if `D`
+--   reaches every code for `μ`, each self-printing universal code has positive `μ`-mass under `D`,
+--   and so does their union.
 -- Reading: Tim (2026-11-15): "So it's not just one program. It's all programs".
 #check @ZeroParadox.selfref_universal_reached
 -- Statement: WITNESS, for `0 < p < 1`, `gapDecode` reaches every code for `trials p hp`, and is

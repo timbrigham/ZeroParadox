@@ -1,4 +1,4 @@
--- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the tower tape `towerTape [] x`, read through `tapeIso` as a tape `ℕ → Bool`, fed to `t_snap_of_fires_once` tape by tape and for `trials p hp`-almost every seed; and the control that the tower tapes themselves form a `trials p hp`-null set. Curated results indexed in ZeroParadox/MANIFEST.md.
+-- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the tower tape `towerTape [] x`, read through `tapeIso` as a tape `ℕ → Bool`, fed to `t_snap_of_fires_once` tape by tape and for `trials p hp`-almost every seed; and the control that, if `0 < p ≤ 1`, the tower tapes themselves form a `trials p hp`-null set. Curated results indexed in ZeroParadox/MANIFEST.md.
 import ZeroParadox.Valuation.TowerTape
 import Mathlib.Tactic
 
@@ -16,7 +16,7 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 ## Formal Overview (AI-assisted)
 `tapeIso` carries `towerTape [] x` to a tape that fires iff `x ≠ botEnd` (§ I); the snap, seed by
-seed and for almost every seed (§ II); the tower tapes form a null set (§ III).
+seed and for almost every seed (§ II); if `0 < p ≤ 1`, the tower tapes form a null set (§ III).
 -/
 
 set_option maxHeartbeats 400000
@@ -79,7 +79,7 @@ theorem towerTape_snap_ae {L : Type*} [ZPSemilattice L] (φ : Bool → L)
     rw [← tapeIso_fires_iff, OrderIso.apply_symm_apply]; exact hw
   exact towerTape_snap_pointwise φ hφ0 hφ1 _ hx
 
-/-! ### § III. CONTROL: the tower tapes are a null set of tapes -/
+/-! ### § III. CONTROL: if `0 < p ≤ 1`, the tower tapes are a null set of tapes -/
 
 /-- `Statement:` the digit of `towerTape [] x` at `Nat.pair (n + 1) 0` is `0`. -/
 theorem towerTape_digit_zero (x : End) (n : ℕ) : towerTape [] x (Nat.pair (n + 1) 0) = 0 := by

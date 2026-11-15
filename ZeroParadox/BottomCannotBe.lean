@@ -729,8 +729,9 @@ noncomputable example : Ordinal.{0} →o Ordinal.{0} :=
 #check @ZeroParadox.exists_lastBit_iff
 -- Statement: the eventually-`false` tapes are `⋃ k, shiftTape k ⁻¹' {⊥}`, ⊥ of `ℕ → Bool`.
 #check @ZeroParadox.eventuallyFalse_eq_iUnion_shift
--- Statement: they are the local floors `localBotEnd v` read through `tapeIso`.
--- Reading: returning to a floor is one set; each local floor is ⊥ of `ℕ → Bool` on its subtape.
+-- Statement: they are the local floors `localBotEnd v` read through `tapeIso`; the subtape of each
+-- after `v` is ⊥ of `ℕ → Bool` (`localFloor_subtape_pole_limit`, above).
+-- Reading: returning to a floor is one set.
 #check @ZeroParadox.eventuallyFalse_eq_range_localFloor
 -- Statement: that set is countable.
 #check @ZeroParadox.eventuallyFalse_countable
@@ -823,8 +824,7 @@ example : ZeroParadox.Disjunctive (fun n => xor (ZeroParadox.champ n) false) := 
 #check @ZeroParadox.tape_totality_two_faces
 -- Statement: CONTROL, a two-element set holding ⊥ of `ℕ → Bool` and a random tape is `fairTape`-null
 -- (`fairTape_singleton_null`).
--- Reading: CARRIER, holding ⊥ of `ℕ → Bool` and a random tape is not the content of the reading below:
--- such a set is `fairTape`-null.
+-- Reading: CARRIER, the two-element null set above is not the content of the reading below.
 #check @ZeroParadox.both_faces_in_null_set
 -- Reading: COINCIDENCE, in the tape chart: minimal as the law (one condition), maximal as almost every
 -- member, the all-false tape inside as a limit. Tim, 2026-11-15: "Could we restate bottom as being both

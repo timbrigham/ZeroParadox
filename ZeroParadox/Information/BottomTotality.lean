@@ -1,4 +1,4 @@
--- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): one tape ensemble, `fairTape`, the law of the maximum-entropy coin (`trials_eq_fairTape_of_maxEntropy`), almost all of whose members are incompressible, with ⊥ of `ℕ → Bool` a non-random limit of its random firing tapes; and the control that a set containing both faces is null. Curated results indexed in ZeroParadox/MANIFEST.md.
+-- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): one tape ensemble, `fairTape`, the law of the maximum-entropy coin (`trials_eq_fairTape_of_maxEntropy`), almost all of whose members are incompressible, with ⊥ of `ℕ → Bool` a non-random limit of its random firing tapes; and the control that a two-element set containing both faces is null. Curated results indexed in ZeroParadox/MANIFEST.md.
 import ZeroParadox.Information.MaxEntropy
 import ZeroParadox.Information.PoleWithinEnsemble
 import Mathlib.Tactic
@@ -18,7 +18,7 @@ defer to my AI assistant regarding the specifics of how the internals work.
 ## Formal Overview (AI-assisted)
 `tape_totality_two_faces` bundles the uniqueness of the maximum-entropy coin (its `trials` is `fairTape`,
 `trials_eq_fairTape_of_maxEntropy`) with three results about `fairTape`; the control
-`both_faces_in_null_set` shows a set holding ⊥ of `ℕ → Bool` and a random tape is null.
+`both_faces_in_null_set` shows a two-element set holding ⊥ of `ℕ → Bool` and a random tape is null.
 -/
 
 set_option maxHeartbeats 400000

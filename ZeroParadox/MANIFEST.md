@@ -344,7 +344,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Information/MaxEntropy.lean` - Maximum entropy: the fair coin, missing information, and incompressible tapes
 - `ZeroParadox/Information/PoleWithinEnsemble.lean` - The never-firing tape inside the firing ensemble
 - `ZeroParadox/Information/SnapEpsilonZero.lean` - The snap and ε₀ on two carriers: on `WithBot Ordinal` the first step lands at ↑0 and `up` carries it to ↑ε₀ (the corner); on `EpsilonOrZero` the first step is ε₀ (the cover)
-- `ZeroParadox/Information/StartBit.lean` - The start bit, the end bit, and the tapes whose tail is ⊥ of `ℕ → Bool`
+- `ZeroParadox/Information/StartBit.lean` - The start bit, the end bit, and the tapes whose tail from some position on is ⊥ of `ℕ → Bool`
 - `ZeroParadox/Information/TapeHalting.lean` - A tape's first hitting time, run as a computation
 - `ZeroParadox/Information/TwoRequirements.lean` - Two requirements: a first step at ⊥ of `L`, and a typical tape
 

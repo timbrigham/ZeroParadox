@@ -135,12 +135,18 @@ theorem omega_opow_univ : ω ^ univ.{u, u + 1} = univ.{u, u + 1} := by
   · exact (isNormal_opow one_lt_omega0).strictMono.id_le _
 
 /-- `Statement:` `univ.{u, u+1}` is the least ordinal of `Ordinal.{u+1}` that is above every lift and
-fixed by `α ↦ ω^α`. The fixed-point clause selects nothing: every ordinal strictly below `univ` is a
+fixed by `α ↦ ω^α`. The fixed-point clause selects nothing (the `example` below): every ordinal strictly below `univ` is a
 lift (`lift_of_lt_univ`), and `univ` is fixed (`omega_opow_univ`). -/
 theorem univ_isLeast_above_level :
     IsLeast {x : Ordinal.{u + 1} | (∀ o : Ordinal.{u}, lift.{u + 1} o < x) ∧ ω ^ x = x}
       univ.{u, u + 1} :=
   ⟨⟨lt_univ_of_lift, omega_opow_univ⟩, fun x ⟨hx, _⟩ => not_lt.1 fun h => by
+    obtain ⟨c, rfl⟩ := lift_of_lt_univ h
+    exact lt_irrefl _ (hx c)⟩
+
+-- Statement: without the fixed-point clause, `univ.{u, u+1}` is still least above every lift.
+example : IsLeast {x : Ordinal.{u + 1} | ∀ o : Ordinal.{u}, lift.{u + 1} o < x} univ.{u, u + 1} :=
+  ⟨lt_univ_of_lift, fun x hx => not_lt.1 fun h => by
     obtain ⟨c, rfl⟩ := lift_of_lt_univ h
     exact lt_irrefl _ (hx c)⟩
 
