@@ -242,11 +242,11 @@ example : typeLT (Set.Ioo (Ordinal.epsilon 0 : Ordinal.{0}) (Ordinal.epsilon 1))
 -- Reading: CARRIER, Tim, 2026-11-14: "if it's strictly an up motion, you still can't tell the two
 -- universes apart.. once you do an over motion, you understand your frame of reference".
 #check @ZeroParadox.lift_epsilon_zero             -- Statement: `lift ε₀ = ε₀`, from `Ordinal.{u}` to `Ordinal.{max u v}`
-#check @ZeroParadox.univ_isLeast_above_level      -- Statement: `univ.{u, u+1}` is the least ordinal above every lift and is fixed by `α ↦ ω^α`; it is least above every lift already (`lift_of_lt_univ`), so the fixed-point clause selects nothing
+#check @ZeroParadox.univ_isLeast_above_level      -- Statement: `univ.{u, u+1}` is the least ordinal of `Ordinal.{u+1}` that is above every lift and fixed by `α ↦ ω^α`; the fixed-point clause selects nothing, since every ordinal strictly below `univ` is a lift (`lift_of_lt_univ`)
 #check @ZeroParadox.epsilon_zero_lt_univ          -- Statement: in `Ordinal.{u+1}`, ε₀ < `univ.{u, u+1}`
 -- Reading: CARRIER, Tim, 2026-11-14: "New point, not new bottom". `univ` is a point of `Ordinal.{u+1}`;
 -- a new ⊥ there is the C-DA2 commitment, not a theorem (§ VI).
-#check @ZeroParadox.roleAbove                     -- Statement: `sInf` of the fixed points of `α ↦ ω^α` strictly above every point of a set `S`: the least one when one exists (`roleAbove_eq_of_isLeast`); for an unbounded `S` it is `sInf ∅ = 0`, ⊥ of `Ordinal`, a junk value, never a role (the CONTROL `example` in `ZeroParadox/Ordinal/UniverseZoom.lean`)
+#check @ZeroParadox.roleAbove                     -- Statement: `sInf` of the fixed points of `α ↦ ω^α` strictly above every point of a set `S`: the least one when one exists (`roleAbove_eq_of_isLeast`); when none exists it is `sInf ∅ = 0` (`Ordinal.sInf_empty`), ⊥ of `Ordinal` (at `Set.univ`: the CONTROL `example` in `ZeroParadox/Ordinal/UniverseZoom.lean`). Reading: that 0 is a junk value of `sInf`, never a role
 #check @ZeroParadox.roleAbove_point_floor         -- Statement: at `{f}` it is `ordinalCornerStep f`, the § I-b strict form
 #check @ZeroParadox.roleAbove_one_construction    -- Statement: in `Ordinal.{u+1}`, `roleAbove {0}` is the lift of ε₀ and `roleAbove (Set.range lift)` is `univ.{u, u+1}`
 #check @ZeroParadox.roleAbove_work_split          -- Statement: `succ 0 < nfp (ω^·) (succ 0)`; the supremum of `succ (lift o)` is `univ`; `nfp (ω^·) univ = univ`
