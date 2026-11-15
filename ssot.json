@@ -672,7 +672,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 4007,
+        "declarations": 4017,
         "files": 223
       },
       "entries": [
@@ -10080,6 +10080,43 @@
             ]
           },
           "reason": "new HEAD declarations (APG decoration existence, choice-free; fan control)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0f28f617-b9bf-4ae4-9b95-ace9be447577",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fires_germ_eq_bot_zero",
+            "short": "fires_germ_eq_bot_zero"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.fires_germ_eq_bot_zero",
+            "short": "fires_germ_eq_bot_zero",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 279: PoleWithinEnsemble § IX, two charts of firing. Modulo trials p hp-null sets (Filter.Germ (ae _) Prop) firing and the t_snap_of_fires_once conclusion are top for 0 < p, bottom at p = 0; pointwise they fail at the all-false tape. Quotient theorems and pointwise controls land together (2026-11-14).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -27401,6 +27438,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "2e7d4521-34e8-4a32-adbf-382eb61ec859",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fires_germ_eq_top",
+            "short": "fires_germ_eq_top"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.fires_germ_eq_top",
+            "short": "fires_germ_eq_top",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 279: PoleWithinEnsemble § IX, two charts of firing. Modulo trials p hp-null sets (Filter.Germ (ae _) Prop) firing and the t_snap_of_fires_once conclusion are top for 0 < p, bottom at p = 0; pointwise they fail at the all-false tape. Quotient theorems and pointwise controls land together (2026-11-14).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "2e8c47e3-1db7-4b37-b097-8528147ddbd3",
           "new": {
             "file": "ZeroParadox/Information/MaxEntropy.lean",
@@ -28870,6 +28944,45 @@
             ]
           },
           "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "30f4f768-7d8b-4810-b6fe-e463bbf884a7",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.snap_fails_at_allFalse",
+            "short": "snap_fails_at_allFalse"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.snap_fails_at_allFalse",
+            "short": "snap_fails_at_allFalse",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Ruling 279: PoleWithinEnsemble § IX, two charts of firing. Modulo trials p hp-null sets (Filter.Germ (ae _) Prop) firing and the t_snap_of_fires_once conclusion are top for 0 < p, bottom at p = 0; pointwise they fail at the all-false tape. Quotient theorems and pointwise controls land together (2026-11-14).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -64379,6 +64492,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "708151fc-dd8e-4d36-916e-60cfaa3c8fed",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.never_fires_ae_zero",
+            "short": "never_fires_ae_zero"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.never_fires_ae_zero",
+            "short": "never_fires_ae_zero",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 279: PoleWithinEnsemble § IX, two charts of firing. Modulo trials p hp-null sets (Filter.Germ (ae _) Prop) firing and the t_snap_of_fires_once conclusion are top for 0 < p, bottom at p = 0; pointwise they fail at the all-false tape. Quotient theorems and pointwise controls land together (2026-11-14).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "7082fcf0-d7a0-4670-af7d-e4076fa42424",
           "new": {
             "file": "ZeroParadox/Multihomed/BoundaryOrder.lean",
@@ -92752,6 +92902,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "a1dc9bd0-b136-4311-89cf-db3508e19c99",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.snap_ae_fixed_phi",
+            "short": "snap_ae_fixed_phi"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.snap_ae_fixed_phi",
+            "short": "snap_ae_fixed_phi",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 279: PoleWithinEnsemble § IX, two charts of firing. Modulo trials p hp-null sets (Filter.Germ (ae _) Prop) firing and the t_snap_of_fires_once conclusion are top for 0 < p, bottom at p = 0; pointwise they fail at the all-false tape. Quotient theorems and pointwise controls land together (2026-11-14).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "a1e11632-09ed-476f-8936-fbb9538f8e42",
           "new": {
             "file": "ZeroParadox/Settheory/HypersetOrder.lean",
@@ -94993,6 +95180,45 @@
             ]
           },
           "reason": "Die quotients carrying UP: UpCompat, quotUp, landing transfer, identity-UP reduction to quot",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a6bec442-5a2d-46d7-a91d-0940b502f8c4",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ae_but_not_every",
+            "short": "ae_but_not_every"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ae_but_not_every",
+            "short": "ae_but_not_every",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Ruling 279: PoleWithinEnsemble § IX, two charts of firing. Modulo trials p hp-null sets (Filter.Germ (ae _) Prop) firing and the t_snap_of_fires_once conclusion are top for 0 < p, bottom at p = 0; pointwise they fail at the all-false tape. Quotient theorems and pointwise controls land together (2026-11-14).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -98248,6 +98474,43 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "abace86c-46fb-4018-b80a-896557beaa0a",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.snap_germ_eq_top",
+            "short": "snap_germ_eq_top"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.snap_germ_eq_top",
+            "short": "snap_germ_eq_top",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 279: PoleWithinEnsemble § IX, two charts of firing. Modulo trials p hp-null sets (Filter.Germ (ae _) Prop) firing and the t_snap_of_fires_once conclusion are top for 0 < p, bottom at p = 0; pointwise they fail at the all-false tape. Quotient theorems and pointwise controls land together (2026-11-14).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -102765,6 +103028,43 @@
             ]
           },
           "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b3236f49-4d57-40cf-9baa-0936f48c0ac2",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.germ_top_ne_bot",
+            "short": "germ_top_ne_bot"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.germ_top_ne_bot",
+            "short": "germ_top_ne_bot",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 279: PoleWithinEnsemble § IX, two charts of firing. Modulo trials p hp-null sets (Filter.Germ (ae _) Prop) firing and the t_snap_of_fires_once conclusion are top for 0 < p, bottom at p = 0; pointwise they fail at the all-false tape. Quotient theorems and pointwise controls land together (2026-11-14).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -121965,6 +122265,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "d36b30fd-7121-4095-88f2-d0e59978a31b",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fires_germ_pure_bot",
+            "short": "fires_germ_pure_bot"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.fires_germ_pure_bot",
+            "short": "fires_germ_pure_bot",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Ruling 279: PoleWithinEnsemble § IX, two charts of firing. Modulo trials p hp-null sets (Filter.Germ (ae _) Prop) firing and the t_snap_of_fires_once conclusion are top for 0 < p, bottom at p = 0; pointwise they fail at the all-false tape. Quotient theorems and pointwise controls land together (2026-11-14).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "d376b788-d54c-4d9c-90eb-6dc5f8308954",
           "new": {
             "file": "ZeroParadox/Information/SnapEpsilonZero.lean",
@@ -124385,6 +124724,43 @@
             "role": []
           },
           "reason": "PoleChartSelection: NEGATIVE result - chart selection at the built pole is axiom-free, refuting the naive 'choice = chart selection' reading; § II is a labelled conditional model",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d8061fac-2168-4be3-9e33-b879cf7fea6d",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fires_ae_eq_univ",
+            "short": "fires_ae_eq_univ"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.fires_ae_eq_univ",
+            "short": "fires_ae_eq_univ",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 279: PoleWithinEnsemble § IX, two charts of firing. Modulo trials p hp-null sets (Filter.Germ (ae _) Prop) firing and the t_snap_of_fires_once conclusion are top for 0 < p, bottom at p = 0; pointwise they fail at the all-false tape. Quotient theorems and pointwise controls land together (2026-11-14).",
           "verify": {
             "axioms": null,
             "sorry_free": true

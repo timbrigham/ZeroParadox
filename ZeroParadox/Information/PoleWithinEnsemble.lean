@@ -3,6 +3,7 @@ import ZeroParadox.Information.TapeHalting
 import Mathlib.MeasureTheory.Measure.Support
 import Mathlib.Topology.Instances.ENat
 import Mathlib.Analysis.SpecialFunctions.Sigmoid
+import Mathlib.Order.Filter.Germ.Basic
 import Mathlib.Tactic
 
 /-!
@@ -20,7 +21,7 @@ defer to my AI assistant regarding the specifics of how the internals work.
 ## Formal Overview (AI-assisted)
 For `0 < p < 1`, ⊥ of `ℕ → Bool` is `trials p hp`-null, in its support, and a limit of random firing tapes whose waits diverge (`pole_within_ensemble` in `ℕ∞`; `pole_within_ensemble_limit` in `NInf`).
 At `p = 0` the mass of `{⊥}` jumps while every cylinder's mass is continuous (§ VI); explicit non-random tapes give the limit with no measure in the statement (§ VII). A heat-bath rate `glauberExciteNN ΔE T`, positive at every `ΔE` and `T`, feeds `trials` (§ VIII).
-Nothing here identifies ⊥ of a `ZPSemilattice` with a tape or with `trials p hp`.
+Modulo `trials p hp`-null sets, firing somewhere is ⊤ for `0 < p` and ⊥ at `p = 0`; tape by tape it fails at ⊥ of `ℕ → Bool` (§ IX). Nothing here identifies ⊥ of a `ZPSemilattice` with a tape or with `trials p hp`.
 -/
 
 set_option maxHeartbeats 400000
@@ -549,6 +550,105 @@ example (ΔE : ℝ) : glauberExcite ΔE 0 = 1 / 2 := by
   simp [glauberExcite, Real.sigmoid]
   norm_num
 
+/-! ### § IX. Two charts of firing: modulo null sets, and tape by tape
+`Reading:` CARRIER. Quotient chart: predicates on tapes read in `Germ (ae (trials p hp)) Prop`, equal
+when they agree off a `trials p hp`-null set. Pointwise chart: predicates read at each tape. -/
+
+/-- `Statement:` if `0 < p ≤ 1` and `φ : Bool → L` sends `false` to ⊥ of `L` and `true` to a point
+other than ⊥ of `L`, then `trials p hp`-almost every tape `w` fires and gives `t_snap_of_fires_once`'s
+conclusion. No `BotHasFirstStep L` hypothesis; one way. -/
+theorem snap_ae_fixed_phi {L : Type*} [ZPSemilattice L] (φ : Bool → L)
+    (hφ0 : φ false = ZPSemilattice.bot) (hφ1 : φ true ≠ ZPSemilattice.bot)
+    (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p) :
+    ∀ᵐ w ∂(trials p hp), ∃ hw : ∃ k, w k = true,
+      let S := φ ∘ firedRun w hw
+      S 0 = ZPSemilattice.bot ∧ S 1 ≠ S 0 ∧ ZPSemilattice.IsStateSequence S ∧
+        (S 0 ≠ S 1 ∧ S 1 ≠ S 0 ∧ ZPSemilattice.join (S 0) (S 1) = S 1) := by
+  filter_upwards [ae_firesOnce p hp hp0] with w hw
+  exact ⟨hw, t_snap_of_fires_once φ hφ0 hφ1 w hw⟩
+
+/-- `Statement:` if `0 < p ≤ 1`, the set of tapes that fire somewhere is `trials p hp`-almost
+everywhere equal to `Set.univ`. -/
+theorem fires_ae_eq_univ (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p) :
+    {w : ℕ → Bool | ∃ k, w k = true} =ᵐ[trials p hp] (Set.univ : Set (ℕ → Bool)) :=
+  (ae_eq_univ_iff_measure_eq isOpen_fires_once.measurableSet.nullMeasurableSet).2
+    (by rw [trials_fires_once p hp hp0, measure_univ])
+
+/-- `Statement:` if `0 < p ≤ 1`, the predicate "fires somewhere" is ⊤ of
+`Germ (ae (trials p hp)) Prop`. -/
+theorem fires_germ_eq_top (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p) :
+    ((fun w : ℕ → Bool => ∃ k, w k = true : (ℕ → Bool) → Prop) :
+      Germ (ae (trials p hp)) Prop) = ⊤ := by
+  show ((fun w : ℕ → Bool => ∃ k, w k = true : (ℕ → Bool) → Prop) : Germ (ae (trials p hp)) Prop)
+    = ((fun _ => True : (ℕ → Bool) → Prop) : Germ (ae (trials p hp)) Prop)
+  refine Germ.coe_eq.2 ?_
+  filter_upwards [ae_firesOnce p hp hp0] with w hw
+  exact propext ⟨fun _ => trivial, fun _ => hw⟩
+
+/-- `Statement:` under `snap_ae_fixed_phi`'s hypotheses, the predicate "`w` fires and gives
+`t_snap_of_fires_once`'s conclusion" is ⊤ of `Germ (ae (trials p hp)) Prop`. -/
+theorem snap_germ_eq_top {L : Type*} [ZPSemilattice L] (φ : Bool → L)
+    (hφ0 : φ false = ZPSemilattice.bot) (hφ1 : φ true ≠ ZPSemilattice.bot)
+    (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p) :
+    ((fun w : ℕ → Bool => ∃ hw : ∃ k, w k = true,
+        let S := φ ∘ firedRun w hw
+        S 0 = ZPSemilattice.bot ∧ S 1 ≠ S 0 ∧ ZPSemilattice.IsStateSequence S ∧
+          (S 0 ≠ S 1 ∧ S 1 ≠ S 0 ∧ ZPSemilattice.join (S 0) (S 1) = S 1) : (ℕ → Bool) → Prop)
+      : Germ (ae (trials p hp)) Prop) = ⊤ := by
+  refine Germ.coe_eq.2 ?_
+  filter_upwards [snap_ae_fixed_phi φ hφ0 hφ1 p hp hp0] with w hw
+  exact propext ⟨fun _ => trivial, fun _ => hw⟩
+
+/-- `Statement:` CONTROL, for every `φ : Bool → L`, at ⊥ of `ℕ → Bool` (the all-`false` tape) no
+proof that it fires exists, so no `φ ∘ firedRun` from it steps at index 1. -/
+theorem snap_fails_at_allFalse {L : Type*} [ZPSemilattice L] (φ : Bool → L) :
+    ¬ ∃ hw : ∃ k, (fun _ => false : ℕ → Bool) k = true,
+      (φ ∘ firedRun (fun _ => false) hw) 1 ≠ (φ ∘ firedRun (fun _ => false) hw) 0 :=
+  fun ⟨⟨_, h⟩, _⟩ => Bool.false_ne_true h
+
+/-- `Statement:` CONTROL, if `0 < p ≤ 1`, `trials p hp`-almost every tape fires somewhere, and not
+every tape does. -/
+theorem ae_but_not_every (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p) :
+    (∀ᵐ w ∂(trials p hp), ∃ k, w k = true) ∧ ¬ ∀ w : ℕ → Bool, ∃ k, w k = true :=
+  ⟨ae_firesOnce p hp hp0, fun h => by obtain ⟨k, hk⟩ := h (fun _ => false); simp at hk⟩
+
+/-- `Statement:` CONTROL, along `pure` at the all-`false` tape (⊥ of `ℕ → Bool`), the predicate
+"fires somewhere" is ⊥ of that filter's `Germ _ Prop`. -/
+theorem fires_germ_pure_bot :
+    ((fun w : ℕ → Bool => ∃ k, w k = true : (ℕ → Bool) → Prop)
+      : Germ (pure (fun _ => false : ℕ → Bool)) Prop) = ⊥ := by
+  show _ = ((fun _ => False : (ℕ → Bool) → Prop) : Germ (pure (fun _ => false : ℕ → Bool)) Prop)
+  refine Germ.coe_eq.2 ?_
+  rw [EventuallyEq, eventually_pure]
+  simp
+
+/-- `Statement:` CONTROL, `trials 0 hp`-almost every tape fires nowhere. -/
+theorem never_fires_ae_zero (hp : (0 : NNReal) ≤ 1) :
+    ∀ᵐ w ∂(trials 0 hp), ¬ ∃ k, w k = true := by
+  rw [ae_iff]
+  simp only [not_not]
+  have e : {w : ℕ → Bool | ∃ k, w k = true} = ⋃ k, fires k := by ext w; simp [fires]
+  rw [e]
+  exact measure_iUnion_null fun k => by rw [trials_fires]; simp
+
+/-- `Statement:` CONTROL, the predicate "fires somewhere" is ⊥ of `Germ (ae (trials 0 hp)) Prop`. -/
+theorem fires_germ_eq_bot_zero (hp : (0 : NNReal) ≤ 1) :
+    ((fun w : ℕ → Bool => ∃ k, w k = true : (ℕ → Bool) → Prop) :
+      Germ (ae (trials 0 hp)) Prop) = ⊥ := by
+  show _ = ((fun _ => False : (ℕ → Bool) → Prop) : Germ (ae (trials 0 hp)) Prop)
+  refine Germ.coe_eq.2 ?_
+  filter_upwards [never_fires_ae_zero hp] with w hw
+  exact propext ⟨fun h => hw h, False.elim⟩
+
+/-- `Statement:` CONTROL, for every `p ≤ 1`, ⊤ ≠ ⊥ in `Germ (ae (trials p hp)) Prop`. -/
+theorem germ_top_ne_bot (p : NNReal) (hp : p ≤ 1) :
+    (⊤ : Germ (ae (trials p hp)) Prop) ≠ ⊥ := by
+  intro h
+  have := Germ.coe_eq.1 h
+  have hne : (ae (trials p hp)).NeBot := inferInstance
+  obtain ⟨w, hw⟩ := this.exists
+  simp at hw
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -610,4 +710,14 @@ open ZeroParadox
 #print axioms glauber_botMass
 #print axioms glauberExcite_tendsto_zero
 #print axioms glauber_jump
+#print axioms snap_ae_fixed_phi
+#print axioms fires_ae_eq_univ
+#print axioms fires_germ_eq_top
+#print axioms snap_germ_eq_top
+#print axioms snap_fails_at_allFalse
+#print axioms ae_but_not_every
+#print axioms fires_germ_pure_bot
+#print axioms never_fires_ae_zero
+#print axioms fires_germ_eq_bot_zero
+#print axioms germ_top_ne_bot
 end PurityCheck
