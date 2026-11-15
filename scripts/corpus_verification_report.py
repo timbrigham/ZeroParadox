@@ -25,16 +25,33 @@ DESIGN NOTE - three detectors, none of them sufficient alone, all measured.
    proves nothing, so it fails closed rather than printing a credential over a blank
    table.
 
+4. A FLOOR ON THE COUNT. CI restores a Lake build cache, and an up-to-date module
+   contributes its footprints only by Lake REPLAYING its stored log. If replay ever
+   dropped them, detector 3 would still pass on whatever was left. So the caller may
+   pass a floor - the distinct-name count a cold build produced - and a count below it
+   fails the report. The floor is a number someone lowers deliberately when
+   declarations are removed; it is never derived from the run it judges.
+
+5. A COLD CHECK. The floor is only as good as the build it was read from, so a run that
+   is meant to be cold says so with `--require-cold <module-count>`, and then the report
+   fails if any `ZeroParadox` or `ZeroParadox.*` module is `Replayed`, or if the number of
+   distinct `ZeroParadox.*` submodules the log shows as `Built` differs from the count the
+   caller passes (the `.lean` files under `ZeroParadox/`). "Cold" is measured from the log,
+   not assumed from the workflow's cache settings. The root module `ZeroParadox` is left
+   out of the `Built` count: in Complete Project job 131631685723 (a cold build of
+   47666d37) all 259 submodules printed a `Built` line and the root module printed none.
+
 Exits 0 if the build verified, 1 otherwise, so the report doubles as a gate -
 but only because the caller passes the real exit code in. Wire it as:
 
     lake build 2>&1 | tee build.log
     BUILD_RC=${PIPESTATUS[0]}
     set -o pipefail
-    python3 scripts/corpus_verification_report.py build.log "$BUILD_RC" \
+    python3 scripts/corpus_verification_report.py build.log "$BUILD_RC" "$FLOOR" \
       | tee -a "$GITHUB_STEP_SUMMARY"
 
-Usage: corpus_verification_report.py <lake-build-log> <build-exit-code>
+Usage: corpus_verification_report.py <lake-build-log> <build-exit-code> [<footprint-floor>
+       [--require-cold <module-count>]]
 """
 import sys
 import re
@@ -57,6 +74,36 @@ try:
 except ValueError:
     sys.stderr.write(f"build-exit-code must be an integer, got {rc_arg!r}\n")
     sys.exit(2)
+# None, not 0, when no floor is passed: "no floor given" and "a floor of zero" are
+# different answers, and the report says which one it ran with.
+floor = None
+if len(sys.argv) > 3:
+    try:
+        floor = int(sys.argv[3])
+    except ValueError:
+        sys.stderr.write(f"footprint-floor must be an integer, got {sys.argv[3]!r}\n")
+        sys.exit(2)
+# The only accepted arguments after the floor are `--require-cold <module-count>`. Anything
+# else is refused rather than ignored, so a misspelled flag cannot turn the cold check off
+# unnoticed, and the count is required, so the cold check cannot run without it.
+require_cold = False
+expected_modules = None
+if len(sys.argv) > 4:
+    if sys.argv[4] != "--require-cold" or len(sys.argv) != 6:
+        sys.stderr.write(f"expected `--require-cold <module-count>` after the floor, "
+                         f"got {sys.argv[4:]!r}\n")
+        sys.exit(2)
+    try:
+        expected_modules = int(sys.argv[5])
+    except ValueError:
+        sys.stderr.write(f"module-count must be an integer, got {sys.argv[5]!r}\n")
+        sys.exit(2)
+    # Zero is refused, not compared: an empty checkout would count 0 files, and a log
+    # with 0 `Built` lines would then agree with it.
+    if expected_modules < 1:
+        sys.stderr.write(f"module-count must be at least 1, got {expected_modules}\n")
+        sys.exit(2)
+    require_cold = True
 
 print(f"[report] reading {path}, build exit code {build_rc}", file=sys.stderr)
 log = open(path, encoding="utf-8", errors="replace").read()
@@ -95,9 +142,30 @@ SORRY_WARNING = "declaration uses `sorry`"          # backticks, measured agains
 # in ordinary log furniture, unlike the bare word "sorry" (`nanoda-allow-sorry`).
 has_sorry_warning = (SORRY_WARNING in log) or ("sorryAx" in log)
 
-ok = (build_rc == 0) and not sorried and not has_sorry_warning and not no_evidence
+# How much of this build came from the cache. Lake prints one progress line per module,
+# `Built X` when it elaborated X in this run and `Replayed X` when X was up to date and
+# its stored log was re-emitted.
+built = len(re.findall(r"\] Built ", log))
+replayed = len(re.findall(r"\] Replayed ", log))
+below_floor = floor is not None and total < floor
+# The root module `ZeroParadox` and every `ZeroParadox.*` submodule, and nothing else
+# (`ZeroParadoxFoo` does not match). A module line is `[i/n] Replayed X` or
+# `[i/n] Built X (1.2s)`, so the name ends at whitespace or at the end of the line.
+CORPUS_MODULE = r"ZeroParadox(?:\.\S+)?(?=\s|$)"
+replayed_corpus = len(re.findall(r"\] Replayed " + CORPUS_MODULE, log, re.MULTILINE))
+built_submodules = len(set(re.findall(r"\] Built (ZeroParadox\.\S+)(?=\s|$)", log,
+                                      re.MULTILINE)))
+replayed_cold = require_cold and replayed_corpus > 0
+built_short = require_cold and built_submodules != expected_modules
+not_cold = replayed_cold or built_short
+
+ok = ((build_rc == 0) and not sorried and not has_sorry_warning and not no_evidence
+      and not below_floor and not not_cold)
 print(f"[report] rc={build_rc} sorried={len(sorried)} warn={has_sorry_warning} "
-      f"evidence={not no_evidence} -> ok={ok}", file=sys.stderr)
+      f"evidence={not no_evidence} total={total} floor={floor} built={built} "
+      f"replayed={replayed} replayed_corpus={replayed_corpus} "
+      f"built_submodules={built_submodules} expected_modules={expected_modules} "
+      f"require_cold={require_cold} -> ok={ok}", file=sys.stderr)
 print(f"[report] {len(axfree)} axiom-free, {len(axdep)} with a footprint", file=sys.stderr)
 
 by_footprint = Counter(ax for _n, ax in axdep)
@@ -129,6 +197,22 @@ if not ok:
                    "at all** — so nothing was verified here. A warm cache still replays "
                    "them, so this means the log is truncated or the build did not run. "
                    "An absence of evidence is not a check.")
+    if below_floor:
+        out.append(f"**The log records {total} declarations with an axiom footprint, below "
+                   f"the floor of {floor} set from a cold build.** Footprints went missing: "
+                   "either the cache replay dropped them or declarations were removed. If "
+                   "they were removed on purpose, lower the floor in "
+                   "`.github/workflows/lean_action_ci.yml` in the same change.")
+    if replayed_cold:
+        out.append(f"**This run was meant to be a cold build, and the log shows "
+                   f"{replayed_corpus} corpus module(s) `Replayed` from a build cache.** "
+                   "Its count cannot be used to set or check the floor.")
+    if built_short:
+        out.append(f"**This run was meant to be a cold build, and the log shows "
+                   f"{built_submodules} distinct `ZeroParadox.*` module(s) `Built`, "
+                   f"against {expected_modules} `.lean` files under `ZeroParadox/`.** "
+                   "Every corpus module must be elaborated in this run for its count to "
+                   "set or check the floor.")
 else:
     out.append(
         "Don't take our word for it. Lake exited 0, no declaration depends on `sorryAx`, "
@@ -149,6 +233,11 @@ out.append(f"**Declarations recording an axiom footprint in this build:** {total
            f"of which **{len(choice_free)} do not use `Classical.choice`**. Counted by "
            "distinct name, and including library declarations the corpus checks "
            "alongside its own.")
+out.append("")
+floor_text = (f"floor **{floor}**, from a cold build" if floor is not None
+              else "**no floor given**")
+out.append(f"**Count check:** {total} against {floor_text}. Modules in this log: "
+           f"{built} elaborated in this run, {replayed} replayed from the build cache.")
 out.append("")
 out.append("| footprint | count | means |")
 out.append("|---|---:|---|")
