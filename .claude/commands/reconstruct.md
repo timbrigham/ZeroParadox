@@ -86,6 +86,42 @@ nobody making an error. The probe above is the **non-internal** reading; droppin
 gives every-constant (74 / 65). Whichever you run, **name it** — the label is the whole point of this
 paragraph, and getting it wrong mislabels the sample by a factor of two.
 
+⚠⚠ **AN ANONYMOUS `example` IS THE UNIT TOO, AND NEITHER PROBE ABOVE REACHES IT.** An `example` is
+elaborated and discarded; it never enters the environment, so `#check` has no name to take and the
+enumeration has no constant to list. Measured 2026-11-15: a planted false gloss sitting on an
+`example` was the one planted error the blind reading missed. So, for each module in scope, also:
+
+1. Copy the module to your scratchpad. Where a line BEGINS with `example` at column 0, replace that
+   word with `theorem zpExample_L<n>`, `<n>` the SOURCE line number. Grep `^\s+example\b` too: an
+   indented `example` declaration is not rewritten by this rule, so look at each hit. Append:
+
+```lean
+open Lean in
+run_cmd do
+  let env ← getEnv
+  let hits := env.constants.toList.filter fun (n, _) =>
+    (n.componentsRev.head?.map (fun c => c.toString.startsWith "zpExample_L")).getD false
+  logInfo m!"EXAMPLES PROBE RAN: {hits.length} example(s) elaborated"
+  for (n, ci) in hits do
+    logInfo m!"EXAMPLE {n} : {ci.type}"
+```
+
+2. Elaborate the COPY from the repo root — `lake env lean <scratch>\<name>_ex.lean > <scratch>\<name>_ex.log 2>&1`
+   — and read the log whole.
+3. **Reconcile by NAME:** every rewritten line `<n>` comes back as `zpExample_L<n>`, or you say why
+   not. A column-0 line of PROSE that starts with "example" produces no constant (say so); a
+   data-valued `example` fails with `type of theorem … is not a proposition` (rewrite that one line
+   as `noncomputable def` and re-run); anything else is an elaboration failure in the copy — read the
+   error, never drop the line.
+4. Hand the `EXAMPLE` lines over in the declaration-name list, MARKED as examples with their source
+   lines; the names exist only in your copy, so the agent falsifies them against the source line.
+   ⚠ **The header line is the evidence the probe RAN.** `EXAMPLES PROBE RAN: 0` means the module has
+   no `example`; NO header line means the probe did not run. Never report the two alike.
+
+CONTROL: on `ZeroParadox/Ordinal/UniverseZoom.lean` every column-0 `example` line comes back by name
+with its elaborated type; on `ZeroParadox/Ordinal/Goodstein.lean` (no `example`) the header prints
+with nothing under it.
+
 If you did not enumerate by name, **say so plainly** — the agent's job is then to scope its answer,
 not to guess a denominator.
 

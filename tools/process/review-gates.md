@@ -66,6 +66,17 @@ precision error — *"a positive natural number less than ω"* is redundant — 
 convention note, caught only by a retroactive review. A change too small to review is still a change
 to a published surface.
 
+### Lean files: `/adversary-review` and `/reconstruct`, in parallel, on the same commit
+
+A commit changing a `.lean` file gets both reviews, spawned in parallel against the same commit (Tim,
+ruling 285(a), 2026-11-15; pilot numbers in `.claude-local/notes/reconstruct_pilot_result_2026-11-15.md`).
+Independence comes from `/reconstruct` reading only elaborated signatures until its phase 3, not from
+ordering. Run its caller pre-flight in full, the `example` probe included, and ask for DIFF 1 gloss by
+gloss, as the pilot did. The adversary's verdict gates. `/reconstruct`'s DIFF 1 items (claimed but not
+backed) are dispositioned by the caller, who applies or carries each like any ordinary finding;
+`/reconstruct` records no verdict, because no ledger step exists for it yet (ticket
+`.claude-local/queue/tooling-reconstruct-blind-reading-pipeline.md`, step 3).
+
 ---
 
 ## Running the gates: the calibration a brief written from memory cannot carry
