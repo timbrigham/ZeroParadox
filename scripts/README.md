@@ -22,7 +22,7 @@ If you are primarily interested in the mathematical content, the PDF documents t
 ### CI verification reports
 
 Unlike everything else in this folder, these three are **primary and executed** — GitHub
-Actions runs `corpus_verification_report.py` on every build; `minimal_core_report.py` is `workflow_dispatch` so it can be fired by hand against any branch, **and also runs automatically when `Miniature.lean`, the report script, or the workflow changes**; `axiom_ledger_report.py` is the same shape for `.github/workflows/axiom_ledger.yml`, which also fires on a `lean-toolchain` or `lake-manifest.json` change. All three publish their output to the run summary, so they
+Actions runs `corpus_verification_report.py` on every build; `minimal_core_report.py` runs in `.github/workflows/minimal_core.yml` and `axiom_ledger_report.py` in `.github/workflows/axiom_ledger.yml`. All three workflows run on every pull request into `main` and every push to `main`, with no path filter; the latter two also run on every push to `illustrated`; each can be fired by hand against any branch (`workflow_dispatch`); and Complete Project and the Axiom Ledger each add a weekly scheduled run, Complete Project's being a cold build that skips the Lake build cache. `corpus_verification_report.py` also takes a floor on the footprint count, set from a cold build, and fails below it. All three publish their output to the run summary, so they
 are not copies of anything and they are not PDF tooling. Each reads a Lean log plus the exit
 code of the Lean run that wrote it (`lake build` for the corpus report, `lake env lean` on one file
 for the other two) and reports what the machine actually checked.

@@ -22,26 +22,14 @@ name: Verification suite
 # tools/verify/ was the prerequisite, which the buildout sequenced AFTER this phase without
 # noticing the dependency.
 
+# Runs on every pull request into main and every push to main, with no path filter: the four
+# gating workflows (Complete Project, Verification suite, Axiom Ledger, Minimal Core) share one
+# cadence there, so a pull request into main always carries all four results.
 on:
   push:
     branches: [main]
-    paths:
-      - 'tools/verify/**'
-      - 'ZeroParadox/**/*.lean'
-      - 'scripts/**'
-      - '**/*.md'
-      - 'register.md'
-      # Without these the workflow never re-runs when the thing it publishes changes.
-      - '.github/workflows/verify.yml'
   pull_request:
     branches: [main]
-    paths:
-      - 'tools/verify/**'
-      - 'ZeroParadox/**/*.lean'
-      - 'scripts/**'
-      - '**/*.md'
-      - 'register.md'
-      - '.github/workflows/verify.yml'
   workflow_dispatch:
 
 permissions:

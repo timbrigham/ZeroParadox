@@ -2,25 +2,19 @@ name: Minimal Core
 
 # The "prove it yourself" gate. Re-checks ZeroParadox/Miniature.lean — the
 # self-contained minimal core — and writes a dual-audience verification report
-# to the run summary. Manual by design (workflow_dispatch) so it can be fired by
-# hand against any branch; also runs automatically when the file itself changes.
+# to the run summary. workflow_dispatch fires it by hand against any branch. It also
+# runs on every pull request into main and every push to main or illustrated, with no
+# path filter: the four gating workflows (Complete Project, Verification suite, Axiom
+# Ledger, Minimal Core) share one cadence on main.
 on:
   workflow_dispatch:
   push:
     branches:
       - main
       - illustrated
-    paths:
-      - 'ZeroParadox/Miniature.lean'
-      - 'scripts/minimal_core_report.py'
-      - '.github/workflows/minimal_core.yml'
   pull_request:
     branches:
       - main
-    paths:
-      - 'ZeroParadox/Miniature.lean'
-      - 'scripts/minimal_core_report.py'
-      - '.github/workflows/minimal_core.yml'
 
 permissions:
   contents: read
@@ -31,12 +25,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
+      # Restore-only: "Complete Project" (lean_action_ci.yml) saves this cache after a green
+      # full build, and its comment records what was verified about it. Miniature.lean imports
+      # only Mathlib, so what this job gains is Mathlib and the other packages already in
+      # place; `lake env lean` below re-elaborates the file itself on every run regardless.
+      - name: Restore the Lake build cache
+        id: lake-cache
+        uses: actions/cache/restore@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
+        with:
+          path: .lake
+          key: lake-build-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}-${{ hashFiles('lakefile.toml') }}-${{ hashFiles('**/*.lean') }}
+          restore-keys: |
+            lake-build-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}-${{ hashFiles('lakefile.toml') }}-
       # build: false keeps this job self-contained, as the header claims. Without it
       # lean-action builds the whole corpus first, so an unrelated breakage elsewhere
-      # kills the job before the Minimal Core is ever elaborated.
+      # kills the job before the Minimal Core is ever elaborated. use-github-cache: false
+      # because the step above is the cache (see lean_action_ci.yml).
       - uses: leanprover/lean-action@v1
         with:
           build: false
+          use-github-cache: false
       - name: Re-elaborate the Minimal Core and write the report
         run: |
           # No pipefail on the elaboration: a failure must still REACH the report.
