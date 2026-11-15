@@ -9,6 +9,7 @@ import ZeroParadox.Category.IgnoranceSeam
 import ZeroParadox.Settheory.Wall
 import ZeroParadox.Information.Disjunctive
 import ZeroParadox.Information.TapeHalting
+import ZeroParadox.Computability.GapDecoder
 
 /-!
 # Machine-checked characterization index of COMPUTATION — what it can and cannot be
@@ -449,5 +450,29 @@ run as Mathlib's delay type `Computation Unit` through `toComp`. -/
 -- Statement: if `0 < p` and `p ≤ 1`, `trials p hp`-almost every `w` fires and halts at `Nat.find hw`.
 -- Reading: almost every, not every: ⊥ of `ℕ → Bool` never halts (`NInf.toComp_infty`); one way.
 #check @ZeroParadox.toComp_det_halts_ae
+-- Reading: CARRIER, a WHAT chart beside THAT and WHEN: reading a program off a tape is a choice, not
+--   forced, and `firedRun` still reads one bit (`ZeroParadox/Computability/GapDecoder.lean`).
+-- Statement: `gapDecode w` is the code numbered by the run of `false` after the first `true` of `w`,
+--   up to the next `true`; `none` without a second `true`.
+#check @ZeroParadox.gapDecode
+-- Statement: `gapDecode w = none` iff `w` is ⊥ of `ℕ → Bool` or its subtape after its first `true` is.
+#check @ZeroParadox.gapDecode_eq_none_iff
+-- Statement: a predicate on a measure `μ` and a decoder `D`: every code has positive `μ`-mass under
+--   `D`. Used only as a hypothesis.
+#check @ZeroParadox.ReachesEveryCode
+-- Statement: if `D` reaches every code for `μ`, the self-printing universal codes form an infinite
+--   set, each of positive `μ`-mass under `D`, through pairwise disjoint events.
+-- Reading: Tim (2026-11-15): "So it's not just one program. It's all programs".
+#check @ZeroParadox.selfref_universal_reached
+-- Statement: WITNESS, for `0 < p < 1`, `gapDecode` reaches every code for `trials p hp`, and is
+--   `none` on a `trials p hp`-null set.
+#check @ZeroParadox.gapDecode_mem
+-- Statement: composing a member with a bijection `Code ≃ Code` gives a member.
+#check @ZeroParadox.ReachesEveryCode.map_equiv
+-- Statement: CONTROL, for every `μ` the constant decoder `_ ↦ some Code.zero` is not a member.
+#check @ZeroParadox.const_not_reachesEveryCode
+-- Statement: CONTROL, at `p = 1` every tape of the support decodes to `Code.zero`, self-printing and
+--   not universal, and `gapDecode` is not a member.
+#check @ZeroParadox.gapDecode_p_one
 
 end ComputationCannotBeIndex

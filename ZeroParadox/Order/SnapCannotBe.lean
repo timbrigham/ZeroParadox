@@ -14,6 +14,7 @@ import ZeroParadox.Information.SnapEpsilonZero
 import ZeroParadox.Information.TapeHalting
 import ZeroParadox.Information.PoleWithinEnsemble
 import ZeroParadox.Valuation.TowerTapeSnap
+import ZeroParadox.Information.StartBit
 
 /-!
 # Machine-checked characterization index of the snap ⊥ → ε₀ — what the snap IS and IS NOT
@@ -50,6 +51,7 @@ section SnapCannotBeIndex
 --   `hw` of `t_snap_of_fires_once` (`ZeroParadox/Information/CrossingTrials.lean` § VIII).
 #check @ZeroParadox.t_snap_of_fires_once             -- Statement: if `φ : Bool → L` sends `false` to ⊥ of `L` and `true` to a point other than ⊥ of `L`, and the tape `w` fires at some stage (`hw`), then `φ ∘ firedRun w hw` meets `t_snap_given`'s `hcc1` and `hocc` and is a state sequence; one way
 #check @ZeroParadox.trials_fires_once                -- Statement: if `0 < p ≤ 1`, the tapes that fire at some stage have `trials p hp` measure one; it names no tape
+#check @ZeroParadox.exists_startBit_iff              -- Statement: a tape has a first `true` iff it is not ⊥ of `ℕ → Bool`, so `hw` of `t_snap_of_fires_once` holds exactly at the tapes other than ⊥ of `ℕ → Bool`. Reading: the start bit (`ZeroParadox/Information/StartBit.lean`)
 -- `Statement:` CONTROL, a particular tape need not fire: the all-`false` tape fires at no stage.
 example : ¬ ∃ k, (fun _ => false : ℕ → Bool) k = true := fun ⟨_, h⟩ => Bool.false_ne_true h
 -- `Statement:` occurrence once: the slot chart's sequence steps at index 1 and stays, so it is not an

@@ -672,8 +672,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 4057,
-        "files": 227
+        "declarations": 4092,
+        "files": 229
       },
       "entries": [
         {
@@ -3781,6 +3781,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "05461660-76ab-4478-9db2-538564f09645",
+          "new": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.gapDecode_mem",
+            "short": "gapDecode_mem"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.gapDecode_mem",
+            "short": "gapDecode_mem",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 D, 2026-11-15, plus Tim's same-day class addition): one tape-to-program decoder (gapDecode, the gap after the start bit read as a code number, ONE CHOICE among many) and the predicate ReachesEveryCode it witnesses; any member reaches the self-printing universal codes with positive probability; controls: constant decoder and gapDecode at p = 1 are non-members (GapDecoder.lean).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "0546f3cf-f85f-4290-9ed7-aaa346158798",
           "new": {
@@ -3917,6 +3954,43 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "057ff315-d3d6-4378-9fb5-7e5bfebb183d",
+          "new": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.gapWitness",
+            "short": "gapWitness"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.gapWitness",
+            "short": "gapWitness",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 D, 2026-11-15, plus Tim's same-day class addition): one tape-to-program decoder (gapDecode, the gap after the start bit read as a code number, ONE CHOICE among many) and the predicate ReachesEveryCode it witnesses; any member reaches the self-printing universal codes with positive probability; controls: constant decoder and gapDecode at p = 1 are non-members (GapDecoder.lean).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -6060,6 +6134,43 @@
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": "[propext, Classical.choice, Quot.sound]",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "08e558a9-b544-4712-ad4c-4bbcb89c5fa7",
+          "new": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.gapDecode",
+            "short": "gapDecode"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.gapDecode",
+            "short": "gapDecode",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 D, 2026-11-15, plus Tim's same-day class addition): one tape-to-program decoder (gapDecode, the gap after the start bit read as a code number, ONE CHOICE among many) and the predicate ReachesEveryCode it witnesses; any member reaches the self-printing universal codes with positive probability; controls: constant decoder and gapDecode at p = 1 are non-members (GapDecoder.lean).",
+          "verify": {
+            "axioms": null,
             "sorry_free": true
           }
         },
@@ -9426,6 +9537,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0e23dcfb-2665-41b4-9be0-bd77af5a61ac",
+          "new": {
+            "file": "ZeroParadox/Information/StartBit.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.mem_eventuallyFalse_iff",
+            "short": "mem_eventuallyFalse_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/StartBit.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.mem_eventuallyFalse_iff",
+            "short": "mem_eventuallyFalse_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 A+B, 2026-11-15): start bit and end bit on N -> Bool; the eventually-false tapes as one set (shifted copies of bottom, silentFrom, the local floors through tapeIso), countable, trials-null for 0 < p, measure one at p = 0 (StartBit.lean).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -16972,6 +17120,80 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "1b35e244-0700-45eb-a312-97837c5c5938",
+          "new": {
+            "file": "ZeroParadox/Information/StartBit.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.measurableSet_eventuallyFalse",
+            "short": "measurableSet_eventuallyFalse"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/StartBit.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.measurableSet_eventuallyFalse",
+            "short": "measurableSet_eventuallyFalse",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 A+B, 2026-11-15): start bit and end bit on N -> Bool; the eventually-false tapes as one set (shifted copies of bottom, silentFrom, the local floors through tapeIso), countable, trials-null for 0 < p, measure one at p = 0 (StartBit.lean).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "1b59ae23-0e0a-44c8-ad53-5d160cb39057",
+          "new": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_gapDecode_pos",
+            "short": "trials_gapDecode_pos"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_gapDecode_pos",
+            "short": "trials_gapDecode_pos",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 D, 2026-11-15, plus Tim's same-day class addition): one tape-to-program decoder (gapDecode, the gap after the start bit read as a code number, ONE CHOICE among many) and the predicate ReachesEveryCode it witnesses; any member reaches the self-printing universal codes with positive probability; controls: constant decoder and gapDecode at p = 1 are non-members (GapDecoder.lean).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "1b62d3a3-b54f-4a6c-b900-a35d7f890122",
           "new": {
@@ -23793,6 +24015,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "2807d11f-121d-4ecb-9e25-9ec9185b85a5",
+          "new": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.gapDecode_eq_none_iff",
+            "short": "gapDecode_eq_none_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.gapDecode_eq_none_iff",
+            "short": "gapDecode_eq_none_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 D, 2026-11-15, plus Tim's same-day class addition): one tape-to-program decoder (gapDecode, the gap after the start bit read as a code number, ONE CHOICE among many) and the predicate ReachesEveryCode it witnesses; any member reaches the self-printing universal codes with positive probability; controls: constant decoder and gapDecode at p = 1 are non-members (GapDecoder.lean).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "28178d77-db97-4989-a9a5-2d3c017cbf68",
           "new": {
             "file": "ZeroParadox/Valuation/CellsJoint.lean",
@@ -24081,6 +24340,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "28808d6f-e6cf-4a04-b237-4c67fa707f32",
+          "new": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.const_not_reachesEveryCode",
+            "short": "const_not_reachesEveryCode"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.const_not_reachesEveryCode",
+            "short": "const_not_reachesEveryCode",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 D, 2026-11-15, plus Tim's same-day class addition): one tape-to-program decoder (gapDecode, the gap after the start bit read as a code number, ONE CHOICE among many) and the predicate ReachesEveryCode it witnesses; any member reaches the self-printing universal codes with positive probability; controls: constant decoder and gapDecode at p = 1 are non-members (GapDecoder.lean).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -28536,6 +28832,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "2fee77c4-ce0e-4a4b-bf3f-3d2cd756acbd",
+          "new": {
+            "file": "ZeroParadox/Information/StartBit.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_eventuallyFalse_null",
+            "short": "trials_eventuallyFalse_null"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/StartBit.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_eventuallyFalse_null",
+            "short": "trials_eventuallyFalse_null",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 A+B, 2026-11-15): start bit and end bit on N -> Bool; the eventually-false tapes as one set (shifted copies of bottom, silentFrom, the local floors through tapeIso), countable, trials-null for 0 < p, measure one at p = 0 (StartBit.lean).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "2ffa1cf4-8a64-4b66-9088-d5c8e323213b",
           "new": {
             "file": "ZeroParadox/Order/MotionFlips.lean",
@@ -30847,6 +31180,43 @@
             ]
           },
           "reason": "CC-NAME-1: the old name asserted the false strong form its own docstring refutes and was quoted as a witness in a DOI-bearing PDF.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "33fda06e-434c-4ce7-b59f-df4fcf0b1b47",
+          "new": {
+            "file": "ZeroParadox/Information/StartBit.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fadingTrials_fires",
+            "short": "fadingTrials_fires"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/StartBit.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.fadingTrials_fires",
+            "short": "fadingTrials_fires",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 C, 2026-11-15): the other chart, a fading coin. fadingTrials (product of Bernoulli(q n)); with summable q the eventually-false tapes have measure one (first Borel-Cantelli); paired with the constant-coin null result as a family indexed by the coin, never a union (StartBit.lean).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -57507,6 +57877,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "629ab1ea-42df-4b19-aa0c-aa5070dcc490",
+          "new": {
+            "file": "ZeroParadox/Information/StartBit.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fadingTrials_const",
+            "short": "fadingTrials_const"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/StartBit.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.fadingTrials_const",
+            "short": "fadingTrials_const",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 C, 2026-11-15): the other chart, a fading coin. fadingTrials (product of Bernoulli(q n)); with summable q the eventually-false tapes have measure one (first Borel-Cantelli); paired with the constant-coin null result as a family indexed by the coin, never a union (StartBit.lean).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "62b11281-19f6-4279-8cad-38a9348097c0",
           "new": {
             "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
@@ -58435,6 +58842,43 @@
             ]
           },
           "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "64a6e520-3c62-42ad-a6ac-4b52712baee7",
+          "new": {
+            "file": "ZeroParadox/Information/StartBit.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.eventuallyFalse_eq_iUnion_silentFrom",
+            "short": "eventuallyFalse_eq_iUnion_silentFrom"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/StartBit.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.eventuallyFalse_eq_iUnion_silentFrom",
+            "short": "eventuallyFalse_eq_iUnion_silentFrom",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 A+B, 2026-11-15): start bit and end bit on N -> Bool; the eventually-false tapes as one set (shifted copies of bottom, silentFrom, the local floors through tapeIso), countable, trials-null for 0 < p, measure one at p = 0 (StartBit.lean).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -65746,6 +66190,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "71ba47c9-282d-4c14-aa2f-00cb6a48ee5f",
+          "new": {
+            "file": "ZeroParadox/Information/StartBit.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_zero_eventuallyFalse",
+            "short": "trials_zero_eventuallyFalse"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/StartBit.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_zero_eventuallyFalse",
+            "short": "trials_zero_eventuallyFalse",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 A+B, 2026-11-15): start bit and end bit on N -> Bool; the eventually-false tapes as one set (shifted copies of bottom, silentFrom, the local floors through tapeIso), countable, trials-null for 0 < p, measure one at p = 0 (StartBit.lean).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "71f71b3a-72ae-485e-b6eb-56fb68830c00",
           "new": {
@@ -67450,6 +67931,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "74891f00-2852-4b1b-9718-21714c330226",
+          "new": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_gapDecode_none_null",
+            "short": "trials_gapDecode_none_null"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_gapDecode_none_null",
+            "short": "trials_gapDecode_none_null",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 D, 2026-11-15, plus Tim's same-day class addition): one tape-to-program decoder (gapDecode, the gap after the start bit read as a code number, ONE CHOICE among many) and the predicate ReachesEveryCode it witnesses; any member reaches the self-printing universal codes with positive probability; controls: constant decoder and gapDecode at p = 1 are non-members (GapDecoder.lean).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "748fce47-eaec-4b6f-9beb-86fdfa8c1a33",
           "new": {
@@ -67623,6 +68141,43 @@
             ]
           },
           "reason": "Die v2 final batch: drawing vs set (self-steps, accessibility, forced rank), ends of a view, orders on motions, placements as views, relaxed least-fixed-point schema, UP legs as nuclei",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "74ee74ad-0506-4c58-8400-a047643f45d7",
+          "new": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ReachesEveryCode.map_equiv",
+            "short": "ReachesEveryCode.map_equiv"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ReachesEveryCode.map_equiv",
+            "short": "ReachesEveryCode.map_equiv",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 D, 2026-11-15, plus Tim's same-day class addition): one tape-to-program decoder (gapDecode, the gap after the start bit read as a code number, ONE CHOICE among many) and the predicate ReachesEveryCode it witnesses; any member reaches the self-printing universal codes with positive probability; controls: constant decoder and gapDecode at p = 1 are non-members (GapDecoder.lean).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -68299,6 +68854,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "75d0aac4-7ad5-41bb-9439-938528454fd0",
+          "new": {
+            "file": "ZeroParadox/Information/StartBit.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.exists_lastBit_iff",
+            "short": "exists_lastBit_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/StartBit.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.exists_lastBit_iff",
+            "short": "exists_lastBit_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 A+B, 2026-11-15): start bit and end bit on N -> Bool; the eventually-false tapes as one set (shifted copies of bottom, silentFrom, the local floors through tapeIso), countable, trials-null for 0 < p, measure one at p = 0 (StartBit.lean).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "75d448ba-82e7-4702-bff8-7bd54c00f803",
           "new": {
             "file": "ZeroParadox/Valuation/PadicVladimirov.lean",
@@ -68363,6 +68955,43 @@
             ]
           },
           "reason": "Land 2026-11-10 cells-joint, local-towers, interleave probes and the new one-way-flow results into ZeroParadox/Valuation (CellsJoint, Interleave, LocalTowers, OneWayFlow).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "75e817de-db88-4a61-a519-6fe1785ac1cb",
+          "new": {
+            "file": "ZeroParadox/Information/StartBit.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fadingTrials",
+            "short": "fadingTrials"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/StartBit.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.fadingTrials",
+            "short": "fadingTrials",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 C, 2026-11-15): the other chart, a fading coin. fadingTrials (product of Bernoulli(q n)); with summable q the eventually-false tapes have measure one (first Borel-Cantelli); paired with the constant-coin null result as a family indexed by the coin, never a union (StartBit.lean).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -75785,6 +76414,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "82c17a14-9cc3-48f4-b371-681d10f5fffa",
+          "new": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.gapDecode_none_subset",
+            "short": "gapDecode_none_subset"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.gapDecode_none_subset",
+            "short": "gapDecode_none_subset",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 D, 2026-11-15, plus Tim's same-day class addition): one tape-to-program decoder (gapDecode, the gap after the start bit read as a code number, ONE CHOICE among many) and the predicate ReachesEveryCode it witnesses; any member reaches the self-printing universal codes with positive probability; controls: constant decoder and gapDecode at p = 1 are non-members (GapDecoder.lean).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "82e4df30-b017-45b2-9fb3-6f22fcfee1d9",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -76730,6 +77396,43 @@
             ]
           },
           "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "84abf2c4-2a4d-4e57-bb41-0e7c598d9b73",
+          "new": {
+            "file": "ZeroParadox/Information/StartBit.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.returning_two_charts",
+            "short": "returning_two_charts"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/StartBit.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.returning_two_charts",
+            "short": "returning_two_charts",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 C, 2026-11-15): the other chart, a fading coin. fadingTrials (product of Bernoulli(q n)); with summable q the eventually-false tapes have measure one (first Borel-Cantelli); paired with the constant-coin null result as a family indexed by the coin, never a union (StartBit.lean).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -79554,6 +80257,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "8a5c5338-2a71-49f4-a131-cf4082c09fa9",
+          "new": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ReachesEveryCode",
+            "short": "ReachesEveryCode"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ReachesEveryCode",
+            "short": "ReachesEveryCode",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 D, 2026-11-15, plus Tim's same-day class addition): one tape-to-program decoder (gapDecode, the gap after the start bit read as a code number, ONE CHOICE among many) and the predicate ReachesEveryCode it witnesses; any member reaches the self-printing universal codes with positive probability; controls: constant decoder and gapDecode at p = 1 are non-members (GapDecoder.lean).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "8a606fda-119e-4904-b758-9c7aeefc9c7a",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -80132,6 +80872,43 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "8b1e8baf-c8dd-4cbc-bba3-69b54487c155",
+          "new": {
+            "file": "ZeroParadox/Information/StartBit.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fadingTrials_isProbability",
+            "short": "fadingTrials_isProbability"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/StartBit.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.fadingTrials_isProbability",
+            "short": "fadingTrials_isProbability",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 C, 2026-11-15): the other chart, a fading coin. fadingTrials (product of Bernoulli(q n)); with summable q the eventually-false tapes have measure one (first Borel-Cantelli); paired with the constant-coin null result as a family indexed by the coin, never a union (StartBit.lean).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -90334,6 +91111,43 @@
             ]
           },
           "reason": "Die v2 final batch: drawing vs set (self-steps, accessibility, forced rank), ends of a view, orders on motions, placements as views, relaxed least-fixed-point schema, UP legs as nuclei",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "9c83c6a3-119d-4e09-8cd3-4533c6259a64",
+          "new": {
+            "file": "ZeroParadox/Information/StartBit.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fadingTrials_eventuallyFalse",
+            "short": "fadingTrials_eventuallyFalse"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/StartBit.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.fadingTrials_eventuallyFalse",
+            "short": "fadingTrials_eventuallyFalse",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 C, 2026-11-15): the other chart, a fading coin. fadingTrials (product of Bernoulli(q n)); with summable q the eventually-false tapes have measure one (first Borel-Cantelli); paired with the constant-coin null result as a family indexed by the coin, never a union (StartBit.lean).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -100674,6 +101488,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "ad844952-f998-447c-85d9-c230dae373ac",
+          "new": {
+            "file": "ZeroParadox/Information/StartBit.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.eventuallyFalse",
+            "short": "eventuallyFalse"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/StartBit.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.eventuallyFalse",
+            "short": "eventuallyFalse",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 A+B, 2026-11-15): start bit and end bit on N -> Bool; the eventually-false tapes as one set (shifted copies of bottom, silentFrom, the local floors through tapeIso), countable, trials-null for 0 < p, measure one at p = 0 (StartBit.lean).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "ada2ccc2-c5c2-4f48-8009-d86cd1ec2781",
           "new": {
@@ -104931,6 +105782,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "b3fcdfb7-6a44-475e-be83-3d49014bb5de",
+          "new": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.gapDecode_p_zero",
+            "short": "gapDecode_p_zero"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.gapDecode_p_zero",
+            "short": "gapDecode_p_zero",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 D, 2026-11-15, plus Tim's same-day class addition): one tape-to-program decoder (gapDecode, the gap after the start bit read as a code number, ONE CHOICE among many) and the predicate ReachesEveryCode it witnesses; any member reaches the self-printing universal codes with positive probability; controls: constant decoder and gapDecode at p = 1 are non-members (GapDecoder.lean).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "b41f664a-ea09-4d22-aae4-8e5ca84d1644",
           "new": {
             "file": "ZeroParadox/Ordinal/PricedInterface.lean",
@@ -106250,6 +107138,43 @@
             ]
           },
           "reason": "Land 2026-11-10 cells-joint, local-towers, interleave probes and the new one-way-flow results into ZeroParadox/Valuation (CellsJoint, Interleave, LocalTowers, OneWayFlow).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b60bfc0c-78e0-47f5-a548-fefff5fd7c0e",
+          "new": {
+            "file": "ZeroParadox/Information/StartBit.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.exists_startBit_iff",
+            "short": "exists_startBit_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/StartBit.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.exists_startBit_iff",
+            "short": "exists_startBit_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 A+B, 2026-11-15): start bit and end bit on N -> Bool; the eventually-false tapes as one set (shifted copies of bottom, silentFrom, the local floors through tapeIso), countable, trials-null for 0 < p, measure one at p = 0 (StartBit.lean).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -111901,6 +112826,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "bfcdc1b5-bcd0-48dd-9cdf-6bb2e6d67f9a",
+          "new": {
+            "file": "ZeroParadox/Information/StartBit.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.eventuallyFalse_eq_iUnion_shift",
+            "short": "eventuallyFalse_eq_iUnion_shift"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/StartBit.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.eventuallyFalse_eq_iUnion_shift",
+            "short": "eventuallyFalse_eq_iUnion_shift",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 A+B, 2026-11-15): start bit and end bit on N -> Bool; the eventually-false tapes as one set (shifted copies of bottom, silentFrom, the local floors through tapeIso), countable, trials-null for 0 < p, measure one at p = 0 (StartBit.lean).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "bfd79d2c-eea9-4358-a71d-3a2c57f4c52e",
           "new": {
             "file": "ZeroParadox/Valuation/PadicTree.lean",
@@ -115353,6 +116315,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "c6527944-e1cd-4bbd-b9e6-37b06fc95867",
+          "new": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.gapDecode_poles",
+            "short": "gapDecode_poles"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.gapDecode_poles",
+            "short": "gapDecode_poles",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 D, 2026-11-15, plus Tim's same-day class addition): one tape-to-program decoder (gapDecode, the gap after the start bit read as a code number, ONE CHOICE among many) and the predicate ReachesEveryCode it witnesses; any member reaches the self-printing universal codes with positive probability; controls: constant decoder and gapDecode at p = 1 are non-members (GapDecoder.lean).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "c67a2fc5-6bbf-4950-9346-f2d1325e666c",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -116752,6 +117751,43 @@
             ]
           },
           "reason": "Die stage/closure shape and registration switch (Die.lean § VI-VII), with its two face maps in their existing homes (Epsilon0LeastFP, Occurrence)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c8c4451d-fe11-484d-b8ec-29af8b138cd6",
+          "new": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.gapDecode_of_mem_cyl",
+            "short": "gapDecode_of_mem_cyl"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.gapDecode_of_mem_cyl",
+            "short": "gapDecode_of_mem_cyl",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 D, 2026-11-15, plus Tim's same-day class addition): one tape-to-program decoder (gapDecode, the gap after the start bit read as a code number, ONE CHOICE among many) and the predicate ReachesEveryCode it witnesses; any member reaches the self-printing universal codes with positive probability; controls: constant decoder and gapDecode at p = 1 are non-members (GapDecoder.lean).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -121495,6 +122531,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "cfa477ab-cd84-4d25-aa80-0a5474eb43f0",
+          "new": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.selfref_universal_reached",
+            "short": "selfref_universal_reached"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.selfref_universal_reached",
+            "short": "selfref_universal_reached",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 D, 2026-11-15, plus Tim's same-day class addition): one tape-to-program decoder (gapDecode, the gap after the start bit read as a code number, ONE CHOICE among many) and the predicate ReachesEveryCode it witnesses; any member reaches the self-printing universal codes with positive probability; controls: constant decoder and gapDecode at p = 1 are non-members (GapDecoder.lean).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "cfda97e0-157d-45ea-8d27-9280b50a21ee",
           "new": {
             "file": "ZeroParadox/Settheory/Tarski.lean",
@@ -121852,6 +122925,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d07af52f-ff5c-408b-a43f-12b455a33188",
+          "new": {
+            "file": "ZeroParadox/Information/StartBit.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.eventuallyFalse_eq_range_localFloor",
+            "short": "eventuallyFalse_eq_range_localFloor"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/StartBit.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.eventuallyFalse_eq_range_localFloor",
+            "short": "eventuallyFalse_eq_range_localFloor",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 A+B, 2026-11-15): start bit and end bit on N -> Bool; the eventually-false tapes as one set (shifted copies of bottom, silentFrom, the local floors through tapeIso), countable, trials-null for 0 < p, measure one at p = 0 (StartBit.lean).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -137091,6 +138201,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "e93690db-bc72-4810-a700-bd6687f9174e",
+          "new": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.shiftTape_eq_bot_iff",
+            "short": "shiftTape_eq_bot_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.shiftTape_eq_bot_iff",
+            "short": "shiftTape_eq_bot_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 D, 2026-11-15, plus Tim's same-day class addition): one tape-to-program decoder (gapDecode, the gap after the start bit read as a code number, ONE CHOICE among many) and the predicate ReachesEveryCode it witnesses; any member reaches the self-printing universal codes with positive probability; controls: constant decoder and gapDecode at p = 1 are non-members (GapDecoder.lean).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "e93a5d53-00b2-4fc1-85da-68f33212447b",
           "new": {
             "file": "ZeroParadox/Category/IgnoranceSeam.lean",
@@ -140358,6 +141505,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "ee8eb041-0422-402f-b42b-7b22e74abf8c",
+          "new": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.gapDecode_p_one",
+            "short": "gapDecode_p_one"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.gapDecode_p_one",
+            "short": "gapDecode_p_one",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 D, 2026-11-15, plus Tim's same-day class addition): one tape-to-program decoder (gapDecode, the gap after the start bit read as a code number, ONE CHOICE among many) and the predicate ReachesEveryCode it witnesses; any member reaches the self-printing universal codes with positive probability; controls: constant decoder and gapDecode at p = 1 are non-members (GapDecoder.lean).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "eece5057-4c7c-4db3-807e-502182e9e3cf",
           "new": {
             "file": "ZeroParadox/Valuation/BottomInvariant.lean",
@@ -141908,6 +143092,43 @@
             ]
           },
           "reason": "Die v2 final batch: drawing vs set (self-steps, accessibility, forced rank), ends of a view, orders on motions, placements as views, relaxed least-fixed-point schema, UP legs as nuclei",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f1dfe488-1ec4-4d36-b189-0dbbf69f38f3",
+          "new": {
+            "file": "ZeroParadox/Information/StartBit.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.eventuallyFalse_countable",
+            "short": "eventuallyFalse_countable"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/StartBit.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.eventuallyFalse_countable",
+            "short": "eventuallyFalse_countable",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 A+B, 2026-11-15): start bit and end bit on N -> Bool; the eventually-false tapes as one set (shifted copies of bottom, silentFrom, the local floors through tapeIso), countable, trials-null for 0 < p, measure one at p = 0 (StartBit.lean).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -147374,6 +148595,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "fad3ac64-6155-428f-a1ad-ab117ba3710e",
+          "new": {
+            "file": "ZeroParadox/Information/StartBit.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.silentFrom_eq_shift_preimage",
+            "short": "silentFrom_eq_shift_preimage"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/StartBit.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.silentFrom_eq_shift_preimage",
+            "short": "silentFrom_eq_shift_preimage",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 A+B, 2026-11-15): start bit and end bit on N -> Bool; the eventually-false tapes as one set (shifted copies of bottom, silentFrom, the local floors through tapeIso), countable, trials-null for 0 < p, measure one at p = 0 (StartBit.lean).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "fad8768d-cb05-41ed-a00a-1e0e77a62cea",
           "new": {
             "file": "ZeroParadox/Category/ExcludedMiddleBridge.lean",
@@ -149498,6 +150756,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "fe233cba-eae4-406f-afbf-035c1c96e797",
+          "new": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.DecodesAlmostSurely",
+            "short": "DecodesAlmostSurely"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.DecodesAlmostSurely",
+            "short": "DecodesAlmostSurely",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 D, 2026-11-15, plus Tim's same-day class addition): one tape-to-program decoder (gapDecode, the gap after the start bit read as a code number, ONE CHOICE among many) and the predicate ReachesEveryCode it witnesses; any member reaches the self-printing universal codes with positive probability; controls: constant decoder and gapDecode at p = 1 are non-members (GapDecoder.lean).",
           "verify": {
             "axioms": null,
             "sorry_free": true
