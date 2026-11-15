@@ -33,13 +33,18 @@ DESIGN NOTE - three detectors, none of them sufficient alone, all measured.
    declarations are removed; it is never derived from the run it judges.
 
 5. A COLD CHECK. The floor is only as good as the build it was read from, so a run that
-   is meant to be cold says so with `--require-cold <module-count>`, and then the report
-   fails if any `ZeroParadox` or `ZeroParadox.*` module is `Replayed`, or if the number of
-   distinct `ZeroParadox.*` submodules the log shows as `Built` differs from the count the
-   caller passes (the `.lean` files under `ZeroParadox/`). "Cold" is measured from the log,
-   not assumed from the workflow's cache settings. The root module `ZeroParadox` is left
-   out of the `Built` count: in Complete Project job 131631685723 (a cold build of
-   47666d37) all 259 submodules printed a `Built` line and the root module printed none.
+   is meant to be cold says so with `--require-cold <names-file>`, a file listing the
+   expected module names one per line (the caller derives them from the `.lean` files
+   under `ZeroParadox/`). The report then compares SETS, not counts: it fails if any
+   `ZeroParadox` or `ZeroParadox.*` module is `Replayed`, if an expected name has no
+   `Built` line, or if a `Built ZeroParadox.*` name is not expected, and it names each
+   missing and each unexpected module. Only progress lines count: a `[i/n] Built` or
+   `[i/n] Replayed` at the start of a line, optionally after one status mark, with a
+   module name containing no `:`. "Cold" is measured from the log, not assumed from the
+   workflow's cache settings. The root module `ZeroParadox` is outside both sets: an
+   expected name must have at least one `.` component, and a `Built ZeroParadox` line is
+   neither required nor unexpected, so the check holds whether or not lakefile.toml's glob
+   builds the root module; a `Replayed ZeroParadox` line still fails it.
 
 Exits 0 if the build verified, 1 otherwise, so the report doubles as a gate -
 but only because the caller passes the real exit code in. Wire it as:
@@ -51,8 +56,9 @@ but only because the caller passes the real exit code in. Wire it as:
       | tee -a "$GITHUB_STEP_SUMMARY"
 
 Usage: corpus_verification_report.py <lake-build-log> <build-exit-code> [<footprint-floor>
-       [--require-cold <module-count>]]
+       [--require-cold <names-file>]]
 """
+import os
 import sys
 import re
 from collections import Counter
@@ -83,28 +89,43 @@ if len(sys.argv) > 3:
     except ValueError:
         sys.stderr.write(f"footprint-floor must be an integer, got {sys.argv[3]!r}\n")
         sys.exit(2)
-# The only accepted arguments after the floor are `--require-cold <module-count>`. Anything
+# A corpus submodule name: `ZeroParadox` plus at least one `.`-separated component, none
+# containing whitespace, `:` (Lake writes facets as `Module:facet`), or parentheses.
+SUBMODULE = r"ZeroParadox(?:\.[^\s:()]+)+"
+# The only accepted arguments after the floor are `--require-cold <names-file>`. Anything
 # else is refused rather than ignored, so a misspelled flag cannot turn the cold check off
-# unnoticed, and the count is required, so the cold check cannot run without it.
-require_cold = False
+# unnoticed, and the file is required, so the cold check cannot run without it.
+# expected_modules is None when no names file is given (no cold check); a given file that
+# is missing, empty or malformed exits 2 here; otherwise it is a non-empty frozenset.
 expected_modules = None
 if len(sys.argv) > 4:
     if sys.argv[4] != "--require-cold" or len(sys.argv) != 6:
-        sys.stderr.write(f"expected `--require-cold <module-count>` after the floor, "
+        sys.stderr.write(f"expected `--require-cold <names-file>` after the floor, "
                          f"got {sys.argv[4:]!r}\n")
         sys.exit(2)
-    try:
-        expected_modules = int(sys.argv[5])
-    except ValueError:
-        sys.stderr.write(f"module-count must be an integer, got {sys.argv[5]!r}\n")
+    names_path = sys.argv[5]
+    if not os.path.isfile(names_path):
+        sys.stderr.write(f"names-file not found: {names_path!r}\n")
         sys.exit(2)
-    # Zero is refused, not compared: an empty checkout would count 0 files, and a log
-    # with 0 `Built` lines would then agree with it.
-    if expected_modules < 1:
-        sys.stderr.write(f"module-count must be at least 1, got {expected_modules}\n")
+    with open(names_path, encoding="utf-8") as fh:
+        lines = [ln.strip() for ln in fh.read().splitlines()]
+    names = [ln for ln in lines if ln]
+    # Empty is refused, not compared: an empty checkout would list no files, and a log
+    # with no `Built` lines would then agree with it.
+    if not names:
+        sys.stderr.write(f"names-file lists no module names: {names_path!r}\n")
         sys.exit(2)
-    require_cold = True
+    malformed = sorted({n for n in names if not re.fullmatch(SUBMODULE, n)})
+    if malformed:
+        sys.stderr.write(f"names-file has {len(malformed)} line(s) that are not "
+                         f"`ZeroParadox.*` module names: {malformed[:10]!r}\n")
+        sys.exit(2)
+    expected_modules = frozenset(names)
+require_cold = expected_modules is not None
 
+if not os.path.isfile(path):
+    sys.stderr.write(f"lake-build-log not found: {path!r}\n")
+    sys.exit(2)
 print(f"[report] reading {path}, build exit code {build_rc}", file=sys.stderr)
 log = open(path, encoding="utf-8", errors="replace").read()
 print(f"[report] {len(log)} chars, {log.count(chr(10))} lines", file=sys.stderr)
@@ -148,23 +169,39 @@ has_sorry_warning = (SORRY_WARNING in log) or ("sorryAx" in log)
 built = len(re.findall(r"\] Built ", log))
 replayed = len(re.findall(r"\] Replayed ", log))
 below_floor = floor is not None and total < floor
-# The root module `ZeroParadox` and every `ZeroParadox.*` submodule, and nothing else
-# (`ZeroParadoxFoo` does not match). A module line is `[i/n] Replayed X` or
-# `[i/n] Built X (1.2s)`, so the name ends at whitespace or at the end of the line.
-CORPUS_MODULE = r"ZeroParadox(?:\.\S+)?(?=\s|$)"
-replayed_corpus = len(re.findall(r"\] Replayed " + CORPUS_MODULE, log, re.MULTILINE))
-built_submodules = len(set(re.findall(r"\] Built (ZeroParadox\.\S+)(?=\s|$)", log,
-                                      re.MULTILINE)))
+# Module progress lines only: `[i/n] Replayed X` or `[i/n] Built X (1.2s)` at the start of
+# a line, optionally after one status mark (`✔`, `⚠`). A `Built` name must end the line or
+# be followed by its timing, so text quoting `[i/n] Built ...` mid-line and facet lines
+# (`X:c.o`) are not counted. A `Replayed` corpus name may be followed by `:` - a false
+# match there only turns a cold run red. `ZeroParadoxFoo` matches neither.
+PROGRESS = r"^[^\S\r\n]*(?:[^\w\s\[]{1,2}[^\S\r\n]+)?\[\d+/\d+\] "
+replayed_names = sorted(set(re.findall(
+    PROGRESS + r"Replayed (ZeroParadox(?:\.[^\s:()]+)*)(?=[\s:(]|$)", log, re.MULTILINE)))
+replayed_corpus = len(replayed_names)
+built_names = set(re.findall(
+    PROGRESS + r"Built (" + SUBMODULE + r")(?=[^\S\r\n]*(?:\([^\r\n]*)?\r?$)",
+    log, re.MULTILINE))
+built_submodules = len(built_names)
+# The cold-check result: None when no names file was given, otherwise the two lists,
+# which are both empty exactly when the names matched.
+if require_cold:
+    missing_modules = sorted(expected_modules - built_names)
+    unexpected_modules = sorted(built_names - expected_modules)
+else:
+    missing_modules = unexpected_modules = None
 replayed_cold = require_cold and replayed_corpus > 0
-built_short = require_cold and built_submodules != expected_modules
-not_cold = replayed_cold or built_short
+built_mismatch = require_cold and bool(missing_modules or unexpected_modules)
+not_cold = replayed_cold or built_mismatch
 
 ok = ((build_rc == 0) and not sorried and not has_sorry_warning and not no_evidence
       and not below_floor and not not_cold)
 print(f"[report] rc={build_rc} sorried={len(sorried)} warn={has_sorry_warning} "
       f"evidence={not no_evidence} total={total} floor={floor} built={built} "
       f"replayed={replayed} replayed_corpus={replayed_corpus} "
-      f"built_submodules={built_submodules} expected_modules={expected_modules} "
+      f"built_submodules={built_submodules} "
+      f"expected_modules={None if expected_modules is None else len(expected_modules)} "
+      f"missing={None if missing_modules is None else len(missing_modules)} "
+      f"unexpected={None if unexpected_modules is None else len(unexpected_modules)} "
       f"require_cold={require_cold} -> ok={ok}", file=sys.stderr)
 print(f"[report] {len(axfree)} axiom-free, {len(axdep)} with a footprint", file=sys.stderr)
 
@@ -206,13 +243,19 @@ if not ok:
     if replayed_cold:
         out.append(f"**This run was meant to be a cold build, and the log shows "
                    f"{replayed_corpus} corpus module(s) `Replayed` from a build cache.** "
-                   "Its count cannot be used to set or check the floor.")
-    if built_short:
-        out.append(f"**This run was meant to be a cold build, and the log shows "
-                   f"{built_submodules} distinct `ZeroParadox.*` module(s) `Built`, "
-                   f"against {expected_modules} `.lean` files under `ZeroParadox/`.** "
-                   "Every corpus module must be elaborated in this run for its count to "
-                   "set or check the floor.")
+                   "Its count cannot be used to set or check the floor. Replayed: "
+                   + ", ".join(f"`{n}`" for n in replayed_names))
+    if built_mismatch:
+        out.append(f"**This run was meant to be a cold build, and the `ZeroParadox.*` "
+                   f"modules the log shows `Built` ({built_submodules}) do not match the "
+                   f"{len(expected_modules)} expected from the `.lean` files under "
+                   "`ZeroParadox/`.** Every corpus module must be elaborated in this run, "
+                   "and nothing else counted, for its count to set or check the floor.")
+        out.append("")
+        out.append(f"- Expected but not `Built` ({len(missing_modules)}): "
+                   + (", ".join(f"`{n}`" for n in missing_modules) or "none"))
+        out.append(f"- `Built` but not expected ({len(unexpected_modules)}): "
+                   + (", ".join(f"`{n}`" for n in unexpected_modules) or "none"))
 else:
     out.append(
         "Don't take our word for it. Lake exited 0, no declaration depends on `sorryAx`, "
@@ -239,6 +282,12 @@ floor_text = (f"floor **{floor}**, from a cold build" if floor is not None
 out.append(f"**Count check:** {total} against {floor_text}. Modules in this log: "
            f"{built} elaborated in this run, {replayed} replayed from the build cache.")
 out.append("")
+if require_cold:
+    out.append(f"**Cold check:** {len(expected_modules)} `ZeroParadox.*` modules expected, "
+               f"{len(expected_modules) - len(missing_modules)} of them `Built`, "
+               f"{len(missing_modules)} missing, {len(unexpected_modules)} unexpected, "
+               f"{replayed_corpus} corpus module(s) `Replayed`.")
+    out.append("")
 out.append("| footprint | count | means |")
 out.append("|---|---:|---|")
 def gloss(footprint: str) -> str:
