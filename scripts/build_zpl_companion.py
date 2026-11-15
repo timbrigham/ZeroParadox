@@ -1,6 +1,6 @@
 """
 Build ZP-L Illustrated Companion
-Version 1.24 | November 2026
+Version 1.25 | November 2026
 Citation fence (Gentzen): the Convergence section's credits follow CLAIMS.md's Gentzen rows and are
 taken from Gentzen 1943 (Math. Ann. 119), the one primary paper filed here, never from a secondary
 source's labels. The 1936 consistency credit rests on Gentzen 1943, p. 140, footnote 2: the 1936
@@ -23,17 +23,17 @@ from reportlab.graphics import renderPDF
 
 def snap_tower_diagram():
     """Horizontal: tower stages (c0) climbing toward ε₀; snap to c1 at ε₀."""
-    # dh = 155 pts (≈ 2.15 × 72); box_cy = 88 fixed.
-    # Box top = 88+17 = 105. SNAP label at 105+8 = 113. Header at 105+20 = 125.
-    # Box bottom = 71. The caption is external (ccaption).
-    # Content: top = 125 < 145 (dh-10). Bottom = 71 > 5. ✓
-    dw, dh = TW, 155
+    # dh = 76 pts (≈ 1.05 × 72); box_cy = 29 fixed.
+    # Box top = 29+17 = 46. SNAP label baseline at 46+8 = 54, glyph top 54+7.5 = 61.5.
+    # Box bottom = 12. The caption is external (ccaption).
+    # Content: top = 61.5 < 66 (dh-10). Bottom = 12 > 5. ✓
+    dw, dh = TW, 76
     d = Drawing(dw, dh)
 
     bw, bh = 60, 34
     spacing = 12
-    box_cy = 88          # fixed — does not derive from dh
-    box_by = box_cy - bh // 2   # = 71
+    box_cy = 29          # fixed — does not derive from dh
+    box_by = box_cy - bh // 2   # = 12
 
     # Stage labels (raw Unicode — String() does not parse HTML entities)
     stage_labels = ['0', '1', 'ω', 'ω^ω']   # 0, 1, ω, ω^ω
@@ -95,16 +95,16 @@ def snap_tower_diagram():
 
 def dual_convergence_diagram():
     """Two rows: ordinal tower approaching ε₀ (top) and 2-adic norms converging to 0 (bottom)."""
-    # dh = 190 pts. row_top = 148 fixed, row_bot = 68 fixed.
-    # Top box top = 148+16 = 164. Top row label at 164+8 = 172 < 180 (dh-10). ✓
-    # Bottom box bottom = 68-16 = 52 > 5; the caption is external (ccaption). ✓
-    dw, dh = TW, 190
+    # dh = 152 pts (≈ 2.11 × 72). row_top = 108 fixed, row_bot = 28 fixed.
+    # Top box top = 108+16 = 124. Top row label baseline at 124+8 = 132, glyph top 132+8 = 140 < 142 (dh-10). ✓
+    # Bottom box bottom = 28-16 = 12 > 5; the caption is external (ccaption). ✓
+    dw, dh = TW, 152
     d = Drawing(dw, dh)
 
     bw, bh = 58, 32
     spacing = 12
-    row_top = 148     # ordinal row center (fixed)
-    row_bot = 68      # 2-adic row center (fixed)
+    row_top = 108     # ordinal row center (fixed)
+    row_bot = 28      # 2-adic row center (fixed)
 
     # Four corresponding stage columns
     stage_ord  = ['1', 'ω', 'ω^ω', 'ω^ω^ω']
@@ -118,8 +118,8 @@ def dual_convergence_diagram():
     total_w = stages_w + dots_w + gap_w + end_bw   # = 380
     x0 = (dw - total_w) / 2   # ≈ 44 pts
 
-    top_by = row_top - bh // 2   # = 132
-    bot_by = row_bot - bh // 2   # = 52
+    top_by = row_top - bh // 2   # = 92
+    bot_by = row_bot - bh // 2   # = 12
 
     # ── Ordinal row (top, teal) ───────────────────────────────────────────────
     for i, lbl in enumerate(stage_ord):
@@ -212,7 +212,7 @@ def dual_convergence_diagram():
     return d
 
 
-VERSION = '1.24'
+VERSION = '1.25'
 FIRST_RELEASED = 'May 2026'
 
 
