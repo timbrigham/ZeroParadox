@@ -672,8 +672,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 4017,
-        "files": 223
+        "declarations": 4057,
+        "files": 227
       },
       "entries": [
         {
@@ -3954,6 +3954,43 @@
             ]
           },
           "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "05a9a0ae-a3ee-4346-ba28-0b10d392977c",
+          "new": {
+            "file": "ZeroParadox/Ordinal/UniverseZoom.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.roleAbove_one_construction",
+            "short": "roleAbove_one_construction"
+          },
+          "old": {
+            "file": "ZeroParadox/Ordinal/UniverseZoom.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.roleAbove_one_construction",
+            "short": "roleAbove_one_construction",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 280 (a): universe-zoom probe landed (UniverseZoom.lean). Below Ordinal.univ a copy of the lower level, one succ over it leaves every copy; lift commutes with omega-power and fixes epsilon-zero; roleAbove gives epsilon-zero at {0} and univ at the range of lift (H-ONE-MOVE, ordinal instance) (2026-11-15).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -7845,6 +7882,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "0bd04b75-3820-48cf-b45c-39e3916cdb6c",
+          "new": {
+            "file": "ZeroParadox/Ordinal/UniverseZoom.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.omega_opow_univ",
+            "short": "omega_opow_univ"
+          },
+          "old": {
+            "file": "ZeroParadox/Ordinal/UniverseZoom.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.omega_opow_univ",
+            "short": "omega_opow_univ",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 280 (a): universe-zoom probe landed (UniverseZoom.lean). Below Ordinal.univ a copy of the lower level, one succ over it leaves every copy; lift commutes with omega-power and fixes epsilon-zero; roleAbove gives epsilon-zero at {0} and univ at the range of lift (H-ONE-MOVE, ordinal instance) (2026-11-15).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "0bd24e0c-f8c2-46fc-9581-6d0b7c42394c",
           "new": {
             "file": "ZeroParadox/Information/CrossingTrials.lean",
@@ -9535,6 +9609,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0e87d7a2-6dd6-4dff-bbb5-b6bbfc27f539",
+          "new": {
+            "file": "ZeroParadox/Ordinal/UniverseZoom.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.roleAbove_bottom_floor",
+            "short": "roleAbove_bottom_floor"
+          },
+          "old": {
+            "file": "ZeroParadox/Ordinal/UniverseZoom.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.roleAbove_bottom_floor",
+            "short": "roleAbove_bottom_floor",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 280 (a): universe-zoom probe landed (UniverseZoom.lean). Below Ordinal.univ a copy of the lower level, one succ over it leaves every copy; lift commutes with omega-power and fixes epsilon-zero; roleAbove gives epsilon-zero at {0} and univ at the range of lift (H-ONE-MOVE, ordinal instance) (2026-11-15).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -18343,6 +18454,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "1df0802c-8f8c-4879-ada8-cb7c084a4cb6",
+          "new": {
+            "file": "ZeroParadox/Order/MotionFlips.lean",
+            "namespace": "ZeroParadox.Motion",
+            "qualified": "ZeroParadox.Motion.UpOverLoop",
+            "short": "UpOverLoop"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/MotionFlips.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.Motion",
+            "qualified": "ZeroParadox.Motion.UpOverLoop",
+            "short": "UpOverLoop",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 280 (a): motion probes landed (MotionFlips.lean). Up-then-over loop iff Motion.Loop (rotation); the 2-adic tower as a die Motion loops, no agreeing order, legs oppose under the valuation; time reversal is not a Loop invariant (2026-11-15).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "1df4ac94-e7f7-420c-9128-f9f5c6630383",
           "new": {
             "file": "ZeroParadox/Multihomed/SnapFrameChange.lean",
@@ -26208,6 +26356,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "2c4b577c-868e-45f0-9886-43309563b3f2",
+          "new": {
+            "file": "ZeroParadox/Order/MotionFlips.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.boolOneWayMotion_loop",
+            "short": "boolOneWayMotion_loop"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/MotionFlips.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.boolOneWayMotion_loop",
+            "short": "boolOneWayMotion_loop",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 280 (a): motion probes landed (MotionFlips.lean). Up-then-over loop iff Motion.Loop (rotation); the 2-adic tower as a die Motion loops, no agreeing order, legs oppose under the valuation; time reversal is not a Loop invariant (2026-11-15).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "2c4d986a-d4db-4be5-a7de-105f3dea4eb5",
           "new": {
             "file": "ZeroParadox/Settheory/GraphBisim.lean",
@@ -26383,6 +26568,43 @@
             ]
           },
           "reason": "ignorance-seam-viii: the bend NInf.det on 2-adic digit tapes is the 2-adic valuation (IgnoranceSeam.lean § VIII)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "2c9fb47f-6ea9-4033-877b-d019c4f3e053",
+          "new": {
+            "file": "ZeroParadox/Ordinal/UniverseZoom.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.over_univ_reveals_frame",
+            "short": "over_univ_reveals_frame"
+          },
+          "old": {
+            "file": "ZeroParadox/Ordinal/UniverseZoom.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.over_univ_reveals_frame",
+            "short": "over_univ_reveals_frame",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 280 (a): universe-zoom probe landed (UniverseZoom.lean). Below Ordinal.univ a copy of the lower level, one succ over it leaves every copy; lift commutes with omega-power and fixes epsilon-zero; roleAbove gives epsilon-zero at {0} and univ at the range of lift (H-ONE-MOVE, ordinal instance) (2026-11-15).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -28314,6 +28536,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "2ffa1cf4-8a64-4b66-9088-d5c8e323213b",
+          "new": {
+            "file": "ZeroParadox/Order/MotionFlips.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.z2TowerMotion_loop",
+            "short": "z2TowerMotion_loop"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/MotionFlips.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.z2TowerMotion_loop",
+            "short": "z2TowerMotion_loop",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 280 (a): motion probes landed (MotionFlips.lean). Up-then-over loop iff Motion.Loop (rotation); the 2-adic tower as a die Motion loops, no agreeing order, legs oppose under the valuation; time reversal is not a Loop invariant (2026-11-15).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "300c9811-a9a0-43bd-af90-40bab6b4958c",
           "new": {
             "file": "ZeroParadox/Ordinal/Epsilon0LeastFP.lean",
@@ -29019,6 +29278,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "311a1c1c-b74f-47e2-89b4-fe7324871919",
+          "new": {
+            "file": "ZeroParadox/Ordinal/UniverseZoom.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.univ_isLeast_above_level",
+            "short": "univ_isLeast_above_level"
+          },
+          "old": {
+            "file": "ZeroParadox/Ordinal/UniverseZoom.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.univ_isLeast_above_level",
+            "short": "univ_isLeast_above_level",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 280 (a): universe-zoom probe landed (UniverseZoom.lean). Below Ordinal.univ a copy of the lower level, one succ over it leaves every copy; lift commutes with omega-power and fixes epsilon-zero; roleAbove gives epsilon-zero at {0} and univ at the range of lift (H-ONE-MOVE, ordinal instance) (2026-11-15).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -30221,6 +30517,43 @@
             ]
           },
           "reason": "phase-order arc r1 fixes: floor-above member (WithTop), phaseRel compatibility, floor move, least landing above floor, named distinctness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "3366224f-e684-4ba8-9f28-3fe109256b53",
+          "new": {
+            "file": "ZeroParadox/Ordinal/UniverseZoom.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.below_univ_is_a_copy",
+            "short": "below_univ_is_a_copy"
+          },
+          "old": {
+            "file": "ZeroParadox/Ordinal/UniverseZoom.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.below_univ_is_a_copy",
+            "short": "below_univ_is_a_copy",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 280 (a): universe-zoom probe landed (UniverseZoom.lean). Below Ordinal.univ a copy of the lower level, one succ over it leaves every copy; lift commutes with omega-power and fixes epsilon-zero; roleAbove gives epsilon-zero at {0} and univ at the range of lift (H-ONE-MOVE, ordinal instance) (2026-11-15).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -32231,6 +32564,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "3755b3f6-e15e-4f69-924b-dac1e97f12bf",
+          "new": {
+            "file": "ZeroParadox/Order/MotionFlips.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.z2TowerMotion_reverse_not_loop",
+            "short": "z2TowerMotion_reverse_not_loop"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/MotionFlips.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.z2TowerMotion_reverse_not_loop",
+            "short": "z2TowerMotion_reverse_not_loop",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 280 (a): motion probes landed (MotionFlips.lean). Up-then-over loop iff Motion.Loop (rotation); the 2-adic tower as a die Motion loops, no agreeing order, legs oppose under the valuation; time reversal is not a Loop invariant (2026-11-15).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "376d14b2-14b9-48fb-b281-8c0501239755",
           "new": {
             "file": "ZeroParadox/Settheory/HypersetOrder.lean",
@@ -32546,6 +32916,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "382e842b-5ce5-42a4-8849-a421e8c20fb8",
+          "new": {
+            "file": "ZeroParadox/Valuation/TowerTapeSnap.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.towerTape_digit_zero",
+            "short": "towerTape_digit_zero"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TowerTapeSnap.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.towerTape_digit_zero",
+            "short": "towerTape_digit_zero",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 280 (b): tower tape wired to the snap as a family indexed by chart (TowerTapeSnap.lean). tapeIso carries towerTape [] x to a tape that fires iff x is not botEnd; pointwise every other seed gives t_snap_of_fires_once's conclusion, almost every trials-seed does; control: the tower tapes are a trials-null set (2026-11-15).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -35170,6 +35577,43 @@
             "role": []
           },
           "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "3cca6edf-bb2e-4e3f-9441-9af7926592e2",
+          "new": {
+            "file": "ZeroParadox/Valuation/TowerTapeSnap.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.towerTape_floor_allFalse",
+            "short": "towerTape_floor_allFalse"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TowerTapeSnap.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.towerTape_floor_allFalse",
+            "short": "towerTape_floor_allFalse",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 280 (b): tower tape wired to the snap as a family indexed by chart (TowerTapeSnap.lean). tapeIso carries towerTape [] x to a tape that fires iff x is not botEnd; pointwise every other seed gives t_snap_of_fires_once's conclusion, almost every trials-seed does; control: the tower tapes are a trials-null set (2026-11-15).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -40620,6 +41064,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "461f3e00-1ee0-447a-b123-80d873e533d7",
+          "new": {
+            "file": "ZeroParadox/Ordinal/UniverseZoom.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lift_iterate_opow",
+            "short": "lift_iterate_opow"
+          },
+          "old": {
+            "file": "ZeroParadox/Ordinal/UniverseZoom.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lift_iterate_opow",
+            "short": "lift_iterate_opow",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 280 (a): universe-zoom probe landed (UniverseZoom.lean). Below Ordinal.univ a copy of the lower level, one succ over it leaves every copy; lift commutes with omega-power and fixes epsilon-zero; roleAbove gives epsilon-zero at {0} and univ at the range of lift (H-ONE-MOVE, ordinal instance) (2026-11-15).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "462cee0c-3f75-435e-b417-8b5e00ac5ecc",
           "new": {
@@ -42505,6 +42986,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "492b2048-6f9f-467a-8a7f-1f9a2d3c91b1",
+          "new": {
+            "file": "ZeroParadox/Valuation/TowerTapeSnap.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.towerTapes_null",
+            "short": "towerTapes_null"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TowerTapeSnap.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.towerTapes_null",
+            "short": "towerTapes_null",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 280 (b): tower tape wired to the snap as a family indexed by chart (TowerTapeSnap.lean). tapeIso carries towerTape [] x to a tape that fires iff x is not botEnd; pointwise every other seed gives t_snap_of_fires_once's conclusion, almost every trials-seed does; control: the tower tapes are a trials-null set (2026-11-15).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -44903,6 +45421,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "4dc6ccae-bf07-448f-8096-244aec8e9347",
+          "new": {
+            "file": "ZeroParadox/Ordinal/UniverseZoom.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lift_epsilon_zero",
+            "short": "lift_epsilon_zero"
+          },
+          "old": {
+            "file": "ZeroParadox/Ordinal/UniverseZoom.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lift_epsilon_zero",
+            "short": "lift_epsilon_zero",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 280 (a): universe-zoom probe landed (UniverseZoom.lean). Below Ordinal.univ a copy of the lower level, one succ over it leaves every copy; lift commutes with omega-power and fixes epsilon-zero; roleAbove gives epsilon-zero at {0} and univ at the range of lift (H-ONE-MOVE, ordinal instance) (2026-11-15).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -50830,6 +51385,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "57f7d340-2eb2-4c08-b9c1-af22fa49c737",
+          "new": {
+            "file": "ZeroParadox/Ordinal/UniverseZoom.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.roleAbove",
+            "short": "roleAbove"
+          },
+          "old": {
+            "file": "ZeroParadox/Ordinal/UniverseZoom.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.roleAbove",
+            "short": "roleAbove",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 280 (a): universe-zoom probe landed (UniverseZoom.lean). Below Ordinal.univ a copy of the lower level, one succ over it leaves every copy; lift commutes with omega-power and fixes epsilon-zero; roleAbove gives epsilon-zero at {0} and univ at the range of lift (H-ONE-MOVE, ordinal instance) (2026-11-15).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "5802a7ca-b650-4a4a-b17e-7311aa22e797",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -52042,6 +52634,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "5986e225-0d84-49cb-8938-ef8cb4e50242",
+          "new": {
+            "file": "ZeroParadox/Ordinal/UniverseZoom.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lift_omega_opow",
+            "short": "lift_omega_opow"
+          },
+          "old": {
+            "file": "ZeroParadox/Ordinal/UniverseZoom.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lift_omega_opow",
+            "short": "lift_omega_opow",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 280 (a): universe-zoom probe landed (UniverseZoom.lean). Below Ordinal.univ a copy of the lower level, one succ over it leaves every copy; lift commutes with omega-power and fixes epsilon-zero; roleAbove gives epsilon-zero at {0} and univ at the range of lift (H-ONE-MOVE, ordinal instance) (2026-11-15).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -53912,6 +54541,43 @@
             ]
           },
           "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "5d29b227-bddb-4a63-8596-44eb59e88642",
+          "new": {
+            "file": "ZeroParadox/Ordinal/UniverseZoom.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.roleAbove_work_split",
+            "short": "roleAbove_work_split"
+          },
+          "old": {
+            "file": "ZeroParadox/Ordinal/UniverseZoom.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.roleAbove_work_split",
+            "short": "roleAbove_work_split",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 280 (a): universe-zoom probe landed (UniverseZoom.lean). Below Ordinal.univ a copy of the lower level, one succ over it leaves every copy; lift commutes with omega-power and fixes epsilon-zero; roleAbove gives epsilon-zero at {0} and univ at the range of lift (H-ONE-MOVE, ordinal instance) (2026-11-15).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -55827,6 +56493,43 @@
             ]
           },
           "reason": "Die stage/closure shape and registration switch (Die.lean § VI-VII), with its two face maps in their existing homes (Epsilon0LeastFP, Occurrence)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "60ebaa60-a04e-4881-a23e-c53e8ea87f63",
+          "new": {
+            "file": "ZeroParadox/Order/MotionFlips.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.z2_valuation_oppose",
+            "short": "z2_valuation_oppose"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/MotionFlips.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.z2_valuation_oppose",
+            "short": "z2_valuation_oppose",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 280 (a): motion probes landed (MotionFlips.lean). Up-then-over loop iff Motion.Loop (rotation); the 2-adic tower as a die Motion loops, no agreeing order, legs oppose under the valuation; time reversal is not a Loop invariant (2026-11-15).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -58138,6 +58841,43 @@
             ]
           },
           "reason": "Round 22: emit the printer's own type-walk (two rfl theorems differing only in binder type) and the load-bearing addition premise that was asserted in one file and consumed in another.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "65bcb28d-07a6-4e03-9da5-28755d2cd291",
+          "new": {
+            "file": "ZeroParadox/Ordinal/UniverseZoom.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lift_of_lt_univ",
+            "short": "lift_of_lt_univ"
+          },
+          "old": {
+            "file": "ZeroParadox/Ordinal/UniverseZoom.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lift_of_lt_univ",
+            "short": "lift_of_lt_univ",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 280 (a): universe-zoom probe landed (UniverseZoom.lean). Below Ordinal.univ a copy of the lower level, one succ over it leaves every copy; lift commutes with omega-power and fixes epsilon-zero; roleAbove gives epsilon-zero at {0} and univ at the range of lift (H-ONE-MOVE, ordinal instance) (2026-11-15).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -70673,6 +71413,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "7bf3ee14-ec40-4911-b99d-e904a28cb7c5",
+          "new": {
+            "file": "ZeroParadox/Order/MotionFlips.lean",
+            "namespace": "ZeroParadox.Motion",
+            "qualified": "ZeroParadox.Motion.loop_not_reverse_invariant",
+            "short": "loop_not_reverse_invariant"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/MotionFlips.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.Motion",
+            "qualified": "ZeroParadox.Motion.loop_not_reverse_invariant",
+            "short": "loop_not_reverse_invariant",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 280 (a): motion probes landed (MotionFlips.lean). Up-then-over loop iff Motion.Loop (rotation); the 2-adic tower as a die Motion loops, no agreeing order, legs oppose under the valuation; time reversal is not a Loop invariant (2026-11-15).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "7c13229b-7283-4eee-aa63-25be660cb12a",
           "new": {
             "file": "ZeroParadox/Valuation/LocalTowers.lean",
@@ -71518,6 +72295,43 @@
             ]
           },
           "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "7d7b1d68-e7d3-4cfe-9052-d180ae81ec1e",
+          "new": {
+            "file": "ZeroParadox/Ordinal/UniverseZoom.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.roleAbove_level_floor",
+            "short": "roleAbove_level_floor"
+          },
+          "old": {
+            "file": "ZeroParadox/Ordinal/UniverseZoom.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.roleAbove_level_floor",
+            "short": "roleAbove_level_floor",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 280 (a): universe-zoom probe landed (UniverseZoom.lean). Below Ordinal.univ a copy of the lower level, one succ over it leaves every copy; lift commutes with omega-power and fixes epsilon-zero; roleAbove gives epsilon-zero at {0} and univ at the range of lift (H-ONE-MOVE, ordinal instance) (2026-11-15).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -72875,6 +73689,43 @@
             ]
           },
           "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "7f631f9b-541d-44f8-8aa4-1e9b96ffc054",
+          "new": {
+            "file": "ZeroParadox/Order/MotionFlips.lean",
+            "namespace": "ZeroParadox.Motion",
+            "qualified": "ZeroParadox.Motion.upOverLoop_iff_loop",
+            "short": "upOverLoop_iff_loop"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/MotionFlips.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.Motion",
+            "qualified": "ZeroParadox.Motion.upOverLoop_iff_loop",
+            "short": "upOverLoop_iff_loop",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 280 (a): motion probes landed (MotionFlips.lean). Up-then-over loop iff Motion.Loop (rotation); the 2-adic tower as a die Motion loops, no agreeing order, legs oppose under the valuation; time reversal is not a Loop invariant (2026-11-15).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -75890,6 +76741,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "84ad78d6-5ad6-4f73-a3e0-d2d5a0f9168b",
+          "new": {
+            "file": "ZeroParadox/Valuation/TowerTapeSnap.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.tapeIso_fires_iff",
+            "short": "tapeIso_fires_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TowerTapeSnap.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.tapeIso_fires_iff",
+            "short": "tapeIso_fires_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 280 (b): tower tape wired to the snap as a family indexed by chart (TowerTapeSnap.lean). tapeIso carries towerTape [] x to a tape that fires iff x is not botEnd; pointwise every other seed gives t_snap_of_fires_once's conclusion, almost every trials-seed does; control: the tower tapes are a trials-null set (2026-11-15).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "84bcfc87-eeac-4650-a22f-f4d228539569",
           "new": {
             "file": "ZeroParadox/Category/NextTimeCategorical.lean",
@@ -77703,6 +78591,43 @@
             ]
           },
           "reason": "Typicality bridge (2026-11-01): CrossingTrials § IV-VII — almost surely gives some run; zero-block tests; typicality as an explicit hypothesis; the slot machine as a die motion.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "88443b50-11a5-46dc-a6c9-8c09f457e18a",
+          "new": {
+            "file": "ZeroParadox/Order/MotionFlips.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.z2TowerMotion",
+            "short": "z2TowerMotion"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/MotionFlips.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.z2TowerMotion",
+            "short": "z2TowerMotion",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 280 (a): motion probes landed (MotionFlips.lean). Up-then-over loop iff Motion.Loop (rotation); the 2-adic tower as a die Motion loops, no agreeing order, legs oppose under the valuation; time reversal is not a Loop invariant (2026-11-15).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -80325,6 +81250,43 @@
             ]
           },
           "reason": "New files Die.lean + DieCannotBe.lean — the die: order-free Motion, switches, existence premises (provisional)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "8e0e9820-7cfd-45c7-ad53-fa6c0f04f43c",
+          "new": {
+            "file": "ZeroParadox/Valuation/TowerTapeSnap.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.towerTape_fires_iff",
+            "short": "towerTape_fires_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TowerTapeSnap.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.towerTape_fires_iff",
+            "short": "towerTape_fires_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 280 (b): tower tape wired to the snap as a family indexed by chart (TowerTapeSnap.lean). tapeIso carries towerTape [] x to a tape that fires iff x is not botEnd; pointwise every other seed gives t_snap_of_fires_once's conclusion, almost every trials-seed does; control: the tower tapes are a trials-null set (2026-11-15).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -84102,6 +85064,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "94234ef2-0265-428b-b412-eb4914a604b9",
+          "new": {
+            "file": "ZeroParadox/Ordinal/UniverseZoom.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.roleAbove_point_floor",
+            "short": "roleAbove_point_floor"
+          },
+          "old": {
+            "file": "ZeroParadox/Ordinal/UniverseZoom.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.roleAbove_point_floor",
+            "short": "roleAbove_point_floor",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 280 (a): universe-zoom probe landed (UniverseZoom.lean). Below Ordinal.univ a copy of the lower level, one succ over it leaves every copy; lift commutes with omega-power and fixes epsilon-zero; roleAbove gives epsilon-zero at {0} and univ at the range of lift (H-ONE-MOVE, ordinal instance) (2026-11-15).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "944efcc5-f079-4b10-be4f-825f5dffcf29",
           "new": {
             "file": "ZeroParadox/State/QubitDie.lean",
@@ -85909,6 +86908,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "9779f269-699b-4deb-9b2a-83474a092307",
+          "new": {
+            "file": "ZeroParadox/Ordinal/UniverseZoom.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.univ_isSuccLimit",
+            "short": "univ_isSuccLimit"
+          },
+          "old": {
+            "file": "ZeroParadox/Ordinal/UniverseZoom.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.univ_isSuccLimit",
+            "short": "univ_isSuccLimit",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 280 (a): universe-zoom probe landed (UniverseZoom.lean). Below Ordinal.univ a copy of the lower level, one succ over it leaves every copy; lift commutes with omega-power and fixes epsilon-zero; roleAbove gives epsilon-zero at {0} and univ at the range of lift (H-ONE-MOVE, ordinal instance) (2026-11-15).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "979216c2-b0ac-450d-8f24-22879f40a712",
           "new": {
             "file": "ZeroParadox/Information/CrossingTrials.lean",
@@ -87705,6 +88741,43 @@
             "role": []
           },
           "reason": "die-coalg-1028: motion as a Part x Set coalgebra (Die § XX) and observation as a parameter of a pair (Die § XXI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "99fb9389-7d9e-4266-8e72-386b84fce6e8",
+          "new": {
+            "file": "ZeroParadox/Ordinal/UniverseZoom.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lt_univ_of_lift",
+            "short": "lt_univ_of_lift"
+          },
+          "old": {
+            "file": "ZeroParadox/Ordinal/UniverseZoom.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lt_univ_of_lift",
+            "short": "lt_univ_of_lift",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 280 (a): universe-zoom probe landed (UniverseZoom.lean). Below Ordinal.univ a copy of the lower level, one succ over it leaves every copy; lift commutes with omega-power and fixes epsilon-zero; roleAbove gives epsilon-zero at {0} and univ at the range of lift (H-ONE-MOVE, ordinal instance) (2026-11-15).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -94561,6 +95634,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "a51c5638-8935-4e48-87fe-f16fa5ef8869",
+          "new": {
+            "file": "ZeroParadox/Order/MotionFlips.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.boolOneWayMotion_reverse_not_loop",
+            "short": "boolOneWayMotion_reverse_not_loop"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/MotionFlips.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.boolOneWayMotion_reverse_not_loop",
+            "short": "boolOneWayMotion_reverse_not_loop",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 280 (a): motion probes landed (MotionFlips.lean). Up-then-over loop iff Motion.Loop (rotation); the 2-adic tower as a die Motion loops, no agreeing order, legs oppose under the valuation; time reversal is not a Loop invariant (2026-11-15).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "a53ef1fe-44c7-4f27-9335-32c3cf7adbe9",
           "new": {
             "file": "ZeroParadox/State/QubitDie.lean",
@@ -94810,6 +95920,43 @@
             ]
           },
           "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a5f5030b-2fd4-46d3-aaa8-d8de22efa0e9",
+          "new": {
+            "file": "ZeroParadox/Ordinal/UniverseZoom.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.roleAbove_eq_of_isLeast",
+            "short": "roleAbove_eq_of_isLeast"
+          },
+          "old": {
+            "file": "ZeroParadox/Ordinal/UniverseZoom.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.roleAbove_eq_of_isLeast",
+            "short": "roleAbove_eq_of_isLeast",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 280 (a): universe-zoom probe landed (UniverseZoom.lean). Below Ordinal.univ a copy of the lower level, one succ over it leaves every copy; lift commutes with omega-power and fixes epsilon-zero; roleAbove gives epsilon-zero at {0} and univ at the range of lift (H-ONE-MOVE, ordinal instance) (2026-11-15).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -98267,6 +99414,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "ab91e6ea-0811-4666-a26c-3374d1fd3b4e",
+          "new": {
+            "file": "ZeroParadox/Order/MotionFlips.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.z2_no_agreeing_order",
+            "short": "z2_no_agreeing_order"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/MotionFlips.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.z2_no_agreeing_order",
+            "short": "z2_no_agreeing_order",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 280 (a): motion probes landed (MotionFlips.lean). Up-then-over loop iff Motion.Loop (rotation); the 2-adic tower as a die Motion loops, no agreeing order, legs oppose under the valuation; time reversal is not a Loop invariant (2026-11-15).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "aba083c6-83c0-4d59-b50b-63742a67cd51",
           "new": {
             "file": "ZeroParadox/Category/LawvereTaboo.lean",
@@ -100117,6 +101301,43 @@
             ]
           },
           "reason": "Die v2 final batch: drawing vs set (self-steps, accessibility, forced rank), ends of a view, orders on motions, placements as views, relaxed least-fixed-point schema, UP legs as nuclei",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "aeb07af9-052b-4cc8-9a5c-08068ebaa8a5",
+          "new": {
+            "file": "ZeroParadox/Valuation/TowerTapeSnap.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.towerTape_snap_ae",
+            "short": "towerTape_snap_ae"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TowerTapeSnap.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.towerTape_snap_ae",
+            "short": "towerTape_snap_ae",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 280 (b): tower tape wired to the snap as a family indexed by chart (TowerTapeSnap.lean). tapeIso carries towerTape [] x to a tape that fires iff x is not botEnd; pointwise every other seed gives t_snap_of_fires_once's conclusion, almost every trials-seed does; control: the tower tapes are a trials-null set (2026-11-15).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -110153,6 +111374,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "beebd212-492b-4fa4-9d24-98dea48076b5",
+          "new": {
+            "file": "ZeroParadox/Valuation/TowerTapeSnap.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.towerTape_snap_pointwise",
+            "short": "towerTape_snap_pointwise"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TowerTapeSnap.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.towerTape_snap_pointwise",
+            "short": "towerTape_snap_pointwise",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 280 (b): tower tape wired to the snap as a family indexed by chart (TowerTapeSnap.lean). tapeIso carries towerTape [] x to a tape that fires iff x is not botEnd; pointwise every other seed gives t_snap_of_fires_once's conclusion, almost every trials-seed does; control: the tower tapes are a trials-null set (2026-11-15).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "beee8aba-12e5-41c4-9631-2c67b9af31f5",
           "new": {
             "file": "ZeroParadox/Settheory/HypersetOrder.lean",
@@ -118613,6 +119871,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "cd73e9b2-7808-43cf-a068-9f2ec29ca46b",
+          "new": {
+            "file": "ZeroParadox/Information/BottomTotality.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.tape_totality_two_faces",
+            "short": "tape_totality_two_faces"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/BottomTotality.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.tape_totality_two_faces",
+            "short": "tape_totality_two_faces",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 280 (a): bottom-totality probe landed (BottomTotality.lean). One ensemble fairTape: law fixed by maximum entropy, almost every member incompressible, the all-false tape a non-random limit of random firing tapes; control: a set holding both faces is null (2026-11-15).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "cd839727-ba95-474e-b669-217fd78f8611",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -121191,6 +122486,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "d209eb99-8d88-4672-980e-fe189661d60a",
+          "new": {
+            "file": "ZeroParadox/Information/BottomTotality.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fairTape_singleton_null",
+            "short": "fairTape_singleton_null"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/BottomTotality.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.fairTape_singleton_null",
+            "short": "fairTape_singleton_null",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 280 (a): bottom-totality probe landed (BottomTotality.lean). One ensemble fairTape: law fixed by maximum entropy, almost every member incompressible, the all-false tape a non-random limit of random firing tapes; control: a set holding both faces is null (2026-11-15).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "d22a3729-e586-4034-a7df-169e307a47c1",
           "new": {
             "file": "ZeroParadox/Valuation/PoleChartSelection.lean",
@@ -123662,6 +124994,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "d5c0a742-2347-46da-a55e-058b761f9526",
+          "new": {
+            "file": "ZeroParadox/Ordinal/UniverseZoom.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.epsilon_zero_lt_univ",
+            "short": "epsilon_zero_lt_univ"
+          },
+          "old": {
+            "file": "ZeroParadox/Ordinal/UniverseZoom.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.epsilon_zero_lt_univ",
+            "short": "epsilon_zero_lt_univ",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 280 (a): universe-zoom probe landed (UniverseZoom.lean). Below Ordinal.univ a copy of the lower level, one succ over it leaves every copy; lift commutes with omega-power and fixes epsilon-zero; roleAbove gives epsilon-zero at {0} and univ at the range of lift (H-ONE-MOVE, ordinal instance) (2026-11-15).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "d5c1fb3d-dae1-4e0f-9524-4d9cf6312988",
           "new": {
@@ -124025,6 +125394,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d6a525f2-20c2-41d3-abc2-0410984f2e0a",
+          "new": {
+            "file": "ZeroParadox/Order/MotionFlips.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.z2_norm_drift",
+            "short": "z2_norm_drift"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/MotionFlips.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.z2_norm_drift",
+            "short": "z2_norm_drift",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 280 (a): motion probes landed (MotionFlips.lean). Up-then-over loop iff Motion.Loop (rotation); the 2-adic tower as a die Motion loops, no agreeing order, legs oppose under the valuation; time reversal is not a Loop invariant (2026-11-15).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -134357,6 +135763,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "e7b5647d-9e67-413e-abf8-eb34c4717c53",
+          "new": {
+            "file": "ZeroParadox/Information/BottomTotality.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.both_faces_in_null_set",
+            "short": "both_faces_in_null_set"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/BottomTotality.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.both_faces_in_null_set",
+            "short": "both_faces_in_null_set",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 280 (a): bottom-totality probe landed (BottomTotality.lean). One ensemble fairTape: law fixed by maximum entropy, almost every member incompressible, the all-false tape a non-random limit of random firing tapes; control: a set holding both faces is null (2026-11-15).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "e7becd3d-27bd-4ac0-8951-b79b6e664ca7",
           "new": {
@@ -136155,6 +137598,43 @@
             ]
           },
           "reason": "new HEAD declarations (APG decoration existence, choice-free; fan control)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ea106d23-f341-4b59-bdc1-62b4ead28aef",
+          "new": {
+            "file": "ZeroParadox/Order/MotionFlips.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.boolOneWayMotion",
+            "short": "boolOneWayMotion"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/MotionFlips.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.boolOneWayMotion",
+            "short": "boolOneWayMotion",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 280 (a): motion probes landed (MotionFlips.lean). Up-then-over loop iff Motion.Loop (rotation); the 2-adic tower as a die Motion loops, no agreeing order, legs oppose under the valuation; time reversal is not a Loop invariant (2026-11-15).",
           "verify": {
             "axioms": null,
             "sorry_free": true
