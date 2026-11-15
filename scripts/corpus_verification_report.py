@@ -25,16 +25,23 @@ DESIGN NOTE - three detectors, none of them sufficient alone, all measured.
    proves nothing, so it fails closed rather than printing a credential over a blank
    table.
 
+4. A FLOOR ON THE COUNT. CI restores a Lake build cache, and an up-to-date module
+   contributes its footprints only by Lake REPLAYING its stored log. If replay ever
+   dropped them, detector 3 would still pass on whatever was left. So the caller may
+   pass a floor - the distinct-name count a cold build produced - and a count below it
+   fails the report. The floor is a number someone lowers deliberately when
+   declarations are removed; it is never derived from the run it judges.
+
 Exits 0 if the build verified, 1 otherwise, so the report doubles as a gate -
 but only because the caller passes the real exit code in. Wire it as:
 
     lake build 2>&1 | tee build.log
     BUILD_RC=${PIPESTATUS[0]}
     set -o pipefail
-    python3 scripts/corpus_verification_report.py build.log "$BUILD_RC" \
+    python3 scripts/corpus_verification_report.py build.log "$BUILD_RC" "$FLOOR" \
       | tee -a "$GITHUB_STEP_SUMMARY"
 
-Usage: corpus_verification_report.py <lake-build-log> <build-exit-code>
+Usage: corpus_verification_report.py <lake-build-log> <build-exit-code> [<footprint-floor>]
 """
 import sys
 import re
@@ -57,6 +64,15 @@ try:
 except ValueError:
     sys.stderr.write(f"build-exit-code must be an integer, got {rc_arg!r}\n")
     sys.exit(2)
+# None, not 0, when no floor is passed: "no floor given" and "a floor of zero" are
+# different answers, and the report says which one it ran with.
+floor = None
+if len(sys.argv) > 3:
+    try:
+        floor = int(sys.argv[3])
+    except ValueError:
+        sys.stderr.write(f"footprint-floor must be an integer, got {sys.argv[3]!r}\n")
+        sys.exit(2)
 
 print(f"[report] reading {path}, build exit code {build_rc}", file=sys.stderr)
 log = open(path, encoding="utf-8", errors="replace").read()
@@ -95,9 +111,18 @@ SORRY_WARNING = "declaration uses `sorry`"          # backticks, measured agains
 # in ordinary log furniture, unlike the bare word "sorry" (`nanoda-allow-sorry`).
 has_sorry_warning = (SORRY_WARNING in log) or ("sorryAx" in log)
 
-ok = (build_rc == 0) and not sorried and not has_sorry_warning and not no_evidence
+# How much of this build came from the cache. Lake prints one progress line per module,
+# `Built X` when it elaborated X in this run and `Replayed X` when X was up to date and
+# its stored log was re-emitted.
+built = len(re.findall(r"\] Built ", log))
+replayed = len(re.findall(r"\] Replayed ", log))
+below_floor = floor is not None and total < floor
+
+ok = ((build_rc == 0) and not sorried and not has_sorry_warning and not no_evidence
+      and not below_floor)
 print(f"[report] rc={build_rc} sorried={len(sorried)} warn={has_sorry_warning} "
-      f"evidence={not no_evidence} -> ok={ok}", file=sys.stderr)
+      f"evidence={not no_evidence} total={total} floor={floor} built={built} "
+      f"replayed={replayed} -> ok={ok}", file=sys.stderr)
 print(f"[report] {len(axfree)} axiom-free, {len(axdep)} with a footprint", file=sys.stderr)
 
 by_footprint = Counter(ax for _n, ax in axdep)
@@ -129,6 +154,12 @@ if not ok:
                    "at all** — so nothing was verified here. A warm cache still replays "
                    "them, so this means the log is truncated or the build did not run. "
                    "An absence of evidence is not a check.")
+    if below_floor:
+        out.append(f"**The log records {total} declarations with an axiom footprint, below "
+                   f"the floor of {floor} set from a cold build.** Footprints went missing: "
+                   "either the cache replay dropped them or declarations were removed. If "
+                   "they were removed on purpose, lower the floor in "
+                   "`.github/workflows/lean_action_ci.yml` in the same change.")
 else:
     out.append(
         "Don't take our word for it. Lake exited 0, no declaration depends on `sorryAx`, "
@@ -149,6 +180,11 @@ out.append(f"**Declarations recording an axiom footprint in this build:** {total
            f"of which **{len(choice_free)} do not use `Classical.choice`**. Counted by "
            "distinct name, and including library declarations the corpus checks "
            "alongside its own.")
+out.append("")
+floor_text = (f"floor **{floor}**, from a cold build" if floor is not None
+              else "**no floor given**")
+out.append(f"**Count check:** {total} against {floor_text}. Modules in this log: "
+           f"{built} elaborated in this run, {replayed} replayed from the build cache.")
 out.append("")
 out.append("| footprint | count | means |")
 out.append("|---|---:|---|")

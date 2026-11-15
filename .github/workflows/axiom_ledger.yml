@@ -4,12 +4,15 @@ name: Axiom Ledger (choice-free computability)
 # recomputes every ledgered declaration's axiom profile with the vendored auditor
 # (ZeroParadox/Vendored/CorpusAudit/, from GuardianEngineAI/corpus) and throws on any mismatch,
 # then writes a per-row report to the run summary. The same module is in the default build, so
-# "Complete Project" also fails on drift; this job isolates it and shows the table. Fires on a
-# toolchain or Mathlib bump too, because that is when a profile drifts. A last step checks the
-# gate fails closed: a ledger with one planted wrong profile must come out red.
-# The path filters below do not cover the ledgered files' whole import closure (Kleene.lean and
-# its imports, for one), so a weekly scheduled run re-checks the ledger on the default branch
-# whatever changed. GitHub disables scheduled runs after 60 days with no repository activity.
+# "Complete Project" also fails on drift; this job isolates it and shows the table. A last step
+# checks the gate fails closed: a ledger with one planted wrong profile must come out red.
+# It runs on every pull request into main and every push to main or illustrated, with no path
+# filter, so a change anywhere in the ledgered files' import closure (Kleene.lean and its imports,
+# for one), and a toolchain or Mathlib bump, re-checks the ledger. The four gating workflows
+# (Complete Project, Verification suite, Axiom Ledger, Minimal Core) share that cadence on main.
+# The weekly scheduled run re-checks the default branch with no commit at all: the actions it uses
+# are pinned to major-version tags (`actions/checkout@v5`, `leanprover/lean-action@v1`), which move
+# without a commit here. GitHub disables scheduled runs after 60 days with no repository activity.
 on:
   workflow_dispatch:
   schedule:
@@ -18,29 +21,9 @@ on:
     branches:
       - main
       - illustrated
-    paths:
-      - 'ZeroParadox/Meta/AxiomLedger.lean'
-      - 'ZeroParadox/Vendored/CorpusAudit/**'
-      - 'ZeroParadox/Computability/KleeneChoiceFree.lean'
-      - 'ZeroParadox/Computability/UniversalChoiceFree.lean'
-      - 'lake-manifest.json'
-      - 'lean-toolchain'
-      - 'scripts/axiom_ledger_report.py'
-      - '.github/workflows/axiom_ledger.yml'
-      - 'AxiomLedgerControl.lean'
   pull_request:
     branches:
       - main
-    paths:
-      - 'ZeroParadox/Meta/AxiomLedger.lean'
-      - 'ZeroParadox/Vendored/CorpusAudit/**'
-      - 'ZeroParadox/Computability/KleeneChoiceFree.lean'
-      - 'ZeroParadox/Computability/UniversalChoiceFree.lean'
-      - 'lake-manifest.json'
-      - 'lean-toolchain'
-      - 'scripts/axiom_ledger_report.py'
-      - '.github/workflows/axiom_ledger.yml'
-      - 'AxiomLedgerControl.lean'
 
 permissions:
   contents: read
@@ -51,12 +34,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
+      # Restore-only: "Complete Project" (lean_action_ci.yml) saves this cache after a green
+      # full build, and its comment records what was verified about it. The key is computed the
+      # same way, so this job restores the build of the same sources when one exists and the
+      # newest near-miss otherwise; Lake rebuilds whatever the restored traces do not match.
+      - name: Restore the Lake build cache
+        id: lake-cache
+        uses: actions/cache/restore@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
+        with:
+          path: .lake
+          key: lake-build-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}-${{ hashFiles('lakefile.toml') }}-${{ hashFiles('**/*.lean') }}
+          restore-keys: |
+            lake-build-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}-${{ hashFiles('lakefile.toml') }}-
       # build: false keeps this job to the ledger's own import closure. Without it lean-action
       # builds the whole corpus first, so an unrelated breakage elsewhere kills the job before
-      # the ledger is ever elaborated.
+      # the ledger is ever elaborated. use-github-cache: false because the step above is the
+      # cache (see lean_action_ci.yml).
       - uses: leanprover/lean-action@v1
         with:
           build: false
+          use-github-cache: false
       # The ledger's imports, plus the auditor's own admission fixtures (AuditChecks), whose
       # `#eval` fails this step if the checker ever accepts one of upstream's invalid cases.
       - name: Build the ledger's imports and the auditor's self-test

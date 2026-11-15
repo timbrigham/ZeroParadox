@@ -1,26 +1,20 @@
 name: Complete Project
 
+# Runs on every pull request into main and every push to main, with no path filter: the four
+# gating workflows (Complete Project, Verification suite, Axiom Ledger, Minimal Core) share one
+# cadence there, so a pull request into main always carries all four results.
+# The weekly scheduled run is the COLD BUILD: it skips the Lake build cache restore below, so
+# every corpus module is elaborated in that run and the footprint count it prints is the one to
+# hold cached runs against (see CORPUS_FOOTPRINT_FLOOR).
 on:
   push:
     branches:
       - main
-    paths:
-      - '**/*.lean'
-      - 'lake-manifest.json'
-      - 'lean-toolchain'
-      # Without these the workflow never re-runs when the thing it publishes changes.
-      - 'scripts/corpus_verification_report.py'
-      - '.github/workflows/lean_action_ci.yml'
   pull_request:
     branches:
       - main
-    paths:
-      - '**/*.lean'
-      - 'lake-manifest.json'
-      - 'lean-toolchain'
-      # Without these the workflow never re-runs when the thing it publishes changes.
-      - 'scripts/corpus_verification_report.py'
-      - '.github/workflows/lean_action_ci.yml'
+  schedule:
+    - cron: '43 5 * * 1'
   workflow_dispatch:
 
 # Note: a docgen-action deploy job was removed from this workflow (April 2026).
@@ -37,14 +31,66 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      # The report fails when the build log records fewer distinct declarations with an axiom
+      # footprint than this. Source: Complete Project job 131631685723 on main, 2026-11-13, a
+      # cold corpus build (259 `Built ZeroParadox.*` lines, no `Replayed` line), whose report
+      # printed "764 axiom-free, 2775 with a footprint" = 3539. Lower it deliberately, in the
+      # same change, when declarations are removed; raise it from a later cold run's count.
+      CORPUS_FOOTPRINT_FLOOR: '3539'
     steps:
       - uses: actions/checkout@v5
+      # LAKE BUILD CACHE. This job saves `.lake` after a green build; this job, Axiom Ledger and
+      # Minimal Core restore it. Checked 2026-11-15 against leanprover/lean-action at the commit
+      # `@v1` resolved to (ba3fdfe5): its `use-github-cache` input (default "true") restores and
+      # saves `.lake`, but the save sits inside the action, after its own build step, and with
+      # `build: false` that is BEFORE our `lake build` below, so it never held this corpus's
+      # build. It is switched off here and this cache replaces it, at the same pinned
+      # actions/cache commit lean-action uses (caa29612 = tag v5.1.0, read from actions/cache's
+      # tag list). The whole `.lake` is cached, Mathlib's oleans included, as lean-action did,
+      # so `lake exe cache get` finds them in place.
+      # A RESTORE CANNOT TURN A FAILING BUILD GREEN: every module's `.trace` records a hash of
+      # its source file and a `depHash` over its imports and options (read from a local
+      # `.lake/build/lib/lean/ZeroParadox/Miniature.trace`), so a changed source or import is
+      # rebuilt and its errors are reported. An up-to-date module REPLAYS its stored log:
+      # measured 2026-11-15 on ZeroParadox.Miniature, a build then an unchanged rebuild printed
+      # `Built` then `Replayed` and the same 9 `#print axioms` lines both times. The floor above
+      # fails the report if replay ever thins the log. Only a run whose build and report passed
+      # saves.
+      # UNTRACKED INPUTS: no corpus module reads a file Lake does not trace (searched
+      # `ZeroParadox/**/*.lean`, the root `.lean` files and `lakefile.toml` for include_str,
+      # IO.FS, readFile, IO.Process and initialize, 2026-11-15). Meta/Snapshot.lean and
+      # Meta/ExtractDeps.lean test whether `.claude-local/translation_matrix` exists and write a
+      # JSON file there; that directory is not in the repository, so in CI both return at once.
+      # KEY: OS + arch + toolchain + manifest + lakefile + a hash of every `.lean` file, taken
+      # right after checkout, before `.lake` exists. A miss on the `.lean` hash falls back to
+      # the newest cache sharing the rest (`restore-keys`) and Lake rebuilds only what changed.
+      # LIMITS (actions/cache README at caa29612): 10 GB of caches per repository, least
+      # recently used evicted first, and anything unused for a week evicted. A cache is scoped
+      # to its branch, and the default branch's cache is available to other branches, so a
+      # pull request into main restores main's cache; what a pull-request run saves is scoped
+      # to that pull request.
+      - name: Compute the Lake build cache key
+        id: lake-key
+        run: |
+          echo "prefix=lake-build-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}-${{ hashFiles('lakefile.toml') }}-" >> "$GITHUB_OUTPUT"
+          echo "key=lake-build-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}-${{ hashFiles('lakefile.toml') }}-${{ hashFiles('**/*.lean') }}" >> "$GITHUB_OUTPUT"
+      - name: Restore the Lake build cache (skipped on the weekly cold build)
+        id: lake-cache
+        if: github.event_name != 'schedule'
+        uses: actions/cache/restore@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
+        with:
+          path: .lake
+          key: ${{ steps.lake-key.outputs.key }}
+          restore-keys: |
+            ${{ steps.lake-key.outputs.prefix }}
       # build: false - lean-action still does toolchain setup and the Mathlib cache, but
       # we run `lake build` ourselves so its output can be captured. The corpus already
       # emits ~1200 `#print axioms` results on every build; they were being discarded.
       - uses: leanprover/lean-action@v1
         with:
           build: false
+          use-github-cache: false
       - name: Build, and publish what the machine actually checked
         run: |
           # No pipefail on the build: a failing build must still REACH the report, so it
@@ -58,4 +104,13 @@ jobs:
           # failing report is silently green.
           set -o pipefail
           python3 scripts/corpus_verification_report.py build.log "${BUILD_RC}" \
-            | tee -a "$GITHUB_STEP_SUMMARY"
+            "${CORPUS_FOOTPRINT_FLOOR}" | tee -a "$GITHUB_STEP_SUMMARY"
+      # Saves only when the step above passed (lake exited 0 and the report accepted it,
+      # floor included), and only when the restore was not already an exact hit for this key.
+      # The cold build saves too, so the weekly run also refreshes the cache.
+      - name: Save the Lake build cache
+        if: success() && steps.lake-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
+        with:
+          path: .lake
+          key: ${{ steps.lake-key.outputs.key }}
