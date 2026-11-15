@@ -114,8 +114,10 @@ example : ¬ @CovBy ℕ (ZeroParadox.zpSemilatticeSup ℕ).toLT 0 2 := fun h =>
 #check @ZeroParadox.maxEntropy_mlRandom_and_snap_ae    -- Statement: the same, with `0 < p` replaced by `binEntropy p = log 2`, the maximum-entropy coin `p = 1/2` (`ZeroParadox/Information/MaxEntropy.lean`); one way. No tape law of ⊥ of `L` is constructed, and `BotHasFirstStep L` stays a hypothesis
 -- Reading: CARRIER — firing somewhere, in two charts (`ZeroParadox/Information/PoleWithinEnsemble.lean` § IX).
 --   Quotient chart, modulo `trials p hp`-null sets: for `0 < p` it is exactly ⊤ of `Germ (ae (trials p hp)) Prop`.
---   Pointwise chart: it fails exactly at ⊥ of `ℕ → Bool`, the one tape that quotient forgets. Neither is THE chart.
-#check @ZeroParadox.snap_ae_fixed_phi                 -- Statement: if `0 < p ≤ 1` and `φ : Bool → L` sends `false` to ⊥ of `L` and `true` elsewhere, almost every tape fires and gives `t_snap_of_fires_once`'s conclusion; no `BotHasFirstStep L`; one way. No map from ⊥ of `L` to a tape appears
+--   Pointwise chart: it fails at ⊥ of `ℕ → Bool` and at no other tape (the § II CONTROL `example` in that file);
+--   for `0 < p` that tape is null, and the quotient forgets it along with every other null set. Neither is THE chart.
+--   Prior art: on measurable predicates the quotient is the measure algebra (Fremlin, *Measure Theory* Vol. 3, §321H).
+#check @ZeroParadox.snap_ae_fixed_phi                 -- Statement: if `0 < p ≤ 1` and `φ : Bool → L` sends `false` to ⊥ of `L` and `true` elsewhere, almost every tape fires and gives `t_snap_of_fires_once`'s conclusion; one way. Against `snap_ae_of_firstStep` above it drops BOTH the hypothesis `BotHasFirstStep L` AND the cover `bot ⋖ S 1` from the conclusion, and `φ` is given rather than produced, so it is not that line with one hypothesis fewer. No map from ⊥ of `L` to a tape appears
 #check @ZeroParadox.fires_ae_eq_univ                  -- Statement: if `0 < p ≤ 1`, the firing set is `trials p hp`-a.e. equal to `Set.univ`
 #check @ZeroParadox.fires_germ_eq_top                 -- Statement: if `0 < p ≤ 1`, "fires somewhere" is ⊤ of `Germ (ae (trials p hp)) Prop`
 #check @ZeroParadox.snap_germ_eq_top                  -- Statement: under `snap_ae_fixed_phi`'s hypotheses, "fires and gives `t_snap_of_fires_once`'s conclusion" is ⊤ of `Germ (ae (trials p hp)) Prop`; a fact about the quotient, not about every tape
