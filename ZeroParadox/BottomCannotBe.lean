@@ -738,6 +738,12 @@ noncomputable example : Ordinal.{0} →o Ordinal.{0} :=
 #check @ZeroParadox.trials_eventuallyFalse_null
 -- Statement: CONTROL, at `p = 0` that set has `trials 0 hp` measure one.
 #check @ZeroParadox.trials_zero_eventuallyFalse
+-- Statement: under a per-stage coin `q` with `Summable q`, that set has measure one (first
+-- Borel-Cantelli); a constant coin is `trials` (`fadingTrials_const`).
+#check @ZeroParadox.fadingTrials_eventuallyFalse
+-- Statement: null under every constant coin `0 < p ≤ 1`, measure one under every summable coin.
+-- Reading: CARRIER, returning to a floor as a family indexed by the coin, never a union.
+#check @ZeroParadox.returning_two_charts
 
 /-! ### The infinitude in two charts: content and self -/
 

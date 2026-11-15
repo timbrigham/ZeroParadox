@@ -15,9 +15,9 @@ defer to my AI assistant regarding the specifics of how the internals work.
 ---
 
 ## Formal Overview (AI-assisted)
-§ I: a tape has a first `true` iff it is not ⊥ of `ℕ → Bool`, and a last `true` iff also eventually
-`false`. § II: the eventually-`false` tapes are one set, read as shifted copies of {⊥}, as
-`silentFrom`, and as the local floors through `tapeIso` (the eventually-zero sequences).
+§ I: first `true` iff not ⊥ of `ℕ → Bool`; last `true` iff also eventually `false`. § II: the
+eventually-`false` tapes are one set: shifted copies of {⊥}, `silentFrom`, the local floors through
+`tapeIso`. § III: null under a constant coin, measure one under a summable coin (Borel-Cantelli).
 -/
 
 set_option maxHeartbeats 400000
@@ -149,6 +149,61 @@ theorem trials_zero_eventuallyFalse (hp : (0 : NNReal) ≤ 1) : trials 0 hp even
   exact Measure.dirac_apply_of_mem (by
     rw [eventuallyFalse_eq_iUnion_silentFrom, Set.mem_iUnion]; exact ⟨0, fun _ _ => rfl⟩)
 
+/-! ### § III. The other chart: a fading coin
+
+`Reading:` CARRIER, returning to a floor as a family indexed by the per-stage law, never a union:
+with a constant coin it is null (`trials_eventuallyFalse_null`), with a summable coin almost sure
+(`fadingTrials_eventuallyFalse`). `trials p hp` is the constant member (`fadingTrials_const`). -/
+
+set_option linter.deprecated false in
+/-- `Statement:` independent Bernoulli(`q n`) flips, one per stage; `trials` with a per-stage `p`. -/
+noncomputable def fadingTrials (q : ℕ → NNReal) (hq : ∀ n, q n ≤ 1) : Measure (ℕ → Bool) :=
+  Measure.infinitePi (fun n => (PMF.bernoulli (q n) (hq n)).toMeasure)
+
+/-- `Statement:` `fadingTrials q hq` is a probability measure. -/
+instance fadingTrials_isProbability (q : ℕ → NNReal) (hq : ∀ n, q n ≤ 1) :
+    IsProbabilityMeasure (fadingTrials q hq) := by
+  unfold fadingTrials; infer_instance
+
+/-- `Statement:` with a constant `q`, `fadingTrials` is `trials`. -/
+theorem fadingTrials_const (p : NNReal) (hp : p ≤ 1) :
+    fadingTrials (fun _ => p) (fun _ => hp) = trials p hp := rfl
+
+set_option linter.deprecated false in
+/-- `Statement:` stage `n` fires with `fadingTrials q hq` probability exactly `q n`. -/
+theorem fadingTrials_fires (q : ℕ → NNReal) (hq : ∀ n, q n ≤ 1) (n : ℕ) :
+    fadingTrials q hq (fires n) = (q n : ENNReal) := by
+  have hpi : fires n = Set.pi ({n} : Finset ℕ) (fun _ => ({true} : Set Bool)) := by
+    ext w; simp [fires]
+  rw [hpi, fadingTrials, Measure.infinitePi_pi _ (fun i _ => measurableSet_singleton true)]
+  simp [PMF.bernoulli]
+
+/-- `Statement:` if `q` is summable, `eventuallyFalse` has `fadingTrials q hq` measure one. The first
+Borel-Cantelli lemma, Mathlib `measure_limsup_atTop_eq_zero`. -/
+theorem fadingTrials_eventuallyFalse (q : ℕ → NNReal) (hq : ∀ n, q n ≤ 1) (hs : Summable q) :
+    fadingTrials q hq eventuallyFalse = 1 := by
+  have h0 : fadingTrials q hq (Filter.limsup fires Filter.atTop) = 0 := by
+    refine measure_limsup_atTop_eq_zero ?_
+    simp only [fadingTrials_fires]
+    exact ENNReal.tsum_coe_ne_top_iff_summable.2 hs
+  have hc : eventuallyFalse = (Filter.limsup fires Filter.atTop)ᶜ := by
+    ext w; exact mem_eventuallyFalse_iff w
+  rw [hc, prob_compl_eq_one_sub, h0, tsub_zero]
+  exact .measurableSet_limsup fun n => fires_measurable n
+
+-- Statement: `q n = (1/2) ^ (n + 1)` is summable, so `fadingTrials_eventuallyFalse` applies to it.
+example : Summable (fun n : ℕ => ((1/2 : NNReal) ^ (n + 1))) :=
+  (NNReal.summable_nat_add_iff 1).2 (NNReal.summable_geometric (by norm_num))
+
+/-- `Statement:` `eventuallyFalse` is null under every constant coin `0 < p ≤ 1`, and has measure one
+under every summable coin. `Reading:` CARRIER, two charts of returning to a floor, indexed by the coin. -/
+theorem returning_two_charts :
+    (∀ (p : NNReal) (hp : p ≤ 1), 0 < p →
+      fadingTrials (fun _ => p) (fun _ => hp) eventuallyFalse = 0) ∧
+    (∀ (q : ℕ → NNReal) (hq : ∀ n, q n ≤ 1), Summable q →
+      fadingTrials q hq eventuallyFalse = 1) :=
+  ⟨fun p hp hp0 => trials_eventuallyFalse_null p hp hp0, fadingTrials_eventuallyFalse⟩
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -166,4 +221,10 @@ open ZeroParadox
 #print axioms measurableSet_eventuallyFalse
 #print axioms trials_eventuallyFalse_null
 #print axioms trials_zero_eventuallyFalse
+#print axioms fadingTrials
+#print axioms fadingTrials_isProbability
+#print axioms fadingTrials_const
+#print axioms fadingTrials_fires
+#print axioms fadingTrials_eventuallyFalse
+#print axioms returning_two_charts
 end PurityCheck
