@@ -1,6 +1,6 @@
 """
 Build ZP-I Illustrated Companion
-Version 1.52 | November 2026
+Version 1.53 | November 2026
 
 Standalone companion for ZP-I: Inside Zero.
 Accessibility target: 2 years of college math.
@@ -276,7 +276,7 @@ def cycle_diagram():
     return d
 
 
-VERSION = '1.52'
+VERSION = '1.53'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -589,11 +589,11 @@ def build():
         'framework reads the two together as a repeating cycle. That cycle is a reading, not a theorem: see '
         'the Note on closure below.'))
     E.append(cbody(
-        '1. <b>T-SNAP</b> on MachinePhase: the step from c₀, ⊥ of MachinePhase, to c₁ (the state this discrete chart names ε₀) has the shape T-SNAP proves; that the step is taken is the occurrence commitment. The branch opens.'
+        '1. <b>T-SNAP</b> on MachinePhase: the step from c₀, ⊥ of MachinePhase, to c₁ (the state this discrete chart names ε₀) has the shape T-SNAP proves; that the step is taken follows from the occurrence commitment together with DA-1. The branch opens.'
         '<br/>'
-        '2. <b>T3 (monotonicity)</b>: states ascend. Each step adds informational content irreversibly.'
+        '2. <b>T3 (monotonicity)</b>: here the list changes carrier, since MachinePhase has a top, c₁: the states are now the depth index, ℕ under max with ⊥ of ℕ = 0. States ascend. Each step adds informational content irreversibly.'
         '<br/>'
-        '3. <b>No top</b>: here the list changes carrier, since MachinePhase has a top, c₁. In a carrier that has no top, the chain never has to stop  - there is always a strictly greater state. '
+        '3. <b>No top</b>: ℕ has no top (nat_has_no_top), so the chain never has to stop  - there is always a strictly greater state. '
         'That it DOES keep ascending through ω state changes is the strict-ascent condition. '
         '(Not ZP-A&#8217;s R1, which is Door 1, no subtraction.)'
         '<br/>'

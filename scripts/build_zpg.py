@@ -1,12 +1,12 @@
 """
 Zero Paradox — ZP-G: Category Theory PDF Builder
-Version 1.31 | November 2026
+Version 1.32 | November 2026
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.31'
+VERSION = '1.32'
 FIRST_RELEASED = 'April 2026'
 
 # ZP-G uses a slightly different amber shade; override zp_utils default
@@ -196,7 +196,7 @@ def build():
         'Axiom AX-G2 — Source Asymmetry',
         'Status: Axiom — foundational',
         [
-            'For any non-initial object X ≠ 0: hom(X, 0) = ∅.',
+            'For any non-initial object X (not isomorphic to 0): hom(X, 0) = ∅.',
             'Motivation: The categorical expression of irreversibility. Morphisms '
             '&#953;<sub>X</sub>: 0 → X exist for all X. Their reversal does not exist. '
             'AX-G2 is consistent with AX-G1 but not derivable from it.',
@@ -250,7 +250,7 @@ def build():
         'Lemma T3 — Unreachability of 0',
         'Status: Derived — from AX-G2',
         [
-            'For any X ≠ 0: hom(X, 0) = ∅. The initial object 0 is unreachable from any non-initial object.',
+            'For any X not isomorphic to 0: hom(X, 0) = ∅. The initial object 0 is unreachable from any non-initial object.',
             'Proof: Direct from AX-G2. ✓',
         ]
     ))
@@ -277,7 +277,7 @@ def build():
             'self-application map supplied by AbstractSelfApp, ⊥ of L is its only occupant (selfApp_quine_role_iff). An occupant has '
             'no external interpreter by structure; it IS its own interpretation.',
             'In categorical terms, this corresponds to two conditions together: (1) AX-G2: '
-            'hom(X, 0) = ∅ for all X ≠ 0 — no morphism can reach inside 0 from outside; and '
+            'hom(X, 0) = ∅ for all X not isomorphic to 0 — no morphism can reach inside 0 from outside; and '
             '(2) T2: ∃! &#953;<sub>X</sub>: 0 → X for all X — 0 is structurally present in every object. '
             'Together these are the categorical image of undifferentiated self-containment: unreachable '
             'from without, yet constitutive of everything.',
@@ -310,7 +310,7 @@ def build():
         'Status: Derived — from AX-G2',
         [
             'No morphism chain from 0 can return to 0 through non-initial objects.',
-            'Proof: A return morphism X<sub>n</sub> → 0 for X<sub>n</sub> ≠ 0 would contradict AX-G2. ✓',
+            'Proof: A return morphism X<sub>n</sub> → 0 for X<sub>n</sub> not isomorphic to 0 would contradict AX-G2. ✓',
         ]
     ))
     E.append(sp(6))
@@ -484,7 +484,7 @@ def build():
             'Part I — Outward surprisal accumulates (from T6-b, T6-c): For any morphism chain '
             '0 = X<sub>0</sub> → ... → X<sub>n</sub>, &#8721; I(X<sub>k</sub> → X<sub>k+1</sub>) ≥ 0, '
             'with strict accumulation as n increases. ✓',
-            'Part II — Inward surprisal is undefined (from AX-G2): For any X ≠ 0, hom(X, 0) = ∅ (AX-G2). '
+            'Part II — Inward surprisal is undefined (from AX-G2): For any X not isomorphic to 0, hom(X, 0) = ∅ (AX-G2). '
             'Therefore D7\' cannot be applied to any morphism f: X → 0 from outside 0 — no such morphism '
             'exists. I(X → 0) is undefined not because K diverges to infinity, but because there is no morphism '
             'to apply D7\' to. ✓',
@@ -495,7 +495,7 @@ def build():
             'numerical. It does not require K to diverge — it requires only AX-G2 and D7\'. ✓',
             'Comparison with ZP-C (to be reconciled in ZP-H T-H2): ZP-C establishes that the discrete surprisal '
             'DF diverges (numerically, to &#8734;) along infinite sequences approaching 0 in Q<sub>2</sub>. T6 Part II '
-            'establishes that I(X → 0) is undefined (domain-absent) for any X ≠ 0 in C. These are compatible: '
+            'establishes that I(X → 0) is undefined (domain-absent) for any X not isomorphic to 0 in C. These are compatible: '
             'ZP-H T-H2 shows that the two hold together. Its proof pairs Lemma T3 (hom(X, 0) = ∅, the fact '
             'Part II rests on) with ZP-C Theorem T2, and uses neither to prove the other '
             '(th2_singularity_compatibility).',
@@ -541,10 +541,10 @@ def build():
             'Let I-KC provide the Kolmogorov framework.',
             'Part I — Universal Constituent (T2): &#8704;X ∈ ob(C), ∃! &#953;<sub>X</sub>: 0 → X. '
             'The initial object 0 is the universal categorical source.',
-            'Part II — Unreachability (T3): &#8704;X ≠ 0, hom(X, 0) = ∅. No non-initial object reaches 0.',
+            'Part II — Unreachability (T3): for every X not isomorphic to 0, hom(X, 0) = ∅. No non-initial object reaches 0.',
             'Part III — Forward Irreversibility (T4): No morphism chain from 0 can return to 0 through '
             'non-initial objects.',
-            'Part IV — Informational Singularity (T6, rebuilt): I(X → 0) is undefined for all X ≠ 0 '
+            'Part IV — Informational Singularity (T6, rebuilt): I(X → 0) is undefined for all X not isomorphic to 0 '
             '(no such morphism exists, AX-G2). Outward surprisal from 0 accumulates along any morphism '
             'chain (T6-b, T6-c). 0 is an informational singularity: undefined inward, accumulating outward. '
             'This part no longer depends on BA-G1.',
@@ -593,7 +593,7 @@ def build():
          'Asymmetry: initial object 0, no terminal object. Foundational structural commitment. Not a gap.'],
         ['AX-G2',
          'Axiom — intentional',
-         'Source asymmetry: hom(X, 0) = ∅ for X ≠ 0. Foundational irreversibility commitment. Not a gap.'],
+         'Source asymmetry: hom(X, 0) = ∅ for X not isomorphic to 0. Foundational irreversibility commitment. Not a gap.'],
         ['R-BA',
          'Remark — BA-G1 demoted',
          'Leinster Shannon entropy characterization is now a compatibility remark, not a bridge axiom premise. '
