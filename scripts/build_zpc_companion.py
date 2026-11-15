@@ -1,5 +1,5 @@
 """
-Build ZP-C Illustrated Companion (v2.14)
+Build ZP-C Illustrated Companion (v2.15)
 """
 
 import os
@@ -177,7 +177,7 @@ def lrun_diagram():
                strokeColor=COMP_BLUE, strokeWidth=1, strokeDashArray=[4, 3]))
     return d
 
-VERSION = '2.14'
+VERSION = '2.15'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -221,8 +221,9 @@ def build():
         Paragraph('ZP Companion | ' + version_line(FIRST_RELEASED, VERSION), CS['meta']),
         Paragraph(
             'This companion explains the ideas in plain language with diagrams and real-world '
-            'examples. It is not the formal document — every claim here restates a result already '
-            'proved in the corresponding technical document. Consult that document for the '
+            'examples. It is not the formal document — its results are proved in ZP-C Information '
+            'Theory or come from the other documents, papers and named theorems it cites, and a '
+            'commitment or reading it mentions is not a result. Consult ZP-C for the '
             'authoritative mathematics.',
             CS['disc']),
     ]

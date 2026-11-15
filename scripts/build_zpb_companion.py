@@ -1,5 +1,5 @@
 """
-Build ZP-B Illustrated Companion (v1.21)
+Build ZP-B Illustrated Companion (v1.22)
 """
 
 import os
@@ -85,7 +85,7 @@ def nested_balls_diagram():
 
     return d
 
-VERSION = '1.21'
+VERSION = '1.22'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -129,8 +129,10 @@ def build():
         Paragraph('ZP Companion | ' + version_line(FIRST_RELEASED, VERSION), CS['meta']),
         Paragraph(
             'This companion explains the ideas in plain language with diagrams and real-world '
-            'examples. It is not the formal document — every claim here restates a result already '
-            'proved there. Consult that document for the authoritative mathematics.',
+            'examples. It is not the formal document — its results are proved in ZP-B p-Adic '
+            'Topology or come from the other documents, papers and named theorems it cites, and a '
+            'commitment or reading it mentions is not a result. Consult ZP-B for '
+            'the authoritative mathematics.',
             CS['disc']),
     ]
 

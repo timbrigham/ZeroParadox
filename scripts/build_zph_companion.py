@@ -1,5 +1,5 @@
 """
-Build ZP-H Illustrated Companion (v1.28)
+Build ZP-H Illustrated Companion (v1.29)
 Standalone companion for ZP-H: Categorical Bridge only.
 ZP-G has its own companion (build_zpg_companion.py).
 
@@ -129,7 +129,7 @@ def snap_convergence_diagram():
 
     return d
 
-VERSION = '1.28'
+VERSION = '1.29'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -307,7 +307,7 @@ def build():
         '<b>FC (Information Theory):</b> The initial object 0 maps to the zero distribution '
         'P = (1, 0). Each morphism maps to an informational transition with '
         'a non-negative cost measured in bits. The fundamental transition costs exactly '
-        '1 bit (ZP-C T1b). The informational singularity of ZP-G and the diverging '
+        '1 bit (ZP-C T1b). The unreachability of 0 in ZP-G (T3) and the diverging '
         'surprisal of ZP-C T2 hold together (T-H2), a pair of separately proved results. In Lean, FC is a sorry-free functor in two forms: fc_functor '
         'lands in InfoDepth, an ℕ-indexed stand-in, and fC_functor lands in KleisliCat PMF, '
         'the Kleisli category of the probability monad.'))
@@ -360,8 +360,8 @@ def build():
         '— the accumulated surprisal grows without bound. These look like two different '
         'statements about the same thing. Are they compatible?'))
     E.append(cbody(
-        'T-H2 proves they are: both hold at once. It pairs two separately proved results '
-        'and uses neither to prove the other. In ZP-C, ask: what happens to surprisal as you approach '
+        'T-H2 proves they are: both hold at once. It pairs two separately proved results, '
+        'ZP-G Lemma T3 and ZP-C Theorem T2, and uses neither to prove the other. In ZP-C, ask: what happens to surprisal as you approach '
         '0 along an infinite path? The answer is divergence. In ZP-G, ask: can you reach '
         '0 by a morphism from outside? The answer is no. '
         'Read informally, if infinite cost is required to reach 0, then no finite morphism can '

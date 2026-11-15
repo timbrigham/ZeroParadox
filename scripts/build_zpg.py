@@ -1,12 +1,12 @@
 """
 Zero Paradox — ZP-G: Category Theory PDF Builder
-Version 1.30 | November 2026
+Version 1.31 | November 2026
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.30'
+VERSION = '1.31'
 FIRST_RELEASED = 'April 2026'
 
 # ZP-G uses a slightly different amber shade; override zp_utils default
@@ -496,8 +496,9 @@ def build():
             'Comparison with ZP-C (to be reconciled in ZP-H T-H2): ZP-C establishes that the discrete surprisal '
             'DF diverges (numerically, to &#8734;) along infinite sequences approaching 0 in Q<sub>2</sub>. T6 Part II '
             'establishes that I(X → 0) is undefined (domain-absent) for any X ≠ 0 in C. These are compatible: '
-            'ZP-H T-H2 shows that the two hold together, a conjunction of two separately proved '
-            'lemmas; its proof uses neither to prove the other (th2_singularity_compatibility).',
+            'ZP-H T-H2 shows that the two hold together. Its proof pairs Lemma T3 (hom(X, 0) = ∅, the fact '
+            'Part II rests on) with ZP-C Theorem T2, and uses neither to prove the other '
+            '(th2_singularity_compatibility).',
             'Status: DERIVED. Depends on AX-G1, AX-G2, D3, D5, D7\', I-KC, T6-a, T6-b, T6-c. OQ-G1 is closed. '
             'BA-G1 is no longer a premise of T6. ✓',
         ]
@@ -580,8 +581,8 @@ def build():
         ['OQ-G4',
          'Closed — ZP-H T-H2',
          'Reconciliation of categorical and ZP-C singularity characterizations. Resolved in ZP-H v1.0. '
-         'Undefined domain (ZP-G) and infinite accumulation (ZP-C) shown to hold together, a '
-         'conjunction of two separately proved lemmas; the proof uses neither to prove the other.'],
+         'Undefined domain (ZP-G) and infinite accumulation (ZP-C) shown to hold together: the proof '
+         'pairs ZP-G Lemma T3 with ZP-C Theorem T2 and uses neither to prove the other.'],
         ['I-KC',
          'Import — named dependency',
          'Conditional Kolmogorov complexity K(x|y) and the coding theorem, imported from ZP-C D1 and '
