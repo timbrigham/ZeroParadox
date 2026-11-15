@@ -1,11 +1,12 @@
 name: Complete Project
 
 # Runs on every pull request into main and every push to main, with no path filter: the four
-# gating workflows (Complete Project, Verification suite, Axiom Ledger, Minimal Core) share one
+# CI workflows (Complete Project, Verification suite, Axiom Ledger, Minimal Core) share one
 # cadence there, so a pull request into main always carries all four results.
-# The weekly scheduled run is the COLD BUILD: it skips the Lake build cache restore below, so
-# every corpus module is elaborated in that run and the footprint count it prints is the one to
-# hold cached runs against (see CORPUS_FOOTPRINT_FLOOR).
+# The weekly scheduled run is the COLD BUILD: it skips the Lake build cache restore below, and
+# the report is passed `--require-cold`, so the run fails if its log shows any corpus module
+# `Replayed`. Its footprint count is the one to hold cached runs against (see
+# CORPUS_FOOTPRINT_FLOOR).
 on:
   push:
     branches:
@@ -32,11 +33,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      # The report fails when the build log records fewer distinct declarations with an axiom
-      # footprint than this. Source: Complete Project job 131631685723 on main, 2026-11-13, a
-      # cold corpus build (259 `Built ZeroParadox.*` lines, no `Replayed` line), whose report
-      # printed "764 axiom-free, 2775 with a footprint" = 3539. Lower it deliberately, in the
-      # same change, when declarations are removed; raise it from a later cold run's count.
+      # The report fails when the build log records `#print axioms` results for fewer distinct
+      # declarations than this (axiom-free ones included); at or above it, it passes. Source:
+      # Complete Project job 131631685723 on main, 2026-11-13, a cold corpus build (259 `Built
+      # ZeroParadox.*` lines, no `Replayed` line), whose report printed "764 axiom-free, 2775
+      # with a footprint" = 3539. It is set by hand: lower it deliberately, in the same change,
+      # when declarations are removed, and raise it by hand from a later cold run's count.
       CORPUS_FOOTPRINT_FLOOR: '3539'
     steps:
       - uses: actions/checkout@v5
@@ -54,8 +56,11 @@ jobs:
       # `.lake/build/lib/lean/ZeroParadox/Miniature.trace`), so a changed source or import is
       # rebuilt and its errors are reported. An up-to-date module REPLAYS its stored log:
       # measured 2026-11-15 on ZeroParadox.Miniature, a build then an unchanged rebuild printed
-      # `Built` then `Replayed` and the same 9 `#print axioms` lines both times. The floor above
-      # fails the report if replay ever thins the log. Only a run whose build and report passed
+      # `Built` then `Replayed` and the same 9 `#print axioms` lines both times; measured
+      # 2026-11-15 again with a trailing comment line appended to that file, the next build
+      # printed `Built` for it, not `Replayed`. The floor above fails the report if replay thins
+      # the log below the floor; a drop that stays at or above it is not caught, which is why
+      # the floor is raised by hand after a cold run. Only a run whose build and report passed
       # saves.
       # UNTRACKED INPUTS: no corpus module reads a file Lake does not trace (searched
       # `ZeroParadox/**/*.lean`, the root `.lean` files and `lakefile.toml` for include_str,
@@ -68,8 +73,7 @@ jobs:
       # LIMITS (actions/cache README at caa29612): 10 GB of caches per repository, least
       # recently used evicted first, and anything unused for a week evicted. A cache is scoped
       # to its branch, and the default branch's cache is available to other branches, so a
-      # pull request into main restores main's cache; what a pull-request run saves is scoped
-      # to that pull request.
+      # pull request into main restores main's cache.
       - name: Compute the Lake build cache key
         id: lake-key
         run: |
@@ -102,12 +106,18 @@ jobs:
           echo "lake build exited ${BUILD_RC}"
           # pipefail IS required here: without it the step inherits tee's status and a
           # failing report is silently green.
+          # On the weekly cold build only, the report also fails if any corpus module was
+          # `Replayed`, so "cold" is read from the log rather than assumed.
+          COLD=()
+          if [ "${{ github.event_name }}" = "schedule" ]; then COLD=(--require-cold); fi
           set -o pipefail
           python3 scripts/corpus_verification_report.py build.log "${BUILD_RC}" \
-            "${CORPUS_FOOTPRINT_FLOOR}" | tee -a "$GITHUB_STEP_SUMMARY"
+            "${CORPUS_FOOTPRINT_FLOOR}" "${COLD[@]}" | tee -a "$GITHUB_STEP_SUMMARY"
       # Saves only when the step above passed (lake exited 0 and the report accepted it,
-      # floor included), and only when the restore was not already an exact hit for this key.
-      # The cold build saves too, so the weekly run also refreshes the cache.
+      # floor and cold check included), and only when the restore was not already an exact hit
+      # for this key. The cold build also saves, which creates a cache entry only when none
+      # exists for this key; it never replaces one (actions/cache README at caa29612: if the key
+      # matches an existing cache, a new cache is not created).
       - name: Save the Lake build cache
         if: success() && steps.lake-cache.outputs.cache-hit != 'true'
         uses: actions/cache/save@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
