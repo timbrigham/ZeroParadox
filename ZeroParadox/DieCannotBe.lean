@@ -61,6 +61,7 @@ import ZeroParadox.Valuation.DoublingAndTree
 import ZeroParadox.State.DieProjection
 import ZeroParadox.State.QubitDie
 import ZeroParadox.State.FermiStepDie
+import ZeroParadox.Order.MotionFlips
 
 set_option maxHeartbeats 400000
 
@@ -2857,6 +2858,17 @@ example (c : Nat.Partrec.Code) (hk : Encodable.encode c ≠ 0) :
   ⟨⟨ZeroParadox.ordinalSuccMotion_agree,
       ZeroParadox.Motion.not_loop_of_agree ZeroParadox.ordinalSuccMotion_agree⟩,
     ZeroParadox.shiftMotion_oppose c, ZeroParadox.shiftMotion_loop c hk⟩
+#check @ZeroParadox.Motion.upOverLoop_iff_loop   -- Statement: an up-then-over loop (`UpOverLoop`) exists iff `Loop` does; both directions. Reading: one cycle entered at either leg, as Mathlib's `Function.IsPeriodicPt.map` rotates a cycle of `g ∘ f` to one of `f ∘ g`
+#check @ZeroParadox.z2TowerMotion_loop           -- Statement: `z2TowerMotion` on ℤ_[2] (UP constant 0, OVER the tower's `cnfToZp2` images) loops; its content is `snap_arc_z2_loop`
+#check @ZeroParadox.z2_no_agreeing_order         -- Statement: so no partial order on ℤ_[2] makes both its legs raise
+#check @ZeroParadox.z2_valuation_oppose          -- Statement: under `PadicInt.valuation`, 0 is least and OVER adds one per stage
+#check @ZeroParadox.z2_norm_drift                -- Statement: DRIFT, under the norm, 0 is least, OVER rises at the seed and falls from stage 1
+#check @ZeroParadox.Motion.loop_not_reverse_invariant -- Statement: some looping motion on `Bool` (`boolOneWayMotion`) has a reverse that does not loop
+#check @ZeroParadox.z2TowerMotion_reverse_not_loop -- Statement: `z2TowerMotion.reverse` does not loop
+-- Reading: Tim, 2026-11-14: "that move can be both rotated and flipped I think". INVARIANT: rotation (which
+-- leg first) and the order dual keep `Loop`, which takes no order; time reversal (`Motion.reverse`)
+-- can remove it. `Agree` excludes a loop (`not_loop_of_agree`); `Oppose` permits one without forcing it
+-- (the ℕ control above).
 -- Reading: one-way "cannot be" as membership in two trap sets, `{y | ∀ a, step a y → a = y}`
 -- (the points stepped into only from themselves or from nothing) and `{y | ∀ b, step y b → b = y}`
 -- (the points stepping only to themselves or nowhere). Each trap theorem below uses one datum, named in
