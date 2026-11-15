@@ -119,17 +119,17 @@ theorem th1_fd (n : ℕ) (hn : 2 ≤ n) :
 ZPG characterizes the singularity as domain absence: hom(X, 0) = ∅ for X ≇ 0 (T3/AX-G2).
 ZPC characterizes it as infinite accumulation: the partial circulation
 `circPartial n = I(n+1) − I(1)` is unbounded above (t2_diverges). These are compatible: both hold.
-No comparison of strength between them is proved here: the theorem below pairs two separately
-proved lemmas, `t3_unreachability` and `t2_diverges`, and uses neither to prove the other. `Reading:` if
+No comparison of strength between them is proved here: the theorem below pairs ZP-G Lemma T3
+(`t3_unreachability`) with ZP-C Theorem T2 (`t2_diverges`) and uses neither to prove the other. `Reading:` if
 infinite accumulation is required to reach 0, no finite morphism reaches it — an informal
-link running from divergence toward absence, not a theorem. That both hold together (a pair of
-separately proved lemmas) closes OQ-G4. -/
+link running from divergence toward absence, not a theorem. That both hold together (ZP-G Lemma T3
+paired with ZP-C Theorem T2) closes OQ-G4. -/
 
 /-- T-H2: Both singularity characterizations hold together.
     Part I (ZPG side): hom(X, 0) = ∅ for any X not isomorphic to 0 — domain-absent.
     Part II (ZPC side): the partial circulation `circPartial n` is unbounded above.
-    `Statement:` a pair `⟨t3_unreachability X hne, t2_diverges⟩`: the two conjuncts are proved by
-    separate lemmas, and this theorem only pairs them. -/
+    `Statement:` a pair `⟨t3_unreachability X hne, t2_diverges⟩`: the two conjuncts are ZP-G Lemma T3
+    and ZP-C Theorem T2, and this theorem only pairs them. -/
 theorem th2_singularity_compatibility {C : Type*} [Category C] [zpcat : ZPCategory C]
     (X : C) (hne : IsEmpty (X ≅ zpcat.zpInitial)) :
     IsEmpty (X ⟶ zpcat.zpInitial) ∧

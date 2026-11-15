@@ -461,12 +461,17 @@ run as Mathlib's delay type `Computation Unit` through `toComp`. -/
 --   `D`. A predicate (`def … : Prop`), not a class field; the theorems that need it take it as a
 --   hypothesis.
 #check @ZeroParadox.ReachesEveryCode
--- Statement: the self-printing universal codes form an infinite set, and the events
---   `{w | D w = some c}` of distinct codes are pairwise disjoint, both unconditionally; and if `D`
---   reaches every code for `μ`, each self-printing universal code has positive `μ`-mass under `D`,
---   and so does their union.
+-- Statement: if `D` reaches every code for `μ`: the self-printing universal codes form an infinite
+--   set, the events `{w | D w = some c}` of distinct codes are pairwise disjoint, each self-printing
+--   universal code has positive `μ`-mass under `D`, and so does their union. The first two hold
+--   without the hypothesis: `selfref_universal_infinite` (§ III) and the `example` below.
 -- Reading: Tim (2026-11-15): "So it's not just one program. It's all programs".
 #check @ZeroParadox.selfref_universal_reached
+-- Statement: for every decoder `D`, with no hypothesis on it, the events `{w | D w = some c}` of
+--   distinct codes are pairwise disjoint.
+example (D : (ℕ → Bool) → Option Nat.Partrec.Code) :
+    Pairwise (fun c c' : Nat.Partrec.Code => Disjoint {w | D w = some c} {w | D w = some c'}) :=
+  fun _ _ hne => Set.disjoint_left.2 fun _ h h' => hne (Option.some.inj (h.symm.trans h'))
 -- Statement: WITNESS, for `0 < p < 1`, `gapDecode` reaches every code for `trials p hp`, and is
 --   `none` on a `trials p hp`-null set.
 #check @ZeroParadox.gapDecode_mem
