@@ -556,8 +556,8 @@ when they agree off a `trials p hp`-null set. Pointwise chart: predicates read a
 somewhere fails at ⊥ of `ℕ → Bool` and at no other tape (the § II CONTROL `example`); for `0 < p`
 that tape is null, and the quotient forgets it along with every other null set, the tapes silent
 from `k` on among them (`trials_localFloor_null`). The two charts are the almost-surely versus surely
-distinction. Prior art: on measurable predicates the quotient chart is the measure algebra of
-`trials p hp`, Σ modulo its null ideal (Fremlin, *Measure Theory* Vol. 3, §321H, named in §321I). -/
+distinction. Prior art: on measurable predicates the quotient chart is the Boolean algebra Σ modulo
+its null ideal, which underlies the measure algebra of `trials p hp` (Fremlin, *Measure Theory* Vol. 3, §321H, named in §321I). -/
 
 /-- `Statement:` if `0 < p ≤ 1` and `φ : Bool → L` sends `false` to ⊥ of `L` and `true` to a point
 other than ⊥ of `L`, then `trials p hp`-almost every tape `w` fires and gives `t_snap_of_fires_once`'s

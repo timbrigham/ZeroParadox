@@ -29,8 +29,8 @@ itself is an antichain (`simplex_antichain`), hence well-founded.
 
 `no_strictMono_real_to_ordinal` (E4) already proved there is **no direct** order map ℝ → Ordinal.
 This file asks the strictly stronger question the framework's own G-construction would face: is the wall
-robust against a **span** — a common apex object `S` mapping order-preservingly to *both* the
-well-founded Ordinal leg and the non-well-founded carrier taken for the attractor (ℝ)? A span that reconciled would mean
+robust against a **span** — a common apex object `S` mapping strictly order-preservingly to the
+well-founded Ordinal leg and order-preservingly to the non-well-founded carrier taken for the attractor (ℝ)? A span that reconciled would mean
 the root cut is only an obstruction-to-direct-maps; an obstruction even to spans means the well-founded
 wall is a genuine invariant.
 
