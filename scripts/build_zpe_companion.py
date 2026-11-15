@@ -1,6 +1,6 @@
 """
 Build ZP-E Illustrated Companion
-Version 1.46 | November 2026
+Version 1.47 | November 2026
 """
 
 import os
@@ -175,7 +175,7 @@ def axioms_table():
     t = Table(data, colWidths=[TW*0.18, TW*0.82])
     t.setStyle(ts); return t
 
-VERSION = '1.46'
+VERSION = '1.47'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -272,7 +272,8 @@ def build():
         'for the first transition from c&#8320;, &#8869; of MachinePhase, to c&#8321; (the state this discrete '
         'chart names &#949;&#8320;) — a transition whose SHAPE ZP-E proves (T-SNAP, t_snap_derived) and whose '
         'occurrence follows from the occurrence commitment together with DA-1: no join-semilattice compels '
-        'the occurrence. A join-semilattice in which T-SNAP holds and '
+        'the occurrence, since in every one the sequence that stays at its ⊥ is a state sequence that never '
+        'steps (the generic NO-GO example in ZeroParadox/Valuation/SemilatticeInstance.lean). A join-semilattice in which T-SNAP holds and '
         'nothing moves is exhibited in the Lean source.'))
     E.append(sp(6))
 

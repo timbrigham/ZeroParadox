@@ -1,12 +1,12 @@
 """
 Zero Paradox — ZP-H: Categorical Bridge PDF Builder
-Version 1.39 | November 2026
+Version 1.40 | November 2026
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.39'
+VERSION = '1.40'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -93,11 +93,11 @@ def build():
             'D7\': Native categorical surprisal I(f) = K(x<sub>B</sub>|x<sub>A</sub>) via I-KC (replaces D7/BA-G1 from v1.0)',
             'I-KC: Conditional Kolmogorov complexity K(x|y) imported from ZP-C — named dependency, not bridge axiom',
             'AX-G1: Asymmetry Axiom — C has initial object 0, no terminal object',
-            'AX-G2: Source Asymmetry — hom(X, 0) = <font name="DV">&#8709;</font> for X &#8800; 0',
+            'AX-G2: Source Asymmetry — hom(X, 0) = <font name="DV">&#8709;</font> for X not isomorphic to 0',
             'R-BA: Leinster categorical entropy characterization [Compatibility Remark — BA-G1 demoted from Bridge Axiom in ZP-G v1.1. No longer a theorem premise.]',
             'T1: Initial object unique up to unique isomorphism',
             'T2: Universal Constituent — &#8704;X &#8712; ob(C), &#8707;! &#953;<sub>X</sub>: 0 &#8594; X',
-            'T3: Unreachability — hom(X, 0) = <font name="DV">&#8709;</font> for X &#8800; 0',
+            'T3: Unreachability — hom(X, 0) = <font name="DV">&#8709;</font> for X not isomorphic to 0',
             'T4: Chains are forward-only — no chain returns to 0',
             'T5: Functors preserve initial objects [OQ-G2 closed in ZP-H T-H1]',
             'T6: Informational singularity of 0 — outward surprisal accumulates; inward undefined [rebuilt in ZP-G v1.1 on D7\'; BA-G1 not a dependency]',
@@ -166,7 +166,7 @@ def build():
             'A morphism f: A &#8594; B in C is a state transition: a structure-preserving map from state A to state B satisfying:',
             '(i) Forward direction: Every morphism f: A &#8594; B represents a net addition of informational content. '
             'No morphism reduces state.',
-            '(ii) Compatibility with AX-G2: For any non-initial object X &#8800; 0, no morphism X &#8594; 0 exists. D-H1(i) '
+            '(ii) Compatibility with AX-G2: For any non-initial object X (not isomorphic to 0), no morphism X &#8594; 0 exists. D-H1(i) '
             'and AX-G2 are consistent: a net-additive transition cannot return to the minimal state 0.',
             '(iii) Composition: Composition of morphisms corresponds to sequential state accumulation. f: A &#8594; B '
             'followed by g: B &#8594; C produces a state at least as large as B.',
@@ -379,7 +379,7 @@ def build():
         'Theorem T-H2 — Compatibility of Singularity Characterizations',
         'Status: Derived — OQ-G4 closed',
         [
-            'Claim: The categorical singularity (undefined domain: hom(X, 0) = <font name="DV">&#8709;</font> for X &#8800; 0, '
+            'Claim: The categorical singularity (undefined domain: hom(X, 0) = <font name="DV">&#8709;</font> for X not isomorphic to 0, '
             'ZP-G Lemma T3, on which ZP-G T6 Part II rests) and the ZP-C singularity (infinite '
             'accumulation, ZP-C Theorem T2) hold together: a conjunction of the two, and the '
             'proof uses neither to prove the other.',
@@ -388,7 +388,7 @@ def build():
             'sequence {x<sub>n</sub>} in Q<sub>2</sub> approaches 0 &#8712; Q<sub>2</sub>.',
             'ZP-C side: By ZP-C T2, the discrete surprisal DF along the infinite sequence {x<sub>n</sub>} approaching 0 in '
             'Q<sub>2</sub> is non-conservative: the accumulated surprisal &#8721; DF(x<sub>k</sub> &#8594; x<sub>k+1</sub>) diverges as n &#8594; &#8734;. The singularity is infinite accumulation.',
-            'ZP-G side: By ZP-G T6(ii), I(X &#8594; 0) is undefined for all X &#8800; 0 because hom(X, 0) = <font name="DV">&#8709;</font> (AX-G2). The singularity is undefined domain.',
+            'ZP-G side: By ZP-G T6(ii), I(X &#8594; 0) is undefined for all X not isomorphic to 0 because hom(X, 0) = <font name="DV">&#8709;</font> (AX-G2). The singularity is undefined domain.',
             'Reconciliation: The two characterizations are compatible: both hold. '
             'In ZP-C, we ask: what happens to surprisal as we approach 0 along an infinite sequence? The '
             'answer is divergence — the accumulation is unbounded. In ZP-G, we ask: can we reach 0 by a '
@@ -552,7 +552,7 @@ def build():
          'kleisli_bottom_not_terminal in ZeroParadox/Category/TreeSeam.lean). Not a gap.'],
         ['AX-G2',
          'Axiom —\nnot novel\nwhere it holds',
-         'Source asymmetry: hom(X, 0) = ∅ for X ≠ 0. Inherited from ZP-G. '
+         'Source asymmetry: hom(X, 0) = ∅ for X not isomorphic to 0. Inherited from ZP-G. '
          'Not a novel commitment where it holds: in a category built from a partial order with a least element, such as ZP-A\'s '
          'semilattice order and the &#8469;-indexed depth categories ZP-H\'s Lean functors land in, a morphism X &#8594; 0 means X &#8804; 0, '
          'so X = 0 by antisymmetry (for the depth categories, the ax_g2 fields of q2BallZPCat, infoDepthZPCat and hilbDimZPCat in '
