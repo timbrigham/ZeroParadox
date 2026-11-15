@@ -18,8 +18,8 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 ## Formal Overview (AI-assisted)
 An up-then-over loop exists iff `Motion.Loop` does (§ I). `z2TowerMotion` on ℤ_[2] loops, so no partial
-order makes its legs agree; under the valuation its legs oppose (§ II). Reversing the step, which keeps
-UP, does not preserve `Loop` (§ III).
+order makes its legs agree; ordered by Mathlib's ℕ-valued valuation (0 ↦ 0) its legs oppose, ordered by
+the additive valuation (0 ↦ ⊤) they neither agree nor oppose (§ II). Reversal does not keep `Loop` (§ III).
 -/
 
 set_option maxHeartbeats 400000
@@ -44,11 +44,12 @@ example {α : Type u} (f g : α → α) (n : ℕ) (x : α) (h : Function.IsPerio
     Function.IsPeriodicPt (f ∘ g) n (f x) :=
   h.map (fun _ => rfl)
 
--- Statement: CONTROL, agreeing legs exclude the up-then-over loop too (`Motion.not_loop_of_agree`).
+-- Statement: corollary, in a partial order agreeing legs exclude the up-then-over loop too
+-- (`Motion.not_loop_of_agree` through `upOverLoop_iff_loop`).
 example {α : Type u} [PartialOrder α] (M : Motion α) (h : M.Agree) : ¬ M.UpOverLoop :=
   fun hl => Motion.not_loop_of_agree h ((Motion.upOverLoop_iff_loop M).1 hl)
 
-/-! ### § II. The 2-adic tower as a motion: it loops, and its legs oppose under the valuation -/
+/-! ### § II. The 2-adic tower as a motion: it loops; its leg polarity under two orders -/
 
 /-- `Statement:` on ℤ_[2], UP sends every point to 0 and OVER steps the `cnfToZp2` image of tower
 stage `n` to that of stage `n + 1`. The constant UP is this definition's choice. -/
@@ -68,7 +69,9 @@ theorem z2_no_agreeing_order (inst : PartialOrder ℤ_[2]) :
   exact Motion.not_loop_of_agree h z2TowerMotion_loop
 
 /-- `Statement:` under Mathlib's ℕ-valued `PadicInt.valuation`, 0 has the least value, and the image
-of stage `n + 1` has the value of stage `n` plus one. -/
+of stage `n + 1` has the value of stage `n` plus one. That 0 reads 0 is Mathlib's totalization
+(`ZeroParadox/DieCannotBe.lean` § VI); the additive valuation reads it ⊤ (`addVal_bot`), and the second
+`example` after `z2_norm_drift` is that chart. -/
 theorem z2_valuation_oppose :
     (∀ x : ℤ_[2], (0 : ℤ_[2]).valuation ≤ x.valuation) ∧
     (∀ n, (cnfToZp2 (towerNONote (n + 1))).valuation = (cnfToZp2 (towerNONote n)).valuation + 1) :=
@@ -88,6 +91,32 @@ theorem z2_norm_drift :
       PadicInt.norm_eq_zpow_neg_valuation (snap_arc_z2_loop.2.1 n hn),
       cnfToZp2_tower_valuation, cnfToZp2_tower_valuation]
     exact zpow_lt_zpow_right₀ (by norm_num) (by omega)
+
+-- Statement: ordered by Mathlib's ℕ-valued valuation (`x ≤ y` iff `valuation x ≤ valuation y`),
+-- `z2TowerMotion`'s legs oppose.
+example : let L : LE ℤ_[2] := ⟨fun x y => x.valuation ≤ y.valuation⟩
+    @Motion.Oppose ℤ_[2] z2TowerMotion L := by
+  intro L
+  refine ⟨fun x y hy => ?_, fun x y ⟨n, hx, hy⟩ => ?_⟩
+  · show y.valuation ≤ x.valuation
+    rw [Part.mem_some_iff.1 hy]; exact z2_valuation_oppose.1 x
+  · subst hx; subst hy
+    show (cnfToZp2 (towerNONote n)).valuation ≤ (cnfToZp2 (towerNONote (n + 1))).valuation
+    rw [z2_valuation_oppose.2 n]; exact Nat.le_succ _
+
+-- Statement: ordered by the additive valuation, read through the norm (`x ≤ y` iff `‖y‖ ≤ ‖x‖`, so
+-- ℤ_[2]'s 0 is greatest), UP raises and `z2TowerMotion`'s legs neither oppose nor agree.
+example : let L : LE ℤ_[2] := ⟨fun x y => ‖y‖ ≤ ‖x‖⟩
+    @Motion.UpRaises ℤ_[2] z2TowerMotion L ∧ ¬ @Motion.Oppose ℤ_[2] z2TowerMotion L ∧
+      ¬ @Motion.Agree ℤ_[2] z2TowerMotion L := by
+  intro L
+  have hup : @Motion.UpRaises ℤ_[2] z2TowerMotion L := fun x y hy => by
+    show ‖y‖ ≤ ‖x‖
+    rw [Part.mem_some_iff.1 hy, norm_zero]; exact norm_nonneg _
+  have hseed : ¬ @Motion.StepRaises ℤ_[2] z2TowerMotion L := fun h => by
+    have := h _ _ ⟨0, rfl, rfl⟩
+    exact absurd this (not_le.2 z2_norm_drift.2.1)
+  exact ⟨hup, fun h => hseed h.2, fun h => hseed h.2⟩
 
 /-! ### § III. Which way time runs: reversal can remove a loop -/
 

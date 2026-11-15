@@ -792,12 +792,14 @@ example : ZeroParadox.Disjunctive (fun n => xor (ZeroParadox.champ n) false) := 
 
 /-! ### One ensemble, two faces: the law and its members -/
 
--- Statement: one ensemble, `fairTape`: exactly one coin maximizes binary entropy; almost every tape is
--- incompressible for every prefix-free decoder; ⊥ of `ℕ → Bool` is not Martin-Löf random for it and
+-- Statement: one ensemble, `fairTape`: exactly one coin maximizes binary entropy (its `trials` is
+-- `fairTape`, `trials_eq_fairTape_of_maxEntropy`, not a conjunct); for each prefix-free decoder `D`,
+-- almost every tape is incompressible for `D`; ⊥ of `ℕ → Bool` is not Martin-Löf random for it and
 -- is in the closure of its random firing tapes.
 #check @ZeroParadox.tape_totality_two_faces
--- Statement: CONTROL, a two-element set holding ⊥ of `ℕ → Bool` and a random tape is `fairTape`-null,
--- so containing a minimal and a maximal member is not the content (`fairTape_singleton_null`).
+-- Statement: CONTROL, a two-element set holding ⊥ of `ℕ → Bool` and a random tape is `fairTape`-null
+-- (`fairTape_singleton_null`).
+-- Reading: containing a minimal and a maximal member is not the content of the reading below.
 #check @ZeroParadox.both_faces_in_null_set
 -- Reading: COINCIDENCE, in the tape chart: minimal as the law (one condition), maximal as almost every
 -- member, the all-false tape inside as a limit. Tim, 2026-11-15: "Could we restate bottom as being both

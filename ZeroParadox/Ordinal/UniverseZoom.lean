@@ -19,8 +19,8 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 ## Formal Overview (AI-assisted)
 Below `Ordinal.univ` a copy of the lower level, and `succ univ` outside it (§ I); lifting fixes ε₀,
-and `univ` is the least fixed point of `α ↦ ω^α` above every lift (§ II); `roleAbove` gives ε₀ at
-`{0}` and `univ` at the range of `lift` (§ III).
+and `univ`, the least ordinal above every lift, is fixed by `α ↦ ω^α` (§ II); `roleAbove` gives ε₀
+at `{0}` and `univ` at the range of `lift` (§ III).
 -/
 
 set_option maxHeartbeats 400000
@@ -68,7 +68,7 @@ theorem over_univ_reveals_frame :
 example (c : Ordinal.{u}) : ∃ d : Ordinal.{u}, lift.{u + 1} d = succ (lift.{u + 1} c) :=
   ⟨c + 1, by rw [Order.succ_eq_add_one, Ordinal.lift_add_one]⟩
 
-/-! ### § II. Lifting commutes with `α ↦ ω^α`; `univ` is its least fixed point above the copy -/
+/-! ### § II. Lifting commutes with `α ↦ ω^α`; `univ`, least above the copy, is a fixed point -/
 
 /-- `Statement:` `lift (ω ^ b) = ω ^ lift b`. An `Ordinal` form was not located in Mathlib as of
 2026-11-15, searched: every file under `Mathlib/SetTheory` for `lift.*opow`, `opow.*lift` and
@@ -120,7 +120,11 @@ theorem univ_isSuccLimit : IsSuccLimit univ.{u, u + 1} := by
   rw [Order.succ_eq_add_one, ← Ordinal.lift_add_one]
   exact lt_univ_of_lift _
 
-/-- `Statement:` `ω ^ univ = univ`. -/
+/-- `Statement:` `ω ^ univ = univ`. The standard fact that the initial ordinal of an uncountable
+cardinal is an ε-number, at `univ = Cardinal.univ.ord` (Mathlib's `Cardinal.ord_univ`); the nearest
+Mathlib neighbour is `Ordinal.isPrincipal_opow_ord` (the initial ordinal of an infinite cardinal is
+closed under `^`). An `ω ^ univ = univ` form was not located by `exact?` at the pinned Mathlib as of
+2026-11-15. -/
 theorem omega_opow_univ : ω ^ univ.{u, u + 1} = univ.{u, u + 1} := by
   apply le_antisymm
   · refine (opow_le_of_isSuccLimit omega0_ne_zero univ_isSuccLimit).2 ?_
@@ -131,7 +135,8 @@ theorem omega_opow_univ : ω ^ univ.{u, u + 1} = univ.{u, u + 1} := by
   · exact (isNormal_opow one_lt_omega0).strictMono.id_le _
 
 /-- `Statement:` `univ.{u, u+1}` is the least ordinal of `Ordinal.{u+1}` that is above every lift and
-fixed by `α ↦ ω^α`. -/
+fixed by `α ↦ ω^α`. The fixed-point clause selects nothing: `univ` is already the least ordinal above
+every lift (`lift_of_lt_univ`), and it is fixed (`omega_opow_univ`). -/
 theorem univ_isLeast_above_level :
     IsLeast {x : Ordinal.{u + 1} | (∀ o : Ordinal.{u}, lift.{u + 1} o < x) ∧ ω ^ x = x}
       univ.{u, u + 1} :=
@@ -146,10 +151,19 @@ theorem epsilon_zero_lt_univ : Ordinal.epsilon.{u + 1} 0 < univ.{u, u + 1} := by
 
 /-! ### § III. One construction at two floors -/
 
-/-- `Statement:` the least fixed point of `α ↦ ω^α` strictly above every point of `S`. At a point
-floor it is the § I-b role of `ZeroParadox/Ordinal/Epsilon0CannotBe.lean`, credited there. -/
+/-- `Statement:` `sInf` of the fixed points of `α ↦ ω^α` strictly above every point of `S`: the least
+one when one exists (`roleAbove_eq_of_isLeast`); for an unbounded `S` it is `sInf ∅ = 0`, ⊥ of
+`Ordinal`, a junk value, never a role (CONTROL below). At a point floor it is the § I-b role of
+`ZeroParadox/Ordinal/Epsilon0CannotBe.lean`, credited there. -/
 noncomputable def roleAbove (S : Set Ordinal.{u}) : Ordinal.{u} :=
   sInf {x | ω ^ x = x ∧ ∀ s ∈ S, s < x}
+
+-- Statement: CONTROL, at the unbounded `Set.univ` no fixed point lies above every point, and
+-- `roleAbove` returns 0, ⊥ of `Ordinal`.
+example : roleAbove (Set.univ : Set Ordinal.{u}) = 0 := by
+  have h : {x : Ordinal.{u} | ω ^ x = x ∧ ∀ s ∈ (Set.univ : Set Ordinal.{u}), s < x} = ∅ :=
+    Set.eq_empty_of_forall_notMem fun x hx => lt_irrefl x (hx.2 x trivial)
+  unfold roleAbove; rw [h, Ordinal.sInf_empty]
 
 /-- `Statement:` if `a` is least among the fixed points of `α ↦ ω^α` strictly above every point of
 `S`, then `roleAbove S = a`. -/
