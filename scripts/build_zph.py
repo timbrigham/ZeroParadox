@@ -1,12 +1,12 @@
 """
 Zero Paradox — ZP-H: Categorical Bridge PDF Builder
-Version 1.37 | November 2026
+Version 1.38 | November 2026
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.37'
+VERSION = '1.38'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -380,7 +380,8 @@ def build():
         'Status: Derived — OQ-G4 closed',
         [
             'Claim: The categorical singularity (undefined domain, ZP-G T6) and the ZP-C singularity (infinite '
-            'accumulation, ZP-C T2) hold together: a conjunction, and neither is derived from the other.',
+            'accumulation, ZP-C T2) hold together: a conjunction of two separately proved lemmas, and the '
+            'proof uses neither to prove the other.',
             'Setup (motivation only; th2_singularity_compatibility involves neither F<sub>C</sub> nor F<sub>B</sub>): Let {X<sub>n</sub>} be a sequence of objects in C such that the corresponding sequence {F<sub>C</sub>(X<sub>n</sub>)} = '
             '{P<sub>n</sub>} in InfoSp approaches F<sub>C</sub>(0) = P = (1, 0) in distribution. Under F<sub>B</sub>, the corresponding '
             'sequence {x<sub>n</sub>} in Q<sub>2</sub> approaches 0 &#8712; Q<sub>2</sub>.',
@@ -394,7 +395,7 @@ def build():
             'accumulation required to reach 0 is infinite, then no finite morphism can accomplish it; that link '
             'runs from divergence toward absence and is a reading, not a theorem.',
             'Lean: th2_singularity_compatibility pairs t3_unreachability (the ZP-G side) with t2_diverges (the '
-            'ZP-C side): the proof term is the pair of these two separately proved lemmas, so neither is derived from the other. '
+            'ZP-C side): the proof term is the pair of these two separately proved lemmas, and it uses neither to prove the other. '
             'OQ-G4 is closed in that sense. <font name="DV">&#10003;</font>',
         ]
     ))
@@ -532,7 +533,8 @@ def build():
          'Closed — T-H2',
          'Reconciliation of categorical (undefined domain) and ZP-C (infinite accumulation) '
          'singularity characterizations. Resolved in Section V. The two characterizations '
-         'are shown to hold together, a conjunction; neither is derived from the other.'],
+         'are shown to hold together, a conjunction of two separately proved lemmas; the proof uses '
+         'neither to prove the other.'],
         ['AX-1',
          'Retired —\nshape: T-SNAP\n(ZP-E v2.0);\nthe snap occurs\ngiven the occurrence\ncommitment and DA-1',
          'Binary Snap Causality. AX-1 is retired. Its content was split in two: the shape of the Snap is '
@@ -614,7 +616,8 @@ def build():
          'Valid — OQ-G2 closed. ZP-G T5 is now unconditional for all four instantiation functors, for F<sub>B</sub> in its stand-in. <font name="DV">&#10003;</font>'],
         ['T-H2: Singularity reconciliation',
          'Valid — OQ-G4 closed. Categorical (undefined domain) and ZP-C (infinite accumulation) '
-         'shown to hold together, a conjunction; neither is derived from the other. <font name="DV">&#10003;</font>'],
+         'shown to hold together, a conjunction of two separately proved lemmas; the proof uses neither '
+         'to prove the other. <font name="DV">&#10003;</font>'],
         ['T-H3: Snap under all four functors',
          'Valid — Derived; cross-framework. T-SNAP inherited as derived theorem (ZP-E v2.0). '
          'DP-1 labelled as design premise. <font name="DV">&#10003;</font>'],
