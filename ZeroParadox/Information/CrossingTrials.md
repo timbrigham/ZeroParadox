@@ -2,7 +2,7 @@
 
 Ride-along for `ZeroParadox/Information/CrossingTrials.lean`. The Lean file holds the declarations, the
 Engineer's Take and the per-declaration glosses; this file holds the prior art, the open items and the
-two-chart reading for § IV–VII (`Reading:` CARRIER, § Two charts below), and the conditionals of § VIII and § IX below.
+two-chart reading for § IV–VII and for fence 2 of the Lean header (`Reading:` CARRIER, § Two charts below), and the conditionals of § VIII and § IX below.
 
 ## What the sections establish, as conditionals
 
@@ -196,10 +196,11 @@ of the motion; crossing is a property of one run; typicality is a property of a 
 
 `Reading:` CARRIER — fence 2 of the Lean header, in both charts
 (`ZeroParadox/Information/PoleWithinEnsemble.lean` § IX). Pointwise, measure one is not necessity: the
-all-`false` tape of `ℕ → Bool` is the one tape that never fires, and for every `φ` no `φ ∘ firedRun`
-from it steps at index 1 (`snap_fails_at_allFalse`). Modulo `trials p hp`-null sets, measure one IS the
-top element: for `0 < p ≤ 1`, "fires somewhere" is ⊤ of `Germ (ae (trials p hp)) Prop`
-(`fires_germ_eq_top`).
+all-`false` tape of `ℕ → Bool` is the one tape that never fires (uniqueness: `PoleWithinEnsemble.lean`
+§ II control), and for every `φ` no `φ ∘ firedRun` from it steps at index 1 (`snap_fails_at_allFalse`).
+Modulo `trials p hp`-null sets, this measure-one predicate IS the top element: for `0 < p ≤ 1`, "fires
+somewhere" is ⊤ of `Germ (ae (trials p hp)) Prop` (`fires_germ_eq_top`); at `p = 0` it is ⊥ of
+`Germ (ae (trials 0 hp)) Prop` (`fires_germ_eq_bot_zero`), so `0 < p` is load-bearing.
 
 `Reading:` CARRIER — the tension. In the valuation chart, `infinitude_forces_infinite_complexity`
 (`ZeroParadox/Valuation/InfinitudeFloor.lean`) gives complexity ⊤ (the top of `ℕ∞`) at the floor of any

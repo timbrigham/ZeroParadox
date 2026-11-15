@@ -92,10 +92,11 @@ block (`#print axioms`, 2026-10-04):
    all-false tape, which is not disjunctive (`allFalse_not_disjunctive`). Neither the commitment nor
    the standard theorem is in Lean (Search record).
 4. **`Code.zero`'s word is empty** (`codeWord_zero_width`), so presence there is vacuous.
-5. **The measure fences of `ZeroParadox/Information/CrossingTrials.lean` stand.** Pointwise, measure
-   one is not necessity: the all-`false` tape of `ℕ → Bool` is the one tape that never fires, and for
-   every `φ` no `φ ∘ firedRun` from it steps (`snap_fails_at_allFalse`). Modulo `trials p hp`-null
-   sets, measure one IS the top element: for `0 < p ≤ 1`, "fires somewhere" is ⊤ of
-   `Germ (ae (trials p hp)) Prop` (`fires_germ_eq_top`). Both charts are
+5. **The measure fences of `ZeroParadox/Information/CrossingTrials.lean` stand.** `Reading:` CARRIER.
+   Pointwise, measure one is not necessity: the all-`false` tape of `ℕ → Bool` is the one tape that
+   never fires (uniqueness: `ZeroParadox/Information/PoleWithinEnsemble.lean` § II control), and for
+   every `φ` no `φ ∘ firedRun` from it steps at index 1 (`snap_fails_at_allFalse`). Modulo
+   `trials p hp`-null sets, this measure-one predicate IS the top element: for `0 < p ≤ 1`, "fires
+   somewhere" is ⊤ of `Germ (ae (trials p hp)) Prop` (`fires_germ_eq_top`). Both charts are stated in
    `ZeroParadox/Information/PoleWithinEnsemble.lean` § IX. Nothing here says any framework object IS a
    fair-coin tape.
