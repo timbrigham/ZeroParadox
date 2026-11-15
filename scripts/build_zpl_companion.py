@@ -1,6 +1,6 @@
 """
 Build ZP-L Illustrated Companion
-Version 1.25 | November 2026
+Version 1.26 | November 2026
 Citation fence (Gentzen): the Convergence section's credits follow CLAIMS.md's Gentzen rows and are
 taken from Gentzen 1943 (Math. Ann. 119), the one primary paper filed here, never from a secondary
 source's labels. The 1936 consistency credit rests on Gentzen 1943, p. 140, footnote 2: the 1936
@@ -212,7 +212,7 @@ def dual_convergence_diagram():
     return d
 
 
-VERSION = '1.25'
+VERSION = '1.26'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -290,7 +290,7 @@ def build():
         'are also always somewhere on the path &#8212; never at the horizon. The horizon '
         '(&#949;&#8320;) is the limit of all those steps combined. It exists as a '
         'mathematical object, but no finite number of steps reaches it.',
-        'The ordinal tower works the same way. The snap that ZP-E proved occurs at &#949;&#8320; '
+        'The ordinal tower works the same way. The snap that the canonical map takes at &#949;&#8320; (ZP-L) '
         'is not a step you can take from inside the tower. It is the point where the tower '
         'stops and something new begins.',
     ]))
