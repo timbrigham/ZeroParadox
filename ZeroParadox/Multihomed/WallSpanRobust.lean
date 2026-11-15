@@ -40,7 +40,7 @@ every well-founded apex in the same universe as the ordinals escapes it (`faithf
 The load-bearing content is in the statements (not the prose):
 
 - `apex_wf_of_strictMono_to_ordinal` — the **invariant**: for ANY relation `r` on ANY apex `S`, a map
-  `f : S → Ordinal` with `r a b → f a < f b` (an order-preserving leg into the well-founded ordinal
+  `f : S → Ordinal` with `r a b → f a < f b` (a strictly order-preserving leg into the well-founded ordinal
   carrier) forces `WellFounded r`. Well-foundedness pulls back along the ordinal leg, period.
 
 - `no_faithful_span_to_ordinal_and_descending` — the **robust wall**, in-statement: there is NO apex
@@ -69,9 +69,9 @@ namespace ZeroParadox
 
 open ZeroParadox
 
-/-! ## The invariant: order-preserving leg into the well-founded ordinal carrier -/
+/-! ## The invariant: strictly order-preserving leg into the well-founded ordinal carrier -/
 
-/-- **The pullback invariant.** For any relation `r` on any apex `S`, an order-preserving leg
+/-- **The pullback invariant.** For any relation `r` on any apex `S`, a strictly order-preserving leg
     `f : S → Ordinal` (`r a b → f a < f b`) forces `WellFounded r`: well-foundedness of `<` on the
     ordinals pulls back along `f`. This is the engine of the robust wall — the well-founded leg of any
     span imposes well-foundedness on the apex. -/
@@ -105,7 +105,7 @@ theorem descending_apex_obstructs_padic_span :
 /-! ## One escape: the trivial bottoms-only span (degenerate; every well-founded apex in the same universe as the ordinals also escapes) -/
 
 /-- **The NO-GO escape, in-statement.** The single-point apex `PUnit` DOES span #1 and #2: its `<`
-    maps order-preservingly to `0 : Ordinal` (vacuously — `PUnit` has no `<`-pair) and its unique
+    maps strictly order-preservingly to `0 : Ordinal` (vacuously — `PUnit` has no `<`-pair) and its unique
     point lands at a chosen simplex point (here the one point of `stdSimplex ℝ (Fin 1)`, not the
     Markov node's simplex). So the cross-root obstruction does dissolve under *this* span. The escape
     is degenerate, and it is not the only one: every well-founded apex in the same universe as the
@@ -126,7 +126,8 @@ theorem trivial_bottoms_only_span :
     order-preserving leg into `Ordinal` forces well-foundedness, and conversely a well-founded apex
     always has one into the ordinals of its own universe (its own rank map). So, with the apex and the
     ordinals in the same universe, "escapes the wall" ⟺ "well-founded apex". The trivial bottoms-only span is one instance; the
-    Markov simplex under the coordinate order is another (the `example` below). -/
+    Markov simplex under the coordinate order is another (the `example` below). No novelty is claimed:
+    this is the standard rank-function characterization of well-foundedness; the converse is Mathlib's `WellFounded.rank` with `WellFounded.rank_lt_of_rel`. -/
 theorem faithful_iff_descending {S : Type u} (r : S → S → Prop) :
     (∃ f : S → Ordinal.{u}, ∀ a b, r a b → f a < f b) ↔ WellFounded r := by
   constructor
