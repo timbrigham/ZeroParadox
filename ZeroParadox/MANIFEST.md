@@ -344,7 +344,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Information/MaxEntropy.lean` - Maximum entropy: the fair coin, missing information, and incompressible tapes
 - `ZeroParadox/Information/PoleWithinEnsemble.lean` - The never-firing tape inside the firing ensemble
 - `ZeroParadox/Information/SnapEpsilonZero.lean` - The snap and ε₀ on two carriers: on `WithBot Ordinal` the first step lands at ↑0 and `up` carries it to ↑ε₀ (the corner); on `EpsilonOrZero` the first step is ε₀ (the cover)
-- `ZeroParadox/Information/StartBit.lean` - The start bit, the end bit, and the tapes that return to a floor
+- `ZeroParadox/Information/StartBit.lean` - The start bit, the end bit, and the tapes whose tail is ⊥ of `ℕ → Bool`
 - `ZeroParadox/Information/TapeHalting.lean` - A tape's first hitting time, run as a computation
 - `ZeroParadox/Information/TwoRequirements.lean` - Two requirements: a first step at ⊥ of `L`, and a typical tape
 
@@ -427,7 +427,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Computability/CodeDataFrameChange.lean` - The frame-change in the computability frame: the code↔data involution, whose fixed locus holds every code's self-application
 - `ZeroParadox/Computability/ComputableCrossing.lean` - The Lawvere bridge, crossed in the computability face (probe)
   - ride-along docs: `ZeroParadox/Computability/ComputableCrossing.md` - Where the obstruction is absent: the universal machine as a reflexive object
-- `ZeroParadox/Computability/GapDecoder.lean` - Reading a program off a tape: one decoder, and the class it witnesses
+- `ZeroParadox/Computability/GapDecoder.lean` - Reading a program off a tape: one decoder, and the class it witnesses under a coin `0 < p < 1`
 - `ZeroParadox/Computability/MarkovNuUniversal.lean` - Does the Markov node (#2) get a ν (terminal/unique-fixed-point) universal property?
 - `ZeroParadox/Computability/NatListRegime.lean` - The third root-cut regime: the nat/list functor (leaf + recursive position)
 - `ZeroParadox/Computability/OutputSeparates.lean` - The head decides, the arity does not: two instances of Rutten's final-system formula

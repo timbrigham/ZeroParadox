@@ -4,7 +4,7 @@ import ZeroParadox.Computability.Kleene
 import Mathlib.Tactic
 
 /-!
-# Reading a program off a tape: one decoder, and the class it witnesses
+# Reading a program off a tape: one decoder, and the class it witnesses under a coin `0 < p < 1`
 
 ## Engineer's Take
 
@@ -17,8 +17,8 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 ## Formal Overview (AI-assisted)
 § I: `gapDecode` reads the run of `false` after the start bit as a code number (a unary length).
-§ II: any decoder meeting `ReachesEveryCode` (a hypothesis) reaches the self-printing universal
-codes with positive probability; `gapDecode` is a member, the constant decoder is not.
+§ II: a decoder in `ReachesEveryCode μ` reaches the self-printing universal codes with positive
+`μ`-mass; `gapDecode` is a member for `trials p hp` with `0 < p < 1`, not at `p = 1`.
 -/
 
 set_option maxHeartbeats 400000
@@ -31,9 +31,10 @@ open MeasureTheory Filter Nat.Partrec
 
 /-- `Statement:` if `w` has a first `true` at `f` and a next `true` at `f + 1 + j`, the code
 numbered `j`; otherwise `none`.
-`Reading:` ONE CHOICE among many, not forced by anything here: `codeWord`
-(`ZeroParadox/Information/Disjunctive.lean`) reads codes in binary, a second choice. `firedRun` still
-reads one bit, that the tape fired ("when, not what" stays true of it); this decoder reads further. -/
+`Reading:` ONE CHOICE among many (`codeWord`, `ZeroParadox/Information/Disjunctive.lean`, reads
+binary). `firedRun` records only THAT the tape fired, one run for every firing tape
+(`firedRun_spec`); WHEN comes from `det` (`toComp_det_results_iff`); this decoder adds a WHAT.
+Prior art at `trials_gapDecode_pos`. -/
 noncomputable def gapDecode (w : ℕ → Bool) : Option Code := by
   classical
   exact if hw : ∃ k, w k = true then
@@ -111,7 +112,11 @@ theorem gapDecode_of_mem_cyl (j : ℕ) (w : ℕ → Bool)
   refine ⟨by rw [hf, hw' (0 + 1 + j) (by omega)]; simp [gapWitness]; omega, fun n hn => ?_⟩
   rw [hf, hw' (0 + 1 + n) (by omega)]; simp [gapWitness]; omega
 
-/-- `Statement:` if `0 < p < 1`, every code `c` has `0 < trials p hp {w | gapDecode w = some c}`. -/
+/-- `Statement:` if `0 < p < 1`, every code `c` has `0 < trials p hp {w | gapDecode w = some c}`.
+`Reading:` prior art, after the start bit this is the machine of Shen, Uspensky, Vereshchagin,
+*Kolmogorov Complexity and Algorithmic Randomness* (AMS 2017), § 4.1, p. 75: toss a fair coin until
+1 appears, output the zeros before it, each `i` with probability `2^-(i+1)`; here the coin is
+`trials p hp` and outputs are Mathlib `Code`s. Formal neighbour: `Kolmogorov.apriori_pos_of_universal`. -/
 theorem trials_gapDecode_pos (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p) (hp1 : p < 1) (c : Code) :
     0 < trials p hp {w | gapDecode w = some c} := by
   refine lt_of_lt_of_le (trials_cyl_pos p hp hp0 hp1 (gapWitness (Encodable.encode c))
@@ -130,10 +135,13 @@ theorem gapDecode_poles :
 /-! ### § II. The class `ReachesEveryCode`
 
 `Reading:` Tim (2026-11-15): "So it's not just one program. It's all programs"; and "once you have
-one you have evidence that a class exists, right?" The tree reading he gave the same day ("the same
-chasing the darkness kind of routing", ruling 259) is not stated here: no orthogonality theorem is
-landed. The class removes the dependence of § II's payoff on one decoder; it does not remove the
-choice to read programs off tapes at all, which stays a commitment, carried as the hypothesis. -/
+one you have evidence that a class exists, right?" His tree reading ("the same chasing the darkness
+kind of routing", Tim, 2026-11-15) is not stated here: `t4_snap_orthogonal` covers cells 0 and 1,
+and the right angle of the actual path against the untaken branches is not located in the corpus
+as of 2026-11-15. The class removes § II's dependence on one decoder, not the choice to read
+programs off tapes, which stays a commitment carried as the hypothesis. Prior art: Shen, Uspensky,
+Vereshchagin § 4.1 (`trials_gapDecode_pos`); the broader home is algorithmic probability
+(Solomonoff, Levin, Chaitin). -/
 
 /-- `Statement:` every code `c` has `0 < μ {w | D w = some c}`. A predicate, used as a hypothesis. -/
 def ReachesEveryCode (μ : Measure (ℕ → Bool)) (D : (ℕ → Bool) → Option Code) : Prop :=
@@ -143,9 +151,14 @@ def ReachesEveryCode (μ : Measure (ℕ → Bool)) (D : (ℕ → Bool) → Optio
 def DecodesAlmostSurely (μ : Measure (ℕ → Bool)) (D : (ℕ → Bool) → Option Code) : Prop :=
   μ {w | D w = Option.none} = 0
 
-/-- `Statement:` if `D` reaches every code for `μ`, the self-printing universal codes form an
-infinite set, each has positive `μ`-mass under `D`, their events are pairwise disjoint, and their
-union has positive `μ`-mass. -/
+/-- `Statement:` the self-printing universal codes form an infinite set, unconditionally
+(`selfref_universal_infinite`); every code's event is pairwise disjoint from every other's; and if
+`D` reaches every code for `μ`, each self-printing universal code has positive `μ`-mass under `D`
+and so does their union.
+`Reading:` beyond the machine of Shen, Uspensky, Vereshchagin § 4.1 (`trials_gapDecode_pos`), whose
+every output has positive probability: the start bit, the biased coin, Mathlib `Code`, an arbitrary
+measure, closure under `Code ≃ Code` (`ReachesEveryCode.map_equiv`), and this link to the
+self-printing universal codes. -/
 theorem selfref_universal_reached {μ : Measure (ℕ → Bool)} {D : (ℕ → Bool) → Option Code}
     (hD : ReachesEveryCode μ D) :
     {c : Code | SelfPrints c ∧ Universal c}.Infinite ∧
@@ -187,8 +200,9 @@ theorem const_not_reachesEveryCode (μ : Measure (ℕ → Bool)) :
   rw [e, measure_empty] at this
   exact lt_irrefl _ this
 
-/-- `Statement:` CONTROL, at `p = 1` every tape of the support decodes to `Code.zero`, which is
-self-printing and not universal, and `gapDecode` is not a member. -/
+/-- `Statement:` CONTROL, at `p = 1` the set of tapes decoding to `Code.zero` has `trials 1 hp`
+measure one (`trials 1 hp` is the Dirac mass at ⊤ of `ℕ → Bool`, `trials_one_eq_dirac`), `Code.zero`
+is self-printing and not universal, and `gapDecode` is not a member. -/
 theorem gapDecode_p_one (hp : (1 : NNReal) ≤ 1) :
     trials 1 hp {w | gapDecode w = some Code.zero} = 1 ∧ SelfPrints Code.zero ∧
       ¬ Universal Code.zero ∧ ¬ ReachesEveryCode (trials 1 hp) gapDecode := by
