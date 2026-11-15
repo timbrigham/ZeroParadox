@@ -60,6 +60,7 @@ import ZeroParadox.Valuation.TowerTape
 import ZeroParadox.Valuation.TreeNotForced
 import ZeroParadox.Valuation.DoublingAndTree
 import ZeroParadox.Valuation.PadicStillPoint
+import ZeroParadox.Information.BottomTotality
 import Mathlib.RingTheory.Valuation.PrimeMultiplicity
 import Mathlib.Order.FixedPoints
 import Mathlib.SetTheory.Ordinal.FixedPoint
@@ -788,5 +789,20 @@ example : ZeroParadox.Disjunctive (fun n => xor (ZeroParadox.champ n) false) := 
 -- That the occupant of the framework's ⊥ role, ⊥ of a `ZPSemilattice`, is MAXIMALLY complex is
 -- Tim's commitment, stated as no equation with any
 -- one tape; disjunctive is the weaker, proved property (`ZeroParadox/Information/Disjunctive.lean`).
+
+/-! ### One ensemble, two faces: the law and its members -/
+
+-- Statement: one ensemble, `fairTape`: exactly one coin maximizes binary entropy; almost every tape is
+-- incompressible for every prefix-free decoder; ⊥ of `ℕ → Bool` is not Martin-Löf random for it and
+-- is in the closure of its random firing tapes.
+#check @ZeroParadox.tape_totality_two_faces
+-- Statement: CONTROL, a two-element set holding ⊥ of `ℕ → Bool` and a random tape is `fairTape`-null,
+-- so containing a minimal and a maximal member is not the content (`fairTape_singleton_null`).
+#check @ZeroParadox.both_faces_in_null_set
+-- Reading: COINCIDENCE, in the tape chart: minimal as the law (one condition), maximal as almost every
+-- member, the all-false tape inside as a limit. Tim, 2026-11-15: "Could we restate bottom as being both
+-- minimal and maximal as being the totality of all of its representations?" Across charts the
+-- totality is a family indexed by chart, never a union of occupants (§ ROLE). "Minimal" is "fixed by
+-- one condition", not a measured complexity of the measure.
 
 end CannotBeIndex
