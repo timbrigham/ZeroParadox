@@ -823,7 +823,8 @@ example : ZeroParadox.Disjunctive (fun n => xor (ZeroParadox.champ n) false) := 
 #check @ZeroParadox.tape_totality_two_faces
 -- Statement: CONTROL, a two-element set holding ⊥ of `ℕ → Bool` and a random tape is `fairTape`-null
 -- (`fairTape_singleton_null`).
--- Reading: containing a minimal and a maximal member is not the content of the reading below.
+-- Reading: CARRIER, holding ⊥ of `ℕ → Bool` and a random tape is not the content of the reading below:
+-- such a set is `fairTape`-null.
 #check @ZeroParadox.both_faces_in_null_set
 -- Reading: COINCIDENCE, in the tape chart: minimal as the law (one condition), maximal as almost every
 -- member, the all-false tape inside as a limit. Tim, 2026-11-15: "Could we restate bottom as being both

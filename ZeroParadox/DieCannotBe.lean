@@ -2867,10 +2867,10 @@ example (c : Nat.Partrec.Code) (hk : Encodable.encode c ≠ 0) :
 #check @ZeroParadox.z2TowerMotion_reverse_not_loop -- Statement: `z2TowerMotion.reverse` does not loop
 -- Reading: Tim, 2026-11-14: "that move can be both rotated and flipped I think". INVARIANT: rotation (which
 -- leg first, `upOverLoop_iff_loop`) and the order dual keep `Loop`, which takes no order.
--- Reading: INVERSION, time reversal (`Motion.reverse`) can remove a loop (`Motion.loop_not_reverse_invariant`,
+-- Statement: INVERSION, time reversal (`Motion.reverse`) can remove a loop (`Motion.loop_not_reverse_invariant`,
 -- `z2TowerMotion_reverse_not_loop`).
 -- Statement: in a partial order, `Agree` excludes a loop (`not_loop_of_agree`); `Oppose` permits one
--- without forcing it (the ℕ control above).
+-- (`shiftMotion c` for `⌜c⌝ ≠ 0`, the polarity `example` above) without forcing it (the ℕ control above).
 -- Reading: one-way "cannot be" as membership in two trap sets, `{y | ∀ a, step a y → a = y}`
 -- (the points stepped into only from themselves or from nothing) and `{y | ∀ b, step y b → b = y}`
 -- (the points stepping only to themselves or nowhere). Each trap theorem below uses one datum, named in

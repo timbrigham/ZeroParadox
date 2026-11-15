@@ -196,11 +196,12 @@ of the motion; crossing is a property of one run; typicality is a property of a 
 
 `Reading:` CARRIER — fence 2 of the Lean header, in both charts
 (`ZeroParadox/Information/PoleWithinEnsemble.lean` § IX). Pointwise, measure one is not necessity: the
-all-`false` tape of `ℕ → Bool` is the one tape that never fires (uniqueness: `PoleWithinEnsemble.lean`
-§ II control), and for every `φ` no `φ ∘ firedRun` from it steps at index 1 (`snap_fails_at_allFalse`).
-Modulo `trials p hp`-null sets, this measure-one predicate IS the top element: for `0 < p ≤ 1`, "fires
-somewhere" is ⊤ of `Germ (ae (trials p hp)) Prop` (`fires_germ_eq_top`); at `p = 0` it is ⊥ of
-`Germ (ae (trials 0 hp)) Prop` (`fires_germ_eq_bot_zero`), so `0 < p` is load-bearing.
+all-`false` tape of `ℕ → Bool` is the one tape that never fires (uniqueness:
+`ZeroParadox/Information/PoleWithinEnsemble.lean` § II control), and for every `φ` no `φ ∘ firedRun`
+from it steps at index 1 (`snap_fails_at_allFalse`). Modulo `trials p hp`-null sets, for `0 < p ≤ 1`
+the predicate "fires somewhere" IS the top element, ⊤ of `Germ (ae (trials p hp)) Prop`
+(`fires_germ_eq_top`); at `p = 0` it is ⊥ of `Germ (ae (trials 0 hp)) Prop` (`fires_germ_eq_bot_zero`),
+and ⊤ ≠ ⊥ there (`germ_top_ne_bot`), so `0 < p` is load-bearing.
 
 `Reading:` CARRIER — the tension. In the valuation chart, `infinitude_forces_infinite_complexity`
 (`ZeroParadox/Valuation/InfinitudeFloor.lean`) gives complexity ⊤ (the top of `ℕ∞`) at the floor of any

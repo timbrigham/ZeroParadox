@@ -19,7 +19,7 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 ## Formal Overview (AI-assisted)
 Below `Ordinal.univ` a copy of the lower level, and `succ univ` outside it (§ I); lifting fixes ε₀,
-and `univ`, the least ordinal above every lift, is fixed by `α ↦ ω^α` (§ II); `roleAbove` gives ε₀
+and `univ`, above every lift, is fixed by `α ↦ ω^α` and least such (§ II); `roleAbove` gives ε₀
 at `{0}` and `univ` at the range of `lift` (§ III).
 -/
 
@@ -135,8 +135,8 @@ theorem omega_opow_univ : ω ^ univ.{u, u + 1} = univ.{u, u + 1} := by
   · exact (isNormal_opow one_lt_omega0).strictMono.id_le _
 
 /-- `Statement:` `univ.{u, u+1}` is the least ordinal of `Ordinal.{u+1}` that is above every lift and
-fixed by `α ↦ ω^α`. The fixed-point clause selects nothing: `univ` is already the least ordinal above
-every lift (`lift_of_lt_univ`), and it is fixed (`omega_opow_univ`). -/
+fixed by `α ↦ ω^α`. The fixed-point clause selects nothing: every ordinal strictly below `univ` is a
+lift (`lift_of_lt_univ`), and `univ` is fixed (`omega_opow_univ`). -/
 theorem univ_isLeast_above_level :
     IsLeast {x : Ordinal.{u + 1} | (∀ o : Ordinal.{u}, lift.{u + 1} o < x) ∧ ω ^ x = x}
       univ.{u, u + 1} :=
@@ -152,9 +152,9 @@ theorem epsilon_zero_lt_univ : Ordinal.epsilon.{u + 1} 0 < univ.{u, u + 1} := by
 /-! ### § III. One construction at two floors -/
 
 /-- `Statement:` `sInf` of the fixed points of `α ↦ ω^α` strictly above every point of `S`: the least
-one when one exists (`roleAbove_eq_of_isLeast`); for an unbounded `S` it is `sInf ∅ = 0`, ⊥ of
-`Ordinal`, a junk value, never a role (CONTROL below). At a point floor it is the § I-b role of
-`ZeroParadox/Ordinal/Epsilon0CannotBe.lean`, credited there. -/
+one when one exists (`roleAbove_eq_of_isLeast`); when none exists it is `sInf ∅ = 0`, ⊥ of `Ordinal`
+(at `Set.univ`: CONTROL below). At a point floor it is the § I-b role of
+`ZeroParadox/Ordinal/Epsilon0CannotBe.lean`, credited there. `Reading:` that 0 is a junk value, never a role. -/
 noncomputable def roleAbove (S : Set Ordinal.{u}) : Ordinal.{u} :=
   sInf {x | ω ^ x = x ∧ ∀ s ∈ S, s < x}
 
