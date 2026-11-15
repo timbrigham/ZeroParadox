@@ -1,5 +1,5 @@
 """
-Build ZP-G Illustrated Companion (v1.16)
+Build ZP-G Illustrated Companion (v1.17)
 Standalone companion for ZP-G Category Theory only.
 ZP-H gets its own companion (build_zph_companion.py).
 
@@ -139,7 +139,7 @@ def functor_diagram():
                  fontSize=8.5, fontName='DV-I', fillColor=colors.HexColor('#555555')))
     return d
 
-VERSION = '1.16'
+VERSION = '1.17'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -183,8 +183,9 @@ def build():
         Paragraph('ZP Companion | ' + version_line(FIRST_RELEASED, VERSION), CS['meta']),
         Paragraph(
             'This companion explains the ideas in plain language with diagrams and real-world '
-            'examples. It is not the formal document — every claim here restates a result already '
-            'proved in the corresponding technical document. Consult that document for the '
+            'examples. It is not the formal document — its results are proved in ZP-G Category Theory '
+            'or come from the other documents, papers and named theorems it cites, and a commitment or '
+            'reading it mentions is not a result. Consult ZP-G for the '
             'authoritative mathematics.',
             CS['disc']),
     ]

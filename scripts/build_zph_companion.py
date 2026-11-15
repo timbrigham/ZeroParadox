@@ -1,5 +1,5 @@
 """
-Build ZP-H Illustrated Companion (v1.27)
+Build ZP-H Illustrated Companion (v1.28)
 Standalone companion for ZP-H: Categorical Bridge only.
 ZP-G has its own companion (build_zpg_companion.py).
 
@@ -129,7 +129,7 @@ def snap_convergence_diagram():
 
     return d
 
-VERSION = '1.27'
+VERSION = '1.28'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -173,8 +173,9 @@ def build():
         Paragraph('ZP Companion | ' + version_line(FIRST_RELEASED, VERSION), CS['meta']),
         Paragraph(
             'This companion explains the ideas in plain language with diagrams and real-world '
-            'examples. It is not the formal document — every claim here restates a result already '
-            'proved in the corresponding technical document. Consult that document for the '
+            'examples. It is not the formal document — its results are proved in ZP-H Categorical Bridge '
+            'or come from the other documents, papers and named theorems it cites, and a commitment or '
+            'reading it mentions is not a result. Consult ZP-H for the '
             'authoritative mathematics. This document assumes familiarity with the ZP-G '
             'Illustrated Companion.',
             CS['disc']),
@@ -307,7 +308,7 @@ def build():
         'P = (1, 0). Each morphism maps to an informational transition with '
         'a non-negative cost measured in bits. The fundamental transition costs exactly '
         '1 bit (ZP-C T1b). The informational singularity of ZP-G and the diverging '
-        'surprisal of ZP-C T2 hold together (T-H2), neither derived from the other. In Lean, FC is a sorry-free functor in two forms: fc_functor '
+        'surprisal of ZP-C T2 hold together (T-H2), a pair of separately proved results. In Lean, FC is a sorry-free functor in two forms: fc_functor '
         'lands in InfoDepth, an ℕ-indexed stand-in, and fC_functor lands in KleisliCat PMF, '
         'the Kleisli category of the probability monad.'))
     E.append(cbody(
@@ -359,8 +360,8 @@ def build():
         '— the accumulated surprisal grows without bound. These look like two different '
         'statements about the same thing. Are they compatible?'))
     E.append(cbody(
-        'T-H2 proves they are: both hold at once. It pairs two separately proved results, '
-        'and neither is derived from the other. In ZP-C, ask: what happens to surprisal as you approach '
+        'T-H2 proves they are: both hold at once. It pairs two separately proved results '
+        'and uses neither to prove the other. In ZP-C, ask: what happens to surprisal as you approach '
         '0 along an infinite path? The answer is divergence. In ZP-G, ask: can you reach '
         '0 by a morphism from outside? The answer is no. '
         'Read informally, if infinite cost is required to reach 0, then no finite morphism can '
@@ -369,7 +370,7 @@ def build():
     E.append(key_result_box('T-H2: Singularity Compatibility',
         'The categorical singularity (no return morphism to 0) and the information-theoretic '
         'singularity (diverging surprisal approaching 0) both hold. T-H2 proves them together, '
-        'as a conjunction; neither is derived from the other.'))
+        'as a conjunction of two separately proved results, and uses neither to prove the other.'))
     E.append(sp(6))
 
     # ── T-H3: The Binary Snap ──────────────────────────────────────────────────

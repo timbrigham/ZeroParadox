@@ -1,6 +1,6 @@
 """
 Build ZP-I Illustrated Companion
-Version 1.50 | November 2026
+Version 1.51 | November 2026
 
 Standalone companion for ZP-I: Inside Zero.
 Accessibility target: 2 years of college math.
@@ -276,7 +276,7 @@ def cycle_diagram():
     return d
 
 
-VERSION = '1.50'
+VERSION = '1.51'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -329,8 +329,9 @@ def build():
             'a formal framework built on lattice algebra and 2-adic topology. '
             'Diagrams and real-world examples are included throughout. '
             'It is self-contained: ZP-A through ZP-E results used here are '
-            'briefly introduced on first appearance. Every claim restates a result already '
-            'proved in the corresponding technical document  - consult that document for the '
+            'briefly introduced on first appearance. Its results are proved in ZP-I Inside Zero or '
+            'come from the other documents, papers and named theorems it cites, and a commitment or '
+            'reading it mentions is not a result  - consult ZP-I for the '
             'authoritative mathematics. (The ZP-E Illustrated Companion covers the upstream '
             'results in more depth if needed.)',
             CS['disc']),
@@ -588,7 +589,7 @@ def build():
         'framework reads the two together as a repeating cycle. That cycle is a reading, not a theorem: see '
         'the Note on closure below.'))
     E.append(cbody(
-        '1. <b>T-SNAP</b> fires: ⊥ and ε₀ emerge. The branch opens.'
+        '1. <b>T-SNAP</b> fires on MachinePhase: c₀, ⊥ of MachinePhase, steps to c₁ (the state this discrete chart names ε₀). The branch opens.'
         '<br/>'
         '2. <b>T3 (monotonicity)</b>: states ascend. Each step adds informational content irreversibly.'
         '<br/>'

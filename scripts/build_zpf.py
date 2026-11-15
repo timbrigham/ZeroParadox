@@ -1,11 +1,11 @@
 """
-Build ZP-F: The Counterexamples (v1.27)
+Build ZP-F: The Counterexamples (v1.28)
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.27'
+VERSION = '1.28'
 FIRST_RELEASED = 'April 2026'
 
 def build():
@@ -340,9 +340,12 @@ def build():
             'alone. The *&#8469; example above is informal.',
             'The dual-approach structure recurs across the ZP layers: in ZP-L, '
             '&#949;&#8320; is located from above as the least fixed point of '
-            '&#945; &#8614; &#969;^&#945; and from below as the limit of the CNF tower; '
+            '&#945; &#8614; &#969;^&#945; and from below as the limit of the CNF tower (the classical '
+            'fact that the least fixed point of a normal function is the supremum of its iterates: '
+            'Veblen 1908, Corollary 1 to Theorem 4; Mathlib Ordinal.iSup_iterate_eq_nfp); '
             'in ZP-M, &#949;&#8320; is sent through the threshold map and snapEmbed to the 0 of '
-            '&#8484;&#8322; that the tower\'s 2-adic images tend to (zpm_triangle). Reading: this recurrence is not coincidental. The snap is the point '
+            '&#8484;&#8322; named above (snap_state_zp2_is_zero), the point the tower\'s cnfToZp2 images tend to (zpm_triangle; '
+            'snapEmbed is defined to send c&#8321; to that 0). Reading: this recurrence is not coincidental. The snap is the point '
             'where a domain\'s own measurement framework exhausts itself; no single framework '
             'can locate it from inside because the framework runs out exactly there. '
             'This suggests a dual approach is required in each case: each framework reaches the '

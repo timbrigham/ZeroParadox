@@ -1,6 +1,6 @@
 """
 Build ZP-L Illustrated Companion
-Version 1.27 | November 2026
+Version 1.28 | November 2026
 Citation fence (Gentzen): the Convergence section's credits follow CLAIMS.md's Gentzen rows and are
 taken from Gentzen 1943 (Math. Ann. 119), the one primary paper filed here, never from a secondary
 source's labels. The 1936 consistency credit rests on Gentzen 1943, p. 140, footnote 2: the 1936
@@ -214,7 +214,7 @@ def dual_convergence_diagram():
     return d
 
 
-VERSION = '1.27'
+VERSION = '1.28'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -259,8 +259,8 @@ def build():
         Paragraph(
             'This companion explains the ideas in plain language with diagrams and examples. '
             'It is not the formal document &#8212; its results are proved in ZP-L Incomputability '
-            'Convergence or in the other documents and papers it names, and the occurrence '
-            'commitment it mentions is a commitment, not a result. Consult that document for the '
+            'Convergence or come from the other documents, papers and named theorems it cites, and the occurrence '
+            'commitment it mentions is a commitment, not a result. Consult ZP-L for the '
             'authoritative mathematics.',
             CS['disc']),
     ]
@@ -295,7 +295,8 @@ def build():
         'are also always somewhere on the path &#8212; never at the horizon. The horizon '
         'is the limit of all those steps combined, and no finite number of steps reaches it. '
         'The analogy is for that shape only, a limit no step reaches: the walk grows without '
-        'bound, while &#949;&#8320; is a specific countable ordinal (the Remember box below).',
+        'bound, while the tower is bounded, with &#949;&#8320;, a specific countable ordinal, as its '
+        'least upper bound (the Remember box below).',
         'The ordinal tower works the same way. The snap that the canonical map takes at &#949;&#8320; (ZP-L) '
         'is not a step you can take from inside the tower. It happens at the least point above every '
         'stage of the tower, where something new begins.',
@@ -385,7 +386,7 @@ def build():
     E.append(dual_convergence_diagram())
     E.append(ccaption(
         'Same tower stages, two perspectives. Teal (top row): ordinal stages 1, &#969;, &#969;^&#969;, &#8230; '
-        'approach &#949;&#8320; from below. Indigo (bottom row): the 2-adic norms of their '
+        'approach &#949;&#8320; from below; &#8220;snap: c1&#8221; is the canonical map&#8217;s value at &#949;&#8320;. Indigo (bottom row): the 2-adic norms of their '
         'images 1/2, 1/4, 1/8, &#8230; converge to 0. '
         'ZP-L &#167;VII: snap_zp2_correspondence.'))
     E.append(sp(4))
