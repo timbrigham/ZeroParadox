@@ -433,7 +433,7 @@ example (f : ZeroParadox.MachinePhase → ZeroParadox.MachinePhase) : ¬ ZeroPar
       (fun x => by cases x; exacts [⟨false, rfl⟩, ⟨true, rfl⟩])
   ZeroParadox.no_selfCopyRef_of_finite f
 
-/-! ### § X. Halting of a tape's first hitting time — THAT and WHEN, not WHAT
+/-! ### § X. Halting of a tape's first hitting time — THAT and WHEN, not WHAT; a decoder, a choice, gives WHAT
 
 `ZeroParadox/Information/TapeHalting.lean`: a tape `w : ℕ → Bool`, its first hitting time `det w`,
 run as Mathlib's delay type `Computation Unit` through `toComp`. -/
@@ -458,10 +458,11 @@ run as Mathlib's delay type `Computation Unit` through `toComp`. -/
 -- Statement: `gapDecode w = none` iff `w` is ⊥ of `ℕ → Bool` or its subtape after its first `true` is.
 #check @ZeroParadox.gapDecode_eq_none_iff
 -- Statement: a predicate on a measure `μ` and a decoder `D`: every code has positive `μ`-mass under
---   `D`. Used only as a hypothesis.
+--   `D`. A predicate (`def … : Prop`), not a class field; the theorems that need it take it as a
+--   hypothesis.
 #check @ZeroParadox.ReachesEveryCode
--- Statement: if `D` reaches every code for `μ`, the self-printing universal codes form an infinite
---   set, each of positive `μ`-mass under `D`, through pairwise disjoint events.
+-- Statement: the self-printing universal codes form an infinite set, unconditionally; and if `D`
+--   reaches every code for `μ`, each has positive `μ`-mass under `D`, through pairwise disjoint events.
 -- Reading: Tim (2026-11-15): "So it's not just one program. It's all programs".
 #check @ZeroParadox.selfref_universal_reached
 -- Statement: WITNESS, for `0 < p < 1`, `gapDecode` reaches every code for `trials p hp`, and is
@@ -471,8 +472,9 @@ run as Mathlib's delay type `Computation Unit` through `toComp`. -/
 #check @ZeroParadox.ReachesEveryCode.map_equiv
 -- Statement: CONTROL, for every `μ` the constant decoder `_ ↦ some Code.zero` is not a member.
 #check @ZeroParadox.const_not_reachesEveryCode
--- Statement: CONTROL, at `p = 1` every tape of the support decodes to `Code.zero`, self-printing and
---   not universal, and `gapDecode` is not a member.
+-- Statement: CONTROL, at `p = 1` the set decoding to `Code.zero` has `trials 1 hp` measure one
+--   (`trials_one_eq_dirac`), `Code.zero` is self-printing and not universal, and `gapDecode` is not
+--   a member.
 #check @ZeroParadox.gapDecode_p_one
 
 end ComputationCannotBeIndex

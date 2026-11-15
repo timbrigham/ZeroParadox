@@ -1,9 +1,9 @@
--- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the start bit and end bit of a tape `ℕ → Bool`, and the tapes that return to ⊥ of `ℕ → Bool` as one countable set, the local floors read as tapes. Curated results indexed in ZeroParadox/MANIFEST.md.
+-- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the start bit and end bit of a tape `ℕ → Bool`, and the tapes whose tail is ⊥ of `ℕ → Bool` as one countable set, the local floors read as tapes. Curated results indexed in ZeroParadox/MANIFEST.md.
 import ZeroParadox.Valuation.TowerTape
 import Mathlib.Tactic
 
 /-!
-# The start bit, the end bit, and the tapes that return to a floor
+# The start bit, the end bit, and the tapes whose tail is ⊥ of `ℕ → Bool`
 
 ## Engineer's Take
 
@@ -17,7 +17,7 @@ defer to my AI assistant regarding the specifics of how the internals work.
 ## Formal Overview (AI-assisted)
 § I: first `true` iff not ⊥ of `ℕ → Bool`; last `true` iff also eventually `false`. § II: the
 eventually-`false` tapes are one set: shifted copies of {⊥}, `silentFrom`, the local floors through
-`tapeIso`. § III: null under a constant coin, measure one under a summable coin (Borel-Cantelli).
+`tapeIso`. § III: null under a constant coin `0 < p ≤ 1`, measure one under a summable coin.
 -/
 
 set_option maxHeartbeats 400000
@@ -98,10 +98,11 @@ theorem exists_lastBit_iff (w : ℕ → Bool) :
 
 /-! ### § II. Returning to a floor, one set -/
 
-/-- `Statement:` `eventuallyFalse` is the set of local floors `localBotEnd v` read through `tapeIso`.
+/-- `Statement:` `eventuallyFalse` is the set of local floors `localBotEnd v` read through `tapeIso`;
+the subtape of each after `v` is ⊥ of `ℕ → Bool` (`localFloor_subtape_pole_limit`).
 `Reading:` Tim (2026-11-15): "If the all zero tape always exists... A returning to bottom like
 this... Isn't this the representation of the all bottom tape within that specific localized
-context?" The subtape after `v` is ⊥ of `ℕ → Bool` (`localFloor_subtape_pole_limit`). -/
+context?" -/
 theorem eventuallyFalse_eq_range_localFloor :
     eventuallyFalse = Set.range (fun v : List (Fin 2) => tapeIso (localBotEnd v)) := by
   ext w
@@ -152,8 +153,10 @@ theorem trials_zero_eventuallyFalse (hp : (0 : NNReal) ≤ 1) : trials 0 hp even
 /-! ### § III. The other chart: a fading coin
 
 `Reading:` CARRIER, returning to a floor as a family indexed by the per-stage law, never a union:
-with a constant coin it is null (`trials_eventuallyFalse_null`), with a summable coin almost sure
-(`fadingTrials_eventuallyFalse`). `trials p hp` is the constant member (`fadingTrials_const`). -/
+with a constant coin `0 < p ≤ 1` it is null (`trials_eventuallyFalse_null`), with a summable coin
+almost sure (`fadingTrials_eventuallyFalse`). `trials p hp` is the constant member
+(`fadingTrials_const`); `p = 0` is constant and summable, measure one (`trials_zero_eventuallyFalse`).
+Prior art at `returning_two_charts`. -/
 
 set_option linter.deprecated false in
 /-- `Statement:` independent Bernoulli(`q n`) flips, one per stage; `trials` with a per-stage `p`. -/
@@ -196,7 +199,11 @@ example : Summable (fun n : ℕ => ((1/2 : NNReal) ^ (n + 1))) :=
   (NNReal.summable_nat_add_iff 1).2 (NNReal.summable_geometric (by norm_num))
 
 /-- `Statement:` `eventuallyFalse` is null under every constant coin `0 < p ≤ 1`, and has measure one
-under every summable coin. `Reading:` CARRIER, two charts of returning to a floor, indexed by the coin. -/
+under every summable coin. `Reading:` CARRIER, two charts of returning to a floor, indexed by the coin.
+`Reading:` prior art, the Borel-Cantelli zero-one law: summable half the first lemma
+(`measure_limsup_atTop_eq_zero`), constant-coin half the second (`ProbabilityTheory.measure_limsup_eq_one`);
+`eventuallyFalse` is a tail event, so 0-or-1 under every independent coin is Kolmogorov's zero-one law
+(`ProbabilityTheory.measure_zero_or_one_of_measurableSet_limsup_atTop`). -/
 theorem returning_two_charts :
     (∀ (p : NNReal) (hp : p ≤ 1), 0 < p →
       fadingTrials (fun _ => p) (fun _ => hp) eventuallyFalse = 0) ∧
