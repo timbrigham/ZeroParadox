@@ -13,6 +13,7 @@ import ZeroParadox.Information.MaxEntropy
 import ZeroParadox.Information.SnapEpsilonZero
 import ZeroParadox.Information.TapeHalting
 import ZeroParadox.Information.PoleWithinEnsemble
+import ZeroParadox.Valuation.TowerTapeSnap
 
 /-!
 # Machine-checked characterization index of the snap ⊥ → ε₀ — what the snap IS and IS NOT
@@ -127,6 +128,12 @@ example : ¬ @CovBy ℕ (ZeroParadox.zpSemilatticeSup ℕ).toLT 0 2 := fun h =>
 #check @ZeroParadox.never_fires_ae_zero               -- Statement: CONTROL, `trials 0 hp`-almost every tape fires nowhere
 #check @ZeroParadox.fires_germ_eq_bot_zero            -- Statement: CONTROL, at `p = 0`, "fires somewhere" is ⊥ of `Germ (ae (trials 0 hp)) Prop`
 #check @ZeroParadox.germ_top_ne_bot                   -- Statement: CONTROL, ⊤ ≠ ⊥ in `Germ (ae (trials p hp)) Prop` for every `p ≤ 1`: the quotient is not degenerate
+-- Reading: CARRIER, the tower tape fed to the snap as a family indexed by chart, never a union
+--   (`ZeroParadox/Valuation/TowerTapeSnap.lean`): `tapeIso` carries `towerTape [] x` to a tape `ℕ → Bool`.
+#check @ZeroParadox.towerTape_fires_iff               -- Statement: `tapeIso (towerTape [] x)` fires iff `x ≠ botEnd`; at `botEnd` it is ⊥ of `ℕ → Bool` (`towerTape_floor_allFalse`)
+#check @ZeroParadox.towerTape_snap_pointwise          -- Statement: pointwise chart, under `snap_ae_fixed_phi`'s hypotheses on `φ`, every seed `x ≠ botEnd` gives `t_snap_of_fires_once`'s conclusion on its tower tape
+#check @ZeroParadox.towerTape_snap_ae                 -- Statement: quotient chart, if `0 < p ≤ 1`, for `trials p hp`-almost every tape `w` the seed `tapeIso.symm w` does; one way
+#check @ZeroParadox.towerTapes_null                   -- Statement: CONTROL, if `0 < p ≤ 1`, the set of tower tapes is `trials p hp`-null, so the law sits on the seed, not on the packed tape
 -- `Statement:` on `Set Bool` (join `∪`, ⊥ = ∅) `∅` has two distinct covers in that order, with join
 -- `Set.univ`, so `hcov` does not fix the target; on a carrier with its own linear order,
 -- `axb1_gives_unique_target` fixes the cover in that order. Reading: prior art, Winskel, *Event
