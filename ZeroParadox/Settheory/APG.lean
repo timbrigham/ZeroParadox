@@ -587,7 +587,7 @@ example {U : Type*} (j : U → U → U) (v : U → ℕ∞) (c : Set U → U)
   exact hu e (top_le_iff.mp (htop ▸ hanti e (c Set.univ) (he _)))
 
 -- Statement: the converse fails (counter-model M1, on `Option ℕ∞`): a semilattice operation with
--- order-reversal and a unique, absorbing `v`-⊤ point, and no identity at all.
+-- order-reversal and a unique `v`-⊤ point that absorbs `c`, and no identity at all.
 example : ∃ (j : Option ℕ∞ → Option ℕ∞ → Option ℕ∞) (v : Option ℕ∞ → ℕ∞)
     (c : Set (Option ℕ∞) → Option ℕ∞) (b : Option ℕ∞),
     (∀ x y z, j (j x y) z = j x (j y z)) ∧ (∀ x y, j x y = j y x) ∧ (∀ x, j x x = x) ∧

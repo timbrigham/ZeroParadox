@@ -12,6 +12,9 @@ import ZeroParadox.Information.TwoRequirements
 import ZeroParadox.Information.MaxEntropy
 import ZeroParadox.Information.SnapEpsilonZero
 import ZeroParadox.Information.TapeHalting
+import ZeroParadox.Information.PoleWithinEnsemble
+import ZeroParadox.Valuation.TowerTapeSnap
+import ZeroParadox.Information.StartBit
 
 /-!
 # Machine-checked characterization index of the snap ⊥ → ε₀ — what the snap IS and IS NOT
@@ -48,6 +51,7 @@ section SnapCannotBeIndex
 --   `hw` of `t_snap_of_fires_once` (`ZeroParadox/Information/CrossingTrials.lean` § VIII).
 #check @ZeroParadox.t_snap_of_fires_once             -- Statement: if `φ : Bool → L` sends `false` to ⊥ of `L` and `true` to a point other than ⊥ of `L`, and the tape `w` fires at some stage (`hw`), then `φ ∘ firedRun w hw` meets `t_snap_given`'s `hcc1` and `hocc` and is a state sequence; one way
 #check @ZeroParadox.trials_fires_once                -- Statement: if `0 < p ≤ 1`, the tapes that fire at some stage have `trials p hp` measure one; it names no tape
+#check @ZeroParadox.exists_startBit_iff              -- Statement: a tape has a first `true` iff it is not ⊥ of `ℕ → Bool`, so `hw` of `t_snap_of_fires_once` holds exactly at the tapes other than ⊥ of `ℕ → Bool`. Reading: the start bit (`ZeroParadox/Information/StartBit.lean`)
 -- `Statement:` CONTROL, a particular tape need not fire: the all-`false` tape fires at no stage.
 example : ¬ ∃ k, (fun _ => false : ℕ → Bool) k = true := fun ⟨_, h⟩ => Bool.false_ne_true h
 -- `Statement:` occurrence once: the slot chart's sequence steps at index 1 and stays, so it is not an
@@ -111,6 +115,28 @@ example : ¬ @CovBy ℕ (ZeroParadox.zpSemilatticeSup ℕ).toLT 0 2 := fun h =>
 #check @ZeroParadox.snap_ae_of_firstStep              -- Statement: if ⊥ of `L` has a first step (`BotHasFirstStep L`) and `0 < p ≤ 1`, then for `trials p hp`-almost every tape `w` some `φ` and `hw` give `snap_of_two_requirements`'s conclusion; one way. Almost every, not every: the all-`false` tape never fires. No map from ⊥ of `L` to a tape or to `trials p hp` appears
 #check @ZeroParadox.mlRandom_and_snap_ae              -- Statement: the same, with `MLRandom (trials p hp) w` conjoined: almost every tape is Martin-Löf random for `trials p hp` and gives that conclusion; one way
 #check @ZeroParadox.maxEntropy_mlRandom_and_snap_ae    -- Statement: the same, with `0 < p` replaced by `binEntropy p = log 2`, the maximum-entropy coin `p = 1/2` (`ZeroParadox/Information/MaxEntropy.lean`); one way. No tape law of ⊥ of `L` is constructed, and `BotHasFirstStep L` stays a hypothesis
+-- Reading: CARRIER — firing somewhere, in two charts (`ZeroParadox/Information/PoleWithinEnsemble.lean` § IX).
+--   Quotient chart, modulo `trials p hp`-null sets: for `0 < p` it is exactly ⊤ of `Germ (ae (trials p hp)) Prop`.
+--   Pointwise chart: it fails at ⊥ of `ℕ → Bool` and at no other tape (the § II CONTROL `example` in that file);
+--   for `0 < p` that tape is null, and the quotient forgets it along with every other null set. Neither is THE chart.
+--   Prior art: on measurable predicates the quotient is the Boolean algebra underlying the measure algebra (Fremlin, *Measure Theory* Vol. 3, §321H).
+#check @ZeroParadox.snap_ae_fixed_phi                 -- Statement: if `0 < p ≤ 1` and `φ : Bool → L` sends `false` to ⊥ of `L` and `true` elsewhere, almost every tape fires and gives `t_snap_of_fires_once`'s conclusion; one way. Against `snap_ae_of_firstStep` above it has no `BotHasFirstStep L` hypothesis AND no cover `bot ⋖ S 1` in its conclusion, and `φ` is given (with hypotheses on `φ false` and `φ true`) rather than produced, so it is not that line with one hypothesis fewer. No map from ⊥ of `L` to a tape appears
+#check @ZeroParadox.fires_ae_eq_univ                  -- Statement: if `0 < p ≤ 1`, the firing set is `trials p hp`-a.e. equal to `Set.univ`
+#check @ZeroParadox.fires_germ_eq_top                 -- Statement: if `0 < p ≤ 1`, "fires somewhere" is ⊤ of `Germ (ae (trials p hp)) Prop`
+#check @ZeroParadox.snap_germ_eq_top                  -- Statement: under `snap_ae_fixed_phi`'s hypotheses, "fires and gives `t_snap_of_fires_once`'s conclusion" is ⊤ of `Germ (ae (trials p hp)) Prop`; a fact about the quotient, not about every tape
+#check @ZeroParadox.snap_fails_at_allFalse            -- Statement: CONTROL, for every `φ`, the all-`false` tape (⊥ of `ℕ → Bool`) has no firing proof, so no `φ ∘ firedRun` from it steps at index 1
+#check @ZeroParadox.ae_but_not_every                  -- Statement: CONTROL, if `0 < p ≤ 1`, almost every tape fires and not every tape does
+#check @ZeroParadox.fires_germ_pure_bot               -- Statement: CONTROL, along `pure` at the all-`false` tape, "fires somewhere" is ⊥ of that filter's germs
+#check @ZeroParadox.never_fires_ae_zero               -- Statement: CONTROL, `trials 0 hp`-almost every tape fires nowhere
+#check @ZeroParadox.fires_germ_eq_bot_zero            -- Statement: CONTROL, at `p = 0`, "fires somewhere" is ⊥ of `Germ (ae (trials 0 hp)) Prop`
+#check @ZeroParadox.germ_top_ne_bot                   -- Statement: CONTROL, ⊤ ≠ ⊥ in `Germ (ae (trials p hp)) Prop` for every `p ≤ 1`: the quotient is not degenerate
+-- Reading: CARRIER, the tower tape fed to the snap as a family indexed by chart, never a union
+--   (`ZeroParadox/Valuation/TowerTapeSnap.lean`): `tapeIso` carries `towerTape [] x` to a tape `ℕ → Bool`.
+#check @ZeroParadox.towerTape_fires_iff               -- Statement: `tapeIso (towerTape [] x)` fires iff `x ≠ botEnd`; at `botEnd` it is ⊥ of `ℕ → Bool` (`towerTape_floor_allFalse`)
+#check @ZeroParadox.towerTape_snap_pointwise          -- Statement: pointwise chart, under `snap_ae_fixed_phi`'s hypotheses on `φ`, every seed `x ≠ botEnd` gives `t_snap_of_fires_once`'s conclusion on its tower tape
+#check @ZeroParadox.towerTape_snap_ae                 -- Statement: almost-everywhere chart, if `0 < p ≤ 1`, for `trials p hp`-almost every tape `w` the seed `tapeIso.symm w` does; one way. The quotient form, for the bare tape, is `snap_germ_eq_top` above
+#check @ZeroParadox.towerTapes_null                   -- Statement: CONTROL, if `0 < p ≤ 1`, the set of tower tapes is `trials p hp`-null
+-- Reading: CARRIER, the law sits on the seed `tapeIso.symm w`, not on the packed tower tape.
 -- `Statement:` on `Set Bool` (join `∪`, ⊥ = ∅) `∅` has two distinct covers in that order, with join
 -- `Set.univ`, so `hcov` does not fix the target; on a carrier with its own linear order,
 -- `axb1_gives_unique_target` fixes the cover in that order. Reading: prior art, Winskel, *Event
@@ -207,6 +233,7 @@ owes no step. -/
 -- `Statement:` the `cover` field is `HasFirstStep`, asked at each non-maximal closed point of `up` (a landing).
 example {α : Type} [PartialOrder α] (U : ZeroParadox.UpAndOver α) {y : α} (hy : U.up.IsClosed y)
     (hmax : ¬ IsMax y) : ZeroParadox.HasFirstStep y := U.cover y hy hmax
+#check @ZeroParadox.UpAndOver.exists_next_landing_of_cover_at -- Statement: for a closure operator `c` and `HasFirstStep y`, some cover `b` of `y` has `c b` closed and `y < c b`. Reading: the hypothesis form of the `cover` field, which `UpAndOver.exists_next_landing` reads off the structure
 #check @ZeroParadox.UpAndOver.isEmpty_of_denselyOrdered -- Statement: no densely ordered carrier carries an `UpAndOver`; the corner's cover is refused. Reading: as § V refuses ℝ a first step
 example : IsEmpty (ZeroParadox.UpAndOver ℝ) := ZeroParadox.UpAndOver.isEmpty_of_denselyOrdered
 #check @ZeroParadox.ordinalUpAndOver                  -- Statement: `Ordinal` carries it: `up` is `nfp (ω^·)` (`snapNucleus`), covers by `Order.succ`, the corner at ε₀ and `succ ε₀`

@@ -34,6 +34,7 @@ import ZeroParadox.Settheory.QuineHost
 import ZeroParadox.Settheory.HypersetOrder
 import ZeroParadox.Computability.SelfCopyReference
 import ZeroParadox.Algebra.Wheel
+import ZeroParadox.Algebra.WheelFrac
 import ZeroParadox.Category.WellFoundedCoalgebra
 import ZeroParadox.Category.ExcludedMiddleBridge
 import ZeroParadox.Category.IgnoranceSeam
@@ -57,6 +58,10 @@ import ZeroParadox.Information.SnapEpsilonZero
 import ZeroParadox.Information.TapeHalting
 import ZeroParadox.Information.PoleWithinEnsemble
 import ZeroParadox.Valuation.DoublingAndTree
+import ZeroParadox.State.DieProjection
+import ZeroParadox.State.QubitDie
+import ZeroParadox.State.FermiStepDie
+import ZeroParadox.Order.MotionFlips
 
 set_option maxHeartbeats 400000
 
@@ -940,6 +945,11 @@ example :
   omega
 #check @ZeroParadox.Motion.RunClosure           -- Statement: the run form: `s` is a run and its range has the shape
 #check @ZeroParadox.Motion.RunClosure.stageClosure -- Statement: run form ⇒ set form; one way
+-- Statement: CONTROL: with the empty step on ℕ, `id` is not a run, so the run form fails at every
+-- `c`.
+example : ∀ c : Part ℕ, ¬ (ZeroParadox.Motion.ofTotal (id : ℕ → ℕ) (fun _ => rfl)
+    (fun _ _ => False)).RunClosure id c :=
+  fun _ ⟨h, _⟩ => h 0
 #check @ZeroParadox.Motion.three_of_not_runClose -- Statement: if no stage of `s` is a landing and `up (s n) ≠ up (s 0)` for some `n`, the carrier has three distinct points (`[propext, Classical.choice, Quot.sound]`, the choice in a case split on definedness; not statement-carried, control measured 2026-10-28)
 #check @ZeroParadox.Motion.four_of_not_runClose -- Statement: with UP total, four distinct points (`[propext, Quot.sound]`)
 -- Statement: the bounds are met: on `Fin 3`, UP `0, 2 ↦ 2`, undefined at `1`, OVER `0 ↔ 1`, the run
@@ -1925,9 +1935,9 @@ example (h : ∀ (β : Type) [PartialOrder β] [OrderBot β], ZeroParadox.BotCov
 -- sources read, as of 2026-10-28. Decidable equality frees the corner split
 -- (`Motion.corner_iff_loop_or_climb`) and the cut (`botCovered_botIntervalTwo`); it does not free
 -- registration. Registration's taboo comes from a `Prop`-valued UP-definedness and is reached on
--- `Unit` (`Motion.em_of_registeredDecidable`); UP-definedness itself is decided when UP is total or
--- presented as an `Option` (`registeredDecidable_of_upTotal`,
--- `ofOption_registeredDecidable`). On `ℕ`, the quantifier in the trichotomy, the selector and fan-in
+-- `Unit` (`Motion.em_of_registeredDecidable`); UP-definedness itself is decided when UP is total
+-- or presented as an `Option` (`registeredDecidable_of_upTotal`, `ofOption_registeredDecidable`).
+-- On `ℕ`, the quantifier in the trichotomy, the selector and fan-in
 -- returns as LPO or Markov's principle; this is measured for `ℕ`, and for the trichotomy and the
 -- selector also on `Option ℕ` (§ XXVII). Escardó (preprint of JSL 78(3) (2013), p. 1) grades the
 -- same principle by the set searched, "For X finite this is trivial, and for X = ℕ, this is LPO",
@@ -2379,9 +2389,41 @@ example : (ZeroParadox.Motion.ofFun ZeroParadox.zpwInv).SelfOnlyAt ZeroParadox.Z
 -- `0` steps only to itself.
 example : (ZeroParadox.Motion.ofFun (Inv.inv : ℚ → ℚ)).SelfOnlyAt 0 :=
   (ZeroParadox.Motion.selfOnlyAt_ofFun_iff _ _).2 inv_zero
--- Reading: with two adjoined points, `∞` is exchanged with `0` and `0·/0` is the involution's fixed
--- centre, not an end; with none, `0` is fixed and nothing is exchanged with it. The one-point case
--- between them is not measured here.
+#check @ZeroParadox.wheel_three_distinct         -- Statement: in a non-trivial wheel, `0`, `/0`, `0·/0` are pairwise distinct
+#check @ZeroParadox.wheel_trivial_of_bot_eq_zero -- Statement: in a wheel, `0·/0 = 0` makes every two elements equal
+-- The common meadow `ℚ_a` (Bergstra & Ponse, arXiv:1406.6878v4) on `Option ℚ`, ℚ with one adjoined point:
+#check @ZeroParadox.cm_inv_inv                   -- Statement: their (e13), `(x⁻¹)⁻¹ = x + 0·x⁻¹`, on the model
+#check @ZeroParadox.cm_a_selfOnly                -- Statement: under inversion, `a` steps only to itself
+#check @ZeroParadox.cm_zero_one_way              -- Statement: under inversion, `0` steps to `a` and `a` not to `0`
+#check @ZeroParadox.cm_not_involutive            -- Statement: inversion is not an involution, `(0⁻¹)⁻¹ = a ≠ 0`
+#check @ZeroParadox.cm_preimage_a                -- Statement: exactly `a` and `0` step into `a` under inversion
+#check @ZeroParadox.cm_a_absorbs                 -- Statement: with OVER `x → x + z`, `a` steps only to itself and every point steps to it
+-- Reading: comparing the totalisations of division on ℚ by the values they adjoin outside ℚ is
+-- Bergstra's frame (J. A. Bergstra, "Division by Zero: A Survey of Options", Transmathematica 1(1),
+-- 2019, § 3, pp. 9–18: the common meadow § 3.1, `0⁻¹ = 0` § 3.2, `0⁻¹ = 1` § 3.3, one added point `∞`
+-- with `0⁻¹ = ∞` and `∞⁻¹ = 0` § 3.4, the wheel § 3.5, the transrationals § 3.6; J. A. Bergstra and
+-- J. V. Tucker, "The Wheel of Rational Numbers as an Abstract Data Type", WADT 2020, LNCS 12669,
+-- pp. 13–30, § 1 pp. 13–14 and p. 29). The corpus reads three of the structures his survey compares
+-- through the die, an instance of his frame and not the reverse, each by the shape of its inversion: the involutive meadow
+-- ℚ₀ (the ℚ control above), where `0` is fixed and inversion is an involution; the common meadow ℚ_a,
+-- where inversion is a one-way arrow `0 → a`, not an involution, and `a` absorbs addition; the wheel,
+-- where `0` and `∞` are exchanged and `0·/0` is the fixed centre. The number of adjoined points does
+-- not decide the shape: the survey's ℚ∞ adds one point and its inversion exchanges `0` and `∞` (§ 3.4),
+-- and its ℚ₁ adds none and its inversion is not an involution (§ 3.3). This is a reading of separate
+-- results, not a theorem; no structural connection between the three structures is claimed.
+-- Statement: the two counter-instances' inversions alone, on their carriers: on `Option ℚ` (`none`
+-- for `∞`), `0⁻¹ = ∞` with `∞⁻¹ = 0` is an involution; on ℚ, `0⁻¹ = 1` is not.
+example : (∀ x : Option ℚ,
+      (fun y : Option ℚ => match y with | none => some 0 | some q => if q = 0 then none else some q⁻¹)
+        ((fun y : Option ℚ => match y with | none => some 0 | some q => if q = 0 then none else some q⁻¹) x)
+        = x) ∧
+    (fun q : ℚ => if q = 0 then (1 : ℚ) else q⁻¹) ((fun q : ℚ => if q = 0 then (1 : ℚ) else q⁻¹) 0) ≠ 0 := by
+  refine ⟨fun x => ?_, by simp⟩
+  rcases x with _ | q
+  · simp
+  · by_cases hq : q = 0
+    · subst hq; simp
+    · simp [hq]
 #check @ZeroParadox.rInv_conj_rScale            -- Statement: on `OnePoint ℚ_[2]`, `rInv ∘ rScale n ∘ rInv = rScale (-n)`
 -- Statement: `OnePoint ℚ_[2]` under `rScale n`: `rInv` reverses the motion, `0` and `∞` each step only
 -- to themselves, and there is no source and no sink (`[propext, Classical.choice, Quot.sound]`).
@@ -2565,10 +2607,12 @@ example : let M := (ZeroParadox.Motion.ofTotal (id : Fin 3 → Fin 3) (fun _ => 
   have e1 := hu 1 (ZeroParadox.Motion.rank_eq_top_of_cycle v hv c1)
   have e2 := hu 2 (ZeroParadox.Motion.rank_eq_top_of_cycle v hv c2)
   exact absurd (e1.trans e2.symm) (by decide)
--- Reading: the three ℕ∞-valued rank theorems print `[propext, Classical.choice, Quot.sound]`, as does
--- the bare statement `(∀ x : ℕ∞, x + 1 ≤ x → x = ⊤) → True` (statement control, measured 2026-10-21):
--- their footprint is carried by ℕ∞ in the statement. `not_cycle_of_nat_rank` states no ℕ∞ and is
--- proved directly over ℕ: `[propext, Quot.sound]`. It covers ℕ-valued ranks only; an ordinal-valued
+-- Reading: the three ℕ∞-valued rank theorems print `[propext, Classical.choice, Quot.sound]`; the
+-- bare statement `(∀ x : ℕ∞, x + 1 ≤ x → x = ⊤) → True` prints no axioms (statement control, measured
+-- 2026-11-13), so the choice is not carried by the statement and enters through their proofs, by
+-- Mathlib's ℕ∞ order lemmas (`le_top` at ℕ∞ alone measures the same three); no choice-free proof was
+-- attempted and no reduction to a taboo, so the class is open between accidental and essential.
+-- `not_cycle_of_nat_rank` states no ℕ∞ and is proved directly over ℕ: `[propext, Quot.sound]`. It covers ℕ-valued ranks only; an ordinal-valued
 -- form, for well-founded relations in general, is not built here. A rank dropping along every step is
 -- a well-foundedness argument, the kind a liveness proof rests on (Alpern and Schneider, IPL 21 (1985),
 -- p. 181).
@@ -2814,6 +2858,19 @@ example (c : Nat.Partrec.Code) (hk : Encodable.encode c ≠ 0) :
   ⟨⟨ZeroParadox.ordinalSuccMotion_agree,
       ZeroParadox.Motion.not_loop_of_agree ZeroParadox.ordinalSuccMotion_agree⟩,
     ZeroParadox.shiftMotion_oppose c, ZeroParadox.shiftMotion_loop c hk⟩
+#check @ZeroParadox.Motion.upOverLoop_iff_loop   -- Statement: an up-then-over loop (`UpOverLoop`) exists iff `Loop` does; both directions. Reading: one cycle entered at either leg, as Mathlib's `Function.IsPeriodicPt.map` rotates a cycle of `g ∘ f` to one of `f ∘ g`
+#check @ZeroParadox.z2TowerMotion_loop           -- Statement: `z2TowerMotion` on ℤ_[2] (UP constant 0, OVER the tower's `cnfToZp2` images) loops. The loop comes from the definition's constant-0 UP, a modelling choice stated in `z2TowerMotion`'s docstring, and one OVER edge out of 0; the proof does not use the tower's convergence. Related corpus fact: the 2-adic arc reapproaches the same 0 (`snap_arc_z2_loop`)
+#check @ZeroParadox.z2_no_agreeing_order         -- Statement: so no partial order on ℤ_[2] makes both its legs raise
+#check @ZeroParadox.z2_valuation_oppose          -- Statement: under Mathlib's ℕ-valued `PadicInt.valuation` (the totalization `valuation 0 = 0`, § VI), 0 is least and OVER adds one per stage; ordered that way the legs oppose, and ordered by the additive valuation (0 reads ⊤) they neither agree nor oppose (the two `example`s in `ZeroParadox/Order/MotionFlips.lean` § II)
+#check @ZeroParadox.z2_norm_drift                -- Statement: DRIFT, under the norm, 0 is least, OVER rises at the seed and falls from stage 1
+#check @ZeroParadox.Motion.loop_not_reverse_invariant -- Statement: some looping motion on `Bool` (`boolOneWayMotion`) has a reverse that does not loop
+#check @ZeroParadox.z2TowerMotion_reverse_not_loop -- Statement: `z2TowerMotion.reverse` does not loop
+-- Reading: Tim, 2026-11-14: "that move can be both rotated and flipped I think". INVARIANT: rotation (which
+-- leg first, `upOverLoop_iff_loop`) and the order dual keep `Loop`, which takes no order.
+-- Reading: INVERSION, time reversal (`Motion.reverse`) can remove a loop (`Motion.loop_not_reverse_invariant`,
+-- `z2TowerMotion_reverse_not_loop`).
+-- Statement: in a partial order, `Agree` excludes a loop (`not_loop_of_agree`); `Oppose` permits one
+-- without forcing it (the ℕ control above).
 -- Reading: one-way "cannot be" as membership in two trap sets, `{y | ∀ a, step a y → a = y}`
 -- (the points stepped into only from themselves or from nothing) and `{y | ∀ b, step y b → b = y}`
 -- (the points stepping only to themselves or nowhere). Each trap theorem below uses one datum, named in
@@ -3185,6 +3242,15 @@ example : ∃ φ : (ZeroParadox.Motion.ofFun (ZeroParadox.tapeCons false)).step 
 #check @ZeroParadox.Motion.upLax_iff_le           -- Statement: `UpLax` iff `(M.up x).map f ≤ N.up (f x)` in `Part`'s order, at every `x`
 #check @ZeroParadox.Motion.upStrict_iff           -- Statement: strict iff lax and UP-definedness reflected
 #check @ZeroParadox.Motion.upStrict_of_upLax_of_upTotal -- Statement: lax ⇒ strict when the source UP is total
+-- Statement: CONTROL: on `Bool` with the empty step, `id` is not lax from UP the identity to UP
+-- constant `true`, and is lax from UP the identity to itself.
+open ZeroParadox.Motion in
+example : ¬ UpLax (ofTotal (id : Bool → Bool) (fun _ => rfl) (fun _ _ => False))
+      (ofTotal (fun _ : Bool => true) (fun _ => rfl) (fun _ _ => False)) id ∧
+    UpLax (ofTotal (id : Bool → Bool) (fun _ => rfl) (fun _ _ => False))
+      (ofTotal (id : Bool → Bool) (fun _ => rfl) (fun _ _ => False)) id :=
+  ⟨fun h => absurd (Part.mem_some_iff.1 (h false false (Part.mem_some _))) (by decide),
+    fun _ _ h => h⟩
 #check @ZeroParadox.Motion.Hom.comp_assoc         -- Statement: strict maps compose associatively, with `Hom.id` as unit (`Hom.id_comp`, `Hom.comp_id`), by `rfl`
 #check @ZeroParadox.Motion.Hom.reverse            -- Statement: a strict map is a strict map of the reverses; involutive (`Hom.reverse_reverse`)
 #check @ZeroParadox.Motion.semiconj_iff_exists_hom -- Statement: on `ofFun` motions, strict maps are the semiconjugacies
@@ -3307,6 +3373,13 @@ example : @ZeroParadox.Motion.StepRaises ℝ (ZeroParadox.Motion.ofFun (fun x : 
 -- or move the point by an order-reversing involution (the sphere, `rInv_reverses`).
 #check @ZeroParadox.Motion.UpClosed               -- Statement: every value of UP at a point of `S` lies in `S`
 #check @ZeroParadox.Motion.StepClosed             -- Statement: every step from a point of `S` lands in `S`
+-- Statement: CONTROL: on `Bool` with UP the identity and the always-true step, `Set.univ` is closed
+-- and `{false}` is not OVER-closed.
+open ZeroParadox.Motion in
+example : (ofTotal (id : Bool → Bool) (fun _ => rfl) (fun _ _ => True)).Closed Set.univ ∧
+    ¬ (ofTotal (id : Bool → Bool) (fun _ => rfl) (fun _ _ => True)).StepClosed {false} :=
+  ⟨⟨fun _ _ _ _ => trivial, fun _ _ _ _ => trivial⟩,
+    fun h => absurd (h false rfl true trivial) (by simp)⟩
 #check @ZeroParadox.Motion.restrict               -- Statement: the motion on the subtype of an UP-closed `S`; OVER is Mathlib's `Subrel`
 #check @ZeroParadox.Motion.mem_restrict_up        -- Statement: UP of the restriction is UP of the motion
 #check @ZeroParadox.Motion.restrict_isLanding_iff -- Statement: a landing of the restriction is a landing lying in `S`
@@ -3418,6 +3491,76 @@ example : let M := ZeroParadox.Motion.ofTotal (id : Option ℕ → Option ℕ) (
     · exact bot_le
     · exact WithBot.coe_le_coe.2 (Nat.le_succ n)
   · change none = some _ at ha; exact nomatch ha
+-- Reading: `UpOrthogonal` takes an inner product as its argument where `UpRaises` takes an order (`ZeroParadox/State/DieProjection.lean`).
+#check @ZeroParadox.Motion.UpOrthogonal          -- Statement: PREMISE, every displacement `x - y`, `y ∈ up x`, is orthogonal to every landing
+#check @ZeroParadox.Motion.upOrthogonal_ofStarProjection -- Statement: member: the orthogonal projection onto `K`, whose landings are `K` (`isLanding_ofStarProjection_iff`)
+#check @ZeroParadox.Motion.starProjection_eq_of_upOrthogonal -- Statement: with `UpOrthogonal` and landings exactly `K`, every value of `up x` is `K.starProjection x`
+#check @ZeroParadox.landings_not_determine_up    -- Statement: CONTROL: an oblique and the orthogonal projection onto one line in ℝ²: same landings and OVER, both total, different motions, only the orthogonal one in `UpOrthogonal`
+#check @ZeroParadox.obliqueOrthoIso              -- Statement: a `Motion.StrictIso` between those two motions
+#check @ZeroParadox.obliqueOrthoIso_not_norm_preserving -- Statement: its map does not preserve the norm
+#check @ZeroParadox.upOrthogonal_not_iso_invariant -- Statement: `UpOrthogonal` is not invariant under `Motion.StrictIso`
+#check @ZeroParadox.Motion.up_eq_starProjection_of_upOrthogonal -- Statement: with `UpOrthogonal`, landings exactly `K` and UP total, `up x = Part.some (K.starProjection x)`
+#check @ZeroParadox.upOrthogonal_values_not_domain -- Statement: CONTROL: UP the identity on the line only: same landings and OVER as `orthoLineMotion`, both in `UpOrthogonal`, not total, a different motion
+#check @ZeroParadox.Motion.upOrthogonal_of_isometric_iso -- Statement: a `Motion.StrictIso` whose map preserves the real inner product carries `UpOrthogonal`
+-- Reading: the collapse by the kernel of UP, Tim's simplification action (`ZeroParadox/Die.lean` § XXI).
+#check @ZeroParadox.Motion.upCompat_ker_up       -- Statement: the kernel of `r` is UP-compatible for `ofTotal r hr st`
+#check @ZeroParadox.Motion.collapse_all_landings -- Statement: in `quotUp` of `ofTotal r hr st` by the kernel of `r`, every class is a landing
+#check @ZeroParadox.Motion.collapseEquiv         -- Statement: the classes of the kernel of `r` are in bijection with the fixed points of `r`
+#check @ZeroParadox.Motion.collapseEquiv_mk      -- Statement: `collapseEquiv` sends the class of `a` to `r a`
+#check @ZeroParadox.orthoCollapseEquiv           -- Statement: the classes of the kernel of `K.starProjection` are in bijection with `K`
+#check @ZeroParadox.ortho_classes                -- Statement: `x`, `y` share a class of the kernel of `K.starProjection` iff `x - y ∈ Kᗮ`; both directions
+#check @ZeroParadox.obliqueCollapseEquiv         -- Statement: CONTROL: the classes of the kernel of `obliqueProj` are in bijection with `planeLine`
+#check @ZeroParadox.collapses_differ             -- Statement: `planeE1`, `-planeE0` share a class of the kernel of `obliqueProj`, not of `planeLine.starProjection`
+#check @ZeroParadox.qubitMeasure                 -- Statement: measurement on ℂ² as a real inner-product space: UP the orthogonal projection onto `K`, OVER empty (`ZeroParadox/State/QubitDie.lean`)
+#check @ZeroParadox.upOrthogonal_qubitMeasure    -- Statement: member: every `qubitMeasure K`, whose landings are `K` (`isLanding_qubitMeasure_iff`)
+#check @ZeroParadox.bitFlipIso                   -- Statement: σ_x as a `Motion.StrictIso` from measure-`|0⟩` to measure-`|1⟩`
+-- Statement: CONTROL: the identity map is no strict map from measure-`|0⟩` to measure-`|1⟩`.
+open ZeroParadox ZeroParadox.Motion in
+example : ¬ ∃ φ : Hom (qubitMeasure qubitLine0) (qubitMeasure qubitLine1), ∀ x, φ.toFun x = x := by
+  rintro ⟨φ, hφ⟩
+  have hf : φ.toFun = id := funext hφ
+  have h := φ.map_up qubitKet0
+  rw [hf] at h
+  have hl0 : qubitLine0.starProjection qubitKet0 = qubitKet0 := by
+    rw [Submodule.starProjection_eq_self_iff, qubitLine0, Submodule.restrictScalars_mem]
+    exact Submodule.mem_span_singleton_self _
+  have h1 : qubitKet0 ∈ (qubitMeasure qubitLine1).up qubitKet0 := by
+    have hm : qubitKet0 ∈ ((qubitMeasure qubitLine0).up qubitKet0).map id := by
+      show qubitKet0 ∈ (Part.some (qubitLine0.starProjection qubitKet0)).map id
+      rw [Part.map_some, hl0]; exact Part.mem_some _
+    rw [← h] at hm
+    exact hm
+  have h2 : (qubitMeasure qubitLine1).IsLanding qubitKet0 := (qubitMeasure qubitLine1).up_idem _ _ h1
+  rw [isLanding_qubitMeasure_iff, qubitLine1, Submodule.restrictScalars_mem,
+    Submodule.mem_span_singleton] at h2
+  obtain ⟨c, hc⟩ := h2
+  have := congrArg (fun v : Qubit => v 0) hc
+  simp [qubitKet0, qubitKet1] at this
+#check @ZeroParadox.upOrthogonal_qubitMeasure_line1_of_bitFlip -- Statement: the test carried by `bitFlipIso`
+#check @ZeroParadox.qubit_poles_flip_eq_perp     -- Statement: the orthocomplement of the line through `|0⟩` is the line through `|1⟩`
+#check @ZeroParadox.qubit_poles_flip_eq_perp'    -- Statement: the orthocomplement of the line through `|1⟩` is the line through `|0⟩`
+#check @ZeroParadox.qubit_flip_fixes_plus        -- Statement: σ_x fixes `|0⟩ + |1⟩`
+#check @ZeroParadox.qubit_perp_moves_plus        -- Statement: `|0⟩ + |1⟩` is not in the orthocomplement of its own line
+#check @ZeroParadox.qubit_flip_perp_agree_at_poles -- Statement: on complex lines, σ_x-image equals orthocomplement at `|0⟩` and `|1⟩`; at `|0⟩ + |1⟩` σ_x fixes the line and the orthocomplement differs from it
+#check @ZeroParadox.signDie                      -- Statement: the die on ℝ with UP `Real.sign` (idempotent: `real_sign_idem`) and OVER `st` (`ZeroParadox/State/FermiStepDie.lean`)
+#check @ZeroParadox.isLanding_signDie_iff        -- Statement: its landings are exactly `-1`, `0`, `1`; both directions
+#check @ZeroParadox.sigmoid_cold_limit_is_sign   -- Statement: `Real.sigmoid (β * x) → (Real.sign x + 1) / 2` as `β → ∞`, at every `x`
+#check @ZeroParadox.signDieMirrorAuto            -- Statement: with OVER `≠`, negation is a strict self-isomorphism of `signDie`
+#check @ZeroParadox.signDieMirrorReverse         -- Statement: with OVER `<`, negation is a strict isomorphism onto `Motion.reverse`
+#check @ZeroParadox.signDie_mirror_not_self_hom  -- Statement: CONTROL: with OVER `<`, no strict self-map of `signDie` has negation as its map
+-- Statement: CONTROL: with OVER `≠` and UP the constant `1` on ℝ, which is not odd, no strict
+-- self-map has negation as its map.
+open ZeroParadox.Motion in
+example : ¬ ∃ φ : Hom (ofTotal (fun _ : ℝ => (1 : ℝ)) (fun _ => rfl) (· ≠ ·))
+      (ofTotal (fun _ : ℝ => (1 : ℝ)) (fun _ => rfl) (· ≠ ·)), ∀ x, φ.toFun x = -x := by
+  rintro ⟨φ, hφ⟩
+  have hf : φ.toFun = fun x => -x := funext hφ
+  have h := φ.map_up 0
+  rw [hf] at h
+  have h2 : Part.some (1 : ℝ) = Part.some (-1) := h
+  have h3 : (1 : ℝ) = -1 := Part.some_injective h2
+  norm_num at h3
+#check @ZeroParadox.signDie_mirror_on_landings   -- Statement: negation fixes `0`, swaps `-1` and `1`, and fixes no other real
 
 /-! ### § XIX. Two points and their views: the four corners, the tower span, the ends of a view -/
 #check @ZeroParadox.Pole.cornerZero_cells        -- Statement: the cells of `ofFun cornerZero` at `zero` and `infty`: trap sets, fan-in, arrival
@@ -3907,6 +4050,16 @@ example {α : Type} (M : ZeroParadox.Motion α) (s : Setoid α) :
 #check @ZeroParadox.Motion.quot_step_mk_iff      -- Statement: with step-compatibility, a class steps to `Y` iff a representative steps into `Y`
 #check @ZeroParadox.Motion.quot_selfOnlyAt_mk_iff -- Statement: with step-compatibility, a class steps to itself only iff some successor and every successor of a representative is related to it
 #check @ZeroParadox.Motion.stepCompat_ofFun      -- Statement: a map sending related points to related points gives step-compatibility for `ofFun`
+-- Statement: CONTROL: non-member: `ofFun` of `Die.lean` § XVIII's `Fin 3` map (`0 ↦ 0`, `1 ↦ 2`,
+-- `2 ↦ 2`) is not step-compatible with the classes `{0, 1}` and `{2}`.
+open ZeroParadox.Motion in
+example : let s : Setoid (Fin 3) := Setoid.ker fun x : Fin 3 => decide (x = 2)
+    ¬ (ofFun (fun x : Fin 3 => if x = 1 then 2 else x)).StepCompat s := by
+  intro s h
+  obtain ⟨b', hb', hr⟩ := h 0 1 0 (by show decide _ = decide _; decide) rfl
+  have : b' = 2 := hb'
+  subst this
+  exact absurd hr (by show ¬ (decide _ = decide _); decide)
 #check @ZeroParadox.Motion.quot_ofFun_step_iff   -- Statement: and the quotient's OVER is the graph of `Quotient.map'`
 #check @ZeroParadox.Motion.UpCompat              -- Statement: related points have related UP values
 #check @ZeroParadox.Motion.upCompat_map_eq       -- Statement: with it, related points have the same UP after the class map
@@ -4299,8 +4452,8 @@ example :
 #check @ZeroParadox.Motion.mkHom_stepBack        -- Statement: if the setoid is also step-compatible, the class map has the back clause
 #check @ZeroParadox.Motion.mkHom_surjective      -- Statement: the class map is onto
 -- Reading: a strict map with the back clause (the observer) gives a compatible kernel, and a
--- compatible setoid gives such a map onto its quotient (the image motion, what the observer shows;
--- the observed motion is the source; Rutten's homomorphic image, or quotient, TCS 249 (2000), p. 10).
+-- compatible setoid gives such a map onto its quotient (what the observer shows; the observed
+-- motion is the source; Rutten's homomorphic image, or quotient, TCS 249 (2000), p. 10).
 -- How this relates to Rutten's Proposition* 5.7 and Proposition 5.8
 -- (pp. 33–34) is in the Readings on `Hom.stepCompat_ker` and `mkHom_stepBack`
 -- (`ZeroParadox/Die.lean` § XXI); the bisimulation half of 5.7 for `Part × Set` is `isBisim_ker`, § XXVI below.
@@ -4414,6 +4567,16 @@ example :
 #check @ZeroParadox.Motion.Bisimilar            -- Statement: related by some bisimulation
 #check @ZeroParadox.Motion.bisimilar_equivalence -- Statement: `Bisimilar M M` is an equivalence relation
 #check @ZeroParadox.Motion.isBisim_bisimilar    -- Statement: `Bisimilar M N` is a bisimulation
+-- Statement: CONTROL: on `Bool` with UP the identity and the one step `false → true`, `true` is
+-- bisimilar to itself and `false` is not bisimilar to `true`.
+open ZeroParadox.Motion in
+example : let M := ofTotal (id : Bool → Bool) (fun _ => rfl) (fun a b => a = false ∧ b = true)
+    Bisimilar M M true true ∧ ¬ Bisimilar M M false true := by
+  intro M
+  refine ⟨(bisimilar_equivalence M).refl true, fun ⟨R, hR, r⟩ => ?_⟩
+  obtain ⟨-, -, fo, -⟩ := (isBisim_iff M M R).1 hR false true r
+  obtain ⟨b', ⟨h1, -⟩, -⟩ := fo true ⟨rfl, rfl⟩
+  exact Bool.noConfusion h1
 #check @ZeroParadox.Motion.isBisim_of_compat    -- Statement: a UP- and step-compatible setoid is a bisimulation
 #check @ZeroParadox.Motion.isBisim_ker          -- Statement: the kernel of a map carrying steps to steps, with `StepBack` and `UpStrict`, is a bisimulation
 #check @ZeroParadox.Motion.isBisim_ker_coalgHom -- Statement: the kernel of a coalgebra homomorphism's underlying map is a bisimulation
@@ -4682,6 +4845,13 @@ example (g : Part ℕ → ZeroParadox.NInf) (hg : ∀ o n, g o = ZeroParadox.NIn
 -- Statement: the round trip as a motion on `Option ℕ ⊕ NInf`: UP `toLimit`, OVER from `r`.
 #check @ZeroParadox.Motion.LoopAt              -- Statement: a landing `y`, a step to `b ≠ y`, and `up b` returns to `y`
 #check @ZeroParadox.Motion.loop_iff_exists_loopAt -- Statement: `Loop` iff `LoopAt` some `y`; both directions
+-- Statement: CONTROL: on `Bool` with OVER `≠`, UP constant `true` loops at `true`, and UP the
+-- identity loops at no point.
+open ZeroParadox.Motion in
+example : (ofTotal (fun _ : Bool => true) (fun _ => rfl) (fun a b => a ≠ b)).LoopAt true ∧
+    ∀ y : Bool, ¬ (ofTotal (id : Bool → Bool) (fun _ => rfl) (fun a b => a ≠ b)).LoopAt y :=
+  ⟨⟨Part.mem_some _, false, (show true ≠ false by decide), (show false ≠ true by decide), Part.mem_some _⟩,
+    fun _ ⟨_, _, _, hby, hyb⟩ => hby (Part.mem_some_iff.1 hyb).symm⟩
 #check @ZeroParadox.NInf.TaggedOrLimit         -- Statement: the carrier `Option ℕ ⊕ NInf`
 #check @ZeroParadox.NInf.toLimit               -- Statement: UP: `inl o ↦ inr (ofOption o)`, `inr x ↦ inr x`
 #check @ZeroParadox.NInf.toLimit_idem          -- Statement: `toLimit` is idempotent
@@ -4938,6 +5108,10 @@ example : (∀ n, ZeroParadox.slotRun (fun _ => false) n = false) ∧
 #check @ZeroParadox.botMass_eq_iInf            -- Statement: that mass is the infimum over `n` of the mass of the length-`n` cylinder at ⊥, each continuous in `p` (`cylMass_continuous`). Reading: the jump is at infinity: every cylinder's mass is continuous in `p`
 #check @ZeroParadox.pole_limit_explicit        -- Statement: the explicit tapes `fireAt n`, firing exactly at `n`, have halting runs and approach ⊥ of `ℕ → Bool` pointwise, `det` passing every `ofNat N`; ⊥'s run does not halt. Reading: choice attaches to typicality: the random limit `pole_within_ensemble_limit` measures `Classical.choice`, this one `[propext, Quot.sound]` (`ZeroParadox/Category/ChoiceCannotBe.lean` § III)
 #check @ZeroParadox.fireAt_not_MLRandom        -- Statement: CONTROL, for `0 < p`, no `fireAt n` is Martin-Löf random for `trials p hp`
+-- Reading: a heat-bath rate relocates `0 < p` into the choice of the rate's form (the sigmoid's codomain, at every `T`); it does not remove it, and no theorem consumes `T > 0` (PoleWithinEnsemble § VIII).
+#check @ZeroParadox.glauber_fires_once         -- Statement: at every `ΔE`, `T`, the firing tapes have `trials (glauberExciteNN ΔE T)` measure one
+#check @ZeroParadox.glauber_botMass            -- Statement: at every `ΔE`, `T`, `botMass (glauberExciteNN ΔE T) = 0`
+#check @ZeroParadox.glauber_jump               -- Statement: if `0 < ΔE`: `botMass` 0 at every `T`, `glauberExcite ΔE T → 0` as `T → 0⁺`, and `botMass 0 = 1`
 
 /-! ### § XXIX. A limit pinned from two directions: `PinnedLimit` -/
 -- Reading: Tim's role, "squishy" in his word: pinned from below by the stages of a run and from the
@@ -5036,6 +5210,25 @@ example : (∀ n, ZeroParadox.slotRun (fun _ => false) n = false) ∧
 #check @ZeroParadox.Motion.StrictIso.equivCoalgIso -- Statement: isomorphisms of motions from `M` to `N` are equivalent (Mathlib `Equiv`) to isomorphisms from `M.toCoalgebra` to `N.toCoalgebra` in Mathlib's `Endofunctor.Coalgebra` category
 #check @ZeroParadox.Motion.ADoubling           -- Statement: PREMISE, `M` is isomorphic to `M.aprod M`; `Doubling` is the same for `M.prod M`
 #check @ZeroParadox.Motion.FixedPole           -- Statement: PREMISE, the isomorphism sends `r` to `(r, r)`
+-- Statement: CONTROL: on ℕ and ℕ × ℕ with UP the identity and the empty step, `Nat.unpair` is a
+-- strict isomorphism with a fixed pole at `0` and none at `1`.
+open ZeroParadox.Motion in
+example : ∃ e : StrictIso (ofTotal (id : ℕ → ℕ) (fun _ => rfl) (fun _ _ => False))
+      (ofTotal (id : ℕ × ℕ → ℕ × ℕ) (fun _ => rfl) (fun _ _ => False)),
+    e.hom.toFun = Nat.unpair ∧ FixedPole e 0 ∧ ¬ FixedPole e 1 := by
+  refine ⟨{ hom := ⟨Nat.unpair, fun h => h.elim, fun x => ?_⟩,
+            inv := ⟨fun p => Nat.pair p.1 p.2, fun h => h.elim, fun p => ?_⟩,
+            left_inv := Nat.pair_unpair,
+            right_inv := fun p => Nat.unpair_pair p.1 p.2 }, rfl, ?_, ?_⟩
+  · show Part.some (Nat.unpair x) = (Part.some x).map Nat.unpair
+    rw [Part.map_some]
+  · show Part.some (Nat.pair p.1 p.2) = (Part.some p).map _
+    rw [Part.map_some]
+  · show Nat.unpair 0 = (0, 0); rfl
+  · show ¬ Nat.unpair 1 = (1, 1)
+    intro h
+    have := congrArg Prod.fst h
+    simp [Nat.unpair, Nat.sqrt] at this
 #check @ZeroParadox.Motion.NonDegenerateAt     -- Statement: PREMISE, `r` reaches some `a` that does not reach `r` back
 #check @ZeroParadox.Motion.tree_of_aDoubling   -- Statement: an isomorphism `M ≅ M.aprod M`, `r` reaching `e⁻¹ (r, r)`, and `NonDegenerateAt r` give a map from `Bool` words, `[]` at `r`, along which reachability is the prefix order; one way
 #check @ZeroParadox.Motion.tree_of_aDoubling_pole -- Reading: if a motion doubles by interleaving, with a fixed pole at `r` and a point reachable from `r` that cannot reach `r` back, then reachability forks at every node of a copy of the binary tree rooted at `r`; one way, and the converse is not claimed

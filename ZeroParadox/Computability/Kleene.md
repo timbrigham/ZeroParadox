@@ -118,7 +118,7 @@ Mathlib: Nat.Partrec.Code.fixed_point (Rogers' fixed-point theorem).
 
 ## Axiom footprint
 
-This section's footprints were measured 2026-10-09 (§ VIII dates its own, 2026-10-04); the live record is
+This section's footprints were measured 2026-10-09 (§ VIII dates each of its own); the live record is
 the `PurityCheck` section of `ZeroParadox/Computability/Kleene.lean`.
 
 Not every proved theorem here carries `Classical.choice`: `encodeCode_self` has no axioms.
@@ -243,22 +243,22 @@ Proposition 3.3, p. 43, a program of no inputs that outputs itself, obtained fro
 theorem (their Theorem 3.2, Kleene's). Here the code instead returns its own Gödel number on every
 input of channel `0`, and is also universal; Proposition 3.3 states no universal half.
 
-**Where `Classical.choice` enters `selfref_universal_exists`, measured 2026-10-04.** For the
+**Where `Classical.choice` enters `selfref_universal_exists`; each bullet dates its measurement.** For the
 statement of `selfref_universal_exists` as written, the choice is not removed: that statement
 carries choice, so no proof of it is choice-free. The channel spelling of the statement (second
 bullet) is choice-free, and as of 2026-10-04 no proof of it without choice was found; see the
 last bullet for the 2026-10-27 result. Measured as follows, by `#print axioms` in a scratch file
 importing this one.
-- The statement carries choice. `SelfPrints` and `Universal` each measure
+- The statement carries choice (measured 2026-10-04). `SelfPrints` and `Universal` each measure
   `[propext, Classical.choice, Quot.sound]`. `Universal` names `Denumerable.ofNat Code`, which is
   `Nat.Partrec.Code.ofNatCode` by `rfl` (`ofNatCode_eq`); `ofNatCode` carries choice, and its
   well-founded recursion is justified by `Nat.unpair_left_le`, `Nat.unpair_right_le` and
   `Nat.div2_val`, each carrying it. `Nat.Partrec.Code.instDenumerable` carries it, while
   `encodeCode`, `eval`, `Nat.pair`, `Nat.unpair` and `Denumerable.ofNat` itself do not.
-- The channel spelling of the statement is choice-free: with `encodeCode` for the Gödel number
+- The channel spelling of the statement is choice-free (measured 2026-10-04): with `encodeCode` for the Gödel number
   and the channel of code `d` written `Nat.pair (encodeCode d + 1) n`, the predicate pair and the
   existence statement measure no axioms.
-- As of 2026-10-04, no proof of the channel spelling was found without choice. Mathlib's
+- As of 2026-10-04, no proof of the channel spelling was found without choice. Measured 2026-10-04: Mathlib's
   `fixed_point₂` carries choice in its statement: its hypothesis `Partrec₂ f` measures the
   triple. Its instance `Primcodable (Code × ℕ)` is `Primcodable.prod` over
   `Primcodable.ofDenumerable Code`, and both `Primcodable.prod` and that instance's
@@ -273,10 +273,10 @@ importing this one.
   the instance `Primcodable.ofDenumerable Code` (`#synth Primcodable Code`), and the choice comes
   from its `Denumerable Code` argument, `Nat.Partrec.Code.instDenumerable`, which measures the
   triple (as does `ofNatCode`, above). `Primcodable.ofDenumerable` itself measures
-  `[propext, Quot.sound]`. `Partrec₂` is stated through `Primcodable.prod`, which measures the
-  triple (above), and the constant `Partrec₂` itself measures the triple
+  `[propext, Quot.sound]`. Measured 2026-10-22: `Partrec₂` is stated through `Primcodable.prod`,
+  which measures the triple (above), and the constant `Partrec₂` itself measures the triple
   (`#print axioms Partrec₂` in the `PurityCheck` section of
-  `ZeroParadox/Computability/KleeneChoiceFree.lean`). Measured
+  `ZeroParadox/Computability/KleeneChoiceFree.lean`). Measured 2026-10-22,
   with no `Code` in it: a statement whose only content is a `Partrec₂` hypothesis at
   `ℕ → ℕ →. ℕ` carries the triple, and the same with a unary `Partrec` hypothesis at `ℕ →. ℕ`
   does not; a unary `Partrec` hypothesis at the pair carrier `ℕ × ℕ →. ℕ` carries the triple, so

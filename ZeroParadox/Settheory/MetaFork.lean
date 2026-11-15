@@ -34,9 +34,9 @@ meta-operator is `f` restricted to its own fixed points; but `f` fixes every fix
 restriction is the **identity** on `Fix(f)`. By `id_fork_open`, the identity's fork is maximally open
 exactly when `Fix(f)` is nontrivial — i.e. exactly when the object fork was open.
 
-**The result being probed (H1):** the double dereference *reproduces the same gap*. The meta-fork
-collapses iff the object fork collapses; ascending to the characterization returns the identical
-collapse condition. The recursion is a fixed point — self-similar, depth-1 stable (the "right angle
+**H1.** `Statement:` meta-collapse iff object-collapse (`meta_collapse_iff_object_collapse`).
+`Reading:` the double dereference *reproduces the same gap*; ascending to the characterization returns
+the identical collapse condition. The recursion is a fixed point — self-similar, depth-1 stable (the "right angle
 inside a right angle" is the *same* angle). It is turtles all the way up unless some level supplies a
 *new* collapsing operator, which is exactly `(Z)`/uniqueness one level up. Nothing here claims the
 grand unification; the meta-recursion and "every gap is a fork" stay fenced (RequirementsGap § V).

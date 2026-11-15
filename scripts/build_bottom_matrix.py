@@ -168,7 +168,7 @@ CELLS = {
         "CONC": "exists_stationary",
         "SELF": "na: no self-application; its fixed point is CONC, no self-similarity",
         "GEN": "na: ν-attractor - carries inbound dynamics, not GEN (μ/ν fork)",
-        "DYN": "in doubly_stochastic_mean_ergodic (converge) + fullMix_not_injective (mixing is lossy) - sink/ν",
+        "DYN": "in doubly_stochastic_mean_ergodic (converge) + fullMix_not_injective (that one chain is lossy) - sink/ν",
     },
     "Kleene (quine, ZPK)": {
         "CANT": "self_halting_undecidable", "NARR": "kleene_quine_is_bot",
@@ -272,8 +272,8 @@ READOUT = """\
   (↑, depart FROM ⊥ irreversibly) - now merged into one directional column. ⊥'s dynamics is single-
   directional, set by its μ/ν polarity: **source (μ/initial) → ↑ outbound; sink (ν/limit/attractor) → ↓
   inbound; seam (μ=ν zero object) → ↕ both.** The apparent "both" of p-adic and Markov was a MIS-FILING:
-  `c3_irreversible` (no continuous path TO 0 - the *arrival* is a jump) and `fullMix_not_injective` (mixing
-  *toward* the stationary state is lossy) are inbound-irreversibility, not departures - re-sorted to ↓. So ↕
+  `c3_irreversible` (no continuous path TO 0 - the *arrival* is a jump) and `fullMix_not_injective` (one
+  chain, `fullMix`, is lossy toward its stationary state) are inbound-irreversibility, not departures - re-sorted to ↓. So ↕
   is a SEAM diagnostic; the only genuine ↕ is Hilbert (ε₀ shows ↕ because its row IS the snap-arc 0→ε₀).
 
 **SELF has two sub-senses (#5-Hilbert probe 2026-06-30).** self-APPLICATION (Kleene-quine: a code acts on
@@ -286,7 +286,7 @@ as these two sub-senses; the structural bottoms get self-similarity at most, not
 that sparsity is its signature (probe 2026-06-30, `markov_probe_2026-06-30.md`). ⚠ Do not rank the
 columns here: which is sparsest or richest is visible in the rendered table and a count in prose goes
 stale against it (R-ADJACENT). It lives in the analytic mode -
-CONC (stationary fixed point) + ↓ inbound dynamics (mean-ergodic attractor ‖T₂‖≤1, and lossy mixing) + CANT
+CONC (stationary fixed point) + ↓ inbound dynamics (mean-ergodic attractor ‖T₂‖≤1, and lossy `fullMix`) + CANT
 (no universal property) + conditional NARR - and every other cell is empty for a NAMED structural reason:
 GEN empty by the μ/ν fork (it is a ν-attractor, carries inbound dynamics not GEN); INV not applicable
 because the simplex carries no 0↔∞ POLE for an inversion to swap ⚠ (NOT because no involution exists:
@@ -294,9 +294,10 @@ because the simplex carries no 0↔∞ POLE for an inversion to swap ⚠ (NOT be
 contradicted until round 3 caught it);
 MEAS not applicable (a probability distribution, no value diverges at it); SELF absent (no self-application;
 its fixed point is CONC, no self-similarity characterization). Its inbound-dynamics (↓) irreversibility is
-the SPECTRAL GAP (2026-06-30, cold-audit SOLID): `fullMix_not_injective` - a mixing chain's relaxation
-operator is non-injective (loses the mean-zero mode), the genuine irreversibility *into* the attractor, with
-`fullMix_mode_decays` from the general `tendsto_norm_iterate_zero`. FENCED: mixing-only - permutation/cyclic
+one chain's eigenvalue-0 mode: `fullMix_not_injective` - `fullMix`'s relaxation
+operator is non-injective (loses the mean-zero mode); mixing alone does not give this (the lazy-chain `example`
+in `MarkovSpectralGap.lean`), with
+`fullMix_mode_decays` from the general `tendsto_norm_iterate_zero`. FENCED: one chain - permutation/cyclic
 chains have no gap, are injective, do not mix (TC39). So #2 = CONC + ↓inbound-dynamics + CANT + condNARR;
 still MEAS/INV/SELF/GEN empty by structure. This agrees with "the telling exception" seen in the campaign and in the Direction-A archimedean
 place. ⚠ It was previously called the THIRD INDEPENDENT confirmation, resting partly on the INV

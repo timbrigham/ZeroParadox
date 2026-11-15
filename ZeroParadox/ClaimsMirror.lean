@@ -41,9 +41,9 @@ again.
 
 ## Formal Overview (AI-assisted)
 
-This file is the exact Lean representation of the framework's **claim graph** — the nodes in the SSOT
-`claims` store. For each claim the store marks `proved`, a theorem here states the claim exactly and
-discharges it from the existing machinery, so the claim graph's `proved` *label* becomes a
+This file is the Lean representation of the framework's **claim graph** — the nodes in the SSOT
+`claims` store. For each claim the store marks `proved`, a theorem here represents it and discharges it;
+an entry narrower than its claim, or discharged by projecting a class field, says so. So the claim graph's `proved` *label* becomes a
 kernel-checked *link* to a green declaration. Conjectural claims are represented as their exact `Prop`
 (stated, never asserted); the retired MC-1 identity is documented as ill-typed, which is itself the
 faithful representation.
@@ -76,17 +76,25 @@ theorem claim_node_order {L : Type*} [ZPSemilattice L] (x : L) : le bot x :=
   bot_le x
 
 /-- Claim `node-set-theory` (proved). Statement: "In set theory, ⊥ is realized as the Quine atom
-    ⊥ = {⊥}, the self-membered singleton (ZF+AFA)." Exact representation: ⊥ alone satisfies `selfMem`
-    (`IsQuineAtom`), read in ZF+AFA as x = {x}, not bare x ∈ x (`selfMem`'s note). Backing: `bot_is_quine_atom`. -/
+    ⊥ = {⊥}, the self-membered singleton (ZF+AFA)." Representation by class fields: `IsQuineAtom ⊥`
+    from `AFAStructure.bot_self_mem` and `quine_unique`, read in ZF+AFA as x = {x} (`selfMem`'s note).
+    Every `ZPSemilattice` carries an `AFAStructure` (`example` below), so this holds of every
+    semilattice and imports no anti-foundation content. Backing: `bot_is_quine_atom`. -/
 theorem claim_node_set_theory {L : Type*} [ZPSemilattice L] [AFAStructure L] :
     IsQuineAtom (bot : L) :=
   bot_is_quine_atom
 
+-- `Statement:` every `ZPSemilattice` carries an `AFAStructure` (`selfMem x := x = ⊥`), and under it
+-- the claim above holds, so it singles out no carrier.
+example (L : Type*) [ZPSemilattice L] :
+    @IsQuineAtom L _ ⟨fun x => x = bot, fun _ _ hx hy => hx.trans hy.symm, rfl⟩ bot :=
+  @claim_node_set_theory L _ ⟨fun x => x = bot, fun _ _ hx hy => hx.trans hy.symm, rfl⟩
+
 /-- Claim `DA-1` (proved). Statement: "DA-1 (instantiation is execution) is closed given DP-2
     (da1_minimal_path); ZP-K witnesses its Path 1: ⊥ is the unique Quine atom of the machine-phase
-    semilattice (da1_closed_concrete)." Exact representation: DA-1's minimal path, the pre- and
+    semilattice (da1_closed_concrete)." Representation of the minimal-path half only: the pre- and
     post-instantiation configurations share the output value ⊥ and differ in machine state, c₀ then c₁.
-    Backing: `da1_minimal_path`. -/
+    The Path 1 witness `da1_closed_concrete` is not represented here. Backing: `da1_minimal_path`. -/
 theorem claim_DA1 :
     let before := preInstantiation
     let after  := postInstantiation
@@ -95,8 +103,10 @@ theorem claim_DA1 :
   da1_minimal_path
 
 /-- Claim `T-SNAP` (proved). Statement: "The Binary Snap ⊥→ε₀ is a theorem (T-SNAP, derived in ZP-E)."
-    Exact representation: the concrete snap is the join transition c₀ → c₁ between two distinct states.
-    Backing: `t_snap_derived`. -/
+    Representation of the SHAPE only: the concrete snap is the join transition c₀ → c₁ between two
+    distinct states of `MachinePhase`. It constrains the shape of a transition, not that one occurs
+    (the NO-GO gauge after `t_snap_derived` in `ZeroParadox/Order/Snap.lean`); occurrence is a
+    separate commitment. Backing: `t_snap_derived`. -/
 theorem claim_T_SNAP : c₀ ≠ c₁ ∧ c₁ ≠ c₀ ∧ join c₀ c₁ = c₁ :=
   t_snap_derived
 
@@ -105,8 +115,9 @@ theorem claim_T_SNAP : c₀ ≠ c₁ ∧ c₁ ≠ c₀ ∧ join c₀ c₁ = c₁
 /-- Claim `node-information` (proved). Statement: "In information theory, L-INF gives unbounded
     surprisal: for every bound M some ball depth n has surprisal I(n) = n > M." (the claim graph adds:
     n is a natural number, the ball-depth reading a design identification, `surprisal_eq_binary_info`;
-    and the second, point-mass reading, `pmf_subsingleton_isPure`). Exact representation: the surprisal is unbounded
-    (no finite bound holds), the L-INF divergence (`l_inf`: ∀ M, ∃ n, M < surprisal n). Backing: `info_bottom_diverges`.
+    and the second, point-mass reading, `pmf_subsingleton_isPure`). Representation of the L-INF half only: the surprisal is unbounded
+    (no finite bound holds), the L-INF divergence (`l_inf`: ∀ M, ∃ n, M < surprisal n). The point-mass
+    reading (`pmf_subsingleton_isPure`) is not represented here. Backing: `info_bottom_diverges`.
     Measure-theoretic home of the depth reading: the depth-n ball of ℤ_[p] has Haar measure p⁻ⁿ
     (`haarZp_ball`, `ZeroParadox/Valuation/PadicHaar.lean`), and the balls of ℚ₂ meet in `{0}`
     (`topfloor_singleton`, `ZeroParadox/Valuation/PadicAttractor.lean`). -/
@@ -128,8 +139,9 @@ theorem claim_node_ordinal (b : ℕ) : heval b 0 = (⊥ : Ordinal) :=
   heval_floor_eq_bot b
 
 /-- Claim `node-algebra` (proved). Statement: "In algebra, ⊥ is realized as the bottom of the wheel of
-    fractions (0·∞ = ⊥)." Exact representation: in the ZP wheel, 0 · ∞ is the wheel bottom.
-    Backing: `zpw_zero_mul_inf_eq_bot`. -/
+    fractions (0·∞ = ⊥)." Representation on the concrete carrier `ZPWheelElem`, not on the wheel of
+    fractions `WheelFrac`: there 0 · ∞ is the absorbing element ⊥ₗ = 0·/0, by unfolding `zpwMul`.
+    "Bottom" here names the absorbing element; no order is in play. Backing: `zpw_zero_mul_inf_eq_bot`. -/
 theorem claim_node_algebra : zpwMul (.fin 0) .inf = .bot :=
   zpw_zero_mul_inf_eq_bot
 
@@ -182,8 +194,8 @@ theorem claim_MC1_cat_valuation :
 /-! ## § V. Category bottom and the floor-reaching correspondence (E-series, Perron) -/
 
 /-- Claim `node-category` (proved). Statement: "In category theory, ⊥ is realized as the initial object
-    (the universal constituent of ZP-G)." Exact representation: in any ZPCategory, the ZP-G bottom is an
-    initial object. Backing: `ZPCategory.zpIsInitial`. -/
+    (the universal constituent of ZP-G)." Representation by class-field projection; this entry exhibits no
+    category, and `forkZPCategory` (`ZeroParadox/Category/Category.lean`) is one instance realizing it. Backing: `ZPCategory.zpIsInitial`. -/
 theorem claim_node_category {C : Type*} [Category C] [ZPCategory C] :
     Nonempty (Limits.IsInitial (ZPCategory.zpInitial : C)) :=
   ⟨ZPCategory.zpIsInitial⟩
@@ -235,9 +247,10 @@ example : IsEmpty (PMF (Fin 0)) :=
 
 /-- Claim `node-computability` (proved). Statement: "In computability, ⊥ is read as the Kleene quine: in
     any KleeneStructure lattice every Quine-atom element equals ⊥ (kleene_quine_is_bot), and the quine
-    itself is the structure's botCode requirement." Exact representation:
-    in a KleeneStructure, every Quine-atom element equals ⊥.
-    Backing: `kleene_quine_is_bot`. -/
+    itself is the structure's botCode requirement." Representation of the first half only: in a
+    KleeneStructure, every Quine-atom element equals ⊥. Backing: `kleene_quine_is_bot`, whose proof is
+    `t_exec` and consumes only the `AFAStructure` field `bot_self_mem` the class extends, no Kleene
+    content. The `botCode` half is not represented (`ZeroParadox/Computability/Kleene.lean`). -/
 theorem claim_node_computability {L : Type*} [ZPSemilattice L] [KleeneStructure L]
     (q : L) (hq : IsQuineAtom q) : q = bot :=
   kleene_quine_is_bot q hq

@@ -7,9 +7,9 @@ set_option maxHeartbeats 400000
 # The type bridge: a separated succession as an interface, with two known implementations
 
 The snap's succession of **targets** — its **iterative bottoms** — shows up in two charts of the framework
-that are DIFFERENT TYPES. (Iterative bottom: a bottom relative to its iteration, the base the next snap
-re-seeds above, never ⊥ of `Ordinal` itself. `ε₀ ≠ ⊥` of `Ordinal` is bedrock, `epsilon0_ne_bot`. The qualifier carries the role
-without asserting the identity; standardized 2026-07-19.)
+that are DIFFERENT TYPES. (Iterative bottom: in the ordinal chart, a rung, ⊥ of `Set.Ici rung` and the base the next snap
+re-seeds just above, never ⊥ of `Ordinal` itself; in the Hilbert chart, whose consecutive states are separated by orthogonality
+and not by an order, the term names the role only. `ε₀ ≠ ⊥` of `Ordinal` is bedrock, `epsilon0_ne_bot`. The qualifier carries the role without asserting the identity; standardized 2026-07-19.)
 - the **ordinal chart** — the ε-numbers `ε₀ < ε₁ < ε₂ < …`, consecutive ones separated by strict order
   (`ZeroParadox/Ordinal/SnapSuccession.lean`, `succession_lt_succ`);
 - the **Hilbert chart** — the state vectors `T(S₀), T(S₁), …`, consecutive ones separated by orthogonality

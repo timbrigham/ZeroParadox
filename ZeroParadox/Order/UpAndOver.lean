@@ -94,6 +94,21 @@ theorem exists_next_landing {y : α} (hy : U.up.IsClosed y) (hmax : ¬ IsMax y) 
   obtain ⟨b, hb⟩ := U.cover y hy hmax
   exact ⟨b, hb, U.up.isClosed_closure b, hb.1.trans_le (U.up.le_closure b)⟩
 
+/-- `Statement:` for any closure operator `c` and any `y` with a first step (`HasFirstStep y`), a
+    cover `b` of `y` followed by `c` lands on a closed point of `c` strictly above `y`.
+    `Reading:` the hypothesis form of the `cover` field (R-COMMIT): the cover at `y` is a premise
+    here, so no `UpAndOver`, closedness of `y` or non-maximality of `y` is assumed. -/
+theorem exists_next_landing_of_cover_at (c : ClosureOperator α) {y : α} (hcov : HasFirstStep y) :
+    ∃ b, y ⋖ b ∧ c.IsClosed (c b) ∧ y < c b := by
+  obtain ⟨b, hb⟩ := hcov
+  exact ⟨b, hb, c.isClosed_closure b, hb.1.trans_le (c.le_closure b)⟩
+
+-- `Statement:` `exists_next_landing`'s conclusion follows from the companion at `U.up`, with the
+-- `cover` field at `y` supplying the hypothesis.
+example {y : α} (hy : U.up.IsClosed y) (hmax : ¬ IsMax y) :
+    ∃ b, y ⋖ b ∧ U.up.IsClosed (U.up b) ∧ y < U.up b :=
+  exists_next_landing_of_cover_at U.up (U.cover y hy hmax)
+
 /-- `Statement:` on a linear order, the landing reached from a cover `b` of `y` is below every
     landing strictly above `y`. -/
 theorem up_le_of_covBy {β : Type u} [LinearOrder β] (V : UpAndOver β) {y b z : β}
@@ -549,7 +564,7 @@ theorem ordinalSuccMotion_climb : ordinalSuccMotion.{u}.Climb := by
 theorem ordinalSuccMotion_up_succ_epsilon0 :
     Ordinal.nfp (fun a => Ordinal.omega0 ^ a) (Order.succ (Ordinal.epsilon 0)) =
       Ordinal.epsilon.{u} 1 := by
-  rw [← Ordinal.epsilon_succ_eq_nfp, Order.succ_eq_add_one, zero_add]
+  rw [Order.succ_eq_add_one, ← Ordinal.epsilon_add_one_eq_nfp, zero_add]
 
 /-- `Statement:` the corner composite of `ordinalSuccMotion`: OVER `Order.succ`, then UP
     `nfp (ω^·)`, as one map on `Ordinal`. -/
@@ -582,7 +597,7 @@ theorem ordinalCornerStep_iterate (n : ℕ) :
   | succ n ih =>
     rw [Function.iterate_succ_apply', ih]
     show Ordinal.nfp _ (Order.succ (Ordinal.epsilon (n : Ordinal.{u}))) = _
-    rw [← Ordinal.epsilon_succ_eq_nfp, Order.succ_eq_add_one]
+    rw [Order.succ_eq_add_one, ← Ordinal.epsilon_add_one_eq_nfp]
     push_cast; rfl
 
 /-- `Statement:` the iterates of the corner composite from 0, ⊥ of `Ordinal`, strictly increase. -/
@@ -614,7 +629,7 @@ theorem ordinalCornerStep_pinnedLimitAbove (f : Ordinal.{u}) :
     rintro _ ⟨n, rfl⟩
     exact (Ordinal.iterate_lt_nfp hn.strictMono ha n).le
 
-/-- `Statement:` at the floor `ε_o` that occupant is `ε_(o+1)` (Mathlib `Ordinal.epsilon_succ_eq_nfp`):
+/-- `Statement:` at the floor `ε_o` that occupant is `ε_(o+1)` (Mathlib `Ordinal.epsilon_add_one_eq_nfp`):
     `ε_(o+1)` occupies `PinnedLimitAbove (ω^·)` at the run from `succ ε_o`, for every `o`. -/
 theorem epsilon_succ_pinnedLimitAbove (o : Ordinal.{u}) :
     (Motion.ofFun fun α : Ordinal.{u} => Ordinal.omega0 ^ α).IsRun
@@ -622,7 +637,9 @@ theorem epsilon_succ_pinnedLimitAbove (o : Ordinal.{u}) :
     PinnedLimitAbove (fun α : Ordinal.{u} => Ordinal.omega0 ^ α)
       (fun n => (fun α : Ordinal.{u} => Ordinal.omega0 ^ α)^[n] (Order.succ (Ordinal.epsilon o)))
       (Ordinal.epsilon (Order.succ o)) := by
-  rw [Ordinal.epsilon_succ_eq_nfp]
+  rw [show Ordinal.epsilon (Order.succ o) =
+      Ordinal.nfp (fun α => Ordinal.omega0 ^ α) (Order.succ (Ordinal.epsilon o)) by
+    simpa only [Order.succ_eq_add_one] using Ordinal.epsilon_add_one_eq_nfp o]
   exact ordinalCornerStep_pinnedLimitAbove _
 
 -- `Statement:` at the floor `ε_n` the occupant is the corner composite iterated `n + 2` times from 0,
@@ -830,6 +847,7 @@ open ZeroParadox
 #print axioms UpAndOver.up_eq_of_mem_Icc
 #print axioms UpAndOver.up_not_injective
 #print axioms UpAndOver.exists_next_landing
+#print axioms UpAndOver.exists_next_landing_of_cover_at
 #print axioms UpAndOver.up_le_of_covBy
 #print axioms UpAndOver.isEmpty_of_denselyOrdered
 #print axioms keepAboveKernel

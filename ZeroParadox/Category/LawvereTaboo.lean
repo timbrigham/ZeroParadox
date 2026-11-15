@@ -243,13 +243,13 @@ the weaker one. The equivalence
 
 -- Reading (cited, not claimed): the `LPO` and `WLPO` forms over `ℕ → Bool` are Escardó, "Infinite
 -- sets that satisfy the principle of omniscience in any variety of constructive mathematics",
--- JSL 78(3) (2013), § 3, p. 4 of the preprint, with `true` and `false` exchanged ("Clearly LPO ⟺ WLPO ∧ MP"); preprint p. 1:
--- "For X finite this is trivial, and for X = ℕ, this is LPO". Ishihara, "Reverse mathematics in
--- Bishop's constructive mathematics", Philosophia Scientiae CS 6 (2006), §§ 2–4, pp. 47–50, states
--- LPO, WLPO, LLPO and MP over `ℕ^ℕ` as instances of excluded middle, weak excluded middle, De Morgan's law and double
--- negation elimination, and Prop 10, p. 53, gives `LPO ↔ WLPO + MP` and `WLPO → LLPO`. The LLPO form
--- below is Diener, "Constructive Reverse Mathematics", arXiv:1804.05495v3, § 1.4, p. 25, indexed
--- from 0.
+-- JSL 78(3) (2013), § 3, p. 4 of the preprint, with `true` and `false` exchanged ("Clearly
+-- LPO ⟺ WLPO ∧ MP"); preprint p. 1: "For X finite this is trivial, and for X = ℕ, this is LPO".
+-- Ishihara, "Reverse mathematics in Bishop's constructive mathematics", Philosophia Scientiae CS 6
+-- (2006), §§ 2–4, pp. 47–50, states LPO, WLPO, LLPO and MP over `ℕ^ℕ` as instances of excluded
+-- middle, weak excluded middle, De Morgan's law and double negation elimination, and Prop 10,
+-- p. 53, gives `LPO ↔ WLPO + MP` and `WLPO → LLPO`. The LLPO form below is Diener, "Constructive
+-- Reverse Mathematics", arXiv:1804.05495v3, § 1.4, p. 25, indexed from 0.
 
 /-- **LPO.** `Statement:` every `r : ℕ → Bool` is `true` somewhere or `false` everywhere. -/
 def LPO : Prop := ∀ r : ℕ → Bool, (∃ n, r n = true) ∨ ∀ n, r n = false

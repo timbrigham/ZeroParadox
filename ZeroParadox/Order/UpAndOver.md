@@ -75,7 +75,7 @@ landing `up b`, since `y < b ≤ up b` (the `example` in § II).
   (`seed_eq_of_nfp_eq_epsilon_limit`).
 - The ordinals' least element 0 is not a landing: `bot_is_not_a_step` (0 is not a fixed point of
   `ω^·`). UP from 0 lands on ε₀ (`snapNucleus_bot`), and no fixed point of `ω^·` lies below ε₀
-  (`nothing_between_is_a_step`); ε₀ ≠ 0 (`epsilon0_ne_zero`, `epsilon0_ne_bot`).
+  (`nothing_between_is_a_step`); ε₀ ≠ 0 of `Ordinal` (`epsilon0_ne_zero`, `epsilon0_ne_bot`).
 - A landing `ε_ o` plays the least-element role in `Set.Ici (ε_ o)` without being the ordinals'
   least element. `Statement:` CARRIER — whether the floor returned to is a new point depends on the chart:
   - In the ordinals the re-floored landing is a different point from every earlier floor

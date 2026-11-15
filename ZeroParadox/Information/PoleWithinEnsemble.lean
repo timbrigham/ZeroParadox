@@ -2,6 +2,8 @@
 import ZeroParadox.Information.TapeHalting
 import Mathlib.MeasureTheory.Measure.Support
 import Mathlib.Topology.Instances.ENat
+import Mathlib.Analysis.SpecialFunctions.Sigmoid
+import Mathlib.Order.Filter.Germ.Basic
 import Mathlib.Tactic
 
 /-!
@@ -18,8 +20,8 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 ## Formal Overview (AI-assisted)
 For `0 < p < 1`, ⊥ of `ℕ → Bool` is `trials p hp`-null, in its support, and a limit of random firing tapes whose waits diverge (`pole_within_ensemble` in `ℕ∞`; `pole_within_ensemble_limit` in `NInf`).
-At `p = 0` the mass of `{⊥}` jumps while every cylinder's mass is continuous (§ VI); explicit non-random tapes give the limit with no measure in the statement (§ VII).
-Nothing here identifies ⊥ of a `ZPSemilattice` with a tape or with `trials p hp`.
+At `p = 0` the mass of `{⊥}` jumps while every cylinder's mass is continuous (§ VI); explicit non-random tapes give the limit with no measure in the statement (§ VII). A heat-bath rate `glauberExciteNN ΔE T`, positive at every `ΔE` and `T`, feeds `trials` (§ VIII).
+Modulo `trials p hp`-null sets, firing somewhere is ⊤ of `Germ (ae (trials p hp)) Prop` for `0 < p` and ⊥ of `Germ (ae (trials 0 hp)) Prop` at `p = 0`; tape by tape it fails at ⊥ of `ℕ → Bool` and at no other tape (§ II), for `0 < p` a null tape that the quotient forgets along with every other null set (§ IX). Nothing here identifies ⊥ of a `ZPSemilattice` with a tape or with `trials p hp`.
 -/
 
 set_option maxHeartbeats 400000
@@ -487,6 +489,172 @@ theorem fireAt_not_MLRandom (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p) (n : ℕ) 
   refine (not_mem_limsup_fires_iff _).2 ⟨n + 1, fun k hk => ?_⟩ h1
   exact decide_eq_false (by omega)
 
+/-! ### § VIII. A heat-bath rate supplies `0 < p`
+`Reading:` this RELOCATES the residual hypothesis `0 < p` of `trials_fires_once` into the choice of
+the rate's form; it does not remove it. `glauberExciteNN_pos` is `Real.sigmoid_pos`: positivity comes
+from the sigmoid's codomain `(0, 1)` at every `ΔE` and `T`, and no theorem here consumes `T > 0`. At
+`T = 0` Lean's `x / 0 = 0` gives the junk rate `1 / 2` (the CONTROL below); `T > 0` enters only as
+the filter `𝓝[>] 0` of `glauberExcite_tendsto_zero`. Any rate with values in `(0, 1]` does the same
+job, so the sigmoid has no special role. The form is the heat-bath (Glauber-type) occupation of one
+site: `glauberExcite ΔE T` is `1 − p(σ, w)` of Levin, Peres and Wilmer, *Markov Chains and Mixing
+Times*, 2nd ed., § 3.3.5, eq. (3.11), p. 45, with `ΔE = 2S` and `β = 1 / T`; after R. J. Glauber,
+J. Math. Phys. 4, 294 (1963). -/
+
+/-- `Statement:` `Real.sigmoid (-(ΔE / T))`. `Reading:` excitation across a gap `ΔE` at temperature `T`. -/
+noncomputable def glauberExcite (ΔE T : ℝ) : ℝ := Real.sigmoid (-(ΔE / T))
+
+/-- `Statement:` `glauberExcite ΔE T` as an `NNReal`. -/
+noncomputable def glauberExciteNN (ΔE T : ℝ) : NNReal :=
+  ⟨glauberExcite ΔE T, (Real.sigmoid_pos _).le⟩
+
+/-- `Statement:` `glauberExciteNN ΔE T ≤ 1`. -/
+theorem glauberExciteNN_le_one (ΔE T : ℝ) : glauberExciteNN ΔE T ≤ 1 :=
+  show glauberExcite ΔE T ≤ 1 from (Real.sigmoid_lt_one _).le
+
+/-- `Statement:` `0 < glauberExciteNN ΔE T`. -/
+theorem glauberExciteNN_pos (ΔE T : ℝ) : 0 < glauberExciteNN ΔE T :=
+  show 0 < glauberExcite ΔE T from Real.sigmoid_pos _
+
+/-- `Statement:` at every `ΔE` and `T`, the tapes that fire somewhere have
+    `trials (glauberExciteNN ΔE T)` measure one. -/
+theorem glauber_fires_once (ΔE T : ℝ) :
+    trials (glauberExciteNN ΔE T) (glauberExciteNN_le_one ΔE T) {w | ∃ k, w k = true} = 1 :=
+  trials_fires_once _ _ (glauberExciteNN_pos ΔE T)
+
+/-- `Statement:` at every `ΔE` and `T`, `trials (glauberExciteNN ΔE T)`-almost every tape fires. -/
+theorem glauber_ae_fires (ΔE T : ℝ) :
+    ∀ᵐ w ∂(trials (glauberExciteNN ΔE T) (glauberExciteNN_le_one ΔE T)), ∃ k, w k = true :=
+  ae_firesOnce _ _ (glauberExciteNN_pos ΔE T)
+
+/-- `Statement:` at every `ΔE` and `T`, `botMass (glauberExciteNN ΔE T) = 0`. -/
+theorem glauber_botMass (ΔE T : ℝ) : botMass (glauberExciteNN ΔE T) = 0 :=
+  botMass_pos (glauberExciteNN_pos ΔE T)
+
+/-- `Statement:` if `0 < ΔE`, `glauberExcite ΔE T → 0` as `T → 0⁺`. -/
+theorem glauberExcite_tendsto_zero {ΔE : ℝ} (hΔ : 0 < ΔE) :
+    Tendsto (glauberExcite ΔE) (𝓝[>] 0) (𝓝 0) := by
+  have h1 : Tendsto (fun T : ℝ => ΔE / T) (𝓝[>] 0) atTop :=
+    Tendsto.const_mul_atTop hΔ tendsto_inv_nhdsGT_zero |>.congr (fun T => by ring)
+  exact Real.tendsto_sigmoid_atBot.comp (tendsto_neg_atTop_atBot.comp h1)
+
+/-- `Statement:` if `0 < ΔE`: `botMass (glauberExciteNN ΔE T) = 0` at every `T`,
+    `glauberExcite ΔE T → 0` as `T → 0⁺`, and `botMass 0 = 1`. -/
+theorem glauber_jump {ΔE : ℝ} (hΔ : 0 < ΔE) :
+    (∀ T, botMass (glauberExciteNN ΔE T) = 0) ∧ Tendsto (glauberExcite ΔE) (𝓝[>] 0) (𝓝 0)
+      ∧ botMass 0 = 1 :=
+  ⟨glauber_botMass ΔE, glauberExcite_tendsto_zero hΔ, botMass_zero⟩
+
+-- Statement: CONTROL, `glauberExcite ΔE 0 = 1 / 2`: Lean's `x / 0 = 0`, so `T = 0` is reached
+-- only as the limit `T → 0⁺` of `glauberExcite_tendsto_zero`, never by substitution.
+example (ΔE : ℝ) : glauberExcite ΔE 0 = 1 / 2 := by
+  simp [glauberExcite, Real.sigmoid]
+  norm_num
+
+/-! ### § IX. Two charts of firing: modulo null sets, and tape by tape
+`Reading:` CARRIER. Quotient chart: predicates on tapes read in `Germ (ae (trials p hp)) Prop`, equal
+when they agree off a `trials p hp`-null set. Pointwise chart: predicates read at each tape. Firing
+somewhere fails at ⊥ of `ℕ → Bool` and at no other tape (the § II CONTROL `example`); for `0 < p`
+that tape is null, and the quotient forgets it along with every other null set, the tapes silent
+from `k` on among them (`trials_localFloor_null`). The two charts are the almost-surely versus surely
+distinction. Prior art: on measurable predicates the quotient chart is the Boolean algebra Σ modulo
+its null ideal, which underlies the measure algebra of `trials p hp` (Fremlin, *Measure Theory* Vol. 3, §321H, named in §321I). -/
+
+/-- `Statement:` if `0 < p ≤ 1` and `φ : Bool → L` sends `false` to ⊥ of `L` and `true` to a point
+other than ⊥ of `L`, then `trials p hp`-almost every tape `w` fires and gives `t_snap_of_fires_once`'s
+conclusion. One way. Against `snap_ae_of_firstStep` it has no `BotHasFirstStep L` hypothesis AND no
+cover `bot ⋖ S 1` in its conclusion, and `φ` is given rather than produced. -/
+theorem snap_ae_fixed_phi {L : Type*} [ZPSemilattice L] (φ : Bool → L)
+    (hφ0 : φ false = ZPSemilattice.bot) (hφ1 : φ true ≠ ZPSemilattice.bot)
+    (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p) :
+    ∀ᵐ w ∂(trials p hp), ∃ hw : ∃ k, w k = true,
+      let S := φ ∘ firedRun w hw
+      S 0 = ZPSemilattice.bot ∧ S 1 ≠ S 0 ∧ ZPSemilattice.IsStateSequence S ∧
+        (S 0 ≠ S 1 ∧ S 1 ≠ S 0 ∧ ZPSemilattice.join (S 0) (S 1) = S 1) := by
+  filter_upwards [ae_firesOnce p hp hp0] with w hw
+  exact ⟨hw, t_snap_of_fires_once φ hφ0 hφ1 w hw⟩
+
+/-- `Statement:` if `0 < p ≤ 1`, the set of tapes that fire somewhere is `trials p hp`-almost
+everywhere equal to `Set.univ`. -/
+theorem fires_ae_eq_univ (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p) :
+    {w : ℕ → Bool | ∃ k, w k = true} =ᵐ[trials p hp] (Set.univ : Set (ℕ → Bool)) :=
+  (ae_eq_univ_iff_measure_eq isOpen_fires_once.measurableSet.nullMeasurableSet).2
+    (by rw [trials_fires_once p hp hp0, measure_univ])
+
+/-- `Statement:` if `0 < p ≤ 1`, the predicate "fires somewhere" is ⊤ of
+`Germ (ae (trials p hp)) Prop`. -/
+theorem fires_germ_eq_top (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p) :
+    ((fun w : ℕ → Bool => ∃ k, w k = true : (ℕ → Bool) → Prop) :
+      Germ (ae (trials p hp)) Prop) = ⊤ := by
+  show ((fun w : ℕ → Bool => ∃ k, w k = true : (ℕ → Bool) → Prop) : Germ (ae (trials p hp)) Prop)
+    = ((fun _ => True : (ℕ → Bool) → Prop) : Germ (ae (trials p hp)) Prop)
+  refine Germ.coe_eq.2 ?_
+  filter_upwards [ae_firesOnce p hp hp0] with w hw
+  exact propext ⟨fun _ => trivial, fun _ => hw⟩
+
+/-- `Statement:` under `snap_ae_fixed_phi`'s hypotheses, the predicate "`w` fires and gives
+`t_snap_of_fires_once`'s conclusion" is ⊤ of `Germ (ae (trials p hp)) Prop`. -/
+theorem snap_germ_eq_top {L : Type*} [ZPSemilattice L] (φ : Bool → L)
+    (hφ0 : φ false = ZPSemilattice.bot) (hφ1 : φ true ≠ ZPSemilattice.bot)
+    (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p) :
+    ((fun w : ℕ → Bool => ∃ hw : ∃ k, w k = true,
+        let S := φ ∘ firedRun w hw
+        S 0 = ZPSemilattice.bot ∧ S 1 ≠ S 0 ∧ ZPSemilattice.IsStateSequence S ∧
+          (S 0 ≠ S 1 ∧ S 1 ≠ S 0 ∧ ZPSemilattice.join (S 0) (S 1) = S 1) : (ℕ → Bool) → Prop)
+      : Germ (ae (trials p hp)) Prop) = ⊤ := by
+  refine Germ.coe_eq.2 ?_
+  filter_upwards [snap_ae_fixed_phi φ hφ0 hφ1 p hp hp0] with w hw
+  exact propext ⟨fun _ => trivial, fun _ => hw⟩
+
+/-- `Statement:` CONTROL, for every `φ : Bool → L`, at ⊥ of `ℕ → Bool` (the all-`false` tape) no
+proof that it fires exists, so no `φ ∘ firedRun` from it steps at index 1. -/
+theorem snap_fails_at_allFalse {L : Type*} [ZPSemilattice L] (φ : Bool → L) :
+    ¬ ∃ hw : ∃ k, (fun _ => false : ℕ → Bool) k = true,
+      (φ ∘ firedRun (fun _ => false) hw) 1 ≠ (φ ∘ firedRun (fun _ => false) hw) 0 :=
+  fun ⟨⟨_, h⟩, _⟩ => Bool.false_ne_true h
+
+/-- `Statement:` CONTROL, if `0 < p ≤ 1`, `trials p hp`-almost every tape fires somewhere, and not
+every tape does. -/
+theorem ae_but_not_every (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p) :
+    (∀ᵐ w ∂(trials p hp), ∃ k, w k = true) ∧ ¬ ∀ w : ℕ → Bool, ∃ k, w k = true :=
+  ⟨ae_firesOnce p hp hp0, fun h => by obtain ⟨k, hk⟩ := h (fun _ => false); simp at hk⟩
+
+/-- `Statement:` CONTROL, along `pure` at the all-`false` tape (⊥ of `ℕ → Bool`), the predicate
+"fires somewhere" is ⊥ of that filter's `Germ _ Prop`. -/
+theorem fires_germ_pure_bot :
+    ((fun w : ℕ → Bool => ∃ k, w k = true : (ℕ → Bool) → Prop)
+      : Germ (pure (fun _ => false : ℕ → Bool)) Prop) = ⊥ := by
+  show _ = ((fun _ => False : (ℕ → Bool) → Prop) : Germ (pure (fun _ => false : ℕ → Bool)) Prop)
+  refine Germ.coe_eq.2 ?_
+  rw [EventuallyEq, eventually_pure]
+  simp
+
+/-- `Statement:` CONTROL, `trials 0 hp`-almost every tape fires nowhere. -/
+theorem never_fires_ae_zero (hp : (0 : NNReal) ≤ 1) :
+    ∀ᵐ w ∂(trials 0 hp), ¬ ∃ k, w k = true := by
+  rw [ae_iff]
+  simp only [not_not]
+  have e : {w : ℕ → Bool | ∃ k, w k = true} = ⋃ k, fires k := by ext w; simp [fires]
+  rw [e]
+  exact measure_iUnion_null fun k => by rw [trials_fires]; simp
+
+/-- `Statement:` CONTROL, the predicate "fires somewhere" is ⊥ of `Germ (ae (trials 0 hp)) Prop`. -/
+theorem fires_germ_eq_bot_zero (hp : (0 : NNReal) ≤ 1) :
+    ((fun w : ℕ → Bool => ∃ k, w k = true : (ℕ → Bool) → Prop) :
+      Germ (ae (trials 0 hp)) Prop) = ⊥ := by
+  show _ = ((fun _ => False : (ℕ → Bool) → Prop) : Germ (ae (trials 0 hp)) Prop)
+  refine Germ.coe_eq.2 ?_
+  filter_upwards [never_fires_ae_zero hp] with w hw
+  exact propext ⟨fun h => hw h, False.elim⟩
+
+/-- `Statement:` CONTROL, for every `p ≤ 1`, ⊤ ≠ ⊥ in `Germ (ae (trials p hp)) Prop`. -/
+theorem germ_top_ne_bot (p : NNReal) (hp : p ≤ 1) :
+    (⊤ : Germ (ae (trials p hp)) Prop) ≠ ⊥ := by
+  intro h
+  have := Germ.coe_eq.1 h
+  have hne : (ae (trials p hp)).NeBot := inferInstance
+  obtain ⟨w, hw⟩ := this.exists
+  simp at hw
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -539,4 +707,23 @@ open ZeroParadox
 #print axioms pole_limit_explicit
 #print axioms stmtLimitNoRand_holds
 #print axioms fireAt_not_MLRandom
+#print axioms glauberExcite
+#print axioms glauberExciteNN
+#print axioms glauberExciteNN_le_one
+#print axioms glauberExciteNN_pos
+#print axioms glauber_fires_once
+#print axioms glauber_ae_fires
+#print axioms glauber_botMass
+#print axioms glauberExcite_tendsto_zero
+#print axioms glauber_jump
+#print axioms snap_ae_fixed_phi
+#print axioms fires_ae_eq_univ
+#print axioms fires_germ_eq_top
+#print axioms snap_germ_eq_top
+#print axioms snap_fails_at_allFalse
+#print axioms ae_but_not_every
+#print axioms fires_germ_pure_bot
+#print axioms never_fires_ae_zero
+#print axioms fires_germ_eq_bot_zero
+#print axioms germ_top_ne_bot
 end PurityCheck

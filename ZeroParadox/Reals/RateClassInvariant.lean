@@ -7,7 +7,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# Axis IV: convergence-rate class as a cross-root invariant
+# Axis IV probe: termination separates these descents; convergence-rate class is not shown to separate them
 
 ## Engineer's Take
 
@@ -20,15 +20,16 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 ## Formal Overview (AI-assisted)
 
-`ZeroParadox/Valuation/NuRateEdge.lean` and `ZeroParadox/Valuation/RateTransport.lean` established that the p-adic ν-floor (#3, geometric orbit `2⁻ⁿ`) and the Markov
-attractor (#2, absorbing) are *rate*-obstructed. This file probes a finer question: among
+`ZeroParadox/Valuation/NuRateEdge.lean` compared the p-adic ν-floor (#3, geometric orbit `2⁻ⁿ`) with the Markov attractor (#2) started at its
+absorbing state, a mismatch set by the two starts (its scope fence); `ZeroParadox/Valuation/RateTransport.lean` gives #3 and #1 a shared envelope. This file probes a finer question: among
 sequences that all reach the floor, is **convergence-rate class** (geometric vs linear) a
 separating invariant that cuts *across* the well-founded/non-well-founded root (Axis I)?
 
 The objects under test are three concrete descent sequences to the floor:
 
 - **geometric** `g n = 2⁻ⁿ` (the #3 p-adic orbit's rate; never reaches `0` over ℝ);
-- **linear / Goodstein-style** `a₀ - n` (the canonical finite well-founded descent, #1);
+- **linear / Goodstein-style** `a₀ - n` (the canonical finite well-founded descent, #1), and its step
+  counter `n`, which increases and is the sequence `linear_overtakes_geometric` is about;
 - **binary-halving** `⌊a₀ / 2ⁿ⌋` (a well-founded ℕ-descent that is *also* geometric base ½).
 
 "Rate-preserving correspondence" between two nonnegative sequences `s, t` is taken to be a
@@ -38,12 +39,11 @@ one direction.
 
 ### What is proved (load-bearing, in-statement)
 
-- `linear_overtakes_geometric` — **the NO-GO (Axis IV separation).** No constant `C` makes the
-  linear count `n` bounded by `C · 2⁻ⁿ`: for every `C` there is an `n` with `(n:ℝ) > C · 2⁻ⁿ`.
-  Geometric decay strictly out-paces linear, so there is *no* rate-preserving map from a linear
-  descent into the geometric orbit. This is a genuine cross-root wall (linear descent is #1, a
-  μ/well-founded object; geometric orbit is #3, a ν object) that is **finer than Axis I** —
-  it separates by rate class, not by well-foundedness.
+- `linear_overtakes_geometric` — **a fact about the counter, not the descent.** No constant `C`
+  makes the counter `n` bounded by `C · 2⁻ⁿ`: for every `C` there is an `n` with `(n:ℝ) > C · 2⁻ⁿ`.
+  The linear *descent* `a₀ - n` is bounded by a constant times `2⁻ⁿ` (the `example` after
+  `linear_overtakes_geometric`): it reaches `0` at step `a₀`, so only finitely many terms are
+  nonzero. So no rate wall between the linear descent and the geometric orbit is proved here.
 
 - `halving_dominated_by_geometric` — **the refined GO (one direction only).** The binary-halving
   ℕ-descent *is* in the geometric rate class from above: `(⌊a₀/2ⁿ⌋ : ℝ) ≤ a₀ · 2⁻ⁿ` for all `n`.
@@ -57,15 +57,15 @@ one direction.
   orbit are rate-separated *below* even when they share the base ½. Well-foundedness reasserts
   itself as a tail phenomenon: terminating descent cannot two-sidedly track a non-terminating orbit.
 
-### Honest verdict — NO-GO (with a one-sided GO), opening Axis IV
+### Honest verdict — termination separates; rate class is not shown to separate them
 
 The pre-registered GO ("a geometric ℕ-descent rate-MATCHES the geometric orbit") holds only as an
 *upper* envelope; the literal two-sided match is **false** because the ℕ-descent terminates. The
-pre-registered NO-GO (linear is rate-incompatible with geometric) **proves**. Together:
-convergence-rate class is a real separating invariant (Axis IV) — but the cleanest reading is that
-*termination* (the μ/well-founded signature) is what blocks the two-sided match, so Axis IV does not
-fully decouple from Axis I; it refines it. No single constant reconciles a terminating descent with
-a non-terminating orbit, in either the linear or the geometric base.
+pre-registered NO-GO (linear is rate-incompatible with geometric) is proved only for the counter `n`;
+for the descent `a₀ - n` it fails, since that descent has the same upper envelope as the halving one.
+What separates is *termination* (`halving_not_matched_below`), which is Axis I itself, so this file
+does not establish convergence-rate class as an invariant finer than Axis I. Below, no positive
+constant matches the terminating halving descent to the non-terminating orbit.
 
 ### What is interpretation, not Lean
 
@@ -90,13 +90,11 @@ theorem geo_le_one (n : ℕ) : geo n ≤ 1 := by
   right
   exact one_le_pow₀ (by norm_num)
 
-/-! ### NO-GO — linear descent is rate-incompatible with the geometric orbit (Axis IV wall) -/
+/-! ### The counter `n` is not bounded by any constant times `2⁻ⁿ` -/
 
-/-- **NO-GO (the Axis IV separation, load-bearing).** No constant `C` bounds the linear count `n`
-    by `C · 2⁻ⁿ`: for every `C` there is an `n` with `(n : ℝ) > C · geo n`. So there is no
-    rate-preserving (bounded-ratio) correspondence sending a *linear* well-founded descent into the
-    *geometric* p-adic orbit. Geometric strictly out-paces linear — a wall finer than Axis I
-    (well-founded vs not), since it ranks two descents that both reach the floor. -/
+/-- `Statement:` no constant `C` bounds the counter `n` by `C · 2⁻ⁿ`: for every `C` there is an `n`
+    with `(n : ℝ) > C · geo n`. The counter increases; it is not the descent `a₀ - n`, which IS
+    bounded by a constant times `2⁻ⁿ` (the `example` below). -/
 theorem linear_overtakes_geometric (C : ℝ) : ∃ n : ℕ, (n : ℝ) > C * geo n := by
   obtain ⟨n, hn⟩ := exists_nat_gt (max C 0)
   refine ⟨n, ?_⟩
@@ -115,9 +113,24 @@ theorem linear_overtakes_geometric (C : ℝ) : ∃ n : ℕ, (n : ℝ) > C * geo 
     rw [mul_one] at hstep
     linarith
 
+-- `Statement:` the linear descent `a₀ - n` is bounded by a constant times `2⁻ⁿ`, for every `a₀`.
+example (a₀ : ℕ) : ∃ C : ℝ, ∀ n : ℕ, ((a₀ - n : ℕ) : ℝ) ≤ C * geo n := by
+  refine ⟨(a₀ : ℝ) * 2 ^ a₀, fun n => ?_⟩
+  rcases Nat.lt_or_ge n a₀ with h | h
+  · have hg : geo n = ((2 : ℝ) ^ n)⁻¹ := by unfold geo; rw [zpow_neg, zpow_natCast]
+    have hp : (2 : ℝ) ^ n ≤ 2 ^ a₀ := pow_le_pow_right₀ (by norm_num) h.le
+    have hpos : (0 : ℝ) < 2 ^ n := by positivity
+    rw [hg, ← div_eq_mul_inv, le_div_iff₀ hpos]
+    have : ((a₀ - n : ℕ) : ℝ) ≤ a₀ := by exact_mod_cast Nat.sub_le a₀ n
+    calc ((a₀ - n : ℕ) : ℝ) * 2 ^ n ≤ a₀ * 2 ^ n :=
+          mul_le_mul_of_nonneg_right this hpos.le
+      _ ≤ a₀ * 2 ^ a₀ := mul_le_mul_of_nonneg_left hp (Nat.cast_nonneg _)
+  · have : (a₀ - n : ℕ) = 0 := by omega
+    rw [this, Nat.cast_zero]
+    exact mul_nonneg (by positivity) (geo_pos n).le
+
 /-- Corollary phrasing: the ratio function `n ↦ n / geo n` is unbounded above (no constant
-    dominates it), which is the standard "no rate-preserving map" statement for the linear→geometric
-    direction. -/
+    dominates it), for the counter `n`, not the descent `a₀ - n`. -/
 theorem linear_geo_ratio_unbounded :
     ∀ C : ℝ, ∃ n : ℕ, C < (n : ℝ) / geo n := by
   intro C
@@ -164,13 +177,12 @@ theorem halving_not_matched_below (a₀ : ℕ) :
   rw [hrhs] at this
   linarith
 
-/-- **capstone (Axis IV, witnessed not narrated).** The three rate facts, bundled:
-    (a) linear descent overtakes any constant multiple of the geometric orbit — no rate-preserving
-    map linear→geometric (the NO-GO wall); (b) binary halving is dominated by the geometric orbit
-    up to constant `a₀` (the one-sided GO); (c) binary halving has *no* lower rate-match with the
-    geometric orbit because it terminates. So convergence-rate class is a genuine separating
-    invariant, but the two-sided match is blocked by termination — Axis IV refines, rather than
-    decouples from, the well-founded fork (Axis I). -/
+/-- **capstone (Axis IV probe, witnessed not narrated).** The three rate facts, bundled:
+    (a) the counter `n` overtakes any constant multiple of the geometric orbit (not the descent
+    `a₀ - n`, which does not); (b) binary halving is dominated by the geometric orbit up to constant
+    `a₀` (the one-sided GO); (c) binary halving has *no* lower rate-match with the geometric orbit
+    because it terminates. What separates is termination, the well-founded fork (Axis I); a rate
+    class finer than Axis I is not established. -/
 theorem linear_geo_rate_asymmetry (a₀ : ℕ) :
     (∀ C : ℝ, ∃ n : ℕ, (n : ℝ) > C * geo n) ∧
     (∀ n : ℕ, ((a₀ / 2 ^ n : ℕ) : ℝ) ≤ (a₀ : ℝ) * geo n) ∧

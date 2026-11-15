@@ -1,11 +1,11 @@
 """
-Build ZP-F: The Counterexamples (v1.26)
+Build ZP-F: The Counterexamples (v1.27)
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.26'
+VERSION = '1.27'
 FIRST_RELEASED = 'April 2026'
 
 def build():
@@ -341,8 +341,8 @@ def build():
             'The dual-approach structure recurs across the ZP layers: in ZP-L, '
             '&#949;&#8320; is located from above as the least fixed point of '
             '&#945; &#8614; &#969;^&#945; and from below as the limit of the CNF tower; '
-            'in ZP-M, the computability and ordinal fixed points are argued to converge to the '
-            'same 2-adic limit. Reading: this recurrence is not coincidental. The snap is the point '
+            'in ZP-M, &#949;&#8320; is sent through the threshold map and snapEmbed to the 0 of '
+            '&#8484;&#8322; that the tower\'s 2-adic images tend to (zpm_triangle). Reading: this recurrence is not coincidental. The snap is the point '
             'where a domain\'s own measurement framework exhausts itself; no single framework '
             'can locate it from inside because the framework runs out exactly there. '
             'This suggests a dual approach is required in each case: each framework reaches the '

@@ -84,7 +84,8 @@ theorem snapNucleus_fixes_epsilon (o : Ordinal) :
 
 /-- **Re-seeding — the next rung is the snap from just past the current one.** `ε_ (succ o)` is the
     snap-closure seeded at `succ (ε_ o)`: when one instance ends at `ε_ o`, the next begins by snapping
-    from one step above it. (Mathlib `epsilon_succ_eq_nfp`.)
+    from one step above it. (Mathlib `epsilon_add_one_eq_nfp`, with `succ o = o + 1` at the index and
+    `succ (ε_ o) = ε_ o + 1` at the seed.)
 
     NOT to be read as "the successor null": `ε_ o` *plays the bottom role* for this next step without
     *being* ⊥, and the ⊥-ROLE fact (`t_iz_limit_is_new_null`, the role half only; reading its occupant
@@ -93,7 +94,7 @@ theorem snapNucleus_fixes_epsilon (o : Ordinal) :
 theorem succession_succ (o : Ordinal) :
     Ordinal.epsilon (Order.succ o)
       = Ordinal.nfp (fun a => Ordinal.omega0 ^ a) (Order.succ (Ordinal.epsilon o)) :=
-  epsilon_succ_eq_nfp o
+  by simpa only [Order.succ_eq_add_one] using epsilon_add_one_eq_nfp o
 
 /-- **Each rung is genuinely new** — strictly above the last. The succession never returns to a rung it
     has already occupied. -/

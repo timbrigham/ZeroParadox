@@ -24,28 +24,24 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 ## Formal Overview (AI-assisted)
 
-This file closes the two **cross-root** (μ↔ν) edges of the bottom-diagram tree
+This file tests the two **cross-root** (μ↔ν) edges of the bottom-diagram tree
 (`thread_obstruction_table_2026-06-29.md` §7) that the earlier obstruction core left untested:
 
 - **(a) #1 proof-theory floor (μ, well-founded order) ↔ #3 p-adic floor (ν, inverse limit).**
 - **(b) #5 Hilbert seam (zero object) ↔ #3 p-adic floor (ν, inverse limit).**
 
 The tree predicts cross-root pairs are **obstructed** (NO-GO), unlike the within-root siblings.
-Both edges are proven obstructed, by two distinct, in-statement separators.
+Edge (b) has an in-statement separator (initiality). Edge (a) does not: its theorem records two facts
+that hold together, and no Lean statement here separates the two floors.
 
-### Edge (a) — #1 vs #3: well-founded descent vs non-well-founded inverse-limit descent (Axis I)
+### Edge (a) — #1 vs #3: two descent facts that hold together (Axis I, no separator)
 
-The proof-theory floor is reached by **well-founded** descent (the ordinals are well-founded under
-`<`). The p-adic floor `{0} = ⋂ q2Ball n` is reached by an **infinite, never-stabilizing** descending
-chain of balls — a *non-well-founded* descent. The separator is therefore the same well-founded-vs-not
-clash as E4, instantiated for #3:
-
-- `padic_descent_radii_strictAnti` — the radii `2⁻ⁿ` of the p-adic descent are **strictly** decreasing
-  for all `n`: an infinite strict descent in ℝ. The descent that defines #3 never terminates.
-- `ordinal_wf_padic_descent_clash` — the load-bearing in-statement separation: the proof-theory carrier is
-  well-founded under `<` **and** the p-adic descent admits an infinite strictly-decreasing radius
-  sequence (non-well-founded descent). A single structure cannot be both the terminating ordinal
-  descent and the non-terminating ball descent; the two floors are reached by incompatible descents.
+`ordinal_wf_padic_descent_clash` pairs `Ordinal.lt_wf` with `padic_descent_radii_strictAnti`, a fact
+about the real sequence `2⁻ⁿ` that never mentions `Q₂`. The conjuncts share no variable, so it
+separates nothing. `Ordinal` itself hosts a never-stabilizing strictly descending chain of sets (the
+`example` after the theorem), so a never-stabilizing descent does not tell the floors apart. Compare
+`ZeroParadox/Multihomed/FloorFactsCooccur.lean` (co-occurrence, no duality) and
+`ZeroParadox/Multihomed/Fork.lean` (the μ/ν identification is conjecture).
 
 ### Edge (b) — #5 vs #3: zero object (initial) vs non-initial limit floor (Axis II)
 
@@ -55,17 +51,21 @@ The Hilbert seam `#5 = StateSpace 0` is a **zero object** of `ModuleCat ℂ` —
 categorical-polarity clash:
 
 - `seam_initial_padic_not_initial` — `#5` is initial in `ModuleCat ℂ` **and** `#3`'s one-point space is *not*
-  initial in `TopCat`. One bottom carries the initial universal property, the other provably does not,
-  so they sit on opposite sides of the μ/ν root.
+  initial in `TopCat`. One bottom carries the initial universal property, the other provably does not.
+  They differ on the initial (μ) half only: both are terminal (`fD_zero_isTerminal`,
+  `padic_bottom_isTerminal`, `ZeroParadox/Multihomed/TreeObstructions.lean`), so the ν half is
+  shared and #5 straddles the μ/ν root rather than sitting opposite #3.
 
-**Cardinality does NOT separate (b).** Both `#5 = StateSpace 0` and `#3 = {0} ⊆ Q₂` are *singletons*
-(`bots_both_subsingleton`), so the Axis-III invariant that split #4 from #5 is silent here: the genuine
-separator for the #5↔#3 edge is polarity (initial vs not), not cardinality. Recorded in-statement so the
-finding is honest about *which* wall does the work.
+**Cardinality does NOT separate (b).** Both `#5 = StateSpace 0` and `#3 = {0} ⊆ Q₂` are *subsingletons*,
+at most one point (`bots_both_subsingleton`), and each is inhabited (the two `example`s after the
+header of `ZeroParadox/Multihomed/TwoFacesBot.lean`), so each has exactly one point and the Axis-III
+invariant that split #4 from #5 is silent here: the genuine separator for the #5↔#3 edge is polarity (initial vs not), not cardinality. Recorded by `bots_both_subsingleton` (at most one point
+each) with the two one-point `example`s in `ZeroParadox/Multihomed/TwoFacesBot.lean`, so the finding is
+honest about *which* wall does the work.
 
-These are **obstruction (no-go) results**: each proves a *separation*, not a cross-domain identity. They
-complete the cross-root row of the tree — every μ↔ν pair the campaign named is now machine-checked
-obstructed.
+Edge (b) is an **obstruction (no-go) result** on the initial half: it proves a *separation*, not a
+cross-domain identity. Edge (a) is not: no separating statement is proved for it, so of the two
+cross-root pairs named here only (b) is machine-checked obstructed.
 -/
 
 namespace ZeroParadox
@@ -74,11 +74,11 @@ open CategoryTheory
 open ZeroParadox ZeroParadox
 open ZeroParadox ZeroParadox
 
-/-! ## Edge (a) — #1 (μ, well-founded) vs #3 (ν, non-well-founded inverse limit) -/
+/-! ## Edge (a) — #1 vs #3: two descent facts that hold together (no separator) -/
 
 /-- The radii `2⁻ⁿ` of the p-adic descent (`q2Ball n = closedBall 0 (2⁻ⁿ)`) are strictly decreasing
-    for all `n`: the inverse-limit descent that reaches the p-adic floor `{0}` never stabilizes — an
-    infinite strict descent. This is the non-well-founded character of the #3 (ν) bottom. -/
+    for all `n`. `Statement:` a fact about a real sequence; it does not mention `Q₂`, its balls or
+    its floor. -/
 theorem padic_descent_radii_strictAnti :
     StrictAnti (fun n : ℕ => (2 : ℝ) ^ (-(n : ℤ))) := by
   intro a b hab
@@ -86,29 +86,36 @@ theorem padic_descent_radii_strictAnti :
   apply zpow_lt_zpow_right₀ (by norm_num : (1 : ℝ) < 2)
   omega
 
-/-- **Edge (a), cross-root obstruction (Axis I).** The #1 proof-theory floor and the #3 p-adic floor
-    are reached by **incompatible descents**: the proof-theory carrier (ordinals) is well-founded under
-    `<` (terminating descent, μ), while the p-adic descent admits an infinite strictly-decreasing radius
-    sequence (non-terminating descent, ν). The two bottoms cannot be one object reached by one descent. -/
+/-- **Edge (a), Axis I: two facts that hold together.** `Statement:` `<` on `Ordinal` is well-founded,
+    and the real sequence `2⁻ⁿ` is strictly decreasing. The conjuncts share no variable and neither
+    mentions `Q₂`, so this separates nothing; no Lean statement here separates the #1 and #3 floors. -/
 theorem ordinal_wf_padic_descent_clash :
     WellFounded ((· < ·) : Ordinal → Ordinal → Prop) ∧
     StrictAnti (fun n : ℕ => (2 : ℝ) ^ (-(n : ℤ))) :=
   ⟨Ordinal.lt_wf, padic_descent_radii_strictAnti⟩
 
+-- Statement: the well-founded carrier `Ordinal` also hosts a never-stabilizing strictly descending
+-- chain of sets, so a non-terminating descent does not separate it from the p-adic floor.
+example : WellFounded ((· < ·) : Ordinal → Ordinal → Prop) ∧
+    StrictAnti (fun n : ℕ => Set.Ici (n : Ordinal)) := by
+  refine ⟨Ordinal.lt_wf, fun a b hab => ?_⟩
+  exact Set.Ici_ssubset_Ici.2 (by exact_mod_cast hab)
+
 /-! ## Edge (b) — #5 (seam, initial) vs #3 (ν, non-initial limit floor) -/
 
 /-- **Edge (b), cross-root obstruction (Axis II).** The #5 Hilbert seam `StateSpace 0` is **initial**
     in `ModuleCat ℂ` (the μ half of its zero-object straddle), while the #3 p-adic floor `{0} ⊆ Q₂` is
-    **not initial** in `TopCat`. One bottom carries the initial universal property, the other provably
-    does not — the categorical-polarity clash across the μ/ν root. -/
+    **not initial** in `TopCat`. Both are terminal (`fD_zero_isTerminal`, `padic_bottom_isTerminal`),
+    so they differ on the initial half only. -/
 theorem seam_initial_padic_not_initial :
     Nonempty (Limits.IsInitial (fD_functor.obj 0)) ∧
     IsEmpty (Limits.IsInitial (TopCat.of (↥({(0 : Q₂)} : Set Q₂)))) :=
   ⟨⟨fD_zero_isInitial⟩, ZeroParadox.padic_bottom_not_initial⟩
 
-/-- Cardinality does NOT separate edge (b): both bottoms are singletons. `#5 = StateSpace 0` is a
-    subsingleton and `#3 = {0} ⊆ Q₂` is a singleton, so the Axis-III (cardinality) invariant is silent
-    here — the genuine separator for #5↔#3 is polarity (`seam_initial_padic_not_initial`), not cardinality. -/
+/-- Cardinality does NOT separate edge (b). `Statement:` `#5 = StateSpace 0` and `#3 = {0} ⊆ Q₂` are
+    both subsingletons, at most one point each; that each is inhabited is not part of this statement
+    (one-point witnesses: the two `example`s in `ZeroParadox/Multihomed/TwoFacesBot.lean`). So the
+    Axis-III (cardinality) invariant is silent here — the genuine separator for #5↔#3 is polarity (`seam_initial_padic_not_initial`), not cardinality. -/
 theorem bots_both_subsingleton :
     Subsingleton (StateSpace 0) ∧ Subsingleton (↥({(0 : Q₂)} : Set Q₂)) := by
   refine ⟨⟨fun a b => ?_⟩, ?_⟩
@@ -123,7 +130,7 @@ end ZeroParadox
 /-! ## Axiom Purity Check
 
 `Classical.choice` is expected via the Mathlib ordinal / `TopCat` / `ModuleCat` / p-adic libraries —
-a library dependency, not a new commitment of these obstruction results. -/
+a library dependency, not a new commitment of these results. -/
 
 section PurityCheck
 open ZeroParadox

@@ -56,6 +56,14 @@ The reviewer returns a worktree **PATH** and a **SHA**. Your three jobs, in orde
     3.  spawn a FRESH reviewer against the merged result. Never the same instance — the point of
         the loop is that the checker of a fix has not seen the argument for it.
 
+⛔ **EXCEPT ON A `.lean` SUBJECT: THERE IS NO SHA.** The reviewer authors nothing there (see `D1`
+DOES NOT REACH A `.lean` FILE in § Remediation), so on the `.lean` paths there is nothing to merge;
+on a mixed subject the SHA carries only the non-`.lean` fixes — merge it as above, and carry the
+`.lean` findings to Tim. EVERY finding on a `.lean` subject, at any severity (a FAIL, and a PASS's
+outstanding findings alike), is carried to Tim's queue with its findings note, severity graded by
+this brief's existing definitions; he changes the text or signs it, and nothing on a `.lean` file is
+edited without him. You never apply a fix to a `.lean` file by hand.
+
 ⭐ **AND THE VERDICT IS ALREADY RECORDED BEFORE ANY OF THIS.** The reviewer records at Step 6 and
 remediates at Step 7, in that order, so its record binds to the bytes it REVIEWED rather than the
 bytes it repaired. Do not ask it to re-record after the fix; the fresh reviewer's run is what
@@ -87,7 +95,8 @@ under `.claude-local/notes/`. It may hold uncommitted work you cannot see. ⚠ *
 file any more** — verdicts go to the ledger, and the recording section below is the only place you
 write a verdict.
 
-⭐⭐ **BUT YOU AUTHOR FIXES FOR BEDROCK FINDINGS, IN YOUR OWN WORKTREE. SEE § REMEDIATION.** That is
+⭐⭐ **BUT YOU AUTHOR FIXES FOR BEDROCK FINDINGS, IN YOUR OWN WORKTREE — NEVER IN A `.lean` FILE, WHERE
+YOU REPORT AND RECORD BUT NEVER EDIT. SEE § REMEDIATION.** That is
 `D1`, and `copy-editor.md` already states it as settled division of labour: *"The adversary writes
 fixes (`D1`); you do not, and neither does editorial's reviewer."*
 
@@ -130,7 +139,7 @@ Working directory: use the current project root.
 ⚠ Where one is already present it stays CHECKABLE only **WHERE A CHECKER ACTUALLY RUNS OVER THE CITING FILE** — here `check_briefs.py`'s `paths` leg resolves it and `check_claude_md` blocks on the same shape. An offset inside prose is checkable by nothing, anywhere.
 
 ⛔⛔ **AND THAT PRECONDITION IS NOT DECORATION — IT FAILS AT A REPOSITORY BOUNDARY.** Measured 2026-09-07 by `mcpdev`: three `file:line` citations pointing INTO this tree, from a repo with no checker over them, and **two were wrong — one of which was never right**, a fabricated line number that happened to land on real-looking code. **"Checkable in principle" and "checked in fact" come apart exactly at the fence**, and a citation nothing gates is a frozen position wearing a colon. Cite across a boundary by CONTENT — the string, the identifier, the section — because the checker that would catch the drift does not run there.
-- If ARGUMENTS_VALUE looks like one or more file paths (tokens ending in `.md`, `.txt`, `.rst`, `.py`, or `.lean`, separated by spaces, commas, or newlines), use **Targeted File Review**: read only those files. ⚠ The separator set is deliberately wide: `tools/verify/ship.py` emits `SHIP_SCOPE` COMMA-joined and callers pass newlines, and a path list that fails to match here does not refuse — it falls through to the permissive prose branch, which is the `MIG-3` shape this brief documents.
+- If ARGUMENTS_VALUE looks like one or more file paths (tokens ending in `.md`, `.txt`, `.rst`, `.html`, `.py`, or `.lean`, separated by spaces, commas, or newlines), use **Targeted File Review**: read only those files. ⚠ The separator set is deliberately wide: `tools/verify/ship.py` emits `SHIP_SCOPE` COMMA-joined and callers pass newlines, and a path list that fails to match here does not refuse — it falls through to the permissive prose branch, which is the `MIG-3` shape this brief documents.
 - Otherwise (multi-line prose or a single block of text), use **Single-Draft Review** on that text only.
 
 ---
@@ -160,7 +169,7 @@ Name every such path in your report.
 
 ## Claim-status routing (all modes)
 
-While reviewing, note whether the content asserts any unproved or conjectural claim — anything stated with confidence that is not a cited, proved result (a conjecture, a "we expect / this shows" about an open question, a universal, an evidential summary, a choice/independence statement). **Detecting the presence of such a claim is in scope; evaluating it in depth is NOT your job — that belongs to `/claim-review` and its proof-theory-referee persona.** If any such claim is present, add a kill-list item: "Conjectural/unproved claim present — `/claim-review` must be recorded and current in the ledger for this content before clearance." A kill-list item withholds the clean verdict, so you record a FAIL rather than reporting a PASS, and the push stays blocked until claim-review has run and recorded. ⚠ **Ledger step `claim_review`, keyed per file — not a signal file, and not HEAD-equality.**
+While reviewing, note whether the content asserts any unproved or conjectural claim — anything stated with confidence that is not a cited, proved result (a conjecture, a "we expect / this shows" about an open question, a universal, an evidential summary, a choice/independence statement). **Detecting the presence of such a claim is in scope; evaluating it in depth is NOT your job — that belongs to `/claim-review` and its proof-theory-referee persona.** If any such claim is present, add a kill-list item: "Conjectural/unproved claim present — `/claim-review` must be recorded and current in the ledger for this content before clearance." A kill-list item withholds the clean verdict, so you record a FAIL rather than reporting a PASS, and the push stays blocked until claim-review has run and recorded. ⚠ **Ledger step `claim_review`, keyed per file — not a signal file, and not HEAD-equality.** ⚠ In an Engineer's Take you do not grade the belief itself, and a mathematical claim inside a Take routes like any other.
 
 ---
 
@@ -228,7 +237,7 @@ Apply when ARGUMENTS_VALUE is `crank` (also `deep` / `claims`). This is a **fram
 
 *Measured 2026-07-26 — why the scope was widened.* ZP-A carried, for months, "ε₀'s existence as a specific minimal non-null element is a metric result, established by ZP-B's 2-adic structure." ZP-B proves clopen separation, total disconnectedness and irreversibility; it proves no minimal element and cannot (the 2-adic norm values accumulate at zero, exactly as the reals do). It is a textbook check-(a) hit — a structure named only by its properties, claimed to force a minimal element, with a constructible counterexample. **This mode has the right check and had never been pointed at the file.** It sat in a "Note on ..." string in the Open Questions section, and it contradicted the project's own CLAIMS.md ledger, which correctly calls the same content a modelling commitment.
 
-**Step 2 — Run the five sleight-of-hand checks on each central claim. (a)–(d) pattern-match from the prose alone; (e) requires BUILDING a witness and running it — do not answer (e) by reading.**
+**Step 2 — Run the six sleight-of-hand checks on each central claim. (a)–(d) pattern-match from the prose alone; (e) requires BUILDING a witness and running it — do not answer (e) by reading.**
 
 (a) **SMUGGLED STRUCTURE.** Does a WEAK / GENERIC structure (named only by its axioms) claim to FORCE a STRONG conclusion — a discrete / minimal / atomic / successor / unique-next / well-ordered element or step? Generic structures satisfying only the stated axioms usually admit DENSE or CONTINUOUS instances. CONSTRUCT such a counterexample yourself (an instance with the stated premise but NOT the conclusion). If it exists, the forcing secretly needs an EXTRA commitment (a discrete/computational model, a metric, a chosen topology, a well-order) not in the named premise — and the doc must name that commitment AT the claim. Flag every "follows from X alone" / "from the axioms of X" / "X forces Y" where a generic X has a counterexample and the extra commitment is unnamed or buried. **Highest-yield check.**
 
@@ -275,7 +284,7 @@ Do NOT let source-reading retro-justify a suspicion away — a suspicion a cold 
 
 **Step 4 — Kill list.** For each flag: quote the exact sentence + file; give the counterexample or the circularity a skeptic sees; classify (overclaim / unpre-empted-suspicion); state the one-line pre-emption the doc is missing ("name the real commitment here", "fence the symbol here", "show the independent co-witness here"). Order by severity (genuine overclaims first). Then list what is CLEAN and why. Be blunt; do not soften.
 
-**Step 4a — SHIP THE CODE, NOT A DESCRIPTION OF IT.** Every finding that can be settled mechanically — (a) counterexamples, (e) trivial witnesses, (f) refuting `example`s — **must carry the actual Lean, verified to elaborate before you report it**, in a fenced block, with the imports it needs and the file and line it belongs at. A finding reading *"a trivial witness exists"* costs the reader the whole build; a finding that hands over eight lines that compile costs them a paste. State which snippets you ran and what the elaborator said. If you could not get one to run, say so — never present an unrun snippet as verified.
+**Step 4a — SHIP THE CODE, NOT A DESCRIPTION OF IT.** Every finding that can be settled mechanically — (a) counterexamples, (e) trivial witnesses, (f) refuting `example`s — **must carry the actual Lean, verified to elaborate before you report it**, in a fenced block, with the imports it needs and the file and line it belongs at — except on a `.lean` subject, where the Lean is EVIDENCE in your findings note and names no insertion site (see § Remediation). A finding reading *"a trivial witness exists"* costs the reader the whole build; a finding that hands over eight lines that compile costs them a paste. State which snippets you ran and what the elaborator said. If you could not get one to run, say so — never present an unrun snippet as verified.
 
 **Step 5 — Save + verdict + record** as in Document Scan Step 4–6. ⚠ Write your note to a filename that CANNOT collide with a concurrent pass — `.claude-local/notes/adversary_review_YYYY-MM-DD_<scope>.md`; several passes of this gate run at once and a shared stem destroys the others' work, which is the same single-path race the signal files were retired over. Then record per the recording section.
 
@@ -290,14 +299,28 @@ Apply when ARGUMENTS_VALUE contains file paths.
 **Step 1** — Read each file path listed. If a path does not exist, note it and skip.
 
 **Step 2** — Review each file:
-- For `.md`, `.txt`, `.rst` files: apply Document Scan Step 2a checks.
+- For `.md`, `.txt`, `.rst`, `.html` files: apply Document Scan Step 2a checks.
 - For `.py` build scripts: apply Document Scan Step 2b checks.
+- For `.lean` files: REPORT AND RECORD, NEVER EDIT — see `D1` DOES NOT REACH A `.lean` FILE in
+  § Remediation. Apply the Central-Claim Crank Audit's Step 2 checks (a)–(f) to the file's
+  docstrings, `Statement:` / `Reading:` glosses and comments, then its Step 3 and Step 3a
+  classification. Settle (e) and (f) by RUNNING a witness or refuting `example` in your scratchpad;
+  that snippet is EVIDENCE for your findings note and names no insertion site in the `.lean` file.
+  The note may quote the offending text, say what is wrong, and suggest wording for Tim to discuss.
+  For an Engineer's Take, apply the Engineer's Take paragraph in § Remediation (its question and its
+  citation check).
+
+⛔ **A path whose extension matches no bullet above has NO check, and a review with no check can only
+PASS.** Do not improvise one and do not record over it: report it as out of protocol and leave it out
+of `--files`.
 
 Produce a `### [filename]` section for each.
 
 **Step 3** — Priority Fix List: top changes across reviewed files, ordered by impact.
 
 **Step 4** — Save output to `.claude-local/notes/adversary_review_YYYY-MM-DD_<scope>.md`. State the filename at the end.
+
+Then finish with Document Scan's **Verdict** and **Record your verdict in the LEDGER, not a file** steps (its Steps 5 and 6).
 
 ---
 
@@ -312,12 +335,12 @@ Apply ONLY when the caller passed an explicit document list for this mode. ⚠�
 **The caller passes the list.** If you were not given one, **STOP AND ERROR**: report `SCOPE UNKNOWN — refusing to review` and record nothing. The sanctioned way for the caller to obtain it is `mcp__gitRobot__read(op='ls-files')`, filtered as below.
 
 The filter the caller should apply, and which you should sanity-check against what you were handed:
-- **Prose files:** `.md`, `.txt`, `.rst` — exclude `historical/`, `.claude-local/`, `.lake/`, `scripts/` (except `scripts/README.md`).
+- **Prose files:** `.md`, `.txt`, `.rst`, `.html` — exclude `historical/`, `.claude-local/`, `.lake/`, `scripts/` (except `scripts/README.md`).
 - **Build scripts:** every `scripts/build_*.py`.
 
 **Step 2a — Review each prose document.**
 
-For every `.md`, `.txt`, or `.rst` file, produce a `### [filename]` section:
+For every `.md`, `.txt`, `.rst`, or `.html` file, produce a `### [filename]` section:
 
 1. **First-impression test** — Opening paragraph genre for a reader with no prior context.
 2. **Artifact/proof accessibility** — Checkable artifact in first two paragraphs?
@@ -382,10 +405,29 @@ files condemns the thirty-nine that passed.
 
 ---
 
-## Step 7 — REMEDIATION: on FAIL-BEDROCK, YOU WRITE THE FIX, IN YOUR OWN WORKTREE (`D1`)
+## Step 7 — REMEDIATION AND THE `.lean` REFUSAL: on FAIL-BEDROCK over a non-`.lean` subject, YOU WRITE THE FIX, IN YOUR OWN WORKTREE (`D1`); on a `.lean` subject, YOU NEVER EDIT
 
 ⛔ **BEDROCK ONLY.** ORDINARY findings stay findings — you report them and someone else decides.
 `D1` is scoped to the defects that must not ship, and widening it is not yours to do.
+
+⛔⛔ **`D1` DOES NOT REACH A `.lean` FILE, NOT EVEN ON FAIL-BEDROCK.** Tim, ruling 252 (2026-11-12):
+*"Let's not allow the adversary review to make any edits to the lean files.. simply refuse."* On a
+`.lean` subject you REPORT and RECORD (Step 6) and you author nothing in the file — no worktree for
+it, no fix. Your findings note MAY quote the offending text, say what is wrong, carry the refuting or
+witness `example`s you ran in your scratchpad (evidence, never an insertion), and suggest wording
+for Tim to discuss — the ruling's purpose is *"That would allow us to discuss the results"*. If a
+caller asks you to edit one, REFUSE and say this paragraph is why. A FAIL blocks like any other
+verdict; Tim resolves it by changing the text or by signing it (`--verdict pass --tier H --how
+signature --who Tim`: signing accepts the text as stated; where a record for the step already
+exists at the same basis, the signature also passes `--revision N`, the next revision). A signature
+is Tim's act alone: no agent, reviewer or caller ever records `--who Tim` on its own initiative,
+even though `record.py` only warns. When a FAIL-BEDROCK spans `.lean` and non-`.lean` paths, `D1`
+still applies to the non-`.lean` paths in your own worktree, and the `.lean` paths stay report-only.
+⚠ **An Engineer's Take is Tim's own words: never grade his conviction or his voice.** Ask whether
+the belief is LABELLED as a belief or READS as a proved result. As everywhere, a source or
+declaration the Take NAMES must say what it is cited for — the fabricated-source and
+misstated-declaration checks still apply to the citation, not to the belief. A finding on a Take may
+suggest wording like any other `.lean` finding; the wording changes only if Tim chooses to change it.
 
 ⭐⭐ **WHY YOU AND NOT THE CALLER — THIS IS THE WHOLE POINT OF `D1`, AND IT IS MEASURED.** *"The
 party that found the defect writes the correction, instead of handing a note to someone who must

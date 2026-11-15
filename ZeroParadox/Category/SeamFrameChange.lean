@@ -1,4 +1,4 @@
--- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the category-frame realization of the POLE EXCHANGE (the snap-as-instance reading is ZP-Q's conjecture, not established here - see the declaration docstring) — the zero-object seam is the μ-bottom (initial) in one chart and the ν-top (terminal) in the other, and the op-duality frame-change swaps the two charts (initial ↔ terminal), fixing the seam as an op-self-dual zero object. The categorical analog of RiemannSphere's rInv swapping 0↔∞. Curated results indexed in ZeroParadox/MANIFEST.md.
+-- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the category-frame realization of the POLE EXCHANGE (the snap-as-instance reading is ZP-Q's conjecture, not established here - see the declaration docstring) — the zero-object seam is the μ-bottom (initial) in one chart and the ν-top (terminal) in the other, and the op-duality frame-change exchanges the two characterisations (initial ↔ terminal) the zero object carries at once; its opposite is again a zero object, as every zero object's is (IsZero.op). On the sphere, RiemannSphere's rInv instead exchanges two distinct points 0 ↔ ∞. Curated results indexed in ZeroParadox/MANIFEST.md.
 import ZeroParadox.State.HilbFunctor
 import ZeroParadox.Category.TreeSeam
 import Mathlib.CategoryTheory.Limits.Shapes.ZeroObjects
@@ -27,20 +27,20 @@ The categorical analog of `RiemannSphere.rInv` (which swaps the poles `0 ↔ ∞
 which swaps the poles **initial ↔ terminal**. The zero-object seam `Z = fD_functor.obj 0`
 (`hilbert_bottom_isZero`) is the μ-bottom (initial) in one chart and the ν-top (terminal) in the other;
 this file bundles that P1 coincidence with the P2 frame-change: `op` carries the seam's initial-ness to
-its op's terminal-ness and its terminal-ness to its op's initial-ness. The seam is the fixed point of
-the frame-change — an `op`-self-dual zero object — the category-frame realization of the POLE EXCHANGE.
+its op's terminal-ness and its terminal-ness to its op's initial-ness: an `op`-self-dual zero object,
+as every zero object is (`IsZero.op`), the category-frame realization of the POLE EXCHANGE.
 `Statement:` COINCIDENCE — the seam is initial AND terminal in `ModuleCat ℂ`, both at once
 (`catseam_is_frameflip` (i) and (ii)). This is the KIND `CLAUDE.md`'s table lists it under.
-`Statement:` INVERSION — and `op`-duality exchanges those two characterisations, fixing the seam
-(`catseam_is_frameflip` (iii)). The theorem bundles both KINDs; that is what makes it a *self-dual*
-zero object rather than either fact alone.
+`Statement:` INVERSION — and `op`-duality exchanges those two characterisations: the seam's opposite
+is terminal and initial in `(ModuleCat ℂ)ᵒᵖ` (`catseam_is_frameflip` (iii) and (iv)). The theorem
+bundles both KINDs; that is what makes it a *self-dual* zero object rather than either fact alone.
 `Reading:` INVERSION — the framework reads the snap as an instance of that exchange. Conjectural: no snap
 appears in `catseam_is_frameflip`, and ZP-Q holds the identification open.
 
 `catseam_is_frameflip`: the seam is (i) initial and (ii) terminal in `ModuleCat ℂ` (the two charts), and
-under the `op` frame-change it is (iii) terminal and (iv) initial in `(ModuleCat ℂ)ᵒᵖ` (the swap). Off
-the zero object the coincidence fails (`generic_object_empty_lim_ne_colim`, `SeamLimColim`), so — as with
-`0` on the sphere — the frame-change fixes only the bottom.
+under the `op` frame-change it is (iii) terminal and (iv) initial in `(ModuleCat ℂ)ᵒᵖ` (the swap). On
+the sphere `rInv` exchanges two distinct points `0`, `∞` (`rInv_swaps`); `op` exchanges two characterisations
+a zero object carries at once. Off it the coincidence fails at `ModuleCat.of ℂ ℂ` (`generic_object_empty_lim_ne_colim`).
 
 **Fences.** Category point-of-view's shape of the frame-change; the abstract cross-domain "snap = frame
 change" stays conjectural (type boundary).
@@ -58,20 +58,22 @@ open CategoryTheory CategoryTheory.Limits
 /-- The zero-object seam `Z = fD_functor.obj 0` (the Hilbert bottom). -/
 noncomputable abbrev Z_seamFC : ModuleCat ℂ := fD_functor.obj 0
 
-/-- **The seam is a FIXED POINT of the frame-change (category frame).**
+/-- **The seam and its opposite are both zero objects (category frame, `op`-self-duality).**
 
     ⚠ **NAME CORRECTION (Tim, 2026-07-30). The handle `catseam_is_frameflip` is retained per the CC-2 /
-    MC-1 convention — do not rename — but it OVERCLAIMS: the seam is not a frame flip, it is what the
-    frame flip FIXES.** The docstring already said so ("the fixed point of the frame-change"); the name
-    did not. No snap appears in this statement either.
+    MC-1 convention — do not rename — but it OVERCLAIMS: the seam is not a frame flip.** No snap appears in this statement either.
 
-    `Statement:` the seam is **initial AND terminal** (a zero object), and so is its opposite — four
-    `Nonempty` witnesses. That is `op`-self-duality.
+    `Statement:` COINCIDENCE — the seam is **initial AND terminal** at once, a zero object (conjuncts
+    (i) and (ii)).
+    `Statement:` INVERSION — `op` exchanges the two characterisations, initial and terminal, that the
+    seam already carries: its opposite is terminal and initial (conjuncts (iii) and (iv)). Its opposite
+    is again a zero object, as every zero object's is (`IsZero.op`), so `op` singles out no object here.
+    `Reading:` INVERSION — by contrast, on the sphere (a different carrier, a different theorem) the
+    exchange is of two distinct points: `rInv` swaps `0` and `∞` (`rInv_swaps`).
 
-    `Reading:` this is "the bottom is **concurrently both poles**" in categorical dress — μ-bottom in one
-    chart, ν-top in the other, **simultaneously**, with `op`-duality exchanging the charts and fixing the
-    seam. Exactly as `rInv` exchanges `0 ↔ ∞` while ⊥ carries both readings. **The frame change is the
-    exchange of the two poles; the seam is where they coincide.** No snap transition appears in the
+    `Reading:` COINCIDENCE and INVERSION — this is "the bottom is **concurrently both poles**" in categorical dress — μ-bottom in one
+    chart, ν-top in the other, **simultaneously**. **The frame change is the exchange of the two
+    characterisations; the seam is the object that carries both.** No snap transition appears in the
     statement, so the snap-as-instance reading stays ZP-Q's conjecture.
 
     **⚠ CORRECTED TWICE, 2026-07-30 (adversary gate, bedrock). Read the whole of this before citing

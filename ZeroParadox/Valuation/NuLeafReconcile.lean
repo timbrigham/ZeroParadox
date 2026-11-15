@@ -33,7 +33,7 @@ point of `stdSimplex ℝ (Fin 1)`), so there should be a canonical **leaf-level*
 even though no global homeomorphism exists.
 
 **Race outcome: GO at the leaf — but it is the GENERIC subsingleton reconciliation (the honest, deflated
-verdict). The asymmetry the T2 audit flagged is CONFIRMED by the same Lean content.**
+verdict). The asymmetry the T2 audit flagged stays a conjecture, unproved here (net verdict below).**
 
 - `padic_floor_unique_NuLeafReconcile` / `simplex_point_unique_NuLeafReconcile` — both ν-bottom carriers are `Unique` (one-element):
   the p-adic floor `↥({0} : Set Q₂)` via `Set.uniqueSingleton`, the one-state stationary point
@@ -51,12 +51,12 @@ the *same* construction produces a homeomorphism `↥({0} : Set Q₂) ≃ₜ PUn
 reconciled with the trivial one-point space by the identical mechanism. So the leaf reconciliation is
 **vacuous as a distinguishing invariant**.
 
-**Net verdict (asymmetry CONFIRMED, not refuted).** Contrast with the μ-branch (T1): there the siblings
-glue via *real functors carrying universal (initiality) morphisms* — a structure-preserving span
-`#4 ⟵ #1 ⟶ #5` that is NOT available between arbitrary objects. The ν-branch glues only by the generic
-subsingleton homeomorphism. Hence the μ/ν tree's two branches are **structurally asymmetric**: μ glues
-structurally; ν glues only set-theoretically / topologically at the point. That is precisely the
-"SUGGESTED-not-proven asymmetry" the T2 audit flagged, now machine-witnessed.
+**Net verdict (asymmetry: conjecture, neither confirmed nor refuted).** Contrast with the μ-branch
+(T1): there the siblings glue via *real functors carrying universal (initiality) morphisms* — a
+structure-preserving span `#4 ⟵ #1 ⟶ #5` that is NOT available between arbitrary objects. The ν-glue
+FOUND here is the generic subsingleton homeomorphism. This file does not prove that no
+structure-preserving ν-glue exists, so "μ glues structurally; ν glues only at the point" remains the
+"SUGGESTED-not-proven asymmetry" the T2 audit flagged.
 
 **What is Lean vs interpretation.** Lean proves: the two ν-bottom carriers are each `Unique`; a
 homeomorphism between them exists; the *same* construction homeomorphs the p-adic floor with `PUnit`
@@ -101,17 +101,17 @@ noncomputable def nu_leaf_reconcile : padicFloor_NuLeafReconcile ≃ₜ simplexP
 /-- **The deflation, IN-statement (the NO-GO half made precise).** The *same* construction that builds
     `nu_leaf_reconcile` also homeomorphs the p-adic floor with the trivial one-point space `PUnit`. So
     the leaf reconciliation distinguishes the simplex point from nothing — it is the generic
-    subsingleton homeomorphism, vacuous as an invariant. This is why the ν-glue is only
-    set-theoretic / topological, in contrast to the structure-preserving μ-glue of T1
-    (`t1_mu_cluster_glue`). -/
+    subsingleton homeomorphism, vacuous as an invariant. `Reading:` the ν-glue found is
+    set-theoretic / topological, against T1's structure-preserving μ-glue (`t1_mu_cluster_glue`);
+    that no structure-preserving ν-glue exists is not proved. -/
 noncomputable def nu_leaf_reconcile_generic : padicFloor_NuLeafReconcile ≃ₜ PUnit :=
   Homeomorph.homeomorphOfUnique padicFloor_NuLeafReconcile PUnit
 
 /-- **capstone (both halves IN one statement).** (a) GO: the ν-bottoms reconcile at the leaf
     (`Nonempty (padicFloor_NuLeafReconcile ≃ₜ simplexPoint_NuLeafReconcile)`); (b) deflation: the identical construction reconciles
     the p-adic floor with `PUnit`, so the leaf map is the generic subsingleton homeomorphism and
-    carries no distinguishing structure. Together: the ν-branch glues, but only vacuously — confirming
-    the μ/ν asymmetry (μ glues structurally via T1's functor span; ν glues only at the point). -/
+    carries no distinguishing structure. `Reading:` the ν-glue exhibited is the generic one; that is
+    consistent with the conjectured μ/ν asymmetry (μ glues via T1's functor span) and does not prove it. -/
 theorem nu_leaf_glue_subsingleton :
     Nonempty (padicFloor_NuLeafReconcile ≃ₜ simplexPoint_NuLeafReconcile) ∧ Nonempty (padicFloor_NuLeafReconcile ≃ₜ PUnit) :=
   ⟨⟨nu_leaf_reconcile⟩, ⟨nu_leaf_reconcile_generic⟩⟩

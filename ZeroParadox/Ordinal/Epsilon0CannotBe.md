@@ -43,7 +43,7 @@ readings are true of different orders:
   (`epsilon0_min_eq_max`), and covers no ordinal (the limit-ordinal `example` in
   `ZeroParadox/Order/SnapCannotBe.lean` § II). Both charts hold; neither is denied.
 
-**The bedrock invariant: ε₀ ≠ 0. It cannot be.**
+**The bedrock invariant: ε₀ ≠ 0 of `Ordinal`. It cannot be.**
 ε₀ is a fixed point (`ω^ε₀ = ε₀`); were it 0 that would say `1 = 0`. Since ⊥ of `Ordinal` is 0, also
 `ε₀ ≠ ⊥` there (`epsilon0_ne_bot`): that ⊥ is the *base fed in*, ε₀ the *closure that comes out* —
 never equal. Any prose, figure, or docstring that entertains `ε₀ = 0` (a "fence," a "co-location at

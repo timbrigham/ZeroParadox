@@ -1,5 +1,5 @@
 """
-Build ZP-H Illustrated Companion (v1.26)
+Build ZP-H Illustrated Companion (v1.27)
 Standalone companion for ZP-H: Categorical Bridge only.
 ZP-G has its own companion (build_zpg_companion.py).
 
@@ -129,7 +129,7 @@ def snap_convergence_diagram():
 
     return d
 
-VERSION = '1.26'
+VERSION = '1.27'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -306,8 +306,8 @@ def build():
         '<b>FC (Information Theory):</b> The initial object 0 maps to the zero distribution '
         'P = (1, 0). Each morphism maps to an informational transition with '
         'a non-negative cost measured in bits. The fundamental transition costs exactly '
-        '1 bit (ZP-C T1b). The informational singularity of ZP-G maps to the diverging '
-        'surprisal of ZP-C T2. In Lean, FC is a sorry-free functor in two forms: fc_functor '
+        '1 bit (ZP-C T1b). The informational singularity of ZP-G and the diverging '
+        'surprisal of ZP-C T2 hold together (T-H2), neither derived from the other. In Lean, FC is a sorry-free functor in two forms: fc_functor '
         'lands in InfoDepth, an ℕ-indexed stand-in, and fC_functor lands in KleisliCat PMF, '
         'the Kleisli category of the probability monad.'))
     E.append(cbody(
@@ -352,25 +352,24 @@ def build():
     E.append(sp(6))
 
     # ── T-H2: Singularity compatibility ────────────────────────────────────────
-    E.append(Paragraph('Two Descriptions of One Obstruction', CS['h1']))
+    E.append(Paragraph('Two Characterizations That Hold Together', CS['h1']))
     E.append(cbody(
         'ZP-G said: there is no morphism from any non-initial object back to 0 (AX-G2). '
         'ZP-C said: the informational cost of approaching 0 is unbounded '
         '— the accumulated surprisal grows without bound. These look like two different '
         'statements about the same thing. Are they compatible?'))
     E.append(cbody(
-        'T-H2 proves they are. The two characterizations are the same obstruction seen from '
-        'different vantage points. In ZP-C, ask: what happens to surprisal as you approach '
+        'T-H2 proves they are: both hold at once. It pairs two separately proved results, '
+        'and neither is derived from the other. In ZP-C, ask: what happens to surprisal as you approach '
         '0 along an infinite path? The answer is divergence. In ZP-G, ask: can you reach '
         '0 by a morphism from outside? The answer is no. '
-        'If infinite cost is required to reach 0, then no finite morphism can accomplish '
-        'it — which is exactly what "no morphism exists" means. Divergence and non-existence '
-        'are two faces of the same fact.'))
+        'Read informally, if infinite cost is required to reach 0, then no finite morphism can '
+        'accomplish it. That link is a reading, not a theorem.'))
 
     E.append(key_result_box('T-H2: Singularity Compatibility',
         'The categorical singularity (no return morphism to 0) and the information-theoretic '
-        'singularity (diverging surprisal approaching 0) are two descriptions of the same '
-        'structural fact. Under the functor FC, they correspond precisely.'))
+        'singularity (diverging surprisal approaching 0) both hold. T-H2 proves them together, '
+        'as a conjunction; neither is derived from the other.'))
     E.append(sp(6))
 
     # ── T-H3: The Binary Snap ──────────────────────────────────────────────────

@@ -96,8 +96,8 @@ whose floor is ℤ_[2]'s 0, with infinite complexity. A def (an exhibited witnes
 3. and `ε₀ ≠ 0`, 0 the ordinals' floor (`epsilon0_ne_zero`) — the height is **not** the floor.
 
 The fight between "ascends to ε₀" and "descends to ℤ_[2]'s 0" is resolved by the map, never by collapse: the 2-adic
-floor 0 is the limit of the tower's `cnfToZp2` images, never a `cnfToZp2` image of ε₀ (ε₀ lies outside
-`NONote`; through the canonical threshold map and `snapEmbed` it does land on 0, `snap_state_zp2_is_zero`),
+floor 0 is the limit of the tower's `cnfToZp2` images, never a `cnfToZp2` image of ε₀ (no `NONote`
+denotes ε₀, `repr_lt_epsilon0`; through the canonical threshold map and `snapEmbed` it does land on 0, `snap_state_zp2_is_zero`),
 and this theorem *proves* `ε₀ ≠ 0` in `Ordinal` while joining the two closures. -/
 theorem tower_height_floor_reconciliation :
     (@InfinitudeFloor.cx ℤ_[2] towerInfinitudeFloor towerInfinitudeFloor.floor = ⊤) ∧

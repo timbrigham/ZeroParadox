@@ -52,11 +52,14 @@ each statement, only assumed, already reports `Classical.choice` (the statement 
 `ZeroParadox/Ordinal/SnapNucleus.lean`).
 The choice is **not** in the `Ordinal` type — `#print axioms Ordinal` reports `[propext, Quot.sound]`. It
 enters through the *order instance and the operations*: `Ordinal.instLinearOrder`, `Ordinal.nfp`,
-`Ordinal.omega0` and `Ordinal.epsilon` each measure `[propext, Classical.choice, Quot.sound]`, and
-`snapNucleus` is built from `nfp` over `omega0 ^ ·` on that order.
+`Ordinal.omega0` and `Ordinal.epsilon` each measure `[propext, Classical.choice, Quot.sound]` (`#print
+axioms` in the PurityCheck sections of `ZeroParadox/Ordinal/OrdinalChoiceEssential.lean` and
+`ZeroParadox/Ordinal/PricedInterface.lean`), and `snapNucleus` is built from `nfp` over `omega0 ^ ·` on
+that order.
 
 The open question is a restatement on a carrier whose statements are choice-free. Its state, part by
-part (measured 2026-10-08):
+part (each theorem's footprint below is printed by the PurityCheck section of the file declaring it; the
+statement-only measurements, "whose statement carries choice", were made 2026-10-08):
 
 * **The ascent below ε₀ is restated, choice-free.** On `ONote`, ZP-N proves the ascent (`exp_lt_term`,
   `omegaPow_no_fixedpoint`, and `tower_strictMono`, the counterpart of `fundamentalSeq_strictMono`).
@@ -66,9 +69,8 @@ part (measured 2026-10-08):
   (`ZeroParadox/Ordinal/SyntacticCollapse.md`) restates the tower's convergence content: the syntactic
   valuation of the tower stages grows past every bound, and on the tower that valuation is the 2-adic
   one (`synVal_tower_eq_valuation`, `ZeroParadox/Ordinal/CnfBridge.lean`, whose statement carries
-  choice). The statement and the proof of
-  `tower_strictMono`, `tower_cofinal` and `synCollapse_epsN` each measure `[propext]`. That is the
-  ascent, not the nucleus.
+  choice). `tower_strictMono`, `tower_cofinal` and `synCollapse_epsN` each print `[propext]`, which
+  bounds statement and proof alike. That is the ascent, not the nucleus.
 * **The results that name ε₀ cannot be stated on `ONote`**: no notation is an upper bound for the
   tower (`tower_no_upper_bound`, from `tower_cofinal`, both `[propext]`), so the carrier has no point
   where ε₀ would sit. The natural counterpart route for the nucleus is therefore **blocked** there
@@ -110,8 +112,8 @@ part (measured 2026-10-08):
   point ⊤ above the notations (`E0Note := WithTop SynONote`), and `e0Repr` sends ⊤, and only ⊤, to ε₀
   (`e0Repr_eq_epsilon0_iff`). There the tower operator fixes ⊤ **by definition**
   (`e0OmegaPow_top`, `rfl`), and ⊤ is its **only** fixed point by a theorem
-  (`e0OmegaPow_fixedpoint_iff`). The statement and the proof of each measure `[propext]` (measured
-  2026-10-08). So this is a choice-free Lean restatement of the fixed-point equation and its
+  (`e0OmegaPow_fixedpoint_iff`). Each prints `[propext]` in that file's PurityCheck section, which
+  bounds statement and proof alike. So this is a choice-free Lean restatement of the fixed-point equation and its
   uniqueness on `E0Note`, with existence set by definition rather than derived, on an order that is not
   well-founded (the `example` stating `¬ WellFoundedLT E0Note`). That file states no leastness
   declaration. Its crossing into `Ordinal`, `e0Repr`, carries `Classical.choice` (its purity block).

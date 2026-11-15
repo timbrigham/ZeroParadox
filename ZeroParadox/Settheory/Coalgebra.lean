@@ -40,7 +40,7 @@ one role each chart is measured against, which is the die's definition, not an i
 
 ## Status
 
-PROVED. Two theorems, no `sorry`. Split axiom footprint: `fix_isEmpty` (μ empty) is choice-free
+PROVED, no `sorry`. Split axiom footprint: `fix_isEmpty` (μ empty) is choice-free
 `[propext, Quot.sound]`; `cofix_nonempty` (ν inhabited) carries `Classical.choice` from Mathlib's
 M-type / corecursion machinery. **That choice sits in `QPF.Cofix` itself** (measured 2026-08-03: the
 type reports `[propext, Classical.choice, Quot.sound]`), so it is not removable by any proof of this

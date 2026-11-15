@@ -9,6 +9,7 @@ import ZeroParadox.Category.IgnoranceSeam
 import ZeroParadox.Settheory.Wall
 import ZeroParadox.Information.Disjunctive
 import ZeroParadox.Information.TapeHalting
+import ZeroParadox.Computability.GapDecoder
 
 /-!
 # Machine-checked characterization index of COMPUTATION — what it can and cannot be
@@ -324,7 +325,8 @@ example {σ : Type*} (f : σ → Option σ) {s t : σ} (h : f s = Option.none)
 #check @ZeroParadox.flipPoles_preserves_extremal
 
 -- Statement: a configuration stepping onward to something else is left unchanged by the swap.
--- Reading: the interior is fixed — the unit circle under `rInv`.
+-- Reading: the interior is fixed pointwise. `rInv` differs: it maps its seam `‖x‖ = 1` onto itself
+--   (`sNorm_rInv` for into, `rInv_involutive` for onto) and fixes on it only the points with `x⁻¹ = x` (`rInv_coe_ne`).
 #check @ZeroParadox.flipPoles_fixes_progress
 
 -- Statement: a self-looping configuration makes the step relation non-well-founded.
@@ -431,7 +433,7 @@ example (f : ZeroParadox.MachinePhase → ZeroParadox.MachinePhase) : ¬ ZeroPar
       (fun x => by cases x; exacts [⟨false, rfl⟩, ⟨true, rfl⟩])
   ZeroParadox.no_selfCopyRef_of_finite f
 
-/-! ### § X. Halting of a tape's first hitting time — THAT and WHEN, not WHAT
+/-! ### § X. Halting of a tape's first hitting time — THAT and WHEN, not WHAT; a decoder, a choice, gives WHAT
 
 `ZeroParadox/Information/TapeHalting.lean`: a tape `w : ℕ → Bool`, its first hitting time `det w`,
 run as Mathlib's delay type `Computation Unit` through `toComp`. -/
@@ -448,5 +450,31 @@ run as Mathlib's delay type `Computation Unit` through `toComp`. -/
 -- Statement: if `0 < p` and `p ≤ 1`, `trials p hp`-almost every `w` fires and halts at `Nat.find hw`.
 -- Reading: almost every, not every: ⊥ of `ℕ → Bool` never halts (`NInf.toComp_infty`); one way.
 #check @ZeroParadox.toComp_det_halts_ae
+-- Reading: CARRIER, a WHAT chart beside THAT and WHEN: reading a program off a tape is a choice, not
+--   forced, and `firedRun` still reads one bit (`ZeroParadox/Computability/GapDecoder.lean`).
+-- Statement: `gapDecode w` is the code numbered by the run of `false` after the first `true` of `w`,
+--   up to the next `true`; `none` without a second `true`.
+#check @ZeroParadox.gapDecode
+-- Statement: `gapDecode w = none` iff `w` is ⊥ of `ℕ → Bool` or its subtape after its first `true` is.
+#check @ZeroParadox.gapDecode_eq_none_iff
+-- Statement: a predicate on a measure `μ` and a decoder `D`: every code has positive `μ`-mass under
+--   `D`. A predicate (`def … : Prop`), not a class field; the theorems that need it take it as a
+--   hypothesis.
+#check @ZeroParadox.ReachesEveryCode
+-- Statement: the self-printing universal codes form an infinite set, unconditionally; and if `D`
+--   reaches every code for `μ`, each has positive `μ`-mass under `D`, through pairwise disjoint events.
+-- Reading: Tim (2026-11-15): "So it's not just one program. It's all programs".
+#check @ZeroParadox.selfref_universal_reached
+-- Statement: WITNESS, for `0 < p < 1`, `gapDecode` reaches every code for `trials p hp`, and is
+--   `none` on a `trials p hp`-null set.
+#check @ZeroParadox.gapDecode_mem
+-- Statement: composing a member with a bijection `Code ≃ Code` gives a member.
+#check @ZeroParadox.ReachesEveryCode.map_equiv
+-- Statement: CONTROL, for every `μ` the constant decoder `_ ↦ some Code.zero` is not a member.
+#check @ZeroParadox.const_not_reachesEveryCode
+-- Statement: CONTROL, at `p = 1` the set decoding to `Code.zero` has `trials 1 hp` measure one
+--   (`trials_one_eq_dirac`), `Code.zero` is self-printing and not universal, and `gapDecode` is not
+--   a member.
+#check @ZeroParadox.gapDecode_p_one
 
 end ComputationCannotBeIndex

@@ -7,7 +7,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# ZP-H: Spectral-gap irreversibility of the Markov transfer operator (the #2 DYN witness)
+# ZP-H: Mode decay, and information loss at eigenvalue 0 for `fullMix` (the #2 DYN witness)
 
 ## Engineer's Take
 
@@ -20,10 +20,11 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 ## Formal Overview (AI-assisted)
 
-This file is the genuine **DYN / arrow-of-time** witness for the #2 Markov bottom. It establishes that
-the relaxation of a *mixing* finite Markov chain toward its stationary attractor is **irreversible**:
-the transfer operator `T` is non-injective, and any off-stationary mode with eigenvalue `|λ| < 1`
-decays geometrically to zero and is lost.
+This file is the **DYN / arrow-of-time** witness for the #2 Markov bottom. It proves two separate things:
+a mode with eigenvalue `|λ| < 1` **decays** to zero in the limit (`tendsto_norm_iterate_zero`), and for
+one chain, `fullMix`, `T` **loses information**: it is non-injective, its mean-zero mode having eigenvalue
+exactly `0`. Decay is not loss: the `example` after `fullMix_not_injective` is a chain with every transition
+probability positive whose mode `v₀` decays (eigenvalue `1/2`) while `T` stays injective.
 
 Three results:
 
@@ -34,21 +35,20 @@ Three results:
   2-state kernel `fullMix` (every state → uniform) is doubly-stochastic and has the mean-zero vector
   `v₀ = ![1, -1]` as an eigenvector with eigenvalue `0` — the maximal spectral gap.
 * **Theorem `fullMix_not_injective` (irreversibility — the DYN witness).** Since `T fullMix v₀ = 0`
-  with `v₀ ≠ 0`, the transfer operator `T fullMix` is **not injective**: the mixing-chain relaxation
-  provably loses information and cannot be reversed.
+  with `v₀ ≠ 0`, the transfer operator `T fullMix` is **not injective**: `fullMix`'s relaxation
+  loses information and cannot be reversed.
 
-**Honest scope / FENCE.** Irreversibility is **not** universal for doubly-stochastic chains. A
-permutation / cyclic chain (`cycKernel`) has eigenvalues on the unit circle (no gap), is
-injective, and does **not** mix (`swap_orbit_not_convergent`). The gap — and hence
-irreversibility — requires a genuinely **mixing** chain; `fullMix` is the concrete witness. So this
-fills the #2 DYN cell in the spectral-gap sense, *conditional on mixing*. It is the genuine version,
-not the thin "convergence = irreversible" re-reading.
+**Honest scope / FENCE.** Non-injectivity is proved for `fullMix` only, and it comes from the
+eigenvalue `0`, not from mixing or from a spectral gap (the `example` after `fullMix_not_injective`).
+A permutation / cyclic chain (`cycKernel`) has eigenvalues on the unit circle (no gap), is injective,
+and does **not** mix (`swap_orbit_not_convergent`). So this fills the #2 DYN cell with one witness,
+`fullMix`, in the eigenvalue-`0` sense. It is not the thin "convergence = irreversible" re-reading.
 
 **Prior art (no novelty claimed).** This is standard finite-chain Perron–Frobenius / spectral-gap theory:
-an off-stationary eigenmode with `|λ| < 1` decays geometrically, and a mixing chain's relaxation loses the
-off-stationary modes. The standard home is spectral-gap → geometric-ergodicity (Levin–Peres, *Markov
+an off-stationary eigenmode with `|λ| < 1` decays geometrically, so a mixing chain's relaxation drives the
+off-stationary modes to zero in the limit. The standard home is spectral-gap → geometric-ergodicity (Levin–Peres, *Markov
 Chains and Mixing Times*; non-reversible case, Kontoyiannis–Meyn, arXiv:0906.5322). The value here is only
-a concrete in-kernel witness (`fullMix`, eigenvalue 0, `![1,-1]`), fenced to the mixing case.
+a concrete in-kernel witness (`fullMix`, eigenvalue 0, `![1,-1]`), fenced to that one chain.
 
 ## Structure
 
@@ -134,9 +134,10 @@ theorem v0_ne_zero : v0 ≠ 0 := by
   have h0 : v0 0 = (0 : Fin 2 → ℝ) 0 := by rw [h]
   simp [v0] at h0
 
-/-- **Theorem — irreversibility (the DYN witness).** The relaxation operator of the mixing chain
-    `fullMix` is **not injective**: it sends the nonzero mean-zero mode `v₀` to `0`, so the mixing
-    relaxation provably loses information and cannot be reversed. -/
+/-- **Theorem — irreversibility (the DYN witness).** The relaxation operator of the chain
+    `fullMix` is **not injective**: it sends the nonzero mean-zero mode `v₀` to `0` (eigenvalue `0`,
+    `fullMix_eigen_zero`), so `fullMix`'s relaxation loses information and cannot be reversed. Mixing
+    alone does not do this: the lazy two-state chain in the `example` below mixes and stays injective. -/
 theorem fullMix_not_injective : ¬ Function.Injective (T fullMix) := by
   intro hinj
   -- T fullMix v0 = 0 = T fullMix 0, but v0 ≠ 0
@@ -144,11 +145,43 @@ theorem fullMix_not_injective : ¬ Function.Injective (T fullMix) := by
     rw [fullMix_eigen_zero, zero_smul, map_zero]
   exact v0_ne_zero (hinj h1)
 
+-- `Statement:` mixing does not give non-injectivity: a chain with every transition probability
+-- positive (the lazy chain, rows `(3/4, 1/4)` and `(1/4, 3/4)`) has an injective `T` while `v₀` decays.
+example : ∃ f : Fin 2 → PMF (Fin 2), (∀ j k, 0 < ((f j) k).toReal) ∧
+    Function.Injective (T f) ∧ Tendsto (fun m => ‖(T f)^[m] v0‖) atTop (𝓝 0) := by
+  let f : Fin 2 → PMF (Fin 2) := fun j =>
+    PMF.ofFintype (fun k => if k = j then ENNReal.ofReal (3 / 4) else ENNReal.ofReal (1 / 4)) (by
+      have h : ENNReal.ofReal (3 / 4) + ENNReal.ofReal (1 / 4) = 1 := by
+        rw [← ENNReal.ofReal_add (by norm_num) (by norm_num)]; norm_num
+      rw [Fin.sum_univ_two]
+      fin_cases j
+      · simpa using h
+      · simpa [add_comm] using h)
+  have hv : ∀ j k, ((f j) k).toReal = if k = j then 3 / 4 else 1 / 4 := by
+    intro j k
+    simp only [f, PMF.ofFintype_apply]
+    split_ifs <;> rw [ENNReal.toReal_ofReal (by norm_num)]
+  have hmode : T f v0 = (1 / 2 : ℝ) • v0 := by
+    funext k
+    rw [T_apply, Fin.sum_univ_two, hv, hv]
+    fin_cases k <;> simp [v0] <;> norm_num
+  refine ⟨f, fun j k => ?_, ?_, tendsto_norm_iterate_zero f hmode (by norm_num [abs_of_pos])⟩
+  · rw [hv]; split_ifs <;> norm_num
+  · rw [← LinearMap.ker_eq_bot, LinearMap.ker_eq_bot']
+    intro v hz
+    have h0 := congrFun hz 0
+    have h1 := congrFun hz 1
+    rw [T_apply, Fin.sum_univ_two, hv, hv] at h0 h1
+    simp at h0 h1
+    funext i
+    fin_cases i <;> simp <;> linarith
+
 /-- **The gap→decay machinery applied to the concrete witness.** `fullMix`'s mean-zero mode `v₀`
     (eigenvalue `0`, the maximal gap) decays under iteration: `‖(T fullMix)^[m] v₀‖ → 0`. This connects the
     general decay lemma `tendsto_norm_iterate_zero` to the concrete chain — the off-stationary mode is
-    irreversibly relaxed away. (λ=0 is the immediate-collapse extreme; the general lemma covers any
-    `|λ|<1`, genuinely geometric for `λ ∈ (0,1)` — a partial-mixing chain.) -/
+    relaxed away, irreversibly here because `fullMix_not_injective`. (λ=0 is the immediate-collapse
+    extreme; the general lemma covers any `|λ|<1`, genuinely geometric for `λ ∈ (0,1)`, where the
+    mode decays without that alone making `T` non-injective.) -/
 theorem fullMix_mode_decays :
     Filter.Tendsto (fun m => ‖(T fullMix)^[m] v0‖) Filter.atTop (𝓝 0) :=
   tendsto_norm_iterate_zero fullMix fullMix_eigen_zero (by norm_num)

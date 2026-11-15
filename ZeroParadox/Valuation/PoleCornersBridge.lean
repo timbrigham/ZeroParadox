@@ -51,9 +51,8 @@ noncomputable def poleToSphere : Pole → Sphere
 
 /-- **The inversion corner is `z ↦ 1/z`.** Under the pole embedding, the abstract `swap` corner commutes
 with the Riemann-sphere inversion `rInv`: `poleToSphere (swap p) = rInv (poleToSphere p)`. The four-corner
-inversion is the framework's own `rInv` — the map that, on the tower side (`cnfToZp2`), reverses ordinal
-ascent into 2-adic descent. The corner that connects the two poles is the map that connects the tower to the
-tree. -/
+inversion is the framework's own `rInv`, a map of the sphere. The tower's stages reach ℤ_[2] by a separate
+map, `cnfToZp2` (§ V); `rInv` is not that map. -/
 theorem swap_is_rInv (p : Pole) : poleToSphere (Pole.swap p) = rInv (poleToSphere p) := by
   cases p <;> simp [poleToSphere, Pole.swap, rInv_zero, rInv_infty]
 
@@ -68,13 +67,13 @@ theorem corners_are_the_swapped_poles :
 
 /-- **The capstone (co-witnessing, shared-shape).** The structure the whole pivot turned on: **two single,
 distinct points — the poles — swapped by the inversion, sitting in an infinite field.** That is the "single
-point versus infinite field" seen at BOTH ends at once. On the 2-adic sphere: `0` (the floor; the tower's
-2-adic limit, `tower_converges_to_zero`) and `∞` (its inversion; the summit side) are the two single points;
-`rInv` swaps them; and `ℚ_[2]` is the infinite field between. Via `cnfToZp2` (`CnfBridge`) the **top-down**
-view — summit `ε₀` (a single point), tree boundary `ℤ₂` (a field) — is the **inverted image** of the
-**bottom-up** view — floor `0` (a single point), its field. One construction, two ends, joined by the map,
-never by `=`: `ε₀ = 0` with 0 the 2-adic zero stays a type boundary (it fails to elaborate). The point
-and the field are the same object read up or down; the inversion is what turns each into the other. -/
+point versus infinite field" seen at BOTH ends at once. On the 2-adic sphere: `0` of `ℚ_[2]` (the floor; under the
+coercion ℤ_[2] → ℚ_[2], ℤ_[2]'s 0, the limit of the tower's 2-adic images, `tower_converges_to_zero`) and `∞` (its
+inversion; the summit side) are the two single points; `rInv` swaps them; `ℚ_[2]` is the infinite field between.
+`Reading:` the **top-down** view — summit `ε₀` (a single point), tree boundary `ℤ₂` (a field) — is read as the
+**inverted image** of the **bottom-up** view — floor `0` (a single point), its field. `cnfToZp2` gives ε₀ no image:
+every `NONote` denotes below ε₀ (`repr_lt_epsilon0`). Never joined by `=`: `ε₀ = (0 : ℤ_[2])` fails to elaborate.
+The point and the field are the same object read up or down; the inversion is what turns each into the other. -/
 theorem point_and_field_at_the_poles :
     poleToSphere Pole.zero ≠ poleToSphere Pole.infty ∧
       rInv (poleToSphere Pole.zero) = poleToSphere Pole.infty ∧
@@ -85,18 +84,18 @@ theorem point_and_field_at_the_poles :
   · simp [poleToSphere, rInv_zero]
   · simp [poleToSphere, rInv_infty]
 
-/-! ### § IV. The forbidden direction is the snap (co-witness, shared-shape) -/
+/-! ### § IV. Two one-way facts side by side (a conjunction, not an identification) -/
 
-/-- **The irreversible direction is the snap.** The two proved one-way facts, sharing one shape:
-* **corner side** — `cornerZero` is not injective: falling to a pole forgets the origin, there is no inverse
+/-- `Statement:` the conjunction of two one-way facts:
+* **corner side** — `cornerZero` is not injective: the collapse to a pole is legal and cannot be undone
   (the forbidden transition among the four corners is *un-collapsing*);
-* **snap side** — `t_snap_irreversible`: once `x ≼ y` with `x ≠ y`, no join from `y` returns to `x` (the
-  forbidden transition of the snap is *returning to the same ⊥*).
+* **snap side** — `t_snap_irreversible`: once `x ≼ y` with `x ≠ y`, no join from `y` returns to `x`; at
+  `x := ⊥` of the semilattice the fall back to ⊥ by a join is unavailable.
 
-These are the same one-way shape on two structures. It is the wall the whole abstraction is bounded by:
-everything reversible is free (the ν-symmetries `cornerId`, `swap`); the one thing you cannot reverse is the
-fall to the floor. The forbidden direction is not a gap — it is the definition of the snap. Co-witnessed,
-never a cross-type `=`. -/
+`Reading:` under `poleView` the collapse to `zero` is a fall (`corner_polarity`): one fact forbids
+undoing a fall, the other forbids the fall, opposite arrows (`ZeroParadox/Valuation/ScaleBridge.lean`
+§ VI: inbound against outbound). Under `poleViewSwap` the collapse is a rise (`pole_polarity_swap`), the
+snap's direction. The corner's irreversibility is non-injectivity in both views. Never a cross-type `=`. -/
 theorem irreversible_direction_is_the_snap {L : Type*} [ZPSemilattice L] {x y : L}
     (hle : ZPSemilattice.join x y = y) (hne : x ≠ y) :
     ¬ Function.Injective Pole.cornerZero ∧ ¬ ∃ z : L, ZPSemilattice.join y z = x :=

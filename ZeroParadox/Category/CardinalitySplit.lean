@@ -47,21 +47,19 @@ Mathlib (neither is a ZP construction):
   (the load-bearing statement: same polarity, distinct cardinality). This is a *different* pair from
   the Kleisli/Hilbert pair, so Axis III is not a peculiarity of #4/#5.
 
-**The structural explanation (also in-statement, `initial_carrier_empty_or_subsingleton`).** The two cardinality
-classes are governed by a single binary distinction: whether the category's objects are forced to
-carry a distinguished point (a zero object). When they are not (`Type`, `KleisliCat PMF`,
-`TopCat`), the initial object is **empty** (card 0); when they are (`ModuleCat`, any category with a
-zero object), the initial object is a **singleton** (card 1, the zero object's underlying set). The
-theorem witnesses both endpoints: `Type`'s initial object is empty, `ModuleCat ℂ`'s is a
-subsingleton. So the #4/#5 split is one shadow of this binary; the canonical content is the
-pointedness dichotomy, not the specific Kleisli/Hilbert objects.
+**The four carriers (`initial_carrier_empty_or_subsingleton`).** `Statement:` `PEmpty` and `Fin 0`
+are empty, `PUnit` and `StateSpace 0` have at most one point. The type mentions neither initiality
+nor pointedness. The universals in `Type` (every initial object is empty) and in `ModuleCat ℂ`
+(every initial object has a subsingleton carrier) are `pointedness_dichotomy`
+(`ZeroParadox/Category/PointednessSharp.lean`); they are facts about those two categories, not a law
+over categories: in commutative rings the initial object is `ℤ` (Mathlib `CommRingCat.zIsInitial`),
+whose carrier has more than one point.
 
 **Honest scope.** "Distinguished only by cardinality" is witnessed as "both initial AND carriers not
-in bijection" — exactly the form `split_kleisli_vs_hilbert` uses. Only the two cardinality classes
-0 and 1 arise (no initial object has a carrier of cardinality ≥ 2, because an initial object is
-unique up to iso *within its category* and the categories here have at most one point in the initial
-carrier); the result is that the phenomenon recurs across unrelated categories, not that arbitrary
-cardinalities occur.
+in bijection" — exactly the form `split_kleisli_vs_hilbert` uses. The two pairs here have carriers
+of cardinality 0 and 1; other categories' initial objects have other carriers (`ℤ` in commutative
+rings, `CommRingCat.zIsInitial`). The result is that the phenomenon recurs across unrelated
+categories, not that arbitrary cardinalities occur.
 -/
 
 namespace ZeroParadox
@@ -96,19 +94,14 @@ theorem split_type_vs_module :
   rintro ⟨e⟩
   exact (e.symm PUnit.unit).elim
 
-/-! ## The structural explanation: Axis III is the pointedness dichotomy -/
+/-! ## The four carriers' cardinalities -/
 
-/-- **The canonical content (in-statement).** The two cardinality classes seen across all four
-    initial bottoms (#4 `Fin 0`, `Type`'s `PEmpty` — empty; #5 `StateSpace 0`, `ModuleCat`'s `PUnit`
-    — singleton) are the two endpoints of a single binary distinction: whether the category forces a
-    distinguished point.
-
-    - `IsEmpty PEmpty` — the non-pointed endpoint: `Type`'s initial carrier is empty.
-    - `Subsingleton PUnit` — the pointed endpoint: `ModuleCat`'s initial carrier has at most one
-      point (it is the zero object's underlying set).
-
-    Both the new pair (`PEmpty`/`PUnit`) and the original #4/#5 pair (`Fin 0`/`StateSpace 0`) sit at
-    these same two endpoints, which is why the split is not special to Kleisli/Hilbert. -/
+/-- `Statement:` the carriers of the four initial bottoms named in this file and in
+    `split_kleisli_vs_hilbert`: `PEmpty` (`Type`) and `Fin 0` (#4) are empty; `PUnit`
+    (`ModuleCat ℂ`) and `StateSpace 0` (#5) have at most one point. The type mentions neither
+    initiality nor pointedness; initiality is carried by `split_type_vs_module` and
+    `split_kleisli_vs_hilbert`, and the universals in `Type` and `ModuleCat ℂ` by
+    `pointedness_dichotomy` (`ZeroParadox/Category/PointednessSharp.lean`). -/
 theorem initial_carrier_empty_or_subsingleton :
     IsEmpty (PEmpty : Type 0) ∧ Subsingleton PUnit ∧
     IsEmpty (Fin 0) ∧ Subsingleton (ZeroParadox.StateSpace 0) := by

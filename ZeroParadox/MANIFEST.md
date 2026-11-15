@@ -90,14 +90,17 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 
 ### State / Hilbert (ZP-D)
 
+- `ZeroParadox/State/DieProjection.lean` - Orthogonal projection as a die motion: with an inner-product test on UP, landings forming a subspace with an orthogonal projection determine every value of UP; without the test they do not; strict isomorphism does not preserve the test, an inner-product-preserving one does
+- `ZeroParadox/State/FermiStepDie.lean` - The cold logistic step as a die: the zero-temperature limit of the sigmoid is the sign map followed by y ↦ (y + 1)/2, the sign map is the UP of a three-landing die, and negation, which that relabelling carries to the sigmoid's point symmetry σ(−x) = 1 − σ(x), is a strict self-isomorphism of the die when OVER is ≠ and a strict isomorphism onto the reversed die when OVER is <
 - `ZeroParadox/State/HilbFunctor.lean` - ZP-H Hilbert Functor: F_D into the real category `ModuleCat ℂ` (MC-1 remediation)
 - `ZeroParadox/State/MeanErgodic.lean` - Mean ergodic convergence for doubly-stochastic kernels (STRETCH)
+- `ZeroParadox/State/QubitDie.lean` - The qubit as a die: projection onto a basis line is an orthogonal-projection motion, the bit flip is an inner-product-preserving strict isomorphism between the projections onto the two basis lines, and on lines the bit flip and the orthocomplement agree at the basis lines and differ at |0⟩ + |1⟩
 - `ZeroParadox/State/ReversibleSpectrum.lean` - Reversible chains have real spectrum (genuine Hilbert / self-adjoint content)
 - `ZeroParadox/State/StateSpace.lean` - ZP-D: State Layer (Hilbert Space)
 
 ### Reals (counterexamples)
 
-- `ZeroParadox/Reals/MarkovSpectralGap.lean` - ZP-H: Spectral-gap irreversibility of the Markov transfer operator (the #2 DYN witness)
+- `ZeroParadox/Reals/MarkovSpectralGap.lean` - ZP-H: Mode decay, and information loss at eigenvalue 0 for `fullMix` (the #2 DYN witness)
 - `ZeroParadox/Reals/OrderedField.lean` - ZP-F: The Real Numbers as Counterexample
 - `ZeroParadox/Reals/PerronFrobenius.lean` - Perron–Frobenius: existence of a stationary distribution (the first NON-thin dictionary entry)
 - `ZeroParadox/Reals/SpectralRadius.lean` - Spectral side: the transfer operator is ℓ¹-nonexpansive, so every eigenvalue has |λ| ≤ 1
@@ -192,7 +195,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 ### Ordinals / proof theory (ZP-L, ZP-M, ZP-N)
 
 - `ZeroParadox/Ordinal/B6_CanonicalCNF.lean` - B6 (pipeline): canonical (CNF / log-ω) ordinal → 2-adic, valuation growth NOT tower-defined
-- `ZeroParadox/Ordinal/CnfBridge.lean` - The CNF/ℤ₂ value bridge, at the construction level (Gentzen.lean item 4)
+- `ZeroParadox/Ordinal/CnfBridge.lean` - The CNF/ℤ₂ value bridge, at the construction level (`ZeroParadox/Ordinal/Gentzen.md` item 4)
   - ride-along docs: `ZeroParadox/Ordinal/CnfBridge.md` - CnfBridge — the CNF/ℤ₂ value bridge, at the construction level
 - `ZeroParadox/Ordinal/ConstructiveOrdinals.lean` - ZP-N: the ε₀ snap, constructively, on ordinal notations (choice-free)
   - ride-along docs: `ZeroParadox/Ordinal/ConstructiveOrdinals.md` - ZP-N, the ε₀ snap on ordinal notations: the probe, the result and its fences
@@ -268,6 +271,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Order/DieJoints.lean` - Joints and dual joints: cut points approached from one side and not reached there
 - `ZeroParadox/Order/MarkovContractionDual.lean` - The dual contraction dichotomy on the Markov ν-side (#2)
 - `ZeroParadox/Order/MarkovPlacement.lean` - The unplaced node: does the Markov attractor (#2) admit ANY order-extremal or categorical placement?
+- `ZeroParadox/Order/MotionFlips.lean` - Which leg first, which way the legs point, which way time runs
 - `ZeroParadox/Order/OrbitDichotomy.lean` - The orbit dichotomy — "one or infinitely many", no finite middle (probe)
 - `ZeroParadox/Order/ProofFloorHomset.lean` - Axis III over the proof-theory floor #1 (the hom-set carrier convention)
 - `ZeroParadox/Order/SeamSchema.lean` - A shared "seam schema" for the QPF root-seam and the lattice selfApp seam; this file exhibits no map between the two settings
@@ -283,7 +287,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Valuation/BoundaryGap.lean` - The boundary embedding: the exact gap to the Bruhat-Tits tree
 - `ZeroParadox/Valuation/BranchingRequirement.lean` - A further requirement — the branching axis: branches are incomparable (the tower does not stack)
 - `ZeroParadox/Valuation/BranchingSnapChain.lean` - The single chain: branching → disconnectedness → the forbidden return
-- `ZeroParadox/Valuation/CantorPropertiesProbe.lean` - Completeness-critic, final pass: homogeneity and ultrametric are derived; compactness is AX-B1
+- `ZeroParadox/Valuation/CantorPropertiesProbe.lean` - Completeness-critic, final pass: a shared node profile and ultrametric agreement; compactness assigned to the arity commitment
 - `ZeroParadox/Valuation/CellsJoint.lean` - Cells and covers at ⊥ of `End`: depth and starting location carried by one index
 - `ZeroParadox/Valuation/CompletenessCriticProbe.lean` - Completeness-critic probe: what property of the generic object do the four axes NOT capture?
 - `ZeroParadox/Valuation/ComplexityLadder.lean` - The complexity ladder: the arity is the variable-count, and it climbs without bound
@@ -330,14 +334,17 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Valuation/TowerHeightFloor.lean` - Height meets floor: the tower's 2-adic images as an InfinitudeFloor, norm order reversed from stage 1 — ε₀ ≠ ⊥ of `Ordinal` preserved
   - ride-along docs: `ZeroParadox/Valuation/TowerHeightFloor.md` - Height meets floor — the tower's 2-adic images as an InfinitudeFloor, norm order reversed from stage 1
 - `ZeroParadox/Valuation/TowerTape.lean` - Local floors as subtape poles, and a tower as one tape
+- `ZeroParadox/Valuation/TowerTapeSnap.lean` - The tower tape fed to the snap, chart by chart
 - `ZeroParadox/Valuation/TreeNotForced.lean` - The binary tree above ⊥ of a join-semilattice: not forced by ⊥ as greatest lower bound of non-⊥ members, a first step, infinitely many atoms and strong atomicity of the whole order; forced, one way (sufficient, not necessary), by depth at every element with strong atomicity
 
 ### Information (ZP-C)
 
+- `ZeroParadox/Information/BottomTotality.lean` - One ensemble, two faces: the law and its members
 - `ZeroParadox/Information/BrudnoBridge.lean` - Brudno bridge: `trials` and `MLRandom` against `kolmogorov-complexity-lean`
 - `ZeroParadox/Information/MaxEntropy.lean` - Maximum entropy: the fair coin, missing information, and incompressible tapes
 - `ZeroParadox/Information/PoleWithinEnsemble.lean` - The never-firing tape inside the firing ensemble
 - `ZeroParadox/Information/SnapEpsilonZero.lean` - The snap and ε₀ on two carriers: on `WithBot Ordinal` the first step lands at ↑0 and `up` carries it to ↑ε₀ (the corner); on `EpsilonOrZero` the first step is ε₀ (the cover)
+- `ZeroParadox/Information/StartBit.lean` - The start bit, the end bit, and the tapes whose tail is ⊥ of `ℕ → Bool`
 - `ZeroParadox/Information/TapeHalting.lean` - A tape's first hitting time, run as a computation
 - `ZeroParadox/Information/TwoRequirements.lean` - Two requirements: a first step at ⊥ of `L`, and a typical tape
 
@@ -349,7 +356,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 ### Reals (counterexamples)
 
 - `ZeroParadox/Reals/ConnectedNoFirstStep.lean` - Connectedness and the first step on a linear order with its order topology
-- `ZeroParadox/Reals/RateClassInvariant.lean` - Axis IV: convergence-rate class as a cross-root invariant
+- `ZeroParadox/Reals/RateClassInvariant.lean` - Axis IV probe: termination separates these descents; convergence-rate class is not shown to separate them
 
 ### Category theory (ZP-G, ZP-H)
 
@@ -402,7 +409,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Multihomed/TreeT1.lean` - ZP-H tree, edge T1 — the within-μ edge: proof-theory floor ↔ categorical-initial bottoms
 - `ZeroParadox/Multihomed/TreeT2.lean` - ZP-H tree, edge T2 — the within-ν edge: Markov attractor ↔ p-adic inverse-limit
 - `ZeroParadox/Multihomed/TwoFacesBot.lean` - Direction B — the two faces of ⊥ at the seam: VACUOUS (they coincide, but only as a bare singleton)
-- `ZeroParadox/Multihomed/WallSpanRobust.lean` - Span-robustness of the well-founded cross-root wall (#1 vs #2)
+- `ZeroParadox/Multihomed/WallSpanRobust.lean` - Spans into the ordinals: the wall bites on non-well-founded apexes (#1 vs #2, #2 taken as ℝ)
 
 ### Set theory / AFA (ZP-J)
 
@@ -420,17 +427,19 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Computability/CodeDataFrameChange.lean` - The frame-change in the computability frame: the code↔data involution, whose fixed locus holds every code's self-application
 - `ZeroParadox/Computability/ComputableCrossing.lean` - The Lawvere bridge, crossed in the computability face (probe)
   - ride-along docs: `ZeroParadox/Computability/ComputableCrossing.md` - Where the obstruction is absent: the universal machine as a reflexive object
+- `ZeroParadox/Computability/GapDecoder.lean` - Reading a program off a tape: one decoder, and the class it witnesses under a coin `0 < p < 1`
 - `ZeroParadox/Computability/MarkovNuUniversal.lean` - Does the Markov node (#2) get a ν (terminal/unique-fixed-point) universal property?
 - `ZeroParadox/Computability/NatListRegime.lean` - The third root-cut regime: the nat/list functor (leaf + recursive position)
 - `ZeroParadox/Computability/OutputSeparates.lean` - The head decides, the arity does not: two instances of Rutten's final-system formula
   - ride-along docs: `ZeroParadox/Computability/OutputSeparates.md` - Which Rutten example governs which family, and a discriminator that fails
 - `ZeroParadox/Computability/RootCutTrichotomy.lean` - The root cut is a TRICHOTOMY (leaf × recursive position)
-- `ZeroParadox/Computability/StationaryUnique.lean` - Irreducibility forces a unique stationary distribution for node #2
+- `ZeroParadox/Computability/StationaryUnique.lean` - One irreducible kernel, the cyclic shift, has a unique stationary distribution (node #2)
 
 ### Ordinals / proof theory (ZP-L, ZP-M, ZP-N)
 
 - `ZeroParadox/Ordinal/ProofFloorCanonical.lean` - Is the proof-theory bottom canonical across the depth campaign?
+- `ZeroParadox/Ordinal/UniverseZoom.lean` - One universe of ordinals seen from the next
 
 ---
 
-*Generated by `build_manifest.py` from the Lean tree + each file's `-- EXPERIMENTAL` header. Rerun after adding, moving, or renaming a file. (138 core, 121 experimental.)*
+*Generated by `build_manifest.py` from the Lean tree + each file's `-- EXPERIMENTAL` header. Rerun after adding, moving, or renaming a file. (141 core, 127 experimental.)*

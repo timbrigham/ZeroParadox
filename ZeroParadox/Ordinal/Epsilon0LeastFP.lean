@@ -17,9 +17,9 @@ defer to my AI assistant regarding the specifics of how the internals work.
 ---
 
 ## Formal Overview
-**Result: CONFIRMED.** ε₀ is the least fixed point of `α ↦ ω^α` — positionally the FIRST, never a
-"ceiling" or "a large ordinal". ⚠ Least in the FIXED-POINT order, **not** order-adjacency: ordinals sit
-strictly between ⊥ and ε₀. Which order, Veblen's Corollary 1 to Theorem 4, and the traps: `ZeroParadox/Ordinal/Epsilon0LeastFP.md`.
+**Result: CONFIRMED.** ε₀ is the least fixed point of `α ↦ ω^α` and, at once, the ω-tower's supremum
+(`epsilon0_min_eq_max`); this file proves the least face. ⚠ Least in the FIXED-POINT order, **not**
+order-adjacency: ordinals sit strictly between ⊥ of `Ordinal` and ε₀. Which order, Veblen's Corollary 1 to Theorem 4, and the traps: `ZeroParadox/Ordinal/Epsilon0LeastFP.md`.
 -/
 
 namespace ZeroParadox
@@ -88,8 +88,8 @@ theorem nfp_seed_successor_cell (o s : Ordinal) (h1 : Ordinal.epsilon o < s)
     Ordinal.nfp (fun α => ω ^ α) s = Ordinal.epsilon (Order.succ o) := by
   have hmono := (Ordinal.isNormal_opow Ordinal.one_lt_omega0).strictMono.monotone
   refine le_antisymm (Ordinal.nfp_le_fp hmono h2 (le_of_eq (omega0_opow_epsilon _))) ?_
-  rw [epsilon_succ_eq_nfp]
-  exact Ordinal.nfp_monotone hmono (Order.succ_le_of_lt h1)
+  rw [Order.succ_eq_add_one, epsilon_add_one_eq_nfp]
+  exact Ordinal.nfp_monotone hmono (Order.add_one_le_of_lt h1)
 
 /-- **`Statement:` at a limit index `o`, the only seed reaching `ε_o` is `ε_o` itself.** -/
 theorem seed_eq_of_nfp_eq_epsilon_limit (o s : Ordinal) (ho : Order.IsSuccLimit o)
@@ -255,7 +255,7 @@ example : Ordinal.card (Ordinal.epsilon (Order.succ (Cardinal.aleph.{0} 1).ord))
   rw [Cardinal.card_ord, h] at hle
   exact absurd hle (not_le.mpr Cardinal.aleph0_lt_aleph_one)
 
-/-- **Invariant — ε₀ ≠ 0.** ε₀ can never be zero, in any reading. It is a fixed point of `α ↦ ω^α`
+/-- **Invariant — ε₀ ≠ 0 of `Ordinal`.** ε₀ is never the ordinal 0. It is a fixed point of `α ↦ ω^α`
     (`epsilon0_is_fixedpoint`); were it 0, that would say `ω^0 = 0`, i.e. `1 = 0`. This is the bedrock
     guard beneath every ε₀ characterization. -/
 theorem epsilon0_ne_zero : ε₀ ≠ 0 := by
@@ -264,8 +264,8 @@ theorem epsilon0_ne_zero : ε₀ ≠ 0 := by
   rw [h, opow_zero] at hf
   exact one_ne_zero hf
 
-/-- **Invariant — ε₀ ≠ ⊥.** Since `(⊥ : Ordinal) = 0` (`Ordinal.bot_eq_zero`) and ε₀ ≠ 0, ε₀ is never
-    the bottom ⊥. ⊥ is *a* base the ε₀-tower is seeded at (`epsilon0_eq_nfp_bot`), never its closure.
+/-- **Invariant — ε₀ ≠ ⊥ of `Ordinal`.** Since `(⊥ : Ordinal) = 0` (`Ordinal.bot_eq_zero`) and ε₀ ≠ 0, ε₀ is never
+    ⊥ of `Ordinal`. That ⊥ is *a* base the ε₀-tower is seeded at (`epsilon0_eq_nfp_bot`), never its closure.
     It is the *least* such base and not the only one: for **normal** `F`, every seed at or below the
     closure reaches the same closure (`isLeastFixedPointFrom_nfp`). The invariant does not depend
     on that. -/

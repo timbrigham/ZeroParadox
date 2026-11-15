@@ -388,13 +388,14 @@ def split_new(viols, base, blocks=None, at_baseline=None):
         pk = _parts(k)
         if pk:
             entries.setdefault((pk[0], pk[2]), []).append(k)
-    held, paired = set(), {}
+    held, paired, used = set(), {}, set()
     for (rel, head), keys in entries.items():
         cur = [b for b in blocks.get(rel, ()) if _parts(b[0]) and _parts(b[0])[2] == head]
         left, loose = list(keys), []
         for key, _n, line in cur:
             if key in left:
                 left.remove(key)
+                used.add(key)
                 held.add((key, line))
             else:
                 loose.append((key, line))
@@ -406,6 +407,29 @@ def split_new(viols, base, blocks=None, at_baseline=None):
         left.sort(key=lambda k: order.index(k) if k in order else len(order))
         for (key, line), entry in zip(loose, left):
             paired[(key, line)] = lengths.get(entry)
+            used.add(entry)
+    # ⚠ A RETITLED BLOCK PAIRS BY POSITION (`PRS-TITLE-1`, 2026-11-14). The head is the block's
+    # first line, i.e. its TITLE, so retitling a grandfathered block broke the pairing above and
+    # the block read as NEW — measured: a one-word title edit to `Category/Category.lean` exited 1.
+    # The baseline is frozen, so the anchor is taken from the baseline COMMIT instead: when the
+    # file holds exactly as many module-doc blocks as it did there, the block at the same ordinal
+    # position takes that position's entry if no head-match consumed it. Any other block count is
+    # ambiguous and stays NEW (fail closed); the may-not-grow rule below applies unchanged.
+    for rel in sorted({r for r, _h in entries}):
+        spare = [k for (r, _h), ks in entries.items() if r == rel for k in ks if k not in used]
+        cur = list(blocks.get(rel, ()))
+        if not spare or not any((k, ln) not in held and (k, ln) not in paired
+                                for k, _n, ln in cur):
+            continue
+        old = at_baseline(rel)
+        if not old or len(old) != len(cur):
+            continue
+        for (key, _n, line), (okey, olen) in zip(cur, old):
+            if (key, line) in held or (key, line) in paired or okey not in spare:
+                continue
+            paired[(key, line)] = olen
+            spare.remove(okey)
+            used.add(okey)
     new, edited = [], []
     for v in viols:
         ident = (v[1], v[4])
@@ -852,9 +876,25 @@ def selftest():
          [blk(edit, 60, 90)], {"F.lean": [(old, 4, 1), (edit, 60, 90)]}, at_ok, 1, 0),
         ("MUST FIRE: two identical copies of one entry",
          [blk(old, 30, 1), blk(old, 30, 50)], {"F.lean": [(old, 30, 1), (old, 30, 50)]}, at_ok, 1, 0),
+        # PRS-TITLE-1: with the grandfathered block still present, a different block is NEW. A
+        # one-for-one replacement at the SAME position is a retitle, and is EDITED (below).
         ("MUST FIRE: a different block in the same file",
-         [blk("F.lean::block::bbbbbbbbbbbb::Another header", 30, 1)],
-         {"F.lean": [("F.lean::block::bbbbbbbbbbbb::Another header", 30, 1)]}, at_ok, 1, 0),
+         [blk("F.lean::block::bbbbbbbbbbbb::Another header", 30, 50)],
+         {"F.lean": [(old, 30, 1), ("F.lean::block::bbbbbbbbbbbb::Another header", 30, 50)]},
+         at_ok, 1, 0),
+        ("MUST SUPPRESS: retitled grandfathered block, same position, not grown",
+         [blk("F.lean::block::bbbbbbbbbbbb::Retitled", 30, 1)],
+         {"F.lean": [("F.lean::block::bbbbbbbbbbbb::Retitled", 30, 1)]}, at_ok, 0, 1),
+        ("MUST FIRE: retitled grandfathered block that GREW",
+         [blk("F.lean::block::bbbbbbbbbbbb::Retitled", 31, 1)],
+         {"F.lean": [("F.lean::block::bbbbbbbbbbbb::Retitled", 31, 1)]}, at_ok, 1, 0),
+        ("MUST FIRE: retitled block, baseline unreadable",
+         [blk("F.lean::block::bbbbbbbbbbbb::Retitled", 30, 1)],
+         {"F.lean": [("F.lean::block::bbbbbbbbbbbb::Retitled", 30, 1)]}, at_none, 1, 0),
+        ("MUST FIRE: retitled block when the block count changed",
+         [blk("F.lean::block::bbbbbbbbbbbb::Retitled", 30, 1)],
+         {"F.lean": [("F.lean::block::bbbbbbbbbbbb::Retitled", 30, 1),
+                     ("F.lean::block::cccccccccccc::Small", 3, 40)]}, at_ok, 1, 0),
         ("MUST FIRE: the same header in another file",
          [blk("G.lean::block::aaaaaaaaaaaa::" + H, 30, 1)],
          {"G.lean": [("G.lean::block::aaaaaaaaaaaa::" + H, 30, 1)]}, at_ok, 1, 0),
@@ -882,6 +922,18 @@ def selftest():
     n_, e_ = split_new(vs, {okey}, None, lambda rel: [(okey, 30)])
     if len(n_) != 1 or e_:
         print("  SELFTEST FAIL: MUST FIRE: shrunk block's heading reused by a new block "
+              "(new=%d edited=%d)" % (len(n_), len(e_))); ok = False
+    # PRS-TITLE-1 through `scan_file`: a one-word TITLE edit to a grandfathered block is EDITED,
+    # not NEW — the measured symptom (exit 1 on `Category/Category.lean`) before the fix.
+    scan_file(orig, "S.lean")
+    okey, olen = LAST_BLOCKS["S.lean"][0][0], LAST_BLOCKS["S.lean"][0][1]
+    retitled = os.path.join(tmp, "Retitled.lean")
+    io.open(retitled, "w", encoding="utf-8", newline="\n").write(
+        "/-! Hdr renamed\n" + "\n".join("orig line %d" % i for i in range(28)) + "\n-/\n")
+    vs = [x for x in scan_file(retitled, "S.lean") if x[0] == "block"]
+    n_, e_ = split_new(vs, {okey}, None, lambda rel: [(okey, olen)])
+    if n_ or len(e_) != 1:
+        print("  SELFTEST FAIL: MUST SUPPRESS: a retitled grandfathered block read as NEW "
               "(new=%d edited=%d)" % (len(n_), len(e_))); ok = False
 
     # ⚠ THE SCOPE PIN (SCOPE-3). This checker walks `ZeroParadox/` privately rather than using

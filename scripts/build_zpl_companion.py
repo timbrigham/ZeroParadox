@@ -1,6 +1,6 @@
 """
 Build ZP-L Illustrated Companion
-Version 1.23 | November 2026
+Version 1.27 | November 2026
 Citation fence (Gentzen): the Convergence section's credits follow CLAIMS.md's Gentzen rows and are
 taken from Gentzen 1943 (Math. Ann. 119), the one primary paper filed here, never from a secondary
 source's labels. The 1936 consistency credit rests on Gentzen 1943, p. 140, footnote 2: the 1936
@@ -23,17 +23,17 @@ from reportlab.graphics import renderPDF
 
 def snap_tower_diagram():
     """Horizontal: tower stages (c0) climbing toward ε₀; snap to c1 at ε₀."""
-    # dh = 155 pts (≈ 2.15 × 72); box_cy = 88 fixed.
-    # Box top = 88+17 = 105. SNAP label at 105+8 = 113. Header at 105+20 = 125.
-    # Encoding labels at 71-18 = 53. Caption at 10.
-    # Content: top = 125 < 145 (dh-10). Bottom = 10 > 5. ✓
-    dw, dh = TW, 155
+    # dh = 76 pts (≈ 1.05 × 72); box_cy = 29 fixed.
+    # Box top = 29+17 = 46. SNAP label baseline at 46+8 = 54, glyph top 54+7.5 = 61.5.
+    # Box bottom = 12. The caption is external (ccaption).
+    # Content: top = 61.5 < 66 (dh-10). Bottom = 12 > 5. ✓
+    dw, dh = TW, 76
     d = Drawing(dw, dh)
 
     bw, bh = 60, 34
     spacing = 12
-    box_cy = 88          # fixed — does not derive from dh
-    box_by = box_cy - bh // 2   # = 71
+    box_cy = 29          # fixed — does not derive from dh
+    box_by = box_cy - bh // 2   # = 12
 
     # Stage labels (raw Unicode — String() does not parse HTML entities)
     stage_labels = ['0', '1', 'ω', 'ω^ω']   # 0, 1, ω, ω^ω
@@ -90,27 +90,21 @@ def snap_tower_diagram():
     d.add(String(snap_label_x, box_by + bh + 8, 'SNAP',
                  fontSize=7.5, fontName='DV-B', fillColor=AMBER))
 
-    # ── Caption (raw Unicode — no HTML entities) ──────────────────────────────
-    d.add(String(14, 10,
-                 'Each tower stage is strictly below ε-zero and maps to c0. '
-                 'The snap to c1 occurs exactly at ε-zero.',
-                 fontSize=7.5, fontName='DV-I', fillColor=GREY_TEXT))
-
     return d
 
 
 def dual_convergence_diagram():
     """Two rows: ordinal tower approaching ε₀ (top) and 2-adic norms converging to 0 (bottom)."""
-    # dh = 190 pts. row_top = 148 fixed, row_bot = 68 fixed.
-    # Top box top = 148+16 = 164. Top row label at 164+8 = 172 < 180 (dh-10). ✓
-    # Bottom box bottom = 68-16 = 52. Caption at 10. ✓
-    dw, dh = TW, 190
+    # dh = 152 pts (≈ 2.11 × 72). row_top = 108 fixed, row_bot = 28 fixed.
+    # Top box top = 108+16 = 124. Top row label baseline at 124+8 = 132, glyph top 132+8 = 140 < 142 (dh-10). ✓
+    # Bottom box bottom = 28-16 = 12 > 5; the caption is external (ccaption). ✓
+    dw, dh = TW, 152
     d = Drawing(dw, dh)
 
     bw, bh = 58, 32
     spacing = 12
-    row_top = 148     # ordinal row center (fixed)
-    row_bot = 68      # 2-adic row center (fixed)
+    row_top = 108     # ordinal row center (fixed)
+    row_bot = 28      # 2-adic row center (fixed)
 
     # Four corresponding stage columns
     stage_ord  = ['1', 'ω', 'ω^ω', 'ω^ω^ω']
@@ -124,8 +118,8 @@ def dual_convergence_diagram():
     total_w = stages_w + dots_w + gap_w + end_bw   # = 380
     x0 = (dw - total_w) / 2   # ≈ 44 pts
 
-    top_by = row_top - bh // 2   # = 132
-    bot_by = row_bot - bh // 2   # = 52
+    top_by = row_top - bh // 2   # = 92
+    bot_by = row_bot - bh // 2   # = 12
 
     # ── Ordinal row (top, teal) ───────────────────────────────────────────────
     for i, lbl in enumerate(stage_ord):
@@ -204,27 +198,23 @@ def dual_convergence_diagram():
                  fontSize=8, fontName='DV-I', fillColor=GREY_TEXT))
 
     # ── Vertical dashed connectors between rows ───────────────────────────────
+    # They stop at y = 62, above the bottom-row label (baseline 52, glyph top 60), so they never cross it.
+    conn_bot = bot_by + bh + 18   # = 62
     for i in range(n):
         bx_mid = x0 + i * (bw + spacing) + bw / 2
-        d.add(Line(bx_mid, top_by - 2, bx_mid, bot_by + bh + 2,
+        d.add(Line(bx_mid, top_by - 2, bx_mid, conn_bot,
                    strokeColor=colors.HexColor('#BBBBBB'), strokeWidth=0.8,
                    strokeDashArray=[3, 3]))
     # End column connector
     bx_mid = end_bx + end_bw / 2
-    d.add(Line(bx_mid, top_by - 2, bx_mid, bot_by + bh + 2,
+    d.add(Line(bx_mid, top_by - 2, bx_mid, conn_bot,
                strokeColor=colors.HexColor('#BBBBBB'), strokeWidth=0.8,
                strokeDashArray=[3, 3]))
-
-    # Caption
-    d.add(String(14, 10,
-                 'Same tower, two views. Top: ordinal stages approach ε-zero. '
-                 'Bottom: their images\' 2-adic norms approach 0.',
-                 fontSize=7.5, fontName='DV-I', fillColor=GREY_TEXT))
 
     return d
 
 
-VERSION = '1.23'
+VERSION = '1.27'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -268,8 +258,9 @@ def build():
         Paragraph('ZP Companion | ' + version_line(FIRST_RELEASED, VERSION), CS['meta']),
         Paragraph(
             'This companion explains the ideas in plain language with diagrams and examples. '
-            'It is not the formal document &#8212; every claim here restates a result already '
-            'proved in ZP-L Incomputability Convergence. Consult that document for the '
+            'It is not the formal document &#8212; its results are proved in ZP-L Incomputability '
+            'Convergence or in the other documents and papers it names, and the occurrence '
+            'commitment it mentions is a commitment, not a result. Consult that document for the '
             'authoritative mathematics.',
             CS['disc']),
     ]
@@ -283,8 +274,10 @@ def build():
         'No equation makes c&#8320; that program: the identity reading is retired, and what stays a '
         'commitment is that c&#8320; actually runs, the occurrence commitment. ZP-L picks up the thread from a different '
         'direction: the ordinal direction. If a map &#981; assigns machine phases to ordinals '
-        '&#8212; sending c&#8320; to everything below a certain point and c&#8321; above it '
-        '&#8212; what is that threshold ordinal? ZP-L establishes the answer: &#949;&#8320;, '
+        '&#8212; never stepping back from c&#8321; to c&#8320;, sending every stage of the tower '
+        '0, 1, &#969;, &#969;^&#969;, &#8230; to c&#8320; and every fixed point of '
+        '&#945; &#8614; &#969;^&#945; to c&#8321; &#8212; where does it first take c&#8321;? '
+        'ZP-L establishes the answer: &#949;&#8320;, '
         'the first fixed point of the map &#945; &#8614; &#969;^&#945;.'))
     E.append(cbody(
         'This is not an arbitrary choice. ZP-L proves that &#949;&#8320; is the minimal '
@@ -300,11 +293,12 @@ def build():
         'Imagine a path where each step is longer than the last: you walk 1 mile, then '
         '2, then 4, then 8, ... You are always getting further from the start, but you '
         'are also always somewhere on the path &#8212; never at the horizon. The horizon '
-        '(&#949;&#8320;) is the limit of all those steps combined. It exists as a '
-        'mathematical object, but no finite number of steps reaches it.',
-        'The ordinal tower works the same way. The snap that ZP-E proved occurs at &#949;&#8320; '
-        'is not a step you can take from inside the tower. It is the point where the tower '
-        'stops and something new begins.',
+        'is the limit of all those steps combined, and no finite number of steps reaches it. '
+        'The analogy is for that shape only, a limit no step reaches: the walk grows without '
+        'bound, while &#949;&#8320; is a specific countable ordinal (the Remember box below).',
+        'The ordinal tower works the same way. The snap that the canonical map takes at &#949;&#8320; (ZP-L) '
+        'is not a step you can take from inside the tower. It happens at the least point above every '
+        'stage of the tower, where something new begins.',
     ]))
     E.append(sp(8))
 
@@ -326,7 +320,7 @@ def build():
     E.append(snap_tower_diagram())
     E.append(ccaption(
         'The tower stages 0, 1, &#969;, &#969;^&#969;, &#8230; all lie strictly below &#949;&#8320; '
-        'and map to c&#8320;. The snap transition to c&#8321; occurs at the threshold &#949;&#8320; itself. '
+        'and the canonical map sends them to c&#8320;. That map takes its snap to c&#8321; at the threshold &#949;&#8320; itself. '
         'The arrow marks the snap. ZP-L &#167;VII: epsilon_zero_snap_canonical.'))
     E.append(sp(4))
     E.append(remember_box(
@@ -444,7 +438,7 @@ def build():
         'structure: the same diagonal argument, the same kind of fixed-point existence '
         'result.',
         'ZPM maps each side into the 2-adics by its own map, the ordinal notations by cnfToZp2 '
-        'and the two machine phases by snapEmbed; a bridge between the settings '
+        'and the two machine phases, the states c&#8320; and c&#8321; of the type MachinePhase, by snapEmbed; a bridge between the settings '
         'themselves is still open. The two rooms share a floor plan.',
     ]))
     E.append(sp(8))
@@ -532,7 +526,7 @@ def build():
         'ordinal approach to &#949;&#8320; and the 2-adic convergence to 0 in &#8484;&#8322;. '
         'All theorems proved without sorry. ZPM places both sides in &#8484;&#8322;: cnfToZp2 '
         'sends the tower\'s ordinal notations there, snapEmbed sends the machine phases there, '
-        'and the tower\'s images converge to snapEmbed\'s value at c&#8321; (zpm_triangle).'))
+        'and the tower\'s images converge to snapEmbed\'s value at c&#8321; (zpm_triangle, with snapEmbed_c1).'))
 
     print(f'Building: {out_path}')
     doc.build(E)

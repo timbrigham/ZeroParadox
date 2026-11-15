@@ -49,9 +49,9 @@ with probability one, hence at some finite stage.
    result cannot discharge it without circularity. This is the requirements/instance distinction,
    not a technicality.
 2. **Measure one is not necessity.** Borel-Cantelli concludes *almost surely* — outside a null set.
-   The framework commits that the snap fires, full stop. So this upgrades that commitment from
-   *possible* to *measure-one on its own premise*, which is strictly stronger than the former and
-   strictly weaker than the latter.
+   The framework commits that the snap fires, full stop. So this upgrades that commitment from *possible*
+   to *measure-one on its own premise*, which is strictly stronger than the former and strictly weaker
+   than the latter, pointwise. `Reading:` CARRIER, quotient: `fires_germ_eq_top` (PoleWithinEnsemble § IX).
 3. **What the argument consumes is DIVERGENCE of `∑ pₙ`, not constancy.** A per-stage probability
    that shrinks fast enough — `pₙ = 2⁻ⁿ` — has a convergent sum, and the **first** Borel-Cantelli
    lemma then gives almost surely only finitely many firings; so a positive chance at every stage is

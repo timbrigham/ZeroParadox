@@ -57,8 +57,11 @@ import ZeroParadox.Settheory.APG
 import ZeroParadox.Valuation.OneWayFlow
 import ZeroParadox.Information.TapeHalting
 import ZeroParadox.Valuation.TowerTape
+import ZeroParadox.Information.StartBit
 import ZeroParadox.Valuation.TreeNotForced
 import ZeroParadox.Valuation.DoublingAndTree
+import ZeroParadox.Valuation.PadicStillPoint
+import ZeroParadox.Information.BottomTotality
 import Mathlib.RingTheory.Valuation.PrimeMultiplicity
 import Mathlib.Order.FixedPoints
 import Mathlib.SetTheory.Ordinal.FixedPoint
@@ -68,11 +71,11 @@ import Mathlib.Order.BoundedOrder.Basic
 /-!
 # Index of declarations characterizing ⊥
 
-Curated, not exhaustive. An INDEXED name is `#check`ed, so it cannot be dead; a name occurring only
-inside a gloss is not. `Statement:` restates what a declaration proves; `Reading:` is interpretation,
-not a claim about the theorem. Where a `Reading:` asserts strength, scope or genericity it should
-carry an `example` that fails to compile if it is wrong; those are the only things proved here, and
-not every such `Reading:` has one yet. Sections: what ⊥ cannot be, must be, and how it is reached.
+Curated, not exhaustive. An INDEXED name is `#check`ed, so deleting or renaming its declaration breaks
+this build; a name only inside a gloss is not. `Statement:` restates what a declaration proves; `Reading:`
+is interpretation, not a claim about the theorem. Where a `Reading:` asserts strength, scope or genericity
+it should carry an `example` that fails to compile if it is wrong; those are the only things proved here,
+and not every such `Reading:` has one yet. Sections: what ⊥ cannot be, must be, and how it is reached.
 ⊥ is a ROLE, not one object: the first section names its occupant per structure, or its absence.
 
 ## Engineer's Take
@@ -214,12 +217,14 @@ example : ∀ o : Ordinal, ((⊥ : Set.Ici o) : Ordinal) = o := fun _ => rfl
 -- Statement: that emptiness, plus any two maps `Fix → Cofix` being equal.
 #check @ZeroParadox.root_cut_strict_asymmetric
 
-/-! ### ⊥ cannot be reached by a structure-preserving (descending/ν) comparison -/
+/-! ### a strictly increasing map into `Ordinal` exists only from a well-founded relation -/
 
 -- Statement: if `r` is not well-founded, no `f : S → Ordinal` is strictly increasing along `r`.
 #check @ZeroParadox.no_faithful_span_to_ordinal_and_descending
--- Statement: the converse biconditional — such an `f` exists iff `r` is well-founded.
+-- Statement: the converse biconditional — such an `f` into `Ordinal` of `S`'s own universe exists iff `r` is well-founded.
 #check @ZeroParadox.faithful_iff_descending
+
+/-! ### the two faces at `selfApp`'s fixed points: a generic subsingleton and one equivalence -/
 
 -- Statement: the equivalences `{x // selfApp x = x} ≃ PUnit` form a subsingleton.
 -- Reading: GENERIC — indexed to fence a misreading, not to carry one. `Subsingleton (α ≃ PUnit)`
@@ -244,14 +249,15 @@ example (α : Type) : Subsingleton (α ≃ PUnit) := inferInstance
 -- Statement: so stationarity under doubly-stochastic `Fin 4` chains is not subsingleton-valued.
 #check @ZeroParadox.doublyStochastic_stationary_not_subsingleton
 
-/-! ### the p-adic floor cannot be reached from within, nor matched to `markovRate` -/
+/-! ### the doubling orbit from `x ≠ 0` never lands on the p-adic floor, and does not match `markovRate` -/
 
 -- Statement: for `x ≠ 0` in ℚ₂, `2ⁿ * x ≠ 0` at every finite `n` — the orbit never lands on ℚ₂'s 0.
 -- Reading: other chart, the 2-adic metric: the same orbit converges to that 0
 -- (`doubling_orbit_tendsto_zero`, § DYNAMICS). Reached in the limit, never at a finite step.
 #check @ZeroParadox.padic_orbit_never_reaches_zero
 -- Statement: for `x ≠ 0`, no reindexing `φ : ℕ → ℕ` matches the p-adic rate to `markovRate`, the
--- absorbing chain's rate (`ZeroParadox/Valuation/NuRateEdge.lean`), at every step.
+-- constant `0` distance of a chain started at its absorbing state (`ZeroParadox/Valuation/NuRateEdge.lean`),
+-- at every step. From `x = 0` the two agree; that file's scope fence: the mismatch is set by the starts.
 #check @ZeroParadox.no_rate_conjugacy
 -- Statement: for `x ≠ 0`, indeed no single pair of indices makes those two rates agree.
 #check @ZeroParadox.no_rate_orderIso
@@ -625,6 +631,18 @@ noncomputable example : Ordinal.{0} →o Ordinal.{0} :=
 #check @ZeroParadox.fullMix_not_injective
 -- Statement: an eigenmode with `|λ| < 1` has `‖(T f)^[m] v‖ → 0`.
 #check @ZeroParadox.tendsto_norm_iterate_zero
+-- Statement: for `α ≥ 0`, `n ≥ 1` and a primitive character `φ` of `ZMod (p ^ n)`, `vladimirov α` sends
+-- the trivial character `paChar n 0` to `0` and `paChar n φ` to `vladLam p α n` times itself, pointwise
+-- on ℤ_[p], and `1 ≤ vladLam p α n` (`ZeroParadox/Valuation/PadicStillPoint.lean` § V).
+#check @ZeroParadox.vladimirov_gap
+-- Statement: for `α ≥ 0`, `vladLam p α n` tends to `∞` as `n → ∞`.
+#check @ZeroParadox.vladLam_tendsto_atTop
+-- Statement: CONTROL, for `n ≥ 1`, `vladLam p (-1) n = 1`.
+#check @ZeroParadox.vladLam_neg_one
+-- Statement: CONTROL, for `α < 0`, `vladLam p α` is bounded above.
+#check @ZeroParadox.vladLam_bounded_of_neg
+-- Reading: eigen-equations on characters only; completeness of the characters in `L²(ℤ_p)` is not
+-- claimed here (§ V header of that file).
 
 /-! ### ⊥ of `End` — one tape read as depth and as width, and the one-way flow -/
 
@@ -703,6 +721,29 @@ noncomputable example : Ordinal.{0} →o Ordinal.{0} :=
 -- ⊤ of `ℕ∞` at the floor. Limit form: `tower_pole_within_pole_limit`.
 -- Reading: a pole within a pole; no identity of ⊥ of a `ZPSemilattice` with any tape is stated.
 #check @ZeroParadox.tower_pole_within_pole
+-- Statement: a tape `ℕ → Bool` has a first `true` iff it is not ⊥ of `ℕ → Bool`; both directions.
+-- Reading: the start bit (Tim, 2026-11-15, magic bytes; `ZeroParadox/Information/StartBit.lean`).
+#check @ZeroParadox.exists_startBit_iff
+-- Statement: a tape has a last `true` iff it is not ⊥ of `ℕ → Bool` and is eventually `false`.
+-- Reading: the end bit.
+#check @ZeroParadox.exists_lastBit_iff
+-- Statement: the eventually-`false` tapes are `⋃ k, shiftTape k ⁻¹' {⊥}`, ⊥ of `ℕ → Bool`.
+#check @ZeroParadox.eventuallyFalse_eq_iUnion_shift
+-- Statement: they are the local floors `localBotEnd v` read through `tapeIso`.
+-- Reading: returning to a floor is one set; each local floor is ⊥ of `ℕ → Bool` on its subtape.
+#check @ZeroParadox.eventuallyFalse_eq_range_localFloor
+-- Statement: that set is countable.
+#check @ZeroParadox.eventuallyFalse_countable
+-- Statement: if `0 < p ≤ 1`, that set is `trials p hp`-null.
+#check @ZeroParadox.trials_eventuallyFalse_null
+-- Statement: CONTROL, at `p = 0` that set has `trials 0 hp` measure one.
+#check @ZeroParadox.trials_zero_eventuallyFalse
+-- Statement: under a per-stage coin `q` with `Summable q`, that set has measure one (first
+-- Borel-Cantelli); a constant coin is `trials` (`fadingTrials_const`).
+#check @ZeroParadox.fadingTrials_eventuallyFalse
+-- Statement: null under every constant coin `0 < p ≤ 1`, measure one under every summable coin.
+-- Reading: CARRIER, returning to a floor as a family indexed by the coin, never a union.
+#check @ZeroParadox.returning_two_charts
 
 /-! ### The infinitude in two charts: content and self -/
 
@@ -772,5 +813,22 @@ example : ZeroParadox.Disjunctive (fun n => xor (ZeroParadox.champ n) false) := 
 -- That the occupant of the framework's ⊥ role, ⊥ of a `ZPSemilattice`, is MAXIMALLY complex is
 -- Tim's commitment, stated as no equation with any
 -- one tape; disjunctive is the weaker, proved property (`ZeroParadox/Information/Disjunctive.lean`).
+
+/-! ### One ensemble, two faces: the law and its members -/
+
+-- Statement: one ensemble, `fairTape`: exactly one coin maximizes binary entropy (its `trials` is
+-- `fairTape`, `trials_eq_fairTape_of_maxEntropy`, not a conjunct); for each prefix-free decoder `D`,
+-- almost every tape is incompressible for `D`; ⊥ of `ℕ → Bool` is not Martin-Löf random for it and
+-- is in the closure of its random firing tapes.
+#check @ZeroParadox.tape_totality_two_faces
+-- Statement: CONTROL, a two-element set holding ⊥ of `ℕ → Bool` and a random tape is `fairTape`-null
+-- (`fairTape_singleton_null`).
+-- Reading: containing a minimal and a maximal member is not the content of the reading below.
+#check @ZeroParadox.both_faces_in_null_set
+-- Reading: COINCIDENCE, in the tape chart: minimal as the law (one condition), maximal as almost every
+-- member, the all-false tape inside as a limit. Tim, 2026-11-15: "Could we restate bottom as being both
+-- minimal and maximal as being the totality of all of its representations?" Across charts the
+-- totality is a family indexed by chart, never a union of occupants (§ ROLE). "Minimal" is "fixed by
+-- one condition", not a measured complexity of the measure.
 
 end CannotBeIndex

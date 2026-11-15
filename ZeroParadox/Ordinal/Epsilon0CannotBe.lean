@@ -8,6 +8,7 @@ import ZeroParadox.Order.LeastFixedPoint
 import ZeroParadox.Valuation.SemilatticeInstance
 import ZeroParadox.Multihomed.BoundaryOrder
 import ZeroParadox.Information.SnapEpsilonZero
+import ZeroParadox.Ordinal.UniverseZoom
 
 /-!
 # Machine-checked characterization index of ε₀ — what ε₀ IS and what it IS NOT
@@ -37,7 +38,7 @@ universe u
 -- Reading: the ε₀ role relative to a floor `f` is the least ε-number strictly greater than `f`, the
 -- least fixed point of `α ↦ ω^α` strictly above `f` (Veblen 1908, Corollary 1 to Theorem 4; see
 -- `ZeroParadox/Ordinal/Epsilon0LeastFP.md`); `f` is the bottom of the carrier `Set.Ici f`.
-#check @Ordinal.epsilon_succ_eq_nfp           -- Statement: Mathlib, `ε_(succ o) = nfp (ω^·) (succ ε_o)`
+#check @Ordinal.epsilon_add_one_eq_nfp        -- Statement: Mathlib, `ε_(o + 1) = nfp (ω^·) (ε_o + 1)`
 -- Reading: Veblen calls the function whose values are these fixed points the first derived function
 -- (Veblen 1908, Theorem 4, p. 283; p. 284, Corollaries 1 and 4, the latter for `ω^x`).
 -- Statement: `nfp (ω^·)` sends each seed `a` to the least fixed point at or above it; this is the
@@ -91,7 +92,7 @@ example :
   have hn := Ordinal.isNormal_opow Ordinal.one_lt_omega0
   have e : Ordinal.epsilon 1
       = Ordinal.nfp (fun α => Ordinal.omega0 ^ α) (Order.succ (Ordinal.epsilon 0)) := by
-    rw [← Ordinal.epsilon_succ_eq_nfp, Order.succ_eq_add_one, zero_add]
+    rw [Order.succ_eq_add_one, ← Ordinal.epsilon_add_one_eq_nfp, zero_add]
   refine ⟨rfl, ⟨Ordinal.omega0_opow_epsilon 1, ?_⟩, ?_⟩
   · rw [e]; exact lt_of_lt_of_le (Order.lt_succ _) (Ordinal.le_nfp _ _)
   · rintro x ⟨hx, hlt⟩
@@ -128,7 +129,7 @@ example (o : NONote) : o.repr < Ordinal.epsilon 0 := ZeroParadox.repr_lt_epsilon
 -- `nfp (ω^·) (succ a)`, the ε₀ role above the floor `a`. They part exactly at the fixed points of
 -- `α ↦ ω^α`: at a fixed-point floor such as `ε_o` the schema returns that floor (§ I-b,
 -- `nfp f = f`), so the ε₀ role is taken strictly above it, at `ε_(o+1)`
--- (`Ordinal.epsilon_succ_eq_nfp`). At the seed ε₀ the first holds at ε₀ and the second climbs to
+-- (`Ordinal.epsilon_add_one_eq_nfp`). At the seed ε₀ the first holds at ε₀ and the second climbs to
 -- ε₁: one point, two branches, both at once. Kind: INVARIANT off the fixed points; the parting is
 -- the content. Not CARRIER: the carrier never changes. Not the dynamical-systems sense (a
 -- qualitative change as a parameter of the map varies): only the seed varies; the map does not.
@@ -184,7 +185,7 @@ example : (∀ a : Ordinal.{u}, Ordinal.nfp (fun α => Ordinal.omega0 ^ α) a =
 -- above, the pole ⊥ = 0 = ∞ a chart claim (`ZeroParadox/BottomCannotBe.lean` § INVERSION), "never"
 -- `epsilon0_ne_bot` (§ I). Scopes: `ZeroParadox/Ordinal/Epsilon0CannotBe.md`.
 
-/-! ### § IV. ε₀ as the snap threshold ⊥ of `Ordinal` → ε₀, co-witnessed with the 2-adic limit and the machine snap -/
+/-! ### § IV. ε₀ as the snap threshold ⊥ of `Ordinal` → ε₀, co-witnessed with the limit of the tower's 2-adic images and the machine snap -/
 #check @ZeroParadox.epsilonZero_fixedPoint    -- Statement: ω ^ ε₀ = ε₀ (the `epsilonZero` spelling). Reading: the fixed point the snap lands the ascent on
 #check @ZeroParadox.snap_exactly_at_epsilon_zero
 #check @ZeroParadox.c1_epsilon_zero_identification
@@ -197,7 +198,7 @@ example : ∃ c : Nat.Partrec.Code, ∀ n, c.eval n = c.eval (Encodable.encode c
 /-! ### § V. The 2-adic realization (along the tower: valuation order agrees, norm order reverses from stage 1; ε₀ ≠ 0 preserved, no identity) -/
 #check @ZeroParadox.snap_arc_z2_loop          -- Statement: the images start at ℤ_[2]'s 0, are ≠ 0 for every stage n ≥ 1, and tend to that 0 (the loop)
 #check @ZeroParadox.mu_construction_correspondence  -- Statement: one tower, two carrier closures: ε₀ in `Ordinal`, ℤ_[2]'s 0 as the images' limit
-#check @ZeroParadox.cnf_bridge_type_boundary  -- Statement: ε₀ is the least fixed point at or above ⊥ of `Ordinal` ∧ the images tend to ℤ_[2]'s 0 ∧ each stage's `repr` is its tower stage. Reading: a co-witness; ε₀ = 0 with 0 of ℤ_[2] fails to elaborate, `Ordinal` vs `ℤ_[2]`
+#check @ZeroParadox.cnf_bridge_type_boundary  -- Statement: ε₀ is the least fixed point at or above ⊥ of `Ordinal` ∧ the images tend to ℤ_[2]'s 0 ∧ each stage's `repr` is its tower stage. Reading: a co-witness; `ε₀ = (0 : ℤ_[2])` fails to elaborate, `Ordinal` vs `ℤ_[2]`
 #check @ZeroParadox.tower_orders_agree        -- Statement: on the tower stages, ordinal `<` iff `<` on the 2-adic valuations of the images; at the seed this rests on Mathlib's `valuation 0 = 0`
 -- Statement: DRIFT. Read by the norm, the order reverses only from stage 1 on: at the seed the norm
 -- rises from 0 (first example), and for 1 ≤ m < n it falls (second example).
@@ -234,5 +235,22 @@ example : typeLT (Set.Ioo (Ordinal.epsilon 0 : Ordinal.{0}) (Ordinal.epsilon 1))
 -- Reading: CARRIER, two charts of one cell, neither denied. Order type: the first cell's seeds below
 -- its landing are as wide as ε₀, and each successor cell is as wide as its own landing. Count: the
 -- first cell is countable, and each of its addresses is a finite term.
+
+/-! ### § VIII. One universe seen from the next: the § I-b role at a point floor and at a level floor -/
+#check @ZeroParadox.below_univ_is_a_copy          -- Statement: below `univ.{u, u+1}` every ordinal is the lift of exactly one ordinal of `Ordinal.{u}`, and the lift keeps and reflects `<`
+#check @ZeroParadox.over_univ_reveals_frame       -- Statement: `univ ⋖ succ univ`, and neither is the lift of an ordinal of `Ordinal.{u}`
+-- Reading: CARRIER, Tim, 2026-11-14: "if it's strictly an up motion, you still can't tell the two
+-- universes apart.. once you do an over motion, you understand your frame of reference".
+#check @ZeroParadox.lift_epsilon_zero             -- Statement: `lift ε₀ = ε₀`, from `Ordinal.{u}` to `Ordinal.{max u v}`
+#check @ZeroParadox.univ_isLeast_above_level      -- Statement: `univ.{u, u+1}` is the least ordinal above every lift and is fixed by `α ↦ ω^α`; it is least above every lift already (`lift_of_lt_univ`), so the fixed-point clause selects nothing
+#check @ZeroParadox.epsilon_zero_lt_univ          -- Statement: in `Ordinal.{u+1}`, ε₀ < `univ.{u, u+1}`
+-- Reading: CARRIER, Tim, 2026-11-14: "New point, not new bottom". `univ` is a point of `Ordinal.{u+1}`;
+-- a new ⊥ there is the C-DA2 commitment, not a theorem (§ VI).
+#check @ZeroParadox.roleAbove                     -- Statement: `sInf` of the fixed points of `α ↦ ω^α` strictly above every point of a set `S`: the least one when one exists (`roleAbove_eq_of_isLeast`); for an unbounded `S` it is `sInf ∅ = 0`, ⊥ of `Ordinal`, a junk value, never a role (the CONTROL `example` in `ZeroParadox/Ordinal/UniverseZoom.lean`)
+#check @ZeroParadox.roleAbove_point_floor         -- Statement: at `{f}` it is `ordinalCornerStep f`, the § I-b strict form
+#check @ZeroParadox.roleAbove_one_construction    -- Statement: in `Ordinal.{u+1}`, `roleAbove {0}` is the lift of ε₀ and `roleAbove (Set.range lift)` is `univ.{u, u+1}`
+#check @ZeroParadox.roleAbove_work_split          -- Statement: `succ 0 < nfp (ω^·) (succ 0)`; the supremum of `succ (lift o)` is `univ`; `nfp (ω^·) univ = univ`
+-- Reading: INVARIANT, Tim, 2026-11-14: "One construction (Recommended)". At `{0}`, 0 of `Ordinal` is the
+-- floor and ε₀ the role strictly above it (§ I, `epsilon0_ne_zero`).
 
 end Epsilon0CannotBeIndex

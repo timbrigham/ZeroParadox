@@ -30,8 +30,8 @@ file asks is sharper: is there ANY purely arrow-level (hom-set-level) property t
 the zero object (#5) from the bare-initial object (#4) — or is terminality contributing no new
 arrow-level constraint, so the seam is characterizable only at the OBJECT level (initial ∧ terminal)?
 
-**Verdict: GO — there is a genuine arrow-level separator.** It is the *existence half of terminality
-stated as a hom-set property*:
+**Verdict: the candidate below separates the two named bottoms, and it is not a seam signature.**
+The candidate is the *existence half of terminality stated as a hom-set property*:
 
 > **P_in(Z)** : for every object `Y`, the in-hom-set `Hom(Y, Z)` is **nonempty**.
 
@@ -43,10 +43,13 @@ This is a statement about hom-sets only (no object-level data), and:
 - `bare_initial_fails_Pin` — **P_in FAILS at #4.** `Hom(fC_functor.obj 1, fC_functor.obj 0)` is
   **empty** (`fC_no_return`: no stochastic map returns into `Fin 0` from a nonempty type), so there
   is an object `Y` with `Hom(Y, #4)` empty. P_in is false at the bare-initial bottom.
-- `hom_into_bot_separates` — the headline: P_in(#5) ∧ ¬P_in(#4). Terminality DOES add
-  arrow-level content (all in-hom-sets become inhabited) that initiality alone does not supply at
-  these bottoms. The seam has an arrow-level signature, sharpening `ZeroParadox/Category/SeamArrowLevel.lean` from "generic collapse" to a
-  genuine arrow-level distinction.
+- `hom_into_bot_separates` — P_in(#5) ∧ ¬P_in(#4). In `ModuleCat ℂ` P_in holds at EVERY object,
+  because that category has zero morphisms (the `example` after `hom_into_bot_separates`); in
+  `KleisliCat PMF` hom-sets into `Fin 0` from nonempty objects are empty. So P_in separates the two
+  ambient categories, not the zero object from the bare-initial object. Terminality implies P_in in
+  any category, one way (`seam_has_Pin` is proved that way); the converse fails (`Fin 2` in
+  `KleisliCat PMF`, the `example` after `bare_initial_fails_Pin`). P_in fails at #4 because `Fin 0`
+  is empty. It is not a seam signature.
 
 **The control — the deflation `ZeroParadox/Category/SeamArrowLevel.lean` was right about.** The endomorphism-subsingleton property is
 NOT a separator (it is the property `ZeroParadox/Category/SeamArrowLevel.lean` and `ZeroParadox/Category/SeamComparisonMap.lean` over-read):
@@ -58,14 +61,10 @@ NOT a separator (it is the property `ZeroParadox/Category/SeamArrowLevel.lean` a
   generic, confirming `ZeroParadox/Category/SeamArrowLevel.lean`'s deflation *for this property*.
 
 **Honest fence — what is Lean vs interpretation.** Lean proves exactly: P_in holds at #5 and fails
-at #4 (a hom-set-nonemptiness property genuinely separating the two), while endo-subsingleton holds
-at both. The reading "P_in is THE arrow-level seam signature, so the seam is arrow-characterizable"
-is the interpretation; P_in is the *existence half* of terminality re-expressed at the hom-set
-level, so what is rigorously shown is that terminality's existence content is not generic across
-these specific bottoms — initiality alone does not force it. We do NOT claim P_in characterizes the
-seam among ALL objects (that would need a uniqueness/quantification statement over every object);
-the Lean content is the named-bottom separation #5 vs #4. The earlier endo-equation reading (`ZeroParadox/Category/SeamArrowLevel.lean`)
-remains correctly deflated.
+at #4, while endo-subsingleton holds at both; and P_in holds at every object of `ModuleCat ℂ`. P_in
+does not single out the seam inside its own category, so the question this file asks (an
+arrow-level property separating a zero object from a bare-initial object) is not answered by P_in.
+The endo-equation reading (`ZeroParadox/Category/SeamArrowLevel.lean`) remains deflated.
 -/
 
 namespace ZeroParadox
@@ -88,21 +87,39 @@ theorem seam_has_Pin :
 /-- **P_in FAILS at the bare-initial bottom (#4).** The in-hom-set
     `Hom(fC_functor.obj 1, fC_functor.obj 0)` is *empty* (`fC_no_return`: no stochastic map returns
     into `Fin 0` from the nonempty `Fin 1`). So there is an object `Y` with `Hom(Y, #4)` empty —
-    P_in is false. This is exactly the failure of terminality at #4. -/
+    P_in is false. Terminality implies P_in in any category, one way only: `Fin 2` in `KleisliCat PMF`
+    satisfies P_in and is not terminal (the `example` below). P_in fails at #4 because its carrier
+    `Fin 0` is empty. -/
 theorem bare_initial_fails_Pin :
     ¬ (∀ Y : KleisliCat PMF, Nonempty (Y ⟶ fC_functor.obj 0)) := by
   intro h
   exact (fC_no_return (by norm_num : 0 < 1)).false (h (fC_functor.obj 1)).some
 
-/-- **headline — an arrow-level property genuinely separates the seam from the bare-initial.**
-    P_in (every in-hom-set nonempty) holds at #5 (the zero object) and FAILS at #4 (initial-only).
-    Terminality therefore contributes arrow-level content — all in-hom-sets inhabited — that
-    initiality alone does not give at these bottoms. This sharpens `ZeroParadox/Category/SeamArrowLevel.lean` and `ZeroParadox/Category/SeamComparisonMap.lean`'s "generic collapse"
-    into a genuine arrow-level distinction: the seam carries a hom-set-level signature. -/
+-- `Statement:` CONTROL: in `KleisliCat PMF`, `Fin 2` satisfies P_in and is not terminal, so P_in does
+-- not imply terminality.
+example : (∀ Y : KleisliCat PMF, Nonempty (Y ⟶ KleisliCat.mk PMF (Fin 2))) ∧
+    IsEmpty (Limits.IsTerminal (KleisliCat.mk PMF (Fin 2))) := by
+  refine ⟨fun _ => ⟨fun _ => PMF.pure (0 : Fin 2)⟩, ⟨fun h => ?_⟩⟩
+  have h1 := congrFun (h.hom_ext
+    (show KleisliCat.mk PMF (Fin 1) ⟶ KleisliCat.mk PMF (Fin 2) from fun _ => PMF.pure (0 : Fin 2))
+    (show KleisliCat.mk PMF (Fin 1) ⟶ KleisliCat.mk PMF (Fin 2) from fun _ => PMF.pure (1 : Fin 2)))
+    (0 : Fin 1)
+  change PMF.pure (0 : Fin 2) = PMF.pure (1 : Fin 2) at h1
+  have h2 := congrArg (fun p : PMF (Fin 2) => p (0 : Fin 2)) h1
+  simp [PMF.pure_apply] at h2
+
+/-- `Statement:` P_in (every in-hom-set nonempty) holds at #5 (the zero object of `ModuleCat ℂ`)
+    and fails at #4 (initial-only in `KleisliCat PMF`). It separates the two ambient categories,
+    not the zero object from the bare-initial object: P_in holds at every object of `ModuleCat ℂ`
+    (the `example` below), so it is not a seam signature. -/
 theorem hom_into_bot_separates :
     (∀ Y : ModuleCat ℂ, Nonempty (Y ⟶ fD_functor.obj 0))
     ∧ ¬ (∀ Y : KleisliCat PMF, Nonempty (Y ⟶ fC_functor.obj 0)) :=
   ⟨seam_has_Pin, bare_initial_fails_Pin⟩
+
+-- Statement: P_in holds at every object of `ModuleCat ℂ`, via the zero morphism; terminality is
+-- not used.
+example (X : ModuleCat ℂ) : ∀ Y : ModuleCat ℂ, Nonempty (Y ⟶ X) := fun _ => ⟨0⟩
 
 /-! ## The control: endo-subsingleton is generic (the `ZeroParadox/Category/SeamArrowLevel.lean` deflation, confirmed) -/
 
@@ -124,7 +141,7 @@ theorem bare_initial_endo_subsingleton :
     at BOTH the seam (#5) and the bare-initial bottom (#4). So the endo-subsingleton property does
     not distinguish them: this is the property `ZeroParadox/Category/SeamArrowLevel.lean` and `ZeroParadox/Category/SeamComparisonMap.lean` over-read as a seam signature, and it is
     confirmed here to be generic (driven by initiality alone, present off-seam). Contrast with
-    `hom_into_bot_separates`, where P_in genuinely separates. -/
+    `hom_into_bot_separates`, where P_in separates the two ambient categories. -/
 theorem endo_subsingleton_does_not_separate :
     Subsingleton (fD_functor.obj 0 ⟶ fD_functor.obj 0)
     ∧ Subsingleton (fC_functor.obj 0 ⟶ fC_functor.obj 0) :=
@@ -133,11 +150,11 @@ theorem endo_subsingleton_does_not_separate :
 /-! ## The full picture in one statement -/
 
 /-- **The arrow-level picture, assembled.** A clean four-way summary at the arrow level:
-    (1) P_in holds at the seam #5; (2) P_in fails at the bare-initial #4 — so P_in *separates*;
+    (1) P_in holds at the seam #5; (2) P_in fails at the bare-initial #4 — so P_in separates the
+    two named bottoms, and with them their ambient categories (P_in holds at every object of
+    `ModuleCat ℂ`, the `example` after `hom_into_bot_separates`);
     (3) endo-subsingleton holds at #5; (4) endo-subsingleton holds at #4 — so endo-subsingleton
-    does *not* separate. The contrast (separator found, generic property correctly excluded) is the
-    sharpening of the `ZeroParadox/Category/SeamArrowLevel.lean` and `ZeroParadox/Category/SeamComparisonMap.lean` deflation: the seam DOES have an arrow-level signature, but it is
-    the in-hom-nonemptiness (terminality-existence) property, not the endo-equation `ZeroParadox/Category/SeamArrowLevel.lean` used. -/
+    does *not* separate. Neither property is a seam signature. -/
 theorem cat_bot_separation_full :
     (∀ Y : ModuleCat ℂ, Nonempty (Y ⟶ fD_functor.obj 0))
     ∧ ¬ (∀ Y : KleisliCat PMF, Nonempty (Y ⟶ fC_functor.obj 0))

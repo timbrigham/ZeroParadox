@@ -2,9 +2,10 @@
 # Self-Closure Obstructions: the wall-side mirror of the diagonal fixed point (experimental probe)
 
 `AbstractSelfApp` (`ZeroParadox/Computability/SelfApp.lean`) abstracts the FIXED POINT — the
-self-application that closes on ⊥. This file abstracts its OBSTRUCTION. The walls of the framework's
-Boundary Map (`SNAP.md`) are not scattered: they all stand at the same self-referential locus (the
-floor, where ⊥ lives), and they sort by *which closure fails* into three shapes (`ClosureShape`):
+self-application that closes on ⊥. This file abstracts its OBSTRUCTION. `Reading:` the walls of the
+framework's Boundary Map (`SNAP.md`) stand at one self-referential locus, the floor of each wall's
+own carrier. That is an organizing conjecture, not proved here: the file proves only the individual
+walls below, and tags each by hand with *which closure fails*, one of three shapes (`ClosureShape`):
 
 * `selfApplication`   — a structure cannot name/contain itself (Cantor/diagonal from above, or
                         Foundation/well-founded from below). The wall of the fixed-point face.
@@ -13,8 +14,8 @@ floor, where ⊥ lives), and they sort by *which closure fails* into three shape
 * `crossFrameIdentity`— two frames cannot be identified as one object. The wall of the seam (MC-1).
 
 A `SelfClosureObstruction` records, per wall, the proposition "the closing operation has a witness"
-together with a proof that it does not — drawn from an existing wall theorem, so the classification is
-grounded, not asserted. This is an ORGANIZING abstraction, the wall-side mirror of `AbstractSelfApp`;
+together with a proof that it does not — drawn from an existing wall theorem, so each wall is
+grounded; the shape tag on it is assigned by hand, so the classification is a design choice. This is an ORGANIZING abstraction, the wall-side mirror of `AbstractSelfApp`;
 it does NOT claim the walls are one object — that would be the very cross-frame identity the seam-wall
 blocks (MC-1). Shapes 1 and 2 are the walls of ⊥'s two faces (fixed point + limit); shape 3 is the
 wall of the seam.
