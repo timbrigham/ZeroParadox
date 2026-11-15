@@ -117,18 +117,19 @@ theorem th1_fd (n : ℕ) (hn : 2 ≤ n) :
 /-! ## T-H2 — Compatibility of Singularity Characterizations (OQ-G4 Closed)
 
 ZPG characterizes the singularity as domain absence: hom(X, 0) = ∅ for X ≇ 0 (T3/AX-G2).
-ZPC characterizes it as infinite accumulation: ∑ I(X_k → X_{k+1}) diverges along any
-sequence approaching 0 (t2_diverges). These are compatible: both hold. No comparison of
-strength between them is proved, since neither is derived from the other. `Reading:` if
+ZPC characterizes it as infinite accumulation: the partial circulation
+`circPartial n = I(n+1) − I(1)` is unbounded above (t2_diverges). These are compatible: both hold.
+No comparison of strength between them is proved here: the theorem below pairs two separately
+proved lemmas, `t3_unreachability` and `t2_diverges`, and uses neither to prove the other. `Reading:` if
 infinite accumulation is required to reach 0, no finite morphism reaches it — an informal
-link running from divergence toward absence, not a theorem. Both sides are independently
-derived. That both hold together (a conjunction, not a derivation of one from the other) closes OQ-G4. -/
+link running from divergence toward absence, not a theorem. That both hold together (a pair of
+separately proved lemmas) closes OQ-G4. -/
 
 /-- T-H2: Both singularity characterizations hold together.
     Part I (ZPG side): hom(X, 0) = ∅ for any X not isomorphic to 0 — domain-absent.
-    Part II (ZPC side): accumulated surprisal along sequences approaching 0 diverges.
-    `Statement:` a pair `⟨t3_unreachability X hne, t2_diverges⟩`, not a joint derivation: Part II
-    mentions none of `C`, `X` or the initial object, so neither conjunct is derived from the other. -/
+    Part II (ZPC side): the partial circulation `circPartial n` is unbounded above.
+    `Statement:` a pair `⟨t3_unreachability X hne, t2_diverges⟩`: the two conjuncts are proved by
+    separate lemmas, and this theorem only pairs them. -/
 theorem th2_singularity_compatibility {C : Type*} [Category C] [zpcat : ZPCategory C]
     (X : C) (hne : IsEmpty (X ≅ zpcat.zpInitial)) :
     IsEmpty (X ⟶ zpcat.zpInitial) ∧
@@ -478,8 +479,8 @@ noncomputable instance infoDepthZPCat : ZPCategory InfoDepth where
     T1b (ZPC) establishes that the P → Q snap costs exactly log 2 (1 bit of JSD).
     This is the informational analogue of AX-G2 in InfoDepth, where no morphism returns to
     depth 0 (`infoDepthZPCat`, by antisymmetry): the snap advances from zero surprisal to one bit.
-    `Statement:` a pair `⟨morphism 0 ⟶ ⟨1⟩ in InfoDepth, t1b_jsd⟩`, not a joint derivation: the two
-    conjuncts share no variable, and neither is derived from the other. -/
+    `Statement:` a pair: the first conjunct is the morphism `⟨⟨Nat.zero_le 1⟩⟩ : 0 ⟶ ⟨1⟩` in
+    InfoDepth, the second is `t1b_jsd`, and the theorem only pairs them. -/
 theorem fc_snap_info_grounded :
     Nonempty ((0 : InfoDepth) ⟶ ⟨1⟩) ∧ jsdPQ = Real.log 2 :=
   ⟨⟨⟨⟨Nat.zero_le 1⟩⟩⟩, t1b_jsd⟩
@@ -569,8 +570,8 @@ noncomputable instance hilbDimZPCat : ZPCategory HilbDimDepth where
 
 /-- Semantic grounding of fd_functor's snap morphism 0 → ⟨1⟩: T4 (ZPD) gives an orthogonal shift
     in StateSpace n (n ≥ 2), ⟪T(0), T(ε₀)⟫_ℂ = 0, read as the dimension advance 0 → 1 here.
-    `Statement:` a pair `⟨morphism 0 ⟶ ⟨1⟩, t4_snap_orthogonal n hn⟩`, not a joint derivation: the
-    first conjunct mentions neither `n` nor `StateSpace n`; neither is derived from the other. -/
+    `Statement:` a pair: the first conjunct is the morphism `⟨⟨Nat.zero_le 1⟩⟩ : 0 ⟶ ⟨1⟩` in
+    HilbDimDepth, the second is `t4_snap_orthogonal n hn`, and the theorem only pairs them. -/
 theorem fd_snap_hilb_grounded (n : ℕ) (hn : 2 ≤ n) :
     Nonempty ((0 : HilbDimDepth) ⟶ ⟨1⟩) ∧
     @inner ℂ (StateSpace n) _
