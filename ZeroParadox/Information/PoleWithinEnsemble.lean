@@ -21,7 +21,7 @@ defer to my AI assistant regarding the specifics of how the internals work.
 ## Formal Overview (AI-assisted)
 For `0 < p < 1`, ⊥ of `ℕ → Bool` is `trials p hp`-null, in its support, and a limit of random firing tapes whose waits diverge (`pole_within_ensemble` in `ℕ∞`; `pole_within_ensemble_limit` in `NInf`).
 At `p = 0` the mass of `{⊥}` jumps while every cylinder's mass is continuous (§ VI); explicit non-random tapes give the limit with no measure in the statement (§ VII). A heat-bath rate `glauberExciteNN ΔE T`, positive at every `ΔE` and `T`, feeds `trials` (§ VIII).
-Modulo `trials p hp`-null sets, firing somewhere is ⊤ for `0 < p` and ⊥ at `p = 0`; tape by tape it fails at ⊥ of `ℕ → Bool` (§ IX). Nothing here identifies ⊥ of a `ZPSemilattice` with a tape or with `trials p hp`.
+Modulo `trials p hp`-null sets, firing somewhere is ⊤ of `Germ (ae (trials p hp)) Prop` for `0 < p` and ⊥ of `Germ (ae (trials 0 hp)) Prop` at `p = 0`; tape by tape it fails at ⊥ of `ℕ → Bool` and at no other tape (§ II), for `0 < p` a null tape that the quotient forgets along with every other null set (§ IX). Nothing here identifies ⊥ of a `ZPSemilattice` with a tape or with `trials p hp`.
 -/
 
 set_option maxHeartbeats 400000
@@ -552,11 +552,17 @@ example (ΔE : ℝ) : glauberExcite ΔE 0 = 1 / 2 := by
 
 /-! ### § IX. Two charts of firing: modulo null sets, and tape by tape
 `Reading:` CARRIER. Quotient chart: predicates on tapes read in `Germ (ae (trials p hp)) Prop`, equal
-when they agree off a `trials p hp`-null set. Pointwise chart: predicates read at each tape. -/
+when they agree off a `trials p hp`-null set. Pointwise chart: predicates read at each tape. Firing
+somewhere fails at ⊥ of `ℕ → Bool` and at no other tape (the § II CONTROL `example`); for `0 < p`
+that tape is null, and the quotient forgets it along with every other null set, the tapes silent
+from `k` on among them (`trials_localFloor_null`). The two charts are the almost-surely versus surely
+distinction. Prior art: on measurable predicates the quotient chart is the measure algebra of
+`trials p hp`, Σ modulo its null ideal (Fremlin, *Measure Theory* Vol. 3, §321H, named in §321I). -/
 
 /-- `Statement:` if `0 < p ≤ 1` and `φ : Bool → L` sends `false` to ⊥ of `L` and `true` to a point
 other than ⊥ of `L`, then `trials p hp`-almost every tape `w` fires and gives `t_snap_of_fires_once`'s
-conclusion. No `BotHasFirstStep L` hypothesis; one way. -/
+conclusion. One way. Against `snap_ae_of_firstStep` it has no `BotHasFirstStep L` hypothesis AND no
+cover `bot ⋖ S 1` in its conclusion, and `φ` is given rather than produced. -/
 theorem snap_ae_fixed_phi {L : Type*} [ZPSemilattice L] (φ : Bool → L)
     (hφ0 : φ false = ZPSemilattice.bot) (hφ1 : φ true ≠ ZPSemilattice.bot)
     (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p) :
