@@ -1,4 +1,4 @@
--- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): one tape ensemble, `fairTape`, whose law is fixed by maximum entropy, almost all of whose members are incompressible, with ⊥ of `ℕ → Bool` a non-random limit of its random firing tapes; and the control that a set containing both faces is null. Curated results indexed in ZeroParadox/MANIFEST.md.
+-- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): one tape ensemble, `fairTape`, the law of the maximum-entropy coin (`trials_eq_fairTape_of_maxEntropy`), almost all of whose members are incompressible, with ⊥ of `ℕ → Bool` a non-random limit of its random firing tapes; and the control that a set containing both faces is null. Curated results indexed in ZeroParadox/MANIFEST.md.
 import ZeroParadox.Information.MaxEntropy
 import ZeroParadox.Information.PoleWithinEnsemble
 import Mathlib.Tactic
@@ -16,7 +16,8 @@ defer to my AI assistant regarding the specifics of how the internals work.
 ---
 
 ## Formal Overview (AI-assisted)
-`tape_totality_two_faces` bundles four corpus results about the one ensemble `fairTape`; the control
+`tape_totality_two_faces` bundles the uniqueness of the maximum-entropy coin (its `trials` is `fairTape`,
+`trials_eq_fairTape_of_maxEntropy`) with three results about `fairTape`; the control
 `both_faces_in_null_set` shows a set holding ⊥ of `ℕ → Bool` and a random tape is null.
 -/
 
@@ -26,9 +27,10 @@ namespace ZeroParadox
 
 open MeasureTheory Filter Topology
 
-/-- `Statement:` exactly one `p` has `binEntropy p = log 2`; `fairTape`-almost every tape is
-incompressible for every prefix-free decoder `D`; ⊥ of `ℕ → Bool` is not Martin-Löf random for
-`fairTape`, and is in the closure of `randFiring (1/2)`. -/
+/-- `Statement:` exactly one `p` has `binEntropy p = log 2` (its `trials` is `fairTape` by
+`trials_eq_fairTape_of_maxEntropy`, not conjoined here); for each prefix-free decoder `D`,
+`fairTape`-almost every tape is incompressible for `D`; ⊥ of `ℕ → Bool` is not Martin-Löf random
+for `fairTape`, and is in the closure of `randFiring (1/2)`. -/
 theorem tape_totality_two_faces :
     (∃ p : NNReal, Real.binEntropy (p : ℝ) = Real.log 2 ∧ 0 < p ∧ p ≤ 1 ∧
         ∀ q : NNReal, Real.binEntropy (q : ℝ) = Real.log 2 → q = p) ∧
@@ -40,7 +42,10 @@ theorem tape_totality_two_faces :
     bot_not_MLRandom (1/2) _ (by norm_num),
     bot_mem_closure_randFiring (1/2) _ (by norm_num) (by norm_num)⟩
 
-/-- `Statement:` every singleton of `ℕ → Bool` is `fairTape`-null. -/
+/-- `Statement:` every singleton of `ℕ → Bool` is `fairTape`-null: the standard fact that the
+fair-coin product measure has no atoms. Mathlib's `MeasureTheory.Measure.infinitePi_singleton`
+(`Mathlib/Probability/ProductMeasure.lean`) gives a singleton's mass as the product of its coordinate
+masses; the proof here bounds it by `(1/2)^n` instead. -/
 theorem fairTape_singleton_null (t : ℕ → Bool) : fairTape {t} = 0 := by
   have hle : ∀ n : ℕ, fairTape {t} ≤ ((1/2 : NNReal) : ENNReal) ^ n := fun n => by
     rw [← Finset.card_range n, ← fairTape_pi_singleton (Finset.range n) t]
