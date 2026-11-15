@@ -17,9 +17,9 @@ defer to my AI assistant regarding the specifics of how the internals work.
 ---
 
 ## Formal Overview (AI-assisted)
-An up-then-over loop exists iff `Motion.Loop` does (§ I). `z2TowerMotion` on ℤ_[2] loops, so no partial
-order makes its legs agree; ordered by Mathlib's ℕ-valued valuation (0 ↦ 0) its legs oppose, ordered by
-the additive valuation (0 ↦ ⊤) they neither agree nor oppose (§ II). Reversal does not keep `Loop` (§ III).
+An up-then-over loop exists iff `Motion.Loop` does (§ I). `z2TowerMotion` on ℤ_[2] loops, so no partial order
+makes its legs agree; preordered by Mathlib's ℕ-valued valuation (0 ↦ 0) its legs oppose, by the reversed norm
+(the additive valuation's order, 0 ↦ ⊤) they neither agree nor oppose (§ II). Reversal does not keep `Loop` (§ III).
 -/
 
 set_option maxHeartbeats 400000
@@ -70,8 +70,9 @@ theorem z2_no_agreeing_order (inst : PartialOrder ℤ_[2]) :
 
 /-- `Statement:` under Mathlib's ℕ-valued `PadicInt.valuation`, 0 has the least value, and the image
 of stage `n + 1` has the value of stage `n` plus one. That 0 reads 0 is Mathlib's totalization
-(`ZeroParadox/DieCannotBe.lean` § VI); the additive valuation reads it ⊤ (`addVal_bot`), and the second
-`example` after `z2_norm_drift` is that chart. -/
+(`ZeroParadox/DieCannotBe.lean` § VI); it carries the first clause and the law's `n = 0` step, since
+stage 0's image is ℤ_[2]'s 0 (`snap_arc_z2_loop`). The additive valuation reads it ⊤ (`addVal_bot`),
+and the second `example` after `z2_norm_drift` is that chart. -/
 theorem z2_valuation_oppose :
     (∀ x : ℤ_[2], (0 : ℤ_[2]).valuation ≤ x.valuation) ∧
     (∀ n, (cnfToZp2 (towerNONote (n + 1))).valuation = (cnfToZp2 (towerNONote n)).valuation + 1) :=
@@ -92,7 +93,7 @@ theorem z2_norm_drift :
       cnfToZp2_tower_valuation, cnfToZp2_tower_valuation]
     exact zpow_lt_zpow_right₀ (by norm_num) (by omega)
 
--- Statement: ordered by Mathlib's ℕ-valued valuation (`x ≤ y` iff `valuation x ≤ valuation y`),
+-- Statement: preordered by Mathlib's ℕ-valued valuation (`x ≤ y` iff `valuation x ≤ valuation y`),
 -- `z2TowerMotion`'s legs oppose.
 example : let L : LE ℤ_[2] := ⟨fun x y => x.valuation ≤ y.valuation⟩
     @Motion.Oppose ℤ_[2] z2TowerMotion L := by
@@ -104,7 +105,7 @@ example : let L : LE ℤ_[2] := ⟨fun x y => x.valuation ≤ y.valuation⟩
     show (cnfToZp2 (towerNONote n)).valuation ≤ (cnfToZp2 (towerNONote (n + 1))).valuation
     rw [z2_valuation_oppose.2 n]; exact Nat.le_succ _
 
--- Statement: ordered by the additive valuation, read through the norm (`x ≤ y` iff `‖y‖ ≤ ‖x‖`, so
+-- Statement: preordered by the additive valuation, read through the norm (`x ≤ y` iff `‖y‖ ≤ ‖x‖`, so
 -- ℤ_[2]'s 0 is greatest), UP raises and `z2TowerMotion`'s legs neither oppose nor agree.
 example : let L : LE ℤ_[2] := ⟨fun x y => ‖y‖ ≤ ‖x‖⟩
     @Motion.UpRaises ℤ_[2] z2TowerMotion L ∧ ¬ @Motion.Oppose ℤ_[2] z2TowerMotion L ∧

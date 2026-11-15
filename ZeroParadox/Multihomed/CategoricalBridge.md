@@ -29,7 +29,7 @@ Key results:
   separates the members is proved property by property (seam_unique_among_named, for the named bottoms, in a lattice with no top).
 - T-H2: Categorical singularity (domain-absent) and ZPC singularity (divergent
   accumulation) hold together: `th2_singularity_compatibility` pairs two separately proved
-  lemmas, `t3_unreachability` and `t2_diverges`, and uses neither to prove the other (OQ-G4 closed in
+  results, `t3_unreachability` (ZP-G Lemma T3) and `t2_diverges` (ZP-C Theorem T2), and uses neither to prove the other (OQ-G4 closed in
   that sense).
 - T-H3: Binary Snap described consistently under all four functors. Fully proved
   by assembling independently proved domain theorems.

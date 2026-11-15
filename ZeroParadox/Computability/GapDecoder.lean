@@ -42,7 +42,8 @@ noncomputable def gapDecode (w : ℕ → Bool) : Option Code := by
       some (Denumerable.ofNat Code (Nat.find hg)) else Option.none)
   else Option.none
 
-/-- `Statement:` the subtape after `k` is ⊥ of `ℕ → Bool` iff `w` has no `true` from `k` on. -/
+/-- `Statement:` the subtape from position `k` on is ⊥ of `ℕ → Bool` iff `w` has no `true` from `k`
+on. -/
 theorem shiftTape_eq_bot_iff (k : ℕ) (w : ℕ → Bool) :
     shiftTape k w = ⊥ ↔ ¬ ∃ j, w (k + j) = true := by
   constructor
@@ -115,7 +116,7 @@ theorem gapDecode_of_mem_cyl (j : ℕ) (w : ℕ → Bool)
 /-- `Statement:` if `0 < p < 1`, every code `c` has `0 < trials p hp {w | gapDecode w = some c}`.
 `Reading:` prior art, after the start bit this is the machine of Shen, Uspensky, Vereshchagin,
 *Kolmogorov Complexity and Algorithmic Randomness* (AMS 2017), § 4.1, p. 75: toss a fair coin until
-1 appears, output the zeros before it, each `i` with probability `2^-(i+1)`; here the coin is
+1 appears, output the number of zeros before it, each `i` with probability `2^-(i+1)`; here the coin is
 `trials p hp` and outputs are Mathlib `Code`s. Formal neighbour: `Kolmogorov.apriori_pos_of_universal`. -/
 theorem trials_gapDecode_pos (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p) (hp1 : p < 1) (c : Code) :
     0 < trials p hp {w | gapDecode w = some c} := by
@@ -136,12 +137,12 @@ theorem gapDecode_poles :
 
 `Reading:` Tim (2026-11-15): "So it's not just one program. It's all programs"; and "once you have
 one you have evidence that a class exists, right?" His tree reading ("the same chasing the darkness
-kind of routing", Tim, 2026-11-15) is not stated here: `t4_snap_orthogonal` covers cells 0 and 1,
-and the right angle of the actual path against the untaken branches is not located in the corpus
-as of 2026-11-15. The class removes § II's dependence on one decoder, not the choice to read
-programs off tapes, which stays a commitment carried as the hypothesis. Prior art: Shen, Uspensky,
-Vereshchagin § 4.1 (`trials_gapDecode_pos`); the broader home is algorithmic probability
-(Solomonoff, Levin, Chaitin). -/
+kind of routing", Tim, 2026-11-15) is not stated here: `t4_snap_orthogonal` covers cells 0 and 1; a
+theorem on the right angle of the actual path against the untaken branches is not located in the
+corpus as of 2026-11-15 (nearest: orthogonal projection as a die motion, `ZeroParadox/State/DieProjection.lean`).
+The class removes § II's dependence on one decoder, not the choice to read programs off tapes, which
+stays a commitment carried as the hypothesis. Prior art: Shen, Uspensky, Vereshchagin § 4.1
+(`trials_gapDecode_pos`); the broader home is algorithmic probability (Solomonoff, Levin, Chaitin). -/
 
 /-- `Statement:` every code `c` has `0 < μ {w | D w = some c}`. A predicate, used as a hypothesis. -/
 def ReachesEveryCode (μ : Measure (ℕ → Bool)) (D : (ℕ → Bool) → Option Code) : Prop :=
@@ -155,10 +156,11 @@ def DecodesAlmostSurely (μ : Measure (ℕ → Bool)) (D : (ℕ → Bool) → Op
 (`selfref_universal_infinite`); every code's event is pairwise disjoint from every other's; and if
 `D` reaches every code for `μ`, each self-printing universal code has positive `μ`-mass under `D`
 and so does their union.
-`Reading:` beyond the machine of Shen, Uspensky, Vereshchagin § 4.1 (`trials_gapDecode_pos`), whose
-every output has positive probability: the start bit, the biased coin, Mathlib `Code`, an arbitrary
-measure, closure under `Code ≃ Code` (`ReachesEveryCode.map_equiv`), and this link to the
-self-printing universal codes. -/
+`Reading:` beside the machine of Shen, Uspensky, Vereshchagin § 4.1 (`trials_gapDecode_pos`), whose
+every output has positive probability: here positivity under an arbitrary measure is the hypothesis
+`hD`, not a result. Added: the start bit, the biased coin, Mathlib `Code`, closure under `Code ≃ Code`
+(`ReachesEveryCode.map_equiv`), and the infinite set of self-printing universal codes
+(`selfref_universal_infinite`) these reach. -/
 theorem selfref_universal_reached {μ : Measure (ℕ → Bool)} {D : (ℕ → Bool) → Option Code}
     (hD : ReachesEveryCode μ D) :
     {c : Code | SelfPrints c ∧ Universal c}.Infinite ∧
