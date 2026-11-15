@@ -672,8 +672,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 4075,
-        "files": 228
+        "declarations": 4092,
+        "files": 229
       },
       "entries": [
         {
@@ -3781,6 +3781,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "05461660-76ab-4478-9db2-538564f09645",
+          "new": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.gapDecode_mem",
+            "short": "gapDecode_mem"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.gapDecode_mem",
+            "short": "gapDecode_mem",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 D, 2026-11-15, plus Tim's same-day class addition): one tape-to-program decoder (gapDecode, the gap after the start bit read as a code number, ONE CHOICE among many) and the predicate ReachesEveryCode it witnesses; any member reaches the self-printing universal codes with positive probability; controls: constant decoder and gapDecode at p = 1 are non-members (GapDecoder.lean).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "0546f3cf-f85f-4290-9ed7-aaa346158798",
           "new": {
@@ -3917,6 +3954,43 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "057ff315-d3d6-4378-9fb5-7e5bfebb183d",
+          "new": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.gapWitness",
+            "short": "gapWitness"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.gapWitness",
+            "short": "gapWitness",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 D, 2026-11-15, plus Tim's same-day class addition): one tape-to-program decoder (gapDecode, the gap after the start bit read as a code number, ONE CHOICE among many) and the predicate ReachesEveryCode it witnesses; any member reaches the self-printing universal codes with positive probability; controls: constant decoder and gapDecode at p = 1 are non-members (GapDecoder.lean).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -6060,6 +6134,43 @@
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": "[propext, Classical.choice, Quot.sound]",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "08e558a9-b544-4712-ad4c-4bbcb89c5fa7",
+          "new": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.gapDecode",
+            "short": "gapDecode"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.gapDecode",
+            "short": "gapDecode",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 D, 2026-11-15, plus Tim's same-day class addition): one tape-to-program decoder (gapDecode, the gap after the start bit read as a code number, ONE CHOICE among many) and the predicate ReachesEveryCode it witnesses; any member reaches the self-printing universal codes with positive probability; controls: constant decoder and gapDecode at p = 1 are non-members (GapDecoder.lean).",
+          "verify": {
+            "axioms": null,
             "sorry_free": true
           }
         },
@@ -17046,6 +17157,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "1b59ae23-0e0a-44c8-ad53-5d160cb39057",
+          "new": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_gapDecode_pos",
+            "short": "trials_gapDecode_pos"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_gapDecode_pos",
+            "short": "trials_gapDecode_pos",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 D, 2026-11-15, plus Tim's same-day class addition): one tape-to-program decoder (gapDecode, the gap after the start bit read as a code number, ONE CHOICE among many) and the predicate ReachesEveryCode it witnesses; any member reaches the self-printing universal codes with positive probability; controls: constant decoder and gapDecode at p = 1 are non-members (GapDecoder.lean).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "1b62d3a3-b54f-4a6c-b900-a35d7f890122",
           "new": {
@@ -23867,6 +24015,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "2807d11f-121d-4ecb-9e25-9ec9185b85a5",
+          "new": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.gapDecode_eq_none_iff",
+            "short": "gapDecode_eq_none_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.gapDecode_eq_none_iff",
+            "short": "gapDecode_eq_none_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 D, 2026-11-15, plus Tim's same-day class addition): one tape-to-program decoder (gapDecode, the gap after the start bit read as a code number, ONE CHOICE among many) and the predicate ReachesEveryCode it witnesses; any member reaches the self-printing universal codes with positive probability; controls: constant decoder and gapDecode at p = 1 are non-members (GapDecoder.lean).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "28178d77-db97-4989-a9a5-2d3c017cbf68",
           "new": {
             "file": "ZeroParadox/Valuation/CellsJoint.lean",
@@ -24155,6 +24340,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "28808d6f-e6cf-4a04-b237-4c67fa707f32",
+          "new": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.const_not_reachesEveryCode",
+            "short": "const_not_reachesEveryCode"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.const_not_reachesEveryCode",
+            "short": "const_not_reachesEveryCode",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 D, 2026-11-15, plus Tim's same-day class addition): one tape-to-program decoder (gapDecode, the gap after the start bit read as a code number, ONE CHOICE among many) and the predicate ReachesEveryCode it witnesses; any member reaches the self-printing universal codes with positive probability; controls: constant decoder and gapDecode at p = 1 are non-members (GapDecoder.lean).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -67709,6 +67931,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "74891f00-2852-4b1b-9718-21714c330226",
+          "new": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_gapDecode_none_null",
+            "short": "trials_gapDecode_none_null"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_gapDecode_none_null",
+            "short": "trials_gapDecode_none_null",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 D, 2026-11-15, plus Tim's same-day class addition): one tape-to-program decoder (gapDecode, the gap after the start bit read as a code number, ONE CHOICE among many) and the predicate ReachesEveryCode it witnesses; any member reaches the self-printing universal codes with positive probability; controls: constant decoder and gapDecode at p = 1 are non-members (GapDecoder.lean).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "748fce47-eaec-4b6f-9beb-86fdfa8c1a33",
           "new": {
@@ -67882,6 +68141,43 @@
             ]
           },
           "reason": "Die v2 final batch: drawing vs set (self-steps, accessibility, forced rank), ends of a view, orders on motions, placements as views, relaxed least-fixed-point schema, UP legs as nuclei",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "74ee74ad-0506-4c58-8400-a047643f45d7",
+          "new": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ReachesEveryCode.map_equiv",
+            "short": "ReachesEveryCode.map_equiv"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ReachesEveryCode.map_equiv",
+            "short": "ReachesEveryCode.map_equiv",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 D, 2026-11-15, plus Tim's same-day class addition): one tape-to-program decoder (gapDecode, the gap after the start bit read as a code number, ONE CHOICE among many) and the predicate ReachesEveryCode it witnesses; any member reaches the self-printing universal codes with positive probability; controls: constant decoder and gapDecode at p = 1 are non-members (GapDecoder.lean).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -76118,6 +76414,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "82c17a14-9cc3-48f4-b371-681d10f5fffa",
+          "new": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.gapDecode_none_subset",
+            "short": "gapDecode_none_subset"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.gapDecode_none_subset",
+            "short": "gapDecode_none_subset",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 D, 2026-11-15, plus Tim's same-day class addition): one tape-to-program decoder (gapDecode, the gap after the start bit read as a code number, ONE CHOICE among many) and the predicate ReachesEveryCode it witnesses; any member reaches the self-printing universal codes with positive probability; controls: constant decoder and gapDecode at p = 1 are non-members (GapDecoder.lean).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "82e4df30-b017-45b2-9fb3-6f22fcfee1d9",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -79913,6 +80246,43 @@
             ]
           },
           "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "8a5c5338-2a71-49f4-a131-cf4082c09fa9",
+          "new": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ReachesEveryCode",
+            "short": "ReachesEveryCode"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ReachesEveryCode",
+            "short": "ReachesEveryCode",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 D, 2026-11-15, plus Tim's same-day class addition): one tape-to-program decoder (gapDecode, the gap after the start bit read as a code number, ONE CHOICE among many) and the predicate ReachesEveryCode it witnesses; any member reaches the self-printing universal codes with positive probability; controls: constant decoder and gapDecode at p = 1 are non-members (GapDecoder.lean).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -105412,6 +105782,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "b3fcdfb7-6a44-475e-be83-3d49014bb5de",
+          "new": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.gapDecode_p_zero",
+            "short": "gapDecode_p_zero"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.gapDecode_p_zero",
+            "short": "gapDecode_p_zero",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 D, 2026-11-15, plus Tim's same-day class addition): one tape-to-program decoder (gapDecode, the gap after the start bit read as a code number, ONE CHOICE among many) and the predicate ReachesEveryCode it witnesses; any member reaches the self-printing universal codes with positive probability; controls: constant decoder and gapDecode at p = 1 are non-members (GapDecoder.lean).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "b41f664a-ea09-4d22-aae4-8e5ca84d1644",
           "new": {
             "file": "ZeroParadox/Ordinal/PricedInterface.lean",
@@ -115908,6 +116315,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "c6527944-e1cd-4bbd-b9e6-37b06fc95867",
+          "new": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.gapDecode_poles",
+            "short": "gapDecode_poles"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.gapDecode_poles",
+            "short": "gapDecode_poles",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 D, 2026-11-15, plus Tim's same-day class addition): one tape-to-program decoder (gapDecode, the gap after the start bit read as a code number, ONE CHOICE among many) and the predicate ReachesEveryCode it witnesses; any member reaches the self-printing universal codes with positive probability; controls: constant decoder and gapDecode at p = 1 are non-members (GapDecoder.lean).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "c67a2fc5-6bbf-4950-9346-f2d1325e666c",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -117307,6 +117751,43 @@
             ]
           },
           "reason": "Die stage/closure shape and registration switch (Die.lean § VI-VII), with its two face maps in their existing homes (Epsilon0LeastFP, Occurrence)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c8c4451d-fe11-484d-b8ec-29af8b138cd6",
+          "new": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.gapDecode_of_mem_cyl",
+            "short": "gapDecode_of_mem_cyl"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.gapDecode_of_mem_cyl",
+            "short": "gapDecode_of_mem_cyl",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 D, 2026-11-15, plus Tim's same-day class addition): one tape-to-program decoder (gapDecode, the gap after the start bit read as a code number, ONE CHOICE among many) and the predicate ReachesEveryCode it witnesses; any member reaches the self-printing universal codes with positive probability; controls: constant decoder and gapDecode at p = 1 are non-members (GapDecoder.lean).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -122039,6 +122520,43 @@
             ]
           },
           "reason": "PadicVladimirov § VIII: the shells as vectors in L2",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "cfa477ab-cd84-4d25-aa80-0a5474eb43f0",
+          "new": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.selfref_universal_reached",
+            "short": "selfref_universal_reached"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.selfref_universal_reached",
+            "short": "selfref_universal_reached",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 D, 2026-11-15, plus Tim's same-day class addition): one tape-to-program decoder (gapDecode, the gap after the start bit read as a code number, ONE CHOICE among many) and the predicate ReachesEveryCode it witnesses; any member reaches the self-printing universal codes with positive probability; controls: constant decoder and gapDecode at p = 1 are non-members (GapDecoder.lean).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -137683,6 +138201,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "e93690db-bc72-4810-a700-bd6687f9174e",
+          "new": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.shiftTape_eq_bot_iff",
+            "short": "shiftTape_eq_bot_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.shiftTape_eq_bot_iff",
+            "short": "shiftTape_eq_bot_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 D, 2026-11-15, plus Tim's same-day class addition): one tape-to-program decoder (gapDecode, the gap after the start bit read as a code number, ONE CHOICE among many) and the predicate ReachesEveryCode it witnesses; any member reaches the self-printing universal codes with positive probability; controls: constant decoder and gapDecode at p = 1 are non-members (GapDecoder.lean).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "e93a5d53-00b2-4fc1-85da-68f33212447b",
           "new": {
             "file": "ZeroParadox/Category/IgnoranceSeam.lean",
@@ -140939,6 +141494,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ee8eb041-0422-402f-b42b-7b22e74abf8c",
+          "new": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.gapDecode_p_one",
+            "short": "gapDecode_p_one"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.gapDecode_p_one",
+            "short": "gapDecode_p_one",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 D, 2026-11-15, plus Tim's same-day class addition): one tape-to-program decoder (gapDecode, the gap after the start bit read as a code number, ONE CHOICE among many) and the predicate ReachesEveryCode it witnesses; any member reaches the self-printing universal codes with positive probability; controls: constant decoder and gapDecode at p = 1 are non-members (GapDecoder.lean).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -150164,6 +150756,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "fe233cba-eae4-406f-afbf-035c1c96e797",
+          "new": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.DecodesAlmostSurely",
+            "short": "DecodesAlmostSurely"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.DecodesAlmostSurely",
+            "short": "DecodesAlmostSurely",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 D, 2026-11-15, plus Tim's same-day class addition): one tape-to-program decoder (gapDecode, the gap after the start bit read as a code number, ONE CHOICE among many) and the predicate ReachesEveryCode it witnesses; any member reaches the self-printing universal codes with positive probability; controls: constant decoder and gapDecode at p = 1 are non-members (GapDecoder.lean).",
           "verify": {
             "axioms": null,
             "sorry_free": true
