@@ -57,6 +57,7 @@ import ZeroParadox.Settheory.APG
 import ZeroParadox.Valuation.OneWayFlow
 import ZeroParadox.Information.TapeHalting
 import ZeroParadox.Valuation.TowerTape
+import ZeroParadox.Information.StartBit
 import ZeroParadox.Valuation.TreeNotForced
 import ZeroParadox.Valuation.DoublingAndTree
 import ZeroParadox.Valuation.PadicStillPoint
@@ -720,6 +721,23 @@ noncomputable example : Ordinal.{0} →o Ordinal.{0} :=
 -- ⊤ of `ℕ∞` at the floor. Limit form: `tower_pole_within_pole_limit`.
 -- Reading: a pole within a pole; no identity of ⊥ of a `ZPSemilattice` with any tape is stated.
 #check @ZeroParadox.tower_pole_within_pole
+-- Statement: a tape `ℕ → Bool` has a first `true` iff it is not ⊥ of `ℕ → Bool`; both directions.
+-- Reading: the start bit (Tim, 2026-11-15, magic bytes; `ZeroParadox/Information/StartBit.lean`).
+#check @ZeroParadox.exists_startBit_iff
+-- Statement: a tape has a last `true` iff it is not ⊥ of `ℕ → Bool` and is eventually `false`.
+-- Reading: the end bit.
+#check @ZeroParadox.exists_lastBit_iff
+-- Statement: the eventually-`false` tapes are `⋃ k, shiftTape k ⁻¹' {⊥}`, ⊥ of `ℕ → Bool`.
+#check @ZeroParadox.eventuallyFalse_eq_iUnion_shift
+-- Statement: they are the local floors `localBotEnd v` read through `tapeIso`.
+-- Reading: returning to a floor is one set; each local floor is ⊥ of `ℕ → Bool` on its subtape.
+#check @ZeroParadox.eventuallyFalse_eq_range_localFloor
+-- Statement: that set is countable.
+#check @ZeroParadox.eventuallyFalse_countable
+-- Statement: if `0 < p ≤ 1`, that set is `trials p hp`-null.
+#check @ZeroParadox.trials_eventuallyFalse_null
+-- Statement: CONTROL, at `p = 0` that set has `trials 0 hp` measure one.
+#check @ZeroParadox.trials_zero_eventuallyFalse
 
 /-! ### The infinitude in two charts: content and self -/
 

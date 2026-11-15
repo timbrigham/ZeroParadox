@@ -672,8 +672,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 4057,
-        "files": 227
+        "declarations": 4069,
+        "files": 228
       },
       "entries": [
         {
@@ -9437,6 +9437,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "0e23dcfb-2665-41b4-9be0-bd77af5a61ac",
+          "new": {
+            "file": "ZeroParadox/Information/StartBit.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.mem_eventuallyFalse_iff",
+            "short": "mem_eventuallyFalse_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/StartBit.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.mem_eventuallyFalse_iff",
+            "short": "mem_eventuallyFalse_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 A+B, 2026-11-15): start bit and end bit on N -> Bool; the eventually-false tapes as one set (shifted copies of bottom, silentFrom, the local floors through tapeIso), countable, trials-null for 0 < p, measure one at p = 0 (StartBit.lean).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "0e2b34e6-5982-4b50-b0f8-455086d1c235",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -16962,6 +16999,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "1b35e244-0700-45eb-a312-97837c5c5938",
+          "new": {
+            "file": "ZeroParadox/Information/StartBit.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.measurableSet_eventuallyFalse",
+            "short": "measurableSet_eventuallyFalse"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/StartBit.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.measurableSet_eventuallyFalse",
+            "short": "measurableSet_eventuallyFalse",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 A+B, 2026-11-15): start bit and end bit on N -> Bool; the eventually-false tapes as one set (shifted copies of bottom, silentFrom, the local floors through tapeIso), countable, trials-null for 0 < p, measure one at p = 0 (StartBit.lean).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -28525,6 +28599,43 @@
             ]
           },
           "reason": "Land TapeHalting: toComp (det w) halts exactly at the first firing, equals the slot run's crossing step, a.s. under trials p with 0 < p, and depth endVal (2026-11-10).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "2fee77c4-ce0e-4a4b-bf3f-3d2cd756acbd",
+          "new": {
+            "file": "ZeroParadox/Information/StartBit.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_eventuallyFalse_null",
+            "short": "trials_eventuallyFalse_null"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/StartBit.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_eventuallyFalse_null",
+            "short": "trials_eventuallyFalse_null",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 A+B, 2026-11-15): start bit and end bit on N -> Bool; the eventually-false tapes as one set (shifted copies of bottom, silentFrom, the local floors through tapeIso), countable, trials-null for 0 < p, measure one at p = 0 (StartBit.lean).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -58446,6 +58557,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "64a6e520-3c62-42ad-a6ac-4b52712baee7",
+          "new": {
+            "file": "ZeroParadox/Information/StartBit.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.eventuallyFalse_eq_iUnion_silentFrom",
+            "short": "eventuallyFalse_eq_iUnion_silentFrom"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/StartBit.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.eventuallyFalse_eq_iUnion_silentFrom",
+            "short": "eventuallyFalse_eq_iUnion_silentFrom",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 A+B, 2026-11-15): start bit and end bit on N -> Bool; the eventually-false tapes as one set (shifted copies of bottom, silentFrom, the local floors through tapeIso), countable, trials-null for 0 < p, measure one at p = 0 (StartBit.lean).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "64aab034-fea6-4296-a669-04f718746747",
           "new": {
             "file": "ZeroParadox/Ordinal/Epsilon0MinMax.lean",
@@ -65746,6 +65894,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "71ba47c9-282d-4c14-aa2f-00cb6a48ee5f",
+          "new": {
+            "file": "ZeroParadox/Information/StartBit.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_zero_eventuallyFalse",
+            "short": "trials_zero_eventuallyFalse"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/StartBit.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_zero_eventuallyFalse",
+            "short": "trials_zero_eventuallyFalse",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 A+B, 2026-11-15): start bit and end bit on N -> Bool; the eventually-false tapes as one set (shifted copies of bottom, silentFrom, the local floors through tapeIso), countable, trials-null for 0 < p, measure one at p = 0 (StartBit.lean).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "71f71b3a-72ae-485e-b6eb-56fb68830c00",
           "new": {
@@ -68288,6 +68473,43 @@
             "role": []
           },
           "reason": "LawvereTaboo: the general fixed-point-free-endomap principle implies weak excluded middle (choice-free), making Lawvere.lean's classical essential rather than accidental",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "75d0aac4-7ad5-41bb-9439-938528454fd0",
+          "new": {
+            "file": "ZeroParadox/Information/StartBit.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.exists_lastBit_iff",
+            "short": "exists_lastBit_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/StartBit.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.exists_lastBit_iff",
+            "short": "exists_lastBit_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 A+B, 2026-11-15): start bit and end bit on N -> Bool; the eventually-false tapes as one set (shifted copies of bottom, silentFrom, the local floors through tapeIso), countable, trials-null for 0 < p, measure one at p = 0 (StartBit.lean).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -100674,6 +100896,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "ad844952-f998-447c-85d9-c230dae373ac",
+          "new": {
+            "file": "ZeroParadox/Information/StartBit.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.eventuallyFalse",
+            "short": "eventuallyFalse"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/StartBit.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.eventuallyFalse",
+            "short": "eventuallyFalse",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 A+B, 2026-11-15): start bit and end bit on N -> Bool; the eventually-false tapes as one set (shifted copies of bottom, silentFrom, the local floors through tapeIso), countable, trials-null for 0 < p, measure one at p = 0 (StartBit.lean).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "ada2ccc2-c5c2-4f48-8009-d86cd1ec2781",
           "new": {
@@ -106250,6 +106509,43 @@
             ]
           },
           "reason": "Land 2026-11-10 cells-joint, local-towers, interleave probes and the new one-way-flow results into ZeroParadox/Valuation (CellsJoint, Interleave, LocalTowers, OneWayFlow).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b60bfc0c-78e0-47f5-a548-fefff5fd7c0e",
+          "new": {
+            "file": "ZeroParadox/Information/StartBit.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.exists_startBit_iff",
+            "short": "exists_startBit_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/StartBit.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.exists_startBit_iff",
+            "short": "exists_startBit_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 A+B, 2026-11-15): start bit and end bit on N -> Bool; the eventually-false tapes as one set (shifted copies of bottom, silentFrom, the local floors through tapeIso), countable, trials-null for 0 < p, measure one at p = 0 (StartBit.lean).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -111890,6 +112186,43 @@
             ]
           },
           "reason": "Typicality bridge (2026-11-01): CrossingTrials § IV-VII — almost surely gives some run; zero-block tests; typicality as an explicit hypothesis; the slot machine as a die motion.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "bfcdc1b5-bcd0-48dd-9cdf-6bb2e6d67f9a",
+          "new": {
+            "file": "ZeroParadox/Information/StartBit.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.eventuallyFalse_eq_iUnion_shift",
+            "short": "eventuallyFalse_eq_iUnion_shift"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/StartBit.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.eventuallyFalse_eq_iUnion_shift",
+            "short": "eventuallyFalse_eq_iUnion_shift",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 A+B, 2026-11-15): start bit and end bit on N -> Bool; the eventually-false tapes as one set (shifted copies of bottom, silentFrom, the local floors through tapeIso), countable, trials-null for 0 < p, measure one at p = 0 (StartBit.lean).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -121852,6 +122185,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d07af52f-ff5c-408b-a43f-12b455a33188",
+          "new": {
+            "file": "ZeroParadox/Information/StartBit.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.eventuallyFalse_eq_range_localFloor",
+            "short": "eventuallyFalse_eq_range_localFloor"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/StartBit.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.eventuallyFalse_eq_range_localFloor",
+            "short": "eventuallyFalse_eq_range_localFloor",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 A+B, 2026-11-15): start bit and end bit on N -> Bool; the eventually-false tapes as one set (shifted copies of bottom, silentFrom, the local floors through tapeIso), countable, trials-null for 0 < p, measure one at p = 0 (StartBit.lean).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -141919,6 +142289,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "f1dfe488-1ec4-4d36-b189-0dbbf69f38f3",
+          "new": {
+            "file": "ZeroParadox/Information/StartBit.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.eventuallyFalse_countable",
+            "short": "eventuallyFalse_countable"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/StartBit.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.eventuallyFalse_countable",
+            "short": "eventuallyFalse_countable",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 A+B, 2026-11-15): start bit and end bit on N -> Bool; the eventually-false tapes as one set (shifted copies of bottom, silentFrom, the local floors through tapeIso), countable, trials-null for 0 < p, measure one at p = 0 (StartBit.lean).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "f1e0035b-1065-47c3-93e0-4166f484a775",
           "new": {
             "file": "ZeroParadox/Algebra/WheelFrac.lean",
@@ -147363,6 +147770,43 @@
             "role": []
           },
           "reason": "die-tagged-1029: the adjoined point tagged (Option ℕ) or a limit (Escardó's ℕ∞, NInf): uniform Bool-step trichotomy and selector free on NInf, LPO on Option ℕ; WLPO at ∞; the chain Option ℕ → NInf → Part ℕ and NInf ≃ Computation Unit (Die § XXIII); Tim ruling 2026-10-29",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "fad3ac64-6155-428f-a1ad-ab117ba3710e",
+          "new": {
+            "file": "ZeroParadox/Information/StartBit.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.silentFrom_eq_shift_preimage",
+            "short": "silentFrom_eq_shift_preimage"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/StartBit.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.silentFrom_eq_shift_preimage",
+            "short": "silentFrom_eq_shift_preimage",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 281 (batch Q6 A+B, 2026-11-15): start bit and end bit on N -> Bool; the eventually-false tapes as one set (shifted copies of bottom, silentFrom, the local floors through tapeIso), countable, trials-null for 0 < p, measure one at p = 0 (StartBit.lean).",
           "verify": {
             "axioms": null,
             "sorry_free": true
