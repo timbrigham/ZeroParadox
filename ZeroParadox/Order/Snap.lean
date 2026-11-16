@@ -295,9 +295,9 @@ example {L : Type*} [ZPSemilattice L] (f : L → L) (hf : ∀ x, le (f x) x) : f
 
 DA-2: A state S satisfies the structural ⊥ role for instantiation I_{n+1} iff
 ∀ x, join S x = x — i.e., S is an additive identity under join (A4 characterisation).
-By da2_bottom_characterization, this uniquely identifies S as ⊥ within that semilattice.
-The Zero Paradox iterated: the terminal state of Iₙ is informationally rich (≠ ⊥ₙ)
-yet algebraically acts as ⊥_{n+1} for the successor instantiation. -/
+By da2_bottom_characterization, this uniquely identifies S as ⊥ within ONE semilattice.
+`Reading:` the terminal state of Iₙ (≠ ⊥ₙ) plays ⊥_{n+1} for a distinct successor instantiation;
+a commitment, not a theorem: no declaration builds that second semilattice (`c_da2_novelty`). -/
 
 /-- DA-2 (algebraic): The ⊥ role is uniquely characterised by A4.
     S satisfies "∀ x, join S x = x" if and only if S = bot. -/

@@ -160,7 +160,7 @@ example : (2 : Ordinal) < epsilonZero ∧ ∀ n : ℕ, fundamentalSeq n ≠ 2 :=
 
 The bridge: NONote → ℤ_[2] maps each CNF term to a 2-adic integer, where `NONote` is
 the type of ordinals below ε₀ in Cantor normal form (Mathlib.SetTheory.Ordinal.Notation).
-The tower stages' images converge to 0 = ⊥ in ℤ_[2] (`tower_converges_to_zero`).
+The tower stages' images converge to ℤ_[2]'s 0 (`tower_converges_to_zero`), norm-least and valuation-greatest (`z2_two_views`).
 ε₀ itself has no image (`NONote` is the ordinals below it); how the ordinal ascent
 and this ℤ₂ descent correspond is `ZeroParadox/Ordinal/Epsilon0CannotBe.lean` § V.
 
@@ -261,7 +261,7 @@ private theorem cnfToZp2_tower_explicit (n : ℕ) :
   rw [hunfold, cnfToZp2_oadd (towerNONote n) 1 0 ONote.NFBelow.zero, cnfToZp2_tower_valuation,
     cnfToZp2_zero, hcast, mul_one, add_zero]
 
-/-- The tower images converge to 0 = ⊥ in ℤ_[2].
+/-- The tower images converge to 0 in ℤ_[2], in the 2-adic norm.
     Each stage's image cnfToZp2(towerNONote (n+1)) = 2^(n+1) in ℤ_[2], so its 2-adic norm is
     ‖2‖^(n+1) = (1/2)^(n+1) → 0. -/
 theorem tower_converges_to_zero :
@@ -512,7 +512,7 @@ theorem epsilon_zero_snap_canonical :
 /-- Four independent facts about the same tower sequence, stated together:
     (i)   Every tower stage is strictly below ε₀ in ordinals (epsilonZero_tower_lt)
     (ii)  The canonical map sends every tower stage to c₀
-    (iii) The 2-adic images of the tower stages converge to 0 = ⊥ (tower_converges_to_zero)
+    (iii) The 2-adic images of the tower stages converge to ℤ_[2]'s 0 (tower_converges_to_zero)
     (iv)  The canonical map sends ε₀ to c₁
     All four are provable from already-established theorems. The same indexing sequence
     (n : ℕ) drives the ordinal tower (fundamentalSeq n < ε₀ for all n) and the 2-adic
@@ -556,7 +556,7 @@ open ZeroParadox
 #print axioms fundamentalSeq_zp2_converges
 -- § II: proved (wrapper around roger_fixed_point_exists)
 #print axioms roger_fixed_point_stability
--- § IV: tower_converges_to_zero (proved — tower images converge to ⊥ in ℤ_[2])
+-- § IV: tower_converges_to_zero (proved — tower images converge to 0 in ℤ_[2])
 #print axioms tower_converges_to_zero
 -- § V: proved
 #print axioms zpe_snap_ordinal_correspondence

@@ -83,8 +83,8 @@ theorem lawvere_trigger_refuted {A : Type*} (e : A → (A → Prop)) :
 /-- **The branch discriminator (the unification).** A self-reference relation cannot be both
 well-founded (the **μ** branch — the wall: Foundation, `wf_no_selfloop`) and carry a diagonal
 fixed point / self-loop (the **ν** branch — the self-referential object: the Quine atom, `selfApp`'s
-`fixed_bot`). `Reading:` the diagonal fixed point is exactly what discriminates the two branches: it
-lands on ν and is refuted on μ. Together with `selfApp_pinnable` (ν: the fixed point exists, uniquely)
+`fixed_bot`). `Reading:` one way: a diagonal fixed point, where present, puts the relation on ν and off
+μ; the statement does not say every non-well-founded relation has one. Together with `selfApp_pinnable` (ν: the fixed point exists, uniquely)
 and `lawvere_trigger_refuted` (regime-independent: the engine's trigger at `B = Prop` is Cantor-blocked
 for every type), this is the μ/ν picture
 in Lawvere terms, discriminated by the self-loop; the ν fixed point is supplied by the class fields
