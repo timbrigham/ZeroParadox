@@ -39,7 +39,7 @@ is settled chart by chart (`selfApp_quine_role_iff`, `quineAtomHost_quine_role_i
 ## Symbol map (component → existing lemma)
 - existence fork        → `ZeroParadox.categorical_fork_strict`  (`idPF_Coalgebra`, `Fix`, `Cofix` from ZP-P)
 - self-members = {⊥}    → `ZeroParadox.selfMem_eq_singleton_bot`  (`selfMemDerived`, `bot`)
-- no literal (Cantor)   → `ZeroParadox.nontrivial_lattice_no_witness` (lattice face, `HasLawvereWitness`); `ZeroParadox.cantor_via_engine` (no surjection `A → (A → Prop)`, which excludes `T ≃ Set T`; `ZeroParadox/Settheory/Wall.lean`, not imported)
+- no literal (Cantor)   → `ZeroParadox.nontrivial_lattice_no_witness` (lattice face, `HasLawvereWitness`); `ZeroParadox.cantor_via_engine` (no surjection `A → (A → Prop)`, which excludes `T ≃ Set T`; `ZeroParadox/Settheory/Wall.lean`, imported via `ZeroParadox/Settheory/QuineHost.lean`)
 
 STATUS: PROVED, sorry-free. Pure assembly of ZP-P coalgebra (`categorical_fork_strict`) +
 ZeroParadox/Computability/SelfApp.lean (`selfMem_eq_singleton_bot`) + ZeroParadox/Category/Lawvere.lean (`nontrivial_lattice_no_witness`); Cantor is cited from ZeroParadox/Settheory/Wall.lean (`cantor_via_engine`).

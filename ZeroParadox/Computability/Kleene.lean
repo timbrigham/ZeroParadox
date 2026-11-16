@@ -416,8 +416,8 @@ theorem quine_goedel_injective (c₁ c₂ : Code)
     Proof: reduce from halting_problem 0. The function φ(c) = Code.comp c (Code.const 0)
     satisfies eval (φ c) k = eval c 0 for all k, so if the self-halting predicate were
     computable, composing with φ would decide "c halts on 0" — contradicting halting_problem 0.
-    For a quine c, quine_period_is_goedel ties halting at encode(c) to halting at any
-    encode(c) + n, so undecidability reaches directly into the period structure. -/
+    For a quine c, quine_period_is_goedel ties halting at any n to halting at encode(c) + n;
+    at n = 0, halting on its own Gödel number is halting on 0. -/
 theorem self_halting_undecidable :
     ¬ComputablePred (fun c : Code => (eval c (Encodable.encode c)).Dom) := by
   intro h
