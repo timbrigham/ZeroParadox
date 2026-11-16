@@ -1,5 +1,5 @@
 """
-Build ZP-H Illustrated Companion (v1.31)
+Build ZP-H Illustrated Companion (v1.32)
 Standalone companion for ZP-H: Categorical Bridge only.
 ZP-G has its own companion (build_zpg_companion.py).
 
@@ -129,7 +129,7 @@ def snap_convergence_diagram():
 
     return d
 
-VERSION = '1.31'
+VERSION = '1.32'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -195,8 +195,9 @@ def build():
     E.append(cbody(
         'The result: in Lean, FB, FC and FD send 0 to an initial object of ℕ-indexed stand-ins (for FB, '
         'Q₂BallDepth; in TopCat its floor is terminal, not initial); FA has no functor term, and its '
-        'witness is ℕ with 0 initial. Each framework has its own proved fact, and only the lattice one '
-        'mentions the snap. That the four are windows on one thing is the framework\'s reading; no '
+        'witness is ℕ with 0 initial. Each framework has its own proved fact, none derived from another '
+        'or from a functor. The corpus labels each a face of the snap, and that labelling is the '
+        'framework\'s reading, as is the further reading that the four are windows on one thing; no '
         'theorem relates them. Where they look alike, the likeness reflects a shared foundation (A1-A4, '
         'AX-B1 and the modelling commitment CC-1, S₀ = ⊥, restated in ZP-J, not forced), not independent '
         'confirmation.'))
@@ -391,8 +392,9 @@ def build():
         'together with DA-1 (closed given DP-2). The occurrence commitment is stated in two charts, execution and slot, in the header of ZeroParadox/Order/Snap.lean (indexed in ZeroParadox/Order/SnapCannotBe.lean &#167; II and CLAIMS.md), the slot chart as the hypothesis hw of t_snap_of_fires_once, that the tape fires at some stage, beside the theorem trials_fires_once that, for independent stages each firing with probability p, 0 &lt; p &#8804; 1, firing at some stage has probability one, which names no tape (ZeroParadox/Information/CrossingTrials.lean &#167; VIII).'))
     E.append(cbody(
         'T-H3 (th3_snap_all_functors) conjoins four separately proved domain facts, listed in the '
-        'T-H3 box below; only the lattice one mentions the snap, its type names no functor, and it '
-        'relates no fact to another. The bullets here are not its conjuncts: they are how the framework '
+        'T-H3 box below; none is derived from another or from a functor, its type names no functor, and it '
+        'relates no fact to another. The corpus labels each a face of the snap, and that labelling is the '
+        'framework\'s reading. The bullets here are not its conjuncts: they are how the framework '
         'reads the Snap in each setting.'))
     E.append(cbody(
         '• In lattice algebra: the first join — ⊥ ∨ ε₀ — producing the first non-bottom state.'
@@ -408,7 +410,8 @@ def build():
     E.append(snap_convergence_diagram())
     E.append(ccaption(
         'The framework\'s reading, drawn as one line per framework: each of the four has a transition '
-        'of the Binary Snap\'s shape. Only the lattice fact mentions the snap (T-SNAP), and no theorem '
+        'of the Binary Snap\'s shape. The corpus labels each of the four proved facts a face of the snap, '
+        'and that labelling is the framework\'s reading; no fact is derived from another, and no theorem '
         'relates the four lines. The vertical line marks the moment of the Snap. '
         'Left: ⊥. Right: ε₀.'))
     E.append(sp(6))
@@ -426,7 +429,8 @@ def build():
         'T-H3 conjoins four domain facts, each proved in its own framework: the lattice join '
         'c₀ ∨ c₁ = c₁, no continuous path in ℚ₂ back to 0, a JSD of exactly 1 bit, and '
         'orthogonal basis vectors. No functor appears in its type and no fact is used to prove '
-        'another, and only the lattice join mentions the snap. Read side by side, the framework takes them '
+        'another. The corpus labels each a face of the snap, and that labelling is the framework\'s '
+        'reading. Read side by side, the framework takes them '
         'as coherence across shared structural '
         'commitments (A1-A4, AX-B1, CC-1), not independent replication. '
         'T-SNAP is a derived theorem inherited here from ZP-E. '
