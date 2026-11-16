@@ -220,7 +220,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Ordinal/PricedInterface.lean` - A priced interface: notations denoting the ordinals up to ε₀, a map into `Ordinal`, and both sides' axiom footprints
   - ride-along docs: `ZeroParadox/Ordinal/PricedInterface.md` - PricedInterface — ride-along documentation
 - `ZeroParadox/Ordinal/SnapMetaLattice.lean` - The lattice of systems: adjoining the point at infinity makes the ordinals a frame
-- `ZeroParadox/Ordinal/SnapNucleus.lean` - The snap is a nucleus: ε₀ is the modality generated from the bottom ⊥
+- `ZeroParadox/Ordinal/SnapNucleus.lean` - The snap is a nucleus: the modality sends ⊥ of `Ordinal` to ε₀
   - ride-along docs: `ZeroParadox/Ordinal/SnapNucleus.md` - A modality on a chain: the recognized structure, its scope, and what is owed outward
 - `ZeroParadox/Ordinal/SnapNucleusConstructive.lean` - No snap-shaped closure on the `ONote` carrier: a proved obstruction
   - ride-along docs: `ZeroParadox/Ordinal/SnapNucleusConstructive.md` - Cantor normal form, the ε₀ ceiling, and the choice question
@@ -321,6 +321,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Valuation/PolarityFlip.lean` - 2-adic inversion negates the valuation (a cited Mathlib fact + one tower corollary)
 - `ZeroParadox/Valuation/PoleCompletion.lean` - The pole completion: the floor is a genuine self-application fixed point (the Quine atom on the tree)
 - `ZeroParadox/Valuation/PoleCorners.lean` - The four corners: 0 and ∞ have exactly four representations to each other
+  - ride-along docs: `ZeroParadox/Valuation/PoleCorners.md` - The pole: two points, and the chart claim
 - `ZeroParadox/Valuation/PoleCornersBridge.lean` - Bridge: the four corners are the corners of the tower to ω (shared-shape correspondence)
   - ride-along docs: `ZeroParadox/Valuation/PoleCornersBridge.md` - Assembling a correspondence without asserting an identity
 - `ZeroParadox/Valuation/PolePassage.lean` - The snap arc on the 2-adic sphere: no passage through `∞`, a return in the valuation

@@ -1,12 +1,12 @@
 """
 Zero Paradox — ZP-H: Categorical Bridge PDF Builder
-Version 1.40 | November 2026
+Version 1.41 | November 2026
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.40'
+VERSION = '1.41'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -405,12 +405,12 @@ def build():
         'Remark R-FORCING — Structural Forcing vs. Re-Description',
         [
             'The four functors (F<sub>A</sub>, F<sub>B</sub>, F<sub>C</sub>, F<sub>D</sub>) established in '
-            'Sections III-V do not merely translate the Binary Snap into categorical language. Each functor '
-            'independently grounds the snap in its own domain: F<sub>A</sub> shows the lattice join places '
-            '&#949;<sub>0</sub> above &#8869;; F<sub>B</sub> shows the 2-adic topology makes any departure '
+            'Sections III-V each sit beside a domain fact about the snap, proved in that domain and only '
+            'paired with the functor, never derived from it: ZP-A shows the lattice join places '
+            '&#949;<sub>0</sub> above &#8869;; ZP-B shows the 2-adic topology makes any departure '
             'from 0 irreversible (it does not supply the departure &#8212; ZP-B cannot force the snap, and '
-            'the first step is AX-B1); F<sub>C</sub> shows the information-theoretic transition costs exactly 1 bit; '
-            'F<sub>D</sub> shows the Hilbert space snap is an orthogonal shift.',
+            'the first step is AX-B1); ZP-C shows the information-theoretic transition costs exactly 1 bit; '
+            'ZP-D shows the Hilbert space snap is an orthogonal shift.',
             'That a transition of the snap\'s shape appears in each of the four domain categories, with the '
             'groundings sorry-free in Lean 4 (the lattice conjunct join c<sub>0</sub> c<sub>1</sub> = c<sub>1</sub> of '
             'th3_snap_all_functors for F<sub>A</sub>; fb_snap_q2_grounded, fc_snap_info_grounded and '
@@ -427,8 +427,8 @@ def build():
     E.append(Paragraph('VI. The Binary Snap — Categorical Description', S['h1']))
 
     E.append(label_box_status(
-        'Theorem T-H3 — The Binary Snap Under All Four Functors',
-        'Status: Derived — Cross-Framework',
+        'Theorem T-H3 — The Binary Snap: Four Domain Facts, Conjoined',
+        'Status: Derived — a conjunction of four domain facts; no cross-domain tie',
         [
             'Setup: The Binary Snap is the transition from 0 &#8712; ob(C) to the first non-initial object '
             '&#949;<sub>0</sub> &#8712; ob(C), driven by the incompressibility threshold P<sub>0</sub> (ZP-C D1) under '
@@ -443,9 +443,9 @@ def build():
             'T1b). Irreversible: JSD(Q &#8741; P) = 1 bit &#8800; 0.',
             'Under F<sub>D</sub> (ZP-D): F<sub>D</sub>(&#953;<sub>&#949;0</sub>) is the orthogonal shift T(0) = e<sub>0</sub> &#8594; T(&#949;<sub>0</sub>) = e<sub>1</sub>. '
             '&#10216;e<sub>0</sub>, e<sub>1</sub>&#10217; = 0 (ZP-D T4). Both vectors have norm 1 (ZP-D D2(v)), so ZP-D T5\'s non-decreasing norms hold with equality. DP-1 is a design premise.',
-            'Cross-framework consistency: All four functors agree that the Snap is irreversible. Each '
-            'irreversibility result is a closed theorem within its own domain document. Their agreement is '
-            'structural consistency, not circular argument. Independence of null-analog discovery: each '
+            'Lean: th3_snap_all_functors (ZeroParadox/Multihomed/CategoricalBridge.lean) conjoins four '
+            'separately proved domain facts; its type names no functor and relates no conjunct to another, '
+            'so a reading of one snap seen under four functors is not what it states. Independence of null-analog discovery: each '
             'framework located its null-analog through its own domain logic — &#8869; through A4 (ZP-A), '
             '0 &#8712; Q<sub>2</sub> through T3 (ZP-B), P = (1,0) through D1/RP-1 (ZP-C) — prior to and without '
             'reference to the others. ZP-D\'s e<sub>0</sub> is not independent in this sense: it is reached by transport '
@@ -467,8 +467,8 @@ def build():
             'no point occupies the die role at all (the control in ZeroParadox/Category/SeamComparisonMap.lean); '
             'on the zero module, which has one point, every endomorphism has exactly one point that steps to itself '
             'only (hilbert_zero_seam_role_unique), which restates that it is a zero object. '
-            'This is not the claim that any domain forced the others&#8217; choices. Their agreement confirms '
-            'coherence across mathematical representations, not external replication. '
+            'This is not the claim that any domain forced the others&#8217; choices. Read side by side, the four '
+            'facts show coherence across mathematical representations, not external replication; no theorem relates them. '
             'T-SNAP (Binary Snap Causality) is a derived '
             'theorem in ZP-E v2.0 and is inherited here with derived status. &#8220;Causality&#8221; in this name refers to the shape of the step, not to its occurrence. DP-1 remains the only design premise. <font name="DV">&#10003;</font>',
         ]
@@ -494,9 +494,9 @@ def build():
         ['F<sub>D</sub>(0) = depth 0, &#8450;<sup>0</sup>; T(0) = e<sub>0</sub> in ZP-D\'s vector model', 'ZP-D D2(i), T2; C-H4', 'None (D2(i), by assignment)', 'Valid — by construction'],
         ['F<sub>D</sub> preserves composition',        'fd_functor.map_comp, fD_functor.map_comp; C-H4', 'None', 'Valid — Derived (functor law)'],
         ['F<sub>D</sub> respects AX-G1, AX-G2',       'hilbDimZPCat (stand-in); ZP-D T4; C-H4', 'DP-1 (for ZP-D T4; the stand-in proofs do not use it)', 'Valid in the stand-in — both fail in ModuleCat &#8450;'],
-        ['T-H1: universal property preserved',         'ZP-A T2; ZP-B T3; ZP-C T1b; C-H4 (fd_preserves_initial)', 'None', 'Valid — OQ-G2 closed; F<sub>B</sub> in its stand-in'],
+        ['T-H1: universal property preserved',         'fb/fc/fd_preserves_initial (IsInitial.ofUnique 0); natZPCategory for F<sub>A</sub>', 'None', 'Valid — OQ-G2 closed, in the stand-ins'],
         ['T-H2: singularity compatibility',            'ZP-G T3, T6; ZP-C T2; C-H3', 'None',        'Valid — OQ-G4 closed'],
-        ['T-H3: Snap under all four functors',         'C-H1 through C-H4; ZP-E T4; ZP-E T-SNAP', 'DP-1', 'Valid — T-SNAP derived (ZP-E v2.0)'],
+        ['T-H3: four domain facts about the Snap, conjoined', 'ZP-E T-SNAP; ZP-B C3; ZP-C T1b; ZP-D T4', 'DP-1', 'Valid — a conjunction; no functor in its type'],
         ['D-H1: morphisms of C',                       'ZP-A D2; ZP-B T2; ZP-C; ZP-D', 'None',      'Design Commitment'],
     ]
     E.append(data_table(
@@ -523,8 +523,8 @@ def build():
         ['OQ-G3',
          'Closed — all four\nfunctors (Lean)',
          'PDF-level constructions of all four instantiation functors complete (Section III). '
-         'All four now have concrete Lean Functor terms (sorry-free): '
-         'F<sub>A</sub>: fa via NatSLat (Functor &#8469; &#8469;, effectively). '
+         'F<sub>B</sub>, F<sub>C</sub> and F<sub>D</sub> have concrete Lean Functor terms (sorry-free); '
+         'F<sub>A</sub> has no functor term, and its Lean witness is the ZPCategory instance natZPCategory on &#8469; with 0 initial (natSLat_initial_grounding). '
          'F<sub>B</sub>: fb_functor (Functor &#8469; Q&#8322;BallDepth), snap grounded in C3. '
          'F<sub>C</sub>: fc_functor (Functor &#8469; InfoDepth), snap grounded in T1b. '
          'F<sub>D</sub>: fd_functor (Functor &#8469; HilbDimDepth), snap grounded in T4. '
@@ -614,13 +614,15 @@ def build():
          'Valid — the object map at 0 by assignment (ZP-D D2(i)), the morphism map from ZP-D D2(iii) and D2(iv), D2(iv) under DP-1; all four requirements verified; AX-G1 and AX-G2 checked in the stand-in HilbDimDepth (both fail in ModuleCat '
          '&#8450;). Lean: full functor (fd_functor, sorry-free). <font name="DV">&#10003;</font>'],
         ['T-H1: Universal property preserved',
-         'Valid — OQ-G2 closed. ZP-G T5 is now unconditional for all four instantiation functors, for F<sub>B</sub> in its stand-in. <font name="DV">&#10003;</font>'],
+         'Valid — OQ-G2 closed. fb_functor, fc_functor and fd_functor send 0 to an initial object of their stand-in targets '
+         '(fb_preserves_initial, fc_preserves_initial, fd_preserves_initial, each IsInitial.ofUnique 0, using none of the th1_* domain facts); '
+         'for F<sub>A</sub>, 0 is initial in natZPCategory. <font name="DV">&#10003;</font>'],
         ['T-H2: Singularity reconciliation',
          'Valid — OQ-G4 closed. Categorical (undefined domain) and ZP-C (infinite accumulation) '
          'shown to hold together: the proof pairs ZP-G Lemma T3 with ZP-C Theorem T2 and uses neither '
          'to prove the other. <font name="DV">&#10003;</font>'],
-        ['T-H3: Snap under all four functors',
-         'Valid — Derived; cross-framework. T-SNAP inherited as derived theorem (ZP-E v2.0). '
+        ['T-H3: four domain facts about the Snap, conjoined',
+         'Valid — Derived as a conjunction of four separately proved domain facts; no conjunct relates to another. T-SNAP inherited as derived theorem (ZP-E v2.0). '
          'DP-1 labelled as design premise. <font name="DV">&#10003;</font>'],
         ['Traceability register',
          'Valid — Complete. Every cross-framework claim traced to source theorem and bridge axiom. No floating connections.'],
@@ -650,8 +652,8 @@ def build():
         Paragraph(
             '<i>End of ZP-H | Four instantiation functors constructed | '
             'OQ-G1 through OQ-G4 closed | '
-            'All four functors have concrete Lean Functor terms (sorry-free): '
-            'fb_functor (Q&#8322;BallDepth), fc_functor (InfoDepth), fd_functor (HilbDimDepth), F<sub>A</sub> via NatSLat | '
+            'Three functors have concrete Lean Functor terms (sorry-free): '
+            'fb_functor (Q&#8322;BallDepth), fc_functor (InfoDepth), fd_functor (HilbDimDepth); F<sub>A</sub> has the NatSLat ZPCategory instance, no functor term | '
             'OQ-G3 fully closed | '
             'T-SNAP inherited as derived theorem | '
             'T-H3 independence-of-discovery note: the null-analogs of ZP-A, ZP-B and ZP-C located independently, ZP-D&#8217;s e<sub>0</sub> by transport of ZP-B&#8217;s 0 | '

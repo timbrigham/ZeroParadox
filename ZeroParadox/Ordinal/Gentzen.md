@@ -26,8 +26,8 @@ ZPL has four components:
    it is a fixed point of `α ↦ ω^α`; it is the first such fixed point above 0. Fully in Lean
    scope via Mathlib ordinals.
 4. **Cantor Normal Form Bridge** — `cnfToZp2` maps ordinals below ε₀ (`NONote`) into `ℤ₂` by
-   recursion on their Cantor normal form; as the tower stages approach ε₀ their images converge to `0 = ⊥` in
-   `ℤ₂`; ε₀ itself has no image, and the two limits correspond as in
+   recursion on their Cantor normal form; as the tower stages approach ε₀ their images converge to `ℤ₂`'s 0,
+   norm-least and valuation-greatest (`z2_two_views`); ε₀ itself has no image, and the two limits correspond as in
    `ZeroParadox/Ordinal/Epsilon0CannotBe.lean` § V. For a map φ : Ordinal → MachinePhase,
    the tower forces the floor of where the value can change: nothing fires below ε₀
    (`snap_threshold_is_epsilon_zero`), which is not occurrence. That φ fires there is
@@ -91,7 +91,7 @@ This recursion ensures that the images of the tower stages get valuation = stage
   cnfToZp2(ω^[2] 0) = 2^2 = 4       (valuation 2)
   cnfToZp2(ω^[n] 0) = 2^n           (valuation n; n ≥ 1)
 
-As n → ∞, valuation → +∞, so the sequence converges to 0 = ⊥ in ℤ_[2].
+As n → ∞, valuation → +∞, so the sequence converges to ℤ_[2]'s 0, norm-least and valuation-greatest (`z2_two_views`).
 
 The valuation and convergence results in this section are fully in Lean scope:
 - `cnfToZp2` is defined by structural recursion on the underlying ONote
@@ -117,8 +117,8 @@ What this does NOT claim:
 What is proved in `ZeroParadox/Ordinal/Gentzen.lean` (§ III + § IV + § V):
   - Ordinal: ε₀ = sup{(ω^·)^[n] 0 | n : ℕ}, every finite stage strictly below ε₀
   - ZPB: cnfToZp2(towerNONote n).valuation = n; for n ≥ 1, cnfToZp2(towerNONote n) = 2^n
-    in ℤ_[2]; norm = ‖2‖^n → 0, so the tower images converge to 0 = ⊥ in ℤ_[2]
-    (tower_converges_to_zero)
+    in ℤ_[2]; norm = ‖2‖^n → 0, so the tower images converge to ℤ_[2]'s 0
+    (tower_converges_to_zero), norm-least and valuation-greatest (z2_two_views)
   - Cofinality: the fundamental sequence is cofinal in ε₀ — for any α < ε₀,
     some tower stage exceeds α (fundamentalSeq_cofinal)
   - Snap lower bound: any order-non-decreasing φ that maps all tower stages to c₀

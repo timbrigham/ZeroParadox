@@ -38,7 +38,7 @@ Lint policy: `weak.linter.mathlibStandardSet` is on, so the build flags genuine 
 | File | Key result | Depends on |
 |------|------------|------------|
 | `Category.lean` | `ZPCategory` and `ZPSurprisal` typeclasses; T6 (informational singularity); T7 (Categorical Zero Paradox); `ForkCat` concrete instance | Lattice |
-| `CategoricalBridge.lean` | Four functors F_A–F_D; T-H2 (singularity compatibility); T-H3 (Binary Snap under all four functors); `nnreal_initial_grounding` shared witness | Category, Surprisal, StateSpace |
+| `CategoricalBridge.lean` | Functors F_B–F_D (F_A via the NatSLat instance); T-H2 (singularity compatibility); T-H3 (four domain facts about the snap, conjoined); `nnreal_initial_grounding` standalone ℝ≥0 witness | Category, Surprisal, StateSpace |
 
 ## Axiom Profile
 

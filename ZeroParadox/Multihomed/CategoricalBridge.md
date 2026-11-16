@@ -31,5 +31,5 @@ Key results:
   accumulation) hold together: `th2_singularity_compatibility` pairs ZP-G Lemma T3
   (`t3_unreachability`) with ZP-C Theorem T2 (`t2_diverges`) and uses neither to prove the other (OQ-G4 closed in
   that sense).
-- T-H3: Binary Snap described consistently under all four functors. Fully proved
-  by assembling independently proved domain theorems.
+- T-H3: `th3_snap_all_functors` conjoins four separately proved domain facts about the snap;
+  its type names no functor and relates no conjunct to another.
