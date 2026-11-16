@@ -1,5 +1,5 @@
 """
-Build ZP-H Illustrated Companion (v1.30)
+Build ZP-H Illustrated Companion (v1.31)
 Standalone companion for ZP-H: Categorical Bridge only.
 ZP-G has its own companion (build_zpg_companion.py).
 
@@ -81,7 +81,7 @@ def four_functor_diagram():
                          fontSize=8.5, fontName='DV-B', fillColor=col))
 
     d.add(String(dw/2 - 200, 16,
-                 'Four functors carry the abstract structure of C into four concrete mathematical frameworks',
+                 'Four maps from C into four frameworks: FB, FC, FD have Lean functor terms; FA has none',
                  fontSize=8, fontName='DV-I', fillColor=colors.HexColor('#555555')))
     return d
 
@@ -129,7 +129,7 @@ def snap_convergence_diagram():
 
     return d
 
-VERSION = '1.30'
+VERSION = '1.31'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -168,7 +168,7 @@ def build():
     E.append(sp(6))
 
     E += [
-        Paragraph('Four maps, one structure', CS['title']),
+        Paragraph('Four maps, four facts', CS['title']),
         Paragraph('Functor Coherence', CS['subtitle']),
         Paragraph('ZP Companion | ' + version_line(FIRST_RELEASED, VERSION), CS['meta']),
         Paragraph(
@@ -193,19 +193,19 @@ def build():
         'Paradox: the lattice algebra of ZP-A, the p-adic topology of ZP-B, the information '
         'theory of ZP-C, and the Hilbert space of ZP-D.'))
     E.append(cbody(
-        'The result: in each framework the image of 0 is an initial object, and each framework '
-        'carries its own proved fact about the snap. That the four are windows on one thing is the '
-        'framework\'s reading; no theorem relates them. '
-        'Their agreement is coherence: all four frameworks are built on the same structural '
-        'axioms (A1-A4, AX-B1) and the modelling commitment CC-1 (S₀ = ⊥, restated in ZP-J, not forced), '
-        'so the Binary Snap appearing in all of them '
-        'reflects a shared foundation, not independent confirmation from unrelated starting points.'))
+        'The result: in Lean, FB, FC and FD send 0 to an initial object of ℕ-indexed stand-ins (for FB, '
+        'Q₂BallDepth; in TopCat its floor is terminal, not initial); FA has no functor term, and its '
+        'witness is ℕ with 0 initial. Each framework has its own proved fact, and only the lattice one '
+        'mentions the snap. That the four are windows on one thing is the framework\'s reading; no '
+        'theorem relates them. Where they look alike, the likeness reflects a shared foundation (A1-A4, '
+        'AX-B1 and the modelling commitment CC-1, S₀ = ⊥, restated in ZP-J, not forced), not independent '
+        'confirmation.'))
     E.append(four_functor_diagram())
     E.append(ccaption(
-        'ZP-H constructs four functors from the abstract category C (center) into the four '
-        'domain frameworks. Each functor F carries objects and morphisms faithfully, '
-        'preserving the forward-only structure and the initial object (FB in its stand-in; '
-        'see T-H1).'))
+        'ZP-H constructs four maps on paper from the abstract category C (center) into the four '
+        'domain frameworks. In Lean, three are functors from ℕ into ℕ-indexed stand-ins (fb_functor, '
+        'fc_functor, fd_functor), each sending 0 to an initial object there; FA has no functor term, '
+        'and its witness is natSLat_initial_grounding (see T-H1).'))
     E.append(sp(6))
 
     # ── The structural floor ───────────────────────────────────────────────────
@@ -259,7 +259,7 @@ def build():
         'at any finite step (padic_orbit_never_reaches_zero). That ⊥ has nothing below it holds in '
         'every setting by A1–A4 (ZP-A T1, T2); the four settings also share AX-B1 and the modelling '
         'commitment CC-1 (S₀ = ⊥, restated in ZP-J, not forced). '
-        'ZP-H states these four reasons side by side; no theorem relates one to another.'))
+        'ZP-H states these four reasons side by side and proves no theorem relating one to another.'))
     E.append(sp(6))
 
     # ── Morphisms of C ─────────────────────────────────────────────────────────
@@ -285,14 +285,17 @@ def build():
     # ── The four functors ──────────────────────────────────────────────────────
     E.append(Paragraph('The Four Functors', CS['h1']))
     E.append(cbody(
-        'Each functor takes the abstract objects and morphisms of C and maps them into '
-        'one of the four frameworks, verifying that the mapping preserves composition, '
-        'identity, and the privileged role of the initial object.'))
+        'Each construction takes the abstract objects and morphisms of C and maps them into '
+        'one of the four frameworks, checking on paper that the mapping preserves composition, '
+        'identity, and the privileged role of the initial object (for FB, in its stand-in). '
+        'The Lean status of each is stated at the end of its paragraph.'))
     E.append(cbody(
         '<b>FA (Lattice):</b> The initial object 0 maps to ⊥ (bottom of the lattice). '
         'Each morphism f: A → B maps to the join operation ⊥ ∨ S = S that witnesses the '
         'transition. Composition corresponds to iterated joins. The forward-only structure '
-        'of C maps to the monotone structure of ZP-A. FA is fully verified in Lean 4, sorry-free.'))
+        'of C maps to the monotone structure of ZP-A. In Lean, FA has no functor term. Its witness is the '
+        'ZPCategory instance on ℕ, where 0 is initial in the order category of ≤ (natSLat_initial_grounding), '
+        'sorry-free.'))
     E.append(cbody(
         '<b>FB (p-Adic Topology):</b> The initial object 0 maps to the element 0 ∈ ℚ₂. '
         'Each morphism maps to a discrete jump across a clopen boundary — formalized as '
@@ -312,7 +315,9 @@ def build():
         'lands in InfoDepth, an ℕ-indexed stand-in, and fC_functor lands in KleisliCat PMF, '
         'the Kleisli category of the probability monad.'))
     E.append(cbody(
-        '<b>FD (Hilbert Space):</b> The initial object 0 maps to the basis vector e₀. '
+        '<b>FD (Hilbert Space):</b> In Lean the initial object 0 maps to depth 0 of the stand-in and to '
+        'the zero module of ModuleCat ℂ. ZP-D\'s vector model reads the point 0 of ℚ₂ as the basis vector e₀, '
+        'which the zero module does not contain, so the two models differ at 0. '
         'Each morphism maps to an orthogonal extension — a step to a perpendicular basis '
         'vector. The Binary Snap becomes a right-angle turn in state space. The design '
         'commitment DP-1 (orthogonality represents clopen separation) is inherited here. '
@@ -333,12 +338,12 @@ def build():
         'ZP-A\'s semilattice and in the three stand-ins. It fails in ModuleCat ℂ: the zero map '
         'sends every module into the zero module, including modules that are not zero.'))
 
-    E.append(example_box('Real-world analogy — Four instruments, one melody', [
-        'Imagine the same musical phrase played on four different instruments: violin, '
-        'trumpet, piano, and voice. Each sounds different, but any musician can hear that '
-        'they are playing the same structure — the same intervals, the same rhythm. ZP-H '
-        'shows that ZP-A through ZP-D are doing the same thing. They are four instruments '
-        'playing one mathematical structure.',
+    E.append(example_box('Real-world analogy — Four instruments', [
+        'Imagine four instruments, violin, trumpet, piano and voice, each playing a phrase. '
+        'A listener may hear one melody in all four. ZP-H does not show that about ZP-A through '
+        'ZP-D: it states four facts, one from each framework, side by side, and no theorem relates '
+        'one to another. Hearing them as four instruments playing one mathematical structure is the '
+        'framework\'s reading, the listener\'s ear rather than the score.',
     ]))
     E.append(sp(6))
 
@@ -349,7 +354,9 @@ def build():
         'has a unique morphism. '
         'The privileged status of 0 is not an artifact of the abstract category. The FB '
         'stand-in is Q₂BallDepth. In TopCat the FB leg fails: there the floor {0} is a '
-        'one-point space, which is terminal and not initial.'))
+        'one-point space, which is terminal and not initial. In Lean this is checked for FB, FC and FD '
+        'in their ℕ-indexed stand-ins (fb_preserves_initial, fc_preserves_initial, fd_preserves_initial); '
+        'FA has no functor term, and its witness is 0 initial in ℕ\'s order category.'))
     E.append(sp(6))
 
     # ── T-H2: Singularity compatibility ────────────────────────────────────────
@@ -383,40 +390,44 @@ def build():
         'as Theorem T-SNAP, and that the snap occurs is stated separately: it follows from the occurrence commitment '
         'together with DA-1 (closed given DP-2). The occurrence commitment is stated in two charts, execution and slot, in the header of ZeroParadox/Order/Snap.lean (indexed in ZeroParadox/Order/SnapCannotBe.lean &#167; II and CLAIMS.md), the slot chart as the hypothesis hw of t_snap_of_fires_once, that the tape fires at some stage, beside the theorem trials_fires_once that, for independent stages each firing with probability p, 0 &lt; p &#8804; 1, firing at some stage has probability one, which names no tape (ZeroParadox/Information/CrossingTrials.lean &#167; VIII).'))
     E.append(cbody(
-        'T-H3 (th3_snap_all_functors) states four separately proved domain facts about the Snap together; '
-        'its type names no functor and relates no fact to another:'))
+        'T-H3 (th3_snap_all_functors) conjoins four separately proved domain facts, listed in the '
+        'T-H3 box below; only the lattice one mentions the snap, its type names no functor, and it '
+        'relates no fact to another. The bullets here are not its conjuncts: they are how the framework '
+        'reads the Snap in each setting.'))
     E.append(cbody(
         '• In lattice algebra: the first join — ⊥ ∨ ε₀ — producing the first non-bottom state.'
         '<br/>'
         '• In p-adic topology: a discrete jump from 0 to ε₀ across a clopen boundary, '
         'irreversible by the topological structure of ℚ₂.'
         '<br/>'
-        '• In information theory: an informational transition costing exactly 1 bit — the '
-        'minimum possible information cost for a transition from the bottom state in this framework (ZP-C T1b).'
+        '• In information theory: an informational transition costing exactly 1 bit (ZP-C T1b).'
         '<br/>'
         '• In Hilbert space: an orthogonal shift from basis vector e₀ to e₁, with '
         'inner product ⟨e₀, e₁⟩ = 0.'))
 
     E.append(snap_convergence_diagram())
     E.append(ccaption(
-        'All four frameworks describe the Binary Snap (T-SNAP) in their own language. '
-        'The vertical line marks the moment of the Snap. '
+        'The framework\'s reading, drawn as one line per framework: each of the four has a transition '
+        'of the Binary Snap\'s shape. Only the lattice fact mentions the snap (T-SNAP), and no theorem '
+        'relates the four lines. The vertical line marks the moment of the Snap. '
         'Left: ⊥. Right: ε₀.'))
     E.append(sp(6))
 
     E.append(remember_box(
-        'The agreement across four frameworks reflects coherence, not independent confirmation. '
+        'Where the four frameworks look alike, the likeness reflects coherence, not independent confirmation. '
         'All four share the same axioms — A1-A4 (lattice axioms), AX-B1 (binary existence) '
-        '— and the modelling commitment CC-1 (S₀ = ⊥, restated in ZP-J, not forced). The Binary '
-        'Snap appears in all four because those foundations are built into each framework, '
-        'not because four separate arguments from unrelated starting points happened to agree.'))
+        '— and the modelling commitment CC-1 (S₀ = ⊥, restated in ZP-J, not forced). A transition of the '
+        'snap\'s shape appears in each because those foundations are built into each framework, '
+        'not because four separate arguments from unrelated starting points converged. That the four are '
+        'one snap is the framework\'s reading; no theorem relates them.'))
     E.append(sp(6))
 
     E.append(key_result_box('T-H3: The Binary Snap, Four Domain Facts',
         'T-H3 conjoins four domain facts, each proved in its own framework: the lattice join '
         'c₀ ∨ c₁ = c₁, no continuous path in ℚ₂ back to 0, a JSD of exactly 1 bit, and '
         'orthogonal basis vectors. No functor appears in its type and no fact is used to prove '
-        'another. Read side by side, they are coherence across shared structural '
+        'another, and only the lattice join mentions the snap. Read side by side, the framework takes them '
+        'as coherence across shared structural '
         'commitments (A1-A4, AX-B1, CC-1), not independent replication. '
         'T-SNAP is a derived theorem inherited here from ZP-E. '
         'The only additional design premise is DP-1 (ZP-D). '
@@ -425,9 +436,10 @@ def build():
     E.append(sp(8))
 
     E.append(cbody(
-        '<b>What this means:</b> The Binary Snap is not a construct of any one framework. '
-        'The shape of the snap, proved as Theorem T-SNAP, has a counterpart proved in each of four distinct mathematical '
-        'languages. ZP-H states the four together; that they are one snap translated is a reading, not a theorem.'))
+        '<b>What this means:</b> The shape of the snap is proved as Theorem T-SNAP. Each of the other '
+        'three frameworks has its own separately proved fact, which the framework reads as the snap\'s '
+        'counterpart there. ZP-H states the four together; that they are one snap translated, and so not '
+        'a construct of any one framework, is a reading, not a theorem.'))
 
     print(f'Building: {out_path}')
     doc.build(E)
