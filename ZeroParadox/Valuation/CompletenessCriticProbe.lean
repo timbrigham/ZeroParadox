@@ -22,7 +22,7 @@ fine. The movement of the thought process itself was what I needed.
 ## Formal Overview (AI-assisted)
 
 The mutual-independence sweep (`ZeroParadox/Valuation/AxisSweepProbe.lean`) found the four axes (pole, fork,
-chain, branching) distinct in the four pairs it swept, chain/branching, fork/pole, pole/chain and pole/branching; no axis is a predicate there, so independence is not a theorem. The **completeness-critic** asks the opposite question: is there a property of the generic
+chain, branching) distinct in three of the four pairs it swept, chain/branching, pole/chain and pole/branching (fork/pole only off the pole: a constant map on the pole has a unique fixed point); no axis is a predicate there, so independence is not a theorem. The **completeness-critic** asks the opposite question: is there a property of the generic
 object (the 2-adic tree boundary — a compact, totally disconnected, perfect Cantor set, in the sense of
 Brouwer's 1910 topological characterization) that the four axes do
 **not** pin down? If yes, that is a candidate fifth requirement.
