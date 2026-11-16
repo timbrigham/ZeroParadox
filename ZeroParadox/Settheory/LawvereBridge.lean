@@ -78,25 +78,25 @@ theorem lawvere_trigger_refuted {A : Type*} (e : A → (A → Prop)) :
     ¬ Function.Surjective e :=
   cantor_via_engine e
 
-/-! ## § V. The μ/ν branches unified — the diagonal fixed point is the discriminator -/
+/-! ## § V. The μ/ν branches unified — a diagonal fixed point excludes the μ branch (one way) -/
 
-/-- **The branch discriminator (the unification).** A self-reference relation cannot be both
+/-- **The branch exclusion (one way).** A self-reference relation cannot be both
 well-founded (the **μ** branch — the wall: Foundation, `wf_no_selfloop`) and carry a diagonal
 fixed point / self-loop (the **ν** branch — the self-referential object: the Quine atom, `selfApp`'s
 `fixed_bot`). `Reading:` one way: a diagonal fixed point, where present, puts the relation on ν and off
-μ; the statement does not say every non-well-founded relation has one. Together with `selfApp_pinnable` (ν: the fixed point exists, uniquely)
+μ. `Statement:` it does not say every non-well-founded relation has one. Together with `selfApp_pinnable` (ν: the fixed point exists, uniquely)
 and `lawvere_trigger_refuted` (regime-independent: the engine's trigger at `B = Prop` is Cantor-blocked
 for every type), this is the μ/ν picture
-in Lawvere terms, discriminated by the self-loop; the ν fixed point is supplied by the class fields
+in Lawvere terms, separated one way by the self-loop; the ν fixed point is supplied by the class fields
 `fixed_bot` / `unique_fp`, not by the engine (§ II, § IV). (The fork's own μ↔ν duality
 is `fork_is_frameflip`; the concrete ν non-well-foundedness of `selfApp` is `floor_not_wellFounded`.) -/
 theorem mu_nu_branch_exclusion {γ : Type*} {r : γ → γ → Prop} (a : γ) (hself : r a a) :
     ¬ WellFounded r :=
   fun hwf => wf_no_selfloop hwf a hself
 
-/-- **`selfApp` lands on ν, via the discriminator.** The framework's diagonal fixed point (⊥ self-looping
+/-- **`selfApp` lands on ν, via the branch exclusion.** The framework's diagonal fixed point (⊥ self-looping
 under `selfApp`, `fixed_bot`) forces the self-reference relation off the μ (well-founded) branch — it is
-the self-referential object. Proved here by feeding `fixed_bot` to the general discriminator: the SAME
+the self-referential object. Proved here by feeding `fixed_bot` to the general branch exclusion: the SAME
 theorem that walls the μ branch produces the ν landing for `selfApp`. So the ν-existence of
 `selfApp_pinnable` and this ν non-well-foundedness are two readings of one fact. -/
 theorem selfApp_lands_on_nu :
