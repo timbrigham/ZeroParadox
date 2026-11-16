@@ -1,4 +1,4 @@
--- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): one tape ensemble, `fairTape`, the law of the maximum-entropy coin (`trials_eq_fairTape_of_maxEntropy`), almost all of whose members are incompressible, with ⊥ of `ℕ → Bool` a non-random limit of its random firing tapes; and the control that a two-element set containing both faces is null. Curated results indexed in ZeroParadox/MANIFEST.md.
+-- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): one tape ensemble, `fairTape`, the law of the maximum-entropy coin (`trials_eq_fairTape_of_maxEntropy`), almost all of whose members are incompressible for any one fixed prefix-free decoder, with ⊥ of `ℕ → Bool` a non-random limit of its random firing tapes; and the control that a two-element set containing both faces is null. Curated results indexed in ZeroParadox/MANIFEST.md.
 import ZeroParadox.Information.MaxEntropy
 import ZeroParadox.Information.PoleWithinEnsemble
 import Mathlib.Tactic

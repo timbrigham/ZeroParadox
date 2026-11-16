@@ -26,10 +26,10 @@ result stated honestly is worth as much as the positive one it replaces. What is
 
 * **§ II — the cost IS identity.** `wem_of_decidableEq_glue`: if the `LawvereTaboo` witness carrier
   `Glue p` had decidable equality for every `p`, weak excluded middle would follow. Choice-free —
-  the classical content is the hypothesis. This lands the cost *directly* at `DecidableEq`, one step
-  earlier than `wem_of_fixedPointFree` lands it (that route first spends a `classical` to *build* the
-  fixed-point-free map; here the taboo falls straight out of the identity decision). It is the
-  decidable-equality face of the same taboo.
+  the classical content is the hypothesis. This lands the cost *directly* at `DecidableEq`. Its sibling
+  `wem_of_fixedPointFree` is also choice-free and takes the fixed-point-free principle as hypothesis;
+  the `classical` supplying that is spent in `fixedPointFree_of_nontrivial`, in neither reduction. It
+  is the decidable-equality face of the same taboo.
 * **§ III — self-containment sits on BOTH sides of the decidability line, so it is not what the taboo
   tracks.** `SelfContained` is the carrier-agnostic form of `AbstractSelfApp`'s three structural
   fields (`selfApp`, `fixed_bot`, `unique_fp` — `ZeroParadox/Computability/SelfApp.lean`), with the
@@ -159,8 +159,8 @@ theorem wem_of_glue_identity (h : ∀ p : Prop, Decidable (gx p = gb0 p)) : Weak
 /-- **Decidable equality on the witness carrier is the taboo.** `DecidableEq (Glue p)` supplies the
 identity decision of § I, so its uniform availability implies weak excluded middle.
 
-This lands the keystone's classical cost *at `DecidableEq`* — one step earlier than
-`wem_of_fixedPointFree`, which first spends a `classical` tactic to build a fixed-point-free endomap.
+This lands the keystone's classical cost *at `DecidableEq`*. `wem_of_fixedPointFree` is its choice-free
+sibling on the fixed-point-free principle, whose `classical` is spent in `fixedPointFree_of_nontrivial`.
 Both are the same taboo; this is its decidable-equality face. Prior art: Hedberg (1998),
 Kraus–Escardó–Coquand–Altenkirch (2013); see the header. Choice-free. -/
 theorem wem_of_decidableEq_glue (h : ∀ p : Prop, DecidableEq (Glue p)) : WeakExcludedMiddle :=

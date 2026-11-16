@@ -109,8 +109,8 @@ theorem seed_eq_of_nfp_eq_epsilon_limit (o s : Ordinal) (ho : Order.IsSuccLimit 
 seeds strictly below that landing. ORDER-TYPE chart: a successor cell is as wide as its landing, the
 first ε₀ and the next ε₁ (`successor_cell_width`); a limit-index cell is a singleton
 (`limit_cell_eq_singleton`). COUNTING chart: the first cell is countable (`card_epsilon0`)
-and a cell past the countable indices is not (the control below). Each address is a finite term
-(`repr_surj_below_epsilon0`, `ZeroParadox/Ordinal/PricedInterface.lean`). Both charts hold. -/
+and a cell past the countable indices is not (the control below). Each seed below ε₀ is a finite term
+(`repr_surj_below_epsilon0`, `ZeroParadox/Ordinal/PricedInterface.lean`); ε₀ is none (`repr_lt_epsilon0`). Both charts hold. -/
 
 universe u
 
