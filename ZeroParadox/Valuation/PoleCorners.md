@@ -7,5 +7,5 @@ pole carrier. Where the two would overlap, **the Lean is authoritative**.
 ## The pole carrier
 
 The pole is the two-element type `Pole = {zero, infty}`: the two points that inversion exchanges
-(`rInv_swaps`); they are distinct here (`poleView_ends`). The framework's `0 = ∞` reading is a chart claim
+(`rInv_swaps`, via `swap_is_rInv`); they are distinct here (`poleView_ends`). The framework's `0 = ∞` reading is a chart claim
 with its own witness (`infinitude_forces_infinite_complexity`).
