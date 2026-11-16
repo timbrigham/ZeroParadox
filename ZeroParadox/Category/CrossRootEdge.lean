@@ -60,14 +60,14 @@ ambient mismatch):
 
 **Honest verdict (recorded here, not hidden in prose).** Even with the arrow asymmetry sharpened
 into a statement, the two witnesses `IsColimit(#4)` and `IsLimit(#3)` are **pre-existing** (`ZeroParadox/Category/KleisliInitialColimit.lean`,
-`ZeroParadox/Order/PadicLimitCone.lean`), and the asymmetry — a colimit object's empty incoming hom vs a limit object's incoming
-factoring map — is a *generic* consequence of "one is a colimit, the other is a limit", true of any
-such pair, not a fact discovered about the snap floors. The objects also live in different ambient
+`ZeroParadox/Order/PadicLimitCone.lean`). Of the asymmetry, only the limit half (an incoming factoring map) is generic to limits;
+the colimit half (an empty incoming hom) is not a consequence of initiality — it is the pre-existing
+`fC_no_return` of `KleisliCat PMF` (the initial `fD_functor.obj 0` is a zero object, `seam_isZero`). The objects also live in different ambient
 categories with no canonical functor between them, the bare-glue non-result `ZeroParadox/Multihomed/SeamConnectorFail.lean` already flagged.
 So this edge is **NO-GO / OVERCLAIM at the new-edge level**: there is no new cross-domain
 identification, only a sharpened *separation*. The framework records that the #4 ↔ #3 cross-root
 obstruction is categorically witnessable **only** as (a) the co-occurrence of the two universal
-properties and (b) the generic limit/colimit arrow-direction asymmetry — beyond that, ambient
+properties and (b) the limit/colimit arrow-direction asymmetry — beyond that, ambient
 incommensurability, exactly as the campaign predicted. This is a clean obstruction (separation)
 result, completing the cross-root edge set at the categorical-witness level.
 -/
@@ -122,8 +122,8 @@ theorem node3_receives_cone :
     a source with no incoming arrows vs a target that receives them. This is the categorical residue
     of the μ/ν root cut for the #4 ↔ #3 pair.
 
-    **FENCE (honest).** This asymmetry is *generic* to any colimit-vs-limit pair; it is sharper than
-    "different categories" but is NOT a fact discovered about the snap floors, and it is NOT a
+    **FENCE (honest).** Only the limit half is generic; the empty incoming hom is `KleisliCat PMF`'s
+    (`fC_no_return`), not initiality's. It is NOT a new fact about the snap floors, and it is NOT a
     cross-domain identification. It records a *separation*, not a tie. -/
 theorem node4_node3_arrow_asymmetry :
     (∀ {n : ℕ}, 0 < n → IsEmpty (fC_functor.obj n ⟶ fC_functor.obj 0)) ∧
@@ -134,10 +134,10 @@ theorem node4_node3_arrow_asymmetry :
     (μ, initial, `ZeroParadox/Category/KleisliInitialColimit.lean`) and the genuine `IsLimit` of node #3 (ν, inverse-limit, `ZeroParadox/Order/PadicLimitCone.lean`), recorded
     together with the in/out arrow asymmetry. This is *everything* the edge witnesses categorically.
 
-    **Verdict: NO-GO / OVERCLAIM at the new-edge level.** Both witnesses are pre-existing; the
-    asymmetry is generic to colimit-vs-limit; the objects share no ambient category. There is no new
+    **Verdict: NO-GO / OVERCLAIM at the new-edge level.** Both witnesses are pre-existing, as are both
+    asymmetry halves (`fC_no_return`, `IsLimit.lift_self`); the objects share no ambient category. There is no new
     cross-domain map and no new identification — only a sharpened separation. The cross-root #4 ↔ #3
-    obstruction is categorically witnessable only as this co-occurrence plus the generic
+    obstruction is categorically witnessable only as this co-occurrence plus the
     arrow-direction asymmetry. -/
 theorem colimit_limit_cross_root :
     Nonempty (IsColimit (asEmptyCocone (fC_obj 0))) ∧

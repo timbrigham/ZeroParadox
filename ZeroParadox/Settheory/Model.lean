@@ -41,8 +41,8 @@ So ⊤ is the ZP-bottom (valuation ∞, unique fixed point), and 0 is the ZP-max
 
 The abstract gap in ZeroParadox/Valuation/Scale.lean asked for an infinite domain where scale can increase
 valuation without bound. ℕ∞ resolves this: each n : ℕ is a level with val n = n,
-scale shifts n to n + 1, and ⊤ is the limit point that all sequences converge to.
-The "indexed family (L₀, L₁, L₂, ...)" is just this structure with each Lₙ = {n, ⊤}.
+scale shifts n to n + 1, and iterating scale from n never reaches ⊤ of ℕ∞ (the iterate example below;
+no convergence is stated). Reading: the "indexed family (L₀, L₁, ...)" as Lₙ = {n, ⊤}, not built here.
 
 ## What this delivers
 

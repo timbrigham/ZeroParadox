@@ -439,8 +439,8 @@ def dnegLayer (P : Prop) : Pole → Prop
   | infty => ¬¬¬P
 
 /-- `Statement:` the negation of `dnegLayer P q` is equivalent to `dnegLayer P (swap q)`.
-    `Reading:` on the two-element regular layer ONLY. Negation on `Prop` is not an involution there
-    (`P ↦ ¬¬P` is one-way, `dnegNucleus`); this is `swap`'s shape at a different level, never an
+    `Reading:` on the two-element regular layer ONLY. Off it, negation on `Prop` is an involution only
+    given excluded middle (`em_iff_all_props_regular`; constructively `P ↦ ¬¬P` is one-way, `dnegNucleus`); this is `swap`'s shape at a different level, never an
     identity, as `ZeroParadox/Computability/Occurrence.lean` § IV-c fences `flipPoles`. -/
 theorem not_dnegLayer_iff (P : Prop) (q : Pole) : ¬ dnegLayer P q ↔ dnegLayer P (swap q) := by
   cases q
@@ -527,7 +527,7 @@ example : @Monotone Pole Pole poleView poleView cornerZero ∧
   ⟨fun _ _ _ => Nat.le_refl _, fun _ _ _ => Nat.le_refl _,
     fun _ _ _ => Nat.le_refl _, fun _ _ _ => Nat.le_refl _⟩
 
--- Reading: a case of the rigidity of well-ordered (so finite) chains, Mathlib
+-- Reading: a case of the rigidity of well-ordered chains (finite ones are well-ordered), Mathlib
 -- `OrderIso.unique_of_wellFoundedLT` and `OrderIso.subsingleton_of_wellFoundedLT'`; here for the
 -- non-instance order `poleView`, as bijective plus a direction, with the CONTROL above pricing bijectivity.
 

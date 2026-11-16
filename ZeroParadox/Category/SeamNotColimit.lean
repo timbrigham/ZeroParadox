@@ -37,16 +37,16 @@ map (the target is a zero object), so the universal factorization of the pair `(
 is nontrivial. So the seam can receive at most the trivial self-cocone, not a universal cocone from
 nonzero μ-bottoms.
 
-**The honest GO companion (`seam_selfcoproduct_collapse`).** The seam's only genuine colimit role is
+**The honest GO companion (`seam_selfcoproduct_collapse`).** The colimit role witnessed here is
 the vacuous one: the coproduct of the zero object with itself is again the zero object. We witness
 `IsColimit` of the binary cofan `Z ← Z → Z` with apex `Z = fD.obj 0` (every leg the zero map). This
 is the `ZeroParadox/Category/SeamLimColim.lean`-flavored collapse `Z ⊔ Z ≅ Z`: a real `IsColimit`, but over a diagram of zero objects,
 so it carries no connector content from the μ-side leaves.
 
 **Why this is a NO-GO for the tree hypothesis.** A μ-side colimit connector must be universal *over the
-nonzero leaves*. The seam is universal only over (copies of) itself. So the colimit-direction analog of
-the cross-root obstruction holds: #5's colimit role is confined to its own category and to the trivial
-self-cocone — it is not a μ-side coproduct apex over #1/#4.
+nonzero leaves*. Of the two binary diagrams tested, the seam is universal over itself only. So the
+colimit-direction analog holds for this shape: the seam is not a binary-coproduct apex over nonzero
+proxies of #1/#4 (other shapes, e.g. the empty diagram it is initial for, are not examined here).
 
 **Honest fence.** The Lean content is exactly: (1) no `IsColimit` binary cofan over two nonzero copies
 of `fD.obj 1` has the zero object as apex; (2) the all-zero self-cofan over the zero object IS a colimit.
@@ -105,7 +105,7 @@ theorem seam_not_mu_colimit_apex
     rw [hd] at hfac; simpa using hfac.symm
   exact leaf_not_isZero ((IsZero.iff_id_eq_zero (fD_functor.obj 1)).mpr hid)
 
-/-- **Honest GO companion.** The seam's only genuine colimit role: the coproduct of the zero object
+/-- **Honest GO companion.** The seam's colimit role tested here: the coproduct of the zero object
     with itself is the zero object. The all-zero binary cofan over `(Z, Z)` with apex `Z = fD.obj 0`
     IS a colimit. A real `IsColimit`, but over zero objects — carrying no μ-side connector content
     (the `ZeroParadox/Category/SeamLimColim.lean` self-collapse `Z ⊔ Z ≅ Z`). -/

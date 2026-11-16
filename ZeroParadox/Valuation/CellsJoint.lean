@@ -22,7 +22,7 @@ cells are for."
 
 ## Formal Overview (AI-assisted)
 The covers (atoms) of ⊥ of `End` are the unit vectors `unitEnd k` (`covers_bot_iff`), the
-`boundaryDouble`-orbit of `unitEnd 0`; `unitEnd k` lies in `boundaryCell k` only, depth is `endVal`
+`boundaryDouble`-orbit of `unitEnd 0`; `unitEnd k` lies in `boundaryCell k`, not `boundaryCell (k + 1)`; depth is `endVal`
 (`mem_boundaryCell_iff`). ⊥ as the glb of non-⊥ members and a first step together force branching (`branching_forced`); `End`'s depth meets that glb condition (`end_glb_unitEnd`), and so does a finite carrier (`diamond_meets_hglb`, `ZeroParadox/Valuation/TreeNotForced.lean`), so depth is sufficient, not required.
 -/
 
@@ -414,7 +414,7 @@ theorem coord_commute_boundaryDouble_eq_id (π : ℕ → ℕ)
 /-! ### § VI. Concurrency: one map, both readings at once. -/
 
 /-- `Statement:` `boundaryDouble`'s fixed points are `{botEnd}`; its iterate ranges nest and meet in
-`{botEnd}`; the covers of ⊥ of `End` are its orbit from `unitEnd 0`; the `k`-th lies in cell `k` only. -/
+`{botEnd}`; the covers of ⊥ of `End` are its orbit from `unitEnd 0`; the `k`-th lies in cell `k`, not `k + 1`. -/
 theorem cells_concurrent :
     (∀ x, boundaryDouble x = x ↔ x = botEnd) ∧
     (∀ k, Set.range (boundaryDouble^[k + 1]) ⊆ Set.range (boundaryDouble^[k])) ∧

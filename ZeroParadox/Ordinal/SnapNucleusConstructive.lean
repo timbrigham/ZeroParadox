@@ -168,7 +168,7 @@ instance instLinearOrderSynONote : LinearOrder SynONote :=
 
 A statement *about* the choice-carrying order, kept apart from the constructive development above.
 Mathlib declares `Preorder ONote` with `le x y := repr x ≤ repr y`, and not as a `PartialOrder`:
-notations not in normal form can denote the same ordinal (`1 + ω` and `ω` are the smallest witness),
+notations not in normal form can denote the same ordinal (`1 + ω` and `ω` are the witness used below),
 and Mathlib's positive counterpart `ONote.repr_inj` requires `NF` on both arguments. So that order is
 unusable here on two independent counts: it routes through `repr` into `Ordinal`'s classically-built
 order machinery, and it is not a partial order, let alone a `SemilatticeInf`. That is why `SynONote`

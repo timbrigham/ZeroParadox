@@ -39,7 +39,7 @@ object exists and is refused. Standard framing and the full scope note: `ZeroPar
 #check @ZeroParadox.cantor_via_engine        -- Cantor: no surjection A → (A → Prop)
 #check @ZeroParadox.russell_via_engine       -- Russell: no surjection A → (A → Prop) via membership `mem : A → A → Prop`
 #check @ZeroParadox.no_self_decider          -- Turing: no surjection A → (A → Bool) (the halting diagonal)
-#check @ZeroParadox.tarski_no_internal_truth -- Tarski: no internal truth predicate (undefinability)
+#check @ZeroParadox.tarski_no_internal_truth -- Tarski face, Cantor form: no surjection A → (A → Prop) read as truth (no syntax or definability)
 #check @ZeroParadox.tarski_no_truth_bottom   -- Tarski's bottom: truth is the wall dual — no floor
 #check @ZeroParadox.curry_no_bottom          -- Curry: no naming surjection; pretending otherwise explodes
 
@@ -54,7 +54,7 @@ In the computability face it is a Kleene code (a `Code`), a term of another type
 #check @ZeroParadox.selfApp_isLeastFixedPointFrom  -- ⊥ of the `ZPSemilattice` is the least fixed point of self-application (the order floor)
 #check @ZeroParadox.ProvabilityLogic.loeb_sentence_is_fixedpoint  -- Löb: the provability diagonal closes given a Löb diagonal ψ (hypotheses hfix1, hfix2)
 #check @ZeroParadox.ProvabilityLogic.godel_two     -- Gödel's second: given a Löb diagonal for falsum, a consistent system does not prove □falsum → falsum — the provability floor
-#check @ZeroParadox.rice_face_has_bottom     -- Rice: computable f has a fixed point up to eval; reading it as the face's floor is the family's criterion, not the theorem
+#check @ZeroParadox.rice_face_has_bottom     -- Rice face, recursion theorem (Mathlib `Nat.Partrec.Code.fixed_point`): computable f has a fixed point up to eval; reading it as the face's floor is the family's criterion, not the theorem
 #check @ZeroParadox.quine_exists_yet_rice    -- Rice pivot: f's fixed point exists AND a non-trivial extensional C is undecidable over all codes; the second conjunct does not mention f (ComputationCannotBe.lean § V)
 
 /-! ### § IV. The minimum-requirements level (`Category/DiagonalWitness.lean`) — the underlying level beneath the fork

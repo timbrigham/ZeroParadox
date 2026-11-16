@@ -44,9 +44,9 @@ theorem tarski_liar_from_naming {A : Type*} (truth : A → (A → Prop))
 
 /-! ## § III. Tarski's undefinability -/
 
-/-- **Tarski's undefinability of truth.** No internal universal truth-naming exists: `truth`
+/-- **Tarski's undefinability, Cantor form.** No internal universal truth-naming exists: `truth`
     cannot be point-surjective, because the liar sentence it would produce (§ II) has no truth value
-    (§ I). Semantically: truth is not definable inside a system that can name all its own predicates.
+    (§ I). It ranges over ALL predicates; definability, syntax and the diagonal lemma do not appear.
     (This is `cantor_via_engine` read on the truth axis; proved here directly off § I + § II for the
     liar reading.) -/
 theorem tarski_no_internal_truth {A : Type*} (truth : A → (A → Prop)) :
@@ -58,8 +58,8 @@ theorem tarski_no_internal_truth {A : Type*} (truth : A → (A → Prop)) :
 /-! ## § IV. The T-schema at the liar is absurd -/
 
 /-- **The T-schema at the liar is inconsistent.** A truth predicate `Tr` obeying its own T-schema at the
-    liar sentence — `Tr liar ↔ ¬ Tr liar` — is absurd. This is Tarski's theorem in T-schema form: no
-    predicate can satisfy `Tr(⌜φ⌝) ↔ φ` for the liar `φ = ¬Tr(⌜φ⌝)`. The floor dual: replace `¬` by the
+    liar sentence — `Tr liar ↔ ¬ Tr liar` — is absurd: an instance of `¬(p ↔ ¬p)`. The liar is a
+    hypothesis; its existence (the diagonal lemma, Tarski's real content) is not proved here. The floor dual: replace `¬` by the
     self-closing map and you get the Quine atom instead of the wall. -/
 theorem tarski_Tschema_liar_absurd {A : Type*} (Tr : A → Prop) (liar : A)
     (hTschema : Tr liar ↔ ¬ Tr liar) : False :=

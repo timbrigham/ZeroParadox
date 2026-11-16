@@ -64,7 +64,7 @@ This file:
   § III. Concrete carrier: ZPWheelElem (ℚ extended with ∞ and ⊥ₗ)
   § IV.  Operations and Wheel instance (all axiom proofs sorry-free)
   § V.   The 0/∞ exchange and the absorbing element: /0 = ∞, 0·/0 = ⊥ₗ (proved); § V-b, the wheel as a die face
-  § VI.  Connection to ValuationStructure: val(⊥) = ∞ ↔ /0 = ∞ (proved)
+  § VI.  Connection to ValuationStructure: on `ZPWheelElem`, val(x) = ⊤ ↔ /x = ∞, as at x = 0 (proved)
   § VII.  WheelValuationStructure: the algebraic bridge (typeclass)
   § VII-b. NO-GO gauge: the class is degenerately inhabited; nondegeneracy as an explicit predicate
   § VIII. Main conjecture: construction half proved (`ZeroParadox/Algebra/WheelFrac.lean`), pinning half open
@@ -529,7 +529,7 @@ def zpwVal : ZPWheelElem → ℕ∞
 theorem zpwVal_zero_eq_top : zpwVal (.fin 0) = ⊤ := by
   simp [zpwVal]
 
-/-- The wheel inverse of fin(0) is the element with valuation 0 (inf).
+/-- The wheel inverse of fin(0), inf, has valuation 0 (as does bot: `zpwVal` is 0 on both).
     This formalises the duality: the element with top valuation maps to the element
     that is the "top" of the multiplicative structure (/0 = ∞). -/
 theorem zpwVal_inv_zero : zpwVal (zpwInv (.fin 0)) = 0 := by
