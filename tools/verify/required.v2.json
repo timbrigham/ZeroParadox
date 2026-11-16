@@ -565,6 +565,11 @@
       "scope": [
         "ZeroParadox/*.lean"
       ],
+      "scope_exclude": [
+        "ZeroParadox/Vendored/*",
+        "ZeroParadox/Ordinal/NaturalOpsPow.lean"
+      ],
+      "_scope_exclude_why_2026_11_16": "the same two exclusions `adversary.scope_exclude` carries (Tim's ruling 268): third-party Lean we do not edit, so a DIFF-1 item there could never be fixed, only carried or rejected, and an open one would hold every push. Raised by the MCP dev session before the burn-down reached them.",
       "_actions_why_2026_11_16": "REQUIRED AT PUSH, Tim's ruling 2026-11-16, superseding his 'register, block nothing' of the same evening: 'I need to make sure that both the adversary review and the Reconstruction review are both checkable under a specific blob... All of the way down. Both review types need to be trackable and required before we start allowing pushes going forward'. Scope is the Lean files only (Tim, confirmed directly the same night; CLAIMS.md out): the reading compares prose against elaborated signatures, so its subject is a module. fnmatch `*` crosses `/`, so the glob covers nested modules, the same glob `adversary` uses. A push CHANGING an in-scope file owes a reconstruct PASS at the new blob; the untouched backlog is reported, not blocking.",
       "reason": "the /reconstruct blind reading (ruling 285(a): Lean files get adversary and reconstruct in parallel on the same commit). Required at push for ZeroParadox/*.lean (see `_actions_why_2026_11_16`). One record per (path, blob) examined, emitted from the sjv `blind_readings` view `reconstruct_verdict`: any DIFF-1 item still open -> FAIL with that (path, blob) failing; carried items -> PASS with outstanding; rejected items appear in the reason only. The record is on DISPOSITIONING, never on the reader's opinion (R-NOCONV). Ticket: .claude-local/queue/tooling-reconstruct-blind-reading-pipeline.md."
     }
