@@ -59,18 +59,18 @@ plus a domain-specific theorem stated beside it, which its initial-object proof 
 
 - **F_A (SLat)**: NatSLat appendix — ℕ with max/0 as ZPSemilattice, ≤ as poset-category.
   0 is categorical initial. Distinct concrete instance. OQ-G3 closed for F_A.
-- **F_B**: Q₂BallDepth appendix — `fb_functor : Functor ℕ Q₂BallDepth`, grounded in C3.
-- **F_C**: InfoDepth appendix — `fc_functor : Functor ℕ InfoDepth`, grounded in T1b.
-- **F_D**: HilbDimDepth appendix — `fd_functor : Functor ℕ HilbDimDepth`, grounded in T4.
+- **F_B**: Q₂BallDepth appendix — `fb_functor : Functor ℕ Q₂BallDepth`, beside C3.
+- **F_C**: InfoDepth appendix — `fc_functor : Functor ℕ InfoDepth`, beside T1b.
+- **F_D**: HilbDimDepth appendix — `fd_functor : Functor ℕ HilbDimDepth`, beside T4.
   Each has a distinct depth-index type, ZPCategory instance, concrete Functor term,
-  preserves_initial definition, and snap grounding theorem. These depth-index types are
+  preserves_initial definition, and a domain theorem stated beside it. These depth-index types are
   proxies isomorphic to ℕ — concrete witnesses, not the real domain categories. The full
   functors into the real Mathlib categories (TopCat / ModuleCat ℂ / KleisliCat PMF) are now
   built in ZeroParadox/Valuation/TopFunctor.lean / ZeroParadox/State/HilbFunctor.lean / ZeroParadox/Multihomed/InfoFunctor.lean and bundled in ZeroParadox/Multihomed/MC1Bridge.lean; they
   supersede these proxies.
   Their targets carry their own instances (`q2BallZPCat`, `infoDepthZPCat`, `hilbDimZPCat`), not NNReal's. -/
 
-/-! ## T-H1 — Initial-Object Properties Under Each Instantiation Functor -/
+/-! ## T-H1 — Domain Facts Beside Each Instantiation (initiality: `f*_preserves_initial`) -/
 
 /-- T-H1 for F_A — ⊥ of a ZPSemilattice L lies below every element (`bot_le`).
     `Statement:` `le bot x` for every x : L; no category on L is built here and no initiality
@@ -81,8 +81,8 @@ theorem th1_fa {L : Type*} [ZPSemilattice L] (x : L) :
   bot_le x
 
 /-- T-H1 for F_B — domain property: no continuous path in Q₂ runs from any x ≠ 0 to 0 (ZPB C3).
-    `Statement:` INVARIANT — the obstruction has no direction: `disconnectedness_forbids_path`
-    (`ZeroParadox/Valuation/BranchingSnapChain.lean`) excludes a path between any two distinct
+    `Statement:` the type is one way, x to 0. INVARIANT, of the pair with `disconnectedness_forbids_path`
+    (`ZeroParadox/Valuation/BranchingSnapChain.lean`), which excludes a path between any two distinct
     points of a totally disconnected space, from 0 to x as well. `fb_preserves_initial` does not use
     this theorem (it follows from `q2BallHom0Unique`); F_B's target instance is `q2BallZPCat`. -/
 theorem th1_fb :
@@ -225,7 +225,7 @@ end NatSLat
 section PurityCheckNatSLat
 open ZeroParadox CategoryTheory CategoryTheory.Limits
 
--- OQ-G3 closed for F_A: ℕ has a categorical initial object grounded in the ZPA semilattice.
+-- OQ-G3 closed for F_A: 0 is initial in `natOrderCat`, built from ≤, not from `natZPSemilattice`'s join.
 -- IsInitial is a Type (not Prop), so `def` rather than `theorem`.
 noncomputable def natSLat_initial_grounding : IsInitial (0 : ℕ) :=
   natZPCategory.zpIsInitial
@@ -384,7 +384,7 @@ theorem fb_snap_q2_grounded :
 
 /-- fb_functor: the concrete Lean Functor term for F_B.
     Source: ℕ with ≤ (NatSLat / NatOrderCat).
-    Target: Q₂BallDepth with ≤ (q2BallCat), grounded in Q₂ via q2BallAt and C3.
+    Target: Q₂BallDepth with ≤ (q2BallCat); neither its type nor its definition uses q2BallAt or C3.
     Object map: n ↦ ⟨n⟩ (each ℕ index wraps to the corresponding ball depth).
     Morphism map: carries the ≤ proof across; functor laws hold by Subsingleton. -/
 noncomputable def fb_functor : Functor ℕ Q₂BallDepth where
@@ -449,8 +449,8 @@ instance infoDepthHom0Unique (n : InfoDepth) : Unique ((0 : InfoDepth) ⟶ n) wh
   uniq    := fun _ => Subsingleton.elim _ _
 
 /-- InfoDepth is a ZPCategory with depth 0 as the initial object.
-    AX-G1: surprisal has no maximum — n + 1 > n always.
-    AX-G2: m.val ≤ 0 forces m = 0; once surprisal is positive no morphism returns to 0. -/
+    AX-G1: depth has no maximum — n + 1 > n always.
+    AX-G2: m.val ≤ 0 forces m = 0; no morphism returns to depth 0 from a positive depth. -/
 noncomputable instance infoDepthZPCat : ZPCategory InfoDepth where
   zpInitial         := 0
   zpIsInitial       := IsInitial.ofUnique 0
@@ -463,10 +463,8 @@ noncomputable instance infoDepthZPCat : ZPCategory InfoDepth where
     subst hn
     exact hne.elim (Iso.refl _)⟩
 
-/-- Semantic grounding of fc_functor's snap morphism 0 → ⟨1⟩:
-    T1b (ZPC) establishes that the P → Q snap costs exactly log 2 (1 bit of JSD).
-    This is the informational analogue of AX-G2 in InfoDepth, where no morphism returns to
-    depth 0 (`infoDepthZPCat`, by antisymmetry): the snap advances from zero surprisal to one bit.
+/-- The morphism 0 → ⟨1⟩ of InfoDepth beside T1b (ZPC): JSD(P, Q) = log 2 (1 bit). The type relates
+    neither to the other, and maps no depth to a surprisal value.
     `Statement:` a pair: the first conjunct, `Nonempty (0 ⟶ ⟨1⟩)` in InfoDepth, is witnessed by
     `⟨⟨Nat.zero_le 1⟩⟩`, the second is proved by `t1b_jsd`, and the theorem only pairs them. -/
 theorem fc_snap_info_grounded :
@@ -475,7 +473,7 @@ theorem fc_snap_info_grounded :
 
 /-- fc_functor: the concrete Lean Functor term for F_C.
     Source: ℕ with ≤ (NatSLat / NatOrderCat).
-    Target: InfoDepth with ≤ (infoDepthCat), grounded in surprisal via T1b.
+    Target: InfoDepth with ≤ (infoDepthCat); neither its type nor its definition uses surprisal or T1b.
     Object map: n ↦ ⟨n⟩ (each ℕ index wraps to the corresponding surprisal depth).
     Morphism map: carries the ≤ proof across; functor laws hold by Subsingleton. -/
 noncomputable def fc_functor : Functor ℕ InfoDepth where
@@ -569,7 +567,7 @@ theorem fd_snap_hilb_grounded (n : ℕ) (hn : 2 ≤ n) :
 
 /-- fd_functor: the concrete Lean Functor term for F_D.
     Source: ℕ with ≤ (NatSLat / NatOrderCat).
-    Target: HilbDimDepth with ≤ (hilbDimCat), grounded in StateSpace via T4.
+    Target: HilbDimDepth with ≤ (hilbDimCat); neither its type nor its definition uses StateSpace or T4.
     Object map: n ↦ ⟨n⟩ (each ℕ index wraps to the corresponding dimension depth).
     Morphism map: carries the ≤ proof across; functor laws hold by Subsingleton. -/
 noncomputable def fd_functor : Functor ℕ HilbDimDepth where
