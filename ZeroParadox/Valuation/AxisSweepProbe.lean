@@ -47,7 +47,8 @@ branching threshold — the minimal snap sits under the minimal field.
 
 **Running tally.** `Reading:` conjecture: no fifth axis has turned up (candidates height, iterative-bottoms,
 irreversibility judged forced), and the four axes have behaved as distinct in pairs chain/branching,
-fork/pole, pole/chain, pole/branching. No axis is a predicate, so independence and completeness are unstated.
+pole/chain, pole/branching; fork/pole only off the pole, since a constant map on the pole has a unique fixed
+point (§ I). No axis is a predicate, so independence and completeness are unstated.
 -/
 
 namespace ZeroParadox

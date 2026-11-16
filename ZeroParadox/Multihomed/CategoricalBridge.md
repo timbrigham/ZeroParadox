@@ -34,6 +34,6 @@ Key results:
   accumulation) hold together: `th2_singularity_compatibility` pairs ZP-G Lemma T3
   (`t3_unreachability`) with ZP-C Theorem T2 (`t2_diverges`) and uses neither to prove the other (OQ-G4 closed in
   that sense).
-- T-H3: `th3_snap_all_functors` conjoins four separately proved domain facts, of which only the
-  first (`join c₀ c₁ = c₁`) mentions the snap; its type names no functor and relates no conjunct
-  to another.
+- T-H3: `th3_snap_all_functors` conjoins four separately proved domain facts, none derived from
+  another or from a functor; its type names no functor and relates no conjunct to another. The
+  corpus labels each a face of the snap, and that labelling is the framework's reading.
