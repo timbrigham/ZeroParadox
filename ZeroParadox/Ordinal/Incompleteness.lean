@@ -26,18 +26,19 @@
 
   ZPM is a consolidation layer, doing for the snap state what the earlier layers did for ⊥.
   The pattern is the same: one object showing up in multiple mathematical domains with
-  different names and different notation, and the job is to build a formal map proving
-  they're the same topological structure.
+  different names and different notation, and the job is to build formal maps that line
+  them up and show how far the match actually goes. The two maps into the 2-adics don't
+  agree at any stage of the tower, and that edge is part of the result.
 
   The mechanism is straightforward once you see it. You define the map, you show the
   structure holds on all three edges, and you confirm that Kleene diagonalization and
   ordinal diagonalization follow the same structural pattern: a self-referential
-  operation produces a forced fixed point. The two domains are formally separate —
-  one over Gödel codes, one over ordinals — but the diagonalization schema is
-  identical.
+  operation produces a forced fixed point. The two domains are formally separate, one
+  over Gödel codes and one over ordinals, and the two diagonalizations share a shape.
+  They are not identical. On the code side a constant code is enough to meet it.
 
   If ZPK and ZPL each proved a piece of the picture, ZPM is the layer where you step
-  back and see that the pieces were always the same picture.
+  back and see how much of the picture the pieces share.
 -/
 
 import ZeroParadox.Computability.Kleene

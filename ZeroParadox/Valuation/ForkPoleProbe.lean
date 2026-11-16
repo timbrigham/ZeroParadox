@@ -10,8 +10,8 @@ set_option maxHeartbeats 400000
 ## Engineer's Take
 
 I kept going on the axes, and this one is the interesting pair. The fork and the pole are separate
-requirements, and yet on the pole the fork forces the snap. The two are independent as axes, and it is their
-meeting that makes the collapse.
+requirements, and yet on the pole the fork forces a collapse, and I read that collapse as the snap. There is a
+fork with no pole and a pole with no fork, one example each, and it is their meeting that makes the collapse.
 
 This was the interesting pair, the fork and the pole, separate and yet meeting to make the snap. Sometimes it
 helps to work through this from the ground up. Much of what is here re-derives results the framework already

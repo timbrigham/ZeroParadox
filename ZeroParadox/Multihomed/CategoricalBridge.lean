@@ -12,11 +12,12 @@ import Mathlib.Tactic
 ## Engineer's Take
 
 Now that the categorical structure is established, ZPH goes back through ZPA
-to ZPD and shows that each of those frameworks is a representation of the same
-underlying object. The algebra, the topology, the information theory, and the
-Hilbert space are not four separate things. They are different vantage points
-on the same object. T-H3 is the formal statement of that. Four independent
-derivations, same snap, same verdict.
+to ZPD and takes one result from each of those frameworks. T-H3 joins the four
+with an "and": the join in the machine phase, no continuous path back to zero
+in Q₂, the one bit between P and Q, and two orthogonal basis vectors. No
+functor shows up in it, and none of the four leans on another. Four independent
+derivations. I read them as different vantage points on the same snap with the
+same verdict. That is my reading, and T-H3 doesn't state it.
 
 ---
 

@@ -17,8 +17,10 @@ state two is the minimum number of states required. Anything else will
 eventually reduce down to one of the two. The transitive relationship for
 closeness doesn't degrade because of the triangle inequality. The balls behave
 like a step function. You're in or you're out. There's a hard gap between the
-two sides and no way to approach the boundary from either direction. C3 follows
-from the totally disconnected structure of Q₂.
+two sides. A sequence can approach zero by continuing forward, and doubling
+does exactly that. What you can't approach is the edge of a ball, because
+every ball is open and closed at once, so there is no edge to approach. C3
+follows from the totally disconnected structure of Q₂.
 
 ---
 
