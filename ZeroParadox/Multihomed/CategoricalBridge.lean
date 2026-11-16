@@ -39,7 +39,7 @@ open CategoryTheory
 /-! ## D-H1 — Morphisms of C are State Transitions (Design Commitment)
 
 A morphism f: A → B in C is a state transition satisfying:
-(i) Forward direction: every morphism represents a net addition of informational content.
+(i) Forward direction: every non-identity morphism represents a net addition of informational content.
 (ii) Compatibility with AX-G2: no morphism X → 0 exists for X not isomorphic to 0.
 (iii) Composition: composition corresponds to sequential state accumulation.
 D-H1 is a design commitment, not a derivation. No Lean theorem — the choice is what
@@ -48,14 +48,14 @@ yield different functors. -/
 
 /-! ## Section III — Instantiation Functors: Domain Properties
 
-The four functors F_A, F_B, F_C, F_D map the abstract ZPCategory C to its four domain
-codomains. A complete Lean construction of each functor as a CategoryTheory.Functor into a
+F_B, F_C, F_D are declared below as functors out of ℕ (`natOrderCat`), not out of an abstract
+ZPCategory; F_A has no functor term in this file. A Lean construction of F_B, F_C, F_D as a CategoryTheory.Functor into a
 real Mathlib category is now done in the sibling files (ZeroParadox/Valuation/TopFunctor.lean / ZeroParadox/State/HilbFunctor.lean /
 ZeroParadox/Multihomed/InfoFunctor.lean, bundled in ZeroParadox/Multihomed/MC1Bridge.lean): fB into TopCat, fD into ModuleCat ℂ, fC into the Kleisli
 category of PMF. (Mathlib has no bespoke SLat/pTop/InfoSp/Hilb categories, so those standard
 categories are the genuine realizations.) The proxies below are the original concrete witnesses,
 superseded by those real-category functors; each still provides a concrete ZPCategory witness
-plus the domain-specific theorem grounding the initial-object claim.
+plus a domain-specific theorem stated beside it, which its initial-object proof does not use.
 
 - **F_A (SLat)**: NatSLat appendix — ℕ with max/0 as ZPSemilattice, ≤ as poset-category.
   0 is categorical initial. Distinct concrete instance. OQ-G3 closed for F_A.
@@ -68,46 +68,40 @@ plus the domain-specific theorem grounding the initial-object claim.
   functors into the real Mathlib categories (TopCat / ModuleCat ℂ / KleisliCat PMF) are now
   built in ZeroParadox/Valuation/TopFunctor.lean / ZeroParadox/State/HilbFunctor.lean / ZeroParadox/Multihomed/InfoFunctor.lean and bundled in ZeroParadox/Multihomed/MC1Bridge.lean; they
   supersede these proxies.
-  NNRealZPCat appendix remains as the shared categorical witness underlying all three. -/
+  Their targets carry their own instances (`q2BallZPCat`, `infoDepthZPCat`, `hilbDimZPCat`), not NNReal's. -/
 
 /-! ## T-H1 — Initial-Object Properties Under Each Instantiation Functor -/
 
-/-- T-H1 for F_A — ⊥ is the initial object in the join-semilattice codomain.
-    For any element x, ⊥ ≼ x: the unique "morphism" ⊥ → x exists (bot_le).
-    In the poset-as-category, ⊥ satisfies the universal property of 0.
-    The NatSLat appendix exhibits ℕ as a concrete ZPCategory grounding this claim.
-    OQ-G3 is closed for F_A. -/
+/-- T-H1 for F_A — ⊥ of a ZPSemilattice L lies below every element (`bot_le`).
+    `Statement:` `le bot x` for every x : L; no category on L is built here and no initiality
+    or uniqueness is stated. Separately, the NatSLat appendix builds ℕ as a concrete ZPCategory
+    with 0 initial (`natSLat_initial_grounding`). OQ-G3 is closed for F_A. -/
 theorem th1_fa {L : Type*} [ZPSemilattice L] (x : L) :
     le bot x :=
   bot_le x
 
-/-- T-H1 for F_B — domain property: topological irreversibility of 0 in Q₂.
-    No continuous path returns to 0 from any x ≠ 0 (ZPB C3). This is the key
-    irreversibility property that F_B's initial-object claim rests on, grounded in
-    ZPB T3 (clopen isolation) and T5 (total disconnectedness).
-    The shared concrete ZPCategory witness for F_B/C/D is nnrealZPCategory (ℝ≥0 with ≤), where
-    AX-G2 is antisymmetry; C3 is the domain analogue. See nnreal_initial_grounding
-    in the NNRealZPCat appendix for the categorical grounding. -/
+/-- T-H1 for F_B — domain property: no continuous path in Q₂ runs from any x ≠ 0 to 0 (ZPB C3).
+    `Statement:` INVARIANT — the obstruction has no direction: `disconnectedness_forbids_path`
+    (`ZeroParadox/Valuation/BranchingSnapChain.lean`) excludes a path between any two distinct
+    points of a totally disconnected space, from 0 to x as well. `fb_preserves_initial` does not use
+    this theorem (it follows from `q2BallHom0Unique`); F_B's target instance is `q2BallZPCat`. -/
 theorem th1_fb :
     ∀ x : Q₂, x ≠ 0 → ¬∃ γ : C(Set.Icc (0 : ℝ) 1, Q₂),
       γ ⟨0, by norm_num⟩ = x ∧ γ ⟨1, by norm_num⟩ = 0 :=
   c3_irreversible
 
 /-- T-H1 for F_C — domain property: the P → Q snap costs exactly 1 bit.
-    JSD(P, Q) = log 2 (ZPC T1b). This is the information-cost fact that F_C's
-    initial-object claim rests on.
-    The shared concrete ZPCategory witness for F_B/C/D is nnrealZPCategory (ℝ≥0 with ≤);
-    the snap corresponds to the morphism 0 → ⟨Real.log 2, _⟩ in that category.
-    See nnreal_initial_grounding in the NNRealZPCat appendix for the categorical grounding. -/
+    JSD(P, Q) = log 2 (ZPC T1b, `t1b_jsd`). `fc_preserves_initial` does not use this theorem
+    (it follows from `infoDepthHom0Unique`); F_C's target instance is `infoDepthZPCat`, and no
+    declaration here relates `jsdPQ` to a morphism (`fc_snap_info_grounded` only pairs them). -/
 theorem th1_fc : jsdPQ = Real.log 2 :=
   t1b_jsd
 
-/-- T-H1 for F_D — domain property: the snap is an orthogonal shift in Hilb.
-    ⟪T(0), T(ε₀)⟫_ℂ = 0 (ZPD T4). This is the Hilbert-space fact that F_D's
-    initial-object claim rests on, grounded in ZPD T2 (injectivity, norm 1) and DP-1.
-    The shared concrete ZPCategory witness for F_B/C/D is nnrealZPCategory (ℝ≥0 with ≤);
-    the categorical snap 0 → 1 corresponds to the orthogonal shift T(0) → T(ε₀) in Hilb.
-    See nnreal_initial_grounding in the NNRealZPCat appendix for the categorical grounding. -/
+/-- T-H1 for F_D — domain property (ZPD T4, `t4_snap_orthogonal`): in `StateSpace n`, n ≥ 2,
+    the images of indices 0 and 1 under `transitionOp` (= `basisVec`) are orthogonal. The type
+    states orthogonality of the pair, not a map between them; calling index 1 "ε₀" is a naming
+    convention (`ZeroParadox/State/StateSpace.lean`, Note on Fin n Indexing). `fd_preserves_initial`
+    does not use this theorem (it follows from `hilbDimHom0Unique`); F_D's target instance is `hilbDimZPCat`. -/
 theorem th1_fd (n : ℕ) (hn : 2 ≤ n) :
     @inner ℂ (StateSpace n) _
       (transitionOp n ⟨0, by omega⟩)
@@ -136,19 +130,19 @@ theorem th2_singularity_compatibility {C : Type*} [Category C] [zpcat : ZPCatego
     (∀ M : ℝ, ∃ n : ℕ, M < circPartial n) :=
   ⟨t3_unreachability X hne, t2_diverges⟩
 
-/-! ## T-H3 — The Binary Snap Under All Four Functors (Cross-Framework)
+/-! ## T-H3 — The Binary Snap: Four Domain Facts, Conjoined (Cross-Framework)
 
-The Binary Snap 0 → ε₀ is characterized consistently under all four instantiation
-functors. Each domain document establishes irreversibility by its own methods.
-T-SNAP (Binary Snap Causality) is a derived theorem inherited from ZP-E v2.0. -/
+`th3_snap_all_functors` conjoins four separately proved domain facts. Its type names no functor
+and relates no conjunct to another, so a reading of one snap seen under four functors is not what
+it states. T-SNAP (Binary Snap Causality) is a derived theorem inherited from ZP-E v2.0. -/
 
-/-- T-H3: The Binary Snap is described consistently under all four functors.
-    Assembled from independently proved domain theorems; no bridge axioms used.
-    - Under F_A (ZPA/ZPE): join c₀ c₁ = c₁. T-SNAP derived (the shape; AX-1 retired); the snap occurs given the occurrence commitment and DA-1.
-    - Under F_B (ZPB): no continuous path ε₀ → 0 in Q₂. Topologically irreversible (C3).
-    - Under F_C (ZPC): JSD(P, Q) = log 2 (1 bit). Informational cost of the Snap (T1b).
-    - Under F_D (ZPD): ⟪T(0), T(ε₀)⟫_ℂ = 0. Snap produces orthogonal shift (T4).
-    Cross-framework consistency: four independent derivations, same verdict. -/
+/-- T-H3: four separately proved domain facts, conjoined; no bridge axioms used.
+    `Statement:` the tuple `⟨t_snap_machine, c3_irreversible, t1b_jsd, t4_snap_orthogonal n hn⟩`, one conjunct per line:
+    - ZPA/ZPE: join c₀ c₁ = c₁. T-SNAP derived (the shape; AX-1 retired); the snap occurs given the occurrence commitment and DA-1.
+    - ZPB: no continuous path in Q₂ from any x ≠ 0 to 0 (C3).
+    - ZPC: JSD(P, Q) = log 2 (1 bit) (T1b).
+    - ZPD: indices 0 and 1 of `transitionOp n`, n ≥ 2, are orthogonal in `StateSpace n` (T4).
+    No functor occurs in the type, and no conjunct is used to prove another. -/
 theorem th3_snap_all_functors (n : ℕ) (hn : 2 ≤ n) :
     join c₀ c₁ = c₁ ∧
     (∀ x : Q₂, x ≠ 0 → ¬∃ γ : C(Set.Icc (0 : ℝ) 1, Q₂),
@@ -178,12 +172,12 @@ end PurityCheck
 
 /-! ## Appendix — NatSLat: ℕ as a Concrete ZPCategory (Closes OQ-G3 for F_A)
 
-ℕ with Nat.max as join and 0 as bottom is a ZPSemilattice. The induced ≼ relation
-agrees with the standard ≤ on ℕ. The poset-as-category construction (morphisms are
-≤-proofs packed as ULift (PLift (m ≤ n))) makes 0 categorical initial and admits no
-terminal object. AX-G2 holds because m ≤ 0 implies m = 0. Together these verify ℕ
-instantiates ZPCategory with zpInitial = 0. This is the concrete grounding of the
-F_A claim in T-H1: OQ-G3 is closed for F_A. -/
+ℕ with Nat.max as join and 0 as `bot` is a ZPSemilattice (`natZPSemilattice`). The poset-as-category
+construction `natOrderCat` is built from ℕ's ≤ directly (morphisms are ≤-proofs packed as
+ULift (PLift (m ≤ n))), not from the semilattice's join; no declaration in this file states that
+the induced ≼ agrees with ≤. It makes 0 categorical initial and admits no terminal object; AX-G2
+holds because m ≤ 0 implies m = 0, so ℕ instantiates ZPCategory with zpInitial = 0. This is a
+concrete ZPCategory beside the F_A statement in T-H1: OQ-G3 is closed for F_A. -/
 
 section NatSLat
 
@@ -240,15 +234,15 @@ noncomputable def natSLat_initial_grounding : IsInitial (0 : ℕ) :=
 end PurityCheckNatSLat
 
 /-! ## Appendix — NNRealZPCat: ℝ≥0 as a Concrete ZPCategory
-    (Shared Categorical Witness for F_B, F_C, F_D)
+    (A Standalone Categorical Witness)
 
 ℝ≥0 (nonneg reals) with ≤ as morphisms is a ZPCategory where 0 is the initial object.
 For any t : ℝ≥0, t + 1 > t, so no terminal object exists (AX-G1). For any x ≤ 0 in
 ℝ≥0, x = 0 (AX-G2). Together, ℝ≥0 instantiates ZPCategory with zpInitial = 0.
 
-`nnreal_initial_grounding` is the single Lean definition establishing this. F_B, F_C, and
-F_D all share this one concrete categorical instance — they are distinguished only by the
-domain-specific theorems proved separately in T-H1 (C3 for F_B, T1b for F_C, T4 for F_D). -/
+`nnreal_initial_grounding` is the single Lean definition establishing this. No declaration relates
+it to `fb_functor`, `fc_functor` or `fd_functor`, whose targets carry their own instances
+(`q2BallZPCat`, `infoDepthZPCat`, `hilbDimZPCat`); NNReal occurs in none of their types. -/
 
 section NNRealZPCat
 open ZeroParadox ZeroParadox ZeroParadox ZeroParadox
@@ -281,15 +275,10 @@ noncomputable instance nnrealZPCategory : ZPCategory NNReal where
     have hx0 : x = 0 := le_antisymm f.down.down (zero_le (a := x))
     subst hx0; exact hne.elim (Iso.refl (0 : NNReal))⟩
 
-/-- Shared concrete ZPCategory witness for F_B, F_C, and F_D.
+/-- A concrete ZPCategory witness on ℝ≥0.
     ℝ≥0 with ≤ is a ZPCategory (nnrealZPCategory); 0 : NNReal is the categorical initial object.
-    All three instantiation functors share this single concrete instance — same category, three
-    distinct domain contexts differentiated by the per-domain theorems in T-H1:
-      F_B: th1_fb (C3 — topological irreversibility in Q₂)
-      F_C: th1_fc (T1b — JSD snap cost = log 2)
-      F_D: th1_fd (T4 — orthogonal snap shift in Hilb)
-    This is one concrete witness, not three independent verifications. The domain facts above
-    are proved separately; this definition establishes only the shared categorical structure.
+    `Statement:` `IsInitial (0 : NNReal)`; it is not related to any of the three instantiation
+    functors, whose targets carry their own instances (`q2BallZPCat`, `infoDepthZPCat`, `hilbDimZPCat`).
     OQ-G3 is closed (CLAIMS.md); the real-category functors are in the sibling files. -/
 noncomputable def nnreal_initial_grounding : IsInitial (0 : NNReal) :=
   nnrealZPCategory.zpIsInitial
@@ -301,8 +290,7 @@ end NNRealZPCat
 section PurityCheckNNRealZPCat
 open ZeroParadox CategoryTheory CategoryTheory.Limits
 
--- One shared witness for F_B, F_C, F_D: ℝ≥0 has a categorical initial object.
--- Domain differentiation (C3, T1b, T4) is proved separately in T-H1 above.
+-- ℝ≥0 has a categorical initial object; not the target of fb/fc/fd_functor.
 #print axioms nnreal_initial_grounding
 
 end PurityCheckNNRealZPCat
@@ -314,7 +302,7 @@ descends into a smaller ball. AX-G2 (no morphism m → 0 for m ≠ 0) holds here
 on the depth index; C3 (no continuous path returns from a non-zero element to 0 in Q₂) is the
 domain fact it mirrors. In `TopCat`, where `fB_functor` lands, the floor `{0}` is not initial
 (`padic_bottom_not_initial`). fb_functor : Functor ℕ Q₂BallDepth is the concrete F_B Lean term;
-fb_snap_q2_grounded connects its snap morphism 0 → 1 to C3. -/
+fb_snap_q2_grounded restates C3 for points of the depth-1 ball; its type names no morphism. -/
 
 section Q₂BallFunctor
 
@@ -384,8 +372,8 @@ theorem q2Ball_antitone {n m : Q₂BallDepth} (h : n.val ≤ m.val) :
   exact zpow_le_zpow_right₀ (by norm_num : (1 : ℝ) ≤ 2)
     (by omega : -(↑m.val : ℤ) ≤ -(↑n.val : ℤ))
 
-/-- Semantic grounding of fb_functor's snap morphism 0 → ⟨1⟩: by C3 (ZPB) no continuous path
-    returns from x ≠ 0 to 0 in Q₂, the topological analogue of AX-G2 (`q2BallZPCat`, antisymmetry).
+/-- C3 (ZPB) stated for x in the depth-1 ball `q2BallAt ⟨1⟩`: no continuous path in Q₂ runs from
+    x ≠ 0 to 0. The type names no morphism of `Q₂BallDepth`, the morphism 0 → ⟨1⟩ included.
     `Statement:` the ball hypothesis `x ∈ q2BallAt ⟨1⟩` is unused by the proof: the content is
     `c3_irreversible`'s, which carries no ball hypothesis. -/
 theorem fb_snap_q2_grounded :
@@ -423,11 +411,11 @@ end PurityCheckQ₂BallFunctor
 
 /-! ## Appendix — InfoDepthCat and fc_functor: Full Functor for F_C
 
-InfoDepth indexes the surprisal hierarchy (depth n = n bits); a morphism n → m (n ≤ m)
-advances to higher surprisal. AX-G2 (no morphism m → 0 for m ≠ 0) holds here by antisymmetry
-of ≤ on the depth index; informational irreversibility is its domain analogue.
+InfoDepth is a newtype over ℕ named for surprisal levels; no declaration here maps a depth to a
+surprisal value. A morphism n → m is a proof of n ≤ m. AX-G2 (no morphism m → 0 for m ≠ 0) holds
+here by antisymmetry of ≤ on the depth index.
 fc_functor : Functor ℕ InfoDepth is the concrete F_C Lean term; fc_snap_info_grounded
-connects its snap morphism 0 → 1 to T1b (JSD = log 2). -/
+pairs the morphism 0 → ⟨1⟩ with T1b (JSD = log 2) and relates neither to the other. -/
 
 section InfoDepthFunctor
 
@@ -514,11 +502,11 @@ end PurityCheckInfoDepthFunctor
 
 /-! ## Appendix — HilbDimCat and fd_functor: Full Functor for F_D
 
-HilbDimDepth indexes the state-space dimension hierarchy (depth n = dimension n); a morphism
-n → m (n ≤ m) advances to a larger state space. AX-G2 (no morphism m → 0 for m ≠ 0) holds
-here by antisymmetry of ≤ on the depth index; orthogonal irreversibility is its domain
-analogue. fd_functor : Functor ℕ HilbDimDepth is the concrete F_D Lean term;
-fd_snap_hilb_grounded connects its snap morphism 0 → 1 to T4 (⟪T(0), T(ε₀)⟫_ℂ = 0). -/
+HilbDimDepth is a newtype over ℕ named for state-space dimensions; no declaration here maps a
+depth to a `StateSpace`. A morphism n → m is a proof of n ≤ m. AX-G2 (no morphism m → 0 for
+m ≠ 0) holds here by antisymmetry of ≤ on the depth index.
+fd_functor : Functor ℕ HilbDimDepth is the concrete F_D Lean term; fd_snap_hilb_grounded
+pairs the morphism 0 → ⟨1⟩ with T4 (`t4_snap_orthogonal`) and relates neither to the other. -/
 
 section HilbDimFunctor
 
@@ -568,8 +556,8 @@ noncomputable instance hilbDimZPCat : ZPCategory HilbDimDepth where
     subst hn
     exact hne.elim (Iso.refl _)⟩
 
-/-- Semantic grounding of fd_functor's snap morphism 0 → ⟨1⟩: T4 (ZPD) gives an orthogonal shift
-    in StateSpace n (n ≥ 2), ⟪T(0), T(ε₀)⟫_ℂ = 0, read as the dimension advance 0 → 1 here.
+/-- The morphism 0 → ⟨1⟩ of HilbDimDepth beside T4 (ZPD): indices 0 and 1 of `transitionOp n` are
+    orthogonal in `StateSpace n`, n ≥ 2, where n is independent of the depth index.
     `Statement:` a pair: the first conjunct, `Nonempty (0 ⟶ ⟨1⟩)` in HilbDimDepth, is witnessed by
     `⟨⟨Nat.zero_le 1⟩⟩`, the second is proved by `t4_snap_orthogonal n hn`, and the theorem only pairs them. -/
 theorem fd_snap_hilb_grounded (n : ℕ) (hn : 2 ≤ n) :
