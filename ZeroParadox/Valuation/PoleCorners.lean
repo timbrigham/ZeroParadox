@@ -23,8 +23,8 @@ framework already has, and that is fine. The movement of the thought process its
 
 ## Formal Overview (AI-assisted)
 
-The pole is the two-element type `Pole = {zero, infty}` — the framework's self-dual point `0 = ∞`
-(`rInv_swaps`). A *representation of the poles to each other* is an endofunction `Pole → Pole`: where each
+The pole is the two-element type `Pole = {zero, infty}`; its reading: `ZeroParadox/Valuation/PoleCorners.md`.
+A *representation of the poles to each other* is an endofunction `Pole → Pole`: where each
 pole is sent. There are **exactly four** (`card_representations : Fintype.card (Pole → Pole) = 4`), and the
 four named corners **exhaust** them (`four_corners_exhaustive`):
 
@@ -56,7 +56,7 @@ namespace ZeroParadox
 
 -- [ZP port] Lean 4.35: Mathlib's `Fintype` deriving handler needs the pre-4.35 defeq transparency.
 set_option backward.isDefEq.respectTransparency false in
-/-- The pole: the two-element type `{0, ∞}` — the framework's self-dual point `0 = ∞`. -/
+/-- The pole carrier: the two-element type `{0, ∞}`, the two points inversion exchanges. -/
 inductive Pole where
   | zero
   | infty
