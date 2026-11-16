@@ -48,7 +48,7 @@ obstruction is reducibility — multiple communicating classes — exactly the s
 identity kernel would have hidden. The antichain obstruction survives the change of ambient.
 
 What DOES hold is only the existence half (`markov_node_stationary_inhabited`, re-exporting
-`exists_stationary`): the stationary set is always inhabited, never empty. Existence without
+`exists_stationary`): the stationary set is inhabited whenever `Fin n` is nonempty. Existence without
 uniqueness is exactly a fixed *set*, not a terminal object.
 
 **Honest scope.** The GO conjecture (subsingleton ⇒ terminal) is **refuted as stated**: it is false
@@ -76,8 +76,8 @@ def IsStationaryPMF (f : Fin n → PMF (Fin n)) (μ : PMF (Fin n)) : Prop := μ.
 
 /-! ## GO half (holds): the stationary set is inhabited -/
 
-/-- **GO half — existence.** Every finite stochastic action has at least one stationary
-    distribution. Re-export of `exists_stationary` (`ZeroParadox/Reals/PerronFrobenius.lean`). The
+/-- **GO half — existence.** Every stochastic action on a nonempty `Fin n` has at least one
+    stationary distribution. Re-export of `exists_stationary` (`ZeroParadox/Reals/PerronFrobenius.lean`). The
     only half of the pre-registered GO conjecture that survives: inhabited, but **not** subsingleton. -/
 theorem markov_node_stationary_inhabited [Nonempty (Fin n)] (f : Fin n → PMF (Fin n)) :
     ∃ μ : PMF (Fin n), IsStationaryPMF f μ :=

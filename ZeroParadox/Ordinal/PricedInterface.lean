@@ -250,7 +250,7 @@ example (o : Ordinal) (ho : o ≤ ε₀) : ∃ a : E0Note, e0Repr a = o := by
 
 `ON_correct` requires the syntactic comparator to agree with the semantic order. That
 fails on raw `ONote`, because distinct notations that are not in normal form can denote the same
-ordinal — `1 + ω` and `ω` are the smallest witness (the same one used by
+ordinal — `1 + ω` and `ω` are the witness used here (the same one used by
 `mathlib_ONote_order_not_antisymm` in `ZeroParadox/Ordinal/SnapNucleusConstructive.lean`). Ontoness
 does not fail: `e0Repr` is onto the ordinals at or below ε₀ (the `example` above).
 

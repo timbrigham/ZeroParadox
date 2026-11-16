@@ -1,5 +1,5 @@
 """
-Build ZP-H Illustrated Companion (v1.29)
+Build ZP-H Illustrated Companion (v1.30)
 Standalone companion for ZP-H: Categorical Bridge only.
 ZP-G has its own companion (build_zpg_companion.py).
 
@@ -129,7 +129,7 @@ def snap_convergence_diagram():
 
     return d
 
-VERSION = '1.29'
+VERSION = '1.30'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -193,10 +193,10 @@ def build():
         'Paradox: the lattice algebra of ZP-A, the p-adic topology of ZP-B, the information '
         'theory of ZP-C, and the Hilbert space of ZP-D.'))
     E.append(cbody(
-        'The result is a verification that all four frameworks are, in a precise sense, '
-        'realizations of the same abstract structure. They are not four separate arguments '
-        'for the same conclusion — they are four different windows looking at one thing. '
-        'This agreement is coherence: all four frameworks are built on the same structural '
+        'The result: in each framework the image of 0 is an initial object, and each framework '
+        'carries its own proved fact about the snap. That the four are windows on one thing is the '
+        'framework\'s reading; no theorem relates them. '
+        'Their agreement is coherence: all four frameworks are built on the same structural '
         'axioms (A1-A4, AX-B1) and the modelling commitment CC-1 (S₀ = ⊥, restated in ZP-J, not forced), '
         'so the Binary Snap appearing in all of them '
         'reflects a shared foundation, not independent confirmation from unrelated starting points.'))
@@ -259,7 +259,7 @@ def build():
         'at any finite step (padic_orbit_never_reaches_zero). That ⊥ has nothing below it holds in '
         'every setting by A1–A4 (ZP-A T1, T2); the four settings also share AX-B1 and the modelling '
         'commitment CC-1 (S₀ = ⊥, restated in ZP-J, not forced). '
-        'ZP-H verifies that these four reasons are consistent.'))
+        'ZP-H states these four reasons side by side; no theorem relates one to another.'))
     E.append(sp(6))
 
     # ── Morphisms of C ─────────────────────────────────────────────────────────
@@ -374,7 +374,7 @@ def build():
     E.append(sp(6))
 
     # ── T-H3: The Binary Snap ──────────────────────────────────────────────────
-    E.append(Paragraph('The Binary Snap Under All Four Functors', CS['h1']))
+    E.append(Paragraph('The Binary Snap: Four Domain Facts', CS['h1']))
     E.append(cbody(
         'The Binary Snap is the transition from 0 to the first non-initial object. '
         'In the abstract category C, it is the unique morphism from 0 to ε₀ — guaranteed '
@@ -383,7 +383,8 @@ def build():
         'as Theorem T-SNAP, and that the snap occurs is stated separately: it follows from the occurrence commitment '
         'together with DA-1 (closed given DP-2). The occurrence commitment is stated in two charts, execution and slot, in the header of ZeroParadox/Order/Snap.lean (indexed in ZeroParadox/Order/SnapCannotBe.lean &#167; II and CLAIMS.md), the slot chart as the hypothesis hw of t_snap_of_fires_once, that the tape fires at some stage, beside the theorem trials_fires_once that, for independent stages each firing with probability p, 0 &lt; p &#8804; 1, firing at some stage has probability one, which names no tape (ZeroParadox/Information/CrossingTrials.lean &#167; VIII).'))
     E.append(cbody(
-        'T-H3 shows that all four functors agree on what the Snap is:'))
+        'T-H3 (th3_snap_all_functors) states four separately proved domain facts about the Snap together; '
+        'its type names no functor and relates no fact to another:'))
     E.append(cbody(
         '• In lattice algebra: the first join — ⊥ ∨ ε₀ — producing the first non-bottom state.'
         '<br/>'
@@ -411,11 +412,11 @@ def build():
         'not because four separate arguments from unrelated starting points happened to agree.'))
     E.append(sp(6))
 
-    E.append(key_result_box('T-H3: The Binary Snap Under All Four Functors',
-        'The four functor images of the Binary Snap are mutually consistent: each framework '
-        'establishes that the transition is irreversible, costs something '
-        '(informational work, topological separation, orthogonal displacement), and is '
-        'the minimal first step. This agreement is coherence across shared structural '
+    E.append(key_result_box('T-H3: The Binary Snap, Four Domain Facts',
+        'T-H3 conjoins four domain facts, each proved in its own framework: the lattice join '
+        'c₀ ∨ c₁ = c₁, no continuous path in ℚ₂ back to 0, a JSD of exactly 1 bit, and '
+        'orthogonal basis vectors. No functor appears in its type and no fact is used to prove '
+        'another. Read side by side, they are coherence across shared structural '
         'commitments (A1-A4, AX-B1, CC-1), not independent replication. '
         'T-SNAP is a derived theorem inherited here from ZP-E. '
         'The only additional design premise is DP-1 (ZP-D). '
@@ -425,8 +426,8 @@ def build():
 
     E.append(cbody(
         '<b>What this means:</b> The Binary Snap is not a construct of any one framework. '
-        'The shape of the snap, proved as Theorem T-SNAP, is a structural fact that survives translation into four distinct mathematical '
-        'languages. ZP-H is the document that verifies this translation is faithful.'))
+        'The shape of the snap, proved as Theorem T-SNAP, has a counterpart proved in each of four distinct mathematical '
+        'languages. ZP-H states the four together; that they are one snap translated is a reading, not a theorem.'))
 
     print(f'Building: {out_path}')
     doc.build(E)
