@@ -11,9 +11,10 @@ something above it, it likewise doesn't change. Joining anything to itself
 returns you back to the same thing. You get the partial order from A1, A2,
 and A3, which we can leverage later. Bottom isn't algebraic zero. It's the
 bottom of a series of actions, the null state, where nothing has occurred yet.
-D2 says that states always have to grow. If you take the null action you stay
-where you are. Any other action moves you forward. Bottom is literally the
-bottom value. Start at null, take any non-null action, and you cannot get back
+D2 says that states never shrink. If you take the null action you stay where
+you are. Any other action moves you forward, unless you're already at or past
+what it adds, and then you stay where you are. Bottom is literally the bottom
+value. Start at null, take any non-null action, and you cannot get back
 to it. At this level it looks like a modeling choice. It's not something the
 algebra forces here. Bottom is where we define the starting point to be. ZPJ
 derives it from structure.
