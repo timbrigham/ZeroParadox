@@ -559,8 +559,14 @@
     "reconstruct": {
       "family": "review",
       "module": ".claude/commands/reconstruct.md",
-      "actions": [],
-      "reason": "the /reconstruct blind reading (ruling 285(a): Lean files get adversary and reconstruct in parallel on the same commit). Registered so its records can land (V8 refuses an unregistered step) and GATING NOTHING: Tim, 2026-11-16, 'register, block nothing'. One record per (path, blob) examined, emitted from the sjv `blind_readings` view `reconstruct_verdict`: any DIFF-1 item still open -> FAIL with that (path, blob) failing; carried items -> PASS with outstanding; rejected items appear in the reason only. The record is on DISPOSITIONING, never on the reader's opinion (R-NOCONV). Moving `actions` to include push is a separate ruling of Tim's. Ticket: .claude-local/queue/tooling-reconstruct-blind-reading-pipeline.md."
+      "actions": [
+        "push"
+      ],
+      "scope": [
+        "ZeroParadox/*.lean"
+      ],
+      "_actions_why_2026_11_16": "REQUIRED AT PUSH, Tim's ruling 2026-11-16, superseding his 'register, block nothing' of the same evening: 'I need to make sure that both the adversary review and the Reconstruction review are both checkable under a specific blob... All of the way down. Both review types need to be trackable and required before we start allowing pushes going forward'. Scope is the Lean files only (Tim, confirmed directly the same night; CLAIMS.md out): the reading compares prose against elaborated signatures, so its subject is a module. fnmatch `*` crosses `/`, so the glob covers nested modules, the same glob `adversary` uses. A push CHANGING an in-scope file owes a reconstruct PASS at the new blob; the untouched backlog is reported, not blocking.",
+      "reason": "the /reconstruct blind reading (ruling 285(a): Lean files get adversary and reconstruct in parallel on the same commit). Required at push for ZeroParadox/*.lean (see `_actions_why_2026_11_16`). One record per (path, blob) examined, emitted from the sjv `blind_readings` view `reconstruct_verdict`: any DIFF-1 item still open -> FAIL with that (path, blob) failing; carried items -> PASS with outstanding; rejected items appear in the reason only. The record is on DISPOSITIONING, never on the reader's opinion (R-NOCONV). Ticket: .claude-local/queue/tooling-reconstruct-blind-reading-pipeline.md."
     }
   },
   "_switches_v15": "A subject set is everything the verdict DEPENDS ON, not merely everything the checker read. Found by ZeroParadox 2026-08-23: check_pov recorded 291 subjects and NOT pov_baseline.txt, so grandfathering a violation into that baseline left the record reading SATISFIED -- every file it named was unchanged. V15 refuses a record that omits a declared switch, which turns a convention into a contract: with the switch as a subject, editing a baseline moves a blob the record names, the key goes STALE, and the checker re-runs. Declaring switches is NOT a narrowing and costs no reason -- it makes a type stricter.",
