@@ -62,7 +62,7 @@ ambient mismatch):
 into a statement, the two witnesses `IsColimit(#4)` and `IsLimit(#3)` are **pre-existing** (`ZeroParadox/Category/KleisliInitialColimit.lean`,
 `ZeroParadox/Order/PadicLimitCone.lean`). Of the asymmetry, only the limit half (an incoming factoring map) is generic to limits;
 the colimit half (an empty incoming hom) is not a consequence of initiality — it is the pre-existing
-`fC_no_return` of `KleisliCat PMF` (the initial `fD_functor.obj 0` is a zero object, `seam_isZero`). The objects also live in different ambient
+`fC_no_return` of `KleisliCat PMF` (contrast, in a different category: in `ModuleCat ℂ` the initial `fD_functor.obj 0` is a zero object and receives maps; `seam_isZero`, `ZeroParadox/Category/CrossCategoryArrow.lean`). The objects also live in different ambient
 categories with no canonical functor between them, the bare-glue non-result `ZeroParadox/Multihomed/SeamConnectorFail.lean` already flagged.
 So this edge is **NO-GO / OVERCLAIM at the new-edge level**: there is no new cross-domain
 identification, only a sharpened *separation*. The framework records that the #4 ↔ #3 cross-root

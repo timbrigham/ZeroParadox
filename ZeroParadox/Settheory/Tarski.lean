@@ -59,7 +59,7 @@ theorem tarski_no_internal_truth {A : Type*} (truth : A → (A → Prop)) :
 
 /-- **The T-schema at the liar is inconsistent.** A truth predicate `Tr` obeying its own T-schema at the
     liar sentence — `Tr liar ↔ ¬ Tr liar` — is absurd: an instance of `¬(p ↔ ¬p)`. The liar is a
-    hypothesis; its existence (the diagonal lemma, Tarski's real content) is not proved here. The floor dual: replace `¬` by the
+    hypothesis; its existence (the diagonal lemma on which Tarski's theorem rests) is not proved here. The floor dual: replace `¬` by the
     self-closing map and you get the Quine atom instead of the wall. -/
 theorem tarski_Tschema_liar_absurd {A : Type*} (Tr : A → Prop) (liar : A)
     (hTschema : Tr liar ↔ ¬ Tr liar) : False :=

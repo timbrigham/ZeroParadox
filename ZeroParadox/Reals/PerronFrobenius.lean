@@ -11,7 +11,8 @@ set_option maxHeartbeats 1000000
 
 Every stochastic action on a nonempty finite state space has a fixed point. Built via Cesàro averaging on the compact simplex
 (Mathlib has `isCompact_stdSimplex` but no Brouwer / Markov–Kakutani fixed-point, so existence is built, not
-pulled off a shelf).
+pulled off a shelf). Related averaging argument: Mathlib's Krylov–Bogolyubov, `MeasureTheory.exists_measurePreserving_probabilityMeasure`
+(`Mathlib/Dynamics/Ergodic/EmpiricalMeasure.lean`), an invariant measure for a continuous map, not this `PMF` bind fixed point.
 
 ## Engineer's Take
 This file is one of a series of iterative attempts on this branch to build a map of how the various

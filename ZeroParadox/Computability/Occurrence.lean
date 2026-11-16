@@ -316,8 +316,8 @@ end PoleSwap
 
 `fan_out` in `ZeroParadox/Miniature.lean` (three incomparable successors) sits alongside
 `pole_cannot_fan : Fintype.card Pole = 2`: **the two-element pole cannot hold the branching
-field.** The computational pole is the halted or looping configurations (`Extremal`); a step can
-also land off it (`machine_trichotomy`'s third case, § VI-c's `carry`). The theorems below say why that matters.
+field**; the theorems below say why that matters. A configuration can sit off the halted-or-looping
+set `Extremal` (`machine_trichotomy`'s third case), and under § VI-c's `carry` every step lands off it.
 
 The reading this section supports: `machine_snap_impossible` (§ III) is powered by
 DETERMINISM, not by the self-loop. It is `pole_cannot_fan` in machine vocabulary. -/

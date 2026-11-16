@@ -34,8 +34,8 @@ diagram with apex the zero object `fD_functor.obj 0` is a colimit. Reason, fully
 a cofan `c` were `IsColimit`, its left injection `inl : fD.obj 1 ⟶ fD.obj 0` is forced to be the zero
 map (the target is a zero object), so the universal factorization of the pair `(𝟙, 0)` would give
 `𝟙 (fD.obj 1) = inl ≫ desc = 0`, making `fD.obj 1` a zero object — contradicting that `StateSpace 1`
-is nontrivial. So the seam can receive at most the trivial self-cocone, not a universal cocone from
-nonzero μ-bottoms.
+is nontrivial. So the seam is not the apex of a universal binary cocone from nonzero μ-bottoms; it is
+a colimit apex over zero objects (below) and, being initial, over the empty diagram.
 
 **The honest GO companion (`seam_selfcoproduct_collapse`).** The colimit role witnessed here is
 the vacuous one: the coproduct of the zero object with itself is again the zero object. We witness
@@ -118,10 +118,10 @@ noncomputable def seam_selfcoproduct_collapse :
   · intro T f g; exact hZ.eq_of_src _ _
   · intro T f g m _ _; exact hZ.eq_of_src _ _
 
-/-- The full result in one statement: the seam is a zero object, the transported μ-leaf is not,
-    and consequently no zero-apex colimit cofan exists over two nonzero μ-leaves — while the
-    self-collapse cofan over the zero object IS a colimit. The pair = "seam is not a μ-side coproduct
-    connector, only a trivial self-cocone." -/
+/-- The seam is a zero object, the transported μ-leaf is not, and no zero-apex binary cofan over
+    two nonzero μ-leaves is a colimit. The self-collapse cofan IS a colimit, separately
+    (`seam_selfcoproduct_collapse`). Reading: the seam is not a binary-coproduct connector over these
+    μ-leaves; it is a colimit apex over zero objects and, being initial, over the empty diagram. -/
 theorem seam_not_colimit_connector :
     IsZero (fD_functor.obj 0)
     ∧ ¬ IsZero (fD_functor.obj 1)

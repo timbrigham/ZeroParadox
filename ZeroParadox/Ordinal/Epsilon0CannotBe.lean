@@ -231,10 +231,9 @@ example : typeLT (Set.Ioo (Ordinal.epsilon 0 : Ordinal.{0}) (Ordinal.epsilon 1))
   rw [h, Ne, Ordinal.lift_inj]
   exact (Ordinal.veblen_right_strictMono 1 zero_lt_one).ne'
 #check @ZeroParadox.card_epsilon0              -- Statement: COUNTING chart, `ε₀.card = ℵ₀`. A cell indexed past the countable ordinals is not countable (the control in `ZeroParadox/Ordinal/Epsilon0LeastFP.lean`)
-#check @ZeroParadox.repr_surj_below_epsilon0   -- Statement: every ordinal below ε₀ is denoted by a normal-form `ONote`, a finite term; ε₀ is denoted by none (`repr_lt_epsilon0`, § I-b)
--- Reading: CARRIER, two charts of one cell, neither denied. Order type: the first cell's seeds below
--- its landing are as wide as ε₀, and each successor cell is as wide as its own landing. Count: the
--- first cell is countable; each of its seeds below ε₀ is a finite term, and ε₀ itself is none.
+#check @ZeroParadox.repr_surj_below_epsilon0   -- Statement: every ordinal below ε₀ is denoted by a normal-form `ONote`, a finite term; no `ONote` denotes ε₀ (`repr_lt_epsilon0`, § I-b)
+-- Reading: CARRIER, two charts of one cell, neither denied: the order-type chart (`first_cell_eq_Iic`,
+-- `successor_cell_width`) and the counting chart (`card_epsilon0`, `repr_surj_below_epsilon0`) above.
 
 /-! ### § VIII. One universe seen from the next: the § I-b role at a point floor and at a level floor -/
 #check @ZeroParadox.below_univ_is_a_copy          -- Statement: below `univ.{u, u+1}` every ordinal is the lift of exactly one ordinal of `Ordinal.{u}`, and the lift keeps and reflects `<`
