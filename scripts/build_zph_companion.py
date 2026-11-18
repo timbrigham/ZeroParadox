@@ -1,5 +1,5 @@
 """
-Build ZP-H Illustrated Companion (v1.32)
+Build ZP-H Illustrated Companion (v1.33)
 Standalone companion for ZP-H: Categorical Bridge only.
 ZP-G has its own companion (build_zpg_companion.py).
 
@@ -129,7 +129,7 @@ def snap_convergence_diagram():
 
     return d
 
-VERSION = '1.32'
+VERSION = '1.33'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -196,8 +196,7 @@ def build():
         'The result: in Lean, FB, FC and FD send 0 to an initial object of ℕ-indexed stand-ins (for FB, '
         'Q₂BallDepth; in TopCat its floor is terminal, not initial); FA has no functor term, and its '
         'witness is ℕ with 0 initial. Each framework has its own proved fact, none derived from another '
-        'or from a functor. The corpus labels each a face of the snap, and that labelling is the '
-        'framework\'s reading, as is the further reading that the four are windows on one thing; no '
+        'or from a functor. That the four are windows on one thing is the framework\'s reading; no '
         'theorem relates them. Where they look alike, the likeness reflects a shared foundation (A1-A4, '
         'AX-B1 and the modelling commitment CC-1, S₀ = ⊥, restated in ZP-J, not forced), not independent '
         'confirmation.'))
@@ -393,8 +392,7 @@ def build():
     E.append(cbody(
         'T-H3 (th3_snap_all_functors) conjoins four separately proved domain facts, listed in the '
         'T-H3 box below; none is derived from another or from a functor, its type names no functor, and it '
-        'relates no fact to another. The corpus labels each a face of the snap, and that labelling is the '
-        'framework\'s reading. The bullets here are not its conjuncts: they are how the framework '
+        'relates no fact to another. The bullets here are not its conjuncts: they are how the framework '
         'reads the Snap in each setting.'))
     E.append(cbody(
         '• In lattice algebra: the first join — ⊥ ∨ ε₀ — producing the first non-bottom state.'
@@ -410,8 +408,7 @@ def build():
     E.append(snap_convergence_diagram())
     E.append(ccaption(
         'The framework\'s reading, drawn as one line per framework: each of the four has a transition '
-        'of the Binary Snap\'s shape. The corpus labels each of the four proved facts a face of the snap, '
-        'and that labelling is the framework\'s reading; no fact is derived from another, and no theorem '
+        'of the Binary Snap\'s shape. No fact is derived from another, and no theorem '
         'relates the four lines. The vertical line marks the moment of the Snap. '
         'Left: ⊥. Right: ε₀.'))
     E.append(sp(6))
@@ -429,8 +426,7 @@ def build():
         'T-H3 conjoins four domain facts, each proved in its own framework: the lattice join '
         'c₀ ∨ c₁ = c₁, no continuous path in ℚ₂ back to 0, a JSD of exactly 1 bit, and '
         'orthogonal basis vectors. No functor appears in its type and no fact is used to prove '
-        'another. The corpus labels each a face of the snap, and that labelling is the framework\'s '
-        'reading. Read side by side, the framework takes them '
+        'another. Read side by side, the framework takes them '
         'as coherence across shared structural '
         'commitments (A1-A4, AX-B1, CC-1), not independent replication. '
         'T-SNAP is a derived theorem inherited here from ZP-E. '

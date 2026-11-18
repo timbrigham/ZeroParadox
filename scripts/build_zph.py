@@ -1,12 +1,12 @@
 """
 Zero Paradox — ZP-H: Categorical Bridge PDF Builder
-Version 1.43 | November 2026
+Version 1.44 | November 2026
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.43'
+VERSION = '1.44'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -419,8 +419,8 @@ def build():
             'The four facts are sorry-free in Lean 4: the lattice conjunct join c<sub>0</sub> c<sub>1</sub> = c<sub>1</sub> of '
             'th3_snap_all_functors; fb_snap_q2_grounded, which restates C3 for points of the depth-1 ball and names no '
             'morphism; and fc_snap_info_grounded and fd_snap_hilb_grounded, each of which only pairs the stand-in morphism '
-            '0 &#8594; 1 of its target with T1b or T4 and relates neither to the other. No fact is derived from another either; the corpus labels each a face of the snap, and that labelling is the framework\'s reading. '
-            'On that reading, each fact constrains the shape a transition can take in its own domain, so a '
+            '0 &#8594; 1 of its target with T1b or T4 and relates neither to the other. No fact is derived from another either. '
+            'On the framework\'s reading, each fact constrains the shape a transition can take in its own domain, so a '
             'transition of the snap\'s shape in each of the four canonical languages for state description is more than '
             're-description. That reading is not a theorem, and neither is the further reading that the '
             'four are one structural singularity. That the transition is taken follows from the occurrence commitment together with DA-1 (closed given DP-2), not from '
@@ -445,8 +445,8 @@ def build():
             'in MachinePhase (T-SNAP); (2) no continuous path in Q<sub>2</sub> runs from a '
             'nonzero point to 0 (ZP-B C3); (3) JSD(P, Q) = log 2, one bit (ZP-C T1b); (4) indices 0 and 1 of transitionOp n are orthogonal '
             'in StateSpace n, n &#8805; 2 (ZP-D T4). No functor occurs in its type, and no conjunct is used to prove another.',
-            'Readings, not part of the statement: the corpus labels each conjunct a face of the Snap, and that labelling is the framework\'s reading. '
-            'The four lines below are how the framework reads the Snap in each instantiation '
+            'Readings, not part of the statement: '
+            'the four lines below are how the framework reads the Snap in each instantiation '
             'setting. They are interpretation, and no Lean declaration states them.',
             'Reading under F<sub>A</sub> (ZP-A): F<sub>A</sub>(&#953;<sub>&#949;0</sub>) = &#8869; &#8744; &#949;<sub>0</sub> = S<sub>1</sub>. The Snap is the first join. Monotone and irreversible by ZP-A T3. '
             'T-SNAP is a derived theorem (ZP-E v2.0); inherited here with derived status.',
@@ -509,7 +509,7 @@ def build():
         ['F<sub>D</sub> respects AX-G1, AX-G2',       'hilbDimZPCat (stand-in); C-H4; ZP-D T4 beside it, not used','DP-1 (for ZP-D T4; the stand-in proofs do not use it)', 'Valid in the stand-in — both fail in ModuleCat &#8450;'],
         ['T-H1: universal property preserved',         'fb/fc/fd_preserves_initial (IsInitial.ofUnique 0); natZPCategory for F<sub>A</sub>', 'None', 'Valid — OQ-G2 closed, in the stand-ins'],
         ['T-H2: singularity compatibility',            'ZP-G T3, T6; ZP-C T2; C-H3', 'None',        'Valid — OQ-G4 closed'],
-        ['T-H3: four separately proved domain facts, conjoined', 'ZP-E T-SNAP; ZP-B C3; ZP-C T1b; ZP-D T4', 'DP-1', 'Valid — a conjunction; none derived from another or from a functor; each labelled a face of the Snap, the framework\'s reading'],
+        ['T-H3: four separately proved domain facts, conjoined', 'ZP-E T-SNAP; ZP-B C3; ZP-C T1b; ZP-D T4', 'DP-1', 'Valid — a conjunction; none derived from another or from a functor'],
         ['D-H1: morphisms of C',                       'ZP-A D2; ZP-B T2; ZP-C; ZP-D', 'None',      'Design Commitment'],
     ]
     E.append(data_table(
@@ -639,7 +639,7 @@ def build():
          'shown to hold together: the proof pairs ZP-G Lemma T3 with ZP-C Theorem T2 and uses neither '
          'to prove the other. <font name="DV">&#10003;</font>'],
         ['T-H3: four separately proved domain facts, conjoined',
-         'Valid — Derived as a conjunction of four separately proved domain facts; no conjunct relates to another or is derived from a functor; the corpus labels each a face of the Snap, and that labelling is the framework\'s reading. T-SNAP inherited as derived theorem (ZP-E v2.0). '
+         'Valid — Derived as a conjunction of four separately proved domain facts; no conjunct relates to another or is derived from a functor. T-SNAP inherited as derived theorem (ZP-E v2.0). '
          'DP-1 labelled as design premise. <font name="DV">&#10003;</font>'],
         ['Traceability register',
          'Valid — Complete. Every cross-framework claim traced to source theorem and bridge axiom. No floating connections.'],
