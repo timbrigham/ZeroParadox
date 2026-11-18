@@ -62,6 +62,7 @@ import ZeroParadox.State.DieProjection
 import ZeroParadox.State.QubitDie
 import ZeroParadox.State.FermiStepDie
 import ZeroParadox.Order.MotionFlips
+import ZeroParadox.Multihomed.TH3Die
 
 set_option maxHeartbeats 400000
 
@@ -5251,5 +5252,16 @@ example : ¬ ∃ f : List Bool → Unit, ∀ l l',
 #check @ZeroParadox.epsilon0_control           -- Reading: the second point the tree theorem uses supplies only non-degeneracy; ε₀ ≠ ⊥ of `Ordinal` (`epsilon0_ne_bot`) is such a point, and `Ordinal` neither doubles nor embeds `BTree`, so naming that point ε₀ adds nothing
 -- Statement: `square_embed_forces_btree` is the order case of `Motion.tree_of_square` (the `example` in
 -- `ZeroParadox/Valuation/DoublingAndTree.lean` § IX).
+
+/-! ### § XXXII. T-H3's four conjuncts, each as a motion on its own carrier -/
+-- Reading: CARRIER — four carriers, each fit beside its control in `ZeroParadox/Multihomed/TH3Die.lean`;
+-- the two cross-links are obstructions through maps, and no equation across carriers is stated.
+#check @ZeroParadox.th3_A_fit                  -- Statement: `MachinePhase`, UP `join · c₁`: `c₀` goes UP to `c₁`, the only landing; `c₀` leaves, `c₁` steps to itself only
+#check @ZeroParadox.th3_B_fit                  -- Statement: `Q₂`, OVER Mathlib's `Joined`: every step into `0` starts at `0` (`c3_irreversible`)
+#check @ZeroParadox.th3_B_every_point_selfOnly -- Statement: in that path motion EVERY point of `Q₂` steps to itself only, so (B) does not single out `0`
+#check @ZeroParadox.th3_C_fit                  -- Statement: UP constant at the mixture, `Th3JsdAlong` holds. Reading: a fit as DATA only; the mixture and the quantity are supplied, not computed by a die premise
+#check @ZeroParadox.th3_D_climb                -- Statement: `StateSpace n`, UP projection onto `ℂ ∙ e₀`, OVER `e₀ → e₁`: the motion climbs (`t4_snap_orthogonal`); `th3_D_control` loops instead at `e₀ + e₁`
+#check @ZeroParadox.th3_AB_collapse            -- Statement: a map carrying join steps to path steps in `Q₂` with `c₁ ↦ 0` sends `c₀ ↦ 0`; the ℝ control `th3_AB_control_real` carries every step
+#check @ZeroParadox.th3_AD_no_upLax            -- Statement: no map `c₀ ↦ e₁`, `c₁ ↦ e₀` makes the UP square lax; `th3_AD_control` builds one at `e₀ + e₁`
 
 end DieCannotBeIndex
