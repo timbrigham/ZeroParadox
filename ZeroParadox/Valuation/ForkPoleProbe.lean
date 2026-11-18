@@ -10,7 +10,7 @@ set_option maxHeartbeats 400000
 ## Engineer's Take
 
 I kept going on the axes, and this one is the interesting pair. The fork and the pole are separate
-requirements, and yet on the pole the fork forces a collapse, and I read that collapse as the snap. There is a
+requirements for any one map, and yet on the pole the fork forces a collapse, and I read that collapse as the snap. There is a
 fork with no pole. On the pole it depends on the map: the identity has no fork, a constant map does. And it is
 their meeting that makes the collapse.
 
