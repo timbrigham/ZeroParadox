@@ -153,7 +153,8 @@ could read them.*
 
 **1. The EQUIVOCATION.** English "choice" — picking, adopting a point of view, selecting a chart — is
 **not** the axiom. Every *"choice = which way you view the split"* line is a **model**, never the
-axiom. Hit four separate times in one session.
+axiom. Hit four separate times in one session. Class row and RUN detector: `DC-77` in
+`.claude-local/DEFECT_CLASSES.md` (one instance or a uniform family? one instance is undecided: run the search).
 
 ⚠ **Attribution, and an earlier version of this got it wrong and seeded the error into five Lean
 files.** **Diaconescu (1975) proves an EQUIVALENCE** for the restricted shape: in a topos, which has
