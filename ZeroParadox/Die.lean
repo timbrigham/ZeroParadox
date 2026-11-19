@@ -5623,7 +5623,9 @@ theorem aprod_fst_not_step :
   intro M N
   exact ⟨Prod.GameAdd.snd (a := ()) (b₁ := ()) (b₂ := ()) trivial, fun h => h⟩
 
-/-- `Statement:` an isomorphism of motions: strict maps both ways, mutually inverse. -/
+/-- `Statement:` an isomorphism of motions: strict maps both ways, mutually inverse. It asks
+    nothing of the carriers; `Motion.HomeoIso` and `Motion.LipIso` (`ZeroParadox/DieSameness.lean`)
+    extend it with continuity and with Lipschitz bounds. -/
 -- [ZP-CUSTOM] equivalent to: an isomorphism in Mathlib's `Endofunctor.Coalgebra` category
 -- (`StrictIso.equivCoalgIso`) | reason: named fields, a pair of `Hom`s (§ XIX) inverse on the
 -- underlying maps, which `FixedPole`, `StrictIso.rtg_iff`, `tree_of_aDoubling` and

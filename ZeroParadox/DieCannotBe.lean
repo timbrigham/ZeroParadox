@@ -67,6 +67,7 @@ import ZeroParadox.Multihomed.OrbitDie
 import ZeroParadox.Multihomed.CollapseDie
 import ZeroParadox.Multihomed.LimitMotion
 import ZeroParadox.Multihomed.BendDie
+import ZeroParadox.DieSameness
 
 set_option maxHeartbeats 400000
 
@@ -5359,5 +5360,16 @@ example : ¬ ZeroParadox.Motion.unitMotion.Loop := fun ⟨_, _, _, _, hne, _⟩ 
 #check @ZeroParadox.bend_halfturn_ne_quarterturn -- Statement: the half turn and the quarter turn are not strictly isomorphic; the proof uses that the half turn squares to the identity and the quarter turn does not
 #check @ZeroParadox.bend_strictIso_iff_conj_of_periodic -- Statement: for continuous `g`, `h` on Hausdorff spaces with `g^[n] = id`, `h^[m] = id` (`0 < n`, `0 < m`), the limit motions are strictly isomorphic iff some bijection conjugates `g` to `h`
 #check @ZeroParadox.bendFiveIso                -- Statement: rotation by `ζ = exp(2πi/5)` and by `ζ²` are strictly isomorphic limit motions on `OnePoint ℂ`; `bend_zeta_sq_conditions` checks the conditions of Rybalkina–Sergeichuk Lemma 2.1 fail for the pair
+
+/-! ### § XXXVII. Levels of the die isomorphism: strict, homeomorphic, bi-Lipschitz -/
+-- Reading: CARRIER — the levels and the control live in `ZeroParadox/DieSameness.lean`; each level
+-- extends the one before; the control below is a `StrictIso` with no `HomeoIso`, and that file
+-- exhibits no `HomeoIso` lacking a `LipIso`.
+#check @ZeroParadox.Motion.StrictIso           -- Statement: the bare level: strict maps both ways, mutually inverse, nothing asked of the carriers
+#check @ZeroParadox.Motion.HomeoIso            -- Statement: a `StrictIso` whose two maps are continuous
+#check @ZeroParadox.Motion.LipIso              -- Statement: a `HomeoIso` whose two maps are Lipschitz; continuity is a field default
+#check @ZeroParadox.Motion.stillMotion_nat_rat_strict_not_homeo -- Statement: CONTROL — `ℕ` and `ℚ` with identity UP and no step: a `StrictIso`, no `HomeoIso`
+#check @ZeroParadox.lmHomeoIsoOfConj           -- Statement: `lmIsoOfConj` at the `HomeoIso` level; its `toStrictIso` is `lmIsoOfConj` by `rfl` (`lmHomeoIsoOfConj_toStrictIso`)
+#check @ZeroParadox.bendFiveIso                -- Statement: stated at the `StrictIso` level (§ XXXVI)
 
 end DieCannotBeIndex
