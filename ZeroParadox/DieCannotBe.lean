@@ -957,8 +957,8 @@ example : ∀ c : Part ℕ, ¬ (ZeroParadox.Motion.ofTotal (id : ℕ → ℕ) (f
   fun _ ⟨h, _⟩ => h 0
 #check @ZeroParadox.Motion.three_of_not_runClose -- Statement: if no stage of `s` is a landing and `up (s n) ≠ up (s 0)` for some `n`, the carrier has three distinct points (`[propext, Classical.choice, Quot.sound]`, the choice in a case split on definedness; not statement-carried, control measured 2026-10-28)
 #check @ZeroParadox.Motion.four_of_not_runClose -- Statement: with UP total, four distinct points (`[propext, Quot.sound]`)
--- Statement: the bounds are met: on `Fin 3`, UP `0, 2 ↦ 2`, undefined at `1`, OVER `0 ↔ 1`, the run
--- `0, 1, 0, …` is landing-free and its stages differ in UP, so `RunsClose` fails.
+-- Statement: the bounds are met: some motion on `Fin 3` fails `RunsClose`. The proof's witness has
+-- UP `0, 2 ↦ 2`, undefined at `1`, OVER `0 ↔ 1`, and the landing-free run `0, 1, 0, …`.
 example : ∃ M : ZeroParadox.Motion (Fin 3), ¬ M.RunsClose := by
   let u : Fin 3 → Option (Fin 3) := fun x => if x = 1 then none else some 2
   have hu : ∀ x y, y ∈ u x → y ∈ u y := by decide
@@ -985,8 +985,8 @@ example : ∃ M : ZeroParadox.Motion (Fin 3), ¬ M.RunsClose := by
   have : (2 : Fin 3) ∈ Part.ofOption (u 0) := Part.mem_ofOption.2 rfl
   rw [← e, Part.mem_ofOption] at this
   exact absurd this (by decide)
--- Statement: with UP total: on `Fin 4`, UP `0 ↦ 2`, `1 ↦ 3`, `2`, `3` fixed, OVER `0 ↔ 1`; `RunsClose`
--- fails.
+-- Statement: with UP total: some motion on `Fin 4` has total UP and fails `RunsClose`. The proof's
+-- witness has UP `0 ↦ 2`, `1 ↦ 3`, `2`, `3` fixed, OVER `0 ↔ 1`.
 example : ∃ M : ZeroParadox.Motion (Fin 4), M.UpTotal ∧ ¬ M.RunsClose := by
   let r : Fin 4 → Fin 4 := fun x => if x = 0 then 2 else if x = 1 then 3 else x
   have hr : ∀ x, r (r x) = r x := by decide
@@ -1132,7 +1132,7 @@ example : (ZeroParadox.runMotion (fun n : ℕ => some (n + 1))).StageClosure Set
       (fun _ => rfl)).2
 #check @ZeroParadox.runMotion_run_diverges      -- Statement: along a run of the motion no stage is a landing and the closure is undefined
 -- Statement: the delay face: for `f a = some b`, the delayed runs from `a` and from `b` are weakly
--- bisimilar (Mathlib `Computation.Equiv`); one step adds one `think`.
+-- bisimilar (Mathlib `Computation.Equiv`); the proof unfolds the step as one `think`.
 example {σ : Type} (f : σ → Option σ) {a b : σ} (h : f a = some b) :
     Computation.Equiv (Computation.corec (fun s => (f s).elim (Sum.inl s) Sum.inr) a)
       (Computation.corec (fun s => (f s).elim (Sum.inl s) Sum.inr) b) := by
@@ -1683,7 +1683,7 @@ example : (ZeroParadox.Motion.ofFun ⇑(ZeroParadox.T ZeroParadox.fullMix)).FanI
       rw [ZeroParadox.fullMix_eigen_zero, zero_smul]).symm, (map_zero _).symm⟩
 -- Statement: each of the four cells {one-to-one or not} × {both trap sets (§ XVI) nonempty, both
 -- empty} has a function-step member; the mixed cells are not shown. Not one-to-one, both nonempty:
--- `cZero` (zero steps to itself only; no step enters infty).
+-- `cZero` (zero steps to itself only; every step into infty starts at infty).
 example : (ZeroParadox.Motion.ofFun ZeroParadox.Miniature.Pole.cZero).FanIn
       ZeroParadox.Miniature.Pole.zero ∧
     (∀ a, (ZeroParadox.Motion.ofFun ZeroParadox.Miniature.Pole.cZero).step a
@@ -2456,7 +2456,20 @@ example (n : ℤ) : let M := (ZeroParadox.Motion.ofTotal (id : ZeroParadox.Spher
   · rintro rfl; rw [inv']
   · intro h
     rw [ZeroParadox.rInv_involutive.injective h, inv]
-#check @ZeroParadox.rInv_swaps                    -- Statement: `rInvHomeo` sends `0` to `∞` and `∞` to `0` on `OnePoint ℚ_[2]`: the INVERSION witness, two distinct points exchanged, not the coincidence
+-- Statement: the reverse half: under `rScale n`, `0` and `∞` of `OnePoint ℚ_[2]` are each stepped
+-- into only from themselves.
+example (n : ℤ) : let M := (ZeroParadox.Motion.ofTotal (id : ZeroParadox.Sphere → ZeroParadox.Sphere)
+      (fun _ => rfl) (fun a b => b = ZeroParadox.rScale n a))
+    M.reverse.SelfOnlyAt (OnePoint.some 0) ∧ M.reverse.SelfOnlyAt OnePoint.infty := by
+  intro M
+  have inv' : ∀ z, ZeroParadox.rScale (-n) (ZeroParadox.rScale n z) = z := fun z => by
+    rw [ZeroParadox.rScale_add, neg_add_cancel, ZeroParadox.rScale_zero]; rfl
+  refine ⟨⟨(ZeroParadox.rScale_fixes_poles n).1.symm, fun b hb => ?_⟩, ⟨rfl, fun b hb => ?_⟩⟩
+  · have hb' : OnePoint.some 0 = ZeroParadox.rScale n b := hb
+    rw [← inv' b, ← hb']; exact (ZeroParadox.rScale_fixes_poles (-n)).1
+  · have hb' : OnePoint.infty = ZeroParadox.rScale n b := hb
+    rw [← inv' b, ← hb']; rfl
+#check @ZeroParadox.rInv_swaps                   -- Statement: `rInvHomeo` sends `0` to `∞` and `∞` to `0` on `OnePoint ℚ_[2]`: the INVERSION witness, two distinct points exchanged, not the coincidence
 -- Reading: Tim's reading of the two ends, measured. A source (nothing steps in) and a sink (nothing
 -- steps out) are roles of the MOTION, not points of its carrier, and a reversal maps the first
 -- one-for-one onto the second (`bijOn_sources_sinks`), as `0` and `∞` under `0 → ∞` on `OnePoint ℕ`.
@@ -3984,7 +3997,7 @@ example :
 #check @ZeroParadox.ordinalViewClosed            -- Statement: the carrier of `ordinalView n` as a closed set of `ordinalSuccMotion`
 #check @ZeroParadox.ordinalViewClosed_strictAnti -- Statement: strictly antitone in `n`
 #check @ZeroParadox.Motion.instPartialOrder      -- Statement: `M ≤ N` when UP is the same and every step of `M` is a step of `N`; a partial order
-#check @ZeroParadox.Motion.leHom                 -- Statement: `M ≤ N` gives the identity as a map of motions
+#check @ZeroParadox.Motion.leHom                 -- Statement: `M ≤ N` gives the identity as a relation homomorphism on the steps, `M.step →r N.step`
 #check @ZeroParadox.Motion.isLanding_iff_of_le   -- Statement: `M ≤ N` gives the same landings
 #check @ZeroParadox.Motion.noEntry_anti          -- Statement: the "no entry from elsewhere" set of `N` lies in that of `M`
 #check @ZeroParadox.Motion.noExit_anti           -- Statement: the "no exit elsewhere" set of `N` lies in that of `M`
@@ -4382,9 +4395,9 @@ example :
     · exact lt_irrefl _ h1
     · exact lt_irrefl _ h2
 -- Statement: the snap's UP leg at the boundary model: `phaseBelowCoverMotion` (UP `phaseClosure`, OVER
--- the covers of `WithBot Ordinal`) climbs from the landing `floor`, the point sent to ⊥ of
--- `WithBot Ordinal`, over the cover to the snap `up 0`, then UP to `up ε₀`, which is neither the snap
--- (`epsilon0_ne_zero`) nor `floor`; so its corner fires (`climb_corner`). The statement names
+-- the covers of `WithBot Ordinal`) climbs and its corner fires (`climb_corner`). The proof's climb
+-- runs from the landing `floor`, the point sent to ⊥ of `WithBot Ordinal`, over the cover to the
+-- snap `up 0`, then UP to `up ε₀`, which is neither the snap (`epsilon0_ne_zero`) nor `floor`. The statement names
 -- `phaseBelowCoverMotion`, which measures `[propext, Classical.choice, Quot.sound]`, and its UP
 -- `phaseClosure` measures the same, through Mathlib's `Ordinal` order and fixed-point theory, while
 -- `phaseEquivWithBot` measures `[propext, Quot.sound]` (`ZeroParadox/Multihomed/BoundaryOrder.lean`'s
@@ -5265,7 +5278,7 @@ example : ∃ e : StrictIso (ofTotal (id : ℕ → ℕ) (fun _ => rfl) (fun _ _ 
 #check @ZeroParadox.Motion.NonDegenerateAt     -- Statement: PREMISE, `r` reaches some `a` that does not reach `r` back
 #check @ZeroParadox.Motion.tree_of_aDoubling   -- Statement: an isomorphism `M ≅ M.aprod M`, `r` reaching `e⁻¹ (r, r)`, and `NonDegenerateAt r` give a map from `Bool` words, `[]` at `r`, along which reachability is the prefix order; one way
 #check @ZeroParadox.Motion.tree_of_aDoubling_pole -- Reading: if a motion doubles by interleaving, with a fixed pole at `r` and a point reachable from `r` that cannot reach `r` back, then reachability forks at every node of a copy of the binary tree rooted at `r`; one way, and the converse is not claimed
-#check @ZeroParadox.sync_no_bridge             -- Reading: with the lockstep pairing in place of the interleaving one, the same three premises give no such tree: the lockstep square does not carry reachability coordinatewise (`sync_rtg_not_product`)
+#check @ZeroParadox.sync_no_bridge             -- Reading: with the lockstep pairing in place of the interleaving one, the same three premises do not force such a tree: `endTopMotion` meets all three and carries none, its lockstep square not carrying reachability coordinatewise (`sync_rtg_not_product`)
 #check @ZeroParadox.sync_rtg_not_product       -- Statement: in `endTopMotion`, ⊥ of `End` reaches itself and `topEnd`, and in the lockstep square (⊥, ⊥) does not reach (⊥, `topEnd`)
 #check @ZeroParadox.Motion.ADoublingEmb        -- Statement: PREMISE, a one-to-one strict map `M.aprod M → M`; implied by `ADoubling` (`aDoublingEmb_of_aDoubling`)
 #check @ZeroParadox.Motion.not_aDoublingEmb_of_finite -- Statement: non-members: every motion on a finite carrier with two distinct points
@@ -5343,8 +5356,8 @@ example : ¬ ZeroParadox.Motion.unitMotion.Loop := fun ⟨_, _, _, _, hne, _⟩ 
 #check @ZeroParadox.bend_conj_of_norm_ne_one   -- Statement: if `‖c‖ ≠ 1` and `‖d‖ ≠ 1`, a homeomorphism of `OnePoint ℂ` conjugates `lmScale c` to `lmScale d`
 #check @ZeroParadox.bend_iso_of_norm_ne_one    -- Statement: if `‖c‖ ≠ 1` and `‖d‖ ≠ 1`, the limit motions of `lmScale c` and `lmScale d` are strictly isomorphic
 #check @ZeroParadox.bendConjIso                -- Statement: the limit motions of `lmScale c` and `lmScale (conj c)` are strictly isomorphic; `bend_iso_I_negI` is `c = i`
-#check @ZeroParadox.bend_halfturn_ne_quarterturn -- Statement: the half turn and the quarter turn are not strictly isomorphic; the proof uses that the half turn squares to the identity
-#check @ZeroParadox.bend_strictIso_iff_conj_of_periodic -- Statement: if `g^[n] = id` and `h^[m] = id`, the limit motions are strictly isomorphic iff some bijection conjugates `g` to `h`
+#check @ZeroParadox.bend_halfturn_ne_quarterturn -- Statement: the half turn and the quarter turn are not strictly isomorphic; the proof uses that the half turn squares to the identity and the quarter turn does not
+#check @ZeroParadox.bend_strictIso_iff_conj_of_periodic -- Statement: for continuous `g`, `h` on Hausdorff spaces with `g^[n] = id`, `h^[m] = id` (`0 < n`, `0 < m`), the limit motions are strictly isomorphic iff some bijection conjugates `g` to `h`
 #check @ZeroParadox.bendFiveIso                -- Statement: rotation by `ζ = exp(2πi/5)` and by `ζ²` are strictly isomorphic limit motions on `OnePoint ℂ`; `bend_zeta_sq_conditions` checks the conditions of Rybalkina–Sergeichuk Lemma 2.1 fail for the pair
 
 end DieCannotBeIndex
