@@ -8,10 +8,10 @@ bottom-diagram mapping campaign, **not a finalized layer**. Curated results are 
 
 - § I. `th3_AD_no_upLax_of_proj_ne` (`ZeroParadox/Multihomed/TH3Die.lean`) rules out the lax UP square
   for a map with `c₀ ↦ v` and `c₁ ↦ th3E0` when the projection of `v` onto `ℂ ∙ th3E0` is not
-  `th3E0`. For a unit vector `u`,
-  the projection of `v` onto `ℂ ∙ u` is `u` iff `⟪u, v⟫ = 1` (`bend_proj_eq_self_iff`). So, with
-  `c₁ ↦ th3E0` fixed, the obstruction fires iff `⟪th3E0, v⟫ ≠ 1` (`bend_AD_obstructed_iff`). It fires at the anti-parallel
-  `-th3E0` (`bend_antiparallel`) and at the phase-shifted `i • th3E0` (`bend_phase`), as at the
+  `th3E0`. For a unit vector `u`, the projection of `v` onto `ℂ ∙ u` is `u` iff `⟪u, v⟫ = 1`
+  (`bend_proj_eq_self_iff`). So, with `c₁ ↦ th3E0` fixed, the obstruction fires iff
+  `⟪th3E0, v⟫ ≠ 1` (`bend_AD_obstructed_iff`). It fires at the anti-parallel `-th3E0`
+  (`bend_antiparallel`) and at the phase-shifted `i • th3E0` (`bend_phase`), as at the
   orthogonal `th3E1`, so it does not separate the three (`bend_no_separation`). The control is
   `bend_overlap_one`: for `w ⊥ th3E0` the square exists at `th3E0 + w`.
 - § II. Scaling `lmScale c` on `OnePoint ℂ` (`ZeroParadox/Multihomed/LimitMotion.lean`). If
@@ -20,13 +20,13 @@ bottom-diagram mapping campaign, **not a finalized layer**. Curated results are 
   step and the negated angle under inversion are `bend_iterate_polar`, `bend_arg_iterate` and
   `bend_inv_angle`.
 - §§ III–IV. If `‖c‖ ≠ 1` and `‖d‖ ≠ 1`, a homeomorphism of `OnePoint ℂ` conjugates `lmScale c` to
-  `lmScale d` (`bend_conj_of_norm_ne_one`), so their limit motions are strictly isomorphic, a
-  strict isomorphism being `Motion.StrictIso` (ZP shorthand: the die isomorphism; § VI)
-  (`bend_iso_of_norm_ne_one`, through `lmIsoOfConj`). On one side of the unit circle the radial
+  `lmScale d` (`bend_conj_of_norm_ne_one`), so their limit motions are strictly isomorphic
+  (`bend_iso_of_norm_ne_one`, through `lmIsoOfConj`); a strict isomorphism is `Motion.StrictIso`
+  (ZP shorthand: the die isomorphism; see § VI). On one side of the unit circle the radial
   power `bendRadial` matches the moduli and the twist `bendTwist`, `z ↦ z · exp(iα log ‖z‖)`, matches
   the angles; across it, `onePointInvHomeo` comes first. The twist alone gives `bendIso` and
   `bend_iso_abs`.
-- § V. At `‖c‖ = 1`. Complex conjugation, extended to `OnePoint ℂ`, makes `lmScale c` and
+- § V. For every `c ≠ 0`, complex conjugation, extended to `OnePoint ℂ`, makes `lmScale c` and
   `lmScale (conj c)` strictly isomorphic (`bendConjIso`); `bend_iso_I_negI` is the case `c = i`.
   The negative controls are `bend_rotation_ne_identity` (a scaling `c ≠ 1` against the identity) and
   `bend_halfturn_ne_quarterturn`, whose proof uses that the half turn squares to the identity and
@@ -35,15 +35,16 @@ bottom-diagram mapping campaign, **not a finalized layer**. Curated results are 
 - § VI. `Motion.StrictIso` (`ZeroParadox/Die.lean`) asks for a bijection carrying steps and
   commuting with UP, and no continuity of the bijection; `limitMotion g` takes a continuous
   self-map `g` of a Hausdorff space. If `g^[n] x = x` with `0 < n`, the limit retraction has a
-  value at `x` iff `x` is a fixed point (`bend_mem_limitRetraction_of_periodic`, which assumes no
-  continuity of `g`). So for continuous `g`, `h` on Hausdorff spaces with `g^[n] = id` and
+  value at `x` iff `x` is a fixed point (`bend_mem_limitRetraction_of_periodic`, which, on a Hausdorff
+  space, assumes no continuity of `g`). So for continuous `g`, `h` on Hausdorff spaces with `g^[n] = id` and
   `h^[m] = id` (`0 < n`, `0 < m`), the limit motions are strictly isomorphic iff some bijection
   conjugates `g` to `h` (`bend_strictIso_iff_conj_of_periodic`; the iso is `bendPeriodicIso`).
-  Conjugacy by a bijection is conjugacy in the symmetric group, classified by cycle type; Mathlib's
-  finite form is `Equiv.Perm.isConj_iff_cycleType_eq`, and the form for an infinite carrier was not
-  located in Mathlib as of 2026-11-19 (searched: LeanExplore, theoremsearch with a formal phrasing,
-  `exact?`). Without periodicity, for continuous `g`, `h` on Hausdorff spaces, a homeomorphism
-  conjugating them gives a strict isomorphism (`lmIsoOfConj`). The test case is
+  For one finite type, Mathlib's `Equiv.Perm.isConj_iff_cycleType_eq` states that two
+  permutations of it are conjugate iff they have the same cycle type; a form for an infinite type
+  was not located in Mathlib as of 2026-11-19 (searched: LeanExplore, theoremsearch, and a grep of
+  Mathlib's `GroupTheory/Perm` folder). Without assuming `g`, `h` periodic, for continuous `g`, `h`
+  on Hausdorff spaces, a homeomorphism conjugating them gives a strict isomorphism
+  (`lmIsoOfConj`). The test case is
   rotation by `ζ = exp(2πi/5)` against rotation by `ζ²`: `bendFiveIso` is a strict isomorphism,
   through `bendFiveFwd z = ζ^(bendSector z) · z`, and `bend_sector_shift` is the sector-index step it
   uses. `bend_zeta_sq_conditions` proves `‖ζ‖ = ‖ζ²‖ = 1`, `ζ ≠ ζ²` and `ζ ≠ conj (ζ²)`.
@@ -74,17 +75,18 @@ Axiom footprints: the `PurityCheck` section at the end of `BendDie.lean`.
   `|a|, |c| > 1`, or `a = c`, or `a = conj(c)`. `bend_conj_same_side` is the "if" half of the first
   two cases. Both papers rest on Kuiper and Robbin, Invent. Math. 19 (1973) 83–106; Budnytska's proof
   also uses her Proposition 2.1, "a conclusion of the results of Kuiper and Robbin, Cappell and
-  Shaneson". Both are cited here only as cited by them.
+  Shaneson". Kuiper–Robbin and Cappell–Shaneson are cited here only as these two papers cite them.
 - J. Milnor, "Dynamics in one complex variable: introductory lectures", arXiv:math/9201272. § 6,
   Remark 6.3: near a repelling periodic point whose multiplier is not real, the Julia set contains
   a sequence of points converging to it whose Koenigs coordinates "lie along a logarithmic
-  spiral", the curve the twist follows. § 12: Poincaré's rotation number "is well defined, and invariant under orientation
-  preserving topological conjugacy". Mathlib's form is `CircleDeg1Lift.translationNumber` with
+  spiral", the curve the twist follows. § 12: Poincaré's rotation number "is well defined, and
+  invariant under orientation preserving topological conjugacy". Mathlib's form is `CircleDeg1Lift.translationNumber` with
   `CircleDeg1Lift.translationNumber_conj_eq`, for lifts of orientation-preserving circle maps.
   Complex conjugation, the map in `bendConjIso`, reverses orientation, so those statements do not
   cover it.
 - The negative controls of § V concern an isomorphism without continuity, so they are not
-  consequences of the classification; their proofs use a fixed point and the orders of the half and quarter turns.
+  consequences of the classification; their proofs use a fixed point, and that the half turn
+  squares to the identity and the quarter turn does not (`i · (i · 1) ≠ 1`).
 - Corpus: `lmScale`, `lmIsoOfConj`, `lm_onePointInv_conj_scale`
   (`ZeroParadox/Multihomed/LimitMotion.lean`), `th3_AD_no_upLax_of_proj_ne`
   (`ZeroParadox/Multihomed/TH3Die.lean`), `Motion.StrictIso` (`ZeroParadox/Die.lean`). Mathlib:
