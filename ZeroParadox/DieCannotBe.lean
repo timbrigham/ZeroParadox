@@ -2701,16 +2701,19 @@ example : (∀ b : Bool, (!b) ≠ b) ∧ (none : Option Bool).bind (fun b => som
   ⟨by decide, rfl⟩
 -- Statement: biproduct diagonal on isomorphism classes of `ModuleCat ℂ` (the quotient by `≅`): a
 -- finite-dimensional `X` whose class steps to itself only under `Y ↦ Y ⊞ Y` is zero
--- (`biprod_diagonal_only_zero`); one way. `freeNat`, not finite, has a class that does and is not zero.
+-- (`biprod_diagonal_only_zero`); one way. `freeNat`, not finite (`freeNat_not_finite`), has a class
+-- that does and is not zero.
 open CategoryTheory CategoryTheory.Limits in
 example (X : ModuleCat.{0} ℂ) [Module.Finite ℂ X] :
     let D : Quotient (isIsomorphicSetoid (ModuleCat.{0} ℂ)) → Quotient (isIsomorphicSetoid _) :=
       Quotient.map (fun Y : ModuleCat.{0} ℂ => Y ⊞ Y) (fun _ _ ⟨i⟩ => ⟨biprod.mapIso i i⟩)
     ((ZeroParadox.Motion.ofFun D).SelfOnlyAt ⟦X⟧ → IsZero X) ∧
-      (ZeroParadox.Motion.ofFun D).SelfOnlyAt ⟦ZeroParadox.freeNat⟧ ∧ ¬ IsZero ZeroParadox.freeNat := by
+      (ZeroParadox.Motion.ofFun D).SelfOnlyAt ⟦ZeroParadox.freeNat⟧ ∧ ¬ IsZero ZeroParadox.freeNat ∧
+      ¬ Module.Finite ℂ ZeroParadox.freeNat := by
   intro D
   refine ⟨fun h => ?_, (ZeroParadox.Motion.selfOnlyAt_ofFun_iff _ _).2
-    (Quotient.sound ⟨ZeroParadox.freeNat_biprod_self.symm⟩), ZeroParadox.freeNat_not_isZero⟩
+    (Quotient.sound ⟨ZeroParadox.freeNat_biprod_self.symm⟩), ZeroParadox.freeNat_not_isZero,
+    ZeroParadox.freeNat_not_finite⟩
   obtain ⟨i⟩ := (Quotient.exact ((ZeroParadox.Motion.selfOnlyAt_ofFun_iff _ _).1 h) :
     IsIsomorphic (X ⊞ X) X)
   exact ZeroParadox.biprod_diagonal_only_zero X ⟨i.symm⟩
@@ -2734,7 +2737,8 @@ example (G : ZeroParadox.EvalClass → ZeroParadox.EvalClass) (hG : ZeroParadox.
   ZeroParadox.selfOnlyAt_of_witnessRel ZeroParadox.hasWitnessRel_evalClass hG
 #check @ZeroParadox.rice_of_evalClassWitness     -- Statement: Rice's theorem (`rice_face` cites Mathlib), proved through that witness
 #check @ZeroParadox.occurrence_undecidable       -- Statement: occurrence at `n` is not a `ComputablePred`
--- Statement: occurrence at `n` respects `eval` and is not a `ComputablePred`, through the witness.
+-- Statement: occurrence at `n` is not a `ComputablePred`, the type of `occurrence_undecidable`, here
+-- through the witness (`rice_of_evalClassWitness`); the proof discharges that occurrence respects `eval`.
 example (n : ℕ) : ¬ ComputablePred (fun c : Nat.Partrec.Code => ZeroParadox.Occurs c n) := by
   obtain ⟨cn, hcn⟩ := Nat.Partrec.Code.exists_code.1 Nat.Partrec.none
   refine ZeroParadox.rice_of_evalClassWitness {c | ZeroParadox.Occurs c n}
@@ -2764,10 +2768,11 @@ example :
     ZeroParadox.Motion.not_climb_of_upStepInvariant (ZeroParadox.shiftMotion_upStepInvariant c)⟩
 -- Statement: CONTROL: `Code.zero` is a computational quine with Gödel number 0, and its `shiftMotion`
 -- has no corner.
-example : ZeroParadox.IsComputationalQuine Nat.Partrec.Code.zero ∧
+example : Encodable.encode Nat.Partrec.Code.zero = 0 ∧
+    ZeroParadox.IsComputationalQuine Nat.Partrec.Code.zero ∧
     ¬ (ZeroParadox.shiftMotion Nat.Partrec.Code.zero).Corner := by
   have hz : Encodable.encode Nat.Partrec.Code.zero = 0 := by decide
-  refine ⟨?_, fun h => (ZeroParadox.shiftMotion_corner_iff _).1 h hz⟩
+  refine ⟨hz, ?_, fun h => (ZeroParadox.shiftMotion_corner_iff _).1 h hz⟩
   show Nat.Partrec.Code.eval Nat.Partrec.Code.zero = ZeroParadox.selfApply Nat.Partrec.Code.zero
   funext n; simp [ZeroParadox.selfApply, hz]
 #check @ZeroParadox.ordinalSuccMotion_up_succ_epsilon0 -- Statement: there UP sends `succ ε₀` to ε₁
@@ -2979,11 +2984,12 @@ example : let M := (ZeroParadox.Motion.ofTotal (id : ℕ → ℕ) (fun _ => rfl)
 open CategoryTheory in
 example : let M := (ZeroParadox.Motion.ofTotal (id : ℕ → ℕ) (fun _ => rfl)
       (fun m n => Nonempty (ZeroParadox.fC_functor.obj m ⟶ ZeroParadox.fC_functor.obj n)))
-    ¬ M.StepRaises ∧ ¬ M.StepLowers ∧ ∀ a, M.step a 0 → a = 0 := by
+    M.step 0 1 ∧ M.step 0 2 ∧ ¬ M.StepRaises ∧ ¬ M.StepLowers ∧ ∀ a, M.step a 0 → a = 0 := by
   intro M
   have s01 : M.step 0 1 := ⟨ZeroParadox.fC_zero_isInitial.to _⟩
+  have s02 : M.step 0 2 := ⟨ZeroParadox.fC_zero_isInitial.to _⟩
   have s31 : M.step 3 1 := ⟨fun _ => PMF.pure (0 : Fin 1)⟩
-  refine ⟨fun h => absurd (h 3 1 s31) (by decide),
+  refine ⟨s01, s02, fun h => absurd (h 3 1 s31) (by decide),
     fun h => absurd (h 0 1 s01) (by decide), fun a ⟨f⟩ => ?_⟩
   rcases Nat.eq_zero_or_pos a with h | h
   · exact h
@@ -3348,18 +3354,23 @@ example {α : Type} (M : ZeroParadox.Motion α) (L₁ L₂ : LE α) :
 -- Reading: one point at opposite ends of two mutually reverse orders, each defined on ℤ_[2] apart from
 -- the other. Reading the valuation's ⊤ as the pole's ∞ is interpretation; the coincidence witness of
 -- the pole stays `infinitude_forces_infinite_complexity` (`ZeroParadox/BottomCannotBe.lean` § INVERSION).
--- Statement: the same membership, every step out of 0 ends at 0, reached by two order routes: 0 the
--- only point `≤ 0` by norm with doubling lowering, and 0 the only point `≥ 0` by `q2Val` with doubling
--- raising.
-example : (∀ b, (ZeroParadox.Motion.ofFun (fun x : ℤ_[2] => 2 * x)).step 0 b → b = 0) ∧
-    (∀ b, (ZeroParadox.Motion.ofFun (fun x : ℤ_[2] => 2 * x)).step 0 b → b = 0) :=
-  ⟨@ZeroParadox.Motion.eq_of_step_from_of_stepLowers _ _ (Preorder.lift (‖·‖ : ℤ_[2] → ℝ)).toLE
-      ZeroParadox.z2_two_views.2.2.2.1 0
-      (fun b (h : ‖b‖ ≤ ‖(0 : ℤ_[2])‖) => norm_le_zero_iff.mp (by simpa using h)),
-   @ZeroParadox.Motion.eq_of_step_from_of_stepRaises _ _ (Preorder.lift ZeroParadox.q2Val).toLE
-      ZeroParadox.z2_two_views.2.2.2.2.1 0
-      (fun b (h : ZeroParadox.q2Val 0 ≤ ZeroParadox.q2Val b) =>
-        ZeroParadox.q2Val_unique b (top_le_iff.mp (ZeroParadox.q2Val_bot ▸ h)))⟩
+-- Statement: the premises of the two order routes to the same membership: doubling lowers by norm and
+-- 0 is the only point `≤ 0` there; doubling raises by `q2Val` and 0 is the only point `≥ 0` there; and
+-- every step out of 0 ends at 0 (`Motion.eq_of_step_from_of_stepLowers` from the first pair).
+example :
+    (@ZeroParadox.Motion.StepLowers ℤ_[2] (ZeroParadox.Motion.ofFun (fun x : ℤ_[2] => 2 * x))
+        (Preorder.lift (‖·‖ : ℤ_[2] → ℝ)).toLE ∧ ∀ b : ℤ_[2], ‖b‖ ≤ ‖(0 : ℤ_[2])‖ → b = 0) ∧
+    (@ZeroParadox.Motion.StepRaises ℤ_[2] (ZeroParadox.Motion.ofFun (fun x : ℤ_[2] => 2 * x))
+        (Preorder.lift ZeroParadox.q2Val).toLE ∧
+      ∀ b : ℤ_[2], ZeroParadox.q2Val 0 ≤ ZeroParadox.q2Val b → b = 0) ∧
+    (∀ b, (ZeroParadox.Motion.ofFun (fun x : ℤ_[2] => 2 * x)).step 0 b → b = 0) := by
+  have hn : ∀ b : ℤ_[2], ‖b‖ ≤ ‖(0 : ℤ_[2])‖ → b = 0 :=
+    fun b h => norm_le_zero_iff.mp (by simpa using h)
+  have hv : ∀ b : ℤ_[2], ZeroParadox.q2Val 0 ≤ ZeroParadox.q2Val b → b = 0 :=
+    fun b h => ZeroParadox.q2Val_unique b (top_le_iff.mp (ZeroParadox.q2Val_bot ▸ h))
+  exact ⟨⟨ZeroParadox.z2_two_views.2.2.2.1, hn⟩, ⟨ZeroParadox.z2_two_views.2.2.2.2.1, hv⟩,
+    @ZeroParadox.Motion.eq_of_step_from_of_stepLowers _ _ (Preorder.lift (‖·‖ : ℤ_[2] → ℝ)).toLE
+      ZeroParadox.z2_two_views.2.2.2.1 0 hn⟩
 -- Statement: CONTROL: least in one order and greatest in another is had by any carrier with a least
 -- point, through the order dual: `false` on `Bool`.
 example : IsBot false ∧ @IsTop Bool (OrderDual.instLE Bool) false :=
@@ -3461,6 +3472,7 @@ example {σ : Type} [PartialOrder σ] (g : σ → σ) (hg : ∀ x, x ≤ g x) :
     let M := ZeroParadox.Motion.ofTotal (id : Option σ → Option σ) (fun _ => rfl)
                 (fun a b => b = Option.map g a)
     ((∀ a, M.step a none → a = none) ∧ (∀ b, M.step none b → b = none)) ∧
+    (@ZeroParadox.Motion.StepRaises (WithBot σ) M _ ∧ @ZeroParadox.Motion.StepRaises (WithTop σ) M _) ∧
     (∀ a : WithBot σ, M.step a (⊥ : WithBot σ) → a = ⊥) ∧
       (∀ b : WithTop σ, M.step (⊤ : WithTop σ) b → b = ⊤) := by
   intro M
@@ -3474,7 +3486,7 @@ example {σ : Type} [PartialOrder σ] (g : σ → σ) (hg : ∀ x, x ≤ g x) :
     rcases a with _ | x
     · exact le_rfl
     · exact WithTop.coe_le_coe.2 (hg x)
-  refine ⟨⟨fun a ha => ?_, fun _ hb => hb⟩, ZeroParadox.Motion.eq_bot_of_step_to_bot hb,
+  refine ⟨⟨fun a ha => ?_, fun _ hb => hb⟩, ⟨hb, ht⟩, ZeroParadox.Motion.eq_bot_of_step_to_bot hb,
     ZeroParadox.Motion.eq_bot_of_step_from_bot (α := (WithTop σ)ᵒᵈ) (M := M) ht⟩
   change none = Option.map g a at ha
   rcases a with _ | x
@@ -4278,7 +4290,8 @@ example :
 #check @ZeroParadox.epsilonOrZeroIsoLanding_spec  -- Statement: RELATION: the order isomorphism from `EpsilonOrZero` to the landings of `phaseUpAndOver.up` sends 0 of `Ordinal` to ⊥ of `WithBot Ordinal` (not to `↑0`) and ε₀ to `↑ε₀`, and carries the cover `0 ⋖ ε₀` to a cover among the landings
 -- Reading: CARRIER, two views of one step, neither THE view. On the full carrier the first step
 -- lands on `↑0` and `↑ε₀` is one UP further (the corner); on the view of landings the first step is
--- ε₀ itself (the cover). The isomorphism is the relation; in both, ε₀ is the step off a floor, not it.
+-- ε₀ itself (the cover). The isomorphism is the relation; in neither is ε₀ the floor: it is reached
+-- from the floor by a step and then UP in the first, by one step in the second.
 -- Statement: the other direction: if a motion on `L` steps elsewhere at ⊥ of `L`, some step `⊥ → b`
 -- carries T-SNAP's triple at `(⊥, b)`. No landing hypothesis is used, so the UP leg plays no part.
 example {L : Type*} [ZeroParadox.ZPSemilattice L] (M : ZeroParadox.Motion L)
@@ -4531,8 +4544,10 @@ example (H : ∀ (σ O : Type) (f : σ → Option σ) (obs : σ → O),
     · exact hnn fun hp => hne (ha' ▸ Quotient.sound (show P = True from eq_true hp))
     · exact absurd hs (by decide)
   exact of_eq_true (show P = True from H Bool Prop _ _ hq true false rfl)
--- Reading: so the converse is classified STATEMENT-CARRIED: decidable equality on `O` makes it
--- choice-free, and stated for every `O` it is a taboo (double-negation elimination).
+-- Reading: so the converse is classified STATEMENT-CARRIED: from decidable equality on `O` it is
+-- proved by cases on `decEq` (a named copy of that proof printed `[propext, Quot.sound]`, measured
+-- 2026-11-19; no `#print axioms` reaches this `example`), and stated for every `O` it is a taboo
+-- (double-negation elimination).
 -- Statement: `carry` (`ZeroParadox/Computability/Occurrence.lean`) under `Prod.fst`: the kernel is
 -- step-compatible, every state steps elsewhere, and no class of the quotient does.
 example :
@@ -4997,8 +5012,9 @@ example (d : DecidableEq Ordinal.{0}) : ZeroParadox.WLPO := by
 -- Reading: in (vi) `L` tags `NInf.infty` through a decidable equality on `Ordinal.{0}`, as
 -- `wlpo_of_tag` tags it through `Option ℕ`'s. `Option ℕ`'s decidable equality is an instance; the one
 -- on `Ordinal.{0}` is a hypothesis here, and given one, weak excluded middle follows (the second
--- CONTROL above, and the `example` after `wlpo_of_weakExcludedMiddle`; both proofs print `Classical.choice`
--- from the ambient `Ordinal` API, so their constructive reading is not measured here). Read
+-- CONTROL above, and the `example` after `wlpo_of_weakExcludedMiddle`). No `#print axioms` reaches an
+-- `example`; named copies of both proofs printed `Classical.choice` (measured 2026-11-19), so their
+-- constructive reading is not measured here. Read
 -- constructively, the content of (vi) lies in its hypothesis: by de Jong and Escardó's argument (cited
 -- next) a decidable equality gives weak excluded middle, and `wlpo_of_weakExcludedMiddle` gives WLPO;
 -- neither Lean proof measures this. Classically WLPO needs no hypothesis (the first
@@ -5254,13 +5270,15 @@ example : ∃ e : StrictIso (ofTotal (id : ℕ → ℕ) (fun _ => rfl) (fun _ _ 
 #check @ZeroParadox.Motion.not_aDoublingEmb_of_finite -- Statement: non-members: every motion on a finite carrier with two distinct points
 #check @ZeroParadox.Motion.fin3_not_aDoublingEmb -- Statement: non-member: `fin3Motion`
 #check @ZeroParadox.Motion.fin3_doubling_control -- Reading: loop, climb and corner together do not force doubling: `fin3Motion` has all three and doubles in neither pairing
-#check @ZeroParadox.endFlip_doubling_control   -- Reading: interleaving doubling with a loop and a corner and no climb, and its reachability carries the tree at ⊥ of `End`; with `unitMotion_not_corner` below, doubling forces none of corner, loop, climb
+#check @ZeroParadox.endFlip_doubling_control   -- Reading: interleaving doubling with a loop and a corner and no climb, and its reachability carries the tree at ⊥ of `End`; with `unitMotion_not_corner` and the no-loop `example` below, doubling forces none of corner, loop, climb
 #check @ZeroParadox.Motion.unit_doubling_degenerate -- Reading: non-degeneracy is load-bearing: `unitMotion` meets both doublings, fails only `NonDegenerate`, and carries no tree (next `example`)
 -- Statement: on `unitMotion` no map from `Bool` words carries reachability as the prefix order.
 example : ¬ ∃ f : List Bool → Unit, ∀ l l',
     Relation.ReflTransGen ZeroParadox.Motion.unitMotion.step (f l) (f l') ↔ l <+: l' :=
   fun ⟨f, hf⟩ => absurd ((hf [false] []).1 (.single trivial)) (by decide)
 #check @ZeroParadox.Motion.unitMotion_not_corner -- Statement: the corner of `unitMotion` does not fire
+-- Statement: `unitMotion` does not loop: a loop needs a step to a second point.
+example : ¬ ZeroParadox.Motion.unitMotion.Loop := fun ⟨_, _, _, _, hne, _⟩ => hne rfl
 #check @ZeroParadox.comb_not_aDoubling         -- Statement: `combLeMotion` (UP the identity, a step `≤` on `Comb`) does not meet `ADoubling`
 #check @ZeroParadox.nn_tree                    -- Reading: doubling forces the tree without discreteness: `ℕ → ℝ≥0` doubles (`nnDouble`), ⊥ of it has no cover, it is not strongly atomic, and `BTree` embeds at ⊥
 #check @ZeroParadox.comb_atomic_no_tree        -- Reading: and discreteness does not force the tree: `Comb` is strongly atomic and embeds no `BTree`
@@ -5284,7 +5302,7 @@ example : ¬ ∃ f : List Bool → Unit, ∀ l l',
 -- first result has the shape "never lands against lands", and no equation across carriers is stated.
 #check @ZeroParadox.od_never_arrives           -- Statement: if every step into `y` starts at `y`, no other point arrives at `y` (repackages `Motion.not_noEntry_of_arrives`)
 #check @ZeroParadox.od_RT_padic_fit            -- Statement: doubling on `Q₂`: `x ≠ 0` never arrives at `0` of `Q₂`; `od_halve_arrives`: every natural arrives at `0` of ℕ under halving
-#check @ZeroParadox.od_RT_collapse_ring        -- Statement: a map carrying halving steps to doubling steps on any commutative ring is `0`, consuming the source's self-step at `0` and fork at `2 * n`, that the target step is the function `z ↦ 2 * z`, and that `z = 2 * z` forces `z = 0` in every commutative ring; `od_RT_reverse_map` is not obstructed
+#check @ZeroParadox.od_RT_collapse_ring        -- Statement: a map carrying halving steps to doubling steps on any commutative ring is `0`; its proof uses the source's self-step at `0` and fork at `2 * n`, that the target step is the function `z ↦ 2 * z`, and that `z = 2 * z` forces `z = 0`. The self-step is that proof's route, not a requirement: carrying only steps between distinct points still forces `0` (the `example` after it in `ZeroParadox/Multihomed/OrbitDie.lean`); `od_RT_reverse_map` is not obstructed
 #check @ZeroParadox.od_PM_same_shape           -- Statement: INVARIANT — from the image of a nonzero rational, doubling never lands on `0` of `Q₂` nor on `0` of ℝ; every `x ≠ 0` of `Q₂` is `od_RT_padic_fit`; the difference is the lifted norm order (`od_PM_fit`)
 #check @ZeroParadox.od_PM_collapse             -- Statement: a step-carrying map `Q₂ → ℝ` monotone for the norm orders is `0`; the reverse is `od_PM_collapse_rev`
 #check @ZeroParadox.odQ2toMarkovHom            -- Statement: a strict map from doubling on `Q₂` into the Markov step at `1/4`, balanced exactly at `0` (`od_NM_hom_balance`)
@@ -5295,7 +5313,7 @@ example : ¬ ∃ f : List Bool → Unit, ∀ l l',
 #check @ZeroParadox.cd_collapse_in             -- Statement: IN form: every point has a path to `y` and every step into the image of `y` starts there, so a step-carrying map is constant
 #check @ZeroParadox.cd_collapse_out            -- Statement: OUT form: `t` steps to every point and the image of `t` has at most one successor, so a step-carrying map is constant
 #check @ZeroParadox.cd_not_injective_of_loop   -- Statement: a lax map from a looping motion into one whose landings step only to themselves is not one-to-one
-#check @ZeroParadox.cd_tiz_doubling_collapse   -- Statement: a map carrying join steps of a `ZPSemilattice` to doubling on `Q₂` is `0`, from A4 alone; reversed, `cd_tiz_reverse_doubling_collapse`
+#check @ZeroParadox.cd_tiz_doubling_collapse   -- Statement: a map carrying join steps of a `ZPSemilattice` to doubling on `Q₂` is `0`, its proof from A4 alone; the conclusion holds into any commutative ring from `join_idem` (the `example` after it); reversed, `cd_tiz_reverse_doubling_collapse`
 #check @ZeroParadox.cd_pred_to_doubling_const  -- Statement: a semiconjugacy from `Nat.pred` to doubling on `Q₂` is `0`; the other direction, `cd_doubling_to_pred`, is not obstructed
 #check @ZeroParadox.cd_realization_bridges     -- Statement: `realization_bridges_both_valuations` without `x ≠ ⊥`, which follows from `ρ x ≠ 0` (`cd_realization_bot`)
 #check @ZeroParadox.cd_run_into                -- Statement: under AX-G2's shape at `I`, a run of the hom motion at `I` at time `k` is, at every time `m ≤ k`, at an object not isomorphism-free with `I`
@@ -5309,6 +5327,8 @@ example : ¬ ∃ f : List Bool → Unit, ∀ l l',
 #check @ZeroParadox.limitRetraction            -- Statement: the limit retraction of `g` (Abate–Bedford) restricted to convergent orbits, partial: defined at `x` exactly when the orbit of `x` converges, with value its limit
 #check @ZeroParadox.limitMotion                -- Statement: for continuous `g` on a Hausdorff space, UP is `limitRetraction g` and OVER is `y = g x`; without continuity UP is not idempotent (`lm_jumpMap_breaks_idem`)
 #check @ZeroParadox.lm_tendsto_iff_arrival_or_closure -- Statement: the orbit of `x` tends to `p` iff `x` arrives at `p` and `p` is a landing, or no stage is a fixed point and the stages have a stage closure containing `p`; exclusive (`lm_not_arrives_of_closure`)
+-- Statement: in `Ordinal`'s order topology `ordinalTowerMotion` is the limit motion of `α ↦ ω^α`, and that iff
+-- holds for it (the first `example` of `ZeroParadox/Multihomed/LimitMotion.lean` § V).
 #check @ZeroParadox.lm_not_arrives_infty       -- Statement: under `lmScale c` on `OnePoint K` no point of `K` arrives at `∞`: adjoining `∞` adds no step into it
 #check @ZeroParadox.lm_mem_iff_omegaLim        -- Statement: on a compact Hausdorff space, `p` is the value of `limitRetraction g x` iff `omegaLim g x = {p}`
 #check @ZeroParadox.lmIsoOfConj                -- Statement: a homeomorphism `e` with `e ∘ g = h ∘ e` is a strict isomorphism of the limit motions of `g` and `h`
