@@ -52,8 +52,9 @@ It reads top to bottom:
   the **least fixed point** of successor (the bottom-of-fixed-points / min). That is `epsilon0_min_eq_max` in
   miniature — the snap lands on a point that is *both a limit and a bottom*, which is exactly why it cannot be
   flattened to a one-way collapse. `ascent_strictMono`: the climb is strict (one-way).
-* **§ VI — the fan-out.** Branching needs at least three elements (`fan_out`, a node with three pairwise
-  incomparable successors), so the two-element pole *cannot* hold it (`pole_cannot_fan`). This is the field —
+* **§ VI — the fan-out.** Three-way branching needs at least three elements (`fan_out`, a node with three
+  pairwise incomparable successors), so the two-element pole *cannot* hold it (`pole_cannot_fan`); two-way
+  branching fits on the pole (`cd_pole_fans_two`, `ZeroParadox/Multihomed/CollapseDie.lean`). This is the field —
   the width the framework's boundary fans into.
 * **The capstone (`shape`)** bundles all of it: wall (no fixed point), floor (fixed point), the collapse
   irreversible, the snap-limit both-a-limit-and-a-bottom, and the fan-out — the whole shape in one theorem.
@@ -252,7 +253,7 @@ theorem ascent_strictMono : StrictMono (fun n : ℕ => (n : ℕ∞)) := by
   show (a : ℕ∞) < (b : ℕ∞)
   exact_mod_cast h
 
-/-! ### § VI. The fan-out — the branching field the pole cannot hold. -/
+/-! ### § VI. The fan-out — the three-way branching field the pole cannot hold. -/
 
 /-- **The fan-out.** A node with three pairwise-incomparable successors (`∅ ⊆ {i}`, and `{i} ⊄ {j}` for
 `i ≠ j`) — a branch of arity three. This is the field: the width the boundary fans into. -/
@@ -262,7 +263,8 @@ theorem fan_out :
   refine ⟨fun i => Set.empty_subset _, fun i j hij hsub => ?_⟩
   exact hij (hsub rfl)
 
-/-- **The pole cannot fan out.** Branching needs at least three elements; the pole has two. So the fan-out is
+/-- **The pole cannot fan out three ways.** Three-way branching needs at least three elements; the pole has
+two, and two-way branching fits on it (`cd_pole_fans_two`, `ZeroParadox/Multihomed/CollapseDie.lean`). So the fan-out is
 strictly bigger than the pole — the field is more than the two poles. -/
 theorem pole_cannot_fan : Fintype.card Pole = 2 := by decide
 
@@ -275,7 +277,7 @@ open Pole in
 * the **collapse** is irreversible (the one-way half of the snap);
 * the **snap-limit** is *both a limit and a bottom* (`⊤` is the supremum of the chain and the least fixed
   point — min ≡ max);
-* the **fan-out** exists (three incomparable successors) where the pole (two elements) cannot hold it.
+* the three-way **fan-out** exists (three incomparable successors) where the pole (two elements) cannot hold it.
 The engine (`lawvere`) and classifier (`wall_of_fpf` / `floor_of_witness`) say *why*; here it is, on two
 points, a minimal chain, and a minimal branch. -/
 theorem shape :
