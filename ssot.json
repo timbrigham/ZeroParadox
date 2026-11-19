@@ -1491,6 +1491,22 @@
           "run_id": "bd-B26-2026-11-16"
         },
         {
+          "blind_reading": "In R the statement fails: 1 is path-joined to 0.",
+          "decl": "ZeroParadox.th3_B_control_real",
+          "elaborated_type": "¬∀ (x : ℝ), (ZeroParadox.th3PathMotion ℝ).step x 0 → x = 0",
+          "git_blob_id": "ff713205564ef7ac5ee8ba0c02830bbe2606a69a",
+          "id": "03bbb4e4-dbd3-5ad5-91e8-092d6b405230",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": null,
+          "line_sha256": "a38e94e24b31fd383f542c09f8c719b754e1d9f64ff5496e90475c6cbfc59416",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "323a62fc-171b-4093-b574-a4024cecc56e",
+          "registry_id_reason": null,
+          "run_id": "rc-be1b20a0-TH3Die-2026-11-19"
+        },
+        {
           "blind_reading": "The encoded tower sequence tends to 0 in ℤ_2 (ball form).",
           "decl": "ZeroParadox.tower_enters_every_ball",
           "elaborated_type": "∀ n, ∀ᶠ k, cnf_encode (towerOrd k) ∈ closedBall (0 : ℤ_[2]) (2^-n)",
@@ -2579,6 +2595,22 @@
           "run_id": "bd-B01-2026-11-16"
         },
         {
+          "blind_reading": "Motion on the two-point phase type whose up-map is the constant map to the top c1 (x -> x join c1) and whose step relation is the graph of that map.",
+          "decl": "ZeroParadox.th3JoinUpMotion",
+          "elaborated_type": "ZeroParadox.Motion ZeroParadox.MachinePhase",
+          "git_blob_id": "ff713205564ef7ac5ee8ba0c02830bbe2606a69a",
+          "id": "0683ea64-1c75-5acb-b070-c0fcdfbbdbbc",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": null,
+          "line_sha256": "615d14a16bd673ee43e6bed4cc8df547a2340a3d844bf414cc501b65d36f1433",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "592cbea8-76a5-476c-8d4d-9a11f61c8347",
+          "registry_id_reason": null,
+          "run_id": "rc-be1b20a0-TH3Die-2026-11-19"
+        },
+        {
           "blind_reading": "For every n, the n-th iterate of ordinalCornerStep from 0 is the coercion of a ⊥ (carrier hidden; plausibly ⊥ of an upper interval at that iterate) and the iterates strictly increase.",
           "decl": "example@L1058",
           "elaborated_type": "∀ (n : ℕ),\n  ↑⊥ = ZeroParadox.ordinalCornerStep^[n] 0 ∧\n    ZeroParadox.ordinalCornerStep^[n] 0 < ZeroParadox.ordinalCornerStep^[n + 1] 0",
@@ -2753,6 +2785,22 @@
           "registry_id": "e3683d8a-633b-4ca8-ad64-92f1819de701",
           "registry_id_reason": null,
           "run_id": "bd-B23-2026-11-16"
+        },
+        {
+          "blind_reading": "If v does not project to e0, no map with bottom to v and top to e0 laxly intertwines constant-top with projection onto the line through e0.",
+          "decl": "ZeroParadox.th3_AD_no_upLax_of_proj_ne",
+          "elaborated_type": "∀ (n : ℕ) (hn : 2 ≤ n)\n  (s : ZeroParadox.StateSpace n → ZeroParadox.StateSpace n → Prop) (v : ZeroParadox.StateSpace n),\n  (ℂ ∙ ZeroParadox.th3E0 n hn).starProjection v ≠ ZeroParadox.th3E0 n hn →\n    ¬∃ f,\n        f ZeroParadox.c₀ = v ∧\n          f ZeroParadox.c₁ = ZeroParadox.th3E0 n hn ∧\n            ZeroParadox.th3JoinUpMotion.UpLax (ZeroParadox.th3ProjMotion n (ZeroParadox.th3E0 n hn) s) f",
+          "git_blob_id": "17b5b719b996d80f85a77b465bd0ce13a7321543",
+          "id": "06cf0c3e-7a34-5f3d-bc03-d6800541b6da",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": 372,
+          "line_sha256": "7a31c7791a665ce94faa8e0f7d698ab0c2fb07e84f22aeee96360e95820d58a2",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "c819bf75-225e-4562-85e9-178908e1bdc2",
+          "registry_id_reason": null,
+          "run_id": "rc-7ac17d10-TH3Die-2026-11-19"
         },
         {
           "blind_reading": "In a ZPSemilattice with two distinct elements, bottom is not greatest (no HasNoTop premise needed).",
@@ -5395,6 +5443,22 @@
           "run_id": "rc-c8a2c52d-DCBP1-2026-11-18"
         },
         {
+          "blind_reading": "Same as th3_B_fit for the reversed (flipped) Joined relation on Q_2.",
+          "decl": "ZeroParadox.th3_B_reverse",
+          "elaborated_type": "∀ (x : ℚ_[2]), (ZeroParadox.th3PathMotion ℚ_[2]).reverse.step x 0 → x = 0",
+          "git_blob_id": "ff713205564ef7ac5ee8ba0c02830bbe2606a69a",
+          "id": "0dc13718-c327-57e0-b074-cbbe3fc552f4",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": null,
+          "line_sha256": "7576b5982747efdb06dc52a8b55495e39ca6a94e0ca43ff6880ee19f78e448c6",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "a469ca80-6ab8-45d1-8e6f-ea62a3c5a933",
+          "registry_id_reason": null,
+          "run_id": "rc-be1b20a0-TH3Die-2026-11-19"
+        },
+        {
           "blind_reading": "Inclusion is transitive.",
           "decl": "ZeroParadox.MemGraph.sub_trans",
           "elaborated_type": "∀ {k m n : ℕ} {A : ZeroParadox.MemGraph k} {B : ZeroParadox.MemGraph m}\n  {C : ZeroParadox.MemGraph n}, A.Sub B → B.Sub C → A.Sub C",
@@ -5665,6 +5729,22 @@
           "registry_id": null,
           "registry_id_reason": "no live entry in ssot.json's declarations for this name (2026-11-16)",
           "run_id": "bd-B06-2026-11-16"
+        },
+        {
+          "blind_reading": "With the single step e0 to e0+e1, the projection motion loops back to e0 and does not climb.",
+          "decl": "ZeroParadox.th3_D_control",
+          "elaborated_type": "∀ (n : ℕ) (hn : 2 ≤ n),\n  have w := ZeroParadox.th3E0 n hn + ZeroParadox.th3E1 n hn;\n  have M := ZeroParadox.th3ProjMotion n (ZeroParadox.th3E0 n hn) fun a b => a = ZeroParadox.th3E0 n hn ∧ b = w;\n  M.Loop ∧ ¬M.Climb",
+          "git_blob_id": "17b5b719b996d80f85a77b465bd0ce13a7321543",
+          "id": "0e5103f4-c76e-5bc0-80b3-fb131d99cb8c",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": 263,
+          "line_sha256": "648b388698555f658a2fc7b11e244d2173775de0bc5a85b0584580a3b5be50db",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "0e23b397-9e56-41a6-912f-0db6463b4d48",
+          "registry_id_reason": null,
+          "run_id": "rc-7ac17d10-TH3Die-2026-11-19"
         },
         {
           "blind_reading": "In WithBot sigma the adjoined bottom is also top iff sigma is empty.",
@@ -6753,6 +6833,22 @@
           "registry_id": "26ee2a33-1bb4-49a8-916e-64b49bd140db",
           "registry_id_reason": null,
           "run_id": "bd-M4-2026-11-16"
+        },
+        {
+          "blind_reading": "The same averaged-KL identity summed in the order Q then P (commutativity of addition).",
+          "decl": "ZeroParadox.th3_C_reverse",
+          "elaborated_type": "∀ mq ∈ ZeroParadox.th3MixMotion.up ZeroParadox.Q_real,\n  ∀ mp ∈ ZeroParadox.th3MixMotion.up ZeroParadox.P_real,\n    1 / 2 * ZeroParadox.klDiv ZeroParadox.Q_real mq + 1 / 2 * ZeroParadox.klDiv ZeroParadox.P_real mp = Real.log 2",
+          "git_blob_id": "ff713205564ef7ac5ee8ba0c02830bbe2606a69a",
+          "id": "10a67668-0b74-59b8-a3ca-51fe629038a9",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": null,
+          "line_sha256": "ace402cd78c7c7864ca687e34cb7a95b40878388ad23041e51e45766602a8c51",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "ae4d4e00-0cf4-406f-ad2b-ac1cf51c5839",
+          "registry_id_reason": null,
+          "run_id": "rc-be1b20a0-TH3Die-2026-11-19"
         },
         {
           "blind_reading": "PUnit computation: id is involutive, x(x·x)=x, id 0 = 0.",
@@ -7971,6 +8067,22 @@
           "run_id": "rc-c8a2c52d-DCBP3-2026-11-18"
         },
         {
+          "blind_reading": "For any v with proj_{span e0}(v) != e0, no up-lax map with f c0 = v, f c1 = e0 exists; up-laxness at c0 -> c1 forces proj(v) = e0. One-line consequence of the definition.",
+          "decl": "ZeroParadox.th3_AD_no_upLax_of_proj_ne",
+          "elaborated_type": "∀ (n : ℕ) (hn : 2 ≤ n)\n  (s : ZeroParadox.StateSpace n → ZeroParadox.StateSpace n → Prop) (v : ZeroParadox.StateSpace n),\n  (ℂ ∙ ZeroParadox.th3E0 n hn).starProjection v ≠ ZeroParadox.th3E0 n hn →\n    ¬∃ f,\n        f ZeroParadox.c₀ = v ∧\n          f ZeroParadox.c₁ = ZeroParadox.th3E0 n hn ∧\n            ZeroParadox.th3JoinUpMotion.UpLax (ZeroParadox.th3ProjMotion n (ZeroParadox.th3E0 n hn) s) f",
+          "git_blob_id": "ff713205564ef7ac5ee8ba0c02830bbe2606a69a",
+          "id": "13faad59-e69a-5979-98a2-e81b3c9943bc",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": null,
+          "line_sha256": "bff1dfa1d94a13dd2c52ba6c7a5fcf8be87e4efea55437450fd7dfb3d6b40c16",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "c819bf75-225e-4562-85e9-178908e1bdc2",
+          "registry_id_reason": null,
+          "run_id": "rc-be1b20a0-TH3Die-2026-11-19"
+        },
+        {
           "blind_reading": "A newtype wrapping one natural number; no laws.",
           "decl": "HilbDimDepth",
           "elaborated_type": "Type",
@@ -8209,6 +8321,22 @@
           "registry_id": "32004c4d-83a8-434e-9ccb-78c0f3d56e15",
           "registry_id_reason": null,
           "run_id": "bd-Q2-2026-11-16"
+        },
+        {
+          "blind_reading": "Q_2 instance: such a map with c1 -> 0 has c0 -> 0.",
+          "decl": "ZeroParadox.th3_AB_collapse",
+          "elaborated_type": "∀ (f : ZeroParadox.MachinePhase → ℚ_[2]),\n  (∀ (a b : ZeroParadox.MachinePhase),\n      ZeroParadox.machineJoinMotion.step a b → (ZeroParadox.th3PathMotion ℚ_[2]).step (f a) (f b)) →\n    f ZeroParadox.c₁ = 0 → f ZeroParadox.c₀ = 0",
+          "git_blob_id": "ff713205564ef7ac5ee8ba0c02830bbe2606a69a",
+          "id": "1498f676-ed28-5359-8b8f-e0c024ff308f",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": null,
+          "line_sha256": "0fc993a27d0f914da6b787f86c4d9c1231c31af5094d1c93fbb60bfe1054f58a",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "cb987fad-684f-46db-9e8b-bfa18a1e6b2f",
+          "registry_id_reason": null,
+          "run_id": "rc-be1b20a0-TH3Die-2026-11-19"
         },
         {
           "blind_reading": "Its up preserves min (monotone map on a chain).",
@@ -9507,6 +9635,22 @@
           "run_id": "bd-B01-2026-11-16"
         },
         {
+          "blind_reading": "On complex n-space, the motion whose up-map is orthogonal projection onto the line through u, with an arbitrary relation s.",
+          "decl": "ZeroParadox.th3ProjMotion",
+          "elaborated_type": "(n : ℕ) →\n  ZeroParadox.StateSpace n →\n    (ZeroParadox.StateSpace n → ZeroParadox.StateSpace n → Prop) → ZeroParadox.Motion (ZeroParadox.StateSpace n)",
+          "git_blob_id": "17b5b719b996d80f85a77b465bd0ce13a7321543",
+          "id": "17591552-a8d6-54d4-a256-45d9392cd8ba",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": 196,
+          "line_sha256": "e99b5158467f3beecdd1c916ee9da530183368136a5795d99d3bb95b991565bb",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "b84f856d-0cc9-40ff-b87a-6dd24d9bd3a9",
+          "registry_id_reason": null,
+          "run_id": "rc-7ac17d10-TH3Die-2026-11-19"
+        },
+        {
           "blind_reading": "Borel measurable space on Z_p.",
           "decl": "ZeroParadox.instMeasurableSpacePadicInt_zeroParadox",
           "elaborated_type": "{p : ℕ} → [inst : Fact (Nat.Prime p)] → MeasurableSpace ℤ_[p]",
@@ -9889,6 +10033,22 @@
           "registry_id": "b48a4987-ddc9-459a-a93f-d8a3c0c4c3d6",
           "registry_id_reason": null,
           "run_id": "bd-M4-2026-11-16"
+        },
+        {
+          "blind_reading": "In the mixture motion P steps to Q, both have the uniform mixture as up-value, and the averaged KL to the up-values is log 2: the Jensen-Shannon divergence of two distinct point masses is log 2.",
+          "decl": "ZeroParadox.th3_C_fit",
+          "elaborated_type": "ZeroParadox.th3MixMotion.step ZeroParadox.P_real ZeroParadox.Q_real ∧\n  ZeroParadox.mixtureM ∈ ZeroParadox.th3MixMotion.up ZeroParadox.P_real ∧\n    ZeroParadox.mixtureM ∈ ZeroParadox.th3MixMotion.up ZeroParadox.Q_real ∧\n      ZeroParadox.Th3JsdAlong ZeroParadox.th3MixMotion",
+          "git_blob_id": "ff713205564ef7ac5ee8ba0c02830bbe2606a69a",
+          "id": "18428eb4-0877-589a-996f-a9af7e0faa77",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": null,
+          "line_sha256": "35dd12fe6bbf561844227206f57211771bcab095235c9fa507247df3fe4352a6",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "0bedbd00-dea5-4bdc-a53d-b3da5851fc08",
+          "registry_id_reason": null,
+          "run_id": "rc-be1b20a0-TH3Die-2026-11-19"
         },
         {
           "blind_reading": "transitionOp at index 0 equals basisVec at 0 (definitional).",
@@ -10385,6 +10545,22 @@
           "registry_id": "832e7232-358e-4692-98a5-f10d3d1ad003",
           "registry_id_reason": null,
           "run_id": "bd-M5-2026-11-16"
+        },
+        {
+          "blind_reading": "Any map from the two-element chain into a totally disconnected space that sends join-steps to path-joinedness takes equal values at bottom and top.",
+          "decl": "ZeroParadox.th3_AB_collapse_any",
+          "elaborated_type": "∀ {X : Type u_1} [inst : TopologicalSpace X] [TotallyDisconnectedSpace X]\n  (f : ZeroParadox.MachinePhase → X),\n  (∀ (a b : ZeroParadox.MachinePhase),\n      ZeroParadox.machineJoinMotion.step a b → (ZeroParadox.th3PathMotion X).step (f a) (f b)) →\n    f ZeroParadox.c₀ = f ZeroParadox.c₁",
+          "git_blob_id": "17b5b719b996d80f85a77b465bd0ce13a7321543",
+          "id": "19867aab-9ad4-5203-b96b-8480f0ae61e6",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": 306,
+          "line_sha256": "bbcc415f0b20cda9190b432084073d48dcf9373e2a5762359aa1907ea723dd05",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "9895f0d1-523b-4ed8-91e9-1ac889375c33",
+          "registry_id_reason": null,
+          "run_id": "rc-7ac17d10-TH3Die-2026-11-19"
         },
         {
           "blind_reading": "Constructor / projection of the one-field newtype over N.",
@@ -11763,6 +11939,22 @@
           "run_id": "bd-B02c-2026-11-16"
         },
         {
+          "blind_reading": "Projection onto span(e0) fixes e0.",
+          "decl": "ZeroParadox.th3_proj_e0_e0",
+          "elaborated_type": "∀ (n : ℕ) (hn : 2 ≤ n),\n  (ℂ ∙ ZeroParadox.th3E0 n hn).starProjection (ZeroParadox.th3E0 n hn) = ZeroParadox.th3E0 n hn",
+          "git_blob_id": "ff713205564ef7ac5ee8ba0c02830bbe2606a69a",
+          "id": "1cd12c91-8069-5ae5-b87d-07ea11cbe5fd",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": null,
+          "line_sha256": "6258960c6a9f8fe0ef4fb644ac65c55b40cb75e7cd8f81fe696fdb10c96c3fb7",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "68930497-0f7d-4660-8047-ea0ce452db2e",
+          "registry_id_reason": null,
+          "run_id": "rc-be1b20a0-TH3Die-2026-11-19"
+        },
+        {
           "blind_reading": "Definition: there is an injective homomorphism from the asynchronous square of M into M.",
           "decl": "ZeroParadox.Motion.ADoublingEmb",
           "elaborated_type": "{α : Type u} → ZeroParadox.Motion α → Prop",
@@ -11777,6 +11969,22 @@
           "registry_id": "2e76aca9-4891-4cd9-9d54-6635bc395e9c",
           "registry_id_reason": null,
           "run_id": "bd-B02c-2026-11-16"
+        },
+        {
+          "blind_reading": "Same statement as th3_AB_collapse, derived from th3_AB_collapse_any.",
+          "decl": "example@L324",
+          "elaborated_type": "∀ (f : ZeroParadox.MachinePhase → ℚ_[2]),\n  (∀ (a b : ZeroParadox.MachinePhase),\n      ZeroParadox.machineJoinMotion.step a b → (ZeroParadox.th3PathMotion ℚ_[2]).step (f a) (f b)) →\n    f ZeroParadox.c₁ = 0 → f ZeroParadox.c₀ = 0",
+          "git_blob_id": "17b5b719b996d80f85a77b465bd0ce13a7321543",
+          "id": "1cd3f7b5-b24e-54e0-98cb-22f8733e89da",
+          "is_example": true,
+          "key_kind": "example_line",
+          "kind": "reading",
+          "line": 324,
+          "line_sha256": "74242026a9e79403e7fb8e0657c3aa8457668598dbfe547dc8a7d6c67a64e29a",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": null,
+          "registry_id_reason": "anonymous example; no registry entry",
+          "run_id": "rc-7ac17d10-TH3Die-2026-11-19"
         },
         {
           "blind_reading": "For each word v, a floor structure on End: floor localBotEnd v, complexity localCx v, members localMember v.",
@@ -12657,6 +12865,22 @@
           "registry_id": "48817216-eb0d-4a37-b38f-77d44824aa86",
           "registry_id_reason": null,
           "run_id": "bd-M4-2026-11-16"
+        },
+        {
+          "blind_reading": "On the two-element chain, the motion with constant-bottom up-map and its graph as relation.",
+          "decl": "ZeroParadox.th3MeetUpMotion",
+          "elaborated_type": "ZeroParadox.Motion ZeroParadox.MachinePhase",
+          "git_blob_id": "17b5b719b996d80f85a77b465bd0ce13a7321543",
+          "id": "1f1705ec-4890-5450-890b-2e1491d83170",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": 80,
+          "line_sha256": "38bfbb9a2101d50cbcff91f2e5715c73fe33f2ce0a9576d1b88eae1fdc2905a7",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "57537d63-2c26-499d-aa96-8a1234cbd993",
+          "registry_id_reason": null,
+          "run_id": "rc-7ac17d10-TH3Die-2026-11-19"
         },
         {
           "blind_reading": "(1,-1) is nonzero.",
@@ -15459,6 +15683,22 @@
           "run_id": "bd-B15-2026-11-16"
         },
         {
+          "blind_reading": "In the 2-adic numbers, any point that 0 is path-joined to is 0.",
+          "decl": "ZeroParadox.th3_B_reverse",
+          "elaborated_type": "∀ (x : ℚ_[2]), (ZeroParadox.th3PathMotion ℚ_[2]).reverse.step x 0 → x = 0",
+          "git_blob_id": "17b5b719b996d80f85a77b465bd0ce13a7321543",
+          "id": "264fc948-a439-53cf-8254-2b50f28832ae",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": 126,
+          "line_sha256": "bb5874b86c9bba7bdb5365a1261b1ad1095007a45fe35993e6efea9ac1a1765a",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "a469ca80-6ab8-45d1-8e6f-ea62a3c5a933",
+          "registry_id_reason": null,
+          "run_id": "rc-7ac17d10-TH3Die-2026-11-19"
+        },
+        {
           "blind_reading": "Z_p is nonempty.",
           "decl": "ZeroParadox.instNonemptyPadicInt_zeroParadox",
           "elaborated_type": "∀ {p : ℕ} [inst : Fact (Nat.Prime p)], Nonempty ℤ_[p]",
@@ -15539,6 +15779,22 @@
           "run_id": "bd-B19-2026-11-16"
         },
         {
+          "blind_reading": "The first basis vector is nonzero.",
+          "decl": "ZeroParadox.th3_e0_ne_zero",
+          "elaborated_type": "∀ (n : ℕ) (hn : 2 ≤ n), ZeroParadox.th3E0 n hn ≠ 0",
+          "git_blob_id": "17b5b719b996d80f85a77b465bd0ce13a7321543",
+          "id": "266b2e55-54c2-5f0a-bede-5ea686765daa",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": 203,
+          "line_sha256": "67f81465e4dc25d9778437923561554a1b9706567a1f3071a14103b9ac02247d",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "e72a0619-032b-4dfa-81c5-8a4a650e19e1",
+          "registry_id_reason": null,
+          "run_id": "rc-7ac17d10-TH3Die-2026-11-19"
+        },
+        {
           "blind_reading": "Infinity is the least upper bound of the finite conaturals.",
           "decl": "ZeroParadox.NInf.isLUB_range_ofNat",
           "elaborated_type": "IsLUB (Set.range ZeroParadox.NInf.ofNat) ZeroParadox.NInf.infty",
@@ -15601,6 +15857,22 @@
           "registry_id": null,
           "registry_id_reason": "anonymous example; no registry entry",
           "run_id": "bd-Q2-2026-11-16"
+        },
+        {
+          "blind_reading": "In the constant-bottom motion, bottom is the up-value of top and is the unique fixed point.",
+          "decl": "ZeroParadox.th3_A_dual",
+          "elaborated_type": "ZeroParadox.c₀ ∈ ZeroParadox.th3MeetUpMotion.up ZeroParadox.c₁ ∧\n  ∀ (y : ZeroParadox.MachinePhase), ZeroParadox.th3MeetUpMotion.IsLanding y ↔ y = ZeroParadox.c₀",
+          "git_blob_id": "17b5b719b996d80f85a77b465bd0ce13a7321543",
+          "id": "26860fcf-c1c1-5d92-bbaf-d3440cf813d5",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": 84,
+          "line_sha256": "14f7f830e1046a123892ace05b9fc64d0f2876f87dbd8a5faac18f218bb44eee",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "157b910b-2ee2-4d2e-9188-738f1fb91ac2",
+          "registry_id_reason": null,
+          "run_id": "rc-7ac17d10-TH3Die-2026-11-19"
         },
         {
           "blind_reading": "Up of quotUp at [a] contains Y iff some value of up a has class Y.",
@@ -16355,6 +16627,22 @@
           "run_id": "bd-M4-2026-11-16"
         },
         {
+          "blind_reading": "2e0 is not orthogonal to e0, yet no lax intertwining map sends bottom to 2e0 and top to e0.",
+          "decl": "example@L404",
+          "elaborated_type": "∀ (n : ℕ) (hn : 2 ≤ n)\n  (s : ZeroParadox.StateSpace n → ZeroParadox.StateSpace n → Prop),\n  inner ℂ (ZeroParadox.th3E0 n hn) (2 • ZeroParadox.th3E0 n hn) ≠ 0 ∧\n    ¬∃ f,\n        f ZeroParadox.c₀ = 2 • ZeroParadox.th3E0 n hn ∧\n          f ZeroParadox.c₁ = ZeroParadox.th3E0 n hn ∧\n            ZeroParadox.th3JoinUpMotion.UpLax (ZeroParadox.th3ProjMotion n (ZeroParadox.th3E0 n hn) s) f",
+          "git_blob_id": "17b5b719b996d80f85a77b465bd0ce13a7321543",
+          "id": "282ced75-1e07-5d64-94bd-6aeac1b7c2a4",
+          "is_example": true,
+          "key_kind": "example_line",
+          "kind": "reading",
+          "line": 404,
+          "line_sha256": "46127aa4cde84602938a011f2956a589f6bda9c05ab9b512d07e0e41f7e8c693",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": null,
+          "registry_id_reason": "anonymous example; no registry entry",
+          "run_id": "rc-7ac17d10-TH3Die-2026-11-19"
+        },
+        {
           "blind_reading": "A newtype wrapping one natural number; no laws.",
           "decl": "Q₂BallDepth",
           "elaborated_type": "Type",
@@ -16465,6 +16753,22 @@
           "registry_id": "cecacab4-dd5e-4b82-8f30-971cc60c3fad",
           "registry_id_reason": null,
           "run_id": "bd-B20-2026-11-16"
+        },
+        {
+          "blind_reading": "With identity up-map the averaged-KL predicate fails (KL(P||P) = KL(Q||Q) = 0, and log 2 > 0).",
+          "decl": "ZeroParadox.th3_C_control",
+          "elaborated_type": "¬ZeroParadox.Th3JsdAlong\n    (ZeroParadox.Motion.ofTotal id ⋯ fun p q => p = ZeroParadox.P_real ∧ q = ZeroParadox.Q_real)",
+          "git_blob_id": "ff713205564ef7ac5ee8ba0c02830bbe2606a69a",
+          "id": "2873a7ab-d09d-58c7-8c94-1baa286cf0f8",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": null,
+          "line_sha256": "77effd5524552750f831f1394b039b9aa9e8a3665249c7718c1447b11fa4178a",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "62280b9c-f7fa-49f1-bf11-2e78732f7b5a",
+          "registry_id_reason": null,
+          "run_id": "rc-be1b20a0-TH3Die-2026-11-19"
         },
         {
           "blind_reading": "Anonymous example; cluster reading: Sequences in Q_2 with norm bounded by 2^-n tend to 0; strictly increasing valuations give a geometric norm bound; depth-chain hypotheses transport strict monotonicity; in any join-semilattice with bottom, a left join-identity equals the bottom; no continuous path in Q_2 joins a nonzero point to 0; bundled conjunctions.",
@@ -17713,6 +18017,22 @@
           "registry_id": "897d80a8-d251-4319-b903-d955d991cbbe",
           "registry_id_reason": null,
           "run_id": "bd-B26-2026-11-16"
+        },
+        {
+          "blind_reading": "In the 2-adic numbers, any point path-joined to 0 is 0.",
+          "decl": "ZeroParadox.th3_B_fit",
+          "elaborated_type": "∀ (x : ℚ_[2]), (ZeroParadox.th3PathMotion ℚ_[2]).step x 0 → x = 0",
+          "git_blob_id": "17b5b719b996d80f85a77b465bd0ce13a7321543",
+          "id": "2bf69225-3012-5b2b-9e7d-9714648fd2c9",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": 113,
+          "line_sha256": "c9a33e61d7a2de3e6aa2bc2742490e035e523e66ed12b069f17d6a421c81a181",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "644345d3-d894-4842-adf4-82bf7f7f95e2",
+          "registry_id_reason": null,
+          "run_id": "rc-7ac17d10-TH3Die-2026-11-19"
         },
         {
           "blind_reading": "Index of a < index of comp a b.",
@@ -21283,6 +21603,22 @@
           "run_id": "bd-B03a-2026-11-16"
         },
         {
+          "blind_reading": "With identity up-map, or the constant-c0 up-map, c1 is not the up-value of c0 (controls on the same two-point carrier).",
+          "decl": "ZeroParadox.th3_A_control",
+          "elaborated_type": "ZeroParadox.c₁ ∉ (ZeroParadox.Motion.ofTotal id ⋯ fun x x_1 => False).up ZeroParadox.c₀ ∧\n  ZeroParadox.c₁ ∉ (ZeroParadox.Motion.ofTotal (fun x => ZeroParadox.c₀) ⋯ fun x x_1 => False).up ZeroParadox.c₀",
+          "git_blob_id": "ff713205564ef7ac5ee8ba0c02830bbe2606a69a",
+          "id": "3469962c-80de-5ddb-9d34-08f9e3f26d2e",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": null,
+          "line_sha256": "435a1d6e71422c2a0a3a6bf92d58d463d8bb4490924928316b12e8c26a9ae19f",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "6132c039-9548-4d14-94ca-b65f7435a768",
+          "registry_id_reason": null,
+          "run_id": "rc-be1b20a0-TH3Die-2026-11-19"
+        },
+        {
           "blind_reading": "If s embeds into a child of t then s embeds into t.",
           "decl": "ZeroParadox.TreeEmbeds.dive",
           "elaborated_type": "∀ {α : Type u_1} {r : α → α → Prop} {s : ZeroParadox.RoseTree α} {b : α}\n  {ts : List (ZeroParadox.RoseTree α)},\n  ∀ t' ∈ ts, ZeroParadox.TreeEmbeds r s t' → ZeroParadox.TreeEmbeds r s (ZeroParadox.RoseTree.node b ts)",
@@ -22451,6 +22787,22 @@
           "run_id": "bd-B21-2026-11-16"
         },
         {
+          "blind_reading": "For the vector 2e0: <e0, 2e0> != 0 (not orthogonal), yet no up-lax map with c0 -> 2e0, c1 -> e0 exists (proj(2e0) = 2e0 != e0). Shows the obstruction hypothesis proj(v) != e0 is strictly weaker than orthogonality.",
+          "decl": "example@L381",
+          "elaborated_type": "∀ (n : ℕ) (hn : 2 ≤ n)\n  (s : ZeroParadox.StateSpace n → ZeroParadox.StateSpace n → Prop),\n  inner ℂ (ZeroParadox.th3E0 n hn) (2 • ZeroParadox.th3E0 n hn) ≠ 0 ∧\n    ¬∃ f,\n        f ZeroParadox.c₀ = 2 • ZeroParadox.th3E0 n hn ∧\n          f ZeroParadox.c₁ = ZeroParadox.th3E0 n hn ∧\n            ZeroParadox.th3JoinUpMotion.UpLax (ZeroParadox.th3ProjMotion n (ZeroParadox.th3E0 n hn) s) f",
+          "git_blob_id": "ff713205564ef7ac5ee8ba0c02830bbe2606a69a",
+          "id": "36faa9e3-f8b7-5702-afac-e8d8cdcbea3b",
+          "is_example": true,
+          "key_kind": "example_line",
+          "kind": "reading",
+          "line": 381,
+          "line_sha256": "71189fc11aa9096abfafa15dc011d4db7587c52e71c163316a6ff5d9bc48ed6c",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": null,
+          "registry_id_reason": "anonymous example; no registry entry",
+          "run_id": "rc-be1b20a0-TH3Die-2026-11-19"
+        },
+        {
           "blind_reading": "e0Repr is not injective (non-normal-form collisions).",
           "decl": "ZeroParadox.e0Repr_not_injective",
           "elaborated_type": "¬Function.Injective ZeroParadox.e0Repr",
@@ -22897,6 +23249,22 @@
           "registry_id": null,
           "registry_id_reason": "anonymous example; no registry entry",
           "run_id": "bd-B03b-2026-11-16"
+        },
+        {
+          "blind_reading": "In any totally disconnected space, two points joined by a path are equal (paths are constant). Restates disconnectedness_forbids_path.",
+          "decl": "ZeroParadox.th3_joined_eq",
+          "elaborated_type": "∀ {X : Type u_1} [inst : TopologicalSpace X] [TotallyDisconnectedSpace X] {x y : X},\n  Joined x y → x = y",
+          "git_blob_id": "ff713205564ef7ac5ee8ba0c02830bbe2606a69a",
+          "id": "37ff6691-10e6-52b1-811f-40792a58e2cb",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": null,
+          "line_sha256": "ef10a386589981027450e40812af4ba0dda7aef40f9ef404ebbcf4567a340d75",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "666610d2-d550-4656-9292-b10262fcf479",
+          "registry_id_reason": null,
+          "run_id": "rc-be1b20a0-TH3Die-2026-11-19"
         },
         {
           "blind_reading": "Cluster reading: Projective line over Q_2 (OnePoint Q_2) and over any proper normed field: the extended inversion swapping 0 and infinity is a continuous involution/homeomorphism; scalings by 2^n fix 0 and infinity and form a Z-action conjugated to n -> -n by inversion; the extended norm is inverted by inversion; the preorder generated by unit multiplication and doubling on nonzero Q_2 is the valuation order; rounding the valuation up/down to even integers gives a closure operator conjugate to the round-down map under inversion.",
@@ -23889,6 +24257,22 @@
           "registry_id": null,
           "registry_id_reason": "anonymous example; no registry entry",
           "run_id": "bd-B03a-2026-11-16"
+        },
+        {
+          "blind_reading": "Projection onto the line through e0 fixes e0.",
+          "decl": "ZeroParadox.th3_proj_e0_e0",
+          "elaborated_type": "∀ (n : ℕ) (hn : 2 ≤ n),\n  (ℂ ∙ ZeroParadox.th3E0 n hn).starProjection (ZeroParadox.th3E0 n hn) = ZeroParadox.th3E0 n hn",
+          "git_blob_id": "17b5b719b996d80f85a77b465bd0ce13a7321543",
+          "id": "3a21c639-4021-5bbf-ba7b-f12471badbba",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": 253,
+          "line_sha256": "46ad0be76d25fced6f56ea8fabd59960f45de16493797f1a31537cba1f7009e7",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "68930497-0f7d-4660-8047-ea0ce452db2e",
+          "registry_id_reason": null,
+          "run_id": "rc-7ac17d10-TH3Die-2026-11-19"
         },
         {
           "blind_reading": "In WithBot Ordinal the bottom is covered by 0 (image of up 0).",
@@ -26435,6 +26819,22 @@
           "run_id": "bd-M4-2026-11-16"
         },
         {
+          "blind_reading": "Motion on the two-point phase type with up-map constant at c0 and step relation its graph (the order-dual of the join-up motion, built by hand).",
+          "decl": "ZeroParadox.th3MeetUpMotion",
+          "elaborated_type": "ZeroParadox.Motion ZeroParadox.MachinePhase",
+          "git_blob_id": "ff713205564ef7ac5ee8ba0c02830bbe2606a69a",
+          "id": "3fae2875-e16b-5b98-865a-aa7fe9a5ba46",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": null,
+          "line_sha256": "8f583401ebb278bee7bd6b5cdfe3b1c6da12bd5b9d32d1b80feec0421bb26f63",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "57537d63-2c26-499d-aa96-8a1234cbd993",
+          "registry_id_reason": null,
+          "run_id": "rc-be1b20a0-TH3Die-2026-11-19"
+        },
+        {
           "blind_reading": "encodeCode tags comp with +6 and prec with +5.",
           "decl": "example@L524",
           "elaborated_type": "∀ (a b : Nat.Partrec.Code), (a.comp b).encodeCode = 4 * Nat.pair a.encodeCode b.encodeCode + 6 ∧ (a.prec b).encodeCode = 4 * Nat.pair a.encodeCode b.encodeCode + 5",
@@ -28051,6 +28451,22 @@
           "run_id": "bd-B13-2026-11-16"
         },
         {
+          "blind_reading": "The vector transitionOp n 1 in C^n (n >= 2); a unit vector.",
+          "decl": "ZeroParadox.th3E1",
+          "elaborated_type": "(n : ℕ) → 2 ≤ n → ZeroParadox.StateSpace n",
+          "git_blob_id": "ff713205564ef7ac5ee8ba0c02830bbe2606a69a",
+          "id": "43becd5f-8aa9-5fd9-ac8b-eb8989ef5f58",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": null,
+          "line_sha256": "16c4ff35c07ef1fd7a58ac2b01ea1b151fb61057d0d79d85dd147748b00fee89",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "f70d2fdc-5a48-4c2f-9b2a-a5bfb477b02d",
+          "registry_id_reason": null,
+          "run_id": "rc-be1b20a0-TH3Die-2026-11-19"
+        },
+        {
           "blind_reading": "Predicate on endomaps: inflationary (x <= f x for all x).",
           "decl": "ZeroParadox.ZPSemilattice.IsStateTransition",
           "elaborated_type": "{L : Type u_1} → [ZeroParadox.ZPSemilattice L] → (L → L) → Prop",
@@ -28225,6 +28641,22 @@
           "registry_id": null,
           "registry_id_reason": "anonymous example; no registry entry",
           "run_id": "rc-c8a2c52d-DCBP2-2026-11-18"
+        },
+        {
+          "blind_reading": "e0 is nonzero (it has norm 1).",
+          "decl": "ZeroParadox.th3_e0_ne_zero",
+          "elaborated_type": "∀ (n : ℕ) (hn : 2 ≤ n), ZeroParadox.th3E0 n hn ≠ 0",
+          "git_blob_id": "ff713205564ef7ac5ee8ba0c02830bbe2606a69a",
+          "id": "442f9396-325a-59b7-b0bb-b7c7cf8a6e33",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": null,
+          "line_sha256": "10b728d475fd8b04b2389b418aacd871f89055d1d6ded0bc69de7e2d3118c898",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "e72a0619-032b-4dfa-81c5-8a4a650e19e1",
+          "registry_id_reason": null,
+          "run_id": "rc-be1b20a0-TH3Die-2026-11-19"
         },
         {
           "blind_reading": "ofFun padId has no self-step on codes, but every eval-class is self-only in the quotient.",
@@ -33939,6 +34371,22 @@
           "run_id": "bd-Q2-2026-11-16"
         },
         {
+          "blind_reading": "In the 2-adic numbers every point is path-joined to itself and to nothing else.",
+          "decl": "ZeroParadox.th3_B_every_point_selfOnly",
+          "elaborated_type": "∀ (y : ℚ_[2]), (ZeroParadox.th3PathMotion ℚ_[2]).SelfOnlyAt y",
+          "git_blob_id": "17b5b719b996d80f85a77b465bd0ce13a7321543",
+          "id": "52645a51-dd19-5f41-8411-9cd986df9a53",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": 121,
+          "line_sha256": "bd782fd40ed0471b90569c66e2b9175ead2bfe4c75b4efc5ef8900bba083e272",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "d08d0101-dfa6-4346-90be-bbac3ad06dcf",
+          "registry_id_reason": null,
+          "run_id": "rc-7ac17d10-TH3Die-2026-11-19"
+        },
+        {
           "blind_reading": "An antitone bijection of the 2-chain is swap.",
           "decl": "ZeroParadox.Pole.eq_swap_of_antitone_bijective",
           "elaborated_type": "∀ (f : ZeroParadox.Pole → ZeroParadox.Pole),\n  Function.Bijective f → Antitone f → f = ZeroParadox.Pole.swap",
@@ -34145,6 +34593,22 @@
           "registry_id": "49ab921b-63bf-4437-8463-4620242da6f4",
           "registry_id_reason": null,
           "run_id": "bd-M3-2026-11-16"
+        },
+        {
+          "blind_reading": "In the relation 'b is a join of a with something', bottom relates to top.",
+          "decl": "ZeroParadox.th3_A_step_machineJoin",
+          "elaborated_type": "ZeroParadox.machineJoinMotion.step ZeroParadox.c₀ ZeroParadox.c₁",
+          "git_blob_id": "17b5b719b996d80f85a77b465bd0ce13a7321543",
+          "id": "52d24d8f-dac2-5d36-99b4-ba3d806f84be",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": 55,
+          "line_sha256": "0ab2b3b630368a3386fd86c681049111cb51bdd412e02dbcc5a35f66f72c7847",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "652175bb-93d3-400f-b3fb-a2957f92170f",
+          "registry_id_reason": null,
+          "run_id": "rc-7ac17d10-TH3Die-2026-11-19"
         },
         {
           "blind_reading": "Predicate on a type: every Boolean predicate p has some x with p x true or p false everywhere (a witness-or-refutation existence, without a uniform selector).",
@@ -36577,6 +37041,22 @@
           "registry_id": "c7d2f858-809e-4f85-ab28-81fac9ca882e",
           "registry_id_reason": null,
           "run_id": "bd-B14-2026-11-16"
+        },
+        {
+          "blind_reading": "For any step relation: e0 is a fixed point of projection onto span(e0) and e1 projects to 0 (orthogonality of e0, e1).",
+          "decl": "ZeroParadox.th3_D_fit",
+          "elaborated_type": "∀ (n : ℕ) (hn : 2 ≤ n) (s : ZeroParadox.StateSpace n → ZeroParadox.StateSpace n → Prop),\n  (ZeroParadox.th3ProjMotion n (ZeroParadox.th3E0 n hn) s).IsLanding (ZeroParadox.th3E0 n hn) ∧\n    0 ∈ (ZeroParadox.th3ProjMotion n (ZeroParadox.th3E0 n hn) s).up (ZeroParadox.th3E1 n hn)",
+          "git_blob_id": "ff713205564ef7ac5ee8ba0c02830bbe2606a69a",
+          "id": "57dc0d5b-3631-5e2e-af76-d6bca7bd59b4",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": null,
+          "line_sha256": "8f140634fb248e02042a1bff391fa2166fd1b49debfdac3b576144ae015e330c",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "ccca13db-090f-4689-93e8-b81b88b7dc3c",
+          "registry_id_reason": null,
+          "run_id": "rc-be1b20a0-TH3Die-2026-11-19"
         },
         {
           "blind_reading": "Member n as a subtree point.",
@@ -39875,6 +40355,22 @@
           "run_id": "bd-B25-2026-11-16"
         },
         {
+          "blind_reading": "e0 is fixed by projection onto its line, and e1 projects to zero.",
+          "decl": "ZeroParadox.th3_D_fit",
+          "elaborated_type": "∀ (n : ℕ) (hn : 2 ≤ n) (s : ZeroParadox.StateSpace n → ZeroParadox.StateSpace n → Prop),\n  (ZeroParadox.th3ProjMotion n (ZeroParadox.th3E0 n hn) s).IsLanding (ZeroParadox.th3E0 n hn) ∧\n    0 ∈ (ZeroParadox.th3ProjMotion n (ZeroParadox.th3E0 n hn) s).up (ZeroParadox.th3E1 n hn)",
+          "git_blob_id": "17b5b719b996d80f85a77b465bd0ce13a7321543",
+          "id": "5f0913b1-0af2-5c0c-a61d-561428cd0083",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": 237,
+          "line_sha256": "c3d1d7293db77835b27754e1d94076633aaa2d0965538edb33c7ad1495ae6bdf",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "ccca13db-090f-4689-93e8-b81b88b7dc3c",
+          "registry_id_reason": null,
+          "run_id": "rc-7ac17d10-TH3Die-2026-11-19"
+        },
+        {
           "blind_reading": "An isomorphism between these two zero objects (any two zero objects are isomorphic).",
           "decl": "ZeroParadox.freeFin0IsoSeam",
           "elaborated_type": "(ModuleCat.free ℂ).obj (Fin 0) ≅ ZeroParadox.fD_functor.obj 0",
@@ -40851,6 +41347,22 @@
           "run_id": "bd-B18-2026-11-16"
         },
         {
+          "blind_reading": "No map f with f c0 = e1, f c1 = e0 is up-lax (sends up-values to up-values) from the join-up motion to projection onto span(e0): it would force e0 = proj(e1) = 0.",
+          "decl": "ZeroParadox.th3_AD_no_upLax",
+          "elaborated_type": "∀ (n : ℕ) (hn : 2 ≤ n) (s : ZeroParadox.StateSpace n → ZeroParadox.StateSpace n → Prop),\n  ¬∃ f,\n      f ZeroParadox.c₀ = ZeroParadox.th3E1 n hn ∧\n        f ZeroParadox.c₁ = ZeroParadox.th3E0 n hn ∧\n          ZeroParadox.th3JoinUpMotion.UpLax (ZeroParadox.th3ProjMotion n (ZeroParadox.th3E0 n hn) s) f",
+          "git_blob_id": "ff713205564ef7ac5ee8ba0c02830bbe2606a69a",
+          "id": "61410a4c-6a5c-59b2-81b3-124e7b8530ce",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": null,
+          "line_sha256": "dd78539a0b4d1ca89bb58bb18e313a1887393ea1dde41b87a30d4176da2ce2d2",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "6150e1b9-4bcd-4861-878d-34f0ae02b3b8",
+          "registry_id_reason": null,
+          "run_id": "rc-be1b20a0-TH3Die-2026-11-19"
+        },
+        {
           "blind_reading": "If p, the middle class equals the t0 class.",
           "decl": "ZeroParadox.gx_eq_gb0",
           "elaborated_type": "∀ (p : Prop), p → ZeroParadox.gx p = ZeroParadox.gb0 p",
@@ -41233,6 +41745,22 @@
           "registry_id": null,
           "registry_id_reason": "anonymous example; no registry entry",
           "run_id": "bd-B15-2026-11-16"
+        },
+        {
+          "blind_reading": "On the two-element chain, the motion whose up-map is join-with-top (a constant-top map) and whose relation is the graph of that map.",
+          "decl": "ZeroParadox.th3JoinUpMotion",
+          "elaborated_type": "ZeroParadox.Motion ZeroParadox.MachinePhase",
+          "git_blob_id": "17b5b719b996d80f85a77b465bd0ce13a7321543",
+          "id": "622e555d-a09b-5611-ba68-72f7aaeed9e0",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": 34,
+          "line_sha256": "a2863750501a6c7eaa581da83a7934c209421ccb136a3d54c37d29172f755fea",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "592cbea8-76a5-476c-8d4d-9a11f61c8347",
+          "registry_id_reason": null,
+          "run_id": "rc-7ac17d10-TH3Die-2026-11-19"
         },
         {
           "blind_reading": "A strict isomorphism from the sign motion with step < to its reverse.",
@@ -42129,6 +42657,22 @@
           "registry_id": "c568af1a-3c43-463a-87ca-2f0cbf4372b3",
           "registry_id_reason": null,
           "run_id": "bd-B12-2026-11-16"
+        },
+        {
+          "blind_reading": "The second standard basis vector of complex n-space, n at least 2.",
+          "decl": "ZeroParadox.th3E1",
+          "elaborated_type": "(n : ℕ) → 2 ≤ n → ZeroParadox.StateSpace n",
+          "git_blob_id": "17b5b719b996d80f85a77b465bd0ce13a7321543",
+          "id": "64a4f339-447c-5cbe-86c8-a5ef464a1189",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": 193,
+          "line_sha256": "09fb79b4ddf169efc39d6f4ea984a50515096b604a0311e65f30b5645fd4a7ab",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "f70d2fdc-5a48-4c2f-9b2a-a5bfb477b02d",
+          "registry_id_reason": null,
+          "run_id": "rc-7ac17d10-TH3Die-2026-11-19"
         },
         {
           "blind_reading": "Converse step raises iff step lowers.",
@@ -43681,6 +44225,22 @@
           "registry_id": "6b3fa921-da3f-4726-97c0-b5e082f2b599",
           "registry_id_reason": null,
           "run_id": "bd-Q1-2026-11-16"
+        },
+        {
+          "blind_reading": "For any totally disconnected X, a map from the two-point phase type to X carrying every join-step to a path-step identifies c0 and c1 (because c0 steps to c1 and joined points in X are equal).",
+          "decl": "ZeroParadox.th3_AB_collapse_any",
+          "elaborated_type": "∀ {X : Type u_1} [inst : TopologicalSpace X] [TotallyDisconnectedSpace X]\n  (f : ZeroParadox.MachinePhase → X),\n  (∀ (a b : ZeroParadox.MachinePhase),\n      ZeroParadox.machineJoinMotion.step a b → (ZeroParadox.th3PathMotion X).step (f a) (f b)) →\n    f ZeroParadox.c₀ = f ZeroParadox.c₁",
+          "git_blob_id": "ff713205564ef7ac5ee8ba0c02830bbe2606a69a",
+          "id": "687323af-c5d6-5fec-b113-2e7dfff43d26",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": null,
+          "line_sha256": "984579c9a840665d7294be0f28f47f1fe4c9c8a2307fa82ca3c17d3696da146f",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "9895f0d1-523b-4ed8-91e9-1ac889375c33",
+          "registry_id_reason": null,
+          "run_id": "rc-be1b20a0-TH3Die-2026-11-19"
         },
         {
           "blind_reading": "In Q_2 the doubling orbit of nonzero x is not eventually 0.",
@@ -49779,6 +50339,22 @@
           "run_id": "w10-reconstruct-2026-11-16"
         },
         {
+          "blind_reading": "In a totally disconnected space, path-joined points are equal.",
+          "decl": "ZeroParadox.th3_joined_eq",
+          "elaborated_type": "∀ {X : Type u_1} [inst : TopologicalSpace X] [TotallyDisconnectedSpace X] {x y : X},\n  Joined x y → x = y",
+          "git_blob_id": "17b5b719b996d80f85a77b465bd0ce13a7321543",
+          "id": "7701d060-c90f-52ff-ba5f-d38d8549a920",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": 98,
+          "line_sha256": "0e4795dc9a5d8fa815e38347260ed669bd0e73be2ae7e3aa600fe33d42d49081",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "666610d2-d550-4656-9292-b10262fcf479",
+          "registry_id_reason": null,
+          "run_id": "rc-7ac17d10-TH3Die-2026-11-19"
+        },
+        {
           "blind_reading": "Under max on the nonnegative reals, the induced strict order is the usual one.",
           "decl": "ZeroParadox.nnreal_zp_lt_iff",
           "elaborated_type": "∀ (x y : NNReal), x < y ↔ x < y",
@@ -50227,6 +50803,22 @@
           "run_id": "bd-B21-2026-11-16"
         },
         {
+          "blind_reading": "Projection onto the line through e0 sends e1 to zero.",
+          "decl": "ZeroParadox.th3_proj_e0_e1",
+          "elaborated_type": "∀ (n : ℕ) (hn : 2 ≤ n),\n  (ℂ ∙ ZeroParadox.th3E0 n hn).starProjection (ZeroParadox.th3E1 n hn) = 0",
+          "git_blob_id": "17b5b719b996d80f85a77b465bd0ce13a7321543",
+          "id": "77f52173-5ebc-5ba8-a7fa-8cbe4632c78c",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": 257,
+          "line_sha256": "75d866a9f1f20e0d95060fef2d9a79932f6800b807e60639746a4b614c69b4cc",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "150574db-ec4b-45f2-a64c-1e5d600df473",
+          "registry_id_reason": null,
+          "run_id": "rc-7ac17d10-TH3Die-2026-11-19"
+        },
+        {
           "blind_reading": "Prepending the empty word is identity.",
           "decl": "ZeroParadox.prependEnd_nil",
           "elaborated_type": "∀ (y : ZeroParadox.End), ZeroParadox.prependEnd [] y = y",
@@ -50627,6 +51219,22 @@
           "run_id": "bd-M5-2026-11-16"
         },
         {
+          "blind_reading": "With the always-true relation on the 2-adic numbers, not every point related to 0 is 0.",
+          "decl": "ZeroParadox.th3_B_control_Q2",
+          "elaborated_type": "¬∀ (x : ℚ_[2]), (ZeroParadox.Motion.ofTotal id ⋯ fun x x_1 => True).step x 0 → x = 0",
+          "git_blob_id": "17b5b719b996d80f85a77b465bd0ce13a7321543",
+          "id": "78b78432-f58a-5cc2-ac8e-b48ca8e3826e",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": 135,
+          "line_sha256": "42aca46e7f70281f26b0e99b30069129baeda9a5fa405b67f57ff35e68c27b5f",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "386d7f03-5a8a-44e1-85a9-b45eb8558f65",
+          "registry_id_reason": null,
+          "run_id": "rc-7ac17d10-TH3Die-2026-11-19"
+        },
+        {
           "blind_reading": "Edge inclusion does not imply hyperset inclusion: one grows to omegaIn but {emptyset} is not a subset of {Omega}.",
           "decl": "ZeroParadox.MemGraph.le_not_sub",
           "elaborated_type": "ZeroParadox.MemGraph.one.Grow ZeroParadox.MemGraph.omegaIn ∧\n  ¬ZeroParadox.MemGraph.one.Sub ZeroParadox.MemGraph.omegaIn",
@@ -51011,6 +51619,22 @@
           "run_id": "bd-B16-2026-11-16"
         },
         {
+          "blind_reading": "The log 2 predicate holds for the reversed mixture motion, trivially, since reversal keeps the up-map.",
+          "decl": "ZeroParadox.th3_C_reverse_motion",
+          "elaborated_type": "ZeroParadox.Th3JsdAlong ZeroParadox.th3MixMotion.reverse",
+          "git_blob_id": "17b5b719b996d80f85a77b465bd0ce13a7321543",
+          "id": "79c1b37d-95c7-530d-9f03-e6a33169d403",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": 181,
+          "line_sha256": "56900a1ac52c4ecbb351f20683a6735feaee50accb82dd035e645eaf55a3d15c",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "6e6ea458-b558-4693-87dc-b12f62bb9d9d",
+          "registry_id_reason": null,
+          "run_id": "rc-7ac17d10-TH3Die-2026-11-19"
+        },
+        {
           "blind_reading": "Data definition (numeric helper or code construction) for the choice-free universal machine; no proposition.",
           "decl": "ZeroParadox.selDArg",
           "elaborated_type": "Nat.Partrec.Code",
@@ -51297,6 +51921,22 @@
           "registry_id": null,
           "registry_id_reason": "no live entry in ssot.json's declarations for this name (2026-11-16)",
           "run_id": "bd-B04-2026-11-16"
+        },
+        {
+          "blind_reading": "With the single step e0 -> e0+e1 instead, the up-value of e0+e1 is e0 again: the motion has the 'Loop' pattern and not the 'Climb' pattern.",
+          "decl": "ZeroParadox.th3_D_control",
+          "elaborated_type": "∀ (n : ℕ) (hn : 2 ≤ n),\n  have w := ZeroParadox.th3E0 n hn + ZeroParadox.th3E1 n hn;\n  have M := ZeroParadox.th3ProjMotion n (ZeroParadox.th3E0 n hn) fun a b => a = ZeroParadox.th3E0 n hn ∧ b = w;\n  M.Loop ∧ ¬M.Climb",
+          "git_blob_id": "ff713205564ef7ac5ee8ba0c02830bbe2606a69a",
+          "id": "7a593cd8-f4e3-5e44-8d07-698e6f8e3581",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": null,
+          "line_sha256": "0cbe0e5033a303111b0feb760bfa24ac4f2d0b3d1aa2e048c401d9155197ffa1",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "0e23b397-9e56-41a6-912f-0db6463b4d48",
+          "registry_id_reason": null,
+          "run_id": "rc-be1b20a0-TH3Die-2026-11-19"
         },
         {
           "blind_reading": "Tapes {1} and {1,3} give the same computation.",
@@ -51905,6 +52545,22 @@
           "registry_id": "01892a81-0676-4d31-a8e3-bb5a795429e1",
           "registry_id_reason": null,
           "run_id": "bd-M4-2026-11-16"
+        },
+        {
+          "blind_reading": "Projection onto span(e0) sends v to 0 iff <e0, v> = 0.",
+          "decl": "ZeroParadox.th3_D_up_zero_iff",
+          "elaborated_type": "∀ (n : ℕ) (hn : 2 ≤ n) (s : ZeroParadox.StateSpace n → ZeroParadox.StateSpace n → Prop)\n  (v : ZeroParadox.StateSpace n),\n  0 ∈ (ZeroParadox.th3ProjMotion n (ZeroParadox.th3E0 n hn) s).up v ↔ inner ℂ (ZeroParadox.th3E0 n hn) v = 0",
+          "git_blob_id": "ff713205564ef7ac5ee8ba0c02830bbe2606a69a",
+          "id": "7bfc7472-6f5d-5c82-91ee-58c607519671",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": null,
+          "line_sha256": "f1cea91dbbc03a7c769f7ac9f91048dc4a4c5496d824ba16cb5d7d2184d9527e",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "c0e443cf-2d0a-40f0-bab4-0a939fcc7abe",
+          "registry_id_reason": null,
+          "run_id": "rc-be1b20a0-TH3Die-2026-11-19"
         },
         {
           "blind_reading": "A monotone two-valued map that is c0 on the tower is c0 on every ordinal below epsilon-zero (generic: cofinality plus monotonicity).",
@@ -53297,6 +53953,22 @@
           "registry_id": "0905e829-b2f3-4eef-9580-e446de4ea1df",
           "registry_id_reason": null,
           "run_id": "bd-B14-2026-11-16"
+        },
+        {
+          "blind_reading": "In the reversed join-with-top relation, bottom has no out-steps and top steps to both points.",
+          "decl": "ZeroParadox.th3_A_reverse",
+          "elaborated_type": "ZeroParadox.th3JoinUpMotion.reverse.NoStepAt ZeroParadox.c₀ ∧\n  ZeroParadox.th3JoinUpMotion.reverse.step ZeroParadox.c₁ ZeroParadox.c₀ ∧\n    ZeroParadox.th3JoinUpMotion.reverse.step ZeroParadox.c₁ ZeroParadox.c₁",
+          "git_blob_id": "17b5b719b996d80f85a77b465bd0ce13a7321543",
+          "id": "7f323b38-9265-5e2d-a026-0a7fce765745",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": 71,
+          "line_sha256": "b3cfccfb9d6e83a839201af7dc639d6afb451665900cb37a5e762cc017427b8a",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "7fd296c8-f945-4ad5-8639-25b65b582fd2",
+          "registry_id_reason": null,
+          "run_id": "rc-7ac17d10-TH3Die-2026-11-19"
         },
         {
           "blind_reading": "Generic: if A has a fixed point and B is fixed-point-free, no map c semiconjugates A to B (contrapositive of IsFixedPt.map).",
@@ -54771,6 +55443,22 @@
           "run_id": "bd-B24-2026-11-16"
         },
         {
+          "blind_reading": "With the single step e0 -> e1, the projection motion has a landing y = e0, a step to b = e1, and an up-value 0 of b distinct from both b and y (the 'Climb' pattern).",
+          "decl": "ZeroParadox.th3_D_climb",
+          "elaborated_type": "∀ (n : ℕ) (hn : 2 ≤ n),\n  (ZeroParadox.th3ProjMotion n (ZeroParadox.th3E0 n hn) fun a b =>\n      a = ZeroParadox.th3E0 n hn ∧ b = ZeroParadox.th3E1 n hn).Climb",
+          "git_blob_id": "ff713205564ef7ac5ee8ba0c02830bbe2606a69a",
+          "id": "8266db51-114b-5497-9168-0290538d9550",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": null,
+          "line_sha256": "c1544276791c9bee9c36c737f0deed5aaf922674e3cbfd2af94c52cf3799cf99",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "aba061d5-f288-4ee8-afa9-02a3957be338",
+          "registry_id_reason": null,
+          "run_id": "rc-be1b20a0-TH3Die-2026-11-19"
+        },
+        {
           "blind_reading": "Bool has a CompleteLattice structure.",
           "decl": "example@L186",
           "elaborated_type": "Nonempty (CompleteLattice Bool)",
@@ -55329,6 +56017,22 @@
           "registry_id": null,
           "registry_id_reason": "anonymous example; no registry entry",
           "run_id": "bd-B07-2026-11-16"
+        },
+        {
+          "blind_reading": "For a vector u in C^n and any relation s: the motion whose up-map is orthogonal projection onto the complex line spanned by u and whose step relation is s.",
+          "decl": "ZeroParadox.th3ProjMotion",
+          "elaborated_type": "(n : ℕ) →\n  ZeroParadox.StateSpace n →\n    (ZeroParadox.StateSpace n → ZeroParadox.StateSpace n → Prop) → ZeroParadox.Motion (ZeroParadox.StateSpace n)",
+          "git_blob_id": "ff713205564ef7ac5ee8ba0c02830bbe2606a69a",
+          "id": "83b2a753-74de-56ae-b634-b67d4c8130ba",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": null,
+          "line_sha256": "4f86953abbec97d12c47cb6d842ed70ed640cefbade17b351d00078a57b5ea5a",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "b84f856d-0cc9-40ff-b87a-6dd24d9bd3a9",
+          "registry_id_reason": null,
+          "run_id": "rc-be1b20a0-TH3Die-2026-11-19"
         },
         {
           "blind_reading": "Field: members of bot are exactly bot.",
@@ -57683,6 +58387,22 @@
           "run_id": "bd-B07-2026-11-16"
         },
         {
+          "blind_reading": "The assignment c0 -> 1, c1 -> 0 into Q_2 (through Z_2) does not carry join-steps to path-steps.",
+          "decl": "ZeroParadox.th3_AB_snapEmbed_not_path",
+          "elaborated_type": "¬∀ (a b : ZeroParadox.MachinePhase),\n    ZeroParadox.machineJoinMotion.step a b →\n      (ZeroParadox.th3PathMotion ℚ_[2]).step ↑(ZeroParadox.snapEmbed a) ↑(ZeroParadox.snapEmbed b)",
+          "git_blob_id": "ff713205564ef7ac5ee8ba0c02830bbe2606a69a",
+          "id": "89c1b0e5-410e-5a53-bafb-ea9a9152e46e",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": null,
+          "line_sha256": "d0da81bbd595afc9dd3150bfd65efd34c9fdc109b08e560487132b7e27747302",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "cf44adc2-8ee5-42ad-84ae-1ca633d46baa",
+          "registry_id_reason": null,
+          "run_id": "rc-be1b20a0-TH3Die-2026-11-19"
+        },
+        {
           "blind_reading": "The candidate section x n and not x(n+1).",
           "decl": "ZeroParadox.NInf.naiveS",
           "elaborated_type": "ZeroParadox.NInf → ℕ → Bool",
@@ -59411,6 +60131,22 @@
           "run_id": "bd-B19-2026-11-16"
         },
         {
+          "blind_reading": "The assignment bottom to 1, top to 0 into the 2-adic numbers does not send join-steps to path-joinedness.",
+          "decl": "ZeroParadox.th3_AB_snapEmbed_not_path",
+          "elaborated_type": "¬∀ (a b : ZeroParadox.MachinePhase),\n    ZeroParadox.machineJoinMotion.step a b →\n      (ZeroParadox.th3PathMotion ℚ_[2]).step ↑(ZeroParadox.snapEmbed a) ↑(ZeroParadox.snapEmbed b)",
+          "git_blob_id": "17b5b719b996d80f85a77b465bd0ce13a7321543",
+          "id": "8e0da382-a43b-5c57-b277-5d3cd4e6c3f3",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": 331,
+          "line_sha256": "488f0b8f83aa89c3370a9dfce5c41bf2c0e47fd9b92a67078ade9e6218c289e0",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "cf44adc2-8ee5-42ad-84ae-1ca633d46baa",
+          "registry_id_reason": null,
+          "run_id": "rc-7ac17d10-TH3Die-2026-11-19"
+        },
+        {
           "blind_reading": "A preorder on WithBot a from a preorder on a; no axioms.",
           "decl": "ZeroParadox.withBotPreorderCF",
           "elaborated_type": "{α : Type u} → [Preorder α] → Preorder (WithBot α)",
@@ -59489,6 +60225,22 @@
           "registry_id": "883a6673-80c6-4234-970b-0f7de7c62c7f",
           "registry_id_reason": null,
           "run_id": "bd-M3-2026-11-16"
+        },
+        {
+          "blind_reading": "In the constant-c0 motion, c0 is the up-value of c1 and c0 is the only fixed point.",
+          "decl": "ZeroParadox.th3_A_dual",
+          "elaborated_type": "ZeroParadox.c₀ ∈ ZeroParadox.th3MeetUpMotion.up ZeroParadox.c₁ ∧\n  ∀ (y : ZeroParadox.MachinePhase), ZeroParadox.th3MeetUpMotion.IsLanding y ↔ y = ZeroParadox.c₀",
+          "git_blob_id": "ff713205564ef7ac5ee8ba0c02830bbe2606a69a",
+          "id": "8e2e8340-e272-54b1-8db7-4e9751e9bf4e",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": null,
+          "line_sha256": "8def83fae6ed48f5373b6927de4d12ab1edaa3f0ea43acd15054e010a7801487",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "157b910b-2ee2-4d2e-9188-738f1fb91ac2",
+          "registry_id_reason": null,
+          "run_id": "rc-be1b20a0-TH3Die-2026-11-19"
         },
         {
           "blind_reading": "The below-cover and above-cover step relations differ.",
@@ -59953,6 +60705,22 @@
           "registry_id": "afe9628c-487d-4b04-b336-f3150a658e49",
           "registry_id_reason": null,
           "run_id": "bd-Q2-2026-11-16"
+        },
+        {
+          "blind_reading": "Reversing the join-up motion's step relation: nothing is reached from c0 (no forward step enters c0), and c1 reaches both c0 and c1 (the forward fan-in into c1, run backwards).",
+          "decl": "ZeroParadox.th3_A_reverse",
+          "elaborated_type": "ZeroParadox.th3JoinUpMotion.reverse.NoStepAt ZeroParadox.c₀ ∧\n  ZeroParadox.th3JoinUpMotion.reverse.step ZeroParadox.c₁ ZeroParadox.c₀ ∧\n    ZeroParadox.th3JoinUpMotion.reverse.step ZeroParadox.c₁ ZeroParadox.c₁",
+          "git_blob_id": "ff713205564ef7ac5ee8ba0c02830bbe2606a69a",
+          "id": "8f29a4cf-adfd-5939-8cc1-37835a7838cf",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": null,
+          "line_sha256": "2df218fddd38b457370b2e0db2ffe66a494bb657d12715794375c1efb22a61cd",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "7fd296c8-f945-4ad5-8639-25b65b582fd2",
+          "registry_id_reason": null,
+          "run_id": "rc-be1b20a0-TH3Die-2026-11-19"
         },
         {
           "blind_reading": "Field: selfMem bot (duplicates the AFA field).",
@@ -61507,6 +62275,22 @@
           "run_id": "bd-B26-2026-11-16"
         },
         {
+          "blind_reading": "In the join-with-top motion the bottom goes up to the top, the top is the unique fixed point, the bottom steps elsewhere, and the top steps only to itself.",
+          "decl": "ZeroParadox.th3_A_fit",
+          "elaborated_type": "ZeroParadox.c₁ ∈ ZeroParadox.th3JoinUpMotion.up ZeroParadox.c₀ ∧\n  (∀ (y : ZeroParadox.MachinePhase), ZeroParadox.th3JoinUpMotion.IsLanding y ↔ y = ZeroParadox.c₁) ∧\n    ZeroParadox.th3JoinUpMotion.LeavesAt ZeroParadox.c₀ ∧ ZeroParadox.th3JoinUpMotion.SelfOnlyAt ZeroParadox.c₁",
+          "git_blob_id": "17b5b719b996d80f85a77b465bd0ce13a7321543",
+          "id": "9320c275-70ab-53bd-9adc-1ed4e0ca91f9",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": 44,
+          "line_sha256": "b6e1704c3b98a8f812cc5be56199e48bd20614f9d4d821cce9f131ade0b36954",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "f8ed30fb-1e56-47b3-8060-14b3cc89b7a0",
+          "registry_id_reason": null,
+          "run_id": "rc-7ac17d10-TH3Die-2026-11-19"
+        },
+        {
           "blind_reading": "WithTop Ordinal is a frame (instance resolution).",
           "decl": "example@L59",
           "elaborated_type": "Order.Frame (WithTop Ordinal.{u_1})",
@@ -62627,6 +63411,22 @@
           "run_id": "bd-M3-2026-11-16"
         },
         {
+          "blind_reading": "c1 is the up-value of c0 iff c0 join c1 = c1, i.e. iff c0 <= c1. Footprint propext only.",
+          "decl": "ZeroParadox.th3_A_iff",
+          "elaborated_type": "ZeroParadox.c₁ ∈ ZeroParadox.th3JoinUpMotion.up ZeroParadox.c₀ ↔\n  ZeroParadox.ZPSemilattice.join ZeroParadox.c₀ ZeroParadox.c₁ = ZeroParadox.c₁",
+          "git_blob_id": "ff713205564ef7ac5ee8ba0c02830bbe2606a69a",
+          "id": "95c557d1-91f8-5048-8110-a81c41333597",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": null,
+          "line_sha256": "aa18474c6df2321662fc0914b3f90ac90ad5af0253a2cec28e93a8b4e0b7befe",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "b4bec1b3-6132-45e8-a603-7caf0e409a74",
+          "registry_id_reason": null,
+          "run_id": "rc-be1b20a0-TH3Die-2026-11-19"
+        },
+        {
           "blind_reading": "Zero := wrap 0.",
           "decl": "instZeroQ₂BallDepth",
           "elaborated_type": "Zero Q₂BallDepth",
@@ -62705,6 +63505,22 @@
           "registry_id": "fea49020-2f19-49cb-8f1e-224b9bb6bf98",
           "registry_id_reason": null,
           "run_id": "bd-B21-2026-11-16"
+        },
+        {
+          "blind_reading": "The assignment bottom to 1, top to 0 into the reals does send every join-step to path-joinedness.",
+          "decl": "ZeroParadox.th3_AB_control_real",
+          "elaborated_type": "∀ (a b : ZeroParadox.MachinePhase),\n  ZeroParadox.machineJoinMotion.step a b →\n    (ZeroParadox.th3PathMotion ℝ).step\n      ((fun p =>\n          match p with\n          | ZeroParadox.MachinePhase.initial => 1\n          | ZeroParadox.MachinePhase.running => 0)\n        a)\n      ((fun p =>\n          match p with\n          | ZeroParadox.MachinePhase.initial => 1\n          | ZeroParadox.MachinePhase.running => 0)\n        b)",
+          "git_blob_id": "17b5b719b996d80f85a77b465bd0ce13a7321543",
+          "id": "95fad285-4c1f-52e3-bf31-6fafd7d607ae",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": 342,
+          "line_sha256": "ea63f02310f1c243de211edf494642025955db3012e9fe196efdd12141f2c325",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "dac939a9-510d-4d4d-80c7-3693f130f9ba",
+          "registry_id_reason": null,
+          "run_id": "rc-7ac17d10-TH3Die-2026-11-19"
         },
         {
           "blind_reading": "A constant-at-bot state sequence exists in MachinePhase.",
@@ -66003,6 +66819,22 @@
           "run_id": "bd-B29-2026-11-16"
         },
         {
+          "blind_reading": "With bottom to e0+e1 and top to e0, such a lax intertwining map exists.",
+          "decl": "ZeroParadox.th3_AD_control",
+          "elaborated_type": "∀ (n : ℕ) (hn : 2 ≤ n) (s : ZeroParadox.StateSpace n → ZeroParadox.StateSpace n → Prop),\n  ∃ f,\n    f ZeroParadox.c₀ = ZeroParadox.th3E0 n hn + ZeroParadox.th3E1 n hn ∧\n      f ZeroParadox.c₁ = ZeroParadox.th3E0 n hn ∧\n        ZeroParadox.th3JoinUpMotion.UpLax (ZeroParadox.th3ProjMotion n (ZeroParadox.th3E0 n hn) s) f",
+          "git_blob_id": "17b5b719b996d80f85a77b465bd0ce13a7321543",
+          "id": "9d2220f3-a9ea-5214-97ca-a79dc0e12a0d",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": 386,
+          "line_sha256": "a940d210464c5f4e0b1ebd7916010519f1bc00ab9cd71c993e3b19788bfde73b",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "a8fb7685-14b2-4514-a403-574ba55b301f",
+          "registry_id_reason": null,
+          "run_id": "rc-7ac17d10-TH3Die-2026-11-19"
+        },
+        {
           "blind_reading": "Case-selector computation lemma, by rfl.",
           "decl": "ZeroParadox.natCase8_6",
           "elaborated_type": "∀ (b0 b1 b2 b3 b4 b5 b6 b7 : ℕ), ZeroParadox.natCase8 6 b0 b1 b2 b3 b4 b5 b6 b7 = b6",
@@ -67329,6 +68161,22 @@
           "registry_id": "996c0bd5-6aa7-4975-886c-a13cec6f306c",
           "registry_id_reason": null,
           "run_id": "bd-B28-2026-11-16"
+        },
+        {
+          "blind_reading": "Projection onto the line through e1 sends e0 to zero.",
+          "decl": "ZeroParadox.th3_D_swap",
+          "elaborated_type": "∀ (n : ℕ) (hn : 2 ≤ n) (s : ZeroParadox.StateSpace n → ZeroParadox.StateSpace n → Prop),\n  0 ∈ (ZeroParadox.th3ProjMotion n (ZeroParadox.th3E1 n hn) s).up (ZeroParadox.th3E0 n hn)",
+          "git_blob_id": "17b5b719b996d80f85a77b465bd0ce13a7321543",
+          "id": "9f888b46-52cf-508f-8ded-a6c2c223d8bb",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": 291,
+          "line_sha256": "b714608140587925c89f279560692a08d87706021b9290cb16fd9561848e9b53",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "1119afec-6923-4244-a382-a7fe50f65443",
+          "registry_id_reason": null,
+          "run_id": "rc-7ac17d10-TH3Die-2026-11-19"
         },
         {
           "blind_reading": "Unit carries a ZPSemilattice instance.",
@@ -70291,6 +71139,22 @@
           "run_id": "bd-M5-2026-11-16"
         },
         {
+          "blind_reading": "The vector transitionOp n 0 in C^n (n >= 2); a unit vector.",
+          "decl": "ZeroParadox.th3E0",
+          "elaborated_type": "(n : ℕ) → 2 ≤ n → ZeroParadox.StateSpace n",
+          "git_blob_id": "ff713205564ef7ac5ee8ba0c02830bbe2606a69a",
+          "id": "a5fb96af-0677-5ca5-8250-403a09c5016c",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": null,
+          "line_sha256": "a1e19a152ee53d9aaacf11bb79424caab74afcd3fbe664861eb8b180802c86f1",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "73aa8b05-62fc-4964-97d9-ac727098a1da",
+          "registry_id_reason": null,
+          "run_id": "rc-be1b20a0-TH3Die-2026-11-19"
+        },
+        {
           "blind_reading": "L2 norm of that indicator is p^{-n/2}.",
           "decl": "ZeroParadox.norm_ballIndicatorL2",
           "elaborated_type": "∀ {p : ℕ} [inst : Fact (Nat.Prime p)] (n : ℕ),\n  ‖ZeroParadox.ballIndicatorL2 n‖ = (↑p ^ n)⁻¹ ^ (1 / 2)",
@@ -70433,6 +71297,22 @@
           "registry_id": "ba0cb8f3-0d6b-49d2-aa88-9d300a925a0d",
           "registry_id_reason": null,
           "run_id": "bd-B14-2026-11-16"
+        },
+        {
+          "blind_reading": "On Q_2 with the always-true step relation the statement fails (1 steps to 0).",
+          "decl": "ZeroParadox.th3_B_control_Q2",
+          "elaborated_type": "¬∀ (x : ℚ_[2]), (ZeroParadox.Motion.ofTotal id ⋯ fun x x_1 => True).step x 0 → x = 0",
+          "git_blob_id": "ff713205564ef7ac5ee8ba0c02830bbe2606a69a",
+          "id": "a64bad30-16b2-5149-9438-be8fcd10c022",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": null,
+          "line_sha256": "60863c79dcc00f44d61a0475f44237afa924c13723f256b8939405cd4592505b",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "386d7f03-5a8a-44e1-85a9-b45eb8558f65",
+          "registry_id_reason": null,
+          "run_id": "rc-be1b20a0-TH3Die-2026-11-19"
         },
         {
           "blind_reading": "The carrier Q ∪ {∞, ⊥} is a wheel (Carlstrom's wheel of Q).",
@@ -70641,6 +71521,22 @@
           "registry_id": "99a13fba-7335-4b90-918a-6ca772af8d36",
           "registry_id_reason": null,
           "run_id": "bd-B12-2026-11-16"
+        },
+        {
+          "blind_reading": "For any topological space X, the motion with identity up-map and step relation Joined (existence of a continuous path from x to y).",
+          "decl": "ZeroParadox.th3PathMotion",
+          "elaborated_type": "(X : Type u_1) → [TopologicalSpace X] → ZeroParadox.Motion X",
+          "git_blob_id": "ff713205564ef7ac5ee8ba0c02830bbe2606a69a",
+          "id": "a6ea909c-f5df-5e00-8ae9-327f30003875",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": null,
+          "line_sha256": "fd200e8ee5a7f0040249ac289ac3366821e43f77bfd6a9263d6a5a679f85e83b",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "b994e849-f499-445b-a080-cde2016b2632",
+          "registry_id_reason": null,
+          "run_id": "rc-be1b20a0-TH3Die-2026-11-19"
         },
         {
           "blind_reading": "Pole.swap is injective and no point is self-only in predecessors or successors.",
@@ -71233,6 +72129,22 @@
           "registry_id": null,
           "registry_id_reason": "anonymous example; no registry entry",
           "run_id": "bd-B24-2026-11-16"
+        },
+        {
+          "blind_reading": "In the motion whose step is b = a join z for some z, c0 steps to c1 (witness z = c1).",
+          "decl": "ZeroParadox.th3_A_step_machineJoin",
+          "elaborated_type": "ZeroParadox.machineJoinMotion.step ZeroParadox.c₀ ZeroParadox.c₁",
+          "git_blob_id": "ff713205564ef7ac5ee8ba0c02830bbe2606a69a",
+          "id": "a812f7de-1cf2-5e86-8753-71c204c19163",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": null,
+          "line_sha256": "78b110e97cfb957ad867b21e10fb43c4e187d953c60f05691260637e573ac0b2",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "652175bb-93d3-400f-b3fb-a2957f92170f",
+          "registry_id_reason": null,
+          "run_id": "rc-be1b20a0-TH3Die-2026-11-19"
         },
         {
           "blind_reading": "OneAtom with the same relation is a QuineAtomHost.",
@@ -72643,6 +73555,22 @@
           "run_id": "bd-B05-2026-11-16"
         },
         {
+          "blind_reading": "Top is the up-value of bottom iff bottom join top equals top; a definitional unfolding, both sides true.",
+          "decl": "ZeroParadox.th3_A_iff",
+          "elaborated_type": "ZeroParadox.c₁ ∈ ZeroParadox.th3JoinUpMotion.up ZeroParadox.c₀ ↔\n  ZeroParadox.ZPSemilattice.join ZeroParadox.c₀ ZeroParadox.c₁ = ZeroParadox.c₁",
+          "git_blob_id": "17b5b719b996d80f85a77b465bd0ce13a7321543",
+          "id": "ab3dd48b-e8ff-5fd9-b5b6-52785766212c",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": 39,
+          "line_sha256": "e52d27affb8a47db4f8d3d7cdf6ebef7feeaf2932b9294c0578149ba0cbdde6b",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "b4bec1b3-6132-45e8-a603-7caf0e409a74",
+          "registry_id_reason": null,
+          "run_id": "rc-7ac17d10-TH3Die-2026-11-19"
+        },
+        {
           "blind_reading": "Anonymous example; cluster reading: Projective line over Q_2 (OnePoint Q_2) and over any proper normed field: the extended inversion swapping 0 and infinity is a continuous involution/homeomorphism; scalings by 2^n fix 0 and infinity and form a Z-action conjugated to n -> -n by inversion; the extended norm is inverted by inversion; the preorder generated by unit multiplication and doubling on nonzero Q_2 is the valuation order; rounding the valuation up/down to even integers gives a closure operator conjugate to the round-down map under inversion.",
           "decl": "example@L277",
           "elaborated_type": "(Continuous ZeroParadox.rInv ∧ Continuous ZeroParadox.onePointInv) ∧\n  TotallyDisconnectedSpace ℚ_[2] ∧ ¬TotallyDisconnectedSpace ℝ",
@@ -72993,6 +73921,22 @@
           "registry_id": "2be46b6f-07cc-4cb1-b61d-aa266c132ac8",
           "registry_id_reason": null,
           "run_id": "bd-B02a-2026-11-16"
+        },
+        {
+          "blind_reading": "In the reals it is false that every point path-joined to 0 is 0.",
+          "decl": "ZeroParadox.th3_B_control_real",
+          "elaborated_type": "¬∀ (x : ℝ), (ZeroParadox.th3PathMotion ℝ).step x 0 → x = 0",
+          "git_blob_id": "17b5b719b996d80f85a77b465bd0ce13a7321543",
+          "id": "ac0b25f9-04ee-59d2-b70f-9c8cf1b387db",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": 131,
+          "line_sha256": "fcd05c9b30c73266a97321d28158a178905369f7ee171fe013d2a4d79fd9097a",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "323a62fc-171b-4093-b574-a4024cecc56e",
+          "registry_id_reason": null,
+          "run_id": "rc-7ac17d10-TH3Die-2026-11-19"
         },
         {
           "blind_reading": "Any ENat-valued d with the +1 law satisfies d(shift^k y) = d y + k.",
@@ -74659,6 +75603,22 @@
           "run_id": "bd-B17-2026-11-16"
         },
         {
+          "blind_reading": "In Q_2 every point is joined to itself and to nothing else; so this step structure is the identity relation and does not distinguish 0.",
+          "decl": "ZeroParadox.th3_B_every_point_selfOnly",
+          "elaborated_type": "∀ (y : ℚ_[2]), (ZeroParadox.th3PathMotion ℚ_[2]).SelfOnlyAt y",
+          "git_blob_id": "ff713205564ef7ac5ee8ba0c02830bbe2606a69a",
+          "id": "aff767e4-d466-59ad-9caa-643480834a1a",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": null,
+          "line_sha256": "2ddaf3c4a8f12621c5a123e21288f6a0a5efc9c5b313f7d7d6b2adb5a0846504",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "d08d0101-dfa6-4346-90be-bbac3ad06dcf",
+          "registry_id_reason": null,
+          "run_id": "rc-be1b20a0-TH3Die-2026-11-19"
+        },
+        {
           "blind_reading": "Same hypotheses: sigma maps the no-successor points of M bijectively onto the no-successor points of the reversed motion (i.e. the no-predecessor points of M).",
           "decl": "example@L2006",
           "elaborated_type": "∀ {α : Type} {M : ZeroParadox.Motion α} {σ : α → α},\n  Function.Involutive σ →\n    (∀ (a b : α), M.step a b ↔ M.step (σ b) (σ a)) → Set.BijOn σ {y | M.NoStepAt y} {y | M.reverse.NoStepAt y}",
@@ -76179,6 +77139,22 @@
           "run_id": "bd-B28-2026-11-16"
         },
         {
+          "blind_reading": "A join-step-to-path map into the 2-adic numbers sending top to 0 sends bottom to 0.",
+          "decl": "ZeroParadox.th3_AB_collapse",
+          "elaborated_type": "∀ (f : ZeroParadox.MachinePhase → ℚ_[2]),\n  (∀ (a b : ZeroParadox.MachinePhase),\n      ZeroParadox.machineJoinMotion.step a b → (ZeroParadox.th3PathMotion ℚ_[2]).step (f a) (f b)) →\n    f ZeroParadox.c₁ = 0 → f ZeroParadox.c₀ = 0",
+          "git_blob_id": "17b5b719b996d80f85a77b465bd0ce13a7321543",
+          "id": "b32bc8e0-7d7f-55bd-8830-b7a4ebdbbe42",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": 316,
+          "line_sha256": "efdfc69d7a08690befde930f49e74b8ed38933dd5ead6f2692af64ab74919089",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "cb987fad-684f-46db-9e8b-bfa18a1e6b2f",
+          "registry_id_reason": null,
+          "run_id": "rc-7ac17d10-TH3Die-2026-11-19"
+        },
+        {
           "blind_reading": "With empty step on ℕ, id is not a run, so no RunClosure.",
           "decl": "example@L951",
           "elaborated_type": "∀ (c : Part ℕ), ¬(ZeroParadox.Motion.ofTotal id ⋯ fun x x_1 => False).RunClosure id c",
@@ -76481,6 +77457,22 @@
           "registry_id": "fb7197c4-f4de-4c82-85f4-f45c7e183201",
           "registry_id_reason": null,
           "run_id": "bd-B29-2026-11-16"
+        },
+        {
+          "blind_reading": "In the motion whose step is the graph of the identity, c0 does not step to c1.",
+          "decl": "ZeroParadox.th3_A_step_control",
+          "elaborated_type": "¬(ZeroParadox.Motion.ofFun id).step ZeroParadox.c₀ ZeroParadox.c₁",
+          "git_blob_id": "ff713205564ef7ac5ee8ba0c02830bbe2606a69a",
+          "id": "b3fdc140-8784-58b6-a1a6-fd3a2ab2775e",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": null,
+          "line_sha256": "9f8bf8a362f8097b93f41735475fde7b7d1121f7b21882bff3ae8ca00086dd9c",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "6e07e517-1474-4530-a29f-0cc55fd6a0fc",
+          "registry_id_reason": null,
+          "run_id": "rc-be1b20a0-TH3Die-2026-11-19"
         },
         {
           "blind_reading": "Successor fixes infinity.",
@@ -79459,6 +80451,22 @@
           "run_id": "bd-B15-2026-11-16"
         },
         {
+          "blind_reading": "In the join-up motion: c1 is the up-value of c0; the fixed points of up are exactly c1; c0 steps to a point other than itself; c1 steps only to itself.",
+          "decl": "ZeroParadox.th3_A_fit",
+          "elaborated_type": "ZeroParadox.c₁ ∈ ZeroParadox.th3JoinUpMotion.up ZeroParadox.c₀ ∧\n  (∀ (y : ZeroParadox.MachinePhase), ZeroParadox.th3JoinUpMotion.IsLanding y ↔ y = ZeroParadox.c₁) ∧\n    ZeroParadox.th3JoinUpMotion.LeavesAt ZeroParadox.c₀ ∧ ZeroParadox.th3JoinUpMotion.SelfOnlyAt ZeroParadox.c₁",
+          "git_blob_id": "ff713205564ef7ac5ee8ba0c02830bbe2606a69a",
+          "id": "bb6f142e-43bf-5425-b66e-430a5ca9d075",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": null,
+          "line_sha256": "5114eadf187aa764af6b9a471360e607cf0b7d27b32c1c43b15b0002fb623703",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "f8ed30fb-1e56-47b3-8060-14b3cc89b7a0",
+          "registry_id_reason": null,
+          "run_id": "rc-be1b20a0-TH3Die-2026-11-19"
+        },
+        {
           "blind_reading": "Definition: the forward map of e sends r to (r,r).",
           "decl": "ZeroParadox.Motion.FixedPole",
           "elaborated_type": "{α : Type u} →\n  {M : ZeroParadox.Motion α} → {N : ZeroParadox.Motion (α × α)} → M.StrictIso N → α → Prop",
@@ -79713,6 +80721,22 @@
           "registry_id": null,
           "registry_id_reason": "anonymous example; no registry entry",
           "run_id": "rc-c8a2c52d-DCBP2-2026-11-18"
+        },
+        {
+          "blind_reading": "Into Q_2 with the always-true step relation, the same assignment carries every join-step.",
+          "decl": "ZeroParadox.th3_AB_control_Q2",
+          "elaborated_type": "∀ (a b : ZeroParadox.MachinePhase),\n  ZeroParadox.machineJoinMotion.step a b →\n    (ZeroParadox.Motion.ofTotal id ⋯ fun x x_1 => True).step ↑(ZeroParadox.snapEmbed a) ↑(ZeroParadox.snapEmbed b)",
+          "git_blob_id": "ff713205564ef7ac5ee8ba0c02830bbe2606a69a",
+          "id": "bc2827dc-41b0-5b28-a07f-6b48fdc49ddf",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": null,
+          "line_sha256": "4698f28a18f159c7190a970556c76c837b7b362df0124d389056a54e185b2635",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "28c2ab96-8aee-48c0-a6af-dc0e8ac32f0f",
+          "registry_id_reason": null,
+          "run_id": "rc-be1b20a0-TH3Die-2026-11-19"
         },
         {
           "blind_reading": "No path in Q_2 between disjoint closed balls of equal radius.",
@@ -93630,6 +94654,22 @@
           "run_id": "bd-Q3-2026-11-16"
         },
         {
+          "blind_reading": "Into R, the assignment c0 -> 1, c1 -> 0 does carry every join-step to a path-step (R is path connected).",
+          "decl": "ZeroParadox.th3_AB_control_real",
+          "elaborated_type": "∀ (a b : ZeroParadox.MachinePhase),\n  ZeroParadox.machineJoinMotion.step a b →\n    (ZeroParadox.th3PathMotion ℝ).step\n      ((fun p =>\n          match p with\n          | ZeroParadox.MachinePhase.initial => 1\n          | ZeroParadox.MachinePhase.running => 0)\n        a)\n      ((fun p =>\n          match p with\n          | ZeroParadox.MachinePhase.initial => 1\n          | ZeroParadox.MachinePhase.running => 0)\n        b)",
+          "git_blob_id": "ff713205564ef7ac5ee8ba0c02830bbe2606a69a",
+          "id": "c005e17c-c1b3-5e35-9326-b8de2644301b",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": null,
+          "line_sha256": "15c62dae9708a6367b0b8bb9f343e8875e977c74457bc4df5799ee906ccd0e23",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "dac939a9-510d-4d4d-80c7-3693f130f9ba",
+          "registry_id_reason": null,
+          "run_id": "rc-be1b20a0-TH3Die-2026-11-19"
+        },
+        {
           "blind_reading": "On Bool with up constant true and step ≠, true leaves and is neither no-step nor self-only.",
           "decl": "example@L1532",
           "elaborated_type": "have M := ZeroParadox.Motion.ofTotal (fun x => true) ⋯ fun a b => a ≠ b;\nM.LeavesAt true ∧ ¬M.NoStepAt true ∧ ¬M.SelfOnlyAt true",
@@ -94860,6 +95900,22 @@
           "registry_id": "cc4b256f-e11d-40f8-bc40-9402e5b49990",
           "registry_id_reason": null,
           "run_id": "bd-Q1-2026-11-16"
+        },
+        {
+          "blind_reading": "With the always-true relation on the 2-adic numbers, the 1/0 assignment preserves every join-step.",
+          "decl": "ZeroParadox.th3_AB_control_Q2",
+          "elaborated_type": "∀ (a b : ZeroParadox.MachinePhase),\n  ZeroParadox.machineJoinMotion.step a b →\n    (ZeroParadox.Motion.ofTotal id ⋯ fun x x_1 => True).step ↑(ZeroParadox.snapEmbed a) ↑(ZeroParadox.snapEmbed b)",
+          "git_blob_id": "17b5b719b996d80f85a77b465bd0ce13a7321543",
+          "id": "c2eb073b-6d2b-5fa4-9961-8aea298aa566",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": 351,
+          "line_sha256": "8f142eedc391fece42a7e4e893b9ca4270120234ede04cb477386278c6c3919e",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "28c2ab96-8aee-48c0-a6af-dc0e8ac32f0f",
+          "registry_id_reason": null,
+          "run_id": "rc-7ac17d10-TH3Die-2026-11-19"
         },
         {
           "blind_reading": "Two strictly ordered points of E0Note share a denotation.",
@@ -96142,6 +97198,22 @@
           "run_id": "bd-M2-2026-11-16"
         },
         {
+          "blind_reading": "Projection onto span(e0) sends e1 to 0.",
+          "decl": "ZeroParadox.th3_proj_e0_e1",
+          "elaborated_type": "∀ (n : ℕ) (hn : 2 ≤ n),\n  (ℂ ∙ ZeroParadox.th3E0 n hn).starProjection (ZeroParadox.th3E1 n hn) = 0",
+          "git_blob_id": "ff713205564ef7ac5ee8ba0c02830bbe2606a69a",
+          "id": "c54e3de1-fc42-56fa-ae7b-707a2b10eb7f",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": null,
+          "line_sha256": "170d1ba5b30151b8c5232504f7ca355368362a9918e824a9cc99e2f0f717b6b9",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "150574db-ec4b-45f2-a64c-1e5d600df473",
+          "registry_id_reason": null,
+          "run_id": "rc-be1b20a0-TH3Die-2026-11-19"
+        },
+        {
           "blind_reading": "Cluster reading: Elementary facts: 0 is least in N; 0 is the least value of the norm on Q_2, attained exactly at 0.",
           "decl": "ZeroParadox.q2_norm_eq_zero_iff",
           "elaborated_type": "∀ (x : ℚ_[2]), ‖x‖ = 0 ↔ x = 0",
@@ -97054,6 +98126,22 @@
           "run_id": "bd-B12-2026-11-16"
         },
         {
+          "blind_reading": "On real functions on a two-point set, the motion with constant up-map at the uniform mixture and a single step from point mass P to point mass Q.",
+          "decl": "ZeroParadox.th3MixMotion",
+          "elaborated_type": "ZeroParadox.Motion (ZeroParadox.BinaryState → ℝ)",
+          "git_blob_id": "17b5b719b996d80f85a77b465bd0ce13a7321543",
+          "id": "c6de9955-c35a-5da6-a91a-c4c650a55d91",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": 142,
+          "line_sha256": "83d23f146344df5ce7136aef1aab37ce32327cb459e4677274e04103fed8c870",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "aa906aa6-8ee4-4633-818e-ba670ce967e4",
+          "registry_id_reason": null,
+          "run_id": "rc-7ac17d10-TH3Die-2026-11-19"
+        },
+        {
           "blind_reading": "For n >= 2 the vectors transitionOp n 0 and transitionOp n 1 are orthogonal in StateSpace n.",
           "decl": "ZeroParadox.th1_fd",
           "elaborated_type": "∀ (n : ℕ) (hn : 2 ≤ n), inner ℂ (ZeroParadox.transitionOp n ⟨0, ⋯⟩) (ZeroParadox.transitionOp n ⟨1, ⋯⟩) = 0",
@@ -97150,6 +98238,22 @@
           "run_id": "bd-B17-2026-11-16"
         },
         {
+          "blind_reading": "No map from the chain to complex n-space with bottom to e1 and top to e0 laxly intertwines constant-top with projection onto the line through e0.",
+          "decl": "ZeroParadox.th3_AD_no_upLax",
+          "elaborated_type": "∀ (n : ℕ) (hn : 2 ≤ n) (s : ZeroParadox.StateSpace n → ZeroParadox.StateSpace n → Prop),\n  ¬∃ f,\n      f ZeroParadox.c₀ = ZeroParadox.th3E1 n hn ∧\n        f ZeroParadox.c₁ = ZeroParadox.th3E0 n hn ∧\n          ZeroParadox.th3JoinUpMotion.UpLax (ZeroParadox.th3ProjMotion n (ZeroParadox.th3E0 n hn) s) f",
+          "git_blob_id": "17b5b719b996d80f85a77b465bd0ce13a7321543",
+          "id": "c720b761-c10e-5a9b-8b0b-4b960a15b130",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": 359,
+          "line_sha256": "a8858b0c8899743d86bba0f08d298d271ee6192d5a271211e92d95ae04a41aa4",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "6150e1b9-4bcd-4861-878d-34f0ae02b3b8",
+          "registry_id_reason": null,
+          "run_id": "rc-7ac17d10-TH3Die-2026-11-19"
+        },
+        {
           "blind_reading": "An ordered field has no least element, no consecutive pair is a cover, and 0 has no cover (density).",
           "decl": "example@L4412",
           "elaborated_type": "∀ {F : Type u_1} [inst : Field F] [inst_1 : LinearOrder F] [IsStrictOrderedRing F]\n  (S : ℕ → F), IsEmpty (OrderBot F) ∧ ¬S 0 ⋖ S 1 ∧ ¬ZeroParadox.HasFirstStep 0",
@@ -97164,6 +98268,22 @@
           "registry_id": null,
           "registry_id_reason": "anonymous example; no registry entry",
           "run_id": "bd-B03c-2026-11-16"
+        },
+        {
+          "blind_reading": "With identity up-map the log 2 identity fails, since klDiv of a distribution with itself is 0.",
+          "decl": "ZeroParadox.th3_C_control",
+          "elaborated_type": "¬ZeroParadox.Th3JsdAlong\n    (ZeroParadox.Motion.ofTotal id ⋯ fun p q => p = ZeroParadox.P_real ∧ q = ZeroParadox.Q_real)",
+          "git_blob_id": "17b5b719b996d80f85a77b465bd0ce13a7321543",
+          "id": "c73c5924-c956-5ec7-ac7b-d9edf39cdbc9",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": 163,
+          "line_sha256": "07c1e77f27ad24a87af2bc018670fb096297c264677929690693fa4ac8adaa5b",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "62280b9c-f7fa-49f1-bf11-2e78732f7b5a",
+          "registry_id_reason": null,
+          "run_id": "rc-7ac17d10-TH3Die-2026-11-19"
         },
         {
           "blind_reading": "On Bool the self-only question is decidable at each point.",
@@ -97756,6 +98876,22 @@
           "registry_id": "e8f0cd43-fa5b-4d17-a714-088edb9ed5f9",
           "registry_id_reason": null,
           "run_id": "bd-B02b-2026-11-16"
+        },
+        {
+          "blind_reading": "P steps to Q, both go up to the uniform mixture, and the Jensen-Shannon value log 2 holds.",
+          "decl": "ZeroParadox.th3_C_fit",
+          "elaborated_type": "ZeroParadox.th3MixMotion.step ZeroParadox.P_real ZeroParadox.Q_real ∧\n  ZeroParadox.mixtureM ∈ ZeroParadox.th3MixMotion.up ZeroParadox.P_real ∧\n    ZeroParadox.mixtureM ∈ ZeroParadox.th3MixMotion.up ZeroParadox.Q_real ∧\n      ZeroParadox.Th3JsdAlong ZeroParadox.th3MixMotion",
+          "git_blob_id": "17b5b719b996d80f85a77b465bd0ce13a7321543",
+          "id": "c9066d82-2657-5159-930b-ca5be5fa3d29",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": 154,
+          "line_sha256": "46d3624c509f00b106a155b098904ec0a54b46501ecca48c072559d82390e2ab",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "0bedbd00-dea5-4bdc-a53d-b3da5851fc08",
+          "registry_id_reason": null,
+          "run_id": "rc-7ac17d10-TH3Die-2026-11-19"
         },
         {
           "blind_reading": "The open interval (eps_o, eps_{o+1}) has order type eps_{o+1} (lifted).",
@@ -98462,6 +99598,22 @@
           "run_id": "bd-B25-2026-11-16"
         },
         {
+          "blind_reading": "Motion on real functions on the two-element type: up-map constant at the uniform (1/2,1/2) function; the only step is from the point mass P to the point mass Q.",
+          "decl": "ZeroParadox.th3MixMotion",
+          "elaborated_type": "ZeroParadox.Motion (ZeroParadox.BinaryState → ℝ)",
+          "git_blob_id": "ff713205564ef7ac5ee8ba0c02830bbe2606a69a",
+          "id": "ca784e5d-cd47-5a66-b60f-aa39ca2c9829",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": null,
+          "line_sha256": "969cd0a2bc506390d15965813e06cc340d9665371a98f02bd1f941cf4553dd25",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "aa906aa6-8ee4-4633-818e-ba670ce967e4",
+          "registry_id_reason": null,
+          "run_id": "rc-be1b20a0-TH3Die-2026-11-19"
+        },
+        {
           "blind_reading": "Defining equation of e0Repr.",
           "decl": "ZeroParadox.e0Repr_top",
           "elaborated_type": "ZeroParadox.e0Repr ⊤ = Ordinal.epsilon 0",
@@ -98830,6 +99982,22 @@
           "run_id": "bd-B09-2026-11-16"
         },
         {
+          "blind_reading": "Projection of v onto the line through e0 is zero iff the inner product of e0 with v is zero.",
+          "decl": "ZeroParadox.th3_D_up_zero_iff",
+          "elaborated_type": "∀ (n : ℕ) (hn : 2 ≤ n) (s : ZeroParadox.StateSpace n → ZeroParadox.StateSpace n → Prop)\n  (v : ZeroParadox.StateSpace n),\n  0 ∈ (ZeroParadox.th3ProjMotion n (ZeroParadox.th3E0 n hn) s).up v ↔ inner ℂ (ZeroParadox.th3E0 n hn) v = 0",
+          "git_blob_id": "17b5b719b996d80f85a77b465bd0ce13a7321543",
+          "id": "cb732708-4d50-5687-86c7-606ceb16297d",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": 218,
+          "line_sha256": "491ec720b87b981025470e4e2d5b3e7c82521218564688aaf231716e3ef91d9e",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "c0e443cf-2d0a-40f0-bab4-0a939fcc7abe",
+          "registry_id_reason": null,
+          "run_id": "rc-7ac17d10-TH3Die-2026-11-19"
+        },
+        {
           "blind_reading": "If the kernel of obs is partial-map-compatible, definedness of the partial map factors through obs.",
           "decl": "ZeroParadox.Motion.dom_factor",
           "elaborated_type": "∀ {α : Type u_1} {O : Type u_3} {M : ZeroParadox.Motion α} (obs : α → O),\n  M.UpCompat (Setoid.ker obs) → ∃ D, ∀ (a : α), (M.up a).Dom ↔ D (obs a)",
@@ -98988,6 +100156,22 @@
           "registry_id": "efb0ed2a-052b-40e7-8202-afd033e07996",
           "registry_id_reason": null,
           "run_id": "bd-B23-2026-11-16"
+        },
+        {
+          "blind_reading": "Predicate on a motion: for all up-values mp of P and mq of Q, (1/2)KL(P||mp) + (1/2)KL(Q||mq) = log 2.",
+          "decl": "ZeroParadox.Th3JsdAlong",
+          "elaborated_type": "ZeroParadox.Motion (ZeroParadox.BinaryState → ℝ) → Prop",
+          "git_blob_id": "ff713205564ef7ac5ee8ba0c02830bbe2606a69a",
+          "id": "cbc7b85c-09a2-5412-bb4b-526a0a0863e5",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": null,
+          "line_sha256": "110dbf3884e9d9c2ab5718c80974e21f5119e824c12fc02ebaee935de795da05",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "3c2d2964-5844-406d-8aa8-77209160f507",
+          "registry_id_reason": null,
+          "run_id": "rc-be1b20a0-TH3Die-2026-11-19"
         },
         {
           "blind_reading": "Recording inhabitation plus ends: Empty is uninhabited with no ends, Z inhabited with no ends, PUnit inhabited with both.",
@@ -99564,6 +100748,22 @@
           "registry_id": "79918650-8bfe-435d-91e8-c3dfaee155bf",
           "registry_id_reason": null,
           "run_id": "bd-B20-2026-11-16"
+        },
+        {
+          "blind_reading": "The second basis vector is nonzero.",
+          "decl": "ZeroParadox.th3_e1_ne_zero",
+          "elaborated_type": "∀ (n : ℕ) (hn : 2 ≤ n), ZeroParadox.th3E1 n hn ≠ 0",
+          "git_blob_id": "17b5b719b996d80f85a77b465bd0ce13a7321543",
+          "id": "cd266b69-04eb-5eeb-9ff6-f3280e0b8330",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": 210,
+          "line_sha256": "cb8e3d959220bd023ed8dad1230da2f926915f59d93c3c8d610257c73366ed32",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "ae53cd77-1f17-4ba1-8237-6ba5bd145aa8",
+          "registry_id_reason": null,
+          "run_id": "rc-7ac17d10-TH3Die-2026-11-19"
         },
         {
           "blind_reading": "Curry's paradox: (p <-> (p -> C)) implies C, for arbitrary propositions; axiom-free.",
@@ -102476,6 +103676,22 @@
           "registry_id": "0dcbef01-bc3f-4548-ab90-a7d5198dfe66",
           "registry_id_reason": null,
           "run_id": "bd-Q2-2026-11-16"
+        },
+        {
+          "blind_reading": "With identity up-map, e1's up-value is e1, not 0.",
+          "decl": "ZeroParadox.th3_D_control_id",
+          "elaborated_type": "∀ (n : ℕ) (hn : 2 ≤ n),\n  0 ∉ (ZeroParadox.Motion.ofTotal id ⋯ fun x x_1 => False).up (ZeroParadox.th3E1 n hn)",
+          "git_blob_id": "ff713205564ef7ac5ee8ba0c02830bbe2606a69a",
+          "id": "d33a00f9-08a7-5162-bb76-9b706aa3ccb7",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": null,
+          "line_sha256": "c56b42767142ee49f4d20e04a6f05b8188555fd8333ec7c682f0f1b536fa109e",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "5eb40f1e-e519-4cec-8f4b-a689a3222899",
+          "registry_id_reason": null,
+          "run_id": "rc-be1b20a0-TH3Die-2026-11-19"
         },
         {
           "blind_reading": "lfp f <= gfp f for a monotone self-map of a complete lattice (Mathlib's OrderHom.lfp_le_gfp).",
@@ -106286,6 +107502,22 @@
           "run_id": "bd-Q2-2026-11-16"
         },
         {
+          "blind_reading": "The log 2 identity with the two summands in the other order.",
+          "decl": "ZeroParadox.th3_C_reverse",
+          "elaborated_type": "∀ mq ∈ ZeroParadox.th3MixMotion.up ZeroParadox.Q_real,\n  ∀ mp ∈ ZeroParadox.th3MixMotion.up ZeroParadox.P_real,\n    1 / 2 * ZeroParadox.klDiv ZeroParadox.Q_real mq + 1 / 2 * ZeroParadox.klDiv ZeroParadox.P_real mp = Real.log 2",
+          "git_blob_id": "17b5b719b996d80f85a77b465bd0ce13a7321543",
+          "id": "db571f75-eb40-5db0-81b3-8b126b6f1f51",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": 175,
+          "line_sha256": "9943ba68b2d7daa3acc74d603bf97a506f1f48c99839edef81808455d6852c29",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "ae4d4e00-0cf4-406f-ad2b-ac1cf51c5839",
+          "registry_id_reason": null,
+          "run_id": "rc-7ac17d10-TH3Die-2026-11-19"
+        },
+        {
           "blind_reading": "On Cantor space N -> Bool with constant landing map (all-false sequence) and step \"prepend false\": decidable domain, total selector, no fan-in (the step map is injective).",
           "decl": "example@L1880",
           "elaborated_type": "have M :=\n  ZeroParadox.Motion.ofTotal (fun x => ⊥) ⋯ fun a b =>\n    b = fun n =>\n      match n with\n      | 0 => false\n      | k.succ => a k;\nM.RegisteredDecidable ∧ M.SelectedTotal ∧ ∀ (y : ℕ → Bool), ¬M.FanIn y",
@@ -108318,6 +109550,22 @@
           "run_id": "bd-M1-2026-11-16"
         },
         {
+          "blind_reading": "With the identity or the constant-bottom up-map, top is not the up-value of bottom.",
+          "decl": "ZeroParadox.th3_A_control",
+          "elaborated_type": "ZeroParadox.c₁ ∉ (ZeroParadox.Motion.ofTotal id ⋯ fun x x_1 => False).up ZeroParadox.c₀ ∧\n  ZeroParadox.c₁ ∉ (ZeroParadox.Motion.ofTotal (fun x => ZeroParadox.c₀) ⋯ fun x x_1 => False).up ZeroParadox.c₀",
+          "git_blob_id": "17b5b719b996d80f85a77b465bd0ce13a7321543",
+          "id": "dfc7c637-306c-5d08-94cd-f82f839932d0",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": 60,
+          "line_sha256": "c1ff22dbc0ebbed45fe0e54adff190da841a7c2eeb77b165f5ae9ec066bdd24f",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "6132c039-9548-4d14-94ca-b65f7435a768",
+          "registry_id_reason": null,
+          "run_id": "rc-7ac17d10-TH3Die-2026-11-19"
+        },
+        {
           "blind_reading": "2 < eps0 and 2 is no tower stage.",
           "decl": "example@L147",
           "elaborated_type": "2 < ZeroParadox.epsilonZero ∧ ∀ (n : ℕ), ZeroParadox.fundamentalSeq n ≠ 2",
@@ -109134,6 +110382,22 @@
           "run_id": "bd-B08-2026-11-16"
         },
         {
+          "blind_reading": "In the 2-adic numbers Q_2, any point joined by a path to 0 is 0.",
+          "decl": "ZeroParadox.th3_B_fit",
+          "elaborated_type": "∀ (x : ℚ_[2]), (ZeroParadox.th3PathMotion ℚ_[2]).step x 0 → x = 0",
+          "git_blob_id": "ff713205564ef7ac5ee8ba0c02830bbe2606a69a",
+          "id": "e175adbf-6fca-5032-964e-dab797fe8444",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": null,
+          "line_sha256": "4ab9cd1d079f528c01ccac2bdc8473380846eb7aeb1f30560511478f9ad4a285",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "644345d3-d894-4842-adf4-82bf7f7f95e2",
+          "registry_id_reason": null,
+          "run_id": "rc-be1b20a0-TH3Die-2026-11-19"
+        },
+        {
           "blind_reading": "Nat.Primrec closure or instance lemma (const).",
           "decl": "ZeroParadox.natPrimrec_const",
           "elaborated_type": "∀ (k : ℕ), Nat.Primrec fun x => k",
@@ -109838,6 +111102,22 @@
           "run_id": "bd-Q2-2026-11-16"
         },
         {
+          "blind_reading": "Same statement as th3_D_up_zero_iff, via Mathlib's two lemmas.",
+          "decl": "example@L228",
+          "elaborated_type": "∀ (n : ℕ) (hn : 2 ≤ n)\n  (s : ZeroParadox.StateSpace n → ZeroParadox.StateSpace n → Prop) (v : ZeroParadox.StateSpace n),\n  0 ∈ (ZeroParadox.th3ProjMotion n (ZeroParadox.th3E0 n hn) s).up v ↔ inner ℂ (ZeroParadox.th3E0 n hn) v = 0",
+          "git_blob_id": "17b5b719b996d80f85a77b465bd0ce13a7321543",
+          "id": "e2f701f3-70ae-5c05-9cef-98ba10c58e46",
+          "is_example": true,
+          "key_kind": "example_line",
+          "kind": "reading",
+          "line": 228,
+          "line_sha256": "46120d4f2be1984c98cbe0a5a49aa61267ca45125dd99508551b256ad4a809ff",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": null,
+          "registry_id_reason": "anonymous example; no registry entry",
+          "run_id": "rc-7ac17d10-TH3Die-2026-11-19"
+        },
+        {
           "blind_reading": "The comparison map from initial algebra (naturals) to final coalgebra (conaturals) of X |-> 1+X is not surjective.",
           "decl": "ZeroParadox.fixToCofix_not_surjective",
           "elaborated_type": "¬Function.Surjective ZeroParadox.fixToCofix",
@@ -110076,6 +111356,22 @@
           "registry_id": null,
           "registry_id_reason": "anonymous example; no registry entry",
           "run_id": "bd-M2-2026-11-16"
+        },
+        {
+          "blind_reading": "The averaged-KL predicate holds for the reversed mixture motion; reversal leaves up unchanged.",
+          "decl": "ZeroParadox.th3_C_reverse_motion",
+          "elaborated_type": "ZeroParadox.Th3JsdAlong ZeroParadox.th3MixMotion.reverse",
+          "git_blob_id": "ff713205564ef7ac5ee8ba0c02830bbe2606a69a",
+          "id": "e34f7547-7692-56eb-9e31-54dd46a14af7",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": null,
+          "line_sha256": "65269abcb9afd8258c03b2d323352fe1f8032b2532d7e492cbb73f672420fedf",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "6e6ea458-b558-4693-87dc-b12f62bb9d9d",
+          "registry_id_reason": null,
+          "run_id": "rc-be1b20a0-TH3Die-2026-11-19"
         },
         {
           "blind_reading": "The walk reflects order: comparability of endpoints forces the prefix relation.",
@@ -110526,6 +111822,22 @@
           "run_id": "bd-B07-2026-11-16"
         },
         {
+          "blind_reading": "Predicate: for all up-values mp of P and mq of Q, half klDiv(P,mp) plus half klDiv(Q,mq) equals log 2.",
+          "decl": "ZeroParadox.Th3JsdAlong",
+          "elaborated_type": "ZeroParadox.Motion (ZeroParadox.BinaryState → ℝ) → Prop",
+          "git_blob_id": "17b5b719b996d80f85a77b465bd0ce13a7321543",
+          "id": "e400972e-3e48-5d62-94ae-4ca280b4799d",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": 147,
+          "line_sha256": "4c1fc679f3034f841d917df2bcab8c56f794eaece4bfc54fc924b8a0faf67c96",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "3c2d2964-5844-406d-8aa8-77209160f507",
+          "registry_id_reason": null,
+          "run_id": "rc-7ac17d10-TH3Die-2026-11-19"
+        },
+        {
           "blind_reading": "The conaturals are omniscient/searchable: every Boolean predicate is false somewhere or true everywhere, without LPO or choice.",
           "decl": "ZeroParadox.NInf.omniscient",
           "elaborated_type": "∀ (p : ZeroParadox.NInf → Bool), (∃ x, p x = false) ∨ ∀ (x : ZeroParadox.NInf), p x = true",
@@ -110892,6 +112204,22 @@
           "registry_id": "4feab700-7cee-43f3-98bd-882a85b6a1a2",
           "registry_id_reason": null,
           "run_id": "bd-B28-2026-11-16"
+        },
+        {
+          "blind_reading": "e1 is nonzero (it has norm 1).",
+          "decl": "ZeroParadox.th3_e1_ne_zero",
+          "elaborated_type": "∀ (n : ℕ) (hn : 2 ≤ n), ZeroParadox.th3E1 n hn ≠ 0",
+          "git_blob_id": "ff713205564ef7ac5ee8ba0c02830bbe2606a69a",
+          "id": "e5390494-cea6-560e-aae8-466262614463",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": null,
+          "line_sha256": "eb1bf8c266c8b26ccc96f614473f809e3bb919de7e31bde897c1ed3fbb02b167",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "ae53cd77-1f17-4ba1-8237-6ba5bd145aa8",
+          "registry_id_reason": null,
+          "run_id": "rc-be1b20a0-TH3Die-2026-11-19"
         },
         {
           "blind_reading": "k ↦ ε_k is injective.",
@@ -114190,6 +115518,22 @@
           "run_id": "bd-B25-2026-11-16"
         },
         {
+          "blind_reading": "In the motion of the identity function, bottom does not step to top.",
+          "decl": "ZeroParadox.th3_A_step_control",
+          "elaborated_type": "¬(ZeroParadox.Motion.ofFun id).step ZeroParadox.c₀ ZeroParadox.c₁",
+          "git_blob_id": "17b5b719b996d80f85a77b465bd0ce13a7321543",
+          "id": "ebc31b46-8e5a-5b5a-89e7-ebfb82497549",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": 66,
+          "line_sha256": "1011cd59e00b9331c27b478e0be8f18fdcf3131799f9f4fc1ee5a9315af1b93c",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "6e07e517-1474-4530-a29f-0cc55fd6a0fc",
+          "registry_id_reason": null,
+          "run_id": "rc-7ac17d10-TH3Die-2026-11-19"
+        },
+        {
           "blind_reading": "floorRel is not well-founded on any L carrying the self-application structure.",
           "decl": "ZeroParadox.floor_not_wellFounded",
           "elaborated_type": "∀ {L : Type u_1} [inst : ZeroParadox.ZPSemilattice L]\n  [inst_1 : ZeroParadox.AbstractSelfApp L], ¬WellFounded ZeroParadox.floorRel",
@@ -115950,6 +117294,22 @@
           "run_id": "bd-M2-2026-11-16"
         },
         {
+          "blind_reading": "On any topological space, the motion with identity up-map and path-joinedness as relation.",
+          "decl": "ZeroParadox.th3PathMotion",
+          "elaborated_type": "(X : Type u_1) → [TopologicalSpace X] → ZeroParadox.Motion X",
+          "git_blob_id": "17b5b719b996d80f85a77b465bd0ce13a7321543",
+          "id": "f01eef48-cdf5-5ab4-a707-e86f59e045de",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": 93,
+          "line_sha256": "05adeb7e9b55bbd303a741c04b0d49428d6fb99a0c7ef9b1e588f7072dabc2e2",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "b994e849-f499-445b-a080-cde2016b2632",
+          "registry_id_reason": null,
+          "run_id": "rc-7ac17d10-TH3Die-2026-11-19"
+        },
+        {
           "blind_reading": "Truncation recursion: next integrand adds the shell load.",
           "decl": "ZeroParadox.vladIntegrand_succ",
           "elaborated_type": "∀ {p : ℕ} [inst : Fact (Nat.Prime p)] (α : ℝ) (m : ℕ), ZeroParadox.vladIntegrand α (m + 1) = fun y => ZeroParadox.vladIntegrand α m y + ZeroParadox.shellLoad α m y",
@@ -116124,6 +117484,22 @@
           "registry_id": null,
           "registry_id_reason": "no live entry in ssot.json's declarations for this name (2026-11-16)",
           "run_id": "bd-B07-2026-11-16"
+        },
+        {
+          "blind_reading": "Same statement as th3_joined_eq: in a totally disconnected space path-joined points are equal.",
+          "decl": "example@L106",
+          "elaborated_type": "∀ {X : Type u_1} [inst : TopologicalSpace X] [TotallyDisconnectedSpace X]\n  {x y : X}, Joined x y → x = y",
+          "git_blob_id": "17b5b719b996d80f85a77b465bd0ce13a7321543",
+          "id": "f0818e4a-3ed0-5595-9f23-0f323236d3ae",
+          "is_example": true,
+          "key_kind": "example_line",
+          "kind": "reading",
+          "line": 106,
+          "line_sha256": "e8f02cc17e31c8f3d246e63b3b527794be4e93ebdf959be80a808c76790b5341",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": null,
+          "registry_id_reason": "anonymous example; no registry entry",
+          "run_id": "rc-7ac17d10-TH3Die-2026-11-19"
         },
         {
           "blind_reading": "For n >= 2 the first two standard basis vectors of R^n differ.",
@@ -116734,6 +118110,22 @@
           "run_id": "bd-B02a-2026-11-16"
         },
         {
+          "blind_reading": "With the single step e0 to e1, the projection motion climbs: e1 goes up to 0, distinct from both e1 and e0.",
+          "decl": "ZeroParadox.th3_D_climb",
+          "elaborated_type": "∀ (n : ℕ) (hn : 2 ≤ n),\n  (ZeroParadox.th3ProjMotion n (ZeroParadox.th3E0 n hn) fun a b =>\n      a = ZeroParadox.th3E0 n hn ∧ b = ZeroParadox.th3E1 n hn).Climb",
+          "git_blob_id": "17b5b719b996d80f85a77b465bd0ce13a7321543",
+          "id": "f18007d5-bb95-5783-a69e-d18df6e9121d",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": 247,
+          "line_sha256": "8865a53cca40db2243dc66440ce2b47ae5beefdde2f917ace0ce1e8bbcb127da",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "aba061d5-f288-4ee8-afa9-02a3957be338",
+          "registry_id_reason": null,
+          "run_id": "rc-7ac17d10-TH3Die-2026-11-19"
+        },
+        {
           "blind_reading": "Goodstein's theorem: every Goodstein sequence reaches 0. Standard ordinal-descent proof below epsilon-zero (bound not stated).",
           "decl": "ZeroParadox.goodstein_terminates",
           "elaborated_type": "∀ (n : ℕ), ∃ k, ZeroParadox.gseq n k = 0",
@@ -117244,6 +118636,22 @@
           "registry_id": null,
           "registry_id_reason": "anonymous example; no registry entry",
           "run_id": "bd-B02c-2026-11-16"
+        },
+        {
+          "blind_reading": "The first standard basis vector of complex n-space, n at least 2.",
+          "decl": "ZeroParadox.th3E0",
+          "elaborated_type": "(n : ℕ) → 2 ≤ n → ZeroParadox.StateSpace n",
+          "git_blob_id": "17b5b719b996d80f85a77b465bd0ce13a7321543",
+          "id": "f298587c-693f-5cf8-bd62-264a95291f51",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": 190,
+          "line_sha256": "79f014e9cfdb1229c75ba27497a8aae385647f51f3d1b56f51b01ad1ffacbba7",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "73aa8b05-62fc-4964-97d9-ac727098a1da",
+          "registry_id_reason": null,
+          "run_id": "rc-7ac17d10-TH3Die-2026-11-19"
         },
         {
           "blind_reading": "For normal f, the least fixed point above a is the supremum of the iterates f^[n] a.",
@@ -118012,6 +119420,22 @@
           "registry_id": null,
           "registry_id_reason": "anonymous example; no registry entry",
           "run_id": "bd-B12-2026-11-16"
+        },
+        {
+          "blind_reading": "With identity up-map, e1 does not go up to zero.",
+          "decl": "ZeroParadox.th3_D_control_id",
+          "elaborated_type": "∀ (n : ℕ) (hn : 2 ≤ n),\n  0 ∉ (ZeroParadox.Motion.ofTotal id ⋯ fun x x_1 => False).up (ZeroParadox.th3E1 n hn)",
+          "git_blob_id": "17b5b719b996d80f85a77b465bd0ce13a7321543",
+          "id": "f40b0c27-bcc2-5748-9421-ec530a9b2460",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": 283,
+          "line_sha256": "4e23fe67e1a6e084105f2028ef7c60f03b6ee15f38e6cf255b49b9d5b541053c",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "5eb40f1e-e519-4cec-8f4b-a689a3222899",
+          "registry_id_reason": null,
+          "run_id": "rc-7ac17d10-TH3Die-2026-11-19"
         },
         {
           "blind_reading": "That family is partial recursive.",
@@ -119724,6 +121148,22 @@
           "registry_id": "cb0aa60a-73b7-4999-a607-6d236bcccd3a",
           "registry_id_reason": null,
           "run_id": "bd-B17-2026-11-16"
+        },
+        {
+          "blind_reading": "Projection onto span(e1) sends e0 to 0 (inner product conjugate-symmetric).",
+          "decl": "ZeroParadox.th3_D_swap",
+          "elaborated_type": "∀ (n : ℕ) (hn : 2 ≤ n) (s : ZeroParadox.StateSpace n → ZeroParadox.StateSpace n → Prop),\n  0 ∈ (ZeroParadox.th3ProjMotion n (ZeroParadox.th3E1 n hn) s).up (ZeroParadox.th3E0 n hn)",
+          "git_blob_id": "ff713205564ef7ac5ee8ba0c02830bbe2606a69a",
+          "id": "f80f7117-3b49-562e-853c-1f77b02bdea9",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": null,
+          "line_sha256": "885f99487e1432e80cfa33897a6867915cc60e914f6cf33f9512770c93371a72",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "1119afec-6923-4244-a382-a7fe50f65443",
+          "registry_id_reason": null,
+          "run_id": "rc-be1b20a0-TH3Die-2026-11-19"
         },
         {
           "blind_reading": "On N-infinity with x -> x+1, any cycle of the reversed relation sits at top.",
@@ -121550,6 +122990,22 @@
           "run_id": "bd-B11-2026-11-16"
         },
         {
+          "blind_reading": "With f c0 = e0+e1, f c1 = e0 an up-lax map exists (proj(e0+e1) = e0, proj(e0) = e0).",
+          "decl": "ZeroParadox.th3_AD_control",
+          "elaborated_type": "∀ (n : ℕ) (hn : 2 ≤ n) (s : ZeroParadox.StateSpace n → ZeroParadox.StateSpace n → Prop),\n  ∃ f,\n    f ZeroParadox.c₀ = ZeroParadox.th3E0 n hn + ZeroParadox.th3E1 n hn ∧\n      f ZeroParadox.c₁ = ZeroParadox.th3E0 n hn ∧\n        ZeroParadox.th3JoinUpMotion.UpLax (ZeroParadox.th3ProjMotion n (ZeroParadox.th3E0 n hn) s) f",
+          "git_blob_id": "ff713205564ef7ac5ee8ba0c02830bbe2606a69a",
+          "id": "fc43108c-4a1a-54e2-9f3c-987b9f914f19",
+          "is_example": false,
+          "key_kind": "registry_id",
+          "kind": "reading",
+          "line": null,
+          "line_sha256": "4086db7afd3b597b5205b09e1c08012ed82b711e3a050760cbe1e8f00b8d369e",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "registry_id": "a8fb7685-14b2-4514-a403-574ba55b301f",
+          "registry_id_reason": null,
+          "run_id": "rc-be1b20a0-TH3Die-2026-11-19"
+        },
+        {
           "blind_reading": "Self-maps of a 2-element set are determined by their fixed-point sets.",
           "decl": "ZeroParadox.Pole.eq_of_selfOnlyAt_iff",
           "elaborated_type": "∀ (f g : ZeroParadox.Pole → ZeroParadox.Pole),\n  (∀ (y : ZeroParadox.Pole), (ZeroParadox.Motion.ofFun f).SelfOnlyAt y ↔ (ZeroParadox.Motion.ofFun g).SelfOnlyAt y) →\n    f = g",
@@ -123084,6 +124540,39 @@
           "registry_id": "aa933189-79d3-445d-a7ab-bed71cf6043f",
           "registry_id_reason": null,
           "run_id": "bd-Q1-2026-11-16"
+        },
+        {
+          "decl": "ZeroParadox.Th3JsdAlong",
+          "diff_kind": "wrong_object",
+          "dispositions": [
+            {
+              "decided_by": null,
+              "disposition": "open",
+              "line_sha256": "9f269b9cca823d40025b338779771f6a69091a2a6f150bd7196182f550fc63b6",
+              "reason": null,
+              "utc": null
+            },
+            {
+              "decided_by": "Tim, 2026-11-19 ruling via AskUserQuestion (\"Carry + ticket upstream\"), relayed by the coordinator",
+              "disposition": "carried",
+              "line_sha256": "db38393aafabacb44b40caff9defee892dc260a596df8d473e4bb73b6e905aba",
+              "reason": "ordinary (wrong_object): carried under Tim's 2026-11-19 ruling; the upstream klDiv description is to be audited in a separate ticket (written by the coordinator). The Th3JsdAlong gloss calls klDiv \"the mean KL divergence\", but klDiv equals Kullback-Leibler divergence only under absolute continuity (Lean x/0 = 0, log 0 = 0); no theorem in TH3Die is affected.",
+              "utc": "2026-11-19T01:46:05+00:00"
+            }
+          ],
+          "git_blob_id": "17b5b719b996d80f85a77b465bd0ce13a7321543",
+          "id": "rc-7ac17d10-TH3Die-2026-11-19#1",
+          "key_kind": "registry_id",
+          "kind": "diff1",
+          "kind_detail": "klDiv uses Lean's x/0 = 0 and log 0 = 0, so it equals the Kullback-Leibler divergence only under absolute continuity; probe: klDiv P_real Q_real = 0 elaborates, while KL(delta_null || delta_exist) = +infinity. The predicate quantifies over every Motion, so for up-values lacking support it is not 'the mean KL divergence'.",
+          "line": 145,
+          "line_sha256": "9f269b9cca823d40025b338779771f6a69091a2a6f150bd7196182f550fc63b6",
+          "path": "ZeroParadox/Multihomed/TH3Die.lean",
+          "prose": "`Statement:` a property defined HERE, not die vocabulary: the mean KL divergence from `P_real` and `Q_real` to their UP values is `log 2`.",
+          "registry_id": "3c2d2964-5844-406d-8aa8-77209160f507",
+          "registry_id_reason": null,
+          "run_id": "rc-7ac17d10-TH3Die-2026-11-19",
+          "signature": "ZeroParadox.Th3JsdAlong : Motion (BinaryState → ℝ) → Prop := fun M => ∀ mp ∈ M.up P_real, ∀ mq ∈ M.up Q_real, 1/2 * klDiv P_real mp + 1/2 * klDiv Q_real mq = Real.log 2, with klDiv p q = ∑ i, p i * Real.log (p i / q i)"
         },
         {
           "decl": "example@L97",
@@ -130016,6 +131505,72 @@
             }
           ],
           "started_utc": "2026-11-18T22:59:30+00:00"
+        },
+        {
+          "brief": {
+            "git_blob_id": "d3642ae3166d2d26139a6f98cfba3af65c79aae7",
+            "path": ".claude/commands/reconstruct.md"
+          },
+          "commit": "be1b20a08dccb86944e0eace9ff2331900f70c5e",
+          "diff1_count": 0,
+          "examined": [
+            {
+              "git_blob_id": "ff713205564ef7ac5ee8ba0c02830bbe2606a69a",
+              "path": "ZeroParadox/Multihomed/TH3Die.lean"
+            }
+          ],
+          "finished_utc": "2026-11-19T01:01:18+00:00",
+          "line_sha256": "1d230b05bc70d863f96255dfad36d294a0b47f9a18afc14120ed4266d690509d",
+          "reader_model": "claude-opus-5-5",
+          "reader_prompt": {
+            "git_blob_id": "93a0f7870b78478ef93b1d38db10aac65c8a6f8d",
+            "path": ".claude-local/notes/reconstruct_runs/prompts/93a0f7870b78478ef93b1d38db10aac65c8a6f8d.md"
+          },
+          "run_id": "rc-be1b20a0-TH3Die-2026-11-19",
+          "skipped": [
+            {
+              "module": "ZeroParadox.Multihomed.TH3Die",
+              "names": [
+                "ZeroParadox.th3E0.congr_simp",
+                "ZeroParadox.th3E1.congr_simp"
+              ],
+              "reason": "auto-generated congr_simp siblings (non-internal population); no prose attaches to them"
+            }
+          ],
+          "started_utc": "2026-11-19T00:46:00+00:00"
+        },
+        {
+          "brief": {
+            "git_blob_id": "d3642ae3166d2d26139a6f98cfba3af65c79aae7",
+            "path": ".claude/commands/reconstruct.md"
+          },
+          "commit": "7ac17d106a8cc44a9699d8ed49034c93cf339a33",
+          "diff1_count": 1,
+          "examined": [
+            {
+              "git_blob_id": "17b5b719b996d80f85a77b465bd0ce13a7321543",
+              "path": "ZeroParadox/Multihomed/TH3Die.lean"
+            }
+          ],
+          "finished_utc": "2026-11-19T01:38:45+00:00",
+          "line_sha256": "c58fd1f467e7f1cf3db16228de6c1d9a5582c932c2385905fce6014effae843d",
+          "reader_model": "claude-opus-5-5",
+          "reader_prompt": {
+            "git_blob_id": "6d502b06bfc576ac8965f219f96c69d68fe10f9d",
+            "path": ".claude-local/notes/reconstruct_runs/prompts/6d502b06bfc576ac8965f219f96c69d68fe10f9d.md"
+          },
+          "run_id": "rc-7ac17d10-TH3Die-2026-11-19",
+          "skipped": [
+            {
+              "module": "ZeroParadox.Multihomed.TH3Die",
+              "names": [
+                "ZeroParadox.th3E0.congr_simp",
+                "ZeroParadox.th3E1.congr_simp"
+              ],
+              "reason": "auto-generated congr_simp siblings (non-internal population); no prose attaches to them"
+            }
+          ],
+          "started_utc": "2026-11-19T01:31:00+00:00"
         }
       ],
       "schema_version": "1"
@@ -130692,8 +132247,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 4135,
-        "files": 230
+        "declarations": 4180,
+        "files": 231
       },
       "entries": [
         {
@@ -136876,6 +138431,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "09a8afe7-0c37-481d-831e-41b4396d4aee",
+          "new": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.od_RT_nat_fit",
+            "short": "od_RT_nat_fit"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.od_RT_nat_fit",
+            "short": "od_RT_nat_fit",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Orbit family as die motions, with controls and obstructions (ZeroParadox/Multihomed/OrbitDie.lean; Tim: \"Land them\", 2026-11-19)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "09ad6308-3b85-4bdd-8ed0-efbf3ee44edc",
           "new": {
             "file": "ZeroParadox/Valuation/RiemannSphere.lean",
@@ -137357,6 +138949,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "0a6b562d-2b51-44f6-8b01-2c655c448229",
+          "new": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.od_halve_selfOnly",
+            "short": "od_halve_selfOnly"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.od_halve_selfOnly",
+            "short": "od_halve_selfOnly",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Orbit family as die motions, with controls and obstructions (ZeroParadox/Multihomed/OrbitDie.lean; Tim: \"Land them\", 2026-11-19)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "0a76fda9-4a42-4607-be1c-fbebcb82e7a1",
           "new": {
             "file": "ZeroParadox/Ordinal/PricedInterface.lean",
@@ -137684,6 +139313,43 @@
             ]
           },
           "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0ad1843d-2ba0-4ae3-9a16-d2fb8560dbd0",
+          "new": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.odDoubleQ2",
+            "short": "odDoubleQ2"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.odDoubleQ2",
+            "short": "odDoubleQ2",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Orbit family as die motions, with controls and obstructions (ZeroParadox/Multihomed/OrbitDie.lean; Tim: \"Land them\", 2026-11-19)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -147690,6 +149356,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "1bb18daa-3c37-4a4e-af40-8f757f784cd8",
+          "new": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.od_markov_selfOnly_iff",
+            "short": "od_markov_selfOnly_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.od_markov_selfOnly_iff",
+            "short": "od_markov_selfOnly_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Orbit family as die motions, with controls and obstructions (ZeroParadox/Multihomed/OrbitDie.lean; Tim: \"Land them\", 2026-11-19)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "1bb2aabe-ebe7-4e26-a79e-a182e8747c45",
           "new": {
             "file": "ZeroParadox/Settheory/Coalgebra.lean",
@@ -152228,6 +153931,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "251beb3f-fcd7-4445-8ae6-b5b7f24226f0",
+          "new": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.odDoubleR",
+            "short": "odDoubleR"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.odDoubleR",
+            "short": "odDoubleR",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Orbit family as die motions, with controls and obstructions (ZeroParadox/Multihomed/OrbitDie.lean; Tim: \"Land them\", 2026-11-19)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "251c7cda-d567-49f3-8748-a76906f431c4",
           "new": {
             "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
@@ -153288,6 +155028,44 @@
             ]
           },
           "reason": "New file GraphBisim.lean: finite membership graphs, Aczel bisimulation, dropLoops (control) vs wfPart (bisimulation-invariant), Omega/empty/zero-star/one/two-cycle examples",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "26d90c43-4b35-476e-bcc8-cc5bf0c11838",
+          "new": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.od_NM_hom_balance",
+            "short": "od_NM_hom_balance"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.od_NM_hom_balance",
+            "short": "od_NM_hom_balance",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation",
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Orbit family as die motions, with controls and obstructions (ZeroParadox/Multihomed/OrbitDie.lean; Tim: \"Land them\", 2026-11-19)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -160714,6 +162492,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "32688ba2-f101-4e70-80ec-31fd3f4274df",
+          "new": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.od_NM_hom_control",
+            "short": "od_NM_hom_control"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.od_NM_hom_control",
+            "short": "od_NM_hom_control",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation",
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Orbit family as die motions, with controls and obstructions (ZeroParadox/Multihomed/OrbitDie.lean; Tim: \"Land them\", 2026-11-19)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "327f32fb-6af1-4c45-8c46-e7384a220c69",
           "new": {
             "file": "ZeroParadox/Ordinal/SnapNucleusConstructive.lean",
@@ -163739,6 +165555,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "384492c8-124c-4cb0-a30b-7addc509c322",
+          "new": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.od_PM_casts",
+            "short": "od_PM_casts"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.od_PM_casts",
+            "short": "od_PM_casts",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Orbit family as die motions, with controls and obstructions (ZeroParadox/Multihomed/OrbitDie.lean; Tim: \"Land them\", 2026-11-19)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "384f5205-d0ed-4e10-b00a-41fe993f34d2",
           "new": {
@@ -164280,6 +166133,43 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "391b72e2-fad5-48d7-9d62-ada225cccb95",
+          "new": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.od_RT_nat_control",
+            "short": "od_RT_nat_control"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.od_RT_nat_control",
+            "short": "od_RT_nat_control",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Orbit family as die motions, with controls and obstructions (ZeroParadox/Multihomed/OrbitDie.lean; Tim: \"Land them\", 2026-11-19)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -165504,6 +167394,43 @@
             ]
           },
           "reason": "2026-07-26 ZP-K occurrence arc: NO-GO gauges (SelfApp, Snap) + new Occurrence.lean (machine model, trap, trilemma, inversion, occurrence-is-halting). ComputationCannotBe.lean is #check-only, 0 decls.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "3af62e41-56fa-4186-ac48-a2628cffec3e",
+          "new": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.od_NM_markov_fit",
+            "short": "od_NM_markov_fit"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.od_NM_markov_fit",
+            "short": "od_NM_markov_fit",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Orbit family as die motions, with controls and obstructions (ZeroParadox/Multihomed/OrbitDie.lean; Tim: \"Land them\", 2026-11-19)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -167260,6 +169187,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "3e748c02-435e-4a71-9cb1-2eea04ca5f63",
+          "new": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.od_RT_padic_iff",
+            "short": "od_RT_padic_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.od_RT_padic_iff",
+            "short": "od_RT_padic_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Orbit family as die motions, with controls and obstructions (ZeroParadox/Multihomed/OrbitDie.lean; Tim: \"Land them\", 2026-11-19)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "3e7e1f86-e69b-4fea-a931-be988039a5e4",
           "new": {
             "file": "ZeroParadox/State/FermiStepDie.lean",
@@ -167740,6 +169704,43 @@
             "role": []
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "3f4165df-fa84-450e-9bb8-dab08f443403",
+          "new": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.od_NM_markov_control",
+            "short": "od_NM_markov_control"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.od_NM_markov_control",
+            "short": "od_NM_markov_control",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Orbit family as die motions, with controls and obstructions (ZeroParadox/Multihomed/OrbitDie.lean; Tim: \"Land them\", 2026-11-19)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -168404,6 +170405,43 @@
             ]
           },
           "reason": "New file: the Bernoulli trial space assembled from Mathlib's infinitePi, iIndepFun_infinitePi and second Borel-Cantelli. A consistency result — if the crossing carries a constant positive probability with independent trials, it fires almost surely. Explicitly NOT a necessity result and not an instance-of claim about the framework's bottom.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "40d708d4-3d5a-4e87-adf7-3cf9511a35b8",
+          "new": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.od_PM_collapse_rev",
+            "short": "od_PM_collapse_rev"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.od_PM_collapse_rev",
+            "short": "od_PM_collapse_rev",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Orbit family as die motions, with controls and obstructions (ZeroParadox/Multihomed/OrbitDie.lean; Tim: \"Land them\", 2026-11-19)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -169823,6 +171861,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "43440247-4eff-4078-ac14-d853bcb346f6",
+          "new": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.od_RT_collapse_ring",
+            "short": "od_RT_collapse_ring"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.od_RT_collapse_ring",
+            "short": "od_RT_collapse_ring",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Orbit family as die motions, with controls and obstructions (ZeroParadox/Multihomed/OrbitDie.lean; Tim: \"Land them\", 2026-11-19)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "4345c656-7c4c-4059-8d9c-89f1f6296c6f",
           "new": {
@@ -171230,6 +173305,43 @@
             ]
           },
           "reason": "New file ZeroParadox/Information/MaxEntropy.lean (experimental, Tim ruling 154): fair coin maximizes entropy, missing information zero iff fair, chain to mlRandom_and_snap_ae under binEntropy p = log 2, Kraft in measure form, almost every fair tape incompressible for any prefix-free decoder. The occurrence commitment is reduced, not discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "4522fa30-d58c-4d25-8693-583e6afa3880",
+          "new": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.od_never_arrives",
+            "short": "od_never_arrives"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.od_never_arrives",
+            "short": "od_never_arrives",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Orbit family as die motions, with controls and obstructions (ZeroParadox/Multihomed/OrbitDie.lean; Tim: \"Land them\", 2026-11-19)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -174032,6 +176144,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "49722efb-4df5-43b5-b3d8-7bc32dae2faa",
+          "new": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.od_PM_collapse_control",
+            "short": "od_PM_collapse_control"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.od_PM_collapse_control",
+            "short": "od_PM_collapse_control",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Orbit family as die motions, with controls and obstructions (ZeroParadox/Multihomed/OrbitDie.lean; Tim: \"Land them\", 2026-11-19)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "49734546-ec65-4849-986c-199919b2a7d2",
           "new": {
             "file": "ZeroParadox/Algebra/WheelFrac.lean",
@@ -176243,6 +178392,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "4dbdfe56-826e-4549-802e-cfc6c7c6279b",
+          "new": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.od_RT_collapse_control_source",
+            "short": "od_RT_collapse_control_source"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.od_RT_collapse_control_source",
+            "short": "od_RT_collapse_control_source",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Orbit family as die motions, with controls and obstructions (ZeroParadox/Multihomed/OrbitDie.lean; Tim: \"Land them\", 2026-11-19)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -181483,6 +183670,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "5711b191-7ac7-4363-92fe-378aec0767f1",
+          "new": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.od_PM_control",
+            "short": "od_PM_control"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.od_PM_control",
+            "short": "od_PM_control",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Orbit family as die motions, with controls and obstructions (ZeroParadox/Multihomed/OrbitDie.lean; Tim: \"Land them\", 2026-11-19)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "5711c592-7be1-4a77-b967-ef2a3be42740",
           "new": {
@@ -184764,6 +186988,44 @@
             ]
           },
           "reason": "Promote the branch-dependent successor-null theorems from the 2026-07-26 probe into LocalFloor.lean, beside the prose claim they prove.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "5c0da8c1-6780-4dd0-a64a-5f6840a92a38",
+          "new": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.od_RT_collapse",
+            "short": "od_RT_collapse"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.od_RT_collapse",
+            "short": "od_RT_collapse",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Orbit family as die motions, with controls and obstructions (ZeroParadox/Multihomed/OrbitDie.lean; Tim: \"Land them\", 2026-11-19)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -189757,6 +192019,43 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "64e7e6a3-a402-412f-b11a-b353b4120c15",
+          "new": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.od_PM_same_shape",
+            "short": "od_PM_same_shape"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.od_PM_same_shape",
+            "short": "od_PM_same_shape",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Orbit family as die motions, with controls and obstructions (ZeroParadox/Multihomed/OrbitDie.lean; Tim: \"Land them\", 2026-11-19)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -202345,6 +204644,81 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "7a318b0e-3cd5-4fa0-a702-f6b5e3d711e7",
+          "new": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.od_RT_collapse_real",
+            "short": "od_RT_collapse_real"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.od_RT_collapse_real",
+            "short": "od_RT_collapse_real",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Orbit family as die motions, with controls and obstructions (ZeroParadox/Multihomed/OrbitDie.lean; Tim: \"Land them\", 2026-11-19)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "7a755be2-f7d4-4ca3-82a0-6d8a58019bae",
+          "new": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.odHalveNat",
+            "short": "odHalveNat"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.odHalveNat",
+            "short": "odHalveNat",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Orbit family as die motions, with controls and obstructions (ZeroParadox/Multihomed/OrbitDie.lean; Tim: \"Land them\", 2026-11-19)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "7a89c1aa-1fc7-4660-bbc5-39179dedb43d",
           "new": {
             "file": "ZeroParadox/Valuation/ScaleDepthWitness.lean",
@@ -203385,6 +205759,43 @@
             "role": []
           },
           "reason": "ninf-retraction-1030: the round trip through ofOption: a left inverse is a right inverse (Escardó's density lemma), hence LPO; LPO data gives NInf ≃ Option ℕ; ofOption onto iff LPO; the round trip as a motion on Option ℕ ⊕ NInf (Die § XXIII); Tim ruling 2026-10-30",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "7c6a2d7d-a02a-4a1e-bb14-ee9b512d1de1",
+          "new": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.od_iter_double",
+            "short": "od_iter_double"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.od_iter_double",
+            "short": "od_iter_double",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Orbit family as die motions, with controls and obstructions (ZeroParadox/Multihomed/OrbitDie.lean; Tim: \"Land them\", 2026-11-19)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -208989,6 +211400,80 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "85bdfa7e-d265-4734-a936-1a935bf562bb",
+          "new": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.od_halve_arrives",
+            "short": "od_halve_arrives"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.od_halve_arrives",
+            "short": "od_halve_arrives",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Orbit family as die motions, with controls and obstructions (ZeroParadox/Multihomed/OrbitDie.lean; Tim: \"Land them\", 2026-11-19)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "85cc8da9-83b0-4cda-bb87-b07b339186b9",
+          "new": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.od_collapse",
+            "short": "od_collapse"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.od_collapse",
+            "short": "od_collapse",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Orbit family as die motions, with controls and obstructions (ZeroParadox/Multihomed/OrbitDie.lean; Tim: \"Land them\", 2026-11-19)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "85d3d69b-cd70-4a00-9fe7-d0005dff29d9",
           "new": {
             "file": "ZeroParadox/Computability/Occurrence.lean",
@@ -213318,6 +215803,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "8e9663a6-7c16-4291-9e21-2b144a77f2ea",
+          "new": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.od_markov_fixed_iff",
+            "short": "od_markov_fixed_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.od_markov_fixed_iff",
+            "short": "od_markov_fixed_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Orbit family as die motions, with controls and obstructions (ZeroParadox/Multihomed/OrbitDie.lean; Tim: \"Land them\", 2026-11-19)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "8eafbb47-b2c4-444d-8c9d-1ad5702c780c",
           "new": {
             "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
@@ -216050,6 +218572,44 @@
             ]
           },
           "reason": "lane F arc 2: snapEmbed in the die (Incompleteness.lean § I-b)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "92edc61f-6a7b-4fcb-ba64-66615373cd47",
+          "new": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.od_RT_collapse_control_target",
+            "short": "od_RT_collapse_control_target"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.od_RT_collapse_control_target",
+            "short": "od_RT_collapse_control_target",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Orbit family as die motions, with controls and obstructions (ZeroParadox/Multihomed/OrbitDie.lean; Tim: \"Land them\", 2026-11-19)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -221820,6 +224380,43 @@
             ]
           },
           "reason": "New file ZeroParadox/Category/WellFoundedCoalgebra.lean: AMM next-time operator + intrinsic well-foundedness for PFunctor coalgebras",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "9c07efcb-09a7-4259-b3db-309cbabe8999",
+          "new": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.od_PM_collapse",
+            "short": "od_PM_collapse"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.od_PM_collapse",
+            "short": "od_PM_collapse",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Orbit family as die motions, with controls and obstructions (ZeroParadox/Multihomed/OrbitDie.lean; Tim: \"Land them\", 2026-11-19)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -228801,6 +231398,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "a7c743e9-bbbe-45c0-b9c8-4428b3c373f3",
+          "new": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.odHalveNatFun",
+            "short": "odHalveNatFun"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.odHalveNatFun",
+            "short": "odHalveNatFun",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Orbit family as die motions, with controls and obstructions (ZeroParadox/Multihomed/OrbitDie.lean; Tim: \"Land them\", 2026-11-19)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "a7f22cbb-7e97-4335-b61f-c99c7da1554b",
           "new": {
             "file": "ZeroParadox/Category/LawvereTaboo.lean",
@@ -229486,6 +232120,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a8eca819-5a47-4336-a77b-11bb15ccd3f5",
+          "new": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.od_RT_collapse_fun",
+            "short": "od_RT_collapse_fun"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.od_RT_collapse_fun",
+            "short": "od_RT_collapse_fun",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Orbit family as die motions, with controls and obstructions (ZeroParadox/Multihomed/OrbitDie.lean; Tim: \"Land them\", 2026-11-19)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -237755,6 +240427,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b4d1b9df-0b12-4348-ab8b-43a15cad8425",
+          "new": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.od_RT_reverse_map",
+            "short": "od_RT_reverse_map"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.od_RT_reverse_map",
+            "short": "od_RT_reverse_map",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Orbit family as die motions, with controls and obstructions (ZeroParadox/Multihomed/OrbitDie.lean; Tim: \"Land them\", 2026-11-19)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -249416,6 +252126,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "c8f831b4-7fe8-49ed-8399-916553701135",
+          "new": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.od_selfstep_image",
+            "short": "od_selfstep_image"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.od_selfstep_image",
+            "short": "od_selfstep_image",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Orbit family as die motions, with controls and obstructions (ZeroParadox/Multihomed/OrbitDie.lean; Tim: \"Land them\", 2026-11-19)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "c9067bb0-f1b0-4065-9a87-88310889c751",
           "new": {
             "file": "ZeroParadox/Information/CrossingTrials.lean",
@@ -252941,6 +255688,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "ce2d8f11-c236-4b42-85b2-450333cf28d9",
+          "new": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.od_PM_collapse_control_mono",
+            "short": "od_PM_collapse_control_mono"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.od_PM_collapse_control_mono",
+            "short": "od_PM_collapse_control_mono",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Orbit family as die motions, with controls and obstructions (ZeroParadox/Multihomed/OrbitDie.lean; Tim: \"Land them\", 2026-11-19)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "ce2e08bc-39fd-4ed7-8ef1-c1e8a353becd",
           "new": {
@@ -255333,6 +258117,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "d21da8ea-d5ac-42a6-a533-da58f804dcca",
+          "new": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.od_NM_source_markov",
+            "short": "od_NM_source_markov"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.od_NM_source_markov",
+            "short": "od_NM_source_markov",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Orbit family as die motions, with controls and obstructions (ZeroParadox/Multihomed/OrbitDie.lean; Tim: \"Land them\", 2026-11-19)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "d22a3729-e586-4034-a7df-169e307a47c1",
           "new": {
             "file": "ZeroParadox/Valuation/PoleChartSelection.lean",
@@ -256727,6 +259548,43 @@
             ]
           },
           "reason": "DS1113-1 fix (values-not-domain control, total corollary, isometric iso carries UpOrthogonal) and the qubit as a die: measurement, bit flip as isometric StrictIso, flip vs orthocomplement on lines (Tim approved 2026-11-13)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d45739e8-b2ef-4dd5-a02b-a28a3890c39b",
+          "new": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.od_PM_fit",
+            "short": "od_PM_fit"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.od_PM_fit",
+            "short": "od_PM_fit",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Orbit family as die motions, with controls and obstructions (ZeroParadox/Multihomed/OrbitDie.lean; Tim: \"Land them\", 2026-11-19)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -258215,6 +261073,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "d662a041-58cb-420a-8b27-520365d3e521",
+          "new": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.odQ2toMarkovHom",
+            "short": "odQ2toMarkovHom"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.odQ2toMarkovHom",
+            "short": "odQ2toMarkovHom",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation",
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Orbit family as die motions, with controls and obstructions (ZeroParadox/Multihomed/OrbitDie.lean; Tim: \"Land them\", 2026-11-19)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "d6a525f2-20c2-41d3-abc2-0410984f2e0a",
           "new": {
             "file": "ZeroParadox/Order/MotionFlips.lean",
@@ -258951,6 +261847,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "d8044194-5ae3-412f-8c9b-945a468d35a5",
+          "new": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.od_halveFun_arrives",
+            "short": "od_halveFun_arrives"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.od_halveFun_arrives",
+            "short": "od_halveFun_arrives",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Orbit family as die motions, with controls and obstructions (ZeroParadox/Multihomed/OrbitDie.lean; Tim: \"Land them\", 2026-11-19)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "d8061fac-2168-4be3-9e33-b879cf7fea6d",
           "new": {
             "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
@@ -259172,6 +262105,44 @@
           "verify": {
             "axioms": "[Quot.sound]",
             "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d872a249-0c3e-4970-8c04-f7ce871c8f6a",
+          "new": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.odQ2toMarkov",
+            "short": "odQ2toMarkov"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.odQ2toMarkov",
+            "short": "odQ2toMarkov",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation",
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Orbit family as die motions, with controls and obstructions (ZeroParadox/Multihomed/OrbitDie.lean; Tim: \"Land them\", 2026-11-19)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
           }
         },
         {
@@ -259582,6 +262553,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "d8d914b7-0f6b-4cb6-a040-cf27cde0b6f8",
+          "new": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.od_isRun_halve",
+            "short": "od_isRun_halve"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.od_isRun_halve",
+            "short": "od_isRun_halve",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Orbit family as die motions, with controls and obstructions (ZeroParadox/Multihomed/OrbitDie.lean; Tim: \"Land them\", 2026-11-19)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "d8dc77e7-c0eb-4d05-9481-c8301f80fe55",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -259867,6 +262875,44 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d98039f7-7a5a-4b34-85f2-07a1c0fa45bb",
+          "new": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.od_NM_halve_collapse",
+            "short": "od_NM_halve_collapse"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.od_NM_halve_collapse",
+            "short": "od_NM_halve_collapse",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Orbit family as die motions, with controls and obstructions (ZeroParadox/Multihomed/OrbitDie.lean; Tim: \"Land them\", 2026-11-19)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -262891,6 +265937,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "de62c9a7-539d-4998-a090-1db8a2082e8d",
+          "new": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.od_RT_padic_fit",
+            "short": "od_RT_padic_fit"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.od_RT_padic_fit",
+            "short": "od_RT_padic_fit",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Orbit family as die motions, with controls and obstructions (ZeroParadox/Multihomed/OrbitDie.lean; Tim: \"Land them\", 2026-11-19)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "de76c0e5-2f74-4253-be2a-c3ce1531f84c",
           "new": {
@@ -265118,6 +268201,43 @@
             ]
           },
           "reason": "Die CannotBe mining batch: trap sets (order and function causes), keep-above kernel and a two-node UpAndOver on HSet 2, SelfCopyRef in die form",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e27dd383-ba78-4f10-a169-b2002dfa6029",
+          "new": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.od_RT_padic_control",
+            "short": "od_RT_padic_control"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.od_RT_padic_control",
+            "short": "od_RT_padic_control",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Orbit family as die motions, with controls and obstructions (ZeroParadox/Multihomed/OrbitDie.lean; Tim: \"Land them\", 2026-11-19)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -268635,6 +271755,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "e7a5da1c-2b85-4411-8846-c9b10005aa85",
+          "new": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.odMarkov",
+            "short": "odMarkov"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.odMarkov",
+            "short": "odMarkov",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Orbit family as die motions, with controls and obstructions (ZeroParadox/Multihomed/OrbitDie.lean; Tim: \"Land them\", 2026-11-19)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "e7b097a9-b46c-47f5-a2ff-245231e07c64",
           "new": {
             "file": "ZeroParadox/Order/UpAndOver.lean",
@@ -272001,6 +275158,43 @@
             ]
           },
           "reason": "Section VI: the scaling parameter as a valuation coordinate, the group identity, and the action packaged as a homeomorphism",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ecade73d-f103-457a-accf-e311a4579c43",
+          "new": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.od_markov_noEntry",
+            "short": "od_markov_noEntry"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.od_markov_noEntry",
+            "short": "od_markov_noEntry",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Orbit family as die motions, with controls and obstructions (ZeroParadox/Multihomed/OrbitDie.lean; Tim: \"Land them\", 2026-11-19)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -282972,6 +286166,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "fe9937c4-0e72-4917-b73b-2ead5fd307df",
+          "new": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.od_double_noEntry",
+            "short": "od_double_noEntry"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/OrbitDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.od_double_noEntry",
+            "short": "od_double_noEntry",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Orbit family as die motions, with controls and obstructions (ZeroParadox/Multihomed/OrbitDie.lean; Tim: \"Land them\", 2026-11-19)",
           "verify": {
             "axioms": null,
             "sorry_free": null

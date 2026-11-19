@@ -63,6 +63,7 @@ import ZeroParadox.State.QubitDie
 import ZeroParadox.State.FermiStepDie
 import ZeroParadox.Order.MotionFlips
 import ZeroParadox.Multihomed.TH3Die
+import ZeroParadox.Multihomed.OrbitDie
 
 set_option maxHeartbeats 400000
 
@@ -5263,5 +5264,15 @@ example : ¬ ∃ f : List Bool → Unit, ∀ l l',
 #check @ZeroParadox.th3_D_climb                -- Statement: `StateSpace n`, UP projection onto `ℂ ∙ e₀`, OVER `e₀ → e₁`: the motion climbs (`t4_snap_orthogonal`); `th3_D_control` loops instead at `e₀ + e₁`
 #check @ZeroParadox.th3_AB_collapse            -- Statement: a map carrying join steps to path steps in `Q₂` with `c₁ ↦ 0` sends `c₀ ↦ 0`; the ℝ control `th3_AB_control_real` carries every step
 #check @ZeroParadox.th3_AD_no_upLax            -- Statement: no map `c₀ ↦ e₁`, `c₁ ↦ e₀` makes the UP square lax; `th3_AD_control` builds one at `e₀ + e₁`
+
+/-! ### § XXXIII. The orbit family: three "doubling never lands" results as motions -/
+-- Reading: CARRIER — each fit beside its control in `ZeroParadox/Multihomed/OrbitDie.lean`; only the
+-- first result has the shape "never lands against lands", and no equation across carriers is stated.
+#check @ZeroParadox.od_never_arrives           -- Statement: if every step into `y` starts at `y`, no other point arrives at `y` (repackages `Motion.not_noEntry_of_arrives`)
+#check @ZeroParadox.od_RT_padic_fit            -- Statement: doubling on `Q₂`: `x ≠ 0` never arrives at `0` of `Q₂`; `od_halve_arrives`: every natural arrives at `0` of ℕ under halving
+#check @ZeroParadox.od_RT_collapse_ring        -- Statement: a map carrying halving steps to doubling steps on a commutative ring with no zero divisors and `2 ≠ 0` is `0`; `od_RT_reverse_map` is not obstructed
+#check @ZeroParadox.od_PM_same_shape           -- Statement: INVARIANT — doubling never lands on `Q₂` nor on ℝ; the difference is the lifted norm order (`od_PM_fit`)
+#check @ZeroParadox.od_PM_collapse             -- Statement: a step-carrying map `Q₂ → ℝ` monotone for the norm orders is `0`; the reverse is `od_PM_collapse_rev`
+#check @ZeroParadox.odQ2toMarkovHom            -- Statement: a strict map from doubling on `Q₂` into the Markov step at `1/4`, balanced exactly at `0` (`od_NM_hom_balance`)
 
 end DieCannotBeIndex
