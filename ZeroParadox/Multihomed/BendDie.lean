@@ -191,7 +191,8 @@ theorem bend_iterate_polar (r θ : ℝ) (hc : (r : ℂ) * Complex.exp (θ * Comp
     rw [← Complex.exp_nat_mul]; congr 1; push_cast; ring
   rw [lm_scale_iterate_some, he, mul_pow]; push_cast; ring_nf
 
-/-- `Statement:` the argument of `cⁿ·z`, as an angle mod 2π, is `n • arg c + arg z`. -/
+/-- `Statement:` for `c ≠ 0` and `z ≠ 0`, the argument of `cⁿ·z`, as an angle mod 2π, is
+    `n • arg c + arg z`. -/
 theorem bend_arg_iterate {c z : ℂ} (hc : c ≠ 0) (hz : z ≠ 0) (n : ℕ) :
     (Complex.arg (c ^ n * z) : Real.Angle) = n • (Complex.arg c : Real.Angle) + Complex.arg z := by
   induction n with
@@ -389,8 +390,8 @@ theorem bend_twist_conj_of_norm_eq {a d : ℂ} (ha : a ≠ 0) (hn : ‖a‖ = �
       _ = d := e2
   rw [bendTwist_conj _ ha, div_mul_cancel₀ _ hl, key]
 
-/-- `Statement:` if `‖c‖, ‖d‖ < 1`, or `‖c‖, ‖d‖ > 1`, a homeomorphism of ℂ conjugates
-    multiplication by `c` to multiplication by `d`. -/
+/-- `Statement:` for `c ≠ 0` and `d ≠ 0`, if `‖c‖, ‖d‖ < 1`, or `‖c‖, ‖d‖ > 1`, a homeomorphism
+    of ℂ conjugates multiplication by `c` to multiplication by `d`. -/
 theorem bend_conj_same_side {c d : ℂ} (hc : c ≠ 0) (hd : d ≠ 0)
     (hs : (‖c‖ < 1 ∧ ‖d‖ < 1) ∨ (1 < ‖c‖ ∧ 1 < ‖d‖)) :
     ∃ e : ℂ ≃ₜ ℂ, ∀ z, e (c * z) = d * e z := by
@@ -472,7 +473,7 @@ example : Nonempty (Motion.StrictIso
     (limitMotion (lmScale (3 : ℂ) (by norm_num)) (lmScale _ _).continuous)) :=
   bend_iso_of_norm_ne_one _ _ (by norm_num) (by norm_num)
 
-/-! ## § V. At `‖c‖ = 1`: `c` against `conj c`, and two negative controls -/
+/-! ## § V. `c` against `conj c` for every `c ≠ 0`, the case `‖c‖ = 1`, and two negative controls -/
 
 /-- `Statement:` complex conjugation, extended to `OnePoint ℂ`, conjugates `lmScale c` to
     `lmScale (conj c)`. -/
@@ -580,7 +581,7 @@ universe u
 variable {X Y : Type u} [TopologicalSpace X] [T2Space X] [TopologicalSpace Y] [T2Space Y]
 
 /-- `Statement:` if `g^[n] x = x` with `0 < n`, then `q` is a value of the limit retraction at
-    `x` iff `x` is a fixed point and `q = x`; `g` need not be continuous. -/
+    `x` iff `x` is a fixed point and `q = x`; on a Hausdorff space, `g` need not be continuous. -/
 theorem bend_mem_limitRetraction_of_periodic {g : X → X} {n : ℕ} (hn : 0 < n)
     {x q : X} (hper : g^[n] x = x) : q ∈ limitRetraction g x ↔ g x = x ∧ q = x := by
   rw [lm_mem_limitRetraction_iff]

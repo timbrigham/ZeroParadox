@@ -481,14 +481,16 @@ example : ∃ M : ZeroParadox.Motion ℕ, (∀ n, M.up n = if n % 2 = 0 then Par
 -- infinite pole (`ZeroParadox/Computability/Occurrence.lean`'s overview; `wfPart_stepCoalg`'s
 -- `Reading:` in `ZeroParadox/Computability/GroundZero.lean`, conjectural), and
 -- `ZeroParadox/Computability/Occurrence.lean` § IV-c's two-element pole {halted, loops-in-place}.
--- Statement: on an empty carrier every existence premise fails ...
+-- Statement: on an empty carrier the seven premises below, each asking for a point of it, fail ...
 example {α : Type} [IsEmpty α] (M : ZeroParadox.Motion α) :
     ¬ M.HasLanding ∧ ¬ M.OverAtLanding ∧ ¬ M.Corner ∧ ¬ M.Elbow ∧ ¬ M.Climb ∧ ¬ M.Loop ∧
       ¬ M.OverToUndefined :=
   ⟨fun ⟨y, _⟩ => isEmptyElim y, fun ⟨y, _⟩ => isEmptyElim y, fun ⟨y, _⟩ => isEmptyElim y,
    fun ⟨x, _⟩ => isEmptyElim x, fun ⟨y, _⟩ => isEmptyElim y, fun ⟨y, _⟩ => isEmptyElim y,
    fun ⟨y, _⟩ => isEmptyElim y⟩
--- Statement: ... and every "for all" premise holds with nothing to test.
+-- Statement: ... and the eight below hold: the "for all" ones with nothing to test, and the existence
+-- premises `SelectedTotal` and `RegisteredDecidable`, whose witnesses are a function and a decision
+-- family out of the carrier, not points of it.
 example {α : Type} [IsEmpty α] [LE α] (M : ZeroParadox.Motion α) :
     M.UpTotal ∧ M.UpStepInvariant ∧ M.RunsClose ∧ M.Agree ∧ M.Oppose ∧ M.SelectedTotal ∧
       M.RegisteredDecidable ∧ ∀ y, M.OverTrichotomy y :=
@@ -4186,7 +4188,8 @@ example (n : ℕ) :
 -- ⊥ of `L` is also a landing, but UP is the identity there, so every point is one and that conjunct
 -- is free. If moreover `S` is a state sequence (ZP-A's D3, which is `StepRaises` of the run motion),
 -- then ⊥ of `L` is in the first trap set and no later stage is ⊥ of `L`. From `hcc1` and `hcov` alone,
--- `BotCovered L`; the converse fails on ℕ. UP is the identity in the run motion, so the corner does
+-- `BotCovered L`; the per-run converse fails on ℕ (`BotCovered ℕ` holds, and a run meets `hcc1` and
+-- `hocc` and not `hcov`). UP is the identity in the run motion, so the corner does
 -- not fire (§ II); with UP `phaseClosure` on the boundary model `Phase` and OVER the covers of its
 -- floor-below order (`WithBot Ordinal`), the corner fires and the motion climbs. In the other
 -- direction, if some motion on `L` steps elsewhere at ⊥ of `L`, some step elsewhere out of ⊥ of `L`
@@ -5338,7 +5341,7 @@ example : ¬ ZeroParadox.Motion.unitMotion.Loop := fun ⟨_, _, _, _, hne, _⟩ 
 /-! ### § XXXV. The limit retraction: an approach is finite arrival or a stage closure -/
 -- Reading: CARRIER — each result beside its control in `ZeroParadox/Multihomed/LimitMotion.lean`;
 -- the carriers are joined only by homeomorphisms, and no equation across carriers is stated.
-#check @ZeroParadox.limitRetraction            -- Statement: the limit retraction of `g` (Abate–Bedford) restricted to convergent orbits, partial: defined at `x` exactly when the orbit of `x` converges, with value its limit
+#check @ZeroParadox.limitRetraction            -- Statement: the limit retraction of `g` (Abate–Bedford) restricted to convergent orbits, partial: defined at `x` exactly when the orbit of `x` converges, with value a limit, chosen; the limit is unique on a Hausdorff space, which `limitMotion` assumes
 #check @ZeroParadox.limitMotion                -- Statement: for continuous `g` on a Hausdorff space, UP is `limitRetraction g` and OVER is `y = g x`; without continuity UP is not idempotent (`lm_jumpMap_breaks_idem`)
 #check @ZeroParadox.lm_tendsto_iff_arrival_or_closure -- Statement: the orbit of `x` tends to `p` iff `x` arrives at `p` and `p` is a landing, or no stage is a fixed point and the stages have a stage closure containing `p`; exclusive (`lm_not_arrives_of_closure`)
 -- Statement: in `Ordinal`'s order topology `ordinalTowerMotion` is the limit motion of `α ↦ ω^α`, and that iff
