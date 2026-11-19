@@ -2,7 +2,7 @@
 
 Ride-along companion to `ZeroParadox/Multihomed/LimitMotion.lean`. Experimental probe in the
 bottom-diagram mapping campaign, **not a finalized layer**. Curated results are indexed in
-`ZeroParadox/MANIFEST.md`.
+`ZeroParadox/MANIFEST.md` and `ZeroParadox/DieCannotBe.lean` § XXXV.
 
 ## Formal Overview (AI-assisted)
 
@@ -20,42 +20,51 @@ its orbit where that orbit converges, and is undefined elsewhere. `limitMotion g
 - § II. `lm_tendsto_iff_arrival_or_closure`: the orbit tends to `p` iff either `x` arrives at `p`
   along OVER and `p` is a landing, or no stage is fixed and the stages have a stage closure with
   value `p`. The two branches exclude each other (`lm_not_arrives_of_closure`). On `OnePoint K`,
-  adjoining `∞` adds no OVER step into it (`lm_not_arrives_infty`), so an orbit tending to `∞` is
-  always in the closure branch.
+  for the scaling `lmScale c`, adjoining `∞` adds no OVER step into it from a point of `K`
+  (`lm_not_arrives_infty`). So for a scaling, an orbit starting in `K` and tending to `∞` is in the
+  closure branch. The lemma is about scalings only.
 - § III. A homeomorphism conjugating two maps is a strict isomorphism of their limit motions
   (`lmIsoOfConj`). On `OnePoint K`, `onePointInv` conjugates scaling by `c` to scaling by `d`,
   `c * d = 1` (`lmHealedIso`); it exchanges the two distinct points `0` and `∞`. Inside `K`, field
-  inversion is a strict isomorphism of the bare function motions (`lmBareInvIso`) and no strict map
-  of the limit motions (`lm_torn_no_hom`).
-- § IV. Instances: doubling on `OnePoint ℚ_[2]` closes at `0` without arriving; halving there and
-  doubling on `OnePoint ℝ` tend to `∞` without arriving; `lm_q2_torn`, `lm_real_torn`. The
+  inversion is a strict isomorphism of the bare function motions when `c * d = 1` (`lmBareInvIso`).
+  When `c ^ n` tends to `0` and `1 < ‖d‖`, it is no strict map of the limit motions
+  (`lm_torn_no_hom`).
+- § IV. Instances, each for a start `x ≠ 0` of the field: doubling on `OnePoint ℚ_[2]` closes at `0`
+  without arriving (`lm_q2_doubling_closure_at_zero`); halving there tends to `∞` without arriving
+  (`lm_q2_halving_to_infty`); doubling on `OnePoint ℝ` tends to `∞` and closes there without arriving
+  (`lm_real_doubling_closure_at_infty`). The torn pairs are `lm_q2_torn` and `lm_real_torn`. The
   oscillating orbit of `1` under scaling by `-1` is the control on both carriers.
-- § V. The reverse direction, from existing declarations only. In `Ordinal` the ω-tower seeded at
-  0, ⊥ of `Ordinal`, is § II's closure branch with UP value ε₀ (`ordinalTowerMotion_stageClosure`);
-  in `ℤ_[2]` the same tower's images only approach ℤ_[2]'s 0 (`snap_arc_z2_loop`).
+- § V. The reverse direction, from existing declarations only. In `Ordinal` the stages of the
+  ω-tower seeded at 0, ⊥ of `Ordinal`, have a stage closure with UP value ε₀
+  (`ordinalTowerMotion_stageClosure`). That is the shape of § II's closure branch, though
+  `ordinalTowerMotion` is not a limit motion. In `ℤ_[2]` the same tower's images start at ℤ_[2]'s 0,
+  differ from it from stage 1 on, and approach that same 0 (`snap_arc_z2_loop`).
 
-None of this is the snap: no covering step `bot ⋖ a` appears in any statement here
+None of this is T-SNAP: no covering step `⊥ ⋖ a` off ⊥ of a lattice appears in any statement here
 (`ZeroParadox/Multihomed/SnapFrameChange.lean` § II).
 
 ## Prior art and credit
 
-This file is an instance of the limit-retraction programme, with weaker hypotheses and weaker
-conclusions.
+This file is a variant of the limit-retraction programme, with weaker hypotheses and weaker
+conclusions. Its UP leg is the limit retraction (Abate–Bedford) restricted to convergent orbits, the
+case Venturini's Theorem 5.1 (viii) describes.
 
 - M. Abate, "Iteration theory, compactly divergent sequences and commuting holomorphic maps",
   Ann. Sc. Norm. Sup. Pisa Cl. Sci. (4) 18 (1991), no. 2, 167–191. Theorem 0.3, p. 169, credited
-  there to Bedford and to Abate: for a taut manifold and a map whose iterates are not compactly
-  divergent, a holomorphic retraction onto the limit manifold; p. 169 names it the limit
-  retraction, and the iterates converge iff `f` is the identity on that manifold.
+  there to Bedford and to Abate: for a (connected) taut manifold and a map whose iterates are not
+  compactly divergent, a holomorphic retraction onto the limit manifold; p. 169 names it the limit
+  retraction, and the iterates converge iff `f` is the identity on that manifold. That retraction is
+  defined on orbits that do not converge, too; `limitRetraction` is not.
 - R. Venturini, "On the orbits of not expansive mappings in metric spaces", arXiv:1304.1023.
   Theorem 5.1 (pp. 13–14), item (viii): for `x, y` off the compactly divergent set,
   `lim f^k(x) = y` iff `y = ρ(x)` and `f(y) = y`. pp. 18–19 define the limit retraction and the
   extended limit retraction `ρ̂ : X → X̂` into the Alexandroff compactification; Theorem 5.2
-  (p. 19). He assumes `f` non-expansive on a locally compact metric space and does not extend `f`
-  to the added point; here `lmScale` is extended and fixes `∞`.
-- J. Milnor, Dynamics lecture notes, § 5 "Attraction and Repulsion" (2001), § 5A: the basin of
-  attraction, the domain of `limitRetraction g`; p. 5-9, `∞` as an attractor on `ℂ ∪ ∞`.
-  Conjugacy invariance of basins is that section's framing; `lmIsoOfConj` proves the die form.
+  (p. 19). He assumes `f` non-expansive on a locally compact metric space with countable basis, and
+  does not extend `f` to the added point; here `lmScale` is extended and fixes `∞`.
+- J. Milnor, Dynamics lecture notes, § 5 "Attraction and Repulsion" (2001), § 5A: the basin `B(A)`
+  of a closed set `A`. The domain of `limitRetraction g` is the union over points `p` of the basins
+  `B({p})`. p. 5-9: `∞` as an attractor on `ℂ ∪ ∞`. Conjugacy invariance of basins is that section's
+  framing; `lmIsoOfConj` proves the die form.
 - Compare Séré's retraction onto `Fix(T)` (Theorem 17 of Fournais, Lewin and Triay,
   arXiv:1911.09482, p. 24), in a Banach setting.
 
@@ -64,10 +73,11 @@ only the convergent orbits, with no group of limit maps. Only the die packaging 
 arrival-or-closure iff and the healed/torn contrast. The split into "eventually fixed" and "never
 fixed" orbits is folklore.
 
-Mathlib, searched 2026-11-19 (LeanExplore, three phrasings; theoremsearch with one formal
-phrasing): `isFixedPt_of_tendsto_iterate`, `omegaLimit`, `mem_omegaLimit_singleton_iff_mapClusterPt`,
-`tendsto_nhds_of_unique_mapClusterPt`. No limit-retraction or basin declaration was located as of
-that date; the null is uninformative.
+Mathlib, searched 2026-11-18 (LeanExplore, three phrasings; theoremsearch, three phrasings, one
+formal; the open web, two queries): `isFixedPt_of_tendsto_iterate`, `omegaLimit`,
+`mem_omegaLimit_singleton_iff_mapClusterPt`, `tendsto_nhds_of_unique_mapClusterPt`. No
+limit-retraction or basin declaration was located as of that date; the null is uninformative.
 
-The § V bound is cited, not claimed: Escardó, preprint of JSL 78(3) (2013), § 11, p. 19, "it is not
-possible to embed ε₀ in 2^ℕ using limit structures" (quoted in `ZeroParadox/DieCannotBe.lean`).
+A bound on the other side of § V is cited, not claimed, in the Lean file's closing `Reading:`:
+Escardó, preprint of JSL 78(3) (2013), § 11, p. 19, "it is not possible to embed ε₀ in 2^ℕ using
+limit structures" (also quoted in `ZeroParadox/DieCannotBe.lean`).

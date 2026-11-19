@@ -1,4 +1,4 @@
--- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the limit retraction of a continuous self-map of a Hausdorff space (Abate; Bedford) as the UP leg of a die `Motion` whose OVER is one step of the map; orbit convergence is exactly finite arrival at a landing or a stage closure, with controls, conjugacy behaviour (healed on `OnePoint K`, torn inside `K`) and the reverse direction through the ε₀ tower. Curated results indexed in ZeroParadox/MANIFEST.md.
+-- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the limit retraction (Abate–Bedford) restricted to convergent orbits, for a continuous self-map of a Hausdorff space, as the UP leg of a die `Motion` whose OVER is one step of the map; orbit convergence is exactly finite arrival at a landing or a stage closure, with controls, conjugacy behaviour (healed on `OnePoint K`, torn inside `K`) and the reverse direction through the ε₀ tower. Curated results indexed in ZeroParadox/MANIFEST.md.
 import ZeroParadox.Die
 import ZeroParadox.Valuation.RiemannSphere
 import ZeroParadox.Valuation.PadicAttractor
@@ -11,13 +11,13 @@ import Mathlib.Dynamics.OmegaLimit
 import Mathlib.Tactic
 
 /-!
-# The limit retraction as a die motion: approach is arrival or stage closure
+# The limit retraction as a die motion: convergence is arrival at a landing or a stage closure
 
 Experimental probe, not a finalized layer; results are indexed in ZeroParadox/MANIFEST.md.
 
 ## Engineer's Take
 
-Metric motion sounded familiar, and that concept needed looking into. Approach becoming arrival is quite literally the shape at the heart of this. Everything has been about an asymptote becoming a final fixed value and vice versa, and if we're capturing that shape, we're very much in the right direction.
+Metric motion sounded familiar, and that concept needed looking into. Approach becoming a landing is quite literally the shape at the heart of this. Everything has been about an asymptote becoming a final fixed value and vice versa, and if we're capturing that shape, we're very much in the right direction.
 
 ---
 
@@ -80,8 +80,8 @@ theorem lm_tendsto_of_omegaLimit {X : Type*} [TopologicalSpace X] [T2Space X] [C
 
 variable {X : Type u} [TopologicalSpace X] [T2Space X]
 
-/-- `Statement:` the limit retraction of `g` (Abate–Bedford), partial: defined at `x` exactly when
-    the orbit of `x` converges (the basin of attraction), with value a limit of that orbit. -/
+/-- `Statement:` the limit retraction (Abate–Bedford) restricted to convergent orbits: defined
+    at `x` iff its orbit converges (the union of point basins `B({p})`), value the limit. -/
 noncomputable def limitRetraction (g : X → X) (x : X) : Part X :=
   ⟨∃ q, Tendsto (fun n => g^[n] x) atTop (𝓝 q), fun h => h.choose⟩
 
@@ -260,6 +260,13 @@ theorem lm_not_arrives_of_closure (x p : X) {c : Part X}
     ¬ (limitMotion g hg).Arrives p x :=
   Motion.not_arrives_of_stageClosure (s := fun n => g^[n] x) (lm_isRun x) hc hp
 
+/-- `Statement:` the closure branch's first conjunct follows from its stage closure: no stage is a
+    landing, and a landing is a fixed point (`lm_isLanding_iff`). -/
+example (x : X) {c : Part X}
+    (hc : (limitMotion g hg).StageClosure (Set.range fun n => g^[n] x) c) :
+    ∀ n, g (g^[n] x) ≠ g^[n] x :=
+  fun n h => (hc _ ⟨n, rfl⟩).1 ((lm_isLanding_iff _).2 h)
+
 end TheIff
 
 /-! ### The compactified carrier: scalings on `OnePoint K` -/
@@ -290,8 +297,8 @@ theorem lm_scale_iterate_some (c : K) (hc : c ≠ 0) (x : K) (n : ℕ) :
   | succ n ih => rw [Function.iterate_succ_apply', ih, lm_scale_some, pow_succ', mul_assoc]
 
 /-- `Statement:` no point of `K` arrives at `∞` along OVER of the limit motion of `lmScale c`.
-    The first unjustified step of "compactify, and approach becomes arrival" is here: adjoining
-    `∞` adds no step into it. -/
+    The first unjustified step of "compactify, and approach becomes arrival" is here: for a
+    scaling, adjoining `∞` adds no step into it from `K`. -/
 theorem lm_not_arrives_infty (c : K) (hc : c ≠ 0) (x : K) :
     ¬ (limitMotion (lmScale c hc) (lmScale c hc).continuous).Arrives OnePoint.infty
         (OnePoint.some x) := by
@@ -546,14 +553,15 @@ theorem lm_q2_halving_to_infty (x : ℚ_[2]) (hx : x ≠ 0) :
   rwa [inv_inv] at h
 
 /-- `Statement:` CARRIER, `ℚ_[2]` torn: inside `ℚ_[2]` field inversion is no strict map of limit
-    motions from doubling to halving, while it is a strict isomorphism of the bare `ofFun` motions. -/
+    motions from doubling to halving, while it is the map of a strict isomorphism of the bare
+    `ofFun` motions (`lmBareInvIso`). -/
 theorem lm_q2_torn :
-    Nonempty (Motion.StrictIso (Motion.ofFun (fun z : ℚ_[2] => 2 * z))
-      (Motion.ofFun (fun z : ℚ_[2] => 2⁻¹ * z))) ∧
+    (∃ φ : Motion.StrictIso (Motion.ofFun (fun z : ℚ_[2] => 2 * z))
+      (Motion.ofFun (fun z : ℚ_[2] => 2⁻¹ * z)), ∀ x, φ.hom.toFun x = x⁻¹) ∧
     ¬ ∃ φ : Motion.Hom (limitMotion (fun z : ℚ_[2] => 2 * z) (continuous_const_mul 2))
         (limitMotion (fun z : ℚ_[2] => 2⁻¹ * z) (continuous_const_mul 2⁻¹)),
         ∀ x, φ.toFun x = x⁻¹ := by
-  refine ⟨⟨lmBareInvIso 2 2⁻¹ (mul_inv_cancel₀ two_ne_zero)⟩, lm_torn_no_hom ?_ ?_⟩
+  refine ⟨⟨lmBareInvIso 2 2⁻¹ (mul_inv_cancel₀ two_ne_zero), fun _ => rfl⟩, lm_torn_no_hom ?_ ?_⟩
   · have h2n : ‖(2 : ℚ_[2])‖ = 2⁻¹ := by simpa using (Padic.norm_p (p := 2))
     rw [norm_inv, h2n]; norm_num
   · simpa using doubling_orbit_tendsto_zero (1 : ℚ_[2])
@@ -588,13 +596,14 @@ theorem lm_real_doubling_closure_at_infty (x : ℝ) (hx : x ≠ 0) :
   · exact ⟨c, hc, hp⟩
 
 /-- `Statement:` CARRIER, ℝ torn: inside ℝ field inversion is no strict map of limit motions from
-    halving to doubling, while it is a strict isomorphism of the bare `ofFun` motions. -/
+    halving to doubling, while it is the map of a strict isomorphism of the bare `ofFun` motions
+    (`lmBareInvIso`). -/
 theorem lm_real_torn :
-    Nonempty (Motion.StrictIso (Motion.ofFun (fun z : ℝ => 2⁻¹ * z))
-      (Motion.ofFun (fun z : ℝ => 2 * z))) ∧
+    (∃ φ : Motion.StrictIso (Motion.ofFun (fun z : ℝ => 2⁻¹ * z))
+      (Motion.ofFun (fun z : ℝ => 2 * z)), ∀ x, φ.hom.toFun x = x⁻¹) ∧
     ¬ ∃ φ : Motion.Hom (limitMotion (fun z : ℝ => 2⁻¹ * z) (continuous_const_mul 2⁻¹))
         (limitMotion (fun z : ℝ => 2 * z) (continuous_const_mul 2)), ∀ x, φ.toFun x = x⁻¹ :=
-  ⟨⟨lmBareInvIso 2⁻¹ 2 (inv_mul_cancel₀ two_ne_zero)⟩,
+  ⟨⟨lmBareInvIso 2⁻¹ 2 (inv_mul_cancel₀ two_ne_zero), fun _ => rfl⟩,
     lm_torn_no_hom (by norm_num) (lm_real_half_tendsto 1)⟩
 
 -- Statement: CONTROL on `OnePoint ℝ`: the `-1` orbit fails both branches at every point.
@@ -606,8 +615,10 @@ end Instances
 
 `Reading:` CARRIER. § II turns an approach (`Tendsto`) into a die fact inside ONE motion. Here one tower,
 seeded at 0, ⊥ of `Ordinal`, is read in two charts joined by `NONote.repr` and `cnfToZp2`, never by
-`=`. In `Ordinal` it is § II's closure branch with the value ε₀ (ε₀ ≠ 0 and ε₀ ≠ ⊥ of `Ordinal`,
-`epsilon0_ne_zero`, `epsilon0_ne_bot`); in `ℤ_[2]` it is only an approach to ℤ_[2]'s 0. -/
+`=`. In `Ordinal` the stages have a stage closure (`Motion.StageClosure`, the shape of § II's
+closure branch; `ordinalTowerMotion` is not a limit motion, so § II's iff does not apply) with the
+value ε₀ (ε₀ ≠ 0 and ε₀ ≠ ⊥ of `Ordinal`, `epsilon0_ne_zero`, `epsilon0_ne_bot`). In `ℤ_[2]` the
+images start at ℤ_[2]'s 0, differ from it from stage 1 on, and approach that same 0. -/
 
 /-- `Statement:` ordinal chart: the stages `fundamentalSeq n` have a stage closure with UP value ε₀
     in `ordinalTowerMotion` (`ordinalTowerMotion_stageClosure`), and 0 of `Ordinal` does not arrive

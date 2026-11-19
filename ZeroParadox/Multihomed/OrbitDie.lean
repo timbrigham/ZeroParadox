@@ -148,39 +148,55 @@ theorem od_RT_nat_control :
     | next _ _ ih => intro h; subst h; exact ih 1 (le_refl 1) rfl
   exact key 1 h rfl
 
-/-- `Statement:` OBSTRUCTION, landing into never-landing: every map carrying `odHalveNat` steps to
-    `odDoubleQ2` steps is `0`. It consumes, from the source, the self-step at `0` and the one-step
-    path `n → 0`; from the target, that `0` of `Q₂` is the only fixed point and every step into it
-    starts there. Nothing 2-adic: `od_RT_collapse_ring`. -/
-theorem od_RT_collapse (f : ℕ → Q₂) (hf : ∀ a b, odHalveNat.step a b → odDoubleQ2.step (f a) (f b))
-    (n : ℕ) : f n = 0 := by
-  have h0 : f 0 = 0 := od_selfstep_image f hf od_halve_selfOnly.1
-    (fun z (hz : z = 2 * z) => by linear_combination -hz)
-  have hpath : Relation.ReflTransGen odHalveNat.step n 0 :=
-    Relation.ReflTransGen.single (Nat.zero_le _)
-  rw [od_collapse f hf (y := 0) (by rw [h0]; exact od_double_noEntry.1) hpath, h0]
+/-- `Statement:` the source FORK: in `odHalveNat`, `2 * n` steps both to `n` and to `0` (the
+    conclusion shape of `execution_requires_branching`, reached without a self-step at `2 * n`). -/
+example (n : ℕ) : odHalveNat.step (2 * n) n ∧ odHalveNat.step (2 * n) 0 :=
+  ⟨show n ≤ 2 * n / 2 from
+    Nat.le_of_eq (Nat.mul_div_cancel_left n Nat.two_pos).symm, Nat.zero_le _⟩
 
-/-- `Statement:` CARRIER — `od_RT_collapse` with target doubling on any commutative ring with no
-    zero divisors in which `2 ≠ 0`. These hypotheses are sufficient; they are not shown necessary. -/
-theorem od_RT_collapse_ring {K : Type*} [CommRing K] [NoZeroDivisors K] [NeZero (2 : K)]
+/-- `Statement:` into ANY function motion, a map carrying `odHalveNat` steps is constant at `f 0`:
+    the fork above meets a single-valued target (the OUT form, locally, is `cd_fan_collapse`,
+    `ZeroParadox/Multihomed/CollapseDie.lean`). -/
+example {β : Type*} (g : β → β) (f : ℕ → β)
+    (hf : ∀ a b, odHalveNat.step a b → (Motion.ofFun g).step (f a) (f b)) (n : ℕ) : f n = f 0 :=
+  (hf (2 * n) n (show n ≤ 2 * n / 2 from
+    Nat.le_of_eq (Nat.mul_div_cancel_left n Nat.two_pos).symm)).trans
+    (hf (2 * n) 0 (Nat.zero_le _)).symm
+
+/-- `Statement:` CARRIER — every map carrying `odHalveNat` steps to doubling steps on a commutative
+    ring is `0`. The proof term consumes, from the source, the self-step at `0` and the fork at
+    `2 * n` (to `n` and to `0`); from the target, only that its step is the function
+    `z ↦ 2 * z`, and that `z = 2 * z` forces `z = 0`, true in every commutative ring. It does not
+    consume the target's no-entry at `0`, which fails in `ZMod 4` (next `example`). -/
+theorem od_RT_collapse_ring {K : Type*} [CommRing K]
     (f : ℕ → K)
     (hf : ∀ a b, odHalveNat.step a b → (Motion.ofFun (fun z : K => 2 * z)).step (f a) (f b))
     (n : ℕ) : f n = 0 := by
-  have h0 : f 0 = 0 := od_selfstep_image f hf od_halve_selfOnly.1
-    (fun z (hz : z = 2 * z) => by linear_combination -hz)
-  have hN : ∀ a, (Motion.ofFun (fun z : K => 2 * z)).step a (f 0) → a = f 0 :=
-    fun a (ha : f 0 = 2 * a) => by
-      rw [h0] at ha ⊢; exact (mul_eq_zero.mp ha.symm).resolve_left two_ne_zero
-  rw [od_collapse f hf hN
-    (Relation.ReflTransGen.single (show odHalveNat.step n 0 from Nat.zero_le _)), h0]
+  have hs : f 0 = 2 * f 0 := hf 0 0 od_halve_selfOnly.1
+  have h0 : f 0 = 0 := by linear_combination -hs
+  have hb : f n = 2 * f (2 * n) := hf (2 * n) n (show n ≤ 2 * n / 2 from
+    Nat.le_of_eq (Nat.mul_div_cancel_left n Nat.two_pos).symm)
+  have hz : f 0 = 2 * f (2 * n) := hf (2 * n) 0 (Nat.zero_le _)
+  rw [hb, ← hz, h0]
 
-/-- `Statement:` `od_RT_collapse` is the `Q₂` instance of `od_RT_collapse_ring`. -/
-example (f : ℕ → Q₂) (hf : ∀ a b, odHalveNat.step a b → odDoubleQ2.step (f a) (f b)) (n : ℕ) :
-    f n = 0 :=
+/-- `Statement:` in `ZMod 4` the collapse holds while the doubling motion's no-entry at `0` fails
+    (`2` steps to `0`). -/
+example : (∀ f : ℕ → ZMod 4, (∀ a b, odHalveNat.step a b →
+      (Motion.ofFun (fun z : ZMod 4 => 2 * z)).step (f a) (f b)) → ∀ n, f n = 0) ∧
+    ¬ ∀ a, (Motion.ofFun (fun z : ZMod 4 => 2 * z)).step a 0 → a = 0 :=
+  ⟨fun f hf n => od_RT_collapse_ring f hf n,
+   fun h => absurd (h 2 (show (0 : ZMod 4) = 2 * 2 by decide)) (by decide)⟩
+
+/-- `Statement:` OBSTRUCTION, landing into never-landing: every map carrying `odHalveNat` steps to
+    `odDoubleQ2` steps is `0`: `od_RT_collapse_ring` at `Q₂`, nothing 2-adic. Target half:
+    `deterministic_has_no_fanout` (`ZeroParadox/Computability/Occurrence.lean`). -/
+theorem od_RT_collapse (f : ℕ → Q₂) (hf : ∀ a b, odHalveNat.step a b → odDoubleQ2.step (f a) (f b))
+    (n : ℕ) : f n = 0 :=
   od_RT_collapse_ring f hf n
 
 /-- `Statement:` the same collapse through the function motion `n ↦ n / 2`, where the path to `0`
-    is the whole descent (`od_halveFun_arrives`). -/
+    is the whole descent (`od_halveFun_arrives`). The source has no fork here, and the proof
+    consumes the target's no-entry at `0` of `Q₂` (`od_double_noEntry`). -/
 theorem od_RT_collapse_fun (f : ℕ → Q₂)
     (hf : ∀ a b, odHalveNatFun.step a b → odDoubleQ2.step (f a) (f b)) (n : ℕ) : f n = 0 := by
   have h0 : f 0 = 0 := od_selfstep_image f hf (show (0 : ℕ) = 0 / 2 from rfl)
@@ -188,15 +204,69 @@ theorem od_RT_collapse_fun (f : ℕ → Q₂)
   rw [od_collapse f hf (y := 0) (by rw [h0]; exact od_double_noEntry.1)
     (Motion.reflTransGen_of_arrives (od_halveFun_arrives n)), h0]
 
+/-- `Statement:` CONTROL for the fork: into `ofFun Nat.pred` (single-valued, `0` its only fixed
+    point, entered from `1`), the map `n ↦ log₂ n + 1` (`0 ↦ 0`) carries every step of the
+    fork-free `odHalveNatFun` and is not constant, while every map carrying `odHalveNat` steps
+    there is `0`. So with this target the fork is consumed; whether `od_RT_collapse_fun` needs
+    no-entry inside a commutative ring is not measured here. -/
+example :
+    (∀ a b, odHalveNatFun.step a b → (Motion.ofFun Nat.pred).step
+      (if a = 0 then 0 else Nat.log 2 a + 1) (if b = 0 then 0 else Nat.log 2 b + 1)) ∧
+    (if (1 : ℕ) = 0 then 0 else Nat.log 2 1 + 1) ≠ 0 ∧
+    ∀ f : ℕ → ℕ, (∀ a b, odHalveNat.step a b → (Motion.ofFun Nat.pred).step (f a) (f b)) →
+      ∀ n, f n = 0 := by
+  refine ⟨fun a b (h : b = a / 2) => ?_, by simp, fun f hf n => ?_⟩
+  · show (if b = 0 then 0 else Nat.log 2 b + 1) = Nat.pred (if a = 0 then 0 else Nat.log 2 a + 1)
+    subst h
+    rcases Nat.lt_or_ge a 2 with ha | ha
+    · interval_cases a <;> simp
+    · have hb : a / 2 ≠ 0 := by omega
+      have hlog : Nat.log 2 (a / 2) = Nat.log 2 a - 1 := Nat.log_div_base 2 a
+      have hpos : 1 ≤ Nat.log 2 a := Nat.le_log_of_pow_le (by norm_num) (by simpa using ha)
+      have ha0 : a ≠ 0 := by omega
+      simp only [hb, ha0, ↓reduceIte, hlog, Nat.pred_succ]
+      omega
+  · have hs : f 0 = Nat.pred (f 0) := hf 0 0 od_halve_selfOnly.1
+    have h0 : f 0 = 0 := by rw [Nat.pred_eq_sub_one] at hs; omega
+    rw [(hf (2 * n) n (show n ≤ 2 * n / 2 from
+      Nat.le_of_eq (Nat.mul_div_cancel_left n Nat.two_pos).symm)).trans
+      (hf (2 * n) 0 (Nat.zero_le _)).symm, h0]
+
+/-- `Statement:` CONTROL for single-valuedness: OVER `y = 2 * x ∨ x ≠ y` on `Q₂` keeps `0` as its
+    only self-stepping point, is not single-valued, and the cast carries every halving step and is
+    not `0`. -/
+example :
+    (∀ z : Q₂, (z = 2 * z ∨ z ≠ z) → z = 0) ∧
+    (∀ a b, odHalveNat.step a b → ((b : Q₂) = 2 * (a : Q₂) ∨ (a : Q₂) ≠ (b : Q₂))) ∧
+    ((1 : ℕ) : Q₂) ≠ 0 := by
+  refine ⟨fun z hz => ?_, fun a b (h : b ≤ a / 2) => ?_, by norm_num⟩
+  · rcases hz with hz | hz
+    · linear_combination -hz
+    · exact absurd rfl hz
+  · by_cases hab : a = b
+    · subst hab; left
+      have : a = 0 := by omega
+      subst this; simp
+    · right; exact_mod_cast hab
+
+/-- `Statement:` CONTROL for `z = 2 * z → z = 0`: into `ofFun id` on `Q₂` (single-valued, every
+    point fixed) the constant map `1` carries every halving step and is not `0`. -/
+example : (∀ a b, odHalveNat.step a b →
+      (Motion.ofFun (id : Q₂ → Q₂)).step ((fun _ => (1 : Q₂)) a) ((fun _ => (1 : Q₂)) b)) ∧
+    (1 : Q₂) ≠ 0 :=
+  ⟨fun _ _ _ => rfl, one_ne_zero⟩
+
 /-- `Statement:` CONTROL, target side (OVER always true on `Q₂`): the cast carries every halving
-    step and is not `0`; so `od_RT_collapse` consumes the target's no-entry at `0`. -/
+    step and is not `0`. The always-true OVER is not single-valued and makes every point a
+    self-step, so it removes both target facts `od_RT_collapse_ring` consumes; the two `example`s
+    above remove them one at a time. -/
 theorem od_RT_collapse_control_target :
     (∀ a b, odHalveNat.step a b →
       (Motion.ofTotal (id : Q₂ → Q₂) (fun _ => rfl) (fun _ _ => True)).step (a : Q₂) (b : Q₂)) ∧
     ((1 : ℕ) : Q₂) ≠ 0 :=
   ⟨fun _ _ _ => trivial, by norm_num⟩
 
-/-- `Statement:` CONTROL, source side (successor on ℕ, no path to `0`, no self-step): `n ↦ 2 ^ n`
+/-- `Statement:` CONTROL, source side (successor on ℕ: no self-step, no fork): `n ↦ 2 ^ n`
     carries every step to a doubling step and is not `0`. -/
 theorem od_RT_collapse_control_source :
     (∀ a b, (Motion.ofFun Nat.succ).step a b → odDoubleQ2.step ((2 : Q₂) ^ a) ((2 : Q₂) ^ b)) ∧
@@ -271,8 +341,9 @@ theorem od_PM_control :
 
 /-- `Statement:` OBSTRUCTION: a map `Q₂ → ℝ` carrying doubling steps to doubling steps and monotone
     for the two norm orders is `0`. It consumes the step square `f (2 * z) = 2 * f z`, the
-    monotonicity, and the source's `StepLowers` (`od_PM_fit`, the 2-adic contraction); controls:
-    `od_PM_collapse_control`, `od_PM_collapse_control_mono`. -/
+    monotonicity, the source's `StepLowers` (`od_PM_fit`, the 2-adic contraction) and the target's
+    expansion `‖2‖ = 2` on ℝ (`Real.norm_two`); controls: `od_PM_collapse_control`,
+    `od_PM_collapse_control_mono`. -/
 theorem od_PM_collapse (f : Q₂ → ℝ) (hf : ∀ a b, odDoubleQ2.step a b → odDoubleR.step (f a) (f b))
     (hmono : ∀ a b : Q₂, ‖a‖ ≤ ‖b‖ → ‖f a‖ ≤ ‖f b‖) (z : Q₂) : f z = 0 := by
   have hs : f (2 * z) = 2 * f z := hf z (2 * z) rfl
@@ -282,7 +353,8 @@ theorem od_PM_collapse (f : Q₂ → ℝ) (hf : ∀ a b, odDoubleQ2.step a b →
 
 /-- `Statement:` INVARIANT under reversal of the direction of the map: a map ℝ → `Q₂` carrying
     doubling steps to doubling steps and monotone for the two norm orders is `0`. It consumes the
-    source's `StepRaises` on ℝ and the target's contraction on `Q₂` (`padic_orbit_norm`). -/
+    source's `StepRaises` on ℝ (`od_PM_fit`) and the target's contraction on `Q₂`
+    (`padic_orbit_norm`). The controls beside `od_PM_collapse` are for the forward direction. -/
 theorem od_PM_collapse_rev (g : ℝ → Q₂) (hg : ∀ a b, odDoubleR.step a b → odDoubleQ2.step (g a) (g b))
     (hmono : ∀ a b : ℝ, ‖a‖ ≤ ‖b‖ → ‖g a‖ ≤ ‖g b‖) (z : ℝ) : g z = 0 := by
   have hs : g (2 * z) = 2 * g z := hg z (2 * z) rfl
@@ -293,16 +365,11 @@ theorem od_PM_collapse_rev (g : ℝ → Q₂) (hg : ∀ a b, odDoubleR.step a b 
   rw [h2] at hl
   exact norm_eq_zero.mp (le_antisymm (by nlinarith [norm_nonneg (g z)]) (norm_nonneg _))
 
-/-- `Statement:` CARRIER — `od_RT_collapse` with target `odDoubleR`: the collapse uses nothing
-    2-adic. -/
+/-- `Statement:` CARRIER — `od_RT_collapse` with target `odDoubleR`: it is `od_RT_collapse_ring` at
+    ℝ, so the collapse uses nothing 2-adic. -/
 theorem od_RT_collapse_real (f : ℕ → ℝ) (hf : ∀ a b, odHalveNat.step a b → odDoubleR.step (f a) (f b))
-    (n : ℕ) : f n = 0 := by
-  have h0 : f 0 = 0 := od_selfstep_image f hf od_halve_selfOnly.1
-    (fun z (hz : z = 2 * z) => by linear_combination -hz)
-  have hN : ∀ a, odDoubleR.step a (f 0) → a = f 0 := fun a (ha : f 0 = 2 * a) => by
-    rw [h0] at ha ⊢; exact (mul_eq_zero.mp ha.symm).resolve_left two_ne_zero
-  rw [od_collapse f hf hN
-    (Relation.ReflTransGen.single (show odHalveNat.step n 0 from Nat.zero_le _)), h0]
+    (n : ℕ) : f n = 0 :=
+  od_RT_collapse_ring f hf n
 
 /-- `Statement:` CARRIER — CONTROL: with source ℝ in place of `Q₂`, the identity carries steps, is
     monotone, and is not `0`; so `od_PM_collapse` consumes the contraction on `Q₂`. -/
@@ -401,13 +468,19 @@ theorem od_NM_hom_control :
   rw [h2, norm_one] at h; norm_num at h
 
 /-- `Statement:` OBSTRUCTION with the Markov target: a map carrying `odHalveNat` steps to `odMarkov`
-    steps is constant at `f 0`. It consumes the self-step at `0` and the one-step path `n → 0` in
-    the source, and the target's no-entry at a balanced point (`od_markov_noEntry`). -/
+    steps is constant at `f 0`. It consumes only the source's fork at `2 * n` and that `odMarkov`
+    is a function motion: it holds into any function motion (the `example` in § I). -/
 theorem od_NM_halve_collapse (f : ℕ → Fin 2 → ℝ)
-    (hf : ∀ a b, odHalveNat.step a b → odMarkov.step (f a) (f b)) (n : ℕ) : f n = f 0 := by
-  have hfix : markovStep (1 / 4) (f 0) = f 0 := (hf 0 0 (Nat.zero_le _)).symm
-  exact od_collapse f hf (od_markov_noEntry ((od_markov_fixed_iff _).1 hfix))
-    (Relation.ReflTransGen.single (Nat.zero_le _))
+    (hf : ∀ a b, odHalveNat.step a b → odMarkov.step (f a) (f b)) (n : ℕ) : f n = f 0 :=
+  (hf (2 * n) n (show n ≤ 2 * n / 2 from
+    Nat.le_of_eq (Nat.mul_div_cancel_left n Nat.two_pos).symm)).trans
+    (hf (2 * n) 0 (Nat.zero_le _)).symm
+
+/-- `Statement:` the value `f 0` is a balanced point: the self-step at `0` makes it a fixed point
+    of the Markov step (`od_markov_fixed_iff`). -/
+example (f : ℕ → Fin 2 → ℝ) (hf : ∀ a b, odHalveNat.step a b → odMarkov.step (f a) (f b)) :
+    imb (f 0) = 0 :=
+  (od_markov_fixed_iff _).1 (hf 0 0 (Nat.zero_le _)).symm
 
 end ZeroParadox
 
