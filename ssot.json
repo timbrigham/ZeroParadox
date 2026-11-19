@@ -132247,8 +132247,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 4258,
-        "files": 233
+        "declarations": 4320,
+        "files": 234
       },
       "entries": [
         {
@@ -133426,6 +133426,43 @@
             "role": []
           },
           "reason": "SyntacticCollapse: choice-free syntactic surrogate for the 2-adic metric collapse (evidence the choice in tower_converges_to_zero is Mathlib-imposed)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0211cdb1-6375-4e49-851b-6f5c475096bd",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_mem_limitRetraction_of_periodic",
+            "short": "bend_mem_limitRetraction_of_periodic"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_mem_limitRetraction_of_periodic",
+            "short": "bend_mem_limitRetraction_of_periodic",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -137762,6 +137799,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "08d34d9f-4a0a-4abc-a438-654173009caf",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_phase",
+            "short": "bend_phase"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_phase",
+            "short": "bend_phase",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "08de54f4-4c1f-46f8-ad6b-8be6f80a3935",
           "new": {
             "file": "ZeroParadox/Ordinal/CnfBridge.lean",
@@ -138160,6 +138234,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "093824cc-3073-4cfa-b2a7-c33d17e735d7",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_overlap_one",
+            "short": "bend_overlap_one"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_overlap_one",
+            "short": "bend_overlap_one",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -139547,6 +139658,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "0ae3f7e4-57d2-4248-9187-861333a4517c",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bendFiveBwd",
+            "short": "bendFiveBwd"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bendFiveBwd",
+            "short": "bendFiveBwd",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "0b0512e7-3fc2-4450-9e7f-d458dd540d88",
           "new": {
@@ -139573,6 +139721,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0b423276-15eb-4968-8334-95d41511ab6e",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_antiparallel",
+            "short": "bend_antiparallel"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_antiparallel",
+            "short": "bend_antiparallel",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -142947,6 +143132,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "105179e5-ba12-4f51-aa04-bbe08673292c",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_rotation_ne_identity",
+            "short": "bend_rotation_ne_identity"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_rotation_ne_identity",
+            "short": "bend_rotation_ne_identity",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "105582bb-df39-4276-b3e6-5906d0cddebe",
           "new": {
             "file": "ZeroParadox/Valuation/LocalTowers.lean",
@@ -143012,6 +143234,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "105efdb0-e930-48ef-9362-b203eb835021",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bendConjIso",
+            "short": "bendConjIso"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bendConjIso",
+            "short": "bendConjIso",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -151249,6 +151508,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "1e9c5888-c19e-40ff-8cdd-3b5c3d50166b",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bendSector",
+            "short": "bendSector"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bendSector",
+            "short": "bendSector",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "1ea81a7b-7b70-45bd-a949-088aa2ae5c96",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -154179,6 +154475,43 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "245a789d-4203-4ce7-a50a-31c1f1c30815",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bendTwist_neg_left",
+            "short": "bendTwist_neg_left"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bendTwist_neg_left",
+            "short": "bendTwist_neg_left",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -158390,6 +158723,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "2ad1be5b-ec1a-4d09-997a-e514bb393521",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bendRadial_conj",
+            "short": "bendRadial_conj"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bendRadial_conj",
+            "short": "bendRadial_conj",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "2aff96ab-65ca-4853-bc8f-3290d15790fa",
           "new": {
             "file": "ZeroParadox/Algebra/WheelFrac.lean",
@@ -161093,6 +161463,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "2f2c19f0-49eb-44c1-97ad-fe9f8b557d90",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bendIso",
+            "short": "bendIso"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bendIso",
+            "short": "bendIso",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "2f375d85-524a-4d9e-9a8d-530b607463ba",
           "new": {
             "file": "ZeroParadox/Multihomed/LimitMotion.lean",
@@ -163524,6 +163931,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "3311ab18-86c6-47e9-abd3-e6a4ae2e771e",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_conj_same_side",
+            "short": "bend_conj_same_side"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_conj_same_side",
+            "short": "bend_conj_same_side",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "3320b670-445f-4058-9691-a63c05942a1d",
           "new": {
@@ -165844,6 +166288,43 @@
             "role": []
           },
           "reason": "PricedInterface: the constructive/classical boundary with its cost measured - carrier choice-free, crossing carries Classical.choice at every declaration. The carrier has the shape of Casteran's ON_plus with a one-point right summand and is not an instance of it (its order is not well-founded); the map has two of ON_correct's three fields (into, onto) and not the comparator field. Cited; the measurement is the delta.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "3789eda8-2d78-4b86-b613-120635288ee8",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bendZeta_ne_zero",
+            "short": "bendZeta_ne_zero"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bendZeta_ne_zero",
+            "short": "bendZeta_ne_zero",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -168404,6 +168885,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "3ba6db6d-d96c-4643-8d95-996cb49c923d",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_inv_polar",
+            "short": "bend_inv_polar"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_inv_polar",
+            "short": "bend_inv_polar",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "3bc1aa6d-14ae-41eb-8134-7945c5f6f37e",
           "new": {
             "file": "ZeroParadox/Valuation/PoleCornersBridge.lean",
@@ -169369,6 +169887,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "3d0c96e4-e26d-4ca9-8538-6ebe06c1c9ce",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_inner_e0_e0",
+            "short": "bend_inner_e0_e0"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_inner_e0_e0",
+            "short": "bend_inner_e0_e0",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "3d0f894e-b578-4d9d-88a5-a6a635013141",
           "new": {
@@ -169765,6 +170320,43 @@
             ]
           },
           "reason": "die-negswap-1111: negation on the double-negation layer as the pole swap (PoleCorners § VI); the corner's DNE reduction to excluded middle (Die § III); Escardó searchability against Bool-valued OVER (Die § XXIII); Tim 'Land it' 2026-11-11",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "3e2d1a16-73c1-47c2-9041-5f722406b330",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_zeta_sq_conditions",
+            "short": "bend_zeta_sq_conditions"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_zeta_sq_conditions",
+            "short": "bend_zeta_sq_conditions",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -178445,6 +179037,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "4c2f460a-14fa-4f1a-91d5-63d93552798b",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_iso_I_negI",
+            "short": "bend_iso_I_negI"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_iso_I_negI",
+            "short": "bend_iso_I_negI",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "4c478879-153f-4c62-9547-808ab63eabf1",
           "new": {
             "file": "ZeroParadox/Valuation/BallLine.lean",
@@ -180300,6 +180929,43 @@
             "role": []
           },
           "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "4faa6093-79b9-42eb-ac1b-6c7ec4aeecb1",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_arg_iterate",
+            "short": "bend_arg_iterate"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_arg_iterate",
+            "short": "bend_arg_iterate",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -183862,6 +184528,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "55c15eb4-5b5d-45c7-9324-c8e2e08d546b",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bendZeta_norm",
+            "short": "bendZeta_norm"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bendZeta_norm",
+            "short": "bendZeta_norm",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "55ccf370-6c0b-4e44-8a35-f448426a726e",
           "new": {
             "file": "ZeroParadox/Valuation/PadicVladimirov.lean",
@@ -184659,6 +185362,43 @@
             ]
           },
           "reason": "Die v2 final batch: drawing vs set (self-steps, accessibility, forced rank), ends of a view, orders on motions, placements as views, relaxed least-fixed-point schema, UP legs as nuclei",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "5721bbf6-c4fc-4483-bf79-66228b226d86",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_sector_shift",
+            "short": "bend_sector_shift"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_sector_shift",
+            "short": "bend_sector_shift",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -190282,6 +191022,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "5fad9829-e4c5-42f8-8eae-2d9fa53aa9bc",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bendRadial_continuous",
+            "short": "bendRadial_continuous"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bendRadial_continuous",
+            "short": "bendRadial_continuous",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "5fb1d010-3d04-48fe-ab3a-2e31a4322c11",
           "new": {
             "file": "ZeroParadox/Category/LawvereTaboo.lean",
@@ -190633,6 +191410,43 @@
             ]
           },
           "reason": "New file ZeroParadox/Information/MaxEntropy.lean (experimental, Tim ruling 154): fair coin maximizes entropy, missing information zero iff fair, chain to mlRandom_and_snap_ae under binEntropy p = log 2, Kraft in measure form, almost every fair tape incompressible for any prefix-free decoder. The occurrence commitment is reduced, not discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "60b933d3-6a8f-4efa-9b42-12b885893ae9",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bendTwist_continuous",
+            "short": "bendTwist_continuous"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bendTwist_continuous",
+            "short": "bendTwist_continuous",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -191901,6 +192715,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "6270fea4-9954-4b08-8920-37280bc6b4a6",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bendFiveIso",
+            "short": "bendFiveIso"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bendFiveIso",
+            "short": "bendFiveIso",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -195687,6 +196538,43 @@
             ]
           },
           "reason": "Die: orthogonal projection as a motion; UpOrthogonal premise, landings determine UP with it, oblique control without it, StrictIso blind to the angle (Tim approved 2026-11-13)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "6981a0d9-fdfb-4fe2-a929-21505df88fc3",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_e0_norm",
+            "short": "bend_e0_norm"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_e0_norm",
+            "short": "bend_e0_norm",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -202612,6 +203500,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "74d876b8-b5bb-4074-81cd-5eae1becbb6f",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bendFiveFwd",
+            "short": "bendFiveFwd"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bendFiveFwd",
+            "short": "bendFiveFwd",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "74ee74ad-0506-4c58-8400-a047643f45d7",
           "new": {
             "file": "ZeroParadox/Computability/GapDecoder.lean",
@@ -204056,6 +204981,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "778b42e0-664c-4eee-9d9b-8f802639fa39",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bendZeta_zpow_add_five",
+            "short": "bendZeta_zpow_add_five"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bendZeta_zpow_add_five",
+            "short": "bendZeta_zpow_add_five",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "778c2002-a133-4bac-aa30-0e9e92ba7a71",
           "new": {
@@ -204931,6 +205893,43 @@
             ]
           },
           "reason": "Limit retraction (Abate-Bedford) as the UP leg of a die motion: orbit convergence is finite arrival at a landing or a stage closure, with controls, healed/torn conjugacy and Q2/R instances (ZeroParadox/Multihomed/LimitMotion.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "789dea64-352e-473a-9bd3-b695a20d5a9a",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_onePointCongr_conj",
+            "short": "bend_onePointCongr_conj"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_onePointCongr_conj",
+            "short": "bend_onePointCongr_conj",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -206048,6 +207047,43 @@
             ]
           },
           "reason": "Lane Q 2026-11-01: the Quine-atom role (SelfOnlyAt) stated in the die, unoccupied in ZFSet, occupied in Cofix idPF_Coalgebra",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "7a99ca3a-68e2-4fc2-ac2a-dbce7807d043",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bendTwistHomeo",
+            "short": "bendTwistHomeo"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bendTwistHomeo",
+            "short": "bendTwistHomeo",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -207206,6 +208242,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "7c7b2625-fd06-42cf-adeb-193a1b9f2b4f",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_iso_abs",
+            "short": "bend_iso_abs"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_iso_abs",
+            "short": "bend_iso_abs",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -208891,6 +209964,43 @@
             ]
           },
           "reason": "New file ZeroParadox/Valuation/PricedPadicInterface.lean — p-adic Group A priced carrier (29 decls)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "7f521ddb-611f-4fa0-a2d4-25356fa549cc",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bendZeta_zpow",
+            "short": "bendZeta_zpow"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bendZeta_zpow",
+            "short": "bendZeta_zpow",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -211881,6 +212991,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "83d1e30b-07fb-4229-8593-26321b995450",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_AD_obstructed_iff",
+            "short": "bend_AD_obstructed_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_AD_obstructed_iff",
+            "short": "bend_AD_obstructed_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "83d5105c-8ef4-4c67-af34-5c1c6cedc99b",
           "new": {
             "file": "ZeroParadox/Valuation/TowerTape.lean",
@@ -214649,6 +215796,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "895f6533-ad48-4187-affa-ae1e6d8613f9",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bendPeriodicIso",
+            "short": "bendPeriodicIso"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bendPeriodicIso",
+            "short": "bendPeriodicIso",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -218736,6 +219920,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "909806fe-6052-47f7-9429-179dfff25d5a",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bendZeta_ne_one",
+            "short": "bendZeta_ne_one"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bendZeta_ne_one",
+            "short": "bendZeta_ne_one",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "90aaf1c2-fcca-4d28-bfd3-955d3475589f",
           "new": {
@@ -221019,6 +222240,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "94067fbd-79ef-4568-bede-c8b7c43fffef",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bendZeta_pow_five",
+            "short": "bendZeta_pow_five"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bendZeta_pow_five",
+            "short": "bendZeta_pow_five",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "9408f6c1-8471-4e32-86b3-dcee56e2fafe",
           "new": {
             "file": "ZeroParadox/Ordinal/OrdinalChoiceEssential.lean",
@@ -223101,6 +224359,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "97bafe4d-f80a-47cc-8f7d-ede1d8556a7a",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_AD_iff",
+            "short": "bend_AD_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_AD_iff",
+            "short": "bend_AD_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "97bc4f52-5b38-4f0b-a6fd-d88e7959909a",
           "new": {
@@ -223976,6 +225271,43 @@
             "role": []
           },
           "reason": "die-joints-1106: ruling 147 (Tim, 2026-11-06), cut points / joints / dual joints of an order and their instances (ZeroParadox/Order/DieJoints.lean), indexed in DieCannotBe § I, § XXVII, § XXIX",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "98c48865-bf2d-4400-b931-187a31e70b83",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_arg_polar",
+            "short": "bend_arg_polar"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_arg_polar",
+            "short": "bend_arg_polar",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -224936,6 +226268,43 @@
             ]
           },
           "reason": "Ball line radii in ENNReal: isolated points accumulating only at 0 and top (BallLine.lean section V)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "9a0b8b71-09cc-4f27-ae67-d18d6a9c1597",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_no_separation",
+            "short": "bend_no_separation"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_no_separation",
+            "short": "bend_no_separation",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -229690,6 +231059,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "a0be5ba8-9be7-4e81-9881-9092853b3e8a",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bendFive_conj",
+            "short": "bendFive_conj"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bendFive_conj",
+            "short": "bendFive_conj",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "a0c1e305-5ccd-42ff-ab9a-a740b4ce8179",
           "new": {
@@ -231501,6 +232907,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "a3de1697-2f40-471e-a5cb-5d6c119f0a74",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_iterate_polar",
+            "short": "bend_iterate_polar"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_iterate_polar",
+            "short": "bend_iterate_polar",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "a3e6feba-72ac-47d3-9bef-2af647fa408c",
           "new": {
             "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
@@ -231857,6 +233300,43 @@
             ]
           },
           "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a4b9e463-7ef2-44df-b72a-b5043a8ce251",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_strictIso_iff_conj_of_periodic",
+            "short": "bend_strictIso_iff_conj_of_periodic"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_strictIso_iff_conj_of_periodic",
+            "short": "bend_strictIso_iff_conj_of_periodic",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -233139,6 +234619,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "a79fe9eb-f7b1-4a77-91ff-953e3dbe173c",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_conj_of_norm_ne_one",
+            "short": "bend_conj_of_norm_ne_one"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_conj_of_norm_ne_one",
+            "short": "bend_conj_of_norm_ne_one",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "a7a02d2a-a791-42ac-a8fe-48cb76ff79a8",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -233570,6 +235087,43 @@
             ]
           },
           "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a85b1e06-3e13-4838-9754-c575960894ee",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_conj_conj",
+            "short": "bend_conj_conj"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_conj_conj",
+            "short": "bend_conj_conj",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -238863,6 +240417,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "af8c347b-3dac-4eda-97c0-fb67f7588b4b",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bendTwist_conj",
+            "short": "bendTwist_conj"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bendTwist_conj",
+            "short": "bendTwist_conj",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "af9ecb45-25fd-4aa8-9103-23e8f55a713b",
           "new": {
             "file": "ZeroParadox/Information/SnapEpsilonZero.lean",
@@ -239972,6 +241563,43 @@
             ]
           },
           "reason": "lane F arc 2: snapEmbed in the die (Incompleteness.lean § I-b)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b1a9280f-41ba-4050-a129-5a4905467b07",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_twist_conj_of_norm_eq",
+            "short": "bend_twist_conj_of_norm_eq"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_twist_conj_of_norm_eq",
+            "short": "bend_twist_conj_of_norm_eq",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -243964,6 +245592,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "b761ab22-022f-488a-b60f-fc2561fcf44d",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bendZeta",
+            "short": "bendZeta"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bendZeta",
+            "short": "bendZeta",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "b76d1906-efdf-4128-a4ea-8c6b97efa9f3",
           "new": {
             "file": "ZeroParadox/Ordinal/SnapMetaLattice.lean",
@@ -244622,6 +246287,43 @@
             ]
           },
           "reason": "New file ZeroParadox/Category/WellFoundedCoalgebra.lean: AMM next-time operator + intrinsic well-foundedness for PFunctor coalgebras",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b89158cb-ab7d-445a-8fca-b8fbffa07a24",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bendRadial_inv",
+            "short": "bendRadial_inv"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bendRadial_inv",
+            "short": "bendRadial_inv",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -245690,6 +247392,43 @@
             ]
           },
           "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ba42f0f9-cf77-4bbd-9fcd-bb48f4626d6d",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_tendsto_zero",
+            "short": "bend_tendsto_zero"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_tendsto_zero",
+            "short": "bend_tendsto_zero",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -249798,6 +251537,43 @@
             ]
           },
           "reason": "PDF sweep r4 item B (2026-11-05): wheel companion's 'Under addition it is the only one' landed as a corpus theorem after wheelBot_absorbs",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c14f2f28-1ab7-4f41-9829-1df9ec22ead6",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bendRadial_norm",
+            "short": "bendRadial_norm"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bendRadial_norm",
+            "short": "bendRadial_norm",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -254077,6 +255853,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c895d410-7b83-4868-a498-4577a64ab547",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bendTwist_norm",
+            "short": "bendTwist_norm"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bendTwist_norm",
+            "short": "bendTwist_norm",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -258821,6 +260634,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "cf1c51c8-5b63-4ceb-9963-089152f55d83",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bendRadialHomeo",
+            "short": "bendRadialHomeo"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bendRadialHomeo",
+            "short": "bendRadialHomeo",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "cf25985c-b14b-4fbe-8e74-a59457df99c3",
           "new": {
             "file": "ZeroParadox/Reals/ConnectedNoFirstStep.lean",
@@ -260404,6 +262254,43 @@
               "probe": "lean #print axioms"
             },
             "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d1d644e7-1f56-4b70-a56f-709b3dcaf4b6",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_closure_zero",
+            "short": "bend_closure_zero"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_closure_zero",
+            "short": "bend_closure_zero",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
           }
         },
         {
@@ -262292,6 +264179,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "d4b050bc-21d6-46a0-9b42-242c6bb6fb1d",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_halfturn_ne_quarterturn",
+            "short": "bend_halfturn_ne_quarterturn"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_halfturn_ne_quarterturn",
+            "short": "bend_halfturn_ne_quarterturn",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "d4cd964f-7f1b-4573-9960-d360afafc4b0",
           "new": {
             "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
@@ -263545,6 +265469,43 @@
             ]
           },
           "reason": "Ruling 280 (a): motion probes landed (MotionFlips.lean). Up-then-over loop iff Motion.Loop (rotation); the 2-adic tower as a die Motion loops, no agreeing order, legs oppose under the valuation; time reversal is not a Loop invariant (2026-11-15).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d6a5c322-5f34-40fc-a3e4-16a427977b20",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_upStrict_of_periodic",
+            "short": "bend_upStrict_of_periodic"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_upStrict_of_periodic",
+            "short": "bend_upStrict_of_periodic",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -266033,6 +267994,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "da23ab52-155e-4a5b-9d0a-17257e9a8264",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_iso_of_norm_ne_one",
+            "short": "bend_iso_of_norm_ne_one"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_iso_of_norm_ne_one",
+            "short": "bend_iso_of_norm_ne_one",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "da279e79-c0b6-4b4d-830d-a2936849d384",
           "new": {
             "file": "ZeroParadox/Category/Category.lean",
@@ -268311,6 +270309,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "de29bb65-e533-4219-b7e1-1ce6827189a6",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_tendsto_infty",
+            "short": "bend_tendsto_infty"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_tendsto_infty",
+            "short": "bend_tendsto_infty",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "de2f88dc-e277-4d40-9f7d-73d108b03adb",
           "new": {
@@ -269658,6 +271693,43 @@
             ]
           },
           "reason": "Boundary.lean SS I-b: the INFINITE-pole reading of the floor - an explicit infinite descent from bot (axiom-free), bot inaccessible (axiom-free, hand proof), and the DCC-route re-derivation (carries choice, kept for the citation). Adopts Mathlib's descending-chain characterization.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e0295f97-9f87-453f-b6b8-d63f245e9821",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_proj_eq_self_iff",
+            "short": "bend_proj_eq_self_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_proj_eq_self_iff",
+            "short": "bend_proj_eq_self_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -274170,6 +276242,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "e70f7772-2115-4c0f-a8ad-628dae3083f5",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bendFiveEquiv",
+            "short": "bendFiveEquiv"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bendFiveEquiv",
+            "short": "bendFiveEquiv",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "e712ff47-0a74-4995-8d38-5cc9047dc3c5",
           "new": {
             "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
@@ -276676,6 +278785,43 @@
             ]
           },
           "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ea7e723b-7407-4457-816d-b9ccd54d0c65",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_rotation_no_limit",
+            "short": "bend_rotation_no_limit"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_rotation_no_limit",
+            "short": "bend_rotation_no_limit",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -286926,6 +289072,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "fb1642db-e34f-43f6-9220-fc3ce88f2ae8",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_inv_angle",
+            "short": "bend_inv_angle"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_inv_angle",
+            "short": "bend_inv_angle",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "fb2b8984-ca0f-44cd-945b-93adb72da32c",
           "new": {
             "file": "ZeroParadox/Valuation/TreeNotForced.lean",
@@ -287914,6 +290097,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "fc94f30f-4dca-4a75-a1c1-f37abf182758",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bendTwist",
+            "short": "bendTwist"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bendTwist",
+            "short": "bendTwist",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -289404,6 +291624,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "ff232caf-178e-4591-be96-eaf64cdc7e40",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bendRadial",
+            "short": "bendRadial"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bendRadial",
+            "short": "bendRadial",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "ff23b01d-f7f3-4fa7-8bc7-5ea439ef18aa",
           "new": {
             "file": "ZeroParadox/Ordinal/SnapNucleus.lean",
@@ -289542,6 +291799,43 @@
             ]
           },
           "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ff64c6be-dd39-4e8c-8667-4fe511eb7f85",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_closure_infty",
+            "short": "bend_closure_infty"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bend_closure_infty",
+            "short": "bend_closure_infty",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; die isomorphism at |c| = 1 sees only cycle structure (ZeroParadox/Multihomed/BendDie.lean)",
           "verify": {
             "axioms": null,
             "sorry_free": null
