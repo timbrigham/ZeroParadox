@@ -1,4 +1,4 @@
--- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the overlap condition of TH3Die's (A)-(D) obstruction, and complex scaling `z ↦ c z` on `OnePoint ℂ` as a limit motion, read against the topological classification of Möbius (linear) maps: modulus and angle invisible for `‖c‖ ≠ 1`, the angle up to sign visible to conjugacy at `‖c‖ = 1`, and the bare die isomorphism seeing only the cycle structure there. Curated results indexed in ZeroParadox/MANIFEST.md.
+-- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the overlap condition of TH3Die's (A)-(D) obstruction, and complex scaling `z ↦ c z` on `OnePoint ℂ` as a limit motion, read against the topological classification of Möbius (linear) maps: modulus and angle invisible to conjugacy for `‖c‖ ≠ 1`; at `‖c‖ = 1`, `c` and `conj c` conjugate (that conjugacy separates the rest is Rybalkina–Sergeichuk Lemma 2.1, literature, not proved here); and, for periodic maps (`c` a root of unity), the strict isomorphism of motions (`Motion.StrictIso`, the die isomorphism) seeing exactly conjugacy by a bare bijection, irrational rotations not covered. Curated results indexed in ZeroParadox/MANIFEST.md.
 import ZeroParadox.Multihomed.TH3Die
 import ZeroParadox.Multihomed.LimitMotion
 import Mathlib.Analysis.SpecialFunctions.Complex.Arg
@@ -115,8 +115,9 @@ theorem bend_overlap_one (s : StateSpace n → StateSpace n → Prop) (w : State
     rw [inner_add_right, bend_inner_e0_e0, hw, add_zero]
   exact ⟨hi, (bend_AD_iff n hn s _).2 hi⟩
 
-/-- `Statement:` the square's existence is the same for `-th3E0`, for `i • th3E0` and for the
-    orthogonal `th3E1`: it fails at all three. -/
+/-- `Statement:` the square exists for `-th3E0` iff it exists for the orthogonal `th3E1`, and
+    for `i • th3E0` iff for `th3E1`. That it fails at all three is `bend_antiparallel`,
+    `bend_phase` and `th3_AD_no_upLax`. -/
 theorem bend_no_separation (s : StateSpace n → StateSpace n → Prop) :
     ((∃ f : MachinePhase → StateSpace n, f c₀ = -th3E0 n hn ∧ f c₁ = th3E0 n hn ∧
       Motion.UpLax th3JoinUpMotion (th3ProjMotion n (th3E0 n hn) s) f) ↔
@@ -133,7 +134,8 @@ end Overlap
 
 /-! ## § II. Scaling by `c` on `OnePoint ℂ`: limits, polar form, inversion -/
 
-/-- `Statement:` `0 < ‖c‖ < 1`: every orbit tends to `0`. -/
+/-- `Statement:` `0 < ‖c‖ < 1`: the orbit of every point `z` of ℂ tends to `0`; `∞`, which
+    `lmScale` fixes, is not covered. -/
 theorem bend_tendsto_zero {c : ℂ} (hc : c ≠ 0) (hc1 : ‖c‖ < 1) (z : ℂ) :
     Tendsto (fun n => (lmScale c hc)^[n] (OnePoint.some z)) atTop (𝓝 (OnePoint.some 0)) :=
   lm_tendsto_zero_of_field hc
@@ -470,7 +472,7 @@ example : Nonempty (Motion.StrictIso
     (limitMotion (lmScale (3 : ℂ) (by norm_num)) (lmScale _ _).continuous)) :=
   bend_iso_of_norm_ne_one _ _ (by norm_num) (by norm_num)
 
-/-! ## § V. At `‖c‖ = 1`: the angle up to sign under conjugacy -/
+/-! ## § V. At `‖c‖ = 1`: `c` against `conj c`, and two negative controls -/
 
 /-- `Statement:` complex conjugation, extended to `OnePoint ℂ`, conjugates `lmScale c` to
     `lmScale (conj c)`. -/
@@ -544,7 +546,8 @@ theorem bend_rotation_ne_identity {c : ℂ} (hc : c ≠ 0) (hne : c ≠ 1) :
   exact hne (OnePoint.coe_injective hfix)
 
 /-- `Statement:` the half turn `-1` and the quarter turn `i` give limit motions that are not
-    strictly isomorphic; the proof uses only that the half turn squares to the identity. -/
+    strictly isomorphic; the proof uses that the half turn squares to the identity and that the
+    quarter turn does not (`i · i = -1 ≠ 1`). -/
 theorem bend_halfturn_ne_quarterturn :
     ¬ Nonempty (Motion.StrictIso
       (limitMotion (lmScale (-1 : ℂ) (neg_ne_zero.2 one_ne_zero)) (lmScale _ _).continuous)
@@ -576,9 +579,9 @@ universe u
 
 variable {X Y : Type u} [TopologicalSpace X] [T2Space X] [TopologicalSpace Y] [T2Space Y]
 
-/-- `Statement:` if `g` is continuous and `g^[n] x = x` with `0 < n`, then `q` is a value of the
-    limit retraction at `x` iff `x` is a fixed point and `q = x`. -/
-theorem bend_mem_limitRetraction_of_periodic {g : X → X} (hg : Continuous g) {n : ℕ} (hn : 0 < n)
+/-- `Statement:` if `g^[n] x = x` with `0 < n`, then `q` is a value of the limit retraction at
+    `x` iff `x` is a fixed point and `q = x`; `g` need not be continuous. -/
+theorem bend_mem_limitRetraction_of_periodic {g : X → X} {n : ℕ} (hn : 0 < n)
     {x q : X} (hper : g^[n] x = x) : q ∈ limitRetraction g x ↔ g x = x ∧ q = x := by
   rw [lm_mem_limitRetraction_iff]
   constructor
@@ -586,12 +589,18 @@ theorem bend_mem_limitRetraction_of_periodic {g : X → X} (hg : Continuous g) {
     have hmul : Tendsto (fun k : ℕ => n * k) atTop atTop :=
       tendsto_atTop_atTop.2 fun b => ⟨b, fun a ha => le_trans ha (Nat.le_mul_of_pos_left a hn)⟩
     have hsub : Tendsto (fun k => g^[n * k] x) atTop (𝓝 q) := ht.comp hmul
-    have hconst : (fun k => g^[n * k] x) = fun _ => x := funext fun k => by
+    have hconst : ∀ k, g^[n * k] x = x := fun k => by
       rw [Function.iterate_mul]; exact Function.iterate_fixed hper k
-    rw [hconst] at hsub
-    have hxq : x = q := tendsto_nhds_unique tendsto_const_nhds hsub
+    have hxq : x = q := tendsto_nhds_unique tendsto_const_nhds
+      (by simpa only [hconst] using hsub)
     subst hxq
-    exact ⟨isFixedPt_of_tendsto_iterate ht hg.continuousAt, rfl⟩
+    have hmul1 : Tendsto (fun k : ℕ => n * k + 1) atTop atTop :=
+      tendsto_atTop_atTop.2 fun b =>
+        ⟨b, fun a ha => le_trans ha (le_trans (Nat.le_mul_of_pos_left a hn) (Nat.le_succ _))⟩
+    have hsub1 : Tendsto (fun k => g^[n * k + 1] x) atTop (𝓝 x) := ht.comp hmul1
+    have hconst1 : ∀ k, g^[n * k + 1] x = g x := fun k => by
+      rw [Function.iterate_succ_apply', hconst]
+    exact ⟨tendsto_nhds_unique tendsto_const_nhds (by simpa only [hconst1] using hsub1), rfl⟩
   · rintro ⟨hfix, hq⟩
     rw [hq]
     have : (fun k => g^[k] x) = fun _ => x := funext fun k => Function.iterate_fixed hfix k
@@ -607,13 +616,13 @@ theorem bend_upStrict_of_periodic {g : X → X} {h : Y → Y} (hg : Continuous g
   apply Part.ext
   intro q
   show q ∈ limitRetraction h (f x) ↔ q ∈ (limitRetraction g x).map f
-  rw [bend_mem_limitRetraction_of_periodic hh hm (hhm (f x)), Part.mem_map_iff]
+  rw [bend_mem_limitRetraction_of_periodic hm (hhm (f x)), Part.mem_map_iff]
   constructor
   · rintro ⟨hfix, rfl⟩
-    exact ⟨x, (bend_mem_limitRetraction_of_periodic hg hn (hgn x)).2
+    exact ⟨x, (bend_mem_limitRetraction_of_periodic hn (hgn x)).2
       ⟨hf (by rw [hc]; exact hfix), rfl⟩, rfl⟩
   · rintro ⟨a, ha, rfl⟩
-    obtain ⟨hfix, rfl⟩ := (bend_mem_limitRetraction_of_periodic hg hn (hgn x)).1 ha
+    obtain ⟨hfix, rfl⟩ := (bend_mem_limitRetraction_of_periodic hn (hgn x)).1 ha
     exact ⟨by rw [← hc, hfix], rfl⟩
 
 /-- `Statement:` if `g^[n] = id` and `h^[m] = id` (`0 < n`, `0 < m`), a bijection `e` with
@@ -634,8 +643,9 @@ noncomputable def bendPeriodicIso {g : X → X} {h : Y → Y} (hg : Continuous g
     left_inv := e.symm_apply_apply
     right_inv := e.apply_symm_apply }
 
-/-- `Statement:` for such periodic `g` and `h`, the limit motions are strictly isomorphic iff some
-    bijection `e` has `e ∘ g = h ∘ e`; both directions. -/
+/-- `Statement:` for continuous `g`, `h` on Hausdorff spaces with `g^[n] = id`, `h^[m] = id`
+    (`0 < n`, `0 < m`), the limit motions are strictly isomorphic iff some bijection `e` has
+    `e ∘ g = h ∘ e`; both directions. -/
 theorem bend_strictIso_iff_conj_of_periodic {g : X → X} {h : Y → Y} (hg : Continuous g)
     (hh : Continuous h) {n m : ℕ} (hn : 0 < n) (hm : 0 < m) (hgn : ∀ x, g^[n] x = x)
     (hhm : ∀ y, h^[m] y = y) :
