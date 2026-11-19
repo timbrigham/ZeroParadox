@@ -1,4 +1,4 @@
--- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): each of the four conjuncts of T-H3 (`th3_snap_all_functors`) read as a fact about a die `Motion` on its own carrier, each fit beside a failing control and its reversed or dual chart, and two obstructions (not identities) relating conjunct (A) to (B) and (A) to (D) through maps of carriers. Curated results indexed in ZeroParadox/MANIFEST.md.
+-- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): each of the four conjuncts of T-H3 (`th3_snap_all_functors`) read as a fact about a die `Motion` on its own carrier, each fit beside a failing control and a second chart (a reversed motion for (A), (B), (C); an order dual for (A); a swap of summands for (C); a swap of basis vectors for (D)), and two obstructions (not identities) relating conjunct (A) to (B) and (A) to (D) through maps of carriers. Curated results indexed in ZeroParadox/MANIFEST.md.
 import ZeroParadox.Multihomed.CategoricalBridge
 import ZeroParadox.Ordinal.Incompleteness
 import ZeroParadox.Valuation.BranchingSnapChain
@@ -35,7 +35,7 @@ def th3JoinUpMotion : Motion MachinePhase :=
   Motion.ofTotal (fun a => join a c₁) (by intro x; cases x <;> rfl) (fun a b => b = join a c₁)
 
 /-- `Statement:` `c₁` is an UP value at `c₀` in `th3JoinUpMotion` iff `join c₀ c₁ = c₁`; both
-    directions, so conjunct (A) is verbatim this membership. -/
+    directions, so conjunct (A) is equivalent to this membership. -/
 theorem th3_A_iff : c₁ ∈ th3JoinUpMotion.up c₀ ↔ join c₀ c₁ = c₁ :=
   Part.mem_some_iff.trans eq_comm
 
@@ -114,8 +114,8 @@ theorem th3_B_fit : ∀ x : Q₂, (th3PathMotion Q₂).step x 0 → x = 0 := by
 theorem th3_B_every_point_selfOnly (y : Q₂) : (th3PathMotion Q₂).SelfOnlyAt y :=
   ⟨Joined.refl y, fun _ hb => (th3_joined_eq hb).symm⟩
 
-/-- `Statement:` INVARIANT under reversal: in the reversed path motion on `Q₂`, every step from `0`
-    ends at `0`. -/
+/-- `Statement:` INVARIANT under reversal: in the reversed path motion on `Q₂`, every step into `0`
+    starts at `0`; it agrees with `th3_B_fit` because `Joined` is symmetric (`Joined.symm`). -/
 theorem th3_B_reverse : ∀ x : Q₂, (th3PathMotion Q₂).reverse.step x 0 → x = 0 :=
   fun _ h => (th3_joined_eq h).symm
 
@@ -163,10 +163,16 @@ theorem th3_C_control :
   have hpos : 0 < Real.log 2 := Real.log_pos (by norm_num)
   linarith
 
-/-- `Statement:` INVARIANT under reversal: summed in the order `Q`, then `P`, the value is the same. -/
+/-- `Statement:` INVARIANT under swapping `P` and `Q` in the sum: summed in the order `Q`, then `P`,
+    the value is the same. -/
 theorem th3_C_reverse : ∀ mq ∈ th3MixMotion.up Q_real, ∀ mp ∈ th3MixMotion.up P_real,
     (1 / 2) * klDiv Q_real mq + (1 / 2) * klDiv P_real mp = Real.log 2 :=
   fun mq hq mp hp => by rw [add_comm]; exact th3_C_fit.2.2.2 mp hp mq hq
+
+/-- `Statement:` INVARIANT under reversal: `Th3JsdAlong` holds for the reversed motion
+    `th3MixMotion.reverse`, which keeps UP. -/
+theorem th3_C_reverse_motion : Th3JsdAlong th3MixMotion.reverse :=
+  th3_C_fit.2.2.2
 
 /-! ## § IV. (D) `StateSpace n`: `⟪T 0, T 1⟫ = 0` -/
 
@@ -278,8 +284,18 @@ end D
 
 /-! ## § V. Obstructions: (A) with (B), (A) with (D). No cross-carrier equation is stated. -/
 
+/-- `Statement:` CARRIER — in any totally disconnected space `X`, a map `MachinePhase → X` carrying each step of
+    `machineJoinMotion` to a step of the path motion sends `c₀` and `c₁` to the same point. (A)
+    supplies the step `c₀ → c₁` (`t_snap_machine`); joined points are equal (`th3_joined_eq`). -/
+theorem th3_AB_collapse_any {X : Type*} [TopologicalSpace X] [TotallyDisconnectedSpace X]
+    (f : MachinePhase → X)
+    (hf : ∀ a b, machineJoinMotion.step a b → (th3PathMotion X).step (f a) (f b)) :
+    f c₀ = f c₁ :=
+  th3_joined_eq (hf c₀ c₁ ⟨c₁, t_snap_machine.symm⟩)
+
 /-- `Statement:` a map `MachinePhase → Q₂` carrying each step of `machineJoinMotion` to a path step
-    and putting `c₁` at `0` also puts `c₀` at `0`. (A) supplies the step `c₀ → c₁`
+    and putting `c₁` at `0` also puts `c₀` at `0`. It is the instance at `0` of
+    `th3_AB_collapse_any`; the `0` is not used. (A) supplies the step `c₀ → c₁`
     (`t_snap_machine`); (B) forbids its image (`c3_irreversible`, via `th3_B_fit`). -/
 theorem th3_AB_collapse (f : MachinePhase → Q₂)
     (hf : ∀ a b, machineJoinMotion.step a b → (th3PathMotion Q₂).step (f a) (f b))
@@ -297,14 +313,23 @@ theorem th3_AB_snapEmbed_not_path :
   have := th3_AB_collapse (fun a => ((snapEmbed a : ℤ_[2]) : Q₂)) hf (by simp)
   simp at this
 
-/-- `Statement:` CONTROL (ℝ): the assignment `c₀ ↦ 1`, `c₁ ↦ 0` into ℝ carries every join step to a
-    path step, so `th3_AB_collapse` uses (B), not only (A). -/
+/-- `Statement:` CARRIER — CONTROL (ℝ): the assignment `c₀ ↦ 1`, `c₁ ↦ 0` into ℝ carries every join step to a
+    path step. What `th3_AB_collapse` consumes beyond (A) is that joined points are equal
+    (`th3_joined_eq`, total disconnectedness), which ℝ lacks. -/
 theorem th3_AB_control_real :
     ∀ a b, machineJoinMotion.step a b →
       (th3PathMotion ℝ).step
         ((fun p : MachinePhase => match p with | .initial => (1 : ℝ) | .running => 0) a)
         ((fun p : MachinePhase => match p with | .initial => (1 : ℝ) | .running => 0) b) :=
   fun _ _ _ => PathConnectedSpace.joined _ _
+
+/-- `Statement:` CONTROL, same carrier `Q₂`: with the always-true OVER in place of `Joined`, the
+    `snapEmbed` assignment (`c₀ ↦ 1`, `c₁ ↦ 0`) carries every join step. -/
+theorem th3_AB_control_Q2 :
+    ∀ a b, machineJoinMotion.step a b →
+      (Motion.ofTotal (id : Q₂ → Q₂) (fun _ => rfl) (fun _ _ => True)).step
+        ((snapEmbed a : ℤ_[2]) : Q₂) ((snapEmbed b : ℤ_[2]) : Q₂) :=
+  fun _ _ _ => trivial
 
 /-- `Statement:` no map `MachinePhase → StateSpace n` with `c₀ ↦ th3E1`, `c₁ ↦ th3E0` satisfies the
     lax UP square from `th3JoinUpMotion` to the projection motion onto `ℂ ∙ th3E0`. -/
@@ -318,8 +343,23 @@ theorem th3_AD_no_upLax (n : ℕ) (hn : 2 ≤ n) (s : StateSpace n → StateSpac
   rw [th3_proj_e0_e1] at h'
   exact th3_e0_ne_zero n hn h'
 
-/-- `Statement:` CONTROL: with the non-orthogonal `th3E0 + th3E1` in place of `th3E1` such a map
-    exists, so `th3_AD_no_upLax` uses (D), not only (A). -/
+/-- `Statement:` for any `v` whose projection onto `ℂ ∙ th3E0` is not `th3E0`, no map
+    `MachinePhase → StateSpace n` with `c₀ ↦ v`, `c₁ ↦ th3E0` satisfies the lax UP square from
+    `th3JoinUpMotion` to the projection motion onto `ℂ ∙ th3E0`. -/
+theorem th3_AD_no_upLax_of_proj_ne (n : ℕ) (hn : 2 ≤ n) (s : StateSpace n → StateSpace n → Prop)
+    (v : StateSpace n) (hv : (ℂ ∙ th3E0 n hn).starProjection v ≠ th3E0 n hn) :
+    ¬ ∃ f : MachinePhase → StateSpace n, f c₀ = v ∧ f c₁ = th3E0 n hn ∧
+      Motion.UpLax th3JoinUpMotion (th3ProjMotion n (th3E0 n hn) s) f := by
+  rintro ⟨f, h0, h1, hf⟩
+  have h := hf c₀ c₁ (th3_A_iff.2 t_snap_machine)
+  rw [h0, h1] at h
+  have h' : th3E0 n hn = (ℂ ∙ th3E0 n hn).starProjection v := Part.mem_some_iff.1 h
+  exact hv h'.symm
+
+/-- `Statement:` CONTROL: with `th3E0 + th3E1` in place of `th3E1` such a map exists. What
+    `th3_AD_no_upLax` consumes is the hypothesis of `th3_AD_no_upLax_of_proj_ne`: the projection
+    of `f c₀` onto `ℂ ∙ th3E0` is not `th3E0`. (D) supplies it for `th3E1` and the proof routes
+    through `t4_snap_orthogonal`; the hypothesis is weaker than orthogonality (next `example`). -/
 theorem th3_AD_control (n : ℕ) (hn : 2 ≤ n) (s : StateSpace n → StateSpace n → Prop) :
     ∃ f : MachinePhase → StateSpace n, f c₀ = th3E0 n hn + th3E1 n hn ∧ f c₁ = th3E0 n hn ∧
       Motion.UpLax th3JoinUpMotion (th3ProjMotion n (th3E0 n hn) s) f := by
@@ -335,6 +375,21 @@ theorem th3_AD_control (n : ℕ) (hn : 2 ≤ n) (s : StateSpace n → StateSpace
     rw [map_add, th3_proj_e0_e0, th3_proj_e0_e1, add_zero]
   · show th3E0 n hn = (ℂ ∙ th3E0 n hn).starProjection (th3E0 n hn)
     rw [th3_proj_e0_e0]
+
+/-- `Statement:` `2 • th3E0` is not orthogonal to `th3E0`, and no map with `c₀ ↦ 2 • th3E0`,
+    `c₁ ↦ th3E0` satisfies the lax UP square. -/
+example (n : ℕ) (hn : 2 ≤ n) (s : StateSpace n → StateSpace n → Prop) :
+    @inner ℂ (StateSpace n) _ (th3E0 n hn) ((2 : ℂ) • th3E0 n hn) ≠ 0 ∧
+    ¬ ∃ f : MachinePhase → StateSpace n, f c₀ = (2 : ℂ) • th3E0 n hn ∧ f c₁ = th3E0 n hn ∧
+      Motion.UpLax th3JoinUpMotion (th3ProjMotion n (th3E0 n hn) s) f := by
+  refine ⟨?_, th3_AD_no_upLax_of_proj_ne n hn s _ ?_⟩
+  · rw [inner_smul_right, inner_self_eq_norm_sq_to_K, show ‖th3E0 n hn‖ = 1 from t2_norm_eq_one n _]
+    norm_num
+  · rw [map_smul, th3_proj_e0_e0]
+    intro h
+    have h' : (2 : ℂ) • th3E0 n hn = (1 : ℂ) • th3E0 n hn := by rw [one_smul]; exact h
+    have h12 := smul_left_injective ℂ (th3_e0_ne_zero n hn) h'
+    norm_num at h12
 
 end ZeroParadox
 
@@ -362,6 +417,7 @@ open ZeroParadox
 #print axioms th3_C_fit
 #print axioms th3_C_control
 #print axioms th3_C_reverse
+#print axioms th3_C_reverse_motion
 #print axioms th3E0
 #print axioms th3E1
 #print axioms th3ProjMotion
@@ -375,9 +431,12 @@ open ZeroParadox
 #print axioms th3_D_control
 #print axioms th3_D_control_id
 #print axioms th3_D_swap
+#print axioms th3_AB_collapse_any
 #print axioms th3_AB_collapse
 #print axioms th3_AB_snapEmbed_not_path
 #print axioms th3_AB_control_real
+#print axioms th3_AB_control_Q2
 #print axioms th3_AD_no_upLax
+#print axioms th3_AD_no_upLax_of_proj_ne
 #print axioms th3_AD_control
 end PurityCheck
