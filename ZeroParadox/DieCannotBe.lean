@@ -64,6 +64,7 @@ import ZeroParadox.State.FermiStepDie
 import ZeroParadox.Order.MotionFlips
 import ZeroParadox.Multihomed.TH3Die
 import ZeroParadox.Multihomed.OrbitDie
+import ZeroParadox.Multihomed.CollapseDie
 
 set_option maxHeartbeats 400000
 
@@ -5274,5 +5275,18 @@ example : ¬ ∃ f : List Bool → Unit, ∀ l l',
 #check @ZeroParadox.od_PM_same_shape           -- Statement: INVARIANT — doubling never lands on `Q₂` nor on ℝ; the difference is the lifted norm order (`od_PM_fit`)
 #check @ZeroParadox.od_PM_collapse             -- Statement: a step-carrying map `Q₂ → ℝ` monotone for the norm orders is `0`; the reverse is `od_PM_collapse_rev`
 #check @ZeroParadox.odQ2toMarkovHom            -- Statement: a strict map from doubling on `Q₂` into the Markov step at `1/4`, balanced exactly at `0` (`od_NM_hom_balance`)
+
+/-! ### § XXXIV. The collapse family: one lemma in two forms, six legacy results as instances -/
+-- Reading: CARRIER — each instance beside its control in `ZeroParadox/Multihomed/CollapseDie.lean`;
+-- each form consumes the target's step at one point, and no equation across carriers is stated.
+#check @ZeroParadox.cd_collapse_in             -- Statement: IN form: every point has a path to `y` and every step into the image of `y` starts there, so a step-carrying map is constant
+#check @ZeroParadox.cd_collapse_out            -- Statement: OUT form: `t` steps to every point and the image of `t` has at most one successor, so a step-carrying map is constant
+#check @ZeroParadox.cd_not_injective_of_loop   -- Statement: a lax map from a looping motion into one whose landings step only to themselves is not one-to-one
+#check @ZeroParadox.cd_tiz_doubling_collapse   -- Statement: a map carrying join steps of a `ZPSemilattice` to doubling on `Q₂` is `0`, from A4 alone; reversed, `cd_tiz_reverse_doubling_collapse`
+#check @ZeroParadox.cd_pred_to_doubling_const  -- Statement: a semiconjugacy from `Nat.pred` to doubling on `Q₂` is `0`; the other direction, `cd_doubling_to_pred`, is not obstructed
+#check @ZeroParadox.cd_realization_bridges     -- Statement: `realization_bridges_both_valuations` without `x ≠ ⊥`, which follows from `ρ x ≠ 0` (`cd_realization_bot`)
+#check @ZeroParadox.cd_run_into                -- Statement: under AX-G2's shape at `I`, a run of the hom motion at `I` was never at an object isomorphism-free with `I`
+#check @ZeroParadox.cd_pole_fans_two           -- Statement: two-way branching fits on the two-point pole, with the node one of its own two successors; three-way does not (`cd_pole_no_three`)
+#check @ZeroParadox.cd_shift_tower_periodic    -- Statement: every lax map from `shiftMotion c` to `ordinalTowerMotion` takes fixed points of `α ↦ ω^α` and has period `⌜c⌝`, for every code `c`
 
 end DieCannotBeIndex

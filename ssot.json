@@ -132247,8 +132247,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 4180,
-        "files": 231
+        "declarations": 4217,
+        "files": 232
       },
       "entries": [
         {
@@ -138321,6 +138321,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "096e3625-5054-4970-93c6-eb16d2e3be99",
+          "new": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_semiconj_const",
+            "short": "cd_semiconj_const"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_semiconj_const",
+            "short": "cd_semiconj_const",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Collapse family as die motions: one lemma in two forms plus the loop obstruction, six legacy results as instances, with controls (ZeroParadox/Multihomed/CollapseDie.lean; Tim: \"One collapse file\", 2026-11-19)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "0985988b-2ba1-4558-994b-2e304085bcef",
           "new": {
             "file": "ZeroParadox/Category/Lawvere.lean",
@@ -139425,6 +139462,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0b47d620-97ac-4c69-9373-2e6484e483f8",
+          "new": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_tiz_control_target",
+            "short": "cd_tiz_control_target"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_tiz_control_target",
+            "short": "cd_tiz_control_target",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Collapse family as die motions: one lemma in two forms plus the loop obstruction, six legacy results as instances, with controls (ZeroParadox/Multihomed/CollapseDie.lean; Tim: \"One collapse file\", 2026-11-19)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -143085,6 +143159,43 @@
         {
           "claims": {
             "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "10e91724-dd91-4b1e-99ad-4b37200d91ac",
+          "new": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_tiz_control_value",
+            "short": "cd_tiz_control_value"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_tiz_control_value",
+            "short": "cd_tiz_control_value",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Collapse family as die motions: one lemma in two forms plus the loop obstruction, six legacy results as instances, with controls (ZeroParadox/Multihomed/CollapseDie.lean; Tim: \"One collapse file\", 2026-11-19)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
             "witness_of": [
               "node-state"
             ]
@@ -143131,6 +143242,43 @@
               "probe": "lean #print axioms"
             },
             "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "11006890-47ff-49ef-be66-813b8e8d34d0",
+          "new": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_tower_landing_selfOnly",
+            "short": "cd_tower_landing_selfOnly"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_tower_landing_selfOnly",
+            "short": "cd_tower_landing_selfOnly",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Collapse family as die motions: one lemma in two forms plus the loop obstruction, six legacy results as instances, with controls (ZeroParadox/Multihomed/CollapseDie.lean; Tim: \"One collapse file\", 2026-11-19)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
           }
         },
         {
@@ -148690,6 +148838,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "1a8dfadd-44b3-44ed-b706-85dae5e9a877",
+          "new": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_bot_steps_everywhere",
+            "short": "cd_bot_steps_everywhere"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_bot_steps_everywhere",
+            "short": "cd_bot_steps_everywhere",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Collapse family as die motions: one lemma in two forms plus the loop obstruction, six legacy results as instances, with controls (ZeroParadox/Multihomed/CollapseDie.lean; Tim: \"One collapse file\", 2026-11-19)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "1a9c07fd-ee93-4d17-adb6-e694dbc6c9ce",
           "new": {
             "file": "ZeroParadox/Valuation/PoleChartSelection.lean",
@@ -153847,6 +154032,43 @@
             ]
           },
           "reason": "The stuttering witness family: no self-loop anywhere, never halts, every step a stutter, and the capstone showing a state can be in the trichotomy's third case forever while its observable never changes. Corrects the file's own claim that the modality is encoded solely as the function-vs-relation choice.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "248fcf52-7ec2-4b03-821c-296f94a28ad8",
+          "new": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_realization_bot",
+            "short": "cd_realization_bot"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_realization_bot",
+            "short": "cd_realization_bot",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Collapse family as die motions: one lemma in two forms plus the loop obstruction, six legacy results as instances, with controls (ZeroParadox/Multihomed/CollapseDie.lean; Tim: \"One collapse file\", 2026-11-19)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -159918,6 +160140,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "2e001fe1-0ff4-41d8-9f7e-af0f9d4051ea",
+          "new": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_pole_fans_two",
+            "short": "cd_pole_fans_two"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_pole_fans_two",
+            "short": "cd_pole_fans_two",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Collapse family as die motions: one lemma in two forms plus the loop obstruction, six legacy results as instances, with controls (ZeroParadox/Multihomed/CollapseDie.lean; Tim: \"One collapse file\", 2026-11-19)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "2e114849-df18-4aa1-9297-a9ac0ac02cdf",
           "new": {
             "file": "ZeroParadox/Order/OrbitDichotomy.lean",
@@ -162738,6 +162997,43 @@
             ]
           },
           "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "32d1dfac-170c-44af-8eb2-d9557ca65275",
+          "new": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_doubling_to_pred",
+            "short": "cd_doubling_to_pred"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_doubling_to_pred",
+            "short": "cd_doubling_to_pred",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Collapse family as die motions: one lemma in two forms plus the loop obstruction, six legacy results as instances, with controls (ZeroParadox/Multihomed/CollapseDie.lean; Tim: \"One collapse file\", 2026-11-19)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -167590,6 +167886,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "3b3ce090-13c1-492e-914b-46c1fe0f0e2e",
+          "new": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cdConstTowerHom",
+            "short": "cdConstTowerHom"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cdConstTowerHom",
+            "short": "cdConstTowerHom",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Collapse family as die motions: one lemma in two forms plus the loop obstruction, six legacy results as instances, with controls (ZeroParadox/Multihomed/CollapseDie.lean; Tim: \"One collapse file\", 2026-11-19)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "3b4b0301-c7f0-4ae7-ab76-9f30e4504f05",
           "new": {
             "file": "ZeroParadox/Valuation/Interleave.lean",
@@ -168216,6 +168549,43 @@
             ]
           },
           "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "3c8cfa4e-94f8-43ef-ba67-edbab928aa32",
+          "new": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_banks_offset_control",
+            "short": "cd_banks_offset_control"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_banks_offset_control",
+            "short": "cd_banks_offset_control",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Collapse family as die motions: one lemma in two forms plus the loop obstruction, six legacy results as instances, with controls (ZeroParadox/Multihomed/CollapseDie.lean; Tim: \"One collapse file\", 2026-11-19)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -170071,6 +170441,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "3fff3a3d-e518-4e14-8025-869c742f0edd",
+          "new": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_realization_ne_bot",
+            "short": "cd_realization_ne_bot"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_realization_ne_bot",
+            "short": "cd_realization_ne_bot",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Collapse family as die motions: one lemma in two forms plus the loop obstruction, six legacy results as instances, with controls (ZeroParadox/Multihomed/CollapseDie.lean; Tim: \"One collapse file\", 2026-11-19)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -179966,6 +180373,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "50511f37-4599-4f92-b4cd-d042dadbb641",
+          "new": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_pole_no_three",
+            "short": "cd_pole_no_three"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_pole_no_three",
+            "short": "cd_pole_no_three",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Collapse family as die motions: one lemma in two forms plus the loop obstruction, six legacy results as instances, with controls (ZeroParadox/Multihomed/CollapseDie.lean; Tim: \"One collapse file\", 2026-11-19)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "50573fd2-821b-4340-adc0-0c576fe0ca7b",
           "new": {
             "file": "ZeroParadox/Information/Disjunctive.lean",
@@ -184412,6 +184856,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "57dc40cf-3bba-491d-ad91-c82bc1c475e6",
+          "new": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_fan_collapse",
+            "short": "cd_fan_collapse"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_fan_collapse",
+            "short": "cd_fan_collapse",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Collapse family as die motions: one lemma in two forms plus the loop obstruction, six legacy results as instances, with controls (ZeroParadox/Multihomed/CollapseDie.lean; Tim: \"One collapse file\", 2026-11-19)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "57e2154e-4528-4515-bcbb-8a855a92375c",
           "new": {
@@ -188456,6 +188937,43 @@
             ]
           },
           "reason": "New file GraphBisim.lean: finite membership graphs, Aczel bisimulation, dropLoops (control) vs wfPart (bisimulation-invariant), Omega/empty/zero-star/one/two-cycle examples",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "5e135353-93ca-4def-aedd-72f471e161d1",
+          "new": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_tiz_control_source",
+            "short": "cd_tiz_control_source"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_tiz_control_source",
+            "short": "cd_tiz_control_source",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Collapse family as die motions: one lemma in two forms plus the loop obstruction, six legacy results as instances, with controls (ZeroParadox/Multihomed/CollapseDie.lean; Tim: \"One collapse file\", 2026-11-19)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -193069,6 +193587,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "66f2b78b-255b-41c6-8d3d-0dbd418b62a1",
+          "new": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cdHomMotion",
+            "short": "cdHomMotion"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cdHomMotion",
+            "short": "cdHomMotion",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Collapse family as die motions: one lemma in two forms plus the loop obstruction, six legacy results as instances, with controls (ZeroParadox/Multihomed/CollapseDie.lean; Tim: \"One collapse file\", 2026-11-19)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "67285818-6942-4377-b3ce-aa836d29e620",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -194239,6 +194794,43 @@
             ]
           },
           "reason": "Occurrence.lean completed to Miniature's shape: pole swap (flipPoles involution), the fan-out finding (determinism is what blocks the snap), uniqueness limit, and the capstone.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "68dc7dc2-b439-48cc-8569-538f49a272b1",
+          "new": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_no_map_to_accumulation",
+            "short": "cd_no_map_to_accumulation"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_no_map_to_accumulation",
+            "short": "cd_no_map_to_accumulation",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Collapse family as die motions: one lemma in two forms plus the loop obstruction, six legacy results as instances, with controls (ZeroParadox/Multihomed/CollapseDie.lean; Tim: \"One collapse file\", 2026-11-19)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -202239,6 +202831,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "75e4bdf6-a559-4428-a152-1fdfb627b0c0",
+          "new": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_run_into_control",
+            "short": "cd_run_into_control"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_run_into_control",
+            "short": "cd_run_into_control",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Collapse family as die motions: one lemma in two forms plus the loop obstruction, six legacy results as instances, with controls (ZeroParadox/Multihomed/CollapseDie.lean; Tim: \"One collapse file\", 2026-11-19)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "75e817de-db88-4a61-a519-6fe1785ac1cb",
           "new": {
             "file": "ZeroParadox/Information/StartBit.lean",
@@ -205697,6 +206326,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "7c429c49-584d-4497-8995-0b52259768e9",
+          "new": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_collapse_out",
+            "short": "cd_collapse_out"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_collapse_out",
+            "short": "cd_collapse_out",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Collapse family as die motions: one lemma in two forms plus the loop obstruction, six legacy results as instances, with controls (ZeroParadox/Multihomed/CollapseDie.lean; Tim: \"One collapse file\", 2026-11-19)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "7c437e71-d6ec-41e4-84cc-1cabe5c22920",
           "new": {
             "file": "ZeroParadox/Multihomed/Boundary.lean",
@@ -208753,6 +209419,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "81133f9a-f7ec-46e7-b16a-99efff58d6d4",
+          "new": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cdJoinStep",
+            "short": "cdJoinStep"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cdJoinStep",
+            "short": "cdJoinStep",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Collapse family as die motions: one lemma in two forms plus the loop obstruction, six legacy results as instances, with controls (ZeroParadox/Multihomed/CollapseDie.lean; Tim: \"One collapse file\", 2026-11-19)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -211881,6 +212584,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "867da07f-05e9-4632-b320-c764f7e40b16",
+          "new": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_shift_tower_not_injective",
+            "short": "cd_shift_tower_not_injective"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_shift_tower_not_injective",
+            "short": "cd_shift_tower_not_injective",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Collapse family as die motions: one lemma in two forms plus the loop obstruction, six legacy results as instances, with controls (ZeroParadox/Multihomed/CollapseDie.lean; Tim: \"One collapse file\", 2026-11-19)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "8680c0ca-9e6c-4fe0-9b7c-45e16f92622c",
           "new": {
@@ -212169,6 +212909,43 @@
             ]
           },
           "reason": "Boundary.lean § I-c: choice-free direction of Mathlib's descending-chain biconditionals, plus the floor result re-routed through it. Answers the open non-constant-descent question: the infinitude is free; only extraction costs.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "871b6b8b-73ec-428e-92a4-c33ef6ab7c84",
+          "new": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_floor_to_tower",
+            "short": "cd_floor_to_tower"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_floor_to_tower",
+            "short": "cd_floor_to_tower",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Collapse family as die motions: one lemma in two forms plus the loop obstruction, six legacy results as instances, with controls (ZeroParadox/Multihomed/CollapseDie.lean; Tim: \"One collapse file\", 2026-11-19)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -214723,6 +215500,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "8bea0246-5dbe-4183-b94b-f962ffeaffbb",
+          "new": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_forward_stepBack",
+            "short": "cd_forward_stepBack"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_forward_stepBack",
+            "short": "cd_forward_stepBack",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Collapse family as die motions: one lemma in two forms plus the loop obstruction, six legacy results as instances, with controls (ZeroParadox/Multihomed/CollapseDie.lean; Tim: \"One collapse file\", 2026-11-19)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "8beb098b-9933-4203-bdb9-a4555541cea3",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -215944,6 +216758,43 @@
             ]
           },
           "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "8f0b4ad8-853d-4de6-a60d-a2bd99d6b830",
+          "new": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_not_injective_of_loop",
+            "short": "cd_not_injective_of_loop"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_not_injective_of_loop",
+            "short": "cd_not_injective_of_loop",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Collapse family as die motions: one lemma in two forms plus the loop obstruction, six legacy results as instances, with controls (ZeroParadox/Multihomed/CollapseDie.lean; Tim: \"One collapse file\", 2026-11-19)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -218659,6 +219510,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "92fbc5a6-54fb-4750-a17d-c129a4c8ffae",
+          "new": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_banks_offset",
+            "short": "cd_banks_offset"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_banks_offset",
+            "short": "cd_banks_offset",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Collapse family as die motions: one lemma in two forms plus the loop obstruction, six legacy results as instances, with controls (ZeroParadox/Multihomed/CollapseDie.lean; Tim: \"One collapse file\", 2026-11-19)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "93045c5f-6524-4103-81ae-c7446ccd77fd",
           "new": {
             "file": "ZeroParadox/Information/MaxEntropy.lean",
@@ -221082,6 +221970,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "96a576e7-a68b-4407-8eb6-2df53d4235e5",
+          "new": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_tiz_doubling_collapse",
+            "short": "cd_tiz_doubling_collapse"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_tiz_doubling_collapse",
+            "short": "cd_tiz_doubling_collapse",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Collapse family as die motions: one lemma in two forms plus the loop obstruction, six legacy results as instances, with controls (ZeroParadox/Multihomed/CollapseDie.lean; Tim: \"One collapse file\", 2026-11-19)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -240955,6 +241880,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "b5a97aa3-db67-463b-9d2e-596b6f8e48a8",
+          "new": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_no_laxHom_tower_shift",
+            "short": "cd_no_laxHom_tower_shift"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_no_laxHom_tower_shift",
+            "short": "cd_no_laxHom_tower_shift",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Collapse family as die motions: one lemma in two forms plus the loop obstruction, six legacy results as instances, with controls (ZeroParadox/Multihomed/CollapseDie.lean; Tim: \"One collapse file\", 2026-11-19)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "b5b05a5c-97cd-47ef-8ec3-0e5a2096484c",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -245356,6 +246318,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "bd3b8fb3-ec0a-40a7-a625-93fef0e6bc83",
+          "new": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_reverse_no_stepBack",
+            "short": "cd_reverse_no_stepBack"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_reverse_no_stepBack",
+            "short": "cd_reverse_no_stepBack",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Collapse family as die motions: one lemma in two forms plus the loop obstruction, six legacy results as instances, with controls (ZeroParadox/Multihomed/CollapseDie.lean; Tim: \"One collapse file\", 2026-11-19)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -251677,6 +252676,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "c811f970-f6f0-4727-ac55-29281cb6b451",
+          "new": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_floor_control_target",
+            "short": "cd_floor_control_target"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_floor_control_target",
+            "short": "cd_floor_control_target",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Collapse family as die motions: one lemma in two forms plus the loop obstruction, six legacy results as instances, with controls (ZeroParadox/Multihomed/CollapseDie.lean; Tim: \"One collapse file\", 2026-11-19)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "c819bf75-225e-4562-85e9-178908e1bdc2",
           "new": {
             "file": "ZeroParadox/Multihomed/TH3Die.lean",
@@ -252483,6 +253519,43 @@
             "role": []
           },
           "reason": "die-joints-1106: ruling 147 (Tim, 2026-11-06), cut points / joints / dual joints of an order and their instances (ZeroParadox/Order/DieJoints.lean), indexed in DieCannotBe § I, § XXVII, § XXIX",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c9a651d6-025e-4bef-8eae-a52ab63f289c",
+          "new": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_floor_control_source",
+            "short": "cd_floor_control_source"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_floor_control_source",
+            "short": "cd_floor_control_source",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Collapse family as die motions: one lemma in two forms plus the loop obstruction, six legacy results as instances, with controls (ZeroParadox/Multihomed/CollapseDie.lean; Tim: \"One collapse file\", 2026-11-19)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -257414,6 +258487,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "d086c1d7-0f2b-405f-aaea-dd4f9015121f",
+          "new": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_run_into",
+            "short": "cd_run_into"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_run_into",
+            "short": "cd_run_into",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Collapse family as die motions: one lemma in two forms plus the loop obstruction, six legacy results as instances, with controls (ZeroParadox/Multihomed/CollapseDie.lean; Tim: \"One collapse file\", 2026-11-19)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "d0872898-3407-4805-9fc3-d26a4e56b343",
           "new": {
             "file": "ZeroParadox/Multihomed/SelfClosureObstruction.lean",
@@ -259511,6 +260621,43 @@
             ]
           },
           "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d41a1d6d-ec57-4e35-a64f-0c591f1a3e08",
+          "new": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_collapse_in",
+            "short": "cd_collapse_in"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_collapse_in",
+            "short": "cd_collapse_in",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Collapse family as die motions: one lemma in two forms plus the loop obstruction, six legacy results as instances, with controls (ZeroParadox/Multihomed/CollapseDie.lean; Tim: \"One collapse file\", 2026-11-19)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -263446,6 +264593,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "da185636-df94-4bda-b697-e6707e202321",
+          "new": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_reverse_no_stepBack_z2",
+            "short": "cd_reverse_no_stepBack_z2"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_reverse_no_stepBack_z2",
+            "short": "cd_reverse_no_stepBack_z2",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Collapse family as die motions: one lemma in two forms plus the loop obstruction, six legacy results as instances, with controls (ZeroParadox/Multihomed/CollapseDie.lean; Tim: \"One collapse file\", 2026-11-19)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "da198e8d-8499-4aa0-9e2b-21514cdab38e",
           "new": {
             "file": "ZeroParadox/Valuation/PadicVladimirov.lean",
@@ -264411,6 +265595,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "db60eca5-37d9-4575-ba73-7dd76c1516b4",
+          "new": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_shift_tower_periodic",
+            "short": "cd_shift_tower_periodic"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_shift_tower_periodic",
+            "short": "cd_shift_tower_periodic",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Collapse family as die motions: one lemma in two forms plus the loop obstruction, six legacy results as instances, with controls (ZeroParadox/Multihomed/CollapseDie.lean; Tim: \"One collapse file\", 2026-11-19)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "db637691-c43b-4a16-ae62-1bc09d5fd6d2",
           "new": {
@@ -264936,6 +266157,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "dca36ca7-abaf-4235-a16e-6a489eef6467",
+          "new": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_pred_to_doubling_const",
+            "short": "cd_pred_to_doubling_const"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_pred_to_doubling_const",
+            "short": "cd_pred_to_doubling_const",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Collapse family as die motions: one lemma in two forms plus the loop obstruction, six legacy results as instances, with controls (ZeroParadox/Multihomed/CollapseDie.lean; Tim: \"One collapse file\", 2026-11-19)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "dca660f7-b430-477a-a88a-e943eafedc02",
           "new": {
             "file": "ZeroParadox/Settheory/QuineDichotomy.lean",
@@ -265374,6 +266632,43 @@
             ]
           },
           "reason": "common meadow Q_a + wheel_three_distinct in WheelFrac.lean (2026-11-14)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "dd4c400d-197b-425e-a22e-5eca0967e2e3",
+          "new": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_reverse_control",
+            "short": "cd_reverse_control"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_reverse_control",
+            "short": "cd_reverse_control",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Collapse family as die motions: one lemma in two forms plus the loop obstruction, six legacy results as instances, with controls (ZeroParadox/Multihomed/CollapseDie.lean; Tim: \"One collapse file\", 2026-11-19)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -265856,6 +267151,43 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "de439962-132b-4906-a11b-0d24af4e388b",
+          "new": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_tiz_reverse_doubling_collapse",
+            "short": "cd_tiz_reverse_doubling_collapse"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_tiz_reverse_doubling_collapse",
+            "short": "cd_tiz_reverse_doubling_collapse",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Collapse family as die motions: one lemma in two forms plus the loop obstruction, six legacy results as instances, with controls (ZeroParadox/Multihomed/CollapseDie.lean; Tim: \"One collapse file\", 2026-11-19)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -274971,6 +276303,43 @@
             ]
           },
           "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ec0bc67c-7cd3-4b77-9b76-0ffde2a760d3",
+          "new": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_realization_bridges",
+            "short": "cd_realization_bridges"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/CollapseDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cd_realization_bridges",
+            "short": "cd_realization_bridges",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Collapse family as die motions: one lemma in two forms plus the loop obstruction, six legacy results as instances, with controls (ZeroParadox/Multihomed/CollapseDie.lean; Tim: \"One collapse file\", 2026-11-19)",
           "verify": {
             "axioms": null,
             "sorry_free": null
