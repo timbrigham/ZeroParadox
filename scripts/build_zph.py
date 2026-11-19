@@ -1,12 +1,12 @@
 """
 Zero Paradox — ZP-H: Categorical Bridge PDF Builder
-Version 1.44 | November 2026
+Version 1.45 | November 2026
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.44'
+VERSION = '1.45'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -481,7 +481,7 @@ def build():
             'on the zero module, which has one point, every endomorphism has exactly one point that steps to itself '
             'only (hilbert_zero_seam_role_unique), which restates that it is a zero object. '
             'This is not the claim that any domain forced the others&#8217; choices. Read side by side, the framework takes the four '
-            'facts as coherence across mathematical representations, not external replication; that is a reading, and no theorem relates them. '
+            'facts as coherence across mathematical representations, not external replication; that is a reading, and T-H3 itself relates none of them to another. '
             'T-SNAP (Binary Snap Causality) is a derived '
             'theorem in ZP-E v2.0 and is inherited here with derived status. &#8220;Causality&#8221; in this name refers to the shape of the step, not to its occurrence. DP-1 remains the only design premise. <font name="DV">&#10003;</font>',
         ]

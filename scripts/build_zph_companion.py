@@ -1,5 +1,5 @@
 """
-Build ZP-H Illustrated Companion (v1.33)
+Build ZP-H Illustrated Companion (v1.34)
 Standalone companion for ZP-H: Categorical Bridge only.
 ZP-G has its own companion (build_zpg_companion.py).
 
@@ -129,7 +129,7 @@ def snap_convergence_diagram():
 
     return d
 
-VERSION = '1.33'
+VERSION = '1.34'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -196,8 +196,8 @@ def build():
         'The result: in Lean, FB, FC and FD send 0 to an initial object of ℕ-indexed stand-ins (for FB, '
         'Q₂BallDepth; in TopCat its floor is terminal, not initial); FA has no functor term, and its '
         'witness is ℕ with 0 initial. Each framework has its own proved fact, none derived from another '
-        'or from a functor. That the four are windows on one thing is the framework\'s reading; no '
-        'theorem relates them. Where they look alike, the likeness reflects a shared foundation (A1-A4, '
+        'or from a functor. That the four are windows on one thing is the framework\'s reading; T-H3 '
+        'itself relates none of them to another. Where they look alike, the likeness reflects a shared foundation (A1-A4, '
         'AX-B1 and the modelling commitment CC-1, S₀ = ⊥, restated in ZP-J, not forced), not independent '
         'confirmation.'))
     E.append(four_functor_diagram())
@@ -341,8 +341,8 @@ def build():
     E.append(example_box('Real-world analogy — Four instruments', [
         'Imagine four instruments, violin, trumpet, piano and voice, each playing a phrase. '
         'A listener may hear one melody in all four. ZP-H does not show that about ZP-A through '
-        'ZP-D: it states four facts, one from each framework, side by side, and no theorem relates '
-        'one to another. Hearing them as four instruments playing one mathematical structure is the '
+        'ZP-D: it states four facts, one from each framework, side by side, and T-H3 itself relates '
+        'none of them to another. Hearing them as four instruments playing one mathematical structure is the '
         'framework\'s reading, the listener\'s ear rather than the score.',
     ]))
     E.append(sp(6))
@@ -408,8 +408,8 @@ def build():
     E.append(snap_convergence_diagram())
     E.append(ccaption(
         'The framework\'s reading, drawn as one line per framework: each of the four has a transition '
-        'of the Binary Snap\'s shape. No fact is derived from another, and no theorem '
-        'relates the four lines. The vertical line marks the moment of the Snap. '
+        'of the Binary Snap\'s shape. No fact is derived from another, and T-H3 itself '
+        'relates none of the four lines to another. The vertical line marks the moment of the Snap. '
         'Left: ⊥. Right: ε₀.'))
     E.append(sp(6))
 
@@ -419,7 +419,7 @@ def build():
         '— and the modelling commitment CC-1 (S₀ = ⊥, restated in ZP-J, not forced). A transition of the '
         'snap\'s shape appears in each because those foundations are built into each framework, '
         'not because four separate arguments from unrelated starting points converged. That the four are '
-        'one snap is the framework\'s reading; no theorem relates them.'))
+        'one snap is the framework\'s reading; T-H3 itself relates none of them to another.'))
     E.append(sp(6))
 
     E.append(key_result_box('T-H3: The Binary Snap, Four Domain Facts',
