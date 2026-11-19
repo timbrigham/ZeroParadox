@@ -1,4 +1,4 @@
--- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the limit retraction (Abate–Bedford) restricted to convergent orbits, for a continuous self-map of a Hausdorff space, as the UP leg of a die `Motion` whose OVER is one step of the map; orbit convergence is exactly finite arrival at a landing or a stage closure, with controls, conjugacy behaviour (healed on `OnePoint K`, torn inside `K`) and the reverse direction through the ε₀ tower. Curated results indexed in ZeroParadox/MANIFEST.md.
+-- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the limit retraction (Abate–Bedford) restricted to convergent orbits, for a continuous self-map of a Hausdorff space, as the UP leg of a die `Motion` whose OVER is one step of the map; orbit convergence is exactly finite arrival at a landing or a stage closure, with controls, conjugacy behaviour (healed on `OnePoint K`; torn inside `K` when `c ^ n → 0` and `1 < ‖d‖`) and the reverse direction through the ε₀ tower. Curated results indexed in ZeroParadox/MANIFEST.md.
 import ZeroParadox.Die
 import ZeroParadox.Valuation.RiemannSphere
 import ZeroParadox.Valuation.PadicAttractor
@@ -8,6 +8,8 @@ import ZeroParadox.Ordinal.CnfBridge
 import ZeroParadox.Ordinal.Epsilon0LeastFP
 import Mathlib.Dynamics.FixedPoints.Topology
 import Mathlib.Dynamics.OmegaLimit
+import Mathlib.SetTheory.Ordinal.Topology
+import Mathlib.Topology.Order.IsNormal
 import Mathlib.Tactic
 
 /-!
@@ -318,7 +320,7 @@ theorem lm_tendsto_zero_of_field {c : K} (hc : c ≠ 0) {x : K}
 
 end Scaling
 
-/-! ## § III. Conjugacy: healed on `OnePoint K`, torn inside `K` -/
+/-! ## § III. Conjugacy: healed on `OnePoint K`, torn inside `K` when `c ^ n → 0` and `1 < ‖d‖` -/
 
 section Conjugacy
 
@@ -615,10 +617,52 @@ end Instances
 
 `Reading:` CARRIER. § II turns an approach (`Tendsto`) into a die fact inside ONE motion. Here one tower,
 seeded at 0, ⊥ of `Ordinal`, is read in two charts joined by `NONote.repr` and `cnfToZp2`, never by
-`=`. In `Ordinal` the stages have a stage closure (`Motion.StageClosure`, the shape of § II's
-closure branch; `ordinalTowerMotion` is not a limit motion, so § II's iff does not apply) with the
-value ε₀ (ε₀ ≠ 0 and ε₀ ≠ ⊥ of `Ordinal`, `epsilon0_ne_zero`, `epsilon0_ne_bot`). In `ℤ_[2]` the
-images start at ℤ_[2]'s 0, differ from it from stage 1 on, and approach that same 0. -/
+`=`. In `Ordinal`, with Mathlib's order topology, `ordinalTowerMotion` is the limit motion of
+`α ↦ ω^α`, so § II's iff applies to it (the first `example` below), and the stages have a stage
+closure (`Motion.StageClosure`, § II's closure branch) with the value ε₀ (ε₀ ≠ 0 and ε₀ ≠ ⊥ of
+`Ordinal`, `epsilon0_ne_zero`, `epsilon0_ne_bot`). In `ℤ_[2]` the images start at ℤ_[2]'s 0, differ
+from it from stage 1 on, and approach that same 0. -/
+
+/-- `Statement:` in `Ordinal`'s order topology `α ↦ ω^α` is continuous (`Order.IsNormal.continuous`),
+    `ordinalTowerMotion` equals its limit motion (each orbit tends to its `nfp`, UP of the tower), and
+    § II's iff `lm_tendsto_iff_arrival_or_closure` holds for `ordinalTowerMotion`. -/
+example :
+    ordinalTowerMotion.{0} = limitMotion (fun a : Ordinal.{0} => Ordinal.omega0 ^ a)
+      (Ordinal.isNormal_opow Ordinal.one_lt_omega0).continuous ∧
+    ∀ x p : Ordinal.{0},
+      Tendsto (fun n => (fun a : Ordinal.{0} => Ordinal.omega0 ^ a)^[n] x) atTop (𝓝 p) ↔
+        (ordinalTowerMotion.{0}.Arrives p x ∧ ordinalTowerMotion.{0}.IsLanding p) ∨
+        ((∀ n, Ordinal.omega0 ^ ((fun a : Ordinal.{0} => Ordinal.omega0 ^ a)^[n] x)
+            ≠ (fun a : Ordinal.{0} => Ordinal.omega0 ^ a)^[n] x) ∧
+          ∃ c, ordinalTowerMotion.{0}.StageClosure
+            (Set.range fun n => (fun a : Ordinal.{0} => Ordinal.omega0 ^ a)^[n] x) c ∧ p ∈ c) := by
+  have hn := Ordinal.isNormal_opow Ordinal.one_lt_omega0
+  have ht : ∀ x : Ordinal.{0}, Tendsto (fun n => (fun a : Ordinal.{0} => Ordinal.omega0 ^ a)^[n] x)
+      atTop (𝓝 (Ordinal.nfp (fun a => Ordinal.omega0 ^ a) x)) := fun x => by
+    rw [← Ordinal.iSup_iterate_eq_nfp]
+    exact tendsto_atTop_ciSup (Monotone.monotone_iterate_of_le_map hn.strictMono.monotone
+      (hn.strictMono.id_le x)) Ordinal.bddAbove_of_small
+  have hup : ordinalTowerMotion.{0}.up
+      = (limitMotion (fun a : Ordinal.{0} => Ordinal.omega0 ^ a) hn.continuous).up := by
+    funext x
+    apply Part.ext
+    intro q
+    show q ∈ Part.some _ ↔ q ∈ limitRetraction _ x
+    rw [Part.mem_some_iff, lm_mem_limitRetraction_iff]
+    exact ⟨fun h => by rw [h]; exact ht x, fun h => tendsto_nhds_unique h (ht x)⟩
+  have heq : ordinalTowerMotion.{0}
+      = limitMotion (fun a : Ordinal.{0} => Ordinal.omega0 ^ a) hn.continuous := by
+    cases h : ordinalTowerMotion.{0} with
+    | mk u1 i1 s1 =>
+      rw [h] at hup
+      simp only at hup
+      subst hup
+      have hs : s1 = (limitMotion (fun a : Ordinal.{0} => Ordinal.omega0 ^ a) hn.continuous).step := by
+        have : ordinalTowerMotion.{0}.step = s1 := by rw [h]
+        rw [← this]; rfl
+      subst hs
+      rfl
+  exact ⟨heq, fun x p => by rw [heq]; exact lm_tendsto_iff_arrival_or_closure x p⟩
 
 /-- `Statement:` ordinal chart: the stages `fundamentalSeq n` have a stage closure with UP value ε₀
     in `ordinalTowerMotion` (`ordinalTowerMotion_stageClosure`), and 0 of `Ordinal` does not arrive
@@ -638,8 +682,9 @@ example : (∀ n, NONote.repr (towerNONote n) = fundamentalSeq n) ∧
   ⟨towerNONote_repr, snap_arc_z2_loop.2.1, snap_arc_z2_loop.2.2⟩
 
 /-! `Reading:` CARRIER. ε₀ gets no image in `ℤ_[2]`: `cnfToZp2` takes `NONote`, and every notation
-denotes below ε₀ (`repr_lt_epsilon0`). A phase map read through `snapEmbed` that is continuous along
-the tower sends ε₀ to `c₀`, not `c₁` (the anonymous `example` after `hε₀`'s ℤ₂ chart in
+denotes below ε₀ (`repr_lt_epsilon0`). A phase map that sends every tower stage to `c₀` (`h0`) and
+whose `snapEmbed` reading is continuous along the tower sends ε₀ to `c₀`, not `c₁` (the anonymous
+`example` after `hε₀`'s ℤ₂ chart in
 `ZeroParadox/Ordinal/Incompleteness.lean` § II). The bound on the other side is cited, not claimed:
 Escardó (preprint of JSL 78(3), 2013, § 11, p. 19) records that ε₀ cannot be embedded in `2^ℕ`
 using limit structures (quote measured 2026-11-01 against the retrieved preprint). -/

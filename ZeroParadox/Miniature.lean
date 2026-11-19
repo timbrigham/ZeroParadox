@@ -40,7 +40,7 @@ It reads top to bottom:
   `floor_of_witness` (the **floor**: witness → fixed point), `wall_of_fpf` (the **wall**: an admissible
   fixed-point-free map kills the witness), `witness_antitone` (the topology spine). One direction only: a
   witness forces fixed points, and the converse is not proved here, so these do not sort every class.
-* **§ III–IV — the pole.** `Miniature.Pole` = `{0, ∞}` has exactly **four** self-maps (`four_exhaustive`). The
+* **§ III–IV — the pole.** `Miniature.Pole` = `{0, ∞}` has exactly **four** self-maps (`card_four`; `four_exhaustive` names them). The
   **wall** sits at `swap` (no fixed point; an involution), the **floor** at the collapse `cZero` (a fixed point;
   not one-to-one). `swap_is_the_wall` is the finite instance of the classifier.
 * **§ V — the snap, in both directions.** The pole gives only the *irreversible* half (`collapse_irreversible`).
@@ -78,7 +78,8 @@ We show the *limited* version deliberately. The **shape** — self-reference for
 self-referential floor — is what the minimal core exhibits, and a bare fixed point is enough to carry it. The
 full Quine atom needs a non-well-founded set theory (ZF+AFA) to host a set x = {x} literally; that host is the
 *flesh*, cited to its home, not rebuilt here. Honest split: the *structural* self-application fixed point is
-Lean-proved and axiom-free (`t_exec`); an equation between a lattice's ⊥ and a set is ill-typed and not asserted: the die's Quine-atom
+Lean-proved and axiom-free under `AFAStructure`: uniqueness, any Quine atom is `bot` (`t_exec`), and existence,
+`bot` is one (`bot_is_quine_atom`, from the class field `AFAStructure.bot_self_mem`); an equation between a lattice's ⊥ and a set is ill-typed and not asserted: the die's Quine-atom
 role has its occupancy settled chart by chart (`ZeroParadox/Settheory/QuineDichotomy.lean`); hosting x = {x} in ZF+AFA is the commitment.
 
 **Honest status.** The *content* is re-derived, not new: the engine is **Lawvere (1969) / Yanofsky (2003)**

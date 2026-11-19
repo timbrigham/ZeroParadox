@@ -148,11 +148,16 @@ theorem od_RT_nat_control :
     | next _ _ ih => intro h; subst h; exact ih 1 (le_refl 1) rfl
   exact key 1 h rfl
 
-/-- `Statement:` the source FORK: in `odHalveNat`, `2 * n` steps both to `n` and to `0` (the
-    conclusion shape of `execution_requires_branching`, reached without a self-step at `2 * n`). -/
-example (n : ℕ) : odHalveNat.step (2 * n) n ∧ odHalveNat.step (2 * n) 0 :=
-  ⟨show n ≤ 2 * n / 2 from
-    Nat.le_of_eq (Nat.mul_div_cancel_left n Nat.two_pos).symm, Nat.zero_le _⟩
+/-- `Statement:` the source FORK: in `odHalveNat`, `2 * n` steps both to `n` and to `0`; for
+    `n ≥ 1` the two successors are distinct and `2 * n` has no self-step, the shape of
+    `execution_requires_branching`'s conclusion (which asks `t ≠ u`). At `n = 0` both successors are
+    `0`, the self-step at `0`. -/
+example (n : ℕ) : (odHalveNat.step (2 * n) n ∧ odHalveNat.step (2 * n) 0) ∧
+    (1 ≤ n → n ≠ 0 ∧ ¬ odHalveNat.step (2 * n) (2 * n)) := by
+  refine ⟨⟨show n ≤ 2 * n / 2 from
+    Nat.le_of_eq (Nat.mul_div_cancel_left n Nat.two_pos).symm, Nat.zero_le _⟩, fun hn => ⟨by omega, ?_⟩⟩
+  show ¬ 2 * n ≤ 2 * n / 2
+  rw [Nat.mul_div_cancel_left n Nat.two_pos]; omega
 
 /-- `Statement:` into ANY function motion, a map carrying `odHalveNat` steps is constant at `f 0`:
     the fork above meets a single-valued target (the OUT form, locally, is `cd_fan_collapse`,
@@ -164,10 +169,10 @@ example {β : Type*} (g : β → β) (f : ℕ → β)
     (hf (2 * n) 0 (Nat.zero_le _)).symm
 
 /-- `Statement:` CARRIER — every map carrying `odHalveNat` steps to doubling steps on a commutative
-    ring is `0`. The proof term consumes, from the source, the self-step at `0` and the fork at
-    `2 * n` (to `n` and to `0`); from the target, only that its step is the function
+    ring is `0`. The proof term consumes, from the source, the self-step at `0` (a route, not a
+    requirement: next `example`) and the fork at `2 * n` (to `n` and to `0`); from the target, only that its step is the function
     `z ↦ 2 * z`, and that `z = 2 * z` forces `z = 0`, true in every commutative ring. It does not
-    consume the target's no-entry at `0`, which fails in `ZMod 4` (next `example`). -/
+    consume the target's no-entry at `0`, which fails in `ZMod 4` (the `ZMod 4` `example` below). -/
 theorem od_RT_collapse_ring {K : Type*} [CommRing K]
     (f : ℕ → K)
     (hf : ∀ a b, odHalveNat.step a b → (Motion.ofFun (fun z : K => 2 * z)).step (f a) (f b))
@@ -178,6 +183,23 @@ theorem od_RT_collapse_ring {K : Type*} [CommRing K]
     Nat.le_of_eq (Nat.mul_div_cancel_left n Nat.two_pos).symm)
   have hz : f 0 = 2 * f (2 * n) := hf (2 * n) 0 (Nat.zero_le _)
   rw [hb, ← hz, h0]
+
+/-- `Statement:` the self-step at `0` is that proof's route, not a requirement: carrying only the
+    steps between DISTINCT points still forces `0` on any commutative ring (`1 → 0`, `2 → 1` and
+    `2 → 0` give `f 0 = 0`, then the fork at `2 * n` for `n ≥ 1`). -/
+example {K : Type*} [CommRing K] (f : ℕ → K)
+    (hf : ∀ a b, a ≠ b → odHalveNat.step a b → (Motion.ofFun (fun z : K => 2 * z)).step (f a) (f b))
+    (n : ℕ) : f n = 0 := by
+  have h10 : f 0 = 2 * f 1 := hf 1 0 (by decide) (Nat.zero_le _)
+  have h21 : f 1 = 2 * f 2 := hf 2 1 (by decide) (show 1 ≤ 2 / 2 by decide)
+  have h20 : f 0 = 2 * f 2 := hf 2 0 (by decide) (Nat.zero_le _)
+  have h0 : f 0 = 0 := by linear_combination -h10 + 2 * h20 - 2 * h21
+  rcases Nat.eq_zero_or_pos n with rfl | hn
+  · exact h0
+  · have hb : f n = 2 * f (2 * n) := hf (2 * n) n (by omega) (show n ≤ 2 * n / 2 from
+      Nat.le_of_eq (Nat.mul_div_cancel_left n Nat.two_pos).symm)
+    have hz : f 0 = 2 * f (2 * n) := hf (2 * n) 0 (by omega) (Nat.zero_le _)
+    rw [hb, ← hz, h0]
 
 /-- `Statement:` in `ZMod 4` the collapse holds while the doubling motion's no-entry at `0` fails
     (`2` steps to `0`). -/
@@ -233,13 +255,15 @@ example :
       (hf (2 * n) 0 (Nat.zero_le _)).symm, h0]
 
 /-- `Statement:` CONTROL for single-valuedness: OVER `y = 2 * x ∨ x ≠ y` on `Q₂` keeps `0` as its
-    only self-stepping point, is not single-valued, and the cast carries every halving step and is
-    not `0`. -/
+    only self-stepping point, is not single-valued (`0` steps to `0` and to `1`), and the cast
+    carries every halving step and is not `0`. -/
 example :
     (∀ z : Q₂, (z = 2 * z ∨ z ≠ z) → z = 0) ∧
+    ((0 : Q₂) = 2 * 0 ∨ (0 : Q₂) ≠ 0) ∧ ((1 : Q₂) = 2 * 0 ∨ (0 : Q₂) ≠ 1) ∧
     (∀ a b, odHalveNat.step a b → ((b : Q₂) = 2 * (a : Q₂) ∨ (a : Q₂) ≠ (b : Q₂))) ∧
     ((1 : ℕ) : Q₂) ≠ 0 := by
-  refine ⟨fun z hz => ?_, fun a b (h : b ≤ a / 2) => ?_, by norm_num⟩
+  refine ⟨fun z hz => ?_, Or.inl (by ring), Or.inr zero_ne_one, fun a b (h : b ≤ a / 2) => ?_,
+    by norm_num⟩
   · rcases hz with hz | hz
     · linear_combination -hz
     · exact absurd rfl hz
@@ -249,8 +273,9 @@ example :
       subst this; simp
     · right; exact_mod_cast hab
 
-/-- `Statement:` CONTROL for `z = 2 * z → z = 0`: into `ofFun id` on `Q₂` (single-valued, every
-    point fixed) the constant map `1` carries every halving step and is not `0`. -/
+/-- `Statement:` CONTROL for "the target's only fixed point is `0`": into `ofFun id` on `Q₂`
+    (single-valued, every point fixed) the constant map `1` carries every halving step and is not
+    `0`. -/
 example : (∀ a b, odHalveNat.step a b →
       (Motion.ofFun (id : Q₂ → Q₂)).step ((fun _ => (1 : Q₂)) a) ((fun _ => (1 : Q₂)) b)) ∧
     (1 : Q₂) ≠ 0 :=
@@ -258,8 +283,8 @@ example : (∀ a b, odHalveNat.step a b →
 
 /-- `Statement:` CONTROL, target side (OVER always true on `Q₂`): the cast carries every halving
     step and is not `0`. The always-true OVER is not single-valued and makes every point a
-    self-step, so it removes both target facts `od_RT_collapse_ring` consumes; the two `example`s
-    above remove them one at a time. -/
+    self-step, so it removes both target facts `od_RT_collapse_ring` consumes (single-valuedness,
+    and `0` as the only fixed point); the two `example`s above remove them one at a time. -/
 theorem od_RT_collapse_control_target :
     (∀ a b, odHalveNat.step a b →
       (Motion.ofTotal (id : Q₂ → Q₂) (fun _ => rfl) (fun _ _ => True)).step (a : Q₂) (b : Q₂)) ∧

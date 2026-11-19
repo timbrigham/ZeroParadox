@@ -38,9 +38,9 @@ theorem cd_collapse_in {α β : Type*} {M : Motion α} {N : Motion β} (f : α �
   od_collapse f hf hN (hy x)
 
 /-- `Statement:` OUT form, local: if `f t` has at most one successor in `N`, a step-carrying map
-    identifies any two successors of `t`. The source half is a fork, the conclusion shape of
-    `execution_requires_branching`; the target half is `deterministic_has_no_fanout`
-    (`ZeroParadox/Computability/Occurrence.lean`). -/
+    identifies any two successors of `t`. The source half is two successors of `t`, not required
+    distinct; `execution_requires_branching`'s conclusion also has them distinct. The target half
+    is `deterministic_has_no_fanout` (`ZeroParadox/Computability/Occurrence.lean`). -/
 theorem cd_fan_collapse {α β : Type*} {M : Motion α} {N : Motion β} (f : α → β)
     (hf : ∀ a b, M.step a b → N.step (f a) (f b)) {t a b : α} (ha : M.step t a) (hb : M.step t b)
     (hN : ∀ c d, N.step (f t) c → N.step (f t) d → c = d) : f a = f b :=
@@ -58,6 +58,23 @@ example {α β : Type*} {M : Motion α} {N : Motion β} (f : α → β)
     (hf : ∀ a b, M.step a b → N.step (f a) (f b)) {t : α} (ht : ∀ a, M.step a t)
     (hN : ∀ b, N.step b (f t) → b = f t) (x : α) : f x = f t :=
   cd_collapse_in f hf (fun x => Relation.ReflTransGen.single (ht x)) hN x
+
+/-- `Statement:` under the IN form's hypotheses, a step of the source makes the image of `y` a
+    fixed point: `f y` steps to itself. -/
+example {α β : Type*} {M : Motion α} {N : Motion β} (f : α → β)
+    (hf : ∀ a b, M.step a b → N.step (f a) (f b)) {y : α}
+    (hy : ∀ x, Relation.ReflTransGen M.step x y) (hN : ∀ a, N.step a (f y) → a = f y)
+    {a b : α} (hab : M.step a b) : N.step (f y) (f y) := by
+  have h := hf a b hab
+  rwa [cd_collapse_in f hf hy hN a, cd_collapse_in f hf hy hN b] at h
+
+/-- `Statement:` CONTROL, no source step: on one point with no steps, into the same motion by the
+    identity, every IN-form hypothesis holds and the image is not a fixed point. -/
+example :
+    let M : Motion Unit := Motion.ofTotal id (fun _ => rfl) (fun _ _ => False)
+    (∀ a b, M.step a b → M.step a b) ∧ (∀ x, Relation.ReflTransGen M.step x ()) ∧
+      (∀ a, M.step a () → a = ()) ∧ ¬ M.step () () :=
+  ⟨fun _ _ h => h, fun _ => Relation.ReflTransGen.refl, fun _ _ => rfl, fun h => h⟩
 
 /-- `Statement:` into a function motion the OUT form needs no hypothesis on the target. -/
 example {α β : Type*} {M : Motion α} (g : β → β) (f : α → β)
@@ -95,7 +112,7 @@ theorem cd_bot_steps_everywhere {L : Type*} [ZPSemilattice L] (e : L) :
   ⟨e, (ZPSemilattice.bot_join e).symm⟩
 
 /-- `Statement:` every map carrying join steps to doubling steps on `Q₂` is `0`: the OUT form at the
-    bottom of `L`. -/
+    bottom of `L`. This route consumes A4; the statement does not need it (next `example`). -/
 theorem cd_tiz_doubling_collapse {L : Type*} [ZPSemilattice L] (f : L → Q₂)
     (hf : ∀ a b, (cdJoinStep L).step a b → (Motion.ofFun (fun x : Q₂ => 2 * x)).step (f a) (f b))
     (x : L) : f x = 0 := by
@@ -105,6 +122,14 @@ theorem cd_tiz_doubling_collapse {L : Type*} [ZPSemilattice L] (f : L → Q₂)
   have hself : f ZPSemilattice.bot = 2 * f ZPSemilattice.bot := hf _ _ (cd_bot_steps_everywhere _)
   rw [hc x ZPSemilattice.bot]
   linear_combination -hself
+
+/-- `Statement:` the same conclusion into doubling on any commutative ring, from `join_idem` alone:
+    every point steps to itself, and `z = 2 * z` forces `z = 0`. -/
+example {L : Type*} [ZPSemilattice L] {K : Type*} [CommRing K] (f : L → K)
+    (hf : ∀ a b, (cdJoinStep L).step a b → (Motion.ofFun (fun x : K => 2 * x)).step (f a) (f b))
+    (x : L) : f x = 0 := by
+  have hs : f x = 2 * f x := hf x x ⟨x, (ZPSemilattice.join_idem x).symm⟩
+  linear_combination -hs
 
 /-- `Statement:` INVARIANT under reversal: every map carrying REVERSED join steps to doubling steps
     on `Q₂` is `0`: the IN form at the bottom of `L`. This route consumes `Q₂`'s
@@ -164,7 +189,8 @@ theorem cd_tiz_control_value :
 /-- `Statement:` if every point of `ofFun A` arrives at a fixed point `y` of `A`, and no fixed point
     of `B` is entered from another point, every semiconjugacy from `A` to `B` is constant at `c y`.
     The IN form for function motions; `hB` says each fixed point `z` of `B` has `{z}` backward
-    invariant, `B⁻¹ {z} = {z}` (Milnor, Dynamics notes § 5, p. 5-2). -/
+    invariant, `B⁻¹ {z} = {z}` (Milnor, Dynamics notes § 5, p. 5-2). The proof uses `hB` only at
+    `c y`; the next `example` states that weaker form, without `hy`. -/
 theorem cd_semiconj_const {α β : Type*} (A : α → α) (B : β → β) (y : α) (hy : A y = y)
     (harr : ∀ x, (Motion.ofFun A).Arrives y x) (hB : ∀ z a, B z = z → B a = z → a = z)
     (c : α → β) (hc : Function.Semiconj c A B) (x : α) : c x = c y := by
@@ -173,6 +199,16 @@ theorem cd_semiconj_const {α β : Type*} (A : α → α) (B : β → β) (y : �
     (fun a b (h : b = A a) => show c b = B (c a) by rw [h]; exact hc a)
     (fun x => (Motion.arrives_ofFun_iff_reflTransGen A y x).1 (harr x))
     (fun a (ha : c y = B a) => hB _ a hfix ha.symm) x
+
+/-- `Statement:` the same conclusion with `B` restricted at the one point `c y` (no other point maps
+    to it), and with no hypothesis that `y` is fixed by `A`. -/
+example {α β : Type*} (A : α → α) (B : β → β) (y : α)
+    (harr : ∀ x, (Motion.ofFun A).Arrives y x) (c : α → β) (hc : Function.Semiconj c A B)
+    (hB : ∀ a, B a = c y → a = c y) (x : α) : c x = c y :=
+  cd_collapse_in (M := Motion.ofFun A) (N := Motion.ofFun B) c
+    (fun a b (h : b = A a) => show c b = B (c a) by rw [h]; exact hc a)
+    (fun x => (Motion.arrives_ofFun_iff_reflTransGen A y x).1 (harr x))
+    (fun a (ha : c y = B a) => hB a ha.symm) x
 
 /-- `Statement:` every semiconjugacy from `Nat.pred` on ℕ to doubling on `Q₂` is `0`. -/
 theorem cd_pred_to_doubling_const (c : ℕ → Q₂)
@@ -256,7 +292,8 @@ example {L : Type*} [ValBridge L] :
     (fun _ : L => (1 : Q₂)) ValBridge.bot ≠ 0 ∧ ¬ (ValBridge.bot : L) ≠ ValBridge.bot :=
   ⟨one_ne_zero, fun h => h rfl⟩
 
-/-- `Statement:` INVARIANT along the orbit: the offset between the two valuations is constant. -/
+/-- `Statement:` INVARIANT along the orbit: for a realization `ρ` and a point `x` with `ρ x ≠ 0`,
+    the offset between the two valuations is constant along the orbit of `x`. -/
 theorem cd_banks_offset {L : Type*} [ValBridge L] (ρ : L → Q₂)
     (hsemi : Function.Semiconj ρ ValBridge.scale (fun q => 2 * q)) (x : L) (hx : ρ x ≠ 0)
     (n : ℕ) :

@@ -20,16 +20,19 @@ step from an unbalanced start (`od_NM_markov_fit`). All of these "never lands" f
 die lemma, `od_never_arrives`, which repackages `Motion.not_noEntry_of_arrives`.
 
 - § I. The obstruction `od_RT_collapse` runs ONE WAY: a map from halving to doubling that carries
-  steps is `0`. It is `od_RT_collapse_ring` at `Q₂`, which holds on any commutative ring. From the
-  source it uses the self-step at `0` and the fork at `2n`, which steps to both `n` and `0`. From
-  the target it uses only that doubling is a function and that `z = 2z` forces `z = 0`. It does not
-  use the target's no-entry at `0`, which fails in `ZMod 4` while the collapse holds there. The
-  fork is the shape of `execution_requires_branching`'s conclusion, the single-valued target is
-  `deterministic_has_no_fanout` (`ZeroParadox/Computability/Occurrence.lean`), and the local OUT
-  form is `cd_fan_collapse` (`ZeroParadox/Multihomed/CollapseDie.lean`). Controls on the target
-  remove single-valuedness alone, `z = 2z ⇒ z = 0` alone, and both at once
-  (`od_RT_collapse_control_target`); `od_RT_collapse_control_source` takes successor on ℕ as the
-  source, which has no self-step and no fork. `od_RT_collapse_real` is the ring version at ℝ. `od_RT_collapse_fun` has a function source
+  steps is `0`. It is `od_RT_collapse_ring` at `Q₂`, which holds on any commutative ring. Its proof
+  uses, from the source, the self-step at `0` and the fork at `2n`, which steps to both `n` and `0`.
+  The self-step is that proof's route, not a requirement: carrying only the steps between distinct
+  points still forces `0` (the `example` after it). From the target the proof uses only that
+  doubling is a function and that `z = 2z` forces `z = 0`. It does not use the target's no-entry at
+  `0`, which fails in `ZMod 4` while the collapse holds there. For `n ≥ 1` the fork has the shape of
+  `execution_requires_branching`'s conclusion, two distinct successors; at `n = 0` both are `0`. The
+  single-valued target is `deterministic_has_no_fanout`
+  (`ZeroParadox/Computability/Occurrence.lean`), and the local OUT form is `cd_fan_collapse`
+  (`ZeroParadox/Multihomed/CollapseDie.lean`). Two anonymous `example`s on the target remove
+  single-valuedness alone and "`0` is the only fixed point" alone, and
+  `od_RT_collapse_control_target` removes both at once; `od_RT_collapse_control_source` takes
+  successor on ℕ as the source, which has no self-step and no fork. `od_RT_collapse_real` is the ring version at ℝ. `od_RT_collapse_fun` has a function source
   with no fork, and its proof uses no-entry at `0` of `Q₂`. Into `ofFun Nat.pred`, which has one
   fixed point and an entry into it, the fork-free source admits a nonconstant map. Whether no-entry
   is needed there inside a commutative ring is not measured. The reverse direction is not obstructed
@@ -64,8 +67,10 @@ die lemma, `od_never_arrives`, which repackages `Motion.not_noEntry_of_arrives`.
   `Motion.eq_of_step_to_ofFun_iff_iterate`). The fork and single-valuedness halves are
   `execution_requires_branching` and `deterministic_has_no_fanout`
   (`ZeroParadox/Computability/Occurrence.lean`).
-- Standard name: a map carrying every step to a step is a functional simulation (Dubut and Wißmann,
-  arXiv:2301.07004, Def. 2.1, pp. 2–3, after Joyal, Nielsen and Winskel). The name is for the
+- Standard name: a map carrying every step to a step is the transition clause of a functional
+  simulation (Dubut and Wißmann, arXiv:2301.07004, Def. 2.1, pp. 2–3, after Joyal, Nielsen and
+  Winskel). Their definition is for labelled transition systems with an initial state, and also
+  asks `f(x0) = y0`; the hypothesis here is its unpointed, single-label case. The name is for the
   hypothesis; it does not name the collapse.
 - Mathlib: `Function.Semiconj` and `Function.IsFixedPt.map`. Each is an `example` in § 0 of the Lean
   file. `Function.Semiconj.mapsTo_fixedPoints` and `Function.Semiconj.mapsTo_periodicPts` are

@@ -34,14 +34,16 @@ its orbit where that orbit converges, and is undefined elsewhere. `limitMotion g
   (`lm_q2_halving_to_infty`); doubling on `OnePoint ℝ` tends to `∞` and closes there without arriving
   (`lm_real_doubling_closure_at_infty`). The torn pairs are `lm_q2_torn` and `lm_real_torn`. The
   oscillating orbit of `1` under scaling by `-1` is the control on both carriers.
-- § V. The reverse direction, from existing declarations only. In `Ordinal` the stages of the
-  ω-tower seeded at 0, ⊥ of `Ordinal`, have a stage closure with UP value ε₀
-  (`ordinalTowerMotion_stageClosure`). That is the shape of § II's closure branch, though
-  `ordinalTowerMotion` is not a limit motion. In `ℤ_[2]` the same tower's images start at ℤ_[2]'s 0,
-  differ from it from stage 1 on, and approach that same 0 (`snap_arc_z2_loop`).
+- § V. The reverse direction. In `Ordinal`'s order topology (Mathlib), `ordinalTowerMotion` is the
+  limit motion of `α ↦ ω^α`, so § II's iff applies to it (the first `example` of § V). The stages of
+  the ω-tower seeded at 0, ⊥ of `Ordinal`, have a stage closure with UP value ε₀
+  (`ordinalTowerMotion_stageClosure`), § II's closure branch. In `ℤ_[2]` the same tower's images
+  start at ℤ_[2]'s 0, differ from it from stage 1 on, and approach that same 0 (`snap_arc_z2_loop`).
 
-None of this is T-SNAP: no covering step `⊥ ⋖ a` off ⊥ of a lattice appears in any statement here
-(`ZeroParadox/Multihomed/SnapFrameChange.lean` § II).
+No statement here uses a join or the covering relation `⋖`. So none carries T-SNAP's join shape
+(`t_snap_given`, `ZeroParadox/Order/Snap.lean`) or a covering step `⊥ ⋖ a`, which enters only as
+the commitment `hcov` of `t_snap_given_cover`; on all of `Ordinal`, ⊥ ⋖ ε₀ is false
+(`ZeroParadox/Order/SnapCannotBe.lean` § II).
 
 ## Prior art and credit
 
@@ -71,12 +73,13 @@ case Venturini's Theorem 5.1 (viii) describes.
 The delta, stated plainly: any continuous map of a Hausdorff space, a partial map, no metric; and
 only the convergent orbits, with no group of limit maps. Only the die packaging is new: the
 arrival-or-closure iff and the healed/torn contrast. The split into "eventually fixed" and "never
-fixed" orbits is folklore.
+fixed" orbits is folklore; it was searched 2026-11-19 (theoremsearch, three phrasings, one formal;
+LeanExplore, three phrasings; the open web, two queries) and not located as a named theorem.
 
-Mathlib, searched 2026-11-18 (LeanExplore, three phrasings; theoremsearch, three phrasings, one
-formal; the open web, two queries): `isFixedPt_of_tendsto_iterate`, `omegaLimit`,
-`mem_omegaLimit_singleton_iff_mapClusterPt`, `tendsto_nhds_of_unique_mapClusterPt`. No
-limit-retraction or basin declaration was located as of that date; the null is uninformative.
+Mathlib, searched 2026-11-19 (LeanExplore, three phrasings; theoremsearch, one formal phrasing):
+`isFixedPt_of_tendsto_iterate`, `omegaLimit`, `mem_omegaLimit_singleton_iff_mapClusterPt`,
+`tendsto_nhds_of_unique_mapClusterPt`. No limit-retraction or basin declaration was located as of
+that date; the null is uninformative.
 
 A bound on the other side of § V is cited, not claimed, in the Lean file's closing `Reading:`:
 Escardó, preprint of JSL 78(3) (2013), § 11, p. 19, "it is not possible to embed ε₀ in 2^ℕ using
