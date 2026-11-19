@@ -41,9 +41,11 @@ its orbit where that orbit converges, and is undefined elsewhere. `limitMotion g
   start at ℤ_[2]'s 0, differ from it from stage 1 on, and approach that same 0 (`snap_arc_z2_loop`).
 
 No statement here uses a join or the covering relation `⋖`. So none carries T-SNAP's join shape
-(`t_snap_given`, `ZeroParadox/Order/Snap.lean`) or a covering step `⊥ ⋖ a`, which enters only as
-the commitment `hcov` of `t_snap_given_cover`; on all of `Ordinal`, ⊥ ⋖ ε₀ is false
-(`ZeroParadox/Order/SnapCannotBe.lean` § II).
+(`t_snap_given`, `ZeroParadox/Order/Snap.lean`) or a covering step `⊥ ⋖ a` off ⊥ of a
+`ZPSemilattice`, in ZP-A's induced order. T-SNAP's statements take that step as the commitment
+`hcov` of `t_snap_given_cover`; it is AX-B1's form (`BotHasFirstStep`, hypothesis `hR1` of
+`snap_of_firstStep_MLRandom`), and in `MachinePhase` it is proved (`t_snap_derived_cover`). On all
+of `Ordinal`, ⊥ ⋖ ε₀ is false (`ZeroParadox/Order/SnapCannotBe.lean` § II).
 
 ## Prior art and credit
 
