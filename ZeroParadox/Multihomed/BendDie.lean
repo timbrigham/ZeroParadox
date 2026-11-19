@@ -13,10 +13,7 @@ are indexed in ZeroParadox/MANIFEST.md.
 
 ## Engineer's Take
 
-This file is one of a series of iterative attempts on this branch to build a map of how the various
-bottoms interconnect, and by extension how bottom moves from being the floor, a thing (a noun), to a
-verb (an action). The Lean here is our attempt, one way or the other, to get a clean verification. I
-defer to my AI assistant regarding the specifics of how the internals work.
+Orthogonality versus not returning to the base vector likely has other applications in the project. We've talked about other potential angles in the relationships, and this might be exactly how they are represented. I was thinking of it as the outer line on a magnetic field, with the bend between zero and infinity.
 
 ---
 
