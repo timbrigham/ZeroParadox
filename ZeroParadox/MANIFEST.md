@@ -397,12 +397,12 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 
 ### Multi-homed bridges (ZP-H)
 
-- `ZeroParadox/Multihomed/CollapseDie.lean` - The collapse family in the die: one lemma, six instances, with controls
+- `ZeroParadox/Multihomed/CollapseDie.lean` - The collapse family in the die: one lemma in two forms, six legacy results, with controls
   - ride-along docs: `ZeroParadox/Multihomed/CollapseDie.md` - CollapseDie — the collapse family as die motions
 - `ZeroParadox/Multihomed/CrossRootCompleteness.lean` - Cross-root completeness: the #1↔#3 and #5↔#3 edges
 - `ZeroParadox/Multihomed/FloorFactsCooccur.lean` - Co-occurrence of four ambient bottom-facts (thin: new fact is generic)
 - `ZeroParadox/Multihomed/Fork.lean` - Restating two `IsInitial` and one `IsTerminal` witness as `IsColimit` / `IsLimit`
-- `ZeroParadox/Multihomed/LimitMotion.lean` - The limit retraction as a die motion: approach is arrival or stage closure
+- `ZeroParadox/Multihomed/LimitMotion.lean` - The limit retraction as a die motion: convergence is arrival at a landing or a stage closure
   - ride-along docs: `ZeroParadox/Multihomed/LimitMotion.md` - LimitMotion — the limit retraction as a die motion
 - `ZeroParadox/Multihomed/OrbitDie.lean` - The orbit family in the die: three "never lands" results as motions, with controls
   - ride-along docs: `ZeroParadox/Multihomed/OrbitDie.md` - OrbitDie — the orbit family as die motions

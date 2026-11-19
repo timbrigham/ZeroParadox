@@ -5284,7 +5284,7 @@ example : ¬ ∃ f : List Bool → Unit, ∀ l l',
 -- first result has the shape "never lands against lands", and no equation across carriers is stated.
 #check @ZeroParadox.od_never_arrives           -- Statement: if every step into `y` starts at `y`, no other point arrives at `y` (repackages `Motion.not_noEntry_of_arrives`)
 #check @ZeroParadox.od_RT_padic_fit            -- Statement: doubling on `Q₂`: `x ≠ 0` never arrives at `0` of `Q₂`; `od_halve_arrives`: every natural arrives at `0` of ℕ under halving
-#check @ZeroParadox.od_RT_collapse_ring        -- Statement: a map carrying halving steps to doubling steps on a commutative ring with no zero divisors and `2 ≠ 0` is `0`, those two hypotheses sufficient and not shown necessary; `od_RT_reverse_map` is not obstructed
+#check @ZeroParadox.od_RT_collapse_ring        -- Statement: a map carrying halving steps to doubling steps on any commutative ring is `0`, consuming the source's self-step at `0` and fork at `2 * n`, that the target step is the function `z ↦ 2 * z`, and that `z = 2 * z` forces `z = 0` in every commutative ring; `od_RT_reverse_map` is not obstructed
 #check @ZeroParadox.od_PM_same_shape           -- Statement: INVARIANT — from the image of a nonzero rational, doubling never lands on `0` of `Q₂` nor on `0` of ℝ; every `x ≠ 0` of `Q₂` is `od_RT_padic_fit`; the difference is the lifted norm order (`od_PM_fit`)
 #check @ZeroParadox.od_PM_collapse             -- Statement: a step-carrying map `Q₂ → ℝ` monotone for the norm orders is `0`; the reverse is `od_PM_collapse_rev`
 #check @ZeroParadox.odQ2toMarkovHom            -- Statement: a strict map from doubling on `Q₂` into the Markov step at `1/4`, balanced exactly at `0` (`od_NM_hom_balance`)
@@ -5306,7 +5306,7 @@ example : ¬ ∃ f : List Bool → Unit, ∀ l l',
 /-! ### § XXXV. The limit retraction: an approach is finite arrival or a stage closure -/
 -- Reading: CARRIER — each result beside its control in `ZeroParadox/Multihomed/LimitMotion.lean`;
 -- the carriers are joined only by homeomorphisms, and no equation across carriers is stated.
-#check @ZeroParadox.limitRetraction            -- Statement: the limit retraction of `g` (Abate–Bedford), partial: defined at `x` exactly when the orbit of `x` converges, with value its limit
+#check @ZeroParadox.limitRetraction            -- Statement: the limit retraction of `g` (Abate–Bedford) restricted to convergent orbits, partial: defined at `x` exactly when the orbit of `x` converges, with value its limit
 #check @ZeroParadox.limitMotion                -- Statement: for continuous `g` on a Hausdorff space, UP is `limitRetraction g` and OVER is `y = g x`; without continuity UP is not idempotent (`lm_jumpMap_breaks_idem`)
 #check @ZeroParadox.lm_tendsto_iff_arrival_or_closure -- Statement: the orbit of `x` tends to `p` iff `x` arrives at `p` and `p` is a landing, or no stage is a fixed point and the stages have a stage closure containing `p`; exclusive (`lm_not_arrives_of_closure`)
 #check @ZeroParadox.lm_not_arrives_infty       -- Statement: under `lmScale c` on `OnePoint K` no point of `K` arrives at `∞`: adjoining `∞` adds no step into it
