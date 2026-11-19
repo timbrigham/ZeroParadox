@@ -66,6 +66,7 @@ import ZeroParadox.Multihomed.TH3Die
 import ZeroParadox.Multihomed.OrbitDie
 import ZeroParadox.Multihomed.CollapseDie
 import ZeroParadox.Multihomed.LimitMotion
+import ZeroParadox.Multihomed.BendDie
 
 set_option maxHeartbeats 400000
 
@@ -5334,5 +5335,16 @@ example : ¬ ZeroParadox.Motion.unitMotion.Loop := fun ⟨_, _, _, _, hne, _⟩ 
 #check @ZeroParadox.lmIsoOfConj                -- Statement: a homeomorphism `e` with `e ∘ g = h ∘ e` is a strict isomorphism of the limit motions of `g` and `h`
 #check @ZeroParadox.lmHealedIso                -- Statement: INVERSION — on `OnePoint K`, `onePointInv` is a strict isomorphism of the limit motions of `lmScale c` and `lmScale d`, `c * d = 1`, exchanging `0` and `∞`, two distinct points
 #check @ZeroParadox.lm_torn_no_hom             -- Statement: inside `K`, if `c ^ n → 0` and `1 < ‖d‖`, no strict map of limit motions from `c`-scaling to `d`-scaling is field inversion; `lmBareInvIso` is one for the bare `ofFun` motions
+
+/-! ### § XXXVI. The bend: the overlap condition, and scaling on `OnePoint ℂ` up to the die isomorphism -/
+-- Reading: CARRIER — each result beside its control in `ZeroParadox/Multihomed/BendDie.lean`;
+-- `Motion.StrictIso` asks no continuity, and no equation across carriers is stated.
+#check @ZeroParadox.bend_AD_obstructed_iff     -- Statement: the (A)-(D) obstruction fires iff `⟪th3E0, v⟫ ≠ 1`; it does not separate `-th3E0`, `i • th3E0` and `th3E1` (`bend_no_separation`)
+#check @ZeroParadox.bend_conj_of_norm_ne_one   -- Statement: if `‖c‖ ≠ 1` and `‖d‖ ≠ 1`, a homeomorphism of `OnePoint ℂ` conjugates `lmScale c` to `lmScale d`
+#check @ZeroParadox.bend_iso_of_norm_ne_one    -- Statement: if `‖c‖ ≠ 1` and `‖d‖ ≠ 1`, the limit motions of `lmScale c` and `lmScale d` are strictly isomorphic
+#check @ZeroParadox.bendConjIso                -- Statement: the limit motions of `lmScale c` and `lmScale (conj c)` are strictly isomorphic; `bend_iso_I_negI` is `c = i`
+#check @ZeroParadox.bend_halfturn_ne_quarterturn -- Statement: the half turn and the quarter turn are not strictly isomorphic; the proof uses that the half turn squares to the identity
+#check @ZeroParadox.bend_strictIso_iff_conj_of_periodic -- Statement: if `g^[n] = id` and `h^[m] = id`, the limit motions are strictly isomorphic iff some bijection conjugates `g` to `h`
+#check @ZeroParadox.bendFiveIso                -- Statement: rotation by `ζ = exp(2πi/5)` and by `ζ²` are strictly isomorphic limit motions on `OnePoint ℂ`; `bend_zeta_sq_conditions` checks the conditions of Rybalkina–Sergeichuk Lemma 2.1 fail for the pair
 
 end DieCannotBeIndex

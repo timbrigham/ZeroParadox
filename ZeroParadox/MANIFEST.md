@@ -397,6 +397,8 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 
 ### Multi-homed bridges (ZP-H)
 
+- `ZeroParadox/Multihomed/BendDie.lean` - The bend: the overlap condition, and complex scaling as a limit motion
+  - ride-along docs: `ZeroParadox/Multihomed/BendDie.md` - BendDie — the overlap condition, and complex scaling as a limit motion
 - `ZeroParadox/Multihomed/CollapseDie.lean` - The collapse family in the die: one lemma in two forms, six legacy results, with controls
   - ride-along docs: `ZeroParadox/Multihomed/CollapseDie.md` - CollapseDie — the collapse family as die motions
 - `ZeroParadox/Multihomed/CrossRootCompleteness.lean` - Cross-root completeness: the #1↔#3 and #5↔#3 edges
