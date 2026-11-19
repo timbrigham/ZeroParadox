@@ -5298,7 +5298,7 @@ example : ¬ ∃ f : List Bool → Unit, ∀ l l',
 #check @ZeroParadox.cd_tiz_doubling_collapse   -- Statement: a map carrying join steps of a `ZPSemilattice` to doubling on `Q₂` is `0`, from A4 alone; reversed, `cd_tiz_reverse_doubling_collapse`
 #check @ZeroParadox.cd_pred_to_doubling_const  -- Statement: a semiconjugacy from `Nat.pred` to doubling on `Q₂` is `0`; the other direction, `cd_doubling_to_pred`, is not obstructed
 #check @ZeroParadox.cd_realization_bridges     -- Statement: `realization_bridges_both_valuations` without `x ≠ ⊥`, which follows from `ρ x ≠ 0` (`cd_realization_bot`)
-#check @ZeroParadox.cd_run_into                -- Statement: under AX-G2's shape at `I`, a run of the hom motion at `I` was never at an object isomorphism-free with `I`
+#check @ZeroParadox.cd_run_into                -- Statement: under AX-G2's shape at `I`, a run of the hom motion at `I` at time `k` is, at every time `m ≤ k`, at an object not isomorphism-free with `I`
 #check @ZeroParadox.cd_pole_fans_two           -- Statement: in the reverse of `ofFun cZero` on `Miniature.Pole`, `zero` steps to two distinct points, one of them `zero` itself (two-way branching as distinct step-successors)
 #check @ZeroParadox.cd_pole_no_three           -- Statement: `Miniature.Pole` has no three pairwise distinct points, so no three-way branching
 #check @ZeroParadox.cd_shift_tower_periodic    -- Statement: every lax map from `shiftMotion c` to `ordinalTowerMotion` takes fixed points of `α ↦ ω^α` and has period `⌜c⌝`, for every code `c`
