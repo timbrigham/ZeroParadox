@@ -83,8 +83,8 @@ theorem lm_tendsto_of_omegaLimit {X : Type*} [TopologicalSpace X] [T2Space X] [C
 
 variable {X : Type u} [TopologicalSpace X] [T2Space X]
 
-/-- `Statement:` the limit retraction (Abate–Bedford) restricted to convergent orbits: defined
-    at `x` iff its orbit converges (the union of point basins `B({p})`), value the limit. -/
+/-- `Statement:` the limit retraction (Abate–Bedford) restricted to convergent orbits: defined at `x` iff its orbit
+    converges (the union of point basins `B({p})`), with value a limit, chosen; the limit is unique on a Hausdorff space, which `limitMotion` assumes. -/
 noncomputable def limitRetraction (g : X → X) (x : X) : Part X :=
   ⟨∃ q, Tendsto (fun n => g^[n] x) atTop (𝓝 q), fun h => h.choose⟩
 
