@@ -1,4 +1,4 @@
--- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): one collapse lemma in two forms (a step-carrying map into a target with no other entry, or at most one successor, at the image point is constant) and the loop obstruction, with six legacy results as instances, each beside a failing control. Curated results indexed in ZeroParadox/MANIFEST.md.
+-- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): one collapse lemma in two forms (a step-carrying map is constant when every source point has a path of steps to one point whose image has no other entry, or one source point steps to every point and its image has at most one successor) and the loop obstruction, with six legacy results read through them, each beside a failing control. Curated results indexed in ZeroParadox/MANIFEST.md.
 import ZeroParadox.Multihomed.OrbitDie
 import ZeroParadox.Valuation.ScaleRealization
 import ZeroParadox.Ordinal.Incompleteness
@@ -8,7 +8,7 @@ import ZeroParadox.Miniature
 import Mathlib.Tactic
 
 /-!
-# The collapse family in the die: one lemma, six instances, with controls
+# The collapse family in the die: one lemma in two forms, six legacy results, with controls
 
 Experimental probe, not a finalized layer; results are indexed in ZeroParadox/MANIFEST.md.
 
@@ -38,7 +38,9 @@ theorem cd_collapse_in {α β : Type*} {M : Motion α} {N : Motion β} (f : α �
   od_collapse f hf hN (hy x)
 
 /-- `Statement:` OUT form, local: if `f t` has at most one successor in `N`, a step-carrying map
-    identifies any two successors of `t`. -/
+    identifies any two successors of `t`. The source half is a fork, the conclusion shape of
+    `execution_requires_branching`; the target half is `deterministic_has_no_fanout`
+    (`ZeroParadox/Computability/Occurrence.lean`). -/
 theorem cd_fan_collapse {α β : Type*} {M : Motion α} {N : Motion β} (f : α → β)
     (hf : ∀ a b, M.step a b → N.step (f a) (f b)) {t a b : α} (ha : M.step t a) (hb : M.step t b)
     (hN : ∀ c d, N.step (f t) c → N.step (f t) d → c = d) : f a = f b :=
@@ -63,8 +65,8 @@ example {α β : Type*} {M : Motion α} (g : β → β) (f : α → β)
     (a b : α) : f a = f b :=
   cd_collapse_out f hf ht (fun c d (hc : c = g (f t)) (hd : d = g (f t)) => hc.trans hd.symm) a b
 
-/-- `Statement:` the first half of the loop obstruction is `Motion.isEmpty_relHom_of_step_self`
-    (`ZeroParadox/Die.lean`): no step-carrying map from a self-step into a step with none. -/
+/-- `Statement:` no step-carrying map from a motion with a self-step into one with none
+    (`Motion.isEmpty_relHom_of_step_self`, `ZeroParadox/Die.lean`). -/
 example {α β : Type*} {M : Motion α} {N : Motion β} {y : α} (hy : M.step y y)
     (hN : ∀ t, ¬ N.step t t) : IsEmpty (M.step →r N.step) :=
   Motion.isEmpty_relHom_of_step_self hy hN
@@ -105,7 +107,8 @@ theorem cd_tiz_doubling_collapse {L : Type*} [ZPSemilattice L] (f : L → Q₂)
   linear_combination -hself
 
 /-- `Statement:` INVARIANT under reversal: every map carrying REVERSED join steps to doubling steps
-    on `Q₂` is `0`: the IN form at the bottom of `L`. -/
+    on `Q₂` is `0`: the IN form at the bottom of `L`. This route consumes `Q₂`'s
+    `two_ne_zero` and no zero divisors; the statement does not need them (next `example`). -/
 theorem cd_tiz_reverse_doubling_collapse {L : Type*} [ZPSemilattice L] (f : L → Q₂)
     (hf : ∀ a b, (cdJoinStep L).reverse.step a b →
       (Motion.ofFun (fun x : Q₂ => 2 * x)).step (f a) (f b)) (x : L) : f x = 0 := by
@@ -115,6 +118,14 @@ theorem cd_tiz_reverse_doubling_collapse {L : Type*} [ZPSemilattice L] (f : L �
     (fun x => Relation.ReflTransGen.single (cd_bot_steps_everywhere x))
     (fun a (ha : f ZPSemilattice.bot = 2 * a) => by
       rw [h0] at ha ⊢; exact (mul_eq_zero.mp ha.symm).resolve_left two_ne_zero) x, h0]
+
+/-- `Statement:` the same conclusion into doubling on any commutative ring, from `join_idem` alone:
+    every point reverse-steps to itself, and `z = 2 * z` forces `z = 0`. -/
+example {L : Type*} [ZPSemilattice L] {K : Type*} [CommRing K] (f : L → K)
+    (hf : ∀ a b, (cdJoinStep L).reverse.step a b →
+      (Motion.ofFun (fun x : K => 2 * x)).step (f a) (f b)) (x : L) : f x = 0 := by
+  have hs : f x = 2 * f x := hf x x ⟨x, (ZPSemilattice.join_idem x).symm⟩
+  linear_combination -hs
 
 /-- `Statement:` CONTROL (target not single-valued): `c₀ ↦ 1`, `c₁ ↦ 0` carries every join step of
     `MachinePhase` to the always-true OVER on `Q₂` and is not constant. -/
@@ -139,18 +150,21 @@ theorem cd_tiz_control_source :
   show f c₁ = 2 * f c₀
   simp [f, c₀, c₁]
 
-/-- `Statement:` CONTROL (single-valued target, another fixed point): the constant map `1` carries
-    every join step into `ofFun (fun _ => 1)`; the collapse holds and the value `0` does not. -/
+/-- `Statement:` CONTROL (single-valued target whose fixed point is `1`): the constant map `1`
+    carries every join step into `ofFun (fun _ => 1)`, and its value is not `0`; so the value `0`
+    in `cd_tiz_doubling_collapse` consumes doubling's fixed point. -/
 theorem cd_tiz_control_value :
-    ∀ a b, (cdJoinStep MachinePhase).step a b →
-      (Motion.ofFun (fun _ : Q₂ => (1 : Q₂))).step ((fun _ => (1 : Q₂)) a) ((fun _ => (1 : Q₂)) b) :=
-  fun _ _ _ => rfl
+    (∀ a b, (cdJoinStep MachinePhase).step a b →
+      (Motion.ofFun (fun _ : Q₂ => (1 : Q₂))).step ((fun _ => (1 : Q₂)) a) ((fun _ => (1 : Q₂)) b)) ∧
+    (1 : Q₂) ≠ 0 :=
+  ⟨fun _ _ _ => rfl, one_ne_zero⟩
 
 /-! ## § II. Floors (`floor_reach_separates_mu_nu`): `Nat.pred` against doubling -/
 
 /-- `Statement:` if every point of `ofFun A` arrives at a fixed point `y` of `A`, and no fixed point
     of `B` is entered from another point, every semiconjugacy from `A` to `B` is constant at `c y`.
-    The IN form for function motions. -/
+    The IN form for function motions; `hB` says each fixed point `z` of `B` has `{z}` backward
+    invariant, `B⁻¹ {z} = {z}` (Milnor, Dynamics notes § 5, p. 5-2). -/
 theorem cd_semiconj_const {α β : Type*} (A : α → α) (B : β → β) (y : α) (hy : A y = y)
     (harr : ∀ x, (Motion.ofFun A).Arrives y x) (hB : ∀ z a, B z = z → B a = z → a = z)
     (c : α → β) (hc : Function.Semiconj c A B) (x : α) : c x = c y := by
@@ -254,7 +268,8 @@ theorem cd_banks_offset {L : Type*} [ValBridge L] (ρ : L → Q₂)
   push_cast
   ring
 
-/-- `Statement:` CONTROL: with the constant realization `1` the offset moves at the first step. -/
+/-- `Statement:` CONTROL for `hsemi`: the constant map `1`, which is not a semiconjugacy into
+    doubling (`1 ≠ 2 * 1`): at any `x ≠ ⊥` of `L` its offset moves at the first step. -/
 theorem cd_banks_offset_control {L : Type*} [ValBridge L] (x : L) (hxb : x ≠ ValBridge.bot) :
     ((ValBridge.val (ValBridge.scale x)).toNat : ℤ) -
         ((fun _ : L => (1 : Q₂)) (ValBridge.scale x)).valuation
@@ -270,7 +285,8 @@ theorem cd_forward_stepBack {L : Type*} (scale : L → L) (ρ : L → Q₂)
   fun a c hc => ⟨scale a, rfl, by rw [hsemi a]; exact hc.symm⟩
 
 /-- `Statement:` reversed chart: if `x` has no `scale`-predecessor, no map `ρ : L → Q₂` satisfies
-    the back clause between the reversed motions. -/
+    the back clause between the reversed motions. The proof consumes that `ρ x` has a half in
+    `Q₂`, the fact `cd_reverse_control` removes on `ℤ_[2]`. -/
 theorem cd_reverse_no_stepBack {L : Type*} (scale : L → L) (ρ : L → Q₂) (x : L)
     (hx : ∀ y, scale y ≠ x) :
     ¬ Motion.StepBack (Motion.ofFun scale).reverse (Motion.ofFun (fun q : Q₂ => 2 * q)).reverse ρ := by
@@ -337,6 +353,12 @@ theorem cd_run_into_control :
         (fun n => if n = 0 then 1 else 0) ∧
       IsEmpty ((1 : ℕ) ≅ 0) :=
   ⟨fun _ => trivial, ⟨fun i => by have := i.hom.down.down; omega⟩⟩
+
+/-- `Statement:` CONTROL for `hI`, same motion: in the hom motion of ℕ the run `0, 1, 1, …` reaches
+    `I = 1` from `0`, and `0` is not isomorphic to `1`. -/
+example : (cdHomMotion ℕ).IsRun (fun n => if n = 0 then 0 else 1) ∧ IsEmpty ((0 : ℕ) ≅ 1) :=
+  ⟨fun n => ⟨homOfLE (by dsimp only; rcases n with _ | n <;> simp)⟩,
+    ⟨fun i => by have := i.inv.down.down; omega⟩⟩
 
 /-- `Statement:` no step-carrying map from the hom motion of an inhabited category into `ofFun succ`
     on ℕ: an identity morphism is a self-step, and `succ` has no fixed point. -/
