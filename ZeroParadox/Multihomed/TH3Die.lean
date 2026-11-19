@@ -1,4 +1,4 @@
--- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): each of the four conjuncts of T-H3 (`th3_snap_all_functors`) read as a fact about a die `Motion` on its own carrier, each fit beside a failing control and a second chart (a reversed motion for (A), (B), (C); an order dual for (A); a swap of summands for (C); a swap of basis vectors for (D)), and two obstructions (not identities) relating conjunct (A) to (B) and (A) to (D) through maps of carriers. Curated results indexed in ZeroParadox/MANIFEST.md.
+-- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): each of the four conjuncts of T-H3 (`th3_snap_all_functors`) read as a fact about a die `Motion` on its own carrier, each fit beside a failing control and a second chart (a reversed motion for (A), (B), (C), trivially for (C) as its property reads only UP, which reversal keeps; an order dual for (A); a swap of summands for (C); a swap of basis vectors for (D)), and two obstructions (not identities) through maps of carriers: (A) into the path motion on `Q₂`, and (A) to (D). Curated results indexed in ZeroParadox/MANIFEST.md.
 import ZeroParadox.Multihomed.CategoricalBridge
 import ZeroParadox.Ordinal.Incompleteness
 import ZeroParadox.Valuation.BranchingSnapChain
@@ -101,6 +101,13 @@ theorem th3_joined_eq {X : Type*} [TopologicalSpace X] [TotallyDisconnectedSpace
   obtain ⟨γ⟩ := h
   exact disconnectedness_forbids_path hxy ⟨γ.toContinuousMap, γ.source, γ.target⟩
 
+/-- `Statement:` `th3_joined_eq` from Mathlib's `TotallyDisconnectedSpace.eq_of_continuous` applied
+    to a path. -/
+example {X : Type*} [TopologicalSpace X] [TotallyDisconnectedSpace X] {x y : X}
+    (h : Joined x y) : x = y := by
+  obtain ⟨γ⟩ := h
+  simpa using TotallyDisconnectedSpace.eq_of_continuous γ γ.continuous 0 1
+
 /-- `Statement:` conjunct (B) as a die fact, from `c3_irreversible`: in the path motion on `Q₂`,
     every step into `0` starts at `0`. -/
 theorem th3_B_fit : ∀ x : Q₂, (th3PathMotion Q₂).step x 0 → x = 0 := by
@@ -115,7 +122,7 @@ theorem th3_B_every_point_selfOnly (y : Q₂) : (th3PathMotion Q₂).SelfOnlyAt 
   ⟨Joined.refl y, fun _ hb => (th3_joined_eq hb).symm⟩
 
 /-- `Statement:` INVARIANT under reversal: in the reversed path motion on `Q₂`, every step into `0`
-    starts at `0`; it agrees with `th3_B_fit` because `Joined` is symmetric (`Joined.symm`). -/
+    starts at `0`; equivalent to `th3_B_fit` by `Joined.symm`, derived here from `th3_joined_eq`. -/
 theorem th3_B_reverse : ∀ x : Q₂, (th3PathMotion Q₂).reverse.step x 0 → x = 0 :=
   fun _ h => (th3_joined_eq h).symm
 
@@ -216,6 +223,15 @@ theorem th3_D_up_zero_iff (s : StateSpace n → StateSpace n → Prop) (v : Stat
     show ‖th3E0 n hn‖ = 1 from t2_norm_eq_one n _]
   simp [th3_e0_ne_zero n hn, eq_comm]
 
+/-- `Statement:` `th3_D_up_zero_iff` from Mathlib's `Submodule.starProjection_apply_eq_zero_iff`
+    and `Submodule.mem_orthogonal_singleton_iff_inner_right`. -/
+example (s : StateSpace n → StateSpace n → Prop) (v : StateSpace n) :
+    (0 : StateSpace n) ∈ (th3ProjMotion n (th3E0 n hn) s).up v ↔
+      @inner ℂ (StateSpace n) _ (th3E0 n hn) v = 0 := by
+  show (0 : StateSpace n) ∈ Part.some ((ℂ ∙ th3E0 n hn).starProjection v) ↔ _
+  rw [Part.mem_some_iff, eq_comm, Submodule.starProjection_apply_eq_zero_iff,
+    Submodule.mem_orthogonal_singleton_iff_inner_right]
+
 /-- `Statement:` conjunct (D) as a die fact, from `t4_snap_orthogonal`: `th3E0` is a landing and
     `th3E1` goes UP to the zero vector. -/
 theorem th3_D_fit (s : StateSpace n → StateSpace n → Prop) :
@@ -294,15 +310,21 @@ theorem th3_AB_collapse_any {X : Type*} [TopologicalSpace X] [TotallyDisconnecte
   th3_joined_eq (hf c₀ c₁ ⟨c₁, t_snap_machine.symm⟩)
 
 /-- `Statement:` a map `MachinePhase → Q₂` carrying each step of `machineJoinMotion` to a path step
-    and putting `c₁` at `0` also puts `c₀` at `0`. It is the instance at `0` of
-    `th3_AB_collapse_any`; the `0` is not used. (A) supplies the step `c₀ → c₁`
-    (`t_snap_machine`); (B) forbids its image (`c3_irreversible`, via `th3_B_fit`). -/
+    and putting `c₁` at `0` also puts `c₀` at `0`. This proof routes through (B): (A) supplies the
+    step `c₀ → c₁` (`t_snap_machine`); (B) forbids its image (`c3_irreversible`, via `th3_B_fit`).
+    The `0` is not needed: the conclusion also follows from `th3_AB_collapse_any` (next `example`). -/
 theorem th3_AB_collapse (f : MachinePhase → Q₂)
     (hf : ∀ a b, machineJoinMotion.step a b → (th3PathMotion Q₂).step (f a) (f b))
     (h1 : f c₁ = 0) : f c₀ = 0 := by
   have hs := hf c₀ c₁ ⟨c₁, t_snap_machine.symm⟩
   rw [h1] at hs
   exact th3_B_fit (f c₀) hs
+
+/-- `Statement:` `th3_AB_collapse`'s conclusion from `th3_AB_collapse_any`, without `th3_B_fit`. -/
+example (f : MachinePhase → Q₂)
+    (hf : ∀ a b, machineJoinMotion.step a b → (th3PathMotion Q₂).step (f a) (f b))
+    (h1 : f c₁ = 0) : f c₀ = 0 :=
+  (th3_AB_collapse_any f hf).trans h1
 
 /-- `Statement:` the `snapEmbed` assignment (`c₀ ↦ 1`, `c₁ ↦ 0`), read in `Q₂`, does not carry the
     join steps to path steps. -/
@@ -314,8 +336,9 @@ theorem th3_AB_snapEmbed_not_path :
   simp at this
 
 /-- `Statement:` CARRIER — CONTROL (ℝ): the assignment `c₀ ↦ 1`, `c₁ ↦ 0` into ℝ carries every join step to a
-    path step. What `th3_AB_collapse` consumes beyond (A) is that joined points are equal
-    (`th3_joined_eq`, total disconnectedness), which ℝ lacks. -/
+    path step, so the second conjunct is used. Beyond (A), `th3_AB_collapse` consumes (B) at the image
+    point (`th3_B_fit`); `th3_AB_collapse_any` consumes the stronger fact that joined points are equal
+    (`th3_joined_eq`). ℝ lacks both. -/
 theorem th3_AB_control_real :
     ∀ a b, machineJoinMotion.step a b →
       (th3PathMotion ℝ).step

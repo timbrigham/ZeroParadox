@@ -1,5 +1,5 @@
 """
-Build ZP-H Illustrated Companion (v1.34)
+Build ZP-H Illustrated Companion (v1.35)
 Standalone companion for ZP-H: Categorical Bridge only.
 ZP-G has its own companion (build_zpg_companion.py).
 
@@ -129,7 +129,7 @@ def snap_convergence_diagram():
 
     return d
 
-VERSION = '1.34'
+VERSION = '1.35'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -196,8 +196,8 @@ def build():
         'The result: in Lean, FB, FC and FD send 0 to an initial object of ℕ-indexed stand-ins (for FB, '
         'Q₂BallDepth; in TopCat its floor is terminal, not initial); FA has no functor term, and its '
         'witness is ℕ with 0 initial. Each framework has its own proved fact, none derived from another '
-        'or from a functor. That the four are windows on one thing is the framework\'s reading; T-H3 '
-        'itself relates none of them to another. Where they look alike, the likeness reflects a shared foundation (A1-A4, '
+        'or from a functor. That the four are windows on one thing is the framework\'s reading; T-H3, '
+        'the theorem that states the four facts together, itself relates none of them to another. Where they look alike, the likeness reflects a shared foundation (A1-A4, '
         'AX-B1 and the modelling commitment CC-1, S₀ = ⊥, restated in ZP-J, not forced), not independent '
         'confirmation.'))
     E.append(four_functor_diagram())
@@ -409,7 +409,7 @@ def build():
     E.append(ccaption(
         'The framework\'s reading, drawn as one line per framework: each of the four has a transition '
         'of the Binary Snap\'s shape. No fact is derived from another, and T-H3 itself '
-        'relates none of the four lines to another. The vertical line marks the moment of the Snap. '
+        'relates none of the four facts to another. The vertical line marks the moment of the Snap. '
         'Left: ⊥. Right: ε₀.'))
     E.append(sp(6))
 
