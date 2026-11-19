@@ -65,6 +65,7 @@ import ZeroParadox.Order.MotionFlips
 import ZeroParadox.Multihomed.TH3Die
 import ZeroParadox.Multihomed.OrbitDie
 import ZeroParadox.Multihomed.CollapseDie
+import ZeroParadox.Multihomed.LimitMotion
 
 set_option maxHeartbeats 400000
 
@@ -5288,5 +5289,17 @@ example : ¬ ∃ f : List Bool → Unit, ∀ l l',
 #check @ZeroParadox.cd_run_into                -- Statement: under AX-G2's shape at `I`, a run of the hom motion at `I` was never at an object isomorphism-free with `I`
 #check @ZeroParadox.cd_pole_fans_two           -- Statement: two-way branching fits on the two-point pole, with the node one of its own two successors; three-way does not (`cd_pole_no_three`)
 #check @ZeroParadox.cd_shift_tower_periodic    -- Statement: every lax map from `shiftMotion c` to `ordinalTowerMotion` takes fixed points of `α ↦ ω^α` and has period `⌜c⌝`, for every code `c`
+
+/-! ### § XXXV. The limit retraction: an approach is finite arrival or a stage closure -/
+-- Reading: CARRIER — each result beside its control in `ZeroParadox/Multihomed/LimitMotion.lean`;
+-- the carriers are joined only by homeomorphisms, and no equation across carriers is stated.
+#check @ZeroParadox.limitRetraction            -- Statement: the limit retraction of `g` (Abate–Bedford), partial: defined at `x` exactly when the orbit of `x` converges, with value its limit
+#check @ZeroParadox.limitMotion                -- Statement: for continuous `g` on a Hausdorff space, UP is `limitRetraction g` and OVER is `y = g x`; without continuity UP is not idempotent (`lm_jumpMap_breaks_idem`)
+#check @ZeroParadox.lm_tendsto_iff_arrival_or_closure -- Statement: the orbit of `x` tends to `p` iff `x` arrives at `p` and `p` is a landing, or no stage is a fixed point and the stages have a stage closure containing `p`; exclusive (`lm_not_arrives_of_closure`)
+#check @ZeroParadox.lm_not_arrives_infty       -- Statement: under `lmScale c` on `OnePoint K` no point of `K` arrives at `∞`: adjoining `∞` adds no step into it
+#check @ZeroParadox.lm_mem_iff_omegaLim        -- Statement: on a compact Hausdorff space, `p` is the value of `limitRetraction g x` iff `omegaLim g x = {p}`
+#check @ZeroParadox.lmIsoOfConj                -- Statement: a homeomorphism `e` with `e ∘ g = h ∘ e` is a strict isomorphism of the limit motions of `g` and `h`
+#check @ZeroParadox.lmHealedIso                -- Statement: INVERSION — on `OnePoint K`, `onePointInv` is a strict isomorphism of the limit motions of `lmScale c` and `lmScale d`, `c * d = 1`, exchanging `0` and `∞`, two distinct points
+#check @ZeroParadox.lm_torn_no_hom             -- Statement: inside `K`, if `c ^ n → 0` and `1 < ‖d‖`, no strict map of limit motions from `c`-scaling to `d`-scaling is field inversion; `lmBareInvIso` is one for the bare `ofFun` motions
 
 end DieCannotBeIndex

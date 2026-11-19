@@ -132247,8 +132247,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 4217,
-        "files": 232
+        "declarations": 4258,
+        "files": 233
       },
       "entries": [
         {
@@ -132877,6 +132877,43 @@
             ]
           },
           "reason": "New file ScaleRealization.lean: the realization map carrying an abstract scale step to 2-adic doubling (Function.Semiconj), with the valuation law derived rather than asserted, two refutation-grade falsifiers, and a non-vacuity witness.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "00f21655-6cd8-4930-a9c1-328f6b9d5060",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_negOrbit_no_limit",
+            "short": "lm_negOrbit_no_limit"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_negOrbit_no_limit",
+            "short": "lm_negOrbit_no_limit",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Limit retraction (Abate-Bedford) as the UP leg of a die motion: orbit convergence is finite arrival at a landing or a stage closure, with controls, healed/torn conjugacy and Q2/R instances (ZeroParadox/Multihomed/LimitMotion.lean)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -136661,6 +136698,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "06e13804-fc79-4303-9da5-602aa6220f7c",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_limitMotion_step",
+            "short": "lm_limitMotion_step"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_limitMotion_step",
+            "short": "lm_limitMotion_step",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Limit retraction (Abate-Bedford) as the UP leg of a die motion: orbit convergence is finite arrival at a landing or a stage closure, with controls, healed/torn conjugacy and Q2/R instances (ZeroParadox/Multihomed/LimitMotion.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "06e66754-7d71-4ec2-8f3e-7d94a587a884",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -138803,6 +138877,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "0a45c133-0c38-4930-94cd-d11e4d2e23fa",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_mem_iff_omegaLim",
+            "short": "lm_mem_iff_omegaLim"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_mem_iff_omegaLim",
+            "short": "lm_mem_iff_omegaLim",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Limit retraction (Abate-Bedford) as the UP leg of a die motion: orbit convergence is finite arrival at a landing or a stage closure, with controls, healed/torn conjugacy and Q2/R instances (ZeroParadox/Multihomed/LimitMotion.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "0a57f293-7791-4d86-b542-693071b6664f",
           "new": {
             "file": "ZeroParadox/Valuation/PoleChartSelection.lean",
@@ -140352,6 +140463,43 @@
             ]
           },
           "reason": "KleeneChoiceFree § VI: choice-free decoder ofNatCodeCF for Nat.Partrec.Code, both inverse laws at [propext, Quot.sound], and its equality with Mathlib's ofNatCode",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0c85e478-1056-486f-a8c5-3af0455c233b",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.limitRetraction",
+            "short": "limitRetraction"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.limitRetraction",
+            "short": "limitRetraction",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Limit retraction (Abate-Bedford) as the UP leg of a die motion: orbit convergence is finite arrival at a landing or a stage closure, with controls, healed/torn conjugacy and Q2/R instances (ZeroParadox/Multihomed/LimitMotion.lean)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -143510,6 +143658,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "116283e8-3501-4d10-a247-baeda63142ed",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_upStepInvariant",
+            "short": "lm_upStepInvariant"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_upStepInvariant",
+            "short": "lm_upStepInvariant",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Limit retraction (Abate-Bedford) as the UP leg of a die motion: orbit convergence is finite arrival at a landing or a stage closure, with controls, healed/torn conjugacy and Q2/R instances (ZeroParadox/Multihomed/LimitMotion.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "11685d46-7d37-4ec4-8690-06e9820af959",
           "new": {
             "file": "ZeroParadox/Settheory/GraphBisim.lean",
@@ -144388,6 +144573,43 @@
             ]
           },
           "reason": "UniversalChoiceFree § IX: a self-printing universal code at [propext, Quot.sound] (restated SelfPrints ∧ Universal via encodeCode/ofNatCodeCF), faithfulness bridges, statement controls, controls zero_selfPrints_not_universal / universal_not_selfPrints_cf / unshifted_incompatible",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "12e88d7e-aabd-4b65-91c2-d7b1b4b9a658",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_tendsto_iff_arrival_or_closure",
+            "short": "lm_tendsto_iff_arrival_or_closure"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_tendsto_iff_arrival_or_closure",
+            "short": "lm_tendsto_iff_arrival_or_closure",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Limit retraction (Abate-Bedford) as the UP leg of a die motion: orbit convergence is finite arrival at a landing or a stage closure, with controls, healed/torn conjugacy and Q2/R instances (ZeroParadox/Multihomed/LimitMotion.lean)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -157575,6 +157797,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "2a105006-dc81-4cc3-aa2b-c7398c764f9c",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lmScale",
+            "short": "lmScale"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lmScale",
+            "short": "lmScale",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Limit retraction (Abate-Bedford) as the UP leg of a die motion: orbit convergence is finite arrival at a landing or a stage closure, with controls, healed/torn conjugacy and Q2/R instances (ZeroParadox/Multihomed/LimitMotion.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "2a23ef7f-c7e2-453f-8521-111f8d736db6",
           "new": {
             "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
@@ -159243,6 +159502,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "2cd14dca-9384-4be1-a020-4f1aeba08741",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_scale_some",
+            "short": "lm_scale_some"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_scale_some",
+            "short": "lm_scale_some",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Limit retraction (Abate-Bedford) as the UP leg of a die motion: orbit convergence is finite arrival at a landing or a stage closure, with controls, healed/torn conjugacy and Q2/R instances (ZeroParadox/Multihomed/LimitMotion.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "2cd69d1a-5d0a-46e7-a9b3-18feb811d903",
           "new": {
             "file": "ZeroParadox/Valuation/RiemannSphere.lean",
@@ -160786,6 +161082,43 @@
             ]
           },
           "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "2f375d85-524a-4d9e-9a8d-530b607463ba",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_q2_halving_to_infty",
+            "short": "lm_q2_halving_to_infty"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_q2_halving_to_infty",
+            "short": "lm_q2_halving_to_infty",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Limit retraction (Abate-Bedford) as the UP leg of a die motion: orbit convergence is finite arrival at a landing or a stage closure, with controls, healed/torn conjugacy and Q2/R instances (ZeroParadox/Multihomed/LimitMotion.lean)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -163840,6 +164173,43 @@
             "role": []
           },
           "reason": "PricedInterface: the constructive/classical boundary with its cost measured - carrier choice-free, crossing carries Classical.choice at every declaration. The carrier has the shape of Casteran's ON_plus with a one-point right summand and is not an instance of it (its order is not well-founded); the map has two of ON_correct's three fields (into, onto) and not the comparator field. Cited; the measurement is the delta.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "34816102-27da-4d8c-bf8f-29c0f66a30a2",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_arrives_of_step_eq",
+            "short": "lm_arrives_of_step_eq"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_arrives_of_step_eq",
+            "short": "lm_arrives_of_step_eq",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Limit retraction (Abate-Bedford) as the UP leg of a die motion: orbit convergence is finite arrival at a landing or a stage closure, with controls, healed/torn conjugacy and Q2/R instances (ZeroParadox/Multihomed/LimitMotion.lean)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -170591,6 +170961,44 @@
             ]
           },
           "reason": "Die v2 final batch: drawing vs set (self-steps, accessibility, forced rank), ends of a view, orders on motions, placements as views, relaxed least-fixed-point schema, UP legs as nuclei",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "40407abf-62a9-49a6-af56-b9c5b8b15ddc",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_not_arrives_infty",
+            "short": "lm_not_arrives_infty"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_not_arrives_infty",
+            "short": "lm_not_arrives_infty",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Limit retraction (Abate-Bedford) as the UP leg of a die motion: orbit convergence is finite arrival at a landing or a stage closure, with controls, healed/torn conjugacy and Q2/R instances (ZeroParadox/Multihomed/LimitMotion.lean)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -183304,6 +183712,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "555928a8-d8b8-43da-85ef-3153b9e9a64b",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_real_doubling_closure_at_infty",
+            "short": "lm_real_doubling_closure_at_infty"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_real_doubling_closure_at_infty",
+            "short": "lm_real_doubling_closure_at_infty",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Limit retraction (Abate-Bedford) as the UP leg of a die motion: orbit convergence is finite arrival at a landing or a stage closure, with controls, healed/torn conjugacy and Q2/R instances (ZeroParadox/Multihomed/LimitMotion.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "556c247b-8749-43e4-ae2d-25f78ea402a3",
           "new": {
@@ -185662,6 +186107,44 @@
             ]
           },
           "reason": "Land 2026-11-10 cells-joint, local-towers, interleave probes and the new one-way-flow results into ZeroParadox/Valuation (CellsJoint, Interleave, LocalTowers, OneWayFlow).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "5913d001-f256-4958-8d4b-ce0490542630",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_q2_torn",
+            "short": "lm_q2_torn"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_q2_torn",
+            "short": "lm_q2_torn",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Limit retraction (Abate-Bedford) as the UP leg of a die motion: orbit convergence is finite arrival at a landing or a stage closure, with controls, healed/torn conjugacy and Q2/R instances (ZeroParadox/Multihomed/LimitMotion.lean)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -190572,6 +191055,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "61476c75-500f-4a14-bff8-247c7456e637",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_tendsto_infty_of_conj",
+            "short": "lm_tendsto_infty_of_conj"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_tendsto_infty_of_conj",
+            "short": "lm_tendsto_infty_of_conj",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Limit retraction (Abate-Bedford) as the UP leg of a die motion: orbit convergence is finite arrival at a landing or a stage closure, with controls, healed/torn conjugacy and Q2/R instances (ZeroParadox/Multihomed/LimitMotion.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "6150e1b9-4bcd-4861-878d-34f0ae02b3b8",
           "new": {
             "file": "ZeroParadox/Multihomed/TH3Die.lean",
@@ -190869,6 +191389,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "61bd95f1-b270-49e8-b455-6dbc30bfc4c4",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_torn_no_hom",
+            "short": "lm_torn_no_hom"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_torn_no_hom",
+            "short": "lm_torn_no_hom",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Limit retraction (Abate-Bedford) as the UP leg of a die motion: orbit convergence is finite arrival at a landing or a stage closure, with controls, healed/torn conjugacy and Q2/R instances (ZeroParadox/Multihomed/LimitMotion.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "61bdcfc5-07c8-44f5-984d-30dc9c2aa3af",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -191121,6 +191679,43 @@
             ]
           },
           "reason": "Lane B2 errata 2026-11-01: reverse arrow of Löb in the abstract ProvabilityLogic class (Löb's principle at A as an explicit hypothesis gives □A → A as a Löb diagonal).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "62379888-87c1-4810-98ae-1ed263d69563",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_omegaLimit_of_tendsto",
+            "short": "lm_omegaLimit_of_tendsto"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_omegaLimit_of_tendsto",
+            "short": "lm_omegaLimit_of_tendsto",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Limit retraction (Abate-Bedford) as the UP leg of a die motion: orbit convergence is finite arrival at a landing or a stage closure, with controls, healed/torn conjugacy and Q2/R instances (ZeroParadox/Multihomed/LimitMotion.lean)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -204310,6 +204905,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "78903fdc-eca6-439f-ad65-96a3bd003339",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lmJumpMap",
+            "short": "lmJumpMap"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lmJumpMap",
+            "short": "lmJumpMap",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Limit retraction (Abate-Bedford) as the UP leg of a die motion: orbit convergence is finite arrival at a landing or a stage closure, with controls, healed/torn conjugacy and Q2/R instances (ZeroParadox/Multihomed/LimitMotion.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "78a1974b-0019-4c87-b12a-a32d1a127d5b",
           "new": {
             "file": "ZeroParadox/Information/CrossingTrials.lean",
@@ -208663,6 +209295,43 @@
             "role": []
           },
           "reason": "die-wpb-1029: weak-pullback preservation for Part x Set (elementwise form) and, for motions, Rutten 5.1, 5.2, 5.4*, the greatest-bisimulation and equivalence clauses of 5.6, the bisimulation half of 5.7*, and 5.9*(2) (Die § XXII); Tim ruling 2026-10-29",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "7f99cbf6-f98c-48ed-bbf5-3f87388ff30c",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_tendsto_zero_of_field",
+            "short": "lm_tendsto_zero_of_field"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_tendsto_zero_of_field",
+            "short": "lm_tendsto_zero_of_field",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Limit retraction (Abate-Bedford) as the UP leg of a die motion: orbit convergence is finite arrival at a landing or a stage closure, with controls, healed/torn conjugacy and Q2/R instances (ZeroParadox/Multihomed/LimitMotion.lean)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -215686,6 +216355,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "8bf8b7af-21f1-44a9-bdaa-e6114cca322c",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_tendsto_of_omegaLimit",
+            "short": "lm_tendsto_of_omegaLimit"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_tendsto_of_omegaLimit",
+            "short": "lm_tendsto_of_omegaLimit",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Limit retraction (Abate-Bedford) as the UP leg of a die motion: orbit convergence is finite arrival at a landing or a stage closure, with controls, healed/torn conjugacy and Q2/R instances (ZeroParadox/Multihomed/LimitMotion.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "8c2318d2-8679-42a2-9037-7ddeeb074e37",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -216156,6 +216862,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "8d37cbfe-3df3-4d65-bc40-fda6ccbbb494",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_omegaLim_of_mem",
+            "short": "lm_omegaLim_of_mem"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_omegaLim_of_mem",
+            "short": "lm_omegaLim_of_mem",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Limit retraction (Abate-Bedford) as the UP leg of a die motion: orbit convergence is finite arrival at a landing or a stage closure, with controls, healed/torn conjugacy and Q2/R instances (ZeroParadox/Multihomed/LimitMotion.lean)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -218241,6 +218984,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "90f23b3a-a155-4787-a21a-1853cea91d0b",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_healedIso_toFun",
+            "short": "lm_healedIso_toFun"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_healedIso_toFun",
+            "short": "lm_healedIso_toFun",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Limit retraction (Abate-Bedford) as the UP leg of a die motion: orbit convergence is finite arrival at a landing or a stage closure, with controls, healed/torn conjugacy and Q2/R instances (ZeroParadox/Multihomed/LimitMotion.lean)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -226934,6 +227714,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "9e31ff54-470e-4fcf-9230-943047de9980",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_isLanding_iff",
+            "short": "lm_isLanding_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_isLanding_iff",
+            "short": "lm_isLanding_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Limit retraction (Abate-Bedford) as the UP leg of a die motion: orbit convergence is finite arrival at a landing or a stage closure, with controls, healed/torn conjugacy and Q2/R instances (ZeroParadox/Multihomed/LimitMotion.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "9e357454-a14b-43fc-8ee3-ba4d27ac79a3",
           "new": {
@@ -228800,6 +229617,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "a0a9becb-0345-4e9f-a8aa-285663a60156",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_real_half_tendsto",
+            "short": "lm_real_half_tendsto"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_real_half_tendsto",
+            "short": "lm_real_half_tendsto",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Limit retraction (Abate-Bedford) as the UP leg of a die motion: orbit convergence is finite arrival at a landing or a stage closure, with controls, healed/torn conjugacy and Q2/R instances (ZeroParadox/Multihomed/LimitMotion.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "a0ae996d-89a1-4570-9cea-45d5f19085d5",
           "new": {
             "file": "ZeroParadox/Settheory/HypersetOrder.lean",
@@ -229525,6 +230379,43 @@
             "role": []
           },
           "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a213d748-beea-427c-b72a-61dc0d0fba90",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_jumpMap_breaks_idem",
+            "short": "lm_jumpMap_breaks_idem"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_jumpMap_breaks_idem",
+            "short": "lm_jumpMap_breaks_idem",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Limit retraction (Abate-Bedford) as the UP leg of a die motion: orbit convergence is finite arrival at a landing or a stage closure, with controls, healed/torn conjugacy and Q2/R instances (ZeroParadox/Multihomed/LimitMotion.lean)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -230966,6 +231857,43 @@
             ]
           },
           "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a4db48e6-cfe7-45bf-839b-8b3954bc9a4f",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_isRun",
+            "short": "lm_isRun"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_isRun",
+            "short": "lm_isRun",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Limit retraction (Abate-Bedford) as the UP leg of a die motion: orbit convergence is finite arrival at a landing or a stage closure, with controls, healed/torn conjugacy and Q2/R instances (ZeroParadox/Multihomed/LimitMotion.lean)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -235890,6 +236818,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "ac8c4ca8-cd63-4504-bc95-a44cf58d09f8",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lmIsoOfConj",
+            "short": "lmIsoOfConj"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lmIsoOfConj",
+            "short": "lmIsoOfConj",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Limit retraction (Abate-Bedford) as the UP leg of a die motion: orbit convergence is finite arrival at a landing or a stage closure, with controls, healed/torn conjugacy and Q2/R instances (ZeroParadox/Multihomed/LimitMotion.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "ac95f0b2-a52f-46aa-b99f-6571d6429185",
           "new": {
             "file": "ZeroParadox/Information/Surprisal.lean",
@@ -236474,6 +237439,43 @@
             ]
           },
           "reason": "New file QuineHost.lean — the Quine-Host requirements typeclass (AFA-requirements reframe, honesty thread)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "adb924ac-55a7-406e-a0ed-b07949b1e66d",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.limitMotion",
+            "short": "limitMotion"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.limitMotion",
+            "short": "limitMotion",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Limit retraction (Abate-Bedford) as the UP leg of a die motion: orbit convergence is finite arrival at a landing or a stage closure, with controls, healed/torn conjugacy and Q2/R instances (ZeroParadox/Multihomed/LimitMotion.lean)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -248373,6 +249375,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "c0483187-25de-46c2-ac3b-dca7a104b127",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_scale_infty",
+            "short": "lm_scale_infty"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_scale_infty",
+            "short": "lm_scale_infty",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Limit retraction (Abate-Bedford) as the UP leg of a die motion: orbit convergence is finite arrival at a landing or a stage closure, with controls, healed/torn conjugacy and Q2/R instances (ZeroParadox/Multihomed/LimitMotion.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "c089ae96-055b-4ae6-9857-1baa229b3967",
           "new": {
             "file": "ZeroParadox/State/DieProjection.lean",
@@ -249062,6 +250101,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "c222e0eb-65d9-441e-b0da-9d401e9d87ac",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_q2_doubling_closure_at_zero",
+            "short": "lm_q2_doubling_closure_at_zero"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_q2_doubling_closure_at_zero",
+            "short": "lm_q2_doubling_closure_at_zero",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Limit retraction (Abate-Bedford) as the UP leg of a die motion: orbit convergence is finite arrival at a landing or a stage closure, with controls, healed/torn conjugacy and Q2/R instances (ZeroParadox/Multihomed/LimitMotion.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "c2242892-f0c3-4639-96a2-6160beae41fe",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -249647,6 +250723,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c33eb242-a85a-498c-86db-4f20c969b521",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_not_arrives_of_closure",
+            "short": "lm_not_arrives_of_closure"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_not_arrives_of_closure",
+            "short": "lm_not_arrives_of_closure",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Limit retraction (Abate-Bedford) as the UP leg of a die motion: orbit convergence is finite arrival at a landing or a stage closure, with controls, healed/torn conjugacy and Q2/R instances (ZeroParadox/Multihomed/LimitMotion.lean)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -252263,6 +253376,43 @@
           "verify": {
             "axioms": [],
             "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c72abd9e-f303-4037-a2c2-f5b84065e2c1",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_omegaLim_eq_omegaLimit",
+            "short": "lm_omegaLim_eq_omegaLimit"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_omegaLim_eq_omegaLimit",
+            "short": "lm_omegaLim_eq_omegaLimit",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Limit retraction (Abate-Bedford) as the UP leg of a die motion: orbit convergence is finite arrival at a landing or a stage closure, with controls, healed/torn conjugacy and Q2/R instances (ZeroParadox/Multihomed/LimitMotion.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
           }
         },
         {
@@ -255636,6 +256786,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "cc90a9cd-8d58-49e1-a93e-1a71127cc59c",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_arrives_iff",
+            "short": "lm_arrives_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_arrives_iff",
+            "short": "lm_arrives_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Limit retraction (Abate-Bedford) as the UP leg of a die motion: orbit convergence is finite arrival at a landing or a stage closure, with controls, healed/torn conjugacy and Q2/R instances (ZeroParadox/Multihomed/LimitMotion.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "cca917f3-f6df-4798-b4e2-141e164f388b",
           "new": {
             "file": "ZeroParadox/Information/Disjunctive.lean",
@@ -258673,6 +259860,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "d0bddbdb-f355-467f-b1bb-d0d8e4c57a33",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lmHomOfConj",
+            "short": "lmHomOfConj"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lmHomOfConj",
+            "short": "lmHomOfConj",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Limit retraction (Abate-Bedford) as the UP leg of a die motion: orbit convergence is finite arrival at a landing or a stage closure, with controls, healed/torn conjugacy and Q2/R instances (ZeroParadox/Multihomed/LimitMotion.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "d0be733a-b947-46b9-a3e2-f1f45b895507",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -258921,6 +260145,43 @@
           "verify": {
             "axioms": [],
             "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d16a3554-6bf1-44c0-8bd1-62710e927010",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_onePointInv_conj_scale",
+            "short": "lm_onePointInv_conj_scale"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_onePointInv_conj_scale",
+            "short": "lm_onePointInv_conj_scale",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Limit retraction (Abate-Bedford) as the UP leg of a die motion: orbit convergence is finite arrival at a landing or a stage closure, with controls, healed/torn conjugacy and Q2/R instances (ZeroParadox/Multihomed/LimitMotion.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
           }
         },
         {
@@ -266569,6 +267830,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "dd3375ec-6312-4bd3-9c2a-65bf4407a5b9",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_real_torn",
+            "short": "lm_real_torn"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_real_torn",
+            "short": "lm_real_torn",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Limit retraction (Abate-Bedford) as the UP leg of a die motion: orbit convergence is finite arrival at a landing or a stage closure, with controls, healed/torn conjugacy and Q2/R instances (ZeroParadox/Multihomed/LimitMotion.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "dd456d8b-95b2-46e2-bb0e-019711890de2",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -267456,6 +268755,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "deb5edc0-ee23-41c8-9bf1-fd45d77c382d",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lmBareInvIso",
+            "short": "lmBareInvIso"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lmBareInvIso",
+            "short": "lmBareInvIso",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Limit retraction (Abate-Bedford) as the UP leg of a die motion: orbit convergence is finite arrival at a landing or a stage closure, with controls, healed/torn conjugacy and Q2/R instances (ZeroParadox/Multihomed/LimitMotion.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "deb62e27-4230-4fa0-be58-aca9c8907c90",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -267738,6 +269075,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "df516bdc-59fb-4e0f-b4b0-1dd2ee913b63",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_negOrbit_fails_die",
+            "short": "lm_negOrbit_fails_die"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_negOrbit_fails_die",
+            "short": "lm_negOrbit_fails_die",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Limit retraction (Abate-Bedford) as the UP leg of a die motion: orbit convergence is finite arrival at a landing or a stage closure, with controls, healed/torn conjugacy and Q2/R instances (ZeroParadox/Multihomed/LimitMotion.lean)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -269940,6 +271315,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e30e343b-783a-464c-9aad-4c83e6951e30",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_mem_limitRetraction_iff",
+            "short": "lm_mem_limitRetraction_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_mem_limitRetraction_iff",
+            "short": "lm_mem_limitRetraction_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Limit retraction (Abate-Bedford) as the UP leg of a die motion: orbit convergence is finite arrival at a landing or a stage closure, with controls, healed/torn conjugacy and Q2/R instances (ZeroParadox/Multihomed/LimitMotion.lean)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -273454,6 +274866,44 @@
             "role": []
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e8140dc1-f34f-496f-be32-c7540a2b6340",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lmHealedIso",
+            "short": "lmHealedIso"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lmHealedIso",
+            "short": "lmHealedIso",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Limit retraction (Abate-Bedford) as the UP leg of a die motion: orbit convergence is finite arrival at a landing or a stage closure, with controls, healed/torn conjugacy and Q2/R instances (ZeroParadox/Multihomed/LimitMotion.lean)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -281182,6 +282632,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "f4ddf2ed-74ea-45ad-9ac7-5bf2b5711c7a",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_limitRetraction_idem",
+            "short": "lm_limitRetraction_idem"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_limitRetraction_idem",
+            "short": "lm_limitRetraction_idem",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Limit retraction (Abate-Bedford) as the UP leg of a die motion: orbit convergence is finite arrival at a landing or a stage closure, with controls, healed/torn conjugacy and Q2/R instances (ZeroParadox/Multihomed/LimitMotion.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "f4de494c-803e-4c0d-82f9-9437b618fc9d",
           "new": {
             "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
@@ -283599,6 +285086,43 @@
             "role": []
           },
           "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f822c0ad-a3bf-44a5-bbb6-e660200230a5",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_scale_iterate_some",
+            "short": "lm_scale_iterate_some"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_scale_iterate_some",
+            "short": "lm_scale_iterate_some",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Limit retraction (Abate-Bedford) as the UP leg of a die motion: orbit convergence is finite arrival at a landing or a stage closure, with controls, healed/torn conjugacy and Q2/R instances (ZeroParadox/Multihomed/LimitMotion.lean)",
           "verify": {
             "axioms": null,
             "sorry_free": null
