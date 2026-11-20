@@ -10,10 +10,7 @@ import Mathlib.Tactic
 
 ## Engineer's Take
 
-This file is one of a series of iterative attempts on this branch to build a map of how the various
-bottoms interconnect, and by extension how bottom moves from being the floor, a thing (a noun), to a
-verb (an action). The Lean here is our attempt, one way or the other, to get a clean verification. I
-defer to my AI assistant regarding the specifics of how the internals work.
+Whether two motions are the same is a switch passed to one of the attributes we're already building the die with, and it's mandatory. The constructors reference each other and pass the fixed default along, to avoid drift. There are three of them instead of two, specifically so that we can note exactly where choice gets introduced, and that's the right way to address the nesting behavior.
 
 ---
 
