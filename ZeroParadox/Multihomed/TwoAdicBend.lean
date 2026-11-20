@@ -248,8 +248,9 @@ theorem dTwist_mult_valuation {u c : ℚ_[2]} (hu : ‖u‖ = 1) (hc : c ≠ 0) 
   rw [Padic.valuation_mul (zpow_ne_zero _ hu0) hc, Padic.valuation_zpow,
     tb_val_eq_zero_of_norm_one hu, mul_zero, zero_add]
 
-/-- `Statement:` CONTROL: no `u` with `‖u‖ = 1` has `u ^ v(2) * 2 = 4`, so no twist sends `×2` to
-    `×4`. `Reading:` a fact about this construction; `scaleConj_two_four` conjugates them. -/
+/-- `Statement:` CONTROL: no `u` with `‖u‖ = 1` has `u ^ v(2) * 2 = 4`; with `dTwist_conj_mul`, no
+    twist sends `×2` to `×4`. `Reading:` a fact about this construction; `scaleConj_two_four`
+    conjugates them. -/
 theorem dTwist_not_two_four {u : ℚ_[2]} (hu : ‖u‖ = 1) :
     u ^ (2 : ℚ_[2]).valuation * 2 ≠ 4 := by
   intro h
