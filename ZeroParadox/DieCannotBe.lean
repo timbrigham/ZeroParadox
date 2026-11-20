@@ -5206,9 +5206,13 @@ example : (∀ n, ZeroParadox.slotRun (fun _ => false) n = false) ∧
 #check @ZeroParadox.pinnedLimitUnique_withTop
 #check @ZeroParadox.PinnedLimit.isJoint        -- Statement: in a partial order, if `c` occupies `PinnedLimit g s c`, then `c` is a joint of (the stages, the fixed points of `g`); one way, and the `Bool` preorder CONTROL in `ZeroParadox/Order/DieJoints.lean` makes antisymmetry a premise
 #check @ZeroParadox.epsilon0_isJoint           -- Statement: ε₀ is a joint of (the ω-tower from ⊥ of `Ordinal`, the fixed points of `ω^·`), by `epsilon0_pinnedLimit`; CONTROLs in the home file: ω is a joint too, and against the fixed points at or above ε₁ the tower has no cut point at ε₀
-#check @ZeroParadox.NInf.wlpo_of_iso           -- Statement: identifying the two carriers by an order isomorphism `NInf ≃o WithTop ℕ` gives WLPO (`[propext, Quot.sound]`)
-#check @ZeroParadox.NInf.orderIsoWithTopClassical -- Statement: CONTROL: such an isomorphism from `Classical.propDecidable`, with no WLPO hypothesis
-#check @ZeroParadox.waitENat                    -- Statement: `orderIsoWithTopClassical` as `NInf ≃o ℕ∞`, the map `endVal_eq_wait` (§ XXX) reads waiting times through. Reading: the exact depth in `ℕ∞` is paid for in WLPO, by `wlpo_of_iso` above, not by the tape
+#check @ZeroParadox.NInf.wlpo_of_iso           -- Statement: identifying the two carriers by an order isomorphism `NInf ≃o WithTop ℕ` gives WLPO (`[propext, Quot.sound]`); `lpo_of_iso`, next, gives LPO
+#check @ZeroParadox.NInf.lpo_of_iso            -- Statement: any order isomorphism `NInf ≃o WithTop ℕ` gives `∀ r : ℕ → Bool, (∃ n, r n = true) ∨ ∀ n, r n = false`, LPO (`[propext, Quot.sound]`)
+#check @ZeroParadox.NInf.iso_ofNat             -- Statement: any order isomorphism `e : NInf ≃o WithTop ℕ` has `e (ofNat n) = ↑n` at every `n`
+#check @ZeroParadox.NInf.lpoData_of_iso        -- Statement: any order isomorphism `NInf ≃o WithTop ℕ` gives, for each `r : ℕ → Bool`, a `PSum (∃ n, r n = true) (∀ n, r n = false)`
+#check @ZeroParadox.NInf.isoOfLPOData          -- Statement: conversely, a `PSum (∃ n, r n = true) (∀ n, r n = false)` for every `r : ℕ → Bool` gives an order isomorphism `NInf ≃o WithTop ℕ` (`[propext, Quot.sound]`)
+#check @ZeroParadox.NInf.orderIsoWithTopClassical -- Statement: CONTROL: such an isomorphism from `Classical.propDecidable`, with no LPO hypothesis
+#check @ZeroParadox.waitENat                    -- Statement: `orderIsoWithTopClassical` as `NInf ≃o ℕ∞`, the map `endVal_eq_wait` (§ XXX) reads waiting times through. Reading: any `NInf ≃o ℕ∞` gives LPO (`NInf.lpo_of_enatIso`, `ZeroParadox/Valuation/DepthIsWait.lean`), so the exact depth in `ℕ∞` is paid for in LPO, not by the tape
 
 /-! ### § XXX. First-occurrence time as a Galois insertion: tapes onto `NInf`, order reversed -/
 -- Reading: Tim's "bend" (2026-11-03): one tape, a firing record in `ℕ → Bool` (pointwise order) and a
@@ -5264,6 +5268,7 @@ example : (∀ n, ZeroParadox.slotRun (fun _ => false) n = false) ∧
 -- `ZeroParadox/Die.lean` § XXVI; carrier controls: `ZeroParadox/Valuation/DoublingAndTree.lean` § IX.
 #check @ZeroParadox.Motion.prod                -- Statement: the lockstep pairing: UP componentwise, a step moves both coordinates
 #check @ZeroParadox.Motion.aprod               -- Statement: the interleaving pairing: UP componentwise, a step moves one coordinate (Mathlib `Prod.GameAdd`)
+#check @ZeroParadox.Motion.rtg_gameAdd_iff     -- Statement: reachability under `Prod.GameAdd R S` is reachability in each coordinate; both directions. Contrast: the lockstep square does not factor so (`sync_rtg_not_product`, below)
 #check @ZeroParadox.Motion.StrictIso.equivCoalgIso -- Statement: isomorphisms of motions from `M` to `N` are equivalent (Mathlib `Equiv`) to isomorphisms from `M.toCoalgebra` to `N.toCoalgebra` in Mathlib's `Endofunctor.Coalgebra` category
 #check @ZeroParadox.Motion.ADoubling           -- Statement: PREMISE, `M` is isomorphic to `M.aprod M`; `Doubling` is the same for `M.prod M`
 #check @ZeroParadox.Motion.FixedPole           -- Statement: PREMISE, the isomorphism sends `r` to `(r, r)`
@@ -5308,6 +5313,7 @@ example : ¬ ZeroParadox.Motion.unitMotion.Loop := fun ⟨_, _, _, _, hne, _⟩ 
 #check @ZeroParadox.nn_tree                    -- Reading: doubling forces the tree without discreteness: `ℕ → ℝ≥0` doubles (`nnDouble`), ⊥ of it has no cover, it is not strongly atomic, and `BTree` embeds at ⊥
 #check @ZeroParadox.comb_atomic_no_tree        -- Reading: and discreteness does not force the tree: `Comb` is strongly atomic and embeds no `BTree`
 #check @ZeroParadox.epsilon0_control           -- Reading: the second point the tree theorem uses supplies only non-degeneracy; ε₀ ≠ ⊥ of `Ordinal` (`epsilon0_ne_bot`) is such a point, and `Ordinal` neither doubles nor embeds `BTree`, so naming that point ε₀ adds nothing
+#check @ZeroParadox.Motion.tree_of_square     -- Statement: for any reflexive transitive `L` (no antisymmetry, no least element), a map `j` with `L (j p) (j q) ↔ L p.1 q.1 ∧ L p.2 q.2`, any root `r` with `L r (j (r, r))` and any `a` with `L r a` and not `L a r`: a map from `Bool` words, `[]` to `r`, along which `L` is the prefix order; one way
 -- Statement: `square_embed_forces_btree` is the order case of `Motion.tree_of_square` (the `example` in
 -- `ZeroParadox/Valuation/DoublingAndTree.lean` § IX).
 

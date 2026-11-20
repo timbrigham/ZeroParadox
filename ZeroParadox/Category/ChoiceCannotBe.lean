@@ -365,10 +365,14 @@ example {σ : Type} [PartialOrder σ] [OrderBot σ] [NoMaxOrder σ] :
 #check @ZeroParadox.toComp_det_results_iff
 #check @ZeroParadox.det_eq_ofNat_iff -- Statement: `det w = ofNat n` iff `n` is the first `true`
 -- Statement: `NInf ≃o ℕ∞` (`orderIsoWithTopClassical`), the map depth in `ℕ∞` is read through.
--- Reading: a separate cost from the one above: any order isomorphism `NInf ≃o WithTop ℕ` gives WLPO
--- (`NInf.wlpo_of_iso`), so reading the waiting time as a value of `ℕ∞` carries a taboo.
+-- Reading: a separate cost from the one above: any order isomorphism `NInf ≃o WithTop ℕ` gives LPO
+-- (`NInf.lpo_of_iso`), so reading the waiting time as a value of `ℕ∞` carries a taboo.
 #check @ZeroParadox.waitENat
 #check @ZeroParadox.NInf.wlpo_of_iso -- Statement: an order isomorphism `NInf ≃o WithTop ℕ` gives WLPO
+#check @ZeroParadox.NInf.lpo_of_iso -- Statement: an order isomorphism `NInf ≃o WithTop ℕ` gives LPO; measured `[propext, Quot.sound]`
+-- Statement: conversely, a `PSum (∃ n, r n = true) (∀ n, r n = false)` for every `r : ℕ → Bool`, LPO
+-- as data, gives an order isomorphism `NInf ≃o WithTop ℕ`; measured `[propext, Quot.sound]`.
+#check @ZeroParadox.NInf.isoOfLPOData
 
 -- The pole within a pole, limit form against value form, footprints from the home files' PurityChecks.
 -- Statement: the local floor's subtape is ⊥ of `ℕ → Bool`, `det` ⊤ of `NInf`; measured `[propext, Quot.sound]`.
@@ -384,8 +388,8 @@ example {σ : Type} [PartialOrder σ] [OrderBot σ] [NoMaxOrder σ] :
 -- Statement: `localCx`, named in the value forms' statements, carries `Classical.choice` (printed next).
 #print axioms ZeroParadox.localCx
 -- Reading: the same divergence, two bins: as a limit in `NInf`, no choice; as a value in `ℕ∞`, through
--- `localCx` (an `endVal`, equal to a `waitENat` value by `endVal_eq_wait`; any `NInf ≃o ℕ∞` gives WLPO,
--- `wlpo_of_iso` above).
+-- `localCx` (an `endVal`, equal to a `waitENat` value by `endVal_eq_wait`; any `NInf ≃o ℕ∞` gives LPO,
+-- `NInf.lpo_of_enatIso`, `ZeroParadox/Valuation/DepthIsWait.lean`).
 
 -- The random limit against the explicit limit, footprints from the home file's PurityCheck.
 -- Statement: random firing tapes with halting runs approach ⊥ of `ℕ → Bool` pointwise, `det` passing

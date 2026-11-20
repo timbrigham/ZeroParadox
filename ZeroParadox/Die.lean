@@ -5078,14 +5078,81 @@ section
 attribute [local instance high] WithTop.instLE
 
 /-- `Statement:` any order isomorphism `NInf ≃o WithTop ℕ` gives WLPO. `Reading:` by
-    `wlpo_of_discrete_tag` at `D = WithTop ℕ`, whose `DecidableEq` is an instance. -/
+    `wlpo_of_discrete_tag` at `D = WithTop ℕ`, whose `DecidableEq` is an instance; `lpo_of_iso`
+    below gives LPO. -/
 theorem wlpo_of_iso (e : NInf ≃o WithTop ℕ) :
     ∀ r : ℕ → Bool, (∀ n, r n = false) ∨ ¬ ∀ n, r n = false :=
   wlpo_of_discrete_tag e fun _ => e.injective.eq_iff
 
+/-- `Statement:` any order isomorphism `NInf ≃o WithTop ℕ` sends `ofNat n` to `↑n`. `Reading:` by
+    induction on `n`, `eq_or_eq_of_between` at the step. -/
+theorem iso_ofNat (e : NInf ≃o WithTop ℕ) (n : ℕ) : e (ofNat n) = WithTop.some n := by
+  have some_le : ∀ {a b : ℕ}, (WithTop.some a ≤ WithTop.some b) ↔ a ≤ b := fun {_ _} =>
+    ⟨fun h => by change WithTop.LE _ _ at h; cases h with | coe_le_coe h => exact h,
+     fun h => WithTop.LE.coe_le_coe h⟩
+  have not_top_le : ∀ a : ℕ, ¬ ((⊤ : WithTop ℕ) ≤ WithTop.some a) := fun _ h => by
+    change WithTop.LE _ _ at h; cases h
+  induction n with
+  | zero =>
+    have h : e (ofNat 0) ≤ e (e.symm (WithTop.some 0)) :=
+      e.le_iff_le.2 (bot_le : (⊥ : NInf) ≤ _)
+    rw [e.apply_symm_apply] at h
+    cases hy : e (ofNat 0) with
+    | top => rw [hy] at h; exact absurd h (not_top_le 0)
+    | coe m =>
+      rw [hy] at h
+      have : m = 0 := Nat.le_zero.1 (some_le.1 h)
+      rw [this]
+  | succ n ih =>
+    have hle : WithTop.some n ≤ e (ofNat (n + 1)) :=
+      ih ▸ e.le_iff_le.2 ((ofNat_le_iff _ _).2 (Nat.le_succ n))
+    have hne : e (ofNat (n + 1)) ≠ WithTop.some n := fun h => by
+      have := ofNat_injective (e.injective (h.trans ih.symm)); omega
+    have hge : WithTop.some (n + 1) ≤ e (ofNat (n + 1)) := by
+      cases hy : e (ofNat (n + 1)) with
+      | top => exact WithTop.LE.le_top _
+      | coe m =>
+        rw [hy] at hle hne
+        have h1 : n ≤ m := some_le.1 hle
+        have h2 : m ≠ n := fun h => hne (by rw [h])
+        exact some_le.2 (by omega)
+    have hex : e (e.symm (WithTop.some (n + 1))) = WithTop.some (n + 1) := e.apply_symm_apply _
+    have h2 : e.symm (WithTop.some (n + 1)) ≤ ofNat (n + 1) := e.le_iff_le.1 (by rw [hex]; exact hge)
+    have h1 : ofNat n ≤ e.symm (WithTop.some (n + 1)) := e.le_iff_le.1 (by
+      rw [ih, hex]; exact some_le.2 (Nat.le_succ n))
+    rcases eq_or_eq_of_between n _ h1 h2 with h | h
+    · exfalso
+      have : WithTop.some (n + 1) = WithTop.some n := by rw [← hex, h, ih]
+      have := Option.some.inj this; omega
+    · rw [← h, hex]
+
+/-- `Statement:` any order isomorphism `NInf ≃o WithTop ℕ` gives LPO. `Reading:` the tag
+    `x ↦ (e x : Option ℕ)` is exact by `iso_ofNat`, so `lpo_of_exactTag` applies. -/
+theorem lpo_of_iso (e : NInf ≃o WithTop ℕ) :
+    ∀ r : ℕ → Bool, (∃ n, r n = true) ∨ ∀ n, r n = false :=
+  lpo_of_exactTag (fun x => (e x : Option ℕ)) fun x n => by
+    show e x = WithTop.some n ↔ x = ofNat n
+    rw [← iso_ofNat e n]; exact e.injective.eq_iff
+
+/-- `Statement:` any order isomorphism `NInf ≃o WithTop ℕ` decides, as data, each sequence: a `PSum` of
+    `∃ n, r n = true` and `∀ n, r n = false`. -/
+def lpoData_of_iso (e : NInf ≃o WithTop ℕ) (r : ℕ → Bool) :
+    PSum (∃ n, r n = true) (∀ n, r n = false) :=
+  have hg : ∀ x n, (e x : Option ℕ) = some n ↔ x = ofNat n := fun x n => by
+    show e x = WithTop.some n ↔ x = ofNat n
+    rw [← iso_ofNat e n]; exact e.injective.eq_iff
+  match hx : (e (det r) : Option ℕ) with
+  | some k => .inl (by
+      have hd : (det r).1 k = false := by
+        rw [(hg _ k).1 hx]; exact decide_eq_false (Nat.lt_irrefl k)
+      obtain ⟨j, _, hj⟩ := detSeq_false r k hd
+      exact ⟨j, hj⟩)
+  | none => .inr ((det_eq_infty_iff r).1
+      (eq_infty_of_ne_ofNat _ fun k e' => by rw [(hg _ k).2 e'] at hx; cases hx))
+
 end
 
--- `Statement:` the order is not used: any injection into `WithTop ℕ` gives WLPO.
+-- `Statement:` for `wlpo_of_iso` the order is not used: any injection into `WithTop ℕ` gives WLPO.
 example (e : NInf → WithTop ℕ) (he : Function.Injective e) :
     ∀ r : ℕ → Bool, (∀ n, r n = false) ∨ ¬ ∀ n, r n = false :=
   wlpo_of_discrete_tag e fun _ => he.eq_iff
@@ -5115,8 +5182,78 @@ theorem ofWithTop_strictMono : StrictMono ofWithTop := by
 
 end
 
-/-- `Statement:` CONTROL: `NInf ≃o WithTop ℕ` from `Classical.propDecidable`, so `wlpo_of_iso`'s
-    hypothesis is inhabited classically. -/
+section
+-- Pin the bare choice-free `WithTop.instLE`, as for `wlpo_of_iso` above.
+attribute [local instance high] WithTop.instLE
+
+/-- `Statement:` conversely, a `PSum` decision of `∃ n, r n = true` against `∀ n, r n = false` for every
+    `r : ℕ → Bool` gives an order isomorphism `NInf ≃o WithTop ℕ`, inverse to `ofWithTop`. -/
+def isoOfLPOData (D : ∀ r : ℕ → Bool, PSum (∃ n, r n = true) (∀ n, r n = false)) :
+    NInf ≃o WithTop ℕ :=
+  have some_le : ∀ {a b : ℕ}, (WithTop.some a ≤ WithTop.some b) ↔ a ≤ b := fun {_ _} =>
+    ⟨fun h => by change WithTop.LE _ _ at h; cases h with | coe_le_coe h => exact h,
+     fun h => WithTop.LE.coe_le_coe h⟩
+  have le_iff : ∀ a b : WithTop ℕ, ofWithTop a ≤ ofWithTop b ↔ a ≤ b := fun a b => by
+    cases a with
+    | top =>
+      cases b with
+      | top => exact ⟨fun _ => WithTop.LE.le_top _, fun _ => le_rfl⟩
+      | coe n =>
+        refine ⟨fun h => ?_, fun h => by change WithTop.LE _ _ at h; cases h⟩
+        exact absurd (show ofNat n = infty from le_antisymm le_top h) (ofNat_ne_infty n)
+    | coe m =>
+      cases b with
+      | top => exact ⟨fun _ => WithTop.LE.le_top _, fun _ => le_top⟩
+      | coe n => exact (ofNat_le_iff m n).trans some_le.symm
+  (show WithTop ℕ ≃o NInf from
+    { toFun := ofWithTop
+      invFun := fun x => match D (fun n => !x.1 n) with
+        | .inl h => WithTop.some (Nat.find h)
+        | .inr _ => ⊤
+      left_inv := fun y => by
+        cases y with
+        | top =>
+          dsimp only
+          split
+          · rename_i h _
+            exfalso; obtain ⟨n, hn⟩ := h; change (!true) = true at hn; cases hn
+          · rfl
+        | coe m =>
+          dsimp only
+          split
+          · rename_i h _
+            have hs := Nat.find_spec h
+            change (!decide (Nat.find h < m)) = true at hs
+            have h1 : ¬ Nat.find h < m := fun hl => by rw [decide_eq_true hl] at hs; cases hs
+            have h2 : Nat.find h ≤ m := Nat.find_min' h (show (!decide (m < m)) = true by
+              rw [decide_eq_false (Nat.lt_irrefl m)]; rfl)
+            have : Nat.find h = m := by omega
+            rw [this]
+          · rename_i h _
+            exfalso; have := h m; change (!decide (m < m)) = false at this
+            rw [decide_eq_false (Nat.lt_irrefl m)] at this; cases this
+      right_inv := fun x => by
+        dsimp only
+        split
+        · rename_i h _
+          have hk : x.1 (Nat.find h) = false := by
+            have := Nat.find_spec h; cases hx : x.1 (Nat.find h) <;> simp_all
+          obtain ⟨j, hj, e⟩ := eq_ofNat_of_false x _ hk
+          have hjx : (!x.1 j) = true := by rw [e]; simp [ofNat]
+          have : Nat.find h ≤ j := Nat.find_min' h hjx
+          have hjk : j = Nat.find h := by omega
+          show ofNat (Nat.find h) = x
+          rw [← hjk, e]
+        · rename_i h _
+          show infty = x
+          exact ext fun i => by
+            have := h i; cases hx : x.1 i <;> simp_all [infty]
+      map_rel_iff' := fun {a b} => le_iff a b }).symm
+
+end
+
+/-- `Statement:` CONTROL: `NInf ≃o WithTop ℕ` from `Classical.propDecidable`, so the hypothesis of
+    `wlpo_of_iso` and `lpo_of_iso` is inhabited classically. -/
 noncomputable def orderIsoWithTopClassical : NInf ≃o WithTop ℕ :=
   (StrictMono.orderIsoOfSurjective ofWithTop ofWithTop_strictMono fun x => by
     classical
@@ -5129,7 +5266,7 @@ end NInf
 /-- `Statement:` `WithTop ℕ`, step `· + 1`, stages the coercion: `⊤` occupies
     `PinnedLimitUnique`. `Statement:` INVARIANT: the predicate `PinnedLimitUnique` holds at `NInf`'s `∞`
     (`NInf.pinnedLimitUnique_succ`) and at `WithTop ℕ`'s `⊤`, so it does not separate the two
-    carriers; identifying them by an order isomorphism costs WLPO (`NInf.wlpo_of_iso`). -/
+    carriers; any order isomorphism identifying them gives LPO (`NInf.lpo_of_iso`). -/
 theorem pinnedLimitUnique_withTop :
     (Motion.ofFun fun x : WithTop ℕ => x + 1).IsRun (fun n : ℕ => (n : WithTop ℕ)) ∧
     PinnedLimitUnique (fun x : WithTop ℕ => x + 1) (fun n : ℕ => (n : WithTop ℕ)) ⊤ := by
@@ -6471,6 +6608,10 @@ open ZeroParadox
 #print axioms NInf.isSuccLimit_infty
 #print axioms NInf.covered_limit_searchable
 #print axioms NInf.wlpo_of_iso
+#print axioms NInf.iso_ofNat
+#print axioms NInf.lpo_of_iso
+#print axioms NInf.lpoData_of_iso
+#print axioms NInf.isoOfLPOData
 #print axioms NInf.ofWithTop
 #print axioms NInf.ofWithTop_strictMono
 #print axioms NInf.orderIsoWithTopClassical

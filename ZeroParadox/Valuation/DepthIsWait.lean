@@ -51,8 +51,13 @@ theorem tapeIso_apply (x : End) (n : ℕ) : tapeIso x n = decide (x n ≠ 0) := 
 
 /-! ### § II. The waiting time read in `ℕ∞` -/
 
-/-- `Statement:` `NInf.orderIsoWithTopClassical` as `NInf ≃o ℕ∞` (costs WLPO, `NInf.wlpo_of_iso`). -/
+/-- `Statement:` `NInf.orderIsoWithTopClassical` as `NInf ≃o ℕ∞` (any such gives LPO: `NInf.lpo_of_enatIso`). -/
 noncomputable def waitENat : NInf ≃o ℕ∞ := NInf.orderIsoWithTopClassical
+
+/-- `Statement:` any order isomorphism `NInf ≃o ℕ∞` gives LPO; `NInf.lpo_of_iso` at `ℕ∞`. -/
+theorem NInf.lpo_of_enatIso (e : NInf ≃o ℕ∞) :
+    ∀ r : ℕ → Bool, (∃ n, r n = true) ∨ ∀ n, r n = false :=
+  NInf.lpo_of_iso e
 
 /-- `Statement:` `waitENat` sends `ofNat n` to `n`. -/
 theorem waitENat_ofNat (n : ℕ) : waitENat (ofNat n) = n :=
@@ -198,7 +203,7 @@ example : waitENat (det (fun n => decide (botEnd n = 0))) ≠ endVal botEnd := b
 
 -- Statement: axioms (PurityCheck), `digitBool`, `tapeIso`, `tapeIso_boundaryDouble`, `det_tapeCons_false`
 --   `[propext, Quot.sound]`; the rest add `Classical.choice`, via `endVal` (an `sInf` in `ℕ∞`) and
---   `waitENat` (any `NInf ≃o ℕ∞` gives WLPO, `NInf.wlpo_of_iso`).
+--   `waitENat` (any `NInf ≃o ℕ∞` gives LPO, `NInf.lpo_of_enatIso`).
 
 end ZeroParadox
 
@@ -209,6 +214,7 @@ open ZeroParadox
 #print axioms tapeIso
 #print axioms tapeIso_apply
 #print axioms waitENat
+#print axioms NInf.lpo_of_enatIso
 #print axioms waitENat_ofNat
 #print axioms natCast_le_waitENat_iff
 #print axioms natCast_le_endVal_iff
