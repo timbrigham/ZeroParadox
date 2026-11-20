@@ -1,5 +1,6 @@
 -- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the limit retraction (Abate–Bedford) restricted to convergent orbits, for a continuous self-map of a Hausdorff space, as the UP leg of a die `Motion` whose OVER is one step of the map; orbit convergence is exactly finite arrival at a landing or a stage closure, with controls, conjugacy behaviour (healed on `OnePoint K`; torn inside `K` when `c ^ n → 0` and `1 < ‖d‖`) and the reverse direction through the ε₀ tower. Curated results indexed in ZeroParadox/MANIFEST.md.
 import ZeroParadox.Die
+import ZeroParadox.DieSameness
 import ZeroParadox.Valuation.RiemannSphere
 import ZeroParadox.Valuation.PadicAttractor
 import ZeroParadox.Valuation.BottomInvariant
@@ -82,8 +83,8 @@ theorem lm_tendsto_of_omegaLimit {X : Type*} [TopologicalSpace X] [T2Space X] [C
 
 variable {X : Type u} [TopologicalSpace X] [T2Space X]
 
-/-- `Statement:` the limit retraction (Abate–Bedford) restricted to convergent orbits: defined
-    at `x` iff its orbit converges (the union of point basins `B({p})`), value the limit. -/
+/-- `Statement:` the limit retraction (Abate–Bedford) restricted to convergent orbits: defined at `x` iff its orbit
+    converges (the union of point basins `B({p})`), with value a limit, chosen; the limit is unique on a Hausdorff space, which `limitMotion` assumes. -/
 noncomputable def limitRetraction (g : X → X) (x : X) : Part X :=
   ⟨∃ q, Tendsto (fun n => g^[n] x) atTop (𝓝 q), fun h => h.choose⟩
 
@@ -363,6 +364,19 @@ noncomputable def lmIsoOfConj {h : Y → Y} (hh : Continuous h) (e : X ≃ₜ Y)
     rw [hc, e.apply_symm_apply, e.apply_symm_apply])
   left_inv := e.symm_apply_apply
   right_inv := e.apply_symm_apply
+
+/-- `Statement:` a topological conjugacy, a homeomorphism `e` with `e ∘ g = h ∘ e`, is a
+    `Motion.HomeoIso` of limit motions (`ZeroParadox/DieSameness.lean`); its `toStrictIso` is `lmIsoOfConj`. -/
+noncomputable def lmHomeoIsoOfConj {h : Y → Y} (hh : Continuous h) (e : X ≃ₜ Y)
+    (hc : ∀ x, e (g x) = h (e x)) : Motion.HomeoIso (limitMotion g hg) (limitMotion h hh) :=
+  { lmIsoOfConj (hg := hg) hh e hc with
+    continuous_hom := e.continuous
+    continuous_inv := e.symm.continuous }
+
+/-- `Statement:` the strict isomorphism under `lmHomeoIsoOfConj` is `lmIsoOfConj`, by `rfl`. -/
+theorem lmHomeoIsoOfConj_toStrictIso {h : Y → Y} (hh : Continuous h) (e : X ≃ₜ Y)
+    (hc : ∀ x, e (g x) = h (e x)) :
+    (lmHomeoIsoOfConj (hg := hg) hh e hc).toStrictIso = lmIsoOfConj (hg := hg) hh e hc := rfl
 
 end Conjugacy
 
@@ -721,6 +735,8 @@ open ZeroParadox
 #print axioms lm_tendsto_zero_of_field
 #print axioms lmHomOfConj
 #print axioms lmIsoOfConj
+#print axioms lmHomeoIsoOfConj
+#print axioms lmHomeoIsoOfConj_toStrictIso
 #print axioms lm_onePointInv_conj_scale
 #print axioms lmHealedIso
 #print axioms lm_healedIso_toFun
