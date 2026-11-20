@@ -99,8 +99,9 @@ Axiom footprints: the `PurityCheck` section at the end of `TwoAdicBend.lean`.
 - J. Bastos, D. Caprio and A. Messaoudi, "Shadowing and stability in p-adic dynamics",
   arXiv:2001.02737v1 (2020), Theorem 26, p. 14: "if ‖a‖_p ≠ 1, then f_{a,b} is Lipschitz
   structurally stable. Furthermore, the conjugation is an isometry and f_{a,b} is topologically
-  conjugate to f_{1/p^k,0}, where ‖a‖_p = p^k". In the proof (p. 16, (21)) the conjugacy `h` is
-  defined digit by digit, `h_i(x) = (g^i(x))_0`. This file proves `dTwist` norm-preserving
+  conjugate to f_{1/p^k,0}, where ‖a‖_p = p^k". In the proof's Case 1 (`a = 1/p`, p. 16, (21)–(22))
+  the conjugacy `h` with `f_{1/p} ∘ h = h ∘ g`, between the `a = 1/p` map and its perturbation
+  `g = f_a + ψ`, is defined digit by digit, `h_i(x) = (g^i(x))_0`. This file proves `dTwist` norm-preserving
   (`dTwist_norm`).
 - The bi-Lipschitz level: `Motion.scale24_not_lip` (`ZeroParadox/DieSameness.lean`) separates `×2`
   and `×4` on ℝ (a `HomeoIso`, no `LipIso`); its docstring cites the p-adic counterpart in
@@ -110,8 +111,10 @@ Axiom footprints: the `PurityCheck` section at the end of `TwoAdicBend.lean`.
   Kuiper–Robbin as those papers cite it). Joining contracting and expanding multipliers through
   `z ↦ 1/z` on `OnePoint ℚ_[2]` follows their route on the Riemann sphere; a statement of it for
   `P¹(ℚ_p)` was not retrieved from either p-adic source above. Closer: Y. Wang and J. Yang, "On
-  p-adic Möbius maps", arXiv:1512.01305v1 (2015), p. 11, Proposition 3.3 (a loxodromic p-adic
-  Möbius map "is conjugate to z → kz for some k with |k| > 1") and Proposition 3.4 (two
+  p-adic Möbius maps", arXiv:1512.01305v1 (2015), p. 11, Proposition 3.3(3) (a p-adic Möbius
+  map g is "loxodromic if it is conjugate to z → kz for some k with |k| > 1"; the converse is
+  used in the proof of Proposition 3.5, p. 11, which assumes without loss of generality that an
+  elliptic or loxodromic g is g(z) = (a/d)z) and Proposition 3.4 (two
   non-identity p-adic Möbius maps "are conjugate if and only if trace(f) = trace(g)"). That is
   algebraic conjugacy by a Möbius map in `PSL(2, ℂ_p)` on `P¹(ℂ_p)`, not a topological
   classification on `OnePoint ℚ_[2]`.
