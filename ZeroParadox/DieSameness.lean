@@ -46,9 +46,10 @@ structure HomeoIso [TopologicalSpace α] [TopologicalSpace β] (M : Motion α) (
   continuous_inv : Continuous inv.toFun
 
 /-- `Statement:` a `HomeoIso` whose forward and backward maps are Lipschitz, so its underlying
-    bijection is bi-Lipschitz. The continuity fields default to the continuity of a Lipschitz map
-    (`LipschitzWith.continuous`), so in structure-instance notation a user supplies only the
-    Lipschitz fields; `LipIso.mk` still takes a full `HomeoIso`. Mathlib states bi-Lipschitz
+    bijection is bi-Lipschitz. The two continuity fields default to the continuity of a Lipschitz
+    map (`LipschitzWith.continuous`), so in structure-instance notation a user supplies the
+    `StrictIso` fields and the two Lipschitz fields, and not the continuity fields; `LipIso.mk`
+    still takes a full `HomeoIso`. Mathlib states bi-Lipschitz
     conditions unbundled, as `AntilipschitzWith` and `LipschitzWith` hypotheses on a map
     (`Mathlib/Topology/MetricSpace/Bilipschitz.lean`); this is a structure because it extends
     `HomeoIso` on motions. -/
@@ -153,24 +154,19 @@ noncomputable def lineIntervalHomeo : HomeoIso (stillMotion ℝ) (stillMotion Ne
     continuous_hom := (orderIsoIooNegOneOne ℝ).continuous
     continuous_inv := (orderIsoIooNegOneOne ℝ).symm.continuous }
 
-/-- `Statement:` no Lipschitz map from `(-1, 1)` onto `ℝ` exists. -/
+/-- `Statement:` no Lipschitz map from `(-1, 1)` onto `ℝ` exists; from Mathlib's
+    `LipschitzWith.isBounded_image` and `NormedSpace.unbounded_univ`. -/
 theorem no_lipschitz_surj (g : NegOneOneIoo → ℝ) (hg : Function.Surjective g) (K : NNReal)
     (hK : LipschitzWith K g) : False := by
-  have h0 : (0 : ℝ) ∈ Set.Ioo (-1 : ℝ) 1 := ⟨by norm_num, by norm_num⟩
-  set x0 : NegOneOneIoo := ⟨0, h0⟩
-  obtain ⟨x, hx⟩ := hg (g x0 + K + 1)
-  have hd : dist (g x) (g x0) ≤ K * dist x x0 := hK.dist_le_mul x x0
-  have hxx : dist x x0 < 1 := by
-    rw [Subtype.dist_eq, Real.dist_eq]
-    obtain ⟨hx1, hx2⟩ := x.2
-    simp only [x0, sub_zero]
-    exact abs_lt.2 ⟨hx1, hx2⟩
-  rw [hx, Real.dist_eq] at hd
-  have hK0 : (0 : ℝ) ≤ K := K.2
-  have : (K : ℝ) * dist x x0 ≤ K := by nlinarith [dist_nonneg (x := x) (y := x0)]
-  have habs : |g x0 + K + 1 - g x0| = K + 1 := by
-    rw [show g x0 + K + 1 - g x0 = (K : ℝ) + 1 by ring, abs_of_pos (by linarith)]
-  linarith
+  have hb : Bornology.IsBounded (Set.univ : Set NegOneOneIoo) :=
+    Metric.isBounded_iff.2 ⟨2, fun x _ y _ => by
+      rw [Subtype.dist_eq, Real.dist_eq, abs_le]
+      obtain ⟨hx1, hx2⟩ := x.2
+      obtain ⟨hy1, hy2⟩ := y.2
+      constructor <;> linarith⟩
+  have h := hK.isBounded_image hb
+  rw [Set.image_univ, hg.range_eq] at h
+  exact NormedSpace.unbounded_univ ℝ ℝ h
 
 /-- `Statement:` CONTROL, metric only. With identity UP and no step on `ℝ` and on `(-1, 1)`, a
     `HomeoIso` exists and no `LipIso` exists. -/
@@ -243,9 +239,13 @@ noncomputable def scale24Homeo : HomeoIso (scaleMotion 2) (scaleMotion 4) where
   continuous_inv := signedSqIso.symm.continuous
 
 /-- `Statement:` CONTROL, dynamical. From `scaleMotion 2` to `scaleMotion 4` a `HomeoIso` exists and
-    no `LipIso` exists. `Reading:` the p-adic counterpart, dilations with different multipliers
-    conjugate by a homeomorphism whose Hölder exponent at 0 cannot be improved, is Jenkins and
-    Spallone, arXiv:1011.2451v1, Proposition 7.1, p. 26 (cited, not claimed). -/
+    no `LipIso` exists. `Reading:` on `ℝ` both dilations expand; that expanding dilations of `ℝ` are
+    topologically conjugate is standard (Fatehi Nia and Rezaei, arXiv:1701.08495, Corollary 2).
+    The p-adic counterparts are cited, not claimed (Jenkins and Spallone, arXiv:1011.2451v1): for
+    contracting dilations by `π₁`, `π₂` with `πᵢ ∈ pᵢℤ_{pᵢ} − {0}`, a conjugating homeomorphism `h`
+    with `|h(x)| ≤ C|x|^(ord(π₁)/ord(π₂))`, an exponent that cannot be improved (Proposition 7.1,
+    p. 26); and on `ℚ₅`, multiplication by 2 and by 4 are not lipeomorphically equivalent (p. 27,
+    after Proposition 7.5). -/
 theorem scale24_not_lip :
     Nonempty (HomeoIso (scaleMotion 2) (scaleMotion 4)) ∧
       IsEmpty (LipIso (scaleMotion 2) (scaleMotion 4)) := by
@@ -291,10 +291,12 @@ theorem scale24_not_lip :
 
 The footprints are printed in `PurityCheck` below. Measured: the structure types `StrictIso` and
 `HomeoIso` depend on no axioms, and `LipIso` carries `Classical.choice`, as do Mathlib's
-`PseudoEMetricSpace` and `LipschitzWith`. At the first two levels a member carries `Classical.choice`
+`PseudoEMetricSpace` and `LipschitzWith`. At the second level a member carries `Classical.choice`
 when built on Mathlib's topology instance (`homeoIsoReflBool`, `homeoIsoReflNat`; the instances on
 `ℕ`, `Bool` and `Empty` carry it) and does not on the hand-built `handTopBool`
-(`homeoIsoReflHandBool`, `[propext, Quot.sound]`). -/
+(`homeoIsoReflHandBool`, `[propext, Quot.sound]`). A first-level member takes no topology: neither
+`StrictIso.refl` nor `stillMotion` carries `Classical.choice`, so neither does `StrictIso.refl` on
+`stillMotion ℕ` or `stillMotion Bool`. -/
 
 /-- `Statement:` the identity `HomeoIso` of the motion with identity UP and no step on `Bool`, at the
     hand-built topology `handTopBool`. -/

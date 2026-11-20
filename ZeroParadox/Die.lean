@@ -1191,8 +1191,9 @@ theorem rank_eq_top_of_not_acc (r : α → α → Prop) (v : α → ℕ∞)
   by_contra hne
   exact h (acc_of_rank_ne_top r v hv hne)
 
-/-- `Statement:` at an accessible `a`, `Set.ncard` of the points `c` with `r`-steps from `a` down to
-    `c` (their number on a finite carrier; `Set.ncard` is 0 on an infinite set), and ⊤ of `ℕ∞`
+/-- `Statement:` at an accessible `a`, `Set.ncard` of the points `c` that reach `a` by one or more
+    `r`-steps (`Relation.TransGen r c a`; steps from `a` down to `c` under the reading of
+    `acc_of_rank_ne_top`) (their number on a finite carrier; `Set.ncard` is 0 on an infinite set), and ⊤ of `ℕ∞`
     elsewhere. -/
 -- [ZP-CUSTOM] no Mathlib analog | reason: Mathlib's `Acc.rank` (`Mathlib/SetTheory/Ordinal/Rank.lean`)
 -- is `Ordinal`-valued and takes the `Acc` proof as an argument; this is total, `ℕ∞`-valued, and
@@ -2283,8 +2284,9 @@ example (M : Motion α) (N : Motion β) (f : α → β) :
 /-- `Statement:` a strict map of motions: a map carrying steps to steps, with `UpStrict`. -/
 -- [ZP-CUSTOM] no Mathlib analog | reason: a Mathlib `RelHom` on the OVER leg paired with a commuting
 -- square on the partial UP leg; Mathlib has each half separately (`RelHom`, and
--- `Endofunctor.Coalgebra.Hom` for `Part`). With the back clause added, the pair is Mathlib's
--- `Endofunctor.Coalgebra.Hom` for `Part × Set` (`coalgHom_iff`, § XX); without it, not.
+-- `Endofunctor.Coalgebra.Hom` for `Part`). For carriers in one universe, with the back clause
+-- added, the pair is Mathlib's `Endofunctor.Coalgebra.Hom` for `Part × Set` (`coalgHom_iff`, § XX);
+-- without it, not.
 structure Hom (M : Motion α) (N : Motion β) where
   /-- The underlying map. -/
   toFun : α → β
