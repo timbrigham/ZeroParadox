@@ -1,4 +1,4 @@
--- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the limit retraction (Abate–Bedford) restricted to convergent orbits, for a continuous self-map of a Hausdorff space, as the UP leg of a die `Motion` whose OVER is one step of the map; orbit convergence is exactly finite arrival at a landing or a stage closure, with controls, conjugacy behaviour (healed on `OnePoint K`; torn inside `K` when `c ^ n → 0` and `1 < ‖d‖`) and the reverse direction through the ε₀ tower. Curated results indexed in ZeroParadox/MANIFEST.md.
+-- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the limit retraction (Abate–Bedford) restricted to convergent orbits, for a continuous self-map of a Hausdorff space, as the UP leg of a die `Motion` whose OVER is one step of the map; orbit convergence is exactly finite arrival at a landing or a stage closure, with controls, conjugacy by field inversion (a strict isomorphism on `OnePoint K`; no strict map inside `K` when `c ^ n → 0` and `1 < ‖d‖`) and the reverse direction through the ε₀ tower. Curated results indexed in ZeroParadox/MANIFEST.md.
 import ZeroParadox.Die
 import ZeroParadox.DieSameness
 import ZeroParadox.Valuation.RiemannSphere
@@ -183,8 +183,8 @@ end LimitRetraction
 noncomputable def lmJumpMap (x : ℝ) : ℝ := if x = 0 then 2 else if x = 2 then 2 else x / 2
 
 /-- `Statement:` CONTROL. Under `lmJumpMap` the orbit of `1` tends to `0` and the orbit of `0` does
-    not: the limit of an orbit need not be the limit of its own orbit, so without continuity the
-    limit retraction is not idempotent and `limitMotion` has no `up_idem`. -/
+    not: the limit of an orbit need not be the limit of its own orbit, so for this discontinuous map
+    the limit retraction is not idempotent; `limitMotion` takes continuity for its `up_idem`. -/
 theorem lm_jumpMap_breaks_idem :
     Tendsto (fun n => lmJumpMap^[n] 1) atTop (𝓝 0) ∧
       ¬ Tendsto (fun n => lmJumpMap^[n] 0) atTop (𝓝 0) := by
@@ -321,7 +321,7 @@ theorem lm_tendsto_zero_of_field {c : K} (hc : c ≠ 0) {x : K}
 
 end Scaling
 
-/-! ## § III. Conjugacy: healed on `OnePoint K`, torn inside `K` when `c ^ n → 0` and `1 < ‖d‖` -/
+/-! ## § III. Conjugacy; inversion healed on `OnePoint K`, torn inside `K` when `c ^ n → 0` and `1 < ‖d‖` -/
 
 section Conjugacy
 
@@ -627,7 +627,7 @@ example (p : OnePoint ℝ) := lm_negOrbit_fails_die (K := ℝ) (by norm_num) p
 
 end Instances
 
-/-! ## § V. The reverse direction: a landing in one chart is an approach in the other
+/-! ## § V. The reverse direction: one tower in the ordinal chart and in the `ℤ_[2]` chart
 
 `Reading:` CARRIER. § II turns an approach (`Tendsto`) into a die fact inside ONE motion. Here one tower,
 seeded at 0, ⊥ of `Ordinal`, is read in two charts joined by `NONote.repr` and `cnfToZp2`, never by

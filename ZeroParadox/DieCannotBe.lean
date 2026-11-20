@@ -4689,7 +4689,7 @@ example : (∀ (r : Option ℕ → Option ℕ → Bool) (y : Option ℕ),
     ZeroParadox.Motion.overTrichotomy_option_boolStep_of_lpo⟩
 #check @ZeroParadox.Omniscient                 -- Statement: every `p : X → Bool` is `true` somewhere or `false` everywhere
 #check @ZeroParadox.Searchable                 -- Statement: a selection function: `p (ε p) = true` or `p` is `false` everywhere
-#check @ZeroParadox.PointwiseSearchable        -- Statement: per `p`, some `x` with `p x = true`, or `p` `false` everywhere
+#check @ZeroParadox.PointwiseSearchable        -- Statement: per `p`, a point `x` exists such that `p x = true` or `p` is `false` everywhere; the point is owed in both cases, so `Empty` fails it and the two lemmas below take `Nonempty X`
 #check @ZeroParadox.OmniscientAway             -- Statement: every `p` is `true` at a point other than `y`, or `true` at no point other than `y` (possibly nowhere)
 #check @ZeroParadox.BoolStepTrichotomy         -- Statement: every `Bool`-valued step on `X` meets the trichotomy at every point
 #check @ZeroParadox.BoolStepSelected           -- Statement: every `Bool`-valued step on `X` has a total selector
@@ -5372,8 +5372,9 @@ example : ¬ ZeroParadox.Motion.unitMotion.Loop := fun ⟨_, _, _, _, hne, _⟩ 
 #check @ZeroParadox.bendFiveIso                -- Statement: rotation by `ζ = exp(2πi/5)` and by `ζ²` are strictly isomorphic limit motions on `OnePoint ℂ`; `bend_zeta_sq_conditions` checks the conditions of Rybalkina–Sergeichuk Lemma 2.1 fail for the pair
 
 /-! ### § XXXVII. Levels of the die isomorphism: strict, homeomorphic, bi-Lipschitz -/
--- Reading: CARRIER — the levels and the control live in `ZeroParadox/DieSameness.lean`; each level
--- extends the one before; the controls below separate both steps.
+-- Reading: CARRIER — `StrictIso` lives in `ZeroParadox/Die.lean`, the two upper levels and the three
+-- controls in `ZeroParadox/DieSameness.lean`; each level extends the one before; the controls below
+-- separate both steps.
 #check @ZeroParadox.Motion.StrictIso           -- Statement: the bare level: strict maps both ways, mutually inverse, nothing asked of the carriers
 #check @ZeroParadox.Motion.HomeoIso            -- Statement: a `StrictIso` whose two maps are continuous
 #check @ZeroParadox.Motion.LipIso              -- Statement: a `HomeoIso` whose two maps are Lipschitz; continuity is a field default
