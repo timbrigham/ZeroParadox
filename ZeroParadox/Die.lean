@@ -5127,7 +5127,9 @@ theorem iso_ofNat (e : NInf ≃o WithTop ℕ) (n : ℕ) : e (ofNat n) = WithTop.
     · rw [← h, hex]
 
 /-- `Statement:` any order isomorphism `NInf ≃o WithTop ℕ` gives LPO. `Reading:` the tag
-    `x ↦ (e x : Option ℕ)` is exact by `iso_ofNat`, so `lpo_of_exactTag` applies. -/
+    `x ↦ (e x : Option ℕ)` is exact by `iso_ofNat`, so `lpo_of_exactTag` applies; the order is used
+    by this route, to force `ofNat n ↦ n`, not by the conclusion: compare Escardó, preprint of JSL
+    78(3) (2013), Corollary 3.7, p. 5, where any bijection of `ℕ∞` with `ℕ` already gives LPO. -/
 theorem lpo_of_iso (e : NInf ≃o WithTop ℕ) :
     ∀ r : ℕ → Bool, (∃ n, r n = true) ∨ ∀ n, r n = false :=
   lpo_of_exactTag (fun x => (e x : Option ℕ)) fun x n => by
@@ -5152,7 +5154,8 @@ def lpoData_of_iso (e : NInf ≃o WithTop ℕ) (r : ℕ → Bool) :
 
 end
 
--- `Statement:` for `wlpo_of_iso` the order is not used: any injection into `WithTop ℕ` gives WLPO.
+-- `Statement:` any injection `NInf → WithTop ℕ` gives WLPO, no order needed. `Reading:` for LPO,
+-- `lpo_of_iso` uses the order on its route only (see its docstring).
 example (e : NInf → WithTop ℕ) (he : Function.Injective e) :
     ∀ r : ℕ → Bool, (∀ n, r n = false) ∨ ¬ ∀ n, r n = false :=
   wlpo_of_discrete_tag e fun _ => he.eq_iff
@@ -5187,7 +5190,9 @@ section
 attribute [local instance high] WithTop.instLE
 
 /-- `Statement:` conversely, a `PSum` decision of `∃ n, r n = true` against `∀ n, r n = false` for every
-    `r : ℕ → Bool` gives an order isomorphism `NInf ≃o WithTop ℕ`, inverse to `ofWithTop`. -/
+    `r : ℕ → Bool` gives an order isomorphism `NInf ≃o WithTop ℕ`, inverse to `ofWithTop` (compare
+    TypeTopology `Taboos.LPO`, `LPO-gives-ι𝟙-is-equiv`, for the bijection; the order isomorphism is
+    the addition here). -/
 def isoOfLPOData (D : ∀ r : ℕ → Bool, PSum (∃ n, r n = true) (∀ n, r n = false)) :
     NInf ≃o WithTop ℕ :=
   have some_le : ∀ {a b : ℕ}, (WithTop.some a ≤ WithTop.some b) ↔ a ≤ b := fun {_ _} =>

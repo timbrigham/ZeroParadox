@@ -5213,7 +5213,7 @@ example : (∀ n, ZeroParadox.slotRun (fun _ => false) n = false) ∧
 #check @ZeroParadox.NInf.lpoData_of_iso        -- Statement: any order isomorphism `NInf ≃o WithTop ℕ` gives, for each `r : ℕ → Bool`, a `PSum (∃ n, r n = true) (∀ n, r n = false)`
 #check @ZeroParadox.NInf.isoOfLPOData          -- Statement: conversely, a `PSum (∃ n, r n = true) (∀ n, r n = false)` for every `r : ℕ → Bool` gives an order isomorphism `NInf ≃o WithTop ℕ` (`[propext, Quot.sound]`)
 #check @ZeroParadox.NInf.orderIsoWithTopClassical -- Statement: CONTROL: such an isomorphism from `Classical.propDecidable`, with no LPO hypothesis
-#check @ZeroParadox.waitENat                    -- Statement: `orderIsoWithTopClassical` as `NInf ≃o ℕ∞`, the map `endVal_eq_wait` (§ XXX) reads waiting times through. Reading: any `NInf ≃o ℕ∞` gives LPO (`NInf.lpo_of_enatIso`, `ZeroParadox/Valuation/DepthIsWait.lean`), so the exact depth in `ℕ∞` is paid for in LPO, not by the tape
+#check @ZeroParadox.waitENat                    -- Statement: `orderIsoWithTopClassical` as `NInf ≃o ℕ∞`, the map `endVal_eq_wait` (§ XXX) reads waiting times through. Reading: the exact depth in `ℕ∞` costs at least LPO, not the tape: any `NInf ≃o ℕ∞` gives LPO (`NInf.lpo_of_enatIso`, `ZeroParadox/Valuation/DepthIsWait.lean`), and LPO given as data suffices for `NInf ≃o WithTop ℕ` (`NInf.isoOfLPOData`)
 
 /-! ### § XXX. First-occurrence time as a Galois insertion: tapes onto `NInf`, order reversed -/
 -- Reading: Tim's "bend" (2026-11-03): one tape, a firing record in `ℕ → Bool` (pointwise order) and a
