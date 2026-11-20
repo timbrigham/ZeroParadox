@@ -98,9 +98,8 @@ noncomputable def attractorBIM : BottomInvariantMeasure Q₂ where
 open Filter Topology
 
 /-- The **ω-limit set** of the orbit of `x` under `f`: the points the orbit accumulates at cofinally,
-    `⋂ N, closure {fⁿ x | n ≥ N}`. This is Mathlib's `omegaLimit` (`Mathlib/Dynamics/OmegaLimit.lean`)
-    specialized to the ℕ-orbit / `atTop` filter / singleton start; rolled lightweight here to avoid the
-    flow / monoid-action API. -/
+    `⋂ N, closure {fⁿ x | n ≥ N}`. Equal to Mathlib's `omegaLimit atTop (fun n y => f^[n] y) {x}`:
+    `lm_omegaLim_eq_omegaLimit` (`ZeroParadox/Multihomed/LimitMotion.lean`). -/
 def omegaLim {X : Type*} [TopologicalSpace X] (f : X → X) (x : X) : Set X :=
   ⋂ N : ℕ, closure (Set.range fun n : ℕ => f^[N + n] x)
 
