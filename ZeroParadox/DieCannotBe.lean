@@ -1196,13 +1196,15 @@ example {α : Type} [Primcodable α] (M : ZeroParadox.Motion α) (h : M.UpTotal)
 -- Reading: so this proof's footprint includes `Classical.choice`; no footprint is claimed here for
 -- the `ℕ`-valued statement itself.
 -- Statement: statement controls, one per codomain: each assumes only a computable map out of `ℕ`.
--- Measured 2026-11-05 in this pinned Mathlib by naming each as a theorem in a scratch file and
--- printing its axioms: the `Bool` one reports `[propext, Classical.choice, Quot.sound]` and the `ℕ`
--- one `[propext, Quot.sound]`, so the choice enters through the `Bool` codomain's encoding
--- (`Primcodable.bool` reports `[propext, Classical.choice, Quot.sound]`) and not through
--- `Computable` itself (`[propext]`).
+-- Elaborated, the `Bool` one names `Primcodable.bool` for its codomain and the `ℕ` one names
+-- `Primcodable.ofDenumerable ℕ Denumerable.nat` on both sides; the footprints of those constants and
+-- of `Computable` are printed next, and of them only `Primcodable.bool` carries `Classical.choice`.
 example (_h : ∃ d : ℕ → Bool, Computable d) : True := trivial
 example (_h : ∃ d : ℕ → ℕ, Computable d) : True := trivial
+#print axioms Primcodable.bool
+#print axioms Primcodable.ofDenumerable
+#print axioms Denumerable.nat
+#print axioms Computable
 #check @ZeroParadox.no_computable_registration_at_kleene_floor -- Statement: no computable test decides self-halting on `Nat.Partrec.Code`
 -- Statement: NON-MEMBER of (a): on `Nat.Partrec.Code`, UP defined (and fixing `c`) where `c` halts on
 -- its own code.
@@ -2701,9 +2703,12 @@ example {L : Type} [ZeroParadox.QuineAtomHost L] :
 #check @ZeroParadox.Motion.selfOnlyAt_ofPartialFun_iff -- Statement: a step to itself only iff `g y = some y`; both directions
 #check @ZeroParadox.Motion.leavesAt_ofPartialFun_iff -- Statement: a step elsewhere iff `g y = some b`, `b ≠ y`; both directions
 -- Statement: the nowhere-defined partial map on `Bool` has no step at any point: the third value of
--- the trichotomy, which a total map never takes.
+-- the trichotomy, which a total map never takes (next `example`).
 example (y : Bool) : (ZeroParadox.Motion.ofPartialFun (fun _ : Bool => (none : Option Bool))).NoStepAt y :=
   (ZeroParadox.Motion.noStepAt_ofPartialFun_iff _ y).2 rfl
+-- Statement: for every self-map `g`, `ofFun g` has a step at every point.
+example {β : Type*} (g : β → β) (y : β) : ¬ (ZeroParadox.Motion.ofFun g).NoStepAt y :=
+  fun h => h (g y) rfl
 -- Statement: adjoin one point: if every admissible map on `Option β` is a lift `x ↦ x.bind g`, no
 -- admissible map is fixed-point-free, since each fixes `none`; so the Cantor route
 -- (`no_witnessRel_of_admissible_fpf`) has no admissible input there; one way.
@@ -2982,7 +2987,7 @@ example : let M := ZeroParadox.Motion.ofTotal (fun _ : Bool => true) (fun _ => r
   ⟨show true ≠ false by decide,
     fun h => absurd (h true false (show true ≠ false by decide)) (by decide),
     fun h => absurd (h false true (show false ≠ true by decide)) (by decide)⟩
-#check @ZeroParadox.Motion.eq_of_step_to_isEmpty -- Statement: emptiness: if each step `a → b` gives a map `E a → E b`, `E y` is empty and every other `E a` is inhabited, then `y` is in the first set; no order, and the step need not be single-valued
+#check @ZeroParadox.Motion.eq_of_step_to_isEmpty -- Statement: emptiness: if each step `a → b` gives a map `E a → E b`, `E y` is empty and every `a` has `E a` inhabited or `a = y`, then `y` is in the first set; no order, and the step need not be single-valued
 -- Statement: member: on ℕ with OVER "a map `Fin m → Fin n` exists", `0` is in the first set, and the
 -- step has two successors at `0`, does not raise (`3 → 1`) and does not lower (`0 → 1`) in ℕ's order.
 example : let M := (ZeroParadox.Motion.ofTotal (id : ℕ → ℕ) (fun _ => rfl)
@@ -3133,7 +3138,7 @@ example : let M := ZeroParadox.Motion.ofTotal (id : Bool → Bool) (fun _ => rfl
     | next _ _ ih => exact ih _ trivial
   exact absurd (key true h) (by decide)
 #check @ZeroParadox.Motion.eq_of_reflTransGen_of_noEntry -- Statement: if every step into `y` starts at `y`, every path ending at `y` starts at `y`
-#check @ZeroParadox.Motion.not_noEntry_of_arrives -- Statement: in any motion, if some `x ≠ y` arrives at `y`, some step into `y` starts elsewhere
+#check @ZeroParadox.Motion.not_noEntry_of_arrives -- Statement: in any motion, if some `x ≠ y` arrives at `y`, not every step into `y` starts at `y`
 #check @ZeroParadox.Motion.noEntry_ofFun_iff_arrives -- Statement: in `ofFun g`, every step into `y` starts at `y` iff every point arriving at `y` is `y`
 -- Statement: CONTROL, the `←` direction fails off function steps: on `Bool` with the always-true
 -- step, every point arriving at `false` is `false`, and `true` steps into `false`.
@@ -3389,7 +3394,9 @@ example :
     @ZeroParadox.Motion.eq_of_step_from_of_stepLowers _ _ (Preorder.lift (‖·‖ : ℤ_[2] → ℝ)).toLE
       ZeroParadox.z2_two_views.2.2.2.1 0 hn⟩
 -- Statement: CONTROL: least in one order and greatest in another is had by any carrier with a least
--- point, through the order dual: `false` on `Bool`.
+-- point, through the order dual (this `example`); `false` on `Bool` is an instance (the next).
+example {β : Type*} [LE β] {b : β} (h : IsBot b) : IsBot b ∧ IsTop (OrderDual.toDual b) :=
+  ⟨h, fun c => h (OrderDual.ofDual c)⟩
 example : IsBot false ∧ @IsTop Bool (OrderDual.instLE Bool) false :=
   ⟨fun b => Bool.false_le b, fun b => Bool.false_le b⟩
 -- Statement: CONTROL: on `Unit` one point is least and greatest in one order.
@@ -5366,12 +5373,13 @@ example : ¬ ZeroParadox.Motion.unitMotion.Loop := fun ⟨_, _, _, _, hne, _⟩ 
 
 /-! ### § XXXVII. Levels of the die isomorphism: strict, homeomorphic, bi-Lipschitz -/
 -- Reading: CARRIER — the levels and the control live in `ZeroParadox/DieSameness.lean`; each level
--- extends the one before; the control below is a `StrictIso` with no `HomeoIso`, and that file
--- exhibits no `HomeoIso` lacking a `LipIso`.
+-- extends the one before; the controls below separate both steps.
 #check @ZeroParadox.Motion.StrictIso           -- Statement: the bare level: strict maps both ways, mutually inverse, nothing asked of the carriers
 #check @ZeroParadox.Motion.HomeoIso            -- Statement: a `StrictIso` whose two maps are continuous
 #check @ZeroParadox.Motion.LipIso              -- Statement: a `HomeoIso` whose two maps are Lipschitz; continuity is a field default
 #check @ZeroParadox.Motion.stillMotion_nat_rat_strict_not_homeo -- Statement: CONTROL — `ℕ` and `ℚ` with identity UP and no step: a `StrictIso`, no `HomeoIso`
+#check @ZeroParadox.Motion.stillMotion_line_interval_homeo_not_lip -- Statement: CONTROL — `ℝ` and `(-1, 1)` with identity UP and no step: a `HomeoIso`, no `LipIso`
+#check @ZeroParadox.Motion.scale24_not_lip     -- Statement: CONTROL — steps `x ↦ 2x` and `x ↦ 4x` on `ℝ`: a `HomeoIso` (by `x ↦ x * |x|`), no `LipIso`
 #check @ZeroParadox.lmHomeoIsoOfConj           -- Statement: `lmIsoOfConj` at the `HomeoIso` level; its `toStrictIso` is `lmIsoOfConj` by `rfl` (`lmHomeoIsoOfConj_toStrictIso`)
 #check @ZeroParadox.bendFiveIso                -- Statement: stated at the `StrictIso` level (§ XXXVI)
 

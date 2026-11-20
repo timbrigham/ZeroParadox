@@ -247,7 +247,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
   - ride-along docs: `ZeroParadox/DiagonalFixedPoint.md` - The μ/ν split, the host verdict, and what this index does not claim
 - `ZeroParadox/Die.lean` - The die: an order-free motion, its switches, and its premises
 - `ZeroParadox/DieCannotBe.lean` - Machine-checked characterization index of the die — its premises, with members and non-members
-- `ZeroParadox/DieSameness.lean` - Levels of "same motion": strict, homeomorphic and bi-Lipschitz isomorphisms of die motions
+- `ZeroParadox/DieSameness.lean` - Homeomorphic and bi-Lipschitz isomorphisms of die motions, the levels above `Motion.StrictIso`
 - `ZeroParadox/Miniature.lean` - The Zero Paradox in miniature — the minimal core
 
 ### Meta / tooling (not framework content)

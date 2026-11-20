@@ -248,7 +248,8 @@ theorem corner_of_not_not_classical : ¬¬ M.Corner → M.Corner :=
 theorem corner_overAtLanding : M.Corner → M.OverAtLanding :=
   fun ⟨y, b, _, hy, hs, _, _⟩ => ⟨y, b, hy, hs⟩
 
-/-- `Statement:` a corner's step leaves its landing. -/
+/-- `Statement:` a corner gives a step between two distinct points; that the step starts at a landing
+    is `corner_leavesAt`. -/
 theorem corner_step_moves : M.Corner → ∃ y b, M.step y b ∧ b ≠ y :=
   fun ⟨y, b, _, hy, hs, hz, hzb⟩ =>
     ⟨y, b, hs, fun hb => hzb (by rw [hb] at hz ⊢; exact Part.mem_unique hz hy)⟩
@@ -1037,8 +1038,8 @@ theorem eq_bot_of_step_from_bot [PartialOrder α] [OrderBot α] (h : M.StepLower
 
 /-! ### § XIII. Further trap data: emptiness, a rank, accessibility, monotonicity; and maps of motions -/
 
-/-- `Statement:` if every step `a → b` gives a map `E a → E b`, `E y` is empty, and `E a` is
-    inhabited for every `a ≠ y`, every step into `y` starts at `y`. No order is used, and the
+/-- `Statement:` if every step `a → b` gives a map `E a → E b`, `E y` is empty, and for every `a`
+    either `E a` is inhabited or `a = y`, every step into `y` starts at `y`. No order is used, and the
     step need not be single-valued. -/
 theorem eq_of_step_to_isEmpty {E : α → Type*} (hstep : ∀ a b, M.step a b → Nonempty (E a → E b))
     {y : α} (hy : IsEmpty (E y)) (hne : ∀ a, Nonempty (E a) ∨ a = y) (a : α)
@@ -1384,7 +1385,7 @@ theorem restrict_stepRaises_Ici [Preorder α] (h : M.StepRaises) (a : α)
   fun x y hs => h x.1 y.1 hs
 
 /-- `Statement:` an empty carrier has at most one motion. One exists on every carrier, the identity UP
-    with the empty step (the `example` at `Type` in `ZeroParadox/DieCannotBe.lean` § 0), and on
+    with the empty step (the `example` at `Type u` in `ZeroParadox/DieCannotBe.lean` § 0), and on
     `Empty` the `Nonempty` example of § II there. -/
 theorem subsingleton_of_isEmpty [IsEmpty α] : Subsingleton (Motion α) :=
   ⟨fun ⟨u, _, s⟩ ⟨u', _, s'⟩ => by
@@ -1653,7 +1654,7 @@ theorem noEntry_iff_noReach (y : α) :
   ⟨fun h _ hx => eq_of_reflTransGen_of_noEntry h hx,
    fun h a ha => h a (Relation.ReflTransGen.single ha)⟩
 
-/-- `Statement:` if some `x ≠ y` arrives at `y`, some step into `y` starts elsewhere. -/
+/-- `Statement:` if some `x ≠ y` arrives at `y`, not every step into `y` starts at `y`. -/
 theorem not_noEntry_of_arrives {x y : α} (h : M.Arrives y x) (hxy : x ≠ y) :
     ¬ ∀ a, M.step a y → a = y :=
   fun hF => hxy (eq_of_reflTransGen_of_noEntry hF (reflTransGen_of_arrives h))
@@ -1874,7 +1875,7 @@ theorem mp_of_exists_fanIn_nat
   · obtain ⟨k, -, hk⟩ := (fired_iff a).1 hfa
     exact ⟨k, hk⟩
 
-/-- `Statement:` if `y` has fan-in, some step into `y` starts elsewhere. -/
+/-- `Statement:` if `y` has fan-in, not every step into `y` starts at `y`. -/
 theorem not_noEntry_of_fanIn {y : α} (h : M.FanIn y) : ¬ ∀ a, M.step a y → a = y :=
   fun hF => let ⟨a, b, hab, ha, hb⟩ := h; hab ((hF a ha).trans (hF b hb).symm)
 
@@ -2245,13 +2246,13 @@ def UpLax (M : Motion α) (N : Motion β) (f : α → β) : Prop :=
   ∀ x y, y ∈ M.up x → f y ∈ N.up (f x)
 
 /-- `Statement:` UP at `f x` in `N` is UP at `x` in `M` mapped by `f`, at every `x`. `Reading:` the
-    UP square commutes in Par; it is Mathlib's coalgebra morphism for the functor `Part` (next
-    `example`). -/
+    UP square commutes in Par; for carriers in `Type`, it is Mathlib's coalgebra morphism for the
+    functor `Part` (next `example`). -/
 def UpStrict (M : Motion α) (N : Motion β) (f : α → β) : Prop :=
   ∀ x, N.up (f x) = (M.up x).map f
 
--- Statement: `UpStrict` is `CategoryTheory.Endofunctor.Coalgebra.Hom` for `ofTypeFunctor Part`, with
--- UP as the structure map; both directions.
+-- Statement: for carriers in `Type`, `UpStrict` is `CategoryTheory.Endofunctor.Coalgebra.Hom` for
+-- `ofTypeFunctor Part`, with UP as the structure map; both directions.
 example {α β : Type} (M : Motion α) (N : Motion β) (f : α → β) :
     UpStrict M N f ↔
       ∃ h : CategoryTheory.Endofunctor.Coalgebra.Hom (F := CategoryTheory.ofTypeFunctor Part)
@@ -2315,7 +2316,7 @@ theorem upLax_iff_le (f : α → β) : UpLax M N f ↔ ∀ x, (M.up x).map f ≤
   · intro h x y hy
     exact h x (f y) ((Part.mem_map_iff _).2 ⟨y, hy, rfl⟩)
 
-/-- `Statement:` `UpStrict` gives `UpLax`; one way (`lax_not_strict` example below). -/
+/-- `Statement:` `UpStrict` gives `UpLax`; one way (the NO-GO `example` "lax is not strict" below). -/
 theorem upStrict_upLax {f : α → β} (h : UpStrict M N f) : UpLax M N f :=
   fun x y hy => by rw [h x]; exact Part.mem_map f hy
 
@@ -2758,8 +2759,10 @@ example : (∀ x : Empty, (fun b : Bool => Part.some (!b)) (Empty.elim x) =
 end Motion
 
 /-! ### § XXI. Observation: a motion and a map out of it, as a pair
-`Reading:` an observation is an explicit second argument (a strict map `φ`, or a map `obs` into any
-type); each result here is about the pair, none about the motion alone. The observer is the map and
+`Reading:` an observation is a second argument (a strict map `φ`, or a map `obs` into any type). Some
+results here take the observation explicitly; others derive it from the motion's own data, its UP's
+domain (`upCompat_ker_dom`) or the idempotent `r` it is built from (`upCompat_ker_up`), and
+`collapseEquiv` concerns `r` alone. The observer is the map and
 the observed motion is its source; when the map is a strict onto map with the back clause, the motion
 it maps onto is its homomorphic image (what the observer shows). -/
 
@@ -5603,8 +5606,9 @@ theorem prod_fst_stepBack (M : Motion α) (N : Motion β) (hN : ∀ b, ∃ b', N
   obtain ⟨b', hb'⟩ := hN p.2
   exact ⟨(c, b'), ⟨hc, hb'⟩, rfl⟩
 
-/-- `Statement:` CONTROL: with `N` a one-point motion with no step, the first projection of
-    `M.prod N` is not a coalgebra homomorphism (`coalgHom_iff`, § XX). -/
+/-- `Statement:` CONTROL: with `M` the one-point motion with a step and `N` the one-point motion
+    with no step, the first projection of `M.prod N` is not a coalgebra homomorphism (`coalgHom_iff`,
+    § XX). -/
 theorem prod_fst_not_coalgHom :
     let M := ofTotal (id : Unit → Unit) (fun _ => rfl) (fun _ _ => True)
     let N := ofTotal (id : Unit → Unit) (fun _ => rfl) (fun _ _ => False)
