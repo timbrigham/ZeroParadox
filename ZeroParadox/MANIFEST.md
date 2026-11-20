@@ -420,6 +420,8 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
   - ride-along docs: `ZeroParadox/Multihomed/TH3Die.md` - TH3Die — T-H3's four conjuncts as die motions
 - `ZeroParadox/Multihomed/TreeT1.lean` - ZP-H tree, edge T1 — the within-μ edge: proof-theory floor ↔ categorical-initial bottoms
 - `ZeroParadox/Multihomed/TreeT2.lean` - ZP-H tree, edge T2 — the within-ν edge: Markov attractor ↔ p-adic inverse-limit
+- `ZeroParadox/Multihomed/TwoAdicBend.lean` - The 2-adic bend: multiplier maps on `OnePoint ℚ_[2]` up to topological conjugacy
+  - ride-along docs: `ZeroParadox/Multihomed/TwoAdicBend.md` - TwoAdicBend — multiplier maps on `OnePoint ℚ_[2]` up to topological conjugacy
 - `ZeroParadox/Multihomed/TwoFacesBot.lean` - Direction B — the two faces of ⊥ at the seam: VACUOUS (they coincide, but only as a bare singleton)
 - `ZeroParadox/Multihomed/WallSpanRobust.lean` - Spans into the ordinals: the wall bites on non-well-founded apexes (#1 vs #2, #2 taken as ℝ)
 

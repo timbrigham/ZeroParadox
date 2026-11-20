@@ -1,0 +1,103 @@
+# TwoAdicBend — multiplier maps on `OnePoint ℚ_[2]` up to topological conjugacy
+
+Ride-along companion to `ZeroParadox/Multihomed/TwoAdicBend.lean`, the 2-adic companion to
+`ZeroParadox/Multihomed/BendDie.lean`. Experimental probe in the bottom-diagram mapping campaign,
+**not a finalized layer**. Curated results are indexed in `ZeroParadox/MANIFEST.md` and
+`ZeroParadox/DieCannotBe.lean` § XXXVIII.
+
+## Formal Overview (AI-assisted)
+
+A multiplier map (dilation) is `z ↦ c z`; on the one-point compactification `OnePoint K` it is
+`lmScale c` (`ZeroParadox/Multihomed/LimitMotion.lean`), fixing `∞`. It is contracting if `‖c‖ < 1`,
+expanding if `1 < ‖c‖`, and indifferent if `‖c‖ = 1`. `ScaleConj c d` says a homeomorphism of
+`OnePoint K` conjugates `lmScale c` to `lmScale d` (topological conjugacy, homeomorphic
+equivalence); `scaleConj_homeoIso` turns it into a `Motion.HomeoIso` of the limit motions
+(`ZeroParadox/DieSameness.lean`). ℂ and `ℚ_[2]` are two carriers below; no statement equates a
+point of one with a point of the other.
+
+- § I. `ScaleConj` is an equivalence relation (`scaleConj_refl`, `scaleConj_symm`,
+  `scaleConj_trans`); inversion gives `×c ~ ×c⁻¹` (`scaleConj_inv`); a homeomorphism of `K` with
+  `e (c z) = d (e z)` extends to `OnePoint K` (`scaleConj_of_homeo`).
+- § III. The discrete twist `dTwist u z = u ^ v(z) * z`, `v` the 2-adic valuation. For `‖u‖ = 1` it
+  preserves the norm (`dTwist_norm`) and is a homeomorphism of `ℚ_[2]` (`dTwistHomeo`), and
+  `dTwist_conj_mul` gives `×c ~ ×(u ^ v(c) * c)` (`dTwist_scaleConj`); `×2 ~ ×(2u)` is
+  `dTwist_scaleConj_two`, `×2 ~ ×6` is `dTwist_two_six`. The control `dTwist_mult_valuation`: the
+  twist never changes the valuation of the multiplier, so it never sends `×2` to `×4`
+  (`dTwist_not_two_four`). `Reading:` that control is about the twist only; `×2` and `×4` are
+  conjugate by § IV's `scaleConj_two_four`.
+- § IV. The step merge. For `v(c) = k + 1`, `stepHomeo c k` sends `2 ^ n * w` to `c ^ n * psiK k w`
+  (`w` a unit), where `psiK k` sends the units into the shells `0 … k` and `rhoK k` back, each
+  undoing the other there (`rho_psi`, `psi_rho`; continuity `psiK_continuous`, `rhoK_contAt`);
+  `stepMap_conj` is the conjugacy equation. So `×2 ~ ×c` for every
+  contracting `c` (`scaleConj_two_of_norm_lt_one`), every `c` with `‖c‖ ≠ 1`
+  (`scaleConj_two_of_norm_ne_one`, an expanding `c` through `scaleConj_inv`), and any two such
+  multipliers (`scaleConj_of_norm_ne_one`, `homeoIso_of_norm_ne_one`). The control
+  `scaleConj_two_not_norm_one`: an indifferent `d` (`‖d‖ = 1`) is never conjugate to `×2`.
+- § V. Four flips. `uFlip z = 4 ^ v(z) * z⁻¹` (the unit-inverse flip, `2 ^ v * w ↦ 2 ^ v * w⁻¹`)
+  and group inversion give automorphisms `flipU`, `flipI` of `ℚ_[2]ˣ`, both continuous
+  (`flipU_continuous`, `flipI_continuous`), with `flip_klein_units`: commuting involutions,
+  four pairwise distinct elements. On `OnePoint ℚ_[2]`, `flipS` extends `uFlip` and
+  `flipA = flipS ∘ onePointInv` is the amplitude flip `2 ^ v * w ↦ 2 ^ (-v) * w`
+  (`flip_klein_onePoint`). `flipA` exchanges `0` of `ℚ_[2]` and `∞` of `OnePoint ℚ_[2]`, `flipS`
+  fixes both (`flip_poles`); `flipA` fixes every point of the unit shell `‖z‖ = 1`
+  (`flipA_fixes_shell`), while `rInv` (`ZeroParadox/Valuation/RiemannSphere.lean`) fixes a shell
+  point iff it is `±1` (`rInv_shell`; the control `rInv_moves_three`). `flip_conj_scales`
+  conjugates `×c` to the three flipped multipliers, `ampFlip_eq` computes the amplitude-flipped one.
+  `Reading:` `flip_klein_units` exhibits a Klein four subgroup of the automorphisms of `ℚ_[2]ˣ`;
+  it does not say these four are all of them.
+- § VI. On `OnePoint ℂ`, `×c` is conjugate to `×conj c` (`bend_conj_conj`,
+  `ZeroParadox/Multihomed/BendDie.lean`), to `×c⁻¹` and to `×(conj c)⁻¹` (`complex_four_conj`), so
+  any two of the four give `Motion.HomeoIso`-related limit motions (`complex_four_homeoIso`).
+  `z ↦ (conj z)⁻¹` fixes every point of the unit circle (`complex_ampFlip_fixes_circle`); inversion
+  alone and conjugation alone each move `i` (`complex_flip_controls`).
+- § VII. `IsAttractingFixedPt` and `IsRepellingFixedPt` are the topological notions; a topological
+  conjugacy preserves both (`attracting_conj_iff`, `repelling_conj_iff`), and an injective map
+  cannot have a non-isolated fixed point that is both (`not_attracting_and_repelling`). On
+  `OnePoint K`, `K` a nontrivially normed field with `ProperSpace K`: for `‖c‖ ≠ 1`, `0` of `K` is attracting iff `c` is
+  contracting and repelling iff it is expanding (`scale_zero_classification`); `∞` the reverse,
+  derived by transport through `onePointInvHomeo` (`scale_infty_classification`); for `‖c‖ = 1`,
+  neither (`scale_infty_neither_of_norm_one`). `conj_swaps_poles`: every homeomorphism conjugating
+  an expanding multiplier to a contracting one exchanges `0` of `K` and `∞`. Instances, one per
+  carrier: `×2` on `OnePoint ℂ` (`complex_two_poles`, `1 < ‖2‖`) and `×2` on `OnePoint ℚ_[2]`
+  (`padic_two_poles`, `‖2‖ < 1` in `ℚ_[2]`), with the attracting and repelling roles of `0` and `∞`
+  exchanged between the two. Controls: `scale_control_one` (`×1`) and `scale_control_rotation`
+  (`×i`).
+
+Axiom footprints: the `PurityCheck` section at the end of `TwoAdicBend.lean`.
+
+## Prior art
+
+- A. Jenkins and S. Spallone, "Lipeomorphic equivalence for p-adic analytic functions: a comparison
+  between complex and p-adic dynamics", arXiv:1011.2451v1 (2010). Standard names adopted here:
+  "multiplier map", "contracting / expanding / indifferent", "homeomorphic equivalence" against
+  "lipeomorphic equivalence". Proposition 7.1, p. 26: "For i = 1, 2, let p_i be primes,
+  π_i ∈ p_i ℤ_{p_i} − {0} and write L_{π_i} : ℚ_{p_i} → ℚ_{p_i} for dilation by π_i. Then there is a
+  homeomorphism h : ℚ_{p_1} → ℚ_{p_2} so that h ∘ L_{π_1} ∘ h⁻¹ = L_{π_2}. In fact, we may choose h
+  and a constant C > 0 with the property that |h(x)| ≤ C|x|^{ord(π_1)/ord(π_2)}. This exponent cannot
+  be improved." `dTwist_scaleConj_two` and `scaleConj_two_four` are instances at `p_1 = p_2 = 2`
+  (`π_2 = 2u`, `π_2 = 4`), with an explicit closed-form conjugacy for the first; the proof there
+  builds `h` from a homeomorphism of fundamental domains `Δ_π = {|π| < |x| ≤ 1}` (Def. 3.6, p. 7),
+  and for `π = 4` that domain is units plus twice units. Its § 7 opening (p. 26) also asserts, without proof there, that
+  for `a` a primitive `k`-th root of unity, `L_a` and `L_a'` are homeomorphically equivalent iff
+  `a'` is also a primitive `k`-th root of unity: on the unit sphere the unit is an invariant.
+- J. Bastos, D. Caprio and A. Messaoudi, "Shadowing and stability in p-adic dynamics",
+  arXiv:2001.02737v1 (2020), Theorem 26, p. 14: "if ‖a‖_p ≠ 1, then f_{a,b} is Lipschitz
+  structurally stable. Furthermore, the conjugation is an isometry and f_{a,b} is topologically
+  conjugate to f_{1/p^k,0}, where ‖a‖_p = p^k". Their conjugacy is built by a digit coding; this
+  file proves `dTwist` norm-preserving (`dTwist_norm`), not an isometry.
+- The bi-Lipschitz level: `Motion.scale24_not_lip` (`ZeroParadox/DieSameness.lean`) separates `×2`
+  and `×4` on ℝ (a `HomeoIso`, no `LipIso`); its docstring cites the p-adic counterpart in
+  Jenkins–Spallone. No `LipIso` statement is made here; `dTwist_mult_valuation` records that the twist keeps the
+  valuation of the multiplier, and § IV's step map does not.
+- The complex side: `ZeroParadox/Multihomed/BendDie.md` (Rybalkina–Sergeichuk Lemma 2.1; Budnytska;
+  Kuiper–Robbin as those papers cite it). Joining contracting and expanding multipliers through
+  `z ↦ 1/z` on `OnePoint ℚ_[2]` follows their route on the Riemann sphere; a statement of it for
+  `P¹(ℚ_p)` was not retrieved from either p-adic source.
+- Corpus: `lmScale`, `lmHomeoIsoOfConj`, `lm_onePointInv_conj_scale`
+  (`ZeroParadox/Multihomed/LimitMotion.lean`), `onePointInvHomeo`, `rInv`
+  (`ZeroParadox/Valuation/RiemannSphere.lean`), `bend_conj_conj` (`BendDie.lean`). Mathlib:
+  `Padic.valuation_mul`, `Padic.norm_eq_zpow_neg_valuation`, `PadicInt.exists_mem_range`,
+  `Homeomorph.onePointCongr`, `Units.mapEquiv`, `MulEquiv.inv`.
+- Search, 2026-11-19 (theoremsearch, three phrasings, one formal; LeanExplore; GitHub
+  `extension:lean`; the open web), recorded in the project notes: no conjugacy of p-adic
+  multiplication maps was located in Mathlib as of that date; the null is uninformative.

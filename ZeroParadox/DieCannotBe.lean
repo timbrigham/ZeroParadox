@@ -67,6 +67,7 @@ import ZeroParadox.Multihomed.OrbitDie
 import ZeroParadox.Multihomed.CollapseDie
 import ZeroParadox.Multihomed.LimitMotion
 import ZeroParadox.Multihomed.BendDie
+import ZeroParadox.Multihomed.TwoAdicBend
 import ZeroParadox.DieSameness
 
 set_option maxHeartbeats 400000
@@ -5389,5 +5390,18 @@ example : ¬ ZeroParadox.Motion.unitMotion.Loop := fun ⟨_, _, _, _, hne, _⟩ 
 #check @ZeroParadox.Motion.scale24_not_lip     -- Statement: CONTROL — steps `x ↦ 2x` and `x ↦ 4x` on `ℝ`: a `HomeoIso` (by `x ↦ x * |x|`), no `LipIso`
 #check @ZeroParadox.lmHomeoIsoOfConj           -- Statement: `lmIsoOfConj` at the `HomeoIso` level; its `toStrictIso` is `lmIsoOfConj` by `rfl` (`lmHomeoIsoOfConj_toStrictIso`)
 #check @ZeroParadox.bendFiveIso                -- Statement: stated at the `StrictIso` level (§ XXXVI)
+
+/-! ### § XXXVIII. The 2-adic bend: multiplier maps on `OnePoint ℚ_[2]` up to topological conjugacy -/
+-- Reading: CARRIER — each result beside its control in `ZeroParadox/Multihomed/TwoAdicBend.lean`;
+-- ℂ and `ℚ_[2]` are two carriers, and no equation across them is stated.
+#check @ZeroParadox.dTwist_scaleConj           -- Statement: for `‖u‖ = 1` the twist `u ^ v(z) * z` conjugates `×c` to `×(u ^ v(c) * c)` on `OnePoint ℚ_[2]`; `×2` to `×6` is `dTwist_two_six`
+#check @ZeroParadox.dTwist_not_two_four        -- Statement: CONTROL — no twist sends `×2` to `×4`; a fact about the construction, since `scaleConj_two_four` conjugates them
+#check @ZeroParadox.scaleConj_of_norm_ne_one   -- Statement: any two multipliers with `‖c‖ ≠ 1`, `‖d‖ ≠ 1` are conjugate on `OnePoint ℚ_[2]`; `homeoIso_of_norm_ne_one` is the `HomeoIso` form
+#check @ZeroParadox.scaleConj_two_not_norm_one -- Statement: CONTROL — a multiplier with `‖d‖ = 1` is not conjugate to `×2` on `OnePoint ℚ_[2]`
+#check @ZeroParadox.flip_klein_units           -- Statement: the unit-inverse flip and inversion are commuting involutions of `ℚ_[2]ˣ`, four distinct elements; on `OnePoint ℚ_[2]`, `flip_klein_onePoint`
+#check @ZeroParadox.flipA_fixes_shell          -- Statement: the amplitude flip fixes the unit shell pointwise; `rInv` fixes only `±1` there (`rInv_shell`)
+#check @ZeroParadox.complex_four_homeoIso      -- Statement: on `OnePoint ℂ`, any two of `c`, `conj c`, `c⁻¹`, `(conj c)⁻¹` give `HomeoIso`-related limit motions
+#check @ZeroParadox.conj_swaps_poles           -- Statement: every homeomorphism conjugating an expanding multiplier to a contracting one on `OnePoint K` exchanges `0` of `K` and `∞`
+#check @ZeroParadox.padic_two_poles            -- Statement: `×2` on `OnePoint ℚ_[2]`: `0` attracting, `∞` repelling; on `OnePoint ℂ` the roles are exchanged (`complex_two_poles`)
 
 end DieCannotBeIndex
