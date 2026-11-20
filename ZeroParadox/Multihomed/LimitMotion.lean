@@ -631,14 +631,14 @@ end Instances
 
 `Reading:` CARRIER. § II turns an approach (`Tendsto`) into a die fact inside ONE motion. Here one tower,
 seeded at 0, ⊥ of `Ordinal`, is read in two charts joined by `NONote.repr` and `cnfToZp2`, never by
-`=`. In `Ordinal`, with Mathlib's order topology, `ordinalTowerMotion` is the limit motion of
+`=`. In `Ordinal.{0}`, with Mathlib's order topology, `ordinalTowerMotion` is the limit motion of
 `α ↦ ω^α`, so § II's iff applies to it (the first `example` below), and the stages have a stage
 closure (`Motion.StageClosure`, § II's closure branch) with the value ε₀ (ε₀ ≠ 0 and ε₀ ≠ ⊥ of
 `Ordinal`, `epsilon0_ne_zero`, `epsilon0_ne_bot`). In `ℤ_[2]` the images start at ℤ_[2]'s 0, differ
 from it from stage 1 on, and approach that same 0. -/
 
-/-- `Statement:` in `Ordinal`'s order topology `α ↦ ω^α` is continuous (`Order.IsNormal.continuous`),
-    `ordinalTowerMotion` equals its limit motion (each orbit tends to its `nfp`, UP of the tower), and
+/-- `Statement:` at universe 0: in `Ordinal.{0}`'s order topology `α ↦ ω^α` is continuous
+    (`Order.IsNormal.continuous`), `ordinalTowerMotion` equals its limit motion (each orbit tends to its `nfp`, UP of the tower), and
     § II's iff `lm_tendsto_iff_arrival_or_closure` holds for `ordinalTowerMotion`. -/
 example :
     ordinalTowerMotion.{0} = limitMotion (fun a : Ordinal.{0} => Ordinal.omega0 ^ a)
