@@ -117,8 +117,9 @@ two-chart reading for § IV–VII and for fence 2 of the Lean header (`Reading:`
   `IsComputableReal (p : ℝ)` and `x` Martin-Löf random for its `bernoulliMeasure p hp`, the frequency of
   ones in `x` tends to `p`; for `p > 0` that gives infinitely many ones. Its hypothesis needs a
   computable `p`, which § VI does not; that Martin-Löf randomness meets § VI's `htyp` for `𝒯` = the
-  zero-block tests is open item 1 at `p = 1/2` and is not stated here for other `p`, and its
-  `bernoulliMeasure` was not compared with `trials`. For the uniform measure the same library has
+  zero-block tests is open item 1 at `p = 1/2` and is not stated here for other `p`. Its
+  `bernoulliMeasure` is `trials`: `trials_eq_bernoulliMeasure`
+  (`ZeroParadox/Information/BrudnoBridge.lean`). For the uniform measure the same library has
   `exists_isMartinLofRandom_uniform` (a Martin-Löf random sequence exists, `EffectiveLaws.lean`) and
   `isEffectivelyNull_singleton_of_computable` (no computable sequence is, `EffectiveNull.lean`); given
   open item 1, the first gives a Martin-Löf random tape meeting `htyp` at `p = 1/2` for `𝒯` = the
