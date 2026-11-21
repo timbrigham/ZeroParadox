@@ -152,6 +152,23 @@ theorem no_tree_subsingleton {α : Type*} [Subsingleton α] (L : α → α → P
   rw [Subsingleton.elim (f [false]) (f [])] at h1
   exact absurd ((hf [false] []).1 (by rwa [Subsingleton.elim (f [false]) (f [])])) (by decide)
 
+/-- `Statement:` CONTROL, on a finite carrier no `f : List Bool → α` carries any relation as the
+prefix order; such an `f` is one-to-one, and `List Bool` is infinite. -/
+theorem no_tree_finite {α : Type*} [Finite α] (L : α → α → Prop) :
+    ¬ ∃ f : List Bool → α, ∀ l l', L (f l) (f l') ↔ l <+: l' := by
+  rintro ⟨f, hf⟩
+  refine not_injective_infinite_finite f fun l l' h => ?_
+  have h1 : l <+: l' := (hf l l').1 (by rw [h]; exact (hf l' l').2 (List.prefix_refl _))
+  have h2 : l' <+: l := (hf l' l).1 (by rw [h]; exact (hf l' l').2 (List.prefix_refl _))
+  exact h1.eq_of_length (le_antisymm h1.length_le h2.length_le)
+
+-- Statement: `no_tree_subsingleton` is the subsingleton case of `no_tree_finite`, and `Bool` is finite
+-- and not a subsingleton.
+example {α : Type*} [Subsingleton α] (L : α → α → Prop) :
+    ¬ ∃ f : List Bool → α, ∀ l l', L (f l) (f l') ↔ l <+: l' := no_tree_finite L
+example : Finite Bool ∧ ¬ Subsingleton Bool :=
+  ⟨inferInstance, fun h => absurd (h.elim true false) (by decide)⟩
+
 -- Statement: the `unitMotion` case, also stated in `ZeroParadox/DieCannotBe.lean`.
 example : ¬ ∃ f : List Bool → Unit, ∀ l l',
     Relation.ReflTransGen ZeroParadox.Motion.unitMotion.step (f l) (f l') ↔ l <+: l' :=
@@ -174,4 +191,5 @@ open ZeroParadox
 #print axioms wordBranch_near
 #print axioms square_branches
 #print axioms no_tree_subsingleton
+#print axioms no_tree_finite
 end PurityCheck

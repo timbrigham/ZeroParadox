@@ -92,6 +92,12 @@ proof's witness is translation by `y - x`. -/
 theorem homog_Z2 (x y : ℤ_[2]) : ∃ e : ℤ_[2] ≃ᵢ ℤ_[2], e x = y :=
   ⟨IsometryEquiv.addLeft (y - x), by simp⟩
 
+/-- `Statement:` for any `x y : ℤ_[2]`, some involutive isometric bijection of `ℤ_[2]` swaps `x` and
+`y`; the proof's witness is `z ↦ x + y - z`. -/
+theorem homog_Z2_swap (x y : ℤ_[2]) :
+    ∃ e : ℤ_[2] ≃ᵢ ℤ_[2], e x = y ∧ e y = x ∧ Function.Involutive e :=
+  ⟨IsometryEquiv.subLeft (x + y), by simp, by simp, fun z => by simp⟩
+
 -- Statement: on `Q₂`, translation is an isometry: the `example` `dist (x - a) (y - a) = dist x y`
 -- after `c3_irreversible` (`ZeroParadox/Valuation/Padic.lean`).
 
@@ -146,6 +152,7 @@ open ZeroParadox
 #print axioms zoom_dist
 #print axioms zoom_range
 #print axioms homog_Z2
+#print axioms homog_Z2_swap
 #print axioms xorWith
 #print axioms xorWith_involutive
 #print axioms xorWith_continuous

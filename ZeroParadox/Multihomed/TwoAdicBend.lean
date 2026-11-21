@@ -211,6 +211,26 @@ noncomputable def dTwistHomeo (u : ℚ_[2]) (hu : ‖u‖ = 1) : ℚ_[2] ≃ₜ 
   continuous_toFun := dTwist_continuous hu
   continuous_invFun := dTwist_continuous (tb_norm_inv_one hu)
 
+/-- `Statement:` for `‖u‖ = 1` the twist is an isometry of `ℚ_[2]` for the distance
+    `‖x - y‖` of the 2-adic norm. -/
+theorem dTwist_isometry {u : ℚ_[2]} (hu : ‖u‖ = 1) : Isometry (dTwist u) := by
+  refine Isometry.of_dist_eq fun x y => ?_
+  rw [dist_eq_norm, dist_eq_norm]
+  rcases eq_or_ne x 0 with rfl | hx
+  · simp [dTwist_zero, dTwist_norm hu]
+  rcases eq_or_ne y 0 with rfl | hy
+  · simp [dTwist_zero, dTwist_norm hu]
+  by_cases hv : x.valuation = y.valuation
+  · have : dTwist u x - dTwist u y = u ^ x.valuation * (x - y) := by
+      simp only [dTwist, hv]; ring
+    rw [this, norm_mul, norm_zpow, hu, one_zpow, one_mul]
+  · have hn : ‖x‖ ≠ ‖y‖ := fun h => hv (tb_val_eq_of_norm_eq hx hy h)
+    have key : ∀ a b : ℚ_[2], ‖a‖ ≠ ‖b‖ → ‖a - b‖ = max ‖a‖ ‖b‖ := by
+      intro a b hab
+      rw [sub_eq_add_neg, Padic.add_eq_max_of_ne (by rwa [norm_neg]), norm_neg]
+    rw [key _ _ (by rwa [dTwist_norm hu, dTwist_norm hu]), dTwist_norm hu, dTwist_norm hu,
+      key _ _ hn]
+
 /-- `Statement:` for `‖u‖ = 1` and `c ≠ 0`, `dTwist u (c z) = (u ^ v(c) * c) * dTwist u z`. -/
 theorem dTwist_conj_mul {u c : ℚ_[2]} (hu : ‖u‖ = 1) (hc : c ≠ 0) (z : ℚ_[2]) :
     dTwist u (c * z) = (u ^ c.valuation * c) * dTwist u z := by
@@ -1511,6 +1531,7 @@ open ZeroParadox
 #print axioms dTwist_inv_left
 #print axioms dTwist_continuous
 #print axioms dTwistHomeo
+#print axioms dTwist_isometry
 #print axioms dTwist_conj_mul
 #print axioms dTwist_scaleConj
 #print axioms dTwist_scaleConj_two

@@ -21,8 +21,8 @@ related stuff, and these parallels are a little spooky.
 
 ## Formal Overview (AI-assisted)
 `Statement:` DRIFT, on Haar `ℤ_p` the transform of the ball of radius `p^(-j)` is `p^(-j)` times the
-indicator of the dual ball `{level ≤ j}` (`paChar_ball_integral_level`,
-`continuous_addChar_ball_integral_level`): as `j` grows the volume falls and the dual ball grows.
+indicator of the dual ball `{level ≤ j}` (`paChar_ball_integral_level`, `continuous_addChar_ball_integral_level`;
+the two levels agree, `contLevel_paCharHom`): as `j` grows the volume falls and the dual ball grows (`ballWave_drift`).
 -/
 
 namespace ZeroParadox
@@ -211,6 +211,15 @@ theorem paChar_ball_integral_level (n j : ℕ) (φ : AddChar (ZMod (p ^ n)) ℂ)
   rw [paChar_ball_integral]
   exact if_congr (charLevel_le_iff n j φ).symm rfl rfl
 
+/-- `Statement:` for `j ≤ k`, `p^(-k) ≤ p^(-j)` and `{φ | charLevel n φ ≤ j} ⊆ {φ | charLevel n φ ≤ k}`. -/
+theorem ballWave_drift (n : ℕ) {j k : ℕ} (hjk : j ≤ k) :
+    ((p : ℝ) ^ k)⁻¹ ≤ ((p : ℝ) ^ j)⁻¹ ∧
+      {φ : AddChar (ZMod (p ^ n)) ℂ | charLevel (p := p) n φ ≤ j}
+        ⊆ {φ | charLevel (p := p) n φ ≤ k} := by
+  refine ⟨?_, fun φ hφ => le_trans hφ hjk⟩
+  have hp : (1 : ℝ) ≤ p := by exact_mod_cast ‹Fact p.Prime›.out.one_lt.le
+  exact inv_anti₀ (pow_pos (by linarith) _) (pow_le_pow_right₀ hp hjk)
+
 /-- `Statement:` a primitive `φ` has `charLevel n φ = n`. -/
 theorem charLevel_of_isPrimitive (n : ℕ) (φ : AddChar (ZMod (p ^ n)) ℂ) (hφ : φ.IsPrimitive) :
     charLevel (p := p) n φ = n := by
@@ -296,6 +305,27 @@ theorem eq_one_of_pow_near_one {w : ℂ} (h : ∀ n : ℕ, ‖w ^ n - 1‖ < 1 /
     linarith
   rw [← hc, this, Circle.coe_one]
 
+/-- `Statement:` if `‖w ^ n - 1‖ < 1/2` for every `n`, then `w = 1`; the `w⁻¹` hypothesis of
+`eq_one_of_pow_near_one` is not needed. -/
+theorem eq_one_of_pow_near_one' {w : ℂ} (h : ∀ n : ℕ, ‖w ^ n - 1‖ < 1 / 2) : w = 1 := by
+  have hw0 : w ≠ 0 := by
+    intro hw; have := h 1; rw [hw, pow_one, zero_sub, norm_neg, norm_one] at this; norm_num at this
+  have hge : 1 ≤ ‖w‖ := by
+    by_contra hlt; push Not at hlt
+    obtain ⟨n, hn⟩ := exists_pow_lt_of_lt_one (by norm_num : (0 : ℝ) < 1 / 2) hlt
+    have h1 := norm_sub_le (w ^ n) (w ^ n - 1)
+    rw [sub_sub_cancel] at h1
+    rw [norm_one, norm_pow] at h1
+    linarith [h n]
+  refine eq_one_of_pow_near_one h (fun n => ?_)
+  have hwn : w ^ n ≠ 0 := pow_ne_zero _ hw0
+  have e : w⁻¹ ^ n - 1 = -(w ^ n - 1) / w ^ n := by
+    rw [inv_pow]; field_simp; ring
+  rw [e, norm_div, norm_neg, norm_pow]
+  have hle : ‖w ^ n - 1‖ / ‖w‖ ^ n ≤ ‖w ^ n - 1‖ :=
+    div_le_self (norm_nonneg _) (one_le_pow₀ hge)
+  exact lt_of_le_of_lt hle (h n)
+
 /-- `Statement:` a continuous `χ : AddChar ℤ_[p] ℂ` is `1` on `{‖z‖ ≤ p^(-j)}` for some `j`. -/
 theorem continuous_addChar_trivial_on_ball (χ : AddChar ℤ_[p] ℂ) (hχ : Continuous χ) :
     ∃ j : ℕ, ∀ z : ℤ_[p], ‖z‖ ≤ (p : ℝ) ^ (-(j : ℤ)) → χ z = 1 := by
@@ -348,7 +378,38 @@ theorem continuous_addChar_ball_integral_level (χ : AddChar ℤ_[p] ℂ) (hχ :
   · intro h; exact ⟨j, le_rfl, h⟩
   · rintro ⟨m, hm, h⟩; exact addChar_trivial_on_ball_mono χ hm h
 
-/-- `Statement:` every continuous `χ : AddChar ℤ_[p] ℂ` is `paChar j φ` for some `j` and `φ`. -/
+/-- `Statement:` `paCharHom n φ` is continuous. -/
+theorem continuous_paCharHom (n : ℕ) (φ : AddChar (ZMod (p ^ n)) ℂ) :
+    Continuous (paCharHom (p := p) n φ) := by
+  rw [Metric.continuous_iff]
+  intro x ε hε
+  have hp : (0 : ℝ) < (p : ℝ) ^ (-(n : ℤ)) :=
+    zpow_pos (by exact_mod_cast ‹Fact p.Prime›.out.pos) _
+  refine ⟨(p : ℝ) ^ (-(n : ℤ)), hp, fun y hy => ?_⟩
+  rw [coe_paCharHom, paChar_locally_constant n φ (le_of_lt (by rwa [dist_eq_norm] at hy)),
+    dist_self]
+  exact hε
+
+/-- `Statement:` `contLevel (paCharHom n φ) hχ = charLevel n φ`, for every continuity proof `hχ`. -/
+theorem contLevel_paCharHom (n : ℕ) (φ : AddChar (ZMod (p ^ n)) ℂ)
+    (hχ : Continuous (paCharHom (p := p) n φ)) :
+    contLevel (paCharHom (p := p) n φ) hχ = charLevel (p := p) n φ := by
+  classical
+  apply le_antisymm
+  · unfold contLevel
+    apply Nat.find_min'
+    intro z hz
+    rw [coe_paCharHom]
+    exact (paChar_trivial_on_ball_iff n _ φ).mpr ((charLevel_le_iff n _ φ).mp le_rfl) z hz
+  · rw [charLevel_le_iff, ← paChar_trivial_on_ball_iff, ← coe_paCharHom]
+    unfold contLevel
+    exact Nat.find_spec (continuous_addChar_trivial_on_ball _ hχ)
+
+/-- `Statement:` every continuous `χ : AddChar ℤ_[p] ℂ` is `paChar j φ` for some `j` and `φ`.
+`Reading:` this is the classical identification of the Pontryagin dual of ℤ_p with the Prüfer group
+ℤ(p^∞), by the same route (continuity, then no small subgroups of the circle): Somasunderam,
+arXiv:1904.01714, Lemma 3. Mathlib's `PadicInt.continuousAddCharEquiv` classifies continuous
+characters of ℤ_p with values in a complete ULTRAMETRIC normed ℤ_p-algebra; it does not apply to ℂ. -/
 theorem continuous_addChar_eq_paChar (χ : AddChar ℤ_[p] ℂ) (hχ : Continuous χ) :
     ∃ (j : ℕ) (φ : AddChar (ZMod (p ^ j)) ℂ), ⇑χ = paChar (p := p) j φ := by
   obtain ⟨j, hj⟩ := continuous_addChar_trivial_on_ball χ hχ
@@ -446,14 +507,18 @@ open ZeroParadox
 #print axioms charLevel
 #print axioms charLevel_le_iff
 #print axioms charLevel_le
+#print axioms ballWave_drift
 #print axioms paChar_ball_integral_level
 #print axioms charLevel_of_isPrimitive
 #print axioms paChar_ball_integral_tradeoff
 #print axioms paChar_trivial_ball_zero
 #print axioms eq_one_of_pow_near_one
+#print axioms eq_one_of_pow_near_one'
 #print axioms continuous_addChar_trivial_on_ball
 #print axioms contLevel
 #print axioms addChar_trivial_on_ball_mono
 #print axioms continuous_addChar_ball_integral_level
+#print axioms continuous_paCharHom
+#print axioms contLevel_paCharHom
 #print axioms continuous_addChar_eq_paChar
 end PurityCheck
