@@ -170,6 +170,8 @@ example : ∀ x : NNReal, ¬ ZeroParadox.HasFirstStep x := ZeroParadox.no_firstS
 -- Statement: for any two points of `ℤ_[2]`, ℤ_[2]'s 0 included, some isometric bijection of `ℤ_[2]`
 -- sends the first to the second (`ZeroParadox/Valuation/UltrametricView.lean`).
 #check @ZeroParadox.homog_Z2
+-- Statement: and some involutive isometric bijection of `ℤ_[2]` swaps the two points.
+#check @ZeroParadox.homog_Z2_swap
 -- Statement: in `TopCat` the one-point space `{0} ⊆ ℚ₂` is TERMINAL (it is not initial,
 -- `padic_bottom_not_initial`); `TopCat`'s initial object is the empty space
 -- (`ZeroParadox/Multihomed/TreeObstructions.lean`).
@@ -658,6 +660,8 @@ noncomputable example : Ordinal.{0} →o Ordinal.{0} :=
 #check @ZeroParadox.paChar_ball_integral_level
 -- Statement: every continuous `χ : AddChar ℤ_[p] ℂ` is `paChar j φ` for some `j` and `φ`.
 #check @ZeroParadox.continuous_addChar_eq_paChar
+-- Statement: on `paCharHom n φ`, the level of a continuous character equals `charLevel n φ`.
+#check @ZeroParadox.contLevel_paCharHom
 -- Statement: for primitive `φ`, `j < n` and any centre `a`, `vladimirov α` sends `paChar n φ` restricted
 -- to `nodeBall j a` to the level-`n` eigenvalue `vladLam p α n` times itself, pointwise on ℤ_[p]
 -- (`ZeroParadox/Valuation/PadicWavelet.lean`).

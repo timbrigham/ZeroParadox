@@ -245216,6 +245216,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "00974d19-03bc-4b04-a1a6-c0145b5ae037",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicBallWave.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ballWave_drift",
+            "short": "ballWave_drift"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicBallWave.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ballWave_drift",
+            "short": "ballWave_drift",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Carried ordinaries: contLevel = charLevel on paCharHom, ball/dual-ball drift, w^-1 hypothesis dropped, dTwist isometry, involutive swap on Z_2, no tree on a finite carrier (2026-11-21).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "00a6e5c1-9066-4dc2-a3ce-c1ff1bae9eb4",
           "new": {
             "file": "ZeroParadox/Valuation/PoleCorners.lean",
@@ -261224,6 +261261,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "17ea22b3-a950-41b5-9eb3-a9759e61c351",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicBallWave.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.continuous_paCharHom",
+            "short": "continuous_paCharHom"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicBallWave.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.continuous_paCharHom",
+            "short": "continuous_paCharHom",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Carried ordinaries: contLevel = charLevel on paCharHom, ball/dual-ball drift, w^-1 hypothesis dropped, dTwist isometry, involutive swap on Z_2, no tree on a finite carrier (2026-11-21).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -280803,6 +280877,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "369780e7-5ece-48bc-a33e-ed7f6d2103c6",
+          "new": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.no_tree_finite",
+            "short": "no_tree_finite"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.no_tree_finite",
+            "short": "no_tree_finite",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Carried ordinaries: contLevel = charLevel on paCharHom, ball/dual-ball drift, w^-1 hypothesis dropped, dTwist isometry, involutive swap on Z_2, no tree on a finite carrier (2026-11-21).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -339964,6 +340075,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "9418e020-2f4d-46fa-a945-d0275ae6c164",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicBallWave.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.eq_one_of_pow_near_one'",
+            "short": "eq_one_of_pow_near_one'"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicBallWave.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.eq_one_of_pow_near_one'",
+            "short": "eq_one_of_pow_near_one'",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Carried ordinaries: contLevel = charLevel on paCharHom, ball/dual-ball drift, w^-1 hypothesis dropped, dTwist isometry, involutive swap on Z_2, no tree on a finite carrier (2026-11-21).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "94234ef2-0265-428b-b412-eb4914a604b9",
           "new": {
             "file": "ZeroParadox/Ordinal/UniverseZoom.lean",
@@ -340354,6 +340502,43 @@
             "role": []
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "9500154a-d6f9-4b9b-8497-086c9571f0c2",
+          "new": {
+            "file": "ZeroParadox/Multihomed/TwoAdicBend.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dTwist_isometry",
+            "short": "dTwist_isometry"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/TwoAdicBend.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.dTwist_isometry",
+            "short": "dTwist_isometry",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Carried ordinaries: contLevel = charLevel on paCharHom, ball/dual-ball drift, w^-1 hypothesis dropped, dTwist isometry, involutive swap on Z_2, no tree on a finite carrier (2026-11-21).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -383495,6 +383680,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "d4d00a00-d7b9-4fa4-bd84-5f141fa62574",
+          "new": {
+            "file": "ZeroParadox/Valuation/UltrametricView.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.homog_Z2_swap",
+            "short": "homog_Z2_swap"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/UltrametricView.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.homog_Z2_swap",
+            "short": "homog_Z2_swap",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Carried ordinaries: contLevel = charLevel on paCharHom, ball/dual-ball drift, w^-1 hypothesis dropped, dTwist isometry, involutive swap on Z_2, no tree on a finite carrier (2026-11-21).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "d4e62dab-357c-4ec4-95f7-3602af346ef3",
           "new": {
             "file": "ZeroParadox/Ordinal/Incompleteness.lean",
@@ -387373,6 +387595,43 @@
             ]
           },
           "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; for periodic maps (c a root of unity) the die isomorphism sees only cycle structure, irrational rotations not covered; at |c| = 1 only c ~ conj c is proved, the separating half is Rybalkina-Sergeichuk literature (ZeroParadox/Multihomed/BendDie.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "da24e85b-b68d-41d0-aea6-3a5b9fb8ccb9",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicBallWave.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.contLevel_paCharHom",
+            "short": "contLevel_paCharHom"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicBallWave.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.contLevel_paCharHom",
+            "short": "contLevel_paCharHom",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Carried ordinaries: contLevel = charLevel on paCharHom, ball/dual-ball drift, w^-1 hypothesis dropped, dTwist isometry, involutive swap on Z_2, no tree on a finite carrier (2026-11-21).",
           "verify": {
             "axioms": null,
             "sorry_free": null

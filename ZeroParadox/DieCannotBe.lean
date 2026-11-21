@@ -5319,10 +5319,13 @@ example : ¬ ZeroParadox.Motion.unitMotion.Loop := fun ⟨_, _, _, _, hne, _⟩ 
 #check @ZeroParadox.Motion.tree_of_square     -- Statement: for any reflexive transitive `L` (no antisymmetry, no least element), a map `j` with `L (j p) (j q) ↔ L p.1 q.1 ∧ L p.2 q.2`, any root `r` with `L r (j (r, r))` and any `a` with `L r a` and not `L a r`: a map from `Bool` words, `[]` to `r`, along which `L` is the prefix order; one way
 -- Statement: `square_embed_forces_btree` is the order case of `Motion.tree_of_square` (the `example` in
 -- `ZeroParadox/Valuation/DoublingAndTree.lean` § IX).
-#check @ZeroParadox.perfectSpace_pi_iff         -- Statement: a product `∀ n, β n` of nonempty discrete levels is perfect iff infinitely many levels are nontrivial; both directions; the case `β n = Bool` indexes the branches of the word tree above one-to-one (`wordBranch_injective`, `wordBranch_surj` below)
+#check @ZeroParadox.perfectSpace_pi_iff         -- Statement: a product `∀ n, β n` of nonempty discrete levels is perfect iff infinitely many levels are nontrivial; both directions; the case `β n = Bool` indexes the branches of the word tree above one-to-one, given `f` carrying `L` as the prefix order (`wordBranch_injective`, `wordBranch_surj` below)
 #check @ZeroParadox.pi_crowded_and_cut          -- Statement: with infinitely many nontrivial levels, the branch space is perfect and no path from `[0,1]` joins two distinct points
-#check @ZeroParadox.square_branches            -- Statement: under the hypotheses of `Motion.tree_of_square`, a family `c : (ℕ → Bool) → ℕ → α`, injective, with `c s 0 = r`, `L`-increasing in depth and `L`-incomparable past a first difference (`ZeroParadox/Order/DieBranches.lean`); one way
+#check @ZeroParadox.square_branches            -- Statement: under the hypotheses of `Motion.tree_of_square`, a family `c : (ℕ → Bool) → ℕ → α`, injective, with `c s 0 = r`, `L`-increasing in depth, `L`-incomparable past a first difference, and with no isolated branch: for every `s`, `n` some `c t ≠ c s` agrees with `c s` at depths `0..n` (`ZeroParadox/Order/DieBranches.lean`); one way
+#check @ZeroParadox.wordBranch_injective       -- Statement: if `f` carries `L` as the prefix order on `Bool` words, `s ↦ wordBranch f s` is one-to-one
 #check @ZeroParadox.wordBranch_surj            -- Statement: if `f` carries `L` as the prefix order on `Bool` words, every `L`-increasing `f (w n)` with `w n` of length `n` is the branch of exactly one `s : ℕ → Bool`
+#check @ZeroParadox.wordBranch_near            -- Statement: if `f` carries `L` as the prefix order on `Bool` words, for every `s` and `n` some `t ≠ s` has a different branch agreeing with that of `s` at depths `0..n`
+#check @ZeroParadox.no_tree_finite             -- Statement: CONTROL — on a finite carrier no `f : List Bool → α` carries any relation as the prefix order
 
 /-! ### § XXXII. T-H3's four conjuncts, each as a motion on its own carrier -/
 -- Reading: CARRIER — four carriers, each fit beside its control in `ZeroParadox/Multihomed/TH3Die.lean`;
@@ -5401,6 +5404,7 @@ example : ¬ ZeroParadox.Motion.unitMotion.Loop := fun ⟨_, _, _, _, hne, _⟩ 
 -- Reading: CARRIER — each result beside its control in `ZeroParadox/Multihomed/TwoAdicBend.lean`;
 -- ℂ and `ℚ_[2]` are two carriers, and no equation across them is stated.
 #check @ZeroParadox.dTwist_scaleConj           -- Statement: for `‖u‖ = 1` the twist `u ^ v(z) * z` conjugates `×c` to `×(u ^ v(c) * c)` on `OnePoint ℚ_[2]`; `×2` to `×6` is `dTwist_two_six`
+#check @ZeroParadox.dTwist_isometry            -- Statement: for `‖u‖ = 1` the twist is an isometry of `ℚ_[2]` for its 2-adic norm
 #check @ZeroParadox.dTwist_not_two_four        -- Statement: CONTROL — no twist sends `×2` to `×4`; a fact about the construction, since `scaleConj_two_four` conjugates them
 #check @ZeroParadox.scaleConj_of_norm_ne_one   -- Statement: any two multipliers with `‖c‖ ≠ 1`, `‖d‖ ≠ 1` are conjugate on `OnePoint ℚ_[2]`; `homeoIso_of_norm_ne_one` is the `HomeoIso` form
 #check @ZeroParadox.scaleConj_two_not_norm_one -- Statement: CONTROL — a multiplier with `‖d‖ = 1` is not conjugate to `×2` on `OnePoint ℚ_[2]`
