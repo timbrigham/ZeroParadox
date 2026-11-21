@@ -6,6 +6,8 @@ import Mathlib.MeasureTheory.Measure.Support
 import Mathlib.Topology.Instances.ENat
 import Mathlib.Analysis.SpecialFunctions.Sigmoid
 import Mathlib.Order.Filter.Germ.Basic
+import Mathlib.Analysis.SpecialFunctions.Log.Base
+import Mathlib.MeasureTheory.Measure.Haar.Unique
 import Mathlib.Tactic
 
 /-!
@@ -752,9 +754,107 @@ theorem haarZp_padicTape_det_eq_trials (n : ℕ) :
 example : trials 0 zero_le_one {w | det w = ofNat 0} = 0 := by
   rw [trials_det_eq_ofNat]; simp
 
+/-- `Statement:` `haarZp {x | q2Val x = k} = 2⁻¹ ^ (k + 1)`. -/
+theorem haarZp_q2Val_eq_inv_two_pow (k : ℕ) :
+    haarZp (p := 2) {x : ℤ_[2] | q2Val x = k} = (2⁻¹ : ENNReal) ^ (k + 1) := by
+  rw [haarZp_q2Val_eq, ENNReal.inv_pow, ENNReal.inv_pow]
+  refine ENNReal.sub_eq_of_eq_add (by simp) ?_
+  rw [pow_succ, ← mul_add, ENNReal.inv_two_add_inv_two, mul_one]
+
+/-- `Statement:` the real mass of `{x | q2Val x = k}` under `haarZp` is `(1 / 2) ^ (k + 1)`. -/
+theorem haarZp_q2Val_toReal (k : ℕ) :
+    (haarZp (p := 2) {x : ℤ_[2] | q2Val x = k}).toReal = ((1 : ℝ) / 2) ^ (k + 1) := by
+  rw [haarZp_q2Val_eq_inv_two_pow, ENNReal.toReal_pow, ENNReal.toReal_inv]; norm_num
+
+/-- `Statement:` the surprisal `-log₂` of `{x | q2Val x = n}` under `haarZp` is `n + 1` bits. -/
+theorem haarZp_q2Val_surprisal (n : ℕ) :
+    -Real.logb 2 (haarZp (p := 2) {x : ℤ_[2] | q2Val x = n}).toReal = n + 1 := by
+  rw [haarZp_q2Val_toReal, Real.logb_pow, one_div, Real.logb_inv,
+    Real.logb_self_eq_one one_lt_two]
+  push_cast; ring
+
+/-- `Statement:` the Shannon entropy `∑ₙ pₙ · (-log₂ pₙ)` of the depth law `pₙ = haarZp {q2Val = n}`
+    is `2` bits. The form `H = -K ∑ pᵢ log pᵢ` is Shannon, "A Mathematical Theory of Communication",
+    Bell System Technical Journal 27 (1948), § 6, Theorem 2, here with `K = 1 / log 2`. -/
+theorem haarZp_q2Val_entropy :
+    HasSum (fun n : ℕ => (haarZp (p := 2) {x : ℤ_[2] | q2Val x = n}).toReal *
+      -Real.logb 2 (haarZp (p := 2) {x : ℤ_[2] | q2Val x = n}).toReal) 2 := by
+  simp only [haarZp_q2Val_surprisal]
+  simp only [haarZp_q2Val_toReal]
+  have h1 := hasSum_coe_mul_geometric_of_norm_lt_one (𝕜 := ℝ) (r := 1 / 2) (by norm_num)
+  have := (h1.add hasSum_geometric_two).mul_left (1 / 2)
+  convert this using 1
+  · funext n; ring
+  · norm_num
+
+/-- `Statement:` doubling `x ↦ 2 * x` on ℤ_[2] is a measurable embedding. -/
+theorem measurableEmbedding_two_mul :
+    MeasurableEmbedding (fun x : ℤ_[2] => 2 * x) :=
+  ((continuous_const.mul continuous_id).isClosedEmbedding
+    (fun _ _ h => mul_left_cancel₀ two_ne_zero h)).measurableEmbedding
+
+/-- `Statement:` the halving, every `S`: `haarZp (2 * S) = 2⁻¹ * haarZp S`. The pulled-back measure
+    `S ↦ haarZp (2 * S)` is translation invariant with total mass `haarZp (2ℤ_[2]) = 2⁻¹`, so Haar
+    uniqueness (`Measure.isAddLeftInvariant_eq_smul`) makes it `2⁻¹ • haarZp`. -/
+theorem haarZp_image_two_mul (S : Set ℤ_[2]) :
+    haarZp (p := 2) ((fun x : ℤ_[2] => 2 * x) '' S) = 2⁻¹ * haarZp (p := 2) S := by
+  set ν := Measure.comap (fun x : ℤ_[2] => 2 * x) (haarZp (p := 2)) with hνdef
+  have hinv : ν.IsAddLeftInvariant := by
+    refine ⟨fun a => ?_⟩
+    ext T hT
+    rw [Measure.map_apply (measurable_const_add a) hT, hνdef,
+      measurableEmbedding_two_mul.comap_apply, measurableEmbedding_two_mul.comap_apply]
+    have hset : (fun x : ℤ_[2] => 2 * x) '' ((fun x => a + x) ⁻¹' T) =
+        (fun y => 2 * a + y) ⁻¹' ((fun x : ℤ_[2] => 2 * x) '' T) := by
+      ext y; constructor
+      · rintro ⟨x, hx, rfl⟩; exact ⟨a + x, hx, by ring⟩
+      · rintro ⟨s, hs, h⟩
+        exact ⟨s - a, by simpa using hs, by linear_combination h⟩
+    rw [hset]; exact measure_preimage_add _ _ _
+  have huniv : ν Set.univ = 2⁻¹ := by
+    rw [hνdef, measurableEmbedding_two_mul.comap_apply, Set.image_univ]
+    have hr : Set.range (fun x : ℤ_[2] => 2 * x) =
+        {x : ℤ_[2] | ‖x‖ ≤ ((2 : ℕ) : ℝ) ^ (-((1 : ℕ) : ℤ))} := by
+      ext x; rw [Set.mem_ofPred_eq, norm_le_two_pow_iff_dvd, pow_one, Set.mem_range]
+      exact ⟨fun ⟨y, hy⟩ => ⟨y, hy.symm⟩, fun ⟨c, hc⟩ => ⟨c, hc.symm⟩⟩
+    rw [hr, haarZp_ball]; simp
+  have := hinv
+  have : IsFiniteMeasure ν := ⟨by rw [huniv]; simp⟩
+  have hν := Measure.isAddLeftInvariant_eq_smul ν (haarZp (p := 2))
+  have hc : ((ν.addHaarScalarFactor (haarZp (p := 2)) : NNReal) : ENNReal) = 2⁻¹ := by
+    have h := congrArg (fun m : Measure ℤ_[2] => m Set.univ) hν
+    simp only [Measure.smul_apply, measure_univ, huniv] at h
+    rw [h]; simp
+  rw [← measurableEmbedding_two_mul.comap_apply, ← hνdef, hν, Measure.smul_apply,
+    ENNReal.smul_def, hc, smul_eq_mul]
+
+/-- `Statement:` `haarZp {0} = 2⁻¹ * haarZp {0}` on ℤ_[2]: the halving at `S = {0}`, which
+    doubling fixes. -/
+theorem haarZp_zero_eq_half :
+    haarZp (p := 2) {(0 : ℤ_[2])} = 2⁻¹ * haarZp (p := 2) {(0 : ℤ_[2])} := by
+  rw [← haarZp_image_two_mul, Set.image_singleton, mul_zero]
+
+/-- `Statement:` `haarZp {0} = 0` on ℤ_[2], from `haarZp_zero_eq_half` and finiteness.
+    `Reading:` T. Williamson, "How probable is an infinite sequence of heads?", *Analysis* 67(3)
+    (2007) 173–180, eqs (4)–(7), pp. 175–176, has the same shape: an event equal in probability to its
+    own half (6) has probability 0 (7), "the probability of an infinite sequence of heads is 0", and
+    "Regularity fails". On `ℕ → Bool` the event is `{⊥}`, the never-firing tape (`botMass_pos`); on
+    ℤ_[2] it is `{0}`. -/
+theorem haarZp_singleton_zero : haarZp (p := 2) {(0 : ℤ_[2])} = 0 := by
+  have h := congrArg ENNReal.toReal haarZp_zero_eq_half
+  rw [ENNReal.toReal_mul, ENNReal.toReal_inv, ENNReal.toReal_ofNat] at h
+  have h0 : (haarZp (p := 2) {(0 : ℤ_[2])}).toReal = 0 := by linarith
+  rcases (ENNReal.toReal_eq_zero_iff _).1 h0 with h | h
+  · exact h
+  · exact absurd h (measure_ne_top _ _)
+
+-- Statement: CONTROL, a probability measure without translation invariance: `dirac 0` gives `{0}`
+-- mass `1`, so `haarZp_singleton_zero` consumes the halving, not probability alone.
+example : (Measure.dirac (0 : ℤ_[2])) {0} = 1 := by simp
+
 end DepthLaw
 
--- Statement: axioms, seven of § X's eight declarations carry `Classical.choice` (`#print axioms`);
+-- Statement: axioms, fifteen of § X's sixteen declarations carry `Classical.choice` (`#print axioms`);
 --   `det_eq_ofNat_set_eq_cylinder` measures `[propext, Quot.sound]`.
 
 end ZeroParadox
@@ -836,4 +936,12 @@ open ZeroParadox
 #print axioms trials_det_eq_ofNat
 #print axioms trials_det_eq_geometric
 #print axioms haarZp_padicTape_det_eq_trials
+#print axioms haarZp_q2Val_eq_inv_two_pow
+#print axioms haarZp_q2Val_toReal
+#print axioms haarZp_q2Val_surprisal
+#print axioms haarZp_q2Val_entropy
+#print axioms measurableEmbedding_two_mul
+#print axioms haarZp_image_two_mul
+#print axioms haarZp_zero_eq_half
+#print axioms haarZp_singleton_zero
 end PurityCheck

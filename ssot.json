@@ -416908,6 +416908,305 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "08c98e54-1512-4f9e-bf77-a01477fc5423",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.haarZp_singleton_zero",
+            "short": "haarZp_singleton_zero"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.haarZp_singleton_zero",
+            "short": "haarZp_singleton_zero",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation",
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "entropy-williamson: depth-law surprisal n+1 bits and entropy 2 bits (Shannon 1948 Thm 2); Haar halving on Z_[2] gives haarZp {0} = 0 (Williamson 2007 eqs 4-7) (PoleWithinEnsemble § X)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "27f0db5c-3809-486d-a5ab-8a62690f9850",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.haarZp_zero_eq_half",
+            "short": "haarZp_zero_eq_half"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.haarZp_zero_eq_half",
+            "short": "haarZp_zero_eq_half",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "entropy-williamson: depth-law surprisal n+1 bits and entropy 2 bits (Shannon 1948 Thm 2); Haar halving on Z_[2] gives haarZp {0} = 0 (Williamson 2007 eqs 4-7) (PoleWithinEnsemble § X)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "760f514d-ae4c-434a-8e50-5c545239672a",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.measurableEmbedding_two_mul",
+            "short": "measurableEmbedding_two_mul"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.measurableEmbedding_two_mul",
+            "short": "measurableEmbedding_two_mul",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "entropy-williamson: depth-law surprisal n+1 bits and entropy 2 bits (Shannon 1948 Thm 2); Haar halving on Z_[2] gives haarZp {0} = 0 (Williamson 2007 eqs 4-7) (PoleWithinEnsemble § X)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "76f2179f-d19f-42fc-af91-8caa079c5597",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.haarZp_q2Val_surprisal",
+            "short": "haarZp_q2Val_surprisal"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.haarZp_q2Val_surprisal",
+            "short": "haarZp_q2Val_surprisal",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "entropy-williamson: depth-law surprisal n+1 bits and entropy 2 bits (Shannon 1948 Thm 2); Haar halving on Z_[2] gives haarZp {0} = 0 (Williamson 2007 eqs 4-7) (PoleWithinEnsemble § X)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "96ff45c1-fd54-4aac-a51d-0dd871ff9ac3",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.haarZp_image_two_mul",
+            "short": "haarZp_image_two_mul"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.haarZp_image_two_mul",
+            "short": "haarZp_image_two_mul",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "entropy-williamson: depth-law surprisal n+1 bits and entropy 2 bits (Shannon 1948 Thm 2); Haar halving on Z_[2] gives haarZp {0} = 0 (Williamson 2007 eqs 4-7) (PoleWithinEnsemble § X)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "bc80a1de-5907-4cb5-a174-45beb72df5cf",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.haarZp_q2Val_toReal",
+            "short": "haarZp_q2Val_toReal"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.haarZp_q2Val_toReal",
+            "short": "haarZp_q2Val_toReal",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "entropy-williamson: depth-law surprisal n+1 bits and entropy 2 bits (Shannon 1948 Thm 2); Haar halving on Z_[2] gives haarZp {0} = 0 (Williamson 2007 eqs 4-7) (PoleWithinEnsemble § X)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d66a1fec-3c6b-4dd1-a9d1-305184ef2719",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.haarZp_q2Val_entropy",
+            "short": "haarZp_q2Val_entropy"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.haarZp_q2Val_entropy",
+            "short": "haarZp_q2Val_entropy",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "entropy-williamson: depth-law surprisal n+1 bits and entropy 2 bits (Shannon 1948 Thm 2); Haar halving on Z_[2] gives haarZp {0} = 0 (Williamson 2007 eqs 4-7) (PoleWithinEnsemble § X)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ff05602b-8335-4c44-8ba4-b39cb38bd19a",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.haarZp_q2Val_eq_inv_two_pow",
+            "short": "haarZp_q2Val_eq_inv_two_pow"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.haarZp_q2Val_eq_inv_two_pow",
+            "short": "haarZp_q2Val_eq_inv_two_pow",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "entropy-williamson: depth-law surprisal n+1 bits and entropy 2 bits (Shannon 1948 Thm 2); Haar halving on Z_[2] gives haarZp {0} = 0 (Williamson 2007 eqs 4-7) (PoleWithinEnsemble § X)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "0d54d6d8-5114-48bd-8abf-a41c4acd23c7",
           "new": {
             "file": "ZeroParadox/Order/UpAndOver.lean",
