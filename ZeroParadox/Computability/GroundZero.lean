@@ -273,10 +273,10 @@ Right to left: well-founded induction carries membership of any fixed point up f
 **No halting predicate had to be invented** — halting *is* accessibility of `stepRel`, so this is
 stated in Mathlib's standard vocabulary.
 
-⚠ **That makes THREE halting notions now reachable from this file, and no bridge between them.**
-`Acc (stepRel f)` here; `Occurs` / `occurs_iff_halts` (Kleene codes) in the imported
-`ZeroParadox/Computability/Occurrence.lean`; and Mathlib's own `(StateTransition.eval f s).Dom`, at
-**this section's exact carrier** — check it before hand-rolling anything. Relating them is a **pointer**, not a new declaration, and is next-touch work. -/
+Three halting notions are reachable from this file: `Acc (stepRel f)` here; `Occurs` /
+`occurs_iff_halts` (Kleene codes) in the imported `ZeroParadox/Computability/Occurrence.lean`; and
+Mathlib's own `(StateTransition.eval f s).Dom`, at this section's exact carrier. § V-b bridges them:
+`acc_stepRel_iff_eval_dom`, and at the clock machine `clock_mem_wfPart_iff`. -/
 theorem isWellFoundedCoalg_stepCoalg_iff :
     IsWellFoundedCoalg (P := natPF_NatListRegime) (stepCoalg f) ↔ WellFounded (stepRel f) := by
   constructor
@@ -296,14 +296,14 @@ theorem isWellFoundedCoalg_stepCoalg_iff :
         rwa [hS] at this
 
 /-- **`Statement:` THE INFORMATION FACE — `wfPart` IS THE HALTING SET.** The least fixed point of the
-next-time operator on a step function is exactly the set of states from which the machine terminates.
+next-time operator on a step function is the accessible set of `stepRel f`; that set is
+`{s | (StateTransition.eval f s).Dom}` (`wfPart_stepCoalg_eq_eval_dom`, § V-b).
 
-`Reading:` conjecture, not proved here (**COINCIDENCE kind**) — one object, two poles read
-simultaneously: `wfPart` is the halting set and its **complement would be the divergent set**, the
-states from which the machine runs forever.
-If so, that is the INFINITE pole of `CLAUDE.md`'s Two-Pole rule, reached as the complement of a
-**construction** (a least fixed point) rather than as a description. ⚠ The complement itself is not
-characterized here; naming it is next work, not a result of this theorem. -/
+`Reading:` **COINCIDENCE kind** — one object, two poles read simultaneously: `wfPart` is the halting
+set, and its complement is the set of states whose unfolding is `natInfinity`
+(`not_mem_wfPart_iff_unfolds_to_infinity`, § V-b). The framework reads that complement as the
+INFINITE pole of `CLAUDE.md`'s Two-Pole rule, reached as the complement of a **construction** (a
+least fixed point) rather than as a description. -/
 theorem wfPart_stepCoalg :
     wfPart (P := natPF_NatListRegime) (stepCoalg f) = {s | Acc (stepRel f) s} := by
   apply le_antisymm
@@ -337,6 +337,132 @@ theorem never_halts_not_wellFounded (hne : ∀ s, f s ≠ none) [Nonempty σ] :
   obtain ⟨x⟩ := ‹Nonempty σ›
   have hx : x ∈ (∅ : Set σ) := by rw [huniv]; exact Set.mem_univ x
   exact hx
+
+/-! ## § V-b. The bridges: `Acc`, Mathlib's `eval`, `Occurs`, and `natInfinity`
+
+Prior art: Mathlib defines `StateTransition.eval f` as `PFun.fix` of the step, and `PFun.fix` asserts
+`Acc` of the transposed step graph before it runs (`Mathlib/Data/PFun.lean`), so
+`acc_stepRel_iff_eval_dom` is an adapter between two interfaces that already agree; the `X + 1` case
+of `wfPart` is AMM's (§ V table). That the halting set is r.e. and not decidable is Turing's, through
+Mathlib's `ComputablePred.halting_problem`. No novelty is claimed. -/
+
+/-- `Statement:` `s` is accessible for `stepRel f` iff the run from `s` halts
+(`StateTransition.eval f s` is defined); both directions. -/
+theorem acc_stepRel_iff_eval_dom (s : σ) :
+    Acc (stepRel f) s ↔ (StateTransition.eval f s).Dom := by
+  constructor
+  · intro h
+    induction h with
+    | intro x _ ih =>
+      cases hx : f x with
+      | none =>
+        exact Part.dom_iff_mem.2 ⟨x, StateTransition.mem_eval.2 ⟨Relation.ReflTransGen.refl, hx⟩⟩
+      | some y =>
+        rw [StateTransition.reaches_eval (Relation.ReflTransGen.single (show y ∈ f x from hx))]
+        exact ih y hx
+  · intro h
+    obtain ⟨b, hb⟩ := Part.dom_iff_mem.1 h
+    obtain ⟨hr, hb0⟩ := StateTransition.mem_eval.1 hb
+    clear h hb
+    induction hr using Relation.ReflTransGen.head_induction_on with
+    | refl =>
+      exact Acc.intro _ fun y hy => by
+        change f b = some y at hy
+        rw [hb0] at hy; cases hy
+    | head hac _ ih =>
+      exact Acc.intro _ fun y hy => by
+        have hyc := Option.mem_unique (show y ∈ f _ from hy) hac
+        subst hyc
+        exact ih
+
+/-- `Statement:` `wfPart` of `stepCoalg f` is the halting set `{s | (StateTransition.eval f s).Dom}`. -/
+theorem wfPart_stepCoalg_eq_eval_dom :
+    wfPart (P := natPF_NatListRegime) (stepCoalg f) = {s | (StateTransition.eval f s).Dom} := by
+  rw [wfPart_stepCoalg]
+  ext s
+  exact acc_stepRel_iff_eval_dom f s
+
+/-- `Statement:` at the clock machine, `(c, n, 0)` lies in `wfPart` iff `Occurs c n`; both directions
+(`clock_eval_dom_iff`). -/
+theorem clock_mem_wfPart_iff (c : Nat.Partrec.Code) (n : ℕ) :
+    (c, n, 0) ∈ wfPart (P := natPF_NatListRegime) (stepCoalg clockStep) ↔ Occurs c n := by
+  rw [wfPart_stepCoalg_eq_eval_dom]
+  exact clock_eval_dom_iff c n
+
+/-- `Statement:` as a predicate of the code, membership of `(c, n, 0)` in the clock machine's `wfPart`
+(a least fixed point) is `REPred`, is not a `ComputablePred`, and its negation is not `REPred`
+(`occurrence_semidecidable_nonoccurrence_not`, `occurrence_undecidable`). -/
+theorem clock_wfPart_re_not_computable (n : ℕ) :
+    REPred (fun c : Nat.Partrec.Code =>
+        (c, n, 0) ∈ wfPart (P := natPF_NatListRegime) (stepCoalg clockStep)) ∧
+    ¬ ComputablePred (fun c : Nat.Partrec.Code =>
+        (c, n, 0) ∈ wfPart (P := natPF_NatListRegime) (stepCoalg clockStep)) ∧
+    ¬ REPred (fun c : Nat.Partrec.Code =>
+        (c, n, 0) ∉ wfPart (P := natPF_NatListRegime) (stepCoalg clockStep)) := by
+  have e : (fun c : Nat.Partrec.Code =>
+      (c, n, 0) ∈ wfPart (P := natPF_NatListRegime) (stepCoalg clockStep)) = fun c => Occurs c n :=
+    funext fun c => propext (clock_mem_wfPart_iff c n)
+  have e' : (fun c : Nat.Partrec.Code =>
+      (c, n, 0) ∉ wfPart (P := natPF_NatListRegime) (stepCoalg clockStep)) =
+      fun c => ¬ Occurs c n :=
+    funext fun c => propext (not_congr (clock_mem_wfPart_iff c n))
+  rw [e, e']
+  exact ⟨(occurrence_semidecidable_nonoccurrence_not n).1, occurrence_undecidable n,
+    (occurrence_semidecidable_nonoccurrence_not n).2⟩
+
+/-- `Statement:` `s` is accessible for `stepRel f` iff its unfolding `Cofix.corec (stepCoalg f) s`
+reaches a leaf (`EventuallyLeaf`); both directions. -/
+theorem acc_stepRel_iff_eventuallyLeaf (s : σ) :
+    Acc (stepRel f) s ↔ EventuallyLeaf (Cofix.corec (stepCoalg f) s) := by
+  constructor
+  · intro h
+    induction h with
+    | intro x _ ih =>
+      cases hx : f x with
+      | none =>
+        refine EventuallyLeaf.leaf _ (fun e => Cofix.corec (stepCoalg f) (PEmpty.elim e)) ?_
+        rw [Cofix.dest_corec]; unfold stepCoalg; rw [hx]; rfl
+      | some y =>
+        refine EventuallyLeaf.step _ (fun _ => Cofix.corec (stepCoalg f) y) ?_ (ih y hx)
+        rw [Cofix.dest_corec]; unfold stepCoalg; rw [hx]; rfl
+  · intro h
+    generalize hx : Cofix.corec (stepCoalg f) s = x at h
+    induction h generalizing s with
+    | leaf x c hd =>
+      subst hx
+      rw [Cofix.dest_corec] at hd
+      unfold stepCoalg at hd
+      cases hs : f s with
+      | none => exact Acc.intro _ fun y hy => by change f s = some y at hy; rw [hs] at hy; cases hy
+      | some y => rw [hs] at hd; exact Bool.noConfusion (congrArg Sigma.fst hd)
+    | step x c hd _ ih =>
+      subst hx
+      rw [Cofix.dest_corec] at hd
+      unfold stepCoalg at hd
+      cases hs : f s with
+      | none => rw [hs] at hd; exact Bool.noConfusion (congrArg Sigma.fst hd)
+      | some y =>
+        rw [hs] at hd
+        have hc : c = fun _ => Cofix.corec (stepCoalg f) y := by
+          have := (Sigma.mk.injEq _ _ _ _).mp hd
+          exact (eq_of_heq this.2).symm
+        have hy : Acc (stepRel f) y := ih y (by rw [hc])
+        exact Acc.intro _ fun z hz => by
+          change f s = some z at hz
+          rw [hs] at hz
+          cases hz
+          exact hy
+
+/-- `Statement:` `s` is outside `wfPart` of `stepCoalg f` iff its unfolding is `natInfinity`; both
+directions (`notEL_unique`, `eventuallyLeaf_ne_infinity`). Unlike `loop_unfolds_to_infinity`, no
+self-loop is assumed. -/
+theorem not_mem_wfPart_iff_unfolds_to_infinity (s : σ) :
+    s ∉ wfPart (P := natPF_NatListRegime) (stepCoalg f) ↔
+      Cofix.corec (stepCoalg f) s = natInfinity := by
+  rw [wfPart_stepCoalg]
+  show ¬ Acc (stepRel f) s ↔ _
+  rw [acc_stepRel_iff_eventuallyLeaf]
+  exact ⟨notEL_unique _, fun h hel => eventuallyLeaf_ne_infinity _ hel h⟩
 
 end ZeroParadox
 
@@ -374,4 +500,10 @@ section PurityCheck
 #print axioms ZeroParadox.isWellFoundedCoalg_stepCoalg_iff
 #print axioms ZeroParadox.wfPart_stepCoalg
 #print axioms ZeroParadox.never_halts_not_wellFounded
+#print axioms ZeroParadox.acc_stepRel_iff_eval_dom
+#print axioms ZeroParadox.wfPart_stepCoalg_eq_eval_dom
+#print axioms ZeroParadox.clock_mem_wfPart_iff
+#print axioms ZeroParadox.clock_wfPart_re_not_computable
+#print axioms ZeroParadox.acc_stepRel_iff_eventuallyLeaf
+#print axioms ZeroParadox.not_mem_wfPart_iff_unfolds_to_infinity
 end PurityCheck

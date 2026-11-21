@@ -139,6 +139,19 @@ theorem MLRandom_fair_iff_le_KPPlain {U : Kolmogorov.Map}
     fun h => MLRandom_of_isMartinLofRandom
       ((Kolmogorov.isMartinLofRandom_uniform_iff_le_KPPlain_cantorPrefix hU w).2 h)⟩
 
+/-- `Statement:` at computable `p`, every `MLRandom (trials p hp)` tape is `FreqBalanced p`: SUV
+Thm 34, the library's `tendsto_freqOne_of_isMartinLofRandom_bernoulli'`, through
+`trials_eq_bernoulliMeasure` and `isMartinLofRandom_of_MLRandom`. No lower bound on `p`. -/
+theorem freqBalanced_of_MLRandom {p : NNReal} (hp : p ≤ 1)
+    (hcomp : Kolmogorov.ComputableReals.IsComputableReal (p : ℝ)) {w : ℕ → Bool}
+    (hw : MLRandom (trials p hp) w) : FreqBalanced p w := by
+  rw [trials_eq_bernoulliMeasure] at hw
+  have := Kolmogorov.tendsto_freqOne_of_isMartinLofRandom_bernoulli' hp hcomp
+    (isMartinLofRandom_of_MLRandom hw)
+  refine this.congr fun n => ?_
+  rw [Kolmogorov.freqOne_eq]
+  rfl
+
 section PurityCheck
 #print axioms trials_eq_bernoulliMeasure
 #print axioms prefixCyl_eq_cantorCylinder
@@ -151,6 +164,7 @@ section PurityCheck
 #print axioms brudno_ae_trials
 #print axioms brudno_fair_of_MLRandom
 #print axioms MLRandom_fair_iff_le_KPPlain
+#print axioms freqBalanced_of_MLRandom
 end PurityCheck
 
 end ZeroParadox

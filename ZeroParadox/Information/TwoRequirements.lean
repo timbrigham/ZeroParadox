@@ -464,10 +464,9 @@ example {L : Type*} [ZPSemilattice L] :
 /-! ## § III. Frequency of `true` tending to `p` (the strong law of large numbers)
 
 Per tape: the fraction of `true` among the first `n` stages tends to `p`. That a Martin-Löf random
-tape has this property is not proved here. For computable `p` the analogue for Milovanov's
-`IsMartinLofRandom` and `bernoulliMeasure` is proved outside the dependency closure
-(`tendsto_freqOne_of_isMartinLofRandom_bernoulli'`; `ZeroParadox/Information/CrossingTrials.md`, Prior
-art); his definitions are not compared with `MLRandom` or `trials p hp` here. For every `p`,
+tape has this property is not proved in this file. For computable `p` it is
+`freqBalanced_of_MLRandom` (`ZeroParadox/Information/BrudnoBridge.lean`, which imports this file),
+from Milovanov's `tendsto_freqOne_of_isMartinLofRandom_bernoulli'` (SUV Thm 34). For every `p`,
 Kjos-Hanssen (arXiv:1408.2850, Theorem 5.2, p. 8) proves it on paper for Hippocratic randomness of
 `μ_p`; not formalized here. -/
 
