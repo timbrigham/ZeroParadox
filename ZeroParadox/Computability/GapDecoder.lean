@@ -227,6 +227,30 @@ theorem gapDecode_p_zero (hp : (0 : NNReal) ≤ 1) :
     trials 0 hp {w | gapDecode w = Option.none} = 1 := by
   rw [trials_zero_eq_dirac]; exact Measure.dirac_apply_of_mem gapDecode_poles.1
 
+/-- `Statement:` if `0 < p`, every tape Martin-Löf random for `trials p hp` decodes to some code
+under `gapDecode`, and its waiting computation `toComp (det w)` terminates. No `p < 1`, no
+computable `p`. `Reading:` the pointwise form of `trials_gapDecode_none_null` and
+`toComp_det_halts_ae`, through zero-block tests (`zeroBlockTypical_of_MLRandom`,
+`fires_io_of_avoids`); folklore that random points satisfy effective almost-sure laws. -/
+theorem gapDecode_and_halts_of_MLRandom (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p) (w : ℕ → Bool)
+    (hML : MLRandom (trials p hp) w) :
+    (∃ c, gapDecode w = some c) ∧ (NInf.toComp (NInf.det w)).Terminates := by
+  have hio := fires_io_of_avoids p hp hp0 _ (fun _ hU => hU) w
+    (zeroBlockTypical_of_MLRandom p hp w hML)
+  have hfire : ∃ k, w k = true := fires_once_of_mem_limsup hio
+  refine ⟨?_, (toComp_det_terminates_iff w).2 hfire⟩
+  cases hd : gapDecode w with
+  | some c => exact ⟨c, rfl⟩
+  | none =>
+    exfalso
+    rcases (gapDecode_eq_none_iff w).1 hd with h | ⟨hw, h⟩
+    · obtain ⟨k, hk⟩ := hfire
+      rw [h] at hk; cases hk
+    · refine (not_mem_limsup_fires_iff w).2 ⟨Nat.find hw + 1, fun k hk => ?_⟩ hio
+      have := congrFun h (k - (Nat.find hw + 1))
+      simp only [shiftTape] at this
+      rwa [Nat.add_sub_cancel' hk] at this
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -249,4 +273,5 @@ open ZeroParadox
 #print axioms const_not_reachesEveryCode
 #print axioms gapDecode_p_one
 #print axioms gapDecode_p_zero
+#print axioms gapDecode_and_halts_of_MLRandom
 end PurityCheck
