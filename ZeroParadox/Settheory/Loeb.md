@@ -91,7 +91,8 @@ with (C3*) and (Löb) in which no one-variable term of odd degree has a fixed po
 is the falsum instance `¬□⊥`), Litak and Visser § 1, Kumasaka and Kurahashi, Fitting's GL fixed-point program
 note (the retrieved copy is dated October 4, 1995), and theoremsearch, ten phrasings over three
 prior-art review rounds of 2026-11-01 (four, four and two). Not retrieved: Boolos (1993) ch. 8, Smoryński (1985),
-Lindström (2006, J. Phil. Logic 35). Wikipedia "Löb's theorem" (read 2026-11-21) attributes to Lindström (2006)
-that in normal modal logic Löb's axiom is equivalent to the conjunction of schema 4 and the existence of modal fixed
-points, a statement about schemas, not about one `A`. Which direction uses D3 is the `example`s after each theorem
-in `ZeroParadox/Settheory/Loeb.lean`. No novelty is claimed. The Lean theorem is the check.
+Lindström (2006, J. Phil. Logic 35). Wikipedia "Löb's theorem" (read 2026-11-21) cites Lindström (2006) for
+deriving modal fixed points from Löb's axiom schema, and concludes that in normal modal logic Löb's axiom is
+equivalent to schema 4 plus the existence of modal fixed points, a statement about schemas, not about one `A`.
+Which direction uses D3 is settled by the `example`s after `loeb_diagonal_of_loeb_axiom` (no D3) and
+`loeb_axiom_of_loeb_diagonal` (D3 needed, CONTROL) in `ZeroParadox/Settheory/Loeb.lean`. No novelty is claimed. The Lean theorem is the check.

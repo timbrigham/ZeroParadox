@@ -204,9 +204,9 @@ example : waitENat (det (fun n => decide (botEnd n = 0))) ≠ endVal botEnd := b
   exact ENat.natCast_ne_top 0
 
 /-! ### § V. ℤ_[2] through the digit tape
-`Reading:` a cited formalization, no novelty: the digit map conjugates the `2`-adic shift to the left
-shift and is a topological isomorphism (Kingsbery–Levin–Preygel–Silva, arXiv:math/0701899, Example 3.3);
-closest formal prior art, the set-level `WittVector.equiv` with `WittVector.verschiebung_frobenius`.
+`Reading:` no novelty: the homeomorphism is Example 3.3's digit map at p = 2 (Kingsbery–Levin–Preygel–
+Silva, arXiv:math/0701899); the square proved here is for doubling, a one-sided inverse of their shift
+T (T(2x) = x), and T's own square is not stated; closest formal prior art, the set-level `WittVector.equiv` with `WittVector.verschiebung_frobenius`.
 PROVED here: the commuting square (`padicEndHomeo_semiconj`), continuity and bijectivity
 (`padicEndHomeo`), and the valuation match (`endVal_padicEndHomeo`). -/
 
@@ -398,9 +398,9 @@ theorem endVal_padicEndHomeo (x : ℤ_[2]) : endVal (padicEndHomeo x) = q2Val x 
 
 end PadicEnd
 
--- Statement: axioms (PurityCheck), `digitBool`, `tapeIso`, `tapeIso_boundaryDouble`, `det_tapeCons_false`
---   `[propext, Quot.sound]`; the rest add `Classical.choice`, via `endVal` (an `sInf` in `ℕ∞`) and
---   `waitENat` (any `NInf ≃o ℕ∞` gives LPO, `NInf.lpo_of_enatIso`), and in § V via `PadicInt.appr`.
+-- Statement: axioms (PurityCheck), `digitBool`, `tapeIso`, `tapeIso_apply`, `NInf.lpo_of_enatIso`,
+--   `tapeIso_boundaryDouble`, `det_tapeCons_false` `[propext, Quot.sound]`; every other entry
+--   `[propext, Classical.choice, Quot.sound]` (measured 2026-11-21).
 
 end ZeroParadox
 

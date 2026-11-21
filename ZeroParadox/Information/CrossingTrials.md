@@ -15,7 +15,8 @@ two-chart reading for § IV–VII and for fence 2 of the Lean header (`Reading:`
   tape `w` avoids `𝒯`, then `w` fires infinitely often (`fires_io_of_avoids`). The avoidance is the
   hypothesis `htyp` on one tape. For `𝒯` the zero-block tests it is weak: the all-`true` tape, a
   constant tape, meets it at every `p ≤ 1` (the third `example`); for `p < 1` it is not Martin-Löf
-  randomness (open item 1 concerns that), and at `p = 1/2` it does not give Kurtz randomness either,
+  randomness, which implies it at every `p ≤ 1`, one way (`zeroBlockTypical_of_MLRandom`,
+  `ZeroParadox/Information/TwoRequirements.lean`), and at `p = 1/2` it does not give Kurtz randomness either,
   since the all-`true` tape is computable (Kurtz and Reimann–Slaman entries below). One way: the squares tape
   fires infinitely often (the first `example`), and for every `0 < p ≤ 1` and every such `𝒯` it does
   not avoid `𝒯` (`squaresTape_not_avoids`; the first `example` is the case `p = 1/2`); at `p = 1/2`
@@ -84,15 +85,16 @@ two-chart reading for § IV–VII and for fence 2 of the Lean header (`Reading:`
   (ii) for the events `fires n`, with two differences: the measure is Bernoulli(`p`) for any
   `0 < p ≤ 1`, computable or not, and the hypothesis is avoidance of a parameter class `𝒯` holding the
   zero-block tests. At `p = 1/2` the weakest such hypothesis (`𝒯` the zero-block tests) is implied
-  by Martin-Löf randomness granted open item 1, which includes that `trials (1/2)` is the fair-coin
-  measure; a larger `𝒯` can make the hypothesis stronger (no tape avoids the class of all families).
+  by Martin-Löf randomness (`zeroBlockTypical_of_MLRandom`, at every `p ≤ 1`, one way), and
+  `trials (1/2)` is the library's fair-coin measure (`trials_eq_bernoulliMeasure`); a larger `𝒯` can make the hypothesis stronger (no tape avoids the class of all families).
   The credit runs from Davie to here.
 - **Computable non-atoms are not random.** J. Reimann and T. Slaman, "Measures and their random reals",
   arXiv:0802.2705, p. 9, Theorem 4.4, (i) ⇒ (ii): a computable sequence that is not an atom of a
   probability measure `µ` is not `µ`-random (Martin-Löf randomness relative to a representation of `µ`).
   `squaresTape_not_avoids` has that shape at Bernoulli(`p`), where the squares tape is not an atom for
-  any `0 < p ≤ 1`; its test is a zero-block test needing only the integer `K`, and that zero-block tests
-  are tests in their sense is not proved here (open item 1, stated at `p = 1/2`). The credit runs from
+  any `0 < p ≤ 1`; its test is a zero-block test needing only the integer `K`, and every zero-block
+  test is a Martin-Löf test (`zeroBlockTest_isMLTest`); their representation-relative tests are not
+  compared here. The credit runs from
   Reimann and Slaman to here.
 - **Kurtz null tests.** J. Franklin and C. Porter, "Key developments in algorithmic randomness",
   arXiv:2004.02851, p. 32, Definition 4.24 (citing Wang): "A Kurtz null test is a Martin-Löf test ⟨V_i⟩
@@ -100,15 +102,16 @@ two-chart reading for § IV–VII and for fence 2 of the Lean header (`Reading:`
   4.26 (credited there to Wang and to Downey, Griffiths and Reid): a sequence is Kurtz random iff it
   passes all Kurtz null tests. Each level of a `ZeroBlockTest` is a finite union of cylinders, chosen
   by a primitive recursive index, so at `p = 1/2` a zero-block test has the shape of a Kurtz null test
-  (open item 1).
+  (open item 1; the Martin-Löf half is `zeroBlockTest_isMLTest`).
 - **Kurtz randomness in Lean.** C. Freer, `algorithmic-randomness`
   (github.com/cameronfreer/algorithmic-randomness, commit `863da3d`,
   `AlgorithmicRandomness/Randomness/Kurtz.lean`, retrieved 2026-11-01): `IsKurtzRandom x := ∀ T :
   ComputableTree, fairCoin T.paths = 0 → x ∉ T.paths`, with `IsMartinLofRandom.isKurtzRandom` and
   `ComputableCantorPoint.not_isKurtzRandom`. Fair-coin measure only.
 - **Martin-Löf randomness in Lean.** A. Milovanov, `kolmogorov-complexity-lean`
-  (github.com/AlexeyMilovanov/kolmogorov-complexity-lean, commit `28da513`,
-  `KolmogorovMathlib/AlgorithmicRandomness/MartinLof.lean`, retrieved 2026-11-01):
+  (github.com/AlexeyMilovanov/kolmogorov-complexity-lean, commit `7e71116`, the pin
+  `ZeroParadox/Information/BrudnoBridge.lean` imports; first retrieved at `28da513`, 2026-11-01,
+  `KolmogorovMathlib/AlgorithmicRandomness/MartinLof.lean`):
   `IsMartinLofTest μ U := IsUniformlyEffectiveOpen U ∧ ∀ n, μ (U n) ≤ dyadicValue 1 n`, "a uniformly
   effective open sequence of sets whose measures decrease as `2⁻ⁿ`"; `IsMartinLofRandom μ w := ∀ U,
   IsMartinLofTest μ U → w ∉ ⋂ n, U n`. `AvoidsTests` has the shape of `IsMartinLofRandom` with the test
@@ -116,16 +119,18 @@ two-chart reading for § IV–VII and for fence 2 of the Lean header (`Reading:`
   `tendsto_freqOne_of_isMartinLofRandom_bernoulli'` ("SUV Theorem 34"): for `p ≤ 1` with
   `IsComputableReal (p : ℝ)` and `x` Martin-Löf random for its `bernoulliMeasure p hp`, the frequency of
   ones in `x` tends to `p`; for `p > 0` that gives infinitely many ones. Its hypothesis needs a
-  computable `p`, which § VI does not; that Martin-Löf randomness meets § VI's `htyp` for `𝒯` = the
-  zero-block tests is open item 1 at `p = 1/2` and is not stated here for other `p`. Its
-  `bernoulliMeasure` is `trials`: `trials_eq_bernoulliMeasure`
-  (`ZeroParadox/Information/BrudnoBridge.lean`). For the uniform measure the same library has
+  computable `p`, which § VI does not. Martin-Löf randomness for `trials p hp` meets § VI's `htyp` for
+  `𝒯` = the zero-block tests at every `p ≤ 1`, one way (`zeroBlockTypical_of_MLRandom`). Its
+  `bernoulliMeasure` is `trials` (`trials_eq_bernoulliMeasure`), and his `IsMartinLofRandom` and
+  `MLRandom` agree at every measure (`isMartinLofRandom_of_MLRandom`, `MLRandom_of_isMartinLofRandom`;
+  all three in `ZeroParadox/Information/BrudnoBridge.lean`). For the uniform measure, his
+  `bernoulliMeasure (1/2)`, the same library has
   `exists_isMartinLofRandom_uniform` (a Martin-Löf random sequence exists, `EffectiveLaws.lean`) and
-  `isEffectivelyNull_singleton_of_computable` (no computable sequence is, `EffectiveNull.lean`); given
-  open item 1, the first gives a Martin-Löf random tape meeting `htyp` at `p = 1/2` for `𝒯` = the
-  zero-block tests. A tape meeting that `htyp` needs no open item: the all-`true` tape meets it at every
-  `p ≤ 1` (§ VI's third `example`), so that hypothesis is weak, and Martin-Löf randomness is the
-  stronger property open item 1 is about. None of these libraries is a dependency here.
+  `isEffectivelyNull_singleton_of_computable` (no computable sequence is, `EffectiveNull.lean`); through
+  those theorems the first gives a Martin-Löf random tape meeting `htyp` at `p = 1/2` for `𝒯` = the
+  zero-block tests. The all-`true` tape meets that `htyp` too, at every `p ≤ 1` (§ VI's third
+  `example`), so that hypothesis is weak and Martin-Löf randomness is the stronger property.
+  `ZeroParadox/Information/BrudnoBridge.lean` imports Milovanov's library; `ZeroParadox/Information/CrossingTrials.lean` imports neither.
 - **Mathlib.** The pin was searched 2026-11-01 for `Martin-L`, `MartinLof`, `algorithmic(ally)? random`,
   `Kurtz` (case-insensitive, `.lake/packages/mathlib/Mathlib`): zero matches. Not located as of
   2026-11-01, searched as stated. theoremsearch, four phrasings (Kurtz null test; Martin-Löf random for
@@ -173,12 +178,14 @@ two-chart reading for § IV–VII and for fence 2 of the Lean header (`Reading:`
 
 ## What remains open (2026-11-01)
 
-1. **Zero-block tests and the standard test classes.** That every `ZeroBlockTest` at `p = 1/2` is a Kurtz
-   null test, hence a Martin-Löf test, is read off the definitions above and is not proved in Lean here;
-   nor is it proved that `trials (1/2)` is the fair-coin measure those definitions use. No
-   effective-open-set notion was located in `ZeroParadox/**` as of 2026-11-01 (searched for
-   `effective(ly) open`, `EffectiveOpen`, `Σ⁰₁`, `Sigma01`, `computably enumerable`, `IsKurtz`,
-   `MartinLof`: hits only in prose), and neither library is imported.
+1. **Zero-block tests and Kurtz null tests.** That every `ZeroBlockTest` at `p = 1/2` is a Kurtz null
+   test is read off the definitions above and is not proved in Lean here. The Martin-Löf half is
+   proved: every zero-block test is an `MLTest` (`zeroBlockTest_isMLTest`), so Martin-Löf randomness
+   for `trials p hp` implies zero-block typicality at every `p ≤ 1`, one way
+   (`zeroBlockTypical_of_MLRandom`, `ZeroParadox/Information/TwoRequirements.lean`); `trials (1/2)` is
+   the fair-coin measure (`trials_eq_bernoulliMeasure`), and `MLRandom` agrees with the library's
+   `IsMartinLofRandom` (`MLRandom_of_isMartinLofRandom`, `isMartinLofRandom_of_MLRandom`; all three in
+   `ZeroParadox/Information/BrudnoBridge.lean`).
 2. **Uniformity in `p`.** `exists_halving_block` gives the block length `K` by an existence proof; it is
    not computed from `p`. For one fixed `p` the test needs only the number `K`, so the primitive-recursive
    index holds for every `0 < p` (`zeroBlockTest_silentFrom`). Computability of `p` would matter for a
@@ -217,8 +224,9 @@ reading; no map from `ℚ_[2]` to tapes is built here), 0 is the all-`false` tap
 `ZeroParadox/Information/Disjunctive.lean`). Tim's maximally complex reading
 (`ZeroParadox/Information/Disjunctive.md` fence 3) places the occupant of ⊥ of a `ZPSemilattice`, read as
 a tape, among the maximally complex tapes, which by standard theory (Levin–Schnorr; not proved here,
-Disjunctive.md fence 2) are Martin-Löf random for the fair coin; that such tapes meet § VI's hypothesis at
-`p = 1/2` for `𝒯` = the zero-block tests is open item 1. That hypothesis is weak and does not single
+Disjunctive.md fence 2) are Martin-Löf random for the fair coin; such tapes meet § VI's hypothesis at
+`p = 1/2` for `𝒯` = the zero-block tests, one way (`zeroBlockTypical_of_MLRandom`, with
+`trials_eq_bernoulliMeasure`). That hypothesis is weak and does not single
 them out: the all-`true` tape meets it too (§ VI's third `example`). The two readings put different tapes in the
 role, and nothing in Lean identifies them.
 

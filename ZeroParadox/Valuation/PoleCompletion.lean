@@ -33,7 +33,7 @@ The self-referential content of that fold is here, and it is **a genuine typecla
 
 * `End = ℕ → Fin 2` (the boundary) is a `ZPSemilattice` pointwise — `Fin 2` is one (join = max, ⊥ = 0), and
   the axioms lift pointwise (`instZPSemilatticeEnd`), with ⊥ = `botEnd`, the floor.
-* `boundaryDouble` is ×2 in digit expansion (shift right, insert 0 at position 0) — the exact combinatorial
+* `boundaryDouble` is ×2 in digit expansion (shift right, insert 0 at position 0) — the combinatorial
   mirror of `SelfApp.q2SelfApp` (×2 on ℚ₂).
 * Its **unique** fixed point is the floor (`boundaryDouble_unique_fp`), so `instAbstractSelfAppEnd :
   AbstractSelfApp End` holds: a self-map whose only fixed point is ⊥. Via `SelfApp.toAFAStructure`, `End`
@@ -58,7 +58,7 @@ namespace ZeroParadox
 open ZPSemilattice
 
 /-- The boundary self-application: ×2 in 2-adic digit expansion = shift right, inserting `0` at position 0.
-The exact combinatorial mirror of `SelfApp.q2SelfApp` (×2 on ℚ₂). -/
+The combinatorial mirror of `SelfApp.q2SelfApp` (×2 on ℚ₂). -/
 def boundaryDouble (x : End) : End := fun n => match n with | 0 => 0 | k + 1 => x k
 
 /-- The floor `botEnd` is a fixed point of ×2 (doubling fixes 0). -/
@@ -75,8 +75,8 @@ theorem boundaryDouble_unique_fp (x : End) (h : boundaryDouble x = x) : x = botE
   | zero => exact (congrFun h 0).symm
   | succ k ih => exact (congrFun h (k + 1)).symm.trans ih
 
-/-- The boundary `End = ℕ → Fin 2` is a `ZPSemilattice` pointwise (join = max, ⊥ = `botEnd`). Unlike ℚ₂
-(a field), the tree boundary IS a semilattice, so it can host a genuine `AbstractSelfApp` instance. -/
+/-- The boundary `End = ℕ → Fin 2` is a `ZPSemilattice` pointwise (join = max, ⊥ = `botEnd`). ℚ₂ has
+none registered here (one exists: the `example` in `ZeroParadox/Order/Lattice.lean`); this one hosts `AbstractSelfApp`. -/
 instance instZPSemilatticeEnd : ZPSemilattice End where
   -- [ZP port] Lean 4.35: core's new `Fin.instMax` (`Init/Data/Fin/MinMax.lean`) proves its bound by
   -- `Std.max_lt_iff`, which carries `Classical.choice`; build the same max (defeq) from `Nat.max_lt`.
@@ -88,9 +88,9 @@ instance instZPSemilatticeEnd : ZPSemilattice End where
   bot_join := by intro x; funext n; exact Fin.ext (Nat.zero_max _)
 
 /-- **The genuine instance.** The tree boundary is an `AbstractSelfApp`: the self-application ×2
-(`boundaryDouble`) has the floor `botEnd` as its unique fixed point. Where ℚ₂ could only be a standalone
-parallel (not a semilattice), `End` IS an instance — self-reference closing at the floor as an honest
-typeclass instance, the Quine-atom shape realized on the tree's own boundary. -/
+(`boundaryDouble`) has the floor `botEnd` as its unique fixed point. No `ZPSemilattice` on ℚ₂ is registered
+here (one exists: every inhabited type admits one, the `example` in `ZeroParadox/Order/Lattice.lean`), so its
+×2 fixed point stays a standalone parallel; `End` IS an instance, the Quine-atom shape on the tree's boundary. -/
 instance instAbstractSelfAppEnd : AbstractSelfApp End where
   selfApp := boundaryDouble
   fixed_bot := boundaryDouble_botEnd
@@ -152,7 +152,7 @@ theorem iInter_range_iterate_boundaryDouble :
   · intro h; funext n; exact h (n + 1) n (Nat.lt_succ_self n)
   · rintro rfl k i _; rfl
 
--- `Statement:` `boundaryDouble` is not constant: it moves the single-`1`-at-`0` end.
+-- `Statement:` `boundaryDouble` is not the identity: it moves the single-`1`-at-`0` end.
 example : boundaryDouble (fun k => if k = 0 then 1 else 0) ≠ fun k => if k = 0 then 1 else 0 := by
   intro h
   have := congrFun h 1
