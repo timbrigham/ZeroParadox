@@ -414591,6 +414591,901 @@
             "axioms": null,
             "sorry_free": null
           }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0f0817f4-7b6a-4a6a-b451-dc23ad7f0e94",
+          "new": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.appr_two_succ",
+            "short": "appr_two_succ"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.appr_two_succ",
+            "short": "appr_two_succ",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "c123-digit-tape: Z_[2] digit tape is a homeomorphism to End conjugating x2 to boundaryDouble (DepthIsWait § V); depth law through padicTape (PoleWithinEnsemble § X)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "13707e1b-000a-4411-85fa-8bc395807844",
+          "new": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.padicTape_two_mul",
+            "short": "padicTape_two_mul"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.padicTape_two_mul",
+            "short": "padicTape_two_mul",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "c123-digit-tape: Z_[2] digit tape is a homeomorphism to End conjugating x2 to boundaryDouble (DepthIsWait § V); depth law through padicTape (PoleWithinEnsemble § X)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "274cc363-eb40-4542-ac92-b78101bc7564",
+          "new": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.padicTapeHomeo_apply",
+            "short": "padicTapeHomeo_apply"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.padicTapeHomeo_apply",
+            "short": "padicTapeHomeo_apply",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "c123-digit-tape: Z_[2] digit tape is a homeomorphism to End conjugating x2 to boundaryDouble (DepthIsWait § V); depth law through padicTape (PoleWithinEnsemble § X)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "4a8a72a6-835d-4ade-abe4-ab14bdb42ce3",
+          "new": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.endVal_padicEndHomeo",
+            "short": "endVal_padicEndHomeo"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.endVal_padicEndHomeo",
+            "short": "endVal_padicEndHomeo",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "c123-digit-tape: Z_[2] digit tape is a homeomorphism to End conjugating x2 to boundaryDouble (DepthIsWait § V); depth law through padicTape (PoleWithinEnsemble § X)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "4ca21262-3806-4fa2-81ef-8959f54834de",
+          "new": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.padicTape_injective",
+            "short": "padicTape_injective"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.padicTape_injective",
+            "short": "padicTape_injective",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "c123-digit-tape: Z_[2] digit tape is a homeomorphism to End conjugating x2 to boundaryDouble (DepthIsWait § V); depth law through padicTape (PoleWithinEnsemble § X)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "5fd68f11-0510-4f1a-8098-922925791b76",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.det_eq_ofNat_set_eq_cylinder",
+            "short": "det_eq_ofNat_set_eq_cylinder"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.det_eq_ofNat_set_eq_cylinder",
+            "short": "det_eq_ofNat_set_eq_cylinder",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "c123-digit-tape: Z_[2] digit tape is a homeomorphism to End conjugating x2 to boundaryDouble (DepthIsWait § V); depth law through padicTape (PoleWithinEnsemble § X)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "5ff9286d-d90e-4ca6-8798-5e6990ae6bbb",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.haarZp_padicTape_det_eq_trials",
+            "short": "haarZp_padicTape_det_eq_trials"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.haarZp_padicTape_det_eq_trials",
+            "short": "haarZp_padicTape_det_eq_trials",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "c123-digit-tape: Z_[2] digit tape is a homeomorphism to End conjugating x2 to boundaryDouble (DepthIsWait § V); depth law through padicTape (PoleWithinEnsemble § X)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "6a78adea-f2e7-4a50-b807-9d6455a28e54",
+          "new": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.continuous_tapeIso_symm",
+            "short": "continuous_tapeIso_symm"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.continuous_tapeIso_symm",
+            "short": "continuous_tapeIso_symm",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "c123-digit-tape: Z_[2] digit tape is a homeomorphism to End conjugating x2 to boundaryDouble (DepthIsWait § V); depth law through padicTape (PoleWithinEnsemble § X)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "71e00217-8bce-4b7c-a9c3-03c44d687fff",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.haarZp_q2Val_eq",
+            "short": "haarZp_q2Val_eq"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.haarZp_q2Val_eq",
+            "short": "haarZp_q2Val_eq",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "c123-digit-tape: Z_[2] digit tape is a homeomorphism to End conjugating x2 to boundaryDouble (DepthIsWait § V); depth law through padicTape (PoleWithinEnsemble § X)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "72845a5c-ba6d-4523-906f-922e7f09d379",
+          "new": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.continuous_padicTape",
+            "short": "continuous_padicTape"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.continuous_padicTape",
+            "short": "continuous_padicTape",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "c123-digit-tape: Z_[2] digit tape is a homeomorphism to End conjugating x2 to boundaryDouble (DepthIsWait § V); depth law through padicTape (PoleWithinEnsemble § X)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "76a2345b-6c4a-4fd3-873f-d67353650fbc",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_det_eq_ofNat",
+            "short": "trials_det_eq_ofNat"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_det_eq_ofNat",
+            "short": "trials_det_eq_ofNat",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "c123-digit-tape: Z_[2] digit tape is a homeomorphism to End conjugating x2 to boundaryDouble (DepthIsWait § V); depth law through padicTape (PoleWithinEnsemble § X)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "7f2e5f22-819e-4fad-bd02-a7fd82a3dd08",
+          "new": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.padicEndHomeo_semiconj",
+            "short": "padicEndHomeo_semiconj"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.padicEndHomeo_semiconj",
+            "short": "padicEndHomeo_semiconj",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "c123-digit-tape: Z_[2] digit tape is a homeomorphism to End conjugating x2 to boundaryDouble (DepthIsWait § V); depth law through padicTape (PoleWithinEnsemble § X)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b350198d-294c-4dd5-8329-bb218e1d2d91",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_det_eq_geometric",
+            "short": "trials_det_eq_geometric"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_det_eq_geometric",
+            "short": "trials_det_eq_geometric",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "c123-digit-tape: Z_[2] digit tape is a homeomorphism to End conjugating x2 to boundaryDouble (DepthIsWait § V); depth law through padicTape (PoleWithinEnsemble § X)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b5c45fa5-0753-45a6-917c-52c64fd2aae5",
+          "new": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.padicTape_surjective",
+            "short": "padicTape_surjective"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.padicTape_surjective",
+            "short": "padicTape_surjective",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "c123-digit-tape: Z_[2] digit tape is a homeomorphism to End conjugating x2 to boundaryDouble (DepthIsWait § V); depth law through padicTape (PoleWithinEnsemble § X)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c0f7c978-26e6-4811-b862-2593a1e99fed",
+          "new": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.appr_two_mul_succ",
+            "short": "appr_two_mul_succ"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.appr_two_mul_succ",
+            "short": "appr_two_mul_succ",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "c123-digit-tape: Z_[2] digit tape is a homeomorphism to End conjugating x2 to boundaryDouble (DepthIsWait § V); depth law through padicTape (PoleWithinEnsemble § X)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ccc196e6-e877-44a5-bbba-f4c2f640c7ba",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natCast_le_q2Val_iff",
+            "short": "natCast_le_q2Val_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natCast_le_q2Val_iff",
+            "short": "natCast_le_q2Val_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "c123-digit-tape: Z_[2] digit tape is a homeomorphism to End conjugating x2 to boundaryDouble (DepthIsWait § V); depth law through padicTape (PoleWithinEnsemble § X)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d266db2c-57c4-4709-8c81-83f1e7eaf233",
+          "new": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.padicEndHomeo",
+            "short": "padicEndHomeo"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.padicEndHomeo",
+            "short": "padicEndHomeo",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "c123-digit-tape: Z_[2] digit tape is a homeomorphism to End conjugating x2 to boundaryDouble (DepthIsWait § V); depth law through padicTape (PoleWithinEnsemble § X)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d7fd8ce4-b85a-4bb2-bd41-4d0a9e5637d1",
+          "new": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.padicTapeHomeo",
+            "short": "padicTapeHomeo"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.padicTapeHomeo",
+            "short": "padicTapeHomeo",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "c123-digit-tape: Z_[2] digit tape is a homeomorphism to End conjugating x2 to boundaryDouble (DepthIsWait § V); depth law through padicTape (PoleWithinEnsemble § X)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "dd973a5e-457c-4f7b-bfe8-d338c37549eb",
+          "new": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.appr_two_eq_of_dvd",
+            "short": "appr_two_eq_of_dvd"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.appr_two_eq_of_dvd",
+            "short": "appr_two_eq_of_dvd",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "c123-digit-tape: Z_[2] digit tape is a homeomorphism to End conjugating x2 to boundaryDouble (DepthIsWait § V); depth law through padicTape (PoleWithinEnsemble § X)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ddeb0e34-cec4-47c7-82f4-de9ae3bc789b",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.norm_le_two_pow_iff_dvd",
+            "short": "norm_le_two_pow_iff_dvd"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.norm_le_two_pow_iff_dvd",
+            "short": "norm_le_two_pow_iff_dvd",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "c123-digit-tape: Z_[2] digit tape is a homeomorphism to End conjugating x2 to boundaryDouble (DepthIsWait § V); depth law through padicTape (PoleWithinEnsemble § X)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "eede53b8-bdfc-4ded-88e5-d2068556fe44",
+          "new": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.q2Val_eq_endVal_padicTape",
+            "short": "q2Val_eq_endVal_padicTape"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.q2Val_eq_endVal_padicTape",
+            "short": "q2Val_eq_endVal_padicTape",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "c123-digit-tape: Z_[2] digit tape is a homeomorphism to End conjugating x2 to boundaryDouble (DepthIsWait § V); depth law through padicTape (PoleWithinEnsemble § X)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f36b4556-fcb4-46fa-9c52-11e5da39517f",
+          "new": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.q2Val_eq_wait_padicTape",
+            "short": "q2Val_eq_wait_padicTape"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.q2Val_eq_wait_padicTape",
+            "short": "q2Val_eq_wait_padicTape",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "c123-digit-tape: Z_[2] digit tape is a homeomorphism to End conjugating x2 to boundaryDouble (DepthIsWait § V); depth law through padicTape (PoleWithinEnsemble § X)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f4489946-4332-4a2f-8857-2a41cf1565bb",
+          "new": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.padicEndHomeo_apply",
+            "short": "padicEndHomeo_apply"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/DepthIsWait.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.padicEndHomeo_apply",
+            "short": "padicEndHomeo_apply",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "c123-digit-tape: Z_[2] digit tape is a homeomorphism to End conjugating x2 to boundaryDouble (DepthIsWait § V); depth law through padicTape (PoleWithinEnsemble § X)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ffb55de7-9105-49d0-828f-8d6c75bbaaab",
+          "new": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.q2Val_preimage_eq_shell",
+            "short": "q2Val_preimage_eq_shell"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.q2Val_preimage_eq_shell",
+            "short": "q2Val_preimage_eq_shell",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "c123-digit-tape: Z_[2] digit tape is a homeomorphism to End conjugating x2 to boundaryDouble (DepthIsWait § V); depth law through padicTape (PoleWithinEnsemble § X)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
         }
       ],
       "schema_version": "1",

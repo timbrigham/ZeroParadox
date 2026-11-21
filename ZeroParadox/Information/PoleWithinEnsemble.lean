@@ -1,5 +1,7 @@
 -- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): ⊥ of `ℕ → Bool`, the never-firing tape, inside the support of `trials p hp` and in the closure of its Martin-Löf random firing tapes, with the waiting time read as a limit and as a value. Curated results indexed in ZeroParadox/MANIFEST.md.
 import ZeroParadox.Information.TapeHalting
+import ZeroParadox.Valuation.PadicVladimirov
+import Mathlib.Probability.Distributions.Geometric
 import Mathlib.MeasureTheory.Measure.Support
 import Mathlib.Topology.Instances.ENat
 import Mathlib.Analysis.SpecialFunctions.Sigmoid
@@ -655,6 +657,105 @@ theorem germ_top_ne_bot (p : NNReal) (hp : p ≤ 1) :
   obtain ⟨w, hw⟩ := this.exists
   simp at hw
 
+/-! ### § X. The depth law: Haar measure on ℤ_[2] and `trials` through the digit tape
+`Reading:` textbook mathematics, no novelty: the waiting time of a Bernoulli tape is geometric, and
+on ℤ_[2] the 2-adic valuation under Haar measure is geometric with ratio `1 / 2`. What is new is
+only that the two are compared through the map `padicTape`. This is the depth marginal alone; that
+`padicTape` carries Haar measure to `trials 2⁻¹` is not stated here and is deferred. -/
+
+section DepthLaw
+
+/-- `Statement:` `(n : ℕ∞) ≤ q2Val x ↔ 2 ^ n ∣ x`. -/
+theorem natCast_le_q2Val_iff (x : ℤ_[2]) (n : ℕ) :
+    (n : ℕ∞) ≤ q2Val x ↔ (2 : ℤ_[2]) ^ n ∣ x := by
+  rw [q2Val_eq_wait_padicTape, natCast_le_waitENat_iff, ofNat_le_det_padicTape]
+
+/-- `Statement:` `‖x‖ ≤ 2 ^ (-n) ↔ 2 ^ n ∣ x` on ℤ_[2]. -/
+theorem norm_le_two_pow_iff_dvd (x : ℤ_[2]) (n : ℕ) :
+    ‖x‖ ≤ ((2 : ℕ) : ℝ) ^ (-(n : ℤ)) ↔ (2 : ℤ_[2]) ^ n ∣ x := by
+  rw [PadicInt.norm_le_pow_iff_mem_span_pow, Ideal.mem_span_singleton]; simp
+
+/-- `Statement:` `{x | q2Val x = k}` is the shell `measure_ball_diff` measures. -/
+theorem q2Val_preimage_eq_shell (k : ℕ) :
+    {x : ℤ_[2] | q2Val x = k} =
+      {x : ℤ_[2] | ‖x‖ ≤ ((2 : ℕ) : ℝ) ^ (-(k : ℤ))} \
+        {x : ℤ_[2] | ‖x‖ ≤ ((2 : ℕ) : ℝ) ^ (-((k + 1 : ℕ) : ℤ))} := by
+  ext x
+  simp only [Set.mem_ofPred_eq, Set.mem_sdiff, norm_le_two_pow_iff_dvd, ← natCast_le_q2Val_iff]
+  induction q2Val x using ENat.recTopCoe with
+  | top => simp
+  | coe v => norm_cast; omega
+
+/-- `Statement:` `haarZp {x | q2Val x = k} = (2 ^ k)⁻¹ - (2 ^ (k + 1))⁻¹`, from `measure_ball_diff`. -/
+theorem haarZp_q2Val_eq (k : ℕ) :
+    haarZp (p := 2) {x : ℤ_[2] | q2Val x = k} =
+      ((2 : ENNReal) ^ k)⁻¹ - ((2 : ENNReal) ^ (k + 1))⁻¹ := by
+  rw [q2Val_preimage_eq_shell]
+  exact_mod_cast measure_ball_diff (p := 2) k
+
+/-- `Statement:` `{w | det w = ofNat n}` is the cylinder of `0ⁿ1`. -/
+theorem det_eq_ofNat_set_eq_cylinder (n : ℕ) :
+    {w : ℕ → Bool | det w = ofNat n} = PiNat.cylinder (fun i => decide (i = n)) (n + 1) := by
+  ext w
+  simp only [Set.mem_ofPred_eq, det_eq_ofNat_iff, PiNat.cylinder]
+  constructor
+  · rintro ⟨hn, hlt⟩ i hi
+    rcases Nat.lt_succ_iff_lt_or_eq.1 hi with h | rfl
+    · simp [hlt i h, h.ne]
+    · simp [hn]
+  · intro h
+    refine ⟨by simpa using h n (by omega), fun k hk => by simpa [hk.ne] using h k (by omega)⟩
+
+/-- `Statement:` `trials p hp {w | det w = ofNat n} = (1 - p) ^ n * p`, every `p ≤ 1`. -/
+theorem trials_det_eq_ofNat (p : NNReal) (hp : p ≤ 1) (n : ℕ) :
+    trials p hp {w | det w = ofNat n} = ((1 - p : NNReal) : ENNReal) ^ n * p := by
+  rw [det_eq_ofNat_set_eq_cylinder, trials_cyl, Finset.prod_range_succ]
+  simp only [decide_true, ite_true]
+  congr 1
+  trans ∏ _i ∈ Finset.range n, ((1 - p : NNReal) : ENNReal)
+  · exact Finset.prod_congr rfl fun i hi => by simp [(Finset.mem_range.1 hi).ne]
+  · rw [Finset.prod_const, Finset.card_range]
+
+/-- `Statement:` for `0 < p ≤ 1`, the first-hit law of `trials p hp` is Mathlib's
+    `geometricMeasure`: `trials p hp {w | det w = ofNat n} = geometricMeasure p {n}`. -/
+theorem trials_det_eq_geometric (p : NNReal) (hp : p ≤ 1) (hp0 : p ≠ 0) (n : ℕ) :
+    trials p hp {w | det w = ofNat n} = ProbabilityTheory.geometricMeasure ⟨p, p.2, hp⟩ {n} := by
+  rw [trials_det_eq_ofNat,
+    ProbabilityTheory.geometricMeasure_singleton (by simpa [Subtype.ext_iff] using hp0)]
+  simp only
+  rw [ENNReal.ofReal_mul (pow_nonneg (by simpa using hp) n), ENNReal.ofReal_pow (by simpa using hp),
+    ENNReal.ofReal_coe_nnreal, ← NNReal.coe_one, ← NNReal.coe_sub hp, ENNReal.ofReal_coe_nnreal]
+
+/-- `Statement:` the Haar mass of the ℤ_[2] points whose digit tape first fires at `n` equals the
+    `trials 2⁻¹` mass of the tapes that first fire at `n`. -/
+theorem haarZp_padicTape_det_eq_trials (n : ℕ) :
+    haarZp (p := 2) (padicTape ⁻¹' {w | det w = ofNat n}) =
+      trials 2⁻¹ (by norm_num) {w | det w = ofNat n} := by
+  have hset : padicTape ⁻¹' {w | det w = ofNat n} = {x : ℤ_[2] | q2Val x = n} := by
+    ext x
+    simp only [Set.mem_preimage, Set.mem_ofPred_eq, q2Val_eq_wait_padicTape]
+    constructor
+    · intro h; rw [h, waitENat_ofNat]
+    · intro h; rw [← waitENat_ofNat] at h; exact waitENat.injective h
+  rw [hset, haarZp_q2Val_eq, trials_det_eq_ofNat]
+  have h12 : ((1 - 2⁻¹ : NNReal) : ENNReal) = 2⁻¹ := by
+    rw [ENNReal.coe_sub, ENNReal.coe_one, ENNReal.coe_inv two_ne_zero, ENNReal.coe_ofNat,
+      ENNReal.one_sub_inv_two]
+  rw [h12, ENNReal.coe_inv two_ne_zero, ENNReal.coe_ofNat, ENNReal.inv_pow]
+  refine ENNReal.sub_eq_of_eq_add (by simp) ?_
+  rw [pow_succ, ENNReal.mul_inv (Or.inl (by simp)) (Or.inl (by simp)), ← ENNReal.inv_pow, ← mul_add,
+    ENNReal.inv_two_add_inv_two, mul_one]
+
+-- Statement: CONTROL, at `p = 0` the first-hit law is not `geometricMeasure`'s: Mathlib puts mass
+-- `1` at `0` there, and `trials 0` gives `{w | det w = ofNat 0}` mass `0`.
+example : trials 0 zero_le_one {w | det w = ofNat 0} = 0 := by
+  rw [trials_det_eq_ofNat]; simp
+
+end DepthLaw
+
+-- Statement: axioms, § X carries `Classical.choice` (Haar measure, `trials`, `PadicInt.appr`, and
+--   `waitENat`, any `NInf ≃o ℕ∞` giving LPO).
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -726,4 +827,12 @@ open ZeroParadox
 #print axioms never_fires_ae_zero
 #print axioms fires_germ_eq_bot_zero
 #print axioms germ_top_ne_bot
+#print axioms natCast_le_q2Val_iff
+#print axioms norm_le_two_pow_iff_dvd
+#print axioms q2Val_preimage_eq_shell
+#print axioms haarZp_q2Val_eq
+#print axioms det_eq_ofNat_set_eq_cylinder
+#print axioms trials_det_eq_ofNat
+#print axioms trials_det_eq_geometric
+#print axioms haarZp_padicTape_det_eq_trials
 end PurityCheck
