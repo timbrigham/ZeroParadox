@@ -305830,6 +305830,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "5d8f0bbc-ebfb-40b4-ab23-9da13f8f7c12",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicKoopmanVladimirov.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.isometry_measurePreserving",
+            "short": "isometry_measurePreserving"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicKoopmanVladimirov.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.isometry_measurePreserving",
+            "short": "isometry_measurePreserving",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Isometries of Z_p preserve Haar and intertwine with D^alpha (Jeong Prop 2.5; Albeverio-Kozyrev Sec 3 eq (2)); quine_mod_exists via fixed_point2_unbounded",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "5d95c789-4f8f-4e0a-8897-24325df538bf",
           "new": {
             "file": "ZeroParadox/Category/LawvereTaboo.lean",
@@ -382136,6 +382173,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "d2c6afb6-5bb8-44d5-aa1a-f4d38e6de931",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicKoopmanVladimirov.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.vladimirov_isometry_intertwine",
+            "short": "vladimirov_isometry_intertwine"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicKoopmanVladimirov.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.vladimirov_isometry_intertwine",
+            "short": "vladimirov_isometry_intertwine",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Isometries of Z_p preserve Haar and intertwine with D^alpha (Jeong Prop 2.5; Albeverio-Kozyrev Sec 3 eq (2)); quine_mod_exists via fixed_point2_unbounded",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "d2d13722-49c4-42c7-9cc7-4d45ad13fd4e",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -384785,6 +384859,43 @@
             ]
           },
           "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; for periodic maps (c a root of unity) the die isomorphism sees only cycle structure, irrational rotations not covered; at |c| = 1 only c ~ conj c is proved, the separating half is Rybalkina-Sergeichuk literature (ZeroParadox/Multihomed/BendDie.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d6b10cd3-f33e-4712-8018-492759c6a3f9",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicKoopmanVladimirov.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.vladimirov_isometry_commute",
+            "short": "vladimirov_isometry_commute"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicKoopmanVladimirov.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.vladimirov_isometry_commute",
+            "short": "vladimirov_isometry_commute",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Isometries of Z_p preserve Haar and intertwine with D^alpha (Jeong Prop 2.5; Albeverio-Kozyrev Sec 3 eq (2)); quine_mod_exists via fixed_point2_unbounded",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -411556,6 +411667,43 @@
             ]
           },
           "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "fe87cc9e-3915-4a36-959e-59de61b98ce6",
+          "new": {
+            "file": "ZeroParadox/Computability/Periodicity.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.quine_mod_exists",
+            "short": "quine_mod_exists"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/Periodicity.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.quine_mod_exists",
+            "short": "quine_mod_exists",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Isometries of Z_p preserve Haar and intertwine with D^alpha (Jeong Prop 2.5; Albeverio-Kozyrev Sec 3 eq (2)); quine_mod_exists via fixed_point2_unbounded",
           "verify": {
             "axioms": null,
             "sorry_free": null

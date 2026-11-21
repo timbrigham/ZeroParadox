@@ -48,6 +48,33 @@ theorem quine_set_infinite : {c : Code | IsComputationalQuine c}.Infinite := by
   have hinj : Function.Injective (fun k : ℕ => Code.const k) := fun a b h => const_inj h
   exact Set.infinite_of_injective_forall_mem hinj hconst_quine
 
+/-- **A quine of least period its own index.** Statement: for every `N` there is a computational
+    quine `c` with `N < encode c`, `eval c n = n % encode c` for all `n`, and no positive period
+    smaller than `encode c`. Kleene's second recursion theorem applied to `F c n := n % encode c`
+    (`fixed_point₂_unbounded`). -/
+theorem quine_mod_exists (N : ℕ) :
+    ∃ c : Code, IsComputationalQuine c ∧ N < Encodable.encode c ∧
+      (∀ n, eval c n = Part.some (n % Encodable.encode c)) ∧
+      ∀ q, 0 < q → q < Encodable.encode c → ¬ Function.Periodic (eval c) q := by
+  have hF : Partrec₂ (fun (c : Code) (n : ℕ) => (Part.some (n % Encodable.encode c) : Part ℕ)) :=
+    (Primrec.nat_mod.comp Primrec.snd (Primrec.encode.comp Primrec.fst)).to_comp.partrec
+  obtain ⟨c, hc, hN⟩ := fixed_point₂_unbounded hF N
+  have hev : ∀ n, eval c n = Part.some (n % Encodable.encode c) := fun n => congrFun hc n
+  refine ⟨c, ?_, hN, hev, fun q hq hqk hper => ?_⟩
+  · show eval c = selfApply c
+    funext n
+    show eval c n = eval c (Encodable.encode c + n)
+    rw [hev, hev, Nat.add_mod_left]
+  · have h := hper 0
+    rw [hev, hev, Nat.zero_mod, Nat.mod_eq_of_lt (by omega : 0 + q < Encodable.encode c)] at h
+    simp at h
+    omega
+
+-- Statement: CONTROL. A constant code is a computational quine (`quine_set_infinite`) and has
+-- period 1, so the periodicity predicate alone does not force the least period to be the index.
+example (k : ℕ) : Function.Periodic (eval (Code.const k)) 1 := by
+  intro x; simp [eval_const]
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -56,4 +83,5 @@ section PurityCheck
 open ZeroParadox Nat.Partrec Nat.Partrec.Code
 #print axioms quine_isPeriodic
 #print axioms quine_set_infinite
+#print axioms quine_mod_exists
 end PurityCheck
