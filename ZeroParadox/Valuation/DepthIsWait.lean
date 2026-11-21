@@ -398,9 +398,9 @@ theorem endVal_padicEndHomeo (x : ℤ_[2]) : endVal (padicEndHomeo x) = q2Val x 
 
 end PadicEnd
 
--- Statement: axioms (PurityCheck), `digitBool`, `tapeIso`, `tapeIso_boundaryDouble`, `det_tapeCons_false`
---   `[propext, Quot.sound]`; the rest add `Classical.choice`, via `endVal` (an `sInf` in `ℕ∞`) and
---   `waitENat` (any `NInf ≃o ℕ∞` gives LPO, `NInf.lpo_of_enatIso`), and in § V via `PadicInt.appr`.
+-- Statement: axioms (PurityCheck), `digitBool`, `tapeIso`, `tapeIso_apply`, `NInf.lpo_of_enatIso`,
+--   `tapeIso_boundaryDouble`, `det_tapeCons_false` `[propext, Quot.sound]`; every other entry
+--   `[propext, Classical.choice, Quot.sound]` (measured 2026-11-21).
 
 end ZeroParadox
 
