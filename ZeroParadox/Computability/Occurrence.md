@@ -204,7 +204,7 @@ state-transition conditionals"*, a condition on what the system would do and not
 observable effect is a *stutter step*; the induced equivalence is *stutter equivalence*. Mathlib's own
 Turing development uses the word for exactly this (`Mathlib/Computability/TuringMachine/PostTuringMachine.lean`:
 *"a one step stutter before actually halting"*, read at source). ⚠ **Everything beyond that Mathlib
-quote is cited for EXISTENCE only — no other source here was read.** The notion is standard in model
+quote is cited for EXISTENCE only — no other source in this paragraph was read.** The notion is standard in model
 checking; *stutter equivalence* is commonly attributed to Browne, Clarke & Grumberg, TCS **59** (1988),
 and stuttering-insensitivity of specifications to Lamport (IFIP 1983), with a textbook treatment in
 Baier & Katoen, *Principles of Model Checking* (cited above for the trap state). **None of the three
