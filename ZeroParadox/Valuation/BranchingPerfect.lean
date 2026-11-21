@@ -6,7 +6,7 @@ import Mathlib.Topology.Connected.TotallyDisconnected
 import Mathlib.Tactic
 
 /-!
-# Infinite branching forces perfection: branch spaces with no isolated point
+# Nonempty discrete levels: the branch space is perfect iff infinitely many levels branch
 
 ## Engineer's Take
 
@@ -34,9 +34,10 @@ open Topology Filter Set
 /-- `Statement:` for nonempty discrete levels `β n`, the branch space `∀ n, β n` has no isolated point
 iff `{n | Nontrivial (β n)}` is infinite. The branching-to-perfect direction generalizes `boundary_perfect`
 (`ZeroParadox/Valuation/CompletenessCriticProbe.lean`); the converse uses `Nonempty` (third control).
-Standard for tree bodies: Bellaïche, arXiv:2407.21763, Prop. 4.23; cf. Foreman, arXiv:2110.08881, Prop. 14.
-Lean: `TauCeti.perfectSpace_pi` (TauCetiProject/TauCeti) proves the if-direction when every factor is
-nontrivial. -/
+`∀ n, β n` is the body of the full tree with `β n` offspring at level `n`; the iff is standard for tree
+bodies: Bellaïche, arXiv:2407.21763, Prop. 4.23; cf. Foreman, arXiv:2110.08881, Prop. 14.
+Lean: `TauCeti.perfectSpace_pi` (TauCetiProject/TauCeti) proves the if-direction for any infinite product
+of nontrivial spaces, without discreteness. -/
 theorem perfectSpace_pi_iff (β : ℕ → Type) [∀ n, TopologicalSpace (β n)]
     [∀ n, DiscreteTopology (β n)] [∀ n, Nonempty (β n)] :
     PerfectSpace (∀ n, β n) ↔ {n | Nontrivial (β n)}.Infinite := by
@@ -90,7 +91,7 @@ example : ¬ PerfectSpace (ℕ → Unit) := by
   have : {n : ℕ | Nontrivial Unit} = ∅ := eq_empty_of_forall_notMem fun _ h => not_nontrivial Unit h
   rw [this]; exact not_infinite.mpr finite_empty
 
--- Control `Statement:` branching that stops after level 3 is not perfect.
+-- Control `Statement:` branching only at levels 0, 1, 2 is not perfect.
 example : ¬ PerfectSpace (∀ n : ℕ, Fin (if n < 3 then 2 else 1)) := by
   have : ∀ n : ℕ, Nonempty (Fin (if n < 3 then 2 else 1)) := fun n => ⟨⟨0, by split <;> omega⟩⟩
   rw [perfectSpace_pi_iff]
