@@ -201,8 +201,12 @@ depends on the grouping chosen. Chalmers' § 3 objects that *"Putnam's system do
 kind of state-transition conditionals"*, a condition on what the system would do and not only on its
 actual run. His § 4 then concedes that *"Every physical system containing a clock and a dial will
 implement every inputless FSA"*, so *"Putnam's result is preserved in only a slightly weakened form"*.
-`carry` has that shape (the `ℕ` counter as his clock, the unchanging `Bool` as his dial), but his dial has
-*"an arbitrary number of different states"* and `carry`'s has two: a shared shape, not an instance.
+`carry` is a clock and a dial: it equals the interleaving pairing of a `Bool` dial that never steps with
+the `ℕ` successor clock (`dialClock_eq_carry`), and his § 4 Claim is formalized beside it, no novelty
+(`dialClockMap_surjective_iff`). His dial has *"an arbitrary number of different states"* and `carry`'s
+has two, which cannot cover three states that each step to themselves (`dialClockMap_control_bool_fin3`);
+one dial value per state always covers (`dialClockMap_id_surjective`). His same § 4 draws the moral that
+*"inputless FSAs are an inappropriate formalism"*, and `carry` takes no input.
 
 **Prior art — this is STUTTERING, and the standard name was one citation away.** A step with no
 observable effect is a *stutter step*; the induced equivalence is *stutter equivalence*. Mathlib's own
