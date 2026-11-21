@@ -244874,8 +244874,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 4510,
-        "files": 237
+        "declarations": 4556,
+        "files": 241
       },
       "entries": [
         {
@@ -411923,6 +411923,1708 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0e51e89b-0f06-42d6-943c-80e09d5dd364",
+          "new": {
+            "file": "ZeroParadox/Valuation/UltrametricView.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.zoom_range",
+            "short": "zoom_range"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/UltrametricView.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.zoom_range",
+            "short": "zoom_range",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Land four probes: UltrametricView (isosceles from a centre, doubling on Z_2, homogeneity), PadicBallWave (ball integrals of p-adic characters), DieBranches (branches of the tree_of_square word tree), PadicWavelet (character times ball indicator: mean zero, orthogonality, D^alpha eigenfunction) (2026-11-20).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "13736abe-1646-47bd-930d-0277a2f93942",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicBallWave.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.paChar_ball_integral_of_le",
+            "short": "paChar_ball_integral_of_le"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicBallWave.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.paChar_ball_integral_of_le",
+            "short": "paChar_ball_integral_of_le",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Land four probes: UltrametricView (isosceles from a centre, doubling on Z_2, homogeneity), PadicBallWave (ball integrals of p-adic characters), DieBranches (branches of the tree_of_square word tree), PadicWavelet (character times ball indicator: mean zero, orthogonality, D^alpha eigenfunction) (2026-11-20).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "29cdfa99-1e48-44cb-9b26-42acd8a6ae80",
+          "new": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.wordBranch_near",
+            "short": "wordBranch_near"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.wordBranch_near",
+            "short": "wordBranch_near",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land four probes: UltrametricView (isosceles from a centre, doubling on Z_2, homogeneity), PadicBallWave (ball integrals of p-adic characters), DieBranches (branches of the tree_of_square word tree), PadicWavelet (character times ball indicator: mean zero, orthogonality, D^alpha eigenfunction) (2026-11-20).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "29cf7d6d-4503-487e-be55-40bd66e987d8",
+          "new": {
+            "file": "ZeroParadox/Valuation/UltrametricView.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.xorWith_continuous",
+            "short": "xorWith_continuous"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/UltrametricView.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.xorWith_continuous",
+            "short": "xorWith_continuous",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Land four probes: UltrametricView (isosceles from a centre, doubling on Z_2, homogeneity), PadicBallWave (ball integrals of p-adic characters), DieBranches (branches of the tree_of_square word tree), PadicWavelet (character times ball indicator: mean zero, orthogonality, D^alpha eigenfunction) (2026-11-20).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "2da0fc67-1c90-4499-9ac6-16868fb217b7",
+          "new": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.tapePrefix_prefix_iff",
+            "short": "tapePrefix_prefix_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.tapePrefix_prefix_iff",
+            "short": "tapePrefix_prefix_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land four probes: UltrametricView (isosceles from a centre, doubling on Z_2, homogeneity), PadicBallWave (ball integrals of p-adic characters), DieBranches (branches of the tree_of_square word tree), PadicWavelet (character times ball indicator: mean zero, orthogonality, D^alpha eigenfunction) (2026-11-20).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "2e447cc5-3881-466b-a52a-03d1a0b2efb3",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicWavelet.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.kozWavelet_orthogonal",
+            "short": "kozWavelet_orthogonal"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicWavelet.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.kozWavelet_orthogonal",
+            "short": "kozWavelet_orthogonal",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land four probes: UltrametricView (isosceles from a centre, doubling on Z_2, homogeneity), PadicBallWave (ball integrals of p-adic characters), DieBranches (branches of the tree_of_square word tree), PadicWavelet (character times ball indicator: mean zero, orthogonality, D^alpha eigenfunction) (2026-11-20).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "38cd9284-173d-477d-844e-56a9a0e3bb74",
+          "new": {
+            "file": "ZeroParadox/Valuation/UltrametricView.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.homog_Z2",
+            "short": "homog_Z2"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/UltrametricView.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.homog_Z2",
+            "short": "homog_Z2",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land four probes: UltrametricView (isosceles from a centre, doubling on Z_2, homogeneity), PadicBallWave (ball integrals of p-adic characters), DieBranches (branches of the tree_of_square word tree), PadicWavelet (character times ball indicator: mean zero, orthogonality, D^alpha eigenfunction) (2026-11-20).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "3bf0e18e-78d8-4e04-8100-96b2155cf53f",
+          "new": {
+            "file": "ZeroParadox/Valuation/UltrametricView.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.xorHomeo_symm",
+            "short": "xorHomeo_symm"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/UltrametricView.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.xorHomeo_symm",
+            "short": "xorHomeo_symm",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Land four probes: UltrametricView (isosceles from a centre, doubling on Z_2, homogeneity), PadicBallWave (ball integrals of p-adic characters), DieBranches (branches of the tree_of_square word tree), PadicWavelet (character times ball indicator: mean zero, orthogonality, D^alpha eigenfunction) (2026-11-20).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "3de71328-ca1b-409c-b7b9-d2b3c01758ab",
+          "new": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.square_branches",
+            "short": "square_branches"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.square_branches",
+            "short": "square_branches",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land four probes: UltrametricView (isosceles from a centre, doubling on Z_2, homogeneity), PadicBallWave (ball integrals of p-adic characters), DieBranches (branches of the tree_of_square word tree), PadicWavelet (character times ball indicator: mean zero, orthogonality, D^alpha eigenfunction) (2026-11-20).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "3fad7d84-2bcd-4535-b47c-0c4a8db3d006",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicWavelet.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.kozWavelet_integral",
+            "short": "kozWavelet_integral"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicWavelet.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.kozWavelet_integral",
+            "short": "kozWavelet_integral",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Land four probes: UltrametricView (isosceles from a centre, doubling on Z_2, homogeneity), PadicBallWave (ball integrals of p-adic characters), DieBranches (branches of the tree_of_square word tree), PadicWavelet (character times ball indicator: mean zero, orthogonality, D^alpha eigenfunction) (2026-11-20).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "45ea27b1-f5d1-40dc-b7e4-0742cc922f3a",
+          "new": {
+            "file": "ZeroParadox/Valuation/UltrametricView.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.homog_cantor",
+            "short": "homog_cantor"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/UltrametricView.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.homog_cantor",
+            "short": "homog_cantor",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land four probes: UltrametricView (isosceles from a centre, doubling on Z_2, homogeneity), PadicBallWave (ball integrals of p-adic characters), DieBranches (branches of the tree_of_square word tree), PadicWavelet (character times ball indicator: mean zero, orthogonality, D^alpha eigenfunction) (2026-11-20).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "487f7b30-b1d2-4bdb-a0fd-3a509819d784",
+          "new": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.wordBranch_eq_of_agree",
+            "short": "wordBranch_eq_of_agree"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.wordBranch_eq_of_agree",
+            "short": "wordBranch_eq_of_agree",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land four probes: UltrametricView (isosceles from a centre, doubling on Z_2, homogeneity), PadicBallWave (ball integrals of p-adic characters), DieBranches (branches of the tree_of_square word tree), PadicWavelet (character times ball indicator: mean zero, orthogonality, D^alpha eigenfunction) (2026-11-20).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "4b8eb96b-2f7c-44cd-afca-f2141b607b96",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicBallWave.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.paChar_eq_one_of_norm_le",
+            "short": "paChar_eq_one_of_norm_le"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicBallWave.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.paChar_eq_one_of_norm_le",
+            "short": "paChar_eq_one_of_norm_le",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Land four probes: UltrametricView (isosceles from a centre, doubling on Z_2, homogeneity), PadicBallWave (ball integrals of p-adic characters), DieBranches (branches of the tree_of_square word tree), PadicWavelet (character times ball indicator: mean zero, orthogonality, D^alpha eigenfunction) (2026-11-20).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "4bba4118-445e-4ff0-ab2c-8b81f91bc346",
+          "new": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.wordBranch",
+            "short": "wordBranch"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.wordBranch",
+            "short": "wordBranch",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land four probes: UltrametricView (isosceles from a centre, doubling on Z_2, homogeneity), PadicBallWave (ball integrals of p-adic characters), DieBranches (branches of the tree_of_square word tree), PadicWavelet (character times ball indicator: mean zero, orthogonality, D^alpha eigenfunction) (2026-11-20).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "52a0bb57-95c4-43f3-8b52-e26b00b3b193",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicBallWave.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.paChar_ball_integral_tradeoff",
+            "short": "paChar_ball_integral_tradeoff"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicBallWave.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.paChar_ball_integral_tradeoff",
+            "short": "paChar_ball_integral_tradeoff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land four probes: UltrametricView (isosceles from a centre, doubling on Z_2, homogeneity), PadicBallWave (ball integrals of p-adic characters), DieBranches (branches of the tree_of_square word tree), PadicWavelet (character times ball indicator: mean zero, orthogonality, D^alpha eigenfunction) (2026-11-20).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "556264e5-4ae6-49f7-b957-9a5135a9f294",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicWavelet.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.self_mem_nodeBall",
+            "short": "self_mem_nodeBall"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicWavelet.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.self_mem_nodeBall",
+            "short": "self_mem_nodeBall",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Land four probes: UltrametricView (isosceles from a centre, doubling on Z_2, homogeneity), PadicBallWave (ball integrals of p-adic characters), DieBranches (branches of the tree_of_square word tree), PadicWavelet (character times ball indicator: mean zero, orthogonality, D^alpha eigenfunction) (2026-11-20).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "5fcb99f3-50e1-4de5-b051-fe387fed71a9",
+          "new": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.wordBranch_mono",
+            "short": "wordBranch_mono"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.wordBranch_mono",
+            "short": "wordBranch_mono",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land four probes: UltrametricView (isosceles from a centre, doubling on Z_2, homogeneity), PadicBallWave (ball integrals of p-adic characters), DieBranches (branches of the tree_of_square word tree), PadicWavelet (character times ball indicator: mean zero, orthogonality, D^alpha eigenfunction) (2026-11-20).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "63afa283-6432-4de3-b801-4582432cea3c",
+          "new": {
+            "file": "ZeroParadox/Valuation/UltrametricView.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fishbowl",
+            "short": "fishbowl"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/UltrametricView.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.fishbowl",
+            "short": "fishbowl",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land four probes: UltrametricView (isosceles from a centre, doubling on Z_2, homogeneity), PadicBallWave (ball integrals of p-adic characters), DieBranches (branches of the tree_of_square word tree), PadicWavelet (character times ball indicator: mean zero, orthogonality, D^alpha eigenfunction) (2026-11-20).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "6d9c97c0-cc5e-4125-b370-dee9da097470",
+          "new": {
+            "file": "ZeroParadox/Valuation/UltrametricView.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.xorWith_involutive",
+            "short": "xorWith_involutive"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/UltrametricView.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.xorWith_involutive",
+            "short": "xorWith_involutive",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Land four probes: UltrametricView (isosceles from a centre, doubling on Z_2, homogeneity), PadicBallWave (ball integrals of p-adic characters), DieBranches (branches of the tree_of_square word tree), PadicWavelet (character times ball indicator: mean zero, orthogonality, D^alpha eigenfunction) (2026-11-20).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "6faf199f-0eba-4e46-8ca9-f0c51f3aab7f",
+          "new": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.wordBranch_incomparable",
+            "short": "wordBranch_incomparable"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.wordBranch_incomparable",
+            "short": "wordBranch_incomparable",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land four probes: UltrametricView (isosceles from a centre, doubling on Z_2, homogeneity), PadicBallWave (ball integrals of p-adic characters), DieBranches (branches of the tree_of_square word tree), PadicWavelet (character times ball indicator: mean zero, orthogonality, D^alpha eigenfunction) (2026-11-20).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "7ca5d92d-86e5-4063-8527-e13c617104c8",
+          "new": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.wordBranch_le_iff",
+            "short": "wordBranch_le_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.wordBranch_le_iff",
+            "short": "wordBranch_le_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land four probes: UltrametricView (isosceles from a centre, doubling on Z_2, homogeneity), PadicBallWave (ball integrals of p-adic characters), DieBranches (branches of the tree_of_square word tree), PadicWavelet (character times ball indicator: mean zero, orthogonality, D^alpha eigenfunction) (2026-11-20).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "7da0f2bf-4acd-478f-bb30-18deb079f75e",
+          "new": {
+            "file": "ZeroParadox/Valuation/UltrametricView.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.xorWith",
+            "short": "xorWith"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/UltrametricView.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.xorWith",
+            "short": "xorWith",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Land four probes: UltrametricView (isosceles from a centre, doubling on Z_2, homogeneity), PadicBallWave (ball integrals of p-adic characters), DieBranches (branches of the tree_of_square word tree), PadicWavelet (character times ball indicator: mean zero, orthogonality, D^alpha eigenfunction) (2026-11-20).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "834325e9-6d35-4e15-85e5-aa07c98f7bad",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicWavelet.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.vladimirov_kozWavelet",
+            "short": "vladimirov_kozWavelet"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicWavelet.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.vladimirov_kozWavelet",
+            "short": "vladimirov_kozWavelet",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land four probes: UltrametricView (isosceles from a centre, doubling on Z_2, homogeneity), PadicBallWave (ball integrals of p-adic characters), DieBranches (branches of the tree_of_square word tree), PadicWavelet (character times ball indicator: mean zero, orthogonality, D^alpha eigenfunction) (2026-11-20).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "92e20905-cf88-4342-9287-f67c10e11ee6",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicWavelet.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.nodeBall_disjoint",
+            "short": "nodeBall_disjoint"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicWavelet.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.nodeBall_disjoint",
+            "short": "nodeBall_disjoint",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Land four probes: UltrametricView (isosceles from a centre, doubling on Z_2, homogeneity), PadicBallWave (ball integrals of p-adic characters), DieBranches (branches of the tree_of_square word tree), PadicWavelet (character times ball indicator: mean zero, orthogonality, D^alpha eigenfunction) (2026-11-20).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "9d36b140-2f36-4822-a09b-555d58d6e7b4",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicWavelet.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.char_vladIntegrand_integrable",
+            "short": "char_vladIntegrand_integrable"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicWavelet.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.char_vladIntegrand_integrable",
+            "short": "char_vladIntegrand_integrable",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Land four probes: UltrametricView (isosceles from a centre, doubling on Z_2, homogeneity), PadicBallWave (ball integrals of p-adic characters), DieBranches (branches of the tree_of_square word tree), PadicWavelet (character times ball indicator: mean zero, orthogonality, D^alpha eigenfunction) (2026-11-20).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a0fbf5e9-2217-40b3-a863-6fe6123da064",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicBallWave.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.paChar_trivial_ball_zero",
+            "short": "paChar_trivial_ball_zero"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicBallWave.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.paChar_trivial_ball_zero",
+            "short": "paChar_trivial_ball_zero",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Land four probes: UltrametricView (isosceles from a centre, doubling on Z_2, homogeneity), PadicBallWave (ball integrals of p-adic characters), DieBranches (branches of the tree_of_square word tree), PadicWavelet (character times ball indicator: mean zero, orthogonality, D^alpha eigenfunction) (2026-11-20).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a4672136-769f-466b-83d1-925fb994e5a5",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicWavelet.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.kozWavelet_integral_level_n",
+            "short": "kozWavelet_integral_level_n"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicWavelet.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.kozWavelet_integral_level_n",
+            "short": "kozWavelet_integral_level_n",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Land four probes: UltrametricView (isosceles from a centre, doubling on Z_2, homogeneity), PadicBallWave (ball integrals of p-adic characters), DieBranches (branches of the tree_of_square word tree), PadicWavelet (character times ball indicator: mean zero, orthogonality, D^alpha eigenfunction) (2026-11-20).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a88ee4e3-080b-4a13-a4fc-f999a0592a9b",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicWavelet.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.add_mem_nodeBall_iff",
+            "short": "add_mem_nodeBall_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicWavelet.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.add_mem_nodeBall_iff",
+            "short": "add_mem_nodeBall_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Land four probes: UltrametricView (isosceles from a centre, doubling on Z_2, homogeneity), PadicBallWave (ball integrals of p-adic characters), DieBranches (branches of the tree_of_square word tree), PadicWavelet (character times ball indicator: mean zero, orthogonality, D^alpha eigenfunction) (2026-11-20).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b575da11-2daa-4a36-b23b-b7c3cee3daf2",
+          "new": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.wordBranch_injective",
+            "short": "wordBranch_injective"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.wordBranch_injective",
+            "short": "wordBranch_injective",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land four probes: UltrametricView (isosceles from a centre, doubling on Z_2, homogeneity), PadicBallWave (ball integrals of p-adic characters), DieBranches (branches of the tree_of_square word tree), PadicWavelet (character times ball indicator: mean zero, orthogonality, D^alpha eigenfunction) (2026-11-20).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ba7423d6-470e-4dfd-a13e-a5eb84f4e8e9",
+          "new": {
+            "file": "ZeroParadox/Valuation/UltrametricView.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fishbowl_Z2_norm",
+            "short": "fishbowl_Z2_norm"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/UltrametricView.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.fishbowl_Z2_norm",
+            "short": "fishbowl_Z2_norm",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Land four probes: UltrametricView (isosceles from a centre, doubling on Z_2, homogeneity), PadicBallWave (ball integrals of p-adic characters), DieBranches (branches of the tree_of_square word tree), PadicWavelet (character times ball indicator: mean zero, orthogonality, D^alpha eigenfunction) (2026-11-20).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "bb37b1f3-90e2-4ca8-b5a8-7eb44fb1cc0c",
+          "new": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.tapePrefix",
+            "short": "tapePrefix"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.tapePrefix",
+            "short": "tapePrefix",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land four probes: UltrametricView (isosceles from a centre, doubling on Z_2, homogeneity), PadicBallWave (ball integrals of p-adic characters), DieBranches (branches of the tree_of_square word tree), PadicWavelet (character times ball indicator: mean zero, orthogonality, D^alpha eigenfunction) (2026-11-20).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "bc1256c8-b887-470b-bb6f-431dadf33d3c",
+          "new": {
+            "file": "ZeroParadox/Valuation/UltrametricView.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fishbowl_Z2_shell",
+            "short": "fishbowl_Z2_shell"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/UltrametricView.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.fishbowl_Z2_shell",
+            "short": "fishbowl_Z2_shell",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Land four probes: UltrametricView (isosceles from a centre, doubling on Z_2, homogeneity), PadicBallWave (ball integrals of p-adic characters), DieBranches (branches of the tree_of_square word tree), PadicWavelet (character times ball indicator: mean zero, orthogonality, D^alpha eigenfunction) (2026-11-20).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c58b67ce-0223-4423-b2b4-31e62518e9dc",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicWavelet.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.kozWavelet_integral_eq_zero",
+            "short": "kozWavelet_integral_eq_zero"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicWavelet.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.kozWavelet_integral_eq_zero",
+            "short": "kozWavelet_integral_eq_zero",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land four probes: UltrametricView (isosceles from a centre, doubling on Z_2, homogeneity), PadicBallWave (ball integrals of p-adic characters), DieBranches (branches of the tree_of_square word tree), PadicWavelet (character times ball indicator: mean zero, orthogonality, D^alpha eigenfunction) (2026-11-20).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c5e04048-e6f0-4649-9596-d792fc90855d",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicWavelet.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.norm_sub_eq_of_far",
+            "short": "norm_sub_eq_of_far"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicWavelet.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.norm_sub_eq_of_far",
+            "short": "norm_sub_eq_of_far",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Land four probes: UltrametricView (isosceles from a centre, doubling on Z_2, homogeneity), PadicBallWave (ball integrals of p-adic characters), DieBranches (branches of the tree_of_square word tree), PadicWavelet (character times ball indicator: mean zero, orthogonality, D^alpha eigenfunction) (2026-11-20).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d1cc931e-40e0-42eb-bd48-da9c8f058543",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicWavelet.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.nodeBall_measurableSet",
+            "short": "nodeBall_measurableSet"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicWavelet.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.nodeBall_measurableSet",
+            "short": "nodeBall_measurableSet",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Land four probes: UltrametricView (isosceles from a centre, doubling on Z_2, homogeneity), PadicBallWave (ball integrals of p-adic characters), DieBranches (branches of the tree_of_square word tree), PadicWavelet (character times ball indicator: mean zero, orthogonality, D^alpha eigenfunction) (2026-11-20).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d37dbee6-5a34-4944-8a36-ca38be35feae",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicWavelet.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.nodeBall",
+            "short": "nodeBall"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicWavelet.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.nodeBall",
+            "short": "nodeBall",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Land four probes: UltrametricView (isosceles from a centre, doubling on Z_2, homogeneity), PadicBallWave (ball integrals of p-adic characters), DieBranches (branches of the tree_of_square word tree), PadicWavelet (character times ball indicator: mean zero, orthogonality, D^alpha eigenfunction) (2026-11-20).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e17dce16-5e7b-4888-a176-f365eb07e27b",
+          "new": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.no_tree_subsingleton",
+            "short": "no_tree_subsingleton"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.no_tree_subsingleton",
+            "short": "no_tree_subsingleton",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land four probes: UltrametricView (isosceles from a centre, doubling on Z_2, homogeneity), PadicBallWave (ball integrals of p-adic characters), DieBranches (branches of the tree_of_square word tree), PadicWavelet (character times ball indicator: mean zero, orthogonality, D^alpha eigenfunction) (2026-11-20).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e49432a5-9094-474d-ad23-4e7560abf779",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicWavelet.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.kozWavelet_eq_zero_of_not_mem",
+            "short": "kozWavelet_eq_zero_of_not_mem"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicWavelet.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.kozWavelet_eq_zero_of_not_mem",
+            "short": "kozWavelet_eq_zero_of_not_mem",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Land four probes: UltrametricView (isosceles from a centre, doubling on Z_2, homogeneity), PadicBallWave (ball integrals of p-adic characters), DieBranches (branches of the tree_of_square word tree), PadicWavelet (character times ball indicator: mean zero, orthogonality, D^alpha eigenfunction) (2026-11-20).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e8716dc1-e84f-42f9-af77-ca5fa0fd3c3b",
+          "new": {
+            "file": "ZeroParadox/Valuation/UltrametricView.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.norm_two_Z2",
+            "short": "norm_two_Z2"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/UltrametricView.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.norm_two_Z2",
+            "short": "norm_two_Z2",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Land four probes: UltrametricView (isosceles from a centre, doubling on Z_2, homogeneity), PadicBallWave (ball integrals of p-adic characters), DieBranches (branches of the tree_of_square word tree), PadicWavelet (character times ball indicator: mean zero, orthogonality, D^alpha eigenfunction) (2026-11-20).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ea3b6b2c-364a-4484-b3ff-e24f54de9f67",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicWavelet.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.kozWavelet",
+            "short": "kozWavelet"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicWavelet.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.kozWavelet",
+            "short": "kozWavelet",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Land four probes: UltrametricView (isosceles from a centre, doubling on Z_2, homogeneity), PadicBallWave (ball integrals of p-adic characters), DieBranches (branches of the tree_of_square word tree), PadicWavelet (character times ball indicator: mean zero, orthogonality, D^alpha eigenfunction) (2026-11-20).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "edbb24fa-d51a-4fc6-b479-68b05aa481d0",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicWavelet.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.integral_char_vladIntegrand_lt",
+            "short": "integral_char_vladIntegrand_lt"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicWavelet.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.integral_char_vladIntegrand_lt",
+            "short": "integral_char_vladIntegrand_lt",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Land four probes: UltrametricView (isosceles from a centre, doubling on Z_2, homogeneity), PadicBallWave (ball integrals of p-adic characters), DieBranches (branches of the tree_of_square word tree), PadicWavelet (character times ball indicator: mean zero, orthogonality, D^alpha eigenfunction) (2026-11-20).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ee03093d-8a92-48d6-abb0-78e3ee64070f",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicWavelet.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.kozWavelet_of_mem",
+            "short": "kozWavelet_of_mem"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicWavelet.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.kozWavelet_of_mem",
+            "short": "kozWavelet_of_mem",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Land four probes: UltrametricView (isosceles from a centre, doubling on Z_2, homogeneity), PadicBallWave (ball integrals of p-adic characters), DieBranches (branches of the tree_of_square word tree), PadicWavelet (character times ball indicator: mean zero, orthogonality, D^alpha eigenfunction) (2026-11-20).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ef85ccc3-6825-4b08-907f-1d56024f3e1b",
+          "new": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.wordBranch_surj",
+            "short": "wordBranch_surj"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.wordBranch_surj",
+            "short": "wordBranch_surj",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Land four probes: UltrametricView (isosceles from a centre, doubling on Z_2, homogeneity), PadicBallWave (ball integrals of p-adic characters), DieBranches (branches of the tree_of_square word tree), PadicWavelet (character times ball indicator: mean zero, orthogonality, D^alpha eigenfunction) (2026-11-20).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f4d49468-77d3-4e01-90ee-96c759acc69f",
+          "new": {
+            "file": "ZeroParadox/Valuation/UltrametricView.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.zoom_dist",
+            "short": "zoom_dist"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/UltrametricView.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.zoom_dist",
+            "short": "zoom_dist",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Land four probes: UltrametricView (isosceles from a centre, doubling on Z_2, homogeneity), PadicBallWave (ball integrals of p-adic characters), DieBranches (branches of the tree_of_square word tree), PadicWavelet (character times ball indicator: mean zero, orthogonality, D^alpha eigenfunction) (2026-11-20).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f7b77429-dccd-4176-ad2c-747ee1af14d0",
+          "new": {
+            "file": "ZeroParadox/Valuation/UltrametricView.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.xorHomeo",
+            "short": "xorHomeo"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/UltrametricView.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.xorHomeo",
+            "short": "xorHomeo",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Land four probes: UltrametricView (isosceles from a centre, doubling on Z_2, homogeneity), PadicBallWave (ball integrals of p-adic characters), DieBranches (branches of the tree_of_square word tree), PadicWavelet (character times ball indicator: mean zero, orthogonality, D^alpha eigenfunction) (2026-11-20).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "fc617f9f-a4d7-486e-b675-923a30a4c45c",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicWavelet.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.kozWavelet_add",
+            "short": "kozWavelet_add"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicWavelet.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.kozWavelet_add",
+            "short": "kozWavelet_add",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Land four probes: UltrametricView (isosceles from a centre, doubling on Z_2, homogeneity), PadicBallWave (ball integrals of p-adic characters), DieBranches (branches of the tree_of_square word tree), PadicWavelet (character times ball indicator: mean zero, orthogonality, D^alpha eigenfunction) (2026-11-20).",
           "verify": {
             "axioms": null,
             "sorry_free": null
