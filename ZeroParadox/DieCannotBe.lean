@@ -58,6 +58,7 @@ import ZeroParadox.Information.SnapEpsilonZero
 import ZeroParadox.Information.TapeHalting
 import ZeroParadox.Information.PoleWithinEnsemble
 import ZeroParadox.Valuation.DoublingAndTree
+import ZeroParadox.Valuation.BranchingPerfect
 import ZeroParadox.State.DieProjection
 import ZeroParadox.State.QubitDie
 import ZeroParadox.State.FermiStepDie
@@ -5317,6 +5318,8 @@ example : ¬ ZeroParadox.Motion.unitMotion.Loop := fun ⟨_, _, _, _, hne, _⟩ 
 #check @ZeroParadox.Motion.tree_of_square     -- Statement: for any reflexive transitive `L` (no antisymmetry, no least element), a map `j` with `L (j p) (j q) ↔ L p.1 q.1 ∧ L p.2 q.2`, any root `r` with `L r (j (r, r))` and any `a` with `L r a` and not `L a r`: a map from `Bool` words, `[]` to `r`, along which `L` is the prefix order; one way
 -- Statement: `square_embed_forces_btree` is the order case of `Motion.tree_of_square` (the `example` in
 -- `ZeroParadox/Valuation/DoublingAndTree.lean` § IX).
+#check @ZeroParadox.perfectSpace_pi_iff         -- Statement: a product `∀ n, β n` of nonempty discrete levels is perfect iff infinitely many levels are nontrivial; both directions. Reading: no map from the word tree above to this branch space is stated
+#check @ZeroParadox.pi_crowded_and_cut          -- Statement: with infinitely many nontrivial levels, the branch space is perfect and no path from `[0,1]` joins two distinct points
 
 /-! ### § XXXII. T-H3's four conjuncts, each as a motion on its own carrier -/
 -- Reading: CARRIER — four carriers, each fit beside its control in `ZeroParadox/Multihomed/TH3Die.lean`;

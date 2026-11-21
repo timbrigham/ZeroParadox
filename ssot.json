@@ -244874,8 +244874,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 4504,
-        "files": 236
+        "declarations": 4510,
+        "files": 237
       },
       "entries": [
         {
@@ -245946,6 +245946,43 @@
           "verify": {
             "axioms": [],
             "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "01a692c2-e00d-49ec-b861-6ea9d5b6cd2d",
+          "new": {
+            "file": "ZeroParadox/Valuation/BranchingPerfect.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cantorSpace_lex_not_dense",
+            "short": "cantorSpace_lex_not_dense"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/BranchingPerfect.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cantorSpace_lex_not_dense",
+            "short": "cantorSpace_lex_not_dense",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land BranchingPerfect: a product of nonempty discrete levels is perfect iff infinitely many levels are nontrivial; crowded-and-cut on Cantor space and on Z_2 as separate theorems; lexicographic gaps (2026-11-20).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
           }
         },
         {
@@ -257727,6 +257764,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "1277efa9-bc49-4b5f-8a51-ae4b99c48964",
+          "new": {
+            "file": "ZeroParadox/Valuation/BranchingPerfect.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.pi_crowded_and_cut",
+            "short": "pi_crowded_and_cut"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/BranchingPerfect.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.pi_crowded_and_cut",
+            "short": "pi_crowded_and_cut",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land BranchingPerfect: a product of nonempty discrete levels is perfect iff infinitely many levels are nontrivial; crowded-and-cut on Cantor space and on Z_2 as separate theorems; lexicographic gaps (2026-11-20).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "127e9ae6-fcb9-4feb-8a6e-53abdc993c27",
           "new": {
@@ -262376,6 +262450,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "1a0229c3-a746-4a69-bc02-cfa400cb5605",
+          "new": {
+            "file": "ZeroParadox/Valuation/BranchingPerfect.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cantorSpace_crowded_and_cut",
+            "short": "cantorSpace_crowded_and_cut"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/BranchingPerfect.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cantorSpace_crowded_and_cut",
+            "short": "cantorSpace_crowded_and_cut",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land BranchingPerfect: a product of nonempty discrete levels is perfect iff infinitely many levels are nontrivial; crowded-and-cut on Cantor space and on Z_2 as separate theorems; lexicographic gaps (2026-11-20).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -316022,6 +316133,43 @@
             ]
           },
           "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "6f493d5c-8d52-4073-9a3b-fe495953b67f",
+          "new": {
+            "file": "ZeroParadox/Valuation/BranchingPerfect.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.padicInt_crowded_and_cut",
+            "short": "padicInt_crowded_and_cut"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/BranchingPerfect.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.padicInt_crowded_and_cut",
+            "short": "padicInt_crowded_and_cut",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land BranchingPerfect: a product of nonempty discrete levels is perfect iff infinitely many levels are nontrivial; crowded-and-cut on Cantor space and on Z_2 as separate theorems; lexicographic gaps (2026-11-20).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -402809,6 +402957,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "f27f51cf-47e2-49c1-a289-ed29aa45a5af",
+          "new": {
+            "file": "ZeroParadox/Valuation/BranchingPerfect.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.perfectSpace_pi_iff",
+            "short": "perfectSpace_pi_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/BranchingPerfect.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.perfectSpace_pi_iff",
+            "short": "perfectSpace_pi_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land BranchingPerfect: a product of nonempty discrete levels is perfect iff infinitely many levels are nontrivial; crowded-and-cut on Cantor space and on Z_2 as separate theorems; lexicographic gaps (2026-11-20).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "f28441ff-992f-4c94-8152-7d754c786aae",
           "new": {
             "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
@@ -405228,6 +405413,43 @@
             ]
           },
           "reason": "Typicality bridge (2026-11-01): CrossingTrials § IV-VII — almost surely gives some run; zero-block tests; typicality as an explicit hypothesis; the slot machine as a die motion.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f6771cec-dcb3-4214-b64d-96d8b41f2f4c",
+          "new": {
+            "file": "ZeroParadox/Valuation/BranchingPerfect.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cantorSpace_perfect",
+            "short": "cantorSpace_perfect"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/BranchingPerfect.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cantorSpace_perfect",
+            "short": "cantorSpace_perfect",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Land BranchingPerfect: a product of nonempty discrete levels is perfect iff infinitely many levels are nontrivial; crowded-and-cut on Cantor space and on Z_2 as separate theorems; lexicographic gaps (2026-11-20).",
           "verify": {
             "axioms": null,
             "sorry_free": null
