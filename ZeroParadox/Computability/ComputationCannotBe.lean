@@ -10,6 +10,7 @@ import ZeroParadox.Settheory.Wall
 import ZeroParadox.Information.Disjunctive
 import ZeroParadox.Information.TapeHalting
 import ZeroParadox.Computability.GapDecoder
+import ZeroParadox.Computability.Periodicity
 
 /-!
 # Machine-checked characterization index of COMPUTATION — what it can and cannot be
@@ -122,6 +123,11 @@ example (k : ℕ) : ZeroParadox.IsComputationalQuine (Nat.Partrec.Code.const k) 
 --   index-multiplicity is the Padding Lemma, which gives many indices for the SAME function —
 --   a different fact from this family, which is broad. Do not conflate them.
 #check @ZeroParadox.quine_period_is_goedel
+
+-- Statement: for every `N` some computational quine `c` has `N < encode c`,
+--   `eval c n = Part.some (n % encode c)` for every `n`, and no period `q` with `0 < q < encode c`
+--   (`ZeroParadox/Computability/Periodicity.lean`).
+#check @ZeroParadox.quine_mod_exists
 
 -- Statement: some code is both `SelfPrints` (channel `0` returns its own Gödel number) and
 --   `Universal` (channel `e + 1` agrees with the code numbered `e`).
@@ -391,6 +397,17 @@ example {σ : Type*} (f : σ → Option σ) {s t : σ} (h : f s = Option.none)
 --   whether the occupant of the framework's ⊥ role, ⊥ of a `ZPSemilattice`, read as a configuration
 --   of a step function `f : σ → Option σ` (§ VI), self-loops — that is the commitment.
 #check @ZeroParadox.loop_unfolds_to_infinity
+
+-- Statement: `wfPart` of `stepCoalg f` is `{s | (StateTransition.eval f s).Dom}`.
+#check @ZeroParadox.wfPart_stepCoalg_eq_eval_dom
+
+-- Statement: `s ∉ wfPart (stepCoalg f)` iff `Cofix.corec (stepCoalg f) s = natInfinity`; both
+--   directions, with no self-loop assumed.
+#check @ZeroParadox.not_mem_wfPart_iff_unfolds_to_infinity
+
+-- Statement: at the clock machine, as a predicate of the code `c`, `(c, n, 0) ∈ wfPart (stepCoalg
+--   clockStep)` is `REPred`, is not a `ComputablePred`, and its negation is not `REPred`.
+#check @ZeroParadox.clock_wfPart_re_not_computable
 
 -- Statement: with a three-valued head there IS a configuration neither halted nor stepping.
 --   `TriStep` is a deliberate counter-model and must never be used as a framework object.

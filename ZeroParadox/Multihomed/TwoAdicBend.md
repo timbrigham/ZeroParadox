@@ -102,7 +102,7 @@ Axiom footprints: the `PurityCheck` section at the end of `TwoAdicBend.lean`.
   conjugate to f_{1/p^k,0}, where ‖a‖_p = p^k". In the proof's Case 1 (`a = 1/p`, p. 16, (21)–(22))
   the conjugacy `h` with `f_{1/p} ∘ h = h ∘ g`, between the `a = 1/p` map and its perturbation
   `g = f_a + ψ`, is defined digit by digit, `h_i(x) = (g^i(x))_0`. This file proves `dTwist` norm-preserving
-  (`dTwist_norm`).
+  (`dTwist_norm`) and an isometry (`dTwist_isometry`).
 - The bi-Lipschitz level: `Motion.scale24_not_lip` (`ZeroParadox/DieSameness.lean`) separates `×2`
   and `×4` on ℝ (a `HomeoIso`, no `LipIso`); its docstring cites the p-adic counterpart in
   Jenkins–Spallone. No `LipIso` statement is made here; `dTwist_mult_valuation` records that the twist keeps the

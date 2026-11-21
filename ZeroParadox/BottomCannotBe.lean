@@ -64,6 +64,7 @@ import ZeroParadox.Valuation.PadicStillPoint
 import ZeroParadox.Valuation.UltrametricView
 import ZeroParadox.Valuation.PadicWavelet
 import ZeroParadox.Information.BottomTotality
+import ZeroParadox.Valuation.PadicKoopmanVladimirov
 import Mathlib.RingTheory.Valuation.PrimeMultiplicity
 import Mathlib.Order.FixedPoints
 import Mathlib.SetTheory.Ordinal.FixedPoint
@@ -666,6 +667,12 @@ noncomputable example : Ordinal.{0} →o Ordinal.{0} :=
 -- to `nodeBall j a` to the level-`n` eigenvalue `vladLam p α n` times itself, pointwise on ℤ_[p]
 -- (`ZeroParadox/Valuation/PadicWavelet.lean`).
 #check @ZeroParadox.vladimirov_kozWavelet
+-- Statement: an isometry `T` of ℤ_[p] is measure-preserving for `haarZp`
+-- (`ZeroParadox/Valuation/PadicKoopmanVladimirov.lean`).
+#check @ZeroParadox.isometry_measurePreserving
+-- Statement: for every isometry `T` of ℤ_[p], `vladimirov α (f ∘ T) = (vladimirov α f) ∘ T` as
+-- functions.
+#check @ZeroParadox.vladimirov_isometry_commute
 
 /-! ### ⊥ of `End` — one tape read as depth and as width, and the one-way flow -/
 
@@ -705,6 +712,14 @@ noncomputable example : Ordinal.{0} →o Ordinal.{0} :=
 -- Statement: `endVal x = waitENat (det (tapeIso x))`, the first `true` on the digit tape, in `ℕ∞`.
 -- Reading: depth and width are one tape read two ways, not two separate facts.
 #check @ZeroParadox.endVal_eq_wait
+-- Statement: `padicEndHomeo (2 * x) = boundaryDouble (padicEndHomeo x)`, for the homeomorphism
+-- `padicEndHomeo : ℤ_[2] ≃ₜ End` (`ZeroParadox/Valuation/DepthIsWait.lean`).
+#check @ZeroParadox.padicEndHomeo_semiconj
+-- Statement: `endVal (padicEndHomeo x) = q2Val x`.
+#check @ZeroParadox.endVal_padicEndHomeo
+-- Statement: the Haar mass of `padicTape ⁻¹' {w | det w = ofNat n}` in ℤ_[2] equals the `trials 2⁻¹`
+-- mass of `{w | det w = ofNat n}` (`ZeroParadox/Information/PoleWithinEnsemble.lean`).
+#check @ZeroParadox.haarZp_padicTape_det_eq_trials
 -- Statement: ⊥ of `End` goes to ⊥ of `ℕ → Bool`, waiting time ⊤ of `NInf`, depth ⊤ of `ℕ∞`.
 -- Statement: ⊤ of `End` goes to ⊤ of `ℕ → Bool`, waiting time ⊥ of `NInf`, depth `0`.
 #check @ZeroParadox.depth_wait_poles

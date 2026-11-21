@@ -71,6 +71,7 @@ import ZeroParadox.Multihomed.LimitMotion
 import ZeroParadox.Multihomed.BendDie
 import ZeroParadox.Multihomed.TwoAdicBend
 import ZeroParadox.DieSameness
+import ZeroParadox.Computability.GapDecoder
 
 set_option maxHeartbeats 400000
 
@@ -483,7 +484,8 @@ example : ∃ M : ZeroParadox.Motion ℕ, (∀ n, M.up n = if n % 2 = 0 then Par
 #check @ZeroParadox.Motion.not_overToUndefined_of_upTotal -- Statement: non-members: every total motion
 -- Reading: two corpus usages sit beside this name, and neither is claimed here: divergence read as the
 -- infinite pole (`ZeroParadox/Computability/Occurrence.lean`'s overview; `wfPart_stepCoalg`'s
--- `Reading:` in `ZeroParadox/Computability/GroundZero.lean`, conjectural), and
+-- `Reading:` in `ZeroParadox/Computability/GroundZero.lean`, over `wfPart_stepCoalg_eq_eval_dom` and
+-- `not_mem_wfPart_iff_unfolds_to_infinity`), and
 -- `ZeroParadox/Computability/Occurrence.lean` § IV-c's two-element pole {halted, loops-in-place}.
 -- Statement: on an empty carrier the seven premises below, each asking for a point of it, fail ...
 example {α : Type} [IsEmpty α] (M : ZeroParadox.Motion α) :
@@ -5161,6 +5163,7 @@ example : (∀ n, ZeroParadox.slotRun (fun _ => false) n = false) ∧
 #check @ZeroParadox.trials_bot_null            -- Statement: if `0 < p`, `{⊥}` of `ℕ → Bool` is `trials p hp`-null. Reading: almost surely, not surely: the only non-firing tape is ⊥ of `ℕ → Bool` (the CONTROL after it in the home file)
 #check @ZeroParadox.bot_mem_support_iff        -- Statement: ⊥ of `ℕ → Bool` is in the support of `trials p hp` iff `p < 1`; both directions. Reading: COINCIDENCE for `0 < p < 1`: null and in the support at once; null is not absent
 #check @ZeroParadox.bot_not_MLRandom           -- Statement: if `0 < p`, ⊥ of `ℕ → Bool` is not Martin-Löf random for `trials p hp`
+#check @ZeroParadox.gapDecode_and_halts_of_MLRandom -- Statement: if `0 < p`, every tape `w` Martin-Löf random for `trials p hp` has `gapDecode w = some c` for some code `c`, and `toComp (det w)` terminates; no `p < 1` (`ZeroParadox/Computability/GapDecoder.lean`)
 #check @ZeroParadox.dense_MLRandom             -- Statement: if `0 < p < 1`, the Martin-Löf random tapes for `trials p hp` are dense. Reading: dense, not every: ⊥ of `ℕ → Bool` is a limit of them and not one of them
 #check @ZeroParadox.pole_within_ensemble_limit -- Statement: if `0 < p < 1`, random firing tapes with halting runs approach ⊥ of `ℕ → Bool` pointwise, `det` passing every `ofNat N`, and ⊥'s run does not halt. Reading: no map from ⊥ of a `ZPSemilattice` to this tape or to `trials p hp` is claimed (`mlRandom_and_snap_ae`)
 #check @ZeroParadox.bot_support_three          -- Statement: the support of `trials p hp` is `{⊥}` of `ℕ → Bool` at `p = 0`, all of `ℕ → Bool` for `0 < p < 1`, and `{⊤}` at `p = 1`
@@ -5398,6 +5401,7 @@ example : ¬ ZeroParadox.Motion.unitMotion.Loop := fun ⟨_, _, _, _, hne, _⟩ 
 #check @ZeroParadox.Motion.stillMotion_line_interval_homeo_not_lip -- Statement: CONTROL — `ℝ` and `(-1, 1)` with identity UP and no step: a `HomeoIso`, no `LipIso`
 #check @ZeroParadox.Motion.scale24_not_lip     -- Statement: CONTROL — steps `x ↦ 2x` and `x ↦ 4x` on `ℝ`: a `HomeoIso` (by `x ↦ x * |x|`), no `LipIso`
 #check @ZeroParadox.lmHomeoIsoOfConj           -- Statement: `lmIsoOfConj` at the `HomeoIso` level; its `toStrictIso` is `lmIsoOfConj` by `rfl` (`lmHomeoIsoOfConj_toStrictIso`)
+#check @ZeroParadox.padicEndHomeo              -- Statement: a homeomorphism `ℤ_[2] ≃ₜ End`, `x ↦ tapeIso.symm (padicTape x)`; it sends `2 * x` to `boundaryDouble` of the image (`padicEndHomeo_semiconj`, `ZeroParadox/Valuation/DepthIsWait.lean`). Reading: the homeomorphic level for doubling on ℤ_[2] and `boundaryDouble` on `End`, typed as a `Homeomorph` with `Function.Semiconj`, not as a `Motion.HomeoIso`
 #check @ZeroParadox.bendFiveIso                -- Statement: stated at the `StrictIso` level (§ XXXVI)
 
 /-! ### § XXXVIII. The 2-adic bend: multiplier maps on `OnePoint ℚ_[2]` up to topological conjugacy -/
