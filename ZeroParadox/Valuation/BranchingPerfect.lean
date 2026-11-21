@@ -1,4 +1,4 @@
--- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): branch spaces of discrete levels are perfect exactly when infinitely many levels branch. Curated results indexed in ZeroParadox/MANIFEST.md.
+-- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): branch spaces of nonempty discrete levels are perfect exactly when infinitely many levels branch. Curated results indexed in ZeroParadox/MANIFEST.md.
 import ZeroParadox.Valuation.BranchingSnapChain
 import ZeroParadox.Valuation.PadicPerfect
 import Mathlib.Topology.Perfect
@@ -6,7 +6,7 @@ import Mathlib.Topology.Connected.TotallyDisconnected
 import Mathlib.Tactic
 
 /-!
-# Branching forces perfection: branch spaces with no isolated point
+# Infinite branching forces perfection: branch spaces with no isolated point
 
 ## Engineer's Take
 
@@ -18,8 +18,9 @@ defer to my AI assistant regarding the specifics of how the internals work.
 ---
 
 ## Formal Overview (AI-assisted)
-`Statement:` CARRIER — perfection paired with total disconnectedness on `ℕ → Bool` and, separately,
-on `ℤ_[2]`; no map between the two carriers is stated.
+`Statement:` CARRIER — a product of nonempty discrete levels is perfect iff infinitely many levels branch
+(`perfectSpace_pi_iff`); on `ℕ → Bool` and, separately, on `ℤ_[2]`, perfection together with no path
+joining distinct points; no map between the two carriers is stated.
 -/
 
 set_option maxHeartbeats 400000
@@ -32,7 +33,10 @@ open Topology Filter Set
 
 /-- `Statement:` for nonempty discrete levels `β n`, the branch space `∀ n, β n` has no isolated point
 iff `{n | Nontrivial (β n)}` is infinite. The branching-to-perfect direction generalizes `boundary_perfect`
-(`ZeroParadox/Valuation/CompletenessCriticProbe.lean`); the converse uses `Nonempty` (third control). -/
+(`ZeroParadox/Valuation/CompletenessCriticProbe.lean`); the converse uses `Nonempty` (third control).
+Standard for tree bodies: Bellaïche, arXiv:2407.21763, Prop. 4.23; cf. Foreman, arXiv:2110.08881, Prop. 14.
+Lean: `TauCeti.perfectSpace_pi` (TauCetiProject/TauCeti) proves the if-direction when every factor is
+nontrivial. -/
 theorem perfectSpace_pi_iff (β : ℕ → Type) [∀ n, TopologicalSpace (β n)]
     [∀ n, DiscreteTopology (β n)] [∀ n, Nonempty (β n)] :
     PerfectSpace (∀ n, β n) ↔ {n | Nontrivial (β n)}.Infinite := by
@@ -132,8 +136,8 @@ theorem padicInt_crowded_and_cut :
 
 /-! ### § III. The order chart: gaps between branches -/
 
-/-- `Statement:` the lexicographic order on `ℕ → Bool` is not dense: `0111…` and `1000…` have nothing
-strictly between them. -/
+/-- `Statement:` the lexicographic order on `ℕ → Bool` is not densely ordered; the proof's witnesses are
+`0111…` and `1000…`. -/
 theorem cantorSpace_lex_not_dense : ¬ DenselyOrdered (Lex (ℕ → Bool)) := by
   intro hd
   let a : ℕ → Bool := fun n => decide (n ≠ 0)
