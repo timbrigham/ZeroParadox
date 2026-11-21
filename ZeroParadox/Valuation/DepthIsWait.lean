@@ -1,6 +1,8 @@
 -- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the depth `endVal` on `End` as the first hitting time `det` of its digit tape, read in `ℕ∞`. Curated results indexed in ZeroParadox/MANIFEST.md.
 import ZeroParadox.Category.IgnoranceSeam
 import ZeroParadox.Valuation.CellsJoint
+import ZeroParadox.Valuation.Scale
+import Mathlib.NumberTheory.Padics.ProperSpace
 import Mathlib.Tactic
 
 /-!
@@ -201,9 +203,204 @@ example : waitENat (det (fun n => decide (botEnd n = 0))) ≠ endVal botEnd := b
   rw [waitENat_ofNat]
   exact ENat.natCast_ne_top 0
 
+/-! ### § V. ℤ_[2] through the digit tape
+`Reading:` a cited formalization, no novelty: the digit map conjugates the `2`-adic shift to the left
+shift and is a topological isomorphism (Kingsbery–Levin–Preygel–Silva, arXiv:math/0701899, Example 3.3);
+closest formal prior art, the set-level `WittVector.equiv` with `WittVector.verschiebung_frobenius`.
+PROVED here: the commuting square (`padicEndHomeo_semiconj`), continuity and bijectivity
+(`padicEndHomeo`), and the valuation match (`endVal_padicEndHomeo`). -/
+
+section PadicEnd
+open PadicInt
+
+/-- `Statement:` for `x : ℤ_[2]`, `q2Val x = waitENat (det (padicTape x))`; 0 of ℤ_[2] goes to ⊤ of
+    `ℕ∞`. The `det` form without `waitENat`: `det_padicTape_eq_infty_iff`,
+    `det_padicTape_eq_ofNat_valuation`. -/
+theorem q2Val_eq_wait_padicTape (x : ℤ_[2]) : q2Val x = waitENat (det (padicTape x)) := by
+  by_cases hx : x = 0
+  · subst hx
+    rw [q2Val_bot, (det_padicTape_eq_infty_iff 0).2 rfl]
+    exact (waitENat.map_top).symm
+  · rw [det_padicTape_eq_ofNat_valuation x hx, waitENat_ofNat]
+    simp [q2Val, hx]
+
+/-- `Statement:` `q2Val x = endVal (tapeIso.symm (padicTape x))`. -/
+theorem q2Val_eq_endVal_padicTape (x : ℤ_[2]) :
+    q2Val x = endVal (tapeIso.symm (padicTape x)) := by
+  rw [endVal_eq_wait, OrderIso.apply_symm_apply, q2Val_eq_wait_padicTape]
+
+/-- `Statement:` `(2 * x).appr (k + 1) = 2 * x.appr k`. -/
+theorem appr_two_mul_succ (x : ℤ_[2]) (k : ℕ) : (2 * x).appr (k + 1) = 2 * x.appr k := by
+  apply appr_two_eq_of _ _ _ (by have := appr_lt x k; rw [pow_succ]; omega)
+  obtain ⟨c, hc⟩ := Ideal.mem_span_singleton.1 (appr_spec k x)
+  refine ⟨c, ?_⟩
+  push_cast at hc ⊢
+  rw [pow_succ]
+  linear_combination 2 * hc
+
+/-- `Statement:` doubling on ℤ_[2] is prepend-`false` on digit tapes. -/
+theorem padicTape_two_mul (x : ℤ_[2]) : padicTape (2 * x) = tapeCons false (padicTape x) := by
+  funext n
+  cases n with
+  | zero =>
+    have h0 : (2 * x).appr 0 = 0 := by simp [PadicInt.appr]
+    have h1 : (2 * x).appr (0 + 1) = 0 := by rw [appr_two_mul_succ]; simp [PadicInt.appr]
+    simp only [padicTape, tapeCons, h0, h1]; simp
+  | succ k =>
+    simp only [padicTape, tapeCons, appr_two_mul_succ]
+    simp
+
+/-- `Statement:` if `2 ^ n ∣ x - y` then `x.appr n = y.appr n`. -/
+theorem appr_two_eq_of_dvd {x y : ℤ_[2]} {n : ℕ} (h : (2 : ℤ_[2]) ^ n ∣ x - y) :
+    x.appr n = y.appr n := by
+  apply appr_two_eq_of _ _ _ (appr_lt y n)
+  have hs := Ideal.mem_span_singleton.1 (appr_spec n y)
+  have := dvd_add h hs
+  convert this using 1; ring
+
+/-- `Statement:` `x.appr (k + 1)` is `x.appr k` plus `2 ^ k` when digit `k` is `true`. -/
+theorem appr_two_succ (x : ℤ_[2]) (k : ℕ) :
+    x.appr (k + 1) = x.appr k + if padicTape x k then 2 ^ k else 0 := by
+  set b := x.appr (k + 1) with hb
+  have hbl : b < 2 ^ (k + 1) := by simpa using appr_lt x (k + 1)
+  have hmod : x.appr k = b % 2 ^ k := by
+    apply appr_two_eq_of _ _ _ (Nat.mod_lt _ (by positivity))
+    have hs := Ideal.mem_span_singleton.1 (appr_spec (k + 1) x)
+    have h1 : (2 : ℤ_[2]) ^ k ∣ x - (b : ℤ_[2]) :=
+      (pow_dvd_pow 2 (Nat.le_succ k)).trans (by simpa using hs)
+    have h2 : (2 : ℤ_[2]) ^ k ∣ ((b : ℕ) : ℤ_[2]) - ((b % 2 ^ k : ℕ) : ℤ_[2]) := by
+      refine ⟨((b / 2 ^ k : ℕ) : ℤ_[2]), ?_⟩
+      have := Nat.div_add_mod b (2 ^ k)
+      have h3 : ((b : ℕ) : ℤ_[2]) =
+          2 ^ k * ((b / 2 ^ k : ℕ) : ℤ_[2]) + ((b % 2 ^ k : ℕ) : ℤ_[2]) := by
+        conv_lhs => rw [← this]
+        push_cast; ring
+      rw [h3]; ring
+    have := dvd_add h1 h2
+    convert this using 1; ring
+  have hq : b / 2 ^ k < 2 := Nat.div_lt_of_lt_mul (by rwa [pow_succ] at hbl)
+  have hdm := Nat.div_add_mod b (2 ^ k)
+  have hpos : 0 < 2 ^ k := by positivity
+  generalize b / 2 ^ k = q at hq hdm
+  rcases (by omega : q = 0 ∨ q = 1) with h | h
+  · have hbe : b = x.appr k := by rw [hmod]; rw [h] at hdm; omega
+    have : padicTape x k = false := by simp [padicTape, ← hb, hbe]
+    rw [this]; simp [hbe]
+  · have hbe : b = x.appr k + 2 ^ k := by rw [hmod]; rw [h] at hdm; omega
+    have : padicTape x k = true := by simp [padicTape, ← hb, hbe]
+    rw [this]; simp [hbe]
+
+/-- `Statement:` `padicTape` is injective. -/
+theorem padicTape_injective : Function.Injective padicTape := by
+  intro x y h
+  have ha : ∀ n, x.appr n = y.appr n := by
+    intro n
+    induction n with
+    | zero => simp [PadicInt.appr]
+    | succ n ih => rw [appr_two_succ, appr_two_succ, ih, h]
+  rw [← sub_eq_zero, ← two_pow_dvd_forall_iff]
+  intro n
+  have hx := Ideal.mem_span_singleton.1 (appr_spec n x)
+  have hy := Ideal.mem_span_singleton.1 (appr_spec n y)
+  have := dvd_sub hx hy
+  rw [ha n] at this
+  convert this using 1; ring
+
+/-- `Statement:` `padicTape` is surjective: every tape is the digit tape of the limit of its partial
+    sums. -/
+theorem padicTape_surjective : Function.Surjective padicTape := by
+  intro r
+  let S : ℕ → ℕ := fun n => ∑ k ∈ Finset.range n, if r k then 2 ^ k else 0
+  have hS : ∀ n, S (n + 1) = S n + if r n then 2 ^ n else 0 := fun n => Finset.sum_range_succ _ _
+  have hSlt : ∀ n, S n < 2 ^ n := by
+    intro n
+    induction n with
+    | zero => simp [S]
+    | succ n ih => rw [hS, pow_succ]; split_ifs <;> omega
+  have hSdvd : ∀ n m, n ≤ m → (2 : ℤ_[2]) ^ n ∣ ((S m : ℕ) : ℤ_[2]) - ((S n : ℕ) : ℤ_[2]) := by
+    intro n m hnm
+    induction m, hnm using Nat.le_induction with
+    | base => simp
+    | succ m hnm ih =>
+      have h2 : (2 : ℤ_[2]) ^ n ∣ (((if r m then 2 ^ m else 0 : ℕ)) : ℤ_[2]) := by
+        split_ifs
+        · push_cast; exact pow_dvd_pow 2 hnm
+        · simp
+      rw [hS, Nat.cast_add]
+      convert dvd_add ih h2 using 1; ring
+  let s : ℕ → ℤ_[2] := fun n => ((S n : ℕ) : ℤ_[2])
+  have hnorm : ∀ n m, n ≤ m → dist (s m) (s n) ≤ ((2 : ℕ) : ℝ) ^ (-(n : ℤ)) := by
+    intro n m h
+    rw [dist_eq_norm]
+    exact (norm_le_pow_iff_mem_span_pow _ n).2
+      (Ideal.mem_span_singleton.2 (by simpa using hSdvd n m h))
+  have hcau : CauchySeq s := by
+    refine Metric.cauchySeq_iff'.2 fun ε hε => ?_
+    obtain ⟨N, hN⟩ := exists_pow_lt_of_lt_one hε (by norm_num : (1 / 2 : ℝ) < 1)
+    refine ⟨N, fun n hn => lt_of_le_of_lt (hnorm N n hn) ?_⟩
+    simpa [zpow_neg, one_div, inv_pow] using hN
+  obtain ⟨x, hx⟩ := cauchySeq_tendsto_of_complete hcau
+  have hxn : ∀ n, dist x (s n) ≤ ((2 : ℕ) : ℝ) ^ (-(n : ℤ)) := fun n =>
+    Metric.isClosed_closedBall.mem_of_tendsto hx
+      (Filter.eventually_atTop.2 ⟨n, fun m hm => Metric.mem_closedBall.2 (hnorm n m hm)⟩)
+  have happr : ∀ n, x.appr n = S n := fun n => by
+    apply appr_two_eq_of x n (S n) (hSlt n)
+    have := (norm_le_pow_iff_mem_span_pow (x - s n) n).1 (by rw [← dist_eq_norm]; exact hxn n)
+    simpa using Ideal.mem_span_singleton.1 this
+  refine ⟨x, funext fun k => ?_⟩
+  simp only [padicTape, happr, hS]
+  cases r k <;> simp
+
+/-- `Statement:` `padicTape` is continuous: digit `k` is constant on balls of radius `2 ^ (-(k + 1))`. -/
+theorem continuous_padicTape : Continuous padicTape := by
+  refine continuous_pi fun k => continuous_iff_continuousAt.2 fun x => ?_
+  refine tendsto_nhds_of_eventually_eq ?_
+  have hε : (0 : ℝ) < ((2 : ℕ) : ℝ) ^ (-((k + 1 : ℕ) : ℤ)) := by positivity
+  filter_upwards [Metric.ball_mem_nhds x hε] with y hy
+  have h := (norm_le_pow_iff_mem_span_pow (y - x) (k + 1)).1
+    (by rw [← dist_eq_norm]; exact (Metric.mem_ball.1 hy).le)
+  have hd : (2 : ℤ_[2]) ^ (k + 1) ∣ y - x := by simpa using Ideal.mem_span_singleton.1 h
+  simp only [padicTape, appr_two_eq_of_dvd hd,
+    appr_two_eq_of_dvd ((pow_dvd_pow 2 (Nat.le_succ k)).trans hd)]
+
+/-- `Statement:` `padicTape` as a homeomorphism `ℤ_[2] ≃ₜ (ℕ → Bool)` (Mathlib
+    `Continuous.homeoOfEquivCompactToT2`). -/
+noncomputable def padicTapeHomeo : ℤ_[2] ≃ₜ (ℕ → Bool) :=
+  (show Continuous (Equiv.ofBijective padicTape ⟨padicTape_injective, padicTape_surjective⟩) from
+    continuous_padicTape).homeoOfEquivCompactToT2
+
+/-- `Statement:` `padicTapeHomeo x = padicTape x`. -/
+theorem padicTapeHomeo_apply (x : ℤ_[2]) : padicTapeHomeo x = padicTape x := rfl
+
+/-- `Statement:` `tapeIso.symm : (ℕ → Bool) → End` is continuous. -/
+theorem continuous_tapeIso_symm : Continuous (tapeIso.symm : (ℕ → Bool) → End) :=
+  continuous_pi fun n =>
+    (continuous_of_discreteTopology.comp (continuous_apply n) :
+      Continuous ((fun b : Bool => digitBool.symm b) ∘ fun r : ℕ → Bool => r n)).congr fun _ => rfl
+
+/-- `Statement:` `x ↦ tapeIso.symm (padicTape x)` as a homeomorphism `ℤ_[2] ≃ₜ End`. -/
+noncomputable def padicEndHomeo : ℤ_[2] ≃ₜ End :=
+  (show Continuous ((Equiv.ofBijective padicTape ⟨padicTape_injective, padicTape_surjective⟩).trans
+      tapeIso.symm.toEquiv) from continuous_tapeIso_symm.comp continuous_padicTape).homeoOfEquivCompactToT2
+
+/-- `Statement:` `padicEndHomeo x = tapeIso.symm (padicTape x)`. -/
+theorem padicEndHomeo_apply (x : ℤ_[2]) : padicEndHomeo x = tapeIso.symm (padicTape x) := rfl
+
+/-- `Statement:` the commuting square: `padicEndHomeo (2 * x) = boundaryDouble (padicEndHomeo x)`. -/
+theorem padicEndHomeo_semiconj :
+    Function.Semiconj padicEndHomeo (fun x : ℤ_[2] => 2 * x) boundaryDouble := fun x => by
+  show tapeIso.symm (padicTape (2 * x)) = boundaryDouble (tapeIso.symm (padicTape x))
+  rw [OrderIso.symm_apply_eq, tapeIso_boundaryDouble, OrderIso.apply_symm_apply, padicTape_two_mul]
+
+/-- `Statement:` `endVal (padicEndHomeo x) = q2Val x`. -/
+theorem endVal_padicEndHomeo (x : ℤ_[2]) : endVal (padicEndHomeo x) = q2Val x :=
+  (q2Val_eq_endVal_padicTape x).symm
+
+end PadicEnd
+
 -- Statement: axioms (PurityCheck), `digitBool`, `tapeIso`, `tapeIso_boundaryDouble`, `det_tapeCons_false`
 --   `[propext, Quot.sound]`; the rest add `Classical.choice`, via `endVal` (an `sInf` in `ℕ∞`) and
---   `waitENat` (any `NInf ≃o ℕ∞` gives LPO, `NInf.lpo_of_enatIso`).
+--   `waitENat` (any `NInf ≃o ℕ∞` gives LPO, `NInf.lpo_of_enatIso`), and in § V via `PadicInt.appr`.
 
 end ZeroParadox
 
@@ -229,4 +426,20 @@ open ZeroParadox
 #print axioms endVal_gi
 #print axioms endVal_no_lower_adjoint
 #print axioms endVal_not_injective
+#print axioms q2Val_eq_wait_padicTape
+#print axioms q2Val_eq_endVal_padicTape
+#print axioms appr_two_mul_succ
+#print axioms padicTape_two_mul
+#print axioms appr_two_eq_of_dvd
+#print axioms appr_two_succ
+#print axioms padicTape_injective
+#print axioms padicTape_surjective
+#print axioms continuous_padicTape
+#print axioms padicTapeHomeo
+#print axioms padicTapeHomeo_apply
+#print axioms continuous_tapeIso_symm
+#print axioms padicEndHomeo
+#print axioms padicEndHomeo_apply
+#print axioms padicEndHomeo_semiconj
+#print axioms endVal_padicEndHomeo
 end PurityCheck

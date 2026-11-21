@@ -47,10 +47,10 @@ the Quine atom's **structural** fixed point here — it is one, by the framework
 is ill-typed and not asserted; `selfApp_quine_role_iff` (`ZeroParadox/Settheory/QuineDichotomy.lean`) at `instAbstractSelfAppEnd`
 makes the floor the die Quine-atom role's only occupant here (`propext` and `Quot.sound`, choice-free); the axiom-free half is `t_exec`.)
 
-**Honest fence.** The tree↔ℚ₂ digit isomorphism is not formalized in this file, so the mirror to `q2SelfApp`
-is a proved PARALLEL (same map, same unique fixed point), never a Lean `=`; and the "both children at once
-= rInv = pole" reading is the interpretation, anchored by the proved `swap_is_rInv`, not a new graph theorem.
-No cross-type identity anywhere.
+**Honest fence.** The tree↔ℚ₂ digit isomorphism is not formalized here, so the mirror to `q2SelfApp` is a proved
+PARALLEL (same map, same unique fixed point), never a Lean `=`; on ℤ_[2] it is a `Function.Semiconj` through a
+homeomorphism (`padicEndHomeo_semiconj`, `ZeroParadox/Valuation/DepthIsWait.lean`). The "both children at once
+= rInv = pole" reading is interpretation, anchored by the proved `swap_is_rInv`. No cross-type identity anywhere.
 -/
 
 namespace ZeroParadox
