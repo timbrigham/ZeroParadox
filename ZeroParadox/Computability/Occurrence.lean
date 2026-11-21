@@ -99,7 +99,8 @@ def LoopsInPlace (s : σ) : Prop := f s = some s
     of fan-out, not the presence of a fixed point"*), and why the trichotomy is genuinely three-valued
     **only** in the non-deterministic setting — make the step single-valued and the **self-loop** is
     a relabelled trap. ⚠ **Not the third case** — § VI-c's `carry` is in the third case at every
-    state, under a function, with an infinite reachable set. Cases 1 and 2 share a fate under a
+    state, under a function, with an infinite reachable set (its run never repeats a state: the
+    injectivity `example` after `carry_no_selfloop`). Cases 1 and 2 share a fate under a
     function; case 3 does not. -/
 theorem machine_trichotomy (s : σ) :
     f s = none ∨ LoopsInPlace f s ∨ ∃ s', f s = some s' ∧ s' ≠ s := by
@@ -419,9 +420,9 @@ bottom is its own fixed point, and execution occurs from it — the model must s
 
 1. **Branching at the bottom**, arity ≥ 2 (`execution_requires_branching`).
 2. **A non-functional dynamics** — no `σ → Option σ` will do (`execution_requires_nondeterminism`).
-3. **Undecidability of the firing** — no algorithm certifies that it occurred
-   (`occurrence_undecidable`), and non-occurrence is not even semi-decidable
-   (`occurrence_semidecidable_nonoccurrence_not`).
+3. **Undecidability of the firing** — no algorithm decides whether it occurs
+   (`occurrence_undecidable`); occurrence is semi-decidable, confirmed by running the code until
+   it halts, and non-occurrence is not (`occurrence_semidecidable_nonoccurrence_not`).
 4. **Both poles at the bottom, across charts** — zero output, infinite duration
    (`selfloop_is_zero_and_infinity`).
 
