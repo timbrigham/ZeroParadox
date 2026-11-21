@@ -651,6 +651,13 @@ noncomputable example : Ordinal.{0} →o Ordinal.{0} :=
 -- Statement: for primitive `φ`, `paChar n φ` integrates over `{‖z‖ ≤ p^(-j)}` to `p^(-j)` if `n ≤ j`,
 -- else to `0` (`ZeroParadox/Valuation/PadicBallWave.lean`).
 #check @ZeroParadox.paChar_ball_integral_tradeoff
+-- Statement: every `χ : AddChar ℤ_[p] ℂ` integrates over `{‖z‖ ≤ p^(-j)}` to `p^(-j)` if `χ = 1` there,
+-- else to `0`; no continuity, no primitivity (`ZeroParadox/Valuation/PadicBallWave.lean`).
+#check @ZeroParadox.addChar_ball_integral
+-- Statement: for every `φ`, the same integral of `paChar n φ` is `p^(-j)` if `charLevel n φ ≤ j`, else `0`.
+#check @ZeroParadox.paChar_ball_integral_level
+-- Statement: every continuous `χ : AddChar ℤ_[p] ℂ` is `paChar j φ` for some `j` and `φ`.
+#check @ZeroParadox.continuous_addChar_eq_paChar
 -- Statement: for primitive `φ`, `j < n` and any centre `a`, `vladimirov α` sends `paChar n φ` restricted
 -- to `nodeBall j a` to the level-`n` eigenvalue `vladLam p α n` times itself, pointwise on ℤ_[p]
 -- (`ZeroParadox/Valuation/PadicWavelet.lean`).

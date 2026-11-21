@@ -9,10 +9,8 @@ set_option maxHeartbeats 400000
 
 ## Engineer's Take
 
-This file is one of a series of iterative attempts on this branch to build a map of how the various
-bottoms interconnect, and by extension how bottom moves from being the floor, a thing (a noun), to a
-verb (an action). The Lean here is our attempt, one way or the other, to get a clean verification. I
-defer to my AI assistant regarding the specifics of how the internals work.
+I get the feeling this shape is of the die as well. It's concurrently an object in motion and motion of
+an object.
 
 ---
 

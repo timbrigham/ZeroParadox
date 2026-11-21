@@ -277784,6 +277784,709 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "32695ebd-b419-47a4-8643-b9de2c8dc7a4",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicBallWave.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.norm_le_zpow_neg_iff_dvd",
+            "short": "norm_le_zpow_neg_iff_dvd"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicBallWave.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.norm_le_zpow_neg_iff_dvd",
+            "short": "norm_le_zpow_neg_iff_dvd",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "PadicBallWave: ball integrals of every additive character of Z_p (general subgroup form), the paChar level, and continuous characters factor through paChar (2026-11-21).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "3aaf4f77-81c1-47e5-aa38-53aac725496b",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicBallWave.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.charLevel_le",
+            "short": "charLevel_le"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicBallWave.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.charLevel_le",
+            "short": "charLevel_le",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "PadicBallWave: ball integrals of every additive character of Z_p (general subgroup form), the paChar level, and continuous characters factor through paChar (2026-11-21).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "4d0d58ab-1349-422f-8751-b5013f92cc97",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicBallWave.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.charLevel",
+            "short": "charLevel"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicBallWave.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.charLevel",
+            "short": "charLevel",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "PadicBallWave: ball integrals of every additive character of Z_p (general subgroup form), the paChar level, and continuous characters factor through paChar (2026-11-21).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "50420ca6-bbe3-4e11-b7a3-d54259cf9463",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicBallWave.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.paCharHom",
+            "short": "paCharHom"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicBallWave.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.paCharHom",
+            "short": "paCharHom",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "PadicBallWave: ball integrals of every additive character of Z_p (general subgroup form), the paChar level, and continuous characters factor through paChar (2026-11-21).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "619c7f44-37de-45fd-b882-035e4c139a17",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicBallWave.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.charLevel_of_isPrimitive",
+            "short": "charLevel_of_isPrimitive"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicBallWave.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.charLevel_of_isPrimitive",
+            "short": "charLevel_of_isPrimitive",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "PadicBallWave: ball integrals of every additive character of Z_p (general subgroup form), the paChar level, and continuous characters factor through paChar (2026-11-21).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "637e148c-2b91-478b-8a14-aa62c8c643de",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicBallWave.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.addChar_addSubgroup_integral",
+            "short": "addChar_addSubgroup_integral"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicBallWave.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.addChar_addSubgroup_integral",
+            "short": "addChar_addSubgroup_integral",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "PadicBallWave: ball integrals of every additive character of Z_p (general subgroup form), the paChar level, and continuous characters factor through paChar (2026-11-21).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "6df5f16e-2782-4a9f-8f72-f65e7cc7759f",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicBallWave.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.continuous_addChar_trivial_on_ball",
+            "short": "continuous_addChar_trivial_on_ball"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicBallWave.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.continuous_addChar_trivial_on_ball",
+            "short": "continuous_addChar_trivial_on_ball",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "PadicBallWave: ball integrals of every additive character of Z_p (general subgroup form), the paChar level, and continuous characters factor through paChar (2026-11-21).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "85bda5ed-60a9-4f2e-8dd2-e11b1d6b8297",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicBallWave.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.continuous_addChar_eq_paChar",
+            "short": "continuous_addChar_eq_paChar"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicBallWave.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.continuous_addChar_eq_paChar",
+            "short": "continuous_addChar_eq_paChar",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "PadicBallWave: ball integrals of every additive character of Z_p (general subgroup form), the paChar level, and continuous characters factor through paChar (2026-11-21).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "88f370b3-f691-4f07-b369-925411fbb075",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicBallWave.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.eq_one_of_pow_near_one",
+            "short": "eq_one_of_pow_near_one"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicBallWave.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.eq_one_of_pow_near_one",
+            "short": "eq_one_of_pow_near_one",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "PadicBallWave: ball integrals of every additive character of Z_p (general subgroup form), the paChar level, and continuous characters factor through paChar (2026-11-21).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "98aaae80-fb09-49a0-ae84-dd609c0e530e",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicBallWave.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.contLevel",
+            "short": "contLevel"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicBallWave.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.contLevel",
+            "short": "contLevel",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "PadicBallWave: ball integrals of every additive character of Z_p (general subgroup form), the paChar level, and continuous characters factor through paChar (2026-11-21).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ac19275b-ec79-4491-b543-63bc680e86ca",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicBallWave.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.coe_paCharHom",
+            "short": "coe_paCharHom"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicBallWave.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.coe_paCharHom",
+            "short": "coe_paCharHom",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "PadicBallWave: ball integrals of every additive character of Z_p (general subgroup form), the paChar level, and continuous characters factor through paChar (2026-11-21).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "adeebba7-4a41-45bd-8bdd-7fd886b58125",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicBallWave.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.addChar_trivial_on_ball_mono",
+            "short": "addChar_trivial_on_ball_mono"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicBallWave.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.addChar_trivial_on_ball_mono",
+            "short": "addChar_trivial_on_ball_mono",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "PadicBallWave: ball integrals of every additive character of Z_p (general subgroup form), the paChar level, and continuous characters factor through paChar (2026-11-21).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b26d82b4-d138-4b13-bdd1-774da4f5eaef",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicBallWave.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.paChar_ball_integral",
+            "short": "paChar_ball_integral"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicBallWave.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.paChar_ball_integral",
+            "short": "paChar_ball_integral",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "PadicBallWave: ball integrals of every additive character of Z_p (general subgroup form), the paChar level, and continuous characters factor through paChar (2026-11-21).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c3df09e5-c8df-41c3-88b4-e1320cec3169",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicBallWave.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.paChar_ball_integral_level",
+            "short": "paChar_ball_integral_level"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicBallWave.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.paChar_ball_integral_level",
+            "short": "paChar_ball_integral_level",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "PadicBallWave: ball integrals of every additive character of Z_p (general subgroup form), the paChar level, and continuous characters factor through paChar (2026-11-21).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c608e121-ab81-4ad3-bdcd-52da84fb2505",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicBallWave.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.paChar_trivial_on_ball_iff",
+            "short": "paChar_trivial_on_ball_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicBallWave.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.paChar_trivial_on_ball_iff",
+            "short": "paChar_trivial_on_ball_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "PadicBallWave: ball integrals of every additive character of Z_p (general subgroup form), the paChar level, and continuous characters factor through paChar (2026-11-21).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d3607dc6-3d06-4683-af9f-072ed4b674a6",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicBallWave.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.continuous_addChar_ball_integral_level",
+            "short": "continuous_addChar_ball_integral_level"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicBallWave.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.continuous_addChar_ball_integral_level",
+            "short": "continuous_addChar_ball_integral_level",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "PadicBallWave: ball integrals of every additive character of Z_p (general subgroup form), the paChar level, and continuous characters factor through paChar (2026-11-21).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d7ca62d7-bfb9-45db-823c-cd4d8a2b262a",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicBallWave.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.charLevel_le_iff",
+            "short": "charLevel_le_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicBallWave.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.charLevel_le_iff",
+            "short": "charLevel_le_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "PadicBallWave: ball integrals of every additive character of Z_p (general subgroup form), the paChar level, and continuous characters factor through paChar (2026-11-21).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e75d5adb-d42f-4fe5-a560-368b442ba609",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicBallWave.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.addChar_ball_integral",
+            "short": "addChar_ball_integral"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicBallWave.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.addChar_ball_integral",
+            "short": "addChar_ball_integral",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "PadicBallWave: ball integrals of every additive character of Z_p (general subgroup form), the paChar level, and continuous characters factor through paChar (2026-11-21).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f483c9a4-6d58-477c-8ed3-a626a4b5749d",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicBallWave.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.addChar_zmodPow_trivial_self",
+            "short": "addChar_zmodPow_trivial_self"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicBallWave.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.addChar_zmodPow_trivial_self",
+            "short": "addChar_zmodPow_trivial_self",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "PadicBallWave: ball integrals of every additive character of Z_p (general subgroup form), the paChar level, and continuous characters factor through paChar (2026-11-21).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "327f32fb-6af1-4c45-8c46-e7384a220c69",
           "new": {
             "file": "ZeroParadox/Ordinal/SnapNucleusConstructive.lean",

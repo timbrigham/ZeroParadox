@@ -10,10 +10,10 @@ import Mathlib.Tactic
 
 ## Engineer's Take
 
-This file is one of a series of iterative attempts on this branch to build a map of how the various
-bottoms interconnect, and by extension how bottom moves from being the floor, a thing (a noun), to a
-verb (an action). The Lean here is our attempt, one way or the other, to get a clean verification. I
-defer to my AI assistant regarding the specifics of how the internals work.
+The shape it makes is like a tree that can go to infinite denseness, from an infinite number of points
+above. The branching itself is what forces the density. It feels like an elevation of a local to a global
+variable. You iterate five times inside your function and you count, and the other is your instance, the
+output object with a value of five.
 
 ---
 
