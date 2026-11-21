@@ -458,6 +458,20 @@ theorem carry_no_selfloop (p : Bool × ℕ) : ¬ LoopsInPlace carry p := by
   have h2 := congrArg Prod.snd (Option.some_injective _ h)
   simp at h2
 
+-- Statement: `carry`'s run never repeats a state: `n ↦` the `n`-fold step from `some p` is injective.
+example (p : Bool × ℕ) :
+    Function.Injective (fun n : ℕ => (fun o : Option (Bool × ℕ) => o.bind carry)^[n] (some p)) := by
+  have h : ∀ n : ℕ, (fun o : Option (Bool × ℕ) => o.bind carry)^[n] (some p) = some (p.1, p.2 + n) := by
+    intro n
+    induction n with
+    | zero => rfl
+    | succ k ih =>
+        rw [Function.iterate_succ_apply', ih]
+        simp [carry, Nat.add_assoc]
+  intro m n hmn
+  simp only [h, Option.some.injEq, Prod.mk.injEq, Nat.add_left_cancel_iff, true_and] at hmn
+  exact hmn
+
 /-- **`Statement:` and it never halts.** -/
 theorem carry_never_halts (p : Bool × ℕ) : carry p ≠ Option.none := by
   simp only [carry]; exact Option.some_ne_none _
