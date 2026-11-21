@@ -234,6 +234,18 @@ owes no step. -/
 example {α : Type} [PartialOrder α] (U : ZeroParadox.UpAndOver α) {y : α} (hy : U.up.IsClosed y)
     (hmax : ¬ IsMax y) : ZeroParadox.HasFirstStep y := U.cover y hy hmax
 #check @ZeroParadox.UpAndOver.exists_next_landing_of_cover_at -- Statement: for a closure operator `c` and `HasFirstStep y`, some cover `b` of `y` has `c b` closed and `y < c b`. Reading: the hypothesis form of the `cover` field, which `UpAndOver.exists_next_landing` reads off the structure
+#check @ZeroParadox.UpAndOver.isLeast_landing_of_gateway -- Statement: for a closure operator `c` on a partial order, `y < b` and `∀ z, y < z → b ≤ z` give `IsLeast {z | c.IsClosed z ∧ y < z} (c b)`; folklore (`ClosureOperator.closure_min`, `CovBy.Ioi_eq`)
+#check @ZeroParadox.UpAndOver.over_needed_iff         -- Statement: under the same hypotheses, `c b ≠ c y ↔ c.IsClosed y`. Reading: floor below, OVER then UP; floor above, UP alone
+-- `Statement:` `phase_epsilon0_isLeast_landing_above_floor` from `isLeast_landing_of_gateway` at the cover
+-- `phase_floor_covBy_snap` (`CovBy.Ioi_eq`) and the value `phaseUp_snap`; UP moves the snap `↑0`.
+open ZeroParadox in
+example : IsLeast {x : WithBot Ordinal | phaseUpAndOver.up.IsClosed x ∧ phaseEquivWithBot Phase.floor < x}
+      (epsilonZero : WithBot Ordinal) ∧
+    phaseUpAndOver.up (phaseEquivWithBot snap) ≠ phaseEquivWithBot snap := by
+  refine ⟨?_, fun h => phase_floor_snap_epsilon0_ne.1 (h.symm.trans phaseUp_snap)⟩
+  rw [← phaseUp_snap]
+  exact UpAndOver.isLeast_landing_of_gateway _ phase_floor_covBy_snap.lt fun w hw => by
+    rw [← Set.mem_Ici, ← phase_floor_covBy_snap.Ioi_eq]; exact hw
 #check @ZeroParadox.UpAndOver.isEmpty_of_denselyOrdered -- Statement: no densely ordered carrier carries an `UpAndOver`; the corner's cover is refused. Reading: as § V refuses ℝ a first step
 example : IsEmpty (ZeroParadox.UpAndOver ℝ) := ZeroParadox.UpAndOver.isEmpty_of_denselyOrdered
 #check @ZeroParadox.ordinalUpAndOver                  -- Statement: `Ordinal` carries it: `up` is `nfp (ω^·)` (`snapNucleus`), covers by `Order.succ`, the corner at ε₀ and `succ ε₀`

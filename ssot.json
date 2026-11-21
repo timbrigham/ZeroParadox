@@ -244874,7 +244874,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 4556,
+        "declarations": 4558,
         "files": 241
       },
       "entries": [
@@ -415933,6 +415933,84 @@
             ]
           },
           "reason": "c123-digit-tape: Z_[2] digit tape is a homeomorphism to End conjugating x2 to boundaryDouble (DepthIsWait § V); depth law through padicTape (PoleWithinEnsemble § X)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0d54d6d8-5114-48bd-8abf-a41c4acd23c7",
+          "new": {
+            "file": "ZeroParadox/Order/UpAndOver.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.UpAndOver.isLeast_landing_of_gateway",
+            "short": "isLeast_landing_of_gateway"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/UpAndOver.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.UpAndOver.isLeast_landing_of_gateway",
+            "short": "isLeast_landing_of_gateway",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [
+              "ceiling"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 11 (2026-11-21): snap landing lemma, cover-then-close over a gateway (folklore, cited) and the floor dichotomy",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "867e85a8-943e-4ddd-b247-59f656f91d81",
+          "new": {
+            "file": "ZeroParadox/Order/UpAndOver.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.UpAndOver.over_needed_iff",
+            "short": "over_needed_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/UpAndOver.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.UpAndOver.over_needed_iff",
+            "short": "over_needed_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [
+              "ceiling"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 11 (2026-11-21): snap landing lemma, cover-then-close over a gateway (folklore, cited) and the floor dichotomy",
           "verify": {
             "axioms": null,
             "sorry_free": null
