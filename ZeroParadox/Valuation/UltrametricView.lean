@@ -12,10 +12,11 @@ set_option maxHeartbeats 400000
 
 ## Engineer's Take
 
-This file is one of a series of iterative attempts on this branch to build a map of how the various
-bottoms interconnect, and by extension how bottom moves from being the floor, a thing (a noun), to a
-verb (an action). The Lean here is our attempt, one way or the other, to get a clean verification. I
-defer to my AI assistant regarding the specifics of how the internals work.
+When I was visualizing the tree I was orbiting around and zooming in. The outside of my view distorted
+like a fish bowl before dissolving the more distant points. When you zoom in and out, you see more detail
+on the edges, kind of like lifting a fog around tree branches. It's ironic. It looks like a fluid version
+of Yggdrasil in my mind, and the branches pop to the forefront as you spin the controls. The wave that
+doesn't wave sounds like the orbit of zero.
 
 ---
 

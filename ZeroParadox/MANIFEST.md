@@ -312,7 +312,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Valuation/OneWayFlow.lean` - The one-way flow: forward attraction and backward exit, two charts of `boundaryDouble`
 - `ZeroParadox/Valuation/PadicAttractor.lean` - The p-adic floor #3 as a dynamical attractor
 - `ZeroParadox/Valuation/PadicBallIndicator.lean` - The p-adic ball indicator in L²(ℤ_p)
-- `ZeroParadox/Valuation/PadicBallWave.lean` - On ℤ_p, a level-n character integrates over the closed ball of radius p^(-j) about 0 to p^(-j) when n ≤ j (every character) and, for a primitive character, to 0 when j < n
+- `ZeroParadox/Valuation/PadicBallWave.lean` - On ℤ_p, an additive character integrates over the closed ball of radius p^(-j) about 0 to p^(-j) if it is 1 on that ball and to 0 otherwise; for paChar n φ, and for every continuous character, that is exactly when the character's level is at most j
 - `ZeroParadox/Valuation/PadicCharacter.lean` - p-adic additive characters and their orthogonality on ℤ_p
 - `ZeroParadox/Valuation/PadicErgodic.lean` - Ergodicity of the p-adic odometer
 - `ZeroParadox/Valuation/PadicHaar.lean` - p-adic Haar measure on ℤ_p
