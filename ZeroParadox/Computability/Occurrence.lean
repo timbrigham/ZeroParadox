@@ -502,6 +502,191 @@ theorem carry_steps_onward_forever_yet_shows_nothing (p : Bool × ℕ) :
   have h2 := congrArg Prod.snd h
   simp at h2
 
+/-! ## § VI-d. CLOCK AND DIAL — `carry` as an interleaving pairing
+
+`carry` is the die's interleaving pairing (`Motion.aprod`, `ZeroParadox/Die.lean`) of a dial that
+never steps with a clock that steps `n ↦ n + 1`. The map `dialClockMap` formalizes the
+implementation mapping of Chalmers § 4; its Reading is at `dialClockMap_surjective_iff`. -/
+
+/-- `Statement:` the clock: `Motion.ofFun Nat.succ` on `ℕ`, UP the identity, OVER `n ↦ n + 1`. -/
+def clockMotion : Motion ℕ := Motion.ofFun Nat.succ
+
+/-- `Statement:` the dial on `D`: UP the identity, no step. -/
+def dialMotion (D : Type) : Motion D := Motion.ofTotal id (fun _ => rfl) (fun _ _ => False)
+
+/-- `Statement:` in dial × clock, `(d, n)` steps to `(d', m)` iff `d' = d` and `m = n + 1`. -/
+theorem dialClock_step_iff {D : Type} (d d' : D) (n m : ℕ) :
+    ((dialMotion D).aprod clockMotion).step (d, n) (d', m) ↔ d' = d ∧ m = n + 1 := by
+  show Prod.GameAdd _ _ _ _ ↔ _
+  rw [Prod.gameAdd_iff]
+  constructor
+  · rintro (⟨h, -⟩ | ⟨h1, h2⟩)
+    · exact h.elim
+    · exact ⟨h2.symm, h1⟩
+  · rintro ⟨rfl, rfl⟩
+    exact Or.inr ⟨rfl, rfl⟩
+
+/-- `Statement:` UP of dial × clock sends every `p` to `Part.some p`. -/
+theorem dialClock_up {D : Type} (p : D × ℕ) :
+    ((dialMotion D).aprod clockMotion).up p = Part.some p := by
+  show Motion.upPair (Part.some p.1) (Part.some p.2) = _
+  rw [Motion.upPair_some]
+
+/-- `Statement:` with `D = Bool`, the step of dial × clock equals the step of
+`Motion.ofPartialFun carry`. -/
+theorem dialClock_step_eq_carry :
+    ((dialMotion Bool).aprod clockMotion).step = (Motion.ofPartialFun carry).step := by
+  funext p q
+  obtain ⟨d, n⟩ := p; obtain ⟨d', m⟩ := q
+  apply propext
+  rw [dialClock_step_iff]
+  show _ ↔ carry (d, n) = some (d', m)
+  simp only [carry, Option.some.injEq, Prod.mk.injEq]
+  exact ⟨fun ⟨h1, h2⟩ => ⟨h1.symm, h2.symm⟩, fun ⟨h1, h2⟩ => ⟨h1.symm, h2.symm⟩⟩
+
+/-- `Statement:` with `D = Bool`, the UP of dial × clock equals the UP of
+`Motion.ofPartialFun carry`. -/
+theorem dialClock_up_eq_carry :
+    ((dialMotion Bool).aprod clockMotion).up = (Motion.ofPartialFun carry).up := by
+  funext p; rw [dialClock_up]; rfl
+
+/-- `Statement:` the identity is a `Motion.StrictIso` from dial(`Bool`) × clock to
+`Motion.ofPartialFun carry`. -/
+def dialClockIsoCarry :
+    Motion.StrictIso ((dialMotion Bool).aprod clockMotion) (Motion.ofPartialFun carry) where
+  hom := ⟨id, fun h => by rw [← dialClock_step_eq_carry]; exact h,
+    fun p => by show Part.some p = _; rw [dialClock_up, Part.map_some]; rfl⟩
+  inv := ⟨id, fun h => by rw [dialClock_step_eq_carry]; exact h,
+    fun p => by rw [dialClock_up]; show Part.some p = (Part.some p).map id; rw [Part.map_some]; rfl⟩
+  left_inv _ := rfl
+  right_inv _ := rfl
+
+/-- `Statement:` `(dialMotion Bool).aprod clockMotion = Motion.ofPartialFun carry`. -/
+theorem dialClock_eq_carry : (dialMotion Bool).aprod clockMotion = Motion.ofPartialFun carry := by
+  have h1 := dialClock_up_eq_carry
+  have h2 := dialClock_step_eq_carry
+  cases h : (dialMotion Bool).aprod clockMotion
+  cases h' : Motion.ofPartialFun carry
+  rw [h, h'] at h1 h2
+  simp only at h1 h2
+  subst h1; subst h2; rfl
+
+/-- `Statement:` under the graph `y = g x` of `g`, `a` reaches `b` iff `g^[n] a = b` for some `n`. -/
+theorem reflTransGen_fun_graph_iff {Q : Type} (g : Q → Q) (a b : Q) :
+    Relation.ReflTransGen (fun x y => y = g x) a b ↔ ∃ n, g^[n] a = b := by
+  constructor
+  · intro h
+    induction h with
+    | refl => exact ⟨0, rfl⟩
+    | tail _ hbc ih =>
+      obtain ⟨n, hn⟩ := ih
+      exact ⟨n + 1, by rw [Function.iterate_succ_apply', hn, hbc]⟩
+  · rintro ⟨n, rfl⟩
+    induction n with
+    | zero => exact .refl
+    | succ k ih => exact ih.tail (Function.iterate_succ_apply' g k a)
+
+/-- `Statement:` under the graph of `Nat.succ`, `n` reaches `m` iff `n ≤ m`. -/
+theorem reflTransGen_succ_graph_iff (n m : ℕ) :
+    Relation.ReflTransGen (fun x y : ℕ => y = Nat.succ x) n m ↔ n ≤ m := by
+  rw [reflTransGen_fun_graph_iff]
+  constructor
+  · rintro ⟨k, rfl⟩; rw [Nat.succ_iterate]; omega
+  · intro h; exact ⟨m - n, by rw [Nat.succ_iterate]; omega⟩
+
+/-- `Statement:` under the empty relation, `d` reaches `d'` iff `d = d'`. -/
+theorem reflTransGen_false_iff {D : Type} (d d' : D) :
+    Relation.ReflTransGen (fun _ _ : D => False) d d' ↔ d = d' := by
+  constructor
+  · intro h
+    induction h with
+    | refl => rfl
+    | tail _ hbc _ => exact hbc.elim
+  · rintro rfl; exact .refl
+
+/-- `Statement:` in dial × clock, `(d, n)` reaches `(d', m)` iff `d = d'` and `n ≤ m`.
+From `Motion.rtg_gameAdd_iff` (`ZeroParadox/Die.lean`, the corpus copy of the prepared Mathlib
+lemma `Prod.reflTransGen_gameAdd_iff`). -/
+theorem dialClock_reach_iff {D : Type} (d d' : D) (n m : ℕ) :
+    Relation.ReflTransGen ((dialMotion D).aprod clockMotion).step (d, n) (d', m) ↔
+      d = d' ∧ n ≤ m := by
+  show Relation.ReflTransGen (Prod.GameAdd _ _) _ _ ↔ _
+  rw [Motion.rtg_gameAdd_iff]
+  exact and_congr (reflTransGen_false_iff d d') (reflTransGen_succ_graph_iff n m)
+
+/-- `Statement:` `dialClockMap g s (d, n) = g^[n] (s d)`. -/
+def dialClockMap {D Q : Type} (g : Q → Q) (s : D → Q) : D × ℕ → Q := fun p => g^[p.2] (s p.1)
+
+/-- `Statement:` `dialClockMap g s` is a `Motion.Hom` from dial × clock to `Motion.ofFun g`. -/
+def dialClockMapHom {D Q : Type} (g : Q → Q) (s : D → Q) :
+    Motion.Hom ((dialMotion D).aprod clockMotion) (Motion.ofFun g) :=
+  ⟨dialClockMap g s, fun {a b} h => by
+    obtain ⟨d, n⟩ := a; obtain ⟨d', m⟩ := b
+    obtain ⟨h1, h2⟩ := (dialClock_step_iff d d' n m).1 h
+    show g^[m] (s d') = g (g^[n] (s d))
+    rw [h1, h2]
+    exact Function.iterate_succ_apply' g n (s d),
+   fun p => by
+    rw [dialClock_up, Part.map_some]; rfl⟩
+
+/-- `Statement:` `Motion.StepBack` holds for `dialClockMap g s` from dial × clock to
+`Motion.ofFun g`. -/
+theorem dialClockMap_stepBack {D Q : Type} (g : Q → Q) (s : D → Q) :
+    Motion.StepBack ((dialMotion D).aprod clockMotion) (Motion.ofFun g) (dialClockMap g s) := by
+  rintro ⟨d, n⟩ c (hc : c = g (g^[n] (s d)))
+  exact ⟨(d, n + 1), (dialClock_step_iff d d n (n + 1)).2 ⟨rfl, rfl⟩,
+    by rw [hc]; exact Function.iterate_succ_apply' g n (s d)⟩
+
+/-- `Statement:` the range of `dialClockMap g s` is the set of `q` reached from `s d` in
+`Motion.ofFun g`, for some `d`. -/
+theorem range_dialClockMap {D Q : Type} (g : Q → Q) (s : D → Q) :
+    Set.range (dialClockMap g s) =
+      {q | ∃ d, Relation.ReflTransGen (Motion.ofFun g).step (s d) q} := by
+  ext q
+  constructor
+  · rintro ⟨⟨d, n⟩, rfl⟩; exact ⟨d, (reflTransGen_fun_graph_iff g _ _).2 ⟨n, rfl⟩⟩
+  · rintro ⟨d, h⟩
+    obtain ⟨n, hn⟩ := (reflTransGen_fun_graph_iff g _ _).1 h
+    exact ⟨(d, n), hn⟩
+
+/-- `Statement:` onto iff every `q` is reached from some `s d` in `Motion.ofFun g`. `Reading:`
+formalizes the § 4 Claim of Chalmers, "Does a Rock Implement Every Finite-State Automaton?",
+Synthese 108 (1996) 309–333: *"Every physical system containing a clock and a dial will implement
+every inputless FSA."* Not new mathematics. -/
+theorem dialClockMap_surjective_iff {D Q : Type} (g : Q → Q) (s : D → Q) :
+    Function.Surjective (dialClockMap g s) ↔
+      ∀ q, ∃ d, Relation.ReflTransGen (Motion.ofFun g).step (s d) q := by
+  rw [← Set.range_eq_univ, range_dialClockMap, Set.eq_univ_iff_forall]; rfl
+
+/-- `Statement:` `dialClockMap g id` is onto, for every `g : Q → Q`.
+`Reading:` Chalmers' § 4 Claim (cited at `dialClockMap_surjective_iff`) with one dial value per
+state. -/
+theorem dialClockMap_id_surjective {Q : Type} (g : Q → Q) :
+    Function.Surjective (dialClockMap g (id : Q → Q)) :=
+  (dialClockMap_surjective_iff g id).2 fun q => ⟨q, .refl⟩
+
+/-- `Statement:` CONTROL: no `s : Bool → Fin 3` makes `dialClockMap id s` onto. -/
+theorem dialClockMap_control_bool_fin3 :
+    ¬ ∃ s : Bool → Fin 3, Function.Surjective (dialClockMap id s) := by
+  rintro ⟨s, hs⟩
+  have hs' : Function.Surjective s := fun q => by
+    obtain ⟨⟨d, n⟩, h⟩ := hs q
+    exact ⟨d, by simpa [dialClockMap, Function.iterate_id] using h⟩
+  have := Fintype.card_le_of_surjective s hs'
+  simp at this
+
+/-- `Statement:` the kernel of `dialClockMap g s` is `StepCompat` on dial × clock
+(`Motion.Hom.stepCompat_ker`). -/
+theorem dialClockMap_ker_stepCompat {D Q : Type} (g : Q → Q) (s : D → Q) :
+    ((dialMotion D).aprod clockMotion).StepCompat (Setoid.ker (dialClockMap g s)) :=
+  Motion.Hom.stepCompat_ker (dialClockMapHom g s) (dialClockMap_stepBack g s)
+
+/-- `Statement:` the quotient by the kernel of `dialClockMap g s` is equivalent to its range
+(Mathlib `Setoid.quotientKerEquivRange`). -/
+noncomputable def dialClockMapKerEquivRange {D Q : Type} (g : Q → Q) (s : D → Q) :
+    Quotient (Setoid.ker (dialClockMap g s)) ≃ Set.range (dialClockMap g s) :=
+  Setoid.quotientKerEquivRange (dialClockMap g s)
+
 /-! ## § VII. The capstone — the whole computational shape in one statement
 
 Mirrors `Miniature.lean`'s `shape`. Five faces of the computational bottom, bundled so the
@@ -784,6 +969,27 @@ open ZeroParadox
 #print axioms carry_never_halts
 #print axioms carry_stutters
 #print axioms carry_steps_onward_forever_yet_shows_nothing
+#print axioms clockMotion
+#print axioms dialMotion
+#print axioms dialClock_step_iff
+#print axioms dialClock_up
+#print axioms dialClock_step_eq_carry
+#print axioms dialClock_up_eq_carry
+#print axioms dialClockIsoCarry
+#print axioms dialClock_eq_carry
+#print axioms reflTransGen_fun_graph_iff
+#print axioms reflTransGen_succ_graph_iff
+#print axioms reflTransGen_false_iff
+#print axioms dialClock_reach_iff
+#print axioms dialClockMap
+#print axioms dialClockMapHom
+#print axioms dialClockMap_stepBack
+#print axioms range_dialClockMap
+#print axioms dialClockMap_surjective_iff
+#print axioms dialClockMap_id_surjective
+#print axioms dialClockMap_control_bool_fin3
+#print axioms dialClockMap_ker_stepCompat
+#print axioms dialClockMapKerEquivRange
 #print axioms occurrence_shape
 #print axioms occurs_iff_halts
 #print axioms occurrence_undecidable

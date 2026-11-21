@@ -417355,6 +417355,783 @@
             "axioms": null,
             "sorry_free": null
           }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0c394242-bd83-4016-8a72-a6a0f13378ea",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dialMotion",
+            "short": "dialMotion"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.dialMotion",
+            "short": "dialMotion",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Clock and dial (Tim ruling 14): carry as the die's interleaving pairing of a frozen dial with the successor clock, and Chalmers 1996 section 4 Claim as a strict Hom onto ofFun g, onto iff the dial values cover the states; Bool dial vs three self-loops as the control.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "1431f5cb-dec9-472b-aebf-e3e3c50d776e",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.reflTransGen_succ_graph_iff",
+            "short": "reflTransGen_succ_graph_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.reflTransGen_succ_graph_iff",
+            "short": "reflTransGen_succ_graph_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Clock and dial (Tim ruling 14): carry as the die's interleaving pairing of a frozen dial with the successor clock, and Chalmers 1996 section 4 Claim as a strict Hom onto ofFun g, onto iff the dial values cover the states; Bool dial vs three self-loops as the control.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "1dfcb17b-4ae1-4a79-bb72-870bdadf57d2",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dialClockMap_surjective_iff",
+            "short": "dialClockMap_surjective_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.dialClockMap_surjective_iff",
+            "short": "dialClockMap_surjective_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "Clock and dial (Tim ruling 14): carry as the die's interleaving pairing of a frozen dial with the successor clock, and Chalmers 1996 section 4 Claim as a strict Hom onto ofFun g, onto iff the dial values cover the states; Bool dial vs three self-loops as the control.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "1f05abad-4b3f-49ce-b37c-05f131878250",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dialClockMapKerEquivRange",
+            "short": "dialClockMapKerEquivRange"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.dialClockMapKerEquivRange",
+            "short": "dialClockMapKerEquivRange",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Clock and dial (Tim ruling 14): carry as the die's interleaving pairing of a frozen dial with the successor clock, and Chalmers 1996 section 4 Claim as a strict Hom onto ofFun g, onto iff the dial values cover the states; Bool dial vs three self-loops as the control.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "1f297270-ec1f-41d3-aacb-bffc2fd0ff82",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dialClockMap_ker_stepCompat",
+            "short": "dialClockMap_ker_stepCompat"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.dialClockMap_ker_stepCompat",
+            "short": "dialClockMap_ker_stepCompat",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Clock and dial (Tim ruling 14): carry as the die's interleaving pairing of a frozen dial with the successor clock, and Chalmers 1996 section 4 Claim as a strict Hom onto ofFun g, onto iff the dial values cover the states; Bool dial vs three self-loops as the control.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "25f297de-df52-4126-83da-7ad7fad1c08a",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dialClock_step_eq_carry",
+            "short": "dialClock_step_eq_carry"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.dialClock_step_eq_carry",
+            "short": "dialClock_step_eq_carry",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Clock and dial (Tim ruling 14): carry as the die's interleaving pairing of a frozen dial with the successor clock, and Chalmers 1996 section 4 Claim as a strict Hom onto ofFun g, onto iff the dial values cover the states; Bool dial vs three self-loops as the control.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "3e9c0862-3822-4b3e-a024-32eb175de833",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dialClockMap_control_bool_fin3",
+            "short": "dialClockMap_control_bool_fin3"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.dialClockMap_control_bool_fin3",
+            "short": "dialClockMap_control_bool_fin3",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Clock and dial (Tim ruling 14): carry as the die's interleaving pairing of a frozen dial with the successor clock, and Chalmers 1996 section 4 Claim as a strict Hom onto ofFun g, onto iff the dial values cover the states; Bool dial vs three self-loops as the control.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "4355d011-6e98-42bd-9627-a6dd0929deeb",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.range_dialClockMap",
+            "short": "range_dialClockMap"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.range_dialClockMap",
+            "short": "range_dialClockMap",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Clock and dial (Tim ruling 14): carry as the die's interleaving pairing of a frozen dial with the successor clock, and Chalmers 1996 section 4 Claim as a strict Hom onto ofFun g, onto iff the dial values cover the states; Bool dial vs three self-loops as the control.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "4916805f-8e2d-4f92-bf98-4dc0dde81ee7",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dialClockMapHom",
+            "short": "dialClockMapHom"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.dialClockMapHom",
+            "short": "dialClockMapHom",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Clock and dial (Tim ruling 14): carry as the die's interleaving pairing of a frozen dial with the successor clock, and Chalmers 1996 section 4 Claim as a strict Hom onto ofFun g, onto iff the dial values cover the states; Bool dial vs three self-loops as the control.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "55766dba-3cdf-40f8-87ec-17d8b920ebec",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dialClockMap_id_surjective",
+            "short": "dialClockMap_id_surjective"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.dialClockMap_id_surjective",
+            "short": "dialClockMap_id_surjective",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "Clock and dial (Tim ruling 14): carry as the die's interleaving pairing of a frozen dial with the successor clock, and Chalmers 1996 section 4 Claim as a strict Hom onto ofFun g, onto iff the dial values cover the states; Bool dial vs three self-loops as the control.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "5dc80c74-7801-4f41-927c-f20df1d8bff8",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.reflTransGen_fun_graph_iff",
+            "short": "reflTransGen_fun_graph_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.reflTransGen_fun_graph_iff",
+            "short": "reflTransGen_fun_graph_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Clock and dial (Tim ruling 14): carry as the die's interleaving pairing of a frozen dial with the successor clock, and Chalmers 1996 section 4 Claim as a strict Hom onto ofFun g, onto iff the dial values cover the states; Bool dial vs three self-loops as the control.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "7832effe-d6e2-4113-ac98-7de033d505a6",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dialClock_eq_carry",
+            "short": "dialClock_eq_carry"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.dialClock_eq_carry",
+            "short": "dialClock_eq_carry",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "Clock and dial (Tim ruling 14): carry as the die's interleaving pairing of a frozen dial with the successor clock, and Chalmers 1996 section 4 Claim as a strict Hom onto ofFun g, onto iff the dial values cover the states; Bool dial vs three self-loops as the control.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "93c58d6e-c421-4a46-bed5-56b23fa689a1",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.reflTransGen_false_iff",
+            "short": "reflTransGen_false_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.reflTransGen_false_iff",
+            "short": "reflTransGen_false_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Clock and dial (Tim ruling 14): carry as the die's interleaving pairing of a frozen dial with the successor clock, and Chalmers 1996 section 4 Claim as a strict Hom onto ofFun g, onto iff the dial values cover the states; Bool dial vs three self-loops as the control.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "97a390be-5926-4246-80ce-f3de5948594a",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dialClock_up_eq_carry",
+            "short": "dialClock_up_eq_carry"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.dialClock_up_eq_carry",
+            "short": "dialClock_up_eq_carry",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Clock and dial (Tim ruling 14): carry as the die's interleaving pairing of a frozen dial with the successor clock, and Chalmers 1996 section 4 Claim as a strict Hom onto ofFun g, onto iff the dial values cover the states; Bool dial vs three self-loops as the control.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ac087f1c-9459-4fa5-8e5a-48c1367e5281",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.clockMotion",
+            "short": "clockMotion"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.clockMotion",
+            "short": "clockMotion",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Clock and dial (Tim ruling 14): carry as the die's interleaving pairing of a frozen dial with the successor clock, and Chalmers 1996 section 4 Claim as a strict Hom onto ofFun g, onto iff the dial values cover the states; Bool dial vs three self-loops as the control.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ac249aea-3724-4e05-8820-e56b413be408",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dialClock_reach_iff",
+            "short": "dialClock_reach_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.dialClock_reach_iff",
+            "short": "dialClock_reach_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "Clock and dial (Tim ruling 14): carry as the die's interleaving pairing of a frozen dial with the successor clock, and Chalmers 1996 section 4 Claim as a strict Hom onto ofFun g, onto iff the dial values cover the states; Bool dial vs three self-loops as the control.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "adca7f69-32d3-44e1-81e5-0bbfc72e2c97",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dialClock_step_iff",
+            "short": "dialClock_step_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.dialClock_step_iff",
+            "short": "dialClock_step_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Clock and dial (Tim ruling 14): carry as the die's interleaving pairing of a frozen dial with the successor clock, and Chalmers 1996 section 4 Claim as a strict Hom onto ofFun g, onto iff the dial values cover the states; Bool dial vs three self-loops as the control.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b3d95fc3-0b6e-43f1-a828-4d8f77c0db2d",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dialClockMap_stepBack",
+            "short": "dialClockMap_stepBack"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.dialClockMap_stepBack",
+            "short": "dialClockMap_stepBack",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Clock and dial (Tim ruling 14): carry as the die's interleaving pairing of a frozen dial with the successor clock, and Chalmers 1996 section 4 Claim as a strict Hom onto ofFun g, onto iff the dial values cover the states; Bool dial vs three self-loops as the control.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c5b2667d-969a-4aa1-9e5e-f48f648ee31a",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dialClock_up",
+            "short": "dialClock_up"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.dialClock_up",
+            "short": "dialClock_up",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Clock and dial (Tim ruling 14): carry as the die's interleaving pairing of a frozen dial with the successor clock, and Chalmers 1996 section 4 Claim as a strict Hom onto ofFun g, onto iff the dial values cover the states; Bool dial vs three self-loops as the control.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "dd9daebe-1afd-4492-9027-150ceec8a59e",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dialClockIsoCarry",
+            "short": "dialClockIsoCarry"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.dialClockIsoCarry",
+            "short": "dialClockIsoCarry",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Clock and dial (Tim ruling 14): carry as the die's interleaving pairing of a frozen dial with the successor clock, and Chalmers 1996 section 4 Claim as a strict Hom onto ofFun g, onto iff the dial values cover the states; Bool dial vs three self-loops as the control.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e0bc9b80-9839-4c1c-bf12-731e18ceed41",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dialClockMap",
+            "short": "dialClockMap"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.dialClockMap",
+            "short": "dialClockMap",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Clock and dial (Tim ruling 14): carry as the die's interleaving pairing of a frozen dial with the successor clock, and Chalmers 1996 section 4 Claim as a strict Hom onto ofFun g, onto iff the dial values cover the states; Bool dial vs three self-loops as the control.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
         }
       ],
       "schema_version": "1",

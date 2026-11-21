@@ -318,6 +318,15 @@ example {σ : Type*} (f : σ → Option σ) {s t : σ} (h : f s = Option.none)
 --   (`clock_arrival_undecidable`, `ZeroParadox/DieCannotBe.lean` § XVI).
 #check @ZeroParadox.eval_dom_iff_arrives_noStepAt
 
+-- Statement: `(dialMotion Bool).aprod clockMotion = Motion.ofPartialFun carry`.
+#check @ZeroParadox.dialClock_eq_carry
+
+-- Statement: in dial × clock, `(d, n)` reaches `(d', m)` iff `d = d'` and `n ≤ m`.
+#check @ZeroParadox.dialClock_reach_iff
+
+-- Statement: `dialClockMap g s` is onto iff every `q` is reached from `s d` in `Motion.ofFun g`, for some `d`.
+#check @ZeroParadox.dialClockMap_surjective_iff
+
 /-! ### § VI-b. The pole, its swap, and what actually blocks the snap -/
 
 -- Statement: exchanging the halted and self-looping poles twice is the identity, pointwise:
