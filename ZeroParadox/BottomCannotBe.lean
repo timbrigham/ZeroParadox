@@ -439,6 +439,9 @@ example : (fun x : ℤ => -x) (0 : ℤ) = 0 := rfl
 #check @ZeroParadox.point_and_field_at_the_poles
 -- Statement: that inversion is a homeomorphism of the sphere.
 #check @ZeroParadox.rInvHomeo
+-- Statement: `0` of `ℚ_[2]` and `∞` are distinct, `rInvHomeo` exchanges them, and a property
+-- invariant under `rInvHomeo` holds at one iff at the other.
+#check @ZeroParadox.rInv_invariant_poles_iff
 -- Reading: the pole ⊥ = 0 = ∞ is a CHART claim, not a point identity, and `rInv_swaps` above is only
 -- its INVERSION witness (two points exchanged, and distinct). The other two witnesses follow.
 -- Statement: COINCIDENCE — in any `InfinitudeFloor`, the complexity at the floor is `⊤ : ℕ∞`.

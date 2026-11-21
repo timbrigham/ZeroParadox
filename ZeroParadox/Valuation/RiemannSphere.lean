@@ -279,6 +279,42 @@ example :
     TotallyDisconnectedSpace ℚ_[2] ∧ ¬ TotallyDisconnectedSpace ℝ :=
   ⟨⟨continuous_rInv, continuous_onePointInv_real⟩, padic_snaps 2, real_no_snap⟩
 
+/-- `Statement:` over any normed field `K`, a property `P` of points of `OnePoint K` with
+    `P (onePointInv z) ↔ P z` for every `z` holds at `0` iff it holds at `∞`. -/
+theorem onePointInv_invariant_poles_iff {K : Type*} [NormedField K] (P : OnePoint K → Prop)
+    (hP : ∀ z, P (onePointInv z) ↔ P z) : P (OnePoint.some 0) ↔ P ∞ := by
+  have h := hP (OnePoint.some 0)
+  rw [onePointInv_zero] at h
+  exact h.symm
+
+/-- `Statement:` `0` of `ℚ_[2]` and `∞` are distinct points of `Sphere`, `rInvHomeo` exchanges them, and
+    an `rInvHomeo`-invariant property `P` holds at `0` iff at `∞`.
+    `Reading:` **INVERSION** — distinct, exchanged, never identified; not a witness for the coincidence
+    `⊥ = 0 = ∞` (`ZeroParadox/BottomCannotBe.lean`). In swap-invariant vocabulary they are indiscernible,
+    so naming one `0` is a chart's choice: M. Black, "The Identity of Indiscernibles", Mind 61 (1952)
+    153–164, p. 156, "every quality and relational characteristic of the one would also be a property
+    of the other". -/
+theorem rInv_invariant_poles_iff (P : Sphere → Prop) (hP : ∀ z, P (rInvHomeo z) ↔ P z) :
+    (OnePoint.some (0 : ℚ_[2]) : Sphere) ≠ ∞ ∧
+      rInvHomeo (OnePoint.some (0 : ℚ_[2])) = ∞ ∧ rInvHomeo ∞ = OnePoint.some (0 : ℚ_[2]) ∧
+      (P (OnePoint.some (0 : ℚ_[2])) ↔ P ∞) := by
+  refine ⟨OnePoint.coe_ne_infty 0, rInv_swaps.1, rInv_swaps.2, ?_⟩
+  have h := hP (OnePoint.some 0)
+  rw [rInv_swaps.1] at h
+  exact h.symm
+
+-- Statement: the ℝ instance of `onePointInv_invariant_poles_iff`.
+example (P : OnePoint ℝ → Prop) (hP : ∀ z, P (onePointInv z) ↔ P z) :
+    P (OnePoint.some 0) ↔ P ∞ :=
+  onePointInv_invariant_poles_iff P hP
+
+-- Statement: control, `z = 0` is not invariant under `rInvHomeo` and separates `0` of `ℚ_[2]` from `∞`.
+example :
+    (¬ ∀ z : Sphere, (rInvHomeo z = OnePoint.some 0 ↔ z = OnePoint.some 0)) ∧
+    ¬ ((OnePoint.some (0 : ℚ_[2]) : Sphere) = OnePoint.some 0 ↔ (∞ : Sphere) = OnePoint.some 0) :=
+  ⟨fun h => OnePoint.coe_ne_infty (0 : ℚ_[2]) ((h ∞).mp rInv_swaps.2).symm,
+   fun h => OnePoint.coe_ne_infty (0 : ℚ_[2]) (h.mp rfl).symm⟩
+
 /-! ### § V. The maps that FIX the pole-pair, and why that makes it an AXIS
 
 `rInv` **exchanges** `0` and `∞`. The scalings `x ↦ 2 ^ n * x` hold both still and translate along the
@@ -992,6 +1028,8 @@ open ZeroParadox
 #print axioms rInv_involutive
 #print axioms continuous_rInv
 #print axioms rInv_swaps
+#print axioms onePointInv_invariant_poles_iff
+#print axioms rInv_invariant_poles_iff
 -- § V: the pole-FIXING maps. `rScale_add` is the infinite-cyclic property; `rInv_conj_rScale` is the
 -- only statement here that consumes both maps at once; `stabiliser_is_bigger` is the NO-GO gauge.
 #print axioms rScale
