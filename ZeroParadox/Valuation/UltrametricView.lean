@@ -1,4 +1,4 @@
--- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): in an ultrametric space, dist x c < dist y c implies dist x y = dist y c; on ℤ_[2], doubling halves distances with image the ball of radius 1/2, and translations (ℤ_[2]) and xor maps (ℕ → Bool) send any point to any other. Curated results indexed in ZeroParadox/MANIFEST.md.
+-- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): in an ultrametric space, dist x c < dist y c implies dist x y = dist y c; on ℤ_[2], doubling halves distances with image the closed ball of radius 1/2 about 0; for any two points, some isometry of ℤ_[2] sends the first to the second, and likewise some involutive homeomorphism of ℕ → Bool. Curated results indexed in ZeroParadox/MANIFEST.md.
 import ZeroParadox.Valuation.Padic
 import ZeroParadox.Valuation.PadicStillPoint
 import ZeroParadox.Valuation.PadicErgodic
@@ -8,7 +8,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# In an ultrametric space, dist x c < dist y c implies dist x y = dist y c; on ℤ_[2], doubling halves distance and has image the ball of radius 1/2; an isometry of ℤ_[2], and an involutive homeomorphism of ℕ → Bool, sends any point to any other
+# In an ultrametric space, dist x c < dist y c implies dist x y = dist y c; on ℤ_[2], doubling halves distance and has image the closed ball of radius 1/2 about 0; ℤ_[2] and ℕ → Bool are homogeneous: for any two points, some isometry of ℤ_[2], likewise some involutive homeomorphism of ℕ → Bool, sends the first to the second
 
 ## Engineer's Take
 
@@ -86,9 +86,13 @@ theorem zoom_range : Set.range (fun x : ℤ_[2] => 2 * x) = {z : ℤ_[2] | ‖z�
 
 /-! ### § III. Homogeneity -/
 
-/-- `Statement:` for any `x y : ℤ_[2]`, some isometric bijection of `ℤ_[2]` sends `x` to `y`. -/
+/-- `Statement:` for any `x y : ℤ_[2]`, some isometric bijection of `ℤ_[2]` sends `x` to `y`; the
+proof's witness is translation by `y - x`. -/
 theorem homog_Z2 (x y : ℤ_[2]) : ∃ e : ℤ_[2] ≃ᵢ ℤ_[2], e x = y :=
   ⟨IsometryEquiv.addLeft (y - x), by simp⟩
+
+-- Statement: on `Q₂`, translation is an isometry: the `example` `dist (x - a) (y - a) = dist x y`
+-- after `c3_irreversible` (`ZeroParadox/Valuation/Padic.lean`).
 
 /-- `Statement:` pointwise xor with a fixed sequence `m`. -/
 def xorWith (m : ℕ → Bool) (z : ℕ → Bool) : ℕ → Bool := fun n => xor (m n) (z n)
@@ -123,9 +127,10 @@ theorem homog_cantor (x y : ℕ → Bool) :
 -- Statement: the forward orbit of `0` of `ℤ_[2]` under `x ↦ x + 1` is dense: the `x = 0`, `p = 2`
 -- case of `denseRange_odometer_orbit`.
 example : DenseRange (fun n : ℕ => (0 : ℤ_[2]) + (n : ℤ_[2])) := denseRange_odometer_orbit 0
--- Statement: the trivial character `paChar n 0`, the zero of `AddChar (ZMod (p ^ n)) ℂ`, takes the
--- same value at `c + x` as at `x`. Reading: CARRIER — `0` of `ℤ_[2]` moves and its orbit is dense,
--- `0` of the character group is fixed by every translation; no equation between the two is stated.
+-- Statement: `paChar n 0`, the zero character `0` of `AddChar (ZMod (p ^ n)) ℂ` composed with
+-- reduction mod `p ^ n`, which is the constant function `1` on `ℤ_[p]` (`paChar_trivial`), takes the
+-- same value at `c + x` as at `x`. Reading: CARRIER — `0` of `ℤ_[2]` moves and its orbit is dense;
+-- the function `paChar n 0` on `ℤ_[p]` is fixed by every translation; no equation between the two is stated.
 #check @stillPoint_koopman_fixed
 
 end ZeroParadox

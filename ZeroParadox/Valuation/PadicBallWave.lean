@@ -1,11 +1,11 @@
--- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): on ℤ_p, the integral of a level-n character over the ball of radius p^(-j) is p^(-j) when n ≤ j, for every character, and 0 when j < n, for a primitive one. Curated results indexed in ZeroParadox/MANIFEST.md.
+-- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): on ℤ_p, the integral of a level-n character over the closed ball of radius p^(-j) about 0 is p^(-j) when n ≤ j, for every character, and 0 when j < n, for a primitive one. Curated results indexed in ZeroParadox/MANIFEST.md.
 import ZeroParadox.Valuation.PadicStillPoint
 import Mathlib.Tactic
 
 set_option maxHeartbeats 400000
 
 /-!
-# On ℤ_p, a level-n character integrates over the ball of radius p^(-j) to p^(-j) when n ≤ j (every character) and, for a primitive character, to 0 when j < n
+# On ℤ_p, a level-n character integrates over the closed ball of radius p^(-j) about 0 to p^(-j) when n ≤ j (every character) and, for a primitive character, to 0 when j < n
 
 ## Engineer's Take
 
@@ -66,6 +66,11 @@ theorem paChar_ball_integral_tradeoff (n j : ℕ) (φ : AddChar (ZMod (p ^ n)) �
   split_ifs with h
   · exact paChar_ball_integral_of_le n j h φ
   · exact paChar_ball_integral_eq_zero n φ hφ (by omega)
+
+-- Reading: over ℚ_p this is the standard ball transform F[Ω(p^(-k)|·|_p)](ξ) = p^k Ω(p^k|ξ|_p)
+-- (Vladimirov–Volovich–Zelenov, p-adic Analysis and Mathematical Physics, IV (3.1), as quoted in
+-- Khrennikov–Shelkovich, arXiv:0808.3338, eq. (2.9)); a Lean ℚ_p form is
+-- `QuadFormsKB.Analysis.fourierP_ballInd` (jonhanke/quadratic-forms-lean).
 
 /-- `Statement:` at every level `n`, the trivial character `paChar n 0` integrates to `1` over
 `{‖z‖ ≤ p^0}`, which is all of `ℤ_p`. -/
