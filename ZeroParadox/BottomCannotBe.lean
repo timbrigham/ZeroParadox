@@ -167,8 +167,8 @@ example : ∀ x : NNReal, ¬ ZeroParadox.HasFirstStep x := ZeroParadox.no_firstS
 -- Statement: ℤ_[2]'s 0 is least in the norm preorder and greatest in the `q2Val` preorder, and doubling
 -- lowers in the first and raises in the second.
 #check @ZeroParadox.z2_two_views
--- Statement: an isometric bijection of `ℤ_[2]` sends any point to any other, ℤ_[2]'s 0 included
--- (`ZeroParadox/Valuation/UltrametricView.lean`).
+-- Statement: for any two points of `ℤ_[2]`, ℤ_[2]'s 0 included, some isometric bijection of `ℤ_[2]`
+-- sends the first to the second (`ZeroParadox/Valuation/UltrametricView.lean`).
 #check @ZeroParadox.homog_Z2
 -- Statement: in `TopCat` the one-point space `{0} ⊆ ℚ₂` is TERMINAL (it is not initial,
 -- `padic_bottom_not_initial`); `TopCat`'s initial object is the empty space
@@ -646,6 +646,8 @@ noncomputable example : Ordinal.{0} →o Ordinal.{0} :=
 #check @ZeroParadox.vladLam_neg_one
 -- Statement: CONTROL, for `α < 0`, `vladLam p α` is bounded above.
 #check @ZeroParadox.vladLam_bounded_of_neg
+-- Reading: eigen-equations on characters only; completeness of the characters in `L²(ℤ_p)` is not
+-- claimed here (§ V header of `ZeroParadox/Valuation/PadicStillPoint.lean`).
 -- Statement: for primitive `φ`, `paChar n φ` integrates over `{‖z‖ ≤ p^(-j)}` to `p^(-j)` if `n ≤ j`,
 -- else to `0` (`ZeroParadox/Valuation/PadicBallWave.lean`).
 #check @ZeroParadox.paChar_ball_integral_tradeoff
@@ -653,8 +655,6 @@ noncomputable example : Ordinal.{0} →o Ordinal.{0} :=
 -- to `nodeBall j a` to the level-`n` eigenvalue `vladLam p α n` times itself, pointwise on ℤ_[p]
 -- (`ZeroParadox/Valuation/PadicWavelet.lean`).
 #check @ZeroParadox.vladimirov_kozWavelet
--- Reading: eigen-equations on characters only; completeness of the characters in `L²(ℤ_p)` is not
--- claimed here (§ V header of that file).
 
 /-! ### ⊥ of `End` — one tape read as depth and as width, and the one-way flow -/
 

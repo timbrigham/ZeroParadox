@@ -269,7 +269,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 
 ### Order / lattice (ZP-A, ZP-E)
 
-- `ZeroParadox/Order/DieBranches.lean` - If f carries L as the prefix order on Bool words, the branches s ↦ (n ↦ f (first n bits of s)) are injective, L-increasing, L-incomparable past the first difference, and every L-increasing length-indexed node sequence is exactly one branch; under tree_of_square's hypotheses such f exists
+- `ZeroParadox/Order/DieBranches.lean` - If f carries L as the prefix order on Bool words, the map from s to its branch n ↦ f (first n bits of s) is injective, each branch is L-increasing, branches are L-incomparable past the first difference, and every L-increasing length-indexed node sequence is exactly one branch; under tree_of_square's hypotheses such f exists
 - `ZeroParadox/Order/DieJoints.lean` - Joints and dual joints: cut points approached from one side and not reached there
 - `ZeroParadox/Order/MarkovContractionDual.lean` - The dual contraction dichotomy on the Markov ν-side (#2)
 - `ZeroParadox/Order/MarkovPlacement.lean` - The unplaced node: does the Markov attractor (#2) admit ANY order-extremal or categorical placement?
@@ -312,7 +312,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Valuation/OneWayFlow.lean` - The one-way flow: forward attraction and backward exit, two charts of `boundaryDouble`
 - `ZeroParadox/Valuation/PadicAttractor.lean` - The p-adic floor #3 as a dynamical attractor
 - `ZeroParadox/Valuation/PadicBallIndicator.lean` - The p-adic ball indicator in L²(ℤ_p)
-- `ZeroParadox/Valuation/PadicBallWave.lean` - On ℤ_p, a level-n character integrates over the ball of radius p^(-j) to p^(-j) when n ≤ j (every character) and, for a primitive character, to 0 when j < n
+- `ZeroParadox/Valuation/PadicBallWave.lean` - On ℤ_p, a level-n character integrates over the closed ball of radius p^(-j) about 0 to p^(-j) when n ≤ j (every character) and, for a primitive character, to 0 when j < n
 - `ZeroParadox/Valuation/PadicCharacter.lean` - p-adic additive characters and their orthogonality on ℤ_p
 - `ZeroParadox/Valuation/PadicErgodic.lean` - Ergodicity of the p-adic odometer
 - `ZeroParadox/Valuation/PadicHaar.lean` - p-adic Haar measure on ℤ_p
@@ -322,7 +322,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Valuation/PadicKozyrev.lean` - A genuine eigenfunction of D^α: the level-1 p-adic character
 - `ZeroParadox/Valuation/PadicStillPoint.lean` - The still-point: the trivial character is the joint fixed/annihilated bottom
 - `ZeroParadox/Valuation/PadicVladimirov.lean` - The Taibleson–Vladimirov operator D^α on ℤ_p
-- `ZeroParadox/Valuation/PadicWavelet.lean` - On ℤ_p, a primitive level-n character times the indicator of a ball of radius p^(-j), j < n, has integral zero and is an eigenfunction of the compact ℤ_p operator D^α with the bare character's level-n eigenvalue; any two characters times indicators of disjoint balls are orthogonal
+- `ZeroParadox/Valuation/PadicWavelet.lean` - On ℤ_p, a primitive level-n character times the indicator of a ball of radius p^(-j), j < n, has integral zero and is an eigenfunction of D^α on ℤ_p (the `vladimirov` operator, not the ℚ_p one) with the bare character's level-n eigenvalue; any two characters times indicators of disjoint balls are orthogonal
 - `ZeroParadox/Valuation/PolarityFlip.lean` - 2-adic inversion negates the valuation (a cited Mathlib fact + one tower corollary)
 - `ZeroParadox/Valuation/PoleCompletion.lean` - The pole completion: the floor is a genuine self-application fixed point (the Quine atom on the tree)
 - `ZeroParadox/Valuation/PoleCorners.lean` - The four corners: 0 and ∞ have exactly four representations to each other
@@ -342,7 +342,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Valuation/TowerTape.lean` - Local floors as subtape poles, and a tower as one tape
 - `ZeroParadox/Valuation/TowerTapeSnap.lean` - The tower tape fed to the snap, chart by chart
 - `ZeroParadox/Valuation/TreeNotForced.lean` - The binary tree above ⊥ of a join-semilattice: not forced by ⊥ as greatest lower bound of non-⊥ members, a first step, infinitely many atoms and strong atomicity of the whole order; forced, one way (sufficient, not necessary), by depth at every element with strong atomicity
-- `ZeroParadox/Valuation/UltrametricView.lean` - In an ultrametric space, dist x c < dist y c implies dist x y = dist y c; on ℤ_[2], doubling halves distance and has image the ball of radius 1/2; an isometry of ℤ_[2], and an involutive homeomorphism of ℕ → Bool, sends any point to any other
+- `ZeroParadox/Valuation/UltrametricView.lean` - In an ultrametric space, dist x c < dist y c implies dist x y = dist y c; on ℤ_[2], doubling halves distance and has image the closed ball of radius 1/2 about 0; ℤ_[2] and ℕ → Bool are homogeneous: for any two points, some isometry of ℤ_[2], likewise some involutive homeomorphism of ℕ → Bool, sends the first to the second
 
 ### Information (ZP-C)
 

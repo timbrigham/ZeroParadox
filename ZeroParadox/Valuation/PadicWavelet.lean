@@ -1,11 +1,11 @@
--- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): on ℤ_p, a primitive level-n character restricted to a ball of radius p^(-j) with j < n has integral zero and is an eigenfunction of the compact ℤ_p Vladimirov operator D^α with the level-n eigenvalue of the bare character, whatever the ball's centre; character-times-ball functions on disjoint balls are orthogonal. Curated results indexed in ZeroParadox/MANIFEST.md.
+-- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): on ℤ_p, a primitive level-n character restricted to a ball of radius p^(-j) with j < n has integral zero and is an eigenfunction of D^α on ℤ_p (the `vladimirov` operator, not the ℚ_p one) with the level-n eigenvalue of the bare character, whatever the ball's centre; character-times-ball functions on disjoint balls are orthogonal. Curated results indexed in ZeroParadox/MANIFEST.md.
 import ZeroParadox.Valuation.PadicBallWave
 import Mathlib.Tactic
 
 set_option maxHeartbeats 400000
 
 /-!
-# On ℤ_p, a primitive level-n character times the indicator of a ball of radius p^(-j), j < n, has integral zero and is an eigenfunction of the compact ℤ_p operator D^α with the bare character's level-n eigenvalue; any two characters times indicators of disjoint balls are orthogonal
+# On ℤ_p, a primitive level-n character times the indicator of a ball of radius p^(-j), j < n, has integral zero and is an eigenfunction of D^α on ℤ_p (the `vladimirov` operator, not the ℚ_p one) with the bare character's level-n eigenvalue; any two characters times indicators of disjoint balls are orthogonal
 
 ## Engineer's Take
 
@@ -18,7 +18,7 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 ## Formal Overview (AI-assisted)
 `Statement:` `kozWavelet n φ j a`, a character times a ball indicator (the shape of S. V. Kozyrev,
-Izv. Math. 66 (2002) 367), on Haar `ℤ_p` with the compact operator `vladimirov`, not the `ℚ_p` one.
+Izv. Math. 66 (2002) 367), on Haar `ℤ_p` with D^α on `ℤ_p` (the `vladimirov` operator, not the `ℚ_p` one).
 No claim about Kozyrev's normalisation, indexing or completeness of the family is made.
 -/
 
@@ -287,6 +287,22 @@ example (n : ℕ) (φ : AddChar (ZMod (p ^ n)) ℂ) (hφ : φ.IsPrimitive) {j : 
     (a : ℤ_[p]) (α : ℝ) (x : ℤ_[p]) :
     vladimirov α (kozWavelet n φ j a) x = ((vladLam p α n : ℝ) : ℂ) * kozWavelet n φ j a x := by
   rw [vladimirov_kozWavelet n φ hφ hjn a α x]; rfl
+
+-- Statement: `kozWavelet n φ j a` is nonzero at its centre `a`, so it is not the zero function.
+example (n : ℕ) (φ : AddChar (ZMod (p ^ n)) ℂ) (j : ℕ) (a : ℤ_[p]) :
+    kozWavelet n φ j a a ≠ 0 := by
+  rw [kozWavelet_of_mem n φ j a (self_mem_nodeBall j a)]
+  intro h
+  have h1 : paChar (p := p) n φ a * paChar (p := p) n φ (-a) = 1 := by
+    rw [← paChar_add, add_neg_cancel]; simp [paChar]
+  rw [h, zero_mul] at h1; exact zero_ne_one h1
+
+-- Reading: over ℚ_p, Kozyrev (arXiv:math-ph/0012019, Lemma 1 and its Remark; Theorem 2, eq. (6))
+-- proves the character-times-ball wavelet is a D^α eigenfunction with the bare character's
+-- eigenvalue, independent of translation; for the operator integrated over a compact ball,
+-- Bikulov–Zubarev (arXiv:1504.03624, Lemma 1) give character eigenvalues depending only on |k|_p;
+-- Albeverio–Kozyrev (arXiv:0708.2074, Theorem 13) give ultrametric-wavelet eigenvalues.
+-- `vladimirov_kozWavelet` is an instance of this known program, on ℤ_p.
 
 end ZeroParadox
 
