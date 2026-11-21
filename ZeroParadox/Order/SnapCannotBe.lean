@@ -54,8 +54,8 @@ section SnapCannotBeIndex
 #check @ZeroParadox.exists_startBit_iff              -- Statement: a tape has a first `true` iff it is not ⊥ of `ℕ → Bool`, so `hw` of `t_snap_of_fires_once` holds exactly at the tapes other than ⊥ of `ℕ → Bool`. Reading: the start bit (`ZeroParadox/Information/StartBit.lean`)
 -- `Statement:` CONTROL, a particular tape need not fire: the all-`false` tape fires at no stage.
 example : ¬ ∃ k, (fun _ => false : ℕ → Bool) k = true := fun ⟨_, h⟩ => Bool.false_ne_true h
--- `Statement:` occurrence once: the slot chart's sequence steps at index 1 and stays, so it is not an
--- `IsStrictStateSequence` (ZP-A's proper ascent at every step).
+-- `Statement:` occurrence once: for every `φ`, the sequence `φ ∘ firedRun` is not strict: it repeats
+-- from index 1, so it is not an `IsStrictStateSequence` (ZP-A's proper ascent at every step).
 example {L : Type*} [ZeroParadox.ZPSemilattice L] (φ : Bool → L) (w : ℕ → Bool) (hw : ∃ k, w k = true) :
     ¬ ZeroParadox.ZPSemilattice.IsStrictStateSequence (φ ∘ ZeroParadox.firedRun w hw) := fun h => by
   have a : ZeroParadox.firedRun w hw 1 = true := (ZeroParadox.firedRun_spec w hw).2 0

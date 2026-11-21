@@ -178,9 +178,11 @@ example : ¬ ∃ f : List Bool → Unit, ∀ l l',
 
 /-! ### § IV. The branch map: shift square, topology, metric, ℤ_[2]
 `Reading:` the prefix map from Cantor space to the ends of the binary tree is a homeomorphism
-(Ramírez Maluendas–Valdez, arXiv:1603.00503, Remark 1.2); the end space of a tree is a Cantor set with
-an action conjugate to the one-sided shift (Calegari, arXiv:2105.11265, Cor. 9.7); a boundary distance
-is the weight `ε(v) = diam [v]` of the meet vertex (Pearson–Bellissard, arXiv:0802.1336, Prop. 6). -/
+(Ramírez Maluendas–Valdez, arXiv:1603.00503, Remark 1.2; compare Mathlib `CantorScheme.inducedMap`);
+for the tree of a degree-`d` sausage shift, the end space is a Cantor set on which the shift polynomial
+acts conjugately to the one-sided shift on `d` letters (Calegari, arXiv:2105.11265, Cor. 9.7); a
+boundary distance is the weight `ε(v) = diam [v]` of the meet vertex (Pearson–Bellissard,
+arXiv:0802.1336, Prop. 6 and its proof, App. A.2). -/
 
 /-- `Statement:` `tapePrefix (tapeCons b s) (n + 1) = b :: tapePrefix s n`. -/
 theorem tapePrefix_tapeCons (b : Bool) (s : ℕ → Bool) (n : ℕ) :
@@ -251,7 +253,7 @@ theorem flipSecond_prefix_iff (l l' : List Bool) : flipSecond l <+: flipSecond l
   exact ⟨fun h => by simpa [inv] using mono h, mono⟩
 
 -- Statement: CONTROL, `sqWord ∘ flipSecond` also carries `L` as the prefix order, and no `c'` makes
--- `j (c', ·)` its prepend-`b` square at depth 2.
+-- `j (c', ·)` its prepend-`b` square at every depth.
 example {α : Type*} (L : α → α → Prop) (hrefl : ∀ x, L x x)
     (htr : ∀ x y z, L x y → L y z → L x z) (j : α × α → α)
     (hj : ∀ p q, L (j p) (j q) ↔ L p.1 q.1 ∧ L p.2 q.2) (r a : α) (hr : L r (j (r, r)))
@@ -492,9 +494,11 @@ theorem appr_neg_one_sub_add (x : ℤ_[2]) (n : ℕ) :
   omega
 
 /-- `Statement:` the digit tape of `-1 - x` is the bitwise complement of the digit tape of `x`.
-`Reading:` Black's two spheres (M. Black, "The Identity of Indiscernibles", Mind 61 (1952) 153–164):
-the die supplies a pair indiscernible from inside its structure (`swap_not_separates` below), and which
-of them carries 0 of ℤ_[2] is fixed only by a chart, a convention. -/
+`Reading:` Black's two spheres (M. Black, "The Identity of Indiscernibles", Mind 61 (1952) 153–164,
+p. 156: "every quality and relational characteristic of the one would also be a property of the
+other"): the word tree's prefix order cannot tell the two branches apart (`map_not_prefix_automorphism`,
+`sqWord_map_not_iff`), while the die's named start points `r`, `a` do separate them (the second CONTROL
+in § VI); which of them carries 0 of ℤ_[2] is fixed by the choice of labelling. -/
 theorem padicTape_neg_one_sub (x : ℤ_[2]) : padicTape (-1 - x) = fun n => !(padicTape x n) := by
   funext k
   have hy := appr_two_succ (-1 - x) k
@@ -568,10 +572,26 @@ theorem swap_not_separates (P : (ℕ → Bool) → Prop) (hP : ∀ s, P (fun n =
 example : (fun s : ℕ → Bool => s 0 = false) (fun _ => false) ∧
     ¬ (fun s : ℕ → Bool => s 0 = false) (fun _ => true) := ⟨rfl, by decide⟩
 
--- Statement: the two-pole contrast: add a join and ⊥ of `L` is picked out positively,
--- `(∀ x, join S x = x) ↔ S = bot` in any `ZPSemilattice L` (`da2_bottom_characterization`,
+-- Statement: CONTROL, the die's start points separate the two branches: depth 1 of the `sqWord`
+-- branch of the all-false tape is `j (j (a, r), r)`, and given `¬ L a r` that of the all-true tape is not.
+example {α : Type*} (L : α → α → Prop) (hrefl : ∀ x, L x x) (j : α × α → α)
+    (hj : ∀ p q, L (j p) (j q) ↔ L p.1 q.1 ∧ L p.2 q.2) (r a : α) (hna : ¬ L a r) :
+    let P : (ℕ → Bool) → Prop := fun s =>
+      wordBranch (Motion.sqWord j r a) s 1 = j (j (a, r), r)
+    P (fun _ => false) ∧ ¬ P (fun _ => true) := by
+  intro P
+  refine ⟨rfl, fun h => ?_⟩
+  have h' : wordBranch (Motion.sqWord j r a) (fun _ => true) 1 = j (j (r, a), r) := rfl
+  change wordBranch (Motion.sqWord j r a) (fun _ => true) 1 = j (j (a, r), r) at h
+  rw [h'] at h
+  have hL : L (j (j (a, r), r)) (j (j (r, a), r)) := by rw [h]; exact hrefl _
+  exact hna ((hj _ _).1 ((hj _ _).1 hL).1).1
+
+-- Reading: the two-pole contrast: add a join and ⊥ of `M` is picked out positively,
+-- `(∀ x, join S x = x) ↔ S = bot` in any `ZPSemilattice M` (`da2_bottom_characterization`,
 -- `ZeroParadox/Order/Snap.lean`); in the die the two cells are `L`-incomparable
--- (`Motion.sqCell_le_iff`), so this indistinguishability is a fact about the die, not every chart.
+-- (`Motion.sqCell_le_iff`), so this indistinguishability is a fact about the die's order on its word
+-- tree, not every chart.
 
 end ZeroParadox
 

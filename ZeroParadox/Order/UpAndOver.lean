@@ -117,8 +117,8 @@ theorem up_le_of_covBy {β : Type u} [LinearOrder β] (V : UpAndOver β) {y b z 
 
 /-- `Statement:` for a closure operator `c`, `y < b` and `b` below every point strictly above `y` give
     `c b` as the least closed point strictly above `y`. Folklore: `ClosureOperator.closure_min`; covers
-    of a linear order qualify (`CovBy.Ioi_eq`); on `Ordinal`, `Ordinal.deriv_add_one`; Ganter's next-closure
-    step, enumerating closed sets in lectic order (Borchmann, arXiv:1111.3975, § 2, Theorem 1). -/
+    of a linear order qualify (`CovBy.Ioi_eq`); on `Ordinal`, `Ordinal.deriv_add_one`; cf. Ganter's next-closure
+    step (Borchmann, arXiv:1111.3975, Thm 1), its analogue in the lectic order. -/
 theorem isLeast_landing_of_gateway (c : ClosureOperator α) {y b : α} (hyb : y < b)
     (hg : ∀ z, y < z → b ≤ z) : IsLeast {z | c.IsClosed z ∧ y < z} (c b) :=
   ⟨⟨c.isClosed_closure b, hyb.trans_le (c.le_closure b)⟩, fun z hz => c.closure_min (hg z hz.2) hz.1⟩
@@ -184,8 +184,8 @@ theorem isEmpty_of_denselyOrdered [DenselyOrdered α] : IsEmpty (UpAndOver α) :
 
 end UpAndOver
 
-/-! ### § III. NO-GO gauge — what fails to be an `UpAndOver`, and the smallest member. Each
-control's `Statement:` names each field that refuses it. -/
+/-! ### § III. NO-GO gauge — controls on the class and on the lemma's hypotheses, and the smallest
+member. Each control on the class names in its `Statement:` each field that refuses it. -/
 
 -- `Statement:` the three-point chain `Fin 3` carries an `UpAndOver`: the closure sending `1` to `2` and
 -- fixing every other point, with the landing `0`, its cover `1`, and `up` moving `1` to `2`. By the
