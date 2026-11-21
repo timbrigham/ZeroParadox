@@ -192,6 +192,14 @@ not a defect. What it removes is an argument, not an obstacle — the inference 
 trapped at a fixed point, therefore stationary"* is invalid, because the middle step can fail while the
 conclusion still holds for a different reason.
 
+`Reading:` this is the shape of Putnam's triviality argument as Chalmers reconstructs it (*Does a
+Rock Implement Every Finite-State Automaton?*, Synthese **108** (1996) 309-333, § 2, read from the
+author's copy at consc.net/papers/rock.html): a system that *"is in different maximal states at
+different times"* is mapped to an automaton's states by *"taking the disjunction of associated
+physical states"*, so whether a never-repeating run such as `carry`'s counts as moving depends on the
+grouping chosen; Chalmers' answer (§ 3) is that *"Putnam's system does not satisfy the right kind of
+state-transition conditionals"*, a condition on what the system would do and not only on its actual run.
+
 **Prior art — this is STUTTERING, and the standard name was one citation away.** A step with no
 observable effect is a *stutter step*; the induced equivalence is *stutter equivalence*. Mathlib's own
 Turing development uses the word for exactly this (`Mathlib/Computability/TuringMachine/PostTuringMachine.lean`:
