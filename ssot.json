@@ -250174,6 +250174,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "07b8aac3-7974-4972-afe7-bcd781d0af69",
+          "new": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dist_wordBranch_succ",
+            "short": "dist_wordBranch_succ"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.dist_wordBranch_succ",
+            "short": "dist_wordBranch_succ",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "DieBranches § IV-V: branch-map shift square, closed embedding, PiNat metric (x1/2), Z_2 composite, not-relabelling, complement x -> -1 - x (2026-11-21).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "07c7f150-6d9c-4dd9-adb8-76462ac77bc7",
           "new": {
             "file": "ZeroParadox/Ordinal/SnapNucleusConstructive.lean",
@@ -267446,6 +267483,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "220d45cc-03f2-4578-aacb-8bbb0bc57f59",
+          "new": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.wordBranch_eq_iff",
+            "short": "wordBranch_eq_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.wordBranch_eq_iff",
+            "short": "wordBranch_eq_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "DieBranches § IV-V: branch-map shift square, closed embedding, PiNat metric (x1/2), Z_2 composite, not-relabelling, complement x -> -1 - x (2026-11-21).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "221f9628-fc11-4182-b70d-e61edf34edbb",
           "new": {
@@ -272169,6 +272243,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "29b421e0-dccb-4489-b0a8-c121d552115e",
+          "new": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.notTree_hf",
+            "short": "notTree_hf"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.notTree_hf",
+            "short": "notTree_hf",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "DieBranches § IV-V: branch-map shift square, closed embedding, PiNat metric (x1/2), Z_2 composite, not-relabelling, complement x -> -1 - x (2026-11-21).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "29c17702-5f3f-49ce-951a-f6e243646283",
           "new": {
             "file": "ZeroParadox/Category/DiagonalWitness.lean",
@@ -274648,6 +274759,43 @@
             ]
           },
           "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "2d60c657-4fc7-4cc1-9b7c-9723d5423666",
+          "new": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.wordBranch_tapeCons",
+            "short": "wordBranch_tapeCons"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.wordBranch_tapeCons",
+            "short": "wordBranch_tapeCons",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "DieBranches § IV-V: branch-map shift square, closed embedding, PiNat metric (x1/2), Z_2 composite, not-relabelling, complement x -> -1 - x (2026-11-21).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -287043,6 +287191,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "400ebe38-adab-4dea-80d8-19cbd5f3ccea",
+          "new": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.sqLayer_false_along_iff",
+            "short": "sqLayer_false_along_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.sqLayer_false_along_iff",
+            "short": "sqLayer_false_along_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "DieBranches § IV-V: branch-map shift square, closed embedding, PiNat metric (x1/2), Z_2 composite, not-relabelling, complement x -> -1 - x (2026-11-21).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "4019e76e-27c8-4d56-b86b-ec670a173f48",
           "new": {
             "file": "ZeroParadox/Valuation/TreeNotForced.lean",
@@ -289034,6 +289219,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "4357275a-3523-4466-afc6-d0f393742808",
+          "new": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.sqWord_branch_semiconj_tail",
+            "short": "sqWord_branch_semiconj_tail"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.sqWord_branch_semiconj_tail",
+            "short": "sqWord_branch_semiconj_tail",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "DieBranches § IV-V: branch-map shift square, closed embedding, PiNat metric (x1/2), Z_2 composite, not-relabelling, complement x -> -1 - x (2026-11-21).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -295220,6 +295442,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "4cb2d569-4d24-494a-98bc-55c0dd828a75",
+          "new": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.notTree_branch",
+            "short": "notTree_branch"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.notTree_branch",
+            "short": "notTree_branch",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "DieBranches § IV-V: branch-map shift square, closed embedding, PiNat metric (x1/2), Z_2 composite, not-relabelling, complement x -> -1 - x (2026-11-21).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "4cba5a94-0be2-4fd9-828f-6672f93b4cc8",
           "new": {
@@ -297470,6 +297729,43 @@
             ]
           },
           "reason": "New file GraphBisim.lean: finite membership graphs, Aczel bisimulation, dropLoops (control) vs wfPart (bisimulation-invariant), Omega/empty/zero-star/one/two-cycle examples",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "506bee4a-51d6-4d67-be88-5a4a116beba3",
+          "new": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.sqWord_map_not_iff",
+            "short": "sqWord_map_not_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.sqWord_map_not_iff",
+            "short": "sqWord_map_not_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "DieBranches § VI: the cell swap as an automorphism of the word tree; swap-invariant predicates do not separate the all-false and all-true tapes (2026-11-21).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -300562,6 +300858,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "55c0e216-7e98-4047-96dc-7884cf65d268",
+          "new": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.padicTape_neg_one_sub",
+            "short": "padicTape_neg_one_sub"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.padicTape_neg_one_sub",
+            "short": "padicTape_neg_one_sub",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "DieBranches § IV-V: branch-map shift square, closed embedding, PiNat metric (x1/2), Z_2 composite, not-relabelling, complement x -> -1 - x (2026-11-21).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "55c15eb4-5b5d-45c7-9324-c8e2e08d546b",
           "new": {
             "file": "ZeroParadox/Multihomed/BendDie.lean",
@@ -301881,6 +302214,43 @@
             ]
           },
           "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "5788fba5-5b41-4ec5-b9bf-0b4ea0c04843",
+          "new": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.flipSecond_prefix_iff",
+            "short": "flipSecond_prefix_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.flipSecond_prefix_iff",
+            "short": "flipSecond_prefix_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "DieBranches § IV-V: branch-map shift square, closed embedding, PiNat metric (x1/2), Z_2 composite, not-relabelling, complement x -> -1 - x (2026-11-21).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -303839,6 +304209,43 @@
           "verify": {
             "axioms": "propext",
             "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "5a1b54c2-d7fa-46a4-b49a-1fa06c683476",
+          "new": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.neg_one_sub_semiconj_two_mul",
+            "short": "neg_one_sub_semiconj_two_mul"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.neg_one_sub_semiconj_two_mul",
+            "short": "neg_one_sub_semiconj_two_mul",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "DieBranches § IV-V: branch-map shift square, closed embedding, PiNat metric (x1/2), Z_2 composite, not-relabelling, complement x -> -1 - x (2026-11-21).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
           }
         },
         {
@@ -310244,6 +310651,43 @@
             ]
           },
           "reason": "T-H3 conjuncts as die motions, with controls and two obstructions (ZeroParadox/Multihomed/TH3Die.lean; Tim: \"Land it\", 2026-11-18)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "644e0745-f462-44c8-a446-95b82d49a14d",
+          "new": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.tapePrefix_tapeCons",
+            "short": "tapePrefix_tapeCons"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.tapePrefix_tapeCons",
+            "short": "tapePrefix_tapeCons",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "DieBranches § IV-V: branch-map shift square, closed embedding, PiNat metric (x1/2), Z_2 composite, not-relabelling, complement x -> -1 - x (2026-11-21).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -318113,6 +318557,43 @@
             ]
           },
           "reason": "phase-order arc r2 fixes: rename F3, extremal-placement characterization (P2), floor-above epsilon0 landing (P3)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "70a4ee50-8c66-4e5e-8b2f-7d0d39d6ffd1",
+          "new": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.map_not_prefix_iff",
+            "short": "map_not_prefix_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.map_not_prefix_iff",
+            "short": "map_not_prefix_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "DieBranches § IV-V: branch-map shift square, closed embedding, PiNat metric (x1/2), Z_2 composite, not-relabelling, complement x -> -1 - x (2026-11-21).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -334978,6 +335459,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "8b82a12d-5c7a-41fa-9d98-e44248cea8bf",
+          "new": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.appr_neg_one_sub_add",
+            "short": "appr_neg_one_sub_add"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.appr_neg_one_sub_add",
+            "short": "appr_neg_one_sub_add",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "DieBranches § IV-V: branch-map shift square, closed embedding, PiNat metric (x1/2), Z_2 composite, not-relabelling, complement x -> -1 - x (2026-11-21).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "8b8eff8a-f4cf-465b-b16c-297d13d21929",
           "new": {
             "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
@@ -336195,6 +336713,43 @@
             ]
           },
           "reason": "Epsilon0LeastFP.lean (2026-10-04, lane Q): cells of nfp (omega^.) as widths — first cell = Iic eps0; successor cell (eps_o, eps_(o+1)) order-isomorphic to Iio eps_(o+1), width eps_(o+1); eps0 countable. From probes_2026-10-04/CellWidth.lean.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "8e4d03d0-36b5-4bcd-bba2-4f03527888b1",
+          "new": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.swap_not_separates",
+            "short": "swap_not_separates"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.swap_not_separates",
+            "short": "swap_not_separates",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "DieBranches § VI: the cell swap as an automorphism of the word tree; swap-invariant predicates do not separate the all-false and all-true tapes (2026-11-21).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -343856,6 +344411,43 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "996daf0b-1bae-4779-a033-d879acb1a41d",
+          "new": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.sqLayer",
+            "short": "sqLayer"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.sqLayer",
+            "short": "sqLayer",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "DieBranches § IV-V: branch-map shift square, closed embedding, PiNat metric (x1/2), Z_2 composite, not-relabelling, complement x -> -1 - x (2026-11-21).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -352413,6 +353005,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "a66d5c3b-dd1e-4c51-aef8-5db95fd75de8",
+          "new": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.continuous_wordBranch",
+            "short": "continuous_wordBranch"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.continuous_wordBranch",
+            "short": "continuous_wordBranch",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "DieBranches § IV-V: branch-map shift square, closed embedding, PiNat metric (x1/2), Z_2 composite, not-relabelling, complement x -> -1 - x (2026-11-21).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "a67039e0-4e48-4d33-88d1-0e3a25d85a45",
           "new": {
             "file": "ZeroParadox/Valuation/PadicBallIndicator.lean",
@@ -357291,6 +357920,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "acd42f27-222c-43f2-9984-444fb90326c7",
+          "new": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.padic_notTree_branch_semiconj",
+            "short": "padic_notTree_branch_semiconj"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.padic_notTree_branch_semiconj",
+            "short": "padic_notTree_branch_semiconj",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "DieBranches § IV-V: branch-map shift square, closed embedding, PiNat metric (x1/2), Z_2 composite, not-relabelling, complement x -> -1 - x (2026-11-21).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "acd9ae49-b219-4597-bba9-a42b1552a451",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -357388,6 +358055,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ad09c918-e163-44f9-ae06-2ffe5b5532b4",
+          "new": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.firstDiff_wordBranch",
+            "short": "firstDiff_wordBranch"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.firstDiff_wordBranch",
+            "short": "firstDiff_wordBranch",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "DieBranches § IV-V: branch-map shift square, closed embedding, PiNat metric (x1/2), Z_2 composite, not-relabelling, complement x -> -1 - x (2026-11-21).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -359854,6 +360558,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b0d1dade-a597-45aa-aa10-768421166a03",
+          "new": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.sqWord_branch_semiconj_cons",
+            "short": "sqWord_branch_semiconj_cons"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.sqWord_branch_semiconj_cons",
+            "short": "sqWord_branch_semiconj_cons",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "DieBranches § IV-V: branch-map shift square, closed embedding, PiNat metric (x1/2), Z_2 composite, not-relabelling, complement x -> -1 - x (2026-11-21).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -367051,6 +367792,44 @@
             ]
           },
           "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "bb88633d-e538-4470-ad03-20481d36227d",
+          "new": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.padic_sqWord_branch_semiconj",
+            "short": "padic_sqWord_branch_semiconj"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.padic_sqWord_branch_semiconj",
+            "short": "padic_sqWord_branch_semiconj",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "DieBranches § IV-V: branch-map shift square, closed embedding, PiNat metric (x1/2), Z_2 composite, not-relabelling, complement x -> -1 - x (2026-11-21).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -382951,6 +383730,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "d308d99d-60c2-48ab-9580-ce9fba0c0602",
+          "new": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dist_wordBranch",
+            "short": "dist_wordBranch"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.dist_wordBranch",
+            "short": "dist_wordBranch",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "DieBranches § IV-V: branch-map shift square, closed embedding, PiNat metric (x1/2), Z_2 composite, not-relabelling, complement x -> -1 - x (2026-11-21).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "d31320a5-3d65-4152-b826-1f8bf8860b74",
           "new": {
             "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
@@ -392101,6 +392917,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "e0784270-704e-4557-861e-edfa26dafbd5",
+          "new": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.padicTape_two_mul_add_one",
+            "short": "padicTape_two_mul_add_one"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.padicTape_two_mul_add_one",
+            "short": "padicTape_two_mul_add_one",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "DieBranches § IV-V: branch-map shift square, closed embedding, PiNat metric (x1/2), Z_2 composite, not-relabelling, complement x -> -1 - x (2026-11-21).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "e08e733b-594c-49b8-aa8e-74cd3a8d9f87",
           "new": {
             "file": "ZeroParadox/Valuation/PadicVladimirov.lean",
@@ -393302,6 +394155,43 @@
             ]
           },
           "reason": "ignorance-seam-viii: the bend NInf.det on 2-adic digit tapes is the 2-adic valuation (IgnoranceSeam.lean § VIII)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e29e17f2-89ea-44b3-801d-9930108c42b1",
+          "new": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.wordBranch_isClosedEmbedding",
+            "short": "wordBranch_isClosedEmbedding"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.wordBranch_isClosedEmbedding",
+            "short": "wordBranch_isClosedEmbedding",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "DieBranches § IV-V: branch-map shift square, closed embedding, PiNat metric (x1/2), Z_2 composite, not-relabelling, complement x -> -1 - x (2026-11-21).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -401232,6 +402122,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "ed80ab2c-be6f-485d-a735-0992f2140853",
+          "new": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.map_not_prefix_automorphism",
+            "short": "map_not_prefix_automorphism"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.map_not_prefix_automorphism",
+            "short": "map_not_prefix_automorphism",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "DieBranches § VI: the cell swap as an automorphism of the word tree; swap-invariant predicates do not separate the all-false and all-true tapes (2026-11-21).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "ed85d1f2-0c2c-4f6c-8707-880fe8d98e7b",
           "new": {
@@ -408503,6 +409430,43 @@
             "role": []
           },
           "reason": "SnapNucleusConstructive: machine-checked IMPOSSIBILITY - no idempotent endomap of ONote has epsilon-number closed points; obstruction is expressive reach (the carrier cannot name the closure), NOT choice",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f95ba23d-e1b0-4bc2-bd6a-57f93663ec68",
+          "new": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.flipSecond",
+            "short": "flipSecond"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/DieBranches.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.flipSecond",
+            "short": "flipSecond",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "DieBranches § IV-V: branch-map shift square, closed embedding, PiNat metric (x1/2), Z_2 composite, not-relabelling, complement x -> -1 - x (2026-11-21).",
           "verify": {
             "axioms": null,
             "sorry_free": null
