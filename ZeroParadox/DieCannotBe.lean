@@ -5330,6 +5330,9 @@ example : ¬ ZeroParadox.Motion.unitMotion.Loop := fun ⟨_, _, _, _, hne, _⟩ 
 #check @ZeroParadox.wordBranch_near            -- Statement: if `f` carries `L` as the prefix order on `Bool` words, for every `s` and `n` some `t ≠ s` has a different branch agreeing with that of `s` at depths `0..n`
 #check @ZeroParadox.sqWord_branch_semiconj_cons -- Statement: the `Motion.sqWord` branch map sends prepend-`b` (`tapeCons b`) on tapes to `sqLayer b` on branches (`Function.Semiconj`)
 #check @ZeroParadox.wordBranch_isClosedEmbedding -- Statement: if `f` carries `L` as the prefix order, for any T2 topology on `α`, `wordBranch f` is a closed embedding into `ℕ → α`
+#check @ZeroParadox.dist_wordBranch            -- Statement: if `f` carries `L` as the prefix order, `dist (wordBranch f s) (wordBranch f t) = dist s t / 2` for `PiNat.dist`
+#check @ZeroParadox.dist_wordBranch_succ       -- Statement: if `f` carries `L` as the prefix order, `dist (fun n => wordBranch f s (n + 1)) (fun n => wordBranch f t (n + 1)) = dist s t` for `PiNat.dist`
+#check @ZeroParadox.padicTape_neg_one_sub      -- Statement: on ℤ_[2], `padicTape (-1 - x) = fun n => !(padicTape x n)`; beside `padicTape_two_mul` (`ZeroParadox/Valuation/DepthIsWait.lean`)
 #check @ZeroParadox.padic_sqWord_branch_semiconj -- Statement: `x ↦ wordBranch (Motion.sqWord j r a) (tapeIso (padicEndHomeo x))` sends `2 * x` on ℤ_[2] to `sqLayer false` (`Function.Semiconj`)
 #check @ZeroParadox.sqLayer_false_along_iff    -- Statement: under `Motion.sqWord_le_iff`'s hypotheses, `L` runs from depth `n` of the branch of `s` to depth `n + 1` of its `sqLayer false` image iff `s` is `false` below `n`; both directions
 #check @ZeroParadox.swap_not_separates         -- Statement: a predicate on tapes invariant under `s ↦ fun n => !s n` holds at the all-false tape iff at the all-true tape; the swap is an order automorphism of the word tree (`map_not_prefix_automorphism`)
