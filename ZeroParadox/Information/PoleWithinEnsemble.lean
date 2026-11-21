@@ -659,8 +659,9 @@ theorem germ_top_ne_bot (p : NNReal) (hp : p ≤ 1) :
 
 /-! ### § X. The depth law: Haar measure on ℤ_[2] and `trials` through the digit tape
 `Reading:` textbook mathematics, no novelty: the waiting time of a Bernoulli tape is geometric, and
-on ℤ_[2] the 2-adic valuation under Haar measure is geometric with ratio `1 / 2`. What is new is
-only that the two are compared through the map `padicTape`. This is the depth marginal alone; that
+on ℤ_[2] the 2-adic valuation under Haar measure is geometric with ratio `1 / 2`. Haar measure on ℤ_p
+is the law of the i.i.d. uniform digit series (Kabluchko–Marynych, arXiv:2311.05369, eq. (2.1)); § X
+proves only its depth marginal, through `padicTape`; that
 `padicTape` carries Haar measure to `trials 2⁻¹` is not stated here and is deferred. -/
 
 section DepthLaw
@@ -753,8 +754,8 @@ example : trials 0 zero_le_one {w | det w = ofNat 0} = 0 := by
 
 end DepthLaw
 
--- Statement: axioms, § X carries `Classical.choice` (Haar measure, `trials`, `PadicInt.appr`, and
---   `waitENat`, any `NInf ≃o ℕ∞` giving LPO).
+-- Statement: axioms, seven of § X's eight declarations carry `Classical.choice` (`#print axioms`);
+--   `det_eq_ofNat_set_eq_cylinder` measures `[propext, Quot.sound]`.
 
 end ZeroParadox
 

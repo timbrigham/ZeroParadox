@@ -33,8 +33,7 @@ which says `D^α` is *equivariant* under the odometer: translating then applying
 same as applying then translating. Mechanically it is translation-invariance of `D^α`, and its single
 hinge is the odometer's measure-preservation `measurePreserving_odometer` — the exact property the
 Koopman operator of `PadicKoopman` is built from. (`D^α` is known to generate a Markov / diffusion
-semigroup — Vladimirov–Volovich–Zelenov, Kochubei — but that semigroup is neither built nor used here;
-this file is the operator-level commutation only.)
+semigroup — Vladimirov–Volovich–Zelenov, Kochubei — but that semigroup is neither built nor used here.)
 
 **Fences.** This is an **operator-level** statement (an intertwining of maps on functions `ℤ_p → ℂ`),
 stated at the function/domain level because `D^α` is *unbounded* and is not the bounded `L²` Koopman
@@ -43,8 +42,9 @@ level** is separately walled (the matched-rate / no-orbit-correspondence result)
 means the two operators commute, not that any process is identified with any other.
 
 ## Structure
-- § I   The kernel is translation-invariant
+- § I   The intertwining of `D^α` with the odometer's Koopman operator
 - § II  The intertwining `D^α ∘ U_c = U_c ∘ D^α`
+- § III Every isometry of `ℤ_p` preserves Haar measure and intertwines with `D^α`
 -/
 
 namespace ZeroParadox

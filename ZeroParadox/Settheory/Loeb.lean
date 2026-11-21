@@ -131,9 +131,11 @@ example (A : S) : Thm (imp (imp (box (imp (box A) A)) A) (imp (box A) A)) :=
     (mp (ax_K _ _) (mp (ax_D2 A (imp (box A) A)) (nec (ax_K A (box A)))))
 
 -- Reading (cited, no novelty claimed): in GL every formula modalized in `p` has a fixed point (de Jongh
--- and Sambin; SEP "Provability Logic" § 2.2); Wikipedia "Löb's theorem" (retrieved 2026-11-21) attributes
--- to Lindström (2006, not retrieved) that in normal modal logic Löb's schema is equivalent to schema 4
--- plus modal fixed points for all formulas.
+-- and Sambin; SEP "Provability Logic" § 2.2); Wikipedia "Löb's theorem" (retrieved 2026-11-21) cites
+-- Lindström (2006, not retrieved) for deriving modal fixed points from Löb's axiom schema, and concludes
+-- that in normal modal logic Löb's axiom is equivalent to schema 4 plus the existence of modal fixed points.
+-- Closest formal prior art: atlas-lean `fixedPoint_GL_of_box` (facebookresearch/atlas-lean, commit
+-- 7fd6444; in GL; source read, type not elaborated).
 -- Statement: `loeb_diagonal_of_loeb_axiom` from explicit hypotheses with no D3.
 example {S : Type*} (imp : S → S → S) (box : S → S) (Thm : S → Prop)
     (mp : ∀ {a b : S}, Thm (imp a b) → Thm a → Thm b)
