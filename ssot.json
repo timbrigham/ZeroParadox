@@ -253362,6 +253362,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "0be906aa-0385-4bc4-ae90-252f8b521d47",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.rInv_invariant_poles_iff",
+            "short": "rInv_invariant_poles_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.rInv_invariant_poles_iff",
+            "short": "rInv_invariant_poles_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "RiemannSphere: inversion-invariant properties cannot separate 0 and ∞ (Black's two spheres Reading); ruling 12 build",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "0be99d38-3004-4ef7-b1d5-8d3ad08d5048",
           "new": {
@@ -278261,6 +278300,44 @@
             ]
           },
           "reason": "PadicBallWave: ball integrals of every additive character of Z_p (general subgroup form), the paChar level, and continuous characters factor through paChar (2026-11-21).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "504e1f98-5d74-446a-89e6-10223c5159b4",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.onePointInv_invariant_poles_iff",
+            "short": "onePointInv_invariant_poles_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.onePointInv_invariant_poles_iff",
+            "short": "onePointInv_invariant_poles_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation",
+              "reals"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "RiemannSphere: inversion-invariant properties cannot separate 0 and ∞ (Black's two spheres Reading); ruling 12 build",
           "verify": {
             "axioms": null,
             "sorry_free": null
