@@ -112,19 +112,19 @@ noncomputable def jsdPQ : ℝ :=
 theorem t1b_jsd : jsdPQ = Real.log 2 := by
   simp [jsdPQ, t1b_kl_P, t1b_kl_Q]; ring
 
-/-! ## Section III: Discrete Surprisal Field on Q₂ -/
+/-! ## Section III: Discrete Surprisal at Ball Depth (balls of ℤ₂) -/
 
-/-- D4: Surprisal at ball-hierarchy depth n: I(n) = n (bits).
-    The branching measure gives each depth-n ball mass 2⁻ⁿ (`haarZp_ball`,
-    `ZeroParadox/Valuation/PadicHaar.lean`), so I(n) = -log₂(2⁻ⁿ) = n; a point has mass 0. -/
+/-- D4: Surprisal at ball-hierarchy depth n, defined as I(n) = n (bits).
+    The depth-n ball about 0 in ℤ₂ has Haar mass 2⁻ⁿ (`haarZp_ball` at p = 2,
+    `ZeroParadox/Valuation/PadicHaar.lean`), and -log₂(2⁻ⁿ) = n matches the definition
+    (`surprisal_eq_binary_info`); the point 0 has mass 0 (`haarZp_singleton_zero`,
+    `ZeroParadox/Information/PoleWithinEnsemble.lean`). -/
 noncomputable def surprisal : ℕ → ℝ := fun n => (n : ℝ)
 
-/-- D4 formula verification: surprisal n = -log₂(2⁻ⁿ).
-    At ball-hierarchy depth n the binary branching measure assigns each branch probability
-    2⁻ⁿ. Shannon information: -log₂(2⁻ⁿ) = n. This proves the D4 docstring claim
-    formally — `surprisal n = n` is the correct information-theoretic formula, not an
-    arbitrary choice. The correspondence between depth n and Q₂ ball-hierarchy depth
-    is a design identification (not a formal import of ZPB). -/
+/-- D4 formula check: surprisal n = -log₂(2⁻ⁿ), a logarithm identity — the definition
+    `surprisal n = n` matches Shannon information at probability 2⁻ⁿ. No measure appears in the
+    statement: reading n as ball depth in ℤ₂ is a design identification (not a formal import
+    of ZPB). -/
 theorem surprisal_eq_binary_info (n : ℕ) :
     surprisal n = -Real.log ((1 / 2 : ℝ) ^ n) / Real.log 2 := by
   have hlog2 : Real.log 2 ≠ 0 := (Real.log_pos (by norm_num : (1 : ℝ) < 2)).ne'

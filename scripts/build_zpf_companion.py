@@ -1,7 +1,7 @@
 """
 Build ZP-F Illustrated Companion
 Where the First Step Fails: The Real Numbers as Counterexample
-Version 1.25 | November 2026
+Version 1.26 | November 2026
 """
 
 import os, math
@@ -109,7 +109,7 @@ def comparison_table():
     return t
 
 
-VERSION = '1.25'
+VERSION = '1.26'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -345,8 +345,8 @@ def build():
         'Zero is not ordinary to the absolute value: |x| = 0 only at x = 0, just as in '
         'Q&#8322; only zero has v&#8322; = +&#8734;. Nor is metric sameness what separates '
         'the two: every point of Z&#8322; also looks the same to its metric (homog_Z2). '
-        'What permits return paths is that the line is connected (place_topological_signature): '
-        'a continuous path joins any point back to zero, and nothing distinguishes it from any '
+        'What permits return paths is that the line is path-connected (Mathlib '
+        'NormedSpace.instPathConnectedSpace): a continuous path joins any point back to zero, and nothing distinguishes it from any '
         'other movement on the line. '
         'Directionality &#8212; the one-way ratchet the framework requires &#8212; '
         'cannot be grounded there.'))
@@ -384,7 +384,9 @@ def build():
         'the compression. The value is forced by the definition, and for &#960; that '
         'relationship also yields algorithms that compute it. A finite definition alone '
         'does not: Chaitin&#8217;s halting probability &#937; has a finite definition, yet no '
-        'algorithm computes its digits, and they are algorithmically random.'))
+        'algorithm computes its digits, and they are algorithmically random (Shen, Uspensky and '
+        'Vereshchagin, Kolmogorov Complexity and Algorithmic Randomness, 2017, &#167; 5.7, '
+        'Theorem 100, p. 157).'))
     E.append(cbody(
         'Most real numbers are not like this. Almost all real numbers — in the '
         'measure-theoretic sense — have no finite definition that picks them out. '
@@ -421,9 +423,11 @@ def build():
         'not exist. &#8869; is not arbitrary. It is the most constrained object '
         'in the framework, the unique global minimum of the lattice. On this commitment its '
         'complexity is not the noise of randomness. It is the silence '
-        'of structural necessity. Where one chart has been measured, the answer differs: '
-        '&#8869; of &#8469; &#8594; Bool, the all-false tape, is not Martin-L&#246;f random for '
-        'the fair coin (tape_totality_two_faces).'))
+        'of structural necessity. Two charts have been measured. In Q&#8322; the floor 0 has '
+        'complexity &#8868; (infinitude_forces_infinite_complexity, at q2InfinitudeFloor). On '
+        'fair-coin tapes, for each prefix-free decoder almost every tape is incompressible, while '
+        '&#8869; of &#8469; &#8594; Bool, the all-false tape, is not Martin-L&#246;f random and '
+        'lies in the closure of the random firing tapes (tape_totality_two_faces).'))
     E.append(cbody(
         'The real number line mixes both kinds — computable constants alongside '
         'algorithmically random reals — with no topological distinction between '

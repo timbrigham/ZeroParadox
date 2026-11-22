@@ -1,5 +1,5 @@
 """
-Build ZP-H Illustrated Companion (v1.36)
+Build ZP-H Illustrated Companion (v1.37)
 Standalone companion for ZP-H: Categorical Bridge only.
 ZP-G has its own companion (build_zpg_companion.py).
 
@@ -129,7 +129,7 @@ def snap_convergence_diagram():
 
     return d
 
-VERSION = '1.36'
+VERSION = '1.37'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -309,7 +309,9 @@ def build():
     E.append(cbody(
         '<b>FC (Information Theory):</b> In Lean the initial object 0 maps to depth 0 of the stand-in and to '
         'Fin 0, the empty type, in the Kleisli category of the probability monad, where it is initial. ZP-C\'s '
-        'information model reads the bottom as the point mass P = (1, 0), and no distribution lives on the '
+        'information model reads the non-existence state of BinaryState, its constructor null, as the '
+        'point mass P = (1, 0) (distP), and no '
+        'distribution lives on the '
         'empty type, so the two models differ at 0. Each morphism maps to an informational transition with '
         'a non-negative cost measured in bits. The fundamental transition costs exactly '
         '1 bit (ZP-C T1b). The unreachability of 0 in ZP-G (T3) and the diverging '
