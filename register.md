@@ -25,10 +25,10 @@ Update this file first on any version bump. README.md Framework table is verifie
 | ZP-P The Fixed-Point Fork | v1.37 | ZP-P_The_Fixed_Point_Fork.pdf | N/A | N/— | formal:794df5a8 |
 | ZP-R Cross-Category Fixed Point | v1.29 | ZP-R_Cross_Category_Fixed_Point.pdf | N/A | N/— | formal:10d00cb2 |
 | ZP-R Diagonal Family Addendum | v1.25 | ZP-R_Diagonal_Family_Addendum.pdf | N/A | N/— | formal:126a51c7 |
-| ZP-Q The Frame-Change | v1.25 | ZP-Q_The_Frame_Change.pdf | N/A | N/— | formal:355f4257 |
-| Zero Paradox Foreword | v2.52 | Zero_Paradox_Foreword.pdf | N/A | N/A | formal:dd0164fe |
-| ZP Tools | N/A | ZP_Tools_and_Methods.pdf | N/A | N/A | formal:7d101f1d |
-| ZP Choice-Free Core Addendum | v1.19 | ZP_Choice_Free_Core_Addendum.pdf | N/A | N/A | formal:825920cd |
+| ZP-Q The Frame-Change | v1.26 | ZP-Q_The_Frame_Change.pdf | N/A | N/— | formal:92baa79c |
+| Zero Paradox Foreword | v2.53 | Zero_Paradox_Foreword.pdf | N/A | N/A | formal:6c8fab32 |
+| ZP Tools | N/A | ZP_Tools_and_Methods.pdf | N/A | N/A | formal:19eb1547 |
+| ZP Choice-Free Core Addendum | v1.20 | ZP_Choice_Free_Core_Addendum.pdf | N/A | N/A | formal:5b904bc1 |
 
 **Comp AR column key:** `Y/Y` = current comp hash adversary-reviewed + remediated (or confirmed clean). `Y/N` = reviewed, fixes identified but not yet applied. `N/—` = not yet reviewed.
 

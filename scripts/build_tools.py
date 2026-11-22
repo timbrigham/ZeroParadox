@@ -193,7 +193,7 @@ def build():
                                      'nothing else, which Lean measures chart by chart: bot of a ZPSemilattice '
                                      'occupies it under a self-application map (AbstractSelfApp; '
                                      'selfApp_quine_role_iff), no set in Mathlib\'s ZFSet does '
-                                     '(zfset_quine_role_unoccupied). Adopting ZF+AFA as the set chart\'s host is '
+                                     '(zfset_quine_role_unoccupied). Adopting AFA as the set chart\'s host is '
                                      'the metatheoretic commitment.'],
             ['Isabelle/HOL',  'No',  'Not used.'],
             ['Agda',          'No',  'Not used.'],
@@ -233,7 +233,7 @@ def build():
         'its own unique self-member (the QuineHost instance on OneAtom, '
         'ZeroParadox/Settheory/QuineHost.lean &#167; V). Wherever membership hosts the role, '
         'Foundation fails (quineAtomHost_not_wellFounded; for any well-founded membership relation, '
-        'the example citing wf_no_selfloop in ZeroParadox/Settheory/QuineDichotomy.lean); adopting ZF + AFA as the set chart\'s host '
+        'the example citing wf_no_selfloop in ZeroParadox/Settheory/QuineDichotomy.lean); adopting AFA as the set chart\'s host '
         'is the metatheoretic commitment (ZP-E, R-AFA). '
         'The stated axioms (AX-B1, AX-G1, AX-G2) and modeling commitments (CC-1, and CC-2\'s adoption '
         'of AFA) remain as stated. The derived results are confirmed as derived. The framework\'s '
@@ -280,15 +280,21 @@ def build():
             ['Claude generated the mathematical ideas',
              'No. The theoretical insights came from the researcher.'],
             ['Claude verified proofs formally without Lean 4',
-             'No. Lean 4 machine-checked all proofs. Prior to Lean 4, informal review only.'],
+             'No. Lean 4 machine-checked the formalized declarations (ZeroParadox/, indexed by '
+             'ZeroParadox/MANIFEST.md). Results the framework argues rather than proves, such as its '
+             'metatheoretic commitments (CLAIMS.md, Tier 4), are argued in prose and are not '
+             'machine-checked. Prior to Lean 4, informal review only.'],
             ['Claude has access to external databases or papers',
-             'No. Knowledge is from training data (cutoff August 2025).'],
+             'Yes. Before a result is built, the literature is searched, and a source is cited only '
+             'after the full document has been retrieved and read.'],
             ['Claude ran simulations or numerical experiments', 'No.'],
             ['Claude searched the internet during sessions',
-             'No web searches were performed for this framework.'],
+             'Yes, as part of that literature search, alongside the project&#8217;s own corpus, the '
+             'pinned Mathlib and Lean-library indexes. A prior-art review run by a separate agent gates '
+             'pushes of new synthesis layers and of new or substantially expanded Lean files.'],
             ['Claude validated against existing literature',
-             'Partial. Claude can note connections to known results (e.g., standard properties '
-             'of Q₂) but cannot perform systematic literature search.'],
+             'Partial. Prior art the search locates is cited in the documents and in the CLAIMS.md '
+             'table of convergence with established work; the search is ongoing and not exhaustive.'],
             ['Claude is the author of the Zero Paradox',
              'No. The researcher is the author. Claude is the research assistant.'],
         ],
