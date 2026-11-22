@@ -14,21 +14,21 @@ Update this file first on any version bump. README.md Framework table is verifie
 | ZP-H Categorical Bridge | v1.46 | ZP-H_Categorical_Bridge.pdf | v1.36 | N/— | formal:ed9a7935 comp:87322507 |
 | ZP-H Native Categories Addendum | v1.15 | ZP-H_Native_Categories_Addendum.pdf | N/A | N/— | formal:18d218db |
 | ZP-I Inside Zero | v1.45 | ZP-I_Inside_Zero.pdf | v1.54 | N/— | formal:29c66f2c comp:89dd75bd |
-| ZP-J Self-Reference | v2.23 | ZP-J_Self_Reference.pdf | v1.45 | N/— | formal:35c16e12 comp:63d4155e |
+| ZP-J Self-Reference | v2.24 | ZP-J_Self_Reference.pdf | v1.45 | N/— | formal:d59fac21 comp:63d4155e |
 | ZP-J AFA Addendum | v1.25 | ZP-J_AFA_Addendum.pdf | N/A | N/— | formal:9d0dd049 |
 | ZP-J Wheel Addendum | v1.11 | ZP-J_Wheel_Addendum.pdf | v1.19 | N/— | formal:849e279d comp:38dd962a |
 | ZP-J Keystone Addendum | v1.31 | ZP-J_Keystone_Addendum.pdf | N/A | N/— | formal:f97b62dd |
-| ZP-K Computational Grounding | v1.39 | ZP-K_Computational_Grounding.pdf | v1.38 | N/— | formal:d558f071 comp:39b7b10f |
+| ZP-K Computational Grounding | v1.40 | ZP-K_Computational_Grounding.pdf | v1.38 | N/— | formal:31cbf3a1 comp:39b7b10f |
 | ZP-L Incomputability Convergence | v1.38 | ZP-L_Incomputability_Convergence.pdf | v1.30 | N/— | formal:f9a872b7 comp:e24e0bec |
 | ZP-M Kleene-Ordinal Bridge | v1.21 | ZP-M_Kleene_Ordinal_Bridge.pdf | v1.15 | N/— | formal:1fffac49 comp:3682660d |
 | ZP-N The Constructive Snap | v2.9 | ZP-N_The_Constructive_Snap.pdf | N/A | N/— | formal:625a4d4e |
 | ZP-P The Fixed-Point Fork | v1.37 | ZP-P_The_Fixed_Point_Fork.pdf | N/A | N/— | formal:794df5a8 |
 | ZP-R Cross-Category Fixed Point | v1.29 | ZP-R_Cross_Category_Fixed_Point.pdf | N/A | N/— | formal:10d00cb2 |
 | ZP-R Diagonal Family Addendum | v1.25 | ZP-R_Diagonal_Family_Addendum.pdf | N/A | N/— | formal:126a51c7 |
-| ZP-Q The Frame-Change | v1.26 | ZP-Q_The_Frame_Change.pdf | N/A | N/— | formal:92baa79c |
-| Zero Paradox Foreword | v2.53 | Zero_Paradox_Foreword.pdf | N/A | N/A | formal:6c8fab32 |
-| ZP Tools | N/A | ZP_Tools_and_Methods.pdf | N/A | N/A | formal:19eb1547 |
-| ZP Choice-Free Core Addendum | v1.21 | ZP_Choice_Free_Core_Addendum.pdf | N/A | N/A | formal:fd370865 |
+| ZP-Q The Frame-Change | v1.27 | ZP-Q_The_Frame_Change.pdf | N/A | N/— | formal:fa620234 |
+| Zero Paradox Foreword | v2.54 | Zero_Paradox_Foreword.pdf | N/A | N/A | formal:05e984d4 |
+| ZP Tools | N/A | ZP_Tools_and_Methods.pdf | N/A | N/A | formal:b1109cc6 |
+| ZP Choice-Free Core Addendum | v1.22 | ZP_Choice_Free_Core_Addendum.pdf | N/A | N/A | formal:70621b4c |
 
 **Comp AR column key:** `Y/Y` = current comp hash adversary-reviewed + remediated (or confirmed clean). `Y/N` = reviewed, fixes identified but not yet applied. `N/—` = not yet reviewed.
 
