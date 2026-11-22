@@ -114,7 +114,7 @@ example (x : ℤ_[2]) : ‖(0 : ℤ_[2])‖ ≤ ‖x‖ ∧ (‖x‖ = 0 → x =
 -- Statement: so every `NONote`, the domain of `cnfToZp2`, denotes strictly below ε₀.
 example (o : NONote) : o.repr < Ordinal.epsilon 0 := ZeroParadox.repr_lt_epsilon0 o.1
 
-/-! ### § I-c. The ⊥ role, one occupant per `ZPSemilattice`; the at-or-above μ schema, at most one per seed and not the ε₀ role -/
+/-! ### § I-c. The ⊥ role, one occupant per `ZPSemilattice`; the at-or-above μ schema, at most one per seed for an antisymmetric relation, and not the ε₀ role -/
 -- Reading: the ⊥ role is a structure's floor and the ε₀ role a position strictly above a floor
 -- (§ I-b); a Lean object fills either as an occupant. The schema is Knaster–Tarski's and Veblen's
 -- (`ZeroParadox/Order/LeastFixedPoint.md`).
@@ -192,7 +192,8 @@ example : (∀ a : Ordinal.{u}, Ordinal.nfp (fun α => Ordinal.omega0 ^ α) a =
 #check @ZeroParadox.c1_epsilon_zero_identification
 #check @ZeroParadox.zpm_triangle              -- Statement: tower stages < ε₀ ∧ the threshold map sends ε₀ to c₁ ∧ the images tend to ℤ_[2]'s 0 ∧ `snapEmbed` sends that c₁ to ℤ_[2]'s 0 (NB no computational conjunct)
 #check @ZeroParadox.both_fixed_points_exist   -- Statement: some code `c` has `eval c n = eval c (encode c + n)` for all `n` ∧ a least ordinal fixed by ω^· exists. The first conjunct is trivially inhabited (example below). A conjunction, not a cross-domain identity
--- Statement: `Code.zero` meets the first conjunct with period 0, since `encode Code.zero = 0`.
+-- Statement: some code meets the first conjunct. Reading: the witness in the proof is `Code.zero`,
+-- with period 0, since `encode Code.zero = 0`.
 example : ∃ c : Nat.Partrec.Code, ∀ n, c.eval n = c.eval (Encodable.encode c + n) :=
   ⟨Nat.Partrec.Code.zero, fun n => by simp [Encodable.encode, Nat.Partrec.Code.encodeCode]⟩
 
@@ -214,7 +215,7 @@ example (m n : ℕ) (hm : 1 ≤ m) (hmn : m < n) :
     PadicInt.norm_eq_zpow_neg_valuation (ZeroParadox.snap_arc_z2_loop.2.1 m hm),
     ZeroParadox.cnfToZp2_tower_valuation, ZeroParadox.cnfToZp2_tower_valuation]
   exact zpow_lt_zpow_right₀ (by norm_num) (by omega)
-#check @ZeroParadox.asymptote_preserved       -- Statement: from stage 1, the denotations climb strictly, each below ε₀, with supremum ε₀; their `cnfToZp2` images are never ℤ_[2]'s 0, tend to it, and climb strictly in `towerCx` through finite values to `towerCx 0 = ⊤`, their supremum; the two orders agree (`ZeroParadox/Valuation/TowerHeightFloor.lean` § V)
+#check @ZeroParadox.asymptote_preserved       -- Statement: from stage 1, the denotations climb strictly, each below ε₀, with supremum ε₀; their `cnfToZp2` images are never ℤ_[2]'s 0, tend to it, and climb strictly in `towerCx` through finite values to `towerCx 0 = ⊤`, their supremum; the two orders agree, which follows from the two strict climbs alone (`ZeroParadox/Valuation/TowerHeightFloor.lean` § V)
 #check @ZeroParadox.eps0_no_preimage          -- Statement: no `NONote` denotes ε₀, so ε₀ has no `cnfToZp2` image
 
 /-! ### § VI. The loop returns to a ⊥, never to ε₀ (the *successor* reading is a commitment) -/

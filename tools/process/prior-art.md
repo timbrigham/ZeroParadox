@@ -100,9 +100,11 @@ elaborated**. `get_dependencies` returns a partial list as a JSON-encoded string
 the proof's constants), and LeanExplore's snapshot is not the pinned Mathlib, so confirm a hit at the pin.
 Then search Reservoir's own index (`https://reservoir.lean-lang.org/packages?q=<term>`, three terms
 minimum, the concept's standard name first) for packages on the topic, and read any candidate's source
-(Tim, 2026-11-22: Reservoir is a named source, never only implied). Then GitHub code search with `extension:lean`, not `language:Lean` (2026-10-31: 9 files against 0),
-`perPage` ≤ 10 and `-repo:timbrigham/ZeroParadox`, for the Reservoir long tail (about 920 packages,
-2026-10-31). The LeanExplore half may be recorded NOT RUN if the tools are unavailable or refused; the
+(Tim, 2026-11-22, ruling 47: Reservoir is a named source, never only implied). Its search is
+client-side: the `?q=` URL filters only in a browser (e.g. Claude in Chrome), and a plain fetch
+returns the whole unfiltered catalogue, so a fetch-only null is NOT RUN, never a null. Then GitHub code
+search with `extension:lean`, not `language:Lean` (2026-10-31: 9 files against 0), `perPage` ≤ 10 and
+`-repo:timbrigham/ZeroParadox`, for the Reservoir long tail (955 packages as of 2026-11-22). The LeanExplore half may be recorded NOT RUN if the tools are unavailable or refused; the
 code search is always required. Its null is uninformative too; both services are rate-limited, and only
 a rate-limit response is a wait. A Lean-only prior art is cited by repository, declaration name and
 commit read, plus that verification status. Full rules: `.claude/commands/prior-art-review.md`, rung B2.

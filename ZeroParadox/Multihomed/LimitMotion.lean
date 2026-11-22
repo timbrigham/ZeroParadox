@@ -1,4 +1,4 @@
--- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the limit retraction (Abate–Bedford) restricted to convergent orbits, for a continuous self-map of a Hausdorff space, as the UP leg of a die `Motion` whose OVER is one step of the map; orbit convergence is exactly finite arrival at a landing or a stage closure, with controls, conjugacy by field inversion (a strict isomorphism on `OnePoint K`; no strict map inside `K` when `c ^ n → 0` and `1 < ‖d‖`) and the reverse direction through the ε₀ tower. Curated results indexed in ZeroParadox/MANIFEST.md.
+-- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the limit retraction (Abate–Bedford) restricted to convergent orbits, for a continuous self-map of a Hausdorff space, as the UP leg of a die `Motion` whose OVER is one step of the map; orbit convergence is exactly finite arrival at a landing or a stage closure, with controls, conjugacy by field inversion (a strict isomorphism on `OnePoint K`; no strict map given by inversion inside `K` when `c ^ n → 0` and `1 < ‖d‖`) and the reverse direction through the ε₀ tower. Curated results indexed in ZeroParadox/MANIFEST.md.
 import ZeroParadox.Die
 import ZeroParadox.DieSameness
 import ZeroParadox.Valuation.RiemannSphere
@@ -739,7 +739,7 @@ partner motion runs them the other way. This is north–south dynamics (prior ar
 `LimitMotion.md`), stated pointwise on the UP leg. The polarity lives only in UP, the limit leg: on
 OVER both poles of `OnePoint ℚ_[2]` step only to themselves in both directions, and no point is a
 step sink or a step source (`lm_dbl_step_level`). The dipole shape alone does not single out `ℚ_[2]`:
-doubling on `OnePoint ℝ` is a dipole too, with the poles exchanged (`lm_real_dipole`). The pole
+doubling and halving on `OnePoint ℝ` form a dipole too, with the poles exchanged (`lm_real_dipole`). The pole
 ⊥ = 0 = ∞ stays a chart claim (`ZeroParadox/BottomCannotBe.lean` § INVERSION), and nothing in this
 section proves the coincidence: `lm_q2_dipole` relates two distinct points, `0` of `ℚ_[2]` and `∞`,
 exchanged by `onePointInv`. -/
@@ -935,7 +935,9 @@ end DipoleInstance
     `Reading:` on `ℚ_[2]` the value face (least norm) and the limit face (greatest `cxQ2`, the
     valuation's `toNat` off `0`) are one order read backwards, `‖x‖ = 2 ^ (-x.valuation)`
     (`Padic.norm_eq_zpow_neg_valuation`): a change of coordinates, not a Kleene-type coincidence like
-    `epsilon0_min_eq_max`. The content is the asymptote: `0` is approached, never reached, through
+    `epsilon0_min_eq_max`. Exactly so on the unit ball `‖x‖ ≤ 1`, where valuations are `≥ 0`; off it
+    `toNat` sends every negative valuation to `0`, so there `cxQ2` is constant and only coarsens the
+    reversed norm order (the `example` below). The content is the asymptote: `0` is approached, never reached, through
     finite complexities climbing to it; `cx_zero_eq_iSup_of_tendsto` gives the supremum along every
     approach. In the ordinal chart the same shape runs from ⊥ of `Ordinal` up to ε₀
     (`epsilon0_eq_nfp_bot`); no identity. -/
@@ -960,6 +962,15 @@ theorem q2_zero_min_eq_max :
      q2InfinitudeFloor.cx_floor_eq_iSup, ⟨⟨0, rfl⟩, ?_⟩⟩⟩
   · rintro _ ⟨y, rfl⟩; simp
   · rintro _ ⟨y, rfl⟩; rw [cxQ2_zero]; exact le_top
+
+/-- `Statement:` `cxQ2` is `0` at `1` and at `2⁻¹`, two points of different norm. -/
+example : cxQ2 (1 : ℚ_[2]) = 0 ∧ cxQ2 (2⁻¹ : ℚ_[2]) = 0 := by
+  have h1 : (2⁻¹ : ℚ_[2]) = ((2 : ℚ_[2]) ^ 1)⁻¹ := by rw [pow_one]
+  refine ⟨by simp [cxQ2], ?_⟩
+  unfold cxQ2
+  rw [ite_cond_eq_false _ _ (eq_false (inv_ne_zero two_ne_zero)), h1, Padic.valuation_inv,
+    two_pow_valuation]
+  rfl
 
 /-! ## § VIII. The `PinnedLimit` role (`ZeroParadox/Die.lean` § XXIV) on the sphere `OnePoint ℚ_[2]` -/
 
@@ -1016,7 +1027,7 @@ theorem lm_sphN_zero_min : @IsBot Sphere lmSphN.toLE (OnePoint.some 0) ∧
   · change sNorm z ≤ sNorm (OnePoint.some 0) at hz
     exact (lm_sNorm_eq_zero z).1 (le_antisymm (by simpa [sNorm] using hz) bot_le)
 
-/-- `Statement:` for every `c ≠ 0`, every run `s` and every point `p` of the sphere, `p` occupies
+/-- `Statement:` for every `c ≠ 0`, every sequence `s` and every point `p` of the sphere, `p` occupies
     `PinnedLimit (lmScale c) s` in neither `lmSphV` nor `lmSphN`. -/
 theorem lm_sphere_pinnedLimit_empty (c : ℚ_[2]) (hc : c ≠ 0) (s : ℕ → Sphere) (p : Sphere) :
     ¬ @PinnedLimit Sphere lmSphV (lmScale c hc) s p ∧ ¬ @PinnedLimit Sphere lmSphN (lmScale c hc) s p :=

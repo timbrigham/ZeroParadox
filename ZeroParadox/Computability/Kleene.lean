@@ -46,7 +46,7 @@ open Nat.Partrec Nat.Partrec.Code
 
 /-- A code c is a Kleene fixed point for f if c's computed behavior equals f(c).
     This is the computational expression of self-containment: c's behavior is
-    determined by c itself, with no external description shorter than c. -/
+    determined by c itself. -/
 -- [ZP-CUSTOM] replaces: Mathlib Function.IsFixedPt | reason: Function.IsFixedPt works on total functions α → α. Here f : Code → ℕ →. ℕ (partial function) and the fixed-point condition is eval c = f c — equality of partial functions. No Mathlib predicate covers this; IsKleeneFixedPoint is the partial-function analog needed for the computability layer.
 def IsKleeneFixedPoint (f : Code → ℕ →. ℕ) (c : Code) : Prop :=
   eval c = f c
@@ -214,7 +214,8 @@ fourth face sits -/
     * (4) is a condition on a `Code`, (1)–(3) are conditions on an element of `L`.
       There is no equality across those types, and none is claimed.
     * (1)–(3) pick out a **unique** element (`quine_unique`), while the computational
-      fixed points form an **infinite** family (`infinite_quine_family`,
+      fixed points form an **infinite** family (`infinite_quine_family`; its members are
+      told apart by `congrArg`, the `example` after `selfApply`, not by
       `quine_goedel_injective`). A unique element and an infinite family are not
       identified by this theorem; see the note in § II on why the non-uniqueness is
       structurally expected, and § VI on what the family actually is. -/
@@ -584,7 +585,8 @@ theorem isComputationalQuine_undecidable :
 
 /-- The family of computational quines is infinite: for any n, a quine with
     Gödel number greater than n exists.
-    Combined with quine_goedel_injective, this gives an infinite injection into quines.
+    Distinct Gödel numbers give distinct codes (the `congrArg` `example` after `selfApply`), so the family is
+    infinite; `quine_goedel_injective` is the converse direction and is not used.
     Note what witnesses it: the constant codes. So the family is unbounded, and this
     theorem does not show its members are instantiation bottoms — reading it as "the
     DA-2 succession has no finite bound" is the framework's interpretation.
@@ -1204,7 +1206,11 @@ theorem firstRecPhi_iterate (n k : ℕ) :
 
 /-- `Statement:` the nowhere-defined function ⊥ of `ℕ → Part ℕ` is `eval` of some code; it is not
     fixed by `firstRecPhi`; the constant-`0` function occupies `PinnedLimitUnique firstRecPhi` along
-    the run `firstRecPhi^[n] ⊥`; and that function is `eval Code.zero`. -/
+    the run `firstRecPhi^[n] ⊥`; and that function is `eval Code.zero`.
+    `Reading:` the Mathlib home of this least-fixed-point computation is `Part.fix` with
+    `Part.fix_eq_ωSup` (`Mathlib/Control/LawfulFix.lean`): for a monotone `f` on `(a : α) → Part (β a)`,
+    `Part.fix f` is the `ωSup` of its approximation chain from ⊥. `fixedPoints.lfp_eq_sSup_iterate` does
+    not apply: it needs a `CompleteLattice`, and `Part ℕ` has no greatest element. -/
 theorem kleene_first_pinnedLimitUnique :
     (∃ c : Code, ∀ n, eval c n = (⊥ : ℕ → Part ℕ) n) ∧
     firstRecPhi ⊥ ≠ ⊥ ∧
@@ -1244,7 +1250,7 @@ theorem kleene_first_pinnedLimitUnique :
   · intro n; rfl
 
 /-- `Statement:` CONTROL: on `ℕ → Part ℕ`, no point occupies `PinnedLimit` of the shift
-    `f ↦ (k ↦ f (k + 1))` along any run. -/
+    `f ↦ (k ↦ f (k + 1))` along any sequence. -/
 theorem kleene_shift_not_pinnedLimit (s : ℕ → ℕ → Part ℕ) (c : ℕ → Part ℕ) :
     ¬ PinnedLimit (fun f : ℕ → Part ℕ => fun k => f (k + 1)) s c :=
   not_pinnedLimit_of_fixed_floor isBot_bot (fun _ h => le_bot_iff.1 h) rfl s c

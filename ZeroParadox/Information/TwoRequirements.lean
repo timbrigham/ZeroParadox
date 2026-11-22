@@ -465,7 +465,7 @@ example {L : Type*} [ZPSemilattice L] :
 /-! ## § II-b. Martin-Löf random for the fair coin implies disjunctive
 
 One Martin-Löf test per word `w` of length `k`: level `m` is the tapes missing `w` in each of the
-first `m * 2 ^ k` aligned blocks (`ZeroParadox/Information/Disjunctive.lean` § VI). -/
+first `m * 2 ^ k` aligned blocks (`wordBlock`, `ZeroParadox/Information/Disjunctive.lean` § III). -/
 
 /-- `Statement:` the tapes that miss `w` in each of the first `B` aligned blocks of length `k`. -/
 def avoidSet (k : ℕ) (w : Fin k → Bool) (B : ℕ) : Set (ℕ → Bool) :=
@@ -614,7 +614,10 @@ theorem avoid_isMLTest (k : ℕ) (w : Fin k → Bool) :
   ⟨fairTape_avoidSet_le k w, avoidList k (ofBits k w), avoidList_computable k _,
     avoidSet_eq_iUnion k w⟩
 
-/-- `Statement:` every tape that is Martin-Löf random for `fairTape` is disjunctive. One way. -/
+/-- `Statement:` every tape that is Martin-Löf random for `fairTape` is disjunctive. One way.
+    `Reading:` standard, the fair-coin case of Landsman, *Typical = random*, arXiv:2306.09226v2, § 4,
+    Thm 4.2 (every finite word occurs infinitely often in every random sequence for the flat Bernoulli
+    measure), which cites Calude 2002 Thm 6.50; Calude was not retrieved. -/
 theorem disjunctive_of_MLRandom {x : ℕ → Bool} (h : MLRandom fairTape x) : Disjunctive x := by
   rw [disjunctive_iff_once]
   intro k w
@@ -631,6 +634,28 @@ theorem disjunctive_of_MLRandom {x : ℕ → Bool} (h : MLRandom fairTape x) : D
 theorem code_occurs_of_MLRandom {x : ℕ → Bool} (h : MLRandom fairTape x) (c : Nat.Partrec.Code) :
     ∃ᶠ n in atTop, ∀ i : Fin (Nat.size (Encodable.encode c)), x (n + i) = codeWord c i :=
   code_occurs_of_disjunctive (disjunctive_of_MLRandom h) c
+
+-- Statement: CONTROL, the converse of `disjunctive_of_MLRandom` fails: `champ` is disjunctive and not
+-- Martin-Löf random for `fairTape` (level `m` the cylinder of its first `m` bits, measure `2⁻ᵐ`).
+example : Disjunctive champ ∧ ¬ MLRandom fairTape champ := by
+  refine ⟨champ_disjunctive, fun h => ?_⟩
+  have hcyl : ∀ m, prefixCyl ((List.range m).map champ) =
+      (↑(Finset.range m) : Set ℕ).pi (fun i => ({champ i} : Set Bool)) := by
+    intro m; ext x; simp [prefixCyl]
+  refine h (fun m => prefixCyl ((List.range m).map champ))
+    ⟨fun m => ?_, fun q => some ((List.range q.1).map champ), ?_, fun m => ?_⟩ ?_
+  · show trials (1/2) _ (prefixCyl ((List.range m).map champ)) ≤ _
+    rw [hcyl, trials, Measure.infinitePi_pi _ (fun i _ => measurableSet_singleton _)]
+    have : ∀ i, (PMF.bernoulli (1/2) (by norm_num)).toMeasure {champ i} = 2⁻¹ := by
+      intro i; cases champ i <;> simp [PMF.bernoulli]
+    rw [Finset.prod_congr rfl (fun i _ => this i), Finset.prod_const, Finset.card_range]
+  · have : Primrec (fun q : ℕ × ℕ => (List.range q.1).map champ) :=
+      Primrec.list_map (Primrec.list_range.comp Primrec.fst) (champ_primrec.comp Primrec.snd).to₂
+    exact (Primrec.option_some.comp this).to_comp
+  · ext x
+    simp only [Set.mem_iUnion, Option.mem_def, Option.some.injEq, exists_prop]
+    exact ⟨fun hx => ⟨0, _, rfl, hx⟩, fun ⟨_, _, hl, hx⟩ => hl ▸ hx⟩
+  · simp [prefixCyl]
 
 /-! ## § III. Frequency of `true` tending to `p` (the strong law of large numbers)
 

@@ -117,7 +117,7 @@ def ofTotal (f : α → α) (hf : ∀ x, f (f x) = f x) (s : α → α → Prop)
 /-- `Statement:` the UP switch at `total`: `up` is defined everywhere. -/
 def UpTotal : Prop := ∀ x, (M.up x).Dom
 
-/-- `Statement:` climb: from a landing `y`, a step to `b`, and `up b` is neither `b` nor `y`. -/
+/-- `Statement:` climb: from a landing `y`, a step to `b`, and `up b` is defined and is neither `b` nor `y`. -/
 def Climb : Prop := ∃ y b z, M.IsLanding y ∧ M.step y b ∧ z ∈ M.up b ∧ z ≠ b ∧ z ≠ y
 
 /-- `Statement:` loop: from a landing `y`, a step to some `b ≠ y`, and `up b` returns to `y`. -/
@@ -4549,9 +4549,10 @@ end Motion
 are Escardó's (preprint of JSL 78(3) (2013), p. 1 and Definition 2.1, p. 3) in the polarity of LPO
 (`ZeroParadox/Category/LawvereTaboo.lean`): a `true` point, or `false` everywhere. `NInf.omniscient`
 and `NInf.eps_spec` (with `NInf.covered_limit_searchable`) state the same for `NInf` in the other
-polarity, `p` replaced by `!p`. The instances on `ℕ`, `Option ℕ` and `NInf`
-(`Motion.lpo_of_trichotomy_nat_boolStep`, `Motion.lpo_of_trichotomy_option_boolStep`,
-`Motion.overTrichotomy_ninf_boolStep`) are cases of the theorems below, not proved through them. -/
+polarity, `p` replaced by `!p`. The instances on `ℕ` and `Option ℕ`
+(`Motion.lpo_of_trichotomy_nat_boolStep`, `Motion.lpo_of_trichotomy_option_boolStep`) are cases of the
+theorems below, not proved through them; on `NInf`, `Motion.overTrichotomy_ninf_boolStep` proves the
+trichotomy outright, an instance of the hypothesis the theorems below take as input. -/
 
 /-- `Statement:` every `p : X → Bool` is `true` somewhere or `false` everywhere. -/
 def Omniscient (X : Type u) : Prop := ∀ p : X → Bool, (∃ x, p x = true) ∨ ∀ x, p x = false

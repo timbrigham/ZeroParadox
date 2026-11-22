@@ -31,7 +31,7 @@ open Ordinal
 theorem epsilon0_is_fixedpoint : ω ^ ε₀ = ε₀ :=
   omega0_opow_epsilon 0
 
-/-- **ε₀ is the LEAST fixed point.** Any ordinal `o` closed under exponentiation (`ω^o = o`) satisfies
+/-- **ε₀ is the LEAST fixed point.** Any ordinal `o` fixed by `α ↦ ω^α` (`ω^o = o`) satisfies
     `ε₀ ≤ o`. With `epsilon0_is_fixedpoint`, ε₀ is the minimal closure — the snap sits at the least
     ordinal fixed by `α ↦ ω^α`, not a larger Veblen point. -/
 theorem epsilon0_least_fixedpoint (o : Ordinal) (h : ω ^ o = o) : ε₀ ≤ o :=
@@ -107,8 +107,9 @@ theorem seed_eq_of_nfp_eq_epsilon_limit (o s : Ordinal) (ho : Order.IsSuccLimit 
 
 /-! ### Cells as widths: order type and count
 `Reading:` a cell is the set of seeds reaching one landing, and its width is the order type of its
-seeds strictly below that landing. ORDER-TYPE chart: a successor cell is as wide as its landing, the
-first ε₀ and the next ε₁ (`successor_cell_width`); a limit-index cell is a singleton
+seeds strictly below that landing. ORDER-TYPE chart: the first cell, landing ε₀, has width ε₀ (Mathlib's
+`Ordinal.type_lt_Iio`, the `example` below); a successor-index cell is as wide as its landing, the next
+ε₁ (`successor_cell_width`); a limit-index cell is a singleton
 (`limit_cell_eq_singleton`). COUNTING chart: the first cell is countable (`card_epsilon0`)
 and a cell past the countable indices is not (the control below). Each seed below ε₀ is denoted by a
 normal-form `ONote` (`repr_surj_below_epsilon0`, `ZeroParadox/Ordinal/PricedInterface.lean`); no `ONote` denotes ε₀ (`repr_lt_epsilon0`). Both charts hold. -/
@@ -267,15 +268,15 @@ theorem epsilon0_ne_zero : ε₀ ≠ 0 := by
 
 /-- **Invariant — ε₀ ≠ ⊥ of `Ordinal`.** Since `(⊥ : Ordinal) = 0` (`Ordinal.bot_eq_zero`) and ε₀ ≠ 0, ε₀ is never
     ⊥ of `Ordinal`. That ⊥ is *a* base the ε₀-tower is seeded at (`epsilon0_eq_nfp_bot`), never its closure.
-    It is the *least* such base and not the only one: for **normal** `F`, every seed at or below the
-    closure reaches the same closure (`isLeastFixedPointFrom_nfp`). The invariant does not depend
+    It is the *least* such base and not the only one: every seed at or below ε₀ reaches ε₀
+    (`nfp_seed_independent_below_epsilon0`, `first_cell_eq_Iic`). The invariant does not depend
     on that. -/
 theorem epsilon0_ne_bot : ε₀ ≠ (⊥ : Ordinal) := by
   rw [Ordinal.bot_eq_zero]
   exact epsilon0_ne_zero
 
 /-- **ε₀'s Veblen coordinates are (1, 0).** ε₀ = `veblen 1 0` (Mathlib `epsilon := veblen 1`, so this is
-    definitional): the element at index 0 of level 1 — the origin of the Veblen coordinate system, hence
+    definitional): the element at index 0 of level 1 — the first point of level 1, hence
     the *minimum* fixed-point closure (matching `epsilon0_least_fixedpoint`), not a definitional pick of a
     large ordinal. The hierarchy continues above ε₀ (ε₁, ε₂, …, ζ₀ = `veblen 2 0`, …) up to Γ₀, the
     Feferman–Schütte ordinal closing the two-argument Veblen hierarchy; the framework lives below Γ₀. -/
