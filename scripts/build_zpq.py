@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-Q: The Frame-Change PDF Builder
-Version 1.27 | November 2026
+Version 1.28 | November 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.27'
+VERSION = '1.28'
 FIRST_RELEASED = 'July 2026'
 
 from reportlab.graphics.shapes import Drawing, Circle, Ellipse, PolyLine, String, Polygon
@@ -112,7 +112,7 @@ def build():
         'ZeroParadox/Category/Heterogeneous.lean). The Kleisli stage-0 object is initial and not '
         'terminal (kleisli_bottom_not_terminal), so it does not carry the two characterisations op '
         'exchanges. The inversion is the <i>frame-change</i>. '
-        '<b>The frame-change is that pole exchange &#8212; &#8869; being read as both 0 and &#8734;. Whether '
+        '<b>The frame-change is that pole exchange. Whether '
         'the snap is an instance of it is the layer&#8217;s open conjecture.</b> The snap, T-SNAP&#8217;s '
         'shape, is a join step off &#8869; of the state semilattice to a different state (t_snap_given); '
         'that the step is a cover, &#8869; &#8918; a (HasFirstStep), is AX-B1&#8217;s first-step form, a '
