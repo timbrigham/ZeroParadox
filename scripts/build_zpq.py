@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-Q: The Frame-Change PDF Builder
-Version 1.28 | November 2026
+Version 1.29 | November 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.28'
+VERSION = '1.29'
 FIRST_RELEASED = 'July 2026'
 
 from reportlab.graphics.shapes import Drawing, Circle, Ellipse, PolyLine, String, Polygon
@@ -80,7 +80,7 @@ def build():
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-Q: The Frame-Change', S['title']),
-        Paragraph('The bottom read as both 0 and &#8734;, and what that does not settle', S['subtitle']),
+        Paragraph('0 of &#8474;<sub>2</sub> read as both 0 and &#8734;, and what that does not settle', S['subtitle']),
         Paragraph(version_line(FIRST_RELEASED, VERSION), S['subtitle']),
         Paragraph(
             '<i>Synthesis layer, the sequel to ZP-P. The abstract frame-flip schema is proved '
@@ -98,9 +98,9 @@ def build():
 
     E.append(body(
         'The Zero Paradox proves the snap &#8869; &#8594; &#949;<sub>0</sub> as a theorem; ZP-Q is about the '
-        'BOTTOM&#8217;s two-facedness, which is a different object from the snap. Across the layers the '
-        'bottom is a fixed point &#8212; a zero &#8212; that carries an infinitude (v<sub>2</sub>(0) = '
-        '&#8734;, unbounded surprisal, the self-referential closure). Two further features are proved, '
+        'BOTTOM&#8217;s two-facedness, which is a different object from the snap. At 0 of &#8474;<sub>2</sub>, '
+        'the floor of the instance q2InfinitudeFloor, cxQ2 0 = &#8868; (infinitude_forces_infinite_complexity, '
+        'ZeroParadox/Valuation/InfinitudeFloor.lean). Two further features are proved, '
         'at two different sets of sites. NO RETURN: &#8869; of ZP-A&#8217;s state semilattice '
         '(t_snap_irreversible), the stage-0 object of the information functor in KleisliCat PMF, from '
         'its later stages (fC_no_return), and 0 of &#8474;<sub>2</sub>, where no continuous path returns '

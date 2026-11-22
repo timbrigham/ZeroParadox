@@ -1,5 +1,5 @@
 """
-Build ZP-H Illustrated Companion (v1.38)
+Build ZP-H Illustrated Companion (v1.39)
 Standalone companion for ZP-H: Categorical Bridge only.
 ZP-G has its own companion (build_zpg_companion.py).
 
@@ -129,7 +129,7 @@ def snap_convergence_diagram():
 
     return d
 
-VERSION = '1.38'
+VERSION = '1.39'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -298,8 +298,8 @@ def build():
         'sorry-free.'))
     E.append(cbody(
         '<b>FB (p-Adic Topology):</b> FB(0) is depth 0 of Q₂BallDepth (fb_functor.obj 0). '
-        'Each morphism maps to a discrete jump across a clopen boundary — formalized as '
-        'antitone depth in Q₂BallDepth. Composition corresponds to sequential jumps. '
+        'A morphism n → m is n ≤ m (fb_functor.map), and the ball at depth m lies inside the ball '
+        'at depth n (q2Ball_antitone). '
         'In Lean, FB is a sorry-free functor in two forms: fb_functor lands in Q₂BallDepth, '
         'an ℕ-indexed stand-in that orders the nested balls around 0 by depth, and fB_functor '
         'lands in TopCat, the category of all topological spaces, where 0 is the limit of the '
@@ -400,9 +400,6 @@ def build():
         'reads the Snap in each setting.'))
     E.append(cbody(
         '• In lattice algebra: the first join — ⊥ ∨ ε₀ — producing the first non-bottom state.'
-        '<br/>'
-        '• In p-adic topology: a discrete jump from 0 to ε₀ across a clopen boundary, '
-        'irreversible by the topological structure of ℚ₂.'
         '<br/>'
         '• In information theory: an informational transition costing exactly 1 bit (ZP-C T1b).'
         '<br/>'
