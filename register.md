@@ -6,12 +6,12 @@ Update this file first on any version bump. README.md Framework table is verifie
 |----------|---------------|----------|-------------------|---------|-------|
 | ZP-A Lattice Algebra | v1.39 | ZP-A_Lattice_Algebra.pdf | v1.27 | N/— | formal:aa58d527 comp:0bc052e1 |
 | ZP-B p-Adic Topology | v1.33 | ZP-B_pAdic_Topology.pdf | v1.22 | N/— | formal:f932756c comp:0bc4e221 |
-| ZP-F The Counterexamples | v1.29 | ZP-F_The_Counterexamples.pdf | v1.25 | N/— | formal:6990414d comp:67d749c4 |
-| ZP-C Information Theory | v1.40 | ZP-C_Information_Theory.pdf | v2.16 | N/— | formal:9aaabaaa comp:60a62003 |
+| ZP-F The Counterexamples | v1.29 | ZP-F_The_Counterexamples.pdf | v1.26 | N/— | formal:6990414d comp:6ca61019 |
+| ZP-C Information Theory | v1.41 | ZP-C_Information_Theory.pdf | v2.16 | N/— | formal:23495088 comp:60a62003 |
 | ZP-D State Layer | v1.22 | ZP-D_State_Layer.pdf | v1.19 | N/— | formal:f547fa75 comp:d859a011 |
 | ZP-E Bridge Document | v3.88 | ZP-E_Bridge_Document.pdf | v1.48 | Y/Y | formal:ef7f573d comp:71607dc6 |
-| ZP-G Category Theory | v1.33 | ZP-G_Category_Theory.pdf | v1.19 | N/— | formal:7fd28e04 comp:78184903 |
-| ZP-H Categorical Bridge | v1.46 | ZP-H_Categorical_Bridge.pdf | v1.36 | N/— | formal:ed9a7935 comp:87322507 |
+| ZP-G Category Theory | v1.34 | ZP-G_Category_Theory.pdf | v1.20 | N/— | formal:ca17ce4d comp:fb346d4f |
+| ZP-H Categorical Bridge | v1.47 | ZP-H_Categorical_Bridge.pdf | v1.37 | N/— | formal:41747b81 comp:dafc0b7b |
 | ZP-H Native Categories Addendum | v1.15 | ZP-H_Native_Categories_Addendum.pdf | N/A | N/— | formal:18d218db |
 | ZP-I Inside Zero | v1.45 | ZP-I_Inside_Zero.pdf | v1.54 | N/— | formal:29c66f2c comp:89dd75bd |
 | ZP-J Self-Reference | v2.24 | ZP-J_Self_Reference.pdf | v1.45 | N/— | formal:d59fac21 comp:63d4155e |

@@ -1,11 +1,11 @@
 """
-Build ZP-C: Information Theory (v1.40)
+Build ZP-C: Information Theory (v1.41)
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.40'
+VERSION = '1.41'
 FIRST_RELEASED = 'April 2026'
 
 def build():
@@ -78,7 +78,7 @@ def build():
         'I(x)  =  &#8722;log<sub>2</sub> P(x),   where   P(x)  :=  P(B(0, |x|<sub>2</sub>))',
         'P(x) is the mass of the closed ball about 0 of radius |x|<sub>2</sub>, not the mass of the point x: P has no atoms, so a single point has mass 0 (for the point 0, haarZp_singleton_zero). For |x|<sub>2</sub> &#8804; 1, P(x) = |x|<sub>2</sub> = 2<super>&#8722;v</super> with v = v<sub>2</sub>(x) (haarZp_ball, ZeroParadox/Valuation/PadicHaar.lean), so I(x) = v<sub>2</sub>(x); for |x|<sub>2</sub> > 1 the ball contains Z<sub>2</sub>, so P(x) = 1 and I(x) = 0.',
         'As v<sub>2</sub>(x) &#8594; +&#8734; (x approaches 0 in the 2-adic metric), I(x) &#8594; +&#8734;: states 2-adically close to 0 are informationally extreme.',
-        'The probability measure P on Q<sub>2</sub> \\ {0} is the branching measure induced by the binary ball hierarchy of Q<sub>2</sub> (RP-2 below): the level-0 ball B(0, 1) = Z<sub>2</sub> carries mass 1, and at each level k &#8805; 0 the two sub-balls of B(0, 2<super>&#8722;k</super>) each receive half the probability mass of their parent ball. On Z<sub>2</sub> it is the Haar probability measure haarZp.',
+        'The probability measure P on Q<sub>2</sub> \\ {0} is the branching measure induced by the binary ball hierarchy of Q<sub>2</sub> (RP-2 below): the level-0 ball B(0, 1) = Z<sub>2</sub> carries mass 1, and at each level k &#8805; 0 the two sub-balls of B(0, 2<super>&#8722;k</super>) each receive half the probability mass of their parent ball. On Z<sub>2</sub> the Haar probability measure haarZp gives each ball about 0 the same mass (haarZp_ball).',
     ]))
     E.append(sp(4))
     E.append(label_box('Principle RP-2 — Branching Measure on Q₂ \\ {0}', [

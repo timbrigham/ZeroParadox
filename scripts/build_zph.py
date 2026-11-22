@@ -1,12 +1,12 @@
 """
 Zero Paradox — ZP-H: Categorical Bridge PDF Builder
-Version 1.46 | November 2026
+Version 1.47 | November 2026
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.46'
+VERSION = '1.47'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -94,7 +94,7 @@ def build():
             'I-KC: Conditional Kolmogorov complexity K(x|y) imported from ZP-C — named dependency, not bridge axiom',
             'AX-G1: Asymmetry Axiom — C has initial object 0, no terminal object',
             'AX-G2: Source Asymmetry — hom(X, 0) = <font name="DV">&#8709;</font> for X not isomorphic to 0',
-            'R-BA: Leinster categorical entropy characterization [Compatibility Remark — BA-G1 demoted from Bridge Axiom in ZP-G v1.1. No longer a theorem premise.]',
+            'R-BA: Leinster categorical entropy characterization [Remark — BA-G1 demoted from Bridge Axiom in ZP-G v1.1. No longer a theorem premise.]',
             'T1: Initial object unique up to unique isomorphism',
             'T2: Universal Constituent — &#8704;X &#8712; ob(C), &#8707;! &#953;<sub>X</sub>: 0 &#8594; X',
             'T3: Unreachability — hom(X, 0) = <font name="DV">&#8709;</font> for X not isomorphic to 0',
@@ -102,7 +102,7 @@ def build():
             'T5: Functors preserve initial objects [OQ-G2 closed in ZP-H T-H1]',
             'T6: Informational singularity of 0 — outward surprisal accumulates; inward undefined [rebuilt in ZP-G v1.1 on D7\'; BA-G1 not a dependency]',
             'T7: Categorical Zero Paradox — closing theorem of ZP-G',
-            'OQ-G1: Closed in ZP-G v1.1 via D7\' (native categorical surprisal) and I-KC (Kolmogorov import from ZP-C). BA-G1 demoted to compatibility remark.',
+            'OQ-G1: Closed in ZP-G v1.1 via D7\' (native categorical surprisal) and I-KC (Kolmogorov import from ZP-C). BA-G1 demoted to remark R-BA.',
         ]
     ))
     E.append(sp(8))
@@ -139,7 +139,7 @@ def build():
         'Status: Structural — labels preserved without laundering',
         [
             'OQ-G1 [Closed in ZP-G v1.1]: Native derivation of categorical surprisal without importing Shannon entropy. '
-            'Closed by D7\' (conditional Kolmogorov complexity K(B|A)) and I-KC. BA-G1 demoted to compatibility remark R-BA.',
+            'Closed by D7\' (conditional Kolmogorov complexity K(B|A)) and I-KC. BA-G1 demoted to remark R-BA.',
             'OQ-G2 [Resolved in Section IV]: Left adjoint verification for instantiation functors.',
             'OQ-G3 [Resolved in Section III]: Explicit construction of four instantiation functors.',
             'OQ-G4 [Resolved in Section V]: Reconciliation of categorical and ZP-C singularity characterizations.',
@@ -252,7 +252,7 @@ def build():
         [
             'Object map: in Lean, with C realized as &#8469;, object n goes to depth n of InfoDepth (fc_functor.obj n) and to the finite type '
             'Fin n of KleisliCat PMF (fC_functor.obj n). The initial object 0 maps to depth 0 of InfoDepth and to Fin 0, the empty type, which is '
-            'initial in KleisliCat PMF (fC_zero_isInitial). ZP-C\'s information model reads the bottom as the point mass at non-existence, '
+            'initial in KleisliCat PMF (fC_zero_isInitial). ZP-C\'s information model reads the non-existence state of BinaryState as its point mass, '
             'the distribution P = (1, 0) over {0, 1} (derived from AX-B1 and RP-1 in ZP-C T1); no distribution lives on the empty type '
             '(the proof of fC_no_return), so the two models differ at 0. InfoSp is '
             'the informal name of the target: in Lean, F<sub>C</sub> is realized in KleisliCat PMF, the Kleisli category of the probability monad '
@@ -394,9 +394,8 @@ def build():
             'ZP-G Lemma T3, on which ZP-G T6 Part II rests) and the ZP-C singularity (infinite '
             'accumulation, ZP-C Theorem T2) hold together: a conjunction of the two, and the '
             'proof uses neither to prove the other.',
-            'Setup (motivation only; th2_singularity_compatibility involves neither F<sub>C</sub> nor F<sub>B</sub>): Let {X<sub>n</sub>} be a sequence of objects in C such that the corresponding sequence {F<sub>C</sub>(X<sub>n</sub>)} = '
-            '{P<sub>n</sub>} of distributions approaches ZP-C\'s point mass P = (1, 0) (ZP-C\'s reading of the bottom; F<sub>C</sub>(0) itself is the '
-            'empty type Fin 0, C-H3). Under F<sub>B</sub>, the corresponding '
+            'Setup (motivation only; th2_singularity_compatibility involves neither F<sub>C</sub> nor F<sub>B</sub>): Let {X<sub>n</sub>} be a sequence of objects in C, with F<sub>C</sub>(X<sub>n</sub>) the finite type '
+            'Fin n of KleisliCat PMF (fC_obj; F<sub>C</sub>(0) is the empty type Fin 0, C-H3). Under F<sub>B</sub>, the corresponding '
             'sequence {x<sub>n</sub>} in Q<sub>2</sub> approaches 0 &#8712; Q<sub>2</sub>.',
             'ZP-C side: By ZP-C T2, the discrete surprisal DF along the infinite sequence {x<sub>n</sub>} approaching 0 in '
             'Q<sub>2</sub> is non-conservative: the accumulated surprisal &#8721; DF(x<sub>k</sub> &#8594; x<sub>k+1</sub>) diverges as n &#8594; &#8734;. The singularity is infinite accumulation.',
@@ -535,7 +534,7 @@ def build():
          'Closed — ZP-G v1.1\nD7\', T6',
          'Native derivation of categorical surprisal without importing Shannon entropy. '
          'Closed in ZP-G v1.1 by D7\' (native categorical surprisal K(B|A)) and I-KC '
-         '(Kolmogorov import from ZP-C). BA-G1 demoted to compatibility remark R-BA. '
+         '(Kolmogorov import from ZP-C). BA-G1 demoted to remark R-BA. '
          'No bridge axiom remains as a theorem premise.'],
         ['OQ-G2',
          'Closed — T-H1',
@@ -591,7 +590,7 @@ def build():
         ['R-BA',
          'Remark —\nBA-G1 demoted\n(ZP-G v1.1)',
          'Leinster Shannon entropy characterization. BA-G1 demoted from Bridge Axiom '
-         'in ZP-G v1.0 to Compatibility Remark R-BA in ZP-G v1.1. '
+         'in ZP-G v1.0 to Remark R-BA in ZP-G v1.1. '
          'Not derivable from D7\': the coding theorem gives a one-sided bound, not an equivalence. Not a gap.'],
         ['D-H1',
          'Design\nCommitment —\nintentional',
@@ -663,7 +662,7 @@ def build():
          'ZP-G\'s own commitment; it holds in the &#8469;-indexed stand-ins and fails in TopCat, ModuleCat &#8450; and KleisliCat PMF. '
          'Stated as local axioms in ZP-G for self-containment. Not gaps.'],
         ['R-BA, D-H1, DP-1',
-         'Compatibility Remark / Design Commitments — intentional. Explicitly stated. Not laundered.'],
+         'Remark / Design Commitments — intentional. Explicitly stated. Not laundered.'],
     ]
 
     E.append(data_table(

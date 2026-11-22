@@ -1,12 +1,12 @@
 """
 Zero Paradox — ZP-G: Category Theory PDF Builder
-Version 1.33 | November 2026
+Version 1.34 | November 2026
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.33'
+VERSION = '1.34'
 FIRST_RELEASED = 'April 2026'
 
 # ZP-G uses a slightly different amber shade; override zp_utils default
@@ -352,16 +352,18 @@ def build():
             'What is imported: The conditional Kolmogorov complexity K(x|y), defined as the length of the '
             'shortest program p such that U(p, y) = x, where U is a fixed universal Turing machine:',
             'K(x|y) = min { |p| : U(p, y) = x }',
-            'Key property — The Coding Theorem (Levin): for prefix complexity K, the two-sided relation is stated '
-            'for the a priori probability m (the maximal lower semicomputable '
-            'semimeasure, which is not computable): K(x) = &#8722;log<sub>2</sub> m(x) + O(1). For a computable '
-            'probability measure P, one direction holds, with a constant c<sub>P</sub> that depends on P:',
+            'Key property — the coding theorem: prefix complexity equals &#8722;log<sub>2</sub> m(x) + O(1), for the '
+            'a priori probability m (the maximal lower semicomputable semimeasure, which is not computable). The '
+            'plain complexity K defined above is at most prefix complexity + O(1). So for a computable '
+            'probability measure P, one direction holds for K, with a constant c<sub>P</sub> that depends on P:',
             'K(x) &#8804; &#8722;log<sub>2</sub> P(x) + c<sub>P</sub>',
             'Source: Shen, Uspensky and Vereshchagin, Kolmogorov Complexity and Algorithmic Randomness (AMS, 2017), '
             '§ 4.2, p. 79 (maximality: m\'(i) &#8804; c&#183;m(i) for every lower semicomputable semimeasure m\'), '
-            'and § 4.5, Theorems 56 and 58, pp. 92–93 (K and &#8722;log m coincide up to an additive constant); '
-            'the conditional forms K(x|y) and m(x|y) are § 4.7, p. 103. The plain complexity defined above is at '
-            'most K + O(1) (§ 4.6, p. 100), so the one-sided bound holds for it as well. The converse inequality fails for '
+            'and § 4.5, Theorems 55, 56 and 58, pp. 91–93 (prefix complexity and &#8722;log m coincide up to an '
+            'additive constant). Plain complexity is at most prefix complexity + O(1) unconditionally at § 4.6, p. 100; '
+            'the conditional forms, with m(x|y), are § 4.7, p. 103, whose remark obtains the conditional inequalities '
+            'by relativizing the unconditional proofs, and the plain-versus-prefix bound is applied here in that '
+            'relativized form. The converse inequality fails for '
             'computable P: with P uniform on n-bit strings given n, &#8722;log<sub>2</sub> P(0<sup>n</sup>|n) = n '
             'while K(0<sup>n</sup>|n) is bounded. The coding theorem is not derived within ZP-G. '
             'It is imported as a named result.',
@@ -465,19 +467,17 @@ def build():
             'K(x<sub>B</sub>|x<sub>A</sub>) &gt; 0 when A &#8775; B (distinct objects cannot have zero description length). '
             '(2) T6-c subadditivity — K(x<sub>n</sub>|x<sub>0</sub>) &#8804; '
             '&#8721; K(x<sub>k+1</sub>|x<sub>k</sub>) + O(n&#183;c) (total surprisal along a chain). '
-            'These are standard and correct results from algorithmic information theory, but they require '
-            'a K-formalization this corpus does not have: none was located in the pinned Mathlib as of '
-            '2026-10-04 (search record in ZeroParadox/Information/Disjunctive.md), Lean developments '
-            'outside Mathlib that define K are named at the ZPSurprisal entry of LEAN_CUSTOM_REGISTRY.md, '
-            'and leaving K unformalized here is a scope decision recorded there.',
+            'Plain and prefix complexity are in the build (plainK and KPPlain from kolmogorov-complexity-lean, '
+            'via ZeroParadox/Information/BrudnoBridge.lean); T6-b and T6-c are not proved from them, and '
+            'ZPSurprisal is not tied to them (scope note, § IV of ZeroParadox/Category/Category.lean).',
             'T6-a is assumed in Lean, not verified: zero identity surprisal is the class field surp_id of '
             'ZPSurprisal, which t6a_identity_surprisal returns unchanged, and surp := fun _ => 0 satisfies the class. '
             'What IS Lean-verified: T6 Part II (inward surprisal is undefined — from AX-G2 and the absence of morphisms to 0), '
             'and T7 insofar as it depends on Parts II, III, V, VI. T6 Part I (outward accumulation) '
             'and T7 Part IV rely on T6-b and T6-c and are therefore also PDF-level only.',
             'Readers citing "the Lean-verified ZP-G framework" should note this boundary. '
-            'The PDF-level arguments for T6-b and T6-c are mathematically valid — these are standard '
-            'K-theoretic results (Li and Vitanyi). The gap is Lean scope, not mathematical correctness.',
+            'The PDF-level arguments for T6-b and T6-c are standard K-theoretic arguments. '
+            'The gap is Lean scope, not mathematical correctness.',
         ]
     ))
 
@@ -516,11 +516,11 @@ def build():
     ))
     E.append(sp(8))
 
-    E.append(Paragraph('7.1 Compatibility with Shannon Entropy — BA-G1 Demoted to Remark', S['h2']))
+    E.append(Paragraph('7.1 D7\' and Shannon Entropy — BA-G1 Demoted to Remark', S['h2']))
 
     E.append(remark_box(
-        'Remark R-BA — Compatibility of D7\' with the Shannon Entropy Functor',
-        'Status: Remark — BA-G1 demoted from Bridge Axiom to Compatibility Remark',
+        'Remark R-BA — D7\' and the Shannon Entropy Functor: a One-Sided Bound',
+        'Status: Remark — BA-G1 demoted from Bridge Axiom to Remark',
         [
             'BA-G1 was originally introduced as a bridge axiom: it imported Leinster\'s categorical '
             'characterization of Shannon entropy (naturality, maximality, chain rule) to define the surprisal '
@@ -575,7 +575,7 @@ def build():
         ['OQ-G1',
          'Closed — D7\', T6',
          'Native categorical derivation of surprisal without importing Shannon entropy. Closed by replacing D7 '
-         'with D7\' (conditional Kolmogorov complexity K(B|A)). BA-G1 demoted from Bridge Axiom to Compatibility '
+         'with D7\' (conditional Kolmogorov complexity K(B|A)). BA-G1 demoted from Bridge Axiom to '
          'Remark R-BA. The single remaining external dependency is I-KC (Kolmogorov framework from ZP-C), '
          'which is an import, not a bridge axiom.'],
         ['OQ-G2',
@@ -603,7 +603,7 @@ def build():
          'Source asymmetry: hom(X, 0) = ∅ for X not isomorphic to 0. Foundational irreversibility commitment. Not a gap.'],
         ['R-BA',
          'Remark — BA-G1 demoted',
-         'Leinster Shannon entropy characterization is now a compatibility remark, not a bridge axiom premise. '
+         'Leinster Shannon entropy characterization is now a remark, not a bridge axiom premise. '
          'Not derivable from D7\': the coding theorem gives a one-sided bound, not an equivalence. Not a gap.'],
     ]
     E.append(data_table(
@@ -639,7 +639,7 @@ def build():
          'Axiom — intentional. Unchanged.'],
         ['AX-G2: Source Asymmetry',
          'Axiom — intentional. Unchanged.'],
-        ['R-BA: BA-G1 compatibility remark',
+        ['R-BA: BA-G1 remark (one-sided bound)',
          'Remark — [BA-G1 demoted from Bridge Axiom]. Shannon entropy functor '
          'related to D7\', not equivalent: the coding theorem bounds D7\' above only. No longer a premise of any theorem.'],
         ['Proposition T1: Uniqueness of initial object',
