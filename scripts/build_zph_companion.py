@@ -1,5 +1,5 @@
 """
-Build ZP-H Illustrated Companion (v1.37)
+Build ZP-H Illustrated Companion (v1.38)
 Standalone companion for ZP-H: Categorical Bridge only.
 ZP-G has its own companion (build_zpg_companion.py).
 
@@ -129,7 +129,7 @@ def snap_convergence_diagram():
 
     return d
 
-VERSION = '1.37'
+VERSION = '1.38'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -297,7 +297,7 @@ def build():
         'ZPCategory instance on ℕ, where 0 is initial in the order category of ≤ (natSLat_initial_grounding), '
         'sorry-free.'))
     E.append(cbody(
-        '<b>FB (p-Adic Topology):</b> The initial object 0 maps to the element 0 ∈ ℚ₂. '
+        '<b>FB (p-Adic Topology):</b> FB(0) is depth 0 of Q₂BallDepth (fb_functor.obj 0). '
         'Each morphism maps to a discrete jump across a clopen boundary — formalized as '
         'antitone depth in Q₂BallDepth. Composition corresponds to sequential jumps. '
         'In Lean, FB is a sorry-free functor in two forms: fb_functor lands in Q₂BallDepth, '
