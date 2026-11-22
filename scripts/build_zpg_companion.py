@@ -1,5 +1,5 @@
 """
-Build ZP-G Illustrated Companion (v1.18)
+Build ZP-G Illustrated Companion (v1.19)
 Standalone companion for ZP-G Category Theory only.
 ZP-H gets its own companion (build_zph_companion.py).
 
@@ -139,7 +139,7 @@ def functor_diagram():
                  fontSize=8.5, fontName='DV-I', fillColor=colors.HexColor('#555555')))
     return d
 
-VERSION = '1.18'
+VERSION = '1.19'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -298,8 +298,11 @@ def build():
     E.append(remember_box(
         'Remember: 0 here is not the number zero. It is a label for the initial object of the '
         'category — the privileged starting point from which all structure originates. '
-        'The label was chosen because 0 plays the same role as ⊥ (bottom) in ZP-A, '
-        '0 ∈ ℚ₂ in ZP-B, and ⊥ in ZP-C.'))
+        'The role is shared, not the object, and not every layer\'s floor fills it. ⊥ of ZP-A is initial '
+        'in its order category (for ℕ, natSLat_initial_grounding), and the ZP-C floor as ZP-H realizes it, '
+        'the empty type Fin 0, is initial in KleisliCat PMF (fC_zero_isInitial). The 2-adic 0 of ZP-B is '
+        'not: in TopCat the one-point space {0} is terminal and not initial '
+        '(padic_bottom_isTerminal, padic_bottom_not_initial).'))
     E.append(sp(6))
 
     # ── Key results ────────────────────────────────────────────────────────────
