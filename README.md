@@ -168,7 +168,9 @@ Third-party material is covered by neither licence and keeps its own. The vendor
 
 If referencing this work, please cite:
 
-> Brigham, Timothy. The Zero Paradox (2026). https://github.com/timbrigham/ZeroParadox
+> Brigham, Timothy. The Zero Paradox (2026). https://doi.org/10.5281/zenodo.20060860 - source: https://github.com/timbrigham/ZeroParadox
+
+The DOI is the concept DOI, which resolves to the latest archived version.
 
 ---
 

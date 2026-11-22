@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If referencing this work, please cite it as below."
+title: "The Zero Paradox: A Multi-Framework Mathematical Ontology"
+authors:
+  - family-names: Brigham
+    given-names: Timothy
+version: v6.0
+doi: 10.5281/zenodo.20060860
+repository-code: "https://github.com/timbrigham/ZeroParadox"
+license:
+  - Apache-2.0
+  - CC-BY-NC-ND-4.0
+keywords:
+  - mathematical ontology
+  - lattice algebra
+  - p-adic topology
+  - information theory
+  - category theory
+  - Lean 4
+  - formal verification
+  - foundational mathematics
+  - binary snap
+  - join-semilattice
