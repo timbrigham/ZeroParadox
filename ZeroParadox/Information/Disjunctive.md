@@ -80,8 +80,8 @@ block (`#print axioms`, 2026-10-04):
    tape. Nothing reads or runs it; occurrence is the occurrence commitment (`ZeroParadox/Order/Snap.lean`).
 2. **Disjunctive is weak.** `champ` is disjunctive and primitive recursive (§ II). Proved here, for
    the fair coin: a Martin-Löf random sequence is disjunctive (`disjunctive_of_MLRandom`,
-   `ZeroParadox/Information/TwoRequirements.lean` § II-b; the standard fact is Landsman, arXiv:2306.09226v2,
-   Thm 4.2, which cites Calude 2002 Thm 6.50), and the converse fails, `champ` is not Martin-Löf random
+   `ZeroParadox/Information/TwoRequirements.lean` § II-b; Landsman, arXiv:2306.09226v2, Thm 4.2, states
+   the fact and itself cites Calude 2002 Thm 6.50 for it), and the converse fails, `champ` is not Martin-Löf random
    for `fairTape` (the control `example` after `code_occurs_of_MLRandom`, same section). Standard
    theory, cited and not proved here: a sequence is Martin-Löf random exactly when its prefixes are
    incompressible in PREFIX-FREE Kolmogorov complexity, `K(x↾n) ≥ n − c` for some constant `c`
@@ -90,8 +90,12 @@ block (`#print axioms`, 2026-10-04):
 3. **The commitment is separate.** `Reading:` Tim's commitment concerns the framework's ⊥ role, ⊥ of
    a `ZPSemilattice`: read as a tape, its occupant is maximally complex, in the prefix-free sense of
    fence 2. A tape maximally complex in that sense is Martin-Löf random (Levin–Schnorr, cited in
-   fence 2, not proved here), hence disjunctive for the fair coin (`disjunctive_of_MLRandom`, proved).
-   No map from a `ZPSemilattice`
+   fence 2, not proved here). Proved here is only that a tape `MLRandom fairTape` in the corpus's sense
+   is disjunctive (`disjunctive_of_MLRandom`). That sense is blind (Hippocratic) Martin-Löf randomness;
+   its agreement with ordinary randomness for the fair coin is CITED, not proved:
+   `ZeroParadox/Information/TwoRequirements.lean` § II cites Kjos-Hanssen, arXiv:1408.2850, Thm 6.2,
+   as proving "it coincides with ordinary randomness for Bernoulli `μ_p`; that `trials p hp` is his
+   `μ_p` is not proved here". No map from a `ZPSemilattice`
    to `ℕ → Bool` is claimed or constructed, and no order on tapes in which a maximally complex tape is
    least: the reading is a commitment, not a chart. In `ℕ → Bool` under the pointwise order, ⊥ is the
    all-false tape, which is not disjunctive (`allFalse_not_disjunctive`). The commitment is recorded

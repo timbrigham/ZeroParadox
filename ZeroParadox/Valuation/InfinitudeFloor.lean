@@ -185,7 +185,9 @@ namespace ZeroParadox
 /-- **Toy witness.** `ℕ∞` itself: `floor = ⊤`, `cx = id`, `member n = (n : ℕ∞)`. Degenerate (it collapses
 an element with its own complexity) — included only to show the requirements are inhabitable and consistent.
 The real, non-degenerate witness is on ℚ_[2] (`q2InfinitudeFloor`, floor = 0, cx = `cxQ2`), where the floor
-is least in the norm order yet carries *top* complexity — the 0 = ∞ coincidence the toy loses. -/
+`0` of ℚ_[2] is the limit of members descending to it as elements while their complexity climbs to ⊤ — the
+drift (§ VII) the toy loses, since there element and complexity climb together. Both carry the coincidence
+`cx floor = ⊤` (`infinitude_forces_infinite_complexity`). -/
 instance : InfinitudeFloor ℕ∞ where
   floor := ⊤
   cx := id

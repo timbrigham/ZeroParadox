@@ -101,8 +101,11 @@ the proof's constants), and LeanExplore's snapshot is not the pinned Mathlib, so
 Then search Reservoir's own index (`https://reservoir.lean-lang.org/packages?q=<term>`, three terms
 minimum, the concept's standard name first) for packages on the topic, and read any candidate's source
 (Tim, 2026-11-22, ruling 47: Reservoir is a named source, never only implied). Its search is
-client-side: the `?q=` URL filters only in a browser (e.g. Claude in Chrome), and a plain fetch
-returns the whole unfiltered catalogue, so a fetch-only null is NOT RUN, never a null. Then GitHub code
+client-side: a plain fetch (WebFetch, curl) of the `?q=` URL returns the first page of the UNFILTERED
+catalogue (20 rows and a total, 955 as of 2026-11-22), so a fetch-only null is recorded NOT RUN, never as
+a null. In a browser (e.g. Claude in Chrome) the search filters client-side (measured 2026-11-22:
+`q=mathlib` returned 5 results); wait for the "Search Results for" header and run that positive control
+before recording a null. Then GitHub code
 search with `extension:lean`, not `language:Lean` (2026-10-31: 9 files against 0), `perPage` ≤ 10 and
 `-repo:timbrigham/ZeroParadox`, for the Reservoir long tail (955 packages as of 2026-11-22). The LeanExplore half may be recorded NOT RUN if the tools are unavailable or refused; the
 code search is always required. Its null is uninformative too; both services are rate-limited, and only

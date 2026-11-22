@@ -461,9 +461,9 @@ example : (fun x : ℤ => -x) (0 : ℤ) = 0 := rfl
 #check @ZeroParadox.lm_fieldLine_is_members -- Statement: the doubling orbit of `2` is the member sequence of `q2InfinitudeFloor`, whose floor `0` of `ℚ_[2]` is doubling's limit sink off `∞`, with complexity `⊤` there
 #check @ZeroParadox.sVal_rInv -- Statement: on `OnePoint ℚ_[2]`, `sVal (rInv p) = negE (sVal p)` at every point `p`, `0` of `ℚ_[2]` and `∞` included (`ZeroParadox/Valuation/RiemannSphere.lean` § X)
 #check @ZeroParadox.q2_zero_min_eq_max -- Statement: `0` of `ℚ_[2]` steps only to itself under doubling and its reverse and has least norm; the field line `2 ^ (n + 1)` tends to it, is never it, and climbs in `cxQ2` through finite values to `cxQ2 0`, their supremum and the greatest value (`ZeroParadox/Multihomed/LimitMotion.lean` § VII)
--- Reading: least norm and greatest `cxQ2` at 0 of `ℚ_[2]` are one order read backwards, a change of
--- coordinates, not two characterizations in the sense of `epsilon0_min_eq_max`; the content is the
--- asymptote, the supremum along the approach.
+-- Reading: the min face is the step fixed point (0 of `ℚ_[2]` steps only to itself), not least norm;
+-- how least norm and greatest `cxQ2` relate is the `Reading:` on this theorem in
+-- `ZeroParadox/Multihomed/LimitMotion.lean` § VII.
 -- Statement: Mathlib's `IsInitial.op` — the opposite of an initial object is terminal.
 -- Reading: CITED, not ZP-proved; attribution is the point. Passing to `Cᵒᵖ` is the categorical face
 -- of inversion, swapping the μ-bottom to a terminal object.
