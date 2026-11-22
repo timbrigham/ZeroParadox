@@ -1,12 +1,12 @@
 """
 Zero Paradox — ZP-H: Categorical Bridge PDF Builder
-Version 1.49 | November 2026
+Version 1.50 | November 2026
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.49'
+VERSION = '1.50'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -217,15 +217,11 @@ def build():
         'Construction C-H2 — Functor FB: C → pTop',
         'Status: PDF construction complete — Lean: full functor (fb_functor, sorry-free)',
         [
-            'Object map: F<sub>B</sub> sends each object X &#8712; ob(C) to an element x &#8712; Q<sub>2</sub>. pTop is the informal name of the target: in Lean, '
-            'F<sub>B</sub> is realized in TopCat, the category of all topological spaces (fB_functor, ZeroParadox/Valuation/TopFunctor.lean), '
-            'and its &#8469;-indexed stand-in is Q&#8322;BallDepth (fb_functor, ZeroParadox/Multihomed/CategoricalBridge.lean).',
-            'Morphism map: F<sub>B</sub> sends each morphism f: A &#8594; B to the discrete jump from x<sub>A</sub> to x<sub>B</sub> '
-            'in Q<sub>2</sub>. By ZP-B T2, any two distinct elements of Q<sub>2</sub> lie in disjoint clopen balls. The jump is across a clopen '
-            'boundary — a well-defined topological transition.',
-            'Preservation of composition: Sequential discrete jumps in Q<sub>2</sub> compose by transitivity of the ball '
-            'structure. x<sub>A</sub> &#8594; x<sub>B</sub> &#8594; x<sub>C</sub> is a valid sequence of clopen transitions. <font name="DV">&#10003;</font>',
-            'Preservation of identity: F<sub>B</sub>(id<sub>A</sub>) is the trivial jump x<sub>A</sub> &#8594; x<sub>A</sub>, which is the identity on Q<sub>2</sub>. <font name="DV">&#10003;</font>',
+            'Object map: fb_functor.obj n is depth n of Q&#8322;BallDepth (fb_functor, ZeroParadox/Multihomed/CategoricalBridge.lean), and '
+            'fB_functor.obj n is the ball space fBObj n in TopCat (fB_functor, ZeroParadox/Valuation/TopFunctor.lean). pTop is the informal name of the target.',
+            'Morphism map: a morphism n &#8594; m is n &#8804; m (fb_functor.map).',
+            'Preservation of composition: the functor law map_comp of fb_functor and fB_functor. <font name="DV">&#10003;</font>',
+            'Preservation of identity: the functor law map_id of fb_functor and fB_functor, F<sub>B</sub>(id<sub>n</sub>) = id<sub>F<sub>B</sub>(n)</sub>. <font name="DV">&#10003;</font>',
             'AX-G1 respected in the stand-in category: the Lean functor fb_functor lands in Q&#8322;BallDepth, the &#8469;-indexed ball-depth '
             'category, which has no terminal object because the depth index has no maximum: n + 1 &gt; n (q2BallZPCat, '
             'ZeroParadox/Multihomed/CategoricalBridge.lean). <font name="DV">&#10003;</font>',
@@ -345,8 +341,9 @@ def build():
             'F<sub>A</sub>: F<sub>A</sub>(0) = &#8869;. For any S<sub>Y</sub> &#8712; L, the unique morphism &#8869; &#8594; S<sub>Y</sub> is the join &#8869; &#8744; S<sub>Y</sub> = S<sub>Y</sub> (ZP-A A4). '
             'Uniqueness: &#8869; is the global minimum (ZP-A T2), so the only order-preserving map from &#8869; to S<sub>Y</sub> is the join with S<sub>Y</sub>. <font name="DV">&#10003;</font>',
             'F<sub>B</sub>: F<sub>B</sub>(0) is depth 0 of Q&#8322;BallDepth (fb_functor.obj 0). '
-            'This leg holds in the stand-in Q&#8322;BallDepth (fb_preserves_initial, ZeroParadox/Multihomed/CategoricalBridge.lean). In TopCat it '
-            'does not: the floor {0} is a one-point space, so it is terminal and not initial there (padic_bottom_isTerminal and padic_bottom_not_initial, '
+            'This leg holds in the stand-in Q&#8322;BallDepth (fb_preserves_initial, ZeroParadox/Multihomed/CategoricalBridge.lean). In TopCat, '
+            'fB_functor sends 0 to the ball fBObj 0. Separately, the floor {0} of Q<sub>2</sub>, the intersection of the balls (fB_bottom_is_limit), '
+            'is terminal and not initial in TopCat (padic_bottom_isTerminal and padic_bottom_not_initial, '
             'ZeroParadox/Multihomed/TreeObstructions.lean). <font name="DV">&#10003;</font>',
             'F<sub>C</sub>: F<sub>C</sub>(0) is depth 0 of InfoDepth (fc_functor.obj 0) and the empty type Fin 0 of KleisliCat PMF '
             '(fC_functor.obj 0), not the distribution P = (1, 0) of ZP-C\'s model (C-H3: the two models differ at 0). '
@@ -449,13 +446,13 @@ def build():
             'in MachinePhase (T-SNAP); (2) no continuous path in Q<sub>2</sub> runs from a '
             'nonzero point to 0 (ZP-B C3); (3) JSD(P, Q) = log 2, one bit (ZP-C T1b); (4) indices 0 and 1 of transitionOp n are orthogonal '
             'in StateSpace n, n &#8805; 2 (ZP-D T4). No functor occurs in its type, and no conjunct is used to prove another.',
+            'Proved (c3_irreversible, conjunct (2) of th3_snap_all_functors): no continuous path in Q<sub>2</sub> runs from a '
+            'nonzero point to 0. It is a fact about Q<sub>2</sub>, not a statement about F<sub>B</sub>.',
             'Readings, not part of the statement: '
-            'the four lines below are how the framework reads the Snap in each instantiation '
+            'the F<sub>A</sub>, F<sub>C</sub> and F<sub>D</sub> lines below are how the framework reads the Snap in each instantiation '
             'setting. They are interpretation, and no Lean declaration states them.',
             'Reading under F<sub>A</sub> (ZP-A): F<sub>A</sub>(&#953;<sub>&#949;0</sub>) = &#8869; &#8744; &#949;<sub>0</sub> = S<sub>1</sub>. The Snap is the first join. Monotone and irreversible by ZP-A T3. '
             'T-SNAP is a derived theorem (ZP-E v2.0); inherited here with derived status.',
-            'Reading under F<sub>B</sub> (ZP-B): no continuous path in Q<sub>2</sub> runs from a '
-            'nonzero point to 0 (ZP-B C3).',
             'Reading under F<sub>C</sub> (ZP-C): F<sub>C</sub>(&#953;<sub>&#949;0</sub>) is the informational transition P &#8594; Q with E = JSD(P &#8741; Q) = 1 bit (ZP-C '
             'T1b). Irreversible: JSD(Q &#8741; P) = 1 bit &#8800; 0.',
             'Reading under F<sub>D</sub> (ZP-D): F<sub>D</sub>(&#953;<sub>&#949;0</sub>) is the orthogonal shift T(0) = e<sub>0</sub> &#8594; T(&#949;<sub>0</sub>) = e<sub>1</sub>. '

@@ -1,5 +1,5 @@
 """
-Build ZP-G Illustrated Companion (v1.21)
+Build ZP-G Illustrated Companion (v1.22)
 Standalone companion for ZP-G Category Theory only.
 ZP-H gets its own companion (build_zph_companion.py).
 
@@ -139,7 +139,7 @@ def functor_diagram():
                  fontSize=8.5, fontName='DV-I', fillColor=colors.HexColor('#555555')))
     return d
 
-VERSION = '1.21'
+VERSION = '1.22'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -301,9 +301,10 @@ def build():
         'The role is shared, not the object, and not every layer\'s floor fills it. A least element is '
         'initial in its order category (Mathlib Preorder.isInitialBot); for ℕ, 0 is initial in natOrderCat, '
         'built from ℕ\'s ≤ rather than from a ZP-A join (natSLat_initial_grounding). The ZP-C floor as ZP-H '
-        'realizes it, the empty type Fin 0, is initial in KleisliCat PMF (fC_zero_isInitial). The 2-adic 0 of ZP-B is '
-        'not: in TopCat the one-point space {0} is terminal and not initial '
-        '(padic_bottom_isTerminal, padic_bottom_not_initial).'))
+        'realizes it, the empty type Fin 0, is initial in KleisliCat PMF (fC_zero_isInitial). In TopCat the 2-adic 0 of ZP-B is '
+        'not: the one-point space {0} is terminal and not initial '
+        '(padic_bottom_isTerminal, padic_bottom_not_initial). Under the norm preorder on ℤ₂, ℤ₂\'s 0 is least '
+        '(z2_two_views, ZeroParadox/Valuation/Scale.lean).'))
     E.append(sp(6))
 
     # ── Key results ────────────────────────────────────────────────────────────

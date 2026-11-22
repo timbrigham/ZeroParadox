@@ -10,8 +10,8 @@ Update this file first on any version bump. README.md Framework table is verifie
 | ZP-C Information Theory | v1.41 | ZP-C_Information_Theory.pdf | v2.16 | N/— | formal:23495088 comp:60a62003 |
 | ZP-D State Layer | v1.22 | ZP-D_State_Layer.pdf | v1.19 | N/— | formal:f547fa75 comp:d859a011 |
 | ZP-E Bridge Document | v3.88 | ZP-E_Bridge_Document.pdf | v1.48 | Y/Y | formal:ef7f573d comp:71607dc6 |
-| ZP-G Category Theory | v1.34 | ZP-G_Category_Theory.pdf | v1.21 | N/— | formal:ca17ce4d comp:fb3f651e |
-| ZP-H Categorical Bridge | v1.49 | ZP-H_Categorical_Bridge.pdf | v1.38 | N/— | formal:d3f8b7dc comp:b8b331eb |
+| ZP-G Category Theory | v1.34 | ZP-G_Category_Theory.pdf | v1.22 | N/— | formal:ca17ce4d comp:6789e547 |
+| ZP-H Categorical Bridge | v1.50 | ZP-H_Categorical_Bridge.pdf | v1.39 | N/— | formal:b1b74f34 comp:d5c6de52 |
 | ZP-H Native Categories Addendum | v1.15 | ZP-H_Native_Categories_Addendum.pdf | N/A | N/— | formal:18d218db |
 | ZP-I Inside Zero | v1.45 | ZP-I_Inside_Zero.pdf | v1.54 | N/— | formal:29c66f2c comp:89dd75bd |
 | ZP-J Self-Reference | v2.24 | ZP-J_Self_Reference.pdf | v1.45 | N/— | formal:d59fac21 comp:63d4155e |
@@ -25,7 +25,7 @@ Update this file first on any version bump. README.md Framework table is verifie
 | ZP-P The Fixed-Point Fork | v1.37 | ZP-P_The_Fixed_Point_Fork.pdf | N/A | N/— | formal:794df5a8 |
 | ZP-R Cross-Category Fixed Point | v1.29 | ZP-R_Cross_Category_Fixed_Point.pdf | N/A | N/— | formal:10d00cb2 |
 | ZP-R Diagonal Family Addendum | v1.25 | ZP-R_Diagonal_Family_Addendum.pdf | N/A | N/— | formal:126a51c7 |
-| ZP-Q The Frame-Change | v1.28 | ZP-Q_The_Frame_Change.pdf | N/A | N/— | formal:6884ebda |
+| ZP-Q The Frame-Change | v1.29 | ZP-Q_The_Frame_Change.pdf | N/A | N/— | formal:9012a8ea |
 | Zero Paradox Foreword | v2.54 | Zero_Paradox_Foreword.pdf | N/A | N/A | formal:05e984d4 |
 | ZP Tools | N/A | ZP_Tools_and_Methods.pdf | N/A | N/A | formal:b1109cc6 |
 | ZP Choice-Free Core Addendum | v1.22 | ZP_Choice_Free_Core_Addendum.pdf | N/A | N/A | formal:70621b4c |
