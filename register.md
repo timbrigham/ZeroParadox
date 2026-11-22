@@ -25,7 +25,7 @@ Update this file first on any version bump. README.md Framework table is verifie
 | ZP-P The Fixed-Point Fork | v1.37 | ZP-P_The_Fixed_Point_Fork.pdf | N/A | N/— | formal:794df5a8 |
 | ZP-R Cross-Category Fixed Point | v1.29 | ZP-R_Cross_Category_Fixed_Point.pdf | N/A | N/— | formal:10d00cb2 |
 | ZP-R Diagonal Family Addendum | v1.25 | ZP-R_Diagonal_Family_Addendum.pdf | N/A | N/— | formal:126a51c7 |
-| ZP-Q The Frame-Change | v1.29 | ZP-Q_The_Frame_Change.pdf | N/A | N/— | formal:9012a8ea |
+| ZP-Q The Frame-Change | v1.30 | ZP-Q_The_Frame_Change.pdf | N/A | N/— | formal:8c9d7e63 |
 | Zero Paradox Foreword | v2.54 | Zero_Paradox_Foreword.pdf | N/A | N/A | formal:05e984d4 |
 | ZP Tools | N/A | ZP_Tools_and_Methods.pdf | N/A | N/A | formal:b1109cc6 |
 | ZP Choice-Free Core Addendum | v1.22 | ZP_Choice_Free_Core_Addendum.pdf | N/A | N/A | formal:70621b4c |
