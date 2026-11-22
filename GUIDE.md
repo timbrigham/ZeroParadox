@@ -12,11 +12,11 @@ For a dictionary and map of ⊥ - the object the whole framework is built on - s
 
 ## What This Is
 
-The Zero Paradox proves that an atom above ⊥ of the discrete state chart (a state with nothing between it and ⊥; c₁ in `MachinePhase`) is structurally forced - not assumed - given the framework's discrete state model (a bare join-semilattice alone can be densely ordered, and in a dense order no element has a first step, so there is no such atom; the real numbers are the familiar dense case, and since they have no least element, a dense case with one is the non-negative reals under max, where 0 is least and has no atom above it). The discrete state model is itself the assumption: it is AX-B1, the framework's one substantive modelling commitment, and for a general join-semilattice the cover is a hypothesis (`t_snap_given_cover`); in the two-state carrier `MachinePhase` the atom is checked (`t_snap_derived_cover`). The result is machine-verified in Lean 4. The supporting structure examines what happens at the bottom element ⊥ across several mathematical frameworks; each independently locates the same structural constraint. One additional hypothesis per framework is required that is not derivable from that framework's axioms alone - these are catalogued in [Axiomatic Commitments](README.md#axiomatic-commitments) in README.md.
+In the Zero Paradox, what supplies an atom above ⊥ of the discrete state chart (a state with nothing between it and ⊥; c₁ in `MachinePhase`) is the framework's discrete state model (a bare join-semilattice alone can be densely ordered, and in a dense order no element has a first step, so there is no such atom; the real numbers are the familiar dense case, and since they have no least element, a dense case with one is the non-negative reals under max, where 0 is least and has no atom above it). The discrete state model is itself the assumption: it is AX-B1, the framework's one substantive modelling commitment, and for a general join-semilattice the cover is a hypothesis (`t_snap_given_cover`); in the two-state carrier `MachinePhase` the atom is checked (`t_snap_derived_cover`). The result is machine-verified in Lean 4. The supporting structure examines the bottom role across several mathematical frameworks: each field fills the same structural role with its own bottom, named as ⊥ of its own carrier and order, and the reading that these are numerically one object is retired as ill-typed. The framework's commitments are catalogued in [Axiomatic Commitments](README.md#axiomatic-commitments) in README.md.
 
 Each layer of the proof is internally closed before any cross-framework claim is made.
 
-No snap-specific axioms appear anywhere in the framework. The Binary Snap - the transition from the bottom element ⊥ to an atom above ⊥ of the discrete state chart (c₁ in `MachinePhase`), whose shape is derived rather than assumed - is a theorem proved in ZP-E from A4 - the standard bottom-element axiom (∀ x, ⊥ ∨ x = x) - together with the framework's computational commitments. A4 is a standard axiom of join-semilattice theory.
+No snap-specific axioms appear anywhere in the framework. The Binary Snap - the transition from ⊥ of the discrete state chart (c₀ in `MachinePhase`) to an atom above it (c₁), whose shape is derived rather than assumed - is a theorem proved in ZP-E: it takes its join from A4, the standard bottom-element axiom of join-semilattice theory (∀ x, ⊥ ∨ x = x), and its atom from AX-B1.
 
 ---
 
@@ -53,7 +53,7 @@ This repository is connected to a Copilot Space - a GitHub AI chat with the docu
 
 **General reader:** [Foreword](Zero_Paradox_Foreword.pdf) → any [Illustrated Companion](#illustrated-companion-documents) → [ZP-E Companion](ZP-E_Illustrated_Companion.pdf) → [ZP-I Companion](ZP-I_Illustrated_Companion.pdf) (framework closure)
 
-**Mathematician:** the formal layers are best read by field, not in one linear sequence. See the [Reading Order (by Specialty)](README.md#reading-order-by-specialty) in the formal index, which routes each specialty (number theory, proof theory, computability, set theory, category theory, order and analysis) through its own layers, the bridge that connects it, and the shared bottom ⊥.
+**Mathematician:** the formal layers are best read by field, not in one linear sequence. See the [Reading Order (by Specialty)](README.md#reading-order-by-specialty) in the formal index, which routes each specialty (number theory, proof theory, computability, set theory, category theory, order and analysis) through its own layers, the bridge that connects it, and the shared role, filled in each field by ⊥ of that field's own carrier.
 
 **Category theory extension:** [ZP-G](ZP-G_Category_Theory.pdf) → [ZP-H](ZP-H_Categorical_Bridge.pdf) → [ZP-H Native Categories Addendum](ZP-H_Native_Categories_Addendum.pdf) (self-contained after ZP-E)
 
@@ -65,7 +65,7 @@ This repository is connected to a Copilot Space - a GitHub AI chat with the docu
 
 One companion per formal document. Plain language, diagrams, real-world examples.
 
-> **Note:** The companions are introductions to the framework's structure. For current theorem names and statuses, the formal documents and the [Claims Ledger](CLAIMS.md) are authoritative.
+> **Note:** The companions are introductions to the framework's structure. Some companions may lag the formal documents; for current theorem names and statuses, the formal documents and the [Claims Ledger](CLAIMS.md) are authoritative.
 
 | File | For Document | Key Diagrams |
 |------|-------------|--------------|
@@ -78,7 +78,7 @@ One companion per formal document. Plain language, diagrams, real-world examples
 | [ZP-G Illustrated Companion](ZP-G_Illustrated_Companion.pdf) | ZP-G | Category and functor concepts, initial object, informational singularity |
 | [ZP-H Illustrated Companion](ZP-H_Illustrated_Companion.pdf) | ZP-H | Four-functor convergence, T-SNAP derivation chain, Binary Snap across the four ZP frameworks |
 | [ZP-I Illustrated Companion](ZP-I_Illustrated_Companion.pdf) | ZP-I | 2-adic depth diagram, three closed doors + Cauchy passage, complete cycle diagram |
-| [ZP-J Illustrated Companion](ZP-J_Illustrated_Companion.pdf) | ZP-J + ZP-J AFA Addendum | Quine atom diagram (⊥ = {⊥}, in ZFC⁻ + AFA), directed-graph (APG) view of the Quine atom (self-loop), three-way equivalence table, CC-1 restated as an equivalence and CC-2 read as the Quine-atom role, abstraction chain (ValuationStructure → AFAStructure), APG decoration uniqueness |
+| [ZP-J Illustrated Companion](ZP-J_Illustrated_Companion.pdf) | ZP-J + ZP-J AFA Addendum | Quine atom diagram (the Quine-atom role, b = {b}, in ZFC⁻ + AFA), directed-graph (APG) view of the Quine atom (self-loop), three-way equivalence table, CC-1 restated as an equivalence and CC-2 read as the Quine-atom role, abstraction chain (ValuationStructure → AFAStructure), APG decoration uniqueness |
 | [ZP-J Wheel Illustrated Companion](ZP-J_Wheel_Illustrated_Companion.pdf) | ZP-J Wheel Addendum | Wheel / meadow / collapse diagram (∞ ≠ ⊥), division by zero made total, ∞ = /0 and ⊥ = 0·/0, the wheel of fractions construction, why identifying ∞ with ⊥ leaves a one-element wheel, porthole connection |
 | [ZP-K Illustrated Companion](ZP-K_Illustrated_Companion.pdf) | ZP-K | Three-way equivalence diagram, computational Quine, execution argument Lean verification |
 | [ZP-L Illustrated Companion](ZP-L_Illustrated_Companion.pdf) | ZP-L | Ordinal tower with ε₀ snap threshold, dual convergence diagram |
