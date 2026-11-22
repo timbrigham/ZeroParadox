@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-Q: The Frame-Change PDF Builder
-Version 1.29 | November 2026
+Version 1.30 | November 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.29'
+VERSION = '1.30'
 FIRST_RELEASED = 'July 2026'
 
 from reportlab.graphics.shapes import Drawing, Circle, Ellipse, PolyLine, String, Polygon
@@ -80,7 +80,7 @@ def build():
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-Q: The Frame-Change', S['title']),
-        Paragraph('0 of &#8474;<sub>2</sub> read as both 0 and &#8734;, and what that does not settle', S['subtitle']),
+        Paragraph('The bottom role read as both 0 and &#8734;, and what that does not settle', S['subtitle']),
         Paragraph(version_line(FIRST_RELEASED, VERSION), S['subtitle']),
         Paragraph(
             '<i>Synthesis layer, the sequel to ZP-P. The abstract frame-flip schema is proved '
