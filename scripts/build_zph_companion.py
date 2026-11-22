@@ -1,5 +1,5 @@
 """
-Build ZP-H Illustrated Companion (v1.35)
+Build ZP-H Illustrated Companion (v1.36)
 Standalone companion for ZP-H: Categorical Bridge only.
 ZP-G has its own companion (build_zpg_companion.py).
 
@@ -129,7 +129,7 @@ def snap_convergence_diagram():
 
     return d
 
-VERSION = '1.35'
+VERSION = '1.36'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -307,8 +307,10 @@ def build():
         'to depth 0 means m ≤ 0, so m = 0. The irreversibility of ZP-B C3 (no continuous path '
         'returns to 0 in ℚ₂) is the domain analogue of that fact, proved in ZP-B.'))
     E.append(cbody(
-        '<b>FC (Information Theory):</b> The initial object 0 maps to the zero distribution '
-        'P = (1, 0). Each morphism maps to an informational transition with '
+        '<b>FC (Information Theory):</b> In Lean the initial object 0 maps to depth 0 of the stand-in and to '
+        'Fin 0, the empty type, in the Kleisli category of the probability monad, where it is initial. ZP-C\'s '
+        'information model reads the bottom as the point mass P = (1, 0), and no distribution lives on the '
+        'empty type, so the two models differ at 0. Each morphism maps to an informational transition with '
         'a non-negative cost measured in bits. The fundamental transition costs exactly '
         '1 bit (ZP-C T1b). The unreachability of 0 in ZP-G (T3) and the diverging '
         'surprisal of ZP-C T2 hold together (T-H2), a pair of separately proved results. In Lean, FC is a sorry-free functor in two forms: fc_functor '

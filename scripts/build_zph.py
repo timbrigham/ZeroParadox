@@ -1,12 +1,12 @@
 """
 Zero Paradox — ZP-H: Categorical Bridge PDF Builder
-Version 1.45 | November 2026
+Version 1.46 | November 2026
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.45'
+VERSION = '1.46'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -250,8 +250,11 @@ def build():
         'Construction C-H3 — Functor FC: C → InfoSp',
         'Status: PDF construction complete — Lean: full functor (fc_functor, sorry-free)',
         [
-            'Object map: F<sub>C</sub> sends each object X &#8712; ob(C) to a probability distribution P<sub>X</sub> over {0, 1}. The initial '
-            'object 0 maps to the point mass at non-existence: F<sub>C</sub>(0) = P = (1, 0) (derived from AX-B1 and RP-1 in ZP-C T1). InfoSp is '
+            'Object map: in Lean, with C realized as &#8469;, object n goes to depth n of InfoDepth (fc_functor.obj n) and to the finite type '
+            'Fin n of KleisliCat PMF (fC_functor.obj n). The initial object 0 maps to depth 0 of InfoDepth and to Fin 0, the empty type, which is '
+            'initial in KleisliCat PMF (fC_zero_isInitial). ZP-C\'s information model reads the bottom as the point mass at non-existence, '
+            'the distribution P = (1, 0) over {0, 1} (derived from AX-B1 and RP-1 in ZP-C T1); no distribution lives on the empty type '
+            '(the proof of fC_no_return), so the two models differ at 0. InfoSp is '
             'the informal name of the target: in Lean, F<sub>C</sub> is realized in KleisliCat PMF, the Kleisli category of the probability monad '
             '(fC_functor, ZeroParadox/Multihomed/InfoFunctor.lean), and its &#8469;-indexed stand-in is InfoDepth (fc_functor, '
             'ZeroParadox/Multihomed/CategoricalBridge.lean).',
@@ -348,9 +351,13 @@ def build():
             'This leg holds in the stand-in Q&#8322;BallDepth (fb_preserves_initial, ZeroParadox/Multihomed/CategoricalBridge.lean). In TopCat it '
             'does not: the floor {0} is a one-point space, so it is terminal and not initial there (padic_bottom_isTerminal and padic_bottom_not_initial, '
             'ZeroParadox/Multihomed/TreeObstructions.lean). <font name="DV">&#10003;</font>',
-            'F<sub>C</sub>: F<sub>C</sub>(0) = P = (1, 0). For any distribution P<sub>Y</sub>, the unique morphism P &#8594; P<sub>Y</sub> is the informational '
-            'transition with work E = JSD(P &#8741; P<sub>Y</sub>). Uniqueness: JSD is symmetric and uniquely determined by P '
-            'and P<sub>Y</sub>; there is exactly one value of informational work for any pair of distributions. <font name="DV">&#10003;</font>',
+            'F<sub>C</sub>: F<sub>C</sub>(0) is depth 0 of InfoDepth (fc_functor.obj 0) and the empty type Fin 0 of KleisliCat PMF '
+            '(fC_functor.obj 0), not the distribution P = (1, 0) of ZP-C\'s model (C-H3: the two models differ at 0). '
+            'Uniqueness of the morphism out of it is a fact about the codomain category: from the empty type there is exactly one '
+            'stochastic map to each object, the empty one (fC_zero_isInitial), and in the stand-in InfoDepth every hom-set out of '
+            'depth 0 has exactly one element (infoDepthHom0Unique), so fc_functor sends 0 to an initial object (fc_preserves_initial, '
+            'ZeroParadox/Multihomed/CategoricalBridge.lean). That JSD takes '
+            'one value on each pair of distributions is a fact about a number, not about morphisms, and is not used here. <font name="DV">&#10003;</font>',
             'F<sub>D</sub>: F<sub>D</sub>(0) is depth 0 of HilbDimDepth (fd_functor.obj 0) and the zero module &#8450;<sup>0</sup> of ModuleCat &#8450; '
             '(fD_functor.obj 0); ZP-D\'s vector model reads 0 of Q<sub>2</sub> as the base vector T(0) = e<sub>0</sub> (ZP-D D2(i)), and reads the morphism '
             'from F<sub>D</sub>(0) to the object of x as the orthogonal extension from e<sub>0</sub> to e<sub>k</sub> (the basis vector assigned to x). '
@@ -388,7 +395,8 @@ def build():
             'accumulation, ZP-C Theorem T2) hold together: a conjunction of the two, and the '
             'proof uses neither to prove the other.',
             'Setup (motivation only; th2_singularity_compatibility involves neither F<sub>C</sub> nor F<sub>B</sub>): Let {X<sub>n</sub>} be a sequence of objects in C such that the corresponding sequence {F<sub>C</sub>(X<sub>n</sub>)} = '
-            '{P<sub>n</sub>} in InfoSp approaches F<sub>C</sub>(0) = P = (1, 0) in distribution. Under F<sub>B</sub>, the corresponding '
+            '{P<sub>n</sub>} of distributions approaches ZP-C\'s point mass P = (1, 0) (ZP-C\'s reading of the bottom; F<sub>C</sub>(0) itself is the '
+            'empty type Fin 0, C-H3). Under F<sub>B</sub>, the corresponding '
             'sequence {x<sub>n</sub>} in Q<sub>2</sub> approaches 0 &#8712; Q<sub>2</sub>.',
             'ZP-C side: By ZP-C T2, the discrete surprisal DF along the infinite sequence {x<sub>n</sub>} approaching 0 in '
             'Q<sub>2</sub> is non-conservative: the accumulated surprisal &#8721; DF(x<sub>k</sub> &#8594; x<sub>k+1</sub>) diverges as n &#8594; &#8734;. The singularity is infinite accumulation.',
@@ -501,7 +509,7 @@ def build():
         ['F<sub>B</sub>(0) = 0 &#8712; Q<sub>2</sub>','ZP-B T3; C-H2',               'None',        'Valid — Derived'],
         ['F<sub>B</sub> preserves composition',        'ZP-B T2; C-H2',               'None',        'Valid — Derived'],
         ['F<sub>B</sub> respects AX-G1, AX-G2',       'q2BallZPCat (stand-in); C-H2; ZP-B C3 beside it, not used', 'None', 'Valid in the stand-in — TopCat has a terminal object'],
-        ['F<sub>C</sub>(0) = P = (1,0)',               'ZP-C T1; ZP-E T6; C-H3',      'AX-B1, RP-1', 'Valid — from AX-B1, RP-1'],
+        ['F<sub>C</sub>(0) = depth 0, Fin 0; P = (1,0) in ZP-C\'s model', 'fC_zero_isInitial; ZP-C T1; ZP-E T6; C-H3', 'AX-B1, RP-1 (for P = (1,0) only)', 'Valid — Fin 0 by construction; P from AX-B1, RP-1; the two models differ at 0'],
         ['F<sub>C</sub> preserves composition',        'Q-stability of post-snap codomain; C-H3', 'None', 'Valid — Derived (binary framework; Q-stability, not subadditivity)'],
         ['F<sub>C</sub> respects AX-G1, AX-G2',       'infoDepthZPCat (stand-in); C-H3; ZP-C T1b beside it, not used','AX-B1, RP-1 (for ZP-C T1b; the stand-in proofs use neither)', 'Valid in the stand-in — KleisliCat PMF has a terminal object'],
         ['F<sub>D</sub>(0) = depth 0, &#8450;<sup>0</sup>; T(0) = e<sub>0</sub> in ZP-D\'s vector model', 'ZP-D D2(i), T2; C-H4', 'None (D2(i), by assignment)', 'Valid — by construction'],
@@ -584,7 +592,7 @@ def build():
          'Remark —\nBA-G1 demoted\n(ZP-G v1.1)',
          'Leinster Shannon entropy characterization. BA-G1 demoted from Bridge Axiom '
          'in ZP-G v1.0 to Compatibility Remark R-BA in ZP-G v1.1. '
-         'Derivable from D7\' and I-KC via the coding theorem. Not a gap.'],
+         'Not derivable from D7\': the coding theorem gives a one-sided bound, not an equivalence. Not a gap.'],
         ['D-H1',
          'Design\nCommitment —\nintentional',
          'Morphisms of C defined as state transitions. This is a design choice that makes '
