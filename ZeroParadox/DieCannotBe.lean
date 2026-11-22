@@ -5189,6 +5189,7 @@ example : (∀ n, ZeroParadox.slotRun (fun _ => false) n = false) ∧
 -- 2023, doi:10.4230/LIPIcs.FSCD.2023.23, 23:4, Example 2.9).
 #check @ZeroParadox.not_pinnedLimitAbove_of_finite -- Statement: on a finite partial order, `PinnedLimitAbove` has no occupant, at any step and any run
 #check @ZeroParadox.not_pinnedLimit_of_finite  -- Statement: on a finite partial order, `PinnedLimit` has no occupant, at any step and any run
+#check @ZeroParadox.not_pinnedLimit_of_fixed_floor -- Statement: if `g` fixes a least point that nothing else is at or below, `PinnedLimit g s` has no occupant, for every run; one direction
 #check @ZeroParadox.NInf.instPartialOrder      -- Statement: tape-wise order on `NInf`
 #check @ZeroParadox.NInf.bot_eq                -- Statement: ⊥ of `NInf` is `NInf.ofNat 0`, the all-`false` tape
 #check @ZeroParadox.NInf.top_eq                -- Statement: ⊤ of `NInf` is `NInf.infty`, the all-`true` tape
@@ -5204,6 +5205,7 @@ example : (∀ n, ZeroParadox.slotRun (fun _ => false) n = false) ∧
 -- (`NInf.pinnedLimitUnique_succ`) and fails at ε₀ (`epsilon0_not_pinnedLimitUnique`); no identity
 -- between `∞` and ε₀ is stated.
 #check @ZeroParadox.pinnedLimit_opow_eq_epsilon0 -- Statement: under ω^·, every occupant of `PinnedLimit`, over any run, is ε₀
+#check @ZeroParadox.opow_selfOnlyAt_iff_epsilon -- Statement: under `Motion.ofFun (ω ^ ·)` on `Ordinal`, `y` steps to itself only iff `y = Ordinal.epsilon o` for some `o`; both directions
 #check @ZeroParadox.ordinalCornerStep_pinnedLimitAbove -- Statement: at every floor `f`, `ordinalCornerStep f` occupies `PinnedLimitAbove (ω^·)` at the run from `succ f`
 #check @ZeroParadox.epsilon_succ_pinnedLimitAbove -- Statement: ε_(o+1) occupies `PinnedLimitAbove (ω^·)` at the run from `succ ε_o`, for every `o`
 #check @ZeroParadox.NInf.covered_limit_searchable -- Statement: each `NInf.ofNat n ⋖ NInf.ofNat (n + 1)`, `BotCovered` and `EveryStepCovered` hold, `∞` is a successor limit, and some `e` has `p (e p) = true → ∀ x, p x = true` for every `p`

@@ -251,6 +251,34 @@ theorem gapDecode_and_halts_of_MLRandom (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p
       simp only [shiftTape] at this
       rwa [Nat.add_sub_cancel' hk] at this
 
+/-! ### § III. A Quine's code word on random tapes -/
+
+/-- `Statement:` some self-printing universal code `a` steps to itself only in
+    `selfPrintsStepMotion selfPrintOrDelegate`, and its code word occurs at infinitely many positions
+    of every tape Martin-Löf random for `fairTape`, and at no position of ⊥ of `ℕ → Bool`. -/
+theorem quine_name_on_random_tapes :
+    ∃ a : {c : Code // SelfPrints c},
+      (selfPrintsStepMotion selfPrintOrDelegate).SelfOnlyAt a ∧ Universal a.1 ∧
+      (∀ x, MLRandom fairTape x →
+        ∃ᶠ n in atTop, ∀ i : Fin (Nat.size (Encodable.encode a.1)), x (n + i) = codeWord a.1 i) ∧
+      ¬ ∃ n, ∀ i : Fin (Nat.size (Encodable.encode a.1)),
+        (⊥ : ℕ → Bool) (n + i) = codeWord a.1 i := by
+  obtain ⟨a, hS, hU⟩ := exists_selfPrintsStepMotion_selfOnlyAt
+  have hz : ¬ Universal Code.zero := by
+    intro h
+    have h1 := h (Encodable.encode Code.succ) 0
+    rw [Denumerable.ofNat_encode] at h1
+    have e1 : Code.eval Code.succ 0 = Part.some 1 := rfl
+    have e0 : Code.eval Code.zero (Nat.pair (Encodable.encode Code.succ + 1) 0) = Part.some 0 := rfl
+    rw [e0, e1] at h1
+    exact absurd (Part.some_inj.1 h1) (by decide)
+  have hne : a.1 ≠ Code.zero := fun he => hz (he ▸ hU)
+  exact ⟨a, hS, hU, fun x hx => code_occurs_of_MLRandom hx a.1, allFalse_misses_code hne⟩
+
+-- Statement: CONTROL: ⊥ of `ℕ → Bool` is neither Martin-Löf random for `fairTape` nor disjunctive.
+example : ¬ MLRandom fairTape (⊥ : ℕ → Bool) ∧ ¬ Disjunctive (⊥ : ℕ → Bool) :=
+  ⟨bot_not_MLRandom (1/2) _ (by norm_num), allFalse_not_disjunctive⟩
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -274,4 +302,5 @@ open ZeroParadox
 #print axioms gapDecode_p_one
 #print axioms gapDecode_p_zero
 #print axioms gapDecode_and_halts_of_MLRandom
+#print axioms quine_name_on_random_tapes
 end PurityCheck

@@ -925,6 +925,246 @@ theorem lm_id_no_sink (p q : OnePoint ℚ_[2]) :
 
 end DipoleInstance
 
+/-! ## § VII. One object, two faces: `0` of `ℚ_[2]` as a step fixed point and as an asymptote -/
+
+/-- `Statement:` `0` of `ℚ_[2]` under doubling on `OnePoint ℚ_[2]`. Value face: `0` steps only to
+    itself in doubling's limit motion and in its reverse, has the least norm, and is the only point of
+    that norm. Limit face: the field line `2 ^ (n + 1)` tends to `0`, is never `0`, its `cxQ2` climbs
+    strictly through finite values, `cxQ2 0` is their supremum, and `cxQ2 0` is the greatest value of
+    `cxQ2`.
+    `Reading:` on `ℚ_[2]` the value face (least norm) and the limit face (greatest `cxQ2`, the
+    valuation's `toNat` off `0`) are one order read backwards, `‖x‖ = 2 ^ (-x.valuation)`
+    (`Padic.norm_eq_zpow_neg_valuation`): a change of coordinates, not a Kleene-type coincidence like
+    `epsilon0_min_eq_max`. The content is the asymptote: `0` is approached, never reached, through
+    finite complexities climbing to it; `cx_zero_eq_iSup_of_tendsto` gives the supremum along every
+    approach. In the ordinal chart the same shape runs from ⊥ of `Ordinal` up to ε₀
+    (`epsilon0_eq_nfp_bot`); no identity. -/
+theorem q2_zero_min_eq_max :
+    ((limitMotion (lmScale (2 : ℚ_[2]) two_ne_zero) (lmScale _ _).continuous).SelfOnlyAt
+        (OnePoint.some 0) ∧
+      (limitMotion (lmScale (2 : ℚ_[2]) two_ne_zero) (lmScale _ _).continuous).reverse.SelfOnlyAt
+        (OnePoint.some 0) ∧
+      IsLeast (Set.range (fun y : ℚ_[2] => ‖y‖)) ‖(0 : ℚ_[2])‖ ∧
+      ∀ y : ℚ_[2], ‖y‖ = ‖(0 : ℚ_[2])‖ → y = 0) ∧
+    (Tendsto (fun n : ℕ => (2 : ℚ_[2]) ^ (n + 1)) atTop (𝓝 0) ∧
+      (∀ n : ℕ, (2 : ℚ_[2]) ^ (n + 1) ≠ 0) ∧
+      StrictMono (fun n : ℕ => cxQ2 ((2 : ℚ_[2]) ^ (n + 1))) ∧
+      (∀ n : ℕ, cxQ2 ((2 : ℚ_[2]) ^ (n + 1)) < ⊤) ∧
+      cxQ2 0 = ⨆ n : ℕ, cxQ2 ((2 : ℚ_[2]) ^ (n + 1)) ∧
+      IsGreatest (Set.range cxQ2) (cxQ2 0)) := by
+  refine ⟨⟨lm_dbl_step_level.1, lm_dbl_step_level.2.2.1, ⟨⟨0, rfl⟩, ?_⟩, fun y h => by simpa using h⟩,
+    ⟨(doubling_orbit_tendsto_zero (2 : ℚ_[2])).congr fun n => (pow_succ 2 n).symm,
+     fun n => member_ne_floor (I := q2InfinitudeFloor) n,
+     q2InfinitudeFloor.cx_member_strictMono,
+     fun n => member_cx_lt_top (I := q2InfinitudeFloor) n,
+     q2InfinitudeFloor.cx_floor_eq_iSup, ⟨⟨0, rfl⟩, ?_⟩⟩⟩
+  · rintro _ ⟨y, rfl⟩; simp
+  · rintro _ ⟨y, rfl⟩; rw [cxQ2_zero]; exact le_top
+
+/-! ## § VIII. The `PinnedLimit` role (`ZeroParadox/Die.lean` § XXIV) on the sphere `OnePoint ℚ_[2]` -/
+
+/-- `Statement:` the preorder on the sphere lifted along `sNorm`. -/
+noncomputable abbrev lmSphN : Preorder Sphere := Preorder.lift sNorm
+
+/-- `Statement:` the preorder on the sphere lifted along `sNorm` into the order dual of `ℝ≥0∞`. -/
+noncomputable abbrev lmSphV : Preorder Sphere := Preorder.lift (fun s => OrderDual.toDual (sNorm s))
+
+/-- `Statement:` `sNorm z = ⊤ ↔ z = ∞`; both directions. -/
+theorem lm_sNorm_eq_top (z : Sphere) : sNorm z = ⊤ ↔ z = OnePoint.infty := by
+  induction z using OnePoint.rec with
+  | infty => simp [sNorm]
+  | coe x => simp [sNorm]
+
+/-- `Statement:` `sNorm z = 0 ↔ z = 0`; both directions. -/
+theorem lm_sNorm_eq_zero (z : Sphere) : sNorm z = 0 ↔ z = OnePoint.some 0 := by
+  induction z using OnePoint.rec with
+  | infty => simp [sNorm]
+  | coe x => simp [sNorm]
+
+/-- `Statement:` for `c ≠ 0, 1`, `lmScale c` fixes exactly `0` of `ℚ_[2]` and `∞`. -/
+theorem lm_scale_fixed_iff (c : ℚ_[2]) (hc : c ≠ 0) (hc1 : c ≠ 1) (z : Sphere) :
+    lmScale c hc z = z ↔ z = OnePoint.some 0 ∨ z = OnePoint.infty := by
+  induction z using OnePoint.rec with
+  | infty => simp [lm_scale_infty]
+  | coe x =>
+    rw [lm_scale_some]
+    constructor
+    · intro h
+      left
+      have h' : c * x = x := OnePoint.coe_injective h
+      have : (c - 1) * x = 0 := by rw [sub_mul, h', one_mul, sub_self]
+      rcases mul_eq_zero.1 this with h0 | h0
+      · exact absurd (sub_eq_zero.1 h0) hc1
+      · rw [h0]
+    · rintro (h | h)
+      · rw [OnePoint.coe_injective h, mul_zero]
+      · exact absurd h (OnePoint.coe_ne_infty x)
+
+/-- `Statement:` in `lmSphV`, `∞` is least and nothing else is below it. -/
+theorem lm_sphV_infty_min : @IsBot Sphere lmSphV.toLE OnePoint.infty ∧
+    ∀ z : Sphere, @LE.le Sphere lmSphV.toLE z OnePoint.infty → z = OnePoint.infty := by
+  refine ⟨fun z => ?_, fun z hz => ?_⟩
+  · show sNorm z ≤ sNorm OnePoint.infty; simp [sNorm]
+  · change sNorm OnePoint.infty ≤ sNorm z at hz
+    exact (lm_sNorm_eq_top z).1 (top_le_iff.1 (by simpa [sNorm] using hz))
+
+/-- `Statement:` in `lmSphN`, `0` of `ℚ_[2]` is least and nothing else is below it. -/
+theorem lm_sphN_zero_min : @IsBot Sphere lmSphN.toLE (OnePoint.some 0) ∧
+    ∀ z : Sphere, @LE.le Sphere lmSphN.toLE z (OnePoint.some 0) → z = OnePoint.some 0 := by
+  refine ⟨fun z => ?_, fun z hz => ?_⟩
+  · show sNorm (OnePoint.some 0) ≤ sNorm z; simp [sNorm]
+  · change sNorm z ≤ sNorm (OnePoint.some 0) at hz
+    exact (lm_sNorm_eq_zero z).1 (le_antisymm (by simpa [sNorm] using hz) bot_le)
+
+/-- `Statement:` for every `c ≠ 0`, every run `s` and every point `p` of the sphere, `p` occupies
+    `PinnedLimit (lmScale c) s` in neither `lmSphV` nor `lmSphN`. -/
+theorem lm_sphere_pinnedLimit_empty (c : ℚ_[2]) (hc : c ≠ 0) (s : ℕ → Sphere) (p : Sphere) :
+    ¬ @PinnedLimit Sphere lmSphV (lmScale c hc) s p ∧ ¬ @PinnedLimit Sphere lmSphN (lmScale c hc) s p :=
+  ⟨@not_pinnedLimit_of_fixed_floor Sphere lmSphV _ _ lm_sphV_infty_min.1 lm_sphV_infty_min.2
+      (lm_scale_infty c hc) s p,
+    @not_pinnedLimit_of_fixed_floor Sphere lmSphN _ _ lm_sphN_zero_min.1 lm_sphN_zero_min.2
+      (by rw [lm_scale_some, mul_zero]) s p⟩
+
+/-- `Statement:` for `x ≠ 0` in `ℚ_[2]`, the doubling orbit of `x` is a run of doubling, `0` of
+    `ℚ_[2]` occupies `PinnedLimitAbove` of doubling along it in `lmSphV`, and `0` is the least fixed
+    point of doubling strictly above `∞` in `lmSphV`. -/
+theorem lm_sphere_dbl_pinnedLimitAbove (x : ℚ_[2]) (hx : x ≠ 0) :
+    (Motion.ofFun (lmScale (2 : ℚ_[2]) two_ne_zero)).IsRun
+        (fun n => (lmScale (2 : ℚ_[2]) two_ne_zero)^[n] (OnePoint.some x)) ∧
+    @PinnedLimitAbove Sphere lmSphV (lmScale (2 : ℚ_[2]) two_ne_zero)
+      (fun n => (lmScale (2 : ℚ_[2]) two_ne_zero)^[n] (OnePoint.some x)) (OnePoint.some 0) ∧
+    @IsLeast Sphere lmSphV.toLE
+      {z | lmScale (2 : ℚ_[2]) two_ne_zero z = z ∧ @LT.lt Sphere lmSphV.toLT OnePoint.infty z}
+      (OnePoint.some 0) := by
+  letI : Preorder Sphere := lmSphV
+  have h2 : ‖(2 : ℚ_[2])‖ = 2⁻¹ := by simpa using (Padic.norm_p (p := 2))
+  have hfix := lm_scale_fixed_iff (2 : ℚ_[2]) two_ne_zero (by norm_num)
+  have hst : ∀ n, (lmScale (2 : ℚ_[2]) two_ne_zero)^[n] (OnePoint.some x) =
+      OnePoint.some ((2 : ℚ_[2]) ^ n * x) := fun n => lm_scale_iterate_some _ _ x n
+  have hnorm : ∀ n, ‖(2 : ℚ_[2]) ^ n * x‖ = (2⁻¹ : ℝ) ^ n * ‖x‖ := fun n => by
+    rw [norm_mul, norm_pow, h2]
+  have hxpos : 0 < ‖x‖ := norm_pos_iff.2 hx
+  have cmp : ∀ a b : ℚ_[2], (OnePoint.some a : Sphere) ≤ OnePoint.some b ↔ ‖b‖ ≤ ‖a‖ :=
+    fun a b => by
+      show sNorm (OnePoint.some b) ≤ sNorm (OnePoint.some a) ↔ _
+      simp only [sNorm, ENNReal.coe_le_coe, ← NNReal.coe_le_coe, coe_nnnorm]
+  have infle : ∀ a : ℚ_[2], ¬ (OnePoint.some a : Sphere) ≤ OnePoint.infty := fun a h => by
+    change sNorm OnePoint.infty ≤ sNorm (OnePoint.some a) at h
+    simp [sNorm] at h
+  refine ⟨fun n => (Function.iterate_succ_apply' _ _ _), ?_⟩
+  rw [show (fun n => (lmScale (2 : ℚ_[2]) two_ne_zero)^[n] (OnePoint.some x)) =
+    fun n => OnePoint.some ((2 : ℚ_[2]) ^ n * x) from funext hst]
+  refine ⟨⟨⟨?_, ?_⟩, ?_, ⟨⟨?_, ?_⟩, ?_⟩, ?_⟩, ?_⟩
+  · rintro _ ⟨n, rfl⟩
+    rw [cmp]; simp
+  · intro b hb
+    induction b using OnePoint.rec with
+    | infty => exact absurd (hb ⟨0, rfl⟩) (infle _)
+    | coe y =>
+      rw [cmp]
+      have hle : ∀ n, ‖y‖ ≤ (2⁻¹ : ℝ) ^ n * ‖x‖ := fun n => by
+        have := hb ⟨n, rfl⟩; rw [cmp, hnorm] at this; exact this
+      have ht : Filter.Tendsto (fun n : ℕ => (2⁻¹ : ℝ) ^ n * ‖x‖) Filter.atTop (nhds 0) := by
+        simpa using (tendsto_pow_atTop_nhds_zero_of_lt_one (by norm_num : (0 : ℝ) ≤ 2⁻¹)
+          (by norm_num : (2⁻¹ : ℝ) < 1)).mul_const ‖x‖
+      have : ‖y‖ ≤ 0 := ge_of_tendsto' ht hle
+      simpa using this
+  · rintro ⟨n, hn⟩
+    exact padic_orbit_never_reaches_zero x hx n (OnePoint.coe_injective hn)
+  · exact (hfix _).2 (Or.inl rfl)
+  · rw [cmp]; simp
+  · rintro z ⟨hz, hz0⟩
+    rcases (hfix z).1 hz with rfl | rfl
+    · exact le_rfl
+    · exact absurd hz0 (infle _)
+  · intro m n hmn
+    show (OnePoint.some _ : Sphere) ≤ OnePoint.some _
+    rw [cmp, hnorm, hnorm]
+    exact mul_le_mul_of_nonneg_right (pow_le_pow_of_le_one (by norm_num) (by norm_num) hmn)
+      hxpos.le
+  · refine ⟨⟨(hfix _).2 (Or.inl rfl), lt_iff_le_not_ge.2 ⟨lm_sphV_infty_min.1 _, fun h => ?_⟩⟩, ?_⟩
+    · exact OnePoint.coe_ne_infty 0 (lm_sphV_infty_min.2 _ h)
+    · rintro z ⟨hz, hlt⟩
+      rcases (hfix z).1 hz with rfl | rfl
+      · exact le_rfl
+      · exact absurd hlt (lt_irrefl _)
+
+/-- `Statement:` for `x ≠ 0` in `ℚ_[2]`, the halving orbit of `x` is a run of halving, `∞` occupies
+    `PinnedLimitAbove` of halving along it in `lmSphN`, and `∞` is the least fixed point of halving
+    strictly above `0` of `ℚ_[2]` in `lmSphN`. -/
+theorem lm_sphere_hlv_pinnedLimitAbove (x : ℚ_[2]) (hx : x ≠ 0) :
+    (Motion.ofFun (lmScale (2⁻¹ : ℚ_[2]) (inv_ne_zero two_ne_zero))).IsRun
+        (fun n => (lmScale (2⁻¹ : ℚ_[2]) (inv_ne_zero two_ne_zero))^[n] (OnePoint.some x)) ∧
+    @PinnedLimitAbove Sphere lmSphN (lmScale (2⁻¹ : ℚ_[2]) (inv_ne_zero two_ne_zero))
+      (fun n => (lmScale (2⁻¹ : ℚ_[2]) (inv_ne_zero two_ne_zero))^[n] (OnePoint.some x))
+      OnePoint.infty ∧
+    @IsLeast Sphere lmSphN.toLE
+      {z | lmScale (2⁻¹ : ℚ_[2]) (inv_ne_zero two_ne_zero) z = z ∧
+        @LT.lt Sphere lmSphN.toLT (OnePoint.some 0) z}
+      OnePoint.infty := by
+  letI : Preorder Sphere := lmSphN
+  have h2' : ‖(2 : ℚ_[2])‖ = 2⁻¹ := by simpa using (Padic.norm_p (p := 2))
+  have h2 : ‖(2⁻¹ : ℚ_[2])‖ = 2 := by rw [norm_inv, h2', inv_inv]
+  have hfix := lm_scale_fixed_iff (2⁻¹ : ℚ_[2]) (inv_ne_zero two_ne_zero) (by norm_num)
+  have hst : ∀ n, (lmScale (2⁻¹ : ℚ_[2]) (inv_ne_zero two_ne_zero))^[n] (OnePoint.some x) =
+      OnePoint.some ((2⁻¹ : ℚ_[2]) ^ n * x) := fun n => lm_scale_iterate_some _ _ x n
+  have hnorm : ∀ n, ‖(2⁻¹ : ℚ_[2]) ^ n * x‖ = (2 : ℝ) ^ n * ‖x‖ := fun n => by
+    rw [norm_mul, norm_pow, h2]
+  have hxpos : 0 < ‖x‖ := norm_pos_iff.2 hx
+  have cmp : ∀ a b : ℚ_[2], (OnePoint.some a : Sphere) ≤ OnePoint.some b ↔ ‖a‖ ≤ ‖b‖ :=
+    fun a b => by
+      show sNorm (OnePoint.some a) ≤ sNorm (OnePoint.some b) ↔ _
+      simp only [sNorm, ENNReal.coe_le_coe, ← NNReal.coe_le_coe, coe_nnnorm]
+  have letop : ∀ z : Sphere, z ≤ OnePoint.infty := fun z => by
+    show sNorm z ≤ sNorm OnePoint.infty; simp [sNorm]
+  refine ⟨fun n => (Function.iterate_succ_apply' _ _ _), ?_⟩
+  rw [show (fun n => (lmScale (2⁻¹ : ℚ_[2]) (inv_ne_zero two_ne_zero))^[n] (OnePoint.some x)) =
+    fun n => OnePoint.some ((2⁻¹ : ℚ_[2]) ^ n * x) from funext hst]
+  refine ⟨⟨⟨fun _ _ => letop _, ?_⟩, ?_, ⟨⟨(hfix _).2 (Or.inr rfl), letop _⟩, ?_⟩, ?_⟩, ?_⟩
+  · intro b hb
+    induction b using OnePoint.rec with
+    | infty => exact le_rfl
+    | coe y =>
+      exfalso
+      have hle : ∀ n, (2 : ℝ) ^ n * ‖x‖ ≤ ‖y‖ := fun n => by
+        have := hb ⟨n, rfl⟩; rw [cmp, hnorm] at this; exact this
+      obtain ⟨n, hn⟩ := pow_unbounded_of_one_lt (‖y‖ / ‖x‖ + 1) (by norm_num : (1 : ℝ) < 2)
+      have h3 := hle n
+      rw [← le_div_iff₀ hxpos] at h3
+      linarith
+  · rintro ⟨n, hn⟩
+    exact OnePoint.coe_ne_infty _ hn
+  · rintro z ⟨hz, hz0⟩
+    rcases (hfix z).1 hz with rfl | rfl
+    · exfalso
+      rw [cmp, norm_zero] at hz0
+      exact absurd (norm_le_zero_iff.1 hz0) (by simpa using hx)
+    · exact le_rfl
+  · intro m n hmn
+    show (OnePoint.some _ : Sphere) ≤ OnePoint.some _
+    rw [cmp, hnorm, hnorm]
+    exact mul_le_mul_of_nonneg_right (pow_le_pow_right₀ (by norm_num) hmn) hxpos.le
+  · refine ⟨⟨(hfix _).2 (Or.inr rfl), lt_iff_le_not_ge.2 ⟨lm_sphN_zero_min.1 _, fun h => ?_⟩⟩, ?_⟩
+    · exact OnePoint.coe_ne_infty 0 (lm_sphN_zero_min.2 _ h).symm
+    · rintro z ⟨hz, hlt⟩
+      rcases (hfix z).1 hz with rfl | rfl
+      · exact absurd hlt (lt_irrefl _)
+      · exact le_rfl
+
+/-- `Statement:` CONTROL: for `x ≠ 0` in `ℚ_[2]`, the doubling orbit of `x` is not monotone in
+    `lmSphN`. -/
+theorem lm_sphere_dbl_norm_not_monotone (x : ℚ_[2]) (hx : x ≠ 0) :
+    ¬ @Monotone ℕ Sphere _ lmSphN (fun n => (lmScale (2 : ℚ_[2]) two_ne_zero)^[n] (OnePoint.some x)) := by
+  intro h
+  have h01 := h (Nat.zero_le 1)
+  change sNorm _ ≤ sNorm _ at h01
+  simp only [Function.iterate_zero_apply, Function.iterate_one, lm_scale_some, sNorm,
+    ENNReal.coe_le_coe, ← NNReal.coe_le_coe, coe_nnnorm, norm_mul] at h01
+  have h2 : ‖(2 : ℚ_[2])‖ = 2⁻¹ := by simpa using (Padic.norm_p (p := 2))
+  rw [h2] at h01
+  have hxpos : 0 < ‖x‖ := norm_pos_iff.2 hx
+  linarith
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -987,4 +1227,16 @@ open ZeroParadox
 #print axioms lm_real_dipole
 #print axioms lm_real_dbl_zero_not_sink
 #print axioms lm_id_no_sink
+#print axioms q2_zero_min_eq_max
+#print axioms lmSphN
+#print axioms lmSphV
+#print axioms lm_sNorm_eq_top
+#print axioms lm_sNorm_eq_zero
+#print axioms lm_scale_fixed_iff
+#print axioms lm_sphV_infty_min
+#print axioms lm_sphN_zero_min
+#print axioms lm_sphere_pinnedLimit_empty
+#print axioms lm_sphere_dbl_pinnedLimitAbove
+#print axioms lm_sphere_hlv_pinnedLimitAbove
+#print axioms lm_sphere_dbl_norm_not_monotone
 end PurityCheck

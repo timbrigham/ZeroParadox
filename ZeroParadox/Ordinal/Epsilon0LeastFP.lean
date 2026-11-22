@@ -1,6 +1,7 @@
 import ZeroParadox.Die
 import Mathlib.SetTheory.Ordinal.Veblen
 import Mathlib.SetTheory.Cardinal.Ordinal
+import ZeroParadox.Ordinal.ConstructiveOrdinals
 
 set_option maxHeartbeats 400000
 
@@ -339,6 +340,41 @@ theorem ordinalTowerMotion_not_upLowers : ¬ ordinalTowerMotion.{u}.UpLowers := 
   epsilon0_ne_zero (nonpos_iff_eq_zero.1
     (h 0 ε₀ (Part.mem_some_iff.2 Ordinal.epsilon_zero_eq_nfp)))
 
+/-- `Statement:` under `Motion.ofFun (ω ^ ·)` on `Ordinal`, `y` steps to itself only iff `y` is
+    `Ordinal.epsilon o` for some `o`; both directions. -/
+theorem opow_selfOnlyAt_iff_epsilon (y : Ordinal.{u}) :
+    (Motion.ofFun fun a : Ordinal.{u} => ω ^ a).SelfOnlyAt y ↔ ∃ o, Ordinal.epsilon o = y := by
+  rw [Motion.selfOnlyAt_ofFun_iff]
+  have hn := Ordinal.isNormal_opow Ordinal.one_lt_omega0
+  rw [← Ordinal.mem_range_deriv hn]
+  simp only [Set.mem_range, Ordinal.epsilon_eq_deriv]
+
+/-- `Statement:` in `ordinalTowerMotion`, `y` steps to itself only iff `y` is `Ordinal.epsilon o` for
+    some `o`; both directions. -/
+theorem ordinalTowerMotion_selfOnlyAt_iff (y : Ordinal.{u}) :
+    ordinalTowerMotion.SelfOnlyAt y ↔ ∃ o, Ordinal.epsilon o = y := by
+  rw [← opow_selfOnlyAt_iff_epsilon, Motion.selfOnlyAt_ofFun_iff]
+  exact ⟨fun h => h.1.symm, fun h => ⟨h.symm, fun b hb => hb.trans h⟩⟩
+
+/-- `Statement:` the exponent depth of a notation: `0` at `ONote.zero`, and one more than the
+    exponent's depth at `oadd e n a`. -/
+def onoteExpDepth : ONote → ℕ
+  | ONote.zero => 0
+  | ONote.oadd e _ _ => onoteExpDepth e + 1
+
+/-- `Statement:` CONTROL: under `Motion.ofFun omegaPow` on `ONote`, no notation steps to itself
+    only. -/
+theorem onote_omegaPow_not_selfOnlyAt (x : ONote) : ¬ (Motion.ofFun omegaPow).SelfOnlyAt x := by
+  rw [Motion.selfOnlyAt_ofFun_iff]
+  intro h
+  have := congrArg onoteExpDepth h
+  simp only [omegaPow, onoteExpDepth] at this
+  omega
+
+-- Statement: CONTROL: under `Motion.ofFun (ω ^ ·)`, 0 of `Ordinal` does not step to itself only.
+example : ¬ (Motion.ofFun fun a : Ordinal => Ordinal.omega0 ^ a).SelfOnlyAt 0 := by
+  rw [Motion.selfOnlyAt_ofFun_iff]; exact bot_is_not_a_step
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -370,4 +406,8 @@ open ZeroParadox
 #print axioms ordinalTowerMotion_stageClosure
 #print axioms ordinalTowerMotion_runClosure
 #print axioms ordinalTowerMotion_not_upLowers
+#print axioms opow_selfOnlyAt_iff_epsilon
+#print axioms ordinalTowerMotion_selfOnlyAt_iff
+#print axioms onoteExpDepth
+#print axioms onote_omegaPow_not_selfOnlyAt
 end PurityCheck

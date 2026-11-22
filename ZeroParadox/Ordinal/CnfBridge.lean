@@ -58,6 +58,38 @@ theorem tower_orders_agree (m n : ℕ) :
       ↔ (cnfToZp2 (towerNONote m)).valuation < (cnfToZp2 (towerNONote n)).valuation :=
   (tower_repr_orderEmbedding m n).symm.trans (tower_valuation_orderEmbedding m n)
 
+-- Statement: CONTROL: off the tower `cnfToZp2` is not injective: a notation denoting ω·2 and a
+-- notation denoting ω^ω both map to `8` of ℤ_[2].
+example :
+    NONote.repr (NONote.oadd (NONote.oadd 0 1 0 ONote.NFBelow.zero) 2 0 ONote.NFBelow.zero) =
+      Ordinal.omega0 * 2 ∧
+    NONote.repr (NONote.oadd (NONote.oadd (NONote.oadd 0 1 0 ONote.NFBelow.zero) 1 0
+      ONote.NFBelow.zero) 1 0 ONote.NFBelow.zero) = Ordinal.omega0 ^ Ordinal.omega0 ∧
+    cnfToZp2 (NONote.oadd (NONote.oadd 0 1 0 ONote.NFBelow.zero) 2 0 ONote.NFBelow.zero) = 8 ∧
+    cnfToZp2 (NONote.oadd (NONote.oadd (NONote.oadd 0 1 0 ONote.NFBelow.zero) 1 0
+      ONote.NFBelow.zero) 1 0 ONote.NFBelow.zero) = 8 := by
+  have v2 : (2 : ℤ_[2]).valuation = 1 := by simpa using PadicInt.valuation_p (p := 2)
+  have v4 : (4 : ℤ_[2]).valuation = 2 := by
+    rw [show (4 : ℤ_[2]) = 2 * 2 by norm_num, PadicInt.valuation_mul two_ne_zero two_ne_zero, v2]
+  have c1 : cnfToZp2 (NONote.oadd 0 1 0 ONote.NFBelow.zero) = 2 := by
+    show (2 : ℤ_[2]) ^ ((cnfToZp2 (0 : NONote)).valuation + 1) * ((1 : ℕ+) : ℤ_[2]) +
+      cnfToZp2 0 = 2
+    simp
+  have cw : cnfToZp2 (NONote.oadd (NONote.oadd 0 1 0 ONote.NFBelow.zero) 1 0
+      ONote.NFBelow.zero) = 4 := by
+    show (2 : ℤ_[2]) ^ ((cnfToZp2 (NONote.oadd 0 1 0 ONote.NFBelow.zero)).valuation + 1) *
+      ((1 : ℕ+) : ℤ_[2]) + cnfToZp2 0 = 4
+    rw [c1, v2]; norm_num
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · simp [NONote.repr, NONote.oadd, ONote.repr]
+  · simp [NONote.repr, NONote.oadd, ONote.repr]
+  · show (2 : ℤ_[2]) ^ ((cnfToZp2 (NONote.oadd 0 1 0 ONote.NFBelow.zero)).valuation + 1) *
+      ((2 : ℕ+) : ℤ_[2]) + cnfToZp2 0 = 8
+    rw [c1, v2]; norm_num
+  · show (2 : ℤ_[2]) ^ ((cnfToZp2 (NONote.oadd (NONote.oadd 0 1 0 ONote.NFBelow.zero) 1 0
+        ONote.NFBelow.zero)).valuation + 1) * ((1 : ℕ+) : ℤ_[2]) + cnfToZp2 0 = 8
+    rw [cw, v4]; norm_num
+
 /-! ## § II. The shared seed maps to each carrier's floor: ⊥ of `Ordinal`, and ℤ_[2]'s 0 -/
 
 /-- **Shared seed → both floors.** The NONote seed `towerNONote 0` (the NONote `0`) maps to

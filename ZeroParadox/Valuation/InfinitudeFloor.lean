@@ -263,6 +263,15 @@ theorem pole_inversion (α : Type*) [TopologicalSpace α] [I : InfinitudeFloorIn
   have h := tendsto_atTop_iSup I.cx_member_strictMono.monotone
   rwa [iSup_strictMono_top I.cx_member_strictMono] at h
 
+/-- `Statement:` in an `InfinitudeFloor` on a topological carrier, if `cx` tends to `⊤` at the floor
+    (a hypothesis, not a class field), then along every sequence `y` tending to the floor, `cx` at the
+    floor is the supremum of `cx (y n)`. -/
+theorem cx_floor_eq_iSup_of_tendsto {α : Type*} [TopologicalSpace α] [I : InfinitudeFloor α]
+    (hcx : Tendsto I.cx (nhds I.floor) (nhds ⊤)) (y : ℕ → α) (hy : Tendsto y atTop (nhds I.floor)) :
+    I.cx I.floor = ⨆ n, I.cx (y n) := by
+  rw [infinitude_forces_infinite_complexity α]
+  exact le_antisymm (le_of_tendsto' (hcx.comp hy) (fun n => le_iSup (fun k => I.cx (y k)) n)) le_top
+
 /-- Toy inversion witness (degenerate): in `ℕ∞`, `n → ⊤`. Here the element and the complexity climb
 together, so there is no genuine inversion — the real one is the 2-adic witness (element ↓ 0 while
 valuation ↑ ⊤). Included only to confirm the extended shape is inhabitable. -/
@@ -331,6 +340,30 @@ noncomputable instance : InfinitudeFloorInversion Q₂ :=
       have hbase : Tendsto (fun n : ℕ => (2 : Q₂) ^ n) atTop (nhds 0) :=
         (pure_orbit_tendsto_zero_iff_norm_lt_one 2).mpr two_is_contraction
       exact hbase.comp (tendsto_add_atTop_nat 1) }
+
+/-- `Statement:` `cxQ2` tends to `⊤` of `ℕ∞` at `0` of `ℚ_[2]`. Proved through Mathlib's
+    `Padic.norm_eq_zpow_neg_valuation`. -/
+theorem cxQ2_tendsto_top : Tendsto cxQ2 (nhds (0 : Q₂)) (nhds ⊤) := by
+  rw [ENat.tendsto_nhds_top_iff_natCast_lt]
+  intro N
+  have hpos : (0 : ℝ) < (2 : ℝ) ^ (-(N : ℤ)) := zpow_pos (by norm_num) _
+  filter_upwards [Metric.ball_mem_nhds (0 : Q₂) hpos] with y hy
+  rw [Metric.mem_ball, dist_zero_right] at hy
+  by_cases hy0 : y = 0
+  · rw [hy0, cxQ2_zero]; exact ENat.natCast_lt_top _
+  · unfold cxQ2
+    rw [if_neg hy0]
+    rw [Padic.norm_eq_zpow_neg_valuation hy0] at hy
+    have hv : -(y.valuation) < -(N : ℤ) :=
+      (zpow_lt_zpow_iff_right₀ (by norm_num : (1 : ℝ) < ((2 : ℕ) : ℝ))).1 (by exact_mod_cast hy)
+    have : N < y.valuation.toNat := by omega
+    exact_mod_cast this
+
+/-- `Statement:` along every sequence `y` tending to `0` of `ℚ_[2]`, `cxQ2 0` is the supremum of
+    `cxQ2 (y n)`. -/
+theorem cx_zero_eq_iSup_of_tendsto (y : ℕ → Q₂) (hy : Tendsto y atTop (nhds 0)) :
+    cxQ2 0 = ⨆ n, cxQ2 (y n) :=
+  cx_floor_eq_iSup_of_tendsto (I := q2InfinitudeFloor) cxQ2_tendsto_top y hy
 
 /-! ### § VIII. NO-GO — what the requirements class does and does not pin down
 
@@ -437,6 +470,9 @@ open ZeroParadox
 #print axioms member_injective
 #print axioms floor_unique_at_top
 #print axioms pole_inversion
+#print axioms cx_floor_eq_iSup_of_tendsto
+#print axioms cxQ2_tendsto_top
+#print axioms cx_zero_eq_iSup_of_tendsto
 #print axioms two_pow_valuation
 #print axioms infinitudeFloor_forces_infinite
 #print axioms no_infinitudeFloor_of_finite

@@ -5,6 +5,7 @@ import ZeroParadox.Settheory.Model
 import Mathlib.Probability.StrongLaw
 import Mathlib.Analysis.Real.OfDigits
 import Mathlib.Order.Filter.EventuallyConst
+import Mathlib.Analysis.Complex.ExponentialBounds
 import Mathlib.Tactic
 
 set_option maxHeartbeats 400000
@@ -461,6 +462,176 @@ example {L : Type*} [ZPSemilattice L] :
     ¬ ∃ (_ : Bool → L) (_ : ∃ k, (fun _ => false : ℕ → Bool) k = true), True :=
   fun ⟨_, ⟨_, h⟩, _⟩ => Bool.false_ne_true h
 
+/-! ## § II-b. Martin-Löf random for the fair coin implies disjunctive
+
+One Martin-Löf test per word `w` of length `k`: level `m` is the tapes missing `w` in each of the
+first `m * 2 ^ k` aligned blocks (`ZeroParadox/Information/Disjunctive.lean` § VI). -/
+
+/-- `Statement:` the tapes that miss `w` in each of the first `B` aligned blocks of length `k`. -/
+def avoidSet (k : ℕ) (w : Fin k → Bool) (B : ℕ) : Set (ℕ → Bool) :=
+  ⋂ n ∈ Finset.range B, (wordBlock k w n)ᶜ
+
+/-- `Statement:` `x ∈ avoidSet k w B` iff every block `n < B` differs from `w` at some position. -/
+theorem mem_avoidSet {k : ℕ} {w : Fin k → Bool} {B : ℕ} {x : ℕ → Bool} :
+    x ∈ avoidSet k w B ↔ ∀ n < B, ∃ i : Fin k, x (n * k + i) ≠ w i := by
+  simp [avoidSet, wordBlock]
+
+/-- `Statement:` under `fairTape`, `avoidSet k w B` has measure `(1 - (1/2) ^ k) ^ B`. -/
+theorem fairTape_avoidSet (k : ℕ) (w : Fin k → Bool) (B : ℕ) :
+    fairTape (avoidSet k w B) = ((1 - (1/2 : NNReal) ^ k : NNReal) : ENNReal) ^ B := by
+  have hI : iIndep (fun n => MeasurableSpace.generateFrom {wordBlock k w n}) fairTape :=
+    (iIndepSet_iff_iIndep _ _).1 (wordBlock_iIndepSet k w)
+  rw [avoidSet, hI.meas_biInter
+    (fun n _ => (MeasurableSpace.measurableSet_generateFrom (Set.mem_singleton _)).compl)]
+  have hc : ∀ n, fairTape (wordBlock k w n)ᶜ = ((1 - (1/2 : NNReal) ^ k : NNReal) : ENNReal) := by
+    intro n
+    rw [prob_compl_eq_one_sub (wordBlock_measurable k w n), fairTape_wordBlock,
+      ENNReal.coe_sub, ENNReal.coe_one, ENNReal.coe_pow]
+  simp only [hc, Finset.prod_const, Finset.card_range]
+
+/-- `Statement:` `(1 - (1/2) ^ k) ^ (2 ^ k) ≤ 1/2` in `ℝ≥0`. -/
+theorem one_sub_pow_le_half (k : ℕ) :
+    (1 - (1/2 : NNReal) ^ k) ^ (2 ^ k) ≤ (2⁻¹ : NNReal) := by
+  have hle : (1/2 : NNReal) ^ k ≤ 1 := pow_le_one₀ (by norm_num) (by norm_num)
+  rw [← NNReal.coe_le_coe]
+  push_cast [NNReal.coe_sub hle]
+  have hK : (1 : ℝ) ≤ ((2 ^ k : ℕ) : ℝ) := by exact_mod_cast Nat.one_le_two_pow
+  have e : ((1/2 : ℝ)) ^ k = 1 / ((2 ^ k : ℕ) : ℝ) := by push_cast; rw [one_div_pow]
+  rw [e]
+  push_cast
+  have h1 := Real.one_sub_div_pow_le_exp_neg (n := 2 ^ k) (t := 1) hK
+  push_cast at h1
+  have h2 := Real.exp_neg_one_lt_half
+  have h3 : (2⁻¹ : ℝ) = 1 / 2 := by norm_num
+  rw [h3]
+  linarith
+
+/-- `Statement:` `fairTape (avoidSet k w (m * 2 ^ k)) ≤ 2⁻¹ ^ m`. -/
+theorem fairTape_avoidSet_le (k : ℕ) (w : Fin k → Bool) (m : ℕ) :
+    fairTape (avoidSet k w (m * 2 ^ k)) ≤ 2⁻¹ ^ m := by
+  rw [fairTape_avoidSet, ← ENNReal.coe_pow, ← ENNReal.coe_inv_two, ← ENNReal.coe_pow,
+    ENNReal.coe_le_coe, Nat.mul_comm, pow_mul]
+  exact pow_le_pow_left₀ zero_le (one_sub_pow_le_half k) m
+
+/-- `Statement:` the bit test on `(m, j)`: in each block `n < m * 2 ^ k`, the bits of `j` differ from
+    the bits of `a` at some position below `k`. -/
+def avoidTest (k a : ℕ) (q : ℕ × ℕ) : Prop :=
+  ∀ n < q.1 * 2 ^ k, ∃ i < k, bitAt q.2 (n * k + i) ≠ bitAt a i
+
+instance (k a : ℕ) : DecidablePred (avoidTest k a) := fun q => by
+  unfold avoidTest; infer_instance
+
+/-- `Statement:` `avoidTest k a` is primitive recursive. -/
+theorem avoidTest_primrec (k a : ℕ) : PrimrecPred (avoidTest k a) := by
+  have hR1 : PrimrecRel (fun (i : ℕ) (y : ℕ × ℕ) => bitAt y.2 (y.1 * k + i) ≠ bitAt a i) := by
+    have hf : Primrec (fun p : ℕ × (ℕ × ℕ) => bitAt p.2.2 (p.2.1 * k + p.1)) :=
+      bitAt_primrec.comp (Primrec.pair (Primrec.snd.comp Primrec.snd)
+        (Primrec.nat_add.comp (Primrec.nat_mul.comp (Primrec.fst.comp Primrec.snd)
+          (Primrec.const k)) Primrec.fst))
+    have hg : Primrec (fun p : ℕ × (ℕ × ℕ) => bitAt a p.1) :=
+      bitAt_primrec.comp (Primrec.pair (Primrec.const a) Primrec.fst)
+    exact (PrimrecRel.comp Primrec.eq hf hg).not
+  have hQ : PrimrecRel (fun (n : ℕ) (q : ℕ × ℕ) => ∃ i < k, bitAt q.2 (n * k + i) ≠ bitAt a i) :=
+    (PrimrecRel.comp (PrimrecRel.exists_mem_list hR1)
+      (Primrec.list_range.comp (Primrec.const k) :
+        Primrec fun _ : ℕ × (ℕ × ℕ) => List.range k)
+      (Primrec.pair Primrec.fst (Primrec.snd.comp Primrec.snd) :
+        Primrec fun p : ℕ × (ℕ × ℕ) => (p.1, p.2.2))).of_eq fun _ => by simp [List.mem_range]
+  exact (PrimrecRel.comp (PrimrecRel.forall_mem_list hQ)
+    (Primrec.list_range.comp (Primrec.nat_mul.comp Primrec.fst (Primrec.const (2 ^ k))) :
+      Primrec fun q : ℕ × ℕ => List.range (q.1 * 2 ^ k))
+    (Primrec.id : Primrec fun q : ℕ × ℕ => q)).of_eq fun _ => by simp [avoidTest, List.mem_range]
+
+/-- `Statement:` at `(m, j)`, the word of the first `m * 2 ^ k * k` bits of `j` when `avoidTest k a`
+    holds there, and `none` otherwise. -/
+def avoidList (k a : ℕ) (q : ℕ × ℕ) : Option (List Bool) :=
+  if avoidTest k a q then some ((List.range (q.1 * 2 ^ k * k)).map (bitAt q.2)) else none
+
+/-- `Statement:` `avoidList k a` is computable. -/
+theorem avoidList_computable (k a : ℕ) : Computable (avoidList k a) := by
+  refine (Primrec.ite (avoidTest_primrec k a) ?_ (Primrec.const none)).to_comp
+  exact Primrec.option_some.comp (Primrec.list_map
+    (Primrec.list_range.comp (Primrec.nat_mul.comp
+      (Primrec.nat_mul.comp Primrec.fst (Primrec.const (2 ^ k))) (Primrec.const k)))
+    (bitAt_primrec.comp (Primrec.pair (Primrec.snd.comp Primrec.fst) Primrec.snd)).to₂)
+
+/-- `Statement:` `avoidSet k w (m * 2 ^ k)` is the union of the prefix cylinders that
+    `avoidList k (ofBits k w)` lists at `(m, j)`, over `j`. -/
+theorem avoidSet_eq_iUnion (k : ℕ) (w : Fin k → Bool) (m : ℕ) :
+    avoidSet k w (m * 2 ^ k) =
+      ⋃ j, ⋃ l ∈ avoidList k (ofBits k w) (m, j), prefixCyl l := by
+  set B := m * 2 ^ k
+  have hw : ∀ i (hi : i < k), bitAt (ofBits k w) i = w ⟨i, hi⟩ := fun i hi =>
+    bitAt_ofBits k w ⟨i, hi⟩
+  have key : ∀ (x : ℕ → Bool) (j : ℕ), (∀ t < B * k, x t = bitAt j t) →
+      (avoidTest k (ofBits k w) (m, j) ↔ x ∈ avoidSet k w B) := by
+    intro x j hx
+    rw [mem_avoidSet]
+    unfold avoidTest
+    simp only
+    constructor
+    · intro h n hn
+      obtain ⟨i, hi, hne⟩ := h n hn
+      refine ⟨⟨i, hi⟩, ?_⟩
+      have hlt : n * k + i < B * k := by
+        have : (n + 1) * k ≤ B * k := Nat.mul_le_mul_right k hn
+        nlinarith
+      rw [hx _ hlt, ← hw i hi]
+      exact hne
+    · intro h n hn
+      obtain ⟨i, hne⟩ := h n hn
+      refine ⟨i, i.isLt, ?_⟩
+      have hlt : n * k + i < B * k := by
+        have : (n + 1) * k ≤ B * k := Nat.mul_le_mul_right k hn
+        have := i.isLt
+        nlinarith
+      rw [← hx _ hlt, hw i i.isLt]
+      exact hne
+  ext x
+  simp only [Set.mem_iUnion, avoidList]
+  constructor
+  · intro hxA
+    refine ⟨ofBits (B * k) (fun t => x t), ?_⟩
+    have hag : ∀ t < B * k, x t = bitAt (ofBits (B * k) (fun t => x t)) t := fun t ht =>
+      (bitAt_ofBits (B * k) (fun t => x t) ⟨t, ht⟩).symm
+    rw [if_pos ((key x _ hag).2 hxA)]
+    refine ⟨_, rfl, fun i hi => ?_⟩
+    simp only [List.length_map, List.length_range] at hi
+    simp only [List.getElem_map, List.getElem_range]
+    exact hag i hi
+  · rintro ⟨j, l, hl, hxl⟩
+    split_ifs at hl with ht
+    · cases hl
+      have hag : ∀ t < B * k, x t = bitAt j t := fun t htl => by
+        have := hxl t (by simpa using htl)
+        simpa using this
+      exact (key x j hag).1 ht
+    · cases hl
+
+/-- `Statement:` `m ↦ avoidSet k w (m * 2 ^ k)` is a Martin-Löf test for `fairTape`. -/
+theorem avoid_isMLTest (k : ℕ) (w : Fin k → Bool) :
+    MLTest fairTape (fun m => avoidSet k w (m * 2 ^ k)) :=
+  ⟨fairTape_avoidSet_le k w, avoidList k (ofBits k w), avoidList_computable k _,
+    avoidSet_eq_iUnion k w⟩
+
+/-- `Statement:` every tape that is Martin-Löf random for `fairTape` is disjunctive. One way. -/
+theorem disjunctive_of_MLRandom {x : ℕ → Bool} (h : MLRandom fairTape x) : Disjunctive x := by
+  rw [disjunctive_iff_once]
+  intro k w
+  have hx := h _ (avoid_isMLTest k w)
+  simp only [Set.mem_iInter, not_forall] at hx
+  obtain ⟨m, hm⟩ := hx
+  rw [mem_avoidSet] at hm
+  push_neg at hm
+  obtain ⟨n, -, hn⟩ := hm
+  exact ⟨n * k, hn⟩
+
+/-- `Statement:` on every tape Martin-Löf random for `fairTape`, the code word of every code `c`
+    occurs at infinitely many positions. -/
+theorem code_occurs_of_MLRandom {x : ℕ → Bool} (h : MLRandom fairTape x) (c : Nat.Partrec.Code) :
+    ∃ᶠ n in atTop, ∀ i : Fin (Nat.size (Encodable.encode c)), x (n + i) = codeWord c i :=
+  code_occurs_of_disjunctive (disjunctive_of_MLRandom h) c
+
 /-! ## § III. Frequency of `true` tending to `p` (the strong law of large numbers)
 
 Per tape: the fraction of `true` among the first `n` stages tends to `p`. That a Martin-Löf random
@@ -906,4 +1077,17 @@ open ZeroParadox
 #print axioms not_eventuallyConst_of_MLRandom
 #print axioms interior_of_MLRandom
 
+#print axioms avoidSet
+#print axioms mem_avoidSet
+#print axioms fairTape_avoidSet
+#print axioms one_sub_pow_le_half
+#print axioms fairTape_avoidSet_le
+#print axioms avoidTest
+#print axioms avoidTest_primrec
+#print axioms avoidList
+#print axioms avoidList_computable
+#print axioms avoidSet_eq_iUnion
+#print axioms avoid_isMLTest
+#print axioms disjunctive_of_MLRandom
+#print axioms code_occurs_of_MLRandom
 end PurityCheck

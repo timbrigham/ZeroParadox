@@ -246067,6 +246067,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "01b59063-39f1-4261-b16b-eef20855b8a5",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_sphN_zero_min",
+            "short": "lm_sphN_zero_min"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_sphN_zero_min",
+            "short": "lm_sphN_zero_min",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "01c2bd2c-6780-4a8d-aa3d-5d4d2c624c94",
           "new": {
             "file": "ZeroParadox/Valuation/Scale.lean",
@@ -246238,6 +246276,44 @@
             ]
           },
           "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; for periodic maps (c a root of unity) the die isomorphism sees only cycle structure, irrational rotations not covered; at |c| = 1 only c ~ conj c is proved, the separating half is Rybalkina-Sergeichuk literature (ZeroParadox/Multihomed/BendDie.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0236c3d1-57b6-482b-b7a9-5adc5ebdef0f",
+          "new": {
+            "file": "ZeroParadox/Valuation/TowerHeightFloor.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.seed_breaks_climb",
+            "short": "seed_breaks_climb"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TowerHeightFloor.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.seed_breaks_climb",
+            "short": "seed_breaks_climb",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -252428,6 +252504,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "0a7e9c71-41e9-4c50-a7b1-33720379e001",
+          "new": {
+            "file": "ZeroParadox/Order/WellFoundedObstruct.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.no_strictAnti_self",
+            "short": "no_strictAnti_self"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/WellFoundedObstruct.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.no_strictAnti_self",
+            "short": "no_strictAnti_self",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "0a9b91fc-0379-402e-81d2-3ac0b8f0831f",
           "new": {
@@ -255468,6 +255581,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "0eafc926-5f8e-44d7-8ca7-364108bb5ae1",
+          "new": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.class_selfOnlyAt_iff",
+            "short": "class_selfOnlyAt_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.class_selfOnlyAt_iff",
+            "short": "class_selfOnlyAt_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "0eb14bcd-838f-4d32-8d13-67b9ebd3ae81",
           "new": {
             "file": "ZeroParadox/Category/Node4Generation.lean",
@@ -257427,6 +257577,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "1192180a-f746-43bc-9782-3f19ba226f08",
+          "new": {
+            "file": "ZeroParadox/Valuation/TowerHeightFloor.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.tower_images_towerImageStep_empty",
+            "short": "tower_images_towerImageStep_empty"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TowerHeightFloor.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.tower_images_towerImageStep_empty",
+            "short": "tower_images_towerImageStep_empty",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -261155,6 +261343,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "1757a863-7d02-4e86-81ec-1d86947189b2",
+          "new": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.quine_name_on_random_tapes",
+            "short": "quine_name_on_random_tapes"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/GapDecoder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.quine_name_on_random_tapes",
+            "short": "quine_name_on_random_tapes",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability",
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -269895,6 +270121,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "2675d309-5661-4353-a640-dc4741fcd8db",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_sphere_dbl_norm_not_monotone",
+            "short": "lm_sphere_dbl_norm_not_monotone"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_sphere_dbl_norm_not_monotone",
+            "short": "lm_sphere_dbl_norm_not_monotone",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "268ea019-65e3-4a6c-a06f-27bc42aa587b",
           "new": {
@@ -274721,6 +274985,43 @@
             ]
           },
           "reason": "die-sameness round 1: upper control (HomeoIso without LipIso: R vs (-1,1); x2 vs x4 on R) ported from probe 39dd870c96, and measured choice members at the HomeoIso level (handTopBool vs Mathlib Bool, N)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "2d53945c-9f8c-4e07-a964-19d9c7ff158b",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.disjunctive_of_MLRandom",
+            "short": "disjunctive_of_MLRandom"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.disjunctive_of_MLRandom",
+            "short": "disjunctive_of_MLRandom",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -280336,6 +280637,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "34ebe6a0-5d23-4537-b363-22cfa8a5f997",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.code_occurs_of_MLRandom",
+            "short": "code_occurs_of_MLRandom"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.code_occurs_of_MLRandom",
+            "short": "code_occurs_of_MLRandom",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "34f71753-c99e-44bb-917c-59f7e9eb3e4e",
           "new": {
             "file": "ZeroParadox/Multihomed/SelfClosureObstruction.lean",
@@ -282031,6 +282369,44 @@
           "verify": {
             "axioms": "[propext, Classical.choice, Quot.sound]",
             "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "380dbc73-cff3-4620-8d54-6776fcf6ffff",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_sphere_dbl_pinnedLimitAbove",
+            "short": "lm_sphere_dbl_pinnedLimitAbove"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_sphere_dbl_pinnedLimitAbove",
+            "short": "lm_sphere_dbl_pinnedLimitAbove",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
           }
         },
         {
@@ -284000,6 +284376,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "3ae9fee9-ebdb-44ff-972b-d4bcc6142f67",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.q2_zero_min_eq_max",
+            "short": "q2_zero_min_eq_max"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.q2_zero_min_eq_max",
+            "short": "q2_zero_min_eq_max",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "3aede525-4fd7-4fc4-9f03-91c68564c98e",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -284968,6 +285382,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "3c58e884-654f-4241-aa44-56db7988b7b4",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.negE_coe",
+            "short": "negE_coe"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.negE_coe",
+            "short": "negE_coe",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "3c60e3ab-3547-4bd6-9281-6e1b2ee04da5",
           "new": {
             "file": "ZeroParadox/DieSameness.lean",
@@ -285842,6 +286293,43 @@
             ]
           },
           "reason": "New file ZeroParadox/Information/MaxEntropy.lean (experimental, Tim ruling 154): fair coin maximizes entropy, missing information zero iff fair, chain to mlRandom_and_snap_ae under binEntropy p = log 2, Kraft in measure form, almost every fair tape incompressible for any prefix-free decoder. The occurrence commitment is reduced, not discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "3d8dfa32-df9b-4479-8bff-df2ffc60053f",
+          "new": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.quine_cell_pullback_undecidable",
+            "short": "quine_cell_pullback_undecidable"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.quine_cell_pullback_undecidable",
+            "short": "quine_cell_pullback_undecidable",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -287923,6 +288411,43 @@
             "role": []
           },
           "reason": "PricedInterface: the constructive/classical boundary with its cost measured - carrier choice-free, crossing carries Classical.choice at every declaration. The carrier has the shape of Casteran's ON_plus with a one-point right summand and is not an instance of it (its order is not well-founded); the map has two of ON_correct's three fields (into, onto) and not the comparator field. Cited; the measurement is the delta.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "41310c5a-ece2-485f-9706-dccda1f274eb",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.avoidSet",
+            "short": "avoidSet"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.avoidSet",
+            "short": "avoidSet",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -293289,6 +293814,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "48f5721e-e00c-4d1a-938e-36a5964841c1",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lmSphV",
+            "short": "lmSphV"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lmSphV",
+            "short": "lmSphV",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "4907a2bb-a596-41ab-8d2b-266d7dd0ce62",
           "new": {
             "file": "ZeroParadox/Algebra/Wheel.lean",
@@ -295064,6 +295627,44 @@
             ]
           },
           "reason": "lane K1: ZP-K § VIII (infinitely many fixed points, padding, self-printing universal code, occurrence controls)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "4bfd3a94-ea7d-49e2-a68e-baf1ec181efb",
+          "new": {
+            "file": "ZeroParadox/Valuation/TowerHeightFloor.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.nat_valuation_control",
+            "short": "nat_valuation_control"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TowerHeightFloor.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.nat_valuation_control",
+            "short": "nat_valuation_control",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -296933,6 +297534,43 @@
           "verify": {
             "axioms": "(none) - does not depend on any axioms",
             "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "4f297241-be93-404a-a829-e15e78319b2e",
+          "new": {
+            "file": "ZeroParadox/Valuation/InfinitudeFloor.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cx_floor_eq_iSup_of_tendsto",
+            "short": "cx_floor_eq_iSup_of_tendsto"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/InfinitudeFloor.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cx_floor_eq_iSup_of_tendsto",
+            "short": "cx_floor_eq_iSup_of_tendsto",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
           }
         },
         {
@@ -300398,6 +301036,43 @@
             ]
           },
           "reason": "The stutter condition as an explicit predicate: every step leaves the observable projection unchanged. Standard name from model checking / TLA.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "5493850e-84dc-448d-a3de-756dbc7cc862",
+          "new": {
+            "file": "ZeroParadox/Order/WellFoundedObstruct.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.enat_no_strictAnti",
+            "short": "enat_no_strictAnti"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/WellFoundedObstruct.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.enat_no_strictAnti",
+            "short": "enat_no_strictAnti",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -313918,6 +314593,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "696112ee-7f7a-4c29-bb7f-236831867f3d",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_sNorm_eq_zero",
+            "short": "lm_sNorm_eq_zero"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_sNorm_eq_zero",
+            "short": "lm_sNorm_eq_zero",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "6981a0d9-fdfb-4fe2-a929-21505df88fc3",
           "new": {
             "file": "ZeroParadox/Multihomed/BendDie.lean",
@@ -314054,6 +314767,43 @@
             ]
           },
           "reason": "Die v2 final batch: drawing vs set (self-steps, accessibility, forced rank), ends of a view, orders on motions, placements as views, relaxed least-fixed-point schema, UP legs as nuclei",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "699cb74f-6505-4ba1-a135-93fad3145e3a",
+          "new": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.kleene_shift_not_pinnedLimit",
+            "short": "kleene_shift_not_pinnedLimit"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.kleene_shift_not_pinnedLimit",
+            "short": "kleene_shift_not_pinnedLimit",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -320169,6 +320919,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "735e3d72-cd07-493b-8671-56f98de52761",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.avoidSet_eq_iUnion",
+            "short": "avoidSet_eq_iUnion"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.avoidSet_eq_iUnion",
+            "short": "avoidSet_eq_iUnion",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "73723d5e-a21a-4037-ab3b-99c3a38142ea",
           "new": {
@@ -320748,6 +321535,44 @@
             ]
           },
           "reason": "Die views batch: views (order as data), restriction to an up-closed set, adjoined points and the empty carrier, arrival and fan-in",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "744e9235-55ff-4f51-918b-eadc4eafd471",
+          "new": {
+            "file": "ZeroParadox/Valuation/TowerHeightFloor.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.asymptote_preserved",
+            "short": "asymptote_preserved"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TowerHeightFloor.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.asymptote_preserved",
+            "short": "asymptote_preserved",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -323310,6 +324135,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "78191294-becb-4e65-ab88-f73a472a762b",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox.NInf",
+            "qualified": "ZeroParadox.NInf.toComp_succ",
+            "short": "toComp_succ"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.NInf",
+            "qualified": "ZeroParadox.NInf.toComp_succ",
+            "short": "toComp_succ",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "781c85a6-913b-4a38-acb6-984376e9edd0",
           "new": {
@@ -325424,6 +326286,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "7bc35905-924f-4e17-be8c-b09d259a593a",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.negE_involutive",
+            "short": "negE_involutive"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.negE_involutive",
+            "short": "negE_involutive",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "7bc507d6-dfec-4e35-b182-03fff110d3b3",
           "new": {
             "file": "ZeroParadox/Valuation/CellsJoint.lean",
@@ -326056,6 +326955,43 @@
             ]
           },
           "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "7c73ecd2-015b-499b-97f6-ddceb3a5e5d6",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.negE",
+            "short": "negE"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.negE",
+            "short": "negE",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -327936,6 +328872,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "7f536288-3cee-4c25-9bd6-dd8ccee80109",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.negE_bot",
+            "short": "negE_bot"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.negE_bot",
+            "short": "negE_bot",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "7f57c21f-c770-4c74-b465-a25c35bfc3ad",
           "new": {
             "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
@@ -329422,6 +330395,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "816cda30-e705-4694-887e-54b7e33429b2",
+          "new": {
+            "file": "ZeroParadox/Ordinal/Epsilon0LeastFP.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.onote_omegaPow_not_selfOnlyAt",
+            "short": "onote_omegaPow_not_selfOnlyAt"
+          },
+          "old": {
+            "file": "ZeroParadox/Ordinal/Epsilon0LeastFP.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.onote_omegaPow_not_selfOnlyAt",
+            "short": "onote_omegaPow_not_selfOnlyAt",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -331124,6 +332134,43 @@
             ]
           },
           "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "83e694da-046a-499e-ab5d-1dcdb0b64aed",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fairTape_avoidSet",
+            "short": "fairTape_avoidSet"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.fairTape_avoidSet",
+            "short": "fairTape_avoidSet",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -333029,6 +334076,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "874dd6de-c471-4d69-9cff-a427ecab32ed",
+          "new": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.firstRecPhi",
+            "short": "firstRecPhi"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.firstRecPhi",
+            "short": "firstRecPhi",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "875a3295-df68-42a5-bb4c-bad7f93dd14b",
           "new": {
             "file": "ZeroParadox/Valuation/PadicBallIndicator.lean",
@@ -333809,6 +334893,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "88874009-d5ce-444f-8893-29b589cdfca4",
+          "new": {
+            "file": "ZeroParadox/Order/WellFoundedObstruct.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.no_antitone_involution_of",
+            "short": "no_antitone_involution_of"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/WellFoundedObstruct.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.no_antitone_involution_of",
+            "short": "no_antitone_involution_of",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "88ba8e04-8227-4999-a029-63bf53498ba0",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -334494,6 +335615,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "8a0c2cf5-6b72-4efa-a504-0d8dd2add468",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.negEIso",
+            "short": "negEIso"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.negEIso",
+            "short": "negEIso",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -336538,6 +337696,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "8da71826-0d0c-4f18-90f2-26bf274558f0",
+          "new": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.role_pushes_not_pulls",
+            "short": "role_pushes_not_pulls"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.role_pushes_not_pulls",
+            "short": "role_pushes_not_pulls",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "8dc312d9-5234-4013-996b-ebd9dbe678fd",
           "new": {
             "file": "ZeroParadox/Valuation/Interleave.lean",
@@ -336679,6 +337874,43 @@
             ]
           },
           "reason": "Ruling 280 (b): tower tape wired to the snap as a family indexed by chart (TowerTapeSnap.lean). tapeIso carries towerTape [] x to a tape that fires iff x is not botEnd; pointwise every other seed gives t_snap_of_fires_once's conclusion, almost every trials-seed does; control: the tower tapes are a trials-null set (2026-11-15).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "8e218412-238d-4928-8f6f-4307d1c2ecee",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.one_sub_pow_le_half",
+            "short": "one_sub_pow_le_half"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.one_sub_pow_le_half",
+            "short": "one_sub_pow_le_half",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -337608,6 +338840,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "8f8bca30-7d53-48e0-8262-94b759738ae8",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.avoidList_computable",
+            "short": "avoidList_computable"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.avoidList_computable",
+            "short": "avoidList_computable",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -339540,6 +340809,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "9241f52e-3548-470d-b666-5313c3920131",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.pinnedLimitUnique_transport",
+            "short": "pinnedLimitUnique_transport"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.pinnedLimitUnique_transport",
+            "short": "pinnedLimitUnique_transport",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "9244aee8-9060-4ed7-80e0-e2a5dfad13d9",
           "new": {
@@ -339566,6 +340872,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "9247bcca-638f-40bc-afef-a45b13acbfd2",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.sVal_zero",
+            "short": "sVal_zero"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.sVal_zero",
+            "short": "sVal_zero",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -343908,6 +345251,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "98a4d6e7-09ee-475b-8882-854ea59038d5",
+          "new": {
+            "file": "ZeroParadox/Order/WellFoundedObstruct.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.withTopInt_no_antitone_involution",
+            "short": "withTopInt_no_antitone_involution"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/WellFoundedObstruct.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.withTopInt_no_antitone_involution",
+            "short": "withTopInt_no_antitone_involution",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "98aab29c-82f0-4485-8db5-6fde4831b31b",
           "new": {
             "file": "ZeroParadox/Valuation/OneWayFlow.lean",
@@ -344081,6 +345461,44 @@
             ]
           },
           "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; for periodic maps (c a root of unity) the die isomorphism sees only cycle structure, irrational rotations not covered; at |c| = 1 only c ~ conj c is proved, the separating half is Rybalkina-Sergeichuk literature (ZeroParadox/Multihomed/BendDie.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "98d616a3-d83c-4452-b69e-c5b6d464da7b",
+          "new": {
+            "file": "ZeroParadox/Valuation/TowerHeightFloor.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.q2Val_two_pow_mul",
+            "short": "q2Val_two_pow_mul"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TowerHeightFloor.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.q2Val_two_pow_mul",
+            "short": "q2Val_two_pow_mul",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -347827,6 +349245,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "9db38496-7763-46c1-b256-7738e903e123",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_sphere_pinnedLimit_empty",
+            "short": "lm_sphere_pinnedLimit_empty"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_sphere_pinnedLimit_empty",
+            "short": "lm_sphere_pinnedLimit_empty",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "9dcc31f1-e514-4d75-98b8-b6adbd32ef70",
           "new": {
             "file": "ZeroParadox/Valuation/PadicErgodic.lean",
@@ -350349,6 +351805,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "a116eab3-a2f1-4989-a855-b08317d75391",
+          "new": {
+            "file": "ZeroParadox/Valuation/TowerHeightFloor.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.eps0_no_preimage",
+            "short": "eps0_no_preimage"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TowerHeightFloor.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.eps0_no_preimage",
+            "short": "eps0_no_preimage",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "a12f150c-6d18-45e9-b389-2e0b2ec5576d",
           "new": {
             "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
@@ -351264,6 +352758,80 @@
             "role": []
           },
           "reason": "die-tagged-1029: the adjoined point tagged (Option ℕ) or a limit (Escardó's ℕ∞, NInf): uniform Bool-step trichotomy and selector free on NInf, LPO on Option ℕ; WLPO at ∞; the chain Option ℕ → NInf → Part ℕ and NInf ≃ Computation Unit (Die § XXIII); Tim ruling 2026-10-29",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a2cd9bbc-cea1-45de-885c-ce99f060e618",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.not_pinnedLimitAbove_of_minimal",
+            "short": "not_pinnedLimitAbove_of_minimal"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.not_pinnedLimitAbove_of_minimal",
+            "short": "not_pinnedLimitAbove_of_minimal",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a2d0aaa3-45ae-4d6c-96bb-21e4c851ca09",
+          "new": {
+            "file": "ZeroParadox/Ordinal/Epsilon0LeastFP.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.onoteExpDepth",
+            "short": "onoteExpDepth"
+          },
+          "old": {
+            "file": "ZeroParadox/Ordinal/Epsilon0LeastFP.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.onoteExpDepth",
+            "short": "onoteExpDepth",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -353182,6 +354750,44 @@
             ]
           },
           "reason": "New file ZeroParadox/Information/Disjunctive.lean: disjunctive (rich) sequences; all-false control; choice-free primitive recursive Champernowne-style witness; fair-coin tape disjunctive a.s. (infinite monkey, 2nd Borel-Cantelli); hypothesis-form presence of every Code's word. PRESENCE only, no execution.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a6802e76-285c-4fdc-8295-3d9e67758a39",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lmSphN",
+            "short": "lmSphN"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lmSphN",
+            "short": "lmSphN",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -355279,6 +356885,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "a953dd0f-d54a-47f3-b9ba-dcca9842ff57",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.sVal_rInv",
+            "short": "sVal_rInv"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.sVal_rInv",
+            "short": "sVal_rInv",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "a95b43ae-0c52-455a-bfdd-34bc328cb5cb",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -355305,6 +356948,43 @@
             ]
           },
           "reason": "Die v2 final batch: drawing vs set (self-steps, accessibility, forced rank), ends of a view, orders on motions, placements as views, relaxed least-fixed-point schema, UP legs as nuclei",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a95bb209-d5c2-46ae-9eed-f7ae61b88298",
+          "new": {
+            "file": "ZeroParadox/Valuation/InfinitudeFloor.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cx_zero_eq_iSup_of_tendsto",
+            "short": "cx_zero_eq_iSup_of_tendsto"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/InfinitudeFloor.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cx_zero_eq_iSup_of_tendsto",
+            "short": "cx_zero_eq_iSup_of_tendsto",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -357237,6 +358917,43 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "abd8c358-ed83-46cf-8c15-32e55fd0aaef",
+          "new": {
+            "file": "ZeroParadox/Ordinal/Epsilon0LeastFP.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ordinalTowerMotion_selfOnlyAt_iff",
+            "short": "ordinalTowerMotion_selfOnlyAt_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Ordinal/Epsilon0LeastFP.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ordinalTowerMotion_selfOnlyAt_iff",
+            "short": "ordinalTowerMotion_selfOnlyAt_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -360006,6 +361723,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "afc28f2b-0c29-4dd2-bdd8-5b9009fec48b",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.sVal_coe_ne",
+            "short": "sVal_coe_ne"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.sVal_coe_ne",
+            "short": "sVal_coe_ne",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "afc7d073-ac7d-4835-bfa8-a2570aaed111",
           "new": {
             "file": "ZeroParadox/State/DieProjection.lean",
@@ -360370,6 +362124,43 @@
             ]
           },
           "reason": "Land 2026-11-10 cells-joint, local-towers, interleave probes and the new one-way-flow results into ZeroParadox/Valuation (CellsJoint, Interleave, LocalTowers, OneWayFlow).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b044780d-8434-4def-afa8-ab0e769718ee",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.not_pinnedLimit_of_fixed_floor",
+            "short": "not_pinnedLimit_of_fixed_floor"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.not_pinnedLimit_of_fixed_floor",
+            "short": "not_pinnedLimit_of_fixed_floor",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -361600,6 +363391,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b236acd6-d678-4b67-98af-2961b96d5b19",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.avoid_isMLTest",
+            "short": "avoid_isMLTest"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.avoid_isMLTest",
+            "short": "avoid_isMLTest",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -364622,6 +366450,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "b62c0fde-87e1-46a9-a639-8d76c1dbe940",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.no_total_mirror_on_field",
+            "short": "no_total_mirror_on_field"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.no_total_mirror_on_field",
+            "short": "no_total_mirror_on_field",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "b6697cca-4d52-46ab-b6aa-29ae6d0e93cc",
           "new": {
             "file": "ZeroParadox/Settheory/LawvereBridge.lean",
@@ -366060,6 +367925,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b8b8a9bb-8699-453e-9bc7-791a1fe89b18",
+          "new": {
+            "file": "ZeroParadox/Order/WellFoundedObstruct.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.orderIsoDualOfInvolutive",
+            "short": "orderIsoDualOfInvolutive"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/WellFoundedObstruct.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.orderIsoDualOfInvolutive",
+            "short": "orderIsoDualOfInvolutive",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -368438,6 +370340,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "bc9e19c6-ee60-4097-8e5f-873f1d17c6af",
+          "new": {
+            "file": "ZeroParadox/Order/WellFoundedObstruct.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.isBot_of_isTop_involutive",
+            "short": "isBot_of_isTop_involutive"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/WellFoundedObstruct.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.isBot_of_isTop_involutive",
+            "short": "isBot_of_isTop_involutive",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "bcdcebc8-327c-4b5d-be3a-0b6fd63a087c",
           "new": {
             "file": "ZeroParadox/Computability/SelfApp.lean",
@@ -370250,6 +372189,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "bf5e58ad-0210-4eb5-8ab8-35d0f02d70bd",
+          "new": {
+            "file": "ZeroParadox/Ordinal/Epsilon0LeastFP.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.opow_selfOnlyAt_iff_epsilon",
+            "short": "opow_selfOnlyAt_iff_epsilon"
+          },
+          "old": {
+            "file": "ZeroParadox/Ordinal/Epsilon0LeastFP.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.opow_selfOnlyAt_iff_epsilon",
+            "short": "opow_selfOnlyAt_iff_epsilon",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "bf653db7-6b13-4195-9025-7521dedd660f",
           "new": {
@@ -370998,6 +372974,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "c0b7af94-6db6-474d-8d46-7bc7974e6608",
+          "new": {
+            "file": "ZeroParadox/Valuation/TowerHeightFloor.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.z2_dbl_pinnedLimitUnique",
+            "short": "z2_dbl_pinnedLimitUnique"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TowerHeightFloor.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.z2_dbl_pinnedLimitUnique",
+            "short": "z2_dbl_pinnedLimitUnique",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "c0d3c27f-b3ce-421c-a1de-2e7d028a998e",
           "new": {
             "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
@@ -371202,6 +373216,43 @@
             ]
           },
           "reason": "Die computability face (halting as arrival, clock machine), quotients of a motion (drawing vs set: hypersets, codes), carrier-changing steps (wrap, Option), PoleEnds with inhabitation",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c12c45fe-8928-4865-b4ee-6cfccd134170",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.avoidList",
+            "short": "avoidList"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.avoidList",
+            "short": "avoidList",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -371566,6 +373617,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c1f0a74d-7661-4d8b-93d8-20ba937ba563",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.sVal_infty",
+            "short": "sVal_infty"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.sVal_infty",
+            "short": "sVal_infty",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -373943,6 +376031,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c5d90a51-6d59-4e1b-9102-c01cf9aa1711",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_sNorm_eq_top",
+            "short": "lm_sNorm_eq_top"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_sNorm_eq_top",
+            "short": "lm_sNorm_eq_top",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -376962,6 +379088,43 @@
             ]
           },
           "reason": "Epsilon0LeastFP.lean (2026-10-04, lane Q): cells of nfp (omega^.) as widths — first cell = Iic eps0; successor cell (eps_o, eps_(o+1)) order-isomorphic to Iio eps_(o+1), width eps_(o+1); eps0 countable. From probes_2026-10-04/CellWidth.lean.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ca86bb19-a3ad-43b5-91b4-1b3b80dafe22",
+          "new": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.kleene_first_pinnedLimitUnique",
+            "short": "kleene_first_pinnedLimitUnique"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.kleene_first_pinnedLimitUnique",
+            "short": "kleene_first_pinnedLimitUnique",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -382628,6 +384791,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "d195d08d-71bb-49c4-ac9d-52a846dfa40d",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.sVal_le_iff_sNorm_le",
+            "short": "sVal_le_iff_sNorm_le"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.sVal_le_iff_sNorm_le",
+            "short": "sVal_le_iff_sNorm_le",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "d1a1f0c4-30a5-44c5-874d-6282f9b6a9e9",
           "new": {
             "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
@@ -384769,6 +386969,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "d487aeb4-346f-4677-9cf5-8a6ec331bb64",
+          "new": {
+            "file": "ZeroParadox/Valuation/InfinitudeFloor.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cxQ2_tendsto_top",
+            "short": "cxQ2_tendsto_top"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/InfinitudeFloor.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cxQ2_tendsto_top",
+            "short": "cxQ2_tendsto_top",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "d48e72f4-9a30-4f87-b894-7a59b3947768",
           "new": {
             "file": "ZeroParadox/Category/BottomUndecidable.lean",
@@ -385993,6 +388230,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "d5f96079-eda3-4041-afe0-34f7f8935973",
+          "new": {
+            "file": "ZeroParadox/Order/WellFoundedObstruct.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ordinal_no_strictAnti",
+            "short": "ordinal_no_strictAnti"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/WellFoundedObstruct.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ordinal_no_strictAnti",
+            "short": "ordinal_no_strictAnti",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "d608354a-fc35-43d2-aa12-5d62b80b1019",
           "new": {
             "file": "ZeroParadox/Valuation/OneWayFlow.lean",
@@ -386091,6 +388365,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d65661ff-b455-4f32-b902-6a90347eca01",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.rInv_reverses_sVal",
+            "short": "rInv_reverses_sVal"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.rInv_reverses_sVal",
+            "short": "rInv_reverses_sVal",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -386277,6 +388588,43 @@
             ]
           },
           "reason": "Isometries of Z_p preserve Haar and intertwine with D^alpha (Jeong Prop 2.5; Albeverio-Kozyrev Sec 3 eq (2)); quine_mod_exists via fixed_point2_unbounded",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d6c58031-58bf-4c90-bda8-fab336f3a018",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.mem_avoidSet",
+            "short": "mem_avoidSet"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.mem_avoidSet",
+            "short": "mem_avoidSet",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -391784,6 +394132,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "de9d3ffe-7b74-45ee-9417-3a92c4841aea",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.avoidTest",
+            "short": "avoidTest"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.avoidTest",
+            "short": "avoidTest",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "de9f73ab-21ea-4fca-8d04-8bc2397f11a8",
           "new": {
             "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
@@ -392104,6 +394489,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "df27e814-a11b-4718-a692-7afa713d750f",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.negE_top",
+            "short": "negE_top"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.negE_top",
+            "short": "negE_top",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -393056,6 +395478,44 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e0a74820-ce5d-42b5-8d1d-2aabbbe09b08",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_sphV_infty_min",
+            "short": "lm_sphV_infty_min"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_sphV_infty_min",
+            "short": "lm_sphV_infty_min",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -394575,6 +397035,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "e30f2b87-b71b-4f4d-913b-0bb376b398b8",
+          "new": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.firstRecPhi_iterate",
+            "short": "firstRecPhi_iterate"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.firstRecPhi_iterate",
+            "short": "firstRecPhi_iterate",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "e31907d0-62e4-404d-b129-9064efcb1624",
           "new": {
@@ -395461,6 +397958,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "e4185420-ebdc-4638-9fde-3faa79f5b0ba",
+          "new": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.pullback_not_computable",
+            "short": "pullback_not_computable"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.pullback_not_computable",
+            "short": "pullback_not_computable",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "e42148a5-098c-4566-8d1f-1301db6458a0",
           "new": {
@@ -396076,6 +398610,44 @@
             ]
           },
           "reason": "The 2-adic bend: multiplier maps z -> c z on OnePoint Q_2 up to topological conjugacy (discrete twist u^v(z) z; every |c| != 1 conjugate to x2, control |d| = 1 not; four flips, Klein four subgroup of Aut(Q_2^x); four multipliers on OnePoint C; attracting/repelling fixed points on OnePoint K, conj_swaps_poles). Jenkins-Spallone Prop 7.1 is the classical statement (ZeroParadox/Multihomed/TwoAdicBend.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e4fd019d-759e-41e3-819c-c6dc5bfd2e89",
+          "new": {
+            "file": "ZeroParadox/Valuation/TowerHeightFloor.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.z2_norm_dbl_empty",
+            "short": "z2_norm_dbl_empty"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TowerHeightFloor.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.z2_norm_dbl_empty",
+            "short": "z2_norm_dbl_empty",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -397156,6 +399728,44 @@
             ]
           },
           "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e679a186-6071-4fc3-b861-e668f4837e8c",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_sphere_hlv_pinnedLimitAbove",
+            "short": "lm_sphere_hlv_pinnedLimitAbove"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_sphere_hlv_pinnedLimitAbove",
+            "short": "lm_sphere_hlv_pinnedLimitAbove",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -398786,6 +401396,43 @@
             ]
           },
           "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e8900ead-28b7-4614-8df4-e4f8bd77c932",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.avoidTest_primrec",
+            "short": "avoidTest_primrec"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.avoidTest_primrec",
+            "short": "avoidTest_primrec",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -400677,6 +403324,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "eb30b01c-e5d9-49e0-a2a2-417b14e7b3da",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.sVal",
+            "short": "sVal"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.sVal",
+            "short": "sVal",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "eb350b3a-3b9a-4bb1-a8f4-f07e25a725a7",
           "new": {
             "file": "ZeroParadox/Reals/ConnectedNoFirstStep.lean",
@@ -401608,6 +404292,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "ec7e3636-8312-441d-bb71-52eec6725b71",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.negE_antitone",
+            "short": "negE_antitone"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.negE_antitone",
+            "short": "negE_antitone",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "ecade73d-f103-457a-accf-e311a4579c43",
           "new": {
             "file": "ZeroParadox/Multihomed/OrbitDie.lean",
@@ -401743,6 +404464,44 @@
             ]
           },
           "reason": "ignorance-seam-viii: the bend NInf.det on 2-adic digit tapes is the 2-adic valuation (IgnoranceSeam.lean § VIII)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ed03060b-bed2-4de0-9682-6fa7c3d8f275",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_scale_fixed_iff",
+            "short": "lm_scale_fixed_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_scale_fixed_iff",
+            "short": "lm_scale_fixed_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -402002,6 +404761,43 @@
             ]
           },
           "reason": "New file ZeroParadox/Information/MaxEntropy.lean (experimental, Tim ruling 154): fair coin maximizes entropy, missing information zero iff fair, chain to mlRandom_and_snap_ae under binEntropy p = log 2, Kraft in measure form, almost every fair tape incompressible for any prefix-free decoder. The occurrence commitment is reduced, not discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ed4f639a-2711-4516-8c24-0d87a90e7a76",
+          "new": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fairTape_avoidSet_le",
+            "short": "fairTape_avoidSet_le"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/TwoRequirements.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.fairTape_avoidSet_le",
+            "short": "fairTape_avoidSet_le",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -407436,6 +410232,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "f603291f-6432-4525-a9fc-f08b9b2ae091",
+          "new": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.comp_think_pinnedLimitUnique",
+            "short": "comp_think_pinnedLimitUnique"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.comp_think_pinnedLimitUnique",
+            "short": "comp_think_pinnedLimitUnique",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "f61d5539-0b9c-4f78-83fd-f94df0a28516",
           "new": {
@@ -410802,6 +413635,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "faf65408-7fc3-4554-b73e-192e4bd598ec",
+          "new": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.name_side_quine",
+            "short": "name_side_quine"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.name_side_quine",
+            "short": "name_side_quine",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "fb10d3ea-b090-476a-a1ad-9924e82a3039",
           "new": {
             "file": "ZeroParadox/Settheory/RequirementsGap.lean",
@@ -412527,6 +415397,43 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "fd7bceae-14e7-4e7e-9a57-4fd545a39777",
+          "new": {
+            "file": "ZeroParadox/Order/WellFoundedObstruct.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.withTopInt_no_bot",
+            "short": "withTopInt_no_bot"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/WellFoundedObstruct.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.withTopInt_no_bot",
+            "short": "withTopInt_no_bot",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -418098,6 +421005,44 @@
             ]
           },
           "reason": "Clock and dial (Tim ruling 14): carry as the die's interleaving pairing of a frozen dial with the successor clock, and Chalmers 1996 section 4 Claim as a strict Hom onto ofFun g, onto iff the dial values cover the states; Bool dial vs three self-loops as the control.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "2606f56b-7b56-4e6a-804a-7a5dc1a8dc9a",
+          "new": {
+            "file": "ZeroParadox/Valuation/TowerHeightFloor.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.tower_images_pinnedLimit",
+            "short": "tower_images_pinnedLimit"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/TowerHeightFloor.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.tower_images_pinnedLimit",
+            "short": "tower_images_pinnedLimit",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
           "verify": {
             "axioms": null,
             "sorry_free": null

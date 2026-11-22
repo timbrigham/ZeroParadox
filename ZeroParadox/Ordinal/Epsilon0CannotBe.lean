@@ -9,6 +9,7 @@ import ZeroParadox.Valuation.SemilatticeInstance
 import ZeroParadox.Multihomed.BoundaryOrder
 import ZeroParadox.Information.SnapEpsilonZero
 import ZeroParadox.Ordinal.UniverseZoom
+import ZeroParadox.Valuation.TowerHeightFloor
 
 /-!
 # Machine-checked characterization index of ε₀ — what ε₀ IS and what it IS NOT
@@ -213,6 +214,8 @@ example (m n : ℕ) (hm : 1 ≤ m) (hmn : m < n) :
     PadicInt.norm_eq_zpow_neg_valuation (ZeroParadox.snap_arc_z2_loop.2.1 m hm),
     ZeroParadox.cnfToZp2_tower_valuation, ZeroParadox.cnfToZp2_tower_valuation]
   exact zpow_lt_zpow_right₀ (by norm_num) (by omega)
+#check @ZeroParadox.asymptote_preserved       -- Statement: from stage 1, the denotations climb strictly, each below ε₀, with supremum ε₀; their `cnfToZp2` images are never ℤ_[2]'s 0, tend to it, and climb strictly in `towerCx` through finite values to `towerCx 0 = ⊤`, their supremum; the two orders agree (`ZeroParadox/Valuation/TowerHeightFloor.lean` § V)
+#check @ZeroParadox.eps0_no_preimage          -- Statement: no `NONote` denotes ε₀, so ε₀ has no `cnfToZp2` image
 
 /-! ### § VI. The loop returns to a ⊥, never to ε₀ (the *successor* reading is a commitment) -/
 #check @ZeroParadox.t_iz_limit_is_new_null    -- Statement: role half only, in any `ZPSemilattice`: (∀ x, join terminal x = x) → terminal = bot. No chain, no limit, no novelty in the statement; "a fresh instance" is the framework's reading, not this theorem

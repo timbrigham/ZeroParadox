@@ -4,6 +4,9 @@ import ZeroParadox.Valuation.PadicAttractor
 import Mathlib.Order.OrderIsoNat
 import Mathlib.Data.Nat.SuccPred
 import Mathlib.Analysis.SpecificLimits.Basic
+import Mathlib.SetTheory.Ordinal.Basic
+import Mathlib.Data.ENat.Lattice
+import Mathlib.Algebra.Order.AddGroupWithTop
 import Mathlib.Tactic
 
 set_option maxHeartbeats 400000
@@ -182,6 +185,77 @@ theorem floor_reach_separates_mu_nu :
 the step-function face derives an **obstruction**, this face takes the orbit as **given**, and neither
 derives motion. The comparison and its prior art: `ZeroParadox/Order/WellFoundedObstruct.md`. -/
 
+/-! ## Order-reversing involutions, and where well-foundedness forbids one
+
+Used by `ZeroParadox/Valuation/RiemannSphere.lean` § X. -/
+
+/-- `Statement:` an antitone involution `f` of a preorder `α` gives an order isomorphism from `α`
+    onto its order dual. -/
+def orderIsoDualOfInvolutive {α : Type*} [Preorder α] (f : α → α) (hf : Antitone f)
+    (hi : Function.Involutive f) : α ≃o αᵒᵈ where
+  toEquiv := (hi.toPerm f).trans OrderDual.toDual
+  map_rel_iff' := by
+    intro a b
+    show f b ≤ f a ↔ a ≤ b
+    exact ⟨fun h => by simpa [hi a, hi b] using hf h, fun h => hf h⟩
+
+/-- `Statement:` an antitone involution sends a greatest element to a least element. -/
+theorem isBot_of_isTop_involutive {α : Type*} [Preorder α] {f : α → α} (hf : Antitone f)
+    (hi : Function.Involutive f) {t : α} (ht : IsTop t) : IsBot (f t) :=
+  fun y => by simpa [hi y] using hf (ht (f y))
+
+-- Statement: Mathlib: `ℤ` is order-isomorphic to its order dual, by negation.
+example : ℤ ≃o ℤᵒᵈ := OrderIso.neg ℤ
+
+/-- `Statement:` if `<` on `α` is well-founded and some `g : ℕ → α` is strictly increasing, no
+    self-map of `α` is strictly antitone. -/
+theorem no_strictAnti_self {α : Type*} [Preorder α] [WellFoundedLT α] {g : ℕ → α}
+    (hg : StrictMono g) (f : α → α) : ¬ StrictAnti f :=
+  fun hf => not_strictAnti_of_wellFoundedLT (f ∘ g) (hf.comp_strictMono hg)
+
+-- Statement: no self-map of ℕ is strictly antitone (`no_infinite_descent`).
+example (f : ℕ → ℕ) : ¬ StrictAnti f := no_infinite_descent f
+
+/-- `Statement:` no self-map of `ℕ∞` is strictly antitone. -/
+theorem enat_no_strictAnti (f : ℕ∞ → ℕ∞) : ¬ StrictAnti f :=
+  no_strictAnti_self (g := fun n : ℕ => (n : ℕ∞))
+    (fun a b h => show (a : ℕ∞) < b by exact_mod_cast h) f
+
+/-- `Statement:` no self-map of `Ordinal.{0}` is strictly antitone. -/
+theorem ordinal_no_strictAnti (f : Ordinal.{0} → Ordinal.{0}) : ¬ StrictAnti f :=
+  no_strictAnti_self (g := fun n : ℕ => (n : Ordinal.{0}))
+    (fun a b h => show (a : Ordinal.{0}) < b by exact_mod_cast h) f
+
+/-- `Statement:` on a linear order where no self-map is strictly antitone, no self-map is an
+    antitone involution. -/
+theorem no_antitone_involution_of {α : Type*} [LinearOrder α] (hno : ∀ f : α → α, ¬ StrictAnti f)
+    (f : α → α) (hf : Antitone f) (hi : Function.Involutive f) : False :=
+  hno f (hf.strictAnti_of_injective hi.injective)
+
+-- Statement: CONTROL: `Fin.rev` is an antitone involution of `Fin 3`, and no `g : ℕ → Fin 3` is
+-- strictly increasing.
+example : Antitone (Fin.rev : Fin 3 → Fin 3) ∧ Function.Involutive (Fin.rev : Fin 3 → Fin 3) ∧
+    ∀ g : ℕ → Fin 3, ¬ StrictMono g :=
+  ⟨fun _ _ h => Fin.rev_le_rev.2 h, Fin.rev_rev, fun g hg => not_injective_infinite_finite g hg.injective⟩
+
+/-- `Statement:` `WithTop ℤ` has no least element. -/
+theorem withTopInt_no_bot (b : WithTop ℤ) : ¬ IsBot b := by
+  intro h
+  induction b using WithTop.recTopCoe with
+  | top => exact absurd (h (0 : ℤ)) (by simp)
+  | coe z => have := WithTop.coe_le_coe.1 (h ((z - 1 : ℤ) : WithTop ℤ)); omega
+
+/-- `Statement:` no self-map of `WithTop ℤ` is an antitone involution. -/
+theorem withTopInt_no_antitone_involution (f : WithTop ℤ → WithTop ℤ) (hf : Antitone f)
+    (hi : Function.Involutive f) : False :=
+  withTopInt_no_bot _ (isBot_of_isTop_involutive hf hi isTop_top)
+
+-- Statement: CONTROL: Mathlib's negation on `WithTop ℤ` sends `⊤` to `⊤` and is not antitone.
+example : -(⊤ : WithTop ℤ) = ⊤ ∧ ¬ Antitone (fun a : WithTop ℤ => -a) := by
+  refine ⟨WithTop.LinearOrderedAddCommGroup.neg_top, fun h => ?_⟩
+  have := h (le_top : ((0 : ℤ) : WithTop ℤ) ≤ ⊤)
+  simp at this
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check
@@ -202,5 +276,13 @@ open ZeroParadox
 #print axioms pred_orbit_reaches_floor
 #print axioms padic_orbit_not_reaches_floor
 #print axioms floor_reach_separates_mu_nu
+#print axioms orderIsoDualOfInvolutive
+#print axioms isBot_of_isTop_involutive
+#print axioms no_strictAnti_self
+#print axioms enat_no_strictAnti
+#print axioms ordinal_no_strictAnti
+#print axioms no_antitone_involution_of
+#print axioms withTopInt_no_bot
+#print axioms withTopInt_no_antitone_involution
 
 end PurityCheck
