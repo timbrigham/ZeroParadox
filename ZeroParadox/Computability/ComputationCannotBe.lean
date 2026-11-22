@@ -245,6 +245,8 @@ example : IsQuineAtom (bot : MachinePhase) ∧
 --   undecidability is of `C` over all codes, and the second conjunct does not mention `f`; nothing
 --   is stated about membership at `f`'s fixed point.
 #check @ZeroParadox.quine_exists_yet_rice
+#check @ZeroParadox.class_selfOnlyAt_iff     -- Statement: for `eval`-respecting `F`, the class of `c` steps to itself only in the quotient by equal `eval` iff `eval (F c) = eval c`; both directions
+#check @ZeroParadox.pullback_not_computable  -- Statement: a property of classes up to equal `eval` that holds at some class and fails at some class is not a computable predicate when read on codes
 
 /-! ### § VI. Occurrence — what it takes for a configuration to MOVE
 

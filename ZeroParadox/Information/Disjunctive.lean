@@ -456,8 +456,9 @@ example : (¬ ∃ a, 0 < a ∧ ∀ n, (fun m => decide (m = 0)) (n + a) = (fun m
 
 /-! ## § VI. What maximal complexity would add
 
-Standard theory, not proved here: a Martin-Löf random sequence, prefix-free incompressible, is
-disjunctive; the converse fails at `champ` (§ II). Statement and search record in the ride-along.
+A tape Martin-Löf random for `fairTape` is disjunctive: `disjunctive_of_MLRandom`
+(`ZeroParadox/Information/TwoRequirements.lean` § II-b); the converse fails at `champ` (§ II). Search
+record in the ride-along.
 `Reading:` Tim's commitment concerns the framework's ⊥ role, ⊥ of a `ZPSemilattice`: read as a tape,
 its occupant is MAXIMALLY complex in that sense. No map from a `ZPSemilattice` to `ℕ → Bool` is
 claimed or constructed, and no order on tapes in which a maximally complex tape is least: the reading

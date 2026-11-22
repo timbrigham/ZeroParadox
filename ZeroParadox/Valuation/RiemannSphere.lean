@@ -4,6 +4,7 @@ import Mathlib.NumberTheory.Padics.ProperSpace
 import ZeroParadox.Die
 import ZeroParadox.Algebra.WheelFrac
 import ZeroParadox.Valuation.SnapDichotomy
+import ZeroParadox.Order.WellFoundedObstruct
 import Mathlib.Tactic
 
 set_option maxHeartbeats 400000
@@ -1008,6 +1009,153 @@ theorem rInv_conj_mulLeft (u : ℚ_[2]) (hu : u ≠ 0) (z : Sphere) :
       show rInv (OnePoint.some (u * x⁻¹)) = OnePoint.some (u⁻¹ * x)
       rw [rInv_coe_ne (mul_ne_zero hu (inv_ne_zero hx)), mul_inv, inv_inv]
 
+/-! ### § X. The valuation on the sphere, and `rInv` as its negation
+
+On nonzero points of `ℚ_[2]`, inversion negates the valuation (Mathlib's `Padic.valuation_inv`).
+Order-reversing involutions: `ZeroParadox/Order/WellFoundedObstruct.lean`. -/
+
+-- Statement: Mathlib: `(x⁻¹).valuation = -x.valuation` for every `x : ℚ_[2]`.
+example (x : ℚ_[2]) : (x⁻¹).valuation = -x.valuation := Padic.valuation_inv x
+
+/-- `Statement:` negation on `ℤ ∪ {±∞}`: `⊥ ↦ ⊤`, `⊤ ↦ ⊥`, `z ↦ -z`. -/
+def negE : WithBot (WithTop ℤ) → WithBot (WithTop ℤ)
+  | none => Option.some none
+  | Option.some none => none
+  | Option.some (Option.some z) => Option.some (Option.some (-z))
+
+/-- `Statement:` `negE ⊥ = ⊤`. -/
+@[simp] theorem negE_bot : negE ⊥ = ⊤ := rfl
+/-- `Statement:` `negE ⊤ = ⊥`. -/
+@[simp] theorem negE_top : negE ⊤ = ⊥ := rfl
+/-- `Statement:` `negE z = -z` on `ℤ`. -/
+@[simp] theorem negE_coe (z : ℤ) :
+    negE (((z : WithTop ℤ)) : WithBot (WithTop ℤ)) = (((-z : ℤ) : WithTop ℤ) : WithBot (WithTop ℤ)) :=
+  rfl
+
+/-- `Statement:` `negE` is an involution. -/
+theorem negE_involutive : Function.Involutive negE := by
+  intro x
+  induction x using WithBot.recBotCoe with
+  | bot => rfl
+  | coe x =>
+    induction x using WithTop.recTopCoe with
+    | top => rfl
+    | coe z => rw [negE_coe, negE_coe, neg_neg]
+
+/-- `Statement:` `negE` is antitone. -/
+theorem negE_antitone : Antitone negE := by
+  intro a b h
+  induction a using WithBot.recBotCoe with
+  | bot => simp
+  | coe a =>
+    induction b using WithBot.recBotCoe with
+    | bot => exact absurd h (by simp)
+    | coe b =>
+      induction b using WithTop.recTopCoe with
+      | top => simp
+      | coe b =>
+        induction a using WithTop.recTopCoe with
+        | top => exact absurd (WithBot.coe_le_coe.1 h) (by simp)
+        | coe a =>
+          simp only [negE_coe, WithBot.coe_le_coe, WithTop.coe_le_coe] at h ⊢
+          omega
+
+/-- `Statement:` `ℤ ∪ {±∞}` is order-isomorphic to its order dual, by `negE`. -/
+def negEIso : WithBot (WithTop ℤ) ≃o (WithBot (WithTop ℤ))ᵒᵈ :=
+  orderIsoDualOfInvolutive negE negE_antitone negE_involutive
+
+/-- `Statement:` the valuation on the sphere: `∞ ↦ ⊥`, `0 ↦ ⊤`, and `x ↦ x.valuation` on nonzero `x`. -/
+noncomputable def sVal : Sphere → WithBot (WithTop ℤ)
+  | (∞ : Sphere) => ⊥
+  | OnePoint.some x => if x = 0 then ⊤ else (((x.valuation : ℤ) : WithTop ℤ) : WithBot (WithTop ℤ))
+
+/-- `Statement:` `sVal ∞ = ⊥`. -/
+@[simp] theorem sVal_infty : sVal ∞ = ⊥ := rfl
+/-- `Statement:` `sVal 0 = ⊤`. -/
+@[simp] theorem sVal_zero : sVal (OnePoint.some (0 : ℚ_[2])) = ⊤ := by simp [sVal]
+/-- `Statement:` `sVal x = x.valuation` for nonzero `x : ℚ_[2]`. -/
+theorem sVal_coe_ne {x : ℚ_[2]} (hx : x ≠ 0) :
+    sVal (OnePoint.some x) = (((x.valuation : ℤ) : WithTop ℤ) : WithBot (WithTop ℤ)) := by
+  simp [sVal, hx]
+
+/-- `Statement:` `sVal (rInv p) = negE (sVal p)` at every point `p` of the sphere, `0` of `ℚ_[2]`
+    and `∞` included. -/
+theorem sVal_rInv (p : Sphere) : sVal (rInv p) = negE (sVal p) := by
+  induction p using OnePoint.rec with
+  | infty => simp [rInv_infty]
+  | coe x =>
+    by_cases hx : x = 0
+    · subst hx; simp [rInv_zero]
+    · rw [rInv_coe_ne hx, sVal_coe_ne (inv_ne_zero hx), sVal_coe_ne hx, negE_coe,
+        Padic.valuation_inv]
+
+/-- `Statement:` `sVal b ≤ sVal a ↔ sNorm a ≤ sNorm b` at every pair of points of the sphere. -/
+theorem sVal_le_iff_sNorm_le (a b : Sphere) : sVal b ≤ sVal a ↔ sNorm a ≤ sNorm b := by
+  induction a using OnePoint.rec with
+  | infty =>
+    induction b using OnePoint.rec with
+    | infty => simp
+    | coe y =>
+      simp only [sVal_infty, le_bot_iff, sNorm]
+      by_cases hy : y = 0
+      · subst hy; simp
+      · rw [sVal_coe_ne hy]; simp
+  | coe x =>
+    induction b using OnePoint.rec with
+    | infty => simp [sNorm]
+    | coe y =>
+      by_cases hx : x = 0
+      · subst hx
+        simp only [sVal_zero, le_top, true_iff]
+        simp [sNorm]
+      · by_cases hy : y = 0
+        · subst hy
+          rw [sVal_zero, sVal_coe_ne hx]
+          simp only [top_le_iff, sNorm, nnnorm_zero, ENNReal.coe_zero, nonpos_iff_eq_zero,
+            ENNReal.coe_eq_zero, nnnorm_eq_zero, hx, iff_false]
+          exact fun h => by simp at h
+        · rw [sVal_coe_ne hx, sVal_coe_ne hy, WithBot.coe_le_coe, WithTop.coe_le_coe,
+            sNorm_coe_le_iff hx hy]
+
+/-- `Statement:` `rInv` reverses the preorder lifted along `sVal`. -/
+theorem rInv_reverses_sVal (a b : Sphere) : sVal (rInv a) ≤ sVal (rInv b) ↔ sVal b ≤ sVal a := by
+  rw [sVal_rInv, sVal_rInv]
+  exact ⟨fun h => by simpa [negE_involutive _] using negE_antitone h, fun h => negE_antitone h⟩
+
+-- Statement: CONTROL: on `ℚ_[2]` with Mathlib's `ℤ`-valued valuation, `(0⁻¹).valuation =
+-- -(0.valuation)` holds, and `0` has the valuation of `1`.
+example : ((0 : ℚ_[2])⁻¹).valuation = -(0 : ℚ_[2]).valuation ∧
+    (0 : ℚ_[2]).valuation = (1 : ℚ_[2]).valuation := by
+  simp
+
+-- Statement: CONTROL: with Mathlib's `WithTop ℤ`-valued `Padic.addValuation`, the same identity holds
+-- at `0` of `ℚ_[2]`.
+example : Padic.addValuation ((0 : ℚ_[2])⁻¹) = -Padic.addValuation (0 : ℚ_[2]) := by
+  simp
+
+/-- `Statement:` for `w : ℚ_[2] → β` into a partial order with `w 0` greatest and some value other
+    than `w 0`, no antitone involution `σ` of `β` satisfies `w x⁻¹ = σ (w x)` for every `x`. -/
+theorem no_total_mirror_on_field {β : Type*} [PartialOrder β] (w : ℚ_[2] → β)
+    (htop : IsTop (w 0)) (hnt : ∃ b, b ≠ w 0) (σ : β → β) (hσ : Antitone σ)
+    (hi : Function.Involutive σ) : ¬ ∀ x, w x⁻¹ = σ (w x) := by
+  intro h
+  have h0 : w 0 = σ (w 0) := by simpa using h 0
+  have hbot : IsBot (w 0) := h0 ▸ isBot_of_isTop_involutive hσ hi htop
+  obtain ⟨b, hb⟩ := hnt
+  exact hb (le_antisymm (htop b) (hbot b))
+
+-- Statement: `sVal` restricted to the points of `ℚ_[2]`, with `σ = negE`, is not mirrored through
+-- field inversion.
+example : ¬ ∀ x : ℚ_[2], sVal (OnePoint.some x⁻¹) = negE (sVal (OnePoint.some x)) :=
+  no_total_mirror_on_field (fun x => sVal (OnePoint.some x)) (by intro b; simp)
+    ⟨⊥, by simp⟩ negE negE_antitone negE_involutive
+
+-- Statement: on ℤ_[2] the `q2Val` preorder is the norm preorder reversed, and on the sphere the
+-- `sVal` preorder is the `sNorm` preorder reversed.
+example : (∀ x y : ℤ_[2], q2Val x ≤ q2Val y ↔ ‖y‖ ≤ ‖x‖) ∧
+    (∀ a b : Sphere, sVal b ≤ sVal a ↔ sNorm a ≤ sNorm b) :=
+  ⟨q2Val_le_iff_norm_le, sVal_le_iff_sNorm_le⟩
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check (enable per theorem once proved) -/
@@ -1072,4 +1220,20 @@ open ZeroParadox
 #print axioms upV_rScale_two
 #print axioms upV_rScale_one_upV
 #print axioms rInv_conj_mulLeft
+-- § X: the valuation on the sphere and its negation.
+#print axioms negE
+#print axioms negE_bot
+#print axioms negE_top
+#print axioms negE_coe
+#print axioms negE_involutive
+#print axioms negE_antitone
+#print axioms negEIso
+#print axioms sVal
+#print axioms sVal_infty
+#print axioms sVal_zero
+#print axioms sVal_coe_ne
+#print axioms sVal_rInv
+#print axioms sVal_le_iff_sNorm_le
+#print axioms rInv_reverses_sVal
+#print axioms no_total_mirror_on_field
 end PurityCheck

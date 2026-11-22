@@ -98,7 +98,9 @@ the repo root. Outside it (FLT, carleson, pfr), Tim ruled 2026-10-31 that the so
 elaborated**. `get_dependencies` returns a partial list as a JSON-encoded string (2026-10-31: for
 `Nat.Partrec.Code.fixed_point₂`, some statement constants, but not `Partrec₂` from its hypothesis, nor
 the proof's constants), and LeanExplore's snapshot is not the pinned Mathlib, so confirm a hit at the pin.
-Then GitHub code search with `extension:lean`, not `language:Lean` (2026-10-31: 9 files against 0),
+Then search Reservoir's own index (`https://reservoir.lean-lang.org/packages?q=<term>`, three terms
+minimum, the concept's standard name first) for packages on the topic, and read any candidate's source
+(Tim, 2026-11-22: Reservoir is a named source, never only implied). Then GitHub code search with `extension:lean`, not `language:Lean` (2026-10-31: 9 files against 0),
 `perPage` ≤ 10 and `-repo:timbrigham/ZeroParadox`, for the Reservoir long tail (about 920 packages,
 2026-10-31). The LeanExplore half may be recorded NOT RUN if the tools are unavailable or refused; the
 code search is always required. Its null is uninformative too; both services are rate-limited, and only

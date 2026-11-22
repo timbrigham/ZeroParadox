@@ -458,6 +458,8 @@ example : (fun x : ℤ => -x) (0 : ℤ) = 0 := rfl
 #check @ZeroParadox.real_zero_infty_connected
 #check @ZeroParadox.lm_q2_dipole            -- Statement: on `OnePoint ℚ_[2]`, doubling and halving limit motions form a dipole with poles `0` of `ℚ_[2]` and `∞`, two distinct points (`ZeroParadox/Multihomed/LimitMotion.lean` § VI)
 #check @ZeroParadox.lm_fieldLine_is_members -- Statement: the doubling orbit of `2` is the member sequence of `q2InfinitudeFloor`, whose floor `0` of `ℚ_[2]` is doubling's limit sink off `∞`, with complexity `⊤` there
+#check @ZeroParadox.sVal_rInv -- Statement: on `OnePoint ℚ_[2]`, `sVal (rInv p) = negE (sVal p)` at every point `p`, `0` of `ℚ_[2]` and `∞` included (`ZeroParadox/Valuation/RiemannSphere.lean` § X)
+#check @ZeroParadox.q2_zero_min_eq_max -- Statement: `0` of `ℚ_[2]` steps only to itself under doubling and its reverse and has least norm; the field line `2 ^ (n + 1)` tends to it, is never it, and climbs in `cxQ2` through finite values to `cxQ2 0`, their supremum and the greatest value (`ZeroParadox/Multihomed/LimitMotion.lean` § VII)
 -- Statement: Mathlib's `IsInitial.op` — the opposite of an initial object is terminal.
 -- Reading: CITED, not ZP-proved; attribution is the point. Passing to `Cᵒᵖ` is the categorical face
 -- of inversion, swapping the μ-bottom to a terminal object.
@@ -855,9 +857,15 @@ example : ZeroParadox.Disjunctive (fun n => xor (ZeroParadox.champ n) false) := 
 -- carries every code word (`code_occurs_of_disjunctive`). Self chart: read against itself it is that
 -- all-false tape; in ℤ_[2] the self-difference is ℤ_[2]'s 0, of additive valuation ⊤ (the floor's
 -- `cx = ⊤`, `infinitude_forces_infinite_complexity`, `ZeroParadox/Valuation/InfinitudeFloor.lean`).
--- That the occupant of the framework's ⊥ role, ⊥ of a `ZPSemilattice`, is MAXIMALLY complex is
--- Tim's commitment, stated as no equation with any
--- one tape; disjunctive is the weaker, proved property (`ZeroParadox/Information/Disjunctive.lean`).
+-- Reading: CHART claim, not a point identity, in the shape of `epsilon0_min_eq_max` (one object, two
+-- characterizations). Tim, 2026-11-12: "simultaneously minimally and maximally complex". Witnesses, each
+-- a theorem in its own carrier: `z2_two_views` (§ ROLE), ℤ_[2]'s 0 least in the norm preorder, greatest
+-- in the `q2Val` preorder; `infinitude_forces_infinite_complexity` at `q2InfinitudeFloor`, `cx = ⊤` at
+-- ℚ_[2]'s 0; `tape_totality_two_faces` (next section), minimal as the law, maximal as almost every
+-- member, ⊥ of `ℕ → Bool` a non-random limit of them. Reading least as minimally complex is
+-- interpretation. Across every chart at once is Tim's commitment, and so is either face for ⊥ of a
+-- `ZPSemilattice`, whose class defines no complexity; no equation with any one tape is stated, and
+-- disjunctive is the weaker, proved property (`ZeroParadox/Information/Disjunctive.lean`).
 
 /-! ### One ensemble, two faces: the law and its members -/
 

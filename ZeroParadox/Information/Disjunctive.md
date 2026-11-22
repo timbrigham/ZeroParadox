@@ -80,7 +80,9 @@ block (`#print axioms`, 2026-10-04):
 2. **Disjunctive is weak.** `champ` is disjunctive and primitive recursive (§ II). Standard theory,
    not proved here: a sequence is Martin-Löf random exactly when its prefixes are incompressible in
    PREFIX-FREE Kolmogorov complexity, `K(x↾n) ≥ n − c` for some constant `c` (Levin–Schnorr, Chaitin),
-   and a Martin-Löf random sequence is disjunctive; the converse fails (`champ`). With PLAIN
+   and a Martin-Löf random sequence is disjunctive, proved here for the fair coin as
+   `disjunctive_of_MLRandom` (`ZeroParadox/Information/TwoRequirements.lean` § II-b); the converse
+   fails (`champ`). With PLAIN
    complexity no infinite sequence has all prefixes incompressible (Martin-Löf), so the prefix-free
    form is the one meant.
 3. **The commitment is separate.** `Reading:` Tim's commitment concerns the framework's ⊥ role, ⊥ of
@@ -89,8 +91,8 @@ block (`#print axioms`, 2026-10-04):
    Martin-Löf random, hence disjunctive. No map from a `ZPSemilattice`
    to `ℕ → Bool` is claimed or constructed, and no order on tapes in which a maximally complex tape is
    least: the reading is a commitment, not a chart. In `ℕ → Bool` under the pointwise order, ⊥ is the
-   all-false tape, which is not disjunctive (`allFalse_not_disjunctive`). Neither the commitment nor
-   the standard theorem is in Lean (Search record).
+   all-false tape, which is not disjunctive (`allFalse_not_disjunctive`). The commitment is not in
+   Lean (Search record).
 4. **`Code.zero`'s word is empty** (`codeWord_zero_width`), so presence there is vacuous.
 5. **The measure fences of `ZeroParadox/Information/CrossingTrials.lean` stand.** `Reading:` CARRIER.
    Pointwise, measure one is not necessity: the all-`false` tape of `ℕ → Bool` is the one tape that

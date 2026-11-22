@@ -4347,6 +4347,10 @@ def ninfEquivComp : NInf ≃ Computation Unit where
 /-- `Statement:` `toComp ∞` is Mathlib's `Computation.empty Unit`, by `rfl`. -/
 theorem toComp_infty : toComp infty = Computation.empty Unit := rfl
 
+/-- `Statement:` `toComp (succ x)` is Mathlib's `Computation.think (toComp x)`, for every `x`. -/
+theorem toComp_succ (x : NInf) : toComp (succ x) = Computation.think (toComp x) := by
+  apply Subtype.ext; funext n; cases n <;> rfl
+
 /-- `Statement:` `ofNat` is one-to-one. -/
 theorem ofNat_injective : Function.Injective ofNat := by
   have key : ∀ a b, a < b → ofNat a ≠ ofNat b := fun a b hab h => by
@@ -4865,6 +4869,60 @@ theorem not_pinnedLimitAbove_of_finite {α : Type*} [PartialOrder α] [Finite α
 theorem not_pinnedLimit_of_finite {α : Type*} [PartialOrder α] [Finite α] (g : α → α)
     (s : ℕ → α) (c : α) : ¬ PinnedLimit g s c :=
   fun h => not_pinnedLimitAbove_of_finite g s c h.toAbove
+
+/-- `Statement:` if nothing other than `c` is at or below `c`, then `c` occupies no
+    `PinnedLimitAbove g s`, for every `g` and `s`. -/
+theorem not_pinnedLimitAbove_of_minimal {α : Type*} [Preorder α] {g : α → α} {s : ℕ → α} {c : α}
+    (hmin : ∀ z, z ≤ c → z = c) : ¬ PinnedLimitAbove g s c :=
+  fun h => h.2.1 ⟨0, hmin _ (h.1.1 ⟨0, rfl⟩)⟩
+
+/-- `Statement:` if `g` fixes a least point `b` that nothing else is at or below, no point occupies
+    `PinnedLimit g s`, for every run `s`. One direction. -/
+theorem not_pinnedLimit_of_fixed_floor {α : Type*} [Preorder α] {g : α → α} {b : α}
+    (hbot : IsBot b) (hmin : ∀ z, z ≤ b → z = b) (hfix : g b = b) (s : ℕ → α) (c : α) :
+    ¬ PinnedLimit g s c := by
+  intro h
+  have hc : c = b := hmin c (h.2.2.1.2 hfix)
+  subst hc
+  exact not_pinnedLimitAbove_of_minimal hmin h.toAbove
+
+/-- `Statement:` an equivalence `e : α ≃ β` with `e (g x) = h (e x)` for every `x` sends
+    `PinnedLimitUnique g s c` to `PinnedLimitUnique h (e ∘ s) (e c)` in the preorder on `β` lifted
+    along `e.symm`. -/
+theorem pinnedLimitUnique_transport {α β : Type*} [Preorder α] (e : α ≃ β) {g : α → α}
+    {h : β → β} (hc : ∀ x, e (g x) = h (e x)) {s : ℕ → α} {c : α} (hp : PinnedLimitUnique g s c) :
+    @PinnedLimitUnique β (Preorder.lift e.symm) h (e ∘ s) (e c) := by
+  letI : Preorder β := Preorder.lift e.symm
+  have fixiff : ∀ y, h y = y ↔ g (e.symm y) = e.symm y := fun y => by
+    constructor
+    · intro hy; apply e.injective; rw [hc, e.apply_symm_apply, hy]
+    · intro hy; have := congrArg e hy; rw [hc, e.apply_symm_apply] at this; exact this
+  obtain ⟨⟨⟨hub, hlst⟩, hnot, ⟨hfix, hleast⟩, hmono⟩, huniq⟩ := hp
+  refine ⟨⟨⟨?_, ?_⟩, ?_, ⟨?_, ?_⟩, ?_⟩, ?_⟩
+  · rintro _ ⟨n, rfl⟩
+    show e.symm (e (s n)) ≤ e.symm (e c)
+    rw [e.symm_apply_apply, e.symm_apply_apply]; exact hub ⟨n, rfl⟩
+  · intro b hb
+    have hc' : c ≤ e.symm b := hlst (by
+      rintro _ ⟨n, rfl⟩
+      have := hb ⟨n, rfl⟩
+      change e.symm (e (s n)) ≤ e.symm b at this
+      rwa [e.symm_apply_apply] at this)
+    show e.symm (e c) ≤ e.symm b
+    rwa [e.symm_apply_apply]
+  · rintro ⟨n, hn⟩
+    exact hnot ⟨n, e.injective hn⟩
+  · show h (e c) = e c
+    rw [← hc, show g c = c from hfix]
+  · intro y hy
+    show e.symm (e c) ≤ e.symm y
+    rw [e.symm_apply_apply]
+    exact hleast ((fixiff y).1 hy)
+  · intro m n hmn
+    show e.symm (e (s m)) ≤ e.symm (e (s n))
+    rw [e.symm_apply_apply, e.symm_apply_apply]; exact hmono hmn
+  · intro y hy
+    rw [← huniq _ ((fixiff y).1 hy), e.apply_symm_apply]
 
 -- `Statement:` CONTROL: antisymmetry is a premise of the exclusion. On `Bool` preordered by `x ≤ y`
 -- for all `x`, `y` (not a partial order), the constant run at `false` climbs and `true` occupies
@@ -6546,6 +6604,7 @@ open ZeroParadox
 #print axioms NInf.ofComp
 #print axioms NInf.ninfEquivComp
 #print axioms NInf.toComp_infty
+#print axioms NInf.toComp_succ
 #print axioms Motion.LoopAt
 #print axioms Motion.loop_iff_exists_loopAt
 #print axioms LPOData
@@ -6593,6 +6652,9 @@ open ZeroParadox
 #print axioms pinnedLimit_iff_closure_omega
 #print axioms not_pinnedLimitAbove_of_finite
 #print axioms not_pinnedLimit_of_finite
+#print axioms not_pinnedLimitAbove_of_minimal
+#print axioms not_pinnedLimit_of_fixed_floor
+#print axioms pinnedLimitUnique_transport
 #print axioms NInf.instPartialOrder
 #print axioms NInf.le_def
 #print axioms NInf.instOrderBot
