@@ -25,7 +25,7 @@ No snap-specific axioms appear anywhere in the framework. The Binary Snap - the 
 - **Not a physical theory** - the framework is silent on which specific state emerges first; physical theories would arise by specifying that
 - **Not a claim about consciousness or the hard problem** - the framework is silent on these questions
 - **Not a claim that zero is paradoxical in all of mathematics** - the paradox is local to this framework's structure
-- **Not a logical contradiction** - the framework is internally consistent throughout
+- **Not a logical contradiction** - what is established is internal coherence: the central theorem and the supporting layer theorems are verified in Lean 4 given the explicitly stated commitments (see "Scope of the claim" under [The Result](README.md#the-result))
 
 **On vocabulary.** The framework aims for precision by using the *established* term for each structure it describes - the recognized name from the relevant field, not a coinage of its own. (Its own results carry reference labels - T-SNAP, MC-1, and the like - as any formal development assigns; those are identifiers for specific results, not invented vocabulary for existing structures.) A deliberate consequence is that its language draws on concepts from many backgrounds: set theory, category theory, proof theory, computability, valuation theory, and others. Borrowing a field's precise vocabulary is not a claim to results in that field; the framework's assertions are confined to the mathematics it formally establishes, and where its structures resemble ideas in other domains, those resemblances are named as such, never asserted as results there.
 
@@ -65,7 +65,7 @@ This repository is connected to a Copilot Space - a GitHub AI chat with the docu
 
 One companion per formal document. Plain language, diagrams, real-world examples.
 
-> **Note (April 2026):** Some companions were written before significant revisions to the formal documents and are currently being updated. Treat them as introductions to the framework's structure, not authoritative statements of current theorem names or statuses.
+> **Note:** The companions are introductions to the framework's structure. For current theorem names and statuses, the formal documents and the [Claims Ledger](CLAIMS.md) are authoritative.
 
 | File | For Document | Key Diagrams |
 |------|-------------|--------------|
@@ -78,7 +78,7 @@ One companion per formal document. Plain language, diagrams, real-world examples
 | [ZP-G Illustrated Companion](ZP-G_Illustrated_Companion.pdf) | ZP-G | Category and functor concepts, initial object, informational singularity |
 | [ZP-H Illustrated Companion](ZP-H_Illustrated_Companion.pdf) | ZP-H | Four-functor convergence, T-SNAP derivation chain, Binary Snap across the four ZP frameworks |
 | [ZP-I Illustrated Companion](ZP-I_Illustrated_Companion.pdf) | ZP-I | 2-adic depth diagram, three closed doors + Cauchy passage, complete cycle diagram |
-| [ZP-J Illustrated Companion](ZP-J_Illustrated_Companion.pdf) | ZP-J + ZP-J AFA Addendum | Quine atom diagram (⊥ = {⊥}, in ZF + AFA), directed-graph (APG) view of the Quine atom (self-loop), three-way equivalence table, CC-1 restated as an equivalence and CC-2 read as the Quine-atom role, abstraction chain (ValuationStructure → AFAStructure), APG decoration uniqueness |
+| [ZP-J Illustrated Companion](ZP-J_Illustrated_Companion.pdf) | ZP-J + ZP-J AFA Addendum | Quine atom diagram (⊥ = {⊥}, in ZFC⁻ + AFA), directed-graph (APG) view of the Quine atom (self-loop), three-way equivalence table, CC-1 restated as an equivalence and CC-2 read as the Quine-atom role, abstraction chain (ValuationStructure → AFAStructure), APG decoration uniqueness |
 | [ZP-J Wheel Illustrated Companion](ZP-J_Wheel_Illustrated_Companion.pdf) | ZP-J Wheel Addendum | Wheel / meadow / collapse diagram (∞ ≠ ⊥), division by zero made total, ∞ = /0 and ⊥ = 0·/0, the wheel of fractions construction, why identifying ∞ with ⊥ leaves a one-element wheel, porthole connection |
 | [ZP-K Illustrated Companion](ZP-K_Illustrated_Companion.pdf) | ZP-K | Three-way equivalence diagram, computational Quine, execution argument Lean verification |
 | [ZP-L Illustrated Companion](ZP-L_Illustrated_Companion.pdf) | ZP-L | Ordinal tower with ε₀ snap threshold, dual convergence diagram |
@@ -118,5 +118,3 @@ Previous document versions are preserved in the git history and browsable at eac
 ---
 
 *For the formal framework, axiomatic commitments, question register, and Lean verification, see the [Formal Index](README.md).*
-
-*Zero Paradox | April 2026*
