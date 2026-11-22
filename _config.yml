@@ -1,5 +1,5 @@
 title: The Zero Paradox
-description: "A Lean 4 formalization: one diagonal fixed-point role at the bottom of five mathematical fields, filled field by field."
+description: "A Lean 4 formalization: one diagonal fixed-point role at the bottom of five mathematical fields, filled field by field (in computability by Kleene codes up to equal output, not by a least element)."
 
 # Apply the site theme to every rendered page. The root .md files carry no
 # front matter, so this default is what wraps them in the layout.
