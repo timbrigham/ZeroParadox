@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP Addendum: The Choice-Free Core
-Version 1.19 | November 2026
+Version 1.20 | November 2026
 Framework-wide note; reads after the Foreword.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.19'
+VERSION = '1.20'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard ──
@@ -206,12 +206,15 @@ def build():
     E.append(remark_box(
         'Remark &#8212; Why this matters',
         [
-            'The Zero Paradox argues that the foundational axioms are not freely chosen but forced by '
-            'the structure of the bottom element. It would be a tension if the framework\'s own '
+            'The Zero Paradox argues that one narrow host-theory commitment is forced rather than '
+            'chosen: a host of the Quine-atom role cannot be well-founded '
+            '(quineAtomHost_not_wellFounded), so Foundation-freeness is forced, while the host '
+            'requirements themselves are argued, not proved (CLAIMS.md, Tier 4). Its other foundational '
+            'commitments are chosen, not derived (CLAIMS.md, Tier 5): AX-B1, the one substantive '
+            'modelling commitment, among them, and AFA is adopted among the anti-foundation axioms '
+            'rather than forced (ZP-E Remark R-AFA). It would be a tension if the framework\'s own '
             'central results leaned on the Axiom of Choice &#8212; the canonical free, non-constructive '
-            'selection. They do not. T-SNAP is axiom-free; the keystone is choice-free. The '
-            '"forced, not chosen" thesis is internally consistent at the level of what the framework '
-            'actually asserts. Where choice appears it is often the supporting library\'s classical '
+            'selection. They do not. T-SNAP is axiom-free; the keystone is choice-free. Where choice appears it is often the supporting library\'s classical '
             'foundation showing through the realizations rather than an assumption of the argument. '
             'The reductions Section III points at are the exception on a different axis: they are about '
             '<i>necessity</i>, not provenance. Some of their principles are proved with the '

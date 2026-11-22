@@ -1,5 +1,5 @@
 """
-Zero Paradox — Foreword PDF Builder (v2.52, revised November 2026)
+Zero Paradox — Foreword PDF Builder (v2.53, revised November 2026)
 Follows all rules in pdf rendering standards.md:
   - All table cells are Paragraph objects
   - No unicode subscripts — use sub/super tags
@@ -9,7 +9,7 @@ Follows all rules in pdf rendering standards.md:
 import os
 from zp_utils import *
 
-VERSION = '2.52'
+VERSION = '2.53'
 FIRST_RELEASED = 'April 2026'
 
 # ── fix() and prose_check() guard on every Paragraph ──
@@ -149,7 +149,7 @@ def commitments_table():
          'the canonical host (ZP-E Remark R-AFA). What remains a commitment is that a unique Quine atom is the '
          'right requirement to demand, and the choice of AFA among the axioms meeting it. '
          'Fixed-point content formally verified in ZFC by ZP-J (ScaleBridge). '
-         'The set-theoretic interpretation is given in ZF+AFA.'),
+         'The set-theoretic interpretation is given in ZFC<sup>&#8722;</sup> + AFA.'),
     ]
 
     table_data = [headers]
@@ -315,8 +315,11 @@ def build():
             'layer&#8217;s member of the bottom family.',
             S['body']),
         Paragraph(
-            'The closure layer (ZP-I) proves T-IZ — the Inside Zero theorem: every '
-            'maximal ascending chain in the state space converges, at its limit, to zero. '
+            'The closure layer (ZP-I) proves T-IZ — the Inside Zero theorem. Its convergence step lives '
+            'in Q₂, not in the state space: a sequence in Q₂ whose 2-adic norms are bounded by 2<sup>&#8722;n</sup> '
+            'converges to 0 of Q₂ (t_iz_cauchy, ZeroParadox/Valuation/SemilatticeInstance.lean); a chain of '
+            'states reaches it only through the modelling commitment that the sequence&#8217;s valuations '
+            'track the chain&#8217;s depths (IsDepthChain). '
             'Reading that limit as something filling the bottom role again takes a choice of '
             'join on Q₂, and then the role half is a theorem (t_iz_limit_is_new_null): anything '
             'filling that role IS the bottom already there (that semilattice&#8217;s ⊥; which point '
@@ -341,7 +344,7 @@ def build():
             'The self-reference layer (ZP-J) proves T-EXEC: in any ZP-A lattice carrying the '
             'AFAStructure typeclass, whatever fills the Quine-atom role (the lattice encoding of the set Q = {Q}) is ⊥, axiom-free. '
             'CC-1 (S₀ = ⊥) is restated as an equivalence, not forced: a sequence starts at a Quine atom exactly when it starts at ⊥, and on any lattice with a second point a valid sequence can start above ⊥. The layer also formalises the '
-            'ZF+Foundation / ZF+AFA relationship and proves APG decoration uniqueness — every '
+            'Foundation / AFA relationship and proves APG decoration uniqueness — every '
             'finite self-referential graph has at most one consistent decoration into the lattice.',
             S['body']),
         Paragraph(
@@ -382,16 +385,16 @@ def build():
             'is a Forced Metatheoretic Commitment, and MC-1 names the bottom family rather than a commitment:',
             S['body']),
         Paragraph(
-            'A note on metatheory: this framework is stated over ZF + AFA '
-            '(Zermelo–Fraenkel set theory with Aczel\'s Anti-Foundation Axiom), '
-            'not standard ZFC. AFA permits self-containing sets — in particular, sets x '
-            'satisfying x = {x}. This matters only for CC-2 in the table below; '
-            'every other result in this framework holds in standard ZF. Lean&#8217;s model of sets '
+            'A note on metatheory: this framework is stated over ZFC<sup>&#8722;</sup> + AFA '
+            '(Zermelo–Fraenkel set theory with Choice, with Aczel\'s Anti-Foundation Axiom in place of '
+            'Foundation: Aczel 1988, p. xviii), not standard ZFC. AFA permits self-containing sets — in '
+            'particular, sets x satisfying x = {x}. This matters only for CC-2 in the table below. '
+            'Lean&#8217;s model of sets '
             'with Foundation cannot host CC-2&#8217;s set chart: there the Quine-atom role reads x = {x}, such '
             'a set would be a member of itself, which the Axiom of Regularity forbids (no set is '
             'self-membered, no_quine_atom), so no set occupies the role (zfset_quine_role_unoccupied). '
-            'The Axiom of Choice is not assumed '
-            'as a framework commitment, and the core does not use it: T-SNAP (t_snap_derived) '
+            'Choice is kept, and which results use it is measured result by result; '
+            'the core does not use it: T-SNAP (t_snap_derived) '
             'depends on no Lean axioms at all (#print axioms is empty). Classical.choice does reach the realization '
             'layers, and not only by inheritance from Mathlib — the category-theory layer spends a '
             'bare classical written in framework source (fixedPointFree_of_nontrivial, in '
@@ -406,16 +409,16 @@ def build():
             'holding a dated measurement table for the computability layer.',
             S['body']),
         Paragraph(
-            'ZF+Foundation and ZF+AFA are not two theories this work bridges — '
+            'ZFC (with Foundation) and ZFC<sup>&#8722;</sup> + AFA are not two theories this work bridges — '
             'they are mutually exclusive foundational choices. Choosing one forecloses '
             'the other. The right image is a porthole, not a bridge: a wall that is '
             'solid and opaque everywhere except one piece of glass. The glass does not '
             'open. Through it, both frameworks share the same arithmetic fact. '
             'That object is zero. In the 2-adic integers, zero is divisible by 2 '
-            'infinitely many times — a provable fact in standard ZF. In ZF+AFA, '
+            'infinitely many times — a provable fact in standard ZF. In ZFC<sup>&#8722;</sup> + AFA, '
             'the same fact carries additional weight: infinite 2-adic divisibility '
             'is, in ZP\'s reading, the formal signature of a set that contains only itself. '
-            'This work is built in ZF+AFA because the question it asks is about '
+            'This work is built in ZFC<sup>&#8722;</sup> + AFA because the question it asks is about '
             'that second reading — what the arithmetic of zero means at the '
             'foundation, not just what it computes.',
             S['body']),

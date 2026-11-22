@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-Q: The Frame-Change PDF Builder
-Version 1.25 | November 2026
+Version 1.26 | November 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.25'
+VERSION = '1.26'
 FIRST_RELEASED = 'July 2026'
 
 from reportlab.graphics.shapes import Drawing, Circle, Ellipse, PolyLine, String, Polygon
@@ -98,11 +98,17 @@ def build():
 
     E.append(body(
         'The Zero Paradox proves the snap &#8869; &#8594; &#949;<sub>0</sub> as a theorem; ZP-Q is about the '
-        'BOTTOM&#8217;s two-facedness, which is a different object from the snap. Across every layer the '
-        'bottom shows the same two features: it '
-        'is a fixed point &#8212; a zero &#8212; that carries an infinitude (v<sub>2</sub>(0) = '
-        '&#8734;, unbounded surprisal, the self-referential closure), and every map to it runs one '
-        'way and reverses only under an inversion that swaps the two poles. These are not two facts. '
+        'BOTTOM&#8217;s two-facedness, which is a different object from the snap. Across the layers the '
+        'bottom is a fixed point &#8212; a zero &#8212; that carries an infinitude (v<sub>2</sub>(0) = '
+        '&#8734;, unbounded surprisal, the self-referential closure). Where the order or category admits '
+        'no return to it &#8212; &#8869; of ZP-A&#8217;s state semilattice (t_snap_irreversible), the '
+        'stage-0 object of the information functor in KleisliCat PMF, from its later stages '
+        '(fC_no_return), and 0 of '
+        '&#8474;<sub>2</sub>, where no continuous path returns to 0 (ZP-B C3) &#8212; it shows a second '
+        'feature: every map to it runs one way and reverses only under an inversion that swaps the two '
+        'poles. In ModuleCat &#8450; it does not: there the bottom is a zero object, initial and terminal '
+        'at once, and every stage maps into it by the zero map (fD_has_return; irreversibility_not_uniform, '
+        'ZeroParadox/Category/Heterogeneous.lean). Where both features hold they are not two facts. '
         'They are two faces of one self-dual object, and the inversion is the <i>frame-change</i>. '
         '<b>The frame-change is that pole exchange &#8212; &#8869; being read as both 0 and &#8734;. Whether '
         'the snap is an instance of it is the layer&#8217;s open conjecture.</b> The snap, T-SNAP&#8217;s '
@@ -120,9 +126,10 @@ def build():
         'Like ZP-P, this is a synthesis layer, organised in three tiers held to three standards of '
         'proof. Tier 1 (Section I) is the abstract schema, proved in Lean over a complete lattice: it '
         'extends ZP-P&#8217;s fork with its second face, the order-duality that swaps the two '
-        'closures. Tier 2 (Section II) is the face catalogue: each domain&#8217;s frame-change is '
-        'a theorem in its home layer, and the valuation face is the framework&#8217;s originating '
-        'figure, the p-adic Riemann sphere. Tier 3 (Section III) is the universal form and its walls: '
+        'closures. Tier 2 (Section II) is the face catalogue: each domain&#8217;s two charts with a '
+        'witness from its home layer, of which two, valuation and category, are full frame-flip '
+        'theorems; the valuation face is the framework&#8217;s originating '
+        'figure, the p-adic Riemann sphere.Tier 3 (Section III) is the universal form and its walls: '
         'the order-theoretic universal holds, the categorical (Lawvere) universal is a proven wall, '
         'and the cross-domain identity is a type boundary. The fences in Section III are load-bearing '
         '&#8212; and they turn out to be built from the same diagonal as the bridges.'))
@@ -160,7 +167,7 @@ def build():
         'ZP-P recorded the fork&#8217;s first face: over a complete lattice a monotone self-map f has '
         'a least fixed point (lfp f, the well-founded / inductive closure, &#956;) and a greatest '
         'fixed point (gfp f, the non-well-founded / coinductive closure, &#957;), and the fork '
-        'collapses to a single point &#8212; the diagonal fixed point &#8869; &#8212; exactly when f '
+        'collapses to a single point, lfp f = gfp f, exactly when f '
         'has a unique fixed point (fork_collapse_iff). ZP-Q adds the second face. The two closures are '
         'the two <i>charts</i>; the <i>frame-change</i> is the order-duality that carries one to the '
         'other. It is the abstract form of the concrete frame-changes below: the p-adic inversion '
@@ -197,8 +204,8 @@ def build():
         [
             'Over any complete lattice, bundling both faces: (i) lfp (f.dual) = gfp f and '
             '(ii) gfp (f.dual) = lfp f (the frame-change swaps the charts), together with '
-            '(iii) lfp f = gfp f &#8596; &#8707;! x, f x = x (the fork collapses at the diagonal '
-            'fixed point &#8212; fork_collapse_iff).',
+            '(iii) lfp f = gfp f &#8596; &#8707;! x, f x = x (the fork collapses to one point, '
+            'the unique fixed point &#8212; fork_collapse_iff).',
             'This is the domain-independent form of the POLE BEHAVIOUR: the two charts are swapped by the '
             'frame-change, and the bottom is where they meet. Note what (iii) says &#8212; least = greatest '
             'exactly when the fixed point is unique &#8212; and note the hypotheses: it needs a COMPLETE LATTICE and a '
@@ -236,11 +243,12 @@ def build():
     ]
 
     E.append(body(
-        'The same frame-flip appears across the framework, each domain realising it with its own '
-        'concrete involution. ZP-Q does not re-prove each face &#8212; each is a theorem in its '
-        'home layer &#8212; it records the catalogue and pins the two faces with a full '
-        'frame-flip (valuation, category) to their Lean witnesses. The two poles of each row are the '
-        'two charts; the frame-change is the involution that swaps them.'))
+        'The catalogue lists, per domain, two charts and a witness from the home layer; ZP-Q does not '
+        're-prove them. Two faces carry a full frame-flip, valuation and category, and ZP-Q pins them '
+        'to their Lean witnesses, where the frame-change is the involution that swaps the two charts. '
+        'Of the other witnesses, fork_collapse_iff is no involution, AbstractSelfApp.unique_fp is a '
+        'class field, biprod_diagonal_only_zero characterizes the zero object rather than exchanging '
+        'two charts, and info_bottom_diverges is one-sided; the reals row is taken up in Section III.'))
 
     E.append(data_table(
         headers=['Domain', 'The two poles (charts)', 'Frame-change &#8212; witness'],
@@ -342,8 +350,9 @@ def build():
             'terminal-ness to an initial-ness of Z<sup>op</sup> (terminalOpOfInitial / '
             'initialOpOfTerminal). The seam is the op-self-dual zero object.',
             'Off the zero object the coincidence fails (ZeroParadox/Category/SeamLimColim.lean: '
-            'generic_object_empty_lim_ne_colim) &#8212; as with 0 on the sphere, the frame-change '
-            'fixes only the bottom.',
+            'generic_object_empty_lim_ne_colim). On the sphere rInv exchanges two distinct points, 0 '
+            'and &#8734; (rInv_swaps); op exchanges two characterisations, initial and terminal, that '
+            'the zero object carries at once.',
             'Lean purity: [propext, Classical.choice, Quot.sound] &#8212; choice-carrying '
             '(inherited from the ModuleCat / category-theory library). ✓',
         ]
@@ -417,7 +426,8 @@ def build():
         'one-point compactification (onePointInv_swaps_real) and has no first step above 0 '
         '(f_snap_impossible), so the frame-flip does not separate &#8477; from &#8474;<sub>2</sub>; '
         'total disconnectedness does (padic_snaps, real_no_snap). The two walls are not hedging: they mark '
-        'where the universal form stops, and each per-domain frame-flip remains a full theorem in its own domain.'))
+        'where the universal form stops, and the two per-domain frame-flips (valuation and category, '
+        'Section II) remain full theorems in their own domains.'))
 
     E.append(def_box(
         'The wall: the categorical universal is category-relative (ZeroParadox/Category/Lawvere.lean)',
@@ -449,8 +459,8 @@ def build():
             'not false but not well-formed. This is proved at the measure level too: '
             'BottomMeasure.lean shows &#8220;+&#8734; at every floor&#8221; is a per-domain bundle in '
             'incompatible types, not one invariant. The interconnect is therefore '
-            'point-of-view-specific. What is claimed formally is only that each domain forks, and '
-            'flips, at its own contact point.',
+            'point-of-view-specific. What is claimed formally is only that each domain forks at its own '
+            'contact point, and that the valuation and category faces flip there.',
         ]
     ))
     E.append(sp(6))
@@ -462,7 +472,8 @@ def build():
         'be nothing to cross. So the boundary is not the price of the connection &#8212; it is its '
         'condition. The keystone is bounded by the exact mechanism it is built from: the diagonal '
         'argument makes the fixed point and, in the same gesture, forbids its universal '
-        'identification. Per-face frame-flips are theorems and are not hedged; the fences scope '
+        'identification. The two per-face frame-flips (valuation, category) are theorems and are not '
+        'hedged; the fences scope '
         'only the universal cross-category claim.',
         bg=BLUE_LITE, border=BLUE
     ))
