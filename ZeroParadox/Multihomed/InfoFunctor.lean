@@ -20,8 +20,8 @@ definition a non zero distribution of information out.
 
 ## Formal Overview (AI-assisted)
 
-ZP-H proves the snap floor ⊥ is the categorical initial object inside the *proxy* category
-`InfoDepth` (a wrapper around ℕ). This file does the stronger, honest thing for the information
+ZP-H's `fc_functor` sends 0 to the initial object of the *proxy* category `InfoDepth`
+(a wrapper around ℕ; `fc_preserves_initial`). This file does the stronger, honest thing for the information
 domain: it realizes the snap chain as a genuine functor into a *real* Mathlib category.
 
 The real "category of information" is the Kleisli category of the finite-distribution monad `PMF` —

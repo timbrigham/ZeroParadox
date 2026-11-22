@@ -18,8 +18,8 @@ indexed starting at zero. A bare 0 itself is the initial point.
 
 ## Formal Overview (AI-assisted)
 
-ZP-H proves the snap floor ⊥ is the categorical initial object inside the *proxy* category
-`HilbDimDepth` (a wrapper around ℕ). This file does the stronger, honest thing for the Hilbert
+ZP-H's `fd_functor` sends 0 to the initial object of the *proxy* category `HilbDimDepth`
+(a wrapper around ℕ; `fd_preserves_initial`). This file does the stronger, honest thing for the Hilbert
 domain: it realizes the snap chain as a genuine functor into a *real* Mathlib category.
 
 Mathlib has no category of Hilbert spaces, so the honest real target is `ModuleCat ℂ` (route 2a):
