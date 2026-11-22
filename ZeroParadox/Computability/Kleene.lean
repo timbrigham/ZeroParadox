@@ -586,7 +586,8 @@ theorem isComputationalQuine_undecidable :
 /-- The family of computational quines is infinite: for any n, a quine with
     Gödel number greater than n exists.
     Distinct Gödel numbers give distinct codes (the `congrArg` `example` after `selfApply`), so the family is
-    infinite; `quine_goedel_injective` is the converse direction and is not used.
+    infinite; `quine_goedel_injective` is the converse direction and is not cited, though the
+    proof uses the same injectivity, `Encodable.encode_inj`.
     Note what witnesses it: the constant codes. So the family is unbounded, and this
     theorem does not show its members are instantiation bottoms — reading it as "the
     DA-2 succession has no finite bound" is the framework's interpretation.
