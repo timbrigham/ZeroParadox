@@ -1,7 +1,7 @@
 """
 Build ZP-F Illustrated Companion
 Where the First Step Fails: The Real Numbers as Counterexample
-Version 1.24 | November 2026
+Version 1.25 | November 2026
 """
 
 import os, math
@@ -109,7 +109,7 @@ def comparison_table():
     return t
 
 
-VERSION = '1.24'
+VERSION = '1.25'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -326,8 +326,12 @@ def build():
     E.append(cbody(
         'Zero has the same relationship to the states above it. It is the floor '
         'from which everything departs — not a peer of the states, but their origin. '
-        'In the ZP framework, zero is the asymptotic limit that the system moves '
-        'away from, not a state it can stably occupy or return to. In &#8477;, zero '
+        'In the ZP framework a run can start at zero and stay there: c<sub>0</sub>, &#8869; of '
+        'MachinePhase, is a state, and T-SNAP holds even under a dynamics in which nothing moves '
+        '(tsnap_holds_but_nothing_moves). What a run cannot do is return: once it stands above '
+        'c<sub>0</sub>, no join brings it back (t_snap_irreversible). In the metric chart of '
+        'Q&#8322; zero is instead a limit, approached and never reached in finitely many steps '
+        '(padic_orbit_never_reaches_zero). In &#8477;, zero '
         'has no such character: it is a regular point of a dense line, '
         'indistinguishable in structure from 1 or &#960;, with no first step above it. '
         'Density is what disqualifies it (axb1_fails_everywhere_iff_dense). The line is also '
@@ -336,15 +340,16 @@ def build():
         'topology, connectedness implies density (Mathlib denselyOrdered_of_preconnectedSpace), '
         'so that is not a second reason.'))
     E.append(cbody(
-        'The real number line treats zero as an ordinary point — a peer of every '
+        'The real number line treats zero as an ordinary point of its order — a peer of every '
         'other element, with the same local structure as 1 or &#960;. '
-        'In &#8477;, zero is not valuatively distinct from any other element; '
-        'every point looks the same from the perspective of the metric. '
-        'That is why return paths are permitted: if zero is just another player, '
-        'nothing distinguishes the path back from any other movement on the line. '
+        'Zero is not ordinary to the absolute value: |x| = 0 only at x = 0, just as in '
+        'Q&#8322; only zero has v&#8322; = +&#8734;. Nor is metric sameness what separates '
+        'the two: every point of Z&#8322; also looks the same to its metric (homog_Z2). '
+        'What permits return paths is that the line is connected (place_topological_signature): '
+        'a continuous path joins any point back to zero, and nothing distinguishes it from any '
+        'other movement on the line. '
         'Directionality &#8212; the one-way ratchet the framework requires &#8212; '
-        'cannot be grounded in a space where zero is indistinguishable in kind '
-        'from everything else.'))
+        'cannot be grounded there.'))
     E.append(cbody(
         'Q&#8322; gives zero a genuinely different role, and it shows in two charts. In the '
         'valuation chart zero has the address +&#8734;: v&#8322;(0) = +&#8734;, the greatest '
@@ -376,40 +381,49 @@ def build():
         'This is what makes &#960; a <i>constant</i> rather than an arbitrary '
         'number. It is the necessary consequence of a geometric relationship — '
         'the ratio of circumference to diameter — and that relationship provides '
-        'the compression. The value is forced by the definition. The computability '
-        'follows from the forcing. Constants are computable because they have '
-        'finite definitions; the finite definition is the short program.'))
+        'the compression. The value is forced by the definition, and for &#960; that '
+        'relationship also yields algorithms that compute it. A finite definition alone '
+        'does not: Chaitin&#8217;s halting probability &#937; has a finite definition, yet no '
+        'algorithm computes its digits, and they are algorithmically random.'))
     E.append(cbody(
         'Most real numbers are not like this. Almost all real numbers — in the '
         'measure-theoretic sense — have no finite definition that picks them out. '
         'They are algorithmically random: no short program generates them; the '
         'first n digits have Kolmogorov complexity close to n. High algorithmic '
-        'complexity is the signature of a number with no mathematical structure '
-        'behind it, no definition that points to it specifically.'))
+        'complexity says that no short program generates the number; as &#937; '
+        'shows, it does not say that no definition points to it.'))
     E.append(sp(8))
 
     # ── VII. Two Kinds of Incompressibility ─────────────────────────────────────
     E.append(Paragraph('VII. Two Kinds of Incompressibility', CS['h1']))
     E.append(cbody(
-        'This brings us to a subtle but important point. ZP-C includes the result '
-        'L-INF: &#8869; has unbounded surprisal — no finite external '
-        'description can capture it. A careful reader might ask: is this the same '
+        'This brings us to a subtle but important point. ZP-C proves L-INF: the '
+        'surprisal at depth n of the ball hierarchy is n, so it exceeds every finite '
+        'bound, each value finite (l_inf). From that, and from c<sub>0</sub>, &#8869; of '
+        'MachinePhase, corresponding to the limit point 0 of Q&#8322;, ZP-C argues, without '
+        'deriving it, that no finite external description can capture c<sub>0</sub>. '
+        'A careful reader might ask: is this the same '
         'as saying &#8869; is algorithmically incompressible, like a random real number?'))
     E.append(cbody(
         'It is not. The distinction is the difference between randomness and necessity.'))
     E.append(cbody(
-        'A random real number is incompressible because it has no structure — '
+        'A typical random real number is incompressible because it has no structure — '
         'no mathematical relationship forces it to be what it is. Its complexity '
         'is high because it is arbitrary. Nothing points to it specifically.'))
     E.append(cbody(
-        '&#8869; is incompressible for the opposite reason: because anything '
-        'standing external to it is structurally excluded. Nothing can occupy '
+        'That &#8869; of a ZPSemilattice, the occupant of the framework&#8217;s bottom role, is '
+        'maximally complex is a commitment, not a theorem: ZeroParadox/BottomCannotBe.lean '
+        'records it as the author&#8217;s commitment, stated as no equation with any one tape. '
+        'Its motivation is the opposite of randomness: on the framework&#8217;s reading, anything '
+        'standing external to &#8869; is structurally excluded. Nothing can occupy '
         'a position outside &#8869; to describe it — not because the description '
         'is too complex, but because the position of "external to &#8869;" does '
         'not exist. &#8869; is not arbitrary. It is the most constrained object '
-        'in the framework, the unique global minimum of the lattice. Its '
-        'incompressibility is not the noise of randomness. It is the silence '
-        'of structural necessity.'))
+        'in the framework, the unique global minimum of the lattice. On this commitment its '
+        'complexity is not the noise of randomness. It is the silence '
+        'of structural necessity. Where one chart has been measured, the answer differs: '
+        '&#8869; of &#8469; &#8594; Bool, the all-false tape, is not Martin-L&#246;f random for '
+        'the fair coin (tape_totality_two_faces).'))
     E.append(cbody(
         'The real number line mixes both kinds — computable constants alongside '
         'algorithmically random reals — with no topological distinction between '
@@ -417,8 +431,9 @@ def build():
     E.append(sp(4))
     E.append(example_box(
         'The contrast in one sentence',
-        ['A random real is incompressible because nothing forced it to be what it is. '
-         '&#8869; is incompressible because nothing can stand outside it. '
+        ['A typical random real is incompressible because nothing forced it to be what it is. '
+         'On the framework&#8217;s commitment, &#8869; is maximally complex, and its reading is '
+         'that nothing can stand outside it. '
          'One is the absence of structure. The other is structure all the way down.']))
     E.append(sp(8))
 
