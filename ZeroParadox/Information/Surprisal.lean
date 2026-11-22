@@ -115,7 +115,8 @@ theorem t1b_jsd : jsdPQ = Real.log 2 := by
 /-! ## Section III: Discrete Surprisal Field on Q₂ -/
 
 /-- D4: Surprisal at ball-hierarchy depth n: I(n) = n (bits).
-    The branching measure assigns P(x) = 2⁻ⁿ at depth n, so I(n) = -log₂(2⁻ⁿ) = n. -/
+    The branching measure gives each depth-n ball mass 2⁻ⁿ (`haarZp_ball`,
+    `ZeroParadox/Valuation/PadicHaar.lean`), so I(n) = -log₂(2⁻ⁿ) = n; a point has mass 0. -/
 noncomputable def surprisal : ℕ → ℝ := fun n => (n : ℝ)
 
 /-- D4 formula verification: surprisal n = -log₂(2⁻ⁿ).

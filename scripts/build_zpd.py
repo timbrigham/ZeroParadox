@@ -1,11 +1,11 @@
 """
-Build ZP-D: State Layer (Hilbert Space) (v1.21)
+Build ZP-D: State Layer (Hilbert Space) (v1.22)
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.21'
+VERSION = '1.22'
 FIRST_RELEASED = 'April 2026'
 
 def build():
@@ -104,7 +104,7 @@ def build():
         'open sets in H are open in Q<sub>2</sub>, and T is continuous. &#10003;',
         'Note on connected spaces: Q<sub>2</sub> is totally disconnected; H = &#8450;<super>n</super> with the norm '
         'topology is path-connected. A continuous map from a totally disconnected space to a '
-        'connected space need not be constant &#8212; it must only have a totally disconnected image. '
+        'connected space need not be constant. '
         'T\'s image is a discrete (hence totally disconnected) set of basis vectors, '
         'which is consistent with both the total disconnectedness of Q<sub>2</sub> and the '
         'path-connectedness of H as a whole.',
