@@ -413948,6 +413948,531 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "10fae24c-64b4-42ba-8106-fa37722f3e74",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox.lmSinkOf",
+            "qualified": "ZeroParadox.lmSinkOf.map",
+            "short": "map"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.lmSinkOf",
+            "qualified": "ZeroParadox.lmSinkOf.map",
+            "short": "map",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Dipole (pointwise north-south dynamics on the UP leg) in LimitMotion § VI: lmSinkOf, lmDipole, the OnePoint Q2 doubling/halving instance, OVER-level and reverse-partner facts, R and identity controls (Tim ruling 33, 2026-11-22)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "13fe6045-5e67-445c-b5ed-4c0c24e04b6b",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_real_dbl_zero_not_sink",
+            "short": "lm_real_dbl_zero_not_sink"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_real_dbl_zero_not_sink",
+            "short": "lm_real_dbl_zero_not_sink",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Dipole (pointwise north-south dynamics on the UP leg) in LimitMotion § VI: lmSinkOf, lmDipole, the OnePoint Q2 doubling/halving instance, OVER-level and reverse-partner facts, R and identity controls (Tim ruling 33, 2026-11-22)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "20d91945-7042-48c9-9279-6d00e37081d5",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_fieldLine_is_members",
+            "short": "lm_fieldLine_is_members"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_fieldLine_is_members",
+            "short": "lm_fieldLine_is_members",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Dipole (pointwise north-south dynamics on the UP leg) in LimitMotion § VI: lmSinkOf, lmDipole, the OnePoint Q2 doubling/halving instance, OVER-level and reverse-partner facts, R and identity controls (Tim ruling 33, 2026-11-22)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "4e83b2de-8846-409a-9e63-6fedcb35be37",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lmDipole",
+            "short": "lmDipole"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lmDipole",
+            "short": "lmDipole",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Dipole (pointwise north-south dynamics on the UP leg) in LimitMotion § VI: lmSinkOf, lmDipole, the OnePoint Q2 doubling/halving instance, OVER-level and reverse-partner facts, R and identity controls (Tim ruling 33, 2026-11-22)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "52895614-8e2a-45cd-893f-90199d871cbf",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_hlv_sinkOf",
+            "short": "lm_hlv_sinkOf"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_hlv_sinkOf",
+            "short": "lm_hlv_sinkOf",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Dipole (pointwise north-south dynamics on the UP leg) in LimitMotion § VI: lmSinkOf, lmDipole, the OnePoint Q2 doubling/halving instance, OVER-level and reverse-partner facts, R and identity controls (Tim ruling 33, 2026-11-22)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "60b255fe-498c-4b8f-b44a-fca9ed5a5a63",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lmSinkOf",
+            "short": "lmSinkOf"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lmSinkOf",
+            "short": "lmSinkOf",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Dipole (pointwise north-south dynamics on the UP leg) in LimitMotion § VI: lmSinkOf, lmDipole, the OnePoint Q2 doubling/halving instance, OVER-level and reverse-partner facts, R and identity controls (Tim ruling 33, 2026-11-22)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "6162c269-6903-4dd0-9751-8b51a2535e7b",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_reverse_not_partner",
+            "short": "lm_reverse_not_partner"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_reverse_not_partner",
+            "short": "lm_reverse_not_partner",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Dipole (pointwise north-south dynamics on the UP leg) in LimitMotion § VI: lmSinkOf, lmDipole, the OnePoint Q2 doubling/halving instance, OVER-level and reverse-partner facts, R and identity controls (Tim ruling 33, 2026-11-22)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "837f98e3-ab5b-4920-9739-9aa8613a07d5",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_hlv_step_reverse",
+            "short": "lm_hlv_step_reverse"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_hlv_step_reverse",
+            "short": "lm_hlv_step_reverse",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Dipole (pointwise north-south dynamics on the UP leg) in LimitMotion § VI: lmSinkOf, lmDipole, the OnePoint Q2 doubling/halving instance, OVER-level and reverse-partner facts, R and identity controls (Tim ruling 33, 2026-11-22)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "85c5b82f-d3f5-4b97-8c5d-4ab96fb9f1d5",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_scale_cancel",
+            "short": "lm_scale_cancel"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_scale_cancel",
+            "short": "lm_scale_cancel",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Dipole (pointwise north-south dynamics on the UP leg) in LimitMotion § VI: lmSinkOf, lmDipole, the OnePoint Q2 doubling/halving instance, OVER-level and reverse-partner facts, R and identity controls (Tim ruling 33, 2026-11-22)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "8a5573ce-3a28-44ce-8172-d89f1e00c5ad",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_dbl_sinkOf",
+            "short": "lm_dbl_sinkOf"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_dbl_sinkOf",
+            "short": "lm_dbl_sinkOf",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Dipole (pointwise north-south dynamics on the UP leg) in LimitMotion § VI: lmSinkOf, lmDipole, the OnePoint Q2 doubling/halving instance, OVER-level and reverse-partner facts, R and identity controls (Tim ruling 33, 2026-11-22)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "938689ff-65d4-4fcb-9e72-594a0bfb61f3",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_dbl_step_level",
+            "short": "lm_dbl_step_level"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_dbl_step_level",
+            "short": "lm_dbl_step_level",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Dipole (pointwise north-south dynamics on the UP leg) in LimitMotion § VI: lmSinkOf, lmDipole, the OnePoint Q2 doubling/halving instance, OVER-level and reverse-partner facts, R and identity controls (Tim ruling 33, 2026-11-22)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "9b4fee36-6edf-44b2-9183-8ae814d98402",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_q2_dipole",
+            "short": "lm_q2_dipole"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_q2_dipole",
+            "short": "lm_q2_dipole",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Dipole (pointwise north-south dynamics on the UP leg) in LimitMotion § VI: lmSinkOf, lmDipole, the OnePoint Q2 doubling/halving instance, OVER-level and reverse-partner facts, R and identity controls (Tim ruling 33, 2026-11-22)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a7f25b07-8a8b-4771-94cd-25d1411c2290",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_id_no_sink",
+            "short": "lm_id_no_sink"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_id_no_sink",
+            "short": "lm_id_no_sink",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Dipole (pointwise north-south dynamics on the UP leg) in LimitMotion § VI: lmSinkOf, lmDipole, the OnePoint Q2 doubling/halving instance, OVER-level and reverse-partner facts, R and identity controls (Tim ruling 33, 2026-11-22)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c2a2d04a-133a-4844-b5cf-e98ed68e3caa",
+          "new": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_real_dipole",
+            "short": "lm_real_dipole"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/LimitMotion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lm_real_dipole",
+            "short": "lm_real_dipole",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Dipole (pointwise north-south dynamics on the UP leg) in LimitMotion § VI: lmSinkOf, lmDipole, the OnePoint Q2 doubling/halving instance, OVER-level and reverse-partner facts, R and identity controls (Tim ruling 33, 2026-11-22)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "ff89b102-e0cf-485c-be18-30312e282272",
           "new": {
             "file": "ZeroParadox/Category/LawvereTaboo.lean",
