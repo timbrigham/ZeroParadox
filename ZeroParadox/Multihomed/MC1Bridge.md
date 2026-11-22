@@ -11,7 +11,8 @@ MC-1 is the cross-framework claim about the four domain bottoms. It was stated i
   category, and it differs by category: a zero object (`Statement:` COINCIDENCE, initial and terminal at once) in `ModuleCat ℂ`, initial and not
   terminal in `KleisliCat PMF`, terminal and not initial in `TopCat`; the three full positions are stated together in
   `floor_positions_full` (`ZeroParadox/Category/TreeSeam.lean`: a zero object; initial and not terminal; terminal and not
-  initial); the four agree on the snap;
+  initial); no agreement across the floors is stated, since `mc1_correspondence` bundles separately proved facts and
+  relates none of them to another;
 * a **literal-identity** half: the four bottoms are numerically one object across four different categories. That
   identity is **retired as ill-typed** (object equality across categories does not typecheck and is not invariant under
   equivalence); what separates the members is proved property by property (`seam_unique_among_named`,
@@ -57,7 +58,7 @@ None of the categorical structure here is new.
   `ModuleCat.isZero_of_subsingleton`.
 
 ZP-H's contribution is not new category theory but the cross-domain *assembly*: each ZP floor characterized in its own
-real category, at a different position in each (above), agreeing on the snap.
+real category, at a different position in each (above), each proved on its own.
 
 ## What the witness does and does not say
 
@@ -65,7 +66,7 @@ real category, at a different position in each (above), agreeing on the snap.
 (`fC_no_return`) and the `TopCat` set equation (`fB_bottom_is_limit`) into one witness; `floorConeIsLimit`,
 `padic_bottom_isTerminal` and `padic_bottom_not_initial` sit outside it. It is the **correspondence** half only. It is
 *not* claimed that the four bottoms are one object, which is retired as ill-typed; the claim is only the per-category
-characterization above and that they agree on the snap. This is the same discipline the framework applies elsewhere, with one difference kept visible:
+characterization above, and the witness states no relation between its fields. This is the same discipline the framework applies elsewhere, with one difference kept visible:
 
 - AX-1 is retired. Its shape is proved as T-SNAP, and that the snap occurs follows from the occurrence commitment
   together with DA-1 (closed given DP-2); that commitment remains. The identity reading leaves nothing to commit to:

@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP Addendum: The Choice-Free Core
-Version 1.20 | November 2026
+Version 1.21 | November 2026
 Framework-wide note; reads after the Foreword.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.20'
+VERSION = '1.21'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard ──
@@ -174,7 +174,7 @@ def build():
         '"Predicative Aspects of Order Theory in Univalent Foundations", arXiv:2102.08812, '
         'Cor 39(iii)-(iv); Booij&#8211;Escard&#243;&#8211;Lumsdaine&#8211;Shulman, '
         '"Parametricity, automorphisms of the universe, and excluded middle", arXiv:1701.05617, '
-        'Thm 3, and Thm 5 (Simpson), whose proof technique the reduction uses) &#8212; the latter sitting on the keystone rather than on an imported order '
+        'Thm 3, and Thm 5 (Simpson), whose proof technique the reduction uses) &#8212; the latter sitting on the diagonal-engine keystone rather than on an imported order '
         'instance; &#167; IV\'s cases 3 to 5 are reductions for principles proved with bare '
         'classicals in ZeroParadox/Die.lean. Each is a statement about the '
         '<b>principle</b>: re-proving it constructively would '
@@ -214,7 +214,11 @@ def build():
             'modelling commitment, among them, and AFA is adopted among the anti-foundation axioms '
             'rather than forced (ZP-E Remark R-AFA). It would be a tension if the framework\'s own '
             'central results leaned on the Axiom of Choice &#8212; the canonical free, non-constructive '
-            'selection. They do not. T-SNAP is axiom-free; the keystone is choice-free. Where choice appears it is often the supporting library\'s classical '
+            'selection. The core results do not. T-SNAP is axiom-free, and so is ZP-J\'s Quine-atom '
+            'self-reference keystone (bot_is_quine_atom, quine_atom_unique; ZeroParadox/AxiomProfile.lean '
+            '&#167; I). The diagonal-engine keystone is not: fixedPointFree_of_nontrivial '
+            '(ZeroParadox/Category/Lawvere.lean) carries the framework\'s own classical, essential on the '
+            'premise of Section III. Where choice appears it is often the supporting library\'s classical '
             'foundation showing through the realizations rather than an assumption of the argument. '
             'The reductions Section III points at are the exception on a different axis: they are about '
             '<i>necessity</i>, not provenance. Some of their principles are proved with the '

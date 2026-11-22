@@ -10,7 +10,7 @@ Update this file first on any version bump. README.md Framework table is verifie
 | ZP-C Information Theory | v1.40 | ZP-C_Information_Theory.pdf | v2.16 | N/— | formal:9aaabaaa comp:60a62003 |
 | ZP-D State Layer | v1.22 | ZP-D_State_Layer.pdf | v1.19 | N/— | formal:f547fa75 comp:d859a011 |
 | ZP-E Bridge Document | v3.88 | ZP-E_Bridge_Document.pdf | v1.48 | Y/Y | formal:ef7f573d comp:71607dc6 |
-| ZP-G Category Theory | v1.33 | ZP-G_Category_Theory.pdf | v1.18 | N/— | formal:7fd28e04 comp:a01a9b39 |
+| ZP-G Category Theory | v1.33 | ZP-G_Category_Theory.pdf | v1.19 | N/— | formal:7fd28e04 comp:78184903 |
 | ZP-H Categorical Bridge | v1.46 | ZP-H_Categorical_Bridge.pdf | v1.36 | N/— | formal:ed9a7935 comp:87322507 |
 | ZP-H Native Categories Addendum | v1.15 | ZP-H_Native_Categories_Addendum.pdf | N/A | N/— | formal:18d218db |
 | ZP-I Inside Zero | v1.45 | ZP-I_Inside_Zero.pdf | v1.54 | N/— | formal:29c66f2c comp:89dd75bd |
@@ -28,7 +28,7 @@ Update this file first on any version bump. README.md Framework table is verifie
 | ZP-Q The Frame-Change | v1.26 | ZP-Q_The_Frame_Change.pdf | N/A | N/— | formal:92baa79c |
 | Zero Paradox Foreword | v2.53 | Zero_Paradox_Foreword.pdf | N/A | N/A | formal:6c8fab32 |
 | ZP Tools | N/A | ZP_Tools_and_Methods.pdf | N/A | N/A | formal:19eb1547 |
-| ZP Choice-Free Core Addendum | v1.20 | ZP_Choice_Free_Core_Addendum.pdf | N/A | N/A | formal:5b904bc1 |
+| ZP Choice-Free Core Addendum | v1.21 | ZP_Choice_Free_Core_Addendum.pdf | N/A | N/A | formal:fd370865 |
 
 **Comp AR column key:** `Y/Y` = current comp hash adversary-reviewed + remediated (or confirmed clean). `Y/N` = reviewed, fixes identified but not yet applied. `N/—` = not yet reviewed.
 
