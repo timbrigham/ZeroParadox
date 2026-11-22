@@ -1,12 +1,12 @@
 """
 Zero Paradox — ZP-H: Categorical Bridge PDF Builder
-Version 1.47 | November 2026
+Version 1.48 | November 2026
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.47'
+VERSION = '1.48'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -217,8 +217,7 @@ def build():
         'Construction C-H2 — Functor FB: C → pTop',
         'Status: PDF construction complete — Lean: full functor (fb_functor, sorry-free)',
         [
-            'Object map: F<sub>B</sub> sends each object X &#8712; ob(C) to an element x &#8712; Q<sub>2</sub>. The initial object 0 maps to '
-            'the element 0 &#8712; Q<sub>2</sub>: F<sub>B</sub>(0) = 0 &#8712; Q<sub>2</sub>. pTop is the informal name of the target: in Lean, '
+            'Object map: F<sub>B</sub> sends each object X &#8712; ob(C) to an element x &#8712; Q<sub>2</sub>. pTop is the informal name of the target: in Lean, '
             'F<sub>B</sub> is realized in TopCat, the category of all topological spaces (fB_functor, ZeroParadox/Valuation/TopFunctor.lean), '
             'and its &#8469;-indexed stand-in is Q&#8322;BallDepth (fb_functor, ZeroParadox/Multihomed/CategoricalBridge.lean).',
             'Morphism map: F<sub>B</sub> sends each morphism f: A &#8594; B to the discrete jump from x<sub>A</sub> to x<sub>B</sub> '
@@ -227,7 +226,6 @@ def build():
             'Preservation of composition: Sequential discrete jumps in Q<sub>2</sub> compose by transitivity of the ball '
             'structure. x<sub>A</sub> &#8594; x<sub>B</sub> &#8594; x<sub>C</sub> is a valid sequence of clopen transitions. <font name="DV">&#10003;</font>',
             'Preservation of identity: F<sub>B</sub>(id<sub>A</sub>) is the trivial jump x<sub>A</sub> &#8594; x<sub>A</sub>, which is the identity on Q<sub>2</sub>. <font name="DV">&#10003;</font>',
-            'In Q<sub>2</sub>, F<sub>B</sub>(0) = 0 is clopen-separated from all nonzero elements (ZP-B T3).',
             'AX-G1 respected in the stand-in category: the Lean functor fb_functor lands in Q&#8322;BallDepth, the &#8469;-indexed ball-depth '
             'category, which has no terminal object because the depth index has no maximum: n + 1 &gt; n (q2BallZPCat, '
             'ZeroParadox/Multihomed/CategoricalBridge.lean). <font name="DV">&#10003;</font>',
@@ -346,8 +344,7 @@ def build():
             'the codomain, &#8707;! morphism F(0) &#8594; Y.',
             'F<sub>A</sub>: F<sub>A</sub>(0) = &#8869;. For any S<sub>Y</sub> &#8712; L, the unique morphism &#8869; &#8594; S<sub>Y</sub> is the join &#8869; &#8744; S<sub>Y</sub> = S<sub>Y</sub> (ZP-A A4). '
             'Uniqueness: &#8869; is the global minimum (ZP-A T2), so the only order-preserving map from &#8869; to S<sub>Y</sub> is the join with S<sub>Y</sub>. <font name="DV">&#10003;</font>',
-            'F<sub>B</sub>: F<sub>B</sub>(0) = 0 &#8712; Q<sub>2</sub>. For any x &#8712; Q<sub>2</sub>, the unique morphism 0 &#8594; x is the discrete jump from 0 to x '
-            'across the clopen boundary. Uniqueness: 0 is clopen-separated from all nonzero elements (ZP-B T3); the only clopen-respecting transition from 0 to x is the direct jump. '
+            'F<sub>B</sub>: F<sub>B</sub>(0) is depth 0 of Q&#8322;BallDepth (fb_functor.obj 0). '
             'This leg holds in the stand-in Q&#8322;BallDepth (fb_preserves_initial, ZeroParadox/Multihomed/CategoricalBridge.lean). In TopCat it '
             'does not: the floor {0} is a one-point space, so it is terminal and not initial there (padic_bottom_isTerminal and padic_bottom_not_initial, '
             'ZeroParadox/Multihomed/TreeObstructions.lean). <font name="DV">&#10003;</font>',
@@ -505,7 +502,7 @@ def build():
         ['F<sub>A</sub>(0) = &#8869;',                'ZP-A T2; C-H1',               'None',        'Valid — Derived'],
         ['F<sub>A</sub> preserves composition',        'ZP-A A1; C-H1',               'None',        'Valid — Derived'],
         ['F<sub>A</sub> respects AX-G1, AX-G2',       'ZP-A T2, T3; natZPCategory; C-H1', 'HasNoTop (no-terminal half)', 'Valid on a carrier with no top'],
-        ['F<sub>B</sub>(0) = 0 &#8712; Q<sub>2</sub>','ZP-B T3; C-H2',               'None',        'Valid — Derived'],
+        ['F<sub>B</sub>(0) = depth 0',                'fb_functor.obj 0; C-H2',      'None',        'Valid — by construction'],
         ['F<sub>B</sub> preserves composition',        'ZP-B T2; C-H2',               'None',        'Valid — Derived'],
         ['F<sub>B</sub> respects AX-G1, AX-G2',       'q2BallZPCat (stand-in); C-H2; ZP-B C3 beside it, not used', 'None', 'Valid in the stand-in — TopCat has a terminal object'],
         ['F<sub>C</sub>(0) = depth 0, Fin 0; P = (1,0) in ZP-C\'s model', 'fC_zero_isInitial; ZP-C T1; ZP-E T6; C-H3', 'AX-B1, RP-1 (for P = (1,0) only)', 'Valid — Fin 0 by construction; P from AX-B1, RP-1; the two models differ at 0'],
