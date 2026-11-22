@@ -5386,6 +5386,8 @@ example : ¬ ZeroParadox.Motion.unitMotion.Loop := fun ⟨_, _, _, _, hne, _⟩ 
 #check @ZeroParadox.lmIsoOfConj                -- Statement: a homeomorphism `e` with `e ∘ g = h ∘ e` is a strict isomorphism of the limit motions of `g` and `h`
 #check @ZeroParadox.lmHealedIso                -- Statement: INVERSION — on `OnePoint K`, `onePointInv` is a strict isomorphism of the limit motions of `lmScale c` and `lmScale d`, `c * d = 1`, exchanging `0` and `∞`, two distinct points
 #check @ZeroParadox.lm_torn_no_hom             -- Statement: inside `K`, if `c ^ n → 0` and `1 < ‖d‖`, no strict map of limit motions from `c`-scaling to `d`-scaling is field inversion; `lmBareInvIso` is one for the bare `ofFun` motions
+#check @ZeroParadox.lmDipole                   -- Statement: `p ≠ q`, `p` is the limit sink of `M` off `q`, `q` the limit sink of `N` off `p`, and `N`'s OVER is `M`'s reversed; `lm_q2_dipole` on `OnePoint ℚ_[2]`, `lm_real_dipole` the ℝ control
+#check @ZeroParadox.lm_reverse_not_partner     -- Statement: `Motion.reverse` of doubling on `OnePoint ℚ_[2]` keeps UP, so `∞` is not its limit sink off `0`: it is not the dipole partner
 
 /-! ### § XXXVI. The bend: the overlap condition, and scaling on `OnePoint ℂ` up to the die isomorphism -/
 -- Reading: CARRIER — each result beside its control in `ZeroParadox/Multihomed/BendDie.lean`;

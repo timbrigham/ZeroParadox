@@ -39,6 +39,14 @@ its orbit where that orbit converges, and is undefined elsewhere. `limitMotion g
   the ω-tower seeded at 0, ⊥ of `Ordinal`, have a stage closure with UP value ε₀
   (`ordinalTowerMotion_stageClosure`), § II's closure branch. In `ℤ_[2]` the same tower's images
   start at ℤ_[2]'s 0, differ from it from stage 1 on, and approach that same 0 (`snap_arc_z2_loop`).
+- § VI. The dipole. `lmSinkOf M p q`: every point other than `q` has UP-value `p`. `lmDipole M N p q`:
+  `p ≠ q`, `p` is a limit sink of `M` off `q`, `q` one of `N` off `p`, and `N`'s OVER is `M`'s
+  reversed. On `OnePoint ℚ_[2]`, doubling and halving form one with poles `0` and `∞`
+  (`lm_q2_dipole`); halving's half is transported along `lmHealedIso` (`lmSinkOf.map`). On OVER both
+  poles step only to themselves (`lm_dbl_step_level`); `Motion.reverse` keeps UP, so it is not the
+  partner (`lm_reverse_not_partner`). Controls: doubling on `OnePoint ℝ` is a dipole with the poles
+  exchanged (`lm_real_dipole`, `lm_real_dbl_zero_not_sink`), and the identity has no limit sink
+  (`lm_id_no_sink`).
 
 No statement here uses a join or the covering relation `⋖`. So none carries T-SNAP's join shape
 (`t_snap_given`, `ZeroParadox/Order/Snap.lean`) or a covering step `⊥ ⋖ a` off ⊥ of a
@@ -86,3 +94,18 @@ that date; the null is uninformative.
 A bound on the other side of § V is cited, not claimed, in the Lean file's closing `Reading:`:
 Escardó, preprint of JSL 78(3) (2013), § 11, p. 19, "it is not possible to embed ε₀ in 2^ℕ using
 limit structures" (also quoted in `ZeroParadox/DieCannotBe.lean`).
+
+`Reading:` § VI's `lmDipole` is north–south dynamics, read on the UP leg of two limit motions.
+H. Masai, "A horofunction counterpart to Teichmüller distance", arXiv:2512.23249 (v1), Definition
+3.10: for a group acting continuously on a compact set `X`, an element `g` has north–south dynamics
+if it has two fixed points `x+ ≠ x−` with `gⁿ(x) → x+` for every `x ≠ x−` and `g⁻ⁿ(x) → x−` for every
+`x ≠ x+`. That is the pointwise form; `lmDipole`, with `M` the limit motion of `g` and `N` that of
+`g⁻¹`, has its shape. A. Lonjou, P. Przytycki and C. Urech, "Finitely generated subgroups of
+algebraic elements of plane Cremona groups are bounded", arXiv:2307.01334 (v2), Definition 4.8, give
+the uniform form: a homeomorphism `a` of a Hausdorff space `P` fixing `p` and `q`, such that for any
+disjoint open `U ∋ p` and `V ∋ q` there is `n` with `aⁿ(P ∖ V) ⊂ U` and `a⁻ⁿ(P ∖ U) ⊂ V`. No
+statement in § VI is the uniform form. Mathlib, searched 2026-11-22: a case-insensitive grep of the
+pinned `Mathlib/Dynamics` for `attractor`, `repeller`, `attracting`, `repelling`, `north-south` (any
+separator), `basin`, `sink` and `source`, and of all of the pinned `Mathlib` for `north-south`,
+`attractor` and `repeller`. No attractor, repeller or north–south notion was located as of
+2026-11-22.

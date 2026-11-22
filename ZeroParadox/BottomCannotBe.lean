@@ -49,6 +49,7 @@ import ZeroParadox.Multihomed.TwoFacesBot
 import ZeroParadox.Computability.SelfCopyReference
 import ZeroParadox.Multihomed.BoundaryOrder
 import ZeroParadox.Valuation.InfinitudeFloor
+import ZeroParadox.Multihomed.LimitMotion
 import ZeroParadox.Valuation.Scale
 import ZeroParadox.Information.Disjunctive
 import ZeroParadox.Settheory.GraphBisim
@@ -455,6 +456,8 @@ example : (fun x : ℤ => -x) (0 : ℤ) = 0 := rfl
 #check @ZeroParadox.no_path_zero_infty
 -- Statement: control, on `OnePoint ℝ` ∞ lies in the connected component of 0 of ℝ.
 #check @ZeroParadox.real_zero_infty_connected
+#check @ZeroParadox.lm_q2_dipole            -- Statement: on `OnePoint ℚ_[2]`, doubling and halving limit motions form a dipole with poles `0` of `ℚ_[2]` and `∞`, two distinct points (`ZeroParadox/Multihomed/LimitMotion.lean` § VI)
+#check @ZeroParadox.lm_fieldLine_is_members -- Statement: the doubling orbit of `2` is the member sequence of `q2InfinitudeFloor`, whose floor `0` of `ℚ_[2]` is doubling's limit sink off `∞`, with complexity `⊤` there
 -- Statement: Mathlib's `IsInitial.op` — the opposite of an initial object is terminal.
 -- Reading: CITED, not ZP-proved; attribution is the point. Passing to `Cᵒᵖ` is the categorical face
 -- of inversion, swapping the μ-bottom to a terminal object.

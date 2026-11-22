@@ -4,6 +4,7 @@ import ZeroParadox.DieSameness
 import ZeroParadox.Valuation.RiemannSphere
 import ZeroParadox.Valuation.PadicAttractor
 import ZeroParadox.Valuation.BottomInvariant
+import ZeroParadox.Valuation.InfinitudeFloor
 import ZeroParadox.Order.WellFoundedObstruct
 import ZeroParadox.Ordinal.CnfBridge
 import ZeroParadox.Ordinal.Epsilon0LeastFP
@@ -703,6 +704,227 @@ whose `snapEmbed` reading is continuous along the tower sends ε₀ to `c₀`, n
 Escardó (preprint of JSL 78(3), 2013, § 11, p. 19) records that ε₀ cannot be embedded in `2^ℕ`
 using limit structures (quote measured 2026-11-01 against the retrieved preprint). -/
 
+/-! ## § VI. The dipole: a limit sink with its exceptional point, and a partner with OVER reversed -/
+
+section Dipole
+
+universe u
+
+variable {α β : Type u}
+
+/-- `Statement:` in `M`, every point other than `q` has UP-value `p`. -/
+def lmSinkOf (M : Motion α) (p q : α) : Prop := ∀ x, x ≠ q → p ∈ M.up x
+
+/-- `Statement:` `p ≠ q`, `p` is a limit sink of `M` with exceptional point `q`, `q` is a limit sink
+    of `N` with exceptional point `p`, and `N` steps from `a` to `b` iff `M` steps from `b` to `a`. -/
+def lmDipole (M N : Motion α) (p q : α) : Prop :=
+  p ≠ q ∧ lmSinkOf M p q ∧ lmSinkOf N q p ∧ ∀ a b, N.step a b ↔ M.step b a
+
+/-- `Statement:` a strict isomorphism `φ` from `M` to `N` sends a limit sink `p` of `M` with
+    exceptional point `q` to the limit sink `φ p` of `N` with exceptional point `φ q`. -/
+theorem lmSinkOf.map {M : Motion α} {N : Motion β} (φ : Motion.StrictIso M N) {p q : α}
+    (h : lmSinkOf M p q) : lmSinkOf N (φ.hom.toFun p) (φ.hom.toFun q) := by
+  intro y hy
+  have hx : φ.inv.toFun y ≠ q := fun e => hy (by rw [← e, φ.right_inv])
+  have h1 := h _ hx
+  have h2 := φ.hom.map_up (φ.inv.toFun y)
+  rw [φ.right_inv] at h2
+  rw [h2]
+  exact Part.mem_map _ h1
+
+end Dipole
+
+/-! `Reading:` INVERSION. The dipole as a magnet: field lines leave one pole and arrive at the other, and the
+partner motion runs them the other way. This is north–south dynamics (prior art in the ride-along
+`LimitMotion.md`), stated pointwise on the UP leg. The polarity lives only in UP, the limit leg: on
+OVER both poles of `OnePoint ℚ_[2]` step only to themselves in both directions, and no point is a
+step sink or a step source (`lm_dbl_step_level`). The dipole shape alone does not single out `ℚ_[2]`:
+doubling on `OnePoint ℝ` is a dipole too, with the poles exchanged (`lm_real_dipole`). The pole
+⊥ = 0 = ∞ stays a chart claim (`ZeroParadox/BottomCannotBe.lean` § INVERSION), and nothing in this
+section proves the coincidence: `lm_q2_dipole` relates two distinct points, `0` of `ℚ_[2]` and `∞`,
+exchanged by `onePointInv`. -/
+
+section DipoleInstance
+
+variable {K : Type*} [NormedField K]
+
+/-- `Statement:` if `c * d = 1`, then `lmScale c (lmScale d z) = z` on `OnePoint K`. -/
+theorem lm_scale_cancel (c d : K) (hc : c ≠ 0) (hd : d ≠ 0) (hcd : c * d = 1) (z : OnePoint K) :
+    lmScale c hc (lmScale d hd z) = z := by
+  induction z using OnePoint.rec with
+  | infty => rfl
+  | coe x => rw [lm_scale_some, lm_scale_some, ← mul_assoc, hcd, one_mul]
+
+/-- `Statement:` on `OnePoint ℚ_[2]`, halving steps from `a` to `b` iff doubling steps from `b` to
+    `a`. -/
+theorem lm_hlv_step_reverse (a b : OnePoint ℚ_[2]) :
+    (limitMotion (lmScale (2⁻¹ : ℚ_[2]) (inv_ne_zero two_ne_zero)) (lmScale _ _).continuous).step a b ↔
+      (limitMotion (lmScale (2 : ℚ_[2]) two_ne_zero) (lmScale _ _).continuous).step b a := by
+  show b = lmScale (2⁻¹ : ℚ_[2]) _ a ↔ a = lmScale (2 : ℚ_[2]) _ b
+  constructor
+  · rintro rfl
+    exact (lm_scale_cancel 2 2⁻¹ two_ne_zero (inv_ne_zero two_ne_zero)
+      (mul_inv_cancel₀ two_ne_zero) a).symm
+  · rintro rfl
+    exact (lm_scale_cancel 2⁻¹ 2 (inv_ne_zero two_ne_zero) two_ne_zero
+      (inv_mul_cancel₀ two_ne_zero) b).symm
+
+/-- `Statement:` on `OnePoint ℚ_[2]`, `0` of `ℚ_[2]` is the limit sink of doubling with exceptional
+    point `∞`. -/
+theorem lm_dbl_sinkOf :
+    lmSinkOf (limitMotion (lmScale (2 : ℚ_[2]) two_ne_zero) (lmScale _ _).continuous)
+      (OnePoint.some 0) OnePoint.infty := by
+  intro x hx
+  induction x using OnePoint.rec with
+  | infty => exact absurd rfl hx
+  | coe z =>
+    show OnePoint.some 0 ∈ limitRetraction _ (OnePoint.some z)
+    exact lm_mem_limitRetraction_iff.2
+      (lm_tendsto_zero_of_field two_ne_zero (doubling_orbit_tendsto_zero z))
+
+/-- `Statement:` on `OnePoint ℚ_[2]`, `∞` is the limit sink of halving with exceptional point `0` of
+    `ℚ_[2]`; proved by `lmSinkOf.map` along `lmHealedIso`, from `lm_dbl_sinkOf`. -/
+theorem lm_hlv_sinkOf :
+    lmSinkOf (limitMotion (lmScale (2⁻¹ : ℚ_[2]) (inv_ne_zero two_ne_zero)) (lmScale _ _).continuous)
+      OnePoint.infty (OnePoint.some 0) := by
+  have h := lmSinkOf.map (lmHealedIso (2 : ℚ_[2]) 2⁻¹ two_ne_zero (inv_ne_zero two_ne_zero)
+    (mul_inv_cancel₀ two_ne_zero)) lm_dbl_sinkOf
+  rw [lm_healedIso_toFun, onePointInv_zero, onePointInv_infty] at h
+  exact h
+
+/-- `Statement:` on `OnePoint ℚ_[2]`, the limit motions of doubling and halving form a dipole with
+    poles `0` of `ℚ_[2]` and `∞`. -/
+theorem lm_q2_dipole :
+    lmDipole (limitMotion (lmScale (2 : ℚ_[2]) two_ne_zero) (lmScale _ _).continuous)
+      (limitMotion (lmScale (2⁻¹ : ℚ_[2]) (inv_ne_zero two_ne_zero)) (lmScale _ _).continuous)
+      (OnePoint.some 0) OnePoint.infty :=
+  ⟨OnePoint.coe_ne_infty 0, lm_dbl_sinkOf, lm_hlv_sinkOf, lm_hlv_step_reverse⟩
+
+/-- `Statement:` for doubling on `OnePoint ℚ_[2]`, `0` of `ℚ_[2]` and `∞` each step only to
+    themselves, in the motion and in its reverse, and no point has no successor, in the motion or in
+    its reverse. -/
+theorem lm_dbl_step_level :
+    (limitMotion (lmScale (2 : ℚ_[2]) two_ne_zero) (lmScale _ _).continuous).SelfOnlyAt
+        (OnePoint.some 0) ∧
+      (limitMotion (lmScale (2 : ℚ_[2]) two_ne_zero) (lmScale _ _).continuous).SelfOnlyAt
+        OnePoint.infty ∧
+      (limitMotion (lmScale (2 : ℚ_[2]) two_ne_zero) (lmScale _ _).continuous).reverse.SelfOnlyAt
+        (OnePoint.some 0) ∧
+      (limitMotion (lmScale (2 : ℚ_[2]) two_ne_zero) (lmScale _ _).continuous).reverse.SelfOnlyAt
+        OnePoint.infty ∧
+      (∀ y, ¬ (limitMotion (lmScale (2 : ℚ_[2]) two_ne_zero) (lmScale _ _).continuous).NoStepAt y) ∧
+      (∀ y, ¬ (limitMotion (lmScale (2 : ℚ_[2]) two_ne_zero)
+        (lmScale _ _).continuous).reverse.NoStepAt y) := by
+  have f0 : lmScale (2 : ℚ_[2]) two_ne_zero (OnePoint.some 0) = OnePoint.some 0 := by
+    rw [lm_scale_some, mul_zero]
+  have fi : lmScale (2 : ℚ_[2]) two_ne_zero OnePoint.infty = OnePoint.infty := lm_scale_infty _ _
+  refine ⟨⟨f0.symm, fun b hb => hb.trans f0⟩, ⟨fi.symm, fun b hb => hb.trans fi⟩,
+    ⟨f0.symm, fun b (hb : OnePoint.some 0 = lmScale (2 : ℚ_[2]) two_ne_zero b) => ?_⟩,
+    ⟨fi.symm, fun b (hb : OnePoint.infty = lmScale (2 : ℚ_[2]) two_ne_zero b) => ?_⟩,
+    fun y h => h _ rfl, fun y h => h (lmScale (2⁻¹ : ℚ_[2]) (inv_ne_zero two_ne_zero) y) ?_⟩
+  · exact (lmScale (2 : ℚ_[2]) two_ne_zero).injective (hb.symm.trans f0.symm)
+  · exact (lmScale (2 : ℚ_[2]) two_ne_zero).injective (hb.symm.trans fi.symm)
+  · exact (lm_scale_cancel 2 2⁻¹ two_ne_zero (inv_ne_zero two_ne_zero)
+      (mul_inv_cancel₀ two_ne_zero) y).symm
+
+/-- `Statement:` `∞` is not the limit sink, with exceptional point `0` of `ℚ_[2]`, of the reverse
+    (`Motion.reverse`) of doubling's limit motion on `OnePoint ℚ_[2]`. -/
+theorem lm_reverse_not_partner :
+    ¬ lmSinkOf (limitMotion (lmScale (2 : ℚ_[2]) two_ne_zero) (lmScale _ _).continuous).reverse
+      OnePoint.infty (OnePoint.some 0) := by
+  intro h
+  have h1 : OnePoint.infty ∈
+      (limitMotion (lmScale (2 : ℚ_[2]) two_ne_zero) (lmScale _ _).continuous).up (OnePoint.some 1) :=
+    h _ (fun e => one_ne_zero (OnePoint.coe_injective e))
+  have h0 : OnePoint.some 0 ∈
+      (limitMotion (lmScale (2 : ℚ_[2]) two_ne_zero) (lmScale _ _).continuous).up (OnePoint.some 1) :=
+    lm_dbl_sinkOf _ (OnePoint.coe_ne_infty 1)
+  exact OnePoint.coe_ne_infty 0 (Part.mem_unique h0 h1)
+
+/-- `Statement:` the doubling orbit of `2` in `OnePoint ℚ_[2]` is the member sequence of
+    `q2InfinitudeFloor`, its floor is `0` of `ℚ_[2]`, that point is the limit sink of doubling with
+    exceptional point `∞`, and the complexity `cx` at the floor is `⊤` of `ℕ∞`. -/
+theorem lm_fieldLine_is_members :
+    (∀ n, (lmScale (2 : ℚ_[2]) two_ne_zero)^[n] (OnePoint.some 2) =
+        OnePoint.some (q2InfinitudeFloor.member n)) ∧
+      q2InfinitudeFloor.floor = (0 : ℚ_[2]) ∧
+      lmSinkOf (limitMotion (lmScale (2 : ℚ_[2]) two_ne_zero) (lmScale _ _).continuous)
+        (OnePoint.some q2InfinitudeFloor.floor) OnePoint.infty ∧
+      q2InfinitudeFloor.cx q2InfinitudeFloor.floor = ⊤ := by
+  refine ⟨fun n => ?_, rfl, lm_dbl_sinkOf, infinitude_forces_infinite_complexity _⟩
+  rw [lm_scale_iterate_some]
+  show OnePoint.some ((2 : ℚ_[2]) ^ n * 2) = OnePoint.some ((2 : ℚ_[2]) ^ (n + 1))
+  rw [pow_succ]
+
+/-- `Statement:` CONTROL. On `OnePoint ℝ`, the limit motions of doubling and halving form a dipole
+    with poles `∞` and `0` of ℝ. -/
+theorem lm_real_dipole :
+    lmDipole (limitMotion (lmScale (2 : ℝ) two_ne_zero) (lmScale _ _).continuous)
+      (limitMotion (lmScale (2⁻¹ : ℝ) (inv_ne_zero two_ne_zero)) (lmScale _ _).continuous)
+      OnePoint.infty (OnePoint.some 0) := by
+  have hs : lmSinkOf (limitMotion (lmScale (2⁻¹ : ℝ) (inv_ne_zero two_ne_zero))
+      (lmScale _ _).continuous) (OnePoint.some 0) OnePoint.infty := by
+    intro x hx
+    induction x using OnePoint.rec with
+    | infty => exact absurd rfl hx
+    | coe z =>
+      show OnePoint.some 0 ∈ limitRetraction _ (OnePoint.some z)
+      exact lm_mem_limitRetraction_iff.2
+        (lm_tendsto_zero_of_field (inv_ne_zero two_ne_zero) (lm_real_half_tendsto z))
+  refine ⟨(OnePoint.coe_ne_infty 0).symm, ?_, hs, fun a b => ?_⟩
+  · intro x hx
+    induction x using OnePoint.rec with
+    | infty =>
+      show OnePoint.infty ∈ limitRetraction _ OnePoint.infty
+      rw [lm_mem_limitRetraction_iff]
+      simp only [Function.iterate_fixed (lm_scale_infty (2 : ℝ) two_ne_zero)]
+      exact tendsto_const_nhds
+    | coe z =>
+      show OnePoint.infty ∈ limitRetraction _ (OnePoint.some z)
+      exact lm_mem_limitRetraction_iff.2
+        (lm_real_doubling_closure_at_infty z (fun e => hx (by rw [e]))).1
+  · show b = lmScale (2⁻¹ : ℝ) _ a ↔ a = lmScale (2 : ℝ) _ b
+    constructor
+    · rintro rfl
+      exact (lm_scale_cancel 2 2⁻¹ two_ne_zero (inv_ne_zero two_ne_zero)
+        (mul_inv_cancel₀ two_ne_zero) a).symm
+    · rintro rfl
+      exact (lm_scale_cancel 2⁻¹ 2 (inv_ne_zero two_ne_zero) two_ne_zero
+        (inv_mul_cancel₀ two_ne_zero) b).symm
+
+/-- `Statement:` CONTROL. On `OnePoint ℝ`, `0` of ℝ is not the limit sink of doubling with
+    exceptional point `∞`. -/
+theorem lm_real_dbl_zero_not_sink :
+    ¬ lmSinkOf (limitMotion (lmScale (2 : ℝ) two_ne_zero) (lmScale _ _).continuous)
+      (OnePoint.some 0) OnePoint.infty := by
+  intro h
+  have h0 := h (OnePoint.some 1) (OnePoint.coe_ne_infty 1)
+  have hi := lm_real_dipole.2.1 (OnePoint.some 1) (fun e => one_ne_zero (OnePoint.coe_injective e))
+  exact OnePoint.coe_ne_infty 0 (Part.mem_unique h0 hi)
+
+/-- `Statement:` CONTROL. On `OnePoint ℚ_[2]`, no `p` is a limit sink with exceptional point `q` of
+    the identity's limit motion, for any `p` and `q`. -/
+theorem lm_id_no_sink (p q : OnePoint ℚ_[2]) :
+    ¬ lmSinkOf (limitMotion (id : OnePoint ℚ_[2] → OnePoint ℚ_[2]) continuous_id) p q := by
+  intro h
+  have key : ∀ x, x ≠ q → p = x := fun x hx => by
+    have := lm_mem_limitRetraction_iff.1 (h x hx)
+    simp only [Function.iterate_id, id] at this
+    exact tendsto_nhds_unique this tendsto_const_nhds
+  have d01 : (OnePoint.some (0 : ℚ_[2])) ≠ OnePoint.some 1 :=
+    fun e => zero_ne_one (OnePoint.coe_injective e)
+  have d0i : (OnePoint.some (0 : ℚ_[2])) ≠ OnePoint.infty := OnePoint.coe_ne_infty 0
+  have d1i : (OnePoint.some (1 : ℚ_[2])) ≠ OnePoint.infty := OnePoint.coe_ne_infty 1
+  by_cases h0 : OnePoint.some (0 : ℚ_[2]) = q
+  · subst h0
+    exact d1i ((key _ d01.symm).symm.trans (key _ (fun e => d0i e.symm)))
+  · by_cases h1 : OnePoint.some (1 : ℚ_[2]) = q
+    · subst h1
+      exact d0i ((key _ h0).symm.trans (key _ (fun e => d1i e.symm)))
+    · exact d01 ((key _ h0).symm.trans (key _ h1))
+
+end DipoleInstance
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -751,4 +973,18 @@ open ZeroParadox
 #print axioms lm_real_half_tendsto
 #print axioms lm_real_doubling_closure_at_infty
 #print axioms lm_real_torn
+#print axioms lmSinkOf
+#print axioms lmDipole
+#print axioms lmSinkOf.map
+#print axioms lm_scale_cancel
+#print axioms lm_hlv_step_reverse
+#print axioms lm_dbl_sinkOf
+#print axioms lm_hlv_sinkOf
+#print axioms lm_q2_dipole
+#print axioms lm_dbl_step_level
+#print axioms lm_reverse_not_partner
+#print axioms lm_fieldLine_is_members
+#print axioms lm_real_dipole
+#print axioms lm_real_dbl_zero_not_sink
+#print axioms lm_id_no_sink
 end PurityCheck
