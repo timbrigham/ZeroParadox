@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-K: Computational Grounding of Self-Reference PDF Builder
-Version 1.39 | November 2026
+Version 1.40 | November 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.39'
+VERSION = '1.40'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -523,7 +523,7 @@ def build():
             'This is the CIC-compatible stand-in for the Quine atom (CC-2): the initial machine '
             'state is self-containing and is the unique element with this property, so with '
             'membership as the step it is the only occupant of the Quine-atom role '
-            '(quineAtomHost_quine_role_iff, host afaStructure_isQuineAtomHost). No ZF+AFA axiom is added — '
+            '(quineAtomHost_quine_role_iff, host afaStructure_isQuineAtomHost). No axiom of ZFC<sup>&#8722;</sup> + AFA is added — '
             'the structural fact is encoded as a definition that Lean verifies.',
         ]
     ))
@@ -576,7 +576,7 @@ def build():
     E.append(Paragraph('III. What Changed for DA-1', S['h2']))
     E.append(body(
         'ZP-E\'s DA-1 section previously carried the designation "Outside Lean Scope" with '
-        'three justifications: Path 1 requires ZF+AFA, which ZP-E held incompatible with Lean\'s CIC/MLTT; '
+        'three justifications: Path 1 requires ZFC<sup>&#8722;</sup> + AFA, which ZP-E held incompatible with Lean\'s CIC/MLTT; '
         'Path 3 requires Kolmogorov complexity (it is uncomputable, and that alone does not keep it '
         'out of Lean, where a noncomputable definition is allowed; no formalization of it was located in '
         'the pinned Mathlib as of 2026-10-04, searched as recorded in '
@@ -926,7 +926,7 @@ def build():
          '∀ f, Computable f → ∃ c, eval (f c) = eval c, has no choice-free restatement in this '
          'corpus. The record is ZeroParadox/Computability/Kleene.md § VIII.'],
         ['Martin-Löf randomness ⇒ disjunctive',
-         'OPEN — not located in this corpus as of 2026-11-21',
+         'OPEN — not located in ZeroParadox/**/*.lean as of 2026-11-21; search below',
          'Standard theory: a Martin-Löf random sequence is disjunctive, and by the Levin–Schnorr '
          'theorem Martin-Löf randomness is incompressibility of every prefix, K(first n bits of x) ≥ '
          'n − c for some constant c and every n, with K the prefix-free complexity (Franklin and '
@@ -941,7 +941,11 @@ def build():
          '(ZeroParadox/Information/BrudnoBridge.lean); a proof there that a Martin-Löf random sequence is disjunctive was '
          'not located as of 2026-11-01 (the search is recorded at that entry). Until this bridge is formalised, the framework\'s commitment that the '
          'occupant of its ⊥ role, ⊥ of a ZPSemilattice, read as a tape, is maximally complex reaches '
-         'Disjunctive (Section VI.I) only as a reading.'],
+         'Disjunctive (Section VI.I) only as a reading. Searched 2026-11-21 over ZeroParadox/**/*.lean for '
+         '&#8220;Disjunctive&#8221; (8 files), for MLRandom beside &#8220;disjunct&#8221;, &#8220;block&#8221; '
+         'and &#8220;word&#8221;, and for &#8220;every finite word&#8221;: the nearest results are '
+         'fairTape_disjunctive_ae (almost every fair tape is disjunctive) and zeroBlockTypical_of_MLRandom '
+         '(a Martin-Löf random tape avoids the zero-block tests), and neither is this implication.'],
     ]
     E.append(data_table(
         ['Item', 'Status', 'Description'],

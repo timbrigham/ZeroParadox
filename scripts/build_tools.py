@@ -285,8 +285,9 @@ def build():
              'metatheoretic commitments (CLAIMS.md, Tier 4), are argued in prose and are not '
              'machine-checked. Prior to Lean 4, informal review only.'],
             ['Claude has access to external databases or papers',
-             'Yes. Before a result is built, the literature is searched, and a source is cited only '
-             'after the full document has been retrieved and read.'],
+             'Yes. Before a result is built, the literature is searched. The rule is that a source is '
+             'cited only after the full document has been retrieved and read; citations that predate the '
+             'rule are being re-checked.'],
             ['Claude ran simulations or numerical experiments', 'No.'],
             ['Claude searched the internet during sessions',
              'Yes, as part of that literature search, alongside the project&#8217;s own corpus, the '

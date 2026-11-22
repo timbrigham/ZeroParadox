@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-Q: The Frame-Change PDF Builder
-Version 1.26 | November 2026
+Version 1.27 | November 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.26'
+VERSION = '1.27'
 FIRST_RELEASED = 'July 2026'
 
 from reportlab.graphics.shapes import Drawing, Circle, Ellipse, PolyLine, String, Polygon
@@ -100,16 +100,18 @@ def build():
         'The Zero Paradox proves the snap &#8869; &#8594; &#949;<sub>0</sub> as a theorem; ZP-Q is about the '
         'BOTTOM&#8217;s two-facedness, which is a different object from the snap. Across the layers the '
         'bottom is a fixed point &#8212; a zero &#8212; that carries an infinitude (v<sub>2</sub>(0) = '
-        '&#8734;, unbounded surprisal, the self-referential closure). Where the order or category admits '
-        'no return to it &#8212; &#8869; of ZP-A&#8217;s state semilattice (t_snap_irreversible), the '
-        'stage-0 object of the information functor in KleisliCat PMF, from its later stages '
-        '(fC_no_return), and 0 of '
-        '&#8474;<sub>2</sub>, where no continuous path returns to 0 (ZP-B C3) &#8212; it shows a second '
-        'feature: every map to it runs one way and reverses only under an inversion that swaps the two '
-        'poles. In ModuleCat &#8450; it does not: there the bottom is a zero object, initial and terminal '
-        'at once, and every stage maps into it by the zero map (fD_has_return; irreversibility_not_uniform, '
-        'ZeroParadox/Category/Heterogeneous.lean). Where both features hold they are not two facts. '
-        'They are two faces of one self-dual object, and the inversion is the <i>frame-change</i>. '
+        '&#8734;, unbounded surprisal, the self-referential closure). Two further features are proved, '
+        'at two different sets of sites. NO RETURN: &#8869; of ZP-A&#8217;s state semilattice '
+        '(t_snap_irreversible), the stage-0 object of the information functor in KleisliCat PMF, from '
+        'its later stages (fC_no_return), and 0 of &#8474;<sub>2</sub>, where no continuous path returns '
+        'to 0 (ZP-B C3). AN INVERSION EXCHANGING THE POLES: 0 and &#8734; of the 2-adic Riemann sphere, '
+        'swapped by rInv (rInv_swaps), and the zero object fD_functor.obj 0 of ModuleCat &#8450;, '
+        'whose initial and terminal characterisations op exchanges (catseam_is_frameflip). The two sets '
+        'differ. The ModuleCat &#8450; zero object is in the second and not the first: every stage maps '
+        'into it by the zero map (fD_has_return; irreversibility_not_uniform, '
+        'ZeroParadox/Category/Heterogeneous.lean). The Kleisli stage-0 object is initial and not '
+        'terminal (kleisli_bottom_not_terminal), so it does not carry the two characterisations op '
+        'exchanges. The inversion is the <i>frame-change</i>. '
         '<b>The frame-change is that pole exchange &#8212; &#8869; being read as both 0 and &#8734;. Whether '
         'the snap is an instance of it is the layer&#8217;s open conjecture.</b> The snap, T-SNAP&#8217;s '
         'shape, is a join step off &#8869; of the state semilattice to a different state (t_snap_given); '
@@ -129,7 +131,7 @@ def build():
         'closures. Tier 2 (Section II) is the face catalogue: each domain&#8217;s two charts with a '
         'witness from its home layer, of which two, valuation and category, are full frame-flip '
         'theorems; the valuation face is the framework&#8217;s originating '
-        'figure, the p-adic Riemann sphere.Tier 3 (Section III) is the universal form and its walls: '
+        'figure, the p-adic Riemann sphere. Tier 3 (Section III) is the universal form and its walls: '
         'the order-theoretic universal holds, the categorical (Lawvere) universal is a proven wall, '
         'and the cross-domain identity is a type boundary. The fences in Section III are load-bearing '
         '&#8212; and they turn out to be built from the same diagonal as the bridges.'))
@@ -207,7 +209,9 @@ def build():
             '(iii) lfp f = gfp f &#8596; &#8707;! x, f x = x (the fork collapses to one point, '
             'the unique fixed point &#8212; fork_collapse_iff).',
             'This is the domain-independent form of the POLE BEHAVIOUR: the two charts are swapped by the '
-            'frame-change, and the bottom is where they meet. Note what (iii) says &#8212; least = greatest '
+            'frame-change, and they meet exactly at the unique fixed point, which need not be the least '
+            'element (the constant-map control after fork_collapse_iff, '
+            'ZeroParadox/Settheory/FixedPointFork.lean: on Bool, f = const true gives lfp = gfp = &#8868;). Note what (iii) says &#8212; least = greatest '
             'exactly when the fixed point is unique &#8212; and note the hypotheses: it needs a COMPLETE LATTICE and a '
             'MONOTONE map. NONE of the framework&#8217;s min&#8801;max facts satisfies those, so none is an instance of it. '
             'epsilon0_min_eq_max is over the ordinals, where the omega-power map has a proper class of fixed points, so nothing '

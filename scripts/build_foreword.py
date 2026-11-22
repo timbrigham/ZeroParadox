@@ -1,5 +1,5 @@
 """
-Zero Paradox — Foreword PDF Builder (v2.53, revised November 2026)
+Zero Paradox — Foreword PDF Builder (v2.54, revised November 2026)
 Follows all rules in pdf rendering standards.md:
   - All table cells are Paragraph objects
   - No unicode subscripts — use sub/super tags
@@ -9,7 +9,7 @@ Follows all rules in pdf rendering standards.md:
 import os
 from zp_utils import *
 
-VERSION = '2.53'
+VERSION = '2.54'
 FIRST_RELEASED = 'April 2026'
 
 # ── fix() and prose_check() guard on every Paragraph ──
@@ -317,9 +317,11 @@ def build():
         Paragraph(
             'The closure layer (ZP-I) proves T-IZ — the Inside Zero theorem. Its convergence step lives '
             'in Q₂, not in the state space: a sequence in Q₂ whose 2-adic norms are bounded by 2<sup>&#8722;n</sup> '
-            'converges to 0 of Q₂ (t_iz_cauchy, ZeroParadox/Valuation/SemilatticeInstance.lean); a chain of '
-            'states reaches it only through the modelling commitment that the sequence&#8217;s valuations '
-            'track the chain&#8217;s depths (IsDepthChain). '
+            'converges to 0 of Q₂ (t_iz_cauchy, ZeroParadox/Valuation/SemilatticeInstance.lean). A chain of '
+            'states supplies that bound in t_iz_h_bound_from_depth_chain, whose hypotheses are that the '
+            'sequence is nowhere zero, that its valuations equal the chain&#8217;s depths (IsDepthChain, a '
+            'modelling commitment), and that the depths form a strict state sequence; the strict-ascent step '
+            'needs only the weaker TracksDepth (h_strict_of_tracksDepth). '
             'Reading that limit as something filling the bottom role again takes a choice of '
             'join on Q₂, and then the role half is a theorem (t_iz_limit_is_new_null): anything '
             'filling that role IS the bottom already there (that semilattice&#8217;s ⊥; which point '
