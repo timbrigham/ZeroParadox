@@ -1,12 +1,12 @@
 """
 Zero Paradox — ZP-G: Category Theory PDF Builder
-Version 1.32 | November 2026
+Version 1.33 | November 2026
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.32'
+VERSION = '1.33'
 FIRST_RELEASED = 'April 2026'
 
 # ZP-G uses a slightly different amber shade; override zp_utils default
@@ -94,8 +94,8 @@ def build():
     # ── INTRO PARAGRAPHS ──────────────────────────────────────────────────────
     E += [
         body('This document is self-contained within category theory, with one explicit import from '
-             'ZP-C: the conditional Kolmogorov complexity K(x|n) and the coding theorem connecting '
-             'it to Shannon entropy. That import is named and labelled; it replaces Bridge '
+             'ZP-C: the conditional Kolmogorov complexity K(x|n) and the coding theorem, which bounds it '
+             'by the surprisal of a computable measure. That import is named and labelled; it replaces Bridge '
              'Axiom BA-G1 (Leinster categorical entropy characterization) with a native derivation. All '
              'other content from ZP-A, ZP-B, ZP-D, and ZP-E remains excluded from this document. '
              'Cross-framework connections are deferred to ZP-H.'),
@@ -216,12 +216,15 @@ def build():
             'isomorphic to it, so AX-G1 rules that degenerate case out — but not conversely, since a non-trivial '
             'category can have a strict initial object and still have a terminal one (in the category of sets, '
             'the empty set is strict initial and the one-point set is terminal). '
-            'What distinguishes ZP-G from a trivial application of initial-object asymmetry is that the initial '
-            'object here is not an abstract placeholder: it is &#8869;, the algebraically minimal element of '
-            'ZP-A\'s lattice. This identification is not asserted in ZP-G; it is demonstrated in ZP-H via '
-            'four concrete domain functors (F<sub>A</sub>, F<sub>B</sub>, F<sub>C</sub>, F<sub>D</sub>), '
-            'each of which maps the natural number depth hierarchy into a stand-in category for its domain and '
-            'preserves the initial object. The axioms are not postulated in isolation; they are shown to hold in '
+            'The initial object of C is not identified with &#8869; of ZP-A\'s lattice, nor with any other '
+            'domain\'s bottom: they live in different structures, and an equation across them is ill-typed '
+            '(MC-1, the bottom family; ZP-H T-H3 makes no identification). What links them is a standard fact '
+            'and a check, not an identity. The fact: a least element of a preorder is initial in its order '
+            'category (Mathlib Preorder.isInitialBot). The check is in ZP-H: three Lean functors '
+            '(fb_functor, fc_functor, fd_functor) send the natural-number depth order into an &#8469;-indexed '
+            'stand-in category for their domain and send 0 to an initial object there; F<sub>A</sub> has no '
+            'functor term, and its witness is 0 initial in &#8469;\'s order category (natSLat_initial_grounding). '
+            'The axioms are not postulated in isolation; they are shown to hold in '
             'each of four ℕ-indexed depth categories, one per domain (ZP-H), and are not claimed for the three '
             'Mathlib categories ZP-H also targets (TopCat, KleisliCat PMF, ModuleCat ℂ) — each of which has a '
             'terminal object, so AX-G1 fails in every one of them. ModuleCat ℂ\'s zero module fD_functor.obj 0 is a zero object that '
@@ -349,12 +352,18 @@ def build():
             'What is imported: The conditional Kolmogorov complexity K(x|y), defined as the length of the '
             'shortest program p such that U(p, y) = x, where U is a fixed universal Turing machine:',
             'K(x|y) = min { |p| : U(p, y) = x }',
-            'Key property — The Coding Theorem: For any computable probability measure P, Kolmogorov '
-            'complexity and Shannon entropy are related up to an additive constant c (depending only on U, '
-            'not on x or y):',
-            'K(x|y) &#8776; &#8722;log<sub>2</sub> P(x|y) + O(c)',
-            'The coding theorem is a standard result of algorithmic information theory (Li and Vitanyi, An '
-            'Introduction to Kolmogorov Complexity and Its Applications). It is not derived within ZP-G. '
+            'Key property — The Coding Theorem (Levin): for prefix complexity K, the two-sided relation is stated '
+            'for the a priori probability m (the maximal lower semicomputable '
+            'semimeasure, which is not computable): K(x) = &#8722;log<sub>2</sub> m(x) + O(1). For a computable '
+            'probability measure P, one direction holds, with a constant c<sub>P</sub> that depends on P:',
+            'K(x) &#8804; &#8722;log<sub>2</sub> P(x) + c<sub>P</sub>',
+            'Source: Shen, Uspensky and Vereshchagin, Kolmogorov Complexity and Algorithmic Randomness (AMS, 2017), '
+            '§ 4.2, p. 79 (maximality: m\'(i) &#8804; c&#183;m(i) for every lower semicomputable semimeasure m\'), '
+            'and § 4.5, Theorems 56 and 58, pp. 92–93 (K and &#8722;log m coincide up to an additive constant); '
+            'the conditional forms K(x|y) and m(x|y) are § 4.7, p. 103. The plain complexity defined above is at '
+            'most K + O(1) (§ 4.6, p. 100), so the one-sided bound holds for it as well. The converse inequality fails for '
+            'computable P: with P uniform on n-bit strings given n, &#8722;log<sub>2</sub> P(0<sup>n</sup>|n) = n '
+            'while K(0<sup>n</sup>|n) is bounded. The coding theorem is not derived within ZP-G. '
             'It is imported as a named result.',
             'Scope of import: I-KC imports K(x|y) and the coding theorem only. No other content from ZP-C is '
             'imported into ZP-G. The Kolmogorov complexity machinery is already present in ZP-C D1 '
@@ -387,16 +396,17 @@ def build():
             'the conditional Kolmogorov complexity of the target given the source.',
             'Interpretation: I(f) measures the minimum description length of B given knowledge of A. It is the '
             'irreducible informational content added by the transition f: A → B, independent of any probability distribution.',
-            'Well-definedness: K(x<sub>B</sub>|x<sub>A</sub>) depends on the encoding of objects as strings. Different encodings '
-            'yield values differing by at most an additive constant c (the coding theorem constant of I-KC). '
+            'Well-definedness: K(x<sub>B</sub>|x<sub>A</sub>) depends on the encoding of objects as strings. Two computable '
+            'encodings, each computable from the other, yield values differing by at most an additive constant c that '
+            'depends on the pair of encodings, not on A or B (translate the strings before running the program). '
             'All claims in ZP-G are stated in terms of whether I(f) is finite, zero, or undefined — qualitative '
             'properties that are invariant under any additive constant. This invariance is a consequence of what '
             'ZP-G chooses to claim, not a general property of K-complexity (additive constants can matter '
             'for precise K-complexity comparisons in AIT).',
-            'Relationship to D7: By the coding theorem (I-KC), K(x<sub>B</sub>|x<sub>A</sub>) ≈ &#8722;log<sub>2</sub> P(x<sub>B</sub>|x<sub>A</sub>) + O(c) '
-            'for any computable measure P. Therefore D7\' and D7 are equivalent up to O(c). The choice of D7\' '
-            'over D7 is not a change in what is being measured; it is a change in how the measure is defined — '
-            'natively versus via import.',
+            'Relationship to D7: by the coding theorem (I-KC), K(x<sub>B</sub>|x<sub>A</sub>) &#8804; &#8722;log<sub>2</sub> P(x<sub>B</sub>|x<sub>A</sub>) + c<sub>P</sub> '
+            'for a conditional measure P computable from both arguments, so D7\' is bounded above by D7 up to a constant that depends on P. '
+            'The reverse bound fails for computable P in general (the example in I-KC), so D7\' and D7 are not equivalent; the '
+            'two-sided relation holds for the conditional a priori probability m, which is not computable. The choice of D7\' over D7 changes what is measured.',
         ]
     ))
     E.append(sp(8))
@@ -460,8 +470,9 @@ def build():
             '2026-10-04 (search record in ZeroParadox/Information/Disjunctive.md), Lean developments '
             'outside Mathlib that define K are named at the ZPSurprisal entry of LEAN_CUSTOM_REGISTRY.md, '
             'and leaving K unformalized here is a scope decision recorded there.',
-            'What IS Lean-verified: T6-a (identity morphism has zero surprisal — from surp_id), '
-            'T6 Part II (inward surprisal is undefined — from AX-G2 and the absence of morphisms to 0), '
+            'T6-a is assumed in Lean, not verified: zero identity surprisal is the class field surp_id of '
+            'ZPSurprisal, which t6a_identity_surprisal returns unchanged, and surp := fun _ => 0 satisfies the class. '
+            'What IS Lean-verified: T6 Part II (inward surprisal is undefined — from AX-G2 and the absence of morphisms to 0), '
             'and T7 insofar as it depends on Parts II, III, V, VI. T6 Part I (outward accumulation) '
             'and T7 Part IV rely on T6-b and T6-c and are therefore also PDF-level only.',
             'Readers citing "the Lean-verified ZP-G framework" should note this boundary. '
@@ -514,17 +525,13 @@ def build():
             'BA-G1 was originally introduced as a bridge axiom: it imported Leinster\'s categorical '
             'characterization of Shannon entropy (naturality, maximality, chain rule) to define the surprisal '
             'functor. BA-G1 was originally the only bridge axiom in ZP-G and the source of OQ-G1.',
-            'BA-G1 is no longer a premise of any theorem; it is retained here as a compatibility remark: '
-            'the coding theorem (I-KC) guarantees that D7\' and the Shannon functor of BA-G1 are equivalent '
-            'up to an additive constant c. Specifically:',
-            'K(x<sub>B</sub>|x<sub>A</sub>) ≈ H(F(B)) &#8722; H(F(A)) + O(c)',
-            'for any computable probability measure P consistent with the morphism structure of C. This '
-            'means all quantitative results originally derived from BA-G1 remain valid under D7\' — they differ '
-            'only by the additive constant c, which does not affect any structural (finite/zero/undefined) claim.',
-            'BA-G1 is not false. It is not retired. It is now a derived compatibility result rather than an assumed '
-            'premise. Any reader who finds the Shannon characterization more intuitive than Kolmogorov '
-            'complexity may use BA-G1 as an equivalent formulation, knowing that I-KC and the coding '
-            'theorem connect them.',
+            'BA-G1 is no longer a premise of any theorem, and it is not derived from D7\': the two are different '
+            'quantities. The coding theorem (I-KC) gives one direction only, K(x<sub>B</sub>|x<sub>A</sub>) &#8804; '
+            '&#8722;log<sub>2</sub> P(x<sub>B</sub>|x<sub>A</sub>) + c<sub>P</sub> for a computable conditional measure P, '
+            'a bound on the surprisal of one outcome under P. No equation between D7\' and the Shannon functor of BA-G1 '
+            'follows from it, so results derived from BA-G1 do not carry over to D7\' by this route, and BA-G1 is not an '
+            'equivalent formulation of D7\'. It is retained as a remark on a related quantity. T6 and T7 do not use '
+            'it: their dependency lists, above and below, do not include BA-G1.',
         ]
     ))
 
@@ -597,7 +604,7 @@ def build():
         ['R-BA',
          'Remark — BA-G1 demoted',
          'Leinster Shannon entropy characterization is now a compatibility remark, not a bridge axiom premise. '
-         'Derivable from D7\' and I-KC via the coding theorem. Not a gap.'],
+         'Not derivable from D7\': the coding theorem gives a one-sided bound, not an equivalence. Not a gap.'],
     ]
     E.append(data_table(
         ['Item', 'Status', 'Description'],
@@ -634,7 +641,7 @@ def build():
          'Axiom — intentional. Unchanged.'],
         ['R-BA: BA-G1 compatibility remark',
          'Remark — [BA-G1 demoted from Bridge Axiom]. Shannon entropy functor '
-         'compatible with D7\' up to O(c) by coding theorem. No longer a premise of any theorem.'],
+         'related to D7\', not equivalent: the coding theorem bounds D7\' above only. No longer a premise of any theorem.'],
         ['Proposition T1: Uniqueness of initial object',
          'Valid — Derived. Relabelled Proposition (subsidiary uniqueness result). Unchanged. ✓'],
         ['Lemma T2: Universal constituent',
@@ -651,7 +658,8 @@ def build():
         ['Proposition T5: Functors preserve initial objects',
          'Valid — Conditional on ZP-H T-H1 (closed). Relabelled Proposition. Unchanged. ✓'],
         ['Lemma T6-a: Identity surprisal is zero',
-         'Valid — Derived. Relabelled Lemma. K(x<sub>A</sub>|x<sub>A</sub>) = 0 up to c. ✓'],
+         'Valid (PDF-level) — Derived. Relabelled Lemma. K(x<sub>A</sub>|x<sub>A</sub>) = 0 up to c. In Lean it is the '
+         'class field surp_id, assumed, not verified. ✓'],
         ['Lemma T6-b: Non-negative outward surprisal',
          'Valid (PDF-level) — Derived from D5, D7\', AX-G2. K &#8805; 0; strict inequality for distinct objects. '
          'NOT Lean-verified: Lean proof reduces to Nat.zero_le _ (trivially true for any &#8469;-valued function; '
