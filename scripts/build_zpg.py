@@ -1,12 +1,12 @@
 """
 Zero Paradox — ZP-G: Category Theory PDF Builder
-Version 1.34 | November 2026
+Version 1.35 | November 2026
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.34'
+VERSION = '1.35'
 FIRST_RELEASED = 'April 2026'
 
 # ZP-G uses a slightly different amber shade; override zp_utils default
@@ -222,7 +222,9 @@ def build():
             'and a check, not an identity. The fact: a least element of a preorder is initial in its order '
             'category (Mathlib Preorder.isInitialBot). The check is in ZP-H: three Lean functors '
             '(fb_functor, fc_functor, fd_functor) send the natural-number depth order into an &#8469;-indexed '
-            'stand-in category for their domain and send 0 to an initial object there; F<sub>A</sub> has no '
+            'stand-in category for their domain and send 0 to an initial object there (for F<sub>B</sub> that 0 '
+            'indexes the ball B(0, 1), q2BallAt, and ZP-B\'s floor {0} is the intersection of the balls, '
+            'fB_bottom_is_limit); F<sub>A</sub> has no '
             'functor term, and its witness is 0 initial in &#8469;\'s order category (natSLat_initial_grounding). '
             'The axioms are not postulated in isolation; they are shown to hold in '
             'each of four ℕ-indexed depth categories, one per domain (ZP-H), and are not claimed for the three '
