@@ -1,12 +1,12 @@
 """
 Zero Paradox — ZP-J: Executability of Self-Reference PDF Builder
-Version 2.22 | November 2026
+Version 2.23 | November 2026
 """
 
 import os
 from zp_utils import *
 
-VERSION = '2.22'
+VERSION = '2.23'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -473,13 +473,15 @@ def build():
         'stronger structures, provide concrete models, and prove decoration uniqueness for every '
         'quiver, with a graph-side proof for finite graphs, and decoration existence for every quiver, '
         'over abstract DecorationUniverses &#8212; analogues of the uniqueness and existence clauses of '
-        'what AFA asserts as an axiom. Every node is either a proved theorem or a typeclass field:'))
+        'what AFA asserts as an axiom. Every node is a proved theorem, a typeclass field, or a named commitment:'))
     E += [
         li('ZP-A axioms A1&#8211;A4: semilattice structure (ZPSemilattice fields).'),
         li('ZP-B: 2-adic topology and irreversibility (proved from Mathlib).'),
         li('ZP-C: information theory, L-INF, L-RUN (proved axiom-free or from Mathlib).'),
         li('ZP-D: state layer, orthogonality (proved from ZP-A and ZP-B).'),
-        li('ZP-E: T-SNAP, DA-1, DA-2 (T-SNAP and DA-2 proved axiom-free; DA-1 Path 3 not formalized).'),
+        li('ZP-E: T-SNAP proved axiom-free. DA-1 closed given the commitment DP-2 (da1_minimal_path); '
+           'DA-1 Path 3 not formalized. DA-2 proved for role-recognition only '
+           '(da2_bottom_characterization); occupancy and distinctness are the commitment C-DA2.'),
         li('ZP-J: AFAStructure fields (selfMem, quine_unique, bot_self_mem). '
            'T-EXEC, J1, and CC-1 in conditional form: proved axiom-free. '
            'Sections VII&#8211;X (Aczel connection, abstraction chain, concrete instances, '

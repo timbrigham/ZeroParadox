@@ -350,10 +350,9 @@ being one-to-one. As codes they may differ in any way; the statement is about th
 control beside it shows that `Universal` carries the first half: `Code.zero` is self-printing
 and not universal, and it disagrees with a self-printing universal code on a channel `e + 1`.
 `Reading:` replicas share everything but the address; the next instance adds only the address.
-That is a claim about relative complexity, and it stays a reading while Kolmogorov complexity is
-not formalized in this corpus, a scope decision (not located in the Mathlib pin as of 2026-10-04,
-search record in `ZeroParadox/Information/Disjunctive.md`; Lean developments outside Mathlib define
-it, named in the `ZPSurprisal` entry of `LEAN_CUSTOM_REGISTRY.md`).
+That is a claim about relative complexity, and it stays a reading: Kolmogorov complexity is in the
+build through `ZeroParadox/Information/BrudnoBridge.lean`, whose theorems are about tapes, and
+`selfPrints_universal_address` states values on channels, not complexities.
 
 **Occurrence controls.** `Occurs` (`ZeroParadox/Computability/Occurrence.lean`) is
 `(eval c n).Dom` by `occurs_iff_halts`. `selfprints_occurs` and `zero_occurs` show it holding

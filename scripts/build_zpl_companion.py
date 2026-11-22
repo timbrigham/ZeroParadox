@@ -1,6 +1,6 @@
 """
 Build ZP-L Illustrated Companion
-Version 1.29 | November 2026
+Version 1.30 | November 2026
 Citation fence (Gentzen): the Convergence section's credits follow CLAIMS.md's Gentzen rows and are
 taken from Gentzen 1943 (Math. Ann. 119), the one primary paper filed here, never from a secondary
 source's labels. The 1936 consistency credit rests on Gentzen 1943, p. 140, footnote 2: the 1936
@@ -214,7 +214,7 @@ def dual_convergence_diagram():
     return d
 
 
-VERSION = '1.29'
+VERSION = '1.30'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -427,21 +427,25 @@ def build():
         'Whether these reflect the same underlying mathematical phenomenon &#8212; '
         'or are coincidentally parallel &#8212; is the open question Gentzen.lean &#167;I poses.'))
     E.append(cbody(
-        'ZP-L &#167;VI (kleene_ordinal_snap_bridge) names this structural parallel explicitly. '
+        'ZP-L &#167;VI (kleene_ordinal_snap_bridge) is named for this parallel. '
         'The theorem itself is purely ordinal &#8212; no Code or eval object appears in it. '
-        'What the section establishes is that the hypothesis structure of the two proofs '
-        'is the same: diagonalization and fixed-point existence.'))
+        'The parallel is not a proved isomorphism (ZeroParadox/Ordinal/Gentzen.md &#167;VI): '
+        'the two fixed points are reached by different routes, &#949;&#8320;, the least fixed '
+        'point of &#969;^&#183;, by iterating '
+        '&#969;^&#183; from the ordinal 0 up to the supremum of the tower (epsilonZero_eq_nfp), '
+        'the program by a construction on codes (roger_fixed_point_stability).'))
     E.append(sp(4))
-    E.append(example_box('Two rooms, same pattern', [
+    E.append(example_box('Two rooms, parallel results', [
         'Imagine two mathematicians working in separate rooms. One (ZP-K) is computing '
         'with programs and asking: what program runs itself? The other (ZP-L) is computing '
         'with ordinals and asking: what ordinal satisfies &#969;^&#945; = &#945;? Neither '
-        'knows what the other is doing. When they compare notes, they find the same proof '
-        'structure: the same diagonal argument, the same kind of fixed-point existence '
-        'result.',
+        'knows what the other is doing. When they compare notes, each has a fixed-point '
+        'existence result, and the routes differ: one builds a program out of codes, the '
+        'other climbs the tower &#969;, &#969;^&#969;, &#8230; to its limit. No theorem '
+        'identifies the two.',
         'ZPM maps each side into the 2-adics by its own map, the ordinal notations by cnfToZp2 '
         'and the two machine phases, the states c&#8320; and c&#8321; of the type MachinePhase, by snapEmbed; a bridge between the settings '
-        'themselves is still open. The two rooms share a floor plan.',
+        'themselves is still open.',
     ]))
     E.append(sp(8))
 
