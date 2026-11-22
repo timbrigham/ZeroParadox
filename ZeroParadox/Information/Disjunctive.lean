@@ -457,8 +457,8 @@ example : (¬ ∃ a, 0 < a ∧ ∀ n, (fun m => decide (m = 0)) (n + a) = (fun m
 /-! ## § VI. What maximal complexity would add
 
 A tape Martin-Löf random for `fairTape` is disjunctive: `disjunctive_of_MLRandom`
-(`ZeroParadox/Information/TwoRequirements.lean` § II-b); the converse fails at `champ` (§ II). Search
-record in the ride-along.
+(`ZeroParadox/Information/TwoRequirements.lean` § II-b). The converse fails: `champ` (§ II) is not
+Martin-Löf random for `fairTape` (the control `example` after `code_occurs_of_MLRandom`, same section).
 `Reading:` Tim's commitment concerns the framework's ⊥ role, ⊥ of a `ZPSemilattice`: read as a tape,
 its occupant is MAXIMALLY complex in that sense. No map from a `ZPSemilattice` to `ℕ → Bool` is
 claimed or constructed, and no order on tapes in which a maximally complex tape is least: the reading

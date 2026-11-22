@@ -85,7 +85,7 @@ whose floor is ℤ_[2]'s 0, with infinite complexity. A def (an exhibited witnes
       funext towerCx_member]
     exact iSup_natSucc_top.symm
 
-/-! ### § IV. The reconciliation — ε₀ ≠ 0 in `Ordinal` proved inside the statement that connects them. -/
+/-! ### § IV. The reconciliation — ε₀ ≠ 0 in `Ordinal` stated beside the two closures. -/
 
 /-- **Height meets floor, reconciled.** One shared construction, two carrier-specific closures held apart by
 `cnfToZp2` (along the tower: valuation order kept, `tower_orders_agree`; norm order reversed from stage 1,
@@ -100,7 +100,8 @@ whose floor is ℤ_[2]'s 0, with infinite complexity. A def (an exhibited witnes
 The fight between "ascends to ε₀" and "descends to ℤ_[2]'s 0" is resolved by the map, never by collapse: the 2-adic
 floor 0 is the limit of the tower's `cnfToZp2` images, never a `cnfToZp2` image of ε₀ (no `NONote`
 denotes ε₀, `repr_lt_epsilon0`; through the canonical threshold map and `snapEmbed` it does land on 0, `snap_state_zp2_is_zero`),
-and this theorem *proves* `ε₀ ≠ 0` in `Ordinal` while joining the two closures. -/
+and this theorem states `ε₀ ≠ 0` in `Ordinal` (`epsilon0_ne_zero`) beside the two closures, as a
+conjunction; the facts that connect them are `asymptote_preserved` and `tower_orders_agree`. -/
 theorem tower_height_floor_reconciliation :
     (@InfinitudeFloor.cx ℤ_[2] towerInfinitudeFloor towerInfinitudeFloor.floor = ⊤) ∧
     (epsilonZero = ⨆ n : ℕ, fundamentalSeq n) ∧
@@ -120,7 +121,9 @@ open Filter Topology
     `Reading:` the tower's image IS the doubling orbit: from stage 1, `cnfToZp2` sends the tower to
     `n ↦ 2 ^ (n + 1)` (the `example` below), the doubling orbit of `2` in ℤ_[2]. The map carries the
     asymptote's shape from the ordinal chart to the 2-adic chart; ε₀ itself has no image
-    (`eps0_no_preimage`). -/
+    (`eps0_no_preimage`). The agreement of the two orders follows from the two strict climbs alone,
+    as it would for any two strictly increasing sequences (the second `example` below); it is not a
+    property of `cnfToZp2`. -/
 theorem asymptote_preserved :
     (StrictMono (fun n => NONote.repr (towerNONote (n + 1))) ∧
       (∀ n, NONote.repr (towerNONote (n + 1)) < epsilonZero) ∧
@@ -158,6 +161,12 @@ example (n : ℕ) : cnfToZp2 (towerNONote (n + 1)) = (2 : ℤ_[2]) ^ (n + 1) := 
   rw [towerNONote_succ_eq, cnfToZp2_omegaPowNote]
   show (2 : ℤ_[2]) ^ ((cnfToZp2 (towerNONote n)).valuation + 1) = _
   rw [cnfToZp2_tower_valuation]
+
+-- Statement: any two strictly increasing sequences `a`, `b` on `ℕ` order their indices alike:
+-- `a m < a n ↔ b m < b n`. This is the whole proof of `asymptote_preserved`'s last conjunct.
+example {α β : Type*} [Preorder α] [Preorder β] {a : ℕ → α} {b : ℕ → β} (ha : StrictMono a)
+    (hb : StrictMono b) (m n : ℕ) : a m < a n ↔ b m < b n :=
+  ha.lt_iff_lt.trans hb.lt_iff_lt.symm
 
 /-- `Statement:` no normal-form notation denotes ε₀ (`repr_lt_epsilon0`). -/
 theorem eps0_no_preimage : ∀ x : NONote, NONote.repr x ≠ epsilonZero :=
@@ -255,7 +264,7 @@ theorem tower_images_pinnedLimit :
     z2_two_views.2.1, z2_two_views.2.2.2.2.2.2.2⟩
 
 /-- `Statement:` CONTROL: the same images are a run of `towerImageStep`, and in every preorder on
-    ℤ_[2] no point occupies `PinnedLimit towerImageStep` along any run. -/
+    ℤ_[2] no point occupies `PinnedLimit towerImageStep` along any sequence. -/
 theorem tower_images_towerImageStep_empty (inst : Preorder ℤ_[2]) :
     (Motion.ofFun towerImageStep).IsRun (fun n => cnfToZp2 (towerNONote (n + 1))) ∧
     ∀ s c, ¬ @PinnedLimit ℤ_[2] inst towerImageStep s c := by

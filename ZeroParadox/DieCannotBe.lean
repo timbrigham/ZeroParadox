@@ -1931,7 +1931,7 @@ example : let M := (ZeroParadox.Motion.ofTotal (fun _ : ℕ → Bool => ⊥) (fu
     · exact Or.inr (Or.inr ⟨_, rfl, fun e => h ((fix y).1 e)⟩)
 -- Reading: the prediction that a face pays a taboo exactly on the legs it does not present as data
 -- holds on `Motion.ofOption` (over every carrier) and on `Bool` and `E0Note` (per instance), and fails
--- on the OVER leg of the last two faces, over every carrier for the machine face and on the one carrier
+-- on the OVER leg of the last two faces, uniformly over all carriers for the machine face and on the one carrier
 -- `ℕ → Bool` for bit tapes: OVER is a function, and the trichotomy still reaches a taboo through the
 -- carrier's equality, which the leg does not supply. The machine face's own UP,
 -- `StateTransition.eval`, is partial and is not the leg measured here.
@@ -2412,7 +2412,7 @@ example : (ZeroParadox.Motion.ofFun (Inv.inv : ℚ → ℚ)).SelfOnlyAt 0 :=
 #check @ZeroParadox.cm_inv_inv                   -- Statement: their (e13), `(x⁻¹)⁻¹ = x + 0·x⁻¹`, on the model
 #check @ZeroParadox.cm_a_selfOnly                -- Statement: under inversion, `a` steps only to itself
 #check @ZeroParadox.cm_zero_one_way              -- Statement: under inversion, `0` steps to `a` and `a` not to `0`
-#check @ZeroParadox.cm_not_involutive            -- Statement: inversion is not an involution, `(0⁻¹)⁻¹ = a ≠ 0`
+#check @ZeroParadox.cm_not_involutive            -- Statement: inversion is not an involution, `(0⁻¹)⁻¹ ≠ 0` (it is `a`, by the two lines around it)
 #check @ZeroParadox.cm_preimage_a                -- Statement: exactly `a` and `0` step into `a` under inversion
 #check @ZeroParadox.cm_a_absorbs                 -- Statement: with OVER `x → x + z`, `a` steps only to itself and every point steps to it
 -- Reading: comparing the totalisations of division on ℚ by the values they adjoin outside ℚ is
@@ -3074,7 +3074,7 @@ example {L : Type} [ZeroParadox.ZPSemilattice L] (a : L) :
       (fun x y => ∃ z, y = ZeroParadox.ZPSemilattice.join x z)).step ZeroParadox.ZPSemilattice.bot a :=
   ⟨a, (ZeroParadox.ZPSemilattice.bot_join a).symm⟩
 #check @ZeroParadox.collect_absorbs_bot          -- Statement: ⊥ of `U` absorbs `collect` in every `DecorationUniverse U`: `collect S = bot` whenever `bot ∈ S`
-#check @ZeroParadox.absorb_of_unique_top         -- Statement: from bare data, a `v`-raising `c` and a unique `v`-⊤ point `b`: `v b = ⊤` and `c S = b` whenever `b ∈ S`
+#check @ZeroParadox.absorb_of_unique_top         -- Statement: from bare data, a `v`-raising `c` and at most one `v`-⊤ point, `b`: `v b = ⊤` and `c S = b` whenever `b ∈ S`
 -- Statement: at most one predecessor, on the reversed motion: ⊤ of ℕ∞ steps only to itself in the
 -- reverse of `ofFun (· + 1)` (`selfOnlyAt_of_step_self` there, since `x + 1 = ⊤` only at `x = ⊤`), so ⊤
 -- of ℕ∞ is in the first set of `ofFun (· + 1)`. In ℕ∞'s own order the step raises, and that datum puts
@@ -3714,8 +3714,8 @@ example : ZeroParadox.PoleEnds PUnit true true ∧ (IsBot PUnit.unit ∧ IsTop P
       ⟨fun ⟨x, _⟩ => x.elim, fun h => absurd h Bool.false_ne_true⟩⟩,
     ⟨⟨fun _ => rfl, fun _ => ⟨⊥, isBot_bot⟩⟩, ⟨fun _ => rfl, fun _ => ⟨⊤, isTop_top⟩⟩⟩⟩
 -- Reading: a cell counts the ends of a view, an `≤` passed as data. `(true, true)` gives two distinct
--- ends only on a `Nontrivial` carrier (`PUnit`), and identification with `Pole` needs exactly two
--- points (`Fin 3`); `Empty` and ℤ share a cell, so the cell does not see emptiness.
+-- ends only on a `Nontrivial` carrier (`PUnit` fails this), and identification with `Pole` needs exactly
+-- two points (`Fin 3` fails this); `Empty` and ℤ share a cell, so the cell does not see emptiness.
 #check @ZeroParadox.PoleEndsInhabited            -- Statement: the carrier is inhabited iff `i`, and the `≤` is in `PoleEnds` cell `(b, t)`
 #check @ZeroParadox.poleEndsInhabited_unique     -- Statement: a `≤` is in at most one such cell
 #check @ZeroParadox.poleEndsInhabited_dual       -- Statement: the order dual keeps `i` and exchanges `b` and `t`
@@ -5136,7 +5136,7 @@ example (d : DecidableEq Ordinal.{0}) : ZeroParadox.WLPO := by
 #check @ZeroParadox.Motion.LaxHom.leavesAt     -- Statement: along a one-to-one lax map, stepping elsewhere at `y` gives it at the image of `y`
 #check @ZeroParadox.slotRun_isRun              -- Statement: every tape drives a run of `slotMotion`
 #check @ZeroParadox.slotRun_crosses_iff        -- Statement: the run starts at `false`, and reaches `true` iff the tape fires somewhere; both directions
-#check @ZeroParadox.exists_fires_io            -- Statement: if `0 < p ≤ 1`, SOME tape fires infinitely often (measure one is nonempty)
+#check @ZeroParadox.exists_fires_io            -- Statement: SOME tape fires infinitely often. Reading: the conclusion does not mention `p`, so `0 < p ≤ 1` does no work in it; the proof goes through measure one being nonempty
 #check @ZeroParadox.fires_io_of_avoids         -- Statement: if `0 < p ≤ 1` and the tape avoids a class holding every zero-block test for `trials p hp`, it fires infinitely often; one way
 #check @ZeroParadox.slotRun_image_departs_of_avoids -- Statement: under the same hypotheses and a one-to-one lax map, the image run is a run that leaves its start; one way
 #check @ZeroParadox.squaresTape_not_avoids    -- Statement: if `0 < p ≤ 1` and `𝒯` holds every zero-block test for `trials p hp`, the squares tape does not avoid `𝒯`

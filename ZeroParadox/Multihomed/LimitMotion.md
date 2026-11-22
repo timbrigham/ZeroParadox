@@ -44,9 +44,9 @@ its orbit where that orbit converges, and is undefined elsewhere. `limitMotion g
   reversed. On `OnePoint ℚ_[2]`, doubling and halving form one with poles `0` and `∞`
   (`lm_q2_dipole`); halving's half is transported along `lmHealedIso` (`lmSinkOf.map`). On OVER both
   poles step only to themselves (`lm_dbl_step_level`); `Motion.reverse` keeps UP, so it is not the
-  partner (`lm_reverse_not_partner`). Controls: doubling on `OnePoint ℝ` is a dipole with the poles
-  exchanged (`lm_real_dipole`, `lm_real_dbl_zero_not_sink`), and the identity has no limit sink
-  (`lm_id_no_sink`).
+  partner (`lm_reverse_not_partner`). Controls: doubling and halving on `OnePoint ℝ` form a dipole
+  with the poles exchanged (`lm_real_dipole`, `lm_real_dbl_zero_not_sink`), and on `OnePoint ℚ_[2]`
+  the identity has no limit sink (`lm_id_no_sink`).
 
 No statement here uses a join or the covering relation `⋖`. So none carries T-SNAP's join shape
 (`t_snap_given`, `ZeroParadox/Order/Snap.lean`) or a covering step `⊥ ⋖ a` off ⊥ of a

@@ -298,7 +298,8 @@ example : letI := ZeroParadox.trivialZPSemilattice
 #check @ZeroParadox.binPF_no_seam
 -- Statement: the `W`-type of the trichotomy functor is empty.
 #check @ZeroParadox.strict_fix_isEmpty
--- Statement: `Fix idPF_Coalgebra.Obj` is empty, proved choice-free (a tighter axiom footprint).
+-- Statement: `Fix idPF_Coalgebra.Obj` is empty, proved with no axioms at all
+-- (`ZeroParadox/Computability/ChoicePurityInvariant.lean`, its `#print axioms` record).
 #check @ZeroParadox.fix_isEmpty_constructive
 -- Statement: `fixToCofix` is not surjective.
 #check @ZeroParadox.fixToCofix_not_surjective
@@ -369,7 +370,7 @@ example : @ZeroParadox.negation_no_fixedpoint = @iff_not_self := rfl
 example (x : ℤ) : (fun y : ℤ => -y) ((fun y : ℤ => -y) x) = x := neg_neg x
 example : (fun x : ℤ => -x) (0 : ℤ) = 0 := rfl
 
-/-! ### POSITIVE — narrow uniqueness and infinite width, which coincide only at ⊥ -/
+/-! ### POSITIVE — narrow uniqueness and infinite width, paired at ⊥ as a criterion (Reading below) -/
 
 -- Statement: in ℚ₂, `q2SelfMem x` forces `x = 0` — at most one such point. [NARROW]
 #check @ZeroParadox.q2_unique_fp
@@ -435,7 +436,7 @@ example : (fun x : ℤ => -x) (0 : ℤ) = 0 := rfl
 #check @ZeroParadox.rInv_reverses
 -- Statement: a conjunction whose first component is the DISEQUALITY of the floor pole and the
 -- infinity pole; inversion exchanging them, and `Infinite ℚ_[2]`, follow in the same declaration.
--- ⚠ `rInv_swaps` directly above states two equations and nothing else, so cite THIS one wherever the
+-- ⚠ `rInv_swaps` above states two equations and nothing else, so cite THIS one wherever the
 -- distinctness is what a sentence leans on.
 #check @ZeroParadox.point_and_field_at_the_poles
 -- Statement: that inversion is a homeomorphism of the sphere.
@@ -460,6 +461,9 @@ example : (fun x : ℤ => -x) (0 : ℤ) = 0 := rfl
 #check @ZeroParadox.lm_fieldLine_is_members -- Statement: the doubling orbit of `2` is the member sequence of `q2InfinitudeFloor`, whose floor `0` of `ℚ_[2]` is doubling's limit sink off `∞`, with complexity `⊤` there
 #check @ZeroParadox.sVal_rInv -- Statement: on `OnePoint ℚ_[2]`, `sVal (rInv p) = negE (sVal p)` at every point `p`, `0` of `ℚ_[2]` and `∞` included (`ZeroParadox/Valuation/RiemannSphere.lean` § X)
 #check @ZeroParadox.q2_zero_min_eq_max -- Statement: `0` of `ℚ_[2]` steps only to itself under doubling and its reverse and has least norm; the field line `2 ^ (n + 1)` tends to it, is never it, and climbs in `cxQ2` through finite values to `cxQ2 0`, their supremum and the greatest value (`ZeroParadox/Multihomed/LimitMotion.lean` § VII)
+-- Reading: least norm and greatest `cxQ2` at 0 of `ℚ_[2]` are one order read backwards, a change of
+-- coordinates, not two characterizations in the sense of `epsilon0_min_eq_max`; the content is the
+-- asymptote, the supremum along the approach.
 -- Statement: Mathlib's `IsInitial.op` — the opposite of an initial object is terminal.
 -- Reading: CITED, not ZP-proved; attribution is the point. Passing to `Cᵒᵖ` is the categorical face
 -- of inversion, swapping the μ-bottom to a terminal object.
@@ -522,7 +526,7 @@ example (k : ℕ) : ∀ n, Nat.Partrec.Code.eval (Nat.Partrec.Code.const k) n =
 -- the Kleene sense of a code applied to its own index.
 #check @ZeroParadox.biprod_diagonal_only_zero
 -- Statement: the free ℂ-module on ℕ is self-similar under that diagonal — `X ≅ X ⊞ X` — because
--- ℵ₀ + ℵ₀ = ℵ₀. Standard name: the Eilenberg–Mazur swindle.
+-- ℵ₀ + ℵ₀ = ℵ₀. Standard name: the absorbing object that the Eilenberg–Mazur swindle uses.
 #check @ZeroParadox.freeNat_biprod_self
 -- Statement: and it is not finite over ℂ, so it sits outside the theorem above. The exclusion is
 -- proved, not asserted in a docstring.
@@ -855,17 +859,22 @@ example : ZeroParadox.Disjunctive (fun n => xor (ZeroParadox.champ n) false) := 
 -- Reading: COINCIDENCE, Tim's reading: one tape, two charts, neither denied. Content chart: read
 -- against the reference all-false tape, ⊥ of `ℕ → Bool`, a tape is itself, and a disjunctive one
 -- carries every code word (`code_occurs_of_disjunctive`). Self chart: read against itself it is that
--- all-false tape; in ℤ_[2] the self-difference is ℤ_[2]'s 0, of additive valuation ⊤ (the floor's
--- `cx = ⊤`, `infinitude_forces_infinite_complexity`, `ZeroParadox/Valuation/InfinitudeFloor.lean`).
--- Reading: CHART claim, not a point identity, in the shape of `epsilon0_min_eq_max` (one object, two
--- characterizations). Tim, 2026-11-12: "simultaneously minimally and maximally complex". Witnesses, each
--- a theorem in its own carrier: `z2_two_views` (§ ROLE), ℤ_[2]'s 0 least in the norm preorder, greatest
--- in the `q2Val` preorder; `infinitude_forces_infinite_complexity` at `q2InfinitudeFloor`, `cx = ⊤` at
--- ℚ_[2]'s 0; `tape_totality_two_faces` (next section), minimal as the law, maximal as almost every
--- member, ⊥ of `ℕ → Bool` a non-random limit of them. Reading least as minimally complex is
--- interpretation. Across every chart at once is Tim's commitment, and so is either face for ⊥ of a
--- `ZPSemilattice`, whose class defines no complexity; no equation with any one tape is stated, and
--- disjunctive is the weaker, proved property (`ZeroParadox/Information/Disjunctive.lean`).
+-- all-false tape; in ℤ_[2] the self-difference is ℤ_[2]'s 0, of additive valuation ⊤ (the same point
+-- read in ℚ_[2] is the floor of `q2InfinitudeFloor`, `cx = ⊤` there by
+-- `infinitude_forces_infinite_complexity`, `ZeroParadox/Valuation/InfinitudeFloor.lean`).
+-- Reading: CHART claim, not a point identity. Tim, 2026-11-12: "simultaneously minimally and maximally
+-- complex". Witnesses, each a theorem in its own carrier: `q2_zero_min_eq_max`
+-- (`ZeroParadox/Multihomed/LimitMotion.lean` § VII), the asymptote: 0 of `ℚ_[2]` steps only to itself
+-- under doubling, and `cxQ2` at it is the supremum of the finite values along the field line
+-- `2 ^ (n + 1)`, which tends to it and never reaches it, and along every approach
+-- (`cx_zero_eq_iSup_of_tendsto`); `tape_totality_two_faces` (next section), minimal as the law, maximal
+-- as almost every member, ⊥ of `ℕ → Bool` a non-random limit of them. `z2_two_views` (§ ROLE), ℤ_[2]'s
+-- 0 least in the norm preorder and greatest in the `q2Val` preorder, is one order read backwards, a
+-- change of coordinates, not two characterizations in the sense of `epsilon0_min_eq_max`. Reading
+-- least as minimally complex is interpretation. Across every chart at once is Tim's commitment, and
+-- so is either face for ⊥ of a `ZPSemilattice`, whose class defines no complexity; no equation with
+-- any one tape is stated, and disjunctive is the weaker, proved property
+-- (`ZeroParadox/Information/Disjunctive.lean`).
 
 /-! ### One ensemble, two faces: the law and its members -/
 

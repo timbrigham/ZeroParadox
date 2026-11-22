@@ -40,7 +40,10 @@ So the four corners map onto the tower's corners: the **zero** corner is the tow
 `botEnd` (`seed_maps_to_bot_both`: `cnfToZp2 (towerNONote 0) = 0`); the **infinity** corner is that seed's
 image under the inversion; **concurrent** has a point sense and a map sense. As a point it is the pole
 `0 = ∞ = ⊥`, a chart claim: ℤ_[2]'s `0` is ⊥ of the 2-adic norm preorder and ⊤ of the `q2Val`
-preorder (`z2_two_views`), where ascent and descent meet. As a map it is `cornerId`, whose shape the
+preorder (`z2_two_views`), where ascent and descent meet. Those two are one order read backwards
+(`z2_two_views`' third conjunct: the `q2Val` preorder is the norm preorder reversed), a change of
+coordinates and not two characterizations in the sense of `epsilon0_min_eq_max`. As a map it is
+`cornerId`, whose shape the
 tower map has in the `PadicInt.valuation` chart (the `Reading:` above); and the **inversion**
 corner shares its shape with `cnfToZp2`'s ordinal-ascent-↔-2-adic-norm-descent reversal on stages
 `n ≥ 1` (the norm chart of the `Reading:` above), never an identity between `swap : Pole → Pole` and

@@ -46,8 +46,9 @@ of length `k` (the `example` after `not_disjunctive_of_periodic`), so `not_disju
   theorem. Not located as of 2026-10-04, searched as above.
 - theoremsearch, three phrasings (definition; "rich sequence"; Martin-Löf random and Champernowne).
   Returned the Barnsley–Leśniak and Barnsley–Vince definitions and Landsman, *Typical = random*
-  (arXiv:2306.09226, Thm 4.2, as summarized by the search result: every word occurs infinitely often in
-  every fair-coin random sequence). Landsman was not retrieved; it is a discovery lead, not a citation.
+  (arXiv:2306.09226). Landsman v2 was retrieved and read (2026-11-22): § 4, Thm 4.2 states that every
+  finite word occurs infinitely often in every random sequence for the flat Bernoulli measure, and
+  cites Calude (2002) Thm 6.50, which was not retrieved.
 
 ## Footprints
 
@@ -77,22 +78,24 @@ block (`#print axioms`, 2026-10-04):
 
 1. **Presence, not execution.** `code_occurs_of_disjunctive` says a code's binary is written on the
    tape. Nothing reads or runs it; occurrence is the occurrence commitment (`ZeroParadox/Order/Snap.lean`).
-2. **Disjunctive is weak.** `champ` is disjunctive and primitive recursive (§ II). Standard theory,
-   not proved here: a sequence is Martin-Löf random exactly when its prefixes are incompressible in
-   PREFIX-FREE Kolmogorov complexity, `K(x↾n) ≥ n − c` for some constant `c` (Levin–Schnorr, Chaitin),
-   and a Martin-Löf random sequence is disjunctive, proved here for the fair coin as
-   `disjunctive_of_MLRandom` (`ZeroParadox/Information/TwoRequirements.lean` § II-b); the converse
-   fails (`champ`). With PLAIN
-   complexity no infinite sequence has all prefixes incompressible (Martin-Löf), so the prefix-free
-   form is the one meant.
+2. **Disjunctive is weak.** `champ` is disjunctive and primitive recursive (§ II). Proved here, for
+   the fair coin: a Martin-Löf random sequence is disjunctive (`disjunctive_of_MLRandom`,
+   `ZeroParadox/Information/TwoRequirements.lean` § II-b; the standard fact is Landsman, arXiv:2306.09226v2,
+   Thm 4.2, which cites Calude 2002 Thm 6.50), and the converse fails, `champ` is not Martin-Löf random
+   for `fairTape` (the control `example` after `code_occurs_of_MLRandom`, same section). Standard
+   theory, cited and not proved here: a sequence is Martin-Löf random exactly when its prefixes are
+   incompressible in PREFIX-FREE Kolmogorov complexity, `K(x↾n) ≥ n − c` for some constant `c`
+   (Levin–Schnorr, Chaitin). With PLAIN complexity no infinite sequence has all prefixes
+   incompressible (Martin-Löf), so the prefix-free form is the one meant.
 3. **The commitment is separate.** `Reading:` Tim's commitment concerns the framework's ⊥ role, ⊥ of
    a `ZPSemilattice`: read as a tape, its occupant is maximally complex, in the prefix-free sense of
-   fence 2. Standard theory, not proved here (fence 2): a tape maximally complex in that sense is
-   Martin-Löf random, hence disjunctive. No map from a `ZPSemilattice`
+   fence 2. A tape maximally complex in that sense is Martin-Löf random (Levin–Schnorr, cited in
+   fence 2, not proved here), hence disjunctive for the fair coin (`disjunctive_of_MLRandom`, proved).
+   No map from a `ZPSemilattice`
    to `ℕ → Bool` is claimed or constructed, and no order on tapes in which a maximally complex tape is
    least: the reading is a commitment, not a chart. In `ℕ → Bool` under the pointwise order, ⊥ is the
-   all-false tape, which is not disjunctive (`allFalse_not_disjunctive`). The commitment is not in
-   Lean (Search record).
+   all-false tape, which is not disjunctive (`allFalse_not_disjunctive`). The commitment is recorded
+   as a `Reading:` (§ VI of the Lean file), not as a theorem.
 4. **`Code.zero`'s word is empty** (`codeWord_zero_width`), so presence there is vacuous.
 5. **The measure fences of `ZeroParadox/Information/CrossingTrials.lean` stand.** `Reading:` CARRIER.
    Pointwise, measure one is not necessity: the all-`false` tape of `ℕ → Bool` is the one tape that
