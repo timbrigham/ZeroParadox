@@ -1,12 +1,12 @@
 """
 Zero Paradox — ZP-H: Categorical Bridge PDF Builder
-Version 1.48 | November 2026
+Version 1.49 | November 2026
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.48'
+VERSION = '1.49'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -454,8 +454,8 @@ def build():
             'setting. They are interpretation, and no Lean declaration states them.',
             'Reading under F<sub>A</sub> (ZP-A): F<sub>A</sub>(&#953;<sub>&#949;0</sub>) = &#8869; &#8744; &#949;<sub>0</sub> = S<sub>1</sub>. The Snap is the first join. Monotone and irreversible by ZP-A T3. '
             'T-SNAP is a derived theorem (ZP-E v2.0); inherited here with derived status.',
-            'Reading under F<sub>B</sub> (ZP-B): F<sub>B</sub>(&#953;<sub>&#949;0</sub>) is the discrete jump 0 &#8594; &#949;<sub>0</sub> &#8712; Q<sub>2</sub> across a clopen boundary (ZP-B T2). '
-            'Topologically irreversible by ZP-B C3.',
+            'Reading under F<sub>B</sub> (ZP-B): no continuous path in Q<sub>2</sub> runs from a '
+            'nonzero point to 0 (ZP-B C3).',
             'Reading under F<sub>C</sub> (ZP-C): F<sub>C</sub>(&#953;<sub>&#949;0</sub>) is the informational transition P &#8594; Q with E = JSD(P &#8741; Q) = 1 bit (ZP-C '
             'T1b). Irreversible: JSD(Q &#8741; P) = 1 bit &#8800; 0.',
             'Reading under F<sub>D</sub> (ZP-D): F<sub>D</sub>(&#953;<sub>&#949;0</sub>) is the orthogonal shift T(0) = e<sub>0</sub> &#8594; T(&#949;<sub>0</sub>) = e<sub>1</sub>. '
