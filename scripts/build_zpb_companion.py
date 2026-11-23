@@ -1,7 +1,8 @@
 """
-Build ZP-B Illustrated Companion (v1.22)
+Build ZP-B Illustrated Companion (v1.23)
 """
 
+import math
 import os
 from zp_utils import *
 from reportlab.graphics.shapes import Drawing, Line, String, Rect, Circle, Ellipse
@@ -45,15 +46,14 @@ def clopen_balls_diagram():
 
 def nested_balls_diagram():
     """Nested balls B(0,1) ⊃ B(0,1/2) ⊃ B(0,1/4) ⊃ B(0,1/8) converging on 0."""
-    dw, dh = TW, 3.2 * inch      # 3.2 * 72 = 230.4 pts; top=218, bottom=10.8
+    dw, dh = TW, 3.2 * inch      # 3.2 in = 230.4 pts; content top 213.2 (outer ring), bottom 10.8
     d = Drawing(dw, dh)
     cx = dw / 2
-    cy = 112  # fixed — cy - ry_outer = 112 - 101.2 = 10.8 > 5; cy + r_outer - 4 = 218 < 220.4
+    cy = 112  # fixed — cy - ry_outer = 112 - 101.2 = 10.8 > 5; cy + ry_outer = 213.2 < 220.4
 
     radii   = [110, 85, 62, 42]
     labels  = ['B(0, 1)', 'B(0, 1/2)', 'B(0, 1/4)', 'B(0, 1/8)']
-    label_x = [cx + r + 4 for r in radii]
-    label_y = [cy + r - 4  for r in radii]
+    ry      = [r * 0.92 for r in radii]
 
     fill_cols = [
         colors.HexColor('#E8F5F5'),
@@ -62,30 +62,35 @@ def nested_balls_diagram():
         colors.HexColor('#88CCCC'),
     ]
 
-    for i in range(len(radii) - 1, -1, -1):
-        d.add(Ellipse(cx, cy, radii[i], radii[i] * 0.92,
+    # Largest first, so each smaller ball is painted on top of the one containing it.
+    for i in range(len(radii)):
+        d.add(Ellipse(cx, cy, radii[i], ry[i],
                       fillColor=fill_cols[i], strokeColor=COMP_BLUE, strokeWidth=0.8))
 
-    for i, (lx, ly, lbl) in enumerate(zip(label_x, label_y, labels)):
-        d.add(String(lx - radii[i] * 2 - 10, ly, lbl, fontSize=7.5,
-                     fontName='DV-I', fillColor=COMP_BLUE))
+    # Each label sits just inside the top of its own ring, in the band above the next ring.
+    for i, lbl in enumerate(labels):
+        d.add(String(cx, cy + ry[i] - 10, lbl, fontSize=7.5, fontName='DV-I',
+                     fillColor=COMP_BLUE, textAnchor='middle'))
 
     # Amber dot at 0
     d.add(Circle(cx, cy, 6, fillColor=COMP_AMBER, strokeColor=COMP_AMBER, strokeWidth=0))
     d.add(String(cx + 9, cy - 4, '0', fontSize=9, fontName='DV-B', fillColor=COMP_AMBER))
 
-    # ε₀ label (snap boundary, between B(0,1/4) and B(0,1/8))
-    snap_r = (radii[2] + radii[3]) / 2
-    d.add(Line(cx + snap_r, cy, cx + snap_r + 18, cy + 18,
-               strokeColor=COMP_AMBER, strokeWidth=0.8))
-    d.add(String(cx + snap_r + 20, cy + 14, 'ε', fontSize=8, fontName='DV-B', fillColor=COMP_AMBER))
-    d.add(String(cx + snap_r + 28, cy + 10, '0', fontSize=6, fontName='DV-B', fillColor=COMP_AMBER))
-    d.add(String(cx + snap_r + 34, cy + 14, '(Snap boundary)', fontSize=7,
+    # ε₀ label: the Snap boundary is the ring whose radius is the threshold 2^-v at the chosen
+    # finest rung v. Here the finest rung drawn is the innermost ring, B(0, 1/8).
+    ang = math.radians(-25)
+    px, py = cx + radii[3] * math.cos(ang), cy + ry[3] * math.sin(ang)
+    ex, ey = cx + radii[0] + 14, cy - 56
+    d.add(Circle(px, py, 2, fillColor=COMP_AMBER, strokeColor=COMP_AMBER, strokeWidth=0))
+    d.add(Line(px, py, ex, ey, strokeColor=COMP_AMBER, strokeWidth=0.8))
+    d.add(String(ex + 3, ey - 3, 'ε', fontSize=8, fontName='DV-B', fillColor=COMP_AMBER))
+    d.add(String(ex + 9, ey - 7, '0', fontSize=6, fontName='DV-B', fillColor=COMP_AMBER))
+    d.add(String(ex + 16, ey - 3, '(Snap boundary)', fontSize=7,
                  fontName='DV-I', fillColor=COMP_AMBER))
 
     return d
 
-VERSION = '1.22'
+VERSION = '1.23'
 FIRST_RELEASED = 'April 2026'
 
 
