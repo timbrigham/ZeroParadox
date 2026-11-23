@@ -43,6 +43,7 @@ import common  # noqa: E402
 # defect this bundle spent its length removing. It is a gate composing a gate, not a checker
 # borrowing a peer's text utilities — which is what MIG-3 objected to.
 import check_hashes as ch  # noqa: E402  (sha8, parse_register, *_SCRIPTS dicts)
+import vendored  # noqa: E402  THE vendored-exemption definition (RR-2); never re-implemented here
 
 HERE = str(common.HERE)
 REPO = str(common.REPO)
@@ -91,35 +92,47 @@ def norm_ver(v):
 
 # --------------------------------------------------------------------------- checks
 
-# Files that legitimately carry NO Engineer's Take (permanent). Basenames.
-# Rationale: the Engineer's Take convention covers ZP-X *framework* layers; vendored/ported
-# infrastructure and dev tooling are not ZP-original content and carry none by design.
-TAKE_EXEMPT = {
-    'Basic.lean',           # removed in v3.0 reorg (kept for back-compat)
-    'NaturalOps.lean',      # verbatim VENDORED from Mathlib (Violeta Hernandez) - not ZP content
-    'NaturalOpsPow.lean',   # PORTS Violeta Hernandez's CGT proof (Apache-2.0) - not ZP-original
-    'ExtractDeps.lean',     # dev tooling (Meta/, "not framework content" per MANIFEST)
-    'Snapshot.lean',        # dev tooling (Meta/, axiom-footprint snapshot generator)
-}
-# Files that OWE a take but are explicitly deferred — backlog, NOT exempt. Tolerated
-# as a non-blocking WARN, never a silent pass. Burn this down; do NOT add new files
-# here — every new ZP-X Lean file must ship a filled take from creation.
+# Files that legitimately carry NO Engineer's Take (permanent). EXACT REPO-RELATIVE PATHS.
+# Rationale: the Engineer's Take convention covers ZP-X *framework* layers; dev tooling is not
+# ZP-original content and carries none by design. Vendored/ported files are exempt through
+# `vendored.is_vendored`, never listed here.
+# ⚠ (`RR-2`, /rely 2026-11-23) THESE WERE BASENAMES, so a take-less `Basic.lean` or `Snapshot.lean`
+# ANYWHERE in the corpus passed. Anchored to the one path each names. `Basic.lean` was dropped: its
+# only home, `ZeroParadox/Basic.lean`, was deleted in the v3.0 reorg (004f065a), and an exemption for
+# a file that does not exist can only ever exempt a file nobody reviewed. `NaturalOps.lean` and
+# `NaturalOpsPow.lean` are vendored.py's (directory and allowlist respectively).
+TAKE_EXEMPT = frozenset({
+    'ZeroParadox/Meta/ExtractDeps.lean',   # dev tooling ("not framework content" per MANIFEST)
+    'ZeroParadox/Meta/Snapshot.lean',      # dev tooling (axiom-footprint snapshot generator)
+})
+# Files that OWE a take but are explicitly deferred — backlog, NOT exempt. Tolerated as a
+# non-blocking WARN, never a silent pass. EXACT REPO-RELATIVE PATHS, for the same reason as above:
+# a basename here downgraded a FAIL to a WARN for any file of that name anywhere. Empty since the
+# five basenames it held (ZPB_PadicTree, ZPJ_AczelConn, ZPJ_Scale, ZPJ_SelfApp, ZPJ_WheelFrac) no
+# longer exist in the corpus. Do NOT add new files here — every new Lean file ships a filled take.
 # See .claude-local/notes/deferred_engineers_takes_2026-06-26.md
-DEFERRED_TAKES = {
-    'ZPB_PadicTree.lean',
-    'ZPJ_AczelConn.lean',
-    'ZPJ_Scale.lean',
-    'ZPJ_SelfApp.lean',
-    'ZPJ_WheelFrac.lean',
-}
+DEFERRED_TAKES = frozenset()
+
+# The root `LEAN_GLOB` is resolved against and the repo-relative path is computed from. A module
+# variable so the selftest can point it at a temp tree that carries the REAL `ZeroParadox/` prefix.
+LEAN_ROOT = REPO
 
 
-def take_exempt(path):
-    """True if `path` owes no take: a TAKE_EXEMPT basename, or any `Vendored` directory component
-    (Tim, ruling 81: "The "vendored" folder should be overridden as needed... None of it should
-    need a take.")."""
-    parts = path.replace('\\', '/').split('/')
-    return parts[-1] in TAKE_EXEMPT or 'Vendored' in parts[:-1]
+def _rel(path):
+    return path.replace('\\', '/').lstrip('/')
+
+
+def take_exempt(rel):
+    """True if the repo-relative `rel` owes no take: an exact TAKE_EXEMPT path, or vendored by
+    `vendored.is_vendored` - THE definition, imported, never re-implemented (Tim, ruling 81: "The
+    "vendored" folder should be overridden as needed... None of it should need a take.").
+
+    ⚠ `RR-2`: this used to test `'Vendored' in parts[:-1]`, a directory of that name at ANY depth,
+    so `ZeroParadox/Order/Vendored/X.lean` passed with no take while vendored.py, which anchors the
+    exemption to `ZeroParadox/Vendored/` because the nested form was a recorded self-exemption hole,
+    said it was not vendored."""
+    norm = _rel(rel)
+    return norm in TAKE_EXEMPT or vendored.is_vendored(norm)
 
 
 def c_engineers_takes():
@@ -134,20 +147,19 @@ def c_engineers_takes():
     # heading + body up to the next markdown heading or EOF; '#' is optional so the
     # bare 'Engineer's Take:' form is recognised too.
     take_re = r'((?:#+\s*)?Engineer.?s Take[^\n]*)\n(.*?)(?=\n#+\s|\Z)'
-    for path in glob.glob(LEAN_GLOB, recursive=True):
-        norm = path.replace('\\', '/')
-        if '.lake' in norm:
+    for full in glob.glob(os.path.join(LEAN_ROOT, LEAN_GLOB), recursive=True):
+        path = _rel(os.path.relpath(full, LEAN_ROOT))
+        if '.lake' in path:
             continue
-        base = os.path.basename(norm)
-        if take_exempt(norm):
+        if take_exempt(path):
             continue
-        txt = read(path)
+        txt = read(full)
         for pat in ('TODO (Tim)', 'TODO: Engineer'):
             if pat in txt:
                 hits.append(f'{path}: contains "{pat}"')
         if not re.search(r'Engineer.?s Take', txt, re.I):
             # no section at all
-            if base in DEFERRED_TAKES:
+            if path in DEFERRED_TAKES:
                 warn(f"Engineer's Take deferred (owed, not exempt) - {path}")
             else:
                 hits.append(f'{path}: no "Engineer\'s Take" section')
@@ -430,14 +442,36 @@ def c_untracked_pdfs():
 # published-process (`.claude/commands/**`) entries and Tim-gated questions do not block.
 #
 # The open-unit test is the one printed in DEFECTS.md's own header, applied verbatim: a heading
-# (`##` to `#####`) is open if it carries the word OPEN and none of the closing words, or says
-# PARTLY CLOSED / still OPEN; a table row whose first cell is a bold or backticked id is judged by the
-# same test over its first two cells. An open unit whose tag cannot be read cannot be graded, so it
+# (`##` to `######`) is open if it carries the word OPEN (or REOPENED) and none of the closing words,
+# or a withdrawn closure, or says PARTLY CLOSED / still OPEN; a table row whose first cell is a bold
+# or backticked id is judged by the same test over its first two cells. An open unit whose tag cannot be read cannot be graded, so it
 # FAILS CLOSED rather than being folded into a bucket.
+#
+# ⚠⚠ `RR-1` (/rely 2026-11-23): THAT TEST READ "NOT OPEN" AS "CLOSED", and for the release-blocking
+# grade that is the wrong default. `OPEN, not yet RESOLVED`, `OPEN - fix ACCEPTED, not merged`,
+# `REOPENED`, lowercase `open`, a `######` heading, a bullet, a row with its status in the third cell
+# and `REMEDIATED AT <sha>, NOT CLOSED` all carried `[content · BEDROCK]` and none blocked. So a line
+# carrying a CONTENT BEDROCK / BEDROCK-CANDIDATE tag now blocks unless it is PROVABLY CLOSED
+# (`_is_closed`, an ALLOW-LIST of closed forms), whatever the line's shape. Enumerating more open
+# spellings would be the same leg failing open on the next one nobody listed. The general open test
+# below (for counts and for untagged units) keeps its OPEN-word trigger, and is judged by the same
+# allow-list for closure.
 
 DEFECTS_REL = os.path.join('.claude-local', 'DEFECTS.md')
-CLOSING_WORDS = ('CLOSED', 'WITHDRAWN', 'RESOLVED', 'RETRACTED', 'SUPERSEDED', 'DISCHARGED', 'ACCEPTED')
-_HEADING = re.compile(r'^(#{2,5})\s+(.*)$')
+# The closed forms. UPPERCASE, matched case-sensitively: the ledger's status convention is the
+# uppercase word, and a lowercase "closed" is as likely to be prose ("the closed ball") as a status.
+CLOSED_FORMS = ('CLOSED', 'WITHDRAWN', 'RESOLVED', 'RETRACTED', 'SUPERSEDED', 'DISCHARGED')
+# The header rule's closing words, for the GENERAL open test only (`_is_open`). ACCEPTED is among
+# them there and deliberately NOT a closed form above: "fix ACCEPTED, not merged" is open.
+CLOSING_WORDS = CLOSED_FORMS + ('ACCEPTED',)
+# Every status word the ledger uses, open or closed. The FIRST one on a line is its status; anything
+# that is not a closed form (OPEN, REOPENED, ACCEPTED, REMEDIATED, FIXED, DEFERRED...) is not closure.
+_STATUS = re.compile(r'\b(PARTLY\s+CLOSED|RE-?OPEN(?:ED)?|OPEN|%s|ACCEPTED|REMEDIATED|FIXED|DEFERRED)\b'
+                     % '|'.join(CLOSED_FORMS), re.I)
+# Anything that withdraws a closure anywhere on the line.
+_UNCLOSE = re.compile(r'\b(?:NOT|NEVER)\s+(?:YET\s+)?(?:%s)\b|\bRE-?OPEN|\bPARTLY\s+CLOSED\b|\bstill\s+OPEN\b'
+                      % '|'.join(CLOSED_FORMS), re.I)
+_HEADING = re.compile(r'^(#{2,6})\s+(.*)$')
 _ROW = re.compile(r'^\|\s*(\*\*[^*|]+\*\*|`[^`|]+`)\s*\|([^|]*)\|')
 _TAG = re.compile(r'\[([a-z][a-z+-]*)\s*·\s*([^\]]+)\]')
 _SEVERITIES = ('BEDROCK', 'BEDROCK-CANDIDATE', 'ORDINARY')
@@ -462,12 +496,37 @@ def defects_path():
     return None, 'main checkout could not be derived (rev-parse exit %s)' % rc
 
 
+def _is_closed(text):
+    """True only when `text` is PROVABLY closed: its FIRST status word is an uppercase closed form,
+    and nothing on the line withdraws it (`NOT CLOSED`, `not yet RESOLVED`, `REOPENED`, `PARTLY
+    CLOSED`, `still OPEN`). No status word at all is NOT closed - absence is not closure."""
+    m = _STATUS.search(text)
+    if not m or m.group(1) not in CLOSED_FORMS:
+        return False
+    return not _UNCLOSE.search(text)
+
+
 def _is_open(text):
+    """The general open-unit test (counts, untagged units) - DEFECTS.md header's rule, verbatim,
+    plus one widening: a closing word that is withdrawn (`NOT CLOSED`, `REOPENED`, ...) no longer
+    reads as closure.
+
+    ⚠ NOT the RR-1 allow-list. Applying "not provably closed" here was measured against the live
+    ledger 2026-11-23 and turned 78 untagged tooling headings and rows into release blockers: ids
+    such as `ZPJK-OQE2-OPEN-1` put OPEN before CLOSED, and later table cells carry prose. The
+    release-blocking grade is fail-closed in `scan_defects`; an UNTAGGED unit that never says OPEN
+    or REOPENED is still not seen here, and that residual is recorded, not hidden."""
     if 'PARTLY CLOSED' in text or re.search(r'\bstill OPEN\b', text):
         return True
-    if not re.search(r'\bOPEN\b', text):
+    if not re.search(r'\bOPEN\b|\bRE-?OPENED\b', text):
         return False
+    if _UNCLOSE.search(text):
+        return True
     return not any(re.search(r'\b%s\b' % w, text) for w in CLOSING_WORDS)
+
+
+def _blocks_release(g):
+    return g is not None and g[0] == 'content' and g[1] in ('BEDROCK', 'BEDROCK-CANDIDATE')
 
 
 def _grade(tag_kind, tag_sev):
@@ -521,18 +580,24 @@ def scan_defects(text):
             continue
         if fence:
             continue
+        g = _unit_grade(ln)
         m = _HEADING.match(ln)
-        if m:
-            judged, label = m.group(2), m.group(2)
-        else:
-            r = _ROW.match(ln)
-            if not r:
+        r = None if m else _ROW.match(ln)
+        if _blocks_release(g):
+            # RR-1: ANY line shape carrying a release-blocking tag is a unit, and it is open unless
+            # provably closed. The whole line is judged, so a status in any cell or after a bullet
+            # is read.
+            if _is_closed(ln.lstrip('#|-*+ \t')):
                 continue
-            judged, label = r.group(1) + ' | ' + r.group(2), r.group(1)
-        if not _is_open(judged):
+            label = (m.group(2) if m else r.group(1) if r else ln.strip())
+        elif m or r:
+            judged = m.group(2) if m else r.group(1) + ' | ' + r.group(2)
+            if not _is_open(judged):
+                continue
+            label = m.group(2) if m else r.group(1)
+        else:
             continue
         label = label.strip()[:90]
-        g = _unit_grade(ln)
         if g is None:
             untagged.append((n, label))
         else:
@@ -685,7 +750,32 @@ def selftest():
             ('closed content BEDROCK passes', '## X-7 **CLOSED** (was OPEN) [content · BEDROCK]\n', False),
             ('open content ORDINARY passes', '## X-8 OPEN [content · ORDINARY]\n', False),
             ('open tooling BEDROCK passes', '## X-9 OPEN [tooling · BEDROCK]\n', False),
-            ('fenced heading is not a unit', '```\n## X-10 OPEN\n```\n', False)):
+            ('fenced heading is not a unit', '```\n## X-10 OPEN\n```\n', False),
+            # RR-1 mutants: each carried a content BEDROCK tag and read as CLOSED before the fix.
+            ('RR-1 OPEN, not yet RESOLVED', '## X-11 OPEN, not yet RESOLVED [content · BEDROCK]\n', True),
+            ('RR-1 fix ACCEPTED, not merged',
+             '## X-12 OPEN - fix ACCEPTED by Tim, not merged [content · BEDROCK]\n', True),
+            ('RR-1 REOPENED', '## X-13 REOPENED 2026-11-22 [content · BEDROCK]\n', True),
+            ('RR-1 lowercase open', '## X-14 open [content · BEDROCK]\n', True),
+            ('RR-1 level-6 heading', '###### X-15 OPEN [content · BEDROCK]\n', True),
+            ('RR-1 bullet', '- **X-16** OPEN [content · BEDROCK]\n', True),
+            ('RR-1 status in third cell', '| **X-17** | f | OPEN `[content · BEDROCK]` |\n', True),
+            ('RR-1 REMEDIATED, NOT CLOSED',
+             '## X-18 REMEDIATED AT 3c7fe97, NOT CLOSED [content · BEDROCK]\n', True),
+            ('RR-1 no status word at all', '## X-19 something [content · BEDROCK]\n', True),
+            ('RR-1 CLOSED then REOPENED', '## X-20 CLOSED 2026-11-01, REOPENED [content · BEDROCK]\n', True),
+            ('RR-1 lowercase closed is not closure', '## X-21 closed [content · BEDROCK]\n', True),
+            ('RR-1 bedrock prose line blocks', 'note: still pending `[content · BEDROCK-CANDIDATE]`\n', True),
+            ('RR-1 untagged REOPENED blocks', '## X-26 REOPENED 2026-11-22\n', True),
+            ('RR-1 untagged OPEN, NOT CLOSED blocks', '## X-27 OPEN, NOT CLOSED\n', True),
+            # The genuinely closed shapes the live ledger uses must still pass.
+            ('closed heading, later was OPEN',
+             '## X-22 **CLOSED 2026-10-16** - Was **OPEN 2026-10-16** [content · BEDROCK]\n', False),
+            ('closed row in second cell',
+             '| `X-23` | **CLOSED 2026-11-21** (fix abc) `[content · BEDROCK]` | f |\n', False),
+            ('closed bullet', '- **X-24** WITHDRAWN [content · BEDROCK]\n', False),
+            ('closed level-4 heading', '#### X-25 (2026-10-20): **CLOSED** - t `[content · BEDROCK-class]`\n',
+             False)):
         ok = _blocks(text) is want
         bad += 0 if ok else 1
         print('    %-34s %s' % (label, 'ok' if ok else '*** WRONG ***'))
@@ -698,29 +788,41 @@ def selftest():
     bad += 0 if ok else 1
     print('    %-34s %s' % ('missing ledger is UNREADABLE', 'ok' if ok else '*** got %s ***' % st))
 
-    # Ruling 81: a take-less file under a `Vendored` directory passes; a take-less file elsewhere
-    # still fails. Driven through c_engineers_takes over a temp tree, so the exemption is RUN.
-    print('  ENGINEER\'S TAKE (MUST SUPPRESS Vendored/, MUST FIRE elsewhere)')
+    # Ruling 81: a take-less file in THE vendored directory passes; a take-less file elsewhere still
+    # fails. Driven through c_engineers_takes over a temp tree carrying the real `ZeroParadox/`
+    # prefix, so the exemption is RUN on the repo-relative path vendored.py anchors to.
+    print('  ENGINEER\'S TAKE (MUST SUPPRESS the anchored exemptions, MUST FIRE elsewhere)')
     import tempfile
-    global LEAN_GLOB
-    real_glob = LEAN_GLOB
+    global LEAN_ROOT
+    real_root = LEAN_ROOT
     saved = (fails[:], warns[:])
     try:
         with tempfile.TemporaryDirectory() as td:
-            for label, rel, want in (
-                    ('take-less Vendored file passes', 'Vendored/X.lean', True),
-                    ('take-less non-vendored file fails', 'Order/X.lean', False)):
-                d = os.path.join(td, label.replace(' ', '_'))
+            for i, (label, rel, want) in enumerate((
+                    ('take-less Vendored file passes', 'ZeroParadox/Vendored/X.lean', True),
+                    ('take-less allowlisted file passes', 'ZeroParadox/Ordinal/NaturalOpsPow.lean', True),
+                    ('take-less Meta/Snapshot passes', 'ZeroParadox/Meta/Snapshot.lean', True),
+                    ('take-less Meta/ExtractDeps passes', 'ZeroParadox/Meta/ExtractDeps.lean', True),
+                    ('take-less non-vendored file fails', 'ZeroParadox/Order/X.lean', False),
+                    # RR-2 mutants: each passed before the fix.
+                    ('RR-2 nested Vendored/ fails', 'ZeroParadox/Order/Vendored/X.lean', False),
+                    ('RR-2 Basic.lean anywhere fails', 'ZeroParadox/Order/Basic.lean', False),
+                    ('RR-2 Snapshot.lean elsewhere fails', 'ZeroParadox/Order/Snapshot.lean', False),
+                    ('RR-2 ExtractDeps elsewhere fails', 'ZeroParadox/Order/ExtractDeps.lean', False),
+                    ('RR-2 NaturalOps.lean elsewhere fails', 'ZeroParadox/Order/NaturalOps.lean', False),
+                    ('RR-2 old deferred basename fails', 'ZeroParadox/Order/ZPJ_Scale.lean', False))):
+                d = os.path.join(td, str(i))
                 os.makedirs(os.path.dirname(os.path.join(d, rel)))
                 with open(os.path.join(d, rel), 'w', encoding='utf-8') as f:
                     f.write('theorem t : True := trivial\n')
-                LEAN_GLOB = os.path.join(d, '**', '*.lean')
+                LEAN_ROOT = d
+                fails[:] = []
                 got = c_engineers_takes()
-                ok = got is want
+                ok = got is want and (want or bool(fails))
                 bad += 0 if ok else 1
                 print('    %-34s %s' % (label, 'ok' if ok else '*** got %s ***' % got))
     finally:
-        LEAN_GLOB = real_glob
+        LEAN_ROOT = real_root
         fails[:], warns[:] = saved
 
     print('\n  selftest: %s' % ('PASS' if not bad else 'FAIL (%d)' % bad))
