@@ -1,5 +1,5 @@
 """
-Build ZP-C Illustrated Companion (v2.16)
+Build ZP-C Illustrated Companion (v2.17)
 """
 
 import os
@@ -9,7 +9,7 @@ from reportlab.graphics import renderPDF
 
 def surprisal_graph():
     """I(x) → ∞ as x → 0 curve."""
-    dw, dh = TW, 2.2 * inch
+    dw, dh = TW, 2.2 * inch      # 2.2 in = 158.4 pts; content top ~138 (∞ label), bottom 35 (origin dot)
     d = Drawing(dw, dh)
     margin_l, margin_b = 60, 40
     plot_w = dw - margin_l - 30
@@ -33,21 +33,22 @@ def surprisal_graph():
     sx = ax
     d.add(Line(sx, ay, sx, ay + plot_h - 5, strokeColor=COMP_AMBER,
                strokeWidth=1, strokeDashArray=[4, 3]))
-    d.add(String(sx - 2, ay + plot_h + 2, 'singularity', fontSize=7,
+    d.add(String(sx + 8, ay + plot_h + 2, 'singularity', fontSize=7,
                  fontName='DV-I', fillColor=COMP_AMBER))
 
     # Amber dot at origin
     d.add(Circle(sx, ay, 5, fillColor=COMP_AMBER, strokeColor=COMP_AMBER, strokeWidth=0))
 
-    # Hyperbola-like curve
+    # Surprisal curve I(x) = −log₂ x on (0, 1]: rises toward the x = 0 asymptote, 0 at x = 1.
+    # Sampled log-uniformly from x = 2^-i_max (where the curve meets the plot top) to x = 1.
+    i_max = 8.0
     pts = []
-    steps = 60
+    steps = 120
     for i in range(steps + 1):
-        t_frac = i / steps
-        x_rel = 0.02 + t_frac * 0.98
-        y_val = 1.0 / x_rel
+        i_val = i_max * (1 - i / steps)          # I runs i_max → 0
+        x_rel = 2.0 ** (-i_val)
         xp = ax + x_rel * plot_w
-        yp = ay + min(y_val / 1.0 * plot_h * 0.45, plot_h - 8)
+        yp = ay + i_val / i_max * (plot_h - 6)
         pts.append((xp, yp))
 
     for i in range(len(pts) - 1):
@@ -55,7 +56,7 @@ def surprisal_graph():
                    strokeColor=COMP_BLUE, strokeWidth=2))
 
     # Raw unicode → and ∞ work in String() with DV font
-    d.add(String(ax + 8, ay + 6,
+    d.add(String(ax + 0.25 * plot_w, ay + plot_h * 0.6,
                  'As x approaches 0, surprisal I(x) → ∞.  Zero is infinitely surprising.',
                  fontSize=7.5, fontName='DV-I', fillColor=colors.HexColor('#555555')))
     return d
@@ -177,7 +178,7 @@ def lrun_diagram():
                strokeColor=COMP_BLUE, strokeWidth=1, strokeDashArray=[4, 3]))
     return d
 
-VERSION = '2.16'
+VERSION = '2.17'
 FIRST_RELEASED = 'April 2026'
 
 
