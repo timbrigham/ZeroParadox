@@ -495,9 +495,9 @@ This entry was written to this file but never tagged; no v5.0 release or Zenodo 
 | ZP-C Information Theory | v1.41 |
 | ZP-D State Layer | v1.22 |
 | ZP-E Bridge Document | v3.88 |
-| ZP-G Category Theory | v1.34 |
+| ZP-G Category Theory | v1.35 |
 | ZP-H Categorical Bridge | v1.50 |
-| ZP-H Native Categories Addendum | v1.15 |
+| ZP-H Native Categories Addendum | v1.16 |
 | ZP-I Inside Zero | v1.45 |
 | ZP-J Self-Reference | v2.24 |
 | ZP-J AFA Addendum | v1.25 |
