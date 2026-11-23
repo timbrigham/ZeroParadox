@@ -5,9 +5,9 @@ Update this file first on any version bump. README.md Framework table is verifie
 | Document | Formal Version | Filename | Companion Version | Comp AR | Notes |
 |----------|---------------|----------|-------------------|---------|-------|
 | ZP-A Lattice Algebra | v1.39 | ZP-A_Lattice_Algebra.pdf | v1.27 | N/— | formal:aa58d527 comp:0bc052e1 |
-| ZP-B p-Adic Topology | v1.33 | ZP-B_pAdic_Topology.pdf | v1.22 | N/— | formal:f932756c comp:0bc4e221 |
+| ZP-B p-Adic Topology | v1.33 | ZP-B_pAdic_Topology.pdf | v1.23 | N/— | formal:f932756c comp:f42b0848 |
 | ZP-F The Counterexamples | v1.29 | ZP-F_The_Counterexamples.pdf | v1.26 | N/— | formal:6990414d comp:6ca61019 |
-| ZP-C Information Theory | v1.41 | ZP-C_Information_Theory.pdf | v2.16 | N/— | formal:23495088 comp:60a62003 |
+| ZP-C Information Theory | v1.41 | ZP-C_Information_Theory.pdf | v2.17 | N/— | formal:23495088 comp:1f2bddba |
 | ZP-D State Layer | v1.22 | ZP-D_State_Layer.pdf | v1.19 | N/— | formal:f547fa75 comp:d859a011 |
 | ZP-E Bridge Document | v3.88 | ZP-E_Bridge_Document.pdf | v1.48 | Y/Y | formal:ef7f573d comp:71607dc6 |
 | ZP-G Category Theory | v1.35 | ZP-G_Category_Theory.pdf | v1.22 | N/— | formal:8b3c68fb comp:6789e547 |
