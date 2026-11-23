@@ -66,9 +66,9 @@ example : Order.Coframe (Sublocale X) := inferInstance
 /-! ### § Non-vacuity — the two extreme predicated differences and their systems
 
 Predicate nothing (the identity, `⊥` in the nucleus lattice) and the system is the whole locale;
-predicate everything (`⊤`) and it collapses to the trivial one-object system. Every genuine modality —
-double negation (the classical core), the open/closed nuclei — sits strictly between, each carving out
-its own system, exactly as the conjecture says. -/
+predicate everything (`⊤`) and it collapses to the trivial one-object system. Every other modality —
+double negation (the classical core), the open/closed nuclei — sits between (`bot_le`, `le_top`; not
+always strictly: one may coincide with an end), each carving out its own system, as the conjecture says. -/
 example : (⊥ : Nucleus X) ≤ (⊤ : Nucleus X) := bot_le
 
 end

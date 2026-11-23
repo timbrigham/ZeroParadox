@@ -10,6 +10,7 @@ import ZeroParadox.Settheory.Wall
 import ZeroParadox.Information.Disjunctive
 import ZeroParadox.Information.TapeHalting
 import ZeroParadox.Computability.GapDecoder
+import ZeroParadox.Computability.Periodicity
 
 /-!
 # Machine-checked characterization index of COMPUTATION — what it can and cannot be
@@ -122,6 +123,11 @@ example (k : ℕ) : ZeroParadox.IsComputationalQuine (Nat.Partrec.Code.const k) 
 --   index-multiplicity is the Padding Lemma, which gives many indices for the SAME function —
 --   a different fact from this family, which is broad. Do not conflate them.
 #check @ZeroParadox.quine_period_is_goedel
+
+-- Statement: for every `N` some computational quine `c` has `N < encode c`,
+--   `eval c n = Part.some (n % encode c)` for every `n`, and no period `q` with `0 < q < encode c`
+--   (`ZeroParadox/Computability/Periodicity.lean`).
+#check @ZeroParadox.quine_mod_exists
 
 -- Statement: some code is both `SelfPrints` (channel `0` returns its own Gödel number) and
 --   `Universal` (channel `e + 1` agrees with the code numbered `e`).
@@ -239,6 +245,8 @@ example : IsQuineAtom (bot : MachinePhase) ∧
 --   undecidability is of `C` over all codes, and the second conjunct does not mention `f`; nothing
 --   is stated about membership at `f`'s fixed point.
 #check @ZeroParadox.quine_exists_yet_rice
+#check @ZeroParadox.class_selfOnlyAt_iff     -- Statement: for `eval`-respecting `F`, the class of `c` steps to itself only in the quotient by equal `eval` iff `eval (F c) = eval c`; both directions
+#check @ZeroParadox.pullback_not_computable  -- Statement: a property of classes up to equal `eval` that holds at some class and fails at some class is not a computable predicate when read on codes
 
 /-! ### § VI. Occurrence — what it takes for a configuration to MOVE
 
@@ -311,6 +319,15 @@ example {σ : Type*} (f : σ → Option σ) {s t : σ} (h : f s = Option.none)
 --   Alpern and Schneider, "Defining Liveness", IPL 21 (1985), p. 182; over codes that cell is undecidable
 --   (`clock_arrival_undecidable`, `ZeroParadox/DieCannotBe.lean` § XVI).
 #check @ZeroParadox.eval_dom_iff_arrives_noStepAt
+
+-- Statement: `(dialMotion Bool).aprod clockMotion = Motion.ofPartialFun carry`.
+#check @ZeroParadox.dialClock_eq_carry
+
+-- Statement: in dial × clock, `(d, n)` reaches `(d', m)` iff `d = d'` and `n ≤ m`.
+#check @ZeroParadox.dialClock_reach_iff
+
+-- Statement: `dialClockMap g s` is onto iff every `q` is reached from `s d` in `Motion.ofFun g`, for some `d`.
+#check @ZeroParadox.dialClockMap_surjective_iff
 
 /-! ### § VI-b. The pole, its swap, and what actually blocks the snap -/
 
@@ -392,6 +409,17 @@ example {σ : Type*} (f : σ → Option σ) {s t : σ} (h : f s = Option.none)
 --   of a step function `f : σ → Option σ` (§ VI), self-loops — that is the commitment.
 #check @ZeroParadox.loop_unfolds_to_infinity
 
+-- Statement: `wfPart` of `stepCoalg f` is `{s | (StateTransition.eval f s).Dom}`.
+#check @ZeroParadox.wfPart_stepCoalg_eq_eval_dom
+
+-- Statement: `s ∉ wfPart (stepCoalg f)` iff `Cofix.corec (stepCoalg f) s = natInfinity`; both
+--   directions, with no self-loop assumed.
+#check @ZeroParadox.not_mem_wfPart_iff_unfolds_to_infinity
+
+-- Statement: at the clock machine, as a predicate of the code `c`, `(c, n, 0) ∈ wfPart (stepCoalg
+--   clockStep)` is `REPred`, is not a `ComputablePred`, and its negation is not `REPred`.
+#check @ZeroParadox.clock_wfPart_re_not_computable
+
 -- Statement: with a three-valued head there IS a configuration neither halted nor stepping.
 --   `TriStep` is a deliberate counter-model and must never be used as a framework object.
 #check @ZeroParadox.tri_unstarted_state_exists
@@ -461,10 +489,18 @@ run as Mathlib's delay type `Computation Unit` through `toComp`. -/
 --   `D`. A predicate (`def … : Prop`), not a class field; the theorems that need it take it as a
 --   hypothesis.
 #check @ZeroParadox.ReachesEveryCode
--- Statement: the self-printing universal codes form an infinite set, unconditionally; and if `D`
---   reaches every code for `μ`, each has positive `μ`-mass under `D`, through pairwise disjoint events.
+-- Statement: if `D` reaches every code for `μ`: the self-printing universal codes form an infinite
+--   set, the events `{w | D w = some c}` of distinct codes are pairwise disjoint, each self-printing
+--   universal code has positive `μ`-mass under `D`, and so does their union. The first two hold
+--   without the hypothesis: `selfref_universal_infinite` (§ III) and the `example` below.
 -- Reading: Tim (2026-11-15): "So it's not just one program. It's all programs".
 #check @ZeroParadox.selfref_universal_reached
+-- Statement: for every decoder `D`, with no hypothesis on it, the events `{w | D w = some c}` of
+--   distinct codes are pairwise disjoint: Mathlib's `pairwise_disjoint_fiber` along
+--   `Option.some_injective`.
+example (D : (ℕ → Bool) → Option Nat.Partrec.Code) :
+    Pairwise (fun c c' : Nat.Partrec.Code => Disjoint {w | D w = some c} {w | D w = some c'}) :=
+  (pairwise_disjoint_fiber D).comp_of_injective (Option.some_injective _)
 -- Statement: WITNESS, for `0 < p < 1`, `gapDecode` reaches every code for `trials p hp`, and is
 --   `none` on a `trials p hp`-null set.
 #check @ZeroParadox.gapDecode_mem

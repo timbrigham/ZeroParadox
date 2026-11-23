@@ -86,6 +86,51 @@ nobody making an error. The probe above is the **non-internal** reading; droppin
 gives every-constant (74 / 65). Whichever you run, **name it** — the label is the whole point of this
 paragraph, and getting it wrong mislabels the sample by a factor of two.
 
+⚠⚠ **AN ANONYMOUS `example` IS THE UNIT TOO, AND NEITHER PROBE ABOVE REACHES IT.** An `example` is
+elaborated and discarded; it never enters the environment, so `#check` has no name to take and the
+enumeration has no constant to list. Measured 2026-11-15: a planted false gloss sitting on an
+`example` was the one planted error the blind reading missed. So, for each module in scope, also:
+
+1. Copy the module to your scratchpad. Where a line BEGINS at column 0 with `example`, or with
+   declaration modifiers and then `example` (`noncomputable`, `private`, `protected`, an attribute
+   `@[...]`), replace the word `example` with `theorem zpExample_L<n>`, keeping the modifiers, `<n>`
+   the SOURCE line number. A `noncomputable example` carries data and `theorem` rejects that
+   modifier, so write `def zpExample_L<n>` there. Grep
+   `^\s+((@\[[^\]]*\]|noncomputable|private|protected)\s+)*example\b` too: an indented `example`
+   declaration is not rewritten by this rule, so look at each hit. Append:
+
+```lean
+open Lean in
+run_cmd do
+  let env ← getEnv
+  let hits := env.constants.toList.filter fun (n, _) =>
+    (n.componentsRev.head?.map (fun c => c.toString.startsWith "zpExample_L")).getD false
+  logInfo m!"EXAMPLES PROBE RAN: {hits.length} example(s) elaborated"
+  for (n, ci) in hits do
+    logInfo m!"EXAMPLE {n} : {ci.type}"
+```
+
+2. Elaborate the COPY from the repo root — `lake env lean <scratch>\<name>_ex.lean > <scratch>\<name>_ex.log 2>&1`
+   — and read the log whole.
+3. **Reconcile by NAME:** every rewritten line `<n>` comes back as `zpExample_L<n>`, or you say why
+   not. A column-0 line of PROSE that starts with "example" produces no constant (say so); a
+   data-valued `example` fails with `type of theorem … is not a proposition` (rewrite that one line
+   as `noncomputable def` and re-run); anything else is an elaboration failure in the copy — read the
+   error, never drop the line.
+4. Hand the `EXAMPLE` lines over in the declaration-name list, MARKED as examples with their source
+   lines; the names exist only in your copy, so the agent falsifies them against the source line.
+   ⚠ **The header line is the evidence the probe RAN;** NO header line means the probe did not run.
+   `EXAMPLES PROBE RAN: 0` says only that no rewritten line produced a constant. Read it as "this
+   module has no `example`" ONLY after step 3 has accounted for every rewritten line by name as
+   prose AND a line-start grep for `example` at any indentation, with or without modifiers
+   (`^\s*((@\[[^\]]*\]|noncomputable|private|protected)\s+)*example\b`), returns nothing or only
+   those prose lines. Never report the not-run and the zero states alike.
+
+CONTROL: on `ZeroParadox/Ordinal/UniverseZoom.lean` every column-0 `example` line comes back by name
+with its elaborated type; on `ZeroParadox/Ordinal/SnapMetaLattice.lean` the six `noncomputable
+example` lines come back by name too, beside the two plain ones; on
+`ZeroParadox/Ordinal/Goodstein.lean` (no `example`) the header prints with nothing under it.
+
 If you did not enumerate by name, **say so plainly** — the agent's job is then to scope its answer,
 not to guess a denominator.
 

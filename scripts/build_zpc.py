@@ -1,11 +1,11 @@
 """
-Build ZP-C: Information Theory (v1.39)
+Build ZP-C: Information Theory (v1.41)
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.39'
+VERSION = '1.41'
 FIRST_RELEASED = 'April 2026'
 
 def build():
@@ -74,10 +74,11 @@ def build():
     ]))
     E.append(sp(4))
     E.append(label_box('Definition D4 — Discrete Surprisal Function I', [
-        'For x &#8712; Q<sub>2</sub> with x &#8800; 0 and P(x) > 0:',
-        'I(x)  =  &#8722;log<sub>2</sub> P(x)',
+        'For x &#8712; Q<sub>2</sub> with x &#8800; 0:',
+        'I(x)  =  &#8722;log<sub>2</sub> P(x),   where   P(x)  :=  P(B(0, |x|<sub>2</sub>))',
+        'P(x) is the mass of the closed ball about 0 of radius |x|<sub>2</sub>, not the mass of the point x: P has no atoms, so a single point has mass 0 (for the point 0, haarZp_singleton_zero). For |x|<sub>2</sub> &#8804; 1, P(x) = |x|<sub>2</sub> = 2<super>&#8722;v</super> with v = v<sub>2</sub>(x) (haarZp_ball, ZeroParadox/Valuation/PadicHaar.lean), so I(x) = v<sub>2</sub>(x); for |x|<sub>2</sub> > 1 the ball contains Z<sub>2</sub>, so P(x) = 1 and I(x) = 0.',
         'As v<sub>2</sub>(x) &#8594; +&#8734; (x approaches 0 in the 2-adic metric), I(x) &#8594; +&#8734;: states 2-adically close to 0 are informationally extreme.',
-        'The probability measure P on Q<sub>2</sub> \\ {0} is the branching measure induced by the binary ball hierarchy of Q<sub>2</sub> (RP-2 below): at each level k, the two sub-balls of B(0, 2<super>&#8722;k</super>) each receive half the probability mass of their parent ball.',
+        'The probability measure P on Q<sub>2</sub> \\ {0} is the branching measure induced by the binary ball hierarchy of Q<sub>2</sub> (RP-2 below): the level-0 ball B(0, 1) = Z<sub>2</sub> carries mass 1, and at each level k &#8805; 0 the two sub-balls of B(0, 2<super>&#8722;k</super>) each receive half the probability mass of their parent ball. On Z<sub>2</sub> the Haar probability measure haarZp gives each ball about 0 the same mass (haarZp_ball).',
     ]))
     E.append(sp(4))
     E.append(label_box('Principle RP-2 — Branching Measure on Q₂ \\ {0}', [
@@ -103,7 +104,7 @@ def build():
     E.append(sp(4))
     E.append(label_box('Theorem T2 — DF Exhibits Non-Conservative Behaviour on Infinite Sequences Approaching 0', [
         'DF is conservative on all finite loops (C = 0 by telescoping). On infinite sequences through the ball hierarchy approaching 0, the circulation diverges: C(DF, &#963;) &#8594; +&#8734;.',
-        'Proof: Let &#963; = (x<sub>1</sub>, x<sub>2</sub>, &#8230;) with x<sub>i</sub> = 2<super>i</super>. Then P(x<sub>i</sub>) = 2<super>&#8722;i</super>, so I(x<sub>i</sub>) = i. Partial circulation C<sub>n</sub> = I(x<sub>n+1</sub>) &#8722; I(x<sub>1</sub>) = n. As n &#8594; &#8734;: C(DF, &#963;) = +&#8734;.',
+        'Proof: Let &#963; = (x<sub>1</sub>, x<sub>2</sub>, &#8230;) with x<sub>i</sub> = 2<super>i</super>. Then P(x<sub>i</sub>) = P(B(0, 2<super>&#8722;i</super>)) = 2<super>&#8722;i</super> (D4), so I(x<sub>i</sub>) = i. Partial circulation C<sub>n</sub> = I(x<sub>n+1</sub>) &#8722; I(x<sub>1</sub>) = n. As n &#8594; &#8734;: C(DF, &#963;) = +&#8734;.',
         'Divergence arises from the unbounded depth of the 2-adic ball hierarchy (ZP-B). Finite conservation and infinite divergence are distinct regimes; no contradiction arises.',
         'Status: DERIVED from ZP-B ball hierarchy structure and branching measure on Q<sub>2</sub>. OQ-C1 closed. <font name="DV">&#10003;</font>',
     ]))

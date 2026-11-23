@@ -1,5 +1,5 @@
 """
-Build ZP-D Illustrated Companion (v1.18)
+Build ZP-D Illustrated Companion (v1.19)
 """
 
 import os
@@ -88,7 +88,7 @@ def t_map_diagram():
 
     return d
 
-VERSION = '1.18'
+VERSION = '1.19'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -132,8 +132,9 @@ def build():
         Paragraph('ZP Companion | ' + version_line(FIRST_RELEASED, VERSION), CS['meta']),
         Paragraph(
             'This companion explains the ideas in plain language with diagrams and real-world '
-            'examples. It is not the formal document — every claim here restates a result already '
-            'proved in the corresponding technical document. Consult that document for the '
+            'examples. It is not the formal document — its results are proved in ZP-D State '
+            'Layer or come from the other documents, papers and named theorems it cites, and a '
+            'commitment or reading it mentions is not a result. Consult ZP-D for the '
             'authoritative mathematics.',
             CS['disc']),
     ]

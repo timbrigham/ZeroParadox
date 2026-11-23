@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP Addendum: The Choice-Free Core
-Version 1.19 | November 2026
+Version 1.22 | November 2026
 Framework-wide note; reads after the Foreword.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.19'
+VERSION = '1.22'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard ──
@@ -174,7 +174,7 @@ def build():
         '"Predicative Aspects of Order Theory in Univalent Foundations", arXiv:2102.08812, '
         'Cor 39(iii)-(iv); Booij&#8211;Escard&#243;&#8211;Lumsdaine&#8211;Shulman, '
         '"Parametricity, automorphisms of the universe, and excluded middle", arXiv:1701.05617, '
-        'Thm 3, and Thm 5 (Simpson), whose proof technique the reduction uses) &#8212; the latter sitting on the keystone rather than on an imported order '
+        'Thm 3, and Thm 5 (Simpson), whose proof technique the reduction uses) &#8212; the latter sitting on the fixed-point-free principle that fixedPointFree_of_nontrivial states, rather than on an imported order '
         'instance; &#167; IV\'s cases 3 to 5 are reductions for principles proved with bare '
         'classicals in ZeroParadox/Die.lean. Each is a statement about the '
         '<b>principle</b>: re-proving it constructively would '
@@ -206,12 +206,23 @@ def build():
     E.append(remark_box(
         'Remark &#8212; Why this matters',
         [
-            'The Zero Paradox argues that the foundational axioms are not freely chosen but forced by '
-            'the structure of the bottom element. It would be a tension if the framework\'s own '
+            'The Zero Paradox argues that one narrow host-theory commitment is forced rather than '
+            'chosen: with membership as the step, a host of the Quine-atom role cannot be well-founded '
+            '(quineAtomHost_not_wellFounded), so Foundation-freeness is forced for that host, while with '
+            'AbstractSelfApp\'s self-application as the step every ZPSemilattice has an occupant, its &#8869; '
+            '(trivialSelfApp, selfApp_quine_role_iff); the host '
+            'requirements themselves are argued, not proved (CLAIMS.md, Tier 4). Its other foundational '
+            'commitments are chosen, not derived (CLAIMS.md, Tier 5): AX-B1, the one substantive '
+            'modelling commitment, among them, and AFA is adopted among the anti-foundation axioms '
+            'rather than forced (ZP-E Remark R-AFA). It would be a tension if the framework\'s own '
             'central results leaned on the Axiom of Choice &#8212; the canonical free, non-constructive '
-            'selection. They do not. T-SNAP is axiom-free; the keystone is choice-free. The '
-            '"forced, not chosen" thesis is internally consistent at the level of what the framework '
-            'actually asserts. Where choice appears it is often the supporting library\'s classical '
+            'selection. The core results do not. T-SNAP is axiom-free, and so is ZP-J\'s Quine-atom '
+            'self-reference keystone (bot_is_quine_atom, quine_atom_unique; ZeroParadox/AxiomProfile.lean '
+            '&#167; I), and so is the diagonal engine, lawvere_fixedpoint (ZeroParadox/Settheory/Wall.lean). '
+            'The choice sits on the step that supplies a fixed-point-free map, fixedPointFree_of_nontrivial '
+            '(ZeroParadox/Category/Lawvere.lean), which carries the framework\'s own classical, essential on the '
+            'premise of Section III; over decidable equality the same step is propext-only '
+            '(fixedPointFree_of_nontrivial_decidable). Where choice appears it is often the supporting library\'s classical '
             'foundation showing through the realizations rather than an assumption of the argument. '
             'The reductions Section III points at are the exception on a different axis: they are about '
             '<i>necessity</i>, not provenance. Some of their principles are proved with the '

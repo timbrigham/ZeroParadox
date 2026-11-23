@@ -9,11 +9,14 @@ set_option maxHeartbeats 400000
 
 ## Engineer's Take
 
-This is a hard one and inherently incomplete. The zero states correspond across domains, all of
-which are vantage points to the same non returnable, 'empty' object. This is the same snap and
-same verdict described by the original depth definitions in ZPH.
+This is a hard one and inherently incomplete. The zero states correspond across domains. Bottom
+is a role, and each domain has its own zero playing it, not one shared object. In the information
+domain you can't get back to it once you leave. In the module category it is a zero object, and
+in the topological one everything maps into it. This is the same snap and same verdict described
+by the original depth definitions in ZPH.
 
-Identification with the same symbology is a commitment of this framework.
+Using the same symbol for all of them is notation. Saying they are literally one object across
+categories isn't a commitment, it's ill-typed.
 
 ---
 

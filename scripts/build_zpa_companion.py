@@ -1,5 +1,5 @@
 """
-Build ZP-A Illustrated Companion (v1.26)
+Build ZP-A Illustrated Companion (v1.27)
 Covers: join-semilattice, partial order, Hasse diagram, one-directional transitions,
 monotonicity (T3), bottom-as-constituent (T2), four concrete examples, and CC-2.
 """
@@ -89,7 +89,7 @@ def transition_diagram():
                  fontName='DV-B', fillColor=RED))
     return d
 
-VERSION = '1.26'
+VERSION = '1.27'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -124,8 +124,9 @@ def build():
           Paragraph('ZP Companion | ' + version_line(FIRST_RELEASED, VERSION), CS['meta']),
           Paragraph(
               'This companion explains the ideas in plain language with diagrams and real-world '
-              'examples. It is not the formal document — every claim here restates a result '
-              'already proved in the corresponding technical document. Consult that document for '
+              'examples. It is not the formal document — its results are proved in ZP-A Lattice '
+              'Algebra or come from the other documents, papers and named theorems it cites, and a '
+              'commitment or reading it mentions is not a result. Consult ZP-A for '
               'the authoritative mathematics.', CS['disc'])]
 
     # What Is ZP-A Doing?

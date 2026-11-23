@@ -23,8 +23,8 @@ framework already has, and that is fine. The movement of the thought process its
 
 ## Formal Overview (AI-assisted)
 
-The pole is the two-element type `Pole = {zero, infty}` — the framework's self-dual point `0 = ∞`
-(`rInv_swaps`). A *representation of the poles to each other* is an endofunction `Pole → Pole`: where each
+The pole is the two-element type `Pole = {zero, infty}`; its reading: `ZeroParadox/Valuation/PoleCorners.md`.
+A *representation of the poles to each other* is an endofunction `Pole → Pole`: where each
 pole is sent. There are **exactly four** (`card_representations : Fintype.card (Pole → Pole) = 4`), and the
 four named corners **exhaust** them (`four_corners_exhaustive`):
 
@@ -56,7 +56,7 @@ namespace ZeroParadox
 
 -- [ZP port] Lean 4.35: Mathlib's `Fintype` deriving handler needs the pre-4.35 defeq transparency.
 set_option backward.isDefEq.respectTransparency false in
-/-- The pole: the two-element type `{0, ∞}` — the framework's self-dual point `0 = ∞`. -/
+/-- The pole carrier: the two-element type `{0, ∞}`, the two points inversion exchanges. -/
 inductive Pole where
   | zero
   | infty
@@ -439,8 +439,8 @@ def dnegLayer (P : Prop) : Pole → Prop
   | infty => ¬¬¬P
 
 /-- `Statement:` the negation of `dnegLayer P q` is equivalent to `dnegLayer P (swap q)`.
-    `Reading:` on the two-element regular layer ONLY. Negation on `Prop` is not an involution there
-    (`P ↦ ¬¬P` is one-way, `dnegNucleus`); this is `swap`'s shape at a different level, never an
+    `Reading:` on the two-element regular layer ONLY. Off it, negation on `Prop` is an involution only
+    given excluded middle (`em_iff_all_props_regular`; constructively `P ↦ ¬¬P` is one-way, `dnegNucleus`); this is `swap`'s shape at a different level, never an
     identity, as `ZeroParadox/Computability/Occurrence.lean` § IV-c fences `flipPoles`. -/
 theorem not_dnegLayer_iff (P : Prop) (q : Pole) : ¬ dnegLayer P q ↔ dnegLayer P (swap q) := by
   cases q
@@ -527,7 +527,7 @@ example : @Monotone Pole Pole poleView poleView cornerZero ∧
   ⟨fun _ _ _ => Nat.le_refl _, fun _ _ _ => Nat.le_refl _,
     fun _ _ _ => Nat.le_refl _, fun _ _ _ => Nat.le_refl _⟩
 
--- Reading: a case of the rigidity of well-ordered (so finite) chains, Mathlib
+-- Reading: a case of the rigidity of well-ordered chains (finite ones are well-ordered), Mathlib
 -- `OrderIso.unique_of_wellFoundedLT` and `OrderIso.subsingleton_of_wellFoundedLT'`; here for the
 -- non-instance order `poleView`, as bijective plus a direction, with the CONTROL above pricing bijectivity.
 

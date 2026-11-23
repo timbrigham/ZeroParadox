@@ -4,10 +4,10 @@ name: Complete Project
 # CI workflows (Complete Project, Verification suite, Axiom Ledger, Minimal Core) share one
 # cadence there, so a pull request into main always carries all four results.
 # The weekly scheduled run is the COLD BUILD: it skips the Lake build cache restore below, and
-# the report is passed `--require-cold` with the number of `.lean` files under `ZeroParadox/`,
-# so the run fails if its log shows any corpus module `Replayed`, or a number of distinct
-# `ZeroParadox.*` modules `Built` other than that file count. Its footprint count is the one to
-# hold cached runs against (see CORPUS_FOOTPRINT_FLOOR).
+# the report is passed `--require-cold` with a file naming the module of every `.lean` file
+# under `ZeroParadox/`, so the run fails if its log shows any corpus module `Replayed`, any of
+# those modules without a `Built` line, or a `Built ZeroParadox.*` module not among them. Its
+# footprint count is the one to hold cached runs against (see CORPUS_FOOTPRINT_FLOOR).
 on:
   push:
     branches:
@@ -108,16 +108,19 @@ jobs:
           # pipefail IS required here: without it the step inherits tee's status and a
           # failing report is silently green.
           # On the weekly cold build only, the report also fails if any corpus module was
-          # `Replayed`, or if the distinct `ZeroParadox.*` modules `Built` do not number the
-          # `.lean` files under `ZeroParadox/` (the submodules lakefile.toml's
-          # `globs = ["ZeroParadox.+"]` builds; the root module ZeroParadox.lean printed no
-          # `Built` line in cold job 131631685723, so it is not counted). "Cold" is read
-          # from the log rather than assumed.
+          # `Replayed`, if a module named in expected_modules.txt has no `Built` line, or if
+          # a `Built ZeroParadox.*` module is not named there, and it lists both kinds.
+          # The names come from the `.lean` paths under `ZeroParadox/` (path to dotted
+          # module name: drop `.lean`, `/` becomes `.`). The root module ZeroParadox.lean
+          # sits outside that directory and is in neither set, so the check does not depend
+          # on whether lakefile.toml's glob builds it. "Cold" is read from the log rather
+          # than assumed.
           COLD=()
           if [ "${{ github.event_name }}" = "schedule" ]; then
-            CORPUS_MODULES=$(find ZeroParadox -type f -name '*.lean' | wc -l)
-            echo "corpus submodules in the checkout: ${CORPUS_MODULES}"
-            COLD=(--require-cold "${CORPUS_MODULES}")
+            find ZeroParadox -type f -name '*.lean' \
+              | sed -e 's/\.lean$//' -e 's#/#.#g' | LC_ALL=C sort > expected_modules.txt
+            echo "corpus submodules in the checkout: $(wc -l < expected_modules.txt)"
+            COLD=(--require-cold expected_modules.txt)
           fi
           set -o pipefail
           python3 scripts/corpus_verification_report.py build.log "${BUILD_RC}" \

@@ -1,9 +1,13 @@
 -- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): ⊥ of `ℕ → Bool`, the never-firing tape, inside the support of `trials p hp` and in the closure of its Martin-Löf random firing tapes, with the waiting time read as a limit and as a value. Curated results indexed in ZeroParadox/MANIFEST.md.
 import ZeroParadox.Information.TapeHalting
+import ZeroParadox.Valuation.PadicVladimirov
+import Mathlib.Probability.Distributions.Geometric
 import Mathlib.MeasureTheory.Measure.Support
 import Mathlib.Topology.Instances.ENat
 import Mathlib.Analysis.SpecialFunctions.Sigmoid
 import Mathlib.Order.Filter.Germ.Basic
+import Mathlib.Analysis.SpecialFunctions.Log.Base
+import Mathlib.MeasureTheory.Measure.Haar.Unique
 import Mathlib.Tactic
 
 /-!
@@ -655,6 +659,204 @@ theorem germ_top_ne_bot (p : NNReal) (hp : p ≤ 1) :
   obtain ⟨w, hw⟩ := this.exists
   simp at hw
 
+/-! ### § X. The depth law: Haar measure on ℤ_[2] and `trials` through the digit tape
+`Reading:` textbook mathematics, no novelty: the waiting time of a Bernoulli tape is geometric, and
+on ℤ_[2] the 2-adic valuation under Haar measure is geometric with ratio `1 / 2`. Haar measure on ℤ_p
+is the law of the i.i.d. uniform digit series (Kabluchko–Marynych, arXiv:2311.05369, eq. (2.1)); § X
+proves only its depth marginal, through `padicTape`; that
+`padicTape` carries Haar measure to `trials 2⁻¹` is not stated here and is deferred. -/
+
+section DepthLaw
+
+/-- `Statement:` `(n : ℕ∞) ≤ q2Val x ↔ 2 ^ n ∣ x`. -/
+theorem natCast_le_q2Val_iff (x : ℤ_[2]) (n : ℕ) :
+    (n : ℕ∞) ≤ q2Val x ↔ (2 : ℤ_[2]) ^ n ∣ x := by
+  rw [q2Val_eq_wait_padicTape, natCast_le_waitENat_iff, ofNat_le_det_padicTape]
+
+/-- `Statement:` `‖x‖ ≤ 2 ^ (-n) ↔ 2 ^ n ∣ x` on ℤ_[2]. -/
+theorem norm_le_two_pow_iff_dvd (x : ℤ_[2]) (n : ℕ) :
+    ‖x‖ ≤ ((2 : ℕ) : ℝ) ^ (-(n : ℤ)) ↔ (2 : ℤ_[2]) ^ n ∣ x := by
+  rw [PadicInt.norm_le_pow_iff_mem_span_pow, Ideal.mem_span_singleton]; simp
+
+/-- `Statement:` `{x | q2Val x = k}` is the shell `measure_ball_diff` measures. -/
+theorem q2Val_preimage_eq_shell (k : ℕ) :
+    {x : ℤ_[2] | q2Val x = k} =
+      {x : ℤ_[2] | ‖x‖ ≤ ((2 : ℕ) : ℝ) ^ (-(k : ℤ))} \
+        {x : ℤ_[2] | ‖x‖ ≤ ((2 : ℕ) : ℝ) ^ (-((k + 1 : ℕ) : ℤ))} := by
+  ext x
+  simp only [Set.mem_ofPred_eq, Set.mem_sdiff, norm_le_two_pow_iff_dvd, ← natCast_le_q2Val_iff]
+  induction q2Val x using ENat.recTopCoe with
+  | top => simp
+  | coe v => norm_cast; omega
+
+/-- `Statement:` `haarZp {x | q2Val x = k} = (2 ^ k)⁻¹ - (2 ^ (k + 1))⁻¹`, from `measure_ball_diff`. -/
+theorem haarZp_q2Val_eq (k : ℕ) :
+    haarZp (p := 2) {x : ℤ_[2] | q2Val x = k} =
+      ((2 : ENNReal) ^ k)⁻¹ - ((2 : ENNReal) ^ (k + 1))⁻¹ := by
+  rw [q2Val_preimage_eq_shell]
+  exact_mod_cast measure_ball_diff (p := 2) k
+
+/-- `Statement:` `{w | det w = ofNat n}` is the cylinder of `0ⁿ1`. -/
+theorem det_eq_ofNat_set_eq_cylinder (n : ℕ) :
+    {w : ℕ → Bool | det w = ofNat n} = PiNat.cylinder (fun i => decide (i = n)) (n + 1) := by
+  ext w
+  simp only [Set.mem_ofPred_eq, det_eq_ofNat_iff, PiNat.cylinder]
+  constructor
+  · rintro ⟨hn, hlt⟩ i hi
+    rcases Nat.lt_succ_iff_lt_or_eq.1 hi with h | rfl
+    · simp [hlt i h, h.ne]
+    · simp [hn]
+  · intro h
+    refine ⟨by simpa using h n (by omega), fun k hk => by simpa [hk.ne] using h k (by omega)⟩
+
+/-- `Statement:` `trials p hp {w | det w = ofNat n} = (1 - p) ^ n * p`, every `p ≤ 1`. -/
+theorem trials_det_eq_ofNat (p : NNReal) (hp : p ≤ 1) (n : ℕ) :
+    trials p hp {w | det w = ofNat n} = ((1 - p : NNReal) : ENNReal) ^ n * p := by
+  rw [det_eq_ofNat_set_eq_cylinder, trials_cyl, Finset.prod_range_succ]
+  simp only [decide_true, ite_true]
+  congr 1
+  trans ∏ _i ∈ Finset.range n, ((1 - p : NNReal) : ENNReal)
+  · exact Finset.prod_congr rfl fun i hi => by simp [(Finset.mem_range.1 hi).ne]
+  · rw [Finset.prod_const, Finset.card_range]
+
+/-- `Statement:` for `0 < p ≤ 1`, the first-hit law of `trials p hp` is Mathlib's
+    `geometricMeasure`: `trials p hp {w | det w = ofNat n} = geometricMeasure p {n}`. -/
+theorem trials_det_eq_geometric (p : NNReal) (hp : p ≤ 1) (hp0 : p ≠ 0) (n : ℕ) :
+    trials p hp {w | det w = ofNat n} = ProbabilityTheory.geometricMeasure ⟨p, p.2, hp⟩ {n} := by
+  rw [trials_det_eq_ofNat,
+    ProbabilityTheory.geometricMeasure_singleton (by simpa [Subtype.ext_iff] using hp0)]
+  simp only
+  rw [ENNReal.ofReal_mul (pow_nonneg (by simpa using hp) n), ENNReal.ofReal_pow (by simpa using hp),
+    ENNReal.ofReal_coe_nnreal, ← NNReal.coe_one, ← NNReal.coe_sub hp, ENNReal.ofReal_coe_nnreal]
+
+/-- `Statement:` the Haar mass of the ℤ_[2] points whose digit tape first fires at `n` equals the
+    `trials 2⁻¹` mass of the tapes that first fire at `n`. -/
+theorem haarZp_padicTape_det_eq_trials (n : ℕ) :
+    haarZp (p := 2) (padicTape ⁻¹' {w | det w = ofNat n}) =
+      trials 2⁻¹ (by norm_num) {w | det w = ofNat n} := by
+  have hset : padicTape ⁻¹' {w | det w = ofNat n} = {x : ℤ_[2] | q2Val x = n} := by
+    ext x
+    simp only [Set.mem_preimage, Set.mem_ofPred_eq, q2Val_eq_wait_padicTape]
+    constructor
+    · intro h; rw [h, waitENat_ofNat]
+    · intro h; rw [← waitENat_ofNat] at h; exact waitENat.injective h
+  rw [hset, haarZp_q2Val_eq, trials_det_eq_ofNat]
+  have h12 : ((1 - 2⁻¹ : NNReal) : ENNReal) = 2⁻¹ := by
+    rw [ENNReal.coe_sub, ENNReal.coe_one, ENNReal.coe_inv two_ne_zero, ENNReal.coe_ofNat,
+      ENNReal.one_sub_inv_two]
+  rw [h12, ENNReal.coe_inv two_ne_zero, ENNReal.coe_ofNat, ENNReal.inv_pow]
+  refine ENNReal.sub_eq_of_eq_add (by simp) ?_
+  rw [pow_succ, ENNReal.mul_inv (Or.inl (by simp)) (Or.inl (by simp)), ← ENNReal.inv_pow, ← mul_add,
+    ENNReal.inv_two_add_inv_two, mul_one]
+
+-- Statement: CONTROL, at `p = 0` the first-hit law is not `geometricMeasure`'s: Mathlib puts mass
+-- `1` at `0` there, and `trials 0` gives `{w | det w = ofNat 0}` mass `0`.
+example : trials 0 zero_le_one {w | det w = ofNat 0} = 0 := by
+  rw [trials_det_eq_ofNat]; simp
+
+/-- `Statement:` `haarZp {x | q2Val x = k} = 2⁻¹ ^ (k + 1)`. -/
+theorem haarZp_q2Val_eq_inv_two_pow (k : ℕ) :
+    haarZp (p := 2) {x : ℤ_[2] | q2Val x = k} = (2⁻¹ : ENNReal) ^ (k + 1) := by
+  rw [haarZp_q2Val_eq, ENNReal.inv_pow, ENNReal.inv_pow]
+  refine ENNReal.sub_eq_of_eq_add (by simp) ?_
+  rw [pow_succ, ← mul_add, ENNReal.inv_two_add_inv_two, mul_one]
+
+/-- `Statement:` the real mass of `{x | q2Val x = k}` under `haarZp` is `(1 / 2) ^ (k + 1)`. -/
+theorem haarZp_q2Val_toReal (k : ℕ) :
+    (haarZp (p := 2) {x : ℤ_[2] | q2Val x = k}).toReal = ((1 : ℝ) / 2) ^ (k + 1) := by
+  rw [haarZp_q2Val_eq_inv_two_pow, ENNReal.toReal_pow, ENNReal.toReal_inv]; norm_num
+
+/-- `Statement:` the surprisal `-log₂` of `{x | q2Val x = n}` under `haarZp` is `n + 1` bits. -/
+theorem haarZp_q2Val_surprisal (n : ℕ) :
+    -Real.logb 2 (haarZp (p := 2) {x : ℤ_[2] | q2Val x = n}).toReal = n + 1 := by
+  rw [haarZp_q2Val_toReal, Real.logb_pow, one_div, Real.logb_inv,
+    Real.logb_self_eq_one one_lt_two]
+  push_cast; ring
+
+/-- `Statement:` the Shannon entropy `∑ₙ pₙ · (-log₂ pₙ)` of the depth law `pₙ = haarZp {q2Val = n}`
+    is `2` bits. The form `H = -K ∑ pᵢ log pᵢ` is Shannon, "A Mathematical Theory of Communication",
+    Bell System Technical Journal 27 (1948), § 6, Theorem 2, here with `K = 1 / log 2`. -/
+theorem haarZp_q2Val_entropy :
+    HasSum (fun n : ℕ => (haarZp (p := 2) {x : ℤ_[2] | q2Val x = n}).toReal *
+      -Real.logb 2 (haarZp (p := 2) {x : ℤ_[2] | q2Val x = n}).toReal) 2 := by
+  simp only [haarZp_q2Val_surprisal]
+  simp only [haarZp_q2Val_toReal]
+  have h1 := hasSum_coe_mul_geometric_of_norm_lt_one (𝕜 := ℝ) (r := 1 / 2) (by norm_num)
+  have := (h1.add hasSum_geometric_two).mul_left (1 / 2)
+  convert this using 1
+  · funext n; ring
+  · norm_num
+
+/-- `Statement:` doubling `x ↦ 2 * x` on ℤ_[2] is a measurable embedding. -/
+theorem measurableEmbedding_two_mul :
+    MeasurableEmbedding (fun x : ℤ_[2] => 2 * x) :=
+  ((continuous_const.mul continuous_id).isClosedEmbedding
+    (fun _ _ h => mul_left_cancel₀ two_ne_zero h)).measurableEmbedding
+
+/-- `Statement:` the halving, every `S`: `haarZp (2 * S) = 2⁻¹ * haarZp S`. The pulled-back measure
+    `S ↦ haarZp (2 * S)` is translation invariant with total mass `haarZp (2ℤ_[2]) = 2⁻¹`, so Haar
+    uniqueness (`Measure.isAddLeftInvariant_eq_smul`) makes it `2⁻¹ • haarZp`. -/
+theorem haarZp_image_two_mul (S : Set ℤ_[2]) :
+    haarZp (p := 2) ((fun x : ℤ_[2] => 2 * x) '' S) = 2⁻¹ * haarZp (p := 2) S := by
+  set ν := Measure.comap (fun x : ℤ_[2] => 2 * x) (haarZp (p := 2)) with hνdef
+  have hinv : ν.IsAddLeftInvariant := by
+    refine ⟨fun a => ?_⟩
+    ext T hT
+    rw [Measure.map_apply (measurable_const_add a) hT, hνdef,
+      measurableEmbedding_two_mul.comap_apply, measurableEmbedding_two_mul.comap_apply]
+    have hset : (fun x : ℤ_[2] => 2 * x) '' ((fun x => a + x) ⁻¹' T) =
+        (fun y => 2 * a + y) ⁻¹' ((fun x : ℤ_[2] => 2 * x) '' T) := by
+      ext y; constructor
+      · rintro ⟨x, hx, rfl⟩; exact ⟨a + x, hx, by ring⟩
+      · rintro ⟨s, hs, h⟩
+        exact ⟨s - a, by simpa using hs, by linear_combination h⟩
+    rw [hset]; exact measure_preimage_add _ _ _
+  have huniv : ν Set.univ = 2⁻¹ := by
+    rw [hνdef, measurableEmbedding_two_mul.comap_apply, Set.image_univ]
+    have hr : Set.range (fun x : ℤ_[2] => 2 * x) =
+        {x : ℤ_[2] | ‖x‖ ≤ ((2 : ℕ) : ℝ) ^ (-((1 : ℕ) : ℤ))} := by
+      ext x; rw [Set.mem_ofPred_eq, norm_le_two_pow_iff_dvd, pow_one, Set.mem_range]
+      exact ⟨fun ⟨y, hy⟩ => ⟨y, hy.symm⟩, fun ⟨c, hc⟩ => ⟨c, hc.symm⟩⟩
+    rw [hr, haarZp_ball]; simp
+  have := hinv
+  have : IsFiniteMeasure ν := ⟨by rw [huniv]; simp⟩
+  have hν := Measure.isAddLeftInvariant_eq_smul ν (haarZp (p := 2))
+  have hc : ((ν.addHaarScalarFactor (haarZp (p := 2)) : NNReal) : ENNReal) = 2⁻¹ := by
+    have h := congrArg (fun m : Measure ℤ_[2] => m Set.univ) hν
+    simp only [Measure.smul_apply, measure_univ, huniv] at h
+    rw [h]; simp
+  rw [← measurableEmbedding_two_mul.comap_apply, ← hνdef, hν, Measure.smul_apply,
+    ENNReal.smul_def, hc, smul_eq_mul]
+
+/-- `Statement:` `haarZp {0} = 2⁻¹ * haarZp {0}` on ℤ_[2]: the halving at `S = {0}`, which
+    doubling fixes. -/
+theorem haarZp_zero_eq_half :
+    haarZp (p := 2) {(0 : ℤ_[2])} = 2⁻¹ * haarZp (p := 2) {(0 : ℤ_[2])} := by
+  rw [← haarZp_image_two_mul, Set.image_singleton, mul_zero]
+
+/-- `Statement:` `haarZp {0} = 0` on ℤ_[2], from `haarZp_zero_eq_half` and finiteness.
+    `Reading:` T. Williamson, "How probable is an infinite sequence of heads?", *Analysis* 67(3)
+    (2007) 173–180, eqs (4)–(7), pp. 175–176, has the same shape: an event equal in probability to its
+    own half (6) has probability 0 (7), "the probability of an infinite sequence of heads is 0", and
+    "Regularity fails". On `ℕ → Bool` the event is `{⊥}`, the never-firing tape (`botMass_pos`); on
+    ℤ_[2] it is `{0}`. -/
+theorem haarZp_singleton_zero : haarZp (p := 2) {(0 : ℤ_[2])} = 0 := by
+  have h := congrArg ENNReal.toReal haarZp_zero_eq_half
+  rw [ENNReal.toReal_mul, ENNReal.toReal_inv, ENNReal.toReal_ofNat] at h
+  have h0 : (haarZp (p := 2) {(0 : ℤ_[2])}).toReal = 0 := by linarith
+  rcases (ENNReal.toReal_eq_zero_iff _).1 h0 with h | h
+  · exact h
+  · exact absurd h (measure_ne_top _ _)
+
+-- Statement: CONTROL, a probability measure without translation invariance: `dirac 0` gives `{0}`
+-- mass `1`, so `haarZp_singleton_zero` consumes the halving, not probability alone.
+example : (Measure.dirac (0 : ℤ_[2])) {0} = 1 := by simp
+
+end DepthLaw
+
+-- Statement: axioms, fifteen of § X's sixteen declarations carry `Classical.choice` (`#print axioms`);
+--   `det_eq_ofNat_set_eq_cylinder` measures `[propext, Quot.sound]`.
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -726,4 +928,20 @@ open ZeroParadox
 #print axioms never_fires_ae_zero
 #print axioms fires_germ_eq_bot_zero
 #print axioms germ_top_ne_bot
+#print axioms natCast_le_q2Val_iff
+#print axioms norm_le_two_pow_iff_dvd
+#print axioms q2Val_preimage_eq_shell
+#print axioms haarZp_q2Val_eq
+#print axioms det_eq_ofNat_set_eq_cylinder
+#print axioms trials_det_eq_ofNat
+#print axioms trials_det_eq_geometric
+#print axioms haarZp_padicTape_det_eq_trials
+#print axioms haarZp_q2Val_eq_inv_two_pow
+#print axioms haarZp_q2Val_toReal
+#print axioms haarZp_q2Val_surprisal
+#print axioms haarZp_q2Val_entropy
+#print axioms measurableEmbedding_two_mul
+#print axioms haarZp_image_two_mul
+#print axioms haarZp_zero_eq_half
+#print axioms haarZp_singleton_zero
 end PurityCheck

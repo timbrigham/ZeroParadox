@@ -4,6 +4,9 @@ import ZeroParadox.Valuation.PadicAttractor
 import Mathlib.Order.OrderIsoNat
 import Mathlib.Data.Nat.SuccPred
 import Mathlib.Analysis.SpecificLimits.Basic
+import Mathlib.SetTheory.Ordinal.Basic
+import Mathlib.Data.ENat.Lattice
+import Mathlib.Algebra.Order.AddGroupWithTop
 import Mathlib.Tactic
 
 set_option maxHeartbeats 400000
@@ -33,7 +36,8 @@ open Filter Topology
 
 /-! ## The obstruction-killer — no infinite descent on the well-founded μ floor -/
 
-/-- **The structural obstruction, stated in general. ⚠ ZERO call sites — nothing below uses it.**
+/-- **The structural obstruction, stated in general. ⚠ No theorem below calls it; its one use is the
+    ℕ `example` in the order-reversing section.**
     There is no infinite strictly-decreasing sequence `ℕ → ℕ`: the well-founded μ floor cannot host
     the order-theoretic analogue of the infinite shrinking 2-adic orbit `2ⁿ·x`. This is
     `not_strictAnti_of_wellFoundedLT` specialised to ℕ (which is `WellFoundedLT`), and it is *false*
@@ -85,9 +89,9 @@ theorem pred_descent_terminates (n : ℕ) : ∀ k, n ≤ k → Nat.pred^[k] n = 
   rw [Nat.pred_iterate]
   omega
 
-/-- The `Nat.pred` orbit is **eventually constant** at `0`: there is a step `N` (namely `n`) past
-    which every orbit value equals the value at `N`. The descent *terminates* — this is the precise
-    sense in which the μ floor's "attractor" is reached in finite time, not approached as a limit. -/
+/-- The `Nat.pred` orbit is **eventually constant** (at `0`, by `pred_descent_terminates`): there is
+    a step `N` (namely `n`) past which every orbit value equals the value at `N`. The descent
+    *terminates* — this is the precise sense in which the μ floor's "attractor" is reached in finite time, not approached as a limit. -/
 theorem pred_orbit_eventually_constant (n : ℕ) :
     ∃ N, ∀ k, N ≤ k → Nat.pred^[k] n = Nat.pred^[N] n := by
   refine ⟨n, fun k hk => ?_⟩
@@ -97,8 +101,8 @@ theorem pred_orbit_eventually_constant (n : ℕ) :
 
 /-- **The contrast (load-bearing, in-statement).** For `x ≠ 0`, the `ZeroParadox/Valuation/PadicAttractor.lean` doubling orbit `2ⁿ·x` is
     *never* `0`: it converges to the floor only as a topological limit and never reaches it in finite
-    time. So the 2-adic (#3, ν) orbit is **not** eventually constant — the opposite of the μ floor's
-    `Nat.pred` orbit, which terminates. This is the precise behavioural separator across Axis I. -/
+    time. So the 2-adic (#3, ν) orbit is **never** eventually `0` (`padic_orbit_not_reaches_floor`) — the
+    opposite of the μ floor's `Nat.pred` orbit, which terminates. This is the precise behavioural separator across Axis I. -/
 theorem padic_orbit_never_reaches_zero (x : Q₂) (hx : x ≠ 0) :
     ∀ n : ℕ, (2 : Q₂) ^ n * x ≠ 0 := by
   intro n
@@ -113,7 +117,8 @@ in the *definition*, not the prose. -/
 /-- **The single dynamical predicate the two ambients are compared under.** An orbit
     `orbit : ℕ → α` (into a type with a distinguished floor `0`) *reaches the floor in finite time* iff
     it is eventually exactly equal to `0`: `∃ N, ∀ k ≥ N, orbit k = 0`. This is the order-theoretic
-    "termination" character (μ); its negation — an orbit that is never `0` from any point on — is the
+    "termination" character (μ). Its negation says the orbit is not eventually `0`: past every `N`
+    some `k` has `orbit k ≠ 0`. Together with convergence to `0` (the capstone below), that is the
     "approaches a limit it never reaches" character (ν). One definition, two ambients. -/
 def ReachesFloorInFiniteTime {α : Type*} [Zero α] (orbit : ℕ → α) : Prop :=
   ∃ N, ∀ k, N ≤ k → orbit k = 0
@@ -130,7 +135,7 @@ theorem pred_orbit_strict_steps (n : ℕ) :
 /-- The μ floor's canonical descent orbit `k ↦ Nat.pred^[k] n` **satisfies**
     `ReachesFloorInFiniteTime`. The existence of a step reaching the floor is obtained from
     `descent_with_strict_steps_reaches_floor` (proved by induction on the bound, **not** through
-    `no_infinite_descent`, which has no call sites — see that lemma's own docstring; the orbit cannot
+    `no_infinite_descent`, which no theorem calls — see that lemma's own docstring; the orbit cannot
     strictly decrease forever), and once the floor is reached the orbit stays (`pred_descent_terminates`
     monotonicity). So well-foundedness is genuinely in this proof term. -/
 theorem pred_orbit_reaches_floor (n : ℕ) :
@@ -182,13 +187,91 @@ theorem floor_reach_separates_mu_nu :
 the step-function face derives an **obstruction**, this face takes the orbit as **given**, and neither
 derives motion. The comparison and its prior art: `ZeroParadox/Order/WellFoundedObstruct.md`. -/
 
+/-! ## Order-reversing involutions, and where well-foundedness forbids one
+
+Used by `ZeroParadox/Valuation/RiemannSphere.lean` § X. -/
+
+/-- `Statement:` an antitone involution `f` of a preorder `α` gives an order isomorphism from `α`
+    onto its order dual.
+    `Reading:` prior art, `ZeroParadox/BottomCannotBe.lean` § INVERSION, PRIOR-ART RECORD
+    (`OrderIso.map_top` into an order dual); this form works for a preorder. -/
+def orderIsoDualOfInvolutive {α : Type*} [Preorder α] (f : α → α) (hf : Antitone f)
+    (hi : Function.Involutive f) : α ≃o αᵒᵈ where
+  toEquiv := (hi.toPerm f).trans OrderDual.toDual
+  map_rel_iff' := by
+    intro a b
+    show f b ≤ f a ↔ a ≤ b
+    exact ⟨fun h => by simpa [hi a, hi b] using hf h, fun h => hf h⟩
+
+/-- `Statement:` an antitone involution sends a greatest element to a least element.
+    `Reading:` `OrderIso.map_top` along `orderIsoDualOfInvolutive` (`ZeroParadox/BottomCannotBe.lean`
+    § INVERSION, PRIOR-ART RECORD); this form works for a preorder with `IsTop`, where `OrderIso.map_top`
+    takes `OrderTop` instances. -/
+theorem isBot_of_isTop_involutive {α : Type*} [Preorder α] {f : α → α} (hf : Antitone f)
+    (hi : Function.Involutive f) {t : α} (ht : IsTop t) : IsBot (f t) :=
+  fun y => by simpa [hi y] using hf (ht (f y))
+
+-- Statement: Mathlib: `ℤ` is order-isomorphic to its order dual, by negation.
+example : ℤ ≃o ℤᵒᵈ := OrderIso.neg ℤ
+
+/-- `Statement:` if `<` on `α` is well-founded and some `g : ℕ → α` is strictly increasing, no
+    self-map of `α` is strictly antitone. -/
+theorem no_strictAnti_self {α : Type*} [Preorder α] [WellFoundedLT α] {g : ℕ → α}
+    (hg : StrictMono g) (f : α → α) : ¬ StrictAnti f :=
+  fun hf => not_strictAnti_of_wellFoundedLT (f ∘ g) (hf.comp_strictMono hg)
+
+-- Statement: no self-map of ℕ is strictly antitone (`no_infinite_descent`).
+example (f : ℕ → ℕ) : ¬ StrictAnti f := no_infinite_descent f
+
+/-- `Statement:` no self-map of `ℕ∞` is strictly antitone. -/
+theorem enat_no_strictAnti (f : ℕ∞ → ℕ∞) : ¬ StrictAnti f :=
+  no_strictAnti_self (g := fun n : ℕ => (n : ℕ∞))
+    (fun a b h => show (a : ℕ∞) < b by exact_mod_cast h) f
+
+/-- `Statement:` no self-map of `Ordinal.{0}` is strictly antitone. -/
+theorem ordinal_no_strictAnti (f : Ordinal.{0} → Ordinal.{0}) : ¬ StrictAnti f :=
+  no_strictAnti_self (g := fun n : ℕ => (n : Ordinal.{0}))
+    (fun a b h => show (a : Ordinal.{0}) < b by exact_mod_cast h) f
+
+/-- `Statement:` on a linear order where no self-map is strictly antitone, no self-map is an
+    antitone involution. -/
+theorem no_antitone_involution_of {α : Type*} [LinearOrder α] (hno : ∀ f : α → α, ¬ StrictAnti f)
+    (f : α → α) (hf : Antitone f) (hi : Function.Involutive f) : False :=
+  hno f (hf.strictAnti_of_injective hi.injective)
+
+-- Statement: CONTROL: `Fin.rev` is an antitone involution of `Fin 3`, and no `g : ℕ → Fin 3` is
+-- strictly increasing.
+example : Antitone (Fin.rev : Fin 3 → Fin 3) ∧ Function.Involutive (Fin.rev : Fin 3 → Fin 3) ∧
+    ∀ g : ℕ → Fin 3, ¬ StrictMono g :=
+  ⟨fun _ _ h => Fin.rev_le_rev.2 h, Fin.rev_rev, fun g hg => not_injective_infinite_finite g hg.injective⟩
+
+/-- `Statement:` `WithTop ℤ` has no least element. -/
+theorem withTopInt_no_bot (b : WithTop ℤ) : ¬ IsBot b := by
+  intro h
+  induction b using WithTop.recTopCoe with
+  | top => exact absurd (h (0 : ℤ)) (by simp)
+  | coe z => have := WithTop.coe_le_coe.1 (h ((z - 1 : ℤ) : WithTop ℤ)); omega
+
+/-- `Statement:` no self-map of `WithTop ℤ` is an antitone involution. -/
+theorem withTopInt_no_antitone_involution (f : WithTop ℤ → WithTop ℤ) (hf : Antitone f)
+    (hi : Function.Involutive f) : False :=
+  withTopInt_no_bot _ (isBot_of_isTop_involutive hf hi isTop_top)
+
+-- Statement: CONTROL: Mathlib's negation on `WithTop ℤ` sends `⊤` to `⊤` and is not antitone.
+example : -(⊤ : WithTop ℤ) = ⊤ ∧ ¬ Antitone (fun a : WithTop ℤ => -a) := by
+  refine ⟨WithTop.LinearOrderedAddCommGroup.neg_top, fun h => ?_⟩
+  have := h (le_top : ((0 : ℤ) : WithTop ℤ) ≤ ⊤)
+  simp at this
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check
 
 `Classical.choice` enters through the Mathlib well-foundedness (`not_strictAnti_of_wellFoundedLT`,
-`RelEmbedding`) and p-adic field libraries — a library dependency, not a new commitment of this
-construction. -/
+`RelEmbedding`) and p-adic field libraries, and, for `withTopInt_no_bot` and
+`withTopInt_no_antitone_involution`, through Mathlib's `WithTop.coe_le_coe` and the `simp` refutation
+of `⊤ ≤ ↑0` in `WithTop ℤ` (each measured `[propext, Classical.choice, Quot.sound]`, 2026-11-22) — a
+library dependency, not a new commitment of this construction. -/
 
 section PurityCheck
 open ZeroParadox
@@ -202,5 +285,13 @@ open ZeroParadox
 #print axioms pred_orbit_reaches_floor
 #print axioms padic_orbit_not_reaches_floor
 #print axioms floor_reach_separates_mu_nu
+#print axioms orderIsoDualOfInvolutive
+#print axioms isBot_of_isTop_involutive
+#print axioms no_strictAnti_self
+#print axioms enat_no_strictAnti
+#print axioms ordinal_no_strictAnti
+#print axioms no_antitone_involution_of
+#print axioms withTopInt_no_bot
+#print axioms withTopInt_no_antitone_involution
 
 end PurityCheck

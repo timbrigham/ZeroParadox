@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-H Addendum: The Snap Floor in Native Categories
-Version 1.14 | November 2026
+Version 1.16 | November 2026
 Reads after ZP-H Categorical Bridge.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.14'
+VERSION = '1.16'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard: route all bare Paragraph() text through Unicode-to-entity conversion ──
@@ -52,11 +52,13 @@ def build():
     # ── Preamble ────────────────────────────────────────────────────────────────
     print('[build_zph_native_addendum] Building preamble...')
     E.append(body(
-        'ZP-H derives the Binary Snap across four mathematical frameworks and locates the '
-        'snap floor &#8869; as the categorical bottom in each. In the main document that '
-        'location is carried by three depth-index proxy categories &#8212; copies of &#8469; '
-        'with the order &#8804; (Q<sub>2</sub>BallDepth, InfoDepth, HilbDimDepth), engineered '
-        'so that depth 0 is the initial object. This addendum does the stronger thing: it '
+        'ZP-H states the Binary Snap as four separately proved domain facts, conjoined in '
+        'th3_snap_all_functors with no cross-domain tie. In the main document, fb_functor, '
+        'fc_functor and fd_functor send 0 to the initial object of three depth-index proxy categories &#8212; copies of &#8469; '
+        'with the order &#8804; (Q<sub>2</sub>BallDepth, InfoDepth, HilbDimDepth; fb_preserves_initial, '
+        'fc_preserves_initial, fd_preserves_initial). For F<sub>B</sub>, depth 0 indexes the ball '
+        'B(0, 1) (q2BallAt), and the floor {0} of Q<sub>2</sub> is the intersection of the balls '
+        '(fB_bottom_is_limit). This addendum does the stronger thing: it '
         'drops the snap floor into each framework\'s own category, taken directly from '
         'Mathlib, where the floor appears in that field\'s native syntax. A topologist, a '
         'functional analyst, and a probabilist each meet the floor in their own category and '
@@ -87,7 +89,8 @@ def build():
     E.append(body(
         'Two honesty boundaries hold throughout. <b>The realized claim is correspondence, '
         'not identity.</b> What is proved is, category by category, the characterization '
-        'named above, the floors agreeing on the snap; that the four bottoms are <i>numerically '
+        'named above; no agreement across the floors is stated (mc1_correspondence bundles separately '
+        'proved facts and relates none of them to another); that the four bottoms are <i>numerically '
         'one object</i> is retired as ill-typed (object equality across categories does not typecheck and is not invariant under equivalence); what separates the members is proved property by property (seam_unique_among_named, for the named bottoms, in a lattice with no top). <b>The native '
         'categories are the honest target.</b> Mathlib has no bespoke category of p-adic '
         'spaces, Hilbert spaces, or information spaces, so the general-purpose categories '
@@ -104,9 +107,9 @@ def build():
     E.append(body(
         'The proxy categories of the main document are correct but indirect. '
         'Q<sub>2</sub>BallDepth, InfoDepth, and HilbDimDepth are each a copy of &#8469; with '
-        'the order &#8804;, wrapped so that the bottom 0 satisfies the universal property of '
+        'the order &#8804;, wrapped so that depth 0 satisfies the universal property of '
         'an initial object and the source-asymmetry condition AX-G2 (no morphism returns to '
-        '0). They witness the snap floor\'s categorical role, but inside a structure built '
+        '0). They witness this inside a structure built '
         'for the purpose rather than inside the domain itself.'))
     E.append(body(
         'The native categories are not built for the purpose, and that is the point '
@@ -278,7 +281,8 @@ def build():
         'This settles the <b>correspondence</b> half of MC-1: across the native categories, '
         'the snap floor is realized by each category\'s own characterization (the zero object in '
         'ModuleCat &#8450;; initial and not terminal in the Kleisli category; in TopCat terminal, since '
-        'it has one point, and not initial, and separately the inverse limit of the ball tower), and the four agree on the snap. The <b>identity</b> half, that the algebraic &#8869;, the 2-adic 0, the '
+        'it has one point, and not initial, and separately the inverse limit of the ball tower), each proved on its own; '
+        'the bundle states no agreement between them. The <b>identity</b> half, that the algebraic &#8869;, the 2-adic 0, the '
         'zero module, and the empty type are numerically one object, is retired as ill-typed '
         '(object equality across categories does not typecheck and is not invariant under '
         'equivalence); what separates the members is proved property by property '
@@ -321,8 +325,8 @@ def build():
 
     E.append(Paragraph(
         'Endnote: This document is an addendum to ZP-H Categorical Bridge and reads after '
-        'it. ZP-H locates the snap floor as the categorical bottom across four frameworks '
-        'using depth-index proxy categories; this addendum realizes the floor inside each '
+        'it. ZP-H sends depth 0 to the initial object of depth-index proxy categories '
+        '(fb_preserves_initial, fc_preserves_initial, fd_preserves_initial); this addendum realizes the floor inside each '
         'framework\'s native Mathlib category by that category\'s own characterization '
         '&#8212; in TopCat the floor {0}, terminal since it has one point and not initial '
         '(padic_bottom_isTerminal, padic_bottom_not_initial), and separately the inverse limit of '

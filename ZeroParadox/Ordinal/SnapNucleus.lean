@@ -4,7 +4,7 @@ import Mathlib.Order.Nucleus
 set_option maxHeartbeats 400000
 
 /-!
-# The snap is a nucleus: ε₀ is the modality generated from the bottom ⊥
+# The snap is a nucleus: the modality sends ⊥ of `Ordinal` to ε₀
 
 ## Engineer's Take
 

@@ -115,6 +115,43 @@ theorem up_le_of_covBy {β : Type u} [LinearOrder β] (V : UpAndOver β) {y b z 
     (hb : y ⋖ b) (hz : V.up.IsClosed z) (hyz : y < z) : V.up b ≤ z :=
   V.up.closure_min (not_lt.1 fun hzb => hb.2 hyz hzb) hz
 
+/-- `Statement:` for a closure operator `c`, `y < b` and `b` below every point strictly above `y` give
+    `c b` as the least closed point strictly above `y`. Folklore: `ClosureOperator.closure_min`; covers
+    of a linear order qualify (`CovBy.Ioi_eq`); on `Ordinal`, `Ordinal.deriv_add_one`; cf. Ganter's next-closure
+    step (Borchmann, arXiv:1111.3975, Thm 1), its analogue in the lectic order. -/
+theorem isLeast_landing_of_gateway (c : ClosureOperator α) {y b : α} (hyb : y < b)
+    (hg : ∀ z, y < z → b ≤ z) : IsLeast {z | c.IsClosed z ∧ y < z} (c b) :=
+  ⟨⟨c.isClosed_closure b, hyb.trans_le (c.le_closure b)⟩, fun z hz => c.closure_min (hg z hz.2) hz.1⟩
+
+-- `Statement:` the gateway hypothesis says `b` is the least element of `Set.Ioi y`.
+example {y b : α} : (y < b ∧ ∀ z, y < z → b ≤ z) ↔ IsLeast (Set.Ioi y) b := Iff.rfl
+
+-- `Statement:` `up_le_of_covBy` from `isLeast_landing_of_gateway`, a cover in a linear order being a
+-- gateway (`CovBy.Ioi_eq`).
+example {β : Type u} [LinearOrder β] (V : UpAndOver β) {y b z : β}
+    (hb : y ⋖ b) (hz : V.up.IsClosed z) (hyz : y < z) : V.up b ≤ z :=
+  (isLeast_landing_of_gateway V.up hb.lt fun w hw => by
+    rw [← Set.mem_Ici, ← hb.Ioi_eq]; exact hw).2 ⟨hz, hyz⟩
+
+/-- `Statement:` for a closure operator `c`, `y < b` and `b` below every point strictly above `y`:
+    `c b ≠ c y` iff `y` is closed.
+    `Reading:` `y` closed (floor below): OVER then UP reaches a new landing; `y` not closed (floor above):
+    UP alone already reaches the landing that OVER then UP reaches. -/
+theorem over_needed_iff (c : ClosureOperator α) {y b : α} (hyb : y < b)
+    (hg : ∀ z, y < z → b ≤ z) : c b ≠ c y ↔ c.IsClosed y := by
+  refine ⟨fun hne => Classical.byContradiction fun hy => hne ?_, fun hy heq => ?_⟩
+  · have hlt : y < c y := lt_of_le_of_ne (c.le_closure y) fun e => hy (c.isClosed_iff.2 e.symm)
+    exact le_antisymm (c.closure_min (hg _ hlt) (c.isClosed_closure y)) (c.monotone hyb.le)
+  · exact lt_irrefl _ (hyb.trans_le ((c.le_closure b).trans (heq.trans hy.closure_eq).le))
+
+-- `Statement:` CONTROL, law not engaged: under the identity closure `isLeast_landing_of_gateway`
+-- holds at every cover of a linear order, and UP never moves the cover (`corner` refuses it, § III).
+example {β : Type u} [LinearOrder β] {y b : β} (hb : y ⋖ b) :
+    IsLeast {z | (ClosureOperator.id β).IsClosed z ∧ y < z} (ClosureOperator.id β b) ∧
+      ClosureOperator.id β b = b :=
+  ⟨isLeast_landing_of_gateway _ hb.lt fun w hw => by
+    rw [← Set.mem_Ici, ← hb.Ioi_eq]; exact hw, rfl⟩
+
 -- `Statement:` two distinct landings follow from `corner` alone: its landing `y` and the landing
 -- `up b`, since `y < b ≤ up b`.
 example : ∃ y z, U.up.IsClosed y ∧ U.up.IsClosed z ∧ y ≠ z := by
@@ -147,8 +184,8 @@ theorem isEmpty_of_denselyOrdered [DenselyOrdered α] : IsEmpty (UpAndOver α) :
 
 end UpAndOver
 
-/-! ### § III. NO-GO gauge — what fails to be an `UpAndOver`, and the smallest member. Each
-control's `Statement:` names each field that refuses it. -/
+/-! ### § III. NO-GO gauge — controls on the class and on the lemma's hypotheses, and the smallest
+member. Each control on the class names in its `Statement:` each field that refuses it. -/
 
 -- `Statement:` the three-point chain `Fin 3` carries an `UpAndOver`: the closure sending `1` to `2` and
 -- fixing every other point, with the landing `0`, its cover `1`, and `up` moving `1` to `2`. By the
@@ -378,6 +415,31 @@ example : ∃ c : ClosureOperator (Fin 3 ⊕ ℚ),
       obtain ⟨m, h1, h2⟩ := exists_between (Sum.inr_lt_inr_iff.1 hb.1)
       exact hb.2 (Sum.inr_lt_inr_iff.2 h1) (Sum.inr_lt_inr_iff.2 h2)
 
+-- `Statement:` CONTROL, the gateway hypothesis of `UpAndOver.isLeast_landing_of_gateway` is
+-- load-bearing: on `Finset Bool`, the closure fixing each subset of `{false}` and sending every other
+-- set to `univ` has `∅` and `{false}` closed and `∅ ⋖ {true}`, and sends `{true}` to `univ`, which is
+-- not the least closed point strictly above `∅`.
+example : ∃ c : ClosureOperator (Finset Bool), c.IsClosed ∅ ∧ c.IsClosed {false} ∧
+    (∅ : Finset Bool) ⋖ {true} ∧ c {true} = Finset.univ ∧
+    ¬ IsLeast {z | c.IsClosed z ∧ ∅ < z} (c {true}) := by
+  let c : ClosureOperator (Finset Bool) :=
+    ClosureOperator.mk' (fun s => if s ⊆ {false} then s else Finset.univ)
+      (by decide) (by decide) (by decide)
+  have hU : c {true} = Finset.univ := by decide
+  have hF : c.IsClosed {false} := c.isClosed_iff.2 (by decide)
+  refine ⟨c, c.isClosed_iff.2 rfl, hF, ⟨by decide, fun d h1 h2 => ?_⟩, hU, fun h => ?_⟩
+  · have h1' : d.Nonempty := Finset.nonempty_iff_ne_empty.2 h1.ne'
+    obtain ⟨x, hx⟩ := h1'
+    have hd : d = {true} := by
+      have := Finset.subset_singleton_iff.1 h2.le
+      rcases this with rfl | rfl
+      · simp at hx
+      · rfl
+    exact h2.ne hd
+  · have := h.2 ⟨hF, by decide⟩
+    rw [hU] at this
+    exact absurd this (by decide)
+
 /-! ### § III-b. Members on an order dual: the keep-above kernel -/
 
 /-- `Statement:` given a least point `e` and a point `a`, the map sending `x` to `a` if `a ≤ x` and to `e`
@@ -490,6 +552,17 @@ noncomputable def ordinalUpAndOver : UpAndOver Ordinal.{u} where
 theorem ordinalUpAndOver_up (x : Ordinal.{u}) :
     ordinalUpAndOver.up x = Ordinal.nfp (fun a => Ordinal.omega0 ^ a) x :=
   rfl
+
+-- `Statement:` CONTROL, UP alone (law not engaged): 0, ⊥ of `Ordinal`, is not closed under
+-- `ordinalUpAndOver.up`, so by `UpAndOver.over_needed_iff` its cover `succ 0` lands where 0 does.
+example : ¬ ordinalUpAndOver.{u}.up.IsClosed 0 ∧
+    ordinalUpAndOver.{u}.up (Order.succ 0) = ordinalUpAndOver.up 0 := by
+  have hnc : ¬ ordinalUpAndOver.{u}.up.IsClosed 0 := fun h => by
+    have := h.closure_eq
+    rw [ordinalUpAndOver_up, ← Ordinal.epsilon_zero_eq_nfp] at this
+    exact (Ordinal.epsilon_pos 0).ne' this
+  exact ⟨hnc, Classical.byContradiction fun hne => hnc
+    ((UpAndOver.over_needed_iff _ (Order.lt_succ 0) fun _ hz => Order.succ_le_of_lt hz).1 hne)⟩
 
 /-- `Statement:` Veblen's derivative of `ω^·` at a successor index is one over-then-up step from the
     previous value (Mathlib `Ordinal.deriv_add_one`; the `ε`-form is `succession_succ`). -/
@@ -833,7 +906,8 @@ end ZeroParadox
 
 /-! ## Axiom Purity Check
 
-The named declarations of §§ I-II measure `[propext, Quot.sound]`. § IV inherits
+The named declarations of §§ I-II measure `[propext, Quot.sound]`, except `UpAndOver.over_needed_iff`,
+which adds `Classical.choice` (`Classical.byContradiction` in its forward direction). § IV inherits
 `Classical.choice` from `snapNucleus` and Mathlib's `Ordinal` fixed-point theory, STATEMENT-CARRIED as in
 `ZeroParadox/Ordinal/SnapNucleus.lean` (statement control on each, measured 2026-10-08). § V's
 footprints are printed below; § VI measures `[propext, Quot.sound]`. -/
@@ -849,6 +923,8 @@ open ZeroParadox
 #print axioms UpAndOver.exists_next_landing
 #print axioms UpAndOver.exists_next_landing_of_cover_at
 #print axioms UpAndOver.up_le_of_covBy
+#print axioms UpAndOver.isLeast_landing_of_gateway
+#print axioms UpAndOver.over_needed_iff
 #print axioms UpAndOver.isEmpty_of_denselyOrdered
 #print axioms keepAboveKernel
 #print axioms nonempty_upAndOver_dual_of_covBy

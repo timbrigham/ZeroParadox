@@ -1,6 +1,6 @@
 """
 Build ZP-L Illustrated Companion
-Version 1.27 | November 2026
+Version 1.30 | November 2026
 Citation fence (Gentzen): the Convergence section's credits follow CLAIMS.md's Gentzen rows and are
 taken from Gentzen 1943 (Math. Ann. 119), the one primary paper filed here, never from a secondary
 source's labels. The 1936 consistency credit rests on Gentzen 1943, p. 140, footnote 2: the 1936
@@ -214,7 +214,7 @@ def dual_convergence_diagram():
     return d
 
 
-VERSION = '1.27'
+VERSION = '1.30'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -259,8 +259,8 @@ def build():
         Paragraph(
             'This companion explains the ideas in plain language with diagrams and examples. '
             'It is not the formal document &#8212; its results are proved in ZP-L Incomputability '
-            'Convergence or in the other documents and papers it names, and the occurrence '
-            'commitment it mentions is a commitment, not a result. Consult that document for the '
+            'Convergence or come from the other documents, papers and named theorems it cites, and a '
+            'commitment or reading it mentions is not a result. Consult ZP-L for the '
             'authoritative mathematics.',
             CS['disc']),
     ]
@@ -295,7 +295,9 @@ def build():
         'are also always somewhere on the path &#8212; never at the horizon. The horizon '
         'is the limit of all those steps combined, and no finite number of steps reaches it. '
         'The analogy is for that shape only, a limit no step reaches: the walk grows without '
-        'bound, while &#949;&#8320; is a specific countable ordinal (the Remember box below).',
+        'bound, while the tower is bounded, with &#949;&#8320;, a specific countable ordinal, as its '
+        'least upper bound, which is also the least fixed point of &#945; &#8614; &#969;^&#945; '
+        '(epsilon0_min_eq_max; What Is &#949;&#8320;? and the Remember box below).',
         'The ordinal tower works the same way. The snap that the canonical map takes at &#949;&#8320; (ZP-L) '
         'is not a step you can take from inside the tower. It happens at the least point above every '
         'stage of the tower, where something new begins.',
@@ -385,7 +387,7 @@ def build():
     E.append(dual_convergence_diagram())
     E.append(ccaption(
         'Same tower stages, two perspectives. Teal (top row): ordinal stages 1, &#969;, &#969;^&#969;, &#8230; '
-        'approach &#949;&#8320; from below. Indigo (bottom row): the 2-adic norms of their '
+        'approach &#949;&#8320; from below; &#8220;snap: c1&#8221; is the canonical map&#8217;s value at &#949;&#8320;. Indigo (bottom row): the 2-adic norms of their '
         'images 1/2, 1/4, 1/8, &#8230; converge to 0. '
         'ZP-L &#167;VII: snap_zp2_correspondence.'))
     E.append(sp(4))
@@ -425,21 +427,25 @@ def build():
         'Whether these reflect the same underlying mathematical phenomenon &#8212; '
         'or are coincidentally parallel &#8212; is the open question Gentzen.lean &#167;I poses.'))
     E.append(cbody(
-        'ZP-L &#167;VI (kleene_ordinal_snap_bridge) names this structural parallel explicitly. '
+        'ZP-L &#167;VI (kleene_ordinal_snap_bridge) is named for this parallel. '
         'The theorem itself is purely ordinal &#8212; no Code or eval object appears in it. '
-        'What the section establishes is that the hypothesis structure of the two proofs '
-        'is the same: diagonalization and fixed-point existence.'))
+        'The parallel is not a proved isomorphism (ZeroParadox/Ordinal/Gentzen.md &#167;VI): '
+        'the two fixed points are reached by different routes, &#949;&#8320;, the least fixed '
+        'point of &#969;^&#183;, by iterating '
+        '&#969;^&#183; from the ordinal 0 up to the supremum of the tower (epsilonZero_eq_nfp), '
+        'the program by a construction on codes (roger_fixed_point_stability).'))
     E.append(sp(4))
-    E.append(example_box('Two rooms, same pattern', [
+    E.append(example_box('Two rooms, parallel results', [
         'Imagine two mathematicians working in separate rooms. One (ZP-K) is computing '
         'with programs and asking: what program runs itself? The other (ZP-L) is computing '
         'with ordinals and asking: what ordinal satisfies &#969;^&#945; = &#945;? Neither '
-        'knows what the other is doing. When they compare notes, they find the same proof '
-        'structure: the same diagonal argument, the same kind of fixed-point existence '
-        'result.',
+        'knows what the other is doing. When they compare notes, each has a fixed-point '
+        'existence result, and the routes differ: one builds a program out of codes, the '
+        'other climbs the tower &#969;, &#969;^&#969;, &#8230; to its limit. No theorem '
+        'identifies the two.',
         'ZPM maps each side into the 2-adics by its own map, the ordinal notations by cnfToZp2 '
         'and the two machine phases, the states c&#8320; and c&#8321; of the type MachinePhase, by snapEmbed; a bridge between the settings '
-        'themselves is still open. The two rooms share a floor plan.',
+        'themselves is still open.',
     ]))
     E.append(sp(8))
 

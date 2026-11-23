@@ -4,6 +4,7 @@ import Mathlib.Computability.PartrecCode
 import Mathlib.Computability.Halting
 import ZeroParadox.Computability.Occurrence
 import ZeroParadox.Category.DiagonalWitness
+import ZeroParadox.Computability.Rice
 import Mathlib.Tactic
 
 /-!
@@ -45,7 +46,7 @@ open Nat.Partrec Nat.Partrec.Code
 
 /-- A code c is a Kleene fixed point for f if c's computed behavior equals f(c).
     This is the computational expression of self-containment: c's behavior is
-    determined by c itself, with no external description shorter than c. -/
+    determined by c itself. -/
 -- [ZP-CUSTOM] replaces: Mathlib Function.IsFixedPt | reason: Function.IsFixedPt works on total functions α → α. Here f : Code → ℕ →. ℕ (partial function) and the fixed-point condition is eval c = f c — equality of partial functions. No Mathlib predicate covers this; IsKleeneFixedPoint is the partial-function analog needed for the computability layer.
 def IsKleeneFixedPoint (f : Code → ℕ →. ℕ) (c : Code) : Prop :=
   eval c = f c
@@ -213,7 +214,8 @@ fourth face sits -/
     * (4) is a condition on a `Code`, (1)–(3) are conditions on an element of `L`.
       There is no equality across those types, and none is claimed.
     * (1)–(3) pick out a **unique** element (`quine_unique`), while the computational
-      fixed points form an **infinite** family (`infinite_quine_family`,
+      fixed points form an **infinite** family (`infinite_quine_family`; its members are
+      told apart by `congrArg`, the `example` after `selfApply`, not by
       `quine_goedel_injective`). A unique element and an infinite family are not
       identified by this theorem; see the note in § II on why the non-uniqueness is
       structurally expected, and § VI on what the family actually is. -/
@@ -416,8 +418,8 @@ theorem quine_goedel_injective (c₁ c₂ : Code)
     Proof: reduce from halting_problem 0. The function φ(c) = Code.comp c (Code.const 0)
     satisfies eval (φ c) k = eval c 0 for all k, so if the self-halting predicate were
     computable, composing with φ would decide "c halts on 0" — contradicting halting_problem 0.
-    For a quine c, quine_period_is_goedel ties halting at encode(c) to halting at any
-    encode(c) + n, so undecidability reaches directly into the period structure. -/
+    For a quine c, quine_period_is_goedel ties halting at any n to halting at encode(c) + n;
+    at n = 0, halting on its own Gödel number is halting on 0. -/
 theorem self_halting_undecidable :
     ¬ComputablePred (fun c : Code => (eval c (Encodable.encode c)).Dom) := by
   intro h
@@ -583,7 +585,9 @@ theorem isComputationalQuine_undecidable :
 
 /-- The family of computational quines is infinite: for any n, a quine with
     Gödel number greater than n exists.
-    Combined with quine_goedel_injective, this gives an infinite injection into quines.
+    Distinct Gödel numbers give distinct codes (the `congrArg` `example` after `selfApply`), so the family is
+    infinite; `quine_goedel_injective` is the converse direction and is not cited, though the
+    proof uses the same injectivity, `Encodable.encode_inj`.
     Note what witnesses it: the constant codes. So the family is unbounded, and this
     theorem does not show its members are instantiation bottoms — reading it as "the
     DA-2 succession has no finite bound" is the framework's interpretation.
@@ -1093,6 +1097,165 @@ theorem codes_vs_classes {F : Code → Code} (hc : Computable F) (hF : EvalRespe
   exact ⟨⟨c, show eval c = eval (F c) from hc'.symm, rfl⟩,
     fun b hb => (hb : eval b = eval (F c)).trans hc'⟩
 
+/-- `Statement:` for `eval`-respecting `F`, the class of `c` steps to itself only in the quotient of
+    `evalStepMotion (eval ∘ F)` by equal `eval` iff `eval (F c) = eval c`; both directions. -/
+theorem class_selfOnlyAt_iff {F : Code → Code} (hF : EvalRespecting F) (c : Code) :
+    ((evalStepMotion fun a => eval (F a)).quot evalSetoid).SelfOnlyAt (Quotient.mk evalSetoid c) ↔
+      eval (F c) = eval c := by
+  rw [Motion.quot_selfOnlyAt_mk_iff (evalStep_stepCompat hF)]
+  constructor
+  · rintro ⟨⟨b, hb, hbc⟩, -⟩
+    exact (hb : eval b = eval (F c)).symm.trans hbc
+  · intro h
+    exact ⟨⟨c, show eval c = eval (F c) from h.symm, rfl⟩,
+      fun b hb => (hb : eval b = eval (F c)).trans h⟩
+
+/-- `Statement:` for computable, `eval`-respecting `F`, no code steps to itself only in
+    `evalStepMotion (eval ∘ F)`, and the class of some code `c` steps to itself only in its quotient by
+    equal `eval`. -/
+theorem role_pushes_not_pulls {F : Code → Code} (hc : Computable F) (hF : EvalRespecting F) :
+    (∀ c, ¬ (evalStepMotion fun a => eval (F a)).SelfOnlyAt c) ∧
+      ∃ c, ((evalStepMotion fun a => eval (F a)).quot evalSetoid).SelfOnlyAt
+        (Quotient.mk evalSetoid c) := by
+  refine ⟨fun c => evalStepMotion_not_selfOnlyAt _ c, ?_⟩
+  obtain ⟨c, hc'⟩ := effective_floor_fixedPoint hc
+  exact ⟨c, (class_selfOnlyAt_iff hF c).2 hc'⟩
+
+/-- `Statement:` for a property `P` of classes up to equal `eval` that holds at some class and fails
+    at some class, `c ↦ P (class of c)` is not a computable predicate on codes. -/
+theorem pullback_not_computable (P : EvalClass → Prop)
+    (h1 : ∃ c, P (Quotient.mk evalSetoid c)) (h0 : ∃ c, ¬ P (Quotient.mk evalSetoid c)) :
+    ¬ ComputablePred (fun c => P (Quotient.mk evalSetoid c)) :=
+  rice_face {c | P (Quotient.mk evalSetoid c)}
+    (fun cf cg e => by
+      simp only [Set.mem_setOf_eq]
+      rw [show Quotient.mk evalSetoid cf = Quotient.mk evalSetoid cg from Quotient.sound e])
+    (by obtain ⟨c, hc⟩ := h1; exact Set.nonempty_iff_ne_empty.1 ⟨c, hc⟩)
+    (by obtain ⟨c, hc⟩ := h0; exact fun hu => hc (by rw [Set.eq_univ_iff_forall] at hu; exact hu c))
+
+/-- `Statement:` whether the class of `c` steps to itself only in the quotient of
+    `evalStepMotion (fun _ => eval Code.zero)` by equal `eval` is not a computable predicate on
+    codes. -/
+theorem quine_cell_pullback_undecidable :
+    ¬ ComputablePred (fun c => ((evalStepMotion fun _ => eval Code.zero).quot evalSetoid).SelfOnlyAt
+      (Quotient.mk evalSetoid c)) := by
+  have hF : EvalRespecting (fun _ : Code => Code.zero) := fun _ _ _ => rfl
+  apply pullback_not_computable
+    (fun X => ((evalStepMotion fun _ => eval Code.zero).quot evalSetoid).SelfOnlyAt X)
+  · exact ⟨Code.zero, (class_selfOnlyAt_iff hF Code.zero).2 rfl⟩
+  · refine ⟨Code.succ, fun h => ?_⟩
+    have h' := congrFun ((class_selfOnlyAt_iff hF Code.succ).1 h) 0
+    have e1 : eval Code.succ 0 = Part.some 1 := rfl
+    have e0 : eval Code.zero 0 = Part.some 0 := rfl
+    rw [e0, e1] at h'
+    exact absurd (Part.some_inj.1 h') (by decide)
+
+-- Statement: CONTROL: the constant-true property of classes, read on codes, is a computable
+-- predicate.
+example : ComputablePred (fun c : Code => (fun _ : EvalClass => True) (Quotient.mk evalSetoid c)) :=
+  ⟨fun _ => isTrue trivial, Computable.const true⟩
+
+/-- `Statement:` `eval` is injective on self-printing codes, and some self-printing universal code
+    steps to itself only in `selfPrintsStepMotion selfPrintOrDelegate`. -/
+theorem name_side_quine :
+    (∀ c d : {c : Code // SelfPrints c}, eval c.1 = eval d.1 → c = d) ∧
+      ∃ a : {c : Code // SelfPrints c},
+        (selfPrintsStepMotion selfPrintOrDelegate).SelfOnlyAt a ∧ Universal a.1 :=
+  ⟨fun c d h => Subtype.ext (selfprints_behaviour_injective c.2 d.2 h),
+    exists_selfPrintsStepMotion_selfOnlyAt⟩
+
+/-! ### § IX-c. The `PinnedLimit` role (`ZeroParadox/Die.lean` § XXIV) in two computation charts -/
+
+/-- `Statement:` `NInf.toComp (NInf.ofNat 0)` is `Computation.pure ()`; that is least in the preorder
+    on `Computation Unit` lifted along `NInf.ninfEquivComp.symm`; the stages
+    `NInf.toComp (NInf.ofNat n)` are a run of `Computation.think`; and `Computation.empty Unit`
+    occupies `PinnedLimitUnique Computation.think` along them in that preorder. -/
+theorem comp_think_pinnedLimitUnique :
+    NInf.toComp (NInf.ofNat 0) = Computation.pure () ∧
+    @IsBot (Computation Unit) (Preorder.lift NInf.ninfEquivComp.symm).toLE (Computation.pure ()) ∧
+    (Motion.ofFun Computation.think).IsRun (fun n => NInf.toComp (NInf.ofNat n)) ∧
+    @PinnedLimitUnique (Computation Unit) (Preorder.lift NInf.ninfEquivComp.symm) Computation.think
+      (fun n => NInf.toComp (NInf.ofNat n)) (Computation.empty Unit) := by
+  have h0 : NInf.toComp (NInf.ofNat 0) = Computation.pure () := by
+    apply Subtype.ext; funext n; simp [NInf.toComp, NInf.ofNat, Computation.pure, Stream'.const]
+  refine ⟨h0, fun c => ?_, fun n => ?_,
+    pinnedLimitUnique_transport NInf.ninfEquivComp (g := NInf.succ) (h := Computation.think)
+      NInf.toComp_succ NInf.pinnedLimitUnique_succ.2⟩
+  · show NInf.ninfEquivComp.symm (Computation.pure ()) ≤ NInf.ninfEquivComp.symm c
+    rw [← h0]
+    show NInf.ninfEquivComp.symm (NInf.ninfEquivComp (NInf.ofNat 0)) ≤ _
+    rw [Equiv.symm_apply_apply]
+    exact bot_le
+  · show NInf.toComp (NInf.ofNat (n + 1)) = Computation.think (NInf.toComp (NInf.ofNat n))
+    rw [← NInf.succ_ofNat, NInf.toComp_succ]
+
+/-- `Statement:` the functional on `ℕ → Part ℕ` sending `f` to `[0 ↦ 0, k + 1 ↦ f k]`. -/
+def firstRecPhi (f : ℕ → Part ℕ) : ℕ → Part ℕ := fun n => match n with
+  | 0 => Part.some 0
+  | k + 1 => f k
+
+/-- `Statement:` `firstRecPhi^[n] ⊥` is `0` below `n` and undefined from `n` on. -/
+theorem firstRecPhi_iterate (n k : ℕ) :
+    (firstRecPhi^[n] ⊥) k = if k < n then Part.some 0 else Part.none := by
+  induction n generalizing k with
+  | zero => simp only [Function.iterate_zero, id, Nat.not_lt_zero, if_false]; rfl
+  | succ n ih =>
+    rw [Function.iterate_succ_apply']
+    cases k with
+    | zero => simp [firstRecPhi]
+    | succ k => simp only [firstRecPhi, ih, Nat.succ_lt_succ_iff]
+
+/-- `Statement:` the nowhere-defined function ⊥ of `ℕ → Part ℕ` is `eval` of some code; it is not
+    fixed by `firstRecPhi`; the constant-`0` function occupies `PinnedLimitUnique firstRecPhi` along
+    the run `firstRecPhi^[n] ⊥`; and that function is `eval Code.zero`.
+    `Reading:` the Mathlib home of this least-fixed-point computation is `Part.fix` with
+    `Part.fix_eq_ωSup` (`Mathlib/Control/LawfulFix.lean`): for a monotone `f` on `(a : α) → Part (β a)`,
+    `Part.fix f` is the `ωSup` of its approximation chain from ⊥. `fixedPoints.lfp_eq_sSup_iterate` does
+    not apply: it needs a `CompleteLattice`, and `Part ℕ` has no greatest element. -/
+theorem kleene_first_pinnedLimitUnique :
+    (∃ c : Code, ∀ n, eval c n = (⊥ : ℕ → Part ℕ) n) ∧
+    firstRecPhi ⊥ ≠ ⊥ ∧
+    PinnedLimitUnique firstRecPhi (fun n => firstRecPhi^[n] ⊥) (fun _ => Part.some 0) ∧
+    (∀ n, eval Code.zero n = Part.some 0) := by
+  have hmono : Monotone firstRecPhi := fun f g h k => by
+    cases k with
+    | zero => exact le_rfl
+    | succ k => exact h k
+  refine ⟨?_, fun h => ?_, ⟨(pinnedLimit_iff_closure_omega firstRecPhi hmono _).2 ⟨⟨?_, ?_⟩, ?_, ?_⟩, ?_⟩,
+    ?_⟩
+  · obtain ⟨c, hc⟩ := exists_code.1 Nat.Partrec.none
+    exact ⟨c, fun n => by rw [hc]; rfl⟩
+  · have := congrFun h 0
+    exact Part.some_ne_none 0 this
+  · rintro _ ⟨n, rfl⟩ k i hi
+    simp only at hi; rw [firstRecPhi_iterate] at hi
+    split_ifs at hi
+    · exact hi
+    · exact absurd hi (Part.notMem_none i)
+  · intro b hb k
+    have := hb ⟨k + 1, rfl⟩ k
+    simp only at this
+    rw [firstRecPhi_iterate, if_pos (Nat.lt_succ_self k)] at this
+    exact this
+  · funext k; cases k <;> rfl
+  · intro n hn
+    have := congrFun hn n
+    rw [← Function.iterate_succ_apply' firstRecPhi n ⊥, firstRecPhi_iterate, firstRecPhi_iterate,
+      if_pos (Nat.lt_succ_self n), if_neg (lt_irrefl n)] at this
+    exact Part.some_ne_none 0 this
+  · intro f hf
+    funext k
+    induction k with
+    | zero => rw [← hf]; rfl
+    | succ k ih => rw [← hf]; exact ih
+  · intro n; rfl
+
+/-- `Statement:` CONTROL: on `ℕ → Part ℕ`, no point occupies `PinnedLimit` of the shift
+    `f ↦ (k ↦ f (k + 1))` along any sequence. -/
+theorem kleene_shift_not_pinnedLimit (s : ℕ → ℕ → Part ℕ) (c : ℕ → Part ℕ) :
+    ¬ PinnedLimit (fun f : ℕ → Part ℕ => fun k => f (k + 1)) s c :=
+  not_pinnedLimit_of_fixed_floor isBot_bot (fun _ h => le_bot_iff.1 h) rfl s c
+
 /-- `Statement:` `c` followed by the identity code, `Code.comp c Code.id`. -/
 -- [ZP-CUSTOM] no Mathlib analog | reason: a named padding map on Mathlib's `Code`, used as a
 -- self-map whose motion has no self-step while every class up to `eval` steps to itself only.
@@ -1241,6 +1404,16 @@ open ZeroParadox ZeroParadox ZPSemilattice ZeroParadox
 #print axioms evalStep_stepCompat
 #print axioms quot_evalStep_step_iff
 #print axioms codes_vs_classes
+#print axioms class_selfOnlyAt_iff
+#print axioms role_pushes_not_pulls
+#print axioms pullback_not_computable
+#print axioms quine_cell_pullback_undecidable
+#print axioms name_side_quine
+#print axioms comp_think_pinnedLimitUnique
+#print axioms firstRecPhi
+#print axioms firstRecPhi_iterate
+#print axioms kleene_first_pinnedLimitUnique
+#print axioms kleene_shift_not_pinnedLimit
 #print axioms padId
 #print axioms eval_padId
 #print axioms padId_ne

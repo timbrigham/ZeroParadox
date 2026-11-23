@@ -49,6 +49,7 @@ import ZeroParadox.Multihomed.TwoFacesBot
 import ZeroParadox.Computability.SelfCopyReference
 import ZeroParadox.Multihomed.BoundaryOrder
 import ZeroParadox.Valuation.InfinitudeFloor
+import ZeroParadox.Multihomed.LimitMotion
 import ZeroParadox.Valuation.Scale
 import ZeroParadox.Information.Disjunctive
 import ZeroParadox.Settheory.GraphBisim
@@ -61,7 +62,10 @@ import ZeroParadox.Information.StartBit
 import ZeroParadox.Valuation.TreeNotForced
 import ZeroParadox.Valuation.DoublingAndTree
 import ZeroParadox.Valuation.PadicStillPoint
+import ZeroParadox.Valuation.UltrametricView
+import ZeroParadox.Valuation.PadicWavelet
 import ZeroParadox.Information.BottomTotality
+import ZeroParadox.Valuation.PadicKoopmanVladimirov
 import Mathlib.RingTheory.Valuation.PrimeMultiplicity
 import Mathlib.Order.FixedPoints
 import Mathlib.SetTheory.Ordinal.FixedPoint
@@ -165,6 +169,11 @@ example : ∀ x : NNReal, ¬ ZeroParadox.HasFirstStep x := ZeroParadox.no_firstS
 -- Statement: ℤ_[2]'s 0 is least in the norm preorder and greatest in the `q2Val` preorder, and doubling
 -- lowers in the first and raises in the second.
 #check @ZeroParadox.z2_two_views
+-- Statement: for any two points of `ℤ_[2]`, ℤ_[2]'s 0 included, some isometric bijection of `ℤ_[2]`
+-- sends the first to the second (`ZeroParadox/Valuation/UltrametricView.lean`).
+#check @ZeroParadox.homog_Z2
+-- Statement: and some involutive isometric bijection of `ℤ_[2]` swaps the two points.
+#check @ZeroParadox.homog_Z2_swap
 -- Statement: in `TopCat` the one-point space `{0} ⊆ ℚ₂` is TERMINAL (it is not initial,
 -- `padic_bottom_not_initial`); `TopCat`'s initial object is the empty space
 -- (`ZeroParadox/Multihomed/TreeObstructions.lean`).
@@ -289,7 +298,8 @@ example : letI := ZeroParadox.trivialZPSemilattice
 #check @ZeroParadox.binPF_no_seam
 -- Statement: the `W`-type of the trichotomy functor is empty.
 #check @ZeroParadox.strict_fix_isEmpty
--- Statement: `Fix idPF_Coalgebra.Obj` is empty, proved choice-free (a tighter axiom footprint).
+-- Statement: `Fix idPF_Coalgebra.Obj` is empty, proved with no axioms at all
+-- (`ZeroParadox/Computability/ChoicePurityInvariant.lean`, its `#print axioms` record).
 #check @ZeroParadox.fix_isEmpty_constructive
 -- Statement: `fixToCofix` is not surjective.
 #check @ZeroParadox.fixToCofix_not_surjective
@@ -360,7 +370,7 @@ example : @ZeroParadox.negation_no_fixedpoint = @iff_not_self := rfl
 example (x : ℤ) : (fun y : ℤ => -y) ((fun y : ℤ => -y) x) = x := neg_neg x
 example : (fun x : ℤ => -x) (0 : ℤ) = 0 := rfl
 
-/-! ### POSITIVE — narrow uniqueness and infinite width, which coincide only at ⊥ -/
+/-! ### POSITIVE — narrow uniqueness and infinite width, paired at ⊥ as a criterion (Reading below) -/
 
 -- Statement: in ℚ₂, `q2SelfMem x` forces `x = 0` — at most one such point. [NARROW]
 #check @ZeroParadox.q2_unique_fp
@@ -426,11 +436,14 @@ example : (fun x : ℤ => -x) (0 : ℤ) = 0 := rfl
 #check @ZeroParadox.rInv_reverses
 -- Statement: a conjunction whose first component is the DISEQUALITY of the floor pole and the
 -- infinity pole; inversion exchanging them, and `Infinite ℚ_[2]`, follow in the same declaration.
--- ⚠ `rInv_swaps` directly above states two equations and nothing else, so cite THIS one wherever the
+-- ⚠ `rInv_swaps` above states two equations and nothing else, so cite THIS one wherever the
 -- distinctness is what a sentence leans on.
 #check @ZeroParadox.point_and_field_at_the_poles
 -- Statement: that inversion is a homeomorphism of the sphere.
 #check @ZeroParadox.rInvHomeo
+-- Statement: `0` of `ℚ_[2]` and `∞` are distinct, `rInvHomeo` exchanges them, and a property
+-- invariant under `rInvHomeo` holds at one iff at the other.
+#check @ZeroParadox.rInv_invariant_poles_iff
 -- Reading: the pole ⊥ = 0 = ∞ is a CHART claim, not a point identity, and `rInv_swaps` above is only
 -- its INVERSION witness (two points exchanged, and distinct). The other two witnesses follow.
 -- Statement: COINCIDENCE — in any `InfinitudeFloor`, the complexity at the floor is `⊤ : ℕ∞`.
@@ -444,6 +457,13 @@ example : (fun x : ℤ => -x) (0 : ℤ) = 0 := rfl
 #check @ZeroParadox.no_path_zero_infty
 -- Statement: control, on `OnePoint ℝ` ∞ lies in the connected component of 0 of ℝ.
 #check @ZeroParadox.real_zero_infty_connected
+#check @ZeroParadox.lm_q2_dipole            -- Statement: on `OnePoint ℚ_[2]`, doubling and halving limit motions form a dipole with poles `0` of `ℚ_[2]` and `∞`, two distinct points (`ZeroParadox/Multihomed/LimitMotion.lean` § VI)
+#check @ZeroParadox.lm_fieldLine_is_members -- Statement: the doubling orbit of `2` is the member sequence of `q2InfinitudeFloor`, whose floor `0` of `ℚ_[2]` is doubling's limit sink off `∞`, with complexity `⊤` there
+#check @ZeroParadox.sVal_rInv -- Statement: on `OnePoint ℚ_[2]`, `sVal (rInv p) = negE (sVal p)` at every point `p`, `0` of `ℚ_[2]` and `∞` included (`ZeroParadox/Valuation/RiemannSphere.lean` § X)
+#check @ZeroParadox.q2_zero_min_eq_max -- Statement: `0` of `ℚ_[2]` steps only to itself under doubling and its reverse and has least norm; the field line `2 ^ (n + 1)` tends to it, is never it, and climbs in `cxQ2` through finite values to `cxQ2 0`, their supremum and the greatest value (`ZeroParadox/Multihomed/LimitMotion.lean` § VII)
+-- Reading: the min face is the step fixed point (0 of `ℚ_[2]` steps only to itself), not least norm;
+-- how least norm and greatest `cxQ2` relate is the `Reading:` on this theorem in
+-- `ZeroParadox/Multihomed/LimitMotion.lean` § VII.
 -- Statement: Mathlib's `IsInitial.op` — the opposite of an initial object is terminal.
 -- Reading: CITED, not ZP-proved; attribution is the point. Passing to `Cᵒᵖ` is the categorical face
 -- of inversion, swapping the μ-bottom to a terminal object.
@@ -506,7 +526,7 @@ example (k : ℕ) : ∀ n, Nat.Partrec.Code.eval (Nat.Partrec.Code.const k) n =
 -- the Kleene sense of a code applied to its own index.
 #check @ZeroParadox.biprod_diagonal_only_zero
 -- Statement: the free ℂ-module on ℕ is self-similar under that diagonal — `X ≅ X ⊞ X` — because
--- ℵ₀ + ℵ₀ = ℵ₀. Standard name: the Eilenberg–Mazur swindle.
+-- ℵ₀ + ℵ₀ = ℵ₀. Standard name: the absorbing object that the Eilenberg–Mazur swindle uses.
 #check @ZeroParadox.freeNat_biprod_self
 -- Statement: and it is not finite over ℂ, so it sits outside the theorem above. The exclusion is
 -- proved, not asserted in a docstring.
@@ -642,7 +662,29 @@ noncomputable example : Ordinal.{0} →o Ordinal.{0} :=
 -- Statement: CONTROL, for `α < 0`, `vladLam p α` is bounded above.
 #check @ZeroParadox.vladLam_bounded_of_neg
 -- Reading: eigen-equations on characters only; completeness of the characters in `L²(ℤ_p)` is not
--- claimed here (§ V header of that file).
+-- claimed here (§ V header of `ZeroParadox/Valuation/PadicStillPoint.lean`).
+-- Statement: for primitive `φ`, `paChar n φ` integrates over `{‖z‖ ≤ p^(-j)}` to `p^(-j)` if `n ≤ j`,
+-- else to `0` (`ZeroParadox/Valuation/PadicBallWave.lean`).
+#check @ZeroParadox.paChar_ball_integral_tradeoff
+-- Statement: every `χ : AddChar ℤ_[p] ℂ` integrates over `{‖z‖ ≤ p^(-j)}` to `p^(-j)` if `χ = 1` there,
+-- else to `0`; no continuity, no primitivity (`ZeroParadox/Valuation/PadicBallWave.lean`).
+#check @ZeroParadox.addChar_ball_integral
+-- Statement: for every `φ`, the same integral of `paChar n φ` is `p^(-j)` if `charLevel n φ ≤ j`, else `0`.
+#check @ZeroParadox.paChar_ball_integral_level
+-- Statement: every continuous `χ : AddChar ℤ_[p] ℂ` is `paChar j φ` for some `j` and `φ`.
+#check @ZeroParadox.continuous_addChar_eq_paChar
+-- Statement: on `paCharHom n φ`, the level of a continuous character equals `charLevel n φ`.
+#check @ZeroParadox.contLevel_paCharHom
+-- Statement: for primitive `φ`, `j < n` and any centre `a`, `vladimirov α` sends `paChar n φ` restricted
+-- to `nodeBall j a` to the level-`n` eigenvalue `vladLam p α n` times itself, pointwise on ℤ_[p]
+-- (`ZeroParadox/Valuation/PadicWavelet.lean`).
+#check @ZeroParadox.vladimirov_kozWavelet
+-- Statement: an isometry `T` of ℤ_[p] is measure-preserving for `haarZp`
+-- (`ZeroParadox/Valuation/PadicKoopmanVladimirov.lean`).
+#check @ZeroParadox.isometry_measurePreserving
+-- Statement: for every isometry `T` of ℤ_[p], `vladimirov α (f ∘ T) = (vladimirov α f) ∘ T` as
+-- functions.
+#check @ZeroParadox.vladimirov_isometry_commute
 
 /-! ### ⊥ of `End` — one tape read as depth and as width, and the one-way flow -/
 
@@ -682,6 +724,14 @@ noncomputable example : Ordinal.{0} →o Ordinal.{0} :=
 -- Statement: `endVal x = waitENat (det (tapeIso x))`, the first `true` on the digit tape, in `ℕ∞`.
 -- Reading: depth and width are one tape read two ways, not two separate facts.
 #check @ZeroParadox.endVal_eq_wait
+-- Statement: `padicEndHomeo (2 * x) = boundaryDouble (padicEndHomeo x)`, for the homeomorphism
+-- `padicEndHomeo : ℤ_[2] ≃ₜ End` (`ZeroParadox/Valuation/DepthIsWait.lean`).
+#check @ZeroParadox.padicEndHomeo_semiconj
+-- Statement: `endVal (padicEndHomeo x) = q2Val x`.
+#check @ZeroParadox.endVal_padicEndHomeo
+-- Statement: the Haar mass of `padicTape ⁻¹' {w | det w = ofNat n}` in ℤ_[2] equals the `trials 2⁻¹`
+-- mass of `{w | det w = ofNat n}` (`ZeroParadox/Information/PoleWithinEnsemble.lean`).
+#check @ZeroParadox.haarZp_padicTape_det_eq_trials
 -- Statement: ⊥ of `End` goes to ⊥ of `ℕ → Bool`, waiting time ⊤ of `NInf`, depth ⊤ of `ℕ∞`.
 -- Statement: ⊤ of `End` goes to ⊤ of `ℕ → Bool`, waiting time ⊥ of `NInf`, depth `0`.
 #check @ZeroParadox.depth_wait_poles
@@ -729,8 +779,9 @@ noncomputable example : Ordinal.{0} →o Ordinal.{0} :=
 #check @ZeroParadox.exists_lastBit_iff
 -- Statement: the eventually-`false` tapes are `⋃ k, shiftTape k ⁻¹' {⊥}`, ⊥ of `ℕ → Bool`.
 #check @ZeroParadox.eventuallyFalse_eq_iUnion_shift
--- Statement: they are the local floors `localBotEnd v` read through `tapeIso`.
--- Reading: returning to a floor is one set; each local floor is ⊥ of `ℕ → Bool` on its subtape.
+-- Statement: they are the local floors `localBotEnd v` read through `tapeIso`; the subtape of each
+-- after `v` is ⊥ of `ℕ → Bool` (`localFloor_subtape_pole_limit`, above).
+-- Reading: returning to a floor is one set.
 #check @ZeroParadox.eventuallyFalse_eq_range_localFloor
 -- Statement: that set is countable.
 #check @ZeroParadox.eventuallyFalse_countable
@@ -808,11 +859,22 @@ example : ZeroParadox.Disjunctive (fun n => xor (ZeroParadox.champ n) false) := 
 -- Reading: COINCIDENCE, Tim's reading: one tape, two charts, neither denied. Content chart: read
 -- against the reference all-false tape, ⊥ of `ℕ → Bool`, a tape is itself, and a disjunctive one
 -- carries every code word (`code_occurs_of_disjunctive`). Self chart: read against itself it is that
--- all-false tape; in ℤ_[2] the self-difference is ℤ_[2]'s 0, of additive valuation ⊤ (the floor's
--- `cx = ⊤`, `infinitude_forces_infinite_complexity`, `ZeroParadox/Valuation/InfinitudeFloor.lean`).
--- That the occupant of the framework's ⊥ role, ⊥ of a `ZPSemilattice`, is MAXIMALLY complex is
--- Tim's commitment, stated as no equation with any
--- one tape; disjunctive is the weaker, proved property (`ZeroParadox/Information/Disjunctive.lean`).
+-- all-false tape; in ℤ_[2] the self-difference is ℤ_[2]'s 0, of additive valuation ⊤ (the same point
+-- read in ℚ_[2] is the floor of `q2InfinitudeFloor`, `cx = ⊤` there by
+-- `infinitude_forces_infinite_complexity`, `ZeroParadox/Valuation/InfinitudeFloor.lean`).
+-- Reading: CHART claim, not a point identity. Tim, 2026-11-12: "simultaneously minimally and maximally
+-- complex". Witnesses, each a theorem in its own carrier: `q2_zero_min_eq_max`
+-- (`ZeroParadox/Multihomed/LimitMotion.lean` § VII), the asymptote: 0 of `ℚ_[2]` steps only to itself
+-- under doubling, and `cxQ2` at it is the supremum of the finite values along the field line
+-- `2 ^ (n + 1)`, which tends to it and never reaches it, and along every approach
+-- (`cx_zero_eq_iSup_of_tendsto`); `tape_totality_two_faces` (next section), minimal as the law, maximal
+-- as almost every member, ⊥ of `ℕ → Bool` a non-random limit of them. `z2_two_views` (§ ROLE), ℤ_[2]'s
+-- 0 least in the norm preorder and greatest in the `q2Val` preorder, is one order read backwards, a
+-- change of coordinates, not two characterizations in the sense of `epsilon0_min_eq_max`. Reading
+-- least as minimally complex is interpretation. Across every chart at once is Tim's commitment, and
+-- so is either face for ⊥ of a `ZPSemilattice`, whose class defines no complexity; no equation with
+-- any one tape is stated, and disjunctive is the weaker, proved property
+-- (`ZeroParadox/Information/Disjunctive.lean`).
 
 /-! ### One ensemble, two faces: the law and its members -/
 
@@ -823,7 +885,7 @@ example : ZeroParadox.Disjunctive (fun n => xor (ZeroParadox.champ n) false) := 
 #check @ZeroParadox.tape_totality_two_faces
 -- Statement: CONTROL, a two-element set holding ⊥ of `ℕ → Bool` and a random tape is `fairTape`-null
 -- (`fairTape_singleton_null`).
--- Reading: containing a minimal and a maximal member is not the content of the reading below.
+-- Reading: CARRIER, the two-element null set above is not the content of the reading below.
 #check @ZeroParadox.both_faces_in_null_set
 -- Reading: COINCIDENCE, in the tape chart: minimal as the law (one condition), maximal as almost every
 -- member, the all-false tape inside as a limit. Tim, 2026-11-15: "Could we restate bottom as being both

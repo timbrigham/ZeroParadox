@@ -9,6 +9,7 @@ import ZeroParadox.Valuation.SemilatticeInstance
 import ZeroParadox.Multihomed.BoundaryOrder
 import ZeroParadox.Information.SnapEpsilonZero
 import ZeroParadox.Ordinal.UniverseZoom
+import ZeroParadox.Valuation.TowerHeightFloor
 
 /-!
 # Machine-checked characterization index of ε₀ — what ε₀ IS and what it IS NOT
@@ -113,7 +114,7 @@ example (x : ℤ_[2]) : ‖(0 : ℤ_[2])‖ ≤ ‖x‖ ∧ (‖x‖ = 0 → x =
 -- Statement: so every `NONote`, the domain of `cnfToZp2`, denotes strictly below ε₀.
 example (o : NONote) : o.repr < Ordinal.epsilon 0 := ZeroParadox.repr_lt_epsilon0 o.1
 
-/-! ### § I-c. The ⊥ role, one occupant per `ZPSemilattice`; the at-or-above μ schema, at most one per seed and not the ε₀ role -/
+/-! ### § I-c. The ⊥ role, one occupant per `ZPSemilattice`; the at-or-above μ schema, at most one per seed for an antisymmetric relation, and not the ε₀ role -/
 -- Reading: the ⊥ role is a structure's floor and the ε₀ role a position strictly above a floor
 -- (§ I-b); a Lean object fills either as an occupant. The schema is Knaster–Tarski's and Veblen's
 -- (`ZeroParadox/Order/LeastFixedPoint.md`).
@@ -191,7 +192,8 @@ example : (∀ a : Ordinal.{u}, Ordinal.nfp (fun α => Ordinal.omega0 ^ α) a =
 #check @ZeroParadox.c1_epsilon_zero_identification
 #check @ZeroParadox.zpm_triangle              -- Statement: tower stages < ε₀ ∧ the threshold map sends ε₀ to c₁ ∧ the images tend to ℤ_[2]'s 0 ∧ `snapEmbed` sends that c₁ to ℤ_[2]'s 0 (NB no computational conjunct)
 #check @ZeroParadox.both_fixed_points_exist   -- Statement: some code `c` has `eval c n = eval c (encode c + n)` for all `n` ∧ a least ordinal fixed by ω^· exists. The first conjunct is trivially inhabited (example below). A conjunction, not a cross-domain identity
--- Statement: `Code.zero` meets the first conjunct with period 0, since `encode Code.zero = 0`.
+-- Statement: some code meets the first conjunct. Reading: the witness in the proof is `Code.zero`,
+-- with period 0, since `encode Code.zero = 0`.
 example : ∃ c : Nat.Partrec.Code, ∀ n, c.eval n = c.eval (Encodable.encode c + n) :=
   ⟨Nat.Partrec.Code.zero, fun n => by simp [Encodable.encode, Nat.Partrec.Code.encodeCode]⟩
 
@@ -213,6 +215,8 @@ example (m n : ℕ) (hm : 1 ≤ m) (hmn : m < n) :
     PadicInt.norm_eq_zpow_neg_valuation (ZeroParadox.snap_arc_z2_loop.2.1 m hm),
     ZeroParadox.cnfToZp2_tower_valuation, ZeroParadox.cnfToZp2_tower_valuation]
   exact zpow_lt_zpow_right₀ (by norm_num) (by omega)
+#check @ZeroParadox.asymptote_preserved       -- Statement: from stage 1, the denotations climb strictly, each below ε₀, with supremum ε₀; their `cnfToZp2` images are never ℤ_[2]'s 0, tend to it, and climb strictly in `towerCx` through finite values to `towerCx 0 = ⊤`, their supremum; the two orders agree, which follows from the two strict climbs alone (`ZeroParadox/Valuation/TowerHeightFloor.lean` § V)
+#check @ZeroParadox.eps0_no_preimage          -- Statement: no `NONote` denotes ε₀, so ε₀ has no `cnfToZp2` image
 
 /-! ### § VI. The loop returns to a ⊥, never to ε₀ (the *successor* reading is a commitment) -/
 #check @ZeroParadox.t_iz_limit_is_new_null    -- Statement: role half only, in any `ZPSemilattice`: (∀ x, join terminal x = x) → terminal = bot. No chain, no limit, no novelty in the statement; "a fresh instance" is the framework's reading, not this theorem
@@ -231,10 +235,9 @@ example : typeLT (Set.Ioo (Ordinal.epsilon 0 : Ordinal.{0}) (Ordinal.epsilon 1))
   rw [h, Ne, Ordinal.lift_inj]
   exact (Ordinal.veblen_right_strictMono 1 zero_lt_one).ne'
 #check @ZeroParadox.card_epsilon0              -- Statement: COUNTING chart, `ε₀.card = ℵ₀`. A cell indexed past the countable ordinals is not countable (the control in `ZeroParadox/Ordinal/Epsilon0LeastFP.lean`)
-#check @ZeroParadox.repr_surj_below_epsilon0   -- Statement: every ordinal below ε₀ is denoted by a normal-form `ONote`, a finite term; ε₀ is denoted by none (`repr_lt_epsilon0`, § I-b)
--- Reading: CARRIER, two charts of one cell, neither denied. Order type: the first cell's seeds below
--- its landing are as wide as ε₀, and each successor cell is as wide as its own landing. Count: the
--- first cell is countable, and each of its addresses is a finite term.
+#check @ZeroParadox.repr_surj_below_epsilon0   -- Statement: every ordinal below ε₀ is denoted by a normal-form `ONote`, a finite term; no `ONote` denotes ε₀ (`repr_lt_epsilon0`, § I-b)
+-- Reading: CARRIER, two charts of one cell, neither denied: the order-type chart (`first_cell_eq_Iic`,
+-- `successor_cell_width`) and the counting chart (`card_epsilon0`, `repr_surj_below_epsilon0`) above.
 
 /-! ### § VIII. One universe seen from the next: the § I-b role at a point floor and at a level floor -/
 #check @ZeroParadox.below_univ_is_a_copy          -- Statement: below `univ.{u, u+1}` every ordinal is the lift of exactly one ordinal of `Ordinal.{u}`, and the lift keeps and reflects `<`
@@ -242,11 +245,11 @@ example : typeLT (Set.Ioo (Ordinal.epsilon 0 : Ordinal.{0}) (Ordinal.epsilon 1))
 -- Reading: CARRIER, Tim, 2026-11-14: "if it's strictly an up motion, you still can't tell the two
 -- universes apart.. once you do an over motion, you understand your frame of reference".
 #check @ZeroParadox.lift_epsilon_zero             -- Statement: `lift ε₀ = ε₀`, from `Ordinal.{u}` to `Ordinal.{max u v}`
-#check @ZeroParadox.univ_isLeast_above_level      -- Statement: `univ.{u, u+1}` is the least ordinal above every lift and is fixed by `α ↦ ω^α`; it is least above every lift already (`lift_of_lt_univ`), so the fixed-point clause selects nothing
+#check @ZeroParadox.univ_isLeast_above_level      -- Statement: `univ.{u, u+1}` is the least ordinal of `Ordinal.{u+1}` that is above every lift and fixed by `α ↦ ω^α`; the fixed-point clause selects nothing, since every ordinal strictly below `univ` is a lift (`lift_of_lt_univ`)
 #check @ZeroParadox.epsilon_zero_lt_univ          -- Statement: in `Ordinal.{u+1}`, ε₀ < `univ.{u, u+1}`
 -- Reading: CARRIER, Tim, 2026-11-14: "New point, not new bottom". `univ` is a point of `Ordinal.{u+1}`;
 -- a new ⊥ there is the C-DA2 commitment, not a theorem (§ VI).
-#check @ZeroParadox.roleAbove                     -- Statement: `sInf` of the fixed points of `α ↦ ω^α` strictly above every point of a set `S`: the least one when one exists (`roleAbove_eq_of_isLeast`); for an unbounded `S` it is `sInf ∅ = 0`, ⊥ of `Ordinal`, a junk value, never a role (the CONTROL `example` in `ZeroParadox/Ordinal/UniverseZoom.lean`)
+#check @ZeroParadox.roleAbove                     -- Statement: `sInf` of the fixed points of `α ↦ ω^α` strictly above every point of a set `S`: the least one when one exists (`roleAbove_eq_of_isLeast`); when none exists it is `sInf ∅ = 0` (`Ordinal.sInf_empty`), ⊥ of `Ordinal` (at `Set.univ`: the CONTROL `example` in `ZeroParadox/Ordinal/UniverseZoom.lean`). Reading: that 0 is a junk value of `sInf`, never a role
 #check @ZeroParadox.roleAbove_point_floor         -- Statement: at `{f}` it is `ordinalCornerStep f`, the § I-b strict form
 #check @ZeroParadox.roleAbove_one_construction    -- Statement: in `Ordinal.{u+1}`, `roleAbove {0}` is the lift of ε₀ and `roleAbove (Set.range lift)` is `univ.{u, u+1}`
 #check @ZeroParadox.roleAbove_work_split          -- Statement: `succ 0 < nfp (ω^·) (succ 0)`; the supremum of `succ (lift o)` is `univ`; `nfp (ω^·) univ = univ`

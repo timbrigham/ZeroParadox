@@ -117,7 +117,7 @@ def ofTotal (f : α → α) (hf : ∀ x, f (f x) = f x) (s : α → α → Prop)
 /-- `Statement:` the UP switch at `total`: `up` is defined everywhere. -/
 def UpTotal : Prop := ∀ x, (M.up x).Dom
 
-/-- `Statement:` climb: from a landing `y`, a step to `b`, and `up b` is neither `b` nor `y`. -/
+/-- `Statement:` climb: from a landing `y`, a step to `b`, and `up b` is defined and is neither `b` nor `y`. -/
 def Climb : Prop := ∃ y b z, M.IsLanding y ∧ M.step y b ∧ z ∈ M.up b ∧ z ≠ b ∧ z ≠ y
 
 /-- `Statement:` loop: from a landing `y`, a step to some `b ≠ y`, and `up b` returns to `y`. -/
@@ -248,7 +248,8 @@ theorem corner_of_not_not_classical : ¬¬ M.Corner → M.Corner :=
 theorem corner_overAtLanding : M.Corner → M.OverAtLanding :=
   fun ⟨y, b, _, hy, hs, _, _⟩ => ⟨y, b, hy, hs⟩
 
-/-- `Statement:` a corner's step leaves its landing. -/
+/-- `Statement:` a corner gives a step between two distinct points; that the step starts at a landing
+    is `corner_leavesAt`. -/
 theorem corner_step_moves : M.Corner → ∃ y b, M.step y b ∧ b ≠ y :=
   fun ⟨y, b, _, hy, hs, hz, hzb⟩ =>
     ⟨y, b, hs, fun hb => hzb (by rw [hb] at hz ⊢; exact Part.mem_unique hz hy)⟩
@@ -1037,8 +1038,8 @@ theorem eq_bot_of_step_from_bot [PartialOrder α] [OrderBot α] (h : M.StepLower
 
 /-! ### § XIII. Further trap data: emptiness, a rank, accessibility, monotonicity; and maps of motions -/
 
-/-- `Statement:` if every step `a → b` gives a map `E a → E b`, `E y` is empty, and `E a` is
-    inhabited for every `a ≠ y`, every step into `y` starts at `y`. No order is used, and the
+/-- `Statement:` if every step `a → b` gives a map `E a → E b`, `E y` is empty, and for every `a`
+    either `E a` is inhabited or `a = y`, every step into `y` starts at `y`. No order is used, and the
     step need not be single-valued. -/
 theorem eq_of_step_to_isEmpty {E : α → Type*} (hstep : ∀ a b, M.step a b → Nonempty (E a → E b))
     {y : α} (hy : IsEmpty (E y)) (hne : ∀ a, Nonempty (E a) ∨ a = y) (a : α)
@@ -1190,8 +1191,9 @@ theorem rank_eq_top_of_not_acc (r : α → α → Prop) (v : α → ℕ∞)
   by_contra hne
   exact h (acc_of_rank_ne_top r v hv hne)
 
-/-- `Statement:` at an accessible `a`, `Set.ncard` of the points `c` with `r`-steps from `a` down to
-    `c` (their number on a finite carrier; `Set.ncard` is 0 on an infinite set), and ⊤ of `ℕ∞`
+/-- `Statement:` at an accessible `a`, `Set.ncard` of the points `c` that reach `a` by one or more
+    `r`-steps (`Relation.TransGen r c a`; steps from `a` down to `c` under the reading of
+    `acc_of_rank_ne_top`) (their number on a finite carrier; `Set.ncard` is 0 on an infinite set), and ⊤ of `ℕ∞`
     elsewhere. -/
 -- [ZP-CUSTOM] no Mathlib analog | reason: Mathlib's `Acc.rank` (`Mathlib/SetTheory/Ordinal/Rank.lean`)
 -- is `Ordinal`-valued and takes the `Acc` proof as an argument; this is total, `ℕ∞`-valued, and
@@ -1384,7 +1386,7 @@ theorem restrict_stepRaises_Ici [Preorder α] (h : M.StepRaises) (a : α)
   fun x y hs => h x.1 y.1 hs
 
 /-- `Statement:` an empty carrier has at most one motion. One exists on every carrier, the identity UP
-    with the empty step (the `example` at `Type` in `ZeroParadox/DieCannotBe.lean` § 0), and on
+    with the empty step (the `example` at `Type u` in `ZeroParadox/DieCannotBe.lean` § 0), and on
     `Empty` the `Nonempty` example of § II there. -/
 theorem subsingleton_of_isEmpty [IsEmpty α] : Subsingleton (Motion α) :=
   ⟨fun ⟨u, _, s⟩ ⟨u', _, s'⟩ => by
@@ -1653,7 +1655,7 @@ theorem noEntry_iff_noReach (y : α) :
   ⟨fun h _ hx => eq_of_reflTransGen_of_noEntry h hx,
    fun h a ha => h a (Relation.ReflTransGen.single ha)⟩
 
-/-- `Statement:` if some `x ≠ y` arrives at `y`, some step into `y` starts elsewhere. -/
+/-- `Statement:` if some `x ≠ y` arrives at `y`, not every step into `y` starts at `y`. -/
 theorem not_noEntry_of_arrives {x y : α} (h : M.Arrives y x) (hxy : x ≠ y) :
     ¬ ∀ a, M.step a y → a = y :=
   fun hF => hxy (eq_of_reflTransGen_of_noEntry hF (reflTransGen_of_arrives h))
@@ -1874,7 +1876,7 @@ theorem mp_of_exists_fanIn_nat
   · obtain ⟨k, -, hk⟩ := (fired_iff a).1 hfa
     exact ⟨k, hk⟩
 
-/-- `Statement:` if `y` has fan-in, some step into `y` starts elsewhere. -/
+/-- `Statement:` if `y` has fan-in, not every step into `y` starts at `y`. -/
 theorem not_noEntry_of_fanIn {y : α} (h : M.FanIn y) : ¬ ∀ a, M.step a y → a = y :=
   fun hF => let ⟨a, b, hab, ha, hb⟩ := h; hab ((hF a ha).trans (hF b hb).symm)
 
@@ -2245,13 +2247,13 @@ def UpLax (M : Motion α) (N : Motion β) (f : α → β) : Prop :=
   ∀ x y, y ∈ M.up x → f y ∈ N.up (f x)
 
 /-- `Statement:` UP at `f x` in `N` is UP at `x` in `M` mapped by `f`, at every `x`. `Reading:` the
-    UP square commutes in Par; it is Mathlib's coalgebra morphism for the functor `Part` (next
-    `example`). -/
+    UP square commutes in Par; for carriers in `Type`, it is Mathlib's coalgebra morphism for the
+    functor `Part` (next `example`). -/
 def UpStrict (M : Motion α) (N : Motion β) (f : α → β) : Prop :=
   ∀ x, N.up (f x) = (M.up x).map f
 
--- Statement: `UpStrict` is `CategoryTheory.Endofunctor.Coalgebra.Hom` for `ofTypeFunctor Part`, with
--- UP as the structure map; both directions.
+-- Statement: for carriers in `Type`, `UpStrict` is `CategoryTheory.Endofunctor.Coalgebra.Hom` for
+-- `ofTypeFunctor Part`, with UP as the structure map; both directions.
 example {α β : Type} (M : Motion α) (N : Motion β) (f : α → β) :
     UpStrict M N f ↔
       ∃ h : CategoryTheory.Endofunctor.Coalgebra.Hom (F := CategoryTheory.ofTypeFunctor Part)
@@ -2282,8 +2284,9 @@ example (M : Motion α) (N : Motion β) (f : α → β) :
 /-- `Statement:` a strict map of motions: a map carrying steps to steps, with `UpStrict`. -/
 -- [ZP-CUSTOM] no Mathlib analog | reason: a Mathlib `RelHom` on the OVER leg paired with a commuting
 -- square on the partial UP leg; Mathlib has each half separately (`RelHom`, and
--- `Endofunctor.Coalgebra.Hom` for `Part`). With the back clause added, the pair is Mathlib's
--- `Endofunctor.Coalgebra.Hom` for `Part × Set` (`coalgHom_iff`, § XX); without it, not.
+-- `Endofunctor.Coalgebra.Hom` for `Part`). For carriers in one universe, with the back clause
+-- added, the pair is Mathlib's `Endofunctor.Coalgebra.Hom` for `Part × Set` (`coalgHom_iff`, § XX);
+-- without it, not.
 structure Hom (M : Motion α) (N : Motion β) where
   /-- The underlying map. -/
   toFun : α → β
@@ -2315,7 +2318,7 @@ theorem upLax_iff_le (f : α → β) : UpLax M N f ↔ ∀ x, (M.up x).map f ≤
   · intro h x y hy
     exact h x (f y) ((Part.mem_map_iff _).2 ⟨y, hy, rfl⟩)
 
-/-- `Statement:` `UpStrict` gives `UpLax`; one way (`lax_not_strict` example below). -/
+/-- `Statement:` `UpStrict` gives `UpLax`; one way (the NO-GO `example` "lax is not strict" below). -/
 theorem upStrict_upLax {f : α → β} (h : UpStrict M N f) : UpLax M N f :=
   fun x y hy => by rw [h x]; exact Part.mem_map f hy
 
@@ -2758,8 +2761,10 @@ example : (∀ x : Empty, (fun b : Bool => Part.some (!b)) (Empty.elim x) =
 end Motion
 
 /-! ### § XXI. Observation: a motion and a map out of it, as a pair
-`Reading:` an observation is an explicit second argument (a strict map `φ`, or a map `obs` into any
-type); each result here is about the pair, none about the motion alone. The observer is the map and
+`Reading:` an observation is a second argument (a strict map `φ`, or a map `obs` into any type). Some
+results here take the observation explicitly; others derive it from the motion's own data, its UP's
+domain (`upCompat_ker_dom`) or the idempotent `r` it is built from (`upCompat_ker_up`), and
+`collapseEquiv` concerns `r` alone. The observer is the map and
 the observed motion is its source; when the map is a strict onto map with the back clause, the motion
 it maps onto is its homomorphic image (what the observer shows). -/
 
@@ -4342,6 +4347,10 @@ def ninfEquivComp : NInf ≃ Computation Unit where
 /-- `Statement:` `toComp ∞` is Mathlib's `Computation.empty Unit`, by `rfl`. -/
 theorem toComp_infty : toComp infty = Computation.empty Unit := rfl
 
+/-- `Statement:` `toComp (succ x)` is Mathlib's `Computation.think (toComp x)`, for every `x`. -/
+theorem toComp_succ (x : NInf) : toComp (succ x) = Computation.think (toComp x) := by
+  apply Subtype.ext; funext n; cases n <;> rfl
+
 /-- `Statement:` `ofNat` is one-to-one. -/
 theorem ofNat_injective : Function.Injective ofNat := by
   have key : ∀ a b, a < b → ofNat a ≠ ofNat b := fun a b hab h => by
@@ -4540,9 +4549,10 @@ end Motion
 are Escardó's (preprint of JSL 78(3) (2013), p. 1 and Definition 2.1, p. 3) in the polarity of LPO
 (`ZeroParadox/Category/LawvereTaboo.lean`): a `true` point, or `false` everywhere. `NInf.omniscient`
 and `NInf.eps_spec` (with `NInf.covered_limit_searchable`) state the same for `NInf` in the other
-polarity, `p` replaced by `!p`. The instances on `ℕ`, `Option ℕ` and `NInf`
-(`Motion.lpo_of_trichotomy_nat_boolStep`, `Motion.lpo_of_trichotomy_option_boolStep`,
-`Motion.overTrichotomy_ninf_boolStep`) are cases of the theorems below, not proved through them. -/
+polarity, `p` replaced by `!p`. The instances on `ℕ` and `Option ℕ`
+(`Motion.lpo_of_trichotomy_nat_boolStep`, `Motion.lpo_of_trichotomy_option_boolStep`) are cases of the
+theorems below, not proved through them; on `NInf`, `Motion.overTrichotomy_ninf_boolStep` proves the
+trichotomy outright, an instance of the hypothesis the theorems below take as input. -/
 
 /-- `Statement:` every `p : X → Bool` is `true` somewhere or `false` everywhere. -/
 def Omniscient (X : Type u) : Prop := ∀ p : X → Bool, (∃ x, p x = true) ∨ ∀ x, p x = false
@@ -4861,6 +4871,60 @@ theorem not_pinnedLimit_of_finite {α : Type*} [PartialOrder α] [Finite α] (g 
     (s : ℕ → α) (c : α) : ¬ PinnedLimit g s c :=
   fun h => not_pinnedLimitAbove_of_finite g s c h.toAbove
 
+/-- `Statement:` if nothing other than `c` is at or below `c`, then `c` occupies no
+    `PinnedLimitAbove g s`, for every `g` and `s`. -/
+theorem not_pinnedLimitAbove_of_minimal {α : Type*} [Preorder α] {g : α → α} {s : ℕ → α} {c : α}
+    (hmin : ∀ z, z ≤ c → z = c) : ¬ PinnedLimitAbove g s c :=
+  fun h => h.2.1 ⟨0, hmin _ (h.1.1 ⟨0, rfl⟩)⟩
+
+/-- `Statement:` if `g` fixes a least point `b` that nothing else is at or below, no point occupies
+    `PinnedLimit g s`, for every run `s`. One direction. -/
+theorem not_pinnedLimit_of_fixed_floor {α : Type*} [Preorder α] {g : α → α} {b : α}
+    (hbot : IsBot b) (hmin : ∀ z, z ≤ b → z = b) (hfix : g b = b) (s : ℕ → α) (c : α) :
+    ¬ PinnedLimit g s c := by
+  intro h
+  have hc : c = b := hmin c (h.2.2.1.2 hfix)
+  subst hc
+  exact not_pinnedLimitAbove_of_minimal hmin h.toAbove
+
+/-- `Statement:` an equivalence `e : α ≃ β` with `e (g x) = h (e x)` for every `x` sends
+    `PinnedLimitUnique g s c` to `PinnedLimitUnique h (e ∘ s) (e c)` in the preorder on `β` lifted
+    along `e.symm`. -/
+theorem pinnedLimitUnique_transport {α β : Type*} [Preorder α] (e : α ≃ β) {g : α → α}
+    {h : β → β} (hc : ∀ x, e (g x) = h (e x)) {s : ℕ → α} {c : α} (hp : PinnedLimitUnique g s c) :
+    @PinnedLimitUnique β (Preorder.lift e.symm) h (e ∘ s) (e c) := by
+  letI : Preorder β := Preorder.lift e.symm
+  have fixiff : ∀ y, h y = y ↔ g (e.symm y) = e.symm y := fun y => by
+    constructor
+    · intro hy; apply e.injective; rw [hc, e.apply_symm_apply, hy]
+    · intro hy; have := congrArg e hy; rw [hc, e.apply_symm_apply] at this; exact this
+  obtain ⟨⟨⟨hub, hlst⟩, hnot, ⟨hfix, hleast⟩, hmono⟩, huniq⟩ := hp
+  refine ⟨⟨⟨?_, ?_⟩, ?_, ⟨?_, ?_⟩, ?_⟩, ?_⟩
+  · rintro _ ⟨n, rfl⟩
+    show e.symm (e (s n)) ≤ e.symm (e c)
+    rw [e.symm_apply_apply, e.symm_apply_apply]; exact hub ⟨n, rfl⟩
+  · intro b hb
+    have hc' : c ≤ e.symm b := hlst (by
+      rintro _ ⟨n, rfl⟩
+      have := hb ⟨n, rfl⟩
+      change e.symm (e (s n)) ≤ e.symm b at this
+      rwa [e.symm_apply_apply] at this)
+    show e.symm (e c) ≤ e.symm b
+    rwa [e.symm_apply_apply]
+  · rintro ⟨n, hn⟩
+    exact hnot ⟨n, e.injective hn⟩
+  · show h (e c) = e c
+    rw [← hc, show g c = c from hfix]
+  · intro y hy
+    show e.symm (e c) ≤ e.symm y
+    rw [e.symm_apply_apply]
+    exact hleast ((fixiff y).1 hy)
+  · intro m n hmn
+    show e.symm (e (s m)) ≤ e.symm (e (s n))
+    rw [e.symm_apply_apply, e.symm_apply_apply]; exact hmono hmn
+  · intro y hy
+    rw [← huniq _ ((fixiff y).1 hy), e.apply_symm_apply]
+
 -- `Statement:` CONTROL: antisymmetry is a premise of the exclusion. On `Bool` preordered by `x ≤ y`
 -- for all `x`, `y` (not a partial order), the constant run at `false` climbs and `true` occupies
 -- `PinnedLimit id`.
@@ -5073,14 +5137,84 @@ section
 attribute [local instance high] WithTop.instLE
 
 /-- `Statement:` any order isomorphism `NInf ≃o WithTop ℕ` gives WLPO. `Reading:` by
-    `wlpo_of_discrete_tag` at `D = WithTop ℕ`, whose `DecidableEq` is an instance. -/
+    `wlpo_of_discrete_tag` at `D = WithTop ℕ`, whose `DecidableEq` is an instance; `lpo_of_iso`
+    below gives LPO. -/
 theorem wlpo_of_iso (e : NInf ≃o WithTop ℕ) :
     ∀ r : ℕ → Bool, (∀ n, r n = false) ∨ ¬ ∀ n, r n = false :=
   wlpo_of_discrete_tag e fun _ => e.injective.eq_iff
 
+/-- `Statement:` any order isomorphism `NInf ≃o WithTop ℕ` sends `ofNat n` to `↑n`. `Reading:` by
+    induction on `n`, `eq_or_eq_of_between` at the step. -/
+theorem iso_ofNat (e : NInf ≃o WithTop ℕ) (n : ℕ) : e (ofNat n) = WithTop.some n := by
+  have some_le : ∀ {a b : ℕ}, (WithTop.some a ≤ WithTop.some b) ↔ a ≤ b := fun {_ _} =>
+    ⟨fun h => by change WithTop.LE _ _ at h; cases h with | coe_le_coe h => exact h,
+     fun h => WithTop.LE.coe_le_coe h⟩
+  have not_top_le : ∀ a : ℕ, ¬ ((⊤ : WithTop ℕ) ≤ WithTop.some a) := fun _ h => by
+    change WithTop.LE _ _ at h; cases h
+  induction n with
+  | zero =>
+    have h : e (ofNat 0) ≤ e (e.symm (WithTop.some 0)) :=
+      e.le_iff_le.2 (bot_le : (⊥ : NInf) ≤ _)
+    rw [e.apply_symm_apply] at h
+    cases hy : e (ofNat 0) with
+    | top => rw [hy] at h; exact absurd h (not_top_le 0)
+    | coe m =>
+      rw [hy] at h
+      have : m = 0 := Nat.le_zero.1 (some_le.1 h)
+      rw [this]
+  | succ n ih =>
+    have hle : WithTop.some n ≤ e (ofNat (n + 1)) :=
+      ih ▸ e.le_iff_le.2 ((ofNat_le_iff _ _).2 (Nat.le_succ n))
+    have hne : e (ofNat (n + 1)) ≠ WithTop.some n := fun h => by
+      have := ofNat_injective (e.injective (h.trans ih.symm)); omega
+    have hge : WithTop.some (n + 1) ≤ e (ofNat (n + 1)) := by
+      cases hy : e (ofNat (n + 1)) with
+      | top => exact WithTop.LE.le_top _
+      | coe m =>
+        rw [hy] at hle hne
+        have h1 : n ≤ m := some_le.1 hle
+        have h2 : m ≠ n := fun h => hne (by rw [h])
+        exact some_le.2 (by omega)
+    have hex : e (e.symm (WithTop.some (n + 1))) = WithTop.some (n + 1) := e.apply_symm_apply _
+    have h2 : e.symm (WithTop.some (n + 1)) ≤ ofNat (n + 1) := e.le_iff_le.1 (by rw [hex]; exact hge)
+    have h1 : ofNat n ≤ e.symm (WithTop.some (n + 1)) := e.le_iff_le.1 (by
+      rw [ih, hex]; exact some_le.2 (Nat.le_succ n))
+    rcases eq_or_eq_of_between n _ h1 h2 with h | h
+    · exfalso
+      have : WithTop.some (n + 1) = WithTop.some n := by rw [← hex, h, ih]
+      have := Option.some.inj this; omega
+    · rw [← h, hex]
+
+/-- `Statement:` any order isomorphism `NInf ≃o WithTop ℕ` gives LPO. `Reading:` the tag
+    `x ↦ (e x : Option ℕ)` is exact by `iso_ofNat`, so `lpo_of_exactTag` applies; the order is used
+    by this route, to force `ofNat n ↦ n`, not by the conclusion: compare Escardó, preprint of JSL
+    78(3) (2013), Corollary 3.7, p. 5, where any bijection of `ℕ∞` with `ℕ` already gives LPO. -/
+theorem lpo_of_iso (e : NInf ≃o WithTop ℕ) :
+    ∀ r : ℕ → Bool, (∃ n, r n = true) ∨ ∀ n, r n = false :=
+  lpo_of_exactTag (fun x => (e x : Option ℕ)) fun x n => by
+    show e x = WithTop.some n ↔ x = ofNat n
+    rw [← iso_ofNat e n]; exact e.injective.eq_iff
+
+/-- `Statement:` any order isomorphism `NInf ≃o WithTop ℕ` decides, as data, each sequence: a `PSum` of
+    `∃ n, r n = true` and `∀ n, r n = false`. -/
+def lpoData_of_iso (e : NInf ≃o WithTop ℕ) (r : ℕ → Bool) :
+    PSum (∃ n, r n = true) (∀ n, r n = false) :=
+  have hg : ∀ x n, (e x : Option ℕ) = some n ↔ x = ofNat n := fun x n => by
+    show e x = WithTop.some n ↔ x = ofNat n
+    rw [← iso_ofNat e n]; exact e.injective.eq_iff
+  match hx : (e (det r) : Option ℕ) with
+  | some k => .inl (by
+      have hd : (det r).1 k = false := by
+        rw [(hg _ k).1 hx]; exact decide_eq_false (Nat.lt_irrefl k)
+      obtain ⟨j, _, hj⟩ := detSeq_false r k hd
+      exact ⟨j, hj⟩)
+  | none => .inr ((det_eq_infty_iff r).1
+      (eq_infty_of_ne_ofNat _ fun k e' => by rw [(hg _ k).2 e'] at hx; cases hx))
+
 end
 
--- `Statement:` the order is not used: any injection into `WithTop ℕ` gives WLPO.
+-- `Statement:` any injection `NInf → WithTop ℕ` gives WLPO, no order needed. `Reading:` for LPO,
+-- `lpo_of_iso` uses the order on its route only (see its docstring).
 example (e : NInf → WithTop ℕ) (he : Function.Injective e) :
     ∀ r : ℕ → Bool, (∀ n, r n = false) ∨ ¬ ∀ n, r n = false :=
   wlpo_of_discrete_tag e fun _ => he.eq_iff
@@ -5110,8 +5244,80 @@ theorem ofWithTop_strictMono : StrictMono ofWithTop := by
 
 end
 
-/-- `Statement:` CONTROL: `NInf ≃o WithTop ℕ` from `Classical.propDecidable`, so `wlpo_of_iso`'s
-    hypothesis is inhabited classically. -/
+section
+-- Pin the bare choice-free `WithTop.instLE`, as for `wlpo_of_iso` above.
+attribute [local instance high] WithTop.instLE
+
+/-- `Statement:` conversely, a `PSum` decision of `∃ n, r n = true` against `∀ n, r n = false` for every
+    `r : ℕ → Bool` gives an order isomorphism `NInf ≃o WithTop ℕ`, inverse to `ofWithTop` (compare
+    TypeTopology `Taboos.LPO`, `LPO-gives-ι𝟙-is-equiv`, for the bijection; the order isomorphism is
+    the addition here). -/
+def isoOfLPOData (D : ∀ r : ℕ → Bool, PSum (∃ n, r n = true) (∀ n, r n = false)) :
+    NInf ≃o WithTop ℕ :=
+  have some_le : ∀ {a b : ℕ}, (WithTop.some a ≤ WithTop.some b) ↔ a ≤ b := fun {_ _} =>
+    ⟨fun h => by change WithTop.LE _ _ at h; cases h with | coe_le_coe h => exact h,
+     fun h => WithTop.LE.coe_le_coe h⟩
+  have le_iff : ∀ a b : WithTop ℕ, ofWithTop a ≤ ofWithTop b ↔ a ≤ b := fun a b => by
+    cases a with
+    | top =>
+      cases b with
+      | top => exact ⟨fun _ => WithTop.LE.le_top _, fun _ => le_rfl⟩
+      | coe n =>
+        refine ⟨fun h => ?_, fun h => by change WithTop.LE _ _ at h; cases h⟩
+        exact absurd (show ofNat n = infty from le_antisymm le_top h) (ofNat_ne_infty n)
+    | coe m =>
+      cases b with
+      | top => exact ⟨fun _ => WithTop.LE.le_top _, fun _ => le_top⟩
+      | coe n => exact (ofNat_le_iff m n).trans some_le.symm
+  (show WithTop ℕ ≃o NInf from
+    { toFun := ofWithTop
+      invFun := fun x => match D (fun n => !x.1 n) with
+        | .inl h => WithTop.some (Nat.find h)
+        | .inr _ => ⊤
+      left_inv := fun y => by
+        cases y with
+        | top =>
+          dsimp only
+          split
+          · rename_i h _
+            exfalso; obtain ⟨n, hn⟩ := h; change (!true) = true at hn; cases hn
+          · rfl
+        | coe m =>
+          dsimp only
+          split
+          · rename_i h _
+            have hs := Nat.find_spec h
+            change (!decide (Nat.find h < m)) = true at hs
+            have h1 : ¬ Nat.find h < m := fun hl => by rw [decide_eq_true hl] at hs; cases hs
+            have h2 : Nat.find h ≤ m := Nat.find_min' h (show (!decide (m < m)) = true by
+              rw [decide_eq_false (Nat.lt_irrefl m)]; rfl)
+            have : Nat.find h = m := by omega
+            rw [this]
+          · rename_i h _
+            exfalso; have := h m; change (!decide (m < m)) = false at this
+            rw [decide_eq_false (Nat.lt_irrefl m)] at this; cases this
+      right_inv := fun x => by
+        dsimp only
+        split
+        · rename_i h _
+          have hk : x.1 (Nat.find h) = false := by
+            have := Nat.find_spec h; cases hx : x.1 (Nat.find h) <;> simp_all
+          obtain ⟨j, hj, e⟩ := eq_ofNat_of_false x _ hk
+          have hjx : (!x.1 j) = true := by rw [e]; simp [ofNat]
+          have : Nat.find h ≤ j := Nat.find_min' h hjx
+          have hjk : j = Nat.find h := by omega
+          show ofNat (Nat.find h) = x
+          rw [← hjk, e]
+        · rename_i h _
+          show infty = x
+          exact ext fun i => by
+            have := h i; cases hx : x.1 i <;> simp_all [infty]
+      map_rel_iff' := fun {a b} => le_iff a b }).symm
+
+end
+
+/-- `Statement:` CONTROL: `NInf ≃o WithTop ℕ` from `Classical.propDecidable`, so the hypothesis of
+    `wlpo_of_iso` and `lpo_of_iso` is inhabited classically. -/
 noncomputable def orderIsoWithTopClassical : NInf ≃o WithTop ℕ :=
   (StrictMono.orderIsoOfSurjective ofWithTop ofWithTop_strictMono fun x => by
     classical
@@ -5124,7 +5330,7 @@ end NInf
 /-- `Statement:` `WithTop ℕ`, step `· + 1`, stages the coercion: `⊤` occupies
     `PinnedLimitUnique`. `Statement:` INVARIANT: the predicate `PinnedLimitUnique` holds at `NInf`'s `∞`
     (`NInf.pinnedLimitUnique_succ`) and at `WithTop ℕ`'s `⊤`, so it does not separate the two
-    carriers; identifying them by an order isomorphism costs WLPO (`NInf.wlpo_of_iso`). -/
+    carriers; any order isomorphism identifying them gives LPO (`NInf.lpo_of_iso`). -/
 theorem pinnedLimitUnique_withTop :
     (Motion.ofFun fun x : WithTop ℕ => x + 1).IsRun (fun n : ℕ => (n : WithTop ℕ)) ∧
     PinnedLimitUnique (fun x : WithTop ℕ => x + 1) (fun n : ℕ => (n : WithTop ℕ)) ⊤ := by
@@ -5603,8 +5809,9 @@ theorem prod_fst_stepBack (M : Motion α) (N : Motion β) (hN : ∀ b, ∃ b', N
   obtain ⟨b', hb'⟩ := hN p.2
   exact ⟨(c, b'), ⟨hc, hb'⟩, rfl⟩
 
-/-- `Statement:` CONTROL: with `N` a one-point motion with no step, the first projection of
-    `M.prod N` is not a coalgebra homomorphism (`coalgHom_iff`, § XX). -/
+/-- `Statement:` CONTROL: with `M` the one-point motion with a step and `N` the one-point motion
+    with no step, the first projection of `M.prod N` is not a coalgebra homomorphism (`coalgHom_iff`,
+    § XX). -/
 theorem prod_fst_not_coalgHom :
     let M := ofTotal (id : Unit → Unit) (fun _ => rfl) (fun _ _ => True)
     let N := ofTotal (id : Unit → Unit) (fun _ => rfl) (fun _ _ => False)
@@ -5623,7 +5830,9 @@ theorem aprod_fst_not_step :
   intro M N
   exact ⟨Prod.GameAdd.snd (a := ()) (b₁ := ()) (b₂ := ()) trivial, fun h => h⟩
 
-/-- `Statement:` an isomorphism of motions: strict maps both ways, mutually inverse. -/
+/-- `Statement:` an isomorphism of motions: strict maps both ways, mutually inverse. It asks
+    nothing of the carriers; `Motion.HomeoIso` and `Motion.LipIso` (`ZeroParadox/DieSameness.lean`)
+    extend it with continuity and with Lipschitz bounds. -/
 -- [ZP-CUSTOM] equivalent to: an isomorphism in Mathlib's `Endofunctor.Coalgebra` category
 -- (`StrictIso.equivCoalgIso`) | reason: named fields, a pair of `Hom`s (§ XIX) inverse on the
 -- underlying maps, which `FixedPole`, `StrictIso.rtg_iff`, `tree_of_aDoubling` and
@@ -6396,6 +6605,7 @@ open ZeroParadox
 #print axioms NInf.ofComp
 #print axioms NInf.ninfEquivComp
 #print axioms NInf.toComp_infty
+#print axioms NInf.toComp_succ
 #print axioms Motion.LoopAt
 #print axioms Motion.loop_iff_exists_loopAt
 #print axioms LPOData
@@ -6443,6 +6653,9 @@ open ZeroParadox
 #print axioms pinnedLimit_iff_closure_omega
 #print axioms not_pinnedLimitAbove_of_finite
 #print axioms not_pinnedLimit_of_finite
+#print axioms not_pinnedLimitAbove_of_minimal
+#print axioms not_pinnedLimit_of_fixed_floor
+#print axioms pinnedLimitUnique_transport
 #print axioms NInf.instPartialOrder
 #print axioms NInf.le_def
 #print axioms NInf.instOrderBot
@@ -6463,6 +6676,10 @@ open ZeroParadox
 #print axioms NInf.isSuccLimit_infty
 #print axioms NInf.covered_limit_searchable
 #print axioms NInf.wlpo_of_iso
+#print axioms NInf.iso_ofNat
+#print axioms NInf.lpo_of_iso
+#print axioms NInf.lpoData_of_iso
+#print axioms NInf.isoOfLPOData
 #print axioms NInf.ofWithTop
 #print axioms NInf.ofWithTop_strictMono
 #print axioms NInf.orderIsoWithTopClassical

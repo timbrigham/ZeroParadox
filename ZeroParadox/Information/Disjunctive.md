@@ -46,8 +46,9 @@ of length `k` (the `example` after `not_disjunctive_of_periodic`), so `not_disju
   theorem. Not located as of 2026-10-04, searched as above.
 - theoremsearch, three phrasings (definition; "rich sequence"; Martin-Löf random and Champernowne).
   Returned the Barnsley–Leśniak and Barnsley–Vince definitions and Landsman, *Typical = random*
-  (arXiv:2306.09226, Thm 4.2, as summarized by the search result: every word occurs infinitely often in
-  every fair-coin random sequence). Landsman was not retrieved; it is a discovery lead, not a citation.
+  (arXiv:2306.09226). Landsman v2 was retrieved and read (2026-11-22): § 4, Thm 4.2 states that every
+  finite word occurs infinitely often in every random sequence for the flat Bernoulli measure, and
+  cites Calude (2002) Thm 6.50, which was not retrieved.
 
 ## Footprints
 
@@ -77,26 +78,33 @@ block (`#print axioms`, 2026-10-04):
 
 1. **Presence, not execution.** `code_occurs_of_disjunctive` says a code's binary is written on the
    tape. Nothing reads or runs it; occurrence is the occurrence commitment (`ZeroParadox/Order/Snap.lean`).
-2. **Disjunctive is weak.** `champ` is disjunctive and primitive recursive (§ II). Standard theory,
-   not proved here: a sequence is Martin-Löf random exactly when its prefixes are incompressible in
-   PREFIX-FREE Kolmogorov complexity, `K(x↾n) ≥ n − c` for some constant `c` (Levin–Schnorr, Chaitin),
-   and a Martin-Löf random sequence is disjunctive; the converse fails (`champ`). With PLAIN
+2. **Disjunctive is weak.** `champ` is disjunctive and primitive recursive (§ II). Proved here, for
+   the fair coin: a Martin-Löf random sequence is disjunctive (`disjunctive_of_MLRandom`,
+   `ZeroParadox/Information/TwoRequirements.lean` § II-b; Landsman, arXiv:2306.09226v2, Thm 4.2, states
+   the fact and itself cites Calude 2002 Thm 6.50 for it), and the converse fails, `champ` is not Martin-Löf random
+   for `fairTape` (the control `example` after `code_occurs_of_MLRandom`, same section). Proved in
+   the EXPERIMENTAL bridge `ZeroParadox/Information/BrudnoBridge.lean`, for the fair coin: a tape is
+   `MLRandom fairTape` exactly when its prefixes are incompressible in PREFIX-FREE Kolmogorov
+   complexity, `n ≤ K(x↾n) + c` for some constant `c` (`MLRandom_fair_iff_le_KPPlain`, the
+   Levin–Schnorr criterion in the form of SUV Thm 94(d)). Cited, not proved here: with PLAIN
    complexity no infinite sequence has all prefixes incompressible (Martin-Löf), so the prefix-free
    form is the one meant.
 3. **The commitment is separate.** `Reading:` Tim's commitment concerns the framework's ⊥ role, ⊥ of
    a `ZPSemilattice`: read as a tape, its occupant is maximally complex, in the prefix-free sense of
-   fence 2. Standard theory, not proved here (fence 2): a tape maximally complex in that sense is
-   Martin-Löf random, hence disjunctive. No map from a `ZPSemilattice`
+   fence 2. From that sense to disjunctive is proved, for the fair coin: prefix-free incompressible
+   implies `MLRandom fairTape` (`MLRandom_fair_iff_le_KPPlain`, EXPERIMENTAL, fence 2), which implies
+   `Disjunctive` (`disjunctive_of_MLRandom`). Not in Lean is the commitment itself. No map from a `ZPSemilattice`
    to `ℕ → Bool` is claimed or constructed, and no order on tapes in which a maximally complex tape is
    least: the reading is a commitment, not a chart. In `ℕ → Bool` under the pointwise order, ⊥ is the
-   all-false tape, which is not disjunctive (`allFalse_not_disjunctive`). Neither the commitment nor
-   the standard theorem is in Lean (Search record).
+   all-false tape, which is not disjunctive (`allFalse_not_disjunctive`). The commitment is recorded
+   as a `Reading:` (§ VI of the Lean file), not as a theorem.
 4. **`Code.zero`'s word is empty** (`codeWord_zero_width`), so presence there is vacuous.
 5. **The measure fences of `ZeroParadox/Information/CrossingTrials.lean` stand.** `Reading:` CARRIER.
    Pointwise, measure one is not necessity: the all-`false` tape of `ℕ → Bool` is the one tape that
    never fires (uniqueness: `ZeroParadox/Information/PoleWithinEnsemble.lean` § II control), and for
    every `φ` no `φ ∘ firedRun` from it steps at index 1 (`snap_fails_at_allFalse`). Modulo
-   `trials p hp`-null sets, this measure-one predicate IS the top element: for `0 < p ≤ 1`, "fires
-   somewhere" is ⊤ of `Germ (ae (trials p hp)) Prop` (`fires_germ_eq_top`). Both charts are stated in
+   `trials p hp`-null sets, for `0 < p ≤ 1` the predicate "fires somewhere" IS the top element, ⊤ of
+   `Germ (ae (trials p hp)) Prop` (`fires_germ_eq_top`); at `p = 0` it is ⊥ of
+   `Germ (ae (trials 0 hp)) Prop` (`fires_germ_eq_bot_zero`). Both charts (pointwise, and modulo null sets) are stated in
    `ZeroParadox/Information/PoleWithinEnsemble.lean` § IX. Nothing here says any framework object IS a
    fair-coin tape.

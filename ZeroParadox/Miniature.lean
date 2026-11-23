@@ -3,10 +3,6 @@ import Mathlib.Data.Fintype.Card
 import Mathlib.Data.ENat.Basic
 import Mathlib.Tactic
 
-set_option maxHeartbeats 400000
-
-universe u
-
 /-!
 # The Zero Paradox in miniature — the minimal core
 
@@ -29,34 +25,32 @@ happens.
 
 ## Formal Overview (AI-assisted)
 
-The smallest self-contained artifact that exhibits the **shape** the whole framework is built on: the
+A compact self-contained artifact that exhibits the **shape** the whole framework is built on: the
 **engine**, the **wall** and **floor** and *why each must be where it is*, the **snap** *in both directions*
-(it is both a limit and a bottom), and the **fan-out** (the branching field) — each on the smallest domain that
-can hold it, where most "why"s are **decided by computation or proved in a line or two** (computed, not
-asserted).
+(on `ℕ∞`, `⊤` is both the supremum of a chain and the least element of a fixed-point set), and the
+**fan-out** (the branching field) — each on a small concrete domain (two points, `ℕ∞`, `Fin 3`; no
+minimality is proved), where most "why"s are **decided by computation or proved in a line or two**
+(computed, not asserted).
 
 It reads top to bottom:
 
 * **§ I — the engine.** Lawvere's diagonal (`lawvere`): a point-surjection forces every endomap to have a
   fixed point. Its dual seed (`negation_no_fp`): negation has no fixed point. The one mechanism.
-* **§ II — the classifier (the map).** `HasWitnessRel` (minimum requirement), `floor_of_witness` (the **floor**:
-  witness → fixed point), `wall_of_fpf` (the **wall**: fixed-point-free map kills the witness), `witness_antitone`
-  (the topology spine). The classifier that sorts wall from floor everywhere.
-* **§ III–IV — the pole.** The two-element pole `{0, ∞}` has exactly **four** self-maps, classified by
-  fixed-point count. The **wall** sits at `swap` (0 fixed points, reversible), the **floor** at the collapses
-  (1 fixed point, irreversible). `swap_is_the_wall` is the finite instance of the classifier: `swap` is
-  fixed-point-free, so it kills the witness.
+* **§ II — the classifier (the map).** `HasWitnessRel` (a diagonal witness relative to an admissible class),
+  `floor_of_witness` (the **floor**: witness → fixed point), `wall_of_fpf` (the **wall**: an admissible
+  fixed-point-free map kills the witness), `witness_antitone` (the topology spine). One direction only: a
+  witness forces fixed points, and the converse is not proved here, so these do not sort every class.
+* **§ III–IV — the pole.** `Miniature.Pole` = `{0, ∞}` has exactly **four** self-maps (`card_four`; `four_exhaustive` names them). The
+  **wall** sits at `swap` (no fixed point; an involution), the **floor** at the collapse `cZero` (a fixed point;
+  not one-to-one). `swap_is_the_wall` is the finite instance of the classifier.
 * **§ V — the snap, in both directions.** The pole gives only the *irreversible* half (`collapse_irreversible`).
-  The snap is also an **ascent to a limit that is itself a bottom**: on the minimal chain `ℕ∞`,
-  `tower_min_eq_max` proves `⊤` is *simultaneously* the **supremum** of the climbing chain (the limit / max) and
-  the **least fixed point** of successor (the bottom-of-fixed-points / min). That is `epsilon0_min_eq_max` in
-  miniature — the snap lands on a point that is *both a limit and a bottom*, which is exactly why it cannot be
-  flattened to a one-way collapse. `ascent_strictMono`: the climb is strict (one-way).
-* **§ VI — the fan-out.** Branching needs at least three elements (`fan_out`, a node with three pairwise
-  incomparable successors), so the two-element pole *cannot* hold it (`pole_cannot_fan`). This is the field —
-  the width the framework's boundary fans into.
-* **The capstone (`shape`)** bundles all of it: wall (no fixed point), floor (fixed point), the collapse
-  irreversible, the snap-limit both-a-limit-and-a-bottom, and the fan-out — the whole shape in one theorem.
+  On `ℕ∞`, `tower_min_eq_max`: `⊤` is the supremum of the chain `0, 1, 2, …` (max) and the least element of
+  `{x | x + 1 = x}` (min), a set equal to `{⊤}`; § V names the orders. `ascent_strictMono`: the climb is strict.
+* **§ VI — the fan-out (the field).** `fan_out`: a node with three pairwise ⊆-incomparable successors. The pole
+  holds no three-way branch (`cd_pole_no_three`); two-way branching as distinct step-successors fits, the node one
+  of its own two successors (`cd_pole_fans_two`; both `ZeroParadox/Multihomed/CollapseDie.lean`).
+* **The capstone (`shape`)** bundles: wall (no fixed point), floor (fixed point), the collapse
+  irreversible, `tower_min_eq_max`, and `fan_out`'s incomparability half — the shape in one theorem.
 
 **What the floor stands for — self-reference and the Quine atom.** This file represents the floor as bare
 fixed-point existence (`floor_of_witness`: a witness forces a fixed point; `cZero_has_fp`: the collapse fixes a
@@ -84,13 +78,14 @@ We show the *limited* version deliberately. The **shape** — self-reference for
 self-referential floor — is what the minimal core exhibits, and a bare fixed point is enough to carry it. The
 full Quine atom needs a non-well-founded set theory (ZF+AFA) to host a set x = {x} literally; that host is the
 *flesh*, cited to its home, not rebuilt here. Honest split: the *structural* self-application fixed point is
-Lean-proved and axiom-free (`t_exec`); an equation between a lattice's ⊥ and a set is ill-typed and not asserted: the die's Quine-atom
+Lean-proved and axiom-free under `AFAStructure`: uniqueness, any Quine atom is `bot` (`t_exec`), and existence,
+`bot` is one (`bot_is_quine_atom`, from the class field `AFAStructure.bot_self_mem`); an equation between a lattice's ⊥ and a set is ill-typed and not asserted: the die's Quine-atom
 role has its occupancy settled chart by chart (`ZeroParadox/Settheory/QuineDichotomy.lean`); hosting x = {x} in ZF+AFA is the commitment.
 
 **Honest status.** The *content* is re-derived, not new: the engine is **Lawvere (1969) / Yanofsky (2003)**
 (`Settheory/Wall.lean`); the classifier is `Category/DiagonalWitness.lean`; the four corners are
 `Valuation/PoleCorners.lean`; the min=max is `Ordinal/Epsilon0MinMax.lean` `epsilon0_min_eq_max` (the real ε₀
-version — `ℕ∞`'s `⊤` here is its minimal shadow, `Settheory/Model.lean`); the branch is the arity fact from
+version — `ℕ∞`'s `⊤` here is its shadow, `Settheory/Model.lean`); the branch is the arity fact from
 `Valuation/CompletenessCriticProbe.lean`. The tiny proofs are restated inline for self-containment; the new
 connective tissue is `swap_is_the_wall` (the pole as a finite instance of the classifier) and the assembly.
 The *value* is the compression.
@@ -100,9 +95,13 @@ entire project. The framework's flesh is its domain *instances* (set theory / AF
 the categorical bridges, the whole MC-1 bottom family), which are the shape *worn* by real mathematics and are
 not here. This file stands **alongside** them as the most compact statement of what they are all instances *of*.
 The cross-domain identity of the instances stays a type boundary (retired as ill-typed), never a Lean `=`; and
-the `ℕ∞` tower is a *shadow* of ε₀ (its `⊤` is the unique fixed point, where the real ε₀ has a whole hierarchy
-above it) — the shape is faithful, the object is minimal.
+the `ℕ∞` tower is a *shadow* of ε₀ (its `⊤` is the unique fixed point of successor, where the real ε₀ has a
+whole hierarchy of fixed points above it) — the shape is faithful, the object is small.
 -/
+
+set_option maxHeartbeats 400000
+
+universe u
 
 namespace ZeroParadox.Miniature
 
@@ -122,10 +121,10 @@ theorem negation_no_fp (p : Prop) : ¬ (p ↔ ¬ p) := by
   have hnp : ¬ p := fun hp => h.mp hp hp
   exact hnp (h.mpr hnp)
 
-/-! ### § II. The classifier — the minimum requirement, and the wall / floor conditions. -/
+/-! ### § II. The classifier — the witness, and the wall / floor conditions. -/
 
-/-- **The minimum requirement.** `β` carries a diagonal witness relative to an admissible endomap class `M`
-when some self-application has, in its range, the diagonal of every admissible `g`. -/
+/-- **The witness.** Some self-application has, in its range, the diagonal of every admissible `g`;
+sufficient for fixed points (`floor_of_witness`), not shown necessary. -/
 def HasWitnessRel (β : Type u) (M : (β → β) → Prop) : Prop :=
   ∃ (α : Type u) (e : α → (α → β)), ∀ g : β → β, M g → ∃ a, (fun x => g (e x x)) = e a
 
@@ -154,7 +153,7 @@ theorem witness_antitone {β : Type*} {M M' : (β → β) → Prop}
   obtain ⟨α, e, he⟩ := h
   exact ⟨α, e, fun g hg => he g (hsub g hg)⟩
 
-/-! ### § III. The smallest concrete witness — the two-element pole and its four self-maps. -/
+/-! ### § III. A concrete witness — the two-element pole and its four self-maps. -/
 
 -- [ZP port] Lean 4.35: Mathlib's `Fintype` deriving handler needs the pre-4.35 defeq transparency.
 set_option backward.isDefEq.respectTransparency false in
@@ -194,7 +193,7 @@ theorem swap_no_fp : ∀ p, swap p ≠ p := by decide
 theorem cZero_has_fp : ∃ b, cZero b = b := ⟨zero, rfl⟩
 
 /-- **THE BRIDGE.** `swap` is fixed-point-free, so by the classifier's wall condition it kills the witness:
-the **wall sits at the inversion corner**, on the smallest domain there is. -/
+the **wall sits at the inversion corner**, on a two-element domain. -/
 theorem swap_is_the_wall (M : (Pole → Pole) → Prop) (hswap : M swap) :
     ¬ HasWitnessRel Pole M :=
   wall_of_fpf hswap swap_no_fp
@@ -211,12 +210,14 @@ theorem collapse_irreversible : ¬ Function.Injective cZero := by
 
 end Pole
 
-/-! ### § V. The snap, in both directions — the limit that is also a bottom.
+/-! ### § V. The snap, in both directions — a supremum that is also the least fixed point.
 
-The pole gives only the irreversible half. The snap also *ascends to a limit that is itself a bottom*: on the
-minimal chain `ℕ∞`, `⊤` is at once the supremum of the climbing chain (the limit) and the least fixed point of
-successor (the bottom-of-fixed-points). This is `Ordinal/Epsilon0MinMax.lean` `epsilon0_min_eq_max` in
-miniature — the reason the snap cannot be flattened to a one-way collapse. -/
+The pole gives only the irreversible half. On the chain `ℕ∞`, `⊤` is at once the supremum of the climbing
+chain (the limit) and the least element of the fixed-point set of successor. That set is `{⊤}`
+(`enat_fp_iff`), so "least" is degenerate here. `⊤` is not ⊥ of `ℕ∞` in its own order (that is `0`); in the
+order the join `min` induces it is ⊥ of that `ZPSemilattice` (`instNatInfZPS`; `natInf_selfMem_singleton` is
+the set equation; both `ZeroParadox/Settheory/Model.lean`). The shape is `epsilon0_min_eq_max` in miniature;
+there the fixed-point set of `α ↦ ω^α` also holds ε₁ (`ZeroParadox/Ordinal/Epsilon0CannotBe.lean` § I-b). -/
 
 /-- The climbing chain `0, 1, 2, …` has supremum `⊤` — the limit (max face). -/
 theorem chain_sup_top : (⨆ n : ℕ, (n : ℕ∞)) = ⊤ := by
@@ -236,15 +237,18 @@ theorem enat_fp_iff (x : ℕ∞) : x + 1 = x ↔ x = ⊤ := by
   · rintro rfl
     simp
 
-/-- **Both a limit and a bottom (min ≡ max, in miniature).** `⊤` is *simultaneously* the supremum of the
-climbing chain (the limit / max) and the least fixed point of successor (the bottom-of-fixed-points / min).
-This is the shadow of `epsilon0_min_eq_max`: the snap lands on a point that is both at once, which is exactly
-why it needs both directions. -/
+/-- `Statement:` COINCIDENCE (min ≡ max, in miniature), in `ℕ∞`'s order: `⊤` is the supremum of the climbing
+chain (max) and the least element of `{x | x + 1 = x}` (min). That set is `{⊤}` (`enat_fp_iff`), so `IsLeast`
+holds because `⊤` is its only element; `⊤` is not ⊥ of `ℕ∞` (the `example` below). The shadow of
+`epsilon0_min_eq_max`. -/
 theorem tower_min_eq_max :
     (⨆ n : ℕ, (n : ℕ∞)) = ⊤ ∧ IsLeast {x : ℕ∞ | x + 1 = x} ⊤ := by
   refine ⟨chain_sup_top, ?_, fun b hb => le_of_eq ((enat_fp_iff b).mp hb).symm⟩
   show (⊤ : ℕ∞) + 1 = ⊤
   simp
+
+-- Statement: in `ℕ∞`'s own order ⊥ is `0`, and `⊤` is not it.
+example : (⊥ : ℕ∞) = 0 ∧ (⊤ : ℕ∞) ≠ ⊥ := ⟨rfl, top_ne_bot⟩
 
 /-- **The ascent is one-way.** The climb `n ↦ ↑n` is strictly monotone — you cannot un-climb. -/
 theorem ascent_strictMono : StrictMono (fun n : ℕ => (n : ℕ∞)) := by
@@ -252,7 +256,7 @@ theorem ascent_strictMono : StrictMono (fun n : ℕ => (n : ℕ∞)) := by
   show (a : ℕ∞) < (b : ℕ∞)
   exact_mod_cast h
 
-/-! ### § VI. The fan-out — the branching field the pole cannot hold. -/
+/-! ### § VI. The fan-out — the three-way branching field the pole cannot hold. -/
 
 /-- **The fan-out.** A node with three pairwise-incomparable successors (`∅ ⊆ {i}`, and `{i} ⊄ {j}` for
 `i ≠ j`) — a branch of arity three. This is the field: the width the boundary fans into. -/
@@ -262,22 +266,25 @@ theorem fan_out :
   refine ⟨fun i => Set.empty_subset _, fun i j hij hsub => ?_⟩
   exact hij (hsub rfl)
 
-/-- **The pole cannot fan out.** Branching needs at least three elements; the pole has two. So the fan-out is
-strictly bigger than the pole — the field is more than the two poles. -/
+/-- **The pole has two elements.** `fan_out` uses three; that `Miniature.Pole` has no three pairwise
+distinct points is `cd_pole_no_three` (`ZeroParadox/Multihomed/CollapseDie.lean`), not this statement. In the
+sense of distinct step-successors, two-way branching fits: in the reverse of `ofFun cZero`, `zero` steps to
+two distinct points, one of them `zero` itself (`cd_pole_fans_two`, same file). -/
 theorem pole_cannot_fan : Fintype.card Pole = 2 := by decide
 
 /-! ### § VII. The capstone — the whole shape, in one theorem. -/
 
 open Pole in
-/-- **The shape.** All of it, on the smallest witnesses:
+/-- **The shape.** On small concrete witnesses:
 * the **wall** (`swap`) has no fixed point;
 * the **floor** (`cZero`) closes at a fixed point;
-* the **collapse** is irreversible (the one-way half of the snap);
-* the **snap-limit** is *both a limit and a bottom* (`⊤` is the supremum of the chain and the least fixed
-  point — min ≡ max);
-* the **fan-out** exists (three incomparable successors) where the pole (two elements) cannot hold it.
+* the **collapse** is not one-to-one (the one-way half of the snap);
+* the **snap-limit**: `⊤` is the supremum of the chain and the least element of `{x : ℕ∞ | x + 1 = x}`,
+  which is `{⊤}` (`tower_min_eq_max`);
+* distinct singletons in `Set (Fin 3)` are ⊆-incomparable (`fan_out.2`; its `∅ ⊆ {i}` half is not bundled).
+  That the pole holds no three pairwise distinct points is `cd_pole_no_three`, not a conjunct here.
 The engine (`lawvere`) and classifier (`wall_of_fpf` / `floor_of_witness`) say *why*; here it is, on two
-points, a minimal chain, and a minimal branch. -/
+points, the chain `ℕ∞`, and a three-way branch. -/
 theorem shape :
     (∀ p, swap p ≠ p) ∧
     (∃ b, cZero b = b) ∧

@@ -1,6 +1,6 @@
 """
 Build ZP-M Illustrated Companion
-Version 1.14 | November 2026
+Version 1.15 | November 2026
 """
 
 import os
@@ -8,7 +8,7 @@ from zp_utils import *
 from reportlab.graphics.shapes import Drawing, Line, String, Rect, Circle, Polygon
 from reportlab.graphics import renderPDF
 
-VERSION = '1.14'
+VERSION = '1.15'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -151,8 +151,9 @@ def build():
         Paragraph('ZP Companion | ' + version_line(FIRST_RELEASED, VERSION), CS['meta']),
         Paragraph(
             'This companion explains the ideas in plain language. It is not the formal '
-            'document &#8212; every claim here restates a result already proved in '
-            'ZP-M: Kleene-Ordinal Bridge. Consult that document for the authoritative '
+            'document &#8212; its results are proved in ZP-M: Kleene-Ordinal Bridge or come '
+            'from the other documents, papers and named theorems it cites, and a commitment or '
+            'reading it mentions is not a result. Consult ZP-M for the authoritative '
             'mathematics.',
             CS['disc']),
         sp(4),

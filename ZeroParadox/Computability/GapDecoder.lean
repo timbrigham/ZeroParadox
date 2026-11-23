@@ -42,7 +42,8 @@ noncomputable def gapDecode (w : ℕ → Bool) : Option Code := by
       some (Denumerable.ofNat Code (Nat.find hg)) else Option.none)
   else Option.none
 
-/-- `Statement:` the subtape after `k` is ⊥ of `ℕ → Bool` iff `w` has no `true` from `k` on. -/
+/-- `Statement:` the subtape from position `k` on is ⊥ of `ℕ → Bool` iff `w` has no `true` from `k`
+on. -/
 theorem shiftTape_eq_bot_iff (k : ℕ) (w : ℕ → Bool) :
     shiftTape k w = ⊥ ↔ ¬ ∃ j, w (k + j) = true := by
   constructor
@@ -115,7 +116,7 @@ theorem gapDecode_of_mem_cyl (j : ℕ) (w : ℕ → Bool)
 /-- `Statement:` if `0 < p < 1`, every code `c` has `0 < trials p hp {w | gapDecode w = some c}`.
 `Reading:` prior art, after the start bit this is the machine of Shen, Uspensky, Vereshchagin,
 *Kolmogorov Complexity and Algorithmic Randomness* (AMS 2017), § 4.1, p. 75: toss a fair coin until
-1 appears, output the zeros before it, each `i` with probability `2^-(i+1)`; here the coin is
+1 appears, output the number of zeros before it, each `i` with probability `2^-(i+1)`; here the coin is
 `trials p hp` and outputs are Mathlib `Code`s. Formal neighbour: `Kolmogorov.apriori_pos_of_universal`. -/
 theorem trials_gapDecode_pos (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p) (hp1 : p < 1) (c : Code) :
     0 < trials p hp {w | gapDecode w = some c} := by
@@ -136,12 +137,12 @@ theorem gapDecode_poles :
 
 `Reading:` Tim (2026-11-15): "So it's not just one program. It's all programs"; and "once you have
 one you have evidence that a class exists, right?" His tree reading ("the same chasing the darkness
-kind of routing", Tim, 2026-11-15) is not stated here: `t4_snap_orthogonal` covers cells 0 and 1,
-and the right angle of the actual path against the untaken branches is not located in the corpus
-as of 2026-11-15. The class removes § II's dependence on one decoder, not the choice to read
-programs off tapes, which stays a commitment carried as the hypothesis. Prior art: Shen, Uspensky,
-Vereshchagin § 4.1 (`trials_gapDecode_pos`); the broader home is algorithmic probability
-(Solomonoff, Levin, Chaitin). -/
+kind of routing", Tim, 2026-11-15) is not stated here: `t4_snap_orthogonal` covers cells 0 and 1;
+the right angle of the actual path against the untaken branches is not stated in this file (beside
+it: orthogonal projection as a die motion, `ZeroParadox/State/DieProjection.lean`).
+The class removes § II's dependence on one decoder, not the choice to read programs off tapes, which
+stays a commitment carried as the hypothesis. Prior art: Shen, Uspensky, Vereshchagin § 4.1
+(`trials_gapDecode_pos`); the broader home is algorithmic probability (Solomonoff, Levin, Chaitin). -/
 
 /-- `Statement:` every code `c` has `0 < μ {w | D w = some c}`. A predicate, used as a hypothesis. -/
 def ReachesEveryCode (μ : Measure (ℕ → Bool)) (D : (ℕ → Bool) → Option Code) : Prop :=
@@ -151,14 +152,16 @@ def ReachesEveryCode (μ : Measure (ℕ → Bool)) (D : (ℕ → Bool) → Optio
 def DecodesAlmostSurely (μ : Measure (ℕ → Bool)) (D : (ℕ → Bool) → Option Code) : Prop :=
   μ {w | D w = Option.none} = 0
 
-/-- `Statement:` the self-printing universal codes form an infinite set, unconditionally
-(`selfref_universal_infinite`); every code's event is pairwise disjoint from every other's; and if
-`D` reaches every code for `μ`, each self-printing universal code has positive `μ`-mass under `D`
-and so does their union.
-`Reading:` beyond the machine of Shen, Uspensky, Vereshchagin § 4.1 (`trials_gapDecode_pos`), whose
-every output has positive probability: the start bit, the biased coin, Mathlib `Code`, an arbitrary
-measure, closure under `Code ≃ Code` (`ReachesEveryCode.map_equiv`), and this link to the
-self-printing universal codes. -/
+/-- `Statement:` if `D` reaches every code for `μ`: the self-printing universal codes form an
+infinite set; every code's event is pairwise disjoint from every other's; each self-printing
+universal code has positive `μ`-mass under `D`, and so does their union. The first two hold without
+`hD` (`selfref_universal_infinite`; the disjointness `example` in
+`ZeroParadox/Computability/ComputationCannotBe.lean` § X).
+`Reading:` beside the machine of Shen, Uspensky, Vereshchagin § 4.1 (`trials_gapDecode_pos`), whose
+every output has positive probability: here positivity under an arbitrary measure is the hypothesis
+`hD`, not a result. Added: the start bit, the biased coin, Mathlib `Code`, closure under `Code ≃ Code`
+(`ReachesEveryCode.map_equiv`), and the infinite set of self-printing universal codes
+(`selfref_universal_infinite`), each with positive `μ`-mass under `D` given `hD`. -/
 theorem selfref_universal_reached {μ : Measure (ℕ → Bool)} {D : (ℕ → Bool) → Option Code}
     (hD : ReachesEveryCode μ D) :
     {c : Code | SelfPrints c ∧ Universal c}.Infinite ∧
@@ -224,6 +227,58 @@ theorem gapDecode_p_zero (hp : (0 : NNReal) ≤ 1) :
     trials 0 hp {w | gapDecode w = Option.none} = 1 := by
   rw [trials_zero_eq_dirac]; exact Measure.dirac_apply_of_mem gapDecode_poles.1
 
+/-- `Statement:` if `0 < p`, every tape Martin-Löf random for `trials p hp` decodes to some code
+under `gapDecode`, and its waiting computation `toComp (det w)` terminates. No `p < 1`, no
+computable `p`. `Reading:` the pointwise form of `trials_gapDecode_none_null` and
+`toComp_det_halts_ae`, through zero-block tests (`zeroBlockTypical_of_MLRandom`,
+`fires_io_of_avoids`); folklore that random points satisfy effective almost-sure laws. -/
+theorem gapDecode_and_halts_of_MLRandom (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p) (w : ℕ → Bool)
+    (hML : MLRandom (trials p hp) w) :
+    (∃ c, gapDecode w = some c) ∧ (NInf.toComp (NInf.det w)).Terminates := by
+  have hio := fires_io_of_avoids p hp hp0 _ (fun _ hU => hU) w
+    (zeroBlockTypical_of_MLRandom p hp w hML)
+  have hfire : ∃ k, w k = true := fires_once_of_mem_limsup hio
+  refine ⟨?_, (toComp_det_terminates_iff w).2 hfire⟩
+  cases hd : gapDecode w with
+  | some c => exact ⟨c, rfl⟩
+  | none =>
+    exfalso
+    rcases (gapDecode_eq_none_iff w).1 hd with h | ⟨hw, h⟩
+    · obtain ⟨k, hk⟩ := hfire
+      rw [h] at hk; cases hk
+    · refine (not_mem_limsup_fires_iff w).2 ⟨Nat.find hw + 1, fun k hk => ?_⟩ hio
+      have := congrFun h (k - (Nat.find hw + 1))
+      simp only [shiftTape] at this
+      rwa [Nat.add_sub_cancel' hk] at this
+
+/-! ### § III. A Quine's code word on random tapes -/
+
+/-- `Statement:` some self-printing universal code `a` steps to itself only in
+    `selfPrintsStepMotion selfPrintOrDelegate`, and its code word occurs at infinitely many positions
+    of every tape Martin-Löf random for `fairTape`, and at no position of ⊥ of `ℕ → Bool`. -/
+theorem quine_name_on_random_tapes :
+    ∃ a : {c : Code // SelfPrints c},
+      (selfPrintsStepMotion selfPrintOrDelegate).SelfOnlyAt a ∧ Universal a.1 ∧
+      (∀ x, MLRandom fairTape x →
+        ∃ᶠ n in atTop, ∀ i : Fin (Nat.size (Encodable.encode a.1)), x (n + i) = codeWord a.1 i) ∧
+      ¬ ∃ n, ∀ i : Fin (Nat.size (Encodable.encode a.1)),
+        (⊥ : ℕ → Bool) (n + i) = codeWord a.1 i := by
+  obtain ⟨a, hS, hU⟩ := exists_selfPrintsStepMotion_selfOnlyAt
+  have hz : ¬ Universal Code.zero := by
+    intro h
+    have h1 := h (Encodable.encode Code.succ) 0
+    rw [Denumerable.ofNat_encode] at h1
+    have e1 : Code.eval Code.succ 0 = Part.some 1 := rfl
+    have e0 : Code.eval Code.zero (Nat.pair (Encodable.encode Code.succ + 1) 0) = Part.some 0 := rfl
+    rw [e0, e1] at h1
+    exact absurd (Part.some_inj.1 h1) (by decide)
+  have hne : a.1 ≠ Code.zero := fun he => hz (he ▸ hU)
+  exact ⟨a, hS, hU, fun x hx => code_occurs_of_MLRandom hx a.1, allFalse_misses_code hne⟩
+
+-- Statement: CONTROL: ⊥ of `ℕ → Bool` is neither Martin-Löf random for `fairTape` nor disjunctive.
+example : ¬ MLRandom fairTape (⊥ : ℕ → Bool) ∧ ¬ Disjunctive (⊥ : ℕ → Bool) :=
+  ⟨bot_not_MLRandom (1/2) _ (by norm_num), allFalse_not_disjunctive⟩
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -246,4 +301,6 @@ open ZeroParadox
 #print axioms const_not_reachesEveryCode
 #print axioms gapDecode_p_one
 #print axioms gapDecode_p_zero
+#print axioms gapDecode_and_halts_of_MLRandom
+#print axioms quine_name_on_random_tapes
 end PurityCheck

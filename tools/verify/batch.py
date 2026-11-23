@@ -27,7 +27,7 @@ while a mechanical precondition is unmet.
     python batch.py close                     # prune baseline, require ledger touch
     python batch.py status
 """
-import io, os, re, sys, json, hashlib, subprocess
+import io, os, re, sys, json, hashlib, subprocess, tempfile
 
 # TWO roots. HERE is the tracked public bundle (checkers + the baselines they consult); PRIV is
 # per-push private state — batch state, signals, the defect ledger — which did NOT move and may be
@@ -2389,8 +2389,19 @@ def cmd_precommit():
     else:
         require(state, "precommit")
     decls = added_decls()
-    print("declarations on disk not in the baseline: %s"
-          % ("NO BASELINE — failing closed" if decls is None else (", ".join(decls) or "(none)")))
+    # The COUNT goes on the line and the full list to a file outside the repository: the
+    # list can run to six figures of characters, which no reader takes whole. None (no
+    # baseline) keeps its own branch, distinct from an empty list.
+    if decls is None:
+        print("declarations on disk not in the baseline: NO BASELINE — failing closed")
+    elif not decls:
+        print("declarations on disk not in the baseline: 0 (none)")
+    else:
+        fd, list_path = tempfile.mkstemp(prefix="batch_precommit_new_decls_", suffix=".txt")
+        with os.fdopen(fd, "w", encoding="utf-8") as fh:
+            fh.write("\n".join(decls) + "\n")
+        print("declarations on disk not in the baseline: %d (full list: %s)"
+              % (len(decls), os.path.abspath(list_path)))
     # Filter-freezing is the only BATCH-specific check here; the rest are universal obligations
     # that apply to every commit.
     checks = ([("filters frozen",) + check_filters_frozen(state)] if state else []) + [

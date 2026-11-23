@@ -18,11 +18,11 @@ angle, as you approach vs as you leave.
 
 ## Formal Overview (AI-assisted)
 
-ZP-H proves the snap floor ⊥ is the categorical initial object inside the *proxy*
-category `Q₂BallDepth` (a wrapper around ℕ engineered so depth-0 is initial). This file
-does the stronger, honest thing: it realizes the snap chain as a genuine functor into the
-*real* category of topological spaces, `TopCat`, with each step an actual clopen ball
-`B(0, 2⁻ⁿ) ⊆ Q₂` and each morphism an actual continuous inclusion.
+ZP-H's `fb_functor` sends 0 to the initial object of the *proxy* category `Q₂BallDepth`
+(`fb_preserves_initial`); depth 0 indexes the ball B(0, 1) (`q2BallAt`). This file does the
+stronger, honest thing: it realizes the snap chain as a genuine functor into the *real* category
+of topological spaces, `TopCat`, with each step an actual clopen ball `B(0, 2⁻ⁿ) ⊆ Q₂` and each
+morphism an actual continuous inclusion.
 
 Because `TopCat` has a terminal object (the one-point space), it is **not** a `ZPCategory`,
 so "preserves the initial object" is the wrong frame here. The shrinking clopen balls form

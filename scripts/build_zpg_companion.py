@@ -1,5 +1,5 @@
 """
-Build ZP-G Illustrated Companion (v1.16)
+Build ZP-G Illustrated Companion (v1.22)
 Standalone companion for ZP-G Category Theory only.
 ZP-H gets its own companion (build_zph_companion.py).
 
@@ -139,7 +139,7 @@ def functor_diagram():
                  fontSize=8.5, fontName='DV-I', fillColor=colors.HexColor('#555555')))
     return d
 
-VERSION = '1.16'
+VERSION = '1.22'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -183,8 +183,9 @@ def build():
         Paragraph('ZP Companion | ' + version_line(FIRST_RELEASED, VERSION), CS['meta']),
         Paragraph(
             'This companion explains the ideas in plain language with diagrams and real-world '
-            'examples. It is not the formal document — every claim here restates a result already '
-            'proved in the corresponding technical document. Consult that document for the '
+            'examples. It is not the formal document — its results are proved in ZP-G Category Theory '
+            'or come from the other documents, papers and named theorems it cites, and a commitment or '
+            'reading it mentions is not a result. Consult ZP-G for the '
             'authoritative mathematics.',
             CS['disc']),
     ]
@@ -270,8 +271,10 @@ def build():
         'An initial object is an object with exactly one morphism to every object — a '
         'universal source. A terminal object would be the reverse — a universal destination, with exactly one '
         'morphism into it from every object — and C has none. Every other object is "reachable" from 0 by exactly '
-        'one route. The initial object is not a new assumption: ⊥\'s existence as the bottom element of the ZP-A '
-        'semilattice already guarantees it. The "no terminal object" half is ZP-G\'s own commitment: in ZP-A, '
+        'one route. Where C is built from an order, the initial object is not a new assumption: a least element '
+        'of an order is initial in its order category (a standard fact), and ⊥ of a ZP-A semilattice is least '
+        'in ZP-A\'s order. That is a shared role, not an identity: C\'s 0 and ⊥ of ZP-A live in different '
+        'structures, and ZP-G and ZP-H do not equate them. The "no terminal object" half is ZP-G\'s own commitment: in ZP-A, '
         'having no top element is an optional hypothesis, and ZP-A\'s two-state carriers have a top.'))
     E.append(cbody(
         '<b>AX-G2 (Source Asymmetry):</b> No morphism points from any non-initial object '
@@ -295,8 +298,13 @@ def build():
     E.append(remember_box(
         'Remember: 0 here is not the number zero. It is a label for the initial object of the '
         'category — the privileged starting point from which all structure originates. '
-        'The label was chosen because 0 plays the same role as ⊥ (bottom) in ZP-A, '
-        '0 ∈ ℚ₂ in ZP-B, and ⊥ in ZP-C.'))
+        'The role is shared, not the object, and not every layer\'s floor fills it. A least element is '
+        'initial in its order category (Mathlib Preorder.isInitialBot); for ℕ, 0 is initial in natOrderCat, '
+        'built from ℕ\'s ≤ rather than from a ZP-A join (natSLat_initial_grounding). The ZP-C floor as ZP-H '
+        'realizes it, the empty type Fin 0, is initial in KleisliCat PMF (fC_zero_isInitial). In TopCat the 2-adic 0 of ZP-B is '
+        'not: the one-point space {0} is terminal and not initial '
+        '(padic_bottom_isTerminal, padic_bottom_not_initial). Under the norm preorder on ℤ₂, ℤ₂\'s 0 is least '
+        '(z2_two_views, ZeroParadox/Valuation/Scale.lean).'))
     E.append(sp(6))
 
     # ── Key results ────────────────────────────────────────────────────────────
@@ -323,18 +331,21 @@ def build():
     # ── Informational asymmetry of the initial object ──────────────────────────
     E.append(Paragraph('The Informational Asymmetry of 0', CS['h1']))
     E.append(cbody(
-        'ZP-G introduces an informal notion of <b>surprisal</b> for morphisms — how much '
-        'informational content a transition carries. The definition is structural, not '
-        'probabilistic: it counts the number of distinct paths from 0 to an object. As the '
-        'category grows and more objects are added, the number of morphisms departing from 0 '
-        'grows with them, and the surprisal of leaving 0 increases without bound.'))
+        'ZP-G defines the <b>surprisal</b> of a morphism f: A → B — how much '
+        'informational content the transition carries — as the conditional Kolmogorov complexity '
+        'of B given A: the length of the shortest program that produces a description of B '
+        'from a description of A (D7′). It is read off the two ends of one morphism, not from a '
+        'probability distribution, and it is not a count of paths: there is exactly one '
+        'morphism from 0 to each object (T2). Along a chain of morphisms leaving 0, each step\'s '
+        'surprisal is at least zero, and ZP-G argues on paper (T6, Part I; not verified in Lean) '
+        'that the total accumulates as the chain grows.'))
     E.append(cbody(
         'The initial object 0 has a built-in directional asymmetry: outward surprisal '
-        '(from 0 to anything) grows without bound, while inward surprisal '
+        '(from 0 to anything) is defined and accumulates along a chain, while inward surprisal '
         '(from anything to 0) is undefined — no such morphism exists (T3). '
         '0 is a one-way origin: reachable as a source, unreachable as a destination.'))
     E.append(cbody(
-        'T6 formalizes this: the surprisal associated with leaving 0 accumulates with each '
+        'T6 states this: the surprisal associated with leaving 0 accumulates with each '
         'step, and the morphisms pointing back to 0 are absent by AX-G2. 0 is a one-way '
         'source of informational content.'))
 

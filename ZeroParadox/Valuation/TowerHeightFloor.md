@@ -28,8 +28,9 @@ the 2-adic norm (`‖x‖ = 2^(-v(x))` for `x ≠ 0`), not a property of `cnfToZ
 rises from 0 (`ZeroParadox/Ordinal/Epsilon0CannotBe.lean` § V). The SAME stages `towerNONote n`, read
 through `NONote.repr`, ascend on the ordinal side to ε₀ (`mu_construction_correspondence`).
 
-`tower_height_floor_reconciliation` bundles the reconciliation and **proves `ε₀ ≠ 0` in the same statement
-that connects the two closures**: (1) the InfinitudeFloor's floor, ℤ_[2]'s 0, has infinite complexity
+`tower_height_floor_reconciliation` bundles the reconciliation and **states `ε₀ ≠ 0` (`epsilon0_ne_zero`)
+beside the two closures, as one conjunction** (the facts that connect them are `asymptote_preserved` and
+`tower_orders_agree`): (1) the InfinitudeFloor's floor, ℤ_[2]'s 0, has infinite complexity
 `cx = ⊤`; (2) the shared tower ascends to the height `ε₀ = ⨆ fundamentalSeq`; (3) `ε₀ ≠ 0` in `Ordinal` —
 the height is NOT the ordinals' floor. One construction, two carrier-specific closures (ε₀ in `Ordinal`;
 ℤ_[2]'s 0 as the images' limit), opposite orientations, joined by `cnfToZp2` and held apart by it. No

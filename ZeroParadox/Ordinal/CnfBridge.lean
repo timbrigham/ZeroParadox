@@ -58,6 +58,56 @@ theorem tower_orders_agree (m n : ℕ) :
       ↔ (cnfToZp2 (towerNONote m)).valuation < (cnfToZp2 (towerNONote n)).valuation :=
   (tower_repr_orderEmbedding m n).symm.trans (tower_valuation_orderEmbedding m n)
 
+-- Statement: CONTROL: off the tower `cnfToZp2` is not injective: a notation denoting 3 and a
+-- notation denoting ω + 1 both map to `6` of ℤ_[2], and no tower stage maps to `6`, so neither
+-- notation is a tower stage.
+example :
+    NONote.repr (NONote.oadd 0 3 0 ONote.NFBelow.zero) = 3 ∧
+    NONote.repr (NONote.oadd (NONote.oadd 0 1 0 ONote.NFBelow.zero) 1
+      (NONote.oadd 0 1 0 ONote.NFBelow.zero)
+      (by show ONote.NFBelow (ONote.oadd 0 1 0) (ONote.oadd 0 1 0).repr
+          exact ONote.NFBelow.oadd ONote.NF.zero ONote.NFBelow.zero (by simp [ONote.repr]))) =
+      Ordinal.omega0 + 1 ∧
+    cnfToZp2 (NONote.oadd 0 3 0 ONote.NFBelow.zero) = 6 ∧
+    cnfToZp2 (NONote.oadd (NONote.oadd 0 1 0 ONote.NFBelow.zero) 1
+      (NONote.oadd 0 1 0 ONote.NFBelow.zero)
+      (by show ONote.NFBelow (ONote.oadd 0 1 0) (ONote.oadd 0 1 0).repr
+          exact ONote.NFBelow.oadd ONote.NF.zero ONote.NFBelow.zero (by simp [ONote.repr]))) = 6 ∧
+    ∀ n, cnfToZp2 (towerNONote n) ≠ 6 := by
+  have v2 : (2 : ℤ_[2]).valuation = 1 := by simpa using PadicInt.valuation_p (p := 2)
+  have c1 : cnfToZp2 (NONote.oadd 0 1 0 ONote.NFBelow.zero) = 2 := by
+    show (2 : ℤ_[2]) ^ ((cnfToZp2 (0 : NONote)).valuation + 1) * ((1 : ℕ+) : ℤ_[2]) +
+      cnfToZp2 0 = 2
+    simp
+  have v6 : (6 : ℤ_[2]).valuation = 1 := by
+    have hq : ((6 : ℤ_[2]) : ℚ_[2]).valuation = 1 := by
+      rw [show ((6 : ℤ_[2]) : ℚ_[2]) = ((6 : ℕ) : ℚ_[2]) by push_cast; rfl,
+        Padic.valuation_natCast, show (6 : ℕ) = 2 * 3 from rfl,
+        padicValNat.mul (by norm_num) (by norm_num), padicValNat_self,
+        padicValNat.eq_zero_of_not_dvd (by norm_num)]
+      rfl
+    rw [PadicInt.valuation_coe] at hq
+    exact_mod_cast hq
+  refine ⟨?_, ?_, ?_, ?_, ?_⟩
+  · simp [NONote.repr, NONote.oadd, ONote.repr]
+  · simp [NONote.repr, NONote.oadd, ONote.repr]
+  · show (2 : ℤ_[2]) ^ ((cnfToZp2 (0 : NONote)).valuation + 1) * ((3 : ℕ+) : ℤ_[2]) +
+      cnfToZp2 0 = 6
+    simp; norm_num
+  · show (2 : ℤ_[2]) ^ ((cnfToZp2 (NONote.oadd 0 1 0 ONote.NFBelow.zero)).valuation + 1) *
+      ((1 : ℕ+) : ℤ_[2]) + cnfToZp2 (NONote.oadd 0 1 0 ONote.NFBelow.zero) = 6
+    rw [c1, v2]; norm_num
+  · intro n h
+    have hv := cnfToZp2_tower_valuation n
+    rw [h, v6] at hv
+    subst hv
+    have h2 : cnfToZp2 (towerNONote 1) = 2 := by
+      show (2 : ℤ_[2]) ^ ((cnfToZp2 (0 : NONote)).valuation + 1) * ((1 : ℕ+) : ℤ_[2]) +
+        cnfToZp2 0 = 2
+      simp
+    rw [h2] at h
+    norm_num at h
+
 /-! ## § II. The shared seed maps to each carrier's floor: ⊥ of `Ordinal`, and ℤ_[2]'s 0 -/
 
 /-- **Shared seed → both floors.** The NONote seed `towerNONote 0` (the NONote `0`) maps to
@@ -108,7 +158,7 @@ theorem mu_construction_correspondence :
 /-! ## § V. The honest fence — co-witness, no type identity -/
 
 /-- **Type boundary, fenced.** ε₀ is the least fixed point from ⊥ (`IsLeastFixedPointFrom`); the 2-adic 0 is
-    the norm-limit of the images `cnfToZp2 (towerNONote n)`, NOT a least fixed point. `ε₀ ≠ 0`, 0 the ordinal
+    the norm-limit of the images `cnfToZp2 (towerNONote n)`, with no least-fixed-point clause stated for it. `ε₀ ≠ 0`, 0 the ordinal
     zero, is `epsilon0_ne_zero`; `ε₀ = (0 : ℤ_[2])` does not type-check, with no coercion between `Ordinal` and
     `ℤ_[2]` in either direction (guard below). Under `cnfToZp2` that 0 is the seed `towerNONote 0`'s image and
     the images' limit, and ε₀ has no image (`repr_lt_epsilon0`, `ZeroParadox/Ordinal/PricedInterface.lean`).
@@ -134,8 +184,7 @@ example : epsilonZero ≠ (0 : Ordinal) := epsilon0_ne_zero
        in ℤ_[2] under the 2-adic norm (and greatest under the valuation preorder).
     2. **DEPARTURE by a discrete jump** — `∀ n ≥ 1, cnfToZp2 (towerNONote n) ≠ 0`: the trajectory
        genuinely leaves 0. The image of the first stage has 2-adic valuation 1 (`cnfToZp2_tower_valuation`), hence
-       norm 1/2, so the norm jumps 0 → 1/2 with no intermediate stage — there is no continuous path
-       off 0, the snap's discreteness rendered as geometry.
+       norm 1/2, so the norm jumps 0 → 1/2 with no intermediate stage.
     3. **REAPPROACH** — `Filter.Tendsto … (nhds 0)`: the images of the stages return toward 0 in
        `ℤ_[2]` (`tower_converges_to_zero`).
 

@@ -1,5 +1,5 @@
 """
-Build ZP-C Illustrated Companion (v2.14)
+Build ZP-C Illustrated Companion (v2.16)
 """
 
 import os
@@ -177,7 +177,7 @@ def lrun_diagram():
                strokeColor=COMP_BLUE, strokeWidth=1, strokeDashArray=[4, 3]))
     return d
 
-VERSION = '2.14'
+VERSION = '2.16'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -221,8 +221,9 @@ def build():
         Paragraph('ZP Companion | ' + version_line(FIRST_RELEASED, VERSION), CS['meta']),
         Paragraph(
             'This companion explains the ideas in plain language with diagrams and real-world '
-            'examples. It is not the formal document — every claim here restates a result already '
-            'proved in the corresponding technical document. Consult that document for the '
+            'examples. It is not the formal document — its results are proved in ZP-C Information '
+            'Theory or come from the other documents, papers and named theorems it cites, and a '
+            'commitment or reading it mentions is not a result. Consult ZP-C for the '
             'authoritative mathematics.',
             CS['disc']),
     ]
@@ -239,9 +240,10 @@ def build():
         'exists — the string must be specified in full, every bit. This route is about one string at '
         'P₀, not about zero in ℚ₂.'))
     E.append(cbody(
-        '<b>Route 2 — 2-adic surprisal (probabilistic):</b> How much probability mass does a '
-        'state carry? As a state approaches zero in ℚ₂, its probability approaches zero, and '
-        'its surprisal I(x) = −log₂ P(x) approaches infinity. Informational cost is unbounded.'))
+        '<b>Route 2 — 2-adic surprisal (probabilistic):</b> How much probability mass lies in '
+        'the ball around zero that just reaches a state? A single point carries none, so ZP-C D4 '
+        'measures the ball. As a state approaches zero in ℚ₂, that ball shrinks, its mass approaches zero, and '
+        'the surprisal I(x) = −log₂ P(x) approaches infinity. Informational cost is unbounded.'))
     E.append(cbody(
         'Neither measure knows about the other. K counts program lengths; I(x) counts probability. '
         'Depth does not imply incompressibility: the bridge claiming it does is refuted (counterexample '
@@ -257,7 +259,8 @@ def build():
 
     E.append(Paragraph('Surprisal: The Cost of a Transition', CS['h1']))
     E.append(cbody(
-        'The surprisal of state x is I(x) = −log₂ P(x): how surprising it is to observe x. '
+        'The surprisal of state x is I(x) = −log₂ P(x), where P(x) is the mass of the ball around 0 '
+        'that reaches x: how surprising it is to observe a state that close to 0. '
         'As x approaches 0, P(x) approaches 0, and I(x) approaches infinity. Zero is infinitely '
         'surprising — it cannot be reached by any path of finite informational cost.'))
 

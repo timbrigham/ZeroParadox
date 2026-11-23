@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-K: Computational Grounding of Self-Reference PDF Builder
-Version 1.38 | November 2026
+Version 1.40 | November 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.38'
+VERSION = '1.40'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -523,7 +523,7 @@ def build():
             'This is the CIC-compatible stand-in for the Quine atom (CC-2): the initial machine '
             'state is self-containing and is the unique element with this property, so with '
             'membership as the step it is the only occupant of the Quine-atom role '
-            '(quineAtomHost_quine_role_iff, host afaStructure_isQuineAtomHost). No ZF+AFA axiom is added — '
+            '(quineAtomHost_quine_role_iff, host afaStructure_isQuineAtomHost). No axiom of ZFC<sup>&#8722;</sup> + AFA is added — '
             'the structural fact is encoded as a definition that Lean verifies.',
         ]
     ))
@@ -576,7 +576,7 @@ def build():
     E.append(Paragraph('III. What Changed for DA-1', S['h2']))
     E.append(body(
         'ZP-E\'s DA-1 section previously carried the designation "Outside Lean Scope" with '
-        'three justifications: Path 1 requires ZF+AFA, which ZP-E held incompatible with Lean\'s CIC/MLTT; '
+        'three justifications: Path 1 requires ZFC<sup>&#8722;</sup> + AFA, which ZP-E held incompatible with Lean\'s CIC/MLTT; '
         'Path 3 requires Kolmogorov complexity (it is uncomputable, and that alone does not keep it '
         'out of Lean, where a noncomputable definition is allowed; no formalization of it was located in '
         'the pinned Mathlib as of 2026-10-04, searched as recorded in '
@@ -597,8 +597,11 @@ def build():
         'supplied at instantiation, not a second independent proof — and the condition it '
         'requires, IsComputationalQuine, is a periodicity condition that a constant code '
         'satisfies trivially. The Kolmogorov reading ("no shorter program is prior to ⊥") has '
-        'no formal content in ZP-K: Kolmogorov complexity is not formalized in this corpus (a scope '
-        'decision, recorded at the ZPSurprisal entry of LEAN_CUSTOM_REGISTRY.md). Path 3 therefore derives nothing here: in ZP-E it bears on DA-1\'s '
+        'no formal content in ZP-K. Kolmogorov complexity is in the build through '
+        'ZeroParadox/Information/BrudnoBridge.lean, whose theorems are about tapes '
+        '(MLRandom_fair_iff_le_KPPlain, the Levin–Schnorr criterion for the fair coin); that the '
+        'occupant of the ⊥ role, read as a tape, is maximally complex is a commitment (Section '
+        'VI.I). Path 3 therefore derives nothing here: in ZP-E it bears on DA-1\'s '
         'precondition and does not derive executing from incompressibility, and that '
         'precondition is what the occurrence commitment asserts.'))
     E.append(body(
@@ -663,11 +666,14 @@ def build():
         'Code.zero\'s empty one. No map from a ZPSemilattice to ℕ → Bool is claimed '
         '(ZeroParadox/Information/Disjunctive.lean § VI).'))
     E.append(body(
-        'The standard theory, stated separately and not proved in Lean: with K the prefix-free '
+        'The standard theory: with K the prefix-free '
         'Kolmogorov complexity, a sequence x has K(first n bits of x) ≥ n − c for some constant c and every n '
         'exactly when it is Martin-Löf random (the Levin–Schnorr theorem; Franklin and Porter, '
         'arXiv:2004.02851, Theorem 2.5, crediting Levin and Schnorr), and Martin-Löf random '
-        'sequences are disjunctive. The prefix-free form is needed: with plain complexity C, every '
+        'sequences are disjunctive. The first half, for the fair coin, is in the build as '
+        'MLRandom_fair_iff_le_KPPlain (ZeroParadox/Information/BrudnoBridge.lean), restated from the '
+        'Lean development kolmogorov-complexity-lean; the second half is open (the Open Items '
+        'Register below). The prefix-free form is needed: with plain complexity C, every '
         'infinite sequence A has C(first n bits of A) ≤ n − log n for infinitely many n (Franklin and '
         'Porter, arXiv:2004.02851, § 2.2, p. 15, crediting Martin-Löf). Martin-Löf (Z. Wahrsch. verw. '
         'Geb. 19 (1971) 225–230, Theorem 1) proves the form conditional on the length n, for plain '
@@ -694,9 +700,9 @@ def build():
             'universal code on a channel e + 1.',
             'Reading: replicas share everything but the address. Incompressibility is a property of '
             'each instance, and the next instance adds only its address. That is a claim about '
-            'relative complexity, and it stays a reading while Kolmogorov complexity is not formalized '
-            'in this corpus (a scope decision, recorded at the ZPSurprisal entry of '
-            'LEAN_CUSTOM_REGISTRY.md, which also names Lean developments outside Mathlib that define it).',
+            'relative complexity, and it stays a reading: Kolmogorov complexity is in the build '
+            'through ZeroParadox/Information/BrudnoBridge.lean, whose theorems are about tapes, and '
+            'selfPrints_universal_address states values on channels, not complexities.',
             'Lean: ZeroParadox.selfPrints_universal_address. '
             'Purity: propext, Classical.choice, Quot.sound (#print axioms in the PurityCheck section '
             'of ZeroParadox/Computability/Kleene.lean).',
@@ -920,7 +926,7 @@ def build():
          '∀ f, Computable f → ∃ c, eval (f c) = eval c, has no choice-free restatement in this '
          'corpus. The record is ZeroParadox/Computability/Kleene.md § VIII.'],
         ['Martin-Löf randomness ⇒ disjunctive',
-         'OPEN — not formalized in this corpus',
+         'OPEN — not located in ZeroParadox/**/*.lean as of 2026-11-21; search below',
          'Standard theory: a Martin-Löf random sequence is disjunctive, and by the Levin–Schnorr '
          'theorem Martin-Löf randomness is incompressibility of every prefix, K(first n bits of x) ≥ '
          'n − c for some constant c and every n, with K the prefix-free complexity (Franklin and '
@@ -931,10 +937,15 @@ def build():
          'Kolmogorov complexity are not located in the Mathlib pin as of 2026-10-04 (search record '
          'in ZeroParadox/Information/Disjunctive.md). Outside Mathlib, one development named at the '
          'ZPSurprisal entry of LEAN_CUSTOM_REGISTRY.md defines Martin-Löf randomness and proves the '
-         'Levin–Schnorr theorem; a proof there that a Martin-Löf random sequence is disjunctive was '
+         'Levin–Schnorr theorem, restated here for the fair coin as MLRandom_fair_iff_le_KPPlain '
+         '(ZeroParadox/Information/BrudnoBridge.lean); a proof there that a Martin-Löf random sequence is disjunctive was '
          'not located as of 2026-11-01 (the search is recorded at that entry). Until this bridge is formalised, the framework\'s commitment that the '
          'occupant of its ⊥ role, ⊥ of a ZPSemilattice, read as a tape, is maximally complex reaches '
-         'Disjunctive (Section VI.I) only as a reading.'],
+         'Disjunctive (Section VI.I) only as a reading. Searched 2026-11-21 over ZeroParadox/**/*.lean for '
+         '&#8220;Disjunctive&#8221; (8 files), for MLRandom beside &#8220;disjunct&#8221;, &#8220;block&#8221; '
+         'and &#8220;word&#8221;, and for &#8220;every finite word&#8221;: the nearest results are '
+         'fairTape_disjunctive_ae (almost every fair tape is disjunctive) and zeroBlockTypical_of_MLRandom '
+         '(a Martin-Löf random tape avoids the zero-block tests), and neither is this implication.'],
     ]
     E.append(data_table(
         ['Item', 'Status', 'Description'],

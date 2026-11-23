@@ -1,12 +1,12 @@
 """
 Zero Paradox — ZP-I: Inside Zero PDF Builder
-Version 1.44 | November 2026
+Version 1.45 | November 2026
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.44'
+VERSION = '1.45'
 FIRST_RELEASED = 'April 2026'
 
 # ZP-I uses justified body text; override the left-aligned zp_utils defaults
@@ -589,7 +589,7 @@ def build():
 
     E.append(Paragraph('III. ZP-G AX-G2 — No Morphism to the Initial Object', S['h2']))
     E.append(body(
-        'AX-G2 states that in the categorical structure C, hom(X, 0) = &#8709; for X &#8800; 0: '
+        'AX-G2 states that in the categorical structure C, hom(X, 0) = &#8709; for X not isomorphic to 0: '
         'no morphism within C leads back to the initial object. This closes the categorical door '
         'to reversal.'))
     E.append(body(
@@ -710,8 +710,9 @@ def build():
         li('T-SNAP: From &#8869;, existence emerges — the shape of that emergence is derived and its '
            'occurrence is committed to, not proved. The Binary Snap '
            '&#8869; &#8594; &#949;<sub>0</sub> is irreversible. This is the opening of the branch.'),
-        li('T3 (Monotonicity): The state sequence ascends without interruption. Each step '
-           'adds informational content irreversibly. The chain climbs.'),
+        li('T3 (Monotonicity): The state sequence never descends: each step keeps the state or raises it '
+           '(state_sequence_monotone). Under IsStrictStateSequence (next item) each step '
+           'adds informational content irreversibly, and the chain climbs.'),
         li('No Top: In a carrier with HasNoTop (a hypothesis on the carrier, not a law: MachinePhase and '
            'OntologicalStates have a top) there is always a strictly greater element, so no chain halts for want of '
            'anywhere to go. It supplies the POSSIBILITY of ascent; IsStrictStateSequence is its '

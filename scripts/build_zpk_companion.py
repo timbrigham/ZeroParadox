@@ -1,6 +1,6 @@
 """
 Build ZP-K Illustrated Companion
-Version 1.37 | November 2026
+Version 1.38 | November 2026
 """
 
 import os
@@ -109,7 +109,7 @@ def four_way_table():
     t = Table(data, colWidths=[TW*0.22, TW*0.30, TW*0.48])
     t.setStyle(ts); return t
 
-VERSION = '1.37'
+VERSION = '1.38'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -262,10 +262,11 @@ def build():
         'not something ZP-K derives: the bridge is built because the reading is held, not the '
         'other way round. The identity half of that reading is retired: what the descriptions '
         'share is the Quine-atom role (Motion.SelfOnlyAt, a point that steps to itself and to '
-        'nothing else), and each chart proves its own occupancy of it. Reading the shared '
-        'position as a role that each chart fills on its own terms, rather than as one '
-        'object, applies the structuralist reading of Benacerraf, "What Numbers Could Not Be," <i>Philosophical Review</i> 74(1) (1965) 47&#8211;73, p. 70 '
-        '(his subject is numbers) to the Quine-atom role; the per-chart results are an instance of that reading, not its source.'))
+        'nothing else), and each chart proves its own occupancy of it. '
+        'Of numbers, Benacerraf writes that "any object can play the role of 3" ("What Numbers Could '
+        'Not Be," <i>Philosophical Review</i> 74(1) (1965) 47&#8211;73, p. 70). The framework applies the same reading to the Quine-atom role: each chart '
+        'fills it on its own terms, rather than one object filling it, and the per-chart occupancy '
+        'results just named are an instance of that reading, not its source.'))
     E.append(sp(4))
     E.append(remember_box(
         'Remember: T-COMP is not saying that set theory and computability theory are the same. '
@@ -448,12 +449,13 @@ def build():
         'simple counting tape in the style of Champernowne is disjunctive and computable. The '
         'framework holds, as a commitment, that the occupant of its ⊥ role, ⊥ of a ZPSemilattice, '
         'read as a tape, is maximally complex; that commitment is about that occupant, not about '
-        'the all-false tape below. Standard theory, not proved in this corpus: a sequence whose every '
+        'the all-false tape below. Standard theory: a sequence whose every '
         'prefix is incompressible up to a constant in the prefix-free sense of Kolmogorov '
         'complexity is exactly a Martin-Löf random one (the Levin–Schnorr theorem; Franklin and '
-        'Porter, arXiv:2004.02851, Theorem 2.5; proved in Lean outside Mathlib in a development '
-        'that the ZPSurprisal entry of LEAN_CUSTOM_REGISTRY.md names), and such a sequence is '
-        'disjunctive. The '
+        'Porter, arXiv:2004.02851, Theorem 2.5; for the fair coin it is in this project\'s build as '
+        'MLRandom_fair_iff_le_KPPlain, ZeroParadox/Information/BrudnoBridge.lean, restated from a '
+        'Lean development outside Mathlib), and such a sequence is disjunctive, a step with no '
+        'Lean proof located (ZP-K, Open Items Register). The '
         'prefix-free sense matters: with plain complexity every infinite sequence has infinitely '
         'many prefixes of length n compressible to at most n − log n bits (Franklin and Porter, '
         'arXiv:2004.02851, § 2.2, p. 15, crediting Martin-Löf; Martin-Löf 1971, Theorem 1, proves '

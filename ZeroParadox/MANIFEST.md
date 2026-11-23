@@ -220,7 +220,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Ordinal/PricedInterface.lean` - A priced interface: notations denoting the ordinals up to ε₀, a map into `Ordinal`, and both sides' axiom footprints
   - ride-along docs: `ZeroParadox/Ordinal/PricedInterface.md` - PricedInterface — ride-along documentation
 - `ZeroParadox/Ordinal/SnapMetaLattice.lean` - The lattice of systems: adjoining the point at infinity makes the ordinals a frame
-- `ZeroParadox/Ordinal/SnapNucleus.lean` - The snap is a nucleus: ε₀ is the modality generated from the bottom ⊥
+- `ZeroParadox/Ordinal/SnapNucleus.lean` - The snap is a nucleus: the modality sends ⊥ of `Ordinal` to ε₀
   - ride-along docs: `ZeroParadox/Ordinal/SnapNucleus.md` - A modality on a chain: the recognized structure, its scope, and what is owed outward
 - `ZeroParadox/Ordinal/SnapNucleusConstructive.lean` - No snap-shaped closure on the `ONote` carrier: a proved obstruction
   - ride-along docs: `ZeroParadox/Ordinal/SnapNucleusConstructive.md` - Cantor normal form, the ε₀ ceiling, and the choice question
@@ -247,6 +247,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
   - ride-along docs: `ZeroParadox/DiagonalFixedPoint.md` - The μ/ν split, the host verdict, and what this index does not claim
 - `ZeroParadox/Die.lean` - The die: an order-free motion, its switches, and its premises
 - `ZeroParadox/DieCannotBe.lean` - Machine-checked characterization index of the die — its premises, with members and non-members
+- `ZeroParadox/DieSameness.lean` - Homeomorphic and bi-Lipschitz isomorphisms of die motions, the levels above `Motion.StrictIso`
 - `ZeroParadox/Miniature.lean` - The Zero Paradox in miniature — the minimal core
 
 ### Meta / tooling (not framework content)
@@ -268,6 +269,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 
 ### Order / lattice (ZP-A, ZP-E)
 
+- `ZeroParadox/Order/DieBranches.lean` - If f carries L as the prefix order on Bool words, the map from s to its branch n ↦ f (first n bits of s) is injective, each branch is L-increasing, branches are L-incomparable past the first difference, and every L-increasing length-indexed node sequence is exactly one branch; under tree_of_square's hypotheses such f exists
 - `ZeroParadox/Order/DieJoints.lean` - Joints and dual joints: cut points approached from one side and not reached there
 - `ZeroParadox/Order/MarkovContractionDual.lean` - The dual contraction dichotomy on the Markov ν-side (#2)
 - `ZeroParadox/Order/MarkovPlacement.lean` - The unplaced node: does the Markov attractor (#2) admit ANY order-extremal or categorical placement?
@@ -285,6 +287,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Valuation/BottomInvariant.lean` - A first universal: the bottom carries an invariant probability measure
   - ride-along docs: `ZeroParadox/Valuation/BottomInvariant.md` - Evidence for a universal at the existence level, and where it stops
 - `ZeroParadox/Valuation/BoundaryGap.lean` - The boundary embedding: the exact gap to the Bruhat-Tits tree
+- `ZeroParadox/Valuation/BranchingPerfect.lean` - Nonempty discrete levels: the branch space is perfect iff infinitely many levels branch
 - `ZeroParadox/Valuation/BranchingRequirement.lean` - A further requirement — the branching axis: branches are incomparable (the tower does not stack)
 - `ZeroParadox/Valuation/BranchingSnapChain.lean` - The single chain: branching → disconnectedness → the forbidden return
 - `ZeroParadox/Valuation/CantorPropertiesProbe.lean` - Completeness-critic, final pass: a shared node profile and ultrametric agreement; compactness assigned to the arity commitment
@@ -309,6 +312,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Valuation/OneWayFlow.lean` - The one-way flow: forward attraction and backward exit, two charts of `boundaryDouble`
 - `ZeroParadox/Valuation/PadicAttractor.lean` - The p-adic floor #3 as a dynamical attractor
 - `ZeroParadox/Valuation/PadicBallIndicator.lean` - The p-adic ball indicator in L²(ℤ_p)
+- `ZeroParadox/Valuation/PadicBallWave.lean` - On ℤ_p, an additive character integrates over the closed ball of radius p^(-j) about 0 to p^(-j) if it is 1 on that ball and to 0 otherwise; for paChar n φ, and for every continuous character, that is exactly when the character's level is at most j
 - `ZeroParadox/Valuation/PadicCharacter.lean` - p-adic additive characters and their orthogonality on ℤ_p
 - `ZeroParadox/Valuation/PadicErgodic.lean` - Ergodicity of the p-adic odometer
 - `ZeroParadox/Valuation/PadicHaar.lean` - p-adic Haar measure on ℤ_p
@@ -318,9 +322,11 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Valuation/PadicKozyrev.lean` - A genuine eigenfunction of D^α: the level-1 p-adic character
 - `ZeroParadox/Valuation/PadicStillPoint.lean` - The still-point: the trivial character is the joint fixed/annihilated bottom
 - `ZeroParadox/Valuation/PadicVladimirov.lean` - The Taibleson–Vladimirov operator D^α on ℤ_p
+- `ZeroParadox/Valuation/PadicWavelet.lean` - On ℤ_p, a primitive level-n character times the indicator of a ball of radius p^(-j), j < n, has integral zero and is an eigenfunction of D^α on ℤ_p (the `vladimirov` operator, not the ℚ_p one) with the bare character's level-n eigenvalue; any two characters times indicators of disjoint balls are orthogonal
 - `ZeroParadox/Valuation/PolarityFlip.lean` - 2-adic inversion negates the valuation (a cited Mathlib fact + one tower corollary)
 - `ZeroParadox/Valuation/PoleCompletion.lean` - The pole completion: the floor is a genuine self-application fixed point (the Quine atom on the tree)
 - `ZeroParadox/Valuation/PoleCorners.lean` - The four corners: 0 and ∞ have exactly four representations to each other
+  - ride-along docs: `ZeroParadox/Valuation/PoleCorners.md` - The pole: two points, and the chart claim
 - `ZeroParadox/Valuation/PoleCornersBridge.lean` - Bridge: the four corners are the corners of the tower to ω (shared-shape correspondence)
   - ride-along docs: `ZeroParadox/Valuation/PoleCornersBridge.md` - Assembling a correspondence without asserting an identity
 - `ZeroParadox/Valuation/PolePassage.lean` - The snap arc on the 2-adic sphere: no passage through `∞`, a return in the valuation
@@ -336,6 +342,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Valuation/TowerTape.lean` - Local floors as subtape poles, and a tower as one tape
 - `ZeroParadox/Valuation/TowerTapeSnap.lean` - The tower tape fed to the snap, chart by chart
 - `ZeroParadox/Valuation/TreeNotForced.lean` - The binary tree above ⊥ of a join-semilattice: not forced by ⊥ as greatest lower bound of non-⊥ members, a first step, infinitely many atoms and strong atomicity of the whole order; forced, one way (sufficient, not necessary), by depth at every element with strong atomicity
+- `ZeroParadox/Valuation/UltrametricView.lean` - In an ultrametric space, dist x c < dist y c implies dist x y = dist y c; on ℤ_[2], doubling halves distance and has image the closed ball of radius 1/2 about 0; ℤ_[2] and ℕ → Bool are homogeneous: for any two points, some isometry of ℤ_[2], likewise some involutive homeomorphism of ℕ → Bool, sends the first to the second
 
 ### Information (ZP-C)
 
@@ -344,7 +351,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Information/MaxEntropy.lean` - Maximum entropy: the fair coin, missing information, and incompressible tapes
 - `ZeroParadox/Information/PoleWithinEnsemble.lean` - The never-firing tape inside the firing ensemble
 - `ZeroParadox/Information/SnapEpsilonZero.lean` - The snap and ε₀ on two carriers: on `WithBot Ordinal` the first step lands at ↑0 and `up` carries it to ↑ε₀ (the corner); on `EpsilonOrZero` the first step is ε₀ (the cover)
-- `ZeroParadox/Information/StartBit.lean` - The start bit, the end bit, and the tapes whose tail is ⊥ of `ℕ → Bool`
+- `ZeroParadox/Information/StartBit.lean` - The start bit, the end bit, and the tapes whose tail from some position on is ⊥ of `ℕ → Bool`
 - `ZeroParadox/Information/TapeHalting.lean` - A tape's first hitting time, run as a computation
 - `ZeroParadox/Information/TwoRequirements.lean` - Two requirements: a first step at ⊥ of `L`, and a typical tape
 
@@ -396,9 +403,17 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 
 ### Multi-homed bridges (ZP-H)
 
+- `ZeroParadox/Multihomed/BendDie.lean` - The bend: the overlap condition, and complex scaling as a limit motion
+  - ride-along docs: `ZeroParadox/Multihomed/BendDie.md` - BendDie — the overlap condition, and complex scaling as a limit motion
+- `ZeroParadox/Multihomed/CollapseDie.lean` - The collapse family in the die: one lemma in two forms, six legacy results, with controls
+  - ride-along docs: `ZeroParadox/Multihomed/CollapseDie.md` - CollapseDie — the collapse family as die motions
 - `ZeroParadox/Multihomed/CrossRootCompleteness.lean` - Cross-root completeness: the #1↔#3 and #5↔#3 edges
 - `ZeroParadox/Multihomed/FloorFactsCooccur.lean` - Co-occurrence of four ambient bottom-facts (thin: new fact is generic)
 - `ZeroParadox/Multihomed/Fork.lean` - Restating two `IsInitial` and one `IsTerminal` witness as `IsColimit` / `IsLimit`
+- `ZeroParadox/Multihomed/LimitMotion.lean` - The limit retraction as a die motion: convergence is arrival at a landing or a stage closure
+  - ride-along docs: `ZeroParadox/Multihomed/LimitMotion.md` - LimitMotion — the limit retraction as a die motion
+- `ZeroParadox/Multihomed/OrbitDie.lean` - The orbit family in the die: three "never lands" results as motions, with controls
+  - ride-along docs: `ZeroParadox/Multihomed/OrbitDie.md` - OrbitDie — the orbit family as die motions
 - `ZeroParadox/Multihomed/RootCutObstruction.lean` - The ROOT cut is a strict, non-glueable μ/ν obstruction
 - `ZeroParadox/Multihomed/SeamConnectorFail.lean` - The seam #5 fails as a two-sided connector to the ν-LIMIT node #3
 - `ZeroParadox/Multihomed/SelfAppForkPlace.lean` - ZP-H tree, theory TH11 — placing the ZP-J selfApp fixed point on the μ/ν fork
@@ -406,8 +421,12 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Multihomed/SnapFrameChange.lean` - The tower limit's two chart-readings: ⊥ and ∞ are two charts, swapped by `rInv`
   - ride-along docs: `ZeroParadox/Multihomed/SnapFrameChange.md` - SnapFrameChange — the tower limit's two chart-readings
 - `ZeroParadox/Multihomed/SpanObstruction.lean` - The #1↔#3 cross-root obstruction under a SPAN (THIN-BUT-HONEST)
+- `ZeroParadox/Multihomed/TH3Die.lean` - T-H3 in the die: four conjuncts as facts about motions, with controls and two obstructions
+  - ride-along docs: `ZeroParadox/Multihomed/TH3Die.md` - TH3Die — T-H3's four conjuncts as die motions
 - `ZeroParadox/Multihomed/TreeT1.lean` - ZP-H tree, edge T1 — the within-μ edge: proof-theory floor ↔ categorical-initial bottoms
 - `ZeroParadox/Multihomed/TreeT2.lean` - ZP-H tree, edge T2 — the within-ν edge: Markov attractor ↔ p-adic inverse-limit
+- `ZeroParadox/Multihomed/TwoAdicBend.lean` - The 2-adic bend: multiplier maps on `OnePoint ℚ_[2]` up to topological conjugacy
+  - ride-along docs: `ZeroParadox/Multihomed/TwoAdicBend.md` - TwoAdicBend — multiplier maps on `OnePoint ℚ_[2]` up to topological conjugacy
 - `ZeroParadox/Multihomed/TwoFacesBot.lean` - Direction B — the two faces of ⊥ at the seam: VACUOUS (they coincide, but only as a bare singleton)
 - `ZeroParadox/Multihomed/WallSpanRobust.lean` - Spans into the ordinals: the wall bites on non-well-founded apexes (#1 vs #2, #2 taken as ℝ)
 
@@ -442,4 +461,4 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 
 ---
 
-*Generated by `build_manifest.py` from the Lean tree + each file's `-- EXPERIMENTAL` header. Rerun after adding, moving, or renaming a file. (141 core, 127 experimental.)*
+*Generated by `build_manifest.py` from the Lean tree + each file's `-- EXPERIMENTAL` header. Rerun after adding, moving, or renaming a file. (142 core, 138 experimental.)*

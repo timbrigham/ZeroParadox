@@ -1,6 +1,7 @@
 import ZeroParadox.Die
 import Mathlib.SetTheory.Ordinal.Veblen
 import Mathlib.SetTheory.Cardinal.Ordinal
+import ZeroParadox.Ordinal.ConstructiveOrdinals
 
 set_option maxHeartbeats 400000
 
@@ -30,7 +31,7 @@ open Ordinal
 theorem epsilon0_is_fixedpoint : ω ^ ε₀ = ε₀ :=
   omega0_opow_epsilon 0
 
-/-- **ε₀ is the LEAST fixed point.** Any ordinal `o` closed under exponentiation (`ω^o = o`) satisfies
+/-- **ε₀ is the LEAST fixed point.** Any ordinal `o` fixed by `α ↦ ω^α` (`ω^o = o`) satisfies
     `ε₀ ≤ o`. With `epsilon0_is_fixedpoint`, ε₀ is the minimal closure — the snap sits at the least
     ordinal fixed by `α ↦ ω^α`, not a larger Veblen point. -/
 theorem epsilon0_least_fixedpoint (o : Ordinal) (h : ω ^ o = o) : ε₀ ≤ o :=
@@ -106,11 +107,12 @@ theorem seed_eq_of_nfp_eq_epsilon_limit (o s : Ordinal) (ho : Order.IsSuccLimit 
 
 /-! ### Cells as widths: order type and count
 `Reading:` a cell is the set of seeds reaching one landing, and its width is the order type of its
-seeds strictly below that landing. ORDER-TYPE chart: a successor cell is as wide as its landing, the
-first ε₀ and the next ε₁ (`successor_cell_width`); a limit-index cell is a singleton
+seeds strictly below that landing. ORDER-TYPE chart: the first cell, landing ε₀, has width ε₀ (Mathlib's
+`Ordinal.type_lt_Iio`, the `example` below); a successor-index cell is as wide as its landing, the next
+ε₁ (`successor_cell_width`); a limit-index cell is a singleton
 (`limit_cell_eq_singleton`). COUNTING chart: the first cell is countable (`card_epsilon0`)
-and a cell past the countable indices is not (the control below). Each address is a finite term
-(`repr_surj_below_epsilon0`, `ZeroParadox/Ordinal/PricedInterface.lean`). Both charts hold. -/
+and a cell past the countable indices is not (the control below). Each seed below ε₀ is denoted by a
+normal-form `ONote` (`repr_surj_below_epsilon0`, `ZeroParadox/Ordinal/PricedInterface.lean`); no `ONote` denotes ε₀ (`repr_lt_epsilon0`). Both charts hold. -/
 
 universe u
 
@@ -266,15 +268,15 @@ theorem epsilon0_ne_zero : ε₀ ≠ 0 := by
 
 /-- **Invariant — ε₀ ≠ ⊥ of `Ordinal`.** Since `(⊥ : Ordinal) = 0` (`Ordinal.bot_eq_zero`) and ε₀ ≠ 0, ε₀ is never
     ⊥ of `Ordinal`. That ⊥ is *a* base the ε₀-tower is seeded at (`epsilon0_eq_nfp_bot`), never its closure.
-    It is the *least* such base and not the only one: for **normal** `F`, every seed at or below the
-    closure reaches the same closure (`isLeastFixedPointFrom_nfp`). The invariant does not depend
+    It is the *least* such base and not the only one: every seed at or below ε₀ reaches ε₀
+    (`nfp_seed_independent_below_epsilon0`, `first_cell_eq_Iic`). The invariant does not depend
     on that. -/
 theorem epsilon0_ne_bot : ε₀ ≠ (⊥ : Ordinal) := by
   rw [Ordinal.bot_eq_zero]
   exact epsilon0_ne_zero
 
 /-- **ε₀'s Veblen coordinates are (1, 0).** ε₀ = `veblen 1 0` (Mathlib `epsilon := veblen 1`, so this is
-    definitional): the element at index 0 of level 1 — the origin of the Veblen coordinate system, hence
+    definitional): the element at index 0 of level 1 — the first point of level 1, hence
     the *minimum* fixed-point closure (matching `epsilon0_least_fixedpoint`), not a definitional pick of a
     large ordinal. The hierarchy continues above ε₀ (ε₁, ε₂, …, ζ₀ = `veblen 2 0`, …) up to Γ₀, the
     Feferman–Schütte ordinal closing the two-argument Veblen hierarchy; the framework lives below Γ₀. -/
@@ -339,6 +341,41 @@ theorem ordinalTowerMotion_not_upLowers : ¬ ordinalTowerMotion.{u}.UpLowers := 
   epsilon0_ne_zero (nonpos_iff_eq_zero.1
     (h 0 ε₀ (Part.mem_some_iff.2 Ordinal.epsilon_zero_eq_nfp)))
 
+/-- `Statement:` under `Motion.ofFun (ω ^ ·)` on `Ordinal`, `y` steps to itself only iff `y` is
+    `Ordinal.epsilon o` for some `o`; both directions. -/
+theorem opow_selfOnlyAt_iff_epsilon (y : Ordinal.{u}) :
+    (Motion.ofFun fun a : Ordinal.{u} => ω ^ a).SelfOnlyAt y ↔ ∃ o, Ordinal.epsilon o = y := by
+  rw [Motion.selfOnlyAt_ofFun_iff]
+  have hn := Ordinal.isNormal_opow Ordinal.one_lt_omega0
+  rw [← Ordinal.mem_range_deriv hn]
+  simp only [Set.mem_range, Ordinal.epsilon_eq_deriv]
+
+/-- `Statement:` in `ordinalTowerMotion`, `y` steps to itself only iff `y` is `Ordinal.epsilon o` for
+    some `o`; both directions. -/
+theorem ordinalTowerMotion_selfOnlyAt_iff (y : Ordinal.{u}) :
+    ordinalTowerMotion.SelfOnlyAt y ↔ ∃ o, Ordinal.epsilon o = y := by
+  rw [← opow_selfOnlyAt_iff_epsilon, Motion.selfOnlyAt_ofFun_iff]
+  exact ⟨fun h => h.1.symm, fun h => ⟨h.symm, fun b hb => hb.trans h⟩⟩
+
+/-- `Statement:` the exponent depth of a notation: `0` at `ONote.zero`, and one more than the
+    exponent's depth at `oadd e n a`. -/
+def onoteExpDepth : ONote → ℕ
+  | ONote.zero => 0
+  | ONote.oadd e _ _ => onoteExpDepth e + 1
+
+/-- `Statement:` CONTROL: under `Motion.ofFun omegaPow` on `ONote`, no notation steps to itself
+    only. -/
+theorem onote_omegaPow_not_selfOnlyAt (x : ONote) : ¬ (Motion.ofFun omegaPow).SelfOnlyAt x := by
+  rw [Motion.selfOnlyAt_ofFun_iff]
+  intro h
+  have := congrArg onoteExpDepth h
+  simp only [omegaPow, onoteExpDepth] at this
+  omega
+
+-- Statement: CONTROL: under `Motion.ofFun (ω ^ ·)`, 0 of `Ordinal` does not step to itself only.
+example : ¬ (Motion.ofFun fun a : Ordinal => Ordinal.omega0 ^ a).SelfOnlyAt 0 := by
+  rw [Motion.selfOnlyAt_ofFun_iff]; exact bot_is_not_a_step
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -370,4 +407,8 @@ open ZeroParadox
 #print axioms ordinalTowerMotion_stageClosure
 #print axioms ordinalTowerMotion_runClosure
 #print axioms ordinalTowerMotion_not_upLowers
+#print axioms opow_selfOnlyAt_iff_epsilon
+#print axioms ordinalTowerMotion_selfOnlyAt_iff
+#print axioms onoteExpDepth
+#print axioms onote_omegaPow_not_selfOnlyAt
 end PurityCheck

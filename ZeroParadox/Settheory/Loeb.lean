@@ -110,7 +110,9 @@ theorem loeb {A : S} (psi : S)
     one-point control). Its converse is `loeb_axiom_of_loeb_diagonal` (§ VI): some Löb diagonal for `A`
     exists iff Löb's principle holds at `A` (the `example` after it). This is not the converse of `loeb`,
     which concludes Löb's RULE at `A`; that converse is false in the class (§ IV, the last `example`).
-    `Reading:` it trades one input of `loeb` for another; it constructs no arithmetic diagonal. -/
+    `Reading:` it trades one input of `loeb` for another; it constructs no arithmetic diagonal.
+    `Statement:` unlike the cited GL forms (below): one `A`, the witness `□A → A`, inputs `ax_K`, `ax_S`,
+    `mp`, `nec`, `ax_D2`, `hL` only, no `ax_D3` (the explicit-hypothesis `example` and controls below). -/
 theorem loeb_diagonal_of_loeb_axiom (A : S)
     (hL : Thm (imp (box (imp (box A) A)) (box A))) :
     Thm (imp (imp (box A) A) (imp (box (imp (box A) A)) A)) ∧
@@ -127,6 +129,59 @@ theorem loeb_diagonal_of_loeb_axiom (A : S)
 example (A : S) : Thm (imp (imp (box (imp (box A) A)) A) (imp (box A) A)) :=
   contract (contract (mp (ax_K _ _) (ax_S _ _ A)) (ax_K _ _))
     (mp (ax_K _ _) (mp (ax_D2 A (imp (box A) A)) (nec (ax_K A (box A)))))
+
+-- Reading (cited, no novelty claimed): in GL every formula modalized in `p` has a fixed point (de Jongh
+-- and Sambin; SEP "Provability Logic" § 2.2); Wikipedia "Löb's theorem" (retrieved 2026-11-21) cites
+-- Lindström (2006, not retrieved) for deriving modal fixed points from Löb's axiom schema, and concludes
+-- that in normal modal logic Löb's axiom is equivalent to schema 4 plus the existence of modal fixed points.
+-- Closest formal prior art: atlas-lean `fixedPoint_GL_of_box` (facebookresearch/atlas-lean, commit
+-- 7fd6444; in GL; source read, type not elaborated).
+-- Statement: `loeb_diagonal_of_loeb_axiom` from explicit hypotheses with no D3.
+example {S : Type*} (imp : S → S → S) (box : S → S) (Thm : S → Prop)
+    (mp : ∀ {a b : S}, Thm (imp a b) → Thm a → Thm b)
+    (ax_K : ∀ a b : S, Thm (imp a (imp b a)))
+    (ax_S : ∀ a b c : S, Thm (imp (imp a (imp b c)) (imp (imp a b) (imp a c))))
+    (nec : ∀ {a : S}, Thm a → Thm (box a))
+    (ax_D2 : ∀ a b : S, Thm (imp (box (imp a b)) (imp (box a) (box b))))
+    (A : S) (hL : Thm (imp (box (imp (box A) A)) (box A))) :
+    Thm (imp (imp (box A) A) (imp (box (imp (box A) A)) A)) ∧
+      Thm (imp (imp (box (imp (box A) A)) A) (imp (box A) A)) := by
+  have contract : ∀ {a b c : S}, Thm (imp a (imp b c)) → Thm (imp a b) → Thm (imp a c) :=
+    fun h1 h2 => mp (mp (ax_S _ _ _) h1) h2
+  have hB : ∀ x y : S, Thm (imp (imp y A) (imp (imp x y) (imp x A))) := fun x y =>
+    contract (mp (ax_K _ _) (ax_S x y A)) (ax_K (imp y A) x)
+  have hbox : Thm (imp (box A) (box (imp (box A) A))) :=
+    mp (ax_D2 A (imp (box A) A)) (nec (ax_K A (box A)))
+  exact ⟨contract (hB _ _) (mp (ax_K _ _) hL), contract (hB _ _) (mp (ax_K _ _) hbox)⟩
+
+-- Statement: CONTROL, `nec` is needed: with `box (a, b) = (false, !a)` and `A = (false, false)`, `mp`,
+-- K, S, D2, D3 and `hL` hold, necessitation fails, and the second conjunct is false.
+example :
+    let imp : Bool × Bool → Bool × Bool → Bool × Bool := fun a b => (!a.1 || b.1, !a.2 || b.2)
+    let box : Bool × Bool → Bool × Bool := fun a => (false, !a.1)
+    let Thm : Bool × Bool → Prop := fun a => a = (true, true)
+    let A : Bool × Bool := (false, false)
+    (∀ a b, Thm (imp a b) → Thm a → Thm b) ∧ (∀ a b, Thm (imp a (imp b a))) ∧
+      (∀ a b c, Thm (imp (imp a (imp b c)) (imp (imp a b) (imp a c)))) ∧
+      (∀ a b, Thm (imp (box (imp a b)) (imp (box a) (box b)))) ∧ (∀ a, Thm (imp (box a) (box (box a)))) ∧
+      Thm (imp (box (imp (box A) A)) (box A)) ∧ ¬ (∀ a, Thm a → Thm (box a)) ∧
+      ¬ Thm (imp (imp (box (imp (box A) A)) A) (imp (box A) A)) := by
+  decide
+
+-- Statement: CONTROL, D2 is needed: with `box (a, b) = (a && b, !a || b)` and `A = (false, false)`,
+-- `mp`, K, S, necessitation, D3 and `hL` hold, D2 fails, and the second conjunct is false.
+example :
+    let imp : Bool × Bool → Bool × Bool → Bool × Bool := fun a b => (!a.1 || b.1, !a.2 || b.2)
+    let box : Bool × Bool → Bool × Bool := fun a => (a.1 && a.2, !a.1 || a.2)
+    let Thm : Bool × Bool → Prop := fun a => a = (true, true)
+    let A : Bool × Bool := (false, false)
+    (∀ a b, Thm (imp a b) → Thm a → Thm b) ∧ (∀ a b, Thm (imp a (imp b a))) ∧
+      (∀ a b c, Thm (imp (imp a (imp b c)) (imp (imp a b) (imp a c)))) ∧
+      (∀ a, Thm a → Thm (box a)) ∧ (∀ a, Thm (imp (box a) (box (box a)))) ∧
+      Thm (imp (box (imp (box A) A)) (box A)) ∧
+      ¬ (∀ a b, Thm (imp (box (imp a b)) (imp (box a) (box b)))) ∧
+      ¬ Thm (imp (imp (box (imp (box A) A)) A) (imp (box A) A)) := by
+  decide
 
 /-! ## § IV. Gödel's second incompleteness — the `A = falsum` corollary -/
 
@@ -318,6 +373,22 @@ example (A : S) :
       Thm (imp (box (imp (box A) A)) (box A)) :=
   ⟨fun ⟨psi, h1, h2⟩ => loeb_axiom_of_loeb_diagonal psi h1 h2,
     fun hL => ⟨_, (loeb_diagonal_of_loeb_axiom A hL).1, (loeb_diagonal_of_loeb_axiom A hL).2⟩⟩
+
+-- Statement: CONTROL, `loeb_axiom_of_loeb_diagonal` needs D3: with `box (a, b) = (a && b, a)` and
+-- `A = (false, false)`, `mp`, K, S, necessitation and D2 hold, D3 fails, some sentence is a Löb diagonal
+-- for `A`, and Löb's principle fails at `A`.
+example :
+    let imp : Bool × Bool → Bool × Bool → Bool × Bool := fun a b => (!a.1 || b.1, !a.2 || b.2)
+    let box : Bool × Bool → Bool × Bool := fun a => (a.1 && a.2, a.1)
+    let Thm : Bool × Bool → Prop := fun a => a = (true, true)
+    let A : Bool × Bool := (false, false)
+    (∀ a b, Thm (imp a b) → Thm a → Thm b) ∧ (∀ a b, Thm (imp a (imp b a))) ∧
+      (∀ a b c, Thm (imp (imp a (imp b c)) (imp (imp a b) (imp a c)))) ∧
+      (∀ a, Thm a → Thm (box a)) ∧ (∀ a b, Thm (imp (box (imp a b)) (imp (box a) (box b)))) ∧
+      ¬ (∀ a, Thm (imp (box a) (box (box a)))) ∧
+      (∃ psi, Thm (imp psi (imp (box psi) A)) ∧ Thm (imp (imp (box psi) A) psi)) ∧
+      ¬ Thm (imp (box (imp (box A) A)) (box A)) := by
+  decide
 
 /-- `Statement:` the Löb map `p ↦ (□p → A)` respects provable equivalence. -/
 theorem loebMap_respects (A : S) {a b : S} (h : ProvEquiv a b) :

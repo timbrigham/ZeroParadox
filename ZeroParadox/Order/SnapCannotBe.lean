@@ -54,8 +54,8 @@ section SnapCannotBeIndex
 #check @ZeroParadox.exists_startBit_iff              -- Statement: a tape has a first `true` iff it is not ⊥ of `ℕ → Bool`, so `hw` of `t_snap_of_fires_once` holds exactly at the tapes other than ⊥ of `ℕ → Bool`. Reading: the start bit (`ZeroParadox/Information/StartBit.lean`)
 -- `Statement:` CONTROL, a particular tape need not fire: the all-`false` tape fires at no stage.
 example : ¬ ∃ k, (fun _ => false : ℕ → Bool) k = true := fun ⟨_, h⟩ => Bool.false_ne_true h
--- `Statement:` occurrence once: the slot chart's sequence steps at index 1 and stays, so it is not an
--- `IsStrictStateSequence` (ZP-A's proper ascent at every step).
+-- `Statement:` occurrence once: for every `φ`, the sequence `φ ∘ firedRun` is not strict: it repeats
+-- from index 1, so it is not an `IsStrictStateSequence` (ZP-A's proper ascent at every step).
 example {L : Type*} [ZeroParadox.ZPSemilattice L] (φ : Bool → L) (w : ℕ → Bool) (hw : ∃ k, w k = true) :
     ¬ ZeroParadox.ZPSemilattice.IsStrictStateSequence (φ ∘ ZeroParadox.firedRun w hw) := fun h => by
   have a : ZeroParadox.firedRun w hw 1 = true := (ZeroParadox.firedRun_spec w hw).2 0
@@ -111,7 +111,7 @@ example : ¬ @CovBy ℕ (ZeroParadox.zpSemilatticeSup ℕ).toLT 0 2 := fun h =>
 --   hypothesis and neither discharged (the `NNReal` and all-`false` controls in `ZeroParadox/Information/TwoRequirements.lean`).
 #check @ZeroParadox.snap_of_firstStep_MLRandom        -- Statement: the same conclusion with `ZeroBlockTypical` replaced by Martin-Löf randomness for `trials p hp` (`MLRandom`, defined in `ZeroParadox/Information/TwoRequirements.lean`), which implies it (`zeroBlockTypical_of_MLRandom`); one way. No tape is named and ⊥ of `L` is not claimed random
 #check @ZeroParadox.phase_snap_of_MLRandom            -- Statement: CORNER, on `WithBot Ordinal` under join `max` (`ZeroParadox/Information/SnapEpsilonZero.lean`): if `w` is Martin-Löf random for `trials p hp` with `0 < p`, some run's `S 1` covers ⊥ of `WithBot Ordinal`, equals the snap `↑0 ≠ ↑ε₀`, and `phaseUpAndOver.up` sends it to `↑ε₀`; one way
-#check @ZeroParadox.epsilonOrZero_snap_of_MLRandom    -- Statement: COVER, on `EpsilonOrZero`, the carrier of the example above, under join `max`: if `w` is as above, some run's `S 1` covers 0 of `Ordinal` and has value ε₀ ≠ 0; one way. The two are related by `epsilonOrZeroIsoLanding_spec`, and neither is the snap's only form
+#check @ZeroParadox.epsilonOrZero_snap_of_MLRandom    -- Statement: COVER, on `EpsilonOrZero`, the carrier of the example above, under join `max`: if `w` is as above, some run's `S 1` covers `epsilonOrZero_bot`, ⊥ of `EpsilonOrZero` (value 0 of `Ordinal`), and has value ε₀ ≠ 0; one way. The two are related by `epsilonOrZeroIsoLanding_spec`, and neither is the snap's only form
 #check @ZeroParadox.snap_ae_of_firstStep              -- Statement: if ⊥ of `L` has a first step (`BotHasFirstStep L`) and `0 < p ≤ 1`, then for `trials p hp`-almost every tape `w` some `φ` and `hw` give `snap_of_two_requirements`'s conclusion; one way. Almost every, not every: the all-`false` tape never fires. No map from ⊥ of `L` to a tape or to `trials p hp` appears
 #check @ZeroParadox.mlRandom_and_snap_ae              -- Statement: the same, with `MLRandom (trials p hp) w` conjoined: almost every tape is Martin-Löf random for `trials p hp` and gives that conclusion; one way
 #check @ZeroParadox.maxEntropy_mlRandom_and_snap_ae    -- Statement: the same, with `0 < p` replaced by `binEntropy p = log 2`, the maximum-entropy coin `p = 1/2` (`ZeroParadox/Information/MaxEntropy.lean`); one way. No tape law of ⊥ of `L` is constructed, and `BotHasFirstStep L` stays a hypothesis
@@ -134,7 +134,7 @@ example : ¬ @CovBy ℕ (ZeroParadox.zpSemilatticeSup ℕ).toLT 0 2 := fun h =>
 --   (`ZeroParadox/Valuation/TowerTapeSnap.lean`): `tapeIso` carries `towerTape [] x` to a tape `ℕ → Bool`.
 #check @ZeroParadox.towerTape_fires_iff               -- Statement: `tapeIso (towerTape [] x)` fires iff `x ≠ botEnd`; at `botEnd` it is ⊥ of `ℕ → Bool` (`towerTape_floor_allFalse`)
 #check @ZeroParadox.towerTape_snap_pointwise          -- Statement: pointwise chart, under `snap_ae_fixed_phi`'s hypotheses on `φ`, every seed `x ≠ botEnd` gives `t_snap_of_fires_once`'s conclusion on its tower tape
-#check @ZeroParadox.towerTape_snap_ae                 -- Statement: almost-everywhere chart, if `0 < p ≤ 1`, for `trials p hp`-almost every tape `w` the seed `tapeIso.symm w` does; one way. The quotient form, for the bare tape, is `snap_germ_eq_top` above
+#check @ZeroParadox.towerTape_snap_ae                 -- Statement: almost-everywhere chart, if `0 < p ≤ 1`, for `trials p hp`-almost every tape `w` the seed `tapeIso.symm w` does; one way. `snap_germ_eq_top` above is the quotient form of `snap_ae_fixed_phi` on the bare tape `w`, not of this seed statement
 #check @ZeroParadox.towerTapes_null                   -- Statement: CONTROL, if `0 < p ≤ 1`, the set of tower tapes is `trials p hp`-null
 -- Reading: CARRIER, the law sits on the seed `tapeIso.symm w`, not on the packed tower tape.
 -- `Statement:` on `Set Bool` (join `∪`, ⊥ = ∅) `∅` has two distinct covers in that order, with join
@@ -234,6 +234,18 @@ owes no step. -/
 example {α : Type} [PartialOrder α] (U : ZeroParadox.UpAndOver α) {y : α} (hy : U.up.IsClosed y)
     (hmax : ¬ IsMax y) : ZeroParadox.HasFirstStep y := U.cover y hy hmax
 #check @ZeroParadox.UpAndOver.exists_next_landing_of_cover_at -- Statement: for a closure operator `c` and `HasFirstStep y`, some cover `b` of `y` has `c b` closed and `y < c b`. Reading: the hypothesis form of the `cover` field, which `UpAndOver.exists_next_landing` reads off the structure
+#check @ZeroParadox.UpAndOver.isLeast_landing_of_gateway -- Statement: for a closure operator `c` on a partial order, `y < b` and `∀ z, y < z → b ≤ z` give `IsLeast {z | c.IsClosed z ∧ y < z} (c b)`; folklore (`ClosureOperator.closure_min`, `CovBy.Ioi_eq`)
+#check @ZeroParadox.UpAndOver.over_needed_iff         -- Statement: under the same hypotheses, `c b ≠ c y ↔ c.IsClosed y`. Reading: floor below, OVER then UP; floor above, UP alone
+-- `Statement:` `phase_epsilon0_isLeast_landing_above_floor` from `isLeast_landing_of_gateway` at the cover
+-- `phase_floor_covBy_snap` (`CovBy.Ioi_eq`) and the value `phaseUp_snap`; UP moves the snap `↑0`.
+open ZeroParadox in
+example : IsLeast {x : WithBot Ordinal | phaseUpAndOver.up.IsClosed x ∧ phaseEquivWithBot Phase.floor < x}
+      (epsilonZero : WithBot Ordinal) ∧
+    phaseUpAndOver.up (phaseEquivWithBot snap) ≠ phaseEquivWithBot snap := by
+  refine ⟨?_, fun h => phase_floor_snap_epsilon0_ne.1 (h.symm.trans phaseUp_snap)⟩
+  rw [← phaseUp_snap]
+  exact UpAndOver.isLeast_landing_of_gateway _ phase_floor_covBy_snap.lt fun w hw => by
+    rw [← Set.mem_Ici, ← phase_floor_covBy_snap.Ioi_eq]; exact hw
 #check @ZeroParadox.UpAndOver.isEmpty_of_denselyOrdered -- Statement: no densely ordered carrier carries an `UpAndOver`; the corner's cover is refused. Reading: as § V refuses ℝ a first step
 example : IsEmpty (ZeroParadox.UpAndOver ℝ) := ZeroParadox.UpAndOver.isEmpty_of_denselyOrdered
 #check @ZeroParadox.ordinalUpAndOver                  -- Statement: `Ordinal` carries it: `up` is `nfp (ω^·)` (`snapNucleus`), covers by `Order.succ`, the corner at ε₀ and `succ ε₀`

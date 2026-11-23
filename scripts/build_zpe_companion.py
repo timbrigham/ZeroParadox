@@ -1,6 +1,6 @@
 """
 Build ZP-E Illustrated Companion
-Version 1.44 | November 2026
+Version 1.48 | November 2026
 """
 
 import os
@@ -175,7 +175,7 @@ def axioms_table():
     t = Table(data, colWidths=[TW*0.18, TW*0.82])
     t.setStyle(ts); return t
 
-VERSION = '1.44'
+VERSION = '1.48'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -211,8 +211,9 @@ def build():
           Paragraph('ZP Companion | ' + version_line(FIRST_RELEASED, VERSION), CS['meta']),
           Paragraph(
               'This companion explains the ideas in plain language with diagrams and real-world '
-              'examples. It is not the formal document — every claim here restates a result '
-              'already proved in the corresponding technical document. Consult that document for '
+              'examples. It is not the formal document — its results are proved in ZP-E Bridge '
+              'Document or come from the other documents, papers and named theorems it cites, and a '
+              'commitment or reading it mentions is not a result. Consult ZP-E for '
               'the authoritative mathematics.', CS['disc'])]
 
     # What Is ZP-E Doing?
@@ -268,8 +269,11 @@ def build():
     E.append(remember_box(
         'Remember: The car crash illustrates what it means to describe one event in multiple '
         'frameworks. The Zero Paradox is not about car crashes — the car crash is an analogy '
-        'for the first transition from &#8869; to &#949;&#8320; — a transition the framework commits to, '
-        'rather than one any join-semilattice compels. A join-semilattice in which T-SNAP holds and '
+        'for the first transition from c&#8320;, &#8869; of MachinePhase, to c&#8321; (the state this discrete '
+        'chart names &#949;&#8320;) — a transition whose SHAPE ZP-E proves (T-SNAP, t_snap_derived) and whose '
+        'occurrence follows from the occurrence commitment together with DA-1: no join-semilattice with bottom (ZP-A&#8217;s class) compels '
+        'the occurrence, since in every one the sequence that stays at its ⊥ is a state sequence that never '
+        'steps (the generic NO-GO example in ZeroParadox/Valuation/SemilatticeInstance.lean). A join-semilattice in which T-SNAP holds and '
         'nothing moves is exhibited in the Lean source.'))
     E.append(sp(6))
 

@@ -1,9 +1,9 @@
--- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the start bit and end bit of a tape `ℕ → Bool`, and the tapes whose tail is ⊥ of `ℕ → Bool` as one countable set, the local floors read as tapes. Curated results indexed in ZeroParadox/MANIFEST.md.
+-- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the start bit and end bit of a tape `ℕ → Bool`, and the tapes whose tail from some position on is ⊥ of `ℕ → Bool` as one countable set, the local floors read as tapes. Curated results indexed in ZeroParadox/MANIFEST.md.
 import ZeroParadox.Valuation.TowerTape
 import Mathlib.Tactic
 
 /-!
-# The start bit, the end bit, and the tapes whose tail is ⊥ of `ℕ → Bool`
+# The start bit, the end bit, and the tapes whose tail from some position on is ⊥ of `ℕ → Bool`
 
 ## Engineer's Take
 
@@ -42,7 +42,8 @@ theorem exists_startBit_iff (w : ℕ → Bool) : (∃ k, w k = true) ↔ w ≠ �
 /-- `Statement:` the tapes that are eventually `false`. -/
 def eventuallyFalse : Set (ℕ → Bool) := {w | ∀ᶠ n in atTop, w n = false}
 
-/-- `Statement:` `silentFrom N` is the set of tapes whose subtape after `N` is ⊥ of `ℕ → Bool`. -/
+/-- `Statement:` `silentFrom N` is the set of tapes whose subtape from position `N` on is ⊥ of
+`ℕ → Bool`. -/
 theorem silentFrom_eq_shift_preimage (N : ℕ) :
     silentFrom N = shiftTape N ⁻¹' {(⊥ : ℕ → Bool)} := by
   ext w
@@ -202,8 +203,8 @@ example : Summable (fun n : ℕ => ((1/2 : NNReal) ^ (n + 1))) :=
 under every summable coin. `Reading:` CARRIER, two charts of returning to a floor, indexed by the coin.
 `Reading:` prior art, the Borel-Cantelli zero-one law: summable half the first lemma
 (`measure_limsup_atTop_eq_zero`), constant-coin half the second (`ProbabilityTheory.measure_limsup_eq_one`);
-`eventuallyFalse` is a tail event, so 0-or-1 under every independent coin is Kolmogorov's zero-one law
-(`ProbabilityTheory.measure_zero_or_one_of_measurableSet_limsup_atTop`). -/
+`eventuallyFalse` is a tail event, so Kolmogorov's zero-one law, not applied in this file, makes it
+0-or-1 under every independent coin (`ProbabilityTheory.measure_zero_or_one_of_measurableSet_limsup_atTop`). -/
 theorem returning_two_charts :
     (∀ (p : NNReal) (hp : p ≤ 1), 0 < p →
       fadingTrials (fun _ => p) (fun _ => hp) eventuallyFalse = 0) ∧

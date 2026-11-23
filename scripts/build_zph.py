@@ -1,12 +1,12 @@
 """
 Zero Paradox — ZP-H: Categorical Bridge PDF Builder
-Version 1.37 | November 2026
+Version 1.50 | November 2026
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.37'
+VERSION = '1.50'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -93,16 +93,16 @@ def build():
             'D7\': Native categorical surprisal I(f) = K(x<sub>B</sub>|x<sub>A</sub>) via I-KC (replaces D7/BA-G1 from v1.0)',
             'I-KC: Conditional Kolmogorov complexity K(x|y) imported from ZP-C — named dependency, not bridge axiom',
             'AX-G1: Asymmetry Axiom — C has initial object 0, no terminal object',
-            'AX-G2: Source Asymmetry — hom(X, 0) = <font name="DV">&#8709;</font> for X &#8800; 0',
-            'R-BA: Leinster categorical entropy characterization [Compatibility Remark — BA-G1 demoted from Bridge Axiom in ZP-G v1.1. No longer a theorem premise.]',
+            'AX-G2: Source Asymmetry — hom(X, 0) = <font name="DV">&#8709;</font> for X not isomorphic to 0',
+            'R-BA: Leinster categorical entropy characterization [Remark — BA-G1 demoted from Bridge Axiom in ZP-G v1.1. No longer a theorem premise.]',
             'T1: Initial object unique up to unique isomorphism',
             'T2: Universal Constituent — &#8704;X &#8712; ob(C), &#8707;! &#953;<sub>X</sub>: 0 &#8594; X',
-            'T3: Unreachability — hom(X, 0) = <font name="DV">&#8709;</font> for X &#8800; 0',
+            'T3: Unreachability — hom(X, 0) = <font name="DV">&#8709;</font> for X not isomorphic to 0',
             'T4: Chains are forward-only — no chain returns to 0',
             'T5: Functors preserve initial objects [OQ-G2 closed in ZP-H T-H1]',
             'T6: Informational singularity of 0 — outward surprisal accumulates; inward undefined [rebuilt in ZP-G v1.1 on D7\'; BA-G1 not a dependency]',
             'T7: Categorical Zero Paradox — closing theorem of ZP-G',
-            'OQ-G1: Closed in ZP-G v1.1 via D7\' (native categorical surprisal) and I-KC (Kolmogorov import from ZP-C). BA-G1 demoted to compatibility remark.',
+            'OQ-G1: Closed in ZP-G v1.1 via D7\' (native categorical surprisal) and I-KC (Kolmogorov import from ZP-C). BA-G1 demoted to remark R-BA.',
         ]
     ))
     E.append(sp(8))
@@ -139,7 +139,7 @@ def build():
         'Status: Structural — labels preserved without laundering',
         [
             'OQ-G1 [Closed in ZP-G v1.1]: Native derivation of categorical surprisal without importing Shannon entropy. '
-            'Closed by D7\' (conditional Kolmogorov complexity K(B|A)) and I-KC. BA-G1 demoted to compatibility remark R-BA.',
+            'Closed by D7\' (conditional Kolmogorov complexity K(B|A)) and I-KC. BA-G1 demoted to remark R-BA.',
             'OQ-G2 [Resolved in Section IV]: Left adjoint verification for instantiation functors.',
             'OQ-G3 [Resolved in Section III]: Explicit construction of four instantiation functors.',
             'OQ-G4 [Resolved in Section V]: Reconciliation of categorical and ZP-C singularity characterizations.',
@@ -166,7 +166,7 @@ def build():
             'A morphism f: A &#8594; B in C is a state transition: a structure-preserving map from state A to state B satisfying:',
             '(i) Forward direction: Every morphism f: A &#8594; B represents a net addition of informational content. '
             'No morphism reduces state.',
-            '(ii) Compatibility with AX-G2: For any non-initial object X &#8800; 0, no morphism X &#8594; 0 exists. D-H1(i) '
+            '(ii) Compatibility with AX-G2: For any non-initial object X (not isomorphic to 0), no morphism X &#8594; 0 exists. D-H1(i) '
             'and AX-G2 are consistent: a net-additive transition cannot return to the minimal state 0.',
             '(iii) Composition: Composition of morphisms corresponds to sequential state accumulation. f: A &#8594; B '
             'followed by g: B &#8594; C produces a state at least as large as B.',
@@ -189,7 +189,7 @@ def build():
     E.append(Paragraph('3.1 F<sub>A</sub>: C &#8594; SLat (Join-Semilattices)', S['h2']))
     E.append(label_box_status(
         'Construction C-H1 — Functor FA: C → SLat',
-        'Status: Derived — OQ-G3 partially closed',
+        'Status: Derived as a PDF construction — Lean: no functor term (witness: natZPCategory, 0 initial in &#8469;)',
         [
             'Object map: F<sub>A</sub> sends each object X &#8712; ob(C) to the state S<sub>X</sub> &#8712; L in the '
             'join-semilattice (L, &#8744;, &#8869;) of ZP-A. The initial object 0 maps to &#8869;: F<sub>A</sub>(0) = &#8869;.',
@@ -217,17 +217,11 @@ def build():
         'Construction C-H2 — Functor FB: C → pTop',
         'Status: PDF construction complete — Lean: full functor (fb_functor, sorry-free)',
         [
-            'Object map: F<sub>B</sub> sends each object X &#8712; ob(C) to an element x &#8712; Q<sub>2</sub>. The initial object 0 maps to '
-            'the element 0 &#8712; Q<sub>2</sub>: F<sub>B</sub>(0) = 0 &#8712; Q<sub>2</sub>. pTop is the informal name of the target: in Lean, '
-            'F<sub>B</sub> is realized in TopCat, the category of all topological spaces (fB_functor, ZeroParadox/Valuation/TopFunctor.lean), '
-            'and its &#8469;-indexed stand-in is Q&#8322;BallDepth (fb_functor, ZeroParadox/Multihomed/CategoricalBridge.lean).',
-            'Morphism map: F<sub>B</sub> sends each morphism f: A &#8594; B to the discrete jump from x<sub>A</sub> to x<sub>B</sub> '
-            'in Q<sub>2</sub>. By ZP-B T2, any two distinct elements of Q<sub>2</sub> lie in disjoint clopen balls. The jump is across a clopen '
-            'boundary — a well-defined topological transition.',
-            'Preservation of composition: Sequential discrete jumps in Q<sub>2</sub> compose by transitivity of the ball '
-            'structure. x<sub>A</sub> &#8594; x<sub>B</sub> &#8594; x<sub>C</sub> is a valid sequence of clopen transitions. <font name="DV">&#10003;</font>',
-            'Preservation of identity: F<sub>B</sub>(id<sub>A</sub>) is the trivial jump x<sub>A</sub> &#8594; x<sub>A</sub>, which is the identity on Q<sub>2</sub>. <font name="DV">&#10003;</font>',
-            'In Q<sub>2</sub>, F<sub>B</sub>(0) = 0 is clopen-separated from all nonzero elements (ZP-B T3).',
+            'Object map: fb_functor.obj n is depth n of Q&#8322;BallDepth (fb_functor, ZeroParadox/Multihomed/CategoricalBridge.lean), and '
+            'fB_functor.obj n is the ball space fBObj n in TopCat (fB_functor, ZeroParadox/Valuation/TopFunctor.lean). pTop is the informal name of the target.',
+            'Morphism map: a morphism n &#8594; m is n &#8804; m (fb_functor.map).',
+            'Preservation of composition: the functor law map_comp of fb_functor and fB_functor. <font name="DV">&#10003;</font>',
+            'Preservation of identity: the functor law map_id of fb_functor and fB_functor, F<sub>B</sub>(id<sub>n</sub>) = id<sub>F<sub>B</sub>(n)</sub>. <font name="DV">&#10003;</font>',
             'AX-G1 respected in the stand-in category: the Lean functor fb_functor lands in Q&#8322;BallDepth, the &#8469;-indexed ball-depth '
             'category, which has no terminal object because the depth index has no maximum: n + 1 &gt; n (q2BallZPCat, '
             'ZeroParadox/Multihomed/CategoricalBridge.lean). <font name="DV">&#10003;</font>',
@@ -250,8 +244,11 @@ def build():
         'Construction C-H3 — Functor FC: C → InfoSp',
         'Status: PDF construction complete — Lean: full functor (fc_functor, sorry-free)',
         [
-            'Object map: F<sub>C</sub> sends each object X &#8712; ob(C) to a probability distribution P<sub>X</sub> over {0, 1}. The initial '
-            'object 0 maps to the point mass at non-existence: F<sub>C</sub>(0) = P = (1, 0) (derived from AX-B1 and RP-1 in ZP-C T1). InfoSp is '
+            'Object map: in Lean, with C realized as &#8469;, object n goes to depth n of InfoDepth (fc_functor.obj n) and to the finite type '
+            'Fin n of KleisliCat PMF (fC_functor.obj n). The initial object 0 maps to depth 0 of InfoDepth and to Fin 0, the empty type, which is '
+            'initial in KleisliCat PMF (fC_zero_isInitial). ZP-C\'s information model reads the non-existence state of BinaryState as its point mass, '
+            'the distribution P = (1, 0) over {0, 1} (derived from AX-B1 and RP-1 in ZP-C T1); no distribution lives on the empty type '
+            '(the proof of fC_no_return), so the two models differ at 0. InfoSp is '
             'the informal name of the target: in Lean, F<sub>C</sub> is realized in KleisliCat PMF, the Kleisli category of the probability monad '
             '(fC_functor, ZeroParadox/Multihomed/InfoFunctor.lean), and its &#8469;-indexed stand-in is InfoDepth (fc_functor, '
             'ZeroParadox/Multihomed/CategoricalBridge.lean).',
@@ -336,21 +333,25 @@ def build():
         'Theorem T-H1 — Each Instantiation Functor Preserves the Initial Object',
         'Status: Derived — OQ-G2 closed',
         [
-            'Claim: For each functor F &#8712; {F<sub>A</sub>, F<sub>B</sub>, F<sub>C</sub>, F<sub>D</sub>}, F(0) is an initial object in the codomain category (for F<sub>B</sub>, in its stand-in).',
+            'Claim: For each functor F &#8712; {F<sub>A</sub>, F<sub>B</sub>, F<sub>C</sub>, F<sub>D</sub>} as constructed in Section III, F(0) is an initial object in the codomain category (for F<sub>B</sub>, in its stand-in). The Lean coverage is narrower and is stated in the conclusion.',
             'Strategy: Rather than proving each functor is a left adjoint in full generality (which would require '
             'establishing adjoint pairs for SLat, pTop, InfoSp, and Hilb), we verify the universal property '
             'directly for each functor. The universal property of the initial object requires: for every object Y in '
             'the codomain, &#8707;! morphism F(0) &#8594; Y.',
             'F<sub>A</sub>: F<sub>A</sub>(0) = &#8869;. For any S<sub>Y</sub> &#8712; L, the unique morphism &#8869; &#8594; S<sub>Y</sub> is the join &#8869; &#8744; S<sub>Y</sub> = S<sub>Y</sub> (ZP-A A4). '
             'Uniqueness: &#8869; is the global minimum (ZP-A T2), so the only order-preserving map from &#8869; to S<sub>Y</sub> is the join with S<sub>Y</sub>. <font name="DV">&#10003;</font>',
-            'F<sub>B</sub>: F<sub>B</sub>(0) = 0 &#8712; Q<sub>2</sub>. For any x &#8712; Q<sub>2</sub>, the unique morphism 0 &#8594; x is the discrete jump from 0 to x '
-            'across the clopen boundary. Uniqueness: 0 is clopen-separated from all nonzero elements (ZP-B T3); the only clopen-respecting transition from 0 to x is the direct jump. '
-            'This leg holds in the stand-in Q&#8322;BallDepth (fb_preserves_initial, ZeroParadox/Multihomed/CategoricalBridge.lean). In TopCat it '
-            'does not: the floor {0} is a one-point space, so it is terminal and not initial there (padic_bottom_isTerminal and padic_bottom_not_initial, '
+            'F<sub>B</sub>: F<sub>B</sub>(0) is depth 0 of Q&#8322;BallDepth (fb_functor.obj 0). '
+            'This leg holds in the stand-in Q&#8322;BallDepth (fb_preserves_initial, ZeroParadox/Multihomed/CategoricalBridge.lean). In TopCat, '
+            'fB_functor sends 0 to the ball fBObj 0. Separately, the floor {0} of Q<sub>2</sub>, the intersection of the balls (fB_bottom_is_limit), '
+            'is terminal and not initial in TopCat (padic_bottom_isTerminal and padic_bottom_not_initial, '
             'ZeroParadox/Multihomed/TreeObstructions.lean). <font name="DV">&#10003;</font>',
-            'F<sub>C</sub>: F<sub>C</sub>(0) = P = (1, 0). For any distribution P<sub>Y</sub>, the unique morphism P &#8594; P<sub>Y</sub> is the informational '
-            'transition with work E = JSD(P &#8741; P<sub>Y</sub>). Uniqueness: JSD is symmetric and uniquely determined by P '
-            'and P<sub>Y</sub>; there is exactly one value of informational work for any pair of distributions. <font name="DV">&#10003;</font>',
+            'F<sub>C</sub>: F<sub>C</sub>(0) is depth 0 of InfoDepth (fc_functor.obj 0) and the empty type Fin 0 of KleisliCat PMF '
+            '(fC_functor.obj 0), not the distribution P = (1, 0) of ZP-C\'s model (C-H3: the two models differ at 0). '
+            'Uniqueness of the morphism out of it is a fact about the codomain category: from the empty type there is exactly one '
+            'stochastic map to each object, the empty one (fC_zero_isInitial), and in the stand-in InfoDepth every hom-set out of '
+            'depth 0 has exactly one element (infoDepthHom0Unique), so fc_functor sends 0 to an initial object (fc_preserves_initial, '
+            'ZeroParadox/Multihomed/CategoricalBridge.lean). That JSD takes '
+            'one value on each pair of distributions is a fact about a number, not about morphisms, and is not used here. <font name="DV">&#10003;</font>',
             'F<sub>D</sub>: F<sub>D</sub>(0) is depth 0 of HilbDimDepth (fd_functor.obj 0) and the zero module &#8450;<sup>0</sup> of ModuleCat &#8450; '
             '(fD_functor.obj 0); ZP-D\'s vector model reads 0 of Q<sub>2</sub> as the base vector T(0) = e<sub>0</sub> (ZP-D D2(i)), and reads the morphism '
             'from F<sub>D</sub>(0) to the object of x as the orthogonal extension from e<sub>0</sub> to e<sub>k</sub> (the basis vector assigned to x). '
@@ -359,8 +360,12 @@ def build():
             'to an initial object (fd_preserves_initial, ZeroParadox/Multihomed/CategoricalBridge.lean). In ModuleCat &#8450; the realization fD_functor '
             'sends 0 to the zero module, a zero object and so initial (hilbert_bottom_isZero, ZeroParadox/Category/TreeSeam.lean). ZP-D T3 (T unique up to a '
             'unitary) concerns the vectors T(x) up to a unitary, not the morphisms between objects, and is not used here. <font name="DV">&#10003;</font>',
-            'Conclusion: OQ-G2 is closed. ZP-G T5 is now unconditional for the four instantiation functors '
-            'of this framework, for F<sub>B</sub> in its stand-in. The universal property of 0 &#8712; ob(C) is fully preserved under F<sub>A</sub>, F<sub>B</sub>, F<sub>C</sub>, and F<sub>D</sub> (for F<sub>B</sub>, in its stand-in). <font name="DV">&#10003;</font>',
+            'Conclusion: OQ-G2 is closed in this sense. On paper, the universal property of 0 &#8712; ob(C) is verified directly for each of the four '
+            'constructions of Section III, for F<sub>B</sub> in its stand-in. In Lean, fb_functor, fc_functor and fd_functor send 0 to an initial '
+            'object of their &#8469;-indexed stand-ins (fb_preserves_initial, fc_preserves_initial, fd_preserves_initial, each IsInitial.ofUnique 0); '
+            'F<sub>A</sub> has no functor term, and its witness is 0 initial in &#8469;\'s order category (natSLat_initial_grounding). '
+            'ZP-G T5\'s OQ-G2 condition is discharged for these and not beyond them: in TopCat the F<sub>B</sub> floor is terminal and not initial '
+            '(padic_bottom_not_initial). <font name="DV">&#10003;</font>',
         ]
     ))
 
@@ -379,14 +384,16 @@ def build():
         'Theorem T-H2 — Compatibility of Singularity Characterizations',
         'Status: Derived — OQ-G4 closed',
         [
-            'Claim: The categorical singularity (undefined domain, ZP-G T6) and the ZP-C singularity (infinite '
-            'accumulation, ZP-C T2) hold together: a conjunction, and neither is derived from the other.',
-            'Setup (motivation only; th2_singularity_compatibility involves neither F<sub>C</sub> nor F<sub>B</sub>): Let {X<sub>n</sub>} be a sequence of objects in C such that the corresponding sequence {F<sub>C</sub>(X<sub>n</sub>)} = '
-            '{P<sub>n</sub>} in InfoSp approaches F<sub>C</sub>(0) = P = (1, 0) in distribution. Under F<sub>B</sub>, the corresponding '
+            'Claim: The categorical singularity (undefined domain: hom(X, 0) = <font name="DV">&#8709;</font> for X not isomorphic to 0, '
+            'ZP-G Lemma T3, on which ZP-G T6 Part II rests) and the ZP-C singularity (infinite '
+            'accumulation, ZP-C Theorem T2) hold together: a conjunction of the two, and the '
+            'proof uses neither to prove the other.',
+            'Setup (motivation only; th2_singularity_compatibility involves neither F<sub>C</sub> nor F<sub>B</sub>): Let {X<sub>n</sub>} be a sequence of objects in C, with F<sub>C</sub>(X<sub>n</sub>) the finite type '
+            'Fin n of KleisliCat PMF (fC_obj; F<sub>C</sub>(0) is the empty type Fin 0, C-H3). Under F<sub>B</sub>, the corresponding '
             'sequence {x<sub>n</sub>} in Q<sub>2</sub> approaches 0 &#8712; Q<sub>2</sub>.',
             'ZP-C side: By ZP-C T2, the discrete surprisal DF along the infinite sequence {x<sub>n</sub>} approaching 0 in '
             'Q<sub>2</sub> is non-conservative: the accumulated surprisal &#8721; DF(x<sub>k</sub> &#8594; x<sub>k+1</sub>) diverges as n &#8594; &#8734;. The singularity is infinite accumulation.',
-            'ZP-G side: By ZP-G T6(ii), I(X &#8594; 0) is undefined for all X &#8800; 0 because hom(X, 0) = <font name="DV">&#8709;</font> (AX-G2). The singularity is undefined domain.',
+            'ZP-G side: By ZP-G T6(ii), I(X &#8594; 0) is undefined for all X not isomorphic to 0 because hom(X, 0) = <font name="DV">&#8709;</font> (AX-G2). The singularity is undefined domain.',
             'Reconciliation: The two characterizations are compatible: both hold. '
             'In ZP-C, we ask: what happens to surprisal as we approach 0 along an infinite sequence? The '
             'answer is divergence — the accumulation is unbounded. In ZP-G, we ask: can we reach 0 by a '
@@ -394,7 +401,7 @@ def build():
             'accumulation required to reach 0 is infinite, then no finite morphism can accomplish it; that link '
             'runs from divergence toward absence and is a reading, not a theorem.',
             'Lean: th2_singularity_compatibility pairs t3_unreachability (the ZP-G side) with t2_diverges (the '
-            'ZP-C side): the proof term is the pair of these two separately proved lemmas, so neither is derived from the other. '
+            'ZP-C side): the proof term is the pair of these two separately proved results, ZP-G Lemma T3 and ZP-C Theorem T2, and it uses neither to prove the other. '
             'OQ-G4 is closed in that sense. <font name="DV">&#10003;</font>',
         ]
     ))
@@ -402,20 +409,22 @@ def build():
     E.append(remark_box(
         'Remark R-FORCING — Structural Forcing vs. Re-Description',
         [
-            'The four functors (F<sub>A</sub>, F<sub>B</sub>, F<sub>C</sub>, F<sub>D</sub>) established in '
-            'Sections III-V do not merely translate the Binary Snap into categorical language. Each functor '
-            'independently grounds the snap in its own domain: F<sub>A</sub> shows the lattice join places '
-            '&#949;<sub>0</sub> above &#8869;; F<sub>B</sub> shows the 2-adic topology makes any departure '
-            'from 0 irreversible (it does not supply the departure &#8212; ZP-B cannot force the snap, and '
-            'the first step is AX-B1); F<sub>C</sub> shows the information-theoretic transition costs exactly 1 bit; '
-            'F<sub>D</sub> shows the Hilbert space snap is an orthogonal shift.',
-            'That a transition of the snap\'s shape appears in each of the four domain categories, with the '
-            'groundings sorry-free in Lean 4 (the lattice conjunct join c<sub>0</sub> c<sub>1</sub> = c<sub>1</sub> of '
-            'th3_snap_all_functors for F<sub>A</sub>; fb_snap_q2_grounded, fc_snap_info_grounded and '
-            'fd_snap_hilb_grounded for F<sub>B</sub>, F<sub>C</sub> and F<sub>D</sub>), '
-            'is more than re-description: in each of the four canonical mathematical languages for state '
-            'description, the phenomenon\'s <i>shape</i> is constrained by that domain\'s own structure. That the '
-            'four are one structural singularity is the framework\'s reading, not a theorem. That the transition is taken follows from the occurrence commitment together with DA-1 (closed given DP-2), not from '
+            'Each of the four instantiation settings of Sections III-V (F<sub>A</sub>, F<sub>B</sub>, F<sub>C</sub>, '
+            'F<sub>D</sub>) has a domain fact proved in its own layer. None is derived from a functor, and no Lean '
+            'declaration pairs any of them with fb_functor, fc_functor or fd_functor (F<sub>A</sub> has no functor term): '
+            'ZP-A shows the lattice join c<sub>0</sub> &#8744; c<sub>1</sub> = c<sub>1</sub> in MachinePhase, which places '
+            'c<sub>1</sub> above c<sub>0</sub>, the &#8869; of MachinePhase (machinePhaseZPS); ZP-B shows the 2-adic topology '
+            'admits no continuous path in Q<sub>2</sub> from a nonzero point back to 0 (C3; it does not supply a departure '
+            '&#8212; ZP-B cannot force the snap, and the first step is AX-B1); ZP-C shows JSD(P, Q) = log 2, one bit (T1b); '
+            'ZP-D shows two basis vectors of the state space are orthogonal (T4).',
+            'The four facts are sorry-free in Lean 4: the lattice conjunct join c<sub>0</sub> c<sub>1</sub> = c<sub>1</sub> of '
+            'th3_snap_all_functors; fb_snap_q2_grounded, which restates C3 for points of the depth-1 ball and names no '
+            'morphism; and fc_snap_info_grounded and fd_snap_hilb_grounded, each of which only pairs the stand-in morphism '
+            '0 &#8594; 1 of its target with T1b or T4 and relates neither to the other. No fact is derived from another either. '
+            'On the framework\'s reading, each fact constrains the shape a transition can take in its own domain, so a '
+            'transition of the snap\'s shape in each of the four canonical languages for state description is more than '
+            're-description. That reading is not a theorem, and neither is the further reading that the '
+            'four are one structural singularity. That the transition is taken follows from the occurrence commitment together with DA-1 (closed given DP-2), not from '
             'any of the four.',
         ]
     ))
@@ -425,25 +434,32 @@ def build():
     E.append(Paragraph('VI. The Binary Snap — Categorical Description', S['h1']))
 
     E.append(label_box_status(
-        'Theorem T-H3 — The Binary Snap Under All Four Functors',
-        'Status: Derived — Cross-Framework',
+        'Theorem T-H3 — The Binary Snap: Four Domain Facts, Conjoined',
+        'Status: Derived — a conjunction of four domain facts; no cross-domain tie',
         [
             'Setup: The Binary Snap is the transition from 0 &#8712; ob(C) to the first non-initial object '
             '&#949;<sub>0</sub> &#8712; ob(C), driven by the incompressibility threshold P<sub>0</sub> (ZP-C D1) under '
             'T-SNAP (Binary Snap — Derived Theorem, ZP-E v2.0).',
             'In C (ZP-G): The Snap is the morphism &#953;<sub>&#949;0</sub>: 0 &#8594; &#949;<sub>0</sub>. By D3, this morphism is unique. '
             'By T4, no chain returns from &#949;<sub>0</sub> to 0. The Snap is categorically irreversible.',
-            'Under F<sub>A</sub> (ZP-A): F<sub>A</sub>(&#953;<sub>&#949;0</sub>) = &#8869; &#8744; &#949;<sub>0</sub> = S<sub>1</sub>. The Snap is the first join. Monotone and irreversible by ZP-A T3. '
+            'Statement (th3_snap_all_functors): four separately proved facts, conjoined. (1) join c<sub>0</sub> c<sub>1</sub> = c<sub>1</sub> '
+            'in MachinePhase (T-SNAP); (2) no continuous path in Q<sub>2</sub> runs from a '
+            'nonzero point to 0 (ZP-B C3); (3) JSD(P, Q) = log 2, one bit (ZP-C T1b); (4) indices 0 and 1 of transitionOp n are orthogonal '
+            'in StateSpace n, n &#8805; 2 (ZP-D T4). No functor occurs in its type, and no conjunct is used to prove another.',
+            'Proved (c3_irreversible, conjunct (2) of th3_snap_all_functors): no continuous path in Q<sub>2</sub> runs from a '
+            'nonzero point to 0. It is a fact about Q<sub>2</sub>, not a statement about F<sub>B</sub>.',
+            'Readings, not part of the statement: '
+            'the F<sub>A</sub>, F<sub>C</sub> and F<sub>D</sub> lines below are how the framework reads the Snap in each instantiation '
+            'setting. They are interpretation, and no Lean declaration states them.',
+            'Reading under F<sub>A</sub> (ZP-A): F<sub>A</sub>(&#953;<sub>&#949;0</sub>) = &#8869; &#8744; &#949;<sub>0</sub> = S<sub>1</sub>. The Snap is the first join. Monotone and irreversible by ZP-A T3. '
             'T-SNAP is a derived theorem (ZP-E v2.0); inherited here with derived status.',
-            'Under F<sub>B</sub> (ZP-B): F<sub>B</sub>(&#953;<sub>&#949;0</sub>) is the discrete jump 0 &#8594; &#949;<sub>0</sub> &#8712; Q<sub>2</sub> across a clopen boundary (ZP-B T2). '
-            'Topologically irreversible by ZP-B C3.',
-            'Under F<sub>C</sub> (ZP-C): F<sub>C</sub>(&#953;<sub>&#949;0</sub>) is the informational transition P &#8594; Q with E = JSD(P &#8741; Q) = 1 bit (ZP-C '
+            'Reading under F<sub>C</sub> (ZP-C): F<sub>C</sub>(&#953;<sub>&#949;0</sub>) is the informational transition P &#8594; Q with E = JSD(P &#8741; Q) = 1 bit (ZP-C '
             'T1b). Irreversible: JSD(Q &#8741; P) = 1 bit &#8800; 0.',
-            'Under F<sub>D</sub> (ZP-D): F<sub>D</sub>(&#953;<sub>&#949;0</sub>) is the orthogonal shift T(0) = e<sub>0</sub> &#8594; T(&#949;<sub>0</sub>) = e<sub>1</sub>. '
+            'Reading under F<sub>D</sub> (ZP-D): F<sub>D</sub>(&#953;<sub>&#949;0</sub>) is the orthogonal shift T(0) = e<sub>0</sub> &#8594; T(&#949;<sub>0</sub>) = e<sub>1</sub>. '
             '&#10216;e<sub>0</sub>, e<sub>1</sub>&#10217; = 0 (ZP-D T4). Both vectors have norm 1 (ZP-D D2(v)), so ZP-D T5\'s non-decreasing norms hold with equality. DP-1 is a design premise.',
-            'Cross-framework consistency: All four functors agree that the Snap is irreversible. Each '
-            'irreversibility result is a closed theorem within its own domain document. Their agreement is '
-            'structural consistency, not circular argument. Independence of null-analog discovery: each '
+            'Lean: th3_snap_all_functors (ZeroParadox/Multihomed/CategoricalBridge.lean) conjoins four '
+            'separately proved domain facts; its type names no functor and relates no conjunct to another, '
+            'so a reading of one snap seen under four functors is not what it states. Independence of null-analog discovery: each '
             'framework located its null-analog through its own domain logic — &#8869; through A4 (ZP-A), '
             '0 &#8712; Q<sub>2</sub> through T3 (ZP-B), P = (1,0) through D1/RP-1 (ZP-C) — prior to and without '
             'reference to the others. ZP-D\'s e<sub>0</sub> is not independent in this sense: it is reached by transport '
@@ -465,8 +481,8 @@ def build():
             'no point occupies the die role at all (the control in ZeroParadox/Category/SeamComparisonMap.lean); '
             'on the zero module, which has one point, every endomorphism has exactly one point that steps to itself '
             'only (hilbert_zero_seam_role_unique), which restates that it is a zero object. '
-            'This is not the claim that any domain forced the others&#8217; choices. Their agreement confirms '
-            'coherence across mathematical representations, not external replication. '
+            'This is not the claim that any domain forced the others&#8217; choices. Read side by side, the framework takes the four '
+            'facts as coherence across mathematical representations, not external replication; that is a reading, and T-H3 itself relates none of them to another. '
             'T-SNAP (Binary Snap Causality) is a derived '
             'theorem in ZP-E v2.0 and is inherited here with derived status. &#8220;Causality&#8221; in this name refers to the shape of the step, not to its occurrence. DP-1 remains the only design premise. <font name="DV">&#10003;</font>',
         ]
@@ -483,18 +499,18 @@ def build():
         ['F<sub>A</sub>(0) = &#8869;',                'ZP-A T2; C-H1',               'None',        'Valid — Derived'],
         ['F<sub>A</sub> preserves composition',        'ZP-A A1; C-H1',               'None',        'Valid — Derived'],
         ['F<sub>A</sub> respects AX-G1, AX-G2',       'ZP-A T2, T3; natZPCategory; C-H1', 'HasNoTop (no-terminal half)', 'Valid on a carrier with no top'],
-        ['F<sub>B</sub>(0) = 0 &#8712; Q<sub>2</sub>','ZP-B T3; C-H2',               'None',        'Valid — Derived'],
+        ['F<sub>B</sub>(0) = depth 0',                'fb_functor.obj 0; C-H2',      'None',        'Valid — by construction'],
         ['F<sub>B</sub> preserves composition',        'ZP-B T2; C-H2',               'None',        'Valid — Derived'],
-        ['F<sub>B</sub> respects AX-G1, AX-G2',       'q2BallZPCat (stand-in); ZP-B C3; C-H2', 'None', 'Valid in the stand-in — TopCat has a terminal object'],
-        ['F<sub>C</sub>(0) = P = (1,0)',               'ZP-C T1; ZP-E T6; C-H3',      'AX-B1, RP-1', 'Valid — from AX-B1, RP-1'],
+        ['F<sub>B</sub> respects AX-G1, AX-G2',       'q2BallZPCat (stand-in); C-H2; ZP-B C3 beside it, not used', 'None', 'Valid in the stand-in — TopCat has a terminal object'],
+        ['F<sub>C</sub>(0) = depth 0, Fin 0; P = (1,0) in ZP-C\'s model', 'fC_zero_isInitial; ZP-C T1; ZP-E T6; C-H3', 'AX-B1, RP-1 (for P = (1,0) only)', 'Valid — Fin 0 by construction; P from AX-B1, RP-1; the two models differ at 0'],
         ['F<sub>C</sub> preserves composition',        'Q-stability of post-snap codomain; C-H3', 'None', 'Valid — Derived (binary framework; Q-stability, not subadditivity)'],
-        ['F<sub>C</sub> respects AX-G1, AX-G2',       'infoDepthZPCat (stand-in); ZP-C T1b; C-H3', 'AX-B1, RP-1 (for ZP-C T1b; the stand-in proofs use neither)', 'Valid in the stand-in — KleisliCat PMF has a terminal object'],
+        ['F<sub>C</sub> respects AX-G1, AX-G2',       'infoDepthZPCat (stand-in); C-H3; ZP-C T1b beside it, not used','AX-B1, RP-1 (for ZP-C T1b; the stand-in proofs use neither)', 'Valid in the stand-in — KleisliCat PMF has a terminal object'],
         ['F<sub>D</sub>(0) = depth 0, &#8450;<sup>0</sup>; T(0) = e<sub>0</sub> in ZP-D\'s vector model', 'ZP-D D2(i), T2; C-H4', 'None (D2(i), by assignment)', 'Valid — by construction'],
         ['F<sub>D</sub> preserves composition',        'fd_functor.map_comp, fD_functor.map_comp; C-H4', 'None', 'Valid — Derived (functor law)'],
-        ['F<sub>D</sub> respects AX-G1, AX-G2',       'hilbDimZPCat (stand-in); ZP-D T4; C-H4', 'DP-1 (for ZP-D T4; the stand-in proofs do not use it)', 'Valid in the stand-in — both fail in ModuleCat &#8450;'],
-        ['T-H1: universal property preserved',         'ZP-A T2; ZP-B T3; ZP-C T1b; C-H4 (fd_preserves_initial)', 'None', 'Valid — OQ-G2 closed; F<sub>B</sub> in its stand-in'],
-        ['T-H2: singularity compatibility',            'ZP-G T6; ZP-C T2; C-H3',     'None',        'Valid — OQ-G4 closed'],
-        ['T-H3: Snap under all four functors',         'C-H1 through C-H4; ZP-E T4; ZP-E T-SNAP', 'DP-1', 'Valid — T-SNAP derived (ZP-E v2.0)'],
+        ['F<sub>D</sub> respects AX-G1, AX-G2',       'hilbDimZPCat (stand-in); C-H4; ZP-D T4 beside it, not used','DP-1 (for ZP-D T4; the stand-in proofs do not use it)', 'Valid in the stand-in — both fail in ModuleCat &#8450;'],
+        ['T-H1: universal property preserved',         'fb/fc/fd_preserves_initial (IsInitial.ofUnique 0); natZPCategory for F<sub>A</sub>', 'None', 'Valid — OQ-G2 closed, in the stand-ins'],
+        ['T-H2: singularity compatibility',            'ZP-G T3, T6; ZP-C T2; C-H3', 'None',        'Valid — OQ-G4 closed'],
+        ['T-H3: four separately proved domain facts, conjoined', 'ZP-E T-SNAP; ZP-B C3; ZP-C T1b; ZP-D T4', 'DP-1', 'Valid — a conjunction; none derived from another or from a functor'],
         ['D-H1: morphisms of C',                       'ZP-A D2; ZP-B T2; ZP-C; ZP-D', 'None',      'Design Commitment'],
     ]
     E.append(data_table(
@@ -512,27 +528,31 @@ def build():
          'Closed — ZP-G v1.1\nD7\', T6',
          'Native derivation of categorical surprisal without importing Shannon entropy. '
          'Closed in ZP-G v1.1 by D7\' (native categorical surprisal K(B|A)) and I-KC '
-         '(Kolmogorov import from ZP-C). BA-G1 demoted to compatibility remark R-BA. '
+         '(Kolmogorov import from ZP-C). BA-G1 demoted to remark R-BA. '
          'No bridge axiom remains as a theorem premise.'],
         ['OQ-G2',
          'Closed — T-H1',
          'Left adjoint verification for instantiation functors. Resolved in Section IV by '
-         'direct verification of the universal property for each of the four functors (for F<sub>B</sub>, in its stand-in).'],
+         'direct verification of the universal property for each of the four PDF constructions (for F<sub>B</sub>, in its stand-in). '
+         'In Lean: fb_functor, fc_functor and fd_functor in their stand-ins (fb/fc/fd_preserves_initial), and for F<sub>A</sub>, '
+         'which has no functor term, 0 initial in natZPCategory (natSLat_initial_grounding).'],
         ['OQ-G3',
-         'Closed — all four\nfunctors (Lean)',
+         'Closed — PDF: all\nfour; Lean: three\nfunctor terms\n(F<sub>B</sub>, F<sub>C</sub>, F<sub>D</sub>)',
          'PDF-level constructions of all four instantiation functors complete (Section III). '
-         'All four now have concrete Lean Functor terms (sorry-free): '
-         'F<sub>A</sub>: fa via NatSLat (Functor &#8469; &#8469;, effectively). '
-         'F<sub>B</sub>: fb_functor (Functor &#8469; Q&#8322;BallDepth), snap grounded in C3. '
-         'F<sub>C</sub>: fc_functor (Functor &#8469; InfoDepth), snap grounded in T1b. '
-         'F<sub>D</sub>: fd_functor (Functor &#8469; HilbDimDepth), snap grounded in T4. '
-         'Each domain type has a distinct ZPCategory instance and preserves_initial definition. '
-         'OQ-G3 fully closed.'],
+         'F<sub>B</sub>, F<sub>C</sub> and F<sub>D</sub> have concrete Lean Functor terms (sorry-free); '
+         'F<sub>A</sub> has no functor term, and its Lean witness is the ZPCategory instance natZPCategory on &#8469; with 0 initial (natSLat_initial_grounding). '
+         'F<sub>B</sub>: fb_functor (Functor &#8469; Q&#8322;BallDepth), beside C3. '
+         'F<sub>C</sub>: fc_functor (Functor &#8469; InfoDepth), beside T1b. '
+         'F<sub>D</sub>: fd_functor (Functor &#8469; HilbDimDepth), beside T4. '
+         'Each functor is n &#8614; &#10216;n&#10217; between thin categories, and neither its type nor its definition uses the domain fact beside it. '
+         'Each of the three stand-in types has a distinct ZPCategory instance and preserves_initial definition. '
+         'OQ-G3 closed in this sense.'],
         ['OQ-G4',
          'Closed — T-H2',
          'Reconciliation of categorical (undefined domain) and ZP-C (infinite accumulation) '
          'singularity characterizations. Resolved in Section V. The two characterizations '
-         'are shown to hold together, a conjunction; neither is derived from the other.'],
+         'are shown to hold together: the proof pairs ZP-G Lemma T3 with ZP-C Theorem T2 and uses '
+         'neither to prove the other.'],
         ['AX-1',
          'Retired —\nshape: T-SNAP\n(ZP-E v2.0);\nthe snap occurs\ngiven the occurrence\ncommitment and DA-1',
          'Binary Snap Causality. AX-1 is retired. Its content was split in two: the shape of the Snap is '
@@ -549,7 +569,7 @@ def build():
          'kleisli_bottom_not_terminal in ZeroParadox/Category/TreeSeam.lean). Not a gap.'],
         ['AX-G2',
          'Axiom —\nnot novel\nwhere it holds',
-         'Source asymmetry: hom(X, 0) = ∅ for X ≠ 0. Inherited from ZP-G. '
+         'Source asymmetry: hom(X, 0) = ∅ for X not isomorphic to 0. Inherited from ZP-G. '
          'Not a novel commitment where it holds: in a category built from a partial order with a least element, such as ZP-A\'s '
          'semilattice order and the &#8469;-indexed depth categories ZP-H\'s Lean functors land in, a morphism X &#8594; 0 means X &#8804; 0, '
          'so X = 0 by antisymmetry (for the depth categories, the ax_g2 fields of q2BallZPCat, infoDepthZPCat and hilbDimZPCat in '
@@ -564,8 +584,8 @@ def build():
         ['R-BA',
          'Remark —\nBA-G1 demoted\n(ZP-G v1.1)',
          'Leinster Shannon entropy characterization. BA-G1 demoted from Bridge Axiom '
-         'in ZP-G v1.0 to Compatibility Remark R-BA in ZP-G v1.1. '
-         'Derivable from D7\' and I-KC via the coding theorem. Not a gap.'],
+         'in ZP-G v1.0 to Remark R-BA in ZP-G v1.1. '
+         'Not derivable from D7\': the coding theorem gives a one-sided bound, not an equivalence. Not a gap.'],
         ['D-H1',
          'Design\nCommitment —\nintentional',
          'Morphisms of C defined as state transitions. This is a design choice that makes '
@@ -600,7 +620,8 @@ def build():
         ['D-H1: Morphisms of C',
          'Design Commitment — explicitly stated; required for functor construction'],
         ['C-H1: F<sub>A</sub>: C &#8594; SLat',
-         'Valid — Derived. Object map, morphism map, composition, identity all verified. <font name="DV">&#10003;</font>'],
+         'Valid — Derived as a PDF construction. Object map, morphism map, composition, identity all checked on paper. '
+         'Lean: no functor term; the witness is natZPCategory, 0 initial in &#8469; (natSLat_initial_grounding). <font name="DV">&#10003;</font>'],
         ['C-H2: F<sub>B</sub>: C &#8594; pTop',
          'Valid — all four requirements verified; AX-G1 and AX-G2 checked in the stand-in Q&#8322;BallDepth (TopCat has a terminal object). '
          'Lean: full functor (fb_functor, sorry-free). <font name="DV">&#10003;</font>'],
@@ -611,12 +632,15 @@ def build():
          'Valid — the object map at 0 by assignment (ZP-D D2(i)), the morphism map from ZP-D D2(iii) and D2(iv), D2(iv) under DP-1; all four requirements verified; AX-G1 and AX-G2 checked in the stand-in HilbDimDepth (both fail in ModuleCat '
          '&#8450;). Lean: full functor (fd_functor, sorry-free). <font name="DV">&#10003;</font>'],
         ['T-H1: Universal property preserved',
-         'Valid — OQ-G2 closed. ZP-G T5 is now unconditional for all four instantiation functors, for F<sub>B</sub> in its stand-in. <font name="DV">&#10003;</font>'],
+         'Valid — OQ-G2 closed. fb_functor, fc_functor and fd_functor send 0 to an initial object of their stand-in targets '
+         '(fb_preserves_initial, fc_preserves_initial, fd_preserves_initial, each IsInitial.ofUnique 0, using none of the th1_* domain facts); '
+         'for F<sub>A</sub>, 0 is initial in natZPCategory. <font name="DV">&#10003;</font>'],
         ['T-H2: Singularity reconciliation',
          'Valid — OQ-G4 closed. Categorical (undefined domain) and ZP-C (infinite accumulation) '
-         'shown to hold together, a conjunction; neither is derived from the other. <font name="DV">&#10003;</font>'],
-        ['T-H3: Snap under all four functors',
-         'Valid — Derived; cross-framework. T-SNAP inherited as derived theorem (ZP-E v2.0). '
+         'shown to hold together: the proof pairs ZP-G Lemma T3 with ZP-C Theorem T2 and uses neither '
+         'to prove the other. <font name="DV">&#10003;</font>'],
+        ['T-H3: four separately proved domain facts, conjoined',
+         'Valid — Derived as a conjunction of four separately proved domain facts; no conjunct relates to another or is derived from a functor. T-SNAP inherited as derived theorem (ZP-E v2.0). '
          'DP-1 labelled as design premise. <font name="DV">&#10003;</font>'],
         ['Traceability register',
          'Valid — Complete. Every cross-framework claim traced to source theorem and bridge axiom. No floating connections.'],
@@ -632,7 +656,7 @@ def build():
          'ZP-G\'s own commitment; it holds in the &#8469;-indexed stand-ins and fails in TopCat, ModuleCat &#8450; and KleisliCat PMF. '
          'Stated as local axioms in ZP-G for self-containment. Not gaps.'],
         ['R-BA, D-H1, DP-1',
-         'Compatibility Remark / Design Commitments — intentional. Explicitly stated. Not laundered.'],
+         'Remark / Design Commitments — intentional. Explicitly stated. Not laundered.'],
     ]
 
     E.append(data_table(
@@ -644,11 +668,11 @@ def build():
     E += [
         sp(12),
         Paragraph(
-            '<i>End of ZP-H | Four instantiation functors constructed | '
+            '<i>End of ZP-H | Four instantiation functors constructed in this document | '
             'OQ-G1 through OQ-G4 closed | '
-            'All four functors have concrete Lean Functor terms (sorry-free): '
-            'fb_functor (Q&#8322;BallDepth), fc_functor (InfoDepth), fd_functor (HilbDimDepth), F<sub>A</sub> via NatSLat | '
-            'OQ-G3 fully closed | '
+            'Three functors have concrete Lean Functor terms (sorry-free): '
+            'fb_functor (Q&#8322;BallDepth), fc_functor (InfoDepth), fd_functor (HilbDimDepth); F<sub>A</sub> has the NatSLat ZPCategory instance, no functor term | '
+            'OQ-G3 closed: PDF constructions for all four, Lean functor terms for three | '
             'T-SNAP inherited as derived theorem | '
             'T-H3 independence-of-discovery note: the null-analogs of ZP-A, ZP-B and ZP-C located independently, ZP-D&#8217;s e<sub>0</sub> by transport of ZP-B&#8217;s 0 | '
             'AX-G2 and the initial-object half of AX-G1 are grounded in prior layers where they hold, and the no-terminal half of '

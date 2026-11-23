@@ -9,9 +9,10 @@ set_option maxHeartbeats 1000000
 /-!
 # Perron–Frobenius: existence of a stationary distribution (the first NON-thin dictionary entry)
 
-Every finite stochastic action has a fixed point. Built via Cesàro averaging on the compact simplex
+Every stochastic action on a nonempty finite state space has a fixed point. Built via Cesàro averaging on the compact simplex
 (Mathlib has `isCompact_stdSimplex` but no Brouwer / Markov–Kakutani fixed-point, so existence is built, not
-pulled off a shelf).
+pulled off a shelf). Related averaging argument: Mathlib's Krylov–Bogolyubov, `MeasureTheory.exists_measurePreserving_probabilityMeasure`
+(`Mathlib/Dynamics/Ergodic/EmpiricalMeasure.lean`), an invariant measure for a continuous map, not this `PMF` bind fixed point.
 
 ## Engineer's Take
 This file is one of a series of iterative attempts on this branch to build a map of how the various
@@ -126,7 +127,7 @@ lemma tendsto_cesaro_diff_zero (f : Fin n → PMF (Fin n)) {v₀ : Fin n → ℝ
     simpa using tendsto_inv_atTop_nhds_zero_nat.mul_const (2 * C)
   exact squeeze_zero_norm hbound hg
 
-/-- **Target — PROVED.** Every finite stochastic action has a stationary distribution: a fixed point of the
+/-- **Target — PROVED.** Every stochastic action on nonempty `Fin n` has a stationary distribution: a fixed point of the
     Kleisli action `μ ↦ μ.bind f`. Built by Cesàro averaging on the compact simplex (no Brouwer needed). -/
 theorem exists_stationary [Nonempty (Fin n)] (f : Fin n → PMF (Fin n)) :
     ∃ μ : PMF (Fin n), μ.bind f = μ := by
