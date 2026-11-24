@@ -135,6 +135,27 @@ def take_exempt(rel):
     return norm in TAKE_EXEMPT or vendored.is_vendored(norm)
 
 
+def _take_has_prose(body):
+    """True when a take's body holds real prose.
+
+    ⚠ `TK-1` (/rely 2026-11-24): the old test stripped `--` lines and accepted anything left, so a
+    body of only the docstring terminator `-/` - exactly the template once its `TODO (Tim)` line is
+    deleted - counted as filled, and so did an empty take followed by Lean code, because the body
+    ran on past the `-/` to the next heading or EOF. The body now ENDS at the docstring terminator;
+    `--` comment lines, comment delimiters and TODO/TBD/FIXME marker lines are dropped; and what is
+    left must contain a word of three or more letters."""
+    body = body.split('-/', 1)[0]
+    kept = []
+    for ln in body.splitlines():
+        s = ln.strip()
+        if not s or s.startswith('--') or s in ('/-', '/-!', '-/'):
+            continue
+        if re.match(r'(?i)^[\W_]*(TODO|TBD|FIXME|XXX)\b', s):
+            continue
+        kept.append(s)
+    return bool(re.search(r'[A-Za-z]{3,}', ' '.join(kept)))
+
+
 def c_engineers_takes():
     """Every ZP-X Lean file carries a filled Engineer's Take.
 
@@ -149,7 +170,7 @@ def c_engineers_takes():
     take_re = r'((?:#+\s*)?Engineer.?s Take[^\n]*)\n(.*?)(?=\n#+\s|\Z)'
     for full in glob.glob(os.path.join(LEAN_ROOT, LEAN_GLOB), recursive=True):
         path = _rel(os.path.relpath(full, LEAN_ROOT))
-        if '.lake' in path:
+        if '.lake' in path.split('/'):   # a `.lake` DIRECTORY, never a substring of a name
             continue
         if take_exempt(path):
             continue
@@ -165,8 +186,11 @@ def c_engineers_takes():
                 hits.append(f'{path}: no "Engineer\'s Take" section')
             continue
         for m in re.finditer(take_re, txt, re.S | re.I):
-            body = re.sub(r'(?m)^\s*--.*$', '', m.group(2)).strip()
-            if not body:
+            head = m.group(1).strip()
+            # The bare `Engineer's Take: <prose>` form (ZPM) starts its prose on the heading line; a
+            # markdown heading's own text is a title, never the take.
+            inline = '' if head.startswith('#') else re.sub(r'(?i)^.*?Engineer.?s Take\s*:?', '', head)
+            if not _take_has_prose(inline + '\n' + m.group(2)):
                 hits.append(f'{path}: empty "{m.group(1).strip()}" section')
     if hits:
         for h in hits:
@@ -447,28 +471,31 @@ def c_untracked_pdfs():
 # or backticked id is judged by the same test over its first two cells. An open unit whose tag cannot be read cannot be graded, so it
 # FAILS CLOSED rather than being folded into a bucket.
 #
-# ⚠⚠ `RR-1` (/rely 2026-11-23): THAT TEST READ "NOT OPEN" AS "CLOSED", and for the release-blocking
-# grade that is the wrong default. `OPEN, not yet RESOLVED`, `OPEN - fix ACCEPTED, not merged`,
-# `REOPENED`, lowercase `open`, a `######` heading, a bullet, a row with its status in the third cell
-# and `REMEDIATED AT <sha>, NOT CLOSED` all carried `[content · BEDROCK]` and none blocked. So a line
-# carrying a CONTENT BEDROCK / BEDROCK-CANDIDATE tag now blocks unless it is PROVABLY CLOSED
-# (`_is_closed`, an ALLOW-LIST of closed forms), whatever the line's shape. Enumerating more open
-# spellings would be the same leg failing open on the next one nobody listed. The general open test
-# below (for counts and for untagged units) keeps its OPEN-word trigger, and is judged by the same
-# allow-list for closure.
+# ⚠⚠ `RR-1` / `RR-1b` (/rely 2026-11-23, 2026-11-24) - AND WHY THIS LEG NO LONGER READS PROSE.
+# The first fix judged closure from the line's prose: its first status word plus a list of withdrawal
+# phrasings. Nine mutants walked past it the next day (`NOT **CLOSED**`, `was CLOSED, now OPEN`,
+# `CLOSED in error`, `## RESOLVED-STATE-1 - OPEN`, ...). Every list of the ways "closed" can be negated
+# is an ENUMERATION and misses the next phrasing (R-NOCONV), so the SHAPE changed: a release-blocking
+# line is closed only when its TAG carries the closure token, and no prose is read for its status.
+#
+#   CLOSURE TOKEN: `[content · BEDROCK · CLOSED YYYY-MM-DD]` (also BEDROCK-CANDIDATE / BEDROCK-class).
+#   Single spaces around each `·`, uppercase CLOSED, one real calendar date. Anything else is OPEN.
+#
+# A third tag segment that is not exactly that token is MALFORMED and blocks with its own message. A
+# bracketed span naming BEDROCK that does not read as a tag at all is UNREADABLE and blocks as an
+# untagged unit (`RR-1c`). An unbalanced code fence blocks too, since it hides the rest of the ledger
+# (`RR-1d`). The general open test below (counts, untagged units) keeps its OPEN-word trigger.
 
 DEFECTS_REL = os.path.join('.claude-local', 'DEFECTS.md')
-# The closed forms. UPPERCASE, matched case-sensitively: the ledger's status convention is the
-# uppercase word, and a lowercase "closed" is as likely to be prose ("the closed ball") as a status.
+# The closing words of DEFECTS.md's header rule, for the GENERAL open test only (`_is_open`). The
+# release-blocking leg never consults them.
 CLOSED_FORMS = ('CLOSED', 'WITHDRAWN', 'RESOLVED', 'RETRACTED', 'SUPERSEDED', 'DISCHARGED')
-# The header rule's closing words, for the GENERAL open test only (`_is_open`). ACCEPTED is among
-# them there and deliberately NOT a closed form above: "fix ACCEPTED, not merged" is open.
 CLOSING_WORDS = CLOSED_FORMS + ('ACCEPTED',)
-# Every status word the ledger uses, open or closed. The FIRST one on a line is its status; anything
-# that is not a closed form (OPEN, REOPENED, ACCEPTED, REMEDIATED, FIXED, DEFERRED...) is not closure.
-_STATUS = re.compile(r'\b(PARTLY\s+CLOSED|RE-?OPEN(?:ED)?|OPEN|%s|ACCEPTED|REMEDIATED|FIXED|DEFERRED)\b'
-                     % '|'.join(CLOSED_FORMS), re.I)
-# Anything that withdraws a closure anywhere on the line.
+# The closure token, matched against the tag's severity part (everything after the kind's `·`).
+_CLOSURE = re.compile(r'^(BEDROCK(?:-CANDIDATE|-class)?) · CLOSED (\d{4}-\d{2}-\d{2})$')
+# Any bracketed span naming BEDROCK, whatever its case or separators: each must read as a tag.
+_BEDROCK_SPAN = re.compile(r'\[[^\[\]\n]*bedrock[^\[\]\n]*\]', re.I)
+# Withdrawn closures, for the GENERAL open test only.
 _UNCLOSE = re.compile(r'\b(?:NOT|NEVER)\s+(?:YET\s+)?(?:%s)\b|\bRE-?OPEN|\bPARTLY\s+CLOSED\b|\bstill\s+OPEN\b'
                       % '|'.join(CLOSED_FORMS), re.I)
 _HEADING = re.compile(r'^(#{2,6})\s+(.*)$')
@@ -496,14 +523,46 @@ def defects_path():
     return None, 'main checkout could not be derived (rev-parse exit %s)' % rc
 
 
-def _is_closed(text):
-    """True only when `text` is PROVABLY closed: its FIRST status word is an uppercase closed form,
-    and nothing on the line withdraws it (`NOT CLOSED`, `not yet RESOLVED`, `REOPENED`, `PARTLY
-    CLOSED`, `still OPEN`). No status word at all is NOT closed - absence is not closure."""
-    m = _STATUS.search(text)
-    if not m or m.group(1) not in CLOSED_FORMS:
-        return False
-    return not _UNCLOSE.search(text)
+def _closure(tag_sev):
+    """The closure state of one tag's severity part: 'closed', 'open' or 'malformed'.
+
+    'closed' ONLY for the exact token (`BEDROCK · CLOSED 2026-11-24`, a real date). A severity with no
+    further segment is 'open'. Any further segment that is not exactly the token - a lowercase
+    `closed`, a missing or impossible date, a second word, a `-` for the `·` - is 'malformed', which
+    blocks like 'open' and is reported separately so it can be fixed rather than mistaken for a
+    status."""
+    import datetime
+    s = tag_sev.strip()
+    if '·' not in s and not re.search(r'\bclosed\b', s, re.I):
+        return 'open'
+    m = _CLOSURE.match(s)
+    if not m:
+        return 'malformed'
+    try:
+        datetime.date.fromisoformat(m.group(2))
+    except ValueError:
+        return 'malformed'
+    return 'closed'
+
+
+def _blocking_tags(text):
+    """(open_or_malformed, unreadable) for one line - the release-blocking leg's whole input.
+
+    `open_or_malformed`: [(grade, state)] for each CONTENT BEDROCK / BEDROCK-CANDIDATE tag on the line
+    that does not carry the closure token. `unreadable`: bracketed spans naming BEDROCK that do not
+    read as a tag. The line's PROSE is never consulted: only the tags."""
+    hits, readable = [], set()
+    for m in _TAG.finditer(text):
+        g = _grade(m.group(1), m.group(2))
+        if g is None:
+            continue
+        readable.add(m.span())
+        if _blocks_release(g):
+            st = _closure(m.group(2))
+            if st != 'closed':
+                hits.append((g, st))
+    unreadable = [s.group(0) for s in _BEDROCK_SPAN.finditer(text) if s.span() not in readable]
+    return hits, unreadable
 
 
 def _is_open(text):
@@ -570,27 +629,40 @@ def _unit_grade(text):
 
 
 def scan_defects(text):
-    """{'units': [(line_no, kind, sev, label)], 'untagged': [(line_no, label)]} over open units."""
-    units, untagged = [], []
-    fence = False
+    """{'units': [(line_no, kind, sev, label)], 'untagged': [(line_no, label)],
+    'malformed': [(line_no, label)]} over open units.
+
+    `malformed` lines are ALSO in `units` (they block as open content bedrock); the list exists so
+    the report can say the closure token was attempted and is wrong, rather than calling it open."""
+    units, untagged, malformed = [], [], []
+    fence, fence_at = False, 0
     for n, raw in enumerate(text.splitlines(), 1):
         ln = raw.rstrip()
         if ln.lstrip().startswith('```'):
-            fence = not fence
+            fence, fence_at = (not fence), n
             continue
         if fence:
             continue
-        g = _unit_grade(ln)
+        hits, unreadable = _blocking_tags(ln)
         m = _HEADING.match(ln)
         r = None if m else _ROW.match(ln)
+        label = (m.group(2) if m else r.group(1) if r else ln.strip()).strip()[:90]
+        if unreadable:
+            # RR-1c: a span naming BEDROCK that does not read as a tag cannot be graded or closed.
+            untagged.append((n, 'unreadable bedrock tag %s - %s' % (unreadable[0][:40], label)))
+            continue
+        if hits:
+            # RR-1b: a release-blocking tag WITHOUT the closure token is open, whatever the prose says
+            # and whatever the line's shape. The most blocking open tag on the line is the unit.
+            g, st = min(hits, key=lambda h: _rank(h[0]))
+            units.append((n, g[0], g[1], label))
+            if any(s == 'malformed' for _, s in hits):
+                malformed.append((n, label))
+            continue
+        g = _unit_grade(ln)
         if _blocks_release(g):
-            # RR-1: ANY line shape carrying a release-blocking tag is a unit, and it is open unless
-            # provably closed. The whole line is judged, so a status in any cell or after a bullet
-            # is read.
-            if _is_closed(ln.lstrip('#|-*+ \t')):
-                continue
-            label = (m.group(2) if m else r.group(1) if r else ln.strip())
-        elif m or r:
+            continue   # every release-blocking tag on the line carries the closure token
+        if m or r:
             judged = m.group(2) if m else r.group(1) + ' | ' + r.group(2)
             if not _is_open(judged):
                 continue
@@ -602,7 +674,10 @@ def scan_defects(text):
             untagged.append((n, label))
         else:
             units.append((n, g[0], g[1], label))
-    return {'units': units, 'untagged': untagged}
+    if fence:
+        # RR-1d: an unclosed fence hid every line after it, so nothing below it was graded.
+        untagged.append((fence_at, 'unbalanced ``` fence opened here hides the rest of the ledger'))
+    return {'units': units, 'untagged': untagged, 'malformed': malformed}
 
 
 def c_defects_ledger(path=None):
@@ -629,8 +704,14 @@ def c_defects_ledger(path=None):
         counts[(k, s)] += 1
     counts['untagged'] = len(res['untagged'])
     blocking = [u for u in res['units'] if u[1] == 'content' and u[2] in ('BEDROCK', 'BEDROCK-CANDIDATE')]
+    bad_token = {n for n, _ in res['malformed']}
     for n, k, s, label in blocking:
-        fail('Open content %s defect (DEFECTS.md:%d) - %s' % (s, n, label))
+        fail('Open content %s defect (DEFECTS.md:%d)%s - %s' % (
+            s, n, ' - closure token MALFORMED, the one closed form is [content · %s · CLOSED '
+            'YYYY-MM-DD]' % s if n in bad_token else '', label))
+    if blocking:
+        warn('a content bedrock unit is CLOSED only by its tag: [content · BEDROCK · CLOSED '
+             'YYYY-MM-DD]. Prose status words are not read.')
     for n, label in res['untagged']:
         fail('Open defect with no readable [kind · SEVERITY] tag (DEFECTS.md:%d) - cannot be graded, '
              'so it blocks - %s' % (n, label))
@@ -740,45 +821,81 @@ def selftest():
     def _blocks(text):
         r = scan_defects(text)
         return bool(r['untagged']) or any(k == 'content' and s != 'ORDINARY' for _, k, s, _ in r['units'])
-    for label, text, want in (
-            ('open content BEDROCK blocks', '## X-1 - **OPEN** `[content · BEDROCK]`\n', True),
+    T = '[content · BEDROCK]'
+    TC = '[content · BEDROCK · CLOSED 2026-11-24]'
+    # want: True = blocks, False = passes, 'malformed' = blocks AND is reported as a bad token.
+    ledger_controls = (
+            ('open content BEDROCK blocks', '## X-1 - **OPEN** `%s`\n' % T, True),
             ('open BEDROCK-class blocks', '#### X-2 OPEN `[content · BEDROCK-class]`\n', True),
             ('open content CANDIDATE blocks', '## X-3 OPEN [content · BEDROCK-CANDIDATE]\n', True),
             ('open untagged heading blocks', '## X-4 - **OPEN 2026-10-31**\n', True),
-            ('open bedrock table row blocks', '| **X-5** | OPEN | f `[content · BEDROCK]` |\n', True),
-            ('PARTLY CLOSED bedrock blocks', '## X-6 PARTLY CLOSED [content · BEDROCK]\n', True),
-            ('closed content BEDROCK passes', '## X-7 **CLOSED** (was OPEN) [content · BEDROCK]\n', False),
+            ('open bedrock table row blocks', '| **X-5** | OPEN | f `%s` |\n' % T, True),
+            ('PARTLY CLOSED bedrock blocks', '## X-6 PARTLY CLOSED %s\n' % T, True),
             ('open content ORDINARY passes', '## X-8 OPEN [content · ORDINARY]\n', False),
             ('open tooling BEDROCK passes', '## X-9 OPEN [tooling · BEDROCK]\n', False),
             ('fenced heading is not a unit', '```\n## X-10 OPEN\n```\n', False),
-            # RR-1 mutants: each carried a content BEDROCK tag and read as CLOSED before the fix.
-            ('RR-1 OPEN, not yet RESOLVED', '## X-11 OPEN, not yet RESOLVED [content · BEDROCK]\n', True),
-            ('RR-1 fix ACCEPTED, not merged',
-             '## X-12 OPEN - fix ACCEPTED by Tim, not merged [content · BEDROCK]\n', True),
-            ('RR-1 REOPENED', '## X-13 REOPENED 2026-11-22 [content · BEDROCK]\n', True),
-            ('RR-1 lowercase open', '## X-14 open [content · BEDROCK]\n', True),
-            ('RR-1 level-6 heading', '###### X-15 OPEN [content · BEDROCK]\n', True),
-            ('RR-1 bullet', '- **X-16** OPEN [content · BEDROCK]\n', True),
-            ('RR-1 status in third cell', '| **X-17** | f | OPEN `[content · BEDROCK]` |\n', True),
-            ('RR-1 REMEDIATED, NOT CLOSED',
-             '## X-18 REMEDIATED AT 3c7fe97, NOT CLOSED [content · BEDROCK]\n', True),
-            ('RR-1 no status word at all', '## X-19 something [content · BEDROCK]\n', True),
-            ('RR-1 CLOSED then REOPENED', '## X-20 CLOSED 2026-11-01, REOPENED [content · BEDROCK]\n', True),
-            ('RR-1 lowercase closed is not closure', '## X-21 closed [content · BEDROCK]\n', True),
-            ('RR-1 bedrock prose line blocks', 'note: still pending `[content · BEDROCK-CANDIDATE]`\n', True),
+            # RR-1 (2026-11-23) mutants.
+            ('RR-1 OPEN, not yet RESOLVED', '## X-11 OPEN, not yet RESOLVED %s\n' % T, True),
+            ('RR-1 fix ACCEPTED, not merged', '## X-12 OPEN - fix ACCEPTED by Tim, not merged %s\n' % T, True),
+            ('RR-1 REOPENED', '## X-13 REOPENED 2026-11-22 %s\n' % T, True),
+            ('RR-1 lowercase open', '## X-14 open %s\n' % T, True),
+            ('RR-1 level-6 heading', '###### X-15 OPEN %s\n' % T, True),
+            ('RR-1 bullet', '- **X-16** OPEN %s\n' % T, True),
+            ('RR-1 status in third cell', '| **X-17** | f | OPEN `%s` |\n' % T, True),
+            ('RR-1 REMEDIATED, NOT CLOSED', '## X-18 REMEDIATED AT 3c7fe97, NOT CLOSED %s\n' % T, True),
+            ('RR-1 no status word at all', '## X-19 something %s\n' % T, True),
+            ('RR-1 CLOSED then REOPENED', '## X-20 CLOSED 2026-11-01, REOPENED %s\n' % T, True),
+            ('RR-1 lowercase closed', '## X-21 closed %s\n' % T, True),
+            ('RR-1 bedrock prose line', 'note: still pending `[content · BEDROCK-CANDIDATE]`\n', True),
             ('RR-1 untagged REOPENED blocks', '## X-26 REOPENED 2026-11-22\n', True),
             ('RR-1 untagged OPEN, NOT CLOSED blocks', '## X-27 OPEN, NOT CLOSED\n', True),
-            # The genuinely closed shapes the live ledger uses must still pass.
-            ('closed heading, later was OPEN',
-             '## X-22 **CLOSED 2026-10-16** - Was **OPEN 2026-10-16** [content · BEDROCK]\n', False),
-            ('closed row in second cell',
-             '| `X-23` | **CLOSED 2026-11-21** (fix abc) `[content · BEDROCK]` | f |\n', False),
-            ('closed bullet', '- **X-24** WITHDRAWN [content · BEDROCK]\n', False),
-            ('closed level-4 heading', '#### X-25 (2026-10-20): **CLOSED** - t `[content · BEDROCK-class]`\n',
-             False)):
-        ok = _blocks(text) is want
+            # RR-1b (2026-11-24) mutants: each passed the prose-reading fix.
+            ('RR-1b closed word in the id', '## RESOLVED-STATE-1 - OPEN %s\n' % T, True),
+            ('RR-1b closed word in the title', '## X SUPERSEDED theorem still cited - OPEN %s\n' % T, True),
+            ('RR-1b closed word in a row id', '| **CLOSED-FORM-1** | OPEN | f %s |\n' % T, True),
+            ('RR-1b NOT **CLOSED**', '## X-30 NOT **CLOSED** %s\n' % T, True),
+            ('RR-1b was CLOSED, now OPEN', '## X-31 was CLOSED 2026-10-01, now OPEN again %s\n' % T, True),
+            ('RR-1b CLOSED in error', '## X-32 CLOSED in error %s\n' % T, True),
+            ('RR-1b closure withdrawn', '## X-33 CLOSED (closure withdrawn 2026-11-02) %s\n' % T, True),
+            ('RR-1b CLOSED -> OPEN', '## X-34 CLOSED -> OPEN %s\n' % T, True),
+            ('RR-1b UN-CLOSED', '## X-35 UN-CLOSED %s\n' % T, True),
+            # A prose closure with no token is OPEN now, in every shape the live ledger used.
+            ('prose CLOSED heading blocks', '## X-7 **CLOSED** (was OPEN) %s\n' % T, True),
+            ('prose CLOSED row blocks', '| `X-23` | **CLOSED 2026-11-21** (fix abc) `%s` | f |\n' % T, True),
+            ('prose WITHDRAWN bullet blocks', '- **X-24** WITHDRAWN %s\n' % T, True),
+            # RR-1c: a near-miss tag cannot be graded, so it blocks as untagged.
+            ('RR-1c capitalised kind', '## X-40 FIXED pending merge [Content · BEDROCK]\n', True),
+            ('RR-1c dot-operator separator', '## X-41 NOT CLOSED [content ⋅ BEDROCK]\n', True),
+            ('RR-1c hyphen separator', '## X-42 CLOSED [content - BEDROCK]\n', True),
+            # RR-1d: an unbalanced fence hides the rest of the ledger.
+            ('RR-1d unbalanced fence', '```\n## X-43 OPEN %s\n' % T, True),
+            # THE closure token passes, in every line shape and every release-blocking grade.
+            ('token heading passes', '## X-50 anything at all, even OPEN `%s`\n' % TC, False),
+            ('token row passes', '| `X-51` | OPEN | f `%s` |\n' % TC, False),
+            ('token bullet passes', '- **X-52** %s\n' % TC, False),
+            ('token CANDIDATE passes', '## X-53 [content · BEDROCK-CANDIDATE · CLOSED 2026-11-24]\n', False),
+            ('token BEDROCK-class passes', '## X-54 [content · BEDROCK-class · CLOSED 2026-11-24]\n', False),
+            ('token beside an open bedrock blocks', '## X-55 %s %s\n' % (TC, T), True),
+            # A malformed closure token blocks and is named as malformed.
+            ('malformed lowercase closed', '## X-60 [content · BEDROCK · closed 2026-11-24]\n', 'malformed'),
+            ('malformed no date', '## X-61 [content · BEDROCK · CLOSED]\n', 'malformed'),
+            ('malformed impossible date', '## X-62 [content · BEDROCK · CLOSED 2026-13-40]\n', 'malformed'),
+            ('malformed trailing words', '## X-63 [content · BEDROCK · CLOSED 2026-11-24 again]\n',
+             'malformed'),
+            ('malformed double space', '## X-64 [content · BEDROCK ·  CLOSED 2026-11-24]\n', 'malformed'),
+            ('malformed hyphen before CLOSED', '## X-65 [content · BEDROCK - CLOSED 2026-11-24]\n',
+             'malformed'),
+            ('malformed other status word', '## X-66 [content · BEDROCK · RESOLVED 2026-11-24]\n',
+             'malformed'),
+            ('malformed short date', '## X-67 [content · BEDROCK · CLOSED 2026-11]\n', 'malformed'))
+    for label, text, want in ledger_controls:
+        got = _blocks(text)
+        if want == 'malformed':
+            ok = got is True and bool(scan_defects(text)['malformed'])
+        else:
+            ok = got is want
         bad += 0 if ok else 1
-        print('    %-34s %s' % (label, 'ok' if ok else '*** WRONG ***'))
+        print('    %-36s %s' % (label, 'ok' if ok else '*** WRONG ***'))
     saved = (fails[:], warns[:])
     try:
         st = c_defects_ledger(os.path.join(HERE, 'no-such-dir', 'DEFECTS.md'))[0]
@@ -810,7 +927,8 @@ def selftest():
                     ('RR-2 Snapshot.lean elsewhere fails', 'ZeroParadox/Order/Snapshot.lean', False),
                     ('RR-2 ExtractDeps elsewhere fails', 'ZeroParadox/Order/ExtractDeps.lean', False),
                     ('RR-2 NaturalOps.lean elsewhere fails', 'ZeroParadox/Order/NaturalOps.lean', False),
-                    ('RR-2 old deferred basename fails', 'ZeroParadox/Order/ZPJ_Scale.lean', False))):
+                    ('RR-2 old deferred basename fails', 'ZeroParadox/Order/ZPJ_Scale.lean', False),
+                    ('.lake substring is not exempt', 'ZeroParadox/Order/P.lakeside.lean', False))):
                 d = os.path.join(td, str(i))
                 os.makedirs(os.path.dirname(os.path.join(d, rel)))
                 with open(os.path.join(d, rel), 'w', encoding='utf-8') as f:
@@ -820,7 +938,35 @@ def selftest():
                 got = c_engineers_takes()
                 ok = got is want and (want or bool(fails))
                 bad += 0 if ok else 1
-                print('    %-34s %s' % (label, 'ok' if ok else '*** got %s ***' % got))
+                print('    %-36s %s' % (label, 'ok' if ok else '*** got %s ***' % got))
+            # TK-1: a take counts as filled only when its body holds real prose.
+            H = "/-!\n# E\n\n## Engineer's Take\n"
+            CODE = 'theorem t : True := trivial\n'
+            for j, (label, body, want) in enumerate((
+                    ('TK-1 body only -/ fails', H + '-/\n', False),
+                    ('TK-1 empty take then code fails', H + '-/\n' + CODE, False),
+                    ('TK-1 whitespace only fails', H + '   \n\t\n-/\n' + CODE, False),
+                    ('TK-1 TODO marker only fails', H + 'TODO\n-/\n' + CODE, False),
+                    ('TK-1 TBD comment only fails', H + '-- TBD\n-/\n' + CODE, False),
+                    ('TK-1 punctuation only fails', H + '...\n-/\n' + CODE, False),
+                    ('TK-1 bare form, empty, fails', "/-! Engineer's Take:\n-/\n" + CODE, False),
+                    ('TK-1 titled heading, empty, fails', "/-!\n## Engineer's Take - ZP-A layer\n-/\n" + CODE,
+                     False),
+                    ('TK-1 filled take passes',
+                     H + 'The order has a least element and nothing sits below it.\n-/\n' + CODE, True),
+                    ('TK-1 bare form, inline, passes',
+                     "/-! Engineer's Take: the snap is a one-way step.\n-/\n" + CODE, True))):
+                d = os.path.join(td, 'tk%d' % j)
+                rel = 'ZeroParadox/Order/Take.lean'
+                os.makedirs(os.path.dirname(os.path.join(d, rel)))
+                with open(os.path.join(d, rel), 'w', encoding='utf-8') as f:
+                    f.write(body)
+                LEAN_ROOT = d
+                fails[:] = []
+                got = c_engineers_takes()
+                ok = got is want and (want or bool(fails))
+                bad += 0 if ok else 1
+                print('    %-36s %s' % (label, 'ok' if ok else '*** got %s ***' % got))
     finally:
         LEAN_ROOT = real_root
         fails[:], warns[:] = saved
