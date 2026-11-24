@@ -465,7 +465,7 @@ This entry was written to this file but never tagged; no v5.0 release or Zenodo 
 
 ---
 
-## v6.0 - 2026-11-23
+## v6.0 - 2026-11-24
 
 **Why this release:** The first release since v4.x. It carries the content drafted for v5.0, which was never tagged - a new formal layer, ZP-R, with its Diagonal Family Addendum - together with four months of Lean development, a theorem status change (AX-1 retired, its content split between Theorem T-SNAP and a separately stated occurrence commitment), and a run of corrections to the shipped prose that ended in the 2026-11-21 rendered-PDF claim sweep.
 
