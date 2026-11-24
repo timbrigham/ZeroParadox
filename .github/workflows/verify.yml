@@ -45,6 +45,11 @@ jobs:
         with:
           python-version: '3.12'
 
+      # `check_release_ready.py`'s untagged-defect leg parses CommonMark with markdown-it-py
+      # (`RR-1h`); without it that leg reports UNREADABLE and its `--selftest` fails, by design.
+      - name: Install Python dependencies
+        run: python -m pip install markdown-it-py==4.2.0
+
       - name: Run the deterministic checkers and publish the result
         env:
           # The report prints corpus prose containing the framework's glyphs. Without this the
