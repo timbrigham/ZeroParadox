@@ -778,13 +778,29 @@ def _unit_grade(grades):
 
 PARSER_UNAVAILABLE = 'unreadable: parser unavailable (markdown_it does not import) - untagged leg not run'
 _CONTAINER = re.compile(r'^[ \t>]*')   # blockquote markers and indent before a row
+# R5-1: CommonMark HTML block kinds 1-5 (start, end), as markdown-it-py 4.2.0's HTML_SEQUENCES[:5].
+# Only these end at a marker rather than a blank line, so only these can run to EOF.
+_HTML_MARKED = tuple((re.compile(s, f), re.compile(e, f)) for s, e, f in (
+    (r'^<(script|pre|style|textarea)(?=(\s|>|$))', r'<\/(script|pre|style|textarea)>', re.I),
+    (r'^<!--', r'-->', 0), (r'^<\?', r'\?>', 0), (r'^<![A-Z]', r'>', 0),
+    (r'^<!\[CDATA\[', r'\]\]>', 0)))
+
+
+def _html_unclosed(content):
+    """R5-1: True when an html_block of kinds 1-5 never reaches its end marker."""
+    body = content.split('\n')
+    for start, end in _HTML_MARKED:
+        if start.search(body[0].lstrip()):
+            return not any(end.search(ln) for ln in body)
+    return False
 
 
 def _structural_units(text):
-    """(units, unbalanced) from CommonMark's block structure (`RR-1h`), or None when markdown-it-py
-    cannot be imported. units: [(line, judged_text, label, {lines})] for every heading (ATX at any
-    indent CommonMark allows, setext, inside blockquotes and list items) and every id row outside a
-    code block, fence or HTML block. unbalanced: the opening line of a fence that runs to EOF."""
+    """(units, unbalanced, ntok) from CommonMark's block structure (`RR-1h`), or None when
+    markdown-it-py cannot be imported. units: [(line, judged_text, label, {lines})] for every heading
+    (ATX at any indent CommonMark allows, setext, inside blockquotes and list items) and every id row
+    outside a code block, fence or HTML block. unbalanced: [(line, what)] for a fence or an HTML block
+    of kinds 1-5 that runs to EOF. ntok: how many tokens the parser returned (R5-5)."""
     try:
         from markdown_it import MarkdownIt
     except ImportError:
@@ -798,12 +814,15 @@ def _structural_units(text):
         a, b = t.map
         if t.type in ('fence', 'code_block', 'html_block'):
             code.update(range(a, b))
+            to_eof = not any(ln.strip() for ln in lines[b:])
             if t.type == 'fence':
                 last = _CONTAINER.sub('', lines[b - 1]).rstrip() if b - a > 1 else ''
                 mk = t.markup
                 closed = last[:1] == mk[0] and set(last) == {mk[0]} and len(last) >= len(mk)
-                if not closed and not any(ln.strip() for ln in lines[b:]):
-                    unbalanced.append(a + 1)
+                if not closed and to_eof:
+                    unbalanced.append((a + 1, 'fence'))
+            elif t.type == 'html_block' and to_eof and _html_unclosed(t.content):
+                unbalanced.append((a + 1, 'HTML block'))
         elif t.type == 'heading_open':
             txt = toks[k + 1].content
             units.append((a + 1, txt, txt, set(range(a + 1, b + 1))))
@@ -813,12 +832,14 @@ def _structural_units(text):
         r = _ROW.match(_CONTAINER.sub('', raw))
         if r:
             units.append((n + 1, r.group(1) + ' | ' + r.group(2), r.group(1), {n + 1}))
-    return sorted(units, key=lambda u: u[0]), unbalanced
+    return sorted(units, key=lambda u: u[0]), unbalanced, len(toks)
 
 
 def scan_defects(text):
     """{'units': [(line_no, kind, sev, label)], 'untagged': [(line_no, label)],
-    'malformed': [(line_no, label)], 'parser': None or PARSER_UNAVAILABLE} over open units.
+    'malformed': [(line_no, label)], 'parser': None or PARSER_UNAVAILABLE} over open units, plus
+    the read evidence (R5-2): 'example' (line of the header's example, or None), 'structure' (headings
+    and id rows parsed below it) and 'tokens' (parser output size). `c_defects_ledger` judges those.
 
     The TAG leg (`_tag_leg`) decides release-blocking bedrock with no reference to structure; the
     UNTAGGED leg (`_structural_units`) judges headings and id rows by the header's open test.
@@ -826,7 +847,7 @@ def scan_defects(text):
     text = text.replace('\r\n', '\n').replace('\r', '\n')
     lines = text.split('\n')
     units, untagged, malformed = [], [], []
-    hits, all_tags, _example = _tag_leg(text)
+    hits, all_tags, example = _tag_leg(text)
     for ln in sorted(hits):
         label = lines[ln - 1].strip()[:90]
         graded = [(g, st) for g, st in hits[ln] if g is not None]
@@ -842,8 +863,10 @@ def scan_defects(text):
     if struct is None:
         # R-ZERONULL: no parser is not "no untagged units". A distinct value, and it blocks.
         untagged.append((0, PARSER_UNAVAILABLE))
-        return {'units': units, 'untagged': untagged, 'malformed': malformed, 'parser': PARSER_UNAVAILABLE}
-    sunits, unbalanced = struct
+        return {'units': units, 'untagged': untagged, 'malformed': malformed, 'parser': PARSER_UNAVAILABLE,
+                'example': example, 'structure': 0, 'tokens': 0}
+    sunits, unbalanced, ntok = struct
+    structure = sum(1 for u in sunits if u[0] > (example or 0))
     for n, judged, label, span in sunits:
         if span & set(hits):
             continue   # the tag leg already reported this unit
@@ -855,10 +878,12 @@ def scan_defects(text):
             untagged.append((n, label))
         else:
             units.append((n, g[0], g[1], label))
-    for n in unbalanced:
-        # RR-1d: a fence that runs to EOF hides every heading and row after it.
-        untagged.append((n, 'unbalanced fence opened here hides the rest of the ledger'))
-    return {'units': units, 'untagged': untagged, 'malformed': malformed, 'parser': None}
+    for n, what in unbalanced:
+        # RR-1d / R5-1: a fence or HTML block that runs to EOF hides every heading and row after it.
+        untagged.append((n, '%s opened here hides the rest of the ledger'
+                         % ('unbalanced fence' if what == 'fence' else 'unclosed HTML block')))
+    return {'units': units, 'untagged': untagged, 'malformed': malformed, 'parser': None,
+            'example': example, 'structure': structure, 'tokens': ntok}
 
 
 def c_defects_ledger(path=None):
@@ -906,7 +931,14 @@ def c_defects_ledger(path=None):
     status = LEDGER_BLOCKED if (blocking or res['untagged']) else LEDGER_CLEAR
     if res['parser']:
         status = LEDGER_UNREADABLE   # the untagged leg never ran; its silence is not a clear ledger
-    detail = '%d blocking (content bedrock %d, untagged %d)' % (
+    elif res['example'] is None or not res['structure'] or not res['tokens']:
+        # R5-2 / R5-5: no header example, or nothing parsed below it, is an unread ledger, not a clear one.
+        fail('Defect ledger UNREADABLE - %s (header example %s, %d headings/rows below it, %d parser '
+             'tokens): empty, truncated or mis-parsed. This is NOT a clear ledger'
+             % (path, 'missing' if res['example'] is None else 'at line %d' % res['example'],
+                res['structure'], res['tokens']))
+        status = LEDGER_UNREADABLE
+    detail ='%d blocking (content bedrock %d, untagged %d)' % (
         len(blocking) + len(res['untagged']), len(blocking), len(res['untagged']))
     return status, detail, counts, path
 
@@ -1134,7 +1166,14 @@ def selftest():
             ('full-width brackets', '## X-1 CLOSED \uff3bcontent · BEDROCK\uff3d\n', True),
             ('hyphen-spelt B-E-D-R-O-C-K', '## X-1 CLOSED [content · B-E-D-R-O-C-K]\n', True),
             ('unclosed bedrock span', '## X-1 CLOSED [content · BEDROCK\n\nmore text\n', True),
-            ('CRLF closure token passes', '## X-1 [content · BEDROCK ·\r\n  CLOSED 2026-11-01]\r\n', False))
+            ('CRLF closure token passes', '## X-1 [content · BEDROCK ·\r\n  CLOSED 2026-11-01]\r\n', False),
+            # R5-1: an HTML block of kinds 1-5 left open to EOF hides the rest, like RR-1d's fence.
+            ('R5-1 C1 unclosed <!-- hides heading', '<!-- note\n\n## X-1 OPEN\n\nmore\n', True),
+            ('R5-1 C2 unclosed <pre> hides heading', '<pre>\n\n## X-1 OPEN\n\nmore\n', True),
+            ('R5-1 C5 unclosed <!-- hides id row', '<!-- x\n\n| **X-1** | OPEN | f |\n', True),
+            ('R5-1 unclosed <script> hides heading', '<script>\n## X-1 OPEN\n', True),
+            ('R5-1 C6 unclosed fence still blocks', '```\n\n## X-1 OPEN\n\nmore\n', True),
+            ('R5-1 closed comment passes', '<!-- a\n## X-1 OPEN\n-->\n', False))
     for label, text, want in ledger_controls:
         got = _blocks(text)
         if want == 'malformed':
@@ -1151,6 +1190,56 @@ def selftest():
     ok = st == LEDGER_UNREADABLE and st != LEDGER_CLEAR
     bad += 0 if ok else 1
     print('    %-34s %s' % ('missing ledger is UNREADABLE', 'ok' if ok else '*** got %s ***' % st))
+
+    # R5-2 / R5-5: the read-evidence floor lives at the FILE entry point, so it runs on real files.
+    import tempfile
+
+    def _ledger_status(body):
+        saved = (fails[:], warns[:])
+        try:
+            with tempfile.TemporaryDirectory() as td:
+                pth = os.path.join(td, 'DEFECTS.md')
+                with open(pth, 'w', encoding='utf-8') as f:
+                    f.write(body)
+                return c_defects_ledger(pth)[0]
+        finally:
+            fails[:], warns[:] = saved
+    HDR = '# Open defects\n\n```text\nA unit is CLOSED only when its tag reads `%s`.\n```\n\n' % P
+    ENTRY = '## X-1 OPEN [content · ORDINARY]\n'
+    for label, body, want in (
+            ('R5-2 D1 empty ledger', '', LEDGER_UNREADABLE),
+            ('R5-2 D2 cut before the example', '# Open defects\n\n## Live entries\n', LEDGER_UNREADABLE),
+            ('R5-2 header-only ledger', HDR, LEDGER_UNREADABLE),
+            ('R5-2 header + one entry is CLEAR', HDR + ENTRY, LEDGER_CLEAR)):
+        st = _ledger_status(body)
+        ok = st == want
+        bad += 0 if ok else 1
+        print('    %-34s %s' % (label, 'ok' if ok else '*** got %s ***' % st))
+
+    class _StubMd:   # R5-5: a parser that imports and returns no tokens
+        def __init__(self, *_a):
+            pass
+
+        def enable(self, *_a):
+            return self
+
+        def parse(self, _t):
+            return []
+    import types
+    stub = types.ModuleType('markdown_it')
+    stub.MarkdownIt = _StubMd
+    real_mods = {k: v for k, v in sys.modules.items() if k == 'markdown_it' or k.startswith('markdown_it.')}
+    try:
+        for k in real_mods:
+            del sys.modules[k]
+        sys.modules['markdown_it'] = stub
+        st = _ledger_status(HDR + ENTRY)
+    finally:
+        del sys.modules['markdown_it']
+        sys.modules.update(real_mods)
+    ok = st == LEDGER_UNREADABLE
+    bad += 0 if ok else 1
+    print('    %-34s %s' % ('R5-5 empty-token parser UNREADABLE', 'ok' if ok else '*** got %s ***' % st))
 
     # R-ZERONULL: markdown_it failing to import must BLOCK as UNREADABLE, never read as clear. The
     # ImportError is real: a `None` entry in sys.modules makes the import statement raise it.
