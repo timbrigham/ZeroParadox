@@ -156,18 +156,49 @@ def _take_has_prose(body):
     return bool(re.search(r'[A-Za-z]{3,}', ' '.join(kept)))
 
 
+# A take is a STRUCTURAL SECTION of a module-level block comment (`/-! ... -/`, the template's form,
+# or a plain `/- ... -/` header, the form `ZeroParadox/Ordinal/Incompleteness.lean` uses), never a
+# mention of the phrase. A `/-- -/` declaration docstring and `--` line comments do not hold one.
+# Its head is a whole line, optionally opening the comment: the template's `## Engineer's Take`
+# (any heading level, optionally titled after a separator) or the bare `Engineer's Take: <prose>`.
+# ⚠ `TK-2` (/rely 2026-11-24): presence was ANY match of the phrase, so `-- no Engineer's Take yet`
+# above a theorem, a docstring sentence saying the take is owed, and `## Engineer's Takeaways` all
+# passed with no take in the file.
+_MODULE_DOC = re.compile(r'/-(?!-)!?(.*?)(?:-/|\Z)', re.S)
+_TAKE_HEAD = re.compile(r"^(#{1,6}[ \t]+Engineer['’]s Take(?:[ \t]*(?:[-:–—][^\n]*)?)?"
+                        r"|Engineer['’]s Take[ \t]*:([^\n]*))[ \t]*$", re.I)
+_MD_HEAD = re.compile(r'^#{1,6}\s')
+
+
+def _takes(txt):
+    """[(head, body)] for every Engineer's Take section in the file's module docstrings. The body
+    runs to the next markdown heading or the end of the docstring; the bare form's inline prose is
+    its first body line."""
+    out = []
+    for doc in _MODULE_DOC.finditer(txt):
+        lines = doc.group(1).splitlines()
+        for i, ln in enumerate(lines):
+            m = _TAKE_HEAD.match(ln.strip())
+            if not m:
+                continue
+            body = [m.group(2) or '']
+            for nxt in lines[i + 1:]:
+                if _MD_HEAD.match(nxt.strip()):
+                    break
+                body.append(nxt)
+            out.append((m.group(0).strip(), '\n'.join(body)))
+    return out
+
+
 def c_engineers_takes():
     """Every ZP-X Lean file carries a filled Engineer's Take.
 
     Fails on a MISSING section, not only an empty or TODO-flagged one. The
     DEFERRED_TAKES backlog is tolerated as a WARN (owed, not exempt); TAKE_EXEMPT
-    files are skipped. The heading match allows both the '## Engineer's Take'
-    markdown form and the bare 'Engineer's Take:' form (ZPM).
+    files are skipped. A section is what `_takes` finds - a head line inside a module-level
+    block comment - and a mention of the phrase anywhere else is not one (`TK-2`).
     """
     hits = []
-    # heading + body up to the next markdown heading or EOF; '#' is optional so the
-    # bare 'Engineer's Take:' form is recognised too.
-    take_re = r'((?:#+\s*)?Engineer.?s Take[^\n]*)\n(.*?)(?=\n#+\s|\Z)'
     for full in glob.glob(os.path.join(LEAN_ROOT, LEAN_GLOB), recursive=True):
         path = _rel(os.path.relpath(full, LEAN_ROOT))
         if '.lake' in path.split('/'):   # a `.lake` DIRECTORY, never a substring of a name
@@ -178,20 +209,17 @@ def c_engineers_takes():
         for pat in ('TODO (Tim)', 'TODO: Engineer'):
             if pat in txt:
                 hits.append(f'{path}: contains "{pat}"')
-        if not re.search(r'Engineer.?s Take', txt, re.I):
-            # no section at all
+        takes = _takes(txt)
+        if not takes:
+            # no section at all - a mention of the phrase is not a section
             if path in DEFERRED_TAKES:
                 warn(f"Engineer's Take deferred (owed, not exempt) - {path}")
             else:
-                hits.append(f'{path}: no "Engineer\'s Take" section')
+                hits.append(f'{path}: no "## Engineer\'s Take" section in a module block comment')
             continue
-        for m in re.finditer(take_re, txt, re.S | re.I):
-            head = m.group(1).strip()
-            # The bare `Engineer's Take: <prose>` form (ZPM) starts its prose on the heading line; a
-            # markdown heading's own text is a title, never the take.
-            inline = '' if head.startswith('#') else re.sub(r'(?i)^.*?Engineer.?s Take\s*:?', '', head)
-            if not _take_has_prose(inline + '\n' + m.group(2)):
-                hits.append(f'{path}: empty "{m.group(1).strip()}" section')
+        for head, body in takes:
+            if not _take_has_prose(body):
+                hits.append(f'{path}: empty "{head}" section')
     if hits:
         for h in hits:
             fail(f'Engineer\'s Take unfilled - {h}')
@@ -485,6 +513,16 @@ def c_untracked_pdfs():
 # bracketed span naming BEDROCK that does not read as a tag at all is UNREADABLE and blocks as an
 # untagged unit (`RR-1c`). An unbalanced code fence blocks too, since it hides the rest of the ledger
 # (`RR-1d`). The general open test below (counts, untagged units) keeps its OPEN-word trigger.
+#
+# ⚠ `RR-1e` / `RR-1f` (/rely round 3, 2026-11-24): TAGS ARE READ EVERYWHERE, AND ACROSS LINE WRAPS.
+# A fence used to exempt every line inside it, and its own fence lines, so three backticks were an
+# exemption any author could grant, and a line scanner could not read a tag wrapped onto a second
+# line. Now every line is read - fenced, fence line, inline code alike - and tags are parsed over each
+# blank-line-separated block with its line breaks joined, so a wrapped tag reads as one. Fences now
+# matter only to the GENERAL test's heading/row shapes, which a fence genuinely stops being.
+# The one documented example is the closure token with the literal placeholder date `YYYY-MM-DD`
+# (exact token): it neither opens nor closes anything, and on a heading, row or bullet - a unit - it
+# is malformed. A real closure date must lie between 2020-01-01 and today.
 
 DEFECTS_REL = os.path.join('.claude-local', 'DEFECTS.md')
 # The closing words of DEFECTS.md's header rule, for the GENERAL open test only (`_is_open`). The
@@ -492,9 +530,15 @@ DEFECTS_REL = os.path.join('.claude-local', 'DEFECTS.md')
 CLOSED_FORMS = ('CLOSED', 'WITHDRAWN', 'RESOLVED', 'RETRACTED', 'SUPERSEDED', 'DISCHARGED')
 CLOSING_WORDS = CLOSED_FORMS + ('ACCEPTED',)
 # The closure token, matched against the tag's severity part (everything after the kind's `·`).
-_CLOSURE = re.compile(r'^(BEDROCK(?:-CANDIDATE|-class)?) · CLOSED (\d{4}-\d{2}-\d{2})$')
+_CLOSURE = re.compile(r'^(BEDROCK(?:-CANDIDATE|-class)?) · CLOSED (\d{4}-\d{2}-\d{2}|YYYY-MM-DD)$')
+PLACEHOLDER_DATE = 'YYYY-MM-DD'   # the header's documented example, by exact token only
+EARLIEST_CLOSURE = '2020-01-01'
 # Any bracketed span naming BEDROCK, whatever its case or separators: each must read as a tag.
 _BEDROCK_SPAN = re.compile(r'\[[^\[\]\n]*bedrock[^\[\]\n]*\]', re.I)
+# A list item, a unit shape for the placeholder rule alongside headings and rows.
+_BULLET = re.compile(r'^\s*(?:[-*+]|\d+[.)])\s')
+# A CommonMark backtick fence: at most 3 spaces of indent, an info string holding no backtick.
+_FENCE_OPEN = re.compile(r'^ {0,3}(`{3,})([^`]*)$')
 # Withdrawn closures, for the GENERAL open test only.
 _UNCLOSE = re.compile(r'\b(?:NOT|NEVER)\s+(?:YET\s+)?(?:%s)\b|\bRE-?OPEN|\bPARTLY\s+CLOSED\b|\bstill\s+OPEN\b'
                       % '|'.join(CLOSED_FORMS), re.I)
@@ -530,7 +574,8 @@ def _closure(tag_sev):
     further segment is 'open'. Any further segment that is not exactly the token - a lowercase
     `closed`, a missing or impossible date, a second word, a `-` for the `·` - is 'malformed', which
     blocks like 'open' and is reported separately so it can be fixed rather than mistaken for a
-    status."""
+    status. A real date outside [2020-01-01, today] is 'malformed'. The placeholder `YYYY-MM-DD` gives
+    'example', which the caller honours only off a unit line."""
     import datetime
     s = tag_sev.strip()
     if '·' not in s and not re.search(r'\bclosed\b', s, re.I):
@@ -538,31 +583,59 @@ def _closure(tag_sev):
     m = _CLOSURE.match(s)
     if not m:
         return 'malformed'
+    if m.group(2) == PLACEHOLDER_DATE:
+        return 'example'
     try:
-        datetime.date.fromisoformat(m.group(2))
+        d = datetime.date.fromisoformat(m.group(2))
     except ValueError:
+        return 'malformed'
+    if not (datetime.date.fromisoformat(EARLIEST_CLOSURE) <= d <= datetime.date.today()):
         return 'malformed'
     return 'closed'
 
 
-def _blocking_tags(text):
-    """(open_or_malformed, unreadable) for one line - the release-blocking leg's whole input.
+def _tags_by_line(lines):
+    """{line_no: ([(grade_or_None, sev_text)], [unreadable_span])} keyed by the line each tag STARTS on.
 
-    `open_or_malformed`: [(grade, state)] for each CONTENT BEDROCK / BEDROCK-CANDIDATE tag on the line
-    that does not carry the closure token. `unreadable`: bracketed spans naming BEDROCK that do not
-    read as a tag. The line's PROSE is never consulted: only the tags."""
-    hits, readable = [], set()
-    for m in _TAG.finditer(text):
-        g = _grade(m.group(1), m.group(2))
-        if g is None:
-            continue
-        readable.add(m.span())
-        if _blocks_release(g):
-            st = _closure(m.group(2))
-            if st != 'closed':
-                hits.append((g, st))
-    unreadable = [s.group(0) for s in _BEDROCK_SPAN.finditer(text) if s.span() not in readable]
-    return hits, unreadable
+    Tags are parsed over each blank-line-separated block with its line breaks (and the indentation
+    and trailing space around them) joined into one space, so a tag wrapped across lines reads as one
+    (`RR-1f`). Every line is read, fenced or not (`RR-1e`)."""
+    import bisect
+    out = {}
+
+    def flush(block):
+        if not block:
+            return
+        starts, parts, pos = [], [], 0
+        for k, (n, s) in enumerate(block):
+            s = s.rstrip() if k == 0 else s.strip()
+            starts.append(pos)
+            parts.append(s)
+            pos += len(s) + 1
+        joined = ' '.join(parts)
+
+        def at(p):
+            return block[bisect.bisect_right(starts, p) - 1][0]
+        readable = set()
+        for m in _TAG.finditer(joined):
+            g = _grade(m.group(1), m.group(2))
+            if g is None:
+                continue
+            readable.add(m.span())
+            out.setdefault(at(m.start()), ([], []))[0].append((g, m.group(2)))
+        for sp in _BEDROCK_SPAN.finditer(joined):
+            if sp.span() not in readable:
+                out.setdefault(at(sp.start()), ([], []))[1].append(sp.group(0))
+
+    block = []
+    for n, raw in enumerate(lines, 1):
+        if raw.strip():
+            block.append((n, raw))
+        else:
+            flush(block)
+            block = []
+    flush(block)
+    return out
 
 
 def _is_open(text):
@@ -622,10 +695,20 @@ def _rank(g):
     return (not blocks, _SEVERITIES.index(g[1]), g[0] != 'content')
 
 
-def _unit_grade(text):
-    """The most blocking readable tag in `text`, or None when no tag reads."""
-    grades = [g for g in (_grade(m.group(1), m.group(2)) for m in _TAG.finditer(text)) if g]
+def _unit_grade(grades):
+    """The most blocking of the readable grades given, or None when there are none."""
     return min(grades, key=_rank) if grades else None
+
+
+def _fence_step(ln, fence):
+    """The fence state after line `ln`: None outside a fence, else the opening run of backticks. A
+    CommonMark opener has at most 3 spaces of indent and an info string with no backtick (so a line
+    that merely BEGINS with inline code is not one); the closer is a run at least as long, alone."""
+    if fence is None:
+        m = _FENCE_OPEN.match(ln)
+        return m.group(1) if m else None
+    m = re.match(r'^ {0,3}(`{3,})\s*$', ln)
+    return None if m and len(m.group(1)) >= len(fence) else fence
 
 
 def scan_defects(text):
@@ -635,22 +718,34 @@ def scan_defects(text):
     `malformed` lines are ALSO in `units` (they block as open content bedrock); the list exists so
     the report can say the closure token was attempted and is wrong, rather than calling it open."""
     units, untagged, malformed = [], [], []
-    fence, fence_at = False, 0
-    for n, raw in enumerate(text.splitlines(), 1):
+    lines = text.splitlines()
+    tags = _tags_by_line(lines)
+    fence, fence_at = None, 0
+    for n, raw in enumerate(lines, 1):
         ln = raw.rstrip()
-        if ln.lstrip().startswith('```'):
-            fence, fence_at = (not fence), n
-            continue
-        if fence:
-            continue
-        hits, unreadable = _blocking_tags(ln)
-        m = _HEADING.match(ln)
-        r = None if m else _ROW.match(ln)
+        in_fence = fence is not None
+        fence = _fence_step(ln, fence)
+        if fence is not None and not in_fence:
+            fence_at = n
+        fence_line = in_fence or fence is not None   # inside, opening or closing a fence
+        grades, unreadable = tags.get(n, ([], []))
+        m = None if fence_line else _HEADING.match(ln)
+        r = None if (m or fence_line) else _ROW.match(ln)
         label = (m.group(2) if m else r.group(1) if r else ln.strip()).strip()[:90]
         if unreadable:
             # RR-1c: a span naming BEDROCK that does not read as a tag cannot be graded or closed.
             untagged.append((n, 'unreadable bedrock tag %s - %s' % (unreadable[0][:40], label)))
             continue
+        # The placeholder example is honoured only off a unit line (heading, row, bullet).
+        unit_line = bool(_HEADING.match(ln) or _ROW.match(ln) or _BULLET.match(ln))
+        hits = []
+        for g, sev in grades:
+            if _blocks_release(g):
+                st = _closure(sev)
+                if st == 'example' and unit_line:
+                    st = 'malformed'
+                if st not in ('closed', 'example'):
+                    hits.append((g, st))
         if hits:
             # RR-1b: a release-blocking tag WITHOUT the closure token is open, whatever the prose says
             # and whatever the line's shape. The most blocking open tag on the line is the unit.
@@ -659,9 +754,9 @@ def scan_defects(text):
             if any(s == 'malformed' for _, s in hits):
                 malformed.append((n, label))
             continue
-        g = _unit_grade(ln)
+        g = _unit_grade([gr for gr, _ in grades])
         if _blocks_release(g):
-            continue   # every release-blocking tag on the line carries the closure token
+            continue   # every release-blocking tag on the line carries the closure token (or is the example)
         if m or r:
             judged = m.group(2) if m else r.group(1) + ' | ' + r.group(2)
             if not _is_open(judged):
@@ -674,8 +769,8 @@ def scan_defects(text):
             untagged.append((n, label))
         else:
             units.append((n, g[0], g[1], label))
-    if fence:
-        # RR-1d: an unclosed fence hid every line after it, so nothing below it was graded.
+    if fence is not None:
+        # RR-1d: an unclosed fence hid every heading and row after it from the general test.
         untagged.append((fence_at, 'unbalanced ``` fence opened here hides the rest of the ledger'))
     return {'units': units, 'untagged': untagged, 'malformed': malformed}
 
@@ -887,7 +982,31 @@ def selftest():
              'malformed'),
             ('malformed other status word', '## X-66 [content · BEDROCK · RESOLVED 2026-11-24]\n',
              'malformed'),
-            ('malformed short date', '## X-67 [content · BEDROCK · CLOSED 2026-11]\n', 'malformed'))
+            ('malformed short date', '## X-67 [content · BEDROCK · CLOSED 2026-11]\n', 'malformed'),
+            # RR-1e (round 3): a fence exempts nothing from the tag read.
+            ('RR-1e fenced heading tag blocks', '```\n## X-70 OPEN %s\n```\n' % T, True),
+            ('RR-1e fenced text row tag blocks', '```text\n| **X-71** | OPEN | f %s |\n```\n' % T, True),
+            ('RR-1e tag on fence-open line blocks', '``` %s\nx\n```\n' % T, True),
+            ('RR-1e tag on fence-close line blocks', '```\nx\n``` %s\n```\n' % T, True),
+            ('RR-1e inline-code pseudo-fence tag', '```a``` note\n## X-72 OPEN %s\n```b``` note\n' % T, True),
+            ('RR-1e inline-code pseudo-fence head', '```a``` note\n## X-73 OPEN\n```b``` note\n', True),
+            ('RR-1e 4-space pseudo-fence head', '    ```\n## X-74 OPEN\n    ```\n', True),
+            ('RR-1e header placeholder passes',
+             '```text\nA unit is CLOSED only when its tag reads `[content · BEDROCK · CLOSED YYYY-MM-DD]`.\n'
+             '```\n', False),
+            ('RR-1e placeholder on a heading', '## X-75 [content · BEDROCK · CLOSED YYYY-MM-DD]\n', 'malformed'),
+            ('RR-1e placeholder on a bullet', '- **X-76** [content · BEDROCK · CLOSED YYYY-MM-DD]\n', 'malformed'),
+            ('RR-1e lowercase placeholder', 'see [content · BEDROCK · CLOSED yyyy-mm-dd]\n', 'malformed'),
+            # RR-1f (round 3): a tag wrapped across lines is still one tag.
+            ('RR-1f wrapped bullet tag blocks', '- **X-77** OPEN, unfixed [content ·\n  BEDROCK]\n', True),
+            ('RR-1f wrapped heading tag blocks', '## X-78 CLOSED [content ·\nBEDROCK]\n', True),
+            ('RR-1f wrapped closure token passes', '- **X-79** [content · BEDROCK ·\n  CLOSED 2026-11-01]\n',
+             False),
+            # Closure dates: none after today, none before 2020.
+            ('future closure date', '## X-80 [content · BEDROCK · CLOSED 2099-12-31]\n', 'malformed'),
+            ('ancient closure date', '## X-81 [content · BEDROCK · CLOSED 0001-01-01]\n', 'malformed'),
+            ('closure date 2019-12-31', '## X-82 [content · BEDROCK · CLOSED 2019-12-31]\n', 'malformed'),
+            ('closure date 2020-01-01 passes', '## X-83 [content · BEDROCK · CLOSED 2020-01-01]\n', False))
     for label, text, want in ledger_controls:
         got = _blocks(text)
         if want == 'malformed':
@@ -955,7 +1074,19 @@ def selftest():
                     ('TK-1 filled take passes',
                      H + 'The order has a least element and nothing sits below it.\n-/\n' + CODE, True),
                     ('TK-1 bare form, inline, passes',
-                     "/-! Engineer's Take: the snap is a one-way step.\n-/\n" + CODE, True))):
+                     "/-! Engineer's Take: the snap is a one-way step.\n-/\n" + CODE, True),
+                    # TK-2 (round 3): a mention of the phrase is not a section.
+                    ('TK-2 comment mention fails', "-- no Engineer's Take yet\n" + CODE, False),
+                    ('TK-2 docstring sentence fails',
+                     "/-! # E\nThe Engineer's Take for this file is owed. -/\n" + CODE, False),
+                    ('TK-2 Takeaways heading fails',
+                     "/-!\n## Engineer's Takeaways for later\nsee elsewhere\n-/\n" + CODE, False),
+                    ('TK-2 heading in a /-- doc fails',
+                     "/--\n## Engineer's Take\nThe order has a least element.\n-/\n" + CODE, False),
+                    ('TK-2 /-! ## heading passes',
+                     "/-! ## Engineer's Take\nThe order has a least element.\n-/\n" + CODE, True),
+                    ('TK-2 /- header, bare form, passes',
+                     "/-\n  Engineer's Take:\n  The order has a least element.\n-/\n" + CODE, True))):
                 d = os.path.join(td, 'tk%d' % j)
                 rel = 'ZeroParadox/Order/Take.lean'
                 os.makedirs(os.path.dirname(os.path.join(d, rel)))
