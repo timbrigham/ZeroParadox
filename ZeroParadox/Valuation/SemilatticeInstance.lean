@@ -478,8 +478,9 @@ It closes the one-factor gap between §Ib and `t_iz_complete`'s `h_bound` hypoth
 `t_iz_r1_t3_geometric_bound` yields `‖Sₙ‖ ≤ ‖S₀‖ · (2⁻¹)ⁿ`, and `IsDepthChain` forces
 `‖S₀‖₂ ≤ 1`, which absorbs the factor. Worked through in `SemilatticeInstance.md`. -/
 
-/-- h_bound derived from ZP-A axioms via depth chain.
-    Optional transparency lemma — t_iz_complete functions without it.
+/-- `Statement:` the bound `h_bound` of `t_iz_complete`, from three hypotheses: `hS` (the chain is
+    nowhere zero) and `IsDepthChain` live in ℚ_[2] and no ZP-A condition discharges them;
+    only `IsStrictStateSequence` is a ZP-A lattice condition. Optional transparency lemma — t_iz_complete functions without it.
     `IsDepthChain` ties v₂(Sₙ) to a ℕ depth index; `IsStrictStateSequence` (the occurrence)
     gives strict growth; `depths 0 : ℕ` forces ‖S 0‖₂ ≤ 1, absorbing the S₀ factor. -/
 theorem t_iz_h_bound_from_depth_chain

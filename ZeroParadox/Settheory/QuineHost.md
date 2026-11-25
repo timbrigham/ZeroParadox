@@ -11,21 +11,19 @@ well-founded (`quineAtomHost_not_wellFounded`), and no `ZFSet` is its own sole m
 
 As cited in ZP-E (Remark R-AFA), Aczel records four anti-foundation axioms, and AFA, FAFA and SAFA each admit
 exactly one reflexive set (x = {x}) while being pairwise incompatible (Aczel 1988, *Non-Well-Founded Sets*,
-CSLI Lecture Notes 14, Corollary 4.28; Appendix A, p. 108). These two locators were not retrieved as of
-2026-11-24. Supplying exactly one Quine atom therefore does not single AFA out: AFA is adopted as the canonical
+CSLI Lecture Notes 14, Corollary 4.28, p. 55; Appendix A, p. 108). Supplying exactly one Quine atom therefore does not single AFA out: AFA is adopted as the canonical
 host, not selected by the membership structure.
 
 ## Boffa, and the mechanism that is checked
 
-As cited in ZP-E, Boffa's axiom implies BA₁ (Aczel 1988, Exercise 5.14(i); p. 59, not retrieved as of
-2026-11-24), and BA₁ alone makes the reflexive sets a proper class (Aczel 1988, Proposition 5.1, p. 57, as
+As cited in ZP-E, Boffa's axiom implies BA₁ (Aczel 1988, Exercise 5.14(i), p. 65: BAFA ⇔ BA₁ + BA₂), and BA₁ alone makes the reflexive sets a proper class (Aczel 1988, Proposition 5.1, p. 57, as
 `boffa_fails_reflexive_unique`'s docstring cites it). No part of either Boffa axiom is formalized here. The
 checked part is the mechanism, that (Y') does not force (Z'): `boffa_fails_reflexive_unique`, a two-element
 toy in which every element is its own only member.
 
 ## What stays a commitment
 
-Demanding a host bottom b = {b} and its uniqueness among reflexive sets, the two fields of `QuineAtomHost`,
-is the commitment (CC-2). `Reading:` a host bottom b = {b, x} with x ≠ b would add members carrying their own
+Adopting AFA is CC-2's commitment. Its Lean abstraction is `QuineAtomHost`, whose two fields demand a host
+bottom b = {b} and its uniqueness among reflexive sets. `Reading:` a host bottom b = {b, x} with x ≠ b would add members carrying their own
 membership chains; b = {b} is the minimal option. Every inhabited carrier meets `QuineAtomHost`
 (`trivialQuineAtomHost`), so membership in the class carries no information without the `mem` named.

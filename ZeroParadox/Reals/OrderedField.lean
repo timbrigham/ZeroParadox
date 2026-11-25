@@ -81,12 +81,12 @@ section AxB1
     the standard notion. Recorded here rather than quietly corrected, so that the same
     unidentified-notion failure is easier to spot if it appears elsewhere.
 
-    **Second standard name, pointer only (added 2026-08-02).** Where a bottom element exists,
+    **Second standard name, pointer only.** Where a bottom element exists,
     `bot ⋖ a` is Mathlib's notion of `a` being an **atom**: `bot_covBy_iff`
     (`Mathlib/Order/Atoms.lean`) states `⊥ ⋖ a ↔ IsAtom a`, so `HasFirstStep bot` says **the order
     has an atom** (`∃ a, IsAtom a`). *(Not "AX-B1 is atomicity": `IsAtomic` is strictly stronger —
-    it requires every non-bottom element to sit above an atom, which `bot_covBy_iff` does not give.
-    Corrected 2026-08-02.)* Before this note the framework had been describing a named
+    it requires every non-bottom element to sit above an atom, which `bot_covBy_iff` does not give.)*
+    Before this note the framework had been describing a named
     order-theoretic notion longhand; **measure the corpus count on demand rather than recording one
     here** — a count written at the site of the only mentions falsifies itself, which the first draft
     of this very note did by asserting "zero".
@@ -360,10 +360,13 @@ completion of ℚ — the first bullet is therefore wider than Ostrowski and res
   and `axb1_fails_in_ordered_field` (via density and `CovBy`): the same fact reached two ways,
   with distinct statements. They are **not** the same declaration and no equation between them is
   asserted.
-  `Reading:` CARRIER — the surreal field No (Conway, *On Numbers and Games*, 1976) is cited as a
-  linearly ordered field, so `f_snap_impossible` would apply there: 0 of No has no first step. No is
-  not in the pinned Mathlib (not located as of 2026-11-24, searched: file names `*urreal*` and the
-  text `Surreal` across the Mathlib checkout and every other Lake package, 0 hits). The value ε₀ sits
+  `Reading:` CARRIER — the surreal numbers No (Conway, *On Numbers and Games*, 1976; not retrieved,
+  cited as a standard fact) form a linearly ordered field, and a proper class rather than a set.
+  `f_snap_impossible` quantifies over a Lean type, so it would apply only to a model of No as a Lean
+  type, where 0 would have no first step; the pinned libraries have none (not located as of
+  2026-11-25, searched: file names `*urreal*` and the case-insensitive text `Surreal` and `PGame`
+  across the Mathlib checkout and every other Lake package; 0 hits for the first two, and the
+  `PGame` hits are only the identifier `sharpGameHypotheses` in kolmogorov-complexity-lean). The value ε₀ sits
   in No among the positive elements `f_snap_blocked` undercuts; in `Ordinal` 0 is covered by its
   successor 1 (Mathlib `Order.covBy_succ`). One carrier of the value ε₀ has a first step above its 0
   and the other does not.

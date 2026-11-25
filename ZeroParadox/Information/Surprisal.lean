@@ -80,7 +80,8 @@ theorem t1_distributions_distinct : distP ≠ distQ := by
 
 -- Statement: RP-1 as the hypothesis `hrp1`: a representation `r` whose distribution at each state has
 -- support within that state is `distP` at `nullSt` and `distQ` at `firstSt`, so T1's uniqueness holds
--- given `hrp1`. CONTROL: `exists_spread_pmf` gives a distribution that fails `hrp1` and is not a point mass.
+-- given `hrp1`. CONTROL: `exists_spread_pmf` at `x ≠ y` gives a distribution that fails `hrp1` and is not
+-- a point mass (at `x = y` its support is one point).
 example (r : BinaryState → PMF BinaryState) (hrp1 : ∀ s, (r s).support ⊆ {s}) :
     r nullSt = distP ∧ r firstSt = distQ := by
   have pure_of : ∀ (p : PMF BinaryState) (a : BinaryState), p.support ⊆ {a} → p = PMF.pure a :=

@@ -15,17 +15,27 @@ Self-contained within information theory and real analysis. Imports ZP-B concept
 disconnectedness, clopen balls) but not as a Lean dependency — ZP-C's theorems do not require the p-adic
 structure.
 
-## P₀, the incompressibility threshold (restating ZP-C D1)
+## P₀, restated over one sequence (ZP-C D1)
 
 ZP-C D1 writes P₀ = lim K(x|n)/n for a string `x` of length `n`, which does not say which string of
-each length the limit runs through, and asserts a limit that need not exist. The well-formed restatement used here: for an infinite binary sequence
-`w`, P₀(w) is the algorithmic entropy rate, lim sup over `n` of K(w↾n | n)/n, with K Kolmogorov complexity
-relative to a fixed universal machine. The repair is to take prefixes of one sequence, and the lim sup in
-place of the limit. P₀ and the length-conditional form K(w↾n | n) are not stated in the corpus (not located
-as of 2026-11-24, searched: `def`/`theorem`/`lemma`/`abbrev` names matching Kolmogorov, Incompress,
-EntropyRate, P₀ and P0, and the text `condK`, over `ZeroParadox/**/*.lean`). The pinned
-kolmogorov-complexity-lean defines `Kolmogorov.condK`, so the form is expressible there. What is in the
-build, in experimental files:
+each length the limit runs through, and asserts a limit that need not exist. The well-formed restatement
+used here: for an infinite binary sequence `w`, P₀(w) is the upper rate, lim sup over `n` of K(w↾n | n)/n,
+with K Kolmogorov complexity relative to a fixed universal machine. The repair is to take prefixes of one
+sequence, and the lim sup in place of the limit. Without the conditioning on `n`, the lim sup of
+K(w↾n)/n is the effective strong (packing) dimension Dim(w) (Athreya, Hitchcock, Lutz and Mayordomo,
+*Effective strong dimension in algorithmic information and computational complexity*, SIAM J. Comput.
+37(3), 2007; arXiv cs/0211025, Corollary 6.2), and the lim inf is effective Hausdorff dimension
+(Mayordomo, Inform. Process. Lett. 84, 2002, as cited there), so the lim sup picks the upper of the two.
+Whether conditioning on `n` changes the value is not claimed here. P₀ and the length-conditional form
+K(w↾n | n) are not stated in the corpus (not located as of 2026-11-25, searched: `def`/`theorem`/`lemma`/`abbrev`
+names matching Kolmogorov, Incompress, EntropyRate, P₀ and P0, one hit, `ae_incompressible`, below, and
+the text `condK`, no hit, over `ZeroParadox/**/*.lean`). The pinned kolmogorov-complexity-lean defines
+`Kolmogorov.condK`, so the form is expressible there. It also defines a point's lower and upper static
+dimensions, the lim inf and lim sup of normalized precision complexity in a computable metric space
+(`Kolmogorov.PointToSet.staticPointDimensions`,
+`KolmogorovMathlib/PointToSet/ComputableMetric/StaticDimensions.lean`); the corpus does not use it (no
+hit for `staticPointDimensions` over `ZeroParadox/**/*.lean`, 2026-11-25). What is in the build, in
+experimental files:
 
 - for each prefix-free decoder `D`, almost every fair-coin tape has a constant bounding how much `D` compresses
   any of its prefixes (`ae_incompressible`, `ZeroParadox/Information/MaxEntropy.lean`; conjunct 2 of

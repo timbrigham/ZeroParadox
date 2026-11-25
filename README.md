@@ -140,7 +140,7 @@ The full labelled account - the supporting commitments (AX-B1, AX-G1, AX-G2, MP-
 
 ## Question Register
 
-The framework's open questions, design commitments, and resolved questions are tracked in the **[Claims Ledger](CLAIMS.md)** - Tier 6 (open: the `Classical.choice` necessity question, OQ-E2, the Lawvere conjecture), Tier 5 (chosen commitments), and the Resolved-questions list.
+The framework's open questions, design commitments, and resolved questions are tracked in the **[Claims Ledger](CLAIMS.md)** - Tier 6 (open: the `Classical.choice` necessity question, OQ-E2, the Lawvere conjecture), Tier 5 (chosen commitments and design principles), and the Resolved-questions list.
 
 **Verification status:** ZP-A through ZP-N, ZP-P, ZP-Q, and ZP-R, plus the ZP-H native-category functors and `mc1_correspondence`, are machine-verified in Lean 4. A second-prover cross-check (e.g. Rocq) is not yet done.
 
