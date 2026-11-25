@@ -73,8 +73,9 @@ Tim named three. Each one splits into the predicates below.
   discrete/continuous contrast of (b).
   Reading: INVERSION, the long way round is a two-chart reading: one rational orbit `2ⁿ` tends to 0 in
   `ℚ_[2]` and to infinity in ℝ (`doubling_place_dichotomy`). Under real doubling no sequence from 0 of
-  ℝ meets `GReturnToStart` (`real_dbl_no_return_zero`). The ordinal tower from 0 closes at ε₀, never
-  back at 0 of `Ordinal` (`ordinal_tower_no_return`).
+  ℝ meets `GReturnToStart` (`real_dbl_no_return_zero`). The ordinal tower from 0 of `Ordinal` does not
+  meet `GReturnToStart` (`ordinal_tower_no_return`); the proof: its tail's closure is ε₀
+  (`ordinalTowerMotion_stageClosure`), and ε₀ ≠ 0 of `Ordinal` (`epsilon0_ne_zero`).
 
 ## AX-B1 has two faces
 
@@ -106,7 +107,8 @@ and backward its norm grows without bound (`fieldLine_two_ends`).
 
 `given_then_fixed_destination` is the general form. Take a motion whose UP is unchanged along steps, a
 point `p` that is the limit sink off `q`, and a run from off `q` with no landing among its stages. Then
-the run closes at UP of its start, `p` is in that closure, and the run never arrives at `p` by steps. It
+the run closes at UP of its start, `p` is in that closure, and the start `s 0` does not arrive at `p`
+(`¬ M.Arrives p (s 0)`). It
 runs one way. `fixed_destination_two_charts` applies it twice: the 2-adic line from 2 closes at 0 of
 `ℚ_[2]`, the real one at ∞ of `OnePoint ℝ`. The destination is fixed. The step count is not, because the
 run never arrives.

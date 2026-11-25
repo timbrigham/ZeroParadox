@@ -12,7 +12,7 @@ import ZeroParadox.Information.BottomTotality
 import ZeroParadox.Information.Surprisal
 
 /-!
-# The givens at the die level: each a predicate on a `Motion`, proved or refuted per chart
+# The givens at the die level: each a `Prop` (all but `GConnected`, `GJoined` on a die `Motion`), proved or refuted per chart
 
 ## Engineer's Take
 
@@ -905,8 +905,10 @@ section GivensIndex
 
 /-! ### § V. The limits (ruling 85) -/
 
-/-- `Statement:` LIMIT (a): 0 of `ℚ_[2]`, which meets `GMinMax` under doubling (`q2_GMinMax`; a
-constant map meets it too, `const_GMinMax`), never leaves under that motion. -/
+/-- `Statement:` no run of doubling from 0 of `ℚ_[2]` leaves it at the first step
+(`¬ GLeavesByRun dblQ2 (OnePoint.some 0)`). `Reading:` CARRIER, limit (a): 0 of `ℚ_[2]` meets
+`GMinMax` under doubling (`q2_GMinMax`; a constant map meets it too, `const_GMinMax`), and departure
+comes from another chart (`machine_leavesByRun`, `slot_occurrence_ae`). -/
 theorem ZeroParadox.q2_not_leavesByRun_zero :
     ¬ ZeroParadox.GLeavesByRun ZeroParadox.dblQ2 (OnePoint.some 0) := by
   rintro ⟨s, hs, h0, h1⟩

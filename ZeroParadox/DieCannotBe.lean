@@ -5432,7 +5432,8 @@ example : ¬ ZeroParadox.Motion.unitMotion.Loop := fun ⟨_, _, _, _, hne, _⟩ 
 #check @ZeroParadox.padic_two_poles            -- Statement: `×2` on `OnePoint ℚ_[2]`: `0` attracting, `∞` repelling; on `OnePoint ℂ` the roles are exchanged (`complex_two_poles`)
 
 /-! ### § XXXIX. The givens as predicates on a motion, per chart -/
--- Reading: CARRIER — each given is a `Prop` on a `Motion`, never a class field, proved or refuted per
+-- Reading: CARRIER — each given is a `Prop`, never a class field (all but `GConnected` and `GJoined`
+-- take a die `Motion`; those two take two points of a topological space), proved or refuted per
 -- chart beside its control in `ZeroParadox/Givens.lean`; no equation across carriers is stated.
 #check @ZeroParadox.GDiscrete                  -- Statement: some step moves, and every moving step is a cover one way or the other in a view `P`; `q2_GDiscrete` holds, `real_not_GDiscrete` fails
 #check @ZeroParadox.GMinMax                    -- Statement: `p` steps only to itself and is the limit sink off `q`; `q2_GMinMax` at 0 of `ℚ_[2]` under doubling, `const_GMinMax` the control

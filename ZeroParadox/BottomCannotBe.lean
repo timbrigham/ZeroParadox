@@ -118,8 +118,9 @@ example : (ZeroParadox.ZPSemilattice.bot : ZeroParadox.MachinePhase) = ZeroParad
 -- Statement: on the tree boundary `End = ℕ → Fin 2` under pointwise max (`instZPSemilatticeEnd`), ⊥
 -- is the all-zeros end `botEnd`.
 example : (ZeroParadox.ZPSemilattice.bot : ZeroParadox.End) = ZeroParadox.botEnd := rfl
--- Statement: `LT ℚ_[2]` does not synthesize here. Measured 2026-11-25 under `import Mathlib` (the
--- pinned library, no scope opened): `LT`, `LE` and `Preorder` on `ℚ_[2]` do not synthesize either.
+-- Statement: `LT ℚ_[2]` does not synthesize here. An order instance on `ℚ_[2]` in Mathlib: not
+-- located as of 2026-11-25, searched: `import Mathlib` (pinned, no scope opened), synthesis of
+-- `LT` / `LE` / `Preorder` on `ℚ_[2]`.
 #check_failure (inferInstance : LT ℚ_[2])
 -- Statement: under the norm preorder ℚ₂'s `0` is least, and the only point of norm `0`.
 example : ∀ x : ℚ_[2], ‖(0 : ℚ_[2])‖ ≤ ‖x‖ ∧ (‖x‖ = 0 ↔ x = 0) := fun x => ⟨by simp, norm_eq_zero⟩
