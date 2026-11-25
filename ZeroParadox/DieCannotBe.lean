@@ -72,6 +72,7 @@ import ZeroParadox.Multihomed.BendDie
 import ZeroParadox.Multihomed.TwoAdicBend
 import ZeroParadox.DieSameness
 import ZeroParadox.Computability.GapDecoder
+import ZeroParadox.Givens
 
 set_option maxHeartbeats 400000
 
@@ -5429,5 +5430,14 @@ example : ¬ ZeroParadox.Motion.unitMotion.Loop := fun ⟨_, _, _, _, hne, _⟩ 
 #check @ZeroParadox.complex_four_homeoIso      -- Statement: on `OnePoint ℂ`, any two of `c`, `conj c`, `c⁻¹`, `(conj c)⁻¹` give `HomeoIso`-related limit motions
 #check @ZeroParadox.conj_swaps_poles           -- Statement: every homeomorphism conjugating an expanding multiplier to a contracting one on `OnePoint K` exchanges `0` of `K` and `∞`
 #check @ZeroParadox.padic_two_poles            -- Statement: `×2` on `OnePoint ℚ_[2]`: `0` attracting, `∞` repelling; on `OnePoint ℂ` the roles are exchanged (`complex_two_poles`)
+
+/-! ### § XXXIX. The givens as predicates on a motion, per chart -/
+-- Reading: CARRIER — each given is a `Prop` on a `Motion`, never a class field, proved or refuted per
+-- chart beside its control in `ZeroParadox/Givens.lean`; no equation across carriers is stated.
+#check @ZeroParadox.GDiscrete                  -- Statement: some step moves, and every moving step is a cover one way or the other in a view `P`; `q2_GDiscrete` holds, `real_not_GDiscrete` fails
+#check @ZeroParadox.GMinMax                    -- Statement: `p` steps only to itself and is the limit sink off `q`; `q2_GMinMax` at 0 of `ℚ_[2]` under doubling, `const_GMinMax` the control
+#check @ZeroParadox.GReturnToStart             -- Statement: a sequence's tail is a run whose stage closure contains its start; `q2_arc_returnToStart` holds, `real_dbl_no_return_zero` fails
+#check @ZeroParadox.given_then_fixed_destination -- Statement: a limit sink off `q`, UP unchanged along steps, a run from off `q` with no landing: the run closes at UP of its start, holds the sink there, and never arrives. One way
+#check @ZeroParadox.q2_not_leavesByRun_zero    -- Statement: LIMIT — 0 of `ℚ_[2]` never leaves under doubling; `machine_leavesByRun` leaves `c₀`, ⊥ of `MachinePhase`
 
 end DieCannotBeIndex

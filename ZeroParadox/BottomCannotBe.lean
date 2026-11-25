@@ -66,6 +66,7 @@ import ZeroParadox.Valuation.UltrametricView
 import ZeroParadox.Valuation.PadicWavelet
 import ZeroParadox.Information.BottomTotality
 import ZeroParadox.Valuation.PadicKoopmanVladimirov
+import ZeroParadox.Givens
 import Mathlib.RingTheory.Valuation.PrimeMultiplicity
 import Mathlib.Order.FixedPoints
 import Mathlib.SetTheory.Ordinal.FixedPoint
@@ -892,5 +893,16 @@ example : ZeroParadox.Disjunctive (fun n => xor (ZeroParadox.champ n) false) := 
 -- minimal and maximal as being the totality of all of its representations?" Across charts the
 -- totality is a family indexed by chart, never a union of occupants (§ ROLE). "Minimal" is "fixed by
 -- one condition", not a measured complexity of the measure.
+
+/-! ### The givens at the die level: minimal and maximal at one point, and its limit -/
+
+-- Statement: 0 of `ℚ_[2]` steps only to itself under doubling and is its limit sink off ∞
+-- (`ZeroParadox/Givens.lean` § II-4).
+#check @ZeroParadox.q2_GMinMax
+-- Statement: ℤ_[2]'s 0, least in norm, is sent by `q2Val` to ⊤ of `ℕ∞`, and no other point is.
+-- Reading: COINCIDENCE; on any characteristic-0 field the same map fails (`field_no_GCoincidence`).
+#check @ZeroParadox.z2_GCoincidence
+-- Statement: LIMIT, 0 of `ℚ_[2]` never leaves under doubling; departure is supplied by another chart.
+#check @ZeroParadox.q2_not_leavesByRun_zero
 
 end CannotBeIndex
