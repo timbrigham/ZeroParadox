@@ -140,8 +140,8 @@ ZP-E (full synthesis: ZP-A, ZP-B, ZP-C, ZP-D), ZP-K (`KleeneStructure`), plus
 ## § III-C, the depth-chain bridge, in full
 
 `t_iz_complete` is formally complete without this section; it exists as a transparency layer for a
-reviewer who wants to trace the chain from the ZP-A lattice axioms to convergence without meeting
-an ungrounded hypothesis.
+reviewer who wants to trace the chain from its hypotheses to convergence. Two of those hypotheses,
+`hS` (the chain is nowhere zero) and `IsDepthChain`, live in ℚ₂ and no ZP-A condition discharges them.
 
 The gap it closes is one factor wide. `t_iz_complete` takes `h_bound : ∀ n, ‖Sₙ‖ ≤ (2⁻¹)ⁿ`. The §Ib
 theorems derive strict valuation growth from IsDepthChain plus IsStrictStateSequence, but `t_iz_r1_t3_geometric_bound`

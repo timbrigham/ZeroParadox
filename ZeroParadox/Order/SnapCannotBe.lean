@@ -15,6 +15,7 @@ import ZeroParadox.Information.TapeHalting
 import ZeroParadox.Information.PoleWithinEnsemble
 import ZeroParadox.Valuation.TowerTapeSnap
 import ZeroParadox.Information.StartBit
+import ZeroParadox.Settheory.QuineDichotomy
 
 /-!
 # Machine-checked characterization index of the snap ⊥ → ε₀ — what the snap IS and IS NOT
@@ -98,7 +99,19 @@ example : let S : ℕ → ℕ := fun n => if n = 0 then 0 else 2
       ¬ (S 0 ⋖ S 1) :=
   ⟨rfl, by decide, ⟨1, Nat.lt_succ_self 0, fun c h1 h2 => by omega⟩,
     fun h => h.2 (c := 1) (by decide) (by decide)⟩
-#check @ZeroParadox.t_snap_given_cover               -- Statement: `t_snap_given` with the cover as a third hypothesis `hcov`, in ZP-A's induced order (`zpSemilatticeSup`); concludes `t_snap_given`'s triple and `bot ⋖ S 1`, the latter `hcov` transported along `hcc1`, and `hocc` follows from `hcov`. The run above meets every binder but `hcov`
+-- `Statement:` on ℕ the run 0, 2, 4, … starts at ⊥ = 0 and is a state sequence, every point has a
+-- first step, and no step of the run is a cover. Reading: a first step at ⊥ does not select the run's
+-- steps.
+open ZeroParadox ZeroParadox.ZPSemilattice in
+example :
+    let S : ℕ → ℕ := fun n => 2 * n
+    S 0 = bot ∧ IsStateSequence S ∧ (∀ m : ℕ, HasFirstStep m) ∧ ∀ n, ¬ (S n ⋖ S (n + 1)) := by
+  refine ⟨rfl, ⟨fun n => 2 * (n + 1), fun n => ?_⟩,
+    fun m => ⟨m + 1, Nat.lt_succ_self m, fun c h1 h2 => by omega⟩,
+    fun n h => h.2 (c := 2 * n + 1) (by dsimp only; omega) (by dsimp only; omega)⟩
+  show 2 * (n + 1) = max (2 * n) (2 * (n + 1))
+  omega
+#check @ZeroParadox.t_snap_given_cover              -- Statement: `t_snap_given` with the cover as a third hypothesis `hcov`, in ZP-A's induced order (`zpSemilatticeSup`); concludes `t_snap_given`'s triple and `bot ⋖ S 1`, the latter `hcov` transported along `hcc1`, and `hocc` follows from `hcov`. The run above meets every binder but `hcov`
 -- `Statement:` the run above, in that order: 2 does not cover 0. The order is passed with `@`, since
 -- a `letI` loses to ℕ's own `<`.
 example : ¬ @CovBy ℕ (ZeroParadox.zpSemilatticeSup ℕ).toLT 0 2 := fun h =>
@@ -113,7 +126,17 @@ example : ¬ @CovBy ℕ (ZeroParadox.zpSemilatticeSup ℕ).toLT 0 2 := fun h =>
 #check @ZeroParadox.phase_snap_of_MLRandom            -- Statement: CORNER, on `WithBot Ordinal` under join `max` (`ZeroParadox/Information/SnapEpsilonZero.lean`): if `w` is Martin-Löf random for `trials p hp` with `0 < p`, some run's `S 1` covers ⊥ of `WithBot Ordinal`, equals the snap `↑0 ≠ ↑ε₀`, and `phaseUpAndOver.up` sends it to `↑ε₀`; one way
 #check @ZeroParadox.epsilonOrZero_snap_of_MLRandom    -- Statement: COVER, on `EpsilonOrZero`, the carrier of the example above, under join `max`: if `w` is as above, some run's `S 1` covers `epsilonOrZero_bot`, ⊥ of `EpsilonOrZero` (value 0 of `Ordinal`), and has value ε₀ ≠ 0; one way. The two are related by `epsilonOrZeroIsoLanding_spec`, and neither is the snap's only form
 #check @ZeroParadox.snap_ae_of_firstStep              -- Statement: if ⊥ of `L` has a first step (`BotHasFirstStep L`) and `0 < p ≤ 1`, then for `trials p hp`-almost every tape `w` some `φ` and `hw` give `snap_of_two_requirements`'s conclusion; one way. Almost every, not every: the all-`false` tape never fires. No map from ⊥ of `L` to a tape or to `trials p hp` appears
-#check @ZeroParadox.mlRandom_and_snap_ae              -- Statement: the same, with `MLRandom (trials p hp) w` conjoined: almost every tape is Martin-Löf random for `trials p hp` and gives that conclusion; one way
+-- `Statement:` at `L := MachinePhase` the first step is proved (`t_snap_derived_cover`), so there
+-- `snap_ae_of_firstStep` needs only `0 < p ≤ 1`; almost every tape, not every.
+open ZeroParadox ZeroParadox.ZPSemilattice MeasureTheory in
+example (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p) :
+    ∀ᵐ w ∂(trials p hp), ∃ (φ : Bool → MachinePhase) (hw : ∃ k, w k = true),
+      let S := φ ∘ firedRun w hw
+      (S 0 = bot ∧ S 1 ≠ S 0 ∧ IsStateSequence S) ∧
+      ((S 0 ≠ S 1 ∧ S 1 ≠ S 0 ∧ join (S 0) (S 1) = S 1) ∧
+        letI := zpSemilatticeSup MachinePhase; (bot : MachinePhase) ⋖ S 1) :=
+  snap_ae_of_firstStep ⟨c₁, t_snap_derived_cover.2⟩ p hp hp0
+#check @ZeroParadox.mlRandom_and_snap_ae             -- Statement: `snap_ae_of_firstStep` (general in `L`, hypothesis `BotHasFirstStep L`), with `MLRandom (trials p hp) w` conjoined: almost every tape is Martin-Löf random for `trials p hp` and gives that conclusion; one way
 #check @ZeroParadox.maxEntropy_mlRandom_and_snap_ae    -- Statement: the same, with `0 < p` replaced by `binEntropy p = log 2`, the maximum-entropy coin `p = 1/2` (`ZeroParadox/Information/MaxEntropy.lean`); one way. No tape law of ⊥ of `L` is constructed, and `BotHasFirstStep L` stays a hypothesis
 -- Reading: CARRIER — firing somewhere, in two charts (`ZeroParadox/Information/PoleWithinEnsemble.lean` § IX).
 --   Quotient chart, modulo `trials p hp`-null sets: for `0 < p` it is exactly ⊤ of `Germ (ae (trials p hp)) Prop`.
@@ -175,6 +198,23 @@ example {L : Type*} [ZeroParadox.ZPSemilattice L] (a : L)
   exact ⟨h1, fun x => (h2 x).imp (fun h => h.trans hcc1.symm) (fun h => h.trans h1.symm)⟩
 example : ∀ x : ZeroParadox.MachinePhase, x = ZeroParadox.ZPSemilattice.bot ∨ x = ZeroParadox.c₁ := by
   intro x; cases x; exacts [Or.inl rfl, Or.inr rfl]
+-- `Statement:` on `MachinePhase`, under `trivialSelfApp`, ⊥ of `MachinePhase` (c₀) is the only point
+-- in the Quine-atom role, ⊥ has a first step, ZP-A's order is linear, and c₁ is the only cover of ⊥
+-- in that order, proved by cases (`axb1_gives_unique_target` needs a `LinearOrder`, not built here).
+-- Reading: occupancy under `trivialSelfApp` holds on every `ZPSemilattice`, so it does not give
+-- branching; branching needs two covers of ⊥, as on `Set Bool` above.
+open ZeroParadox ZeroParadox.ZPSemilattice in
+example :
+    (letI : AbstractSelfApp MachinePhase := trivialSelfApp MachinePhase
+     ∀ y : MachinePhase, (Motion.ofFun (AbstractSelfApp.selfApp (L := MachinePhase))).SelfOnlyAt y ↔ y = bot) ∧
+    BotHasFirstStep MachinePhase ∧ (∀ x y : MachinePhase, le x y ∨ le y x) ∧
+    (letI := zpSemilatticeSup MachinePhase; ∀ a : MachinePhase, (bot : MachinePhase) ⋖ a → a = c₁) := by
+  refine ⟨fun y => ?_, ⟨c₁, t_snap_derived_cover.2⟩, ?_, ?_⟩
+  · exact @selfApp_quine_role_iff _ _ (trivialSelfApp MachinePhase) y
+  · intro x y; cases x <;> cases y <;> first | exact Or.inl rfl | exact Or.inr rfl
+  · intro a ha; cases a
+    · exact absurd ha.1 (@lt_irrefl _ (zpSemilatticeSup MachinePhase).toPreorder _)
+    · rfl
 #check @bot_covBy_iff                                 -- Statement: in any partial order with a least element ⊥ (`OrderBot`), `⊥ ⋖ a ↔ IsAtom a`; an atom's two halves are `a ≠ ⊥` and nothing strictly between, a different pair from the ordinal ε₀'s least fixed point and tower supremum
 #check @covBy_iff_atom_Ici                            -- Statement: `a ⋖ b ↔ IsAtom ⟨b, _⟩ : Set.Ici a`; a cover is an atom measured from the bottom of `Set.Ici a`
 -- `Statement:` the ℕ run's step 0 → 2 lands on an atom one rung up: 2 is not an atom of `Set.Ici 0`,
@@ -191,6 +231,37 @@ example : ¬ @IsAtom (Set.Ici (0 : ℕ)) _ Set.Ici.orderBot ⟨2, Nat.zero_le 2�
 #check @ZeroParadox.t_snap_accessible_proper_subset   -- Statement: in any `ZPSemilattice`, for `bot ≠ ε₀` (any such element), the up-set of ε₀ is a proper subset of the up-set of `bot`. Reading: `bot` is not in the smaller set
 #check @ZeroParadox.da2_bottom_characterization       -- Statement: the ⊥ role within one `ZPSemilattice`: `(∀ x, join S x = x) ↔ S = bot`
 #check @ZeroParadox.da3_accessibleCardinality         -- Statement: a definition, the cardinality of the up-set `{x // le p x}` of `p`. Reading: reachable cardinality is position-relative
+-- `Statement:` CONTROL, on ℕ (join `max`) the up-set of 1 is a proper subset of the up-set of ⊥ = 0 and
+-- has the same cardinality: a proper subset need not be smaller as a cardinal. The finite case, where it
+-- is: the `example` after `t_snap_accessible_proper_subset` in `ZeroParadox/Order/Snap.lean`.
+open ZeroParadox ZeroParadox.ZPSemilattice in
+example : da3_accessibleCardinality (1 : ℕ) = da3_accessibleCardinality (bot : ℕ) ∧
+    {x : ℕ | le 1 x} ⊂ {x : ℕ | le bot x} := by
+  have hle : ∀ p x : ℕ, le p x ↔ p ≤ x := fun p x => by
+    show max p x = x ↔ p ≤ x
+    exact max_eq_right_iff
+  refine ⟨?_, t_snap_accessible_proper_subset (by decide)⟩
+  unfold da3_accessibleCardinality
+  refine Cardinal.mk_congr
+    { toFun := fun x => ⟨x.1 - 1, (hle _ _).2 (Nat.zero_le _)⟩
+      invFun := fun x => ⟨x.1 + 1, (hle _ _).2 (by omega)⟩
+      left_inv := fun x => Subtype.ext (by have := (hle _ _).1 x.2; simp only; omega)
+      right_inv := fun x => Subtype.ext (by simp only; omega) }
+-- `Statement:` `Set ℝ` under `∪` is a `ZPSemilattice` with ⊥ = ∅, and the covers of ∅ in inclusion
+-- (the singletons) are not countable: the number of first steps above ⊥ depends on the carrier.
+example : Nonempty (ZeroParadox.ZPSemilattice (Set ℝ)) ∧
+    ¬ ({a : Set ℝ | (∅ : Set ℝ) ⋖ a}).Countable := by
+  refine ⟨⟨⟨(· ∪ ·), ∅, Set.union_assoc, Set.union_comm, Set.union_self, Set.empty_union⟩⟩,
+    fun h => ?_⟩
+  have hinj : Function.Injective (fun r : ℝ => ({r} : Set ℝ)) :=
+    fun _ _ e => Set.singleton_eq_singleton_iff.1 e
+  have hsub : Set.range (fun r : ℝ => ({r} : Set ℝ)) ⊆ {a : Set ℝ | (∅ : Set ℝ) ⋖ a} := by
+    rintro _ ⟨r, rfl⟩; exact Set.empty_covBy_singleton r
+  have hc : (Set.range (fun r : ℝ => ({r} : Set ℝ))).Countable := h.mono hsub
+  have : (Set.univ : Set ℝ).Countable := by
+    have := hc.preimage_of_injOn (f := fun r : ℝ => ({r} : Set ℝ)) (fun _ _ _ _ e => hinj e)
+    simpa using this
+  exact Cardinal.not_countable_real this
 
 /-! ### § IV. The snap returns to a ⊥ (read as a successor null — a commitment); its 2-adic realization is a loop -/
 #check @ZeroParadox.c_da2_novelty                     -- Statement: contrapositive of the role fact, in one `ZPSemilattice`: a state `≠ bot` cannot satisfy the join-identity. Reading: "distinct successor instantiation" is the reading, not the statement

@@ -23,8 +23,9 @@ falsum, a consistent system cannot prove `□falsum → falsum` — its own cons
 Gödel's second theorem when the class is instantiated at a theory of arithmetic and falsum is its falsum. In
 the class, `godel_two` binds falsum as an arbitrary sentence (`ProvabilityLogic` has no falsum
 constant and no ex-falso), so it covers any unprovable sentence with a Löb diagonal, including one
-that does not imply every sentence, and without a Löb diagonal its conclusion can fail (the two
-`example`s directly after `godel_two` in `ZeroParadox/Settheory/Loeb.lean`). The Löb sentence
+that does not imply every sentence, and without a Löb diagonal its conclusion can fail (in
+`ZeroParadox/Settheory/Loeb.lean` § IV, the Kripke-frame `example` on `Bool × Bool` and the one-point
+reflexive control after it). The Löb sentence
 `ψ ↔ (□ψ → A)` is a diagonal fixed point up to provability (`ProvabilityLogic.loeb_sentence_is_fixedpoint`)
 (ν: in arithmetic, by the diagonal lemma; here the hypotheses hfix1, hfix2), and Löb is what it forces
 (`ProvabilityLogic.loeb`). On the Lindenbaum quotient its class is a literal fixed point of the induced map

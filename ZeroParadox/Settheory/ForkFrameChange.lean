@@ -44,9 +44,9 @@ theorem gfp_dual_eq_lfp : (OrderHom.dual f).gfp = f.lfp := rfl
     `Reading:` INVERSION, conjectural: the valuation (`snap_is_frameflip`) and category
     (`catseam_is_frameflip`) frame-flips are read as sharing this shape; neither is an instance of it.
 
-    **Scope note (2026-07-30).** Of the three `*_is_frameflip` handles this is the only one whose name
-    matches its statement: duality genuinely does exchange the fork's two ends. The other two overclaim and
-    carry corrections in their own docstrings — `snap_is_frameflip` proves the tower limit's two
+    **Scope note.** Of the three `*_is_frameflip` handles this is the only one whose name
+    matches its statement: duality genuinely does exchange the fork's two ends. The other two names say
+    more than their statements, and their own docstrings state the scope — `snap_is_frameflip` proves the tower limit's two
     chart-readings (**no snap appears in it**), and `Statement:` COINCIDENCE and INVERSION,
     `catseam_is_frameflip` proves the seam carries both characterizations, initial and terminal, which
     `op` exchanges (`terminalOpOfInitial`, `initialOpOfTerminal`): at a zero object the flip exchanges two
@@ -63,16 +63,14 @@ theorem gfp_dual_eq_lfp : (OrderHom.dual f).gfp = f.lfp := rfl
     off the zero face (`bot ⋖ a`, AX-B1), a separate object and a commitment. The cross-domain claim that
     the snap *is* the frame change remains this layer's open conjecture, as its file header states.
 
-    **⚠ CORRECTED TWICE, 2026-07-30 (adversary gate, bedrock). Read the whole of this before citing
-    any "min≡max family".** An earlier revision called `epsilon0_min_eq_max` an instance of
-    `fork_collapse_iff`; a second revision fixed that but then called `selfApp_bot_is_both_extremal` and the
-    categorical zero object instances instead. **BOTH claims are false, for the same reason: nothing here
-    satisfies `fork_collapse_iff`'s hypotheses.** It requires `[CompleteLattice α]` and a *monotone*
-    `f : α →o α` (`Settheory/FixedPointFork.lean`). Measured against that:
+    **⚠ None of `epsilon0_min_eq_max`, `selfApp_bot_is_both_extremal` or the categorical zero object is
+    an instance of `fork_collapse_iff`. Read this before citing any "min≡max family".** `Statement:`
+    CARRIER — none satisfies
+    its hypotheses, `[CompleteLattice α]` and a *monotone* `f : α →o α`
+    (`Settheory/FixedPointFork.lean`). Measured against that:
     * `epsilon0_min_eq_max` — `α ↦ ω^α` on `Ordinal` has a **proper class** of fixed points (`ε₁, ε₂, …`
       all satisfy `ω ^ ε_ o = ε_ o`, Mathlib `omega0_opow_epsilon`), so the uniqueness side of (iii)
-      fails. The case is in fact stronger than that and the earlier wording under-stated it: `Ordinal`
-      carries no `CompleteLattice` instance in the pin, so `lfp` and `gfp` are not defined there at all
+      fails. More: `Ordinal` carries no `CompleteLattice` instance in the pin, so `lfp` and `gfp` are not defined there at all
       and `lfp ≠ gfp` is not even a well-formed proposition. The hypotheses fail before the conclusion
       can be stated.
     * `selfApp_bot_is_both_extremal` — `ZPSemilattice` is a **bare join-semilattice**, not a complete

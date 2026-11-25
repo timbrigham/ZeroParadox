@@ -34,8 +34,11 @@ The faces formalized here fork in two:
   checked in Lean (`hasWitnessRel_evalClass` with `fixedPoint_of_witnessRel`). Rice states that fixed
   point beside an undecidable property (`quine_exists_yet_rice`).
 
-Gödel's first incompleteness is not formalized here. The cells present are the ones currently
-formalized, and other domains' cells remain open.
+Gödel's first incompleteness has no cell here. Its unprovability half is checked in the abstract
+`ProvabilityLogic` class (the `example` directly after `godel_two` in `ZeroParadox/Settheory/Loeb.lean`,
+which derives `⊢ falsum` from `⊢ G`). The half that `¬G` is unprovable is not stated there: the class has
+no negation, and that half needs more than consistency, namely ω-consistency (Gödel) or a Rosser sentence
+in place of `G`. The cells present are the ones currently formalized, and other domains' cells remain open.
 
 ## The fence — built in, load-bearing
 

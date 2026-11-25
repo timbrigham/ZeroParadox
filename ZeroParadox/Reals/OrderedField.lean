@@ -1,6 +1,7 @@
 import Mathlib.Algebra.Order.Field.Basic
 import Mathlib.Order.Cover
 import Mathlib.Data.Real.Basic
+import Mathlib.Analysis.Real.Hyperreal
 
 /-!
 # ZP-F: The Real Numbers as Counterexample
@@ -80,12 +81,12 @@ section AxB1
     the standard notion. Recorded here rather than quietly corrected, so that the same
     unidentified-notion failure is easier to spot if it appears elsewhere.
 
-    **Second standard name, pointer only (added 2026-08-02).** Where a bottom element exists,
+    **Second standard name, pointer only.** Where a bottom element exists,
     `bot ⋖ a` is Mathlib's notion of `a` being an **atom**: `bot_covBy_iff`
     (`Mathlib/Order/Atoms.lean`) states `⊥ ⋖ a ↔ IsAtom a`, so `HasFirstStep bot` says **the order
     has an atom** (`∃ a, IsAtom a`). *(Not "AX-B1 is atomicity": `IsAtomic` is strictly stronger —
-    it requires every non-bottom element to sit above an atom, which `bot_covBy_iff` does not give.
-    Corrected 2026-08-02.)* Before this note the framework had been describing a named
+    it requires every non-bottom element to sit above an atom, which `bot_covBy_iff` does not give.)*
+    Before this note the framework had been describing a named
     order-theoretic notion longhand; **measure the corpus count on demand rather than recording one
     here** — a count written at the site of the only mentions falsifies itself, which the first draft
     of this very note did by asserting "zero".
@@ -321,6 +322,11 @@ theorem r_snap_blocked (ε₀ : ℝ) (hε : 0 < ε₀) : ∃ δ : ℝ, 0 < δ �
 theorem r_snap_impossible : ¬∃ ε₀ : ℝ, 0 < ε₀ ∧ ¬∃ δ : ℝ, 0 < δ ∧ δ < ε₀ :=
   f_snap_impossible
 
+-- Statement: the hyperreals `ℝ*` (Mathlib `Hyperreal`) are an ordered field, so both results apply with
+-- no transfer principle: no first step above 0 of `ℝ*`.
+example : ¬∃ e : ℝ*, 0 < e ∧ ¬∃ d : ℝ*, 0 < d ∧ d < e := f_snap_impossible
+example : ¬ HasFirstStep (0 : ℝ*) := axb1_fails_in_ordered_field
+
 end Reals
 
 /-! ## Classification Note: Ordered Fields and the Snap
@@ -341,26 +347,29 @@ order admitting a first step. Both are true and they are about different objects
   (`f_snap_impossible` below; ℝ(t) is a non-Archimedean ordered field where the snap still fails);
 * the **repeated-trials argument** works in **exactly** the Archimedean ordered fields.
 
-Do not read the second as reinstating the claim this note struck.
-
-*(Corrected 2026-08-01. This section was headed "Archimedean Fields and the Snap" and said
-"the underlying reason is the Archimedean property". That is false: a non-Archimedean ordered
-field such as ℝ(t) is still **dense**, so the snap is blocked there too. Being Archimedean is
-not what does the work; being an ordered field is. The struck claim survived here for months
-after the same wording was corrected in `ZeroParadox/Valuation/Padic.lean` — an adversary gate
-found it by grepping the CLAIM rather than the file.)*
+Do not read the second as a claim that the snap turns on the Archimedean property.
 
 **ZP-F / ZP-B classification.** *(Ostrowski's theorem classifies the absolute values on ℚ up to
 equivalence, so it governs the ℝ-versus-ℚ_p split only. It does **not** classify ℝ(t), which is not a
 completion of ℚ — the first bullet is therefore wider than Ostrowski and rests on
-`f_snap_impossible`, not on the classification. Heading corrected 2026-08-02; it previously read
-"Classification (Ostrowski's theorem)" while governing a bullet containing ℝ(t).)*
+`f_snap_impossible`, not on the classification.)*
 
-- **Ordered fields** (ℝ, ℚ, and equally the non-Archimedean ones like ℝ(t)): the snap is
+- **Ordered fields** (ℝ, ℚ, and equally the non-Archimedean ones like ℝ(t) and the hyperreals
+  `ℝ*`, the `example`s after `r_snap_impossible`): the snap is
   **impossible** — proved in this file by two distinct theorems, `f_snap_impossible` (by halving)
   and `axb1_fails_in_ordered_field` (via density and `CovBy`): the same fact reached two ways,
   with distinct statements. They are **not** the same declaration and no equation between them is
   asserted.
+  `Reading:` CARRIER — the surreal numbers No (Conway, *On Numbers and Games*, 1976; not retrieved,
+  cited as a standard fact) form a linearly ordered field, and a proper class rather than a set.
+  `f_snap_impossible` quantifies over a Lean type, so it would apply only to a model of No as a Lean
+  type, where 0 would have no first step; the pinned libraries have none (not located as of
+  2026-11-25, searched: file names `*urreal*` and the case-insensitive text `Surreal` and `PGame`
+  across the Mathlib checkout and every other Lake package; 0 hits for the first two, and the
+  `PGame` hits are only the identifier `sharpGameHypotheses` in kolmogorov-complexity-lean). The value ε₀ sits
+  in No among the positive elements `f_snap_blocked` undercuts; in `Ordinal` 0 is covered by its
+  successor 1 (Mathlib `Order.covBy_succ`). One carrier of the value ε₀ has a first step above its 0
+  and the other does not.
 - Non-Archimedean **and not an ordered field** (ℚ₂): the snap is **not blocked**, which is a strictly
   weaker statement than being forced. *(The p-adics admit no compatible linear order. Only the
   **elementary direction** is used: in an ordered field every square is ≥ 0, so a sum of squares
@@ -381,12 +390,7 @@ So the classification is a statement about where the snap is RULED OUT. Ostrowsk
 (see `ZeroParadox/Valuation/Ostrowski.lean` for the framework's own statement of it) separates
 the Archimedean completions of ℚ from the non-Archimedean ones; **ZP-F rules the snap out in every
 ordered field** — which is what this file actually proves, and is wider than the Archimedean
-completion — and ZP-B removes the topological obstruction in ℚ₂. *(Corrected 2026-08-01: this read
-"ZP-F rules the snap out on the Archimedean side", which understates a theorem needing no Archimedean
-hypothesis. The identical phrasing in `ZeroParadox/Valuation/Padic.lean` was struck in the same arc, **as
-of `a565649`** — and only on the second attempt: the first pass corrected this file while asserting the
-sibling had already been fixed, when it had not. **Do not restate another file's state as fact in a
-correction note — including this one, which is why it is dated: grep the claim there instead.**)* That the snap
+completion — and ZP-B removes the topological obstruction in ℚ₂. That the snap
 actually occurs there is carried by AX-B1 together with the framework's commitments, never by
 C3 or T5 alone.
 

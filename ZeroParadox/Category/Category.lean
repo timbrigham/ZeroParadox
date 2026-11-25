@@ -106,6 +106,8 @@ example (α : Type) [Preorder α] (h : ∀ x : α, ∃ y, x < y) : ∀ t : α, I
   fun t => ⟨fun ht => by
     obtain ⟨y, hy⟩ := h t
     exact lt_irrefl _ (lt_of_lt_of_le hy (leOfHom (ht.from y)))⟩
+-- Statement: AX-G1's initial-object half on every `ZPSemilattice`, in ZP-A's induced order, is the
+-- `example` after `th1_fa` in `ZeroParadox/Multihomed/CategoricalBridge.lean`, with its `Unit` control.
 
 /-! ## II. ZPSurprisal — I-KC Import (D7') -/
 
@@ -127,6 +129,12 @@ theorem t1_initial_unique {C : Type*} [Category C] [ZPCategory C]
     {A B : C} (hA : IsInitial A) (hB : IsInitial B) : Nonempty (A ≅ B) :=
   ⟨hA.uniqueUpToIso hB⟩
 
+-- Statement: T1 at full strength, unique up to unique isomorphism: some `A ≅ B` equals every
+-- `A ≅ B`. `t1_initial_unique` states only `Nonempty (A ≅ B)`, and its `[ZPCategory C]` is unused.
+example {C : Type*} [Category C] {A B : C} (hA : IsInitial A) (hB : IsInitial B) :
+    ∃ i : A ≅ B, ∀ j : A ≅ B, j = i :=
+  ⟨hA.uniqueUpToIso hB, fun _ => Iso.ext (hA.hom_ext _ _)⟩
+
 /-- T2 — Universal Constituent (AX-G1 / D3).
     The initial object 0 maps uniquely to every object X. -/
 theorem t2_universal_constituent {C : Type*} [Category C] [ZPC : ZPCategory C] (X : C) :
@@ -141,8 +149,9 @@ theorem t3_unreachability {C : Type*} [Category C] [ZPC : ZPCategory C]
   ZPC.ax_g2 X hne
 
 /-- T4 — Chains are Forward-Only (AX-G2).
-    No morphism chain starting at 0 can return to 0 through a non-initial object.
-    Consequence of T3: the terminal node of any such chain satisfies T3. -/
+    `Statement:` for one object `X` not isomorphic to 0 there is no morphism `X ⟶ 0`; the argument
+    `_f : 0 ⟶ X` is unused, so this is `t3_unreachability` with an ignored argument, and no chain is
+    stated. `Reading:` applied at the last object of a chain out of 0, it is the PDF's forward-only chain. -/
 theorem t4_chains_forward_only {C : Type*} [Category C] [ZPC : ZPCategory C]
     (X : C) (hne : IsEmpty (X ≅ ZPC.zpInitial))
     (_f : ZPC.zpInitial ⟶ X) :
@@ -152,10 +161,11 @@ theorem t4_chains_forward_only {C : Type*} [Category C] [ZPC : ZPCategory C]
 /-! ## IV. T6 — Informational Singularity (D7', I-KC) -/
 
 /- Lean Scope Note — T6-b/c versus PDF Claims
-   The PDF's T6-b proves strict inequality: I(f) > 0 when A ≇ 0 (the empty program
+   The PDF's T6-b states strict inequality: I(f) > 0 when A ≠ B (the empty program
    cannot reproduce x_B from x_A when they encode distinct states). The PDF's T6-c
-   establishes monotone accumulation via subadditivity of K:
+   argues monotone accumulation from subadditivity of K, an upper bound:
      K(x_n|x_0) ≤ ∑ K(x_{k+1}|x_k) + O(n·c).
+   The dependency's forms and the measured limits: `ZeroParadox/Category/Category.md`.
    Neither claim is captured by ZPSurprisal. That typeclass abstracts only the
    structural skeleton of K — surp_id (zero identity surprisal) and surp : hom → ℕ
    (non-negative by type). The Lean proofs of T6-b and T6-c reduce to Nat.zero_le _,
@@ -204,14 +214,23 @@ theorem t6c_surprisal_sum_nonneg {C : Type*} [Category C] [ZPCategory C]
 /-- T6 — Informational Singularity of 0.
     Part I: outward surprisal from 0 is defined and non-negative (T6-b).
     Part II: inward surprisal to 0 is undefined — no morphism X → 0 exists for X ≇ 0 (T3).
-    The initial object is the unique informational singularity: accessible outward, a dead
-    end inward. The singularity is structural (domain-absent), not numerical (divergence). -/
+    The initial object is an informational singularity: accessible outward, a dead end
+    inward. Uniqueness among objects is not stated here (the `example` below gives its structural
+    half). The singularity is structural (domain-absent), not numerical (divergence). -/
 theorem t6_informational_singularity {C : Type*} [Category C] [ZPC : ZPCategory C]
     [ZPS : ZPSurprisal C]
     (X : C) (hne : IsEmpty (X ≅ ZPC.zpInitial)) :
     (∀ f : ZPC.zpInitial ⟶ X, 0 ≤ ZPS.surp f) ∧
     IsEmpty (X ⟶ ZPC.zpInitial) :=
   ⟨fun f => t6b_surprisal_nonneg f, t3_unreachability X hne⟩
+
+-- Statement: T6's "unique object", its structural half: every `X` not isomorphic to 0 receives a
+-- morphism from an object not isomorphic to it (0 itself). With `t3_unreachability` (no `X` not
+-- isomorphic to 0 maps into 0), the inward dead end singles out 0 up to isomorphism; this example alone
+-- does not. Part I's outward conjunct above is `Nat.zero_le`.
+example {C : Type*} [Category C] [Z : ZPCategory C] (X : C) (hX : IsEmpty (X ≅ Z.zpInitial)) :
+    ∃ Y : C, IsEmpty (Y ≅ X) ∧ Nonempty (Y ⟶ X) :=
+  ⟨Z.zpInitial, ⟨fun i => hX.false i.symm⟩, ⟨Z.zpIsInitial.to X⟩⟩
 
 /-! ## V. T7 — The Categorical Zero Paradox (Closing Theorem) -/
 
