@@ -93,7 +93,23 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 section CannotBeIndex
 
-/-! ### ROLE — ⊥ is a position in a structure (a carrier with its order, or a category); a structure has at most one occupant, possibly none -/
+/-! ### ROLE — ⊥ is a position in a structure (a carrier with its order, or a category); a partial order has at most one occupant, possibly none; a preorder may have several; a category's are unique up to isomorphism -/
+
+-- Statement: in a partial order a set has at most one least element.
+#check @IsLeast.unique
+-- Statement: CONTROL: in a preorder several points can be least: under the `q2Val` preorder on
+-- ℤ_[2] (`z2_two_views`), `1` and `-1` are both least and distinct.
+example : @IsBot ℤ_[2] (Preorder.lift ZeroParadox.q2Val).toLE 1 ∧
+    @IsBot ℤ_[2] (Preorder.lift ZeroParadox.q2Val).toLE (-1) ∧ (1 : ℤ_[2]) ≠ -1 := by
+  have hv := ZeroParadox.z2_two_views.2.2.1
+  refine ⟨fun x => (hv 1 x).2 ?_, fun x => (hv (-1) x).2 ?_, fun h => ?_⟩
+  · rw [norm_one]; exact PadicInt.norm_le_one x
+  · rw [norm_neg, norm_one]; exact PadicInt.norm_le_one x
+  · have h2 : (2 : ℤ_[2]) = 0 := by linear_combination h
+    have : ‖(2 : ℤ_[2])‖ = 2⁻¹ := by simpa using PadicInt.norm_p (p := 2)
+    rw [h2, norm_zero] at this; norm_num at this
+-- Statement: in a category any two initial objects are isomorphic.
+#check @CategoryTheory.Limits.IsInitial.uniqueUpToIso
 
 -- Statement: in `Ordinal` under its well-order, ⊥ is `0`.
 #check @Ordinal.bot_eq_zero
@@ -102,7 +118,9 @@ example : (ZeroParadox.ZPSemilattice.bot : ZeroParadox.MachinePhase) = ZeroParad
 -- Statement: on the tree boundary `End = ℕ → Fin 2` under pointwise max (`instZPSemilatticeEnd`), ⊥
 -- is the all-zeros end `botEnd`.
 example : (ZeroParadox.ZPSemilattice.bot : ZeroParadox.End) = ZeroParadox.botEnd := rfl
--- Statement: Mathlib supplies no order instance on ℚ₂: `LT ℚ_[2]` does not synthesize.
+-- Statement: `LT ℚ_[2]` does not synthesize here. An order instance on `ℚ_[2]` in Mathlib: not
+-- located as of 2026-11-25, searched: `import Mathlib` (pinned, no scope opened), synthesis of
+-- `LT` / `LE` / `Preorder` on `ℚ_[2]`.
 #check_failure (inferInstance : LT ℚ_[2])
 -- Statement: under the norm preorder ℚ₂'s `0` is least, and the only point of norm `0`.
 example : ∀ x : ℚ_[2], ‖(0 : ℚ_[2])‖ ≤ ‖x‖ ∧ (‖x‖ = 0 ↔ x = 0) := fun x => ⟨by simp, norm_eq_zero⟩
@@ -114,8 +132,9 @@ example : letI : Preorder ℚ_[2] := Preorder.lift (‖·‖); ¬ ZeroParadox.Ha
     have ha : (0 : ℝ) < ‖a‖ := norm_zero (E := ℚ_[2]) ▸ h0a
     let ⟨c, hc0, hca⟩ := NormedField.exists_norm_lt ℚ_[2] ha
     hc (c := c) (show ‖(0 : ℚ_[2])‖ < ‖c‖ from norm_zero (E := ℚ_[2]) ▸ hc0) hca
--- Statement: the same holds in every nontrivially normed field, ℝ included, so at `0` the norm
--- preorder does not separate ℚ₂ from ℝ. The order is passed with `@`: a `letI` loses to ℝ's `<`.
+-- Statement: the same holds in every nontrivially normed field `K : Type` (universe 0), ℝ
+-- included, so at `0` the norm preorder does not separate ℚ₂ from ℝ. The order is passed with `@`:
+-- a `letI` loses to ℝ's `<`.
 example : (∀ (K : Type) [NontriviallyNormedField K],
       ¬ @ZeroParadox.HasFirstStep K (Preorder.lift (‖·‖ : K → ℝ)).toLT 0) ∧
     ¬ @ZeroParadox.HasFirstStep ℝ (Preorder.lift (‖·‖ : ℝ → ℝ)).toLT 0 := by
@@ -315,7 +334,7 @@ example : letI := ZeroParadox.trivialZPSemilattice
 -- `markovStep (1/4)` orbit stays balanced — that one chain, not Markov orbits generally.
 #check @ZeroParadox.padic_markov_no_orbit_correspondence
 
-/-! ### the seam and floor cannot be transported or cross-connected -/
+/-! ### the seam and floor: the role is not transported, and no cross-setting map is exhibited -/
 
 -- Statement: the Hilbert floor is a zero object while the p-adic floor admits no initial structure.
 #check @ZeroParadox.seam_role_not_transported
@@ -537,7 +556,7 @@ example (k : ℕ) : ∀ n, Nat.Partrec.Code.eval (Nat.Partrec.Code.const k) n =
 #check @ZeroParadox.freeNat_not_isZero
 -- Statement: the seam satisfies `seam ≅ seam ⊞ seam` and is a zero object.
 #check @ZeroParadox.seam_is_diagonal_fixpoint
--- Statement: a type is infinite iff it carries a self-map that is one-to-one, not onto, and has
+-- Statement: a type `α : Type` (universe 0) is infinite iff it carries a self-map that is one-to-one, not onto, and has
 -- exactly one fixed point (`SelfCopyRef`).
 #check @ZeroParadox.infinite_iff_exists_selfCopyRef
 -- Statement: `boundaryDouble` on the tree boundary `End` is such a map (`SelfCopyRef boundaryDouble`).
@@ -894,16 +913,20 @@ example : ZeroParadox.Disjunctive (fun n => xor (ZeroParadox.champ n) false) := 
 -- totality is a family indexed by chart, never a union of occupants (§ ROLE). "Minimal" is "fixed by
 -- one condition", not a measured complexity of the measure.
 
-/-! ### The givens at the die level: minimal and maximal at one point, and its limit -/
+/-! ### The givens at the die level: given (a) as a chart claim (least in ℤ_[2]'s norm preorder, greatest at its image in `ℕ∞`), and a limit -/
 
 -- Statement: 0 of `ℚ_[2]` steps only to itself under doubling and is its limit sink off ∞
 -- (`ZeroParadox/Givens.lean` § II-4).
 #check @ZeroParadox.q2_GMinMax
--- Statement: ℤ_[2]'s 0, least in norm, is sent by `q2Val` to ⊤ of `ℕ∞`, and no other point is.
+-- Statement: some map of motions, doubling on ℤ_[2] to `+1` on `ℕ∞`, sends ℤ_[2]'s 0 (least in the
+-- norm preorder, stepping only to itself) to a point greatest in `ℕ∞` and stepping only to itself,
+-- and sends no other point there. The proof's map is `q2Val` (`q2ValHom`), sending 0 to ⊤ of `ℕ∞`.
 -- Reading: COINCIDENCE; on any characteristic-0 field a map of the same shape, doubling into
 -- `+1` on `ℕ∞`, fails (`field_no_GCoincidence`).
 #check @ZeroParadox.z2_GCoincidence
--- Statement: LIMIT, 0 of `ℚ_[2]` never leaves under doubling; departure is supplied by another chart.
+-- Statement: no run of doubling from 0 of `ℚ_[2]` leaves it at the first step (`¬ GLeavesByRun`).
+-- Reading: CARRIER, departure is supplied by another chart: a run leaves `c₀`, ⊥ of `MachinePhase`
+-- (`machine_leavesByRun`, `ZeroParadox/Givens.lean` § V).
 #check @ZeroParadox.q2_not_leavesByRun_zero
 
 end CannotBeIndex

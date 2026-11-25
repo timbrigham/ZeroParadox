@@ -244874,7 +244874,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 4861,
+        "declarations": 4862,
         "files": 248
       },
       "entries": [
@@ -263726,6 +263726,43 @@
             ]
           },
           "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "1a8199f9-dfd5-4941-8db0-26d8050de72a",
+          "new": {
+            "file": "ZeroParadox/Givens.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.real_hlv_not_GDiscrete",
+            "short": "real_hlv_not_GDiscrete"
+          },
+          "old": {
+            "file": "ZeroParadox/Givens.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.real_hlv_not_GDiscrete",
+            "short": "real_hlv_not_GDiscrete",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "givens-fx-1125: real halving is not GDiscrete in the absolute-value view lmRealN (ruling 88b/89)",
           "verify": {
             "axioms": null,
             "sorry_free": null

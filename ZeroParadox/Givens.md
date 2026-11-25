@@ -1,7 +1,8 @@
 # The givens at the die level: what each one is, and the theorem that carries it
 
-Ride-along for `ZeroParadox/Givens.lean`. Each given is a `Prop` on a die `Motion` (`ZeroParadox/Die.lean`),
-never a field of a class, so each one can be true of one chart and false of another. The file proves or
+Ride-along for `ZeroParadox/Givens.lean`. Each given is a `Prop`, never a field of a class, so each one
+can be true of one chart and false of another. All but `GConnected` and `GJoined` take a die `Motion`
+(`ZeroParadox/Die.lean`); those two take two points of a topological space. The file proves or
 refutes each given chart by chart. The main charts are four limit motions: doubling and halving on the
 2-adic sphere `OnePoint ℚ_[2]`, and doubling and halving on the real projective line `OnePoint ℝ`. Further
 charts are `machineJoinMotion` on `MachinePhase`, `ordinalSuccMotion` and `ordinalTowerMotion` on
@@ -63,15 +64,18 @@ Tim named three. Each one splits into the predicates below.
   (`real_hlv_returnToStart`). So `GReturnToStart` alone does not separate the long way round from a
   plain contraction. Inside its own carrier the 2-adic return is a plain contraction too: 0 of `ℚ_[2]`
   is an attracting fixed point of doubling (`padic_two_poles`, `ZeroParadox/Multihomed/TwoAdicBend.lean`).
-  The two carriers differ in their absolute values, not the two return runs: each 2-adic doubling
-  step is a cover in the norm order (`q2_double_covBy`), and the nonzero 2-adic norms are exactly the
-  integer powers of 2 (`q2_norm_image`); the nonzero absolute values of ℝ fill all of (0, ∞)
+  The two return runs differ step by step at each carrier's own absolute value. Each 2-adic doubling
+  step from a nonzero point is a cover in the norm order (`q2_double_covBy`). Real halving is not
+  `GDiscrete` in the absolute-value view `lmRealN` (`real_hlv_not_GDiscrete`), because 3/4 lies
+  between 1/2 and 1. The nonzero 2-adic norms are the integer powers of 2 (`q2_norm_image`, which
+  repackages Mathlib's `Padic.padicNormE.image`), and the nonzero absolute values of ℝ fill (0, ∞)
   (`real_norm_image`), with another between any two (`real_norm_dense`). That is the
   discrete/continuous contrast of (b).
   Reading: INVERSION, the long way round is a two-chart reading: one rational orbit `2ⁿ` tends to 0 in
   `ℚ_[2]` and to infinity in ℝ (`doubling_place_dichotomy`). Under real doubling no sequence from 0 of
-  ℝ meets `GReturnToStart` (`real_dbl_no_return_zero`). The ordinal tower from 0 closes at ε₀, never
-  back at 0 of `Ordinal` (`ordinal_tower_no_return`).
+  ℝ meets `GReturnToStart` (`real_dbl_no_return_zero`). The ordinal tower from 0 of `Ordinal` does not
+  meet `GReturnToStart` (`ordinal_tower_no_return`); the proof: its tail's closure is ε₀
+  (`ordinalTowerMotion_stageClosure`), and ε₀ ≠ 0 of `Ordinal` (`epsilon0_ne_zero`).
 
 ## AX-B1 has two faces
 
@@ -103,10 +107,11 @@ and backward its norm grows without bound (`fieldLine_two_ends`).
 
 `given_then_fixed_destination` is the general form. Take a motion whose UP is unchanged along steps, a
 point `p` that is the limit sink off `q`, and a run from off `q` with no landing among its stages. Then
-the run closes at UP of its start, `p` is in that closure, and the run never arrives at `p` by steps. It
+the run closes at UP of its start, `p` is in that closure, and the start `s 0` does not arrive at `p`
+(`¬ M.Arrives p (s 0)`). It
 runs one way. `fixed_destination_two_charts` applies it twice: the 2-adic line from 2 closes at 0 of
-`ℚ_[2]`, the real one at ∞ of `OnePoint ℝ`. The destination is fixed. The step count is not, because the
-run never arrives.
+`ℚ_[2]`, the real one at ∞ of `OnePoint ℝ`. The destination is fixed. The step count is not: in each
+chart the start 2 does not arrive at its destination (`¬ Arrives`).
 
 ## The limits
 
