@@ -28,8 +28,10 @@ Tim named three. Each one splits into the predicates below.
 
 **(b) The run from 0 to infinity is discrete and continuous at once.**
 - Discrete face: `GDiscrete M P`, where every moving step is a cover in the view `P`, and
-  `GCoverAtLanding`. 2-adic doubling meets `GDiscrete` (`q2_GDiscrete`). Real doubling fails it
-  (`real_not_GDiscrete`: `3/2` lies between 1 and 2). `MachinePhase`, the ordinals and every
+  `GCoverAtLanding`. The verdict is about the view as much as the motion. 2-adic doubling meets
+  `GDiscrete` in the norm view `lmSphN` (`q2_GDiscrete`). Real doubling fails it in the absolute-value
+  view `lmRealN` (`real_not_GDiscrete`: `3/2` lies between 1 and 2). Other views of `OnePoint ℝ` are
+  not treated here. `MachinePhase`, the ordinals and every
   `UpAndOver` meet both. No motion on `Unit` meets `GDiscrete`.
 - Continuous face: `GConnected` and `GJoined`. On `OnePoint ℝ`, ∞ is in 0's connected component
   (`real_GConnected`). On the 2-adic sphere it is not (`q2_not_GConnected`), and no path joins them
@@ -47,8 +49,9 @@ Tim named three. Each one splits into the predicates below.
 - The climb: `GClimbNotLoop`. It holds for `ordinalSuccMotion` and every `UpAndOver`. The control is a
   `Fin 3` motion with always-true OVER, which loops.
 - The return: `GReturnToStart M s`. The tail of `s` is a run whose closure contains `s 0`. The 2-adic arc
-  meets it (`q2_arc_returnToStart`). The real chart has no such return to 0 of ℝ
-  (`real_dbl_no_return_zero`). The ordinal tower from 0 closes at ε₀, never back at 0 of `Ordinal`
+  meets it under 2-adic doubling (`q2_arc_returnToStart`). Under real doubling no sequence from 0 of ℝ
+  meets it (`real_dbl_no_return_zero`). That theorem is about real doubling only: real halving contracts
+  toward 0 of ℝ, and this file proves nothing about a return under it. The ordinal tower from 0 closes at ε₀, never back at 0 of `Ordinal`
   (`ordinal_tower_no_return`).
 
 ## AX-B1 has two faces
