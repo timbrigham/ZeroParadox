@@ -202,7 +202,8 @@ def guidance(n, targets=None, arc_base=None):
             f'  ** PAST THE ORDINARY CAP ({ORDINARY_CAP}). **',
             '  This round may ONLY continue the loop if it finds something BEDROCK-tier:',
             '    a violated core invariant (epsilon-zero != 0, epsilon-zero != bottom, min/max',
-            '    flattened, snap-arc returning to the SAME bottom, a cross-type equality), a',
+            '    flattened, the snap-arc returning to epsilon-zero or novelty cited as proved, a',
+            '    cross-type equality; the 2-adic arc returning to the SAME 0 is PROVED, not a defect), a',
             '    FABRICATED claim about an external source, or a false premise carrying a conclusion.',
             '  Anything else -> verdict is STOP-ORDINARY: push despite the findings. Do not iterate.',
         ]
