@@ -39,8 +39,9 @@ included (for example `f x = true :: x`).
 strings `x` have `condK V x y ≤ k`: `Kolmogorov.card_condK_le_boundedPrograms_length`
 (`KolmogorovMathlib/AlgorithmicStatistics/StrongModels/ProfileCardinality.lean`) bounds the size of any such
 finite set by `(boundedPrograms k).length`, and `Kolmogorov.length_boundedPrograms_succ_eq`
-(`KolmogorovMathlib/AlgorithmicStatistics/Selector.lean`) puts that length at `2^(k+1) - 1`. So no single
-target is forced above the constant, and at each bound only finitely many targets fall at or below it. The
+(`KolmogorovMathlib/AlgorithmicStatistics/Selector.lean`) puts that length at `2^(k+1) - 1`. So at each
+bound only finitely many targets fall at or below it. That no single target is forced above the constant
+is `condK_comp`'s content, in the paragraph above, not the counting lemmas'. The
 unconditional counterpart is `Kolmogorov.card_plainK_lt_mem_Icc`
 (`KolmogorovMathlib/Complexity/CanonicalObjects/Counting.lean`).
 

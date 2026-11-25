@@ -149,8 +149,9 @@ theorem t3_unreachability {C : Type*} [Category C] [ZPC : ZPCategory C]
   ZPC.ax_g2 X hne
 
 /-- T4 — Chains are Forward-Only (AX-G2).
-    No morphism chain starting at 0 can return to 0 through a non-initial object.
-    Consequence of T3: the terminal node of any such chain satisfies T3. -/
+    `Statement:` for one object `X` not isomorphic to 0 there is no morphism `X ⟶ 0`; the argument
+    `_f : 0 ⟶ X` is unused, so this is `t3_unreachability` with an ignored argument, and no chain is
+    stated. `Reading:` applied at the last object of a chain out of 0, it is the PDF's forward-only chain. -/
 theorem t4_chains_forward_only {C : Type*} [Category C] [ZPC : ZPCategory C]
     (X : C) (hne : IsEmpty (X ≅ ZPC.zpInitial))
     (_f : ZPC.zpInitial ⟶ X) :
@@ -213,8 +214,9 @@ theorem t6c_surprisal_sum_nonneg {C : Type*} [Category C] [ZPCategory C]
 /-- T6 — Informational Singularity of 0.
     Part I: outward surprisal from 0 is defined and non-negative (T6-b).
     Part II: inward surprisal to 0 is undefined — no morphism X → 0 exists for X ≇ 0 (T3).
-    The initial object is the unique informational singularity: accessible outward, a dead
-    end inward. The singularity is structural (domain-absent), not numerical (divergence). -/
+    The initial object is an informational singularity: accessible outward, a dead end
+    inward. Uniqueness among objects is not stated here (the `example` below gives its structural
+    half). The singularity is structural (domain-absent), not numerical (divergence). -/
 theorem t6_informational_singularity {C : Type*} [Category C] [ZPC : ZPCategory C]
     [ZPS : ZPSurprisal C]
     (X : C) (hne : IsEmpty (X ≅ ZPC.zpInitial)) :

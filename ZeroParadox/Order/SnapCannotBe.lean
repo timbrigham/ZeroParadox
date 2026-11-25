@@ -136,7 +136,7 @@ example (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p) :
       ((S 0 ≠ S 1 ∧ S 1 ≠ S 0 ∧ join (S 0) (S 1) = S 1) ∧
         letI := zpSemilatticeSup MachinePhase; (bot : MachinePhase) ⋖ S 1) :=
   snap_ae_of_firstStep ⟨c₁, t_snap_derived_cover.2⟩ p hp hp0
-#check @ZeroParadox.mlRandom_and_snap_ae             -- Statement: the same, with `MLRandom (trials p hp) w` conjoined: almost every tape is Martin-Löf random for `trials p hp` and gives that conclusion; one way
+#check @ZeroParadox.mlRandom_and_snap_ae             -- Statement: `snap_ae_of_firstStep` (general in `L`, hypothesis `BotHasFirstStep L`), with `MLRandom (trials p hp) w` conjoined: almost every tape is Martin-Löf random for `trials p hp` and gives that conclusion; one way
 #check @ZeroParadox.maxEntropy_mlRandom_and_snap_ae    -- Statement: the same, with `0 < p` replaced by `binEntropy p = log 2`, the maximum-entropy coin `p = 1/2` (`ZeroParadox/Information/MaxEntropy.lean`); one way. No tape law of ⊥ of `L` is constructed, and `BotHasFirstStep L` stays a hypothesis
 -- Reading: CARRIER — firing somewhere, in two charts (`ZeroParadox/Information/PoleWithinEnsemble.lean` § IX).
 --   Quotient chart, modulo `trials p hp`-null sets: for `0 < p` it is exactly ⊤ of `Germ (ae (trials p hp)) Prop`.
