@@ -369,7 +369,7 @@ theorem machine_GCoverAtLanding :
     GCoverAtLanding machineJoinMotion (zpSemilatticeSup MachinePhase).toPreorder :=
   ⟨c₀, c₁, Part.mem_some _, ⟨c₁, t_snap_machine.symm⟩, t_snap_derived_cover.2⟩
 
-/-- `Statement:` ordinal chart: `GDiscrete` holds for `ordinalSuccMotion` (OVER = `Order.succ`). -/
+/-- `Statement:` ordinal chart (universe 0): `GDiscrete` holds for `ordinalSuccMotion` (OVER = `Order.succ`). -/
 theorem ordinal_GDiscrete : GDiscrete ordinalSuccMotion.{0} inferInstance := by
   refine ⟨⟨0, Order.succ 0, rfl, (Order.lt_succ 0).ne⟩, ?_⟩
   rintro a b (rfl : b = Order.succ a) -
@@ -381,6 +381,28 @@ theorem ordinal_GCoverAtLanding : GCoverAtLanding ordinalSuccMotion.{0} inferIns
   ⟨Ordinal.epsilon 0, Order.succ (Ordinal.epsilon 0),
     Part.mem_some_iff.2 (Ordinal.nfp_eq_self (Ordinal.omega0_opow_epsilon 0)).symm, rfl,
     Order.covBy_succ _⟩
+
+/-- `Statement:` CONTROL, ordinal tower chart (universe 0): `ordinalTowerMotion` (OVER `α ↦ ω^α`)
+fails `GDiscrete` (1 steps to ω, and 2 lies between) and fails `GCoverAtLanding`, in `Ordinal`'s
+own order. -/
+theorem ordinal_tower_not_discrete :
+    ¬ GDiscrete ordinalTowerMotion.{0} inferInstance ∧
+      ¬ GCoverAtLanding ordinalTowerMotion.{0} inferInstance := by
+  refine ⟨?_, ?_⟩
+  · rintro ⟨-, h⟩
+    have hs : ordinalTowerMotion.{0}.step 1 (Ordinal.omega0 ^ (1 : Ordinal.{0})) := rfl
+    have h1w : (1 : Ordinal.{0}) < Ordinal.omega0 ^ (1 : Ordinal.{0}) := by
+      rw [Ordinal.opow_one]; exact Ordinal.one_lt_omega0
+    rcases h _ _ hs h1w.ne with hc | hc
+    · refine hc.2 (c := 2) ?_ ?_
+      · exact one_lt_two
+      · rw [Ordinal.opow_one]; exact_mod_cast Ordinal.natCast_lt_omega0 2
+    · exact absurd hc.1 (not_lt.2 h1w.le)
+  · rintro ⟨y, b, hy, hs, hc⟩
+    have hfix : Ordinal.omega0 ^ y = y := (ordinalTowerMotion_isLanding_iff y).1 hy
+    have hb : b = y := (show b = Ordinal.omega0 ^ y from hs).trans hfix
+    subst hb
+    exact lt_irrefl _ hc.1
 
 /-- `Statement:` every `UpAndOver` meets `GDiscrete`, from its corner. -/
 theorem upAndOver_GDiscrete {α : Type*} [PartialOrder α] (U : UpAndOver α) :
@@ -514,7 +536,7 @@ theorem real_hlv_GMinMax_zero : GMinMax hlvReal (OnePoint.some 0) ∞ := by
 example : ¬ machineJoinMotion.SelfOnlyAt c₀ := fun h =>
   absurd ((machineJoinMotion_selfOnlyAt_iff c₀).1 h) (by decide)
 
-/-- `Statement:` ordinal chart: no ordinal steps only to itself under `Order.succ`. -/
+/-- `Statement:` ordinal chart (universe 0): no ordinal steps only to itself under `Order.succ`. -/
 theorem ordinal_no_selfOnly (y : Ordinal.{0}) : ¬ ordinalSuccMotion.SelfOnlyAt y :=
   fun h => (Order.lt_succ y).ne (show y = Order.succ y from h.1)
 
@@ -678,8 +700,8 @@ noncomputable def q2ValHom :
     rw [show b = 2 * a from h]; exact q2Val_double a
   map_up := fun x => by simp [Motion.ofFun, Motion.ofTotal]
 
-/-- `Statement:` ℤ_[2]'s 0 meets `GCoincidence` through `q2ValHom`: least in norm, sent to ⊤ of
-`ℕ∞`, the only point sent there. `Reading:` COINCIDENCE. -/
+/-- `Statement:` ℤ_[2]'s 0 meets `GCoincidence`: some strict map of motions sends it, least in norm,
+to ⊤ of `ℕ∞`, and sends no other point there. The proof's witness is `q2ValHom`. `Reading:` COINCIDENCE. -/
 theorem z2_GCoincidence :
     GCoincidence (Motion.ofFun (fun x : ℤ_[2] => 2 * x)) (Motion.ofFun (fun n : ℕ∞ => n + 1))
       (Preorder.lift (fun x : ℤ_[2] => ‖x‖)) inferInstance 0 := by
@@ -726,7 +748,7 @@ example (P : Preorder ℝ) : ¬ GCoincidence (Motion.ofFun (fun x : ℝ => 2 * x
 example (P : Preorder ℚ_[2]) : ¬ GCoincidence (Motion.ofFun (fun x : ℚ_[2] => 2 * x))
     (Motion.ofFun (fun n : ℕ∞ => n + 1)) P inferInstance 0 := field_no_GCoincidence P
 
--- Statement: CONTROL: the constant map at ⊤ is a `Hom` too; only the off-point clause excludes it.
+-- Statement: CONTROL: the constant map at ⊤ is a `Hom` between these two motions too.
 example : ∃ φ : Motion.Hom (Motion.ofFun (fun x : ℤ_[2] => 2 * x))
     (Motion.ofFun (fun n : ℕ∞ => n + 1)), ∀ x, φ.toFun x = ⊤ :=
   ⟨⟨fun _ => ⊤, fun {_ _} _ => (top_add 1).symm, fun x => by simp [Motion.ofFun, Motion.ofTotal]⟩,
@@ -883,7 +905,8 @@ theorem fixed_destination_two_charts :
 
 open MeasureTheory in
 /-- `Statement:` for `0 < p ≤ 1`, `trials p hp`-almost every tape gives a run of `slotMotion` from
-`false` that leaves `false`. Every tape gives a run; only "leaves" needs the measure. -/
+`false` that eventually departs `false` (`∃ n, slotRun w n ≠ false`). Every tape gives a run; only the
+eventual departure needs the measure. The first-step witness is `slot_leavesByRun`. -/
 theorem slot_occurrence_ae (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p) :
     ∀ᵐ w ∂(trials p hp), slotMotion.IsRun (slotRun w) ∧ slotRun w 0 = false ∧
       ∃ n, slotRun w n ≠ false := by
@@ -908,7 +931,8 @@ section GivensIndex
 /-- `Statement:` no run of doubling from 0 of `ℚ_[2]` leaves it at the first step
 (`¬ GLeavesByRun dblQ2 (OnePoint.some 0)`). `Reading:` CARRIER, limit (a): 0 of `ℚ_[2]` meets
 `GMinMax` under doubling (`q2_GMinMax`; a constant map meets it too, `const_GMinMax`), and departure
-comes from another chart (`machine_leavesByRun`, `slot_occurrence_ae`). -/
+comes from another chart: at the first step (`machine_leavesByRun`, `slot_leavesByRun`), or eventually
+on almost every tape (`slot_occurrence_ae`). -/
 theorem ZeroParadox.q2_not_leavesByRun_zero :
     ¬ ZeroParadox.GLeavesByRun ZeroParadox.dblQ2 (OnePoint.some 0) := by
   rintro ⟨s, hs, h0, h1⟩
@@ -916,13 +940,13 @@ theorem ZeroParadox.q2_not_leavesByRun_zero :
   exact h1 (ZeroParadox.lm_dbl_step_level.1.2 (s 1) hstep)
 
 #check @ZeroParadox.machine_leavesByRun        -- Statement: LIMIT (a), departure from another chart: a run leaves `c₀`, ⊥ of `MachinePhase`.
-#check @ZeroParadox.slot_occurrence_ae         -- Statement: LIMIT (a), departure from the tape chart: for `0 < p ≤ 1`, almost every tape's run leaves `false`.
+#check @ZeroParadox.slot_occurrence_ae         -- Statement: LIMIT (a), departure from the tape chart: for `0 < p ≤ 1`, almost every tape's run eventually departs `false`; the first-step witness is `slot_leavesByRun`.
 #check @ZeroParadox.snap_ae_of_firstStep       -- Statement: LIMIT (b): any `0 < p ≤ 1` with `BotHasFirstStep L` gives almost-every-run firing; complexity is not a hypothesis.
 #check @ZeroParadox.never_fires_ae_zero        -- Statement: LIMIT (b), control: at `p = 0`, almost every tape fires nowhere.
-#check @ZeroParadox.q2_arc_returnToStart       -- Statement: LIMIT (c): the arc returns to the SAME 0 of `ℚ_[2]` it started from.
+#check @ZeroParadox.q2_arc_returnToStart       -- Statement: LIMIT (c): the run closure of the arc's tail contains the arc's start, the SAME 0 of `ℚ_[2]` (`GReturnToStart`).
 #check @ZeroParadox.fieldLine_same_iff         -- Statement: LIMIT (c): along a route unique to its line: two lines are equal or disjoint.
 #check @ZeroParadox.q2_double_covBy            -- Statement: LIMIT (c): each 2-adic doubling step from a nonzero point is a cover in the norm order; the value group is discrete (`q2_norm_image`).
-#check @ZeroParadox.real_hlv_returnToStart     -- Statement: LIMIT (c), control: real halving also returns to 0 of ℝ, through a dense value group (`real_norm_image`).
+#check @ZeroParadox.real_hlv_returnToStart     -- Statement: LIMIT (c), control: under real halving some sequence from 0 of ℝ also meets `GReturnToStart` (its tail's closure contains 0 of ℝ), through a dense value group (`real_norm_image`).
 
 /-! ### § VI. The commitments that stay hypotheses -/
 #check @ZeroParadox.BotHasFirstStep            -- Statement: AX-B1's first-step form, a `Prop` on `L`, used as the hypothesis `hR1`.
@@ -967,6 +991,7 @@ open ZeroParadox
 #print axioms machine_GCoverAtLanding
 #print axioms ordinal_GDiscrete
 #print axioms ordinal_GCoverAtLanding
+#print axioms ordinal_tower_not_discrete
 #print axioms upAndOver_GDiscrete
 #print axioms upAndOver_GCoverAtLanding
 #print axioms unit_not_GDiscrete

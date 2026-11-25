@@ -3233,8 +3233,9 @@ example (c : Nat.Partrec.Code) (n : ℕ) :
   have h' : ZeroParadox.clockStep (c', n', k) = some (c, n, 0) := h
   obtain ⟨-, hb⟩ := (ZeroParadox.clockStep_eq_some_iff c' n' k _).1 h'
   simp at hb
--- Reading: on the clock machine the arrival (liveness) cell at `(c, n, 0)` is undecidable over codes,
--- and the "no entry from elsewhere" (safety) cell at the same configurations holds for every code.
+-- Reading: on the clock machine the liveness cell, arrival FROM `(c, n, 0)` at a configuration with no
+-- step, is undecidable over codes, and the safety cell, no step INTO `(c, n, 0)` from elsewhere,
+-- holds for every code.
 -- Whether the safety cell is decidable on other machines or configurations is not stated.
 
 /-! ### § XVII. Maps of motions: Mathlib's `RelHom` on the steps -/
@@ -5372,7 +5373,7 @@ example : ¬ ZeroParadox.Motion.unitMotion.Loop := fun ⟨_, _, _, _, hne, _⟩ 
 #check @ZeroParadox.cd_pred_to_doubling_const  -- Statement: a semiconjugacy from `Nat.pred` to doubling on `Q₂` is `0`; the other direction, `cd_doubling_to_pred`, is not obstructed
 #check @ZeroParadox.cd_realization_bridges     -- Statement: `realization_bridges_both_valuations` without `x ≠ ⊥`, which follows from `ρ x ≠ 0` (`cd_realization_bot`)
 #check @ZeroParadox.cd_run_into                -- Statement: under AX-G2's shape at `I`, a run of the hom motion at `I` at time `k` is, at every time `m ≤ k`, at an object not isomorphism-free with `I`
-#check @ZeroParadox.cd_pole_fans_two           -- Statement: in the reverse of `ofFun cZero` on `Miniature.Pole`, `zero` steps to two distinct points, one of them `zero` itself (two-way branching as distinct step-successors)
+#check @ZeroParadox.cd_pole_fans_two           -- Statement: in the reverse of `ofFun cZero` on `Miniature.Pole`, `zero` steps to two distinct points (two-way branching as distinct step-successors)
 #check @ZeroParadox.cd_pole_no_three           -- Statement: `Miniature.Pole` has no three pairwise distinct points, so no three-way branching
 #check @ZeroParadox.cd_shift_tower_periodic    -- Statement: every lax map from `shiftMotion c` to `ordinalTowerMotion` takes fixed points of `α ↦ ω^α` and has period `⌜c⌝`, for every code `c`
 

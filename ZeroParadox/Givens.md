@@ -18,8 +18,8 @@ Tim named three. Each one splits into the predicates below.
   The sink half is one pole of `lmDipole`, which `ZeroParadox/Multihomed/LimitMotion.md` reads as
   north–south dynamics and cites there. It holds at 0 of `ℚ_[2]` under doubling (`q2_GMinMax`). It holds
   at ∞ of `OnePoint ℝ` under real doubling (`real_GMinMax_infty`), and fails there at 0 of ℝ
-  (`real_not_GMinMax_zero`). It fails at `c₀`, ⊥ of `MachinePhase`, and at every ordinal under
-  `Order.succ` (`ordinal_no_selfOnly`). Controls: the identity on `Unit`, and the constant map at 0
+  (`real_not_GMinMax_zero`). It fails at `c₀`, ⊥ of `MachinePhase`, and at every ordinal of
+  universe 0 under `Order.succ` (`ordinal_no_selfOnly`). Controls: the identity on `Unit`, and the constant map at 0
   (`const_GMinMax`). Both meet it, so `GMinMax` alone says little. The constant map has no limit motion
   as its dipole partner (`const_no_limit_partner`).
 - `GCoincidence`: a strict map of motions sends a point `y` that steps only to itself and is least in
@@ -37,8 +37,10 @@ Tim named three. Each one splits into the predicates below.
   direction, in the view `P`; and `GCoverAtLanding`. The verdict belongs to the pair of motion and view.
   2-adic doubling meets `GDiscrete` in the norm view `lmSphN` (`q2_GDiscrete`). Real doubling fails it in
   the absolute-value view `lmRealN` (`real_not_GDiscrete`: `3/2` lies between 1 and 2), and meets it in
-  the binary-exponent view (`real_dbl_GDiscrete_expView`). `MachinePhase`, the ordinals and every
-  `UpAndOver` meet both. No motion on `Unit` meets `GDiscrete`.
+  the binary-exponent view (`real_dbl_GDiscrete_expView`). `MachinePhase`, `ordinalSuccMotion` on
+  `Ordinal` (universe 0) and every `UpAndOver` meet both. `ordinalTowerMotion` on `Ordinal` (universe 0)
+  fails both (`ordinal_tower_not_discrete`: 1 steps to ω, and 2 lies between). No motion on `Unit`
+  meets `GDiscrete`.
 - So the discrete/continuous contrast is stated at each carrier's own absolute value. In `ℚ_[2]` the
   nonzero norms are exactly the integer powers of 2 (`q2_norm_image`), so no norm lies strictly between
   `‖x‖` and `2‖x‖` (`q2_norm_gap`). In ℝ the nonzero absolute values are every positive real
@@ -54,9 +56,9 @@ Tim named three. Each one splits into the predicates below.
   exists, the constant map at ∞ (`const_infty_hom`), so a `Hom` alone carries nothing.
 
 **(c) Breaking away, and returning to zero the long way round.**
-- Breaking away: `GLeavesByRun M y`. It holds at `c₀` of `MachinePhase`, at 0 of `Ordinal` and at `false`
+- Breaking away: `GLeavesByRun M y`. It holds at `c₀` of `MachinePhase`, at 0 of `Ordinal` (universe 0) and at `false`
   in the slot chart. It fails at 0 of `ℚ_[2]` under doubling (§ V, limit (a)).
-- The climb: `GClimbNotLoop`. It holds for `ordinalSuccMotion` and every `UpAndOver`. The control is a
+- The climb: `GClimbNotLoop`. It holds for `ordinalSuccMotion` (universe 0) and every `UpAndOver`. The control is a
   `Fin 3` motion with always-true OVER, which loops.
 - The return: `GReturnToStart M s`. The tail of `s` is a run whose closure contains `s 0`.
   Statement: CARRIER, two charts meet it from 0. The 2-adic arc meets it under 2-adic doubling
@@ -67,13 +69,14 @@ Tim named three. Each one splits into the predicates below.
   The two return runs differ step by step at each carrier's own absolute value. Each 2-adic doubling
   step from a nonzero point is a cover in the norm order (`q2_double_covBy`). Real halving is not
   `GDiscrete` in the absolute-value view `lmRealN` (`real_hlv_not_GDiscrete`), because 3/4 lies
-  between 1/2 and 1. The nonzero 2-adic norms are the integer powers of 2 (`q2_norm_image`, which
-  repackages Mathlib's `Padic.padicNormE.image`), and the nonzero absolute values of ℝ fill (0, ∞)
+  between 1/2 and 1. The nonzero 2-adic norms are the integer powers of 2 (`q2_norm_image`: Mathlib's
+  `Padic.padicNormE.image` gives one inclusion, `Padic.norm_p_zpow` the other), and the nonzero
+  absolute values of ℝ fill (0, ∞)
   (`real_norm_image`), with another between any two (`real_norm_dense`). That is the
   discrete/continuous contrast of (b).
   Reading: INVERSION, the long way round is a two-chart reading: one rational orbit `2ⁿ` tends to 0 in
   `ℚ_[2]` and to infinity in ℝ (`doubling_place_dichotomy`). Under real doubling no sequence from 0 of
-  ℝ meets `GReturnToStart` (`real_dbl_no_return_zero`). The ordinal tower from 0 of `Ordinal` does not
+  ℝ meets `GReturnToStart` (`real_dbl_no_return_zero`). The ordinal tower from 0 of `Ordinal` (universe 0) does not
   meet `GReturnToStart` (`ordinal_tower_no_return`); the proof: its tail's closure is ε₀
   (`ordinalTowerMotion_stageClosure`), and ε₀ ≠ 0 of `Ordinal` (`epsilon0_ne_zero`).
 
@@ -110,8 +113,8 @@ point `p` that is the limit sink off `q`, and a run from off `q` with no landing
 the run closes at UP of its start, `p` is in that closure, and the start `s 0` does not arrive at `p`
 (`¬ M.Arrives p (s 0)`). It
 runs one way. `fixed_destination_two_charts` applies it twice: the 2-adic line from 2 closes at 0 of
-`ℚ_[2]`, the real one at ∞ of `OnePoint ℝ`. The destination is fixed. The step count is not: in each
-chart the start 2 does not arrive at its destination (`¬ Arrives`).
+`ℚ_[2]`, the real one at ∞ of `OnePoint ℝ`. The destination is fixed, and there is no finite step
+count to it: in each chart the start 2 does not arrive at its destination (`¬ Arrives`).
 
 ## The limits
 
