@@ -110,8 +110,8 @@ point `p` that is the limit sink off `q`, and a run from off `q` with no landing
 the run closes at UP of its start, `p` is in that closure, and the start `s 0` does not arrive at `p`
 (`¬ M.Arrives p (s 0)`). It
 runs one way. `fixed_destination_two_charts` applies it twice: the 2-adic line from 2 closes at 0 of
-`ℚ_[2]`, the real one at ∞ of `OnePoint ℝ`. The destination is fixed. The step count is not, because the
-run never arrives.
+`ℚ_[2]`, the real one at ∞ of `OnePoint ℝ`. The destination is fixed. The step count is not: in each
+chart the start 2 does not arrive at its destination (`¬ Arrives`).
 
 ## The limits
 
