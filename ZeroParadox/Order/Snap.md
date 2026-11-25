@@ -36,7 +36,13 @@ Cross-framework synthesis of ZP-A through ZP-D. Provides three formal inserts:
     generator, not an inert string, so this path does not derive executing from incompressibility.
     Its Lean counterpart is the machinePhaseKleene instance's botCode_is_quine field, a KleeneStructure
     requirement that constant codes also meet, not a witness of execution and not a second
-    independent proof.
+    independent proof. Kolmogorov complexity is in the build for infinite tapes
+    (`ZeroParadox/Information/BrudnoBridge.lean`, restating kolmogorov-complexity-lean:
+    `MLRandom_fair_iff_le_KPPlain`, `brudno_fair_of_MLRandom`), and for each fixed prefix-free decoder
+    almost every fair tape is incompressible (`ae_incompressible`, conjunct 2 of
+    `tape_totality_two_faces`). The finite-string bound K(x | n) ≥ |x| at P₀ is not stated in Lean, and P₀
+    has no Lean definition (not located as of 2026-11-24, searched: `def`/`theorem` names matching
+    Kolmogorov, incompress, P₀, P0 and entropyRate over `ZeroParadox/**/*.lean`).
 
   The Lean counterparts of Paths 1 and 3 are carried together by `da1_paths_unified` as a
   conjunction; that they name one structural fact is the framework's reading. ZP-K states what is

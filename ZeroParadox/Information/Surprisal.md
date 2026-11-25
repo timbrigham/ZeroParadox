@@ -15,6 +15,22 @@ Self-contained within information theory and real analysis. Imports ZP-B concept
 disconnectedness, clopen balls) but not as a Lean dependency — ZP-C's theorems do not require the p-adic
 structure.
 
+## P₀, the incompressibility threshold (formerly ZP-C D1)
+
+For an infinite binary sequence `w`, P₀(w) is the algorithmic entropy rate, lim sup over `n` of
+K(w↾n | n)/n, with K Kolmogorov complexity relative to a fixed universal machine. P₀ has no Lean definition,
+and the length-conditional form K(w↾n | n) is not stated in Lean (not located as of 2026-11-24, searched:
+`def`/`theorem` names matching Kolmogorov, Incompress, EntropyRate, Complexity, P₀ and P0 over
+`ZeroParadox/**/*.lean`). What is in the build, in experimental files:
+
+- for each prefix-free decoder `D`, almost every fair-coin tape has a constant bounding how much `D` compresses
+  any of its prefixes (`ae_incompressible`, `ZeroParadox/Information/MaxEntropy.lean`; conjunct 2 of
+  `tape_totality_two_faces`);
+- for a tape Martin-Löf random for the fair coin, plain complexity per bit tends to 1
+  (`brudno_fair_of_MLRandom`, `ZeroParadox/Information/BrudnoBridge.lean`, restating kolmogorov-complexity-lean);
+  and almost every tape is Martin-Löf random for its law (`mlRandom_ae`,
+  `ZeroParadox/Information/TwoRequirements.lean`).
+
 ## The converse — the collision is NECESSARY, not decorative
 
 The question these two theorems answer, which no wording gate could: does a non-injective representation

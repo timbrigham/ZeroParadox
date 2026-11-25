@@ -14,7 +14,8 @@ Key results:
   - F_A (ZPA/ZPE): no functor term. `th1_fa` is `bot_le` (⊥ of a ZPSemilattice lies below every
     element; no category is built on it). Separately, ℕ with max/0 is a concrete ZPCategory
     instance whose 0 is initial in `natOrderCat`, built from ℕ's ≤ (`natSLat_initial_grounding`,
-    NatSLat appendix).
+    NatSLat appendix). On every `ZPSemilattice`, ⊥ is initial in the order category of ZP-A's induced
+    order (Mathlib `Preorder.isInitialBot`; the `example` after `th1_fa`, with its `Unit` control).
   - F_B: Q₂BallDepth appendix — concrete Functor ℕ → Q₂BallDepth (fb_functor); its image of 0
     is initial in that stand-in (`fb_preserves_initial`, `IsInitial.ofUnique 0`), beside C3. In
     `TopCat` the floor is terminal and not initial (`padic_bottom_not_initial`).
@@ -24,7 +25,8 @@ Key results:
     is initial in that stand-in (`fd_preserves_initial`), beside T4 (orthogonality).
   OQ-G3 status: each F_B/F_C/F_D has a concrete depth-index witness here (a ZPCategory on an
   ℕ-indexed newtype whose initial object is depth 0). The full functors into the REAL domain categories are now
-  built in the sibling files — fB_functor : ℕᵒᵖ ⥤ TopCat (ZeroParadox/Valuation/TopFunctor.lean), fD_functor :
+  built in the sibling files — fB_functor : ℕᵒᵖ ⥤ TopCat (ZeroParadox/Valuation/TopFunctor.lean; contravariant,
+  its source is ℕ with arrows reversed, unlike `fb_functor : Functor ℕ Q₂BallDepth`), fD_functor :
   ℕ ⥤ ModuleCat ℂ (ZeroParadox/State/HilbFunctor.lean), fC_functor : ℕ ⥤ KleisliCat PMF (ZeroParadox/Multihomed/InfoFunctor.lean), bundled
   as mc1_correspondence (ZeroParadox/Multihomed/MC1Bridge.lean). Those supersede the ℕ-shaped depth proxies in this file.
   MC-1's correspondence half is thereby formal; the literal cross-category identity is retired as

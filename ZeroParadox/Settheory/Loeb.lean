@@ -200,6 +200,14 @@ theorem godel_two {falsum : S} (psi : S)
     (hcon : ¬ Thm falsum) : ¬ Thm (imp (box falsum) falsum) :=
   fun h => hcon (loeb psi hfix1 hfix2 h)
 
+-- Statement: Gödel's first incompleteness, its unprovability half, in the class: a consistent system
+-- does not prove a sentence `G` with `⊢ G → (□G → falsum)`, the forward half of the Löb diagonal at
+-- `falsum`. `hcon` carries it: the inconsistent `Unit` member (§ I NO-GO gauge) proves every sentence.
+-- The class has no negation, so the other half (`¬G` unprovable) is not stated here.
+example {falsum : S} (G : S) (hfix1 : Thm (imp G (imp (box G) falsum)))
+    (hcon : ¬ Thm falsum) : ¬ Thm G :=
+  fun hG => hcon (mp (mp hfix1 hG) (nec hG))
+
 -- Reading: the propositions of the Kripke frame on the two-element strict chain, the frame of a finite
 -- GL-model (Saitou & Noguchi, arXiv:2609.13780, Def. 3.4). Statement: with `box (a, b) = (b, true)`,
 -- `F = (false, true)` is unprovable, is its own Löb diagonal, and `⊢ F → (false, false)` fails; Löb's

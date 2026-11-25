@@ -81,6 +81,25 @@ theorem th1_fa {L : Type*} [ZPSemilattice L] (x : L) :
     le bot x :=
   bot_le x
 
+-- Statement: F_A's initiality leg on EVERY `ZPSemilattice`: in ZP-A's induced order (`zpSemilatticeSup`,
+-- `zpOrderBot`), ⊥ of `L` is initial in the order category of `L` (Mathlib `Preorder.isInitialBot`);
+-- `natSLat_initial_grounding` is the ℕ case. The codomain is that order category of one `L`.
+open CategoryTheory.Limits in
+noncomputable example (L : Type*) [ZPSemilattice L] :
+    letI := zpSemilatticeSup L; letI := zpOrderBot L; IsInitial (bot : L) := by
+  letI := zpSemilatticeSup L; letI := zpOrderBot L
+  exact Preorder.isInitialBot L
+
+-- Statement: CONTROL, on the one-point semilattice `Unit` that ⊥ is also terminal, so this is AX-G1's
+-- initial-object half only; the no-terminal half is the separate hypothesis `HasNoTop`.
+noncomputable example :
+    letI : ZPSemilattice Unit := ⟨fun _ _ => (), (), fun _ _ _ => rfl, fun _ _ => rfl,
+      fun _ => rfl, fun _ => rfl⟩
+    letI := zpSemilatticeSup Unit; CategoryTheory.Limits.IsTerminal (bot : Unit) :=
+  CategoryTheory.Limits.IsTerminal.ofUniqueHom
+    (fun _ => CategoryTheory.homOfLE (le_of_eq (Subsingleton.elim _ _)))
+    (fun _ _ => Subsingleton.elim _ _)
+
 /-- T-H1 for F_B — domain property: no continuous path in Q₂ runs from any x ≠ 0 to 0 (ZPB C3).
     `Statement:` the type is one way, x to 0. INVARIANT, of the pair with `disconnectedness_forbids_path`
     (`ZeroParadox/Valuation/BranchingSnapChain.lean`), which excludes a path between any two distinct

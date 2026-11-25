@@ -506,8 +506,9 @@ theorem t_iz_h_bound_from_depth_chain
     nowhere zero, and `IsDepthChain`, the BRIDGE asserting the 2-adic valuation tracks that
     index — it binds no `ZPSemilattice` at all and is an undischarged modelling commitment.
     Optional transparency variant — t_iz_complete is the canonical theorem.
-    A peer reviewer can now trace the full chain from the ZP-A conditions to convergence
-    without encountering an ungrounded hypothesis. -/
+    The handle says "from axioms"; `hS` and `IsDepthChain` are hypotheses that no ZP-A condition
+    discharges. A family meeting `IsDepthChain`: `scaleChain_isDepthChain`
+    (`ZeroParadox/Valuation/ScaleDepthWitness.lean`). -/
 theorem t_iz_complete_from_axioms
     (S : ℕ → Q₂) (depths : ℕ → ℕ)
     (hS : ∀ n, S n ≠ 0)

@@ -106,6 +106,8 @@ example (α : Type) [Preorder α] (h : ∀ x : α, ∃ y, x < y) : ∀ t : α, I
   fun t => ⟨fun ht => by
     obtain ⟨y, hy⟩ := h t
     exact lt_irrefl _ (lt_of_lt_of_le hy (leOfHom (ht.from y)))⟩
+-- Statement: AX-G1's initial-object half on every `ZPSemilattice`, in ZP-A's induced order, is the
+-- `example` after `th1_fa` in `ZeroParadox/Multihomed/CategoricalBridge.lean`, with its `Unit` control.
 
 /-! ## II. ZPSurprisal — I-KC Import (D7') -/
 
@@ -126,6 +128,12 @@ class ZPSurprisal (C : Type*) [Category C] [ZPCategory C] where
 theorem t1_initial_unique {C : Type*} [Category C] [ZPCategory C]
     {A B : C} (hA : IsInitial A) (hB : IsInitial B) : Nonempty (A ≅ B) :=
   ⟨hA.uniqueUpToIso hB⟩
+
+-- Statement: T1 at full strength, unique up to unique isomorphism: some `A ≅ B` equals every
+-- `A ≅ B`. `t1_initial_unique` states only `Nonempty (A ≅ B)`, and its `[ZPCategory C]` is unused.
+example {C : Type*} [Category C] {A B : C} (hA : IsInitial A) (hB : IsInitial B) :
+    ∃ i : A ≅ B, ∀ j : A ≅ B, j = i :=
+  ⟨hA.uniqueUpToIso hB, fun _ => Iso.ext (hA.hom_ext _ _)⟩
 
 /-- T2 — Universal Constituent (AX-G1 / D3).
     The initial object 0 maps uniquely to every object X. -/
@@ -152,10 +160,11 @@ theorem t4_chains_forward_only {C : Type*} [Category C] [ZPC : ZPCategory C]
 /-! ## IV. T6 — Informational Singularity (D7', I-KC) -/
 
 /- Lean Scope Note — T6-b/c versus PDF Claims
-   The PDF's T6-b proves strict inequality: I(f) > 0 when A ≇ 0 (the empty program
+   The PDF's T6-b states strict inequality: I(f) > 0 when A ≠ B (the empty program
    cannot reproduce x_B from x_A when they encode distinct states). The PDF's T6-c
-   establishes monotone accumulation via subadditivity of K:
+   argues monotone accumulation from subadditivity of K, an upper bound:
      K(x_n|x_0) ≤ ∑ K(x_{k+1}|x_k) + O(n·c).
+   The dependency's forms and the measured limits: `ZeroParadox/Category/Category.md`.
    Neither claim is captured by ZPSurprisal. That typeclass abstracts only the
    structural skeleton of K — surp_id (zero identity surprisal) and surp : hom → ℕ
    (non-negative by type). The Lean proofs of T6-b and T6-c reduce to Nat.zero_le _,
@@ -212,6 +221,13 @@ theorem t6_informational_singularity {C : Type*} [Category C] [ZPC : ZPCategory 
     (∀ f : ZPC.zpInitial ⟶ X, 0 ≤ ZPS.surp f) ∧
     IsEmpty (X ⟶ ZPC.zpInitial) :=
   ⟨fun f => t6b_surprisal_nonneg f, t3_unreachability X hne⟩
+
+-- Statement: T6's "unique object", its structural half: every `X` not isomorphic to 0 receives a
+-- morphism from an object not isomorphic to it (0 itself), so the inward dead end singles out 0 up to
+-- isomorphism. Part I's outward conjunct above is `Nat.zero_le`.
+example {C : Type*} [Category C] [Z : ZPCategory C] (X : C) (hX : IsEmpty (X ≅ Z.zpInitial)) :
+    ∃ Y : C, IsEmpty (Y ≅ X) ∧ Nonempty (Y ⟶ X) :=
+  ⟨Z.zpInitial, ⟨fun i => hX.false i.symm⟩, ⟨Z.zpIsInitial.to X⟩⟩
 
 /-! ## V. T7 — The Categorical Zero Paradox (Closing Theorem) -/
 

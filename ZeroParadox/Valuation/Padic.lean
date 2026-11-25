@@ -265,6 +265,15 @@ example (x : Q₂) (hx : x ≠ 0) (j : ℤ) : ‖x‖ ≤ (2 : ℝ) ^ (-j) ↔ j
   rw [zpow_le_zpow_iff_right₀ (by norm_num : (1 : ℝ) < 2)]
   omega
 
+-- Statement: ZP-B T3's gap: a point of ℚ₂ outside the ball `B(0, 2^(-j))` has norm at least `2^(-j+1)`.
+example (x : Q₂) (j : ℤ) (hx : ¬ ‖x‖ ≤ (2 : ℝ) ^ (-j)) : (2 : ℝ) ^ (-j + 1) ≤ ‖x‖ := by
+  have hx0 : x ≠ 0 := by
+    rintro rfl; exact hx (by rw [norm_zero]; positivity)
+  rw [Padic.norm_eq_zpow_neg_valuation hx0] at hx ⊢
+  push_cast at hx ⊢
+  rw [zpow_le_zpow_iff_right₀ (by norm_num : (1 : ℝ) < 2)] at hx ⊢
+  omega
+
 /-! ## Theorem T5 — Q₂ is Totally Disconnected
 
 The only connected subsets of Q₂ are singletons.
