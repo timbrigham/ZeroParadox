@@ -60,10 +60,14 @@ Tim named three. Each one splits into the predicates below.
 - The return: `GReturnToStart M s`. The tail of `s` is a run whose closure contains `s 0`.
   Statement: CARRIER, two charts meet it from 0. The 2-adic arc meets it under 2-adic doubling (`q2_arc_returnToStart`), and the
   sequence `0, 1, 1/2, 1/4, …` meets it under real halving (`real_hlv_returnToStart`). So
-  `GReturnToStart` alone does not separate the long way round from a plain contraction. What separates
-  them is the value group the steps run through: each 2-adic doubling step is a cover in the norm order
-  (`q2_double_covBy`) of a discrete value group (`q2_norm_image`); the real halving return runs through
-  a dense one (`real_norm_image`). Under real doubling no sequence from 0 of ℝ meets `GReturnToStart`
+  `GReturnToStart` alone does not separate the long way round from a plain contraction. Inside its own
+  carrier the 2-adic return is a plain contraction too: 0 of `ℚ_[2]` is an attracting fixed point of
+  doubling (`padic_two_poles`, `ZeroParadox/Multihomed/TwoAdicBend.lean`). The two returns differ in
+  the value group the steps run through: each 2-adic doubling step is a cover in the norm order
+  (`q2_double_covBy`) of a discrete value group (`q2_norm_image`), and the real halving return runs
+  through a dense one (`real_norm_image`). That is the discrete/continuous contrast of (b). Reading:
+  INVERSION, the long way round is a two-chart reading: one rational orbit `2ⁿ` tends to 0 in `ℚ_[2]` and to infinity
+  in ℝ (`doubling_place_dichotomy`). Under real doubling no sequence from 0 of ℝ meets `GReturnToStart`
   (`real_dbl_no_return_zero`). The ordinal tower from 0 closes at ε₀, never back at 0 of `Ordinal`
   (`ordinal_tower_no_return`).
 
@@ -115,7 +119,7 @@ run never arrives.
   Archimedean fence).
 - **(c)** The return is to the same 0: 0 of ℤ_[2] for the tower's image (`snap_arc_z2_loop`), 0 of
   `ℚ_[2]` on the sphere (`q2_arc_returnToStart`), along a route unique to its line (`fieldLine_same_iff`),
-  by cover steps (`q2_double_covBy`).
+  by cover steps in the norm order (`q2_double_covBy`).
 
 ## The magnet, as a Reading
 
