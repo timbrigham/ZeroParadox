@@ -1,7 +1,8 @@
 # The givens at the die level: what each one is, and the theorem that carries it
 
-Ride-along for `ZeroParadox/Givens.lean`. Each given is a `Prop` on a die `Motion` (`ZeroParadox/Die.lean`),
-never a field of a class, so each one can be true of one chart and false of another. The file proves or
+Ride-along for `ZeroParadox/Givens.lean`. Each given is a `Prop`, never a field of a class, so each one
+can be true of one chart and false of another. All but `GConnected` and `GJoined` take a die `Motion`
+(`ZeroParadox/Die.lean`); those two take two points of a topological space. The file proves or
 refutes each given chart by chart. The main charts are four limit motions: doubling and halving on the
 2-adic sphere `OnePoint ℚ_[2]`, and doubling and halving on the real projective line `OnePoint ℝ`. Further
 charts are `machineJoinMotion` on `MachinePhase`, `ordinalSuccMotion` and `ordinalTowerMotion` on
@@ -63,9 +64,11 @@ Tim named three. Each one splits into the predicates below.
   (`real_hlv_returnToStart`). So `GReturnToStart` alone does not separate the long way round from a
   plain contraction. Inside its own carrier the 2-adic return is a plain contraction too: 0 of `ℚ_[2]`
   is an attracting fixed point of doubling (`padic_two_poles`, `ZeroParadox/Multihomed/TwoAdicBend.lean`).
-  The two carriers differ in their absolute values, not the two return runs: each 2-adic doubling
-  step is a cover in the norm order (`q2_double_covBy`), and the nonzero 2-adic norms are exactly the
-  integer powers of 2 (`q2_norm_image`); the nonzero absolute values of ℝ fill all of (0, ∞)
+  The two return runs differ step by step at each carrier's own absolute value. Each 2-adic doubling
+  step from a nonzero point is a cover in the norm order (`q2_double_covBy`). Real halving is not
+  `GDiscrete` in the absolute-value view `lmRealN` (`real_hlv_not_GDiscrete`), because 3/4 lies
+  between 1/2 and 1. The nonzero 2-adic norms are the integer powers of 2 (`q2_norm_image`, which
+  repackages Mathlib's `Padic.padicNormE.image`), and the nonzero absolute values of ℝ fill (0, ∞)
   (`real_norm_image`), with another between any two (`real_norm_dense`). That is the
   discrete/continuous contrast of (b).
   Reading: INVERSION, the long way round is a two-chart reading: one rational orbit `2ⁿ` tends to 0 in

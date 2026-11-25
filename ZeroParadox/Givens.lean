@@ -35,7 +35,8 @@ still "what they are".. each one of those field lines that I'm visualizing is un
 
 ---
 
-Every given is a `Prop` on a die `Motion` (`ZeroParadox/Die.lean`), never a class field. § 0 the
+Every given is a `Prop`, never a class field. All but `GConnected` and `GJoined` take a die `Motion`
+(`ZeroParadox/Die.lean`); those two take two points of a topological space. § 0 the
 charts; § I the givens; § II per chart, with controls; § III the field lines; § IV given these,
 then; § V the limits; § VI the commitments that stay hypotheses. Long form: `ZeroParadox/Givens.md`.
 -/
@@ -252,6 +253,22 @@ theorem real_not_GDiscrete : ¬ GDiscrete dblReal lmRealN := by
   · exact hc.2 ((key 1 (3 / 2)).2 (by norm_num)) ((key (3 / 2) 2).2 (by norm_num))
   · exact absurd ((key 2 1).1 hc.1) (by norm_num)
 
+/-- `Statement:` real halving chart: `GDiscrete` FAILS in `lmRealN` (`1 → 1/2`, with `3/4` between). -/
+theorem real_hlv_not_GDiscrete : ¬ GDiscrete hlvReal lmRealN := by
+  rintro ⟨-, h⟩
+  have hs : hlvReal.step (OnePoint.some 1) (OnePoint.some 2⁻¹) := by
+    show OnePoint.some (2⁻¹ : ℝ) = lmScale (2⁻¹ : ℝ) (inv_ne_zero two_ne_zero) (OnePoint.some 1)
+    rw [lm_scale_some, mul_one]
+  have hne : (OnePoint.some (1 : ℝ) : OnePoint ℝ) ≠ OnePoint.some 2⁻¹ := fun e => by
+    have := OnePoint.coe_injective e; norm_num at this
+  have key : ∀ a b : ℝ, @LT.lt (OnePoint ℝ) lmRealN.toLT (OnePoint.some a) (OnePoint.some b) ↔
+      |a| < |b| := fun a b => by
+    show realSphNorm (OnePoint.some a) < realSphNorm (OnePoint.some b) ↔ _
+    simp only [realSphNorm, ENNReal.coe_lt_coe, ← NNReal.coe_lt_coe, coe_nnnorm, Real.norm_eq_abs]
+  rcases h _ _ hs hne with hc | hc
+  · exact absurd ((key 1 2⁻¹).1 hc.1) (by norm_num)
+  · exact hc.2 ((key 2⁻¹ (3 / 4)).2 (by norm_num)) ((key (3 / 4) 1).2 (by norm_num))
+
 /-- `Statement:` `Int.log 2 (2 * r) = Int.log 2 r + 1` for `0 < r` in ℝ. -/
 theorem givens_log2_two_mul {r : ℝ} (hr : 0 < r) : Int.log 2 (2 * r) = Int.log 2 r + 1 := by
   apply _root_.le_antisymm
@@ -346,7 +363,8 @@ theorem machine_GDiscrete :
   · exact absurd rfl hne
   · exact absurd rfl hne
 
-/-- `Statement:` `c₀`, ⊥ of `MachinePhase`, is a landing and steps to its cover `c₁`. -/
+/-- `Statement:` `MachinePhase` chart: some landing of `machineJoinMotion` steps to a cover of it in
+ZP-A's induced order. The proof's witness is `c₀`, ⊥ of `MachinePhase`, stepping to `c₁`. -/
 theorem machine_GCoverAtLanding :
     GCoverAtLanding machineJoinMotion (zpSemilatticeSup MachinePhase).toPreorder :=
   ⟨c₀, c₁, Part.mem_some _, ⟨c₁, t_snap_machine.symm⟩, t_snap_derived_cover.2⟩
@@ -357,7 +375,8 @@ theorem ordinal_GDiscrete : GDiscrete ordinalSuccMotion.{0} inferInstance := by
   rintro a b (rfl : b = Order.succ a) -
   exact Or.inl (Order.covBy_succ a)
 
-/-- `Statement:` ε₀ is a landing of `ordinalSuccMotion` and steps to its successor, a cover. -/
+/-- `Statement:` ordinal chart (universe 0): some landing of `ordinalSuccMotion` steps to its
+successor, a cover of it. The proof's witness is ε₀. -/
 theorem ordinal_GCoverAtLanding : GCoverAtLanding ordinalSuccMotion.{0} inferInstance :=
   ⟨Ordinal.epsilon 0, Order.succ (Ordinal.epsilon 0),
     Part.mem_some_iff.2 (Ordinal.nfp_eq_self (Ordinal.omega0_opow_epsilon 0)).symm, rfl,
@@ -611,8 +630,9 @@ theorem real_hlv_returnToStart :
     _, hrc, ?_⟩
   exact lm_real_dipole.2.2.1 _ (OnePoint.coe_ne_infty 1)
 
-/-- `Statement:` ordinal chart: the tower from 0 of `Ordinal` closes at ε₀, never back at 0 of
-`Ordinal` (`epsilon0_ne_zero`). -/
+/-- `Statement:` ordinal chart (universe 0): the tower from 0 of `Ordinal` does not meet
+`GReturnToStart`: no `RunClosure` of its tail contains 0 of `Ordinal`. The proof: that closure is
+ε₀ (`ordinalTowerMotion_stageClosure`), and ε₀ ≠ 0 of `Ordinal` (`epsilon0_ne_zero`). -/
 theorem ordinal_tower_no_return :
     ¬ GReturnToStart ordinalTowerMotion.{0}
       (fun n => (fun a : Ordinal.{0} => Ordinal.omega0 ^ a)^[n] 0) := by
@@ -828,7 +848,8 @@ end FieldLines
 
 /-- `Statement:` given `GMinMax`'s max half (`p` the limit sink off `q`), UP unchanged along steps,
 and a run from off `q` with no landing among its stages: the run closes at UP of its start, `p` is in
-that closure, and the run never arrives at `p` along OVER. One way. -/
+that closure, and the start `s 0` does not arrive at `p` (`¬ M.Arrives p (s 0)`, `Motion.Arrives`).
+One way. -/
 theorem given_then_fixed_destination {α : Type*} {M : Motion α} (hinv : M.UpStepInvariant)
     {p q : α} (hmax : lmSinkOf M p q) {s : ℕ → α} (hrun : M.IsRun s) (h0 : s 0 ≠ q)
     (hnl : ∀ n, ¬ M.IsLanding (s n)) :
@@ -837,7 +858,7 @@ theorem given_then_fixed_destination {α : Type*} {M : Motion α} (hinv : M.UpSt
    Motion.not_arrives_of_stageClosure hrun (Motion.stageClosure_of_run hinv hrun hnl) (hmax _ h0)⟩
 
 /-- `Statement:` in both charts: the 2-adic field line from 2 closes at 0 of `ℚ_[2]`, the real one
-at ∞ of `OnePoint ℝ`, and neither arrives. `Reading:` INVERSION of the destination across charts. -/
+at ∞ of `OnePoint ℝ`, and neither start (2) arrives at its closure point (`Arrives`). `Reading:` INVERSION of the destination across charts. -/
 theorem fixed_destination_two_charts :
     (dblQ2.RunClosure (fun n => (lmScale (2 : ℚ_[2]) two_ne_zero)^[n] (OnePoint.some 2))
         (dblQ2.up (OnePoint.some 2)) ∧
@@ -878,7 +899,7 @@ section GivensIndex
 #check @ZeroParadox.snap_ae_of_firstStep       -- Statement: `BotHasFirstStep L` and `0 < p ≤ 1` give, for almost every tape, a run from ⊥ of `L` whose first step covers ⊥ of `L`. One way.
 #check @ZeroParadox.doubling_place_dichotomy   -- Statement: for rational `x ≠ 0`, `2ⁿx → 0` in `ℚ_[2]` and `|2ⁿx| → ∞` in ℝ.
 #check @ZeroParadox.q2_zero_min_eq_max         -- Statement: 0 of `ℚ_[2]` steps only to itself under doubling and has least norm; its `cxQ2` is the supremum and greatest value along the field line `2 ^ (n + 1)`.
-#check @ZeroParadox.tape_totality_two_faces    -- Statement: one maximum-entropy coin; `fairTape`-almost every tape incompressible for each prefix-free decoder; ⊥ of `ℕ → Bool` not random, and in the closure of the random firing tapes.
+#check @ZeroParadox.tape_totality_two_faces    -- Statement: one maximum-entropy coin; for each prefix-free decoder, `fairTape`-almost every tape incompressible for it; ⊥ of `ℕ → Bool` not random, and in the closure of the random firing tapes.
 #check @ZeroParadox.snap_arc_z2_loop           -- Statement: the tower's image starts at 0 of ℤ_[2], is nonzero from stage 1, and tends to that same 0.
 #check @ZeroParadox.arc_q2Val                  -- Statement: `q2Val` of the arc is ⊤ of `ℕ∞` at stage 0, `n` at stage `n ≥ 1`, and tends to ⊤.
 
@@ -898,7 +919,7 @@ theorem ZeroParadox.q2_not_leavesByRun_zero :
 #check @ZeroParadox.never_fires_ae_zero        -- Statement: LIMIT (b), control: at `p = 0`, almost every tape fires nowhere.
 #check @ZeroParadox.q2_arc_returnToStart       -- Statement: LIMIT (c): the arc returns to the SAME 0 of `ℚ_[2]` it started from.
 #check @ZeroParadox.fieldLine_same_iff         -- Statement: LIMIT (c): along a route unique to its line: two lines are equal or disjoint.
-#check @ZeroParadox.q2_double_covBy            -- Statement: LIMIT (c): each 2-adic doubling step is a cover in the norm order; the value group is discrete (`q2_norm_image`).
+#check @ZeroParadox.q2_double_covBy            -- Statement: LIMIT (c): each 2-adic doubling step from a nonzero point is a cover in the norm order; the value group is discrete (`q2_norm_image`).
 #check @ZeroParadox.real_hlv_returnToStart     -- Statement: LIMIT (c), control: real halving also returns to 0 of ℝ, through a dense value group (`real_norm_image`).
 
 /-! ### § VI. The commitments that stay hypotheses -/
@@ -931,6 +952,7 @@ open ZeroParadox
 #print axioms q2_hlv_GDiscrete
 #print axioms q2_not_GCoverAtLanding
 #print axioms real_not_GDiscrete
+#print axioms real_hlv_not_GDiscrete
 #print axioms givens_log2_two_mul
 #print axioms realExpView
 #print axioms real_dbl_GDiscrete_expView

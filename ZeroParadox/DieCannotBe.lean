@@ -307,8 +307,8 @@ example : (∀ M : ZeroParadox.Motion Bool, ¬¬ M.Corner → M.Corner) ↔ Zero
 -- loop is a point `b ≠ y` from which OVER and UP both reach the landing `y`, and a climb one from which
 -- they reach two different points (the two examples after the ℕ∞ ones).
 -- Statement: LOOP, wiring one, on the ℕ∞ model (`ZeroParadox/Settheory/Model.lean`: join `min`, scale
--- `+ 1`): UP join with `c`, OVER the scale step. If `c ≠ ⊤` of `ℕ∞`, the motion loops at `c`, does not
--- climb, and is the die motion of no `UpAndOver ℕ∞`.
+-- `+ 1`): UP join with `c`, OVER the scale step. If `c ≠ ⊤` of `ℕ∞`, the motion loops (`Loop`; the
+-- proof's landing is `c`), does not climb, and is the die motion of no `UpAndOver ℕ∞`.
 example (c : ℕ∞) (hc : c ≠ ⊤) :
     let M := ZeroParadox.Motion.ofTotal (fun x : ℕ∞ => ZeroParadox.ZPSemilattice.join x c)
       (fun x => show min (min x c) c = min x c by rw [min_assoc, min_self])
@@ -3101,8 +3101,8 @@ example : ¬ (∀ a, (ZeroParadox.Motion.ofFun Nat.pred).step a 0 → a = 0) ∧
 -- Reading: the first trap set says no other start ever gets in, the second that no step leaves to
 -- elsewhere; read on runs, each forbids a "bad thing" (safety, Alpern and Schneider, "Defining
 -- Liveness", IPL 21 (1985), p. 181). `Arrives` implies that every run passes through `y`
--- (`exists_run_eq_of_arrives`; the converse holds given a step at every point other than `y`,
--- `arrives_of_forall_run`), a "good thing" eventually happening (liveness, p. 182, termination among
+-- (`exists_run_eq_of_arrives`; the converse holds given `DecidableEq` and a step at every point
+-- other than `y`, `arrives_of_forall_run`), a "good thing" eventually happening (liveness, p. 182, termination among
 -- their examples); theirs are properties of executions, these of a step relation. Arrival is a die
 -- notion; approach in a metric (`Tendsto`) is not, since a motion carries no topology.
 #check @ZeroParadox.Motion.Arrives              -- Statement: `x = y`, or `x` has a step and every step from `x` lands at a point arriving at `y`
@@ -4317,7 +4317,7 @@ example :
 #check @ZeroParadox.snap_of_firstStep_MLRandom    -- Statement: if ⊥ of `L` has a first step in ZP-A's induced order (`BotHasFirstStep L`) and `w` is Martin-Löf random for `trials p hp` with `0 < p`, then some `φ` and firing proof `hw` make `φ ∘ firedRun w hw` a state sequence meeting `hcc1`, `hocc` and `hcov`; one way
 #check @ZeroParadox.linearMaxZPS_snap_target      -- Statement: if `α` is linearly ordered with least element `b`, `b ⋖ a`, and `w` is as above, then under join `max` the run's `S 1` covers `b` in `α`'s order and equals `a`; one way
 #check @ZeroParadox.phase_snap_of_MLRandom        -- Statement: CORNER leg: if `w` is as above, then on `WithBot Ordinal` under join `max` some run's `S 1` covers ⊥ of `WithBot Ordinal`, equals the snap `↑0`, differs from `↑ε₀`, and `phaseUpAndOver.up` sends it to `↑ε₀`; one way
-#check @ZeroParadox.epsilonOrZero_snap_of_MLRandom -- Statement: COVER leg: if `w` is as above, then on `EpsilonOrZero` (0 of `Ordinal` and the fixed points of `ω^·`) under join `max` some run's `S 1` covers 0 of `Ordinal` and has value ε₀, which is not 0; one way
+#check @ZeroParadox.epsilonOrZero_snap_of_MLRandom -- Statement: COVER leg: if `w` is as above, then on `EpsilonOrZero` (0 of `Ordinal` and the fixed points of `ω^·`) under join `max` some run's `S 1` covers `epsilonOrZero_bot` (value 0 of `Ordinal`) in `EpsilonOrZero`'s subtype order and has value ε₀, which is not 0 of `Ordinal`; one way
 #check @ZeroParadox.epsilonOrZeroIsoLanding_spec  -- Statement: RELATION: the order isomorphism from `EpsilonOrZero` to the landings of `phaseUpAndOver.up` sends 0 of `Ordinal` to ⊥ of `WithBot Ordinal` (not to `↑0`) and ε₀ to `↑ε₀`, and carries the cover `0 ⋖ ε₀` to a cover among the landings
 -- Reading: CARRIER, two views of one step, neither THE view. On the full carrier the first step
 -- lands on `↑0` and `↑ε₀` is one UP further (the corner); on the view of landings the first step is
@@ -5436,8 +5436,8 @@ example : ¬ ZeroParadox.Motion.unitMotion.Loop := fun ⟨_, _, _, _, hne, _⟩ 
 -- chart beside its control in `ZeroParadox/Givens.lean`; no equation across carriers is stated.
 #check @ZeroParadox.GDiscrete                  -- Statement: some step moves, and every moving step is a cover one way or the other in a view `P`; `q2_GDiscrete` holds, `real_not_GDiscrete` fails
 #check @ZeroParadox.GMinMax                    -- Statement: `p` steps only to itself and is the limit sink off `q`; `q2_GMinMax` at 0 of `ℚ_[2]` under doubling, `const_GMinMax` the control
-#check @ZeroParadox.GReturnToStart             -- Statement: a sequence's tail is a run whose stage closure contains its start; `q2_arc_returnToStart` holds, `real_dbl_no_return_zero` fails
-#check @ZeroParadox.given_then_fixed_destination -- Statement: a limit sink off `q`, UP unchanged along steps, a run from off `q` with no landing: the run closes at UP of its start, holds the sink there, and never arrives. One way
+#check @ZeroParadox.GReturnToStart             -- Statement: a sequence's tail is a run whose stage closure contains its start; `q2_arc_returnToStart` holds, `real_dbl_no_return_zero` fails for every sequence starting at 0 of ℝ
+#check @ZeroParadox.given_then_fixed_destination -- Statement: a limit sink off `q`, UP unchanged along steps, a run from off `q` with no landing: the run closes at UP of its start, holds the sink there, and the start does not arrive at the sink (`¬ Arrives`). One way
 #check @ZeroParadox.q2_not_leavesByRun_zero    -- Statement: LIMIT — 0 of `ℚ_[2]` never leaves under doubling; `machine_leavesByRun` leaves `c₀`, ⊥ of `MachinePhase`
 
 end DieCannotBeIndex
