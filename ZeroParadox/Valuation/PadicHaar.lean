@@ -36,13 +36,14 @@ claimed**. Prior art: the next block.
 
 /-! ## Prior art
 
-FLT, `FLT/HaarMeasure/MeasurableSpacePadics.lean` (Dillies, Loeffler, 2024; read by the 2026-11-25
-prior-art review at commit `ee47fd2a`) builds the same measure: Borel `PadicInt.instMeasurableSpace`,
-`PadicInt.instMeasureSpace := ⟨addHaarMeasure ⊤⟩`, `PadicInt.volume_univ`. FLT is outside this
-dependency closure, so it is re-instantiated here; this file adds `haarZp_ball` (FLT's ball lemma,
-`Padic.volume_closedBall_one`, is the unit ball only). Mathlib: not located as of 2026-11-25, searched
-`import Mathlib`, `#synth MeasurableSpace ℤ_[3]` (fails). `Mathlib/NumberTheory/Padics/Measure/` has
-`AbstractMeasure`, ring-valued linear functionals: a different object from `MeasureTheory.Measure`. -/
+FLT at commit `ee47fd2a` (read 2026-11-25, types not elaborated; FLT is outside this dependency closure,
+so both are re-proved here; credit runs from FLT to this file). `FLT/HaarMeasure/MeasurableSpacePadics.lean`
+(Dillies, Loeffler, 2024) builds the same measure: Borel `PadicInt.instMeasurableSpace`,
+`PadicInt.instMeasureSpace := ⟨addHaarMeasure ⊤⟩`, `PadicInt.volume_univ`. `haarZp_ball` is the `x = pⁿ`,
+`s = univ` case, stated as a norm-ball, of `PadicInt.volume_padicInt_smul : volume (x • s) = ‖x‖₊ * volume s`
+(`FLT/HaarMeasure/HaarChar/Padic.lean`, Dillies, López-Contreras, 2024). Mathlib: not located as of
+2026-11-25, searched `import Mathlib`, `#synth MeasurableSpace ℤ_[3]` (fails); its `AbstractMeasure :=
+C(X, R) →L[R] E` (`Mathlib/NumberTheory/Padics/Measure/`) is continuous linear maps, not `MeasureTheory.Measure`. -/
 
 namespace ZeroParadox
 
