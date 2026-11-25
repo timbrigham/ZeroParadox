@@ -19,22 +19,30 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 ## Formal Overview (AI-assisted)
 
-The measure foundation for the p-adic bottom in the bottoms-interconnect map. It equips the compact
-group `ℤ_p` with its Borel σ-algebra and the additive Haar **probability** measure (normalized so
-the whole space has measure `1`), and records the measure of the standard norm-balls: `{x : ℤ_p |
-‖x‖ ≤ p^(-n)}` is the additive subgroup `p^n ℤ_p` of index `p^n`, so translation-invariance forces
-its measure to be `p^(-n)`. Everything downstream — `L²(ℤ_p)`, composition operators on it
-(`Lp.compMeasurePreservingₗᵢ`), and ball-indicator integrals — is built against this measure. This
-is what lets the p-adic bottom carry the same transfer-operator / relaxation structure already
-established for the Markov bottom (`MarkovSpectralGap`). All results are standard measure theory on
-a compact group; **no novelty is claimed** — the value is only that Mathlib does not instantiate
-this measure, so the map needs it built.
+The measure foundation for the p-adic chart of the bottoms-interconnect map (base point 0 of
+`ℤ_[p]`). It equips the compact group `ℤ_p` with its Borel σ-algebra and the additive Haar
+**probability** measure (normalized so the whole space has measure `1`), and records the measure of
+the standard norm-balls: `{x : ℤ_p | ‖x‖ ≤ p^(-n)}` is the additive subgroup `p^n ℤ_p` of index
+`p^n`, so translation-invariance forces its measure to be `p^(-n)`. Built against this measure
+downstream: `koopman` (`ZeroParadox/Valuation/PadicKoopman.lean`), `ergodic_odometer`, and the
+Vladimirov operator of `vladimirov_gap`. Standard measure theory on a compact group; **no novelty is
+claimed**. Prior art: the next block.
 
 ## Structure
 - § I   Borel measurable-space structure on ℤ_p
 - § II  The additive Haar probability measure
 - § III Measure of the norm-balls
 -/
+
+/-! ## Prior art
+
+FLT, `FLT/HaarMeasure/MeasurableSpacePadics.lean` (Dillies, Loeffler, 2024; read by the 2026-11-25
+prior-art review at commit `ee47fd2a`) builds the same measure: Borel `PadicInt.instMeasurableSpace`,
+`PadicInt.instMeasureSpace := ⟨addHaarMeasure ⊤⟩`, `PadicInt.volume_univ`. FLT is outside this
+dependency closure, so it is re-instantiated here; this file adds `haarZp_ball` (FLT's ball lemma,
+`Padic.volume_closedBall_one`, is the unit ball only). Mathlib: not located as of 2026-11-25, searched
+`import Mathlib`, `#synth MeasurableSpace ℤ_[3]` (fails). `Mathlib/NumberTheory/Padics/Measure/` has
+`AbstractMeasure`, ring-valued linear functionals: a different object from `MeasureTheory.Measure`. -/
 
 namespace ZeroParadox
 
@@ -47,8 +55,8 @@ instance : Nonempty ℤ_[p] := ⟨0⟩
 
 /-! ## § I — Borel measurable-space structure on ℤ_p -/
 
-/-- Borel σ-algebra on `ℤ_p` (the metric/ultrametric Borel structure). Mathlib registers no
-    `MeasurableSpace` instance on `ℤ_p`, so we opt into the Borel one. -/
+/-- Borel σ-algebra on `ℤ_p` (the metric/ultrametric Borel structure). No Mathlib `MeasurableSpace`
+    instance on `ℤ_p` was located (2026-11-25, Prior art block), so we opt into the Borel one. -/
 noncomputable instance : MeasurableSpace ℤ_[p] := borel _
 
 instance : BorelSpace ℤ_[p] := ⟨rfl⟩
@@ -123,9 +131,9 @@ end ZeroParadox
 
 /-! ## Axiom Purity Check
 
-`haarZp_ball` depends on `[propext, Classical.choice, Quot.sound]`. `Classical.choice` enters through
-the Mathlib additive-Haar construction and the `ℝ≥0∞` / `MeasureTheory` analysis libraries — a library
-dependency, not a new commitment of this file. No `sorryAx` appears. -/
+`Classical.choice` in `haarZp_ball`'s footprint is already in its statement: a theorem about the norm
+on `ℤ_[p]` alone (`‖(0 : ℤ_[3])‖ = 0 := norm_zero`, scratch probe 2026-11-25) prints the same
+footprint. Inherited from Mathlib, not a commitment of this file. -/
 section PurityCheck
 open ZeroParadox
 #print axioms haarZp_ball
