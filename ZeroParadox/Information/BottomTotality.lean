@@ -29,8 +29,9 @@ open MeasureTheory Filter Topology
 `trials_eq_fairTape_of_maxEntropy`, not conjoined here); for each prefix-free decoder `D`,
 `fairTape`-almost every tape is incompressible for `D`; ⊥ of `ℕ → Bool` is not Martin-Löf random
 for `fairTape`, and is in the closure of `randFiring (1/2)`. `Reading:` CARRIER: the minimal face
-sits on the point (⊥ of `ℕ → Bool` is not random, `bot_not_MLRandom`) and on the law (one
-maximum-entropy coin); the maximal face sits on almost every member (`ae_incompressible`). That one
+sits on the point (⊥ of `ℕ → Bool` is not random, `bot_not_MLRandom`) and on the law, minimal in
+the sense that a single condition fixes it (the unique `p` with `binEntropy p = log 2`, the first
+conjunct); the maximal face sits on almost every member, incompressible (`ae_incompressible`). That one
 object is simultaneously minimally and maximally complex is the Take's belief, not a theorem here. -/
 theorem tape_totality_two_faces :
     (∃ p : NNReal, Real.binEntropy (p : ℝ) = Real.log 2 ∧ 0 < p ∧ p ≤ 1 ∧
