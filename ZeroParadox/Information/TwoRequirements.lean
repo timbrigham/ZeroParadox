@@ -1,4 +1,3 @@
--- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): a first step at ⊥ of a ZP-A semilattice and a typical tape, as two hypotheses giving the snap's cover and its slot-chart firing (`hw`). Curated results indexed in ZeroParadox/MANIFEST.md.
 import ZeroParadox.Information.Disjunctive
 import ZeroParadox.Reals.OrderedField
 import ZeroParadox.Settheory.Model
@@ -20,10 +19,9 @@ zero-block typical, Martin-Löf random (implies the first, § II), frequency of 
 sends a tape to a dyadic rational iff the tape is eventually constant.
 ## Engineer's Take
 
-This file is one of a series of iterative attempts on this branch to build a map of how the various
-bottoms interconnect, and by extension how bottom moves from being the floor, a thing (a noun), to a
-verb (an action). The Lean here is our attempt, one way or the other, to get a clean verification. I
-defer to my AI assistant regarding the specifics of how the internals work.
+When you look at the slot machine stuff what we are making the claim off is that at the bottom is infinitely complex, and we can take motion And/or distance being discreet... A step away from zero becomes statistically speaking effectively guaranteed to happen
+
+I think the real argument isn't that tsnap happens, it's that the preconditions are meetable.
 
 ---
 -/

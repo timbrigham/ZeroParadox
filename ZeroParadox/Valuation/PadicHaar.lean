@@ -1,4 +1,3 @@
--- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the additive Haar probability measure on ℤ_p and the measure of its norm-balls. Curated results indexed in ZeroParadox/MANIFEST.md.
 import Mathlib.NumberTheory.Padics.PadicIntegers
 import Mathlib.NumberTheory.Padics.ProperSpace
 import Mathlib.MeasureTheory.Measure.Haar.Basic
@@ -8,9 +7,6 @@ set_option maxHeartbeats 400000
 
 /-!
 # p-adic Haar measure on ℤ_p
-
-Experimental probe in the bottom-diagram mapping campaign — not a finalized layer. Curated results
-are indexed in ZeroParadox/MANIFEST.md.
 
 ## Engineer's Take
 
