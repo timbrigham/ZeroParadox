@@ -83,7 +83,8 @@ theorem th1_fa {L : Type*} [ZPSemilattice L] (x : L) :
 
 -- Statement: F_A's initiality leg on EVERY `ZPSemilattice`: in ZP-A's induced order (`zpSemilatticeSup`,
 -- `zpOrderBot`), ⊥ of `L` is initial in the order category of `L` (Mathlib `Preorder.isInitialBot`);
--- `natSLat_initial_grounding` is the ℕ case. The codomain is that order category of one `L`.
+-- `natSLat_initial_grounding` states initiality of ℕ's 0 in `natOrderCat`, a different category, built
+-- from ℕ's ≤ and not from the join. The codomain is that order category of one `L`.
 open CategoryTheory.Limits in
 noncomputable example (L : Type*) [ZPSemilattice L] :
     letI := zpSemilatticeSup L; letI := zpOrderBot L; IsInitial (bot : L) := by

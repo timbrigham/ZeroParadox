@@ -40,9 +40,11 @@ Cross-framework synthesis of ZP-A through ZP-D. Provides three formal inserts:
     (`ZeroParadox/Information/BrudnoBridge.lean`, restating kolmogorov-complexity-lean:
     `MLRandom_fair_iff_le_KPPlain`, `brudno_fair_of_MLRandom`), and for each fixed prefix-free decoder
     almost every fair tape is incompressible (`ae_incompressible`, conjunct 2 of
-    `tape_totality_two_faces`). The finite-string bound K(x | n) ≥ |x| at P₀ is not stated in Lean, and P₀
-    has no Lean definition (not located as of 2026-11-24, searched: `def`/`theorem` names matching
-    Kolmogorov, incompress, P₀, P0 and entropyRate over `ZeroParadox/**/*.lean`).
+    `tape_totality_two_faces`). The finite-string bound K(x | n) ≥ |x| at P₀ and a definition of P₀ are not
+    stated in the corpus (not located as of 2026-11-24, searched: `def`/`theorem`/`lemma`/`abbrev` names
+    matching Kolmogorov, incompress, P₀, P0 and entropyRate, and the text `condK`, over
+    `ZeroParadox/**/*.lean`). The pinned kolmogorov-complexity-lean defines `Kolmogorov.condK`, so the
+    bound is expressible there.
 
   The Lean counterparts of Paths 1 and 3 are carried together by `da1_paths_unified` as a
   conjunction; that they name one structural fact is the framework's reading. ZP-K states what is

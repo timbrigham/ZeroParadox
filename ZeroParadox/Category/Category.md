@@ -17,8 +17,8 @@ neither. `Reading:` the import is cited, not consumed.
 Given an encoding `enc : C → BitString` and an optimal decompressor `U`, D7' reads as
 `fun {A B} (_ : A ⟶ B) => Kolmogorov.condK U (enc B) (enc A) : ℕ∞`. That is not an instance of
 `ZPSurprisal`: the class asks for `ℕ` values and an exact zero on identities (`surp_id`), and `condK` gives
-`ℕ∞` values and a bound. The implication runs one way: membership in the class gives an exact-zero identity
-surprisal; Kolmogorov complexity gives only the bounded form. The class is also met by `surp := fun _ => 0`
+`ℕ∞` values and a bound. An exact zero on identities gives the bound, with constant `0`; the bound does not
+give an exact zero. The class is also met by `surp := fun _ => 0`
 (the NO-GO gauge in § I of the Lean file). This form was not elaborated.
 
 ## T6-a, identity surprisal
@@ -35,9 +35,13 @@ constant". In `ZPSurprisal` it is the field `surp_id`, assumed and returned unch
 to: `Kolmogorov.condK_comp` bounds `condK U (f x) x` by one constant for a computable `f`, distinct strings
 included (for example `f x = true :: x`).
 
-**Conjecture (counting form of T6-b), not probed:** for an optimal `U`, every `y` and every `k`, the set
-`{x | Kolmogorov.condK U x y ≤ k}` is finite with at most `2^(k+1) - 1` elements. The unconditional analogue
-in the dependency is `Kolmogorov.card_plainK_lt_mem_Icc`
+**Counting form of T6-b.** For every decompressor `V`, every `y` and every `k`, at most `2^(k+1) - 1`
+strings `x` have `condK V x y ≤ k`: `Kolmogorov.card_condK_le_boundedPrograms_length`
+(`KolmogorovMathlib/AlgorithmicStatistics/StrongModels/ProfileCardinality.lean`) bounds the size of any such
+finite set by `(boundedPrograms k).length`, and `Kolmogorov.length_boundedPrograms_succ_eq`
+(`KolmogorovMathlib/AlgorithmicStatistics/Selector.lean`) puts that length at `2^(k+1) - 1`. So no single
+target is forced above the constant, and at each bound only finitely many targets fall at or below it. The
+unconditional counterpart is `Kolmogorov.card_plainK_lt_mem_Icc`
 (`KolmogorovMathlib/Complexity/CanonicalObjects/Counting.lean`).
 
 ## T6-c, surprisal along chains

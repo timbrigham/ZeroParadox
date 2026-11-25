@@ -223,8 +223,9 @@ theorem t6_informational_singularity {C : Type*} [Category C] [ZPC : ZPCategory 
   ⟨fun f => t6b_surprisal_nonneg f, t3_unreachability X hne⟩
 
 -- Statement: T6's "unique object", its structural half: every `X` not isomorphic to 0 receives a
--- morphism from an object not isomorphic to it (0 itself), so the inward dead end singles out 0 up to
--- isomorphism. Part I's outward conjunct above is `Nat.zero_le`.
+-- morphism from an object not isomorphic to it (0 itself). With `t3_unreachability` (no `X` not
+-- isomorphic to 0 maps into 0), the inward dead end singles out 0 up to isomorphism; this example alone
+-- does not. Part I's outward conjunct above is `Nat.zero_le`.
 example {C : Type*} [Category C] [Z : ZPCategory C] (X : C) (hX : IsEmpty (X ≅ Z.zpInitial)) :
     ∃ Y : C, IsEmpty (Y ≅ X) ∧ Nonempty (Y ⟶ X) :=
   ⟨Z.zpInitial, ⟨fun i => hX.false i.symm⟩, ⟨Z.zpIsInitial.to X⟩⟩

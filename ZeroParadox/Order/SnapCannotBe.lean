@@ -100,7 +100,8 @@ example : let S : ℕ → ℕ := fun n => if n = 0 then 0 else 2
   ⟨rfl, by decide, ⟨1, Nat.lt_succ_self 0, fun c h1 h2 => by omega⟩,
     fun h => h.2 (c := 1) (by decide) (by decide)⟩
 -- `Statement:` on ℕ the run 0, 2, 4, … starts at ⊥ = 0 and is a state sequence, every point has a
--- first step, and no step of the run is a cover: a first step at ⊥ does not select the run's steps.
+-- first step, and no step of the run is a cover. Reading: a first step at ⊥ does not select the run's
+-- steps.
 open ZeroParadox ZeroParadox.ZPSemilattice in
 example :
     let S : ℕ → ℕ := fun n => 2 * n
@@ -198,17 +199,22 @@ example {L : Type*} [ZeroParadox.ZPSemilattice L] (a : L)
 example : ∀ x : ZeroParadox.MachinePhase, x = ZeroParadox.ZPSemilattice.bot ∨ x = ZeroParadox.c₁ := by
   intro x; cases x; exacts [Or.inl rfl, Or.inr rfl]
 -- `Statement:` on `MachinePhase`, under `trivialSelfApp`, ⊥ of `MachinePhase` (c₀) is the only point
--- in the Quine-atom role, ⊥ has a first step, and ZP-A's order is linear, so that first step is the
--- only cover (`axb1_gives_unique_target`). Reading: occupancy under `trivialSelfApp` holds on every
--- `ZPSemilattice`, so it does not give branching; branching needs two covers of ⊥, as on `Set Bool` above.
+-- in the Quine-atom role, ⊥ has a first step, ZP-A's order is linear, and c₁ is the only cover of ⊥
+-- in that order, proved by cases (`axb1_gives_unique_target` needs a `LinearOrder`, not built here).
+-- Reading: occupancy under `trivialSelfApp` holds on every `ZPSemilattice`, so it does not give
+-- branching; branching needs two covers of ⊥, as on `Set Bool` above.
 open ZeroParadox ZeroParadox.ZPSemilattice in
 example :
     (letI : AbstractSelfApp MachinePhase := trivialSelfApp MachinePhase
      ∀ y : MachinePhase, (Motion.ofFun (AbstractSelfApp.selfApp (L := MachinePhase))).SelfOnlyAt y ↔ y = bot) ∧
-    BotHasFirstStep MachinePhase ∧ (∀ x y : MachinePhase, le x y ∨ le y x) := by
-  refine ⟨fun y => ?_, ⟨c₁, t_snap_derived_cover.2⟩, ?_⟩
+    BotHasFirstStep MachinePhase ∧ (∀ x y : MachinePhase, le x y ∨ le y x) ∧
+    (letI := zpSemilatticeSup MachinePhase; ∀ a : MachinePhase, (bot : MachinePhase) ⋖ a → a = c₁) := by
+  refine ⟨fun y => ?_, ⟨c₁, t_snap_derived_cover.2⟩, ?_, ?_⟩
   · exact @selfApp_quine_role_iff _ _ (trivialSelfApp MachinePhase) y
   · intro x y; cases x <;> cases y <;> first | exact Or.inl rfl | exact Or.inr rfl
+  · intro a ha; cases a
+    · exact absurd ha.1 (@lt_irrefl _ (zpSemilatticeSup MachinePhase).toPreorder _)
+    · rfl
 #check @bot_covBy_iff                                 -- Statement: in any partial order with a least element ⊥ (`OrderBot`), `⊥ ⋖ a ↔ IsAtom a`; an atom's two halves are `a ≠ ⊥` and nothing strictly between, a different pair from the ordinal ε₀'s least fixed point and tower supremum
 #check @covBy_iff_atom_Ici                            -- Statement: `a ⋖ b ↔ IsAtom ⟨b, _⟩ : Set.Ici a`; a cover is an atom measured from the bottom of `Set.Ici a`
 -- `Statement:` the ℕ run's step 0 → 2 lands on an atom one rung up: 2 is not an atom of `Set.Ici 0`,
