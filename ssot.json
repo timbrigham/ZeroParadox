@@ -244874,7 +244874,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 4853,
+        "declarations": 4861,
         "files": 248
       },
       "entries": [
@@ -262699,6 +262699,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "18f36b9a-70e1-4d0a-8b81-37d7ba7b0ee1",
+          "new": {
+            "file": "ZeroParadox/Givens.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.real_hlv_returnToStart",
+            "short": "real_hlv_returnToStart"
+          },
+          "old": {
+            "file": "ZeroParadox/Givens.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.real_hlv_returnToStart",
+            "short": "real_hlv_returnToStart",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "givens-r1: ruling 86 (a) native absolute value (discrete vs dense value group) and order-relativity control; (b) real halving return",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "18f3aacc-3062-4a95-8266-f85200b0b89e",
           "new": {
             "file": "ZeroParadox/Valuation/Scale.lean",
@@ -270016,6 +270053,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "2521f98b-ef4f-4744-8512-c90869f4b82c",
+          "new": {
+            "file": "ZeroParadox/Givens.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.q2_norm_image",
+            "short": "q2_norm_image"
+          },
+          "old": {
+            "file": "ZeroParadox/Givens.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.q2_norm_image",
+            "short": "q2_norm_image",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "givens-r1: ruling 86 (a) native absolute value (discrete vs dense value group) and order-relativity control; (b) real halving return",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "252f7d6a-b3cd-4176-8217-023afe5bc741",
           "new": {
             "file": "ZeroParadox/Multihomed/BoundaryOrder.lean",
@@ -275811,6 +275885,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "2cbd3a4e-2f60-4f10-95db-6beb1eaf5442",
+          "new": {
+            "file": "ZeroParadox/Givens.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.real_norm_dense",
+            "short": "real_norm_dense"
+          },
+          "old": {
+            "file": "ZeroParadox/Givens.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.real_norm_dense",
+            "short": "real_norm_dense",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "givens-r1: ruling 86 (a) native absolute value (discrete vs dense value group) and order-relativity control; (b) real halving return",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "2cd14dca-9384-4be1-a020-4f1aeba08741",
           "new": {
             "file": "ZeroParadox/Multihomed/LimitMotion.lean",
@@ -280194,6 +280305,43 @@
             ]
           },
           "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "32be7ce6-e14e-4b63-8689-a6755c23bf4e",
+          "new": {
+            "file": "ZeroParadox/Givens.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.q2_norm_gap",
+            "short": "q2_norm_gap"
+          },
+          "old": {
+            "file": "ZeroParadox/Givens.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.q2_norm_gap",
+            "short": "q2_norm_gap",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "givens-r1: ruling 86 (a) native absolute value (discrete vs dense value group) and order-relativity control; (b) real halving return",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -291803,6 +291951,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "441cfda0-7d61-4331-abb6-728989379e5b",
+          "new": {
+            "file": "ZeroParadox/Givens.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.realExpView",
+            "short": "realExpView"
+          },
+          "old": {
+            "file": "ZeroParadox/Givens.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.realExpView",
+            "short": "realExpView",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "givens-r1: ruling 86 (a) native absolute value (discrete vs dense value group) and order-relativity control; (b) real halving return",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "442195c8-cc25-4b55-8aa2-d13d2fa81301",
           "new": {
@@ -295994,6 +296179,43 @@
             ]
           },
           "reason": "UniversalChoiceFree § IX: a self-printing universal code at [propext, Quot.sound] (restated SelfPrints ∧ Universal via encodeCode/ofNatCodeCF), faithfulness bridges, statement controls, controls zero_selfPrints_not_universal / universal_not_selfPrints_cf / unshifted_incompatible",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "4a276989-8ba9-4574-83a3-2bf7a8a0f3d9",
+          "new": {
+            "file": "ZeroParadox/Givens.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.real_norm_image",
+            "short": "real_norm_image"
+          },
+          "old": {
+            "file": "ZeroParadox/Givens.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.real_norm_image",
+            "short": "real_norm_image",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "givens-r1: ruling 86 (a) native absolute value (discrete vs dense value group) and order-relativity control; (b) real halving return",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -331146,6 +331368,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "7e020d49-f0d1-4ebb-8445-1e9f9ffe5367",
+          "new": {
+            "file": "ZeroParadox/Givens.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.real_dbl_GDiscrete_expView",
+            "short": "real_dbl_GDiscrete_expView"
+          },
+          "old": {
+            "file": "ZeroParadox/Givens.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.real_dbl_GDiscrete_expView",
+            "short": "real_dbl_GDiscrete_expView",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "givens-r1: ruling 86 (a) native absolute value (discrete vs dense value group) and order-relativity control; (b) real halving return",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "7e07e78e-6b5e-4d2f-bce2-101041705075",
           "new": {
@@ -338412,6 +338671,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "8879a41c-f6d3-44d7-a650-707dcf823892",
+          "new": {
+            "file": "ZeroParadox/Givens.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.givens_log2_two_mul",
+            "short": "givens_log2_two_mul"
+          },
+          "old": {
+            "file": "ZeroParadox/Givens.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.givens_log2_two_mul",
+            "short": "givens_log2_two_mul",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "givens-r1: ruling 86 (a) native absolute value (discrete vs dense value group) and order-relativity control; (b) real halving return",
           "verify": {
             "axioms": null,
             "sorry_free": null

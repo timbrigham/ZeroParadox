@@ -84,7 +84,8 @@ section Givens
 variable {α β : Type*}
 
 /-- `Statement:` given (b), discrete face (AX-B1 along the run): some step moves, and every moving
-step is a cover, one way or the other, in the view order `P`. -/
+step is a cover, one way or the other, in the view order `P`. A property of the pair `(M, P)`: real
+doubling fails it in `lmRealN` and meets it in the order lifted from `realExpView` (§ II-1). -/
 def GDiscrete (M : Motion α) (P : Preorder α) : Prop :=
   (∃ a b, M.step a b ∧ a ≠ b) ∧
     ∀ a b, M.step a b → a ≠ b → (@CovBy α P.toLT a b ∨ @CovBy α P.toLT b a)
@@ -250,6 +251,89 @@ theorem real_not_GDiscrete : ¬ GDiscrete dblReal lmRealN := by
   rcases h _ _ hs hne with hc | hc
   · exact hc.2 ((key 1 (3 / 2)).2 (by norm_num)) ((key (3 / 2) 2).2 (by norm_num))
   · exact absurd ((key 2 1).1 hc.1) (by norm_num)
+
+/-- `Statement:` `Int.log 2 (2 * r) = Int.log 2 r + 1` for `0 < r` in ℝ. -/
+theorem givens_log2_two_mul {r : ℝ} (hr : 0 < r) : Int.log 2 (2 * r) = Int.log 2 r + 1 := by
+  apply _root_.le_antisymm
+  · have h := Int.lt_zpow_succ_log_self (b := 2) (by norm_num) r
+    have : 2 * r < (2 : ℝ) ^ (Int.log 2 r + 1 + 1) := by
+      push_cast at h; rw [zpow_add_one₀ (by norm_num)]; linarith
+    have := (Int.lt_zpow_iff_log_lt (b := 2) (by norm_num) (by positivity)).1 this
+    omega
+  · apply (Int.zpow_le_iff_le_log (b := 2) (by norm_num) (by positivity)).1
+    rw [zpow_add_one₀ (by norm_num)]
+    have := Int.zpow_log_le_self (b := 2) (by norm_num) hr
+    push_cast at this ⊢
+    linarith
+
+/-- `Statement:` the binary-exponent view of `OnePoint ℝ`: `Int.log 2 |x|` at `x`, `0` at `∞`. -/
+noncomputable def realExpView : OnePoint ℝ → ℤ
+  | (∞ : OnePoint ℝ) => 0
+  | OnePoint.some x => Int.log 2 |x|
+
+/-- `Statement:` CONTROL (order-relativity): real doubling MEETS `GDiscrete` in the order lifted
+from `realExpView`, though it fails it in `lmRealN` (`real_not_GDiscrete`). -/
+theorem real_dbl_GDiscrete_expView : GDiscrete dblReal (Preorder.lift realExpView) := by
+  refine ⟨⟨OnePoint.some 1, OnePoint.some 2, ?_, ?_⟩, ?_⟩
+  · show OnePoint.some (2 : ℝ) = lmScale (2 : ℝ) two_ne_zero (OnePoint.some 1)
+    rw [lm_scale_some, mul_one]
+  · intro e; have := OnePoint.coe_injective e; norm_num at this
+  · intro a b hs hne
+    have hb : b = lmScale (2 : ℝ) two_ne_zero a := hs
+    induction a using OnePoint.rec with
+    | infty => exact absurd (hb.trans (lm_scale_infty _ _)).symm hne
+    | coe x =>
+      rw [lm_scale_some] at hb
+      subst hb
+      have hx : x ≠ 0 := by rintro rfl; exact hne (by rw [mul_zero])
+      have hv : realExpView (OnePoint.some (2 * x)) = realExpView (OnePoint.some x) + 1 := by
+        show Int.log 2 |2 * x| = Int.log 2 |x| + 1
+        rw [abs_mul, abs_two]; exact givens_log2_two_mul (abs_pos.2 hx)
+      refine Or.inl ⟨?_, fun c h1 h2 => ?_⟩
+      · show realExpView _ < realExpView _; omega
+      · have h1' : realExpView (OnePoint.some x) < realExpView c := h1
+        have h2' : realExpView c < realExpView (OnePoint.some (2 * x)) := h2
+        omega
+
+/-- `Statement:` at the native absolute value of `ℚ_[2]`, the nonzero norms are exactly the integer
+powers of 2 (`Padic.padicNormE.image`). -/
+theorem q2_norm_image :
+    (fun x : ℚ_[2] => ‖x‖) '' {x | x ≠ 0} = Set.range (fun k : ℤ => (2 : ℝ) ^ k) := by
+  ext r
+  constructor
+  · rintro ⟨x, hx, rfl⟩
+    obtain ⟨n, hn⟩ := Padic.padicNormE.image (p := 2) hx
+    exact ⟨-n, by simp only at hn ⊢; rw [hn]; push_cast; rfl⟩
+  · rintro ⟨k, rfl⟩
+    refine ⟨(2 : ℚ_[2]) ^ (-k), zpow_ne_zero _ two_ne_zero, ?_⟩
+    simpa using Padic.norm_p_zpow (p := 2) (-k)
+
+/-- `Statement:` so above a nonzero norm the next norm is at least its double: no norm of `ℚ_[2]`
+lies strictly between `‖x‖` and `2 * ‖x‖`. -/
+theorem q2_norm_gap {x y : ℚ_[2]} (hx : x ≠ 0) (h : ‖x‖ < ‖y‖) : 2 * ‖x‖ ≤ ‖y‖ := by
+  have hy : y ≠ 0 := by
+    rintro rfl; rw [norm_zero] at h; exact absurd h (not_lt.2 (norm_nonneg _))
+  obtain ⟨m, hm⟩ := Padic.padicNormE.image (p := 2) hx
+  obtain ⟨n, hn⟩ := Padic.padicNormE.image (p := 2) hy
+  rw [hm, hn] at h ⊢
+  push_cast at h ⊢
+  have a := (zpow_lt_zpow_iff_right₀ (by norm_num : (1 : ℝ) < 2)).1 h
+  have e : (2 : ℝ) * (2 : ℝ) ^ (-m) = (2 : ℝ) ^ (-m + 1) := by
+    rw [zpow_add_one₀ (by norm_num)]; ring
+  rw [e]
+  exact zpow_le_zpow_right₀ (by norm_num) (by omega)
+
+/-- `Statement:` at the native absolute value of ℝ, the nonzero values are every positive real. -/
+theorem real_norm_image : (fun x : ℝ => |x|) '' {x | x ≠ 0} = Set.Ioi 0 := by
+  ext r
+  constructor
+  · rintro ⟨x, hx, rfl⟩; exact abs_pos.2 hx
+  · intro hr
+    exact ⟨r, ne_of_gt hr, abs_of_pos hr⟩
+
+/-- `Statement:` so between any two positive values another absolute value lies. -/
+theorem real_norm_dense {a b : ℝ} (ha : 0 < a) (hab : a < b) : ∃ x : ℝ, a < |x| ∧ |x| < b :=
+  ⟨(a + b) / 2, by rw [abs_of_pos (by linarith)]; constructor <;> linarith⟩
 
 /-- `Statement:` `MachinePhase` chart: `GDiscrete` holds in ZP-A's induced order. -/
 theorem machine_GDiscrete :
@@ -510,6 +594,23 @@ theorem real_dbl_no_return_zero (s : ℕ → OnePoint ℝ) (h0 : s 0 = OnePoint.
   rw [h1.2] at hinf
   exact OnePoint.coe_ne_infty 0 (Part.mem_unique hmem hinf)
 
+/-- `Statement:` real halving chart: a sequence from 0 of ℝ meets `GReturnToStart` (`0, 1, 1/2,
+1/4, …`, the tail closing at 0 of ℝ). So `GReturnToStart` alone does not separate a return the
+long way round from a plain contraction. -/
+theorem real_hlv_returnToStart :
+    ∃ s : ℕ → OnePoint ℝ, s 0 = OnePoint.some 0 ∧ GReturnToStart hlvReal s := by
+  let g := lmScale (2⁻¹ : ℝ) (inv_ne_zero two_ne_zero)
+  have hnf : ∀ n, g (g^[n] (OnePoint.some 1)) ≠ g^[n] (OnePoint.some 1) := by
+    intro n h
+    rw [lm_scale_iterate_some, lm_scale_some] at h
+    have h' := OnePoint.coe_injective h
+    have hz : (2⁻¹ : ℝ) ^ n * 1 ≠ 0 := by positivity
+    exact hz (by linear_combination (-2) * h')
+  have hrc := lm_orbit_runClosure g.continuous (OnePoint.some 1) hnf
+  refine ⟨fun n => Nat.casesOn n (OnePoint.some 0) (fun m => g^[m] (OnePoint.some 1)), rfl,
+    _, hrc, ?_⟩
+  exact lm_real_dipole.2.2.1 _ (OnePoint.coe_ne_infty 1)
+
 /-- `Statement:` ordinal chart: the tower from 0 of `Ordinal` closes at ε₀, never back at 0 of
 `Ordinal` (`epsilon0_ne_zero`). -/
 theorem ordinal_tower_no_return :
@@ -614,7 +715,11 @@ example : ∃ φ : Motion.Hom (Motion.ofFun (fun x : ℤ_[2] => 2 * x))
 /-! ## § III. The field lines of 2-adic doubling (ruling 84)
 
 The line through a nonzero `x` of `ℚ_[2]` is `{2 ^ k * x | k : ℤ}`; its label is `x` with its power
-of 2 removed. -/
+of 2 removed. This is the standard decomposition `ℚ_p^× ≅ ⟨p⟩ × ℤ_p^×` at `p = 2` (A. Jenkins and
+S. Spallone, arXiv:1011.2451v1, § 3.2, p. 7: "the basic decomposition Q_p^× ≅ <p> × Z_p^×"; cited in
+`ZeroParadox/Multihomed/TwoAdicBend.md`); on ℤ_[2] the label is Mathlib's `PadicInt.unitCoeff` (the
+`example` after `fieldLineLabel_of_norm_one`). The additions here are the `ℚ_[2]` form and the
+reading of each line as a run between the shared ends 0 and ∞. -/
 
 section FieldLines
 
@@ -684,6 +789,18 @@ theorem fieldLineLabel_of_norm_one {u : ℚ_[2]} (hu : ‖u‖ = 1) : fieldLineL
     have := zpow_right_injective₀ (by norm_num : (0 : ℝ) < 2) (by norm_num) this
     omega
   simp [fieldLineLabel, hv]
+
+-- Statement: on nonzero `x` of ℤ_[2], the label is Mathlib's unit part `PadicInt.unitCoeff`.
+example {x : ℤ_[2]} (hx : x ≠ 0) :
+    fieldLineLabel (x : ℚ_[2]) = (PadicInt.unitCoeff hx : ℚ_[2]) := by
+  have hs : (x : ℚ_[2]) = ((PadicInt.unitCoeff hx : ℤ_[2]) : ℚ_[2]) * (2 : ℚ_[2]) ^ x.valuation := by
+    conv_lhs => rw [PadicInt.unitCoeff_spec hx]
+    rw [PadicInt.coe_mul, PadicInt.coe_pow, PadicInt.coe_natCast]
+    norm_num
+  have hn : ‖((PadicInt.unitCoeff hx : ℤ_[2]) : ℚ_[2])‖ = 1 := PadicInt.norm_units _
+  have hu0 : ((PadicInt.unitCoeff hx : ℤ_[2]) : ℚ_[2]) ≠ 0 := by
+    rintro h; rw [h, norm_zero] at hn; norm_num at hn
+  rw [hs, mul_comm, ← zpow_natCast, fieldLineLabel_zpow_mul _ hu0, fieldLineLabel_of_norm_one hn]
 
 /-- `Statement:` CONTROL: the lines through 1 and through 3 never meet. -/
 theorem fieldLines_one_three_disjoint : ¬ ∃ k : ℤ, (3 : ℚ_[2]) = (2 : ℚ_[2]) ^ k * 1 := by
@@ -767,8 +884,8 @@ section GivensIndex
 
 /-! ### § V. The limits (ruling 85) -/
 
-/-- `Statement:` LIMIT (a): 0 of `ℚ_[2]`, minimal and maximal at once under doubling (`q2_GMinMax`),
-never leaves under that motion. -/
+/-- `Statement:` LIMIT (a): 0 of `ℚ_[2]`, which meets `GMinMax` under doubling (`q2_GMinMax`; a
+constant map meets it too, `const_GMinMax`), never leaves under that motion. -/
 theorem ZeroParadox.q2_not_leavesByRun_zero :
     ¬ ZeroParadox.GLeavesByRun ZeroParadox.dblQ2 (OnePoint.some 0) := by
   rintro ⟨s, hs, h0, h1⟩
@@ -781,6 +898,8 @@ theorem ZeroParadox.q2_not_leavesByRun_zero :
 #check @ZeroParadox.never_fires_ae_zero        -- Statement: LIMIT (b), control: at `p = 0`, almost every tape fires nowhere.
 #check @ZeroParadox.q2_arc_returnToStart       -- Statement: LIMIT (c): the arc returns to the SAME 0 of `ℚ_[2]` it started from.
 #check @ZeroParadox.fieldLine_same_iff         -- Statement: LIMIT (c): along a route unique to its line: two lines are equal or disjoint.
+#check @ZeroParadox.q2_double_covBy            -- Statement: LIMIT (c): each 2-adic doubling step is a cover in the norm order; the value group is discrete (`q2_norm_image`).
+#check @ZeroParadox.real_hlv_returnToStart     -- Statement: LIMIT (c), control: real halving also returns to 0 of ℝ, through a dense value group (`real_norm_image`).
 
 /-! ### § VI. The commitments that stay hypotheses -/
 #check @ZeroParadox.BotHasFirstStep            -- Statement: AX-B1's first-step form, a `Prop` on `L`, used as the hypothesis `hR1`.
@@ -812,6 +931,14 @@ open ZeroParadox
 #print axioms q2_hlv_GDiscrete
 #print axioms q2_not_GCoverAtLanding
 #print axioms real_not_GDiscrete
+#print axioms givens_log2_two_mul
+#print axioms realExpView
+#print axioms real_dbl_GDiscrete_expView
+#print axioms q2_norm_image
+#print axioms q2_norm_gap
+#print axioms real_norm_image
+#print axioms real_norm_dense
+#print axioms real_hlv_returnToStart
 #print axioms machine_GDiscrete
 #print axioms machine_GCoverAtLanding
 #print axioms ordinal_GDiscrete
