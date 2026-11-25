@@ -119,7 +119,7 @@ count to it: in each chart the start 2 does not arrive at its destination (`¬ A
 ## The limits
 
 - **(a)** 0 of `ℚ_[2]` meets `GMinMax` under doubling (a constant map meets it too, `const_GMinMax`), and
-  it never leaves under that motion (`q2_not_leavesByRun_zero`). Departure comes from another chart: the
+  no run of doubling from 0 of `ℚ_[2]` leaves it at the first step (`q2_not_leavesByRun_zero`). Departure comes from another chart: the
   machine (`machine_leavesByRun`) or the tape (`slot_occurrence_ae`).
 - **(b)** Reading: complexity selects the coin. It does not make the step happen. Any `0 < p ≤ 1`
   together with a first step gives firing on almost every run (`snap_ae_of_firstStep`). At `p = 0`
@@ -131,9 +131,10 @@ count to it: in each chart the start 2 does not arrive at its destination (`¬ A
   infinitesimal at every standard `n`, no standard multiple of it reaching 1
   (`crossing_stays_infinitesimal`; standard `n` only, see `ZeroParadox/Information/Surprisal.md`, the
   Archimedean fence).
-- **(c)** The return is to the same 0: 0 of ℤ_[2] for the tower's image (`snap_arc_z2_loop`), 0 of
-  `ℚ_[2]` on the sphere (`q2_arc_returnToStart`), along a route unique to its line (`fieldLine_same_iff`),
-  by cover steps in the norm order (`q2_double_covBy`).
+- **(c)** The same 0, as a limit: the tower's image starts at 0 of ℤ_[2] and tends to that same 0
+  (`snap_arc_z2_loop`); on the sphere the run closure of the arc's tail contains its start, 0 of
+  `ℚ_[2]` (`q2_arc_returnToStart`), along a route unique to its line (`fieldLine_same_iff`), by cover
+  steps in the norm order (`q2_double_covBy`).
 
 ## The magnet, as a Reading
 

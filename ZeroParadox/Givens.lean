@@ -313,7 +313,7 @@ theorem real_dbl_GDiscrete_expView : GDiscrete dblReal (Preorder.lift realExpVie
         omega
 
 /-- `Statement:` at the native absolute value of `ℚ_[2]`, the nonzero norms are exactly the integer
-powers of 2 (`Padic.padicNormE.image`). -/
+powers of 2 (`Padic.padicNormE.image` for one inclusion, `Padic.norm_p_zpow` for the other). -/
 theorem q2_norm_image :
     (fun x : ℚ_[2] => ‖x‖) '' {x | x ≠ 0} = Set.range (fun k : ℤ => (2 : ℝ) ^ k) := by
   ext r
