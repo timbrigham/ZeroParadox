@@ -253,7 +253,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Die.lean` - The die: an order-free motion, its switches, and its premises
 - `ZeroParadox/DieCannotBe.lean` - Machine-checked characterization index of the die — its premises, with members and non-members
 - `ZeroParadox/DieSameness.lean` - Homeomorphic and bi-Lipschitz isomorphisms of die motions, the levels above `Motion.StrictIso`
-- `ZeroParadox/Givens.lean` - The givens at the die level: each a predicate on a `Motion`, proved or refuted per chart
+- `ZeroParadox/Givens.lean` - The givens at the die level: each a `Prop` (all but `GConnected`, `GJoined` on a die `Motion`), proved or refuted per chart
   - ride-along docs: `ZeroParadox/Givens.md` - The givens at the die level: what each one is, and the theorem that carries it
 - `ZeroParadox/Miniature.lean` - The Zero Paradox in miniature — the minimal core
 

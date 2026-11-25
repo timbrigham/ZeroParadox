@@ -488,8 +488,10 @@ example : (fun x : ℤ => -x) (0 : ℤ) = 0 := rfl
 -- Reading: CITED, not ZP-proved; attribution is the point. Passing to `Cᵒᵖ` is the categorical face
 -- of inversion, swapping the μ-bottom to a terminal object.
 #check @CategoryTheory.Limits.IsInitial.op
--- Statement: Mathlib's `hasZeroObject_op` — a zero object stays a zero object in the opposite.
+-- Statement: Mathlib's `IsZero.op` — a zero object `X` of `C` gives a zero object `op X` of `Cᵒᵖ`.
 -- Reading: the seam is self-dual under `op`, the fixed centre of the inversion.
+#check @CategoryTheory.Limits.IsZero.op
+-- Statement: Mathlib's `hasZeroObject_op` — if `C` has a zero object, so does `Cᵒᵖ`.
 #check @CategoryTheory.Limits.hasZeroObject_op
 -- Reading: PRIOR-ART RECORD, do NOT rebuild. "Order-reversal swaps ⊥ and ⊤" is two Mathlib facts,
 -- applied to an order isomorphism `α ≃o βᵒᵈ` into an order dual: `OrderIso.map_bot` sends ⊥ of `α` to
@@ -921,7 +923,7 @@ example : ZeroParadox.Disjunctive (fun n => xor (ZeroParadox.champ n) false) := 
 -- Statement: some map of motions, doubling on ℤ_[2] to `+1` on `ℕ∞`, sends ℤ_[2]'s 0 (least in the
 -- norm preorder, stepping only to itself) to a point greatest in `ℕ∞` and stepping only to itself,
 -- and sends no other point there. The proof's map is `q2Val` (`q2ValHom`), sending 0 to ⊤ of `ℕ∞`.
--- Reading: COINCIDENCE; on any characteristic-0 field a map of the same shape, doubling into
+-- Reading: COINCIDENCE; on any characteristic-0 field (universe 0) a map of the same shape, doubling into
 -- `+1` on `ℕ∞`, fails (`field_no_GCoincidence`).
 #check @ZeroParadox.z2_GCoincidence
 -- Statement: no run of doubling from 0 of `ℚ_[2]` leaves it at the first step (`¬ GLeavesByRun`).

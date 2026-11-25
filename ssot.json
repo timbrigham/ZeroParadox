@@ -244874,7 +244874,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 4862,
+        "declarations": 4863,
         "files": 248
       },
       "entries": [
@@ -413636,6 +413636,43 @@
             ]
           },
           "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f000f220-dc06-474d-8b8f-9f4275d52a6b",
+          "new": {
+            "file": "ZeroParadox/Givens.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ordinal_tower_not_discrete",
+            "short": "ordinal_tower_not_discrete"
+          },
+          "old": {
+            "file": "ZeroParadox/Givens.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ordinal_tower_not_discrete",
+            "short": "ordinal_tower_not_discrete",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "givens final round (ruling 91): ordinalTowerMotion (universe 0) fails GDiscrete and GCoverAtLanding, scoping Givens.md's ordinal claim to ordinalSuccMotion",
           "verify": {
             "axioms": null,
             "sorry_free": null
