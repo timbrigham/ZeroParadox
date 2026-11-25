@@ -57,6 +57,20 @@ instance machinePhaseZPS : ZPSemilattice MachinePhase where
   join_idem  := by intro x;     cases x                          <;> rfl
   bot_join   := by intro x;     cases x                          <;> rfl
 
+-- `Statement:` CONTROL, the carrier does not fix which phase is ⊥: with the join flipped (running the
+-- identity, initial absorbing) `MachinePhase` carries another `ZPSemilattice` whose ⊥ is `c₁`.
+-- `l_run` (c₀ ≠ c₁) holds under either instance.
+example : ∃ inst : ZPSemilattice MachinePhase, inst.bot = c₁ :=
+  ⟨{ join := fun x y => match x, y with
+        | .running, y => y
+        | x, .running => x
+        | .initial, .initial => .initial
+     bot := .running
+     join_assoc := by intro x y z; cases x <;> cases y <;> cases z <;> rfl
+     join_comm := by intro x y; cases x <;> cases y <;> rfl
+     join_idem := by intro x; cases x <;> rfl
+     bot_join := by intro x; cases x <;> rfl }, rfl⟩
+
 -- `Statement:` this carrier HAS a top: `running` has nothing strictly above it, so ZP-A's optional
 -- hypothesis `HasNoTop` fails here. AX-G1's no-terminal half is therefore not supplied by ZP-A.
 example : ¬ HasNoTop MachinePhase := by
@@ -362,8 +376,8 @@ attribute [-instance] Set.instCompleteAtomicBooleanAlgebra Set.instBooleanAlgebr
     From ε₀, only {x | ε₀ ≤ x} is accessible — a proper subset, since ⊥ is excluded:
     if le ε₀ ⊥ then le_antisymm (with le ⊥ ε₀, always true) gives ⊥ = ε₀,
     contradicting hne. This is the structural content beyond t_snap_machine := rfl.
-    Note: for infinite L, proper subset does not imply a smaller Cardinal (ℕ\{0} ≃ ℕ).
-    For Fintype L, this does imply da3_accessibleCardinality ε₀ < da3_accessibleCardinality ⊥. -/
+    As cardinals: smaller for finite `L` (the `example` after this section), not on ℕ (the CONTROL
+    beside `da3_accessibleCardinality` in `ZeroParadox/Order/SnapCannotBe.lean` § III). -/
 theorem t_snap_accessible_proper_subset {L : Type*} [ZPSemilattice L] {ε₀ : L}
     (hne : (bot : L) ≠ ε₀) :
     {x : L | le ε₀ x} ⊂ {x : L | le bot x} := by
@@ -372,6 +386,19 @@ theorem t_snap_accessible_proper_subset {L : Type*} [ZPSemilattice L] {ε₀ : L
   · intro h
     exact hne (le_antisymm (bot_le ε₀) (h (bot_le bot)))
 end
+
+-- `Statement:` for finite `L` and `bot ≠ ε`, the accessible cardinality from `ε` is strictly smaller
+-- than from ⊥ of `L` (Mathlib `Set.Finite.card_lt_card`).
+example {L : Type*} [ZPSemilattice L] [Finite L] {ε : L} (h : (bot : L) ≠ ε) :
+    da3_accessibleCardinality ε < da3_accessibleCardinality (bot : L) := by
+  unfold da3_accessibleCardinality
+  have hlt := Set.Finite.card_lt_card (Set.toFinite {x : L | le bot x})
+    (t_snap_accessible_proper_subset h)
+  have e1 : (Nat.card {x : L | le ε x} : Cardinal) = Cardinal.mk {x : L // le ε x} := Nat.cast_card
+  have e2 : (Nat.card {x : L | le bot x} : Cardinal) = Cardinal.mk {x : L // le bot x} :=
+    Nat.cast_card
+  rw [← e1, ← e2]
+  exact_mod_cast hlt
 
 /-! ## VI. DP-2 — Execution Distinguishability and DA-1 Lean Formalization
 

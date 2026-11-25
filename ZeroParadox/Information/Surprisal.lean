@@ -78,6 +78,24 @@ theorem t1_distributions_distinct : distP ≠ distQ := by
   have h : distP nullSt = distQ nullSt := by rw [heq]
   simp [distP, distQ, PMF.pure_apply, nullSt, firstSt] at h
 
+-- Statement: RP-1 as the hypothesis `hrp1`: a representation `r` whose distribution at each state has
+-- support within that state is `distP` at `nullSt` and `distQ` at `firstSt`, so T1's uniqueness holds
+-- given `hrp1`. CONTROL: `exists_spread_pmf` gives a distribution that fails `hrp1` and is not a point mass.
+example (r : BinaryState → PMF BinaryState) (hrp1 : ∀ s, (r s).support ⊆ {s}) :
+    r nullSt = distP ∧ r firstSt = distQ := by
+  have pure_of : ∀ (p : PMF BinaryState) (a : BinaryState), p.support ⊆ {a} → p = PMF.pure a :=
+    fun p a h => by
+      have hz : ∀ b, b ≠ a → p b = 0 := fun b hb => by
+        by_contra hne; exact hb (h ((PMF.mem_support_iff p b).2 hne))
+      have hpa : p a = 1 := by
+        have ht := p.tsum_coe
+        rwa [tsum_eq_single a hz] at ht
+      ext b
+      by_cases hb : b = a
+      · subst hb; simp [PMF.pure_apply, hpa]
+      · simp [PMF.pure_apply, hb, hz b hb]
+  exact ⟨pure_of _ _ (hrp1 _), pure_of _ _ (hrp1 _)⟩
+
 -- T1b: JSD(P, Q) = log 2 (= 1 bit in base-2).
 -- KL divergence computed directly over BinaryState using the branching mixture M = (1/2, 1/2).
 

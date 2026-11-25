@@ -110,6 +110,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Category/AxG2Reduce.lean` - B4 (pipeline): AX-G2 is derivable from strict-initiality (a ZP-G posit collapses)
 - `ZeroParadox/Category/BottomUndecidable.lean` - Where the keystone's classical cost sits: unresolved identity, and NOT self-containment
 - `ZeroParadox/Category/Category.lean` - ZP-G: Category Theory
+  - ride-along docs: `ZeroParadox/Category/Category.md` - ZP-G's surprisal against Kolmogorov complexity: the import, what the class carries, and what it does not
 - `ZeroParadox/Category/ChoiceCannotBe.lean` - Machine-checked characterization index of the framework's relationship to `Classical.choice`
   - ride-along docs: `ZeroParadox/Category/ChoiceCannotBe.md` - Choice and the framework: the long form of the choice index
 - `ZeroParadox/Category/DiagonalWitness.lean` - The minimum requirements to be a diagonal fixed point — the relativized Lawvere witness
@@ -166,6 +167,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Settheory/OntBridge.lean` - ZPJ — OntologicalStates → AbstractSelfApp → AFA Content
 - `ZeroParadox/Settheory/QuineDichotomy.lean` - ZPJ — the Quine-atom dichotomy
 - `ZeroParadox/Settheory/QuineHost.lean` - The Quine-Host Requirements — the AFA fragment the framework actually needs
+  - ride-along docs: `ZeroParadox/Settheory/QuineHost.md` - Why AFA, and what the forcing does not choose
 - `ZeroParadox/Settheory/SetTheoryAFA.lean` - ZP-J: Executability of Self-Reference
 - `ZeroParadox/Settheory/Tarski.lean` - Tarski's undefinability of truth — the diagonal family's TRUTH face (probe)
   - ride-along docs: `ZeroParadox/Settheory/Tarski.md` - The liar as the exact negation of the closing self-reference
