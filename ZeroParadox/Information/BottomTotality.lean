@@ -1,4 +1,3 @@
--- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): one tape ensemble, `fairTape`, the law of the maximum-entropy coin (`trials_eq_fairTape_of_maxEntropy`), almost all of whose members are incompressible for any one fixed prefix-free decoder, with ⊥ of `ℕ → Bool` a non-random limit of its random firing tapes; and the control that a two-element set containing both faces is null. Curated results indexed in ZeroParadox/MANIFEST.md.
 import ZeroParadox.Information.MaxEntropy
 import ZeroParadox.Information.PoleWithinEnsemble
 import Mathlib.Tactic
@@ -8,10 +7,9 @@ import Mathlib.Tactic
 
 ## Engineer's Take
 
-This file is one of a series of iterative attempts on this branch to build a map of how the various
-bottoms interconnect, and by extension how bottom moves from being the floor, a thing (a noun), to a
-verb (an action). The Lean here is our attempt, one way or the other, to get a clean verification. I
-defer to my AI assistant regarding the specifics of how the internals work.
+Maybe the claim isn't maximally complex... It's that it is simultaneously minimally and maximally complex
+
+Maximum entropy sounds exactly like infinite randomness from the other side.
 
 ---
 
