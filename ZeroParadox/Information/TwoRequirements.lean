@@ -12,11 +12,11 @@ set_option maxHeartbeats 400000
 /-!
 # Two requirements: a first step at ⊥ of `L`, and a typical tape
 
-Two HYPOTHESES, neither discharged: `BotHasFirstStep L`, a cover of ⊥ of a `ZPSemilattice L` in
-ZP-A's induced order (AX-B1's form), and a tape typical for `trials p hp`, in three forms:
-zero-block typical, Martin-Löf random (implies the first, § II), frequency of `true` tending to
-`p`. § I–III: with `0 < p` they give `t_snap_given_cover`'s full conclusion. § IV: binary expansion
-sends a tape to a dyadic rational iff the tape is eventually constant.
+Two HYPOTHESES of the general theorems: `BotHasFirstStep L`, a cover of ⊥ of a `ZPSemilattice L` in ZP-A's induced order
+(AX-B1's form), and a tape typical for `trials p hp`: zero-block typical, Martin-Löf random (implies the first, § II), or
+frequency of `true` tending to `p`. Each is discharged only at witnesses: the first at the carrier `Bool` (`bool_botHasFirstStep`),
+the second for every `p` by existence (`exists_MLRandom`) and almost surely (`snap_ae_of_firstStep`). § I–III: with `0 < p`
+they give `t_snap_given_cover`'s full conclusion. § IV: binary expansion sends a tape to a dyadic rational iff it is eventually constant.
 ## Engineer's Take
 
 When you look at the slot machine stuff what we are making the claim off is that at the bottom is infinitely complex, and we can take motion And/or distance being discreet... A step away from zero becomes statistically speaking effectively guaranteed to happen
@@ -456,6 +456,11 @@ theorem mlRandom_and_snap_ae {L : Type*} [ZPSemilattice L] (hR1 : BotHasFirstSte
 -- Statement: CONTROL, almost every is not every: at the all-`false` tape no `hw` exists, so the
 -- conclusion fails there for every `L` (measure zero: the measure-one CONTROL `example` in
 -- `ZeroParadox/Information/CrossingTrials.lean` § VIII). Dropping the first step: `nnreal_not_botHasFirstStep`.
+-- Reading: CARRIER: this all-`false` tape is ⊥ of `ℕ → Bool`, and it is not Martin-Löf random
+-- (`bot_not_MLRandom`, `ZeroParadox/Information/PoleWithinEnsemble.lean`; § I's drop-typicality
+-- control), so "⊥ is maximally complex" read of ⊥ of `ℕ → Bool` as a point is refuted in this
+-- chart; the maximal face lives on the law and almost every member
+-- (`ZeroParadox/Information/BottomTotality.lean`).
 example {L : Type*} [ZPSemilattice L] :
     ¬ ∃ (_ : Bool → L) (_ : ∃ k, (fun _ => false : ℕ → Bool) k = true), True :=
   fun ⟨_, ⟨_, h⟩, _⟩ => Bool.false_ne_true h
@@ -774,7 +779,9 @@ end Frequency
 /-! ## § IV. Tape to real: binary expansion
 
 `tapeReal w` is `0.w₀w₁w₂…` in base 2 (`Real.ofDigits`). How `trials p hp` pushes forward under it
-is not stated here; `Mathlib/Analysis/Real/OfDigits.lean` has no measure statement (read 2026-11-06). -/
+is not stated here; `Mathlib/Analysis/Real/OfDigits.lean` has no measure statement (read 2026-11-06).
+The dyadic-iff-eventually-constant equivalence is a standard fact proved here; no source for it was
+retrieved (2026-11-25), so none is cited. -/
 
 section TapeReal
 

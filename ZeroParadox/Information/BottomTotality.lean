@@ -14,9 +14,9 @@ Maximum entropy sounds exactly like infinite randomness from the other side.
 ---
 
 ## Formal Overview (AI-assisted)
-`tape_totality_two_faces` bundles the uniqueness of the maximum-entropy coin (its `trials` is `fairTape`,
-`trials_eq_fairTape_of_maxEntropy`) with three results about `fairTape`; the control
-`both_faces_in_null_set` shows a two-element set holding ⊥ of `ℕ → Bool` and a random tape is null.
+`tape_totality_two_faces` conjoins the uniqueness of the maximum-entropy coin with three results about `fairTape`;
+that coin's `trials` is `fairTape` (`trials_eq_fairTape_of_maxEntropy`, cited, not conjoined). Two faces: the law and its members.
+Prior art: `ZeroParadox/Information/MaxEntropy.lean` § IV (Kraft, Schnorr) and § V (Levin–Schnorr, Brudno).
 -/
 
 set_option maxHeartbeats 400000
@@ -28,7 +28,10 @@ open MeasureTheory Filter Topology
 /-- `Statement:` exactly one `p` has `binEntropy p = log 2` (its `trials` is `fairTape` by
 `trials_eq_fairTape_of_maxEntropy`, not conjoined here); for each prefix-free decoder `D`,
 `fairTape`-almost every tape is incompressible for `D`; ⊥ of `ℕ → Bool` is not Martin-Löf random
-for `fairTape`, and is in the closure of `randFiring (1/2)`. -/
+for `fairTape`, and is in the closure of `randFiring (1/2)`. `Reading:` CARRIER: the minimal face
+sits on the point (⊥ of `ℕ → Bool` is not random, `bot_not_MLRandom`) and on the law (one
+maximum-entropy coin); the maximal face sits on almost every member (`ae_incompressible`). That one
+object is simultaneously minimally and maximally complex is the Take's belief, not a theorem here. -/
 theorem tape_totality_two_faces :
     (∃ p : NNReal, Real.binEntropy (p : ℝ) = Real.log 2 ∧ 0 < p ∧ p ≤ 1 ∧
         ∀ q : NNReal, Real.binEntropy (q : ℝ) = Real.log 2 → q = p) ∧
@@ -54,8 +57,8 @@ theorem fairTape_singleton_null (t : ℕ → Bool) : fairTape {t} = 0 := by
     ENNReal.tendsto_pow_atTop_nhds_zero_of_lt_one (by norm_num)
   exact le_antisymm (ge_of_tendsto' ht hle) zero_le
 
-/-- `Statement:` CONTROL, some tape `w0` is Martin-Löf random for `fairTape`, ⊥ of `ℕ → Bool` is not,
-and `{⊥, w0}` is `fairTape`-null. -/
+/-- `Statement:` CONTROL, the two-tape pairing (not the title's law and members): some tape `w0` is
+Martin-Löf random for `fairTape`, ⊥ of `ℕ → Bool` is not, and `{⊥, w0}` is `fairTape`-null. -/
 theorem both_faces_in_null_set :
     ∃ w0, MLRandom fairTape w0 ∧ ¬ MLRandom fairTape (⊥ : ℕ → Bool) ∧
       fairTape ({⊥, w0} : Set (ℕ → Bool)) = 0 := by
