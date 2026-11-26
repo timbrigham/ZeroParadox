@@ -941,6 +941,19 @@ example : ZeroParadox.Disjunctive (fun n => xor (ZeroParadox.champ n) false) := 
 -- `fadingTrials q hq`-almost every tape some `φ` makes the run `φ ∘ firedRun w hw` step off ⊥ of `L`
 -- to a cover. One way.
 #check @ZeroParadox.schedule_snap_ae
+-- Statement: the mean of `wait + 1` under `trials p hp` is `p⁻¹` in `ℝ≥0∞`, every `p ≤ 1`, ⊤ at `p = 0`.
+#check @ZeroParadox.lintegral_wait_succ
+-- Statement: for `1 ≤ x`, `(x⁻¹).toNNReal = 0` iff `x = ⊤`; at `p = 0` the mean of `wait + 1` is ⊤ and
+-- almost every tape never fires; ⊥ of `ℕ → Bool` has wait ⊤ of `ℕ∞`.
+#check @ZeroParadox.wait_chart_top
+-- Statement: `unpack`, the columns of a tape along `Nat.pairEquiv`, is measure preserving from
+-- `trials p hp` to the product of countably many copies of `trials p hp`.
+#check @ZeroParadox.unpack_measurePreserving
+-- Statement: ⊥ of `ℕ → Bool` is in the support of `trials p hp` and `binEntropy p > 0` iff `0 < p < 1`.
+#check @ZeroParadox.dial_two_faces_iff
+-- Statement: under those two conditions "some stage fires" has mass 1, and ⊥ of `ℕ → Bool` is in the
+-- support and null.
+#check @ZeroParadox.dial_pinned_faces
 
 /-! ### The givens at the die level: given (a) as a chart claim (least in ℤ_[2]'s norm preorder, greatest at its image in `ℕ∞`), and a limit -/
 
