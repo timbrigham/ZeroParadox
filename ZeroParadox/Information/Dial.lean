@@ -151,8 +151,8 @@ theorem dial_not_uniform :
 /-- `Statement:` let `φ : Bool → L` send `false` to ⊥ of `L` and `true` elsewhere. Every image run
 `φ ∘ slotRun w` starts at ⊥ of `L`; for `trials 0 hp`-almost every tape it is ⊥ of `L` at every stage;
 for `0 < p ≤ 1` and `trials p hp`-almost every tape it is somewhere not ⊥ of `L`. From
-`never_fires_ae_zero` and `ae_firesOnce`; on `firedRun` the third conjunct is implied by
-`snap_ae_fixed_phi`, which is strictly stronger (it fixes the first exit time). Maps
+`never_fires_ae_zero` and `ae_firesOnce`; on `firedRun` the third conjunct also follows from
+`snap_ae_fixed_phi`, which adds detail (it names the first exit time). Maps
 run tape → run → image; no map from ⊥ of `L` to a tape is claimed. -/
 theorem dial_jump_into_L {L : Type*} [ZPSemilattice L] (φ : Bool → L)
     (hφ0 : φ false = ZPSemilattice.bot) (hφ1 : φ true ≠ ZPSemilattice.bot) :
