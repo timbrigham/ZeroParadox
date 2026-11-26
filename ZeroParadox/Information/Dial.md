@@ -15,6 +15,14 @@ this file holds what was already in the corpus, the prior art, and the fences.
   (`ZeroParadox/Information/PoleWithinEnsemble.lean`); `t_snap_of_fires_once`, `slotRun_crosses_iff`
   (`ZeroParadox/Information/CrossingTrials.lean`).
 - The law's minimal face: `tape_totality_two_faces` (`ZeroParadox/Information/BottomTotality.lean`).
+- § VII: the cylinder mass `trials_cyl`, the wait `waitENat ∘ det` and `natCast_le_waitENat_iff`
+  (`ZeroParadox/Valuation/DepthIsWait.lean`), `wait_bot`, `never_fires_ae_zero`
+  (`ZeroParadox/Information/PoleWithinEnsemble.lean`); `trials_zeroBlock` (`ZeroParadox/Information/CrossingTrials.lean`)
+  states the same block mass for a window starting at any `N`.
+- § VIII: `natDirsOrderIso`, the same `Nat.pair` columns on `End` with its order (`ZeroParadox/Valuation/Interleave.lean`),
+  and `natDirs_bot_iff` (`ZeroParadox/Valuation/TowerTape.lean`); the `example` after `unpack_apply` relates the two
+  through `tapeIso`.
+- § IX: `bot_mem_support_iff`, `trials_bot_null` (`ZeroParadox/Information/PoleWithinEnsemble.lean`).
 
 ## Prior art (searched 2026-11-25)
 
@@ -47,6 +55,33 @@ this file holds what was already in the corpus, the prior art, and the fences.
   continuous and the convergence is still not uniform, which the proposition does not forbid, since `(0, 1]`
   is not compact; non-uniformity on `(0, 1]` gives it on `[0, 1]`.
 
+## Prior art for § VII-IX (searched 2026-11-26)
+
+- § VII. The number of stages up to and including the first success of independent Bernoulli(`p`) trials is
+  the shifted geometric distribution, mean `1/p`; `lintegral_wait_succ` proves it by the tail-sum formula,
+  `E[N + 1] = Σ_k P(N ≥ k)`. Mathlib's `ProbabilityTheory.geometricMeasure` is the unshifted (failures) form
+  and sets `geometricMeasure 0` to the Dirac mass at 0; a Mathlib lemma evaluating its mean was not located as
+  of 2026-11-26, searched: the declaration list of `Mathlib/Probability/Distributions/Geometric.lean`,
+  LeanExplore (one phrasing), theoremsearch (one formal phrasing). The `p = 0` endpoint, wait ⊤ almost surely
+  and mean ⊤ (`wait_chart_top`), is an improper (defective) waiting-time distribution; in survival analysis
+  the mass never failing is the cure fraction (Louzada, de Oliveira, Moreira, arXiv:1509.05244, p. 3: "S is an
+  improper survival function"), here equal to 1. The chart `x = p⁻¹` is Mathlib's `OrderIso.invENNReal`.
+- § VIII. `unpack_measurePreserving` reindexes an infinite product measure, from Mathlib's
+  `Measure.infinitePi_map_piCongrLeft` and `Measure.infinitePi_map_curry`. At the level of individual random
+  sequences the neighbours are van Lambalgen's theorem (Franklin, Porter, arXiv:2004.02851, Theorem 3.6:
+  `A ⊕ B` is n-random iff `A` is n-random and `B` is n-random relative to `A`; Shen, Uspensky, Vereshchagin,
+  *Kolmogorov Complexity and Algorithmic Randomness*, AMS 2017, Theorem 125, for a product `P × Q`) and the
+  countable column decomposition along a pairing function (Porter, arXiv:1503.06332, Theorem 2.10, crediting
+  Kautz 1991: each column of a Martin-Löf random `A` is random relative to the others). Those are about the
+  uniform or a computable measure and about which sequences are random; § VIII is measure-level only, for
+  every `p ≤ 1`, in both directions (`pack_measurePreserving`), and says nothing about individual tapes.
+- § IX. The two faces as a reading of random strings: effective complexity, which Ay, Müller, Szkoła,
+  arXiv:0810.5663, p. 1, describe as Gell-Mann and Lloyd's attempt "to split the algorithmic information
+  content of some string x into two parts, its random features and its regularities" (Gell-Mann, Lloyd,
+  *Complexity* 2(1), 1996, cited for existence only, not retrieved). The same paper's Theorem 10
+  ("Incompressible Strings are Simple"): incompressible strings of length `n` have effective complexity at most
+  `log n + O(log log n)`. That is finite strings and computable ensembles; § IX measures no description length.
+
 ## Fences
 
 - "The bottom is the set of all tapes" is the tape-chart `Reading:` (ruling 94). Nothing identifies ⊥ of a
@@ -55,6 +90,12 @@ this file holds what was already in the corpus, the prior art, and the fences.
 - Analog and digital are a `Reading:`; the theorems say continuous (`fireWithin_continuous`) and jump
   (`fireMass_not_continuousAt_zero`).
 - The schedule's dichotomy assumes independent stages; `schedule_never_pos` also needs every chance below one.
+- The mean in § VII is a value in `ℝ≥0∞`; at `p = 0` it is ⊤ of `ℝ≥0∞`, not a real number. `x = p⁻¹` is a
+  chart on `[1, ⊤]`, not an identity of 0 with ∞.
+- § VIII proves equality of measures, not randomness of any column; the `End` relation is pointwise, through
+  `tapeIso`, and no measure on `End` is stated.
+- § IX: "minimally and maximally complex" is a `Reading:`; the theorems say support membership, positive
+  binary entropy, mass 1 and mass 0. The `p = 0` and `p = 1` controls each meet one face and not the other.
 - EXPERIMENTAL dependence. `Dial.lean` imports `ZeroParadox/Information/StartBit.lean` (EXPERIMENTAL) and
   reaches `ZeroParadox/Information/PoleWithinEnsemble.lean` (EXPERIMENTAL) through
   `ZeroParadox/Information/BottomTotality.lean`, which also imports `ZeroParadox/Information/MaxEntropy.lean`
@@ -65,4 +106,7 @@ this file holds what was already in the corpus, the prior art, and the fences.
   (`tape_totality_two_faces`, in `BottomTotality.lean`). `dial_fire_jump`, `fireMass`, `fireMass_eq`,
   `fireMass_not_continuousAt_zero`, `fireWithin` and `dial_digital_limit` use no declaration of those three
   modules (theirs come from `ZeroParadox/Information/CrossingTrials.lean` and Mathlib), though their module
-  imports them.
+  imports them. § VII uses `trials_cyl`, `wait_bot`, `never_fires_ae_zero` (`PoleWithinEnsemble.lean`) and
+  `natCast_le_waitENat_iff` (`ZeroParadox/Valuation/DepthIsWait.lean`, EXPERIMENTAL); § IX uses
+  `bot_mem_support_iff` and `trials_bot_null` (`PoleWithinEnsemble.lean`). `unpack`, `unpack_apply`,
+  `unpack_measurePreserving` and `pack_measurePreserving` use none of those modules' declarations.

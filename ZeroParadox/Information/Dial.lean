@@ -19,9 +19,9 @@ analog and a digital value
 ---
 
 ## Formal Overview (AI-assisted)
-Switch: "some stage fires" has `trials p hp` mass 0 at `p = 0`, 1 for `0 < p ≤ 1` (§ II). Volume:
-"fires within `n` stages" is `1 - (1 - p) ^ n`, continuous, tending to the switch non-uniformly
-(§ III). § IV: the jump in a `ZPSemilattice`, forward maps only; § V, § VI: schedules, the law.
+Switch (§ II): "some stage fires" has mass 0 at `p = 0`, 1 for `0 < p ≤ 1`. Volume (§ III): "fires
+within `n` stages", `1 - (1 - p) ^ n`, continuous, tends to the switch non-uniformly. § IV: the jump in
+`L`, forward only; § V-VI: schedules, the law; § VII: mean wait `p⁻¹`; § VIII: columns; § IX: two faces.
 -/
 
 set_option maxHeartbeats 400000
@@ -302,6 +302,184 @@ theorem law_two_faces :
     ∀ q : ℝ, Real.binEntropy q ≤ Real.log 2 :=
   ⟨tape_totality_two_faces.1, fun _ => Real.binEntropy_le_log_two⟩
 
+section WaitPackFaces
+
+open NInf
+
+/-! ### § VII. The wait chart: chance `p`, mean waiting count `p⁻¹` -/
+
+/-- `Statement:` for every tape `w`, counting the `k` with `w ∈ PiNat.cylinder ⊥ k` (first `k` stages
+all `false`, ⊥ of `ℕ → Bool`) gives `waitENat (det w) + 1` in `ℝ≥0∞`: the tail-sum formula, pointwise. -/
+theorem tsum_cylinder_bot_indicator (w : ℕ → Bool) :
+    ∑' k : ℕ, (PiNat.cylinder (⊥ : ℕ → Bool) k).indicator (fun _ => (1 : ENNReal)) w =
+      ((waitENat (det w) : ℕ∞) : ENNReal) + 1 := by
+  have hmem : ∀ k, w ∈ PiNat.cylinder (⊥ : ℕ → Bool) k ↔ (k : ℕ∞) ≤ waitENat (det w) := fun k => by
+    rw [natCast_le_waitENat_iff, ofNat_le_det_iff]; simp [PiNat.cylinder]
+  have hterm : ∀ k, (PiNat.cylinder (⊥ : ℕ → Bool) k).indicator (fun _ => (1 : ENNReal)) w =
+      if (k : ℕ∞) ≤ waitENat (det w) then 1 else 0 := fun k => by
+    by_cases hk : (k : ℕ∞) ≤ waitENat (det w)
+    · rw [ite_eq_left hk, Set.indicator_of_mem ((hmem k).2 hk)]
+    · rw [ite_eq_right hk, Set.indicator_of_notMem (fun h => hk ((hmem k).1 h))]
+  simp_rw [hterm]
+  generalize waitENat (det w) = W
+  induction W using ENat.recTopCoe with
+  | top =>
+    simp only [le_top, ite_true, ENat.toENNReal_top, top_add]
+    exact ENNReal.tsum_const_eq_top_of_ne_zero one_ne_zero
+  | coe m =>
+    rw [tsum_eq_sum (s := Finset.range (m + 1)) (fun k hk => by
+      simp only [Finset.mem_range, not_lt] at hk
+      rw [ite_eq_right (by exact_mod_cast (show ¬ k ≤ m by omega))])]
+    rw [Finset.sum_congr rfl (fun k hk => ite_eq_left (by
+      simp only [Finset.mem_range] at hk; exact_mod_cast (show k ≤ m by omega)))]
+    simp
+
+/-- `Statement:` the mean of `wait + 1` (the shifted geometric count, stages up to and including the
+first firing) under `trials p hp` is `p⁻¹` in `ℝ≥0∞`, every `p ≤ 1`; at `p = 0` it is ⊤ of `ℝ≥0∞`. -/
+theorem lintegral_wait_succ (p : NNReal) (hp : p ≤ 1) :
+    ∫⁻ w, (((waitENat (det w) : ℕ∞) : ENNReal) + 1) ∂(trials p hp) = (p : ENNReal)⁻¹ := by
+  have hm : ∀ k, MeasurableSet (PiNat.cylinder (⊥ : ℕ → Bool) k) := fun k =>
+    (PiNat.isOpen_cylinder (fun _ : ℕ => Bool) ⊥ k).measurableSet
+  have hc : ∀ k, trials p hp (PiNat.cylinder (⊥ : ℕ → Bool) k) = ((1 - p : NNReal) : ENNReal) ^ k :=
+    fun k => by
+      rw [trials_cyl]
+      have hb : ∀ i, (⊥ : ℕ → Bool) i = false := fun _ => rfl
+      simp only [hb, Bool.false_eq_true, ite_false, Finset.prod_const, Finset.card_range]
+  rw [show (fun w : ℕ → Bool => ((waitENat (det w) : ℕ∞) : ENNReal) + 1) =
+      fun w => ∑' k : ℕ, (PiNat.cylinder (⊥ : ℕ → Bool) k).indicator (fun _ => (1 : ENNReal)) w from
+    funext fun w => (tsum_cylinder_bot_indicator w).symm]
+  rw [lintegral_tsum (fun k => (measurable_const.indicator (hm k)).aemeasurable)]
+  simp_rw [lintegral_indicator_const (hm _), one_mul, hc]
+  rw [ENNReal.tsum_geometric, ← ENNReal.coe_one, ← ENNReal.coe_sub, tsub_tsub_cancel_of_le hp]
+
+/-- `Statement:` the chart `x = p⁻¹`, Mathlib's `OrderIso.invENNReal`: for `x : ℝ≥0∞` with `1 ≤ x`, the
+mean of `wait + 1` under `trials (x⁻¹).toNNReal` is `x`. -/
+theorem lintegral_wait_succ_inv (x : ENNReal) (hx : 1 ≤ x) :
+    ∫⁻ w, (((waitENat (det w) : ℕ∞) : ENNReal) + 1)
+      ∂(trials (x⁻¹).toNNReal (by
+          rw [← ENNReal.coe_le_coe, ENNReal.coe_toNNReal (ENNReal.inv_ne_top.2
+            (ne_of_gt (lt_of_lt_of_le zero_lt_one hx)))]
+          simpa using ENNReal.inv_le_inv.2 hx)) = x := by
+  rw [lintegral_wait_succ, ENNReal.coe_toNNReal (ENNReal.inv_ne_top.2
+    (ne_of_gt (lt_of_lt_of_le zero_lt_one hx))), inv_inv]
+
+-- Statement: `OrderIso.invENNReal` is `x ↦ x⁻¹`, read into the order dual.
+example (x : ENNReal) : OrderDual.ofDual (OrderIso.invENNReal x) = x⁻¹ := rfl
+
+/-- `Statement:` the endpoint: for `1 ≤ x`, `(x⁻¹).toNNReal = 0` iff `x = ⊤`; at `p = 0` the mean of
+`wait + 1` is ⊤ of `ℝ≥0∞` and almost every tape never fires; ⊥ of `ℕ → Bool` has wait ⊤ of `ℕ∞`. -/
+theorem wait_chart_top (x : ENNReal) (hx : 1 ≤ x) :
+    ((x⁻¹).toNNReal = 0 ↔ x = ⊤) ∧
+    (∀ hp : (0 : NNReal) ≤ 1,
+      ∫⁻ w, (((waitENat (det w) : ℕ∞) : ENNReal) + 1) ∂(trials 0 hp) = ⊤ ∧
+      ∀ᵐ w ∂(trials 0 hp), ¬ ∃ k, w k = true) ∧
+    waitENat (det (⊥ : ℕ → Bool)) = ⊤ := by
+  refine ⟨?_, fun hp => ⟨by rw [lintegral_wait_succ]; simp, never_fires_ae_zero hp⟩, wait_bot⟩
+  rw [ENNReal.toNNReal_eq_zero_iff, ENNReal.inv_eq_zero, ENNReal.inv_eq_top]
+  exact ⟨fun h => h.resolve_right (ne_of_gt (lt_of_lt_of_le zero_lt_one hx)), Or.inl⟩
+
+-- Statement: CONTROL `x = 1`: `p = 1`, stage 0 fires almost surely, and the mean of `wait + 1` is 1.
+example : trials 1 le_rfl (fires 0) = 1 ∧
+    ∫⁻ w, (((waitENat (det w) : ℕ∞) : ENNReal) + 1) ∂(trials 1 le_rfl) = 1 :=
+  ⟨by rw [trials_fires]; simp, by rw [lintegral_wait_succ]; simp⟩
+
+/-! ### § VIII. Packing: a tape of tapes at the same chance -/
+
+/-- `Statement:` the columns of a tape along `Nat.pairEquiv`, a measurable equivalence
+`(ℕ → Bool) ≃ᵐ (ℕ → ℕ → Bool)`. -/
+def unpack : (ℕ → Bool) ≃ᵐ (ℕ → ℕ → Bool) :=
+  (MeasurableEquiv.piCongrLeft (fun _ : ℕ × ℕ => Bool) Nat.pairEquiv.symm).trans
+    (MeasurableEquiv.curry ℕ ℕ Bool)
+
+/-- `Statement:` `unpack w i j = w (Nat.pair i j)`. -/
+theorem unpack_apply (w : ℕ → Bool) (i j : ℕ) : unpack w i j = w (Nat.pair i j) := by
+  show (MeasurableEquiv.piCongrLeft (fun _ : ℕ × ℕ => Bool) Nat.pairEquiv.symm w) (i, j) = _
+  have h : ((i, j) : ℕ × ℕ) = Nat.pairEquiv.symm (Nat.pair i j) := (Nat.unpair_pair i j).symm
+  rw [h, MeasurableEquiv.piCongrLeft_apply_apply]
+
+-- Statement: through `tapeIso`, column `i` of `unpack` is `natDirsOrderIso`'s direction `i`.
+example (x : End) (i : ℕ) : unpack (tapeIso x) i = tapeIso (natDirsOrderIso x i) :=
+  funext fun j => by rw [unpack_apply]; rfl
+
+set_option linter.deprecated false in
+/-- `Statement:` `unpack` is measure preserving from `trials p hp` to the product of countably many
+copies of `trials p hp`, every `p ≤ 1`. -/
+theorem unpack_measurePreserving (p : NNReal) (hp : p ≤ 1) :
+    MeasurePreserving unpack (trials p hp) (Measure.infinitePi fun _ : ℕ => trials p hp) := by
+  refine ⟨unpack.measurable, ?_⟩
+  unfold unpack trials
+  rw [MeasurableEquiv.coe_trans, ← Measure.map_map (MeasurableEquiv.measurable _)
+    (MeasurableEquiv.measurable _)]
+  rw [Measure.infinitePi_map_piCongrLeft
+    (fun _ : ℕ × ℕ => (PMF.bernoulli p hp).toMeasure) Nat.pairEquiv.symm]
+  exact Measure.infinitePi_map_curry (fun _ _ => (PMF.bernoulli p hp).toMeasure)
+
+/-- `Statement:` and `unpack.symm` is measure preserving back. -/
+theorem pack_measurePreserving (p : NNReal) (hp : p ≤ 1) :
+    MeasurePreserving unpack.symm (Measure.infinitePi fun _ : ℕ => trials p hp) (trials p hp) :=
+  (unpack_measurePreserving p hp).symm _
+
+-- Statement: CONTROL, a law whose stages differ: for the Dirac law at the tape firing only at stage 0,
+-- `unpack` is not measure preserving onto the product of copies of it.
+example : ¬ MeasurePreserving unpack (Measure.dirac (fun k => decide (k = 0)))
+    (Measure.infinitePi fun _ : ℕ => Measure.dirac (fun k : ℕ => decide (k = 0))) := by
+  intro h
+  have hs0 : MeasurableSet {f : ℕ → Bool | f 0 = true} :=
+    measurableSet_eq_fun (measurable_pi_apply 0) measurable_const
+  have hs : MeasurableSet {y : ℕ → ℕ → Bool | y 1 0 = true} :=
+    measurableSet_eq_fun ((measurable_pi_apply 0).comp (measurable_pi_apply 1)) measurable_const
+  have e := congrArg (fun ν : Measure (ℕ → ℕ → Bool) => ν {y | y 1 0 = true}) h.map_eq
+  have hr : {y : ℕ → ℕ → Bool | y 1 0 = true} = (fun y => y 1) ⁻¹' {f | f 0 = true} := rfl
+  rw [Measure.map_apply unpack.measurable hs, Measure.dirac_apply' _ (unpack.measurable hs), hr,
+    ← Measure.map_apply (measurable_pi_apply 1) hs0, Measure.infinitePi_map_eval,
+    Measure.dirac_apply' _ hs0] at e
+  have h1 : (fun k : ℕ => decide (k = 0)) ∉
+      unpack ⁻¹' ((fun y => y 1) ⁻¹' {f : ℕ → Bool | f 0 = true}) := by
+    simp only [Set.mem_preimage, Set.mem_ofPred_eq, unpack_apply]; decide
+  have h2 : (fun k : ℕ => decide (k = 0)) ∈ {f : ℕ → Bool | f 0 = true} := rfl
+  rw [Set.indicator_of_notMem h1, Set.indicator_of_mem h2] at e
+  simp at e
+
+/-! ### § IX. Two faces pin the dial -/
+
+/-- `Statement:` ⊥ of `ℕ → Bool` is in the support of `trials p hp` and `binEntropy p > 0` iff
+`0 < p < 1`; both directions. -/
+theorem dial_two_faces_iff (p : NNReal) (hp : p ≤ 1) :
+    ((⊥ : ℕ → Bool) ∈ (trials p hp).support ∧ 0 < Real.binEntropy (p : ℝ)) ↔ 0 < p ∧ p < 1 := by
+  rw [bot_mem_support_iff]
+  constructor
+  · rintro ⟨h1, h0⟩
+    refine ⟨pos_iff_ne_zero.2 fun h => ?_, h1⟩
+    subst h; simp at h0
+  · rintro ⟨h0, h1⟩
+    exact ⟨h1, Real.binEntropy_pos (by exact_mod_cast h0) (by exact_mod_cast h1)⟩
+
+/-- `Statement:` under those two faces, "some stage fires" has `trials p hp` mass 1
+(`dial_fire_jump`), and ⊥ of `ℕ → Bool` is in the support and null (`trials_bot_null`).
+`Reading:` (Tim's) ⊥ simultaneously minimally and maximally complex: the law contains the point, the
+point does not contain the law (on ⊥ of `End`, columns all ⊥ exactly at ⊥: `natDirs_bot_iff`). -/
+theorem dial_pinned_faces (p : NNReal) (hp : p ≤ 1)
+    (h : (⊥ : ℕ → Bool) ∈ (trials p hp).support ∧ 0 < Real.binEntropy (p : ℝ)) :
+    trials p hp {w | ∃ k, w k = true} = 1 ∧ (⊥ : ℕ → Bool) ∈ (trials p hp).support ∧
+      trials p hp {(⊥ : ℕ → Bool)} = 0 := by
+  obtain ⟨h0, -⟩ := (dial_two_faces_iff p hp).1 h
+  exact ⟨by rw [dial_fire_jump, ite_eq_right h0.ne'], h.1, trials_bot_null p hp h0⟩
+
+-- Statement: CONTROL `p = 0`: ⊥ of `ℕ → Bool` in the support, entropy 0. Reading: the point
+-- without the law.
+example : (⊥ : ℕ → Bool) ∈ (trials 0 zero_le_one).support ∧
+    Real.binEntropy ((0 : NNReal) : ℝ) = 0 :=
+  ⟨(bot_mem_support_iff 0 _).2 zero_lt_one, by simp⟩
+
+-- Statement: CONTROL `p = 1`: ⊥ of `ℕ → Bool` not in the support, entropy 0, firing of mass 1.
+-- Reading: the law without the point.
+example : (⊥ : ℕ → Bool) ∉ (trials 1 le_rfl).support ∧ Real.binEntropy ((1 : NNReal) : ℝ) = 0 ∧
+    trials 1 le_rfl {w | ∃ k, w k = true} = 1 :=
+  ⟨by rw [bot_mem_support_iff]; exact lt_irrefl 1, by simp,
+    by rw [dial_fire_jump, ite_eq_right one_ne_zero]⟩
+
+end WaitPackFaces
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -326,4 +504,14 @@ open ZeroParadox
 #print axioms schedule_never_pos
 #print axioms schedule_halving_control
 #print axioms law_two_faces
+#print axioms tsum_cylinder_bot_indicator
+#print axioms lintegral_wait_succ
+#print axioms lintegral_wait_succ_inv
+#print axioms wait_chart_top
+#print axioms unpack
+#print axioms unpack_apply
+#print axioms unpack_measurePreserving
+#print axioms pack_measurePreserving
+#print axioms dial_two_faces_iff
+#print axioms dial_pinned_faces
 end PurityCheck

@@ -244874,7 +244874,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 4882,
+        "declarations": 4892,
         "files": 249
       },
       "entries": [
@@ -256869,6 +256869,43 @@
             ]
           },
           "reason": "Die v2 final batch: drawing vs set (self-steps, accessibility, forced rank), ends of a view, orders on motions, placements as views, relaxed least-fixed-point schema, UP legs as nuclei",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "1005a56c-810c-458f-b935-6014fbbd4968",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.unpack_apply",
+            "short": "unpack_apply"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.unpack_apply",
+            "short": "unpack_apply",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § VII-IX (2026-11-26): the wait chart (shifted-geometric mean p^-1 in ENNReal by the tail-sum formula, p = 0 included as the defective endpoint; chart x = p^-1 via OrderIso.invENNReal), packing (unpack along Nat.pairEquiv, measure preserving both directions between trials p and its countable product; reindexing of an infinite product measure), and the two faces pinning the dial (bot of N -> Bool in the support and binEntropy p > 0 iff 0 < p < 1; then firing has mass 1 and bot is a null member).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -269442,6 +269479,43 @@
             ]
           },
           "reason": "Section V of GroundZero: the well-founded coalgebra predicate applied to step functions = halting",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "23987c28-be34-470e-bb69-ac09c487b3e4",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dial_two_faces_iff",
+            "short": "dial_two_faces_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.dial_two_faces_iff",
+            "short": "dial_two_faces_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § VII-IX (2026-11-26): the wait chart (shifted-geometric mean p^-1 in ENNReal by the tail-sum formula, p = 0 included as the defective endpoint; chart x = p^-1 via OrderIso.invENNReal), packing (unpack along Nat.pairEquiv, measure preserving both directions between trials p and its countable product; reindexing of an infinite product measure), and the two faces pinning the dial (bot of N -> Bool in the support and binEntropy p > 0 iff 0 < p < 1; then firing has mass 1 and bot is a null member).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -372314,6 +372388,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "b650431b-708f-416b-ad7e-39bd129ff3ce",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.unpack",
+            "short": "unpack"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.unpack",
+            "short": "unpack",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § VII-IX (2026-11-26): the wait chart (shifted-geometric mean p^-1 in ENNReal by the tail-sum formula, p = 0 included as the defective endpoint; chart x = p^-1 via OrderIso.invENNReal), packing (unpack along Nat.pairEquiv, measure preserving both directions between trials p and its countable product; reindexing of an infinite product measure), and the two faces pinning the dial (bot of N -> Bool in the support and binEntropy p > 0 iff 0 < p < 1; then firing has mass 1 and bot is a null member).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "b6697cca-4d52-46ab-b6aa-29ae6d0e93cc",
           "new": {
             "file": "ZeroParadox/Settheory/LawvereBridge.lean",
@@ -400886,6 +400997,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "de25431f-dafd-4330-a0b5-4342e454d9ee",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.pack_measurePreserving",
+            "short": "pack_measurePreserving"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.pack_measurePreserving",
+            "short": "pack_measurePreserving",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § VII-IX (2026-11-26): the wait chart (shifted-geometric mean p^-1 in ENNReal by the tail-sum formula, p = 0 included as the defective endpoint; chart x = p^-1 via OrderIso.invENNReal), packing (unpack along Nat.pairEquiv, measure preserving both directions between trials p and its countable product; reindexing of an infinite product measure), and the two faces pinning the dial (bot of N -> Bool in the support and binEntropy p > 0 iff 0 < p < 1; then firing has mass 1 and bot is a null member).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "de29bb65-e533-4219-b7e1-1ce6827189a6",
           "new": {
             "file": "ZeroParadox/Multihomed/BendDie.lean",
@@ -407524,6 +407672,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "e6f4d432-d89c-433e-9cdc-16046fef8d20",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.unpack_measurePreserving",
+            "short": "unpack_measurePreserving"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.unpack_measurePreserving",
+            "short": "unpack_measurePreserving",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § VII-IX (2026-11-26): the wait chart (shifted-geometric mean p^-1 in ENNReal by the tail-sum formula, p = 0 included as the defective endpoint; chart x = p^-1 via OrderIso.invENNReal), packing (unpack along Nat.pairEquiv, measure preserving both directions between trials p and its countable product; reindexing of an infinite product measure), and the two faces pinning the dial (bot of N -> Bool in the support and binEntropy p > 0 iff 0 < p < 1; then firing has mass 1 and bot is a null member).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "e6fc6769-bf87-4ef5-aa5c-b78f15825694",
           "new": {
@@ -410710,6 +410895,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "eb075dfb-8935-4e8b-b87e-7b0e9087f4d3",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.wait_chart_top",
+            "short": "wait_chart_top"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.wait_chart_top",
+            "short": "wait_chart_top",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § VII-IX (2026-11-26): the wait chart (shifted-geometric mean p^-1 in ENNReal by the tail-sum formula, p = 0 included as the defective endpoint; chart x = p^-1 via OrderIso.invENNReal), packing (unpack along Nat.pairEquiv, measure preserving both directions between trials p and its countable product; reindexing of an infinite product measure), and the two faces pinning the dial (bot of N -> Bool in the support and binEntropy p > 0 iff 0 < p < 1; then firing has mass 1 and bot is a null member).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "eb12c8ba-9bbb-4041-9264-7758d4938be8",
           "new": {
             "file": "ZeroParadox/Valuation/PadicStillPoint.lean",
@@ -411415,6 +411637,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "ebbaf91b-3d38-4bef-86e0-9e9488d77f52",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lintegral_wait_succ_inv",
+            "short": "lintegral_wait_succ_inv"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lintegral_wait_succ_inv",
+            "short": "lintegral_wait_succ_inv",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § VII-IX (2026-11-26): the wait chart (shifted-geometric mean p^-1 in ENNReal by the tail-sum formula, p = 0 included as the defective endpoint; chart x = p^-1 via OrderIso.invENNReal), packing (unpack along Nat.pairEquiv, measure preserving both directions between trials p and its countable product; reindexing of an infinite product measure), and the two faces pinning the dial (bot of N -> Bool in the support and binEntropy p > 0 iff 0 < p < 1; then firing has mass 1 and bot is a null member).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "ebbe8114-e739-4b58-ae82-1858648924fb",
           "new": {
             "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
@@ -411774,6 +412033,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ec46f42f-cd58-4895-9ef5-70282afdc66d",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dial_pinned_faces",
+            "short": "dial_pinned_faces"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.dial_pinned_faces",
+            "short": "dial_pinned_faces",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § VII-IX (2026-11-26): the wait chart (shifted-geometric mean p^-1 in ENNReal by the tail-sum formula, p = 0 included as the defective endpoint; chart x = p^-1 via OrderIso.invENNReal), packing (unpack along Nat.pairEquiv, measure preserving both directions between trials p and its countable product; reindexing of an infinite product measure), and the two faces pinning the dial (bot of N -> Bool in the support and binEntropy p > 0 iff 0 < p < 1; then firing has mass 1 and bot is a null member).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -412920,6 +413216,43 @@
             "role": []
           },
           "reason": "die-bend-1104: Tim's \"bend\" (ruling 38): first-occurrence time det as a Galois insertion of tapes onto NInf, order reversed (Die.lean § XXV)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "edd63796-3aa2-4535-b513-98139131e2b1",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.tsum_cylinder_bot_indicator",
+            "short": "tsum_cylinder_bot_indicator"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.tsum_cylinder_bot_indicator",
+            "short": "tsum_cylinder_bot_indicator",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § VII-IX (2026-11-26): the wait chart (shifted-geometric mean p^-1 in ENNReal by the tail-sum formula, p = 0 included as the defective endpoint; chart x = p^-1 via OrderIso.invENNReal), packing (unpack along Nat.pairEquiv, measure preserving both directions between trials p and its countable product; reindexing of an infinite product measure), and the two faces pinning the dial (bot of N -> Bool in the support and binEntropy p > 0 iff 0 < p < 1; then firing has mass 1 and bot is a null member).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -419263,6 +419596,43 @@
             ]
           },
           "reason": "T-H3 conjuncts as die motions, with controls and two obstructions (ZeroParadox/Multihomed/TH3Die.lean; Tim: \"Land it\", 2026-11-18)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f712142a-1baf-493a-b5ac-83f95e71f08e",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lintegral_wait_succ",
+            "short": "lintegral_wait_succ"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lintegral_wait_succ",
+            "short": "lintegral_wait_succ",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § VII-IX (2026-11-26): the wait chart (shifted-geometric mean p^-1 in ENNReal by the tail-sum formula, p = 0 included as the defective endpoint; chart x = p^-1 via OrderIso.invENNReal), packing (unpack along Nat.pairEquiv, measure preserving both directions between trials p and its countable product; reindexing of an infinite product measure), and the two faces pinning the dial (bot of N -> Bool in the support and binEntropy p > 0 iff 0 < p < 1; then firing has mass 1 and bot is a null member).",
           "verify": {
             "axioms": null,
             "sorry_free": null

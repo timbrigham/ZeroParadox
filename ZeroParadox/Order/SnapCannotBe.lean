@@ -158,6 +158,7 @@ example (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p) :
 #check @ZeroParadox.dial_digital_limit                -- Statement: the mass of "fires within the first `n` stages", `1 - (1 - p) ^ n` and continuous in `p`, tends as `n → ∞` to the switch, 0 at `p = 0` and 1 for `p > 0`; not uniformly on `(0, 1]` (`dial_not_uniform`)
 #check @ZeroParadox.schedule_fires_of_tsum_top        -- Statement: with independent stage chances `q n` (`fadingTrials`) whose sum diverges, some stage fires with probability one; `schedule_never_pos`: with a convergent sum and every `q n < 1`, with positive probability no stage fires
 #check @ZeroParadox.schedule_snap_ae                  -- Statement: `snap_ae_of_firstStep` with `trials p hp` replaced by `fadingTrials q hq` whose chances sum to ∞: if ⊥ of `L` has a first step, almost every tape gives a run stepping off ⊥ of `L` to a cover; one way
+#check @ZeroParadox.dial_pinned_faces                 -- Statement: if ⊥ of `ℕ → Bool` is in the support of `trials p hp` and `binEntropy p > 0` (equivalently `0 < p < 1`, `dial_two_faces_iff`), "some stage fires" has mass 1 and ⊥ of `ℕ → Bool` is in the support and null
 -- Reading: CARRIER, the tower tape fed to the snap as a family indexed by chart, never a union
 --   (`ZeroParadox/Valuation/TowerTapeSnap.lean`): `tapeIso` carries `towerTape [] x` to a tape `ℕ → Bool`.
 #check @ZeroParadox.towerTape_fires_iff               -- Statement: `tapeIso (towerTape [] x)` fires iff `x ≠ botEnd`; at `botEnd` it is ⊥ of `ℕ → Bool` (`towerTape_floor_allFalse`)
