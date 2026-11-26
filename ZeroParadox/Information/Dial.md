@@ -38,8 +38,8 @@ this file holds what was already in the corpus, the prior art, and the fences.
   `trials p hp` as Mathlib's `geometricMeasure`, for `p ≠ 0`; `runLaw_stay` is the same geometric holding read
   off the chain. `InvariantMarkovKernel` (`ZeroParadox/Valuation/BottomInvariant.lean`) bundles a Markov kernel
   with an invariant law; § XI uses no invariant law. The other chart of `ofFun_kernel_dirac`: `odMarkov`
-  (`ZeroParadox/Multihomed/OrbitDie.lean` § III) runs a Markov step as a deterministic `Motion.ofFun` die on
-  distributions `Fin 2 → ℝ`, and `odometerIMK`, `attractorIMK` (`ZeroParadox/Valuation/BottomInvariant.lean`)
+  (`ZeroParadox/Multihomed/OrbitDie.lean` § III) runs the Markov step at `a = 1/4` as a deterministic
+  `Motion.ofFun` die on vectors `Fin 2 → ℝ` (distributions among them), and `odometerIMK`, `attractorIMK` (`ZeroParadox/Valuation/BottomInvariant.lean`)
   are `Kernel.deterministic` instances of `InvariantMarkovKernel`. The two observers of the `Reading:` at § XI's header:
   value side `loop_is_a_trap`, `stutter_obs_const`, `carry_steps_onward_forever_yet_shows_nothing`
   (`ZeroParadox/Computability/Occurrence.lean`), `da1_minimal_path` (`ZeroParadox/Order/Snap.lean`),
@@ -153,7 +153,8 @@ this file holds what was already in the corpus, the prior art, and the fences.
 - Standard names. A Markov kernel `K` with `Subordinate M K` is a Markov chain whose directed graph lies in
   the step relation: Levin, Peres, Wilmer, *Markov Chains and Mixing Times*, 2nd ed., Remark 1.24, p. 15,
   "the directed graph with vertex set equal to the state space of the chain, that includes the directed edge
-  (x, y) in its edge set iff P(x, y) > 0". A point stepping to itself only carries an absorbing state (p. 15:
+  (x, y) in its edge set iff P(x, y) > 0". Under a subordinate kernel, a point stepping to itself only is an absorbing state
+  (`leave_zero_of_selfOnlyAt`; p. 15:
   "the chain never leaves x once it first visits x; such states are called absorbing"); a chain that may stay
   put has positive holding probability, of which LPW's lazy version `Q = (I + P)/2` is one instance (p. 8, "We
   call Q a lazy version of P"). `slotKernel` is their Example 1.1 (p. 3, the frog,
@@ -233,7 +234,9 @@ this file holds what was already in the corpus, the prior art, and the fences.
   in the same `example`. § X: `xorHomeo`,
   `xorWith_involutive` (UltrametricView), `det_eq_ofNat_iff` (TapeHalting), `waitENat` (DepthIsWait),
   `tape_never_fires_iff`. § XI: `runLaw_stay_eq_trials`, `runLaw_leaves`, `ae_leaves_iff`,
-  `slot_stay_eq_trials`, `glauber_slot_leaves` and the two `example`s use `trials_cyl` (PoleWithinEnsemble);
+  `slot_stay_eq_trials`, `glauber_slot_leaves`, the `slotKernel 0` CONTROL `example` and the `ZPSemilattice`
+  `example` use `trials_cyl` (PoleWithinEnsemble); the converse CONTROL `example` (after the `slotKernel 0`
+  control) uses no EXPERIMENTAL declaration;
   `glauber_slot_leaves` also `glauberExciteNN` (PoleWithinEnsemble); `leave_half_of_maxEntropy` uses
   `eq_half_of_maxEntropy` (MaxEntropy); the rest of § XI uses none. `dial_fire_jump`, `fireMass`, `fireMass_eq`, `fireMass_not_continuousAt_zero`,
   `fireWithin`, `dial_digital_limit`, `unpack`, `unpack_apply`, `unpack_measurePreserving`,
