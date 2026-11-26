@@ -35,9 +35,12 @@ this file holds what was already in the corpus, the prior art, and the fences.
 - § XI: `slotMotion` (`ZeroParadox/Information/CrossingTrials.lean`) is reused as the die `slotKernel` is
   subordinate to; `Motion`, `NoStepAt`, `SelfOnlyAt`, `LeavesAt`, `ofFun` (`ZeroParadox/Die.lean`).
   `trials_det_eq_geometric` (`ZeroParadox/Information/PoleWithinEnsemble.lean`) is the first-hit law of
-  `trials p hp` as Mathlib's `geometricMeasure`; `runLaw_stay` is the same geometric holding read off the
-  chain. `InvariantMarkovKernel` (`ZeroParadox/Valuation/BottomInvariant.lean`) bundles a Markov kernel
-  with an invariant law; § XI uses no invariant law. The two observers of the `Reading:` at § XI's header:
+  `trials p hp` as Mathlib's `geometricMeasure`, for `p ≠ 0`; `runLaw_stay` is the same geometric holding read
+  off the chain. `InvariantMarkovKernel` (`ZeroParadox/Valuation/BottomInvariant.lean`) bundles a Markov kernel
+  with an invariant law; § XI uses no invariant law. The other chart of `ofFun_kernel_dirac`: `odMarkov`
+  (`ZeroParadox/Multihomed/OrbitDie.lean` § III) runs a Markov step as a deterministic `Motion.ofFun` die on
+  distributions `Fin 2 → ℝ`, and `odometerIMK`, `attractorIMK` (`ZeroParadox/Valuation/BottomInvariant.lean`)
+  are `Kernel.deterministic` instances of `InvariantMarkovKernel`. The two observers of the `Reading:` at § XI's header:
   value side `loop_is_a_trap`, `stutter_obs_const`, `carry_steps_onward_forever_yet_shows_nothing`
   (`ZeroParadox/Computability/Occurrence.lean`), `da1_minimal_path` (`ZeroParadox/Order/Snap.lean`),
   `Motion.quot_leavesAt_iff`, `Motion.selectedTotal_of_option` (`ZeroParadox/Die.lean`); move side
@@ -152,13 +155,18 @@ this file holds what was already in the corpus, the prior art, and the fences.
   "the directed graph with vertex set equal to the state space of the chain, that includes the directed edge
   (x, y) in its edge set iff P(x, y) > 0". A point stepping to itself only carries an absorbing state (p. 15:
   "the chain never leaves x once it first visits x; such states are called absorbing"); a chain that may stay
-  put is lazy (p. 8, "We call Q a lazy version of P"). `slotKernel` is their Example 1.1 (p. 3, the frog,
+  put has positive holding probability, of which LPW's lazy version `Q = (I + P)/2` is one instance (p. 8, "We
+  call Q a lazy version of P"). `slotKernel` is their Example 1.1 (p. 3, the frog,
   east coin `p`) with the west pad made absorbing.
 - The chain law. `runLaw` is Mathlib's `Kernel.trajMeasure` (the Ionescu-Tulcea theorem,
-  `Mathlib/Probability/Kernel/IonescuTulcea/Traj.lean`) of `dirac x₀` and the time-homogeneous `homK K`; the
-  pinned Mathlib has no time-homogeneous wrapper. The same construction is `markovChainLaw` in TauCeti
-  (repository TauCetiProject/TauCeti, commit 656ded17, `TauCeti/Probability/Process/MarkovChain.lean`), and
-  `absorbingChain p : Kernel Bool Bool` there (`.../MarkovChain/Examples/Absorbing.lean`) is `slotKernel`.
+  `Mathlib/Probability/Kernel/IonescuTulcea/Traj.lean`) of `dirac x₀` and the time-homogeneous `homK K`; a
+  time-homogeneous wrapper in the pinned Mathlib was not located as of 2026-11-26, searched: case-insensitive
+  grep of `Mathlib/Probability` for `markovChain`, `Markov chain`, `homogeneous` and `trajMeasure` (hits only
+  `trajMeasure` in `Kernel/IonescuTulcea/Traj.lean` and docstrings of `Kernel/Irreducible.lean`). The same
+  construction is `markovChainLaw` in TauCeti (repository TauCetiProject/TauCeti, commit 656ded17,
+  `TauCeti/Probability/Process/MarkovChain.lean`), and `absorbingChain p : Kernel Bool Bool` there
+  (`TauCeti/Probability/MarkovChain/Examples/Absorbing.lean`, `p : unitInterval` the stay weight at `false`) is
+  `slotKernel (1 - p)`, whose `p` is the leave weight (`slotKernel_leave`).
   PARTLY VERIFIED: statements fetched, not elaborated, outside this repository's dependency closure. § XI's
   own part is the die side: `Subordinate`, its controls, and the identity of the stay record with `trials p`.
 - Exact weights. `ae_leaves_iff` depends only on whether the leave-weight is positive; the law itself
