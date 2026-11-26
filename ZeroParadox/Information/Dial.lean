@@ -151,7 +151,8 @@ theorem dial_not_uniform :
 /-- `Statement:` let `φ : Bool → L` send `false` to ⊥ of `L` and `true` elsewhere. Every image run
 `φ ∘ slotRun w` starts at ⊥ of `L`; for `trials 0 hp`-almost every tape it is ⊥ of `L` at every stage;
 for `0 < p ≤ 1` and `trials p hp`-almost every tape it is somewhere not ⊥ of `L`. From
-`never_fires_ae_zero` and `ae_firesOnce`; on `firedRun` the third conjunct is `snap_ae_fixed_phi`. Maps
+`never_fires_ae_zero` and `ae_firesOnce`; on `firedRun` the third conjunct is implied by
+`snap_ae_fixed_phi`, which is strictly stronger (it fixes the first exit time). Maps
 run tape → run → image; no map from ⊥ of `L` to a tape is claimed. -/
 theorem dial_jump_into_L {L : Type*} [ZPSemilattice L] (φ : Bool → L)
     (hφ0 : φ false = ZPSemilattice.bot) (hφ1 : φ true ≠ ZPSemilattice.bot) :
@@ -195,6 +196,27 @@ theorem schedule_fires_of_tsum_top (q : ℕ → NNReal) (hq : ∀ n, q n ≤ 1)
   rw [mem_limsup_iff_frequently_mem] at hw
   obtain ⟨k, -, hk⟩ := hw.forall_exists_of_atTop 0
   exact ⟨k, hk⟩
+
+/-- `Statement:` if ⊥ of `L` has a first step and `∑ q n = ∞`, then for `fadingTrials q hq`-almost
+every tape `w`, `w` fires (`hw`) and `snap_of_firstStep_fires_once`'s conclusion holds: the run
+steps off ⊥ of `L` to a cover. `snap_ae_of_firstStep` with `trials p hp` replaced by a schedule; from
+`schedule_fires_of_tsum_top`. One way. -/
+theorem schedule_snap_ae {L : Type*} [ZPSemilattice L] (hR1 : BotHasFirstStep L)
+    (q : ℕ → NNReal) (hq : ∀ n, q n ≤ 1) (hs : ∑' n, (q n : ENNReal) = ⊤) :
+    ∀ᵐ w ∂(fadingTrials q hq), ∃ (φ : Bool → L) (hw : ∃ k, w k = true),
+      let S := φ ∘ firedRun w hw
+      (S 0 = ZPSemilattice.bot ∧ S 1 ≠ S 0 ∧ ZPSemilattice.IsStateSequence S) ∧
+      ((S 0 ≠ S 1 ∧ S 1 ≠ S 0 ∧ ZPSemilattice.join (S 0) (S 1) = S 1) ∧
+        letI := zpSemilatticeSup L; (ZPSemilattice.bot : L) ⋖ S 1) := by
+  have hm : MeasurableSet {w : ℕ → Bool | ∃ k, w k = true} := by
+    have e : {w : ℕ → Bool | ∃ k, w k = true} = ⋃ k, fires k := by ext w; simp [fires]
+    rw [e]; exact MeasurableSet.iUnion fires_measurable
+  have hfire : ∀ᵐ w ∂(fadingTrials q hq), w ∈ {w : ℕ → Bool | ∃ k, w k = true} :=
+    (ae_iff_measure_eq hm.nullMeasurableSet).2
+      (by rw [schedule_fires_of_tsum_top q hq hs, measure_univ])
+  filter_upwards [hfire] with w hw
+  obtain ⟨φ, h⟩ := snap_of_firstStep_fires_once hR1 w hw
+  exact ⟨φ, hw, h⟩
 
 set_option linter.deprecated false in
 /-- `Statement:` if `∑ q n < ∞` and every `q n < 1`, the tapes on which no stage fires, `{⊥}` of
@@ -300,6 +322,7 @@ open ZeroParadox
 #print axioms dial_jump_into_L
 #print axioms fadingTrials_fires_iIndepSet
 #print axioms schedule_fires_of_tsum_top
+#print axioms schedule_snap_ae
 #print axioms schedule_never_pos
 #print axioms schedule_halving_control
 #print axioms law_two_faces

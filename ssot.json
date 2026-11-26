@@ -244874,7 +244874,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 4881,
+        "declarations": 4882,
         "files": 249
       },
       "entries": [
@@ -276318,6 +276318,43 @@
             ]
           },
           "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "2d070b1e-9076-4a17-9b1c-11bb5d39d426",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.schedule_snap_ae",
+            "short": "schedule_snap_ae"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.schedule_snap_ae",
+            "short": "schedule_snap_ae",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "v7 step 4 final pass (ruling 97): snap_ae_of_firstStep under a divergent schedule (fadingTrials), from schedule_fires_of_tsum_top and snap_of_firstStep_fires_once; backs the \"(more generally ...)\" cover clause.",
           "verify": {
             "axioms": null,
             "sorry_free": null
