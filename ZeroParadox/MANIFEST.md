@@ -54,6 +54,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Valuation/Ostrowski.lean` - ZP-P instance: the number-system fork (ℝ vs ℚ_p), via Ostrowski
 - `ZeroParadox/Valuation/Padic.lean` - ZP-B: p-Adic Topology
   - ride-along docs: `ZeroParadox/Valuation/Padic.md` - Why Q₂ rather than a discrete two-point space
+- `ZeroParadox/Valuation/PadicHaar.lean` - p-adic Haar measure on ℤ_p
 - `ZeroParadox/Valuation/PadicPerfect.lean` - M11 (re-attempt): the 2-adic ball is perfect — Cantor–Bendixson rank 0
 - `ZeroParadox/Valuation/PadicTree.lean` - A rooted 2-adic tree as a `SimpleGraph`
 - `ZeroParadox/Valuation/PlaceAllPrimes.lean` - ZP-H Direction A, Cycle A5 (depth c) — the framework's OWN bottom family = all places of ℚ
@@ -80,6 +81,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 ### Information (ZP-C)
 
 - `ZeroParadox/Information/BottomMeasure.lean` - P6: measure = +∞ at the bottom — per-domain bundle, and the type-boundary finding
+- `ZeroParadox/Information/BottomTotality.lean` - One ensemble, two faces: the law and its members
 - `ZeroParadox/Information/CrossingTrials.lean` - Crossing trials: what a probability on the crossing would buy
   - ride-along docs: `ZeroParadox/Information/CrossingTrials.md` - Crossing trials, § IV–IX: from almost surely to one run, from one firing to a state sequence, and why a finite reading can confirm a firing (`isOpen_fires_once`) and never refute one
 - `ZeroParadox/Information/Disjunctive.lean` - Disjunctive sequences: a tape on which every finite word occurs
@@ -87,6 +89,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Information/PadicSurprisal.lean` - B3 (pipeline): information surprisal ≡ 2-adic depth at the floor
 - `ZeroParadox/Information/Surprisal.lean` - ZP-C: Information Theory
   - ride-along docs: `ZeroParadox/Information/Surprisal.md` - The Archimedean fence, what repetition buys, and the concurrent readings
+- `ZeroParadox/Information/TwoRequirements.lean` - Two requirements: a first step at ⊥ of `L`, and a typical tape
 
 ### State / Hilbert (ZP-D)
 
@@ -250,6 +253,8 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Die.lean` - The die: an order-free motion, its switches, and its premises
 - `ZeroParadox/DieCannotBe.lean` - Machine-checked characterization index of the die — its premises, with members and non-members
 - `ZeroParadox/DieSameness.lean` - Homeomorphic and bi-Lipschitz isomorphisms of die motions, the levels above `Motion.StrictIso`
+- `ZeroParadox/Givens.lean` - The givens at the die level: each a `Prop` (all but `GConnected`, `GJoined` on a die `Motion`), proved or refuted per chart
+  - ride-along docs: `ZeroParadox/Givens.md` - The givens at the die level: what each one is, and the theorem that carries it
 - `ZeroParadox/Miniature.lean` - The Zero Paradox in miniature — the minimal core
 
 ### Meta / tooling (not framework content)
@@ -317,7 +322,6 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Valuation/PadicBallWave.lean` - On ℤ_p, an additive character integrates over the closed ball of radius p^(-j) about 0 to p^(-j) if it is 1 on that ball and to 0 otherwise; for paChar n φ, and for every continuous character, that is exactly when the character's level is at most j
 - `ZeroParadox/Valuation/PadicCharacter.lean` - p-adic additive characters and their orthogonality on ℤ_p
 - `ZeroParadox/Valuation/PadicErgodic.lean` - Ergodicity of the p-adic odometer
-- `ZeroParadox/Valuation/PadicHaar.lean` - p-adic Haar measure on ℤ_p
 - `ZeroParadox/Valuation/PadicJointSpectrum.lean` - The joint spectrum: Koopman ⋈ Vladimirov share the character eigenbasis
 - `ZeroParadox/Valuation/PadicKoopman.lean` - The Koopman operator on L²(ℤ_p)
 - `ZeroParadox/Valuation/PadicKoopmanVladimirov.lean` - Koopman ⋈ Vladimirov: the odometer intertwines with D^α
@@ -348,14 +352,12 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 
 ### Information (ZP-C)
 
-- `ZeroParadox/Information/BottomTotality.lean` - One ensemble, two faces: the law and its members
 - `ZeroParadox/Information/BrudnoBridge.lean` - Brudno bridge: `trials` and `MLRandom` against `kolmogorov-complexity-lean`
 - `ZeroParadox/Information/MaxEntropy.lean` - Maximum entropy: the fair coin, missing information, and incompressible tapes
 - `ZeroParadox/Information/PoleWithinEnsemble.lean` - The never-firing tape inside the firing ensemble
 - `ZeroParadox/Information/SnapEpsilonZero.lean` - The snap and ε₀ on two carriers: on `WithBot Ordinal` the first step lands at ↑0 and `up` carries it to ↑ε₀ (the corner); on `EpsilonOrZero` the first step is ε₀ (the cover)
 - `ZeroParadox/Information/StartBit.lean` - The start bit, the end bit, and the tapes whose tail from some position on is ⊥ of `ℕ → Bool`
 - `ZeroParadox/Information/TapeHalting.lean` - A tape's first hitting time, run as a computation
-- `ZeroParadox/Information/TwoRequirements.lean` - Two requirements: a first step at ⊥ of `L`, and a typical tape
 
 ### State / Hilbert (ZP-D)
 
@@ -463,4 +465,4 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 
 ---
 
-*Generated by `build_manifest.py` from the Lean tree + each file's `-- EXPERIMENTAL` header. Rerun after adding, moving, or renaming a file. (142 core, 138 experimental.)*
+*Generated by `build_manifest.py` from the Lean tree + each file's `-- EXPERIMENTAL` header. Rerun after adding, moving, or renaming a file. (146 core, 135 experimental.)*

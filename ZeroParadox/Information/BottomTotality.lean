@@ -1,4 +1,3 @@
--- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): one tape ensemble, `fairTape`, the law of the maximum-entropy coin (`trials_eq_fairTape_of_maxEntropy`), almost all of whose members are incompressible for any one fixed prefix-free decoder, with ⊥ of `ℕ → Bool` a non-random limit of its random firing tapes; and the control that a two-element set containing both faces is null. Curated results indexed in ZeroParadox/MANIFEST.md.
 import ZeroParadox.Information.MaxEntropy
 import ZeroParadox.Information.PoleWithinEnsemble
 import Mathlib.Tactic
@@ -8,17 +7,16 @@ import Mathlib.Tactic
 
 ## Engineer's Take
 
-This file is one of a series of iterative attempts on this branch to build a map of how the various
-bottoms interconnect, and by extension how bottom moves from being the floor, a thing (a noun), to a
-verb (an action). The Lean here is our attempt, one way or the other, to get a clean verification. I
-defer to my AI assistant regarding the specifics of how the internals work.
+Maybe the claim isn't maximally complex... It's that it is simultaneously minimally and maximally complex
+
+Maximum entropy sounds exactly like infinite randomness from the other side.
 
 ---
 
 ## Formal Overview (AI-assisted)
-`tape_totality_two_faces` bundles the uniqueness of the maximum-entropy coin (its `trials` is `fairTape`,
-`trials_eq_fairTape_of_maxEntropy`) with three results about `fairTape`; the control
-`both_faces_in_null_set` shows a two-element set holding ⊥ of `ℕ → Bool` and a random tape is null.
+`tape_totality_two_faces` conjoins the uniqueness of the maximum-entropy coin with three results about `fairTape`;
+that coin's `trials` is `fairTape` (`trials_eq_fairTape_of_maxEntropy`, cited, not conjoined). Two faces: the law and its members.
+Prior art: `ZeroParadox/Information/MaxEntropy.lean` § IV (Kraft, Schnorr) and § V (Levin–Schnorr, Brudno).
 -/
 
 set_option maxHeartbeats 400000
@@ -30,7 +28,11 @@ open MeasureTheory Filter Topology
 /-- `Statement:` exactly one `p` has `binEntropy p = log 2` (its `trials` is `fairTape` by
 `trials_eq_fairTape_of_maxEntropy`, not conjoined here); for each prefix-free decoder `D`,
 `fairTape`-almost every tape is incompressible for `D`; ⊥ of `ℕ → Bool` is not Martin-Löf random
-for `fairTape`, and is in the closure of `randFiring (1/2)`. -/
+for `fairTape`, and is in the closure of `randFiring (1/2)`. `Reading:` CARRIER: the minimal face
+sits on the point (⊥ of `ℕ → Bool` is not random, `bot_not_MLRandom`) and on the law, minimal in
+the sense that a single condition fixes it (the unique `p` with `binEntropy p = log 2`, the first
+conjunct); the maximal face sits on almost every member, incompressible (`ae_incompressible`). That one
+object is simultaneously minimally and maximally complex is the Take's belief, not a theorem here. -/
 theorem tape_totality_two_faces :
     (∃ p : NNReal, Real.binEntropy (p : ℝ) = Real.log 2 ∧ 0 < p ∧ p ≤ 1 ∧
         ∀ q : NNReal, Real.binEntropy (q : ℝ) = Real.log 2 → q = p) ∧
@@ -56,8 +58,8 @@ theorem fairTape_singleton_null (t : ℕ → Bool) : fairTape {t} = 0 := by
     ENNReal.tendsto_pow_atTop_nhds_zero_of_lt_one (by norm_num)
   exact le_antisymm (ge_of_tendsto' ht hle) zero_le
 
-/-- `Statement:` CONTROL, some tape `w0` is Martin-Löf random for `fairTape`, ⊥ of `ℕ → Bool` is not,
-and `{⊥, w0}` is `fairTape`-null. -/
+/-- `Statement:` CONTROL, the two-tape pairing (not the title's law and members): some tape `w0` is
+Martin-Löf random for `fairTape`, ⊥ of `ℕ → Bool` is not, and `{⊥, w0}` is `fairTape`-null. -/
 theorem both_faces_in_null_set :
     ∃ w0, MLRandom fairTape w0 ∧ ¬ MLRandom fairTape (⊥ : ℕ → Bool) ∧
       fairTape ({⊥, w0} : Set (ℕ → Bool)) = 0 := by

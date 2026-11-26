@@ -1,4 +1,3 @@
--- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): a first step at ⊥ of a ZP-A semilattice and a typical tape, as two hypotheses giving the snap's cover and its slot-chart firing (`hw`). Curated results indexed in ZeroParadox/MANIFEST.md.
 import ZeroParadox.Information.Disjunctive
 import ZeroParadox.Reals.OrderedField
 import ZeroParadox.Settheory.Model
@@ -13,17 +12,16 @@ set_option maxHeartbeats 400000
 /-!
 # Two requirements: a first step at ⊥ of `L`, and a typical tape
 
-Two HYPOTHESES, neither discharged: `BotHasFirstStep L`, a cover of ⊥ of a `ZPSemilattice L` in
-ZP-A's induced order (AX-B1's form), and a tape typical for `trials p hp`, in three forms:
-zero-block typical, Martin-Löf random (implies the first, § II), frequency of `true` tending to
-`p`. § I–III: with `0 < p` they give `t_snap_given_cover`'s full conclusion. § IV: binary expansion
-sends a tape to a dyadic rational iff the tape is eventually constant.
+Two HYPOTHESES of the general theorems: `BotHasFirstStep L`, a cover of ⊥ of a `ZPSemilattice L` in ZP-A's induced order
+(AX-B1's form), and a tape typical for `trials p hp`: zero-block typical, Martin-Löf random (implies the first, § II), or
+frequency of `true` tending to `p`. The general theorems discharge neither; each is discharged only at witnesses: the first at the carrier `Bool` (`bool_botHasFirstStep`),
+the second, in its Martin-Löf form, for every `p` by existence (`exists_MLRandom`) and almost surely (`mlRandom_ae`; with the snap, `mlRandom_and_snap_ae`). § I–III: with `0 < p`
+they give `t_snap_given_cover`'s full conclusion. § IV: binary expansion sends a tape to a dyadic rational iff it is eventually constant.
 ## Engineer's Take
 
-This file is one of a series of iterative attempts on this branch to build a map of how the various
-bottoms interconnect, and by extension how bottom moves from being the floor, a thing (a noun), to a
-verb (an action). The Lean here is our attempt, one way or the other, to get a clean verification. I
-defer to my AI assistant regarding the specifics of how the internals work.
+When you look at the slot machine stuff what we are making the claim off is that at the bottom is infinitely complex, and we can take motion And/or distance being discreet... A step away from zero becomes statistically speaking effectively guaranteed to happen
+
+I think the real argument isn't that tsnap happens, it's that the preconditions are meetable.
 
 ---
 -/
@@ -83,7 +81,8 @@ theorem snap_of_firstStep_fires_once {L : Type*} [ZPSemilattice L] (hR1 : BotHas
 /-- `Statement:` if ⊥ of `L` has a first step and `w` is zero-block typical for `trials p hp` with
 `0 < p`, then `w` fires (`hw`) and `snap_of_firstStep_fires_once`'s conclusion holds. One way.
 `Reading:` CARRIER: the occurrence commitment's slot-chart hypothesis `hw` comes from typicality of
-one tape, the cover from AX-B1's form on `L`; neither is discharged, and a firing is not proved to
+one tape, the cover from AX-B1's form on `L`; this theorem discharges neither (each is discharged
+only at witnesses, module header), and a firing is not proved to
 be an execution event (`ZeroParadox/Order/Snap.lean`). The firing step is the step at which the
 waiting computation `toComp (det w)` halts (`toComp_det_results_iff_slotRun`); that is when, not what. -/
 theorem snap_of_two_requirements {L : Type*} [ZPSemilattice L] (hR1 : BotHasFirstStep L)
@@ -458,6 +457,12 @@ theorem mlRandom_and_snap_ae {L : Type*} [ZPSemilattice L] (hR1 : BotHasFirstSte
 -- Statement: CONTROL, almost every is not every: at the all-`false` tape no `hw` exists, so the
 -- conclusion fails there for every `L` (measure zero: the measure-one CONTROL `example` in
 -- `ZeroParadox/Information/CrossingTrials.lean` § VIII). Dropping the first step: `nnreal_not_botHasFirstStep`.
+-- Reading: CARRIER: this all-`false` tape is ⊥ of `ℕ → Bool`, and it is not Martin-Löf random for
+-- `trials p hp` with `0 < p` (`bot_not_MLRandom`, `ZeroParadox/Information/PoleWithinEnsemble.lean`;
+-- § I's drop-typicality control), so "⊥ is maximally complex" read of ⊥ of
+-- `ℕ → Bool` as a point is refuted in this chart for `0 < p`; the maximal face lives on almost every
+-- member, the minimal face on the point and on the law (`tape_totality_two_faces`,
+-- `ZeroParadox/Information/BottomTotality.lean`).
 example {L : Type*} [ZPSemilattice L] :
     ¬ ∃ (_ : Bool → L) (_ : ∃ k, (fun _ => false : ℕ → Bool) k = true), True :=
   fun ⟨_, ⟨_, h⟩, _⟩ => Bool.false_ne_true h
@@ -776,7 +781,11 @@ end Frequency
 /-! ## § IV. Tape to real: binary expansion
 
 `tapeReal w` is `0.w₀w₁w₂…` in base 2 (`Real.ofDigits`). How `trials p hp` pushes forward under it
-is not stated here; `Mathlib/Analysis/Real/OfDigits.lean` has no measure statement (read 2026-11-06). -/
+is not stated here; `Mathlib/Analysis/Real/OfDigits.lean` has no measure statement (read 2026-11-06).
+The dyadic-iff-eventually-constant equivalence is a standard fact, proved here; it is stated, not
+proved, in Tsaban and Weiss, *Products of special sets of real numbers*, Real Analysis Exchange 30
+(2004/5), arXiv:math/0307226, Definition 3.1, p. 7 ("ℚ₂ = T[C] denote the 2-adic rational numbers
+in [0,1]", `C` the eventually constant elements of `{0,1}^ℕ`). -/
 
 section TapeReal
 
@@ -913,8 +922,8 @@ theorem not_eventuallyConst_iff_not_dyadic (w : ℕ → Bool) :
 -- Reading: CARRIER. The tapes that settle land on dyadic rationals, each at a finite binary level;
 -- the tapes that never settle land off them, strictly inside (0, 1). The split is between values with
 -- a finite binary expansion and values with only infinite ones, not stepped versus continuous: the
--- dyadic rationals are dense among themselves (between two distinct ones lies a third, the `example`
--- below), and in ℝ's order no point, dyadic or not, has a first step
+-- non-negative dyadic rationals (`IsDyadic`) are dense among themselves (between two distinct ones
+-- lies a third, the `example` below), and in ℝ's order no point, dyadic or not, has a first step
 -- (`no_firstStep_of_preconnected`, `ZeroParadox/Reals/ConnectedNoFirstStep.lean`). The first step of § I is asked of `L`, never of ℝ.
 
 -- Statement: between two distinct dyadic rationals `x < y` lies a third, their midpoint.
