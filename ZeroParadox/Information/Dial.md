@@ -121,8 +121,11 @@ this file holds what was already in the corpus, the prior art, and the fences.
   `xorOffset_measurePreserving_fair` is the translation invariance of that measure, proved here coordinatewise
   from Mathlib's `Measure.infinitePi_map_pi` (the image of an infinite product measure under a coordinatewise
   map is the product of the images). Uniqueness of a Haar probability measure on a locally compact group is
-  Mathlib's `MeasureTheory.Measure.isAddHaarMeasure_eq_of_isProbabilityMeasure`; § X does not use it, since
-  `ℕ → Bool` carries no group instance in Mathlib (`Bool` has none), and states the converse directly:
+  Mathlib's `MeasureTheory.Measure.isAddHaarMeasure_eq_of_isProbabilityMeasure`. It applies here: Mathlib makes
+  `Bool` a Boolean ring (`Mathlib/Algebra/Ring/BooleanRing.lean`), whose addition is `xor`, so `ℕ → Bool` is a
+  locally compact topological additive group (`Pi.addCommGroup`, `Pi.isTopologicalAddGroup`) and `xorOffset t`
+  is addition of `t`. § X does not use it, since that instance lies outside `Dial.lean`'s imports, and states
+  the converse directly:
   `xorOffset_measurePreserving_iff`, one coordinate where `t` is `true` sends Bernoulli(`p`) to Bernoulli(`1 - p`).
   Mathlib has Haar measure on finite products (`MeasureTheory.Measure.pi.isAddHaarMeasure`) and binary products
   (`MeasureTheory.Measure.prod.instIsAddHaarMeasure`); a statement that the infinite product of uniform measures
