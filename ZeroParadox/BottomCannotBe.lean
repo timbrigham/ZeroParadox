@@ -949,11 +949,20 @@ example : ZeroParadox.Disjunctive (fun n => xor (ZeroParadox.champ n) false) := 
 -- Statement: `unpack`, the columns of a tape along `Nat.pairEquiv`, is measure preserving from
 -- `trials p hp` to the product of countably many copies of `trials p hp`.
 #check @ZeroParadox.unpack_measurePreserving
--- Statement: ⊥ of `ℕ → Bool` is in the support of `trials p hp` and `binEntropy p > 0` iff `0 < p < 1`.
-#check @ZeroParadox.dial_two_faces_iff
--- Statement: under those two conditions "some stage fires" has mass 1, and ⊥ of `ℕ → Bool` is in the
--- support and null.
+-- Statement: for `p ≤ 1`, `binEntropy p > 0` iff `0 < p < 1`.
+#check @ZeroParadox.dial_entropy_pos_iff
+-- Statement: `binEntropy p > 0` implies ⊥ of `ℕ → Bool` is in the support of `trials p hp`; one way.
+#check @ZeroParadox.bot_mem_support_of_entropy_pos
+-- Statement: if `0 < p < 1`, every tape is in the support of `trials p hp` and its singleton is null.
+#check @ZeroParadox.trials_support_null
+-- Statement: if `binEntropy p > 0`, "some stage fires" has mass 1, and every tape, ⊥ of `ℕ → Bool`
+-- among them, is in the support and null.
 #check @ZeroParadox.dial_pinned_faces
+-- Statement: `xorOffset t` (pointwise `xor` with `t`) sends ⊥ of `ℕ → Bool` to `t` and `t` to ⊥ of
+-- `ℕ → Bool`, and is its own inverse.
+#check @ZeroParadox.xorOffset_bot
+-- Statement: for `p ≤ 1`, `xorOffset t` preserves `trials p hp` iff `t` is ⊥ of `ℕ → Bool` or `p = 1/2`.
+#check @ZeroParadox.xorOffset_measurePreserving_iff
 
 /-! ### The givens at the die level: given (a) as a chart claim (least in ℤ_[2]'s norm preorder, greatest at its image in `ℕ∞`), and a limit -/
 

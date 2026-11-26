@@ -15,14 +15,24 @@ this file holds what was already in the corpus, the prior art, and the fences.
   (`ZeroParadox/Information/PoleWithinEnsemble.lean`); `t_snap_of_fires_once`, `slotRun_crosses_iff`
   (`ZeroParadox/Information/CrossingTrials.lean`).
 - The law's minimal face: `tape_totality_two_faces` (`ZeroParadox/Information/BottomTotality.lean`).
-- § VII: the cylinder mass `trials_cyl`, the wait `waitENat ∘ det` and `natCast_le_waitENat_iff`
-  (`ZeroParadox/Valuation/DepthIsWait.lean`), `wait_bot`, `never_fires_ae_zero`
+- § VII: the cylinder mass `trials_cyl`, the wait `waitENat ∘ det` (`waitENat` and `natCast_le_waitENat_iff` in
+  `ZeroParadox/Valuation/DepthIsWait.lean`, `det` in `ZeroParadox/Die.lean`), `wait_bot`, `never_fires_ae_zero`
   (`ZeroParadox/Information/PoleWithinEnsemble.lean`); `trials_zeroBlock` (`ZeroParadox/Information/CrossingTrials.lean`)
   states the same block mass for a window starting at any `N`.
 - § VIII: `natDirsOrderIso`, the same `Nat.pair` columns on `End` with its order (`ZeroParadox/Valuation/Interleave.lean`),
   and `natDirs_bot_iff` (`ZeroParadox/Valuation/TowerTape.lean`); the `example` after `unpack_apply` relates the two
   through `tapeIso`.
-- § IX: `bot_mem_support_iff`, `trials_bot_null` (`ZeroParadox/Information/PoleWithinEnsemble.lean`).
+- § IX: `bot_mem_support_iff`, `trials_support_univ`, `trials_cyl`, `trials_zero_eq_dirac`
+  (`ZeroParadox/Information/PoleWithinEnsemble.lean`); `fairTape_singleton_null`
+  (`ZeroParadox/Information/BottomTotality.lean`) is the `p = 1/2` case of `trials_support_null`'s second half.
+  The complexity rate of `trials p` tapes, which the "maximally complex" `Reading:` gestures at, is measured in
+  `ZeroParadox/Information/MaxEntropy.lean` § V (`measure_setOf_not_tendsto_plainK_cantorPrefix_div`, the
+  Bernoulli case of Brudno's theorem, from Milovanov's library).
+- § X: `xorWith`, `xorHomeo`, `xorWith_involutive` and `homog_cantor` (`ZeroParadox/Valuation/UltrametricView.lean`:
+  some involutive homeomorphism of `ℕ → Bool` sends any tape to any other); `xorOffset` is `xorHomeo t` as a
+  measurable equivalence. `det_eq_ofNat_iff` (`ZeroParadox/Information/TapeHalting.lean`); `fairTape`
+  (`ZeroParadox/Information/Disjunctive.lean`); `trials_fires`, `fires_measurable`
+  (`ZeroParadox/Information/CrossingTrials.lean`).
 
 ## Prior art (searched 2026-11-25)
 
@@ -57,17 +67,31 @@ this file holds what was already in the corpus, the prior art, and the fences.
 
 ## Prior art for § VII-IX (searched 2026-11-26)
 
-- § VII. The number of stages up to and including the first success of independent Bernoulli(`p`) trials is
-  the shifted geometric distribution, mean `1/p`; `lintegral_wait_succ` proves it by the tail-sum formula,
-  `E[N + 1] = Σ_k P(N ≥ k)`. Mathlib's `ProbabilityTheory.geometricMeasure` is the unshifted (failures) form
-  and sets `geometricMeasure 0` to the Dirac mass at 0; a Mathlib lemma evaluating its mean was not located as
-  of 2026-11-26, searched: the declaration list of `Mathlib/Probability/Distributions/Geometric.lean`,
-  LeanExplore (one phrasing), theoremsearch (one formal phrasing). The `p = 0` endpoint, wait ⊤ almost surely
-  and mean ⊤ (`wait_chart_top`), is an improper (defective) waiting-time distribution; in survival analysis
-  the mass never failing is the cure fraction (Louzada, de Oliveira, Moreira, arXiv:1509.05244, p. 3: "S is an
-  improper survival function"), here equal to 1. The chart `x = p⁻¹` is Mathlib's `OrderIso.invENNReal`.
+- § VII. The number of stages up to and including the first success of independent Bernoulli(`p`) trials has
+  the shifted geometric distribution, mean `1/p`; `lintegral_wait_succ` proves that mean (not the
+  distribution) by the tail-sum formula, `E[T + 1] = Σ_k P(T ≥ k)` with `T` the wait. Mathlib's
+  `ProbabilityTheory.geometricMeasure` is the unshifted (failures) form and sets `geometricMeasure 0` to the
+  Dirac mass at 0; a Mathlib lemma evaluating its mean was not located as of 2026-11-26, searched: the
+  declaration list of `Mathlib/Probability/Distributions/Geometric.lean` and a regex for geometric
+  mean/expectation over the pinned Mathlib, LeanExplore (two phrasings), theoremsearch (three formal
+  phrasings: geometric mean, geometric expectation, tail-sum lintegral), GitHub code search with
+  `extension:lean` (two phrasings). Neighbours: Mathlib's series identity
+  `tsum_coe_mul_geometric_of_norm_lt_one`; outside Mathlib, GitHub code search returned fragments of
+  `weighted_geometric_tsum_eq_inv` (facebookresearch/atlas-lean) and `tsum_geometric_trials`
+  (paulklemstine/Lean), both stating `Σ (n + 1) p (1 - p)ⁿ = 1/p` in `ℝ` for `0 < p`, existence only, source not
+  read. The `p = 0` endpoint, where almost every tape never fires and the mean is ⊤ (`wait_chart_top`), is an
+  improper (defective) waiting-time distribution; in survival analysis the mass never failing is the cure
+  fraction (Louzada, de Oliveira, Moreira, arXiv:1509.05244, p. 3: "S is an improper survival function"), here
+  equal to 1. They credit the cure-rate model to Berkson and Gage (*JASA*, 1952), cited for existence only, not
+  retrieved. The chart `x = p⁻¹` is Mathlib's `OrderIso.invENNReal`.
 - § VIII. `unpack_measurePreserving` reindexes an infinite product measure, from Mathlib's
-  `Measure.infinitePi_map_piCongrLeft` and `Measure.infinitePi_map_curry`. At the level of individual random
+  `Measure.infinitePi_map_piCongrLeft` and `Measure.infinitePi_map_curry`. A published measure-level pairing
+  statement: Brattka, Gherardi, Hölzl, "Probabilistic computability and choice", *Information and
+  Computation* 242 (2015), arXiv:1312.7305, Lemma 4.4(1), pp. 16-17: the pairing `2^ℕ × 2^ℕ → 2^ℕ`,
+  `(p, q) ↦ ⟨p, q⟩`, is a computable isomorphism and measure preserving, where measure preserving means
+  `μ_X(f⁻¹(A)) = μ_Y(A)` for all closed `A`, with the spaces' canonical measures. Theirs is two columns, the
+  canonical measure on `2^ℕ`, and computable; § VIII is countably many columns along `Nat.pair`, Bernoulli(`p`)
+  for every `p ≤ 1`, and equality of Borel measures in both directions. At the level of individual random
   sequences the neighbours are van Lambalgen's theorem (Franklin, Porter, arXiv:2004.02851, Theorem 3.6:
   `A ⊕ B` is n-random iff `A` is n-random and `B` is n-random relative to `A`; Shen, Uspensky, Vereshchagin,
   *Kolmogorov Complexity and Algorithmic Randomness*, AMS 2017, Theorem 125, for a product `P × Q`) and the
@@ -75,18 +99,46 @@ this file holds what was already in the corpus, the prior art, and the fences.
   Kautz 1991: each column of a Martin-Löf random `A` is random relative to the others). Those are about the
   uniform or a computable measure and about which sequences are random; § VIII is measure-level only, for
   every `p ≤ 1`, in both directions (`pack_measurePreserving`), and says nothing about individual tapes.
-- § IX. The two faces as a reading of random strings: effective complexity, which Ay, Müller, Szkoła,
-  arXiv:0810.5663, p. 1, describe as Gell-Mann and Lloyd's attempt "to split the algorithmic information
-  content of some string x into two parts, its random features and its regularities" (Gell-Mann, Lloyd,
-  *Complexity* 2(1), 1996, cited for existence only, not retrieved). The same paper's Theorem 10
-  ("Incompressible Strings are Simple"): incompressible strings of length `n` have effective complexity at most
-  `log n + O(log log n)`. That is finite strings and computable ensembles; § IX measures no description length.
+- § IX. `dial_entropy_pos_iff` (binary entropy positive exactly on the open interval) was not located in
+  Mathlib as of 2026-11-26, searched: the lemma list of `Mathlib/Analysis/SpecialFunctions/BinaryEntropy.lean`
+  (`Real.binEntropy_pos` is the backward direction, `Real.binEntropy_eq_zero` the zero set), `exact?` on the
+  `NNReal` form and on the `ℝ` form with `0 ≤ p ≤ 1`, LeanExplore (one phrasing). `trials_support_null` is the
+  standard fact that for `0 < p < 1` the Bernoulli(`p`) product measure on `{0, 1}^ℕ` has full support and no
+  atoms. The reading of the faces against random strings: effective complexity, which Ay, Müller, Szkoła,
+  arXiv:0810.5663, p. 1, call "an attempt by M. Gell-Mann and S. Lloyd" to define a complexity measure, whose
+  main idea, they write, "is to split the algorithmic information content of some string x into two parts, its
+  random features and its regularities" (Gell-Mann, Lloyd, *Complexity*, Vol. 2, 44-52 (1996), as that
+  paper's reference list gives it; cited for existence only, not retrieved). The same paper's Theorem 10
+  ("Incompressible Strings are Simple"): for some global constant `c`, effective complexity `E_{δ,Δ}(x)` is at
+  most `log n + O(log log n)` for every `r`-incompressible string `x` of length `n` (`K(x) ≥ n + K(n) − r`),
+  every `δ ≥ 0` and every tolerance `Δ ≥ r + c`. That is finite strings and computable ensembles; § IX
+  measures no description length (the corpus measures the rate in `MaxEntropy.lean` § V, above).
+
+## Prior art for § X (searched 2026-11-26)
+
+- Standard names: `ℕ → Bool` under pointwise `xor` is the Cantor group `(ℤ/2ℤ)^ℕ`, a compact abelian group;
+  `xorOffset t` is translation by `t`; the fair-coin product measure is its normalized Haar measure, and
+  `xorOffset_measurePreserving_fair` is the translation invariance of that measure, proved here coordinatewise
+  from Mathlib's `Measure.infinitePi_map_pi` (the image of an infinite product measure under a coordinatewise
+  map is the product of the images). Uniqueness of a Haar probability measure on a locally compact group is
+  Mathlib's `MeasureTheory.Measure.isAddHaarMeasure_eq_of_isProbabilityMeasure`; § X does not use it, since
+  `ℕ → Bool` carries no group instance in Mathlib (`Bool` has none), and states the converse directly:
+  `xorOffset_measurePreserving_iff`, one coordinate where `t` is `true` sends Bernoulli(`p`) to Bernoulli(`1 - p`).
+  Mathlib has Haar measure on finite products (`MeasureTheory.Measure.pi.isAddHaarMeasure`) and binary products
+  (`MeasureTheory.Measure.prod.instIsAddHaarMeasure`); a statement that the infinite product of uniform measures
+  on `ZMod 2` is Haar was not located as of 2026-11-26, searched: LeanExplore (one phrasing), theoremsearch
+  (one formal phrasing, which returned `Measure.IsInvInvariant` and finite-product invariance instances). Two
+  informal theoremsearch phrasings returned the compact-group Haar theorem and a remark that the Haar measure
+  on the Cantor group makes the coordinates i.i.d. fair signs (Sussman, arXiv:2210.02495); neither retrieved,
+  existence only.
 
 ## Fences
 
 - "The bottom is the set of all tapes" is the tape-chart `Reading:` (ruling 94). Nothing identifies ⊥ of a
   `ZPSemilattice` with `ℕ → Bool`; `dial_jump_into_L` runs tape → `slotRun` → image under `φ`, forward only.
-- "Certain" means probability one. ⊥ of `ℕ → Bool` is a member at every `p`, of mass 0 for `0 < p`.
+- "Certain" means probability one. ⊥ of `ℕ → Bool` is in the support of `trials p hp` exactly for `p < 1`
+  (`bot_mem_support_iff`) and its singleton has mass 0 exactly for `0 < p` (`trials_bot_null`, and mass 1 at
+  `p = 0`); for `0 < p < 1` every tape has both properties (`trials_support_null`).
 - Analog and digital are a `Reading:`; the theorems say continuous (`fireWithin_continuous`) and jump
   (`fireMass_not_continuousAt_zero`).
 - The schedule's dichotomy assumes independent stages; `schedule_never_pos` also needs every chance below one.
@@ -95,18 +147,39 @@ this file holds what was already in the corpus, the prior art, and the fences.
 - § VIII proves equality of measures, not randomness of any column; the `End` relation is pointwise, through
   `tapeIso`, and no measure on `End` is stated.
 - § IX: "minimally and maximally complex" is a `Reading:`; the theorems say support membership, positive
-  binary entropy, mass 1 and mass 0. The `p = 0` and `p = 1` controls each meet one face and not the other.
-- EXPERIMENTAL dependence. `Dial.lean` imports `ZeroParadox/Information/StartBit.lean` (EXPERIMENTAL) and
-  reaches `ZeroParadox/Information/PoleWithinEnsemble.lean` (EXPERIMENTAL) through
-  `ZeroParadox/Information/BottomTotality.lean`, which also imports `ZeroParadox/Information/MaxEntropy.lean`
-  (EXPERIMENTAL). Theorems using a declaration of those modules: `tape_never_fires_iff`
-  (`exists_startBit_iff`); `dial_fire_within`, `fireWithin_continuous`, `fireWithin_mono`,
-  `dial_not_uniform_witness`, `dial_not_uniform` (`cylMass_eq`, `cylMass_continuous`); `dial_jump_into_L`
-  (`never_fires_ae_zero`, `ae_firesOnce`, `tape_never_fires_iff`); all of § V (`fadingTrials`); `law_two_faces`
-  (`tape_totality_two_faces`, in `BottomTotality.lean`). `dial_fire_jump`, `fireMass`, `fireMass_eq`,
-  `fireMass_not_continuousAt_zero`, `fireWithin` and `dial_digital_limit` use no declaration of those three
-  modules (theirs come from `ZeroParadox/Information/CrossingTrials.lean` and Mathlib), though their module
-  imports them. § VII uses `trials_cyl`, `wait_bot`, `never_fires_ae_zero` (`PoleWithinEnsemble.lean`) and
-  `natCast_le_waitENat_iff` (`ZeroParadox/Valuation/DepthIsWait.lean`, EXPERIMENTAL); § IX uses
-  `bot_mem_support_iff` and `trials_bot_null` (`PoleWithinEnsemble.lean`). `unpack`, `unpack_apply`,
-  `unpack_measurePreserving` and `pack_measurePreserving` use none of those modules' declarations.
+  binary entropy, mass 1 and mass 0. Positive entropy alone pins `0 < p < 1` and implies ⊥ of `ℕ → Bool` in the
+  support, one way: the `p = 0` control meets the support condition and not the entropy one, and no `p` meets
+  the entropy condition without the support one. The `p = 1` control meets neither, and shows firing of mass 1
+  without positive entropy. No measure-level statement in § IX singles out ⊥ of `ℕ → Bool`; the order (`bot_le`),
+  never firing (`tape_never_fires_iff`) and wait ⊤ (`wait_bot`) do.
+- § X: "every tape is a local bottom" is a `Reading:` (Tim, 2026-11-26: "that's exactly a baseline and a local
+  reference change to it"). Proved: `xorOffset t` exchanges ⊥ of `ℕ → Bool` and `t`, and under the fair coin the
+  wait to first disagreement with `t` has the law of the wait from ⊥ (`fair_wait_offset`). The order bottom is
+  unique: ⊥ of `ℕ → Bool` is the least tape (`bot_le`), and `xorOffset t` for `t` not ⊥ of `ℕ → Bool` is not an
+  order automorphism; it is not even monotone (the `example` after `xorOffset_bot`). Only `p = 1/2` makes the
+  change of baseline measure preserving (`xorOffset_measurePreserving_iff`). "The zero tape is needed for the
+  other options to exist" is stronger than what is proved, which is that ⊥ of `ℕ → Bool` is the reference the
+  wait is computed from: the wait counts the cylinders of ⊥ of `ℕ → Bool` a tape lies in
+  (`tsum_cylinder_bot_indicator`), and their masses `(1 - p)^k` (`trials_cyl` at ⊥) give its mean
+  (`lintegral_wait_succ`); § X moves that reference to any `t`.
+- EXPERIMENTAL dependence. `Dial.lean` imports two EXPERIMENTAL modules directly,
+  `ZeroParadox/Information/StartBit.lean` and `ZeroParadox/Valuation/UltrametricView.lean`. It reaches four more:
+  `ZeroParadox/Information/PoleWithinEnsemble.lean` and `ZeroParadox/Information/MaxEntropy.lean` through
+  `ZeroParadox/Information/BottomTotality.lean`; `ZeroParadox/Valuation/TowerTape.lean`,
+  `ZeroParadox/Valuation/Interleave.lean` and `ZeroParadox/Valuation/DepthIsWait.lean` through StartBit
+  (TowerTape imports Interleave, which imports DepthIsWait); `ZeroParadox/Information/TapeHalting.lean` through
+  PoleWithinEnsemble. Uses, by section: `tape_never_fires_iff` (`exists_startBit_iff`, StartBit);
+  `dial_fire_within`, `fireWithin_continuous`, `fireWithin_mono`, `dial_not_uniform_witness`, `dial_not_uniform`
+  (`cylMass_eq`, `cylMass_continuous`, PoleWithinEnsemble); `dial_jump_into_L` (`never_fires_ae_zero`,
+  `ae_firesOnce`, PoleWithinEnsemble, and `tape_never_fires_iff`); all of § V (`fadingTrials`, StartBit);
+  `law_two_faces` (`tape_totality_two_faces`, in `BottomTotality.lean`, which uses MaxEntropy). § VII:
+  `trials_cyl`, `wait_bot`, `never_fires_ae_zero` (PoleWithinEnsemble), `waitENat` and
+  `natCast_le_waitENat_iff` (DepthIsWait). § VIII: the `example` after `unpack_apply` uses `tapeIso`
+  (DepthIsWait) and `natDirsOrderIso` (Interleave); `natDirs_bot_iff` (TowerTape) is a pointer only. § IX:
+  `bot_mem_support_iff`, `trials_support_univ`, `trials_cyl`, `trials_zero_eq_dirac` (PoleWithinEnsemble),
+  `wait_bot` and `waitENat` in the `example` naming what singles out ⊥ of `ℕ → Bool`. § X: `xorHomeo`,
+  `xorWith_involutive` (UltrametricView), `det_eq_ofNat_iff` (TapeHalting), `waitENat` (DepthIsWait),
+  `tape_never_fires_iff`. `dial_fire_jump`, `fireMass`, `fireMass_eq`, `fireMass_not_continuousAt_zero`,
+  `fireWithin`, `dial_digital_limit`, `unpack`, `unpack_apply`, `unpack_measurePreserving` and
+  `pack_measurePreserving` use no declaration of an EXPERIMENTAL module (theirs come from
+  `ZeroParadox/Information/CrossingTrials.lean` and Mathlib), though their module imports them.
