@@ -152,8 +152,10 @@ this file holds what was already in the corpus, the prior art, and the fences.
   binary entropy, mass 1 and mass 0. Positive entropy alone pins `0 < p < 1` and implies ⊥ of `ℕ → Bool` in the
   support, one way: the `p = 0` control meets the support condition and not the entropy one, and no `p` meets
   the entropy condition without the support one. The `p = 1` control meets neither, and shows firing of mass 1
-  without positive entropy. Under positive entropy (`0 < p < 1`) no measure-level statement singles out ⊥ of
-  `ℕ → Bool` (`dial_pinned_faces`, `trials_support_null`); at `p = 0` the law is the Dirac mass at ⊥ of `ℕ → Bool`
+  without positive entropy. Under positive entropy (`0 < p < 1`) support membership and null singletons do not
+  single out ⊥ of `ℕ → Bool`, since every tape has both (`dial_pinned_faces`, `trials_support_null`); for
+  `0 < p < 1` with `p ≠ 1/2` the law does single it out, as the only tape whose translation `xorOffset t`
+  preserves `trials p hp` (`xorOffset_measurePreserving_iff`, § X); at `p = 0` the law is the Dirac mass at ⊥ of `ℕ → Bool`
   (`trials_zero_eq_dirac`, the § IX `p = 0` CONTROL); at every `p` the order (`bot_le`), never firing
   (`tape_never_fires_iff`) and wait ⊤ (`wait_bot`) single it out (the § IX `example`).
 - § X: "every tape is a local bottom" is a `Reading:` (Tim, 2026-11-26: "that's exactly a baseline and a local
