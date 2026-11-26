@@ -41,8 +41,8 @@ theorem tape_never_fires_iff (w : ℕ → Bool) : (¬ ∃ k, w k = true) ↔ w =
 /-! ### § II. The switch -/
 
 /-- `Statement:` the `trials p hp` mass of "some stage fires" is 0 at `p = 0` and 1 at every
-`0 < p ≤ 1`. One is probability one: ⊥ of `ℕ → Bool` stays a member, of mass 0
-(`trials_bot_mass_jump`). -/
+`0 < p ≤ 1`. One is probability one: `{⊥}` of `ℕ → Bool` has mass 0 at every `0 < p ≤ 1`
+(`trials_bot_mass_jump`), and ⊥ of `ℕ → Bool` is in the support only for `p < 1` (`bot_mem_support_iff`). -/
 theorem dial_fire_jump (p : NNReal) (hp : p ≤ 1) :
     trials p hp {w | ∃ k, w k = true} = if p = 0 then 0 else 1 := by
   split_ifs with h0
@@ -518,12 +518,17 @@ example : (⊥ : ℕ → Bool) ∉ (trials 1 le_rfl).support ∧ Real.binEntropy
 -- Statement: what singles out ⊥ of `ℕ → Bool`, at every `p`: the least tape in the pointwise order
 -- (`bot_le`), the only never-firing tape (`tape_never_fires_iff`), wait ⊤ of `ℕ∞` (`wait_bot`).
 -- Reading: (Tim's) ⊥ simultaneously minimally and maximally complex; the complexity rate of
--- `trials p` tapes is in `ZeroParadox/Information/MaxEntropy.lean` § V (Brudno, Bernoulli case).
+-- `trials p` tapes is `brudno_ae_trials` (`ZeroParadox/Information/BrudnoBridge.lean`).
 example (w : ℕ → Bool) : (⊥ : ℕ → Bool) ≤ w ∧ ((¬ ∃ k, w k = true) ↔ w = fun _ => false) ∧
     waitENat (det (⊥ : ℕ → Bool)) = ⊤ :=
   ⟨bot_le, tape_never_fires_iff w, wait_bot⟩
 
-/-! ### § X. Every tape is a local bottom: translation in the Cantor group -/
+/-! ### § X. Translation in the Cantor group
+
+`Reading:` every tape is a local bottom. Proved: `xorOffset t` sends `t` to ⊥ of `ℕ → Bool`
+(`xorOffset_bot`), so `t` is least in the pointwise order transported along `xorOffset t` (the
+`example` after the not-monotone CONTROL); the order's own ⊥ of `ℕ → Bool` does not move (that
+CONTROL). -/
 
 /-- `Statement:` translation by `t` under pointwise `xor` (the compact group `(ℤ/2ℤ)^ℕ`): `xorHomeo t`
 (`ZeroParadox/Valuation/UltrametricView.lean`) as a measurable equivalence. -/
@@ -546,6 +551,10 @@ example (t : ℕ → Bool) (ht : t ≠ ⊥) : ¬ Monotone (xorOffset t) := fun h
   have := h (bot_le : (⊥ : ℕ → Bool) ≤ t)
   rw [(xorOffset_bot t).1, (xorOffset_bot t).2.1] at this
   exact ht (le_bot_iff.1 this)
+
+-- Statement: `t` is least in the pointwise order transported along `xorOffset t`.
+example (t w : ℕ → Bool) : xorOffset t t ≤ xorOffset t w := by
+  rw [(xorOffset_bot t).2.1]; exact bot_le
 
 /-- `Statement:` the wait of `xorOffset t w` is the first disagreement of `w` with `t`:
 `det (xorOffset t w) = ofNat n` iff `w n ≠ t n` and `w k = t k` for every `k < n`. -/

@@ -25,9 +25,8 @@ this file holds what was already in the corpus, the prior art, and the fences.
 - § IX: `bot_mem_support_iff`, `trials_support_univ`, `trials_cyl`, `trials_zero_eq_dirac`
   (`ZeroParadox/Information/PoleWithinEnsemble.lean`); `fairTape_singleton_null`
   (`ZeroParadox/Information/BottomTotality.lean`) is the `p = 1/2` case of `trials_support_null`'s second half.
-  The complexity rate of `trials p` tapes, which the "maximally complex" `Reading:` gestures at, is measured in
-  `ZeroParadox/Information/MaxEntropy.lean` § V (`measure_setOf_not_tendsto_plainK_cantorPrefix_div`, the
-  Bernoulli case of Brudno's theorem, from Milovanov's library).
+  The complexity rate of `trials p` tapes, which the "maximally complex" `Reading:` gestures at, is
+  `brudno_ae_trials` (`ZeroParadox/Information/BrudnoBridge.lean`).
 - § X: `xorWith`, `xorHomeo`, `xorWith_involutive` and `homog_cantor` (`ZeroParadox/Valuation/UltrametricView.lean`:
   some involutive homeomorphism of `ℕ → Bool` sends any tape to any other); `xorOffset` is `xorHomeo t` as a
   measurable equivalence. `det_eq_ofNat_iff` (`ZeroParadox/Information/TapeHalting.lean`); `fairTape`
@@ -112,7 +111,7 @@ this file holds what was already in the corpus, the prior art, and the fences.
   ("Incompressible Strings are Simple"): for some global constant `c`, effective complexity `E_{δ,Δ}(x)` is at
   most `log n + O(log log n)` for every `r`-incompressible string `x` of length `n` (`K(x) ≥ n + K(n) − r`),
   every `δ ≥ 0` and every tolerance `Δ ≥ r + c`. That is finite strings and computable ensembles; § IX
-  measures no description length (the corpus measures the rate in `MaxEntropy.lean` § V, above).
+  measures no description length (the rate is `brudno_ae_trials`, above).
 
 ## Prior art for § X (searched 2026-11-26)
 
@@ -125,15 +124,15 @@ this file holds what was already in the corpus, the prior art, and the fences.
   `Bool` a Boolean ring (`Mathlib/Algebra/Ring/BooleanRing.lean`), whose addition is `xor`, so `ℕ → Bool` is a
   locally compact topological additive group (`Pi.addCommGroup`, `Pi.isTopologicalAddGroup`) and `xorOffset t`
   is addition of `t`. § X does not use it, since that instance lies outside `Dial.lean`'s imports, and states
-  the converse directly:
+  the converse within the Bernoulli family, for a single `t`:
   `xorOffset_measurePreserving_iff`, one coordinate where `t` is `true` sends Bernoulli(`p`) to Bernoulli(`1 - p`).
   Mathlib has Haar measure on finite products (`MeasureTheory.Measure.pi.isAddHaarMeasure`) and binary products
   (`MeasureTheory.Measure.prod.instIsAddHaarMeasure`); a statement that the infinite product of uniform measures
   on `ZMod 2` is Haar was not located as of 2026-11-26, searched: LeanExplore (one phrasing), theoremsearch
   (one formal phrasing, which returned `Measure.IsInvInvariant` and finite-product invariance instances). Two
-  informal theoremsearch phrasings returned the compact-group Haar theorem and a remark that the Haar measure
-  on the Cantor group makes the coordinates i.i.d. fair signs (Sussman, arXiv:2210.02495); neither retrieved,
-  existence only.
+  informal theoremsearch phrasings returned the compact-group Haar theorem (not retrieved, existence only) and
+  Sussman, arXiv:2210.02495, Remark at the end of p. 3: the Haar measure on the Cantor group `{−1, +1}^ℕ` makes
+  the coordinates independent fair ±1 signs.
 
 ## Fences
 
@@ -162,20 +161,15 @@ this file holds what was already in the corpus, the prior art, and the fences.
   order automorphism; it is not even monotone (the `example` after `xorOffset_bot`). Only `p = 1/2` makes the
   change of baseline measure preserving (`xorOffset_measurePreserving_iff`). "The zero tape is needed for the
   other options to exist" is stronger than what is proved, which is that ⊥ of `ℕ → Bool` is the reference the
-  wait is computed from: the wait counts the cylinders of ⊥ of `ℕ → Bool` a tape lies in
-  (`tsum_cylinder_bot_indicator`), and their masses `(1 - p)^k` (`trials_cyl` at ⊥) give its mean
+  wait is computed from: the cylinders of ⊥ of `ℕ → Bool` a tape lies in number wait + 1
+  (`tsum_cylinder_bot_indicator`), and their masses `(1 - p)^k` (`trials_cyl` at ⊥) give the mean of wait + 1
   (`lintegral_wait_succ`); § X moves that reference to any `t`.
-- EXPERIMENTAL dependence. `Dial.lean` imports two EXPERIMENTAL modules directly,
-  `ZeroParadox/Information/StartBit.lean` and `ZeroParadox/Valuation/UltrametricView.lean`. It reaches four more:
-  `ZeroParadox/Information/PoleWithinEnsemble.lean` and `ZeroParadox/Information/MaxEntropy.lean` through
-  `ZeroParadox/Information/BottomTotality.lean`; `ZeroParadox/Valuation/TowerTape.lean`,
-  `ZeroParadox/Valuation/Interleave.lean` and `ZeroParadox/Valuation/DepthIsWait.lean` through StartBit
-  (TowerTape imports Interleave, which imports DepthIsWait); `ZeroParadox/Information/TapeHalting.lean` through
-  PoleWithinEnsemble. Uses, by section: `tape_never_fires_iff` (`exists_startBit_iff`, StartBit);
+- EXPERIMENTAL dependence. `Dial.lean` imports modules marked EXPERIMENTAL; the theorems that use a declaration
+  of one are listed below. Uses, by section: `tape_never_fires_iff` (`exists_startBit_iff`, StartBit);
   `dial_fire_within`, `fireWithin_continuous`, `fireWithin_mono`, `dial_not_uniform_witness`, `dial_not_uniform`
   (`cylMass_eq`, `cylMass_continuous`, PoleWithinEnsemble); `dial_jump_into_L` (`never_fires_ae_zero`,
   `ae_firesOnce`, PoleWithinEnsemble, and `tape_never_fires_iff`); all of § V (`fadingTrials`, StartBit);
-  `law_two_faces` (`tape_totality_two_faces`, in `BottomTotality.lean`, which uses MaxEntropy). § VII:
+  `law_two_faces` (`tape_totality_two_faces`, in `BottomTotality.lean`, which uses `ZeroParadox/Information/MaxEntropy.lean`). § VII:
   `trials_cyl`, `wait_bot`, `never_fires_ae_zero` (PoleWithinEnsemble), `waitENat` and
   `natCast_le_waitENat_iff` (DepthIsWait). § VIII: the `example` after `unpack_apply` uses `tapeIso`
   (DepthIsWait) and `natDirsOrderIso` (Interleave); `natDirs_bot_iff` (TowerTape) is a pointer only. § IX:
@@ -183,6 +177,6 @@ this file holds what was already in the corpus, the prior art, and the fences.
   `wait_bot` and `waitENat` in the `example` naming what singles out ⊥ of `ℕ → Bool`. § X: `xorHomeo`,
   `xorWith_involutive` (UltrametricView), `det_eq_ofNat_iff` (TapeHalting), `waitENat` (DepthIsWait),
   `tape_never_fires_iff`. `dial_fire_jump`, `fireMass`, `fireMass_eq`, `fireMass_not_continuousAt_zero`,
-  `fireWithin`, `dial_digital_limit`, `unpack`, `unpack_apply`, `unpack_measurePreserving` and
-  `pack_measurePreserving` use no declaration of an EXPERIMENTAL module (theirs come from
+  `fireWithin`, `dial_digital_limit`, `unpack`, `unpack_apply`, `unpack_measurePreserving`,
+  `pack_measurePreserving` and `dial_entropy_pos_iff` use no declaration of an EXPERIMENTAL module (theirs come from
   `ZeroParadox/Information/CrossingTrials.lean` and Mathlib), though their module imports them.
