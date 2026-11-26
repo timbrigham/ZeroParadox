@@ -27,16 +27,22 @@ this file holds what was already in the corpus, the prior art, and the fences.
   probabilities below one, none occurs with positive probability iff the sum converges. Its proof here is a
   tail bound (a block of `N` silent stages, then a union bound on the rest), not an infinite product. The
   analytic core of that half in product form is Mathlib `tprod_one_add_ne_zero_of_summable` (with `f = -q`,
-  `∏ (1 - q n) ≠ 0` in a complete normed ring when every `1 - q n ≠ 0` and `∑ ‖q n‖` converges); see also
+  `∏ (1 - q n) ≠ 0` in a ring `R` with `[NormedCommRing R] [NormOneClass R] [CompleteSpace R]
+  [NormMulClass R]`, when every `1 - q n ≠ 0` and `∑ ‖q n‖` converges); see also
   `multipliable_one_sub_of_summable` and `Real.multipliable_of_summable_log`. The measure-theoretic statement
   was not located as of 2026-11-25 (lean-explore, two phrasings; theoremsearch, one phrasing).
 - The volume tending to the switch: a uniform limit of continuous functions is continuous (Mathlib
   `TendstoUniformly.continuous`), so the jump of `fireMass` forces non-uniform convergence on `[0, 1]`.
-  Conversely, Pólya's theorem (Dini's second theorem), in the form of Bogoya, Böttcher, Maximenko,
-  arXiv:1509.01836, Proposition 3.2: if `g` is continuous on `[0, 1]` and functions `f n : [0, 1] → ℝ`, each
-  increasing (non-strict), converge to `g` at every point of `[0, 1]`, the convergence is uniform on `[0, 1]`.
-  Each `fireWithin n` is monotone in `p` (`fireWithin_mono`), so on the segment `[0, 1]` uniform convergence
-  and a continuous limit go together, and the jump at 0 is what blocks it. `dial_not_uniform` proves more, on
+  Conversely, two results give uniform convergence when the limit is continuous. Dini's theorem, Mathlib
+  `Monotone.tendstoUniformlyOn_of_forall_tendsto` (`Mathlib/Topology/UniformSpace/Dini.lean`): functions
+  continuous on a compact set, increasing in the index, converging pointwise there to a function continuous
+  there, converge uniformly there. `fireWithin n p` increases with `n`, since the event "some stage below `n`
+  fires" grows with `n` (the monotonicity `dial_digital_limit`'s proof uses). Bogoya, Böttcher, Maximenko,
+  arXiv:1509.01836, Proposition 3.2, with monotonicity in the variable instead: if `g` is continuous on
+  `[0, 1]` and functions `f n : [0, 1] → ℝ`, each increasing (non-strict), converge to `g` at every point of
+  `[0, 1]`, the convergence is uniform on `[0, 1]`. Each `fireWithin n` is monotone in `p`
+  (`fireWithin_mono`). So on the segment `[0, 1]` uniform convergence and a continuous limit go together, and
+  the jump at 0 is what blocks it. `dial_not_uniform` proves more, on
   `(0, 1]`, by an explicit witness (`dial_not_uniform_witness`): there the limit is constantly 1 and
   continuous and the convergence is still not uniform, which the proposition does not forbid, since `(0, 1]`
   is not compact; non-uniformity on `(0, 1]` gives it on `[0, 1]`.
@@ -49,5 +55,14 @@ this file holds what was already in the corpus, the prior art, and the fences.
 - Analog and digital are a `Reading:`; the theorems say continuous (`fireWithin_continuous`) and jump
   (`fireMass_not_continuousAt_zero`).
 - The schedule's dichotomy assumes independent stages; `schedule_never_pos` also needs every chance below one.
-- `Dial.lean` imports two EXPERIMENTAL modules, `ZeroParadox/Information/PoleWithinEnsemble.lean` and
-  `ZeroParadox/Information/StartBit.lean`; `tape_never_fires_iff` and `dial_jump_into_L` rest on them.
+- EXPERIMENTAL dependence. `Dial.lean` imports `ZeroParadox/Information/StartBit.lean` (EXPERIMENTAL) and
+  reaches `ZeroParadox/Information/PoleWithinEnsemble.lean` (EXPERIMENTAL) through
+  `ZeroParadox/Information/BottomTotality.lean`, which also imports `ZeroParadox/Information/MaxEntropy.lean`
+  (EXPERIMENTAL). Theorems using a declaration of those modules: `tape_never_fires_iff`
+  (`exists_startBit_iff`); `dial_fire_within`, `fireWithin_continuous`, `fireWithin_mono`,
+  `dial_not_uniform_witness`, `dial_not_uniform` (`cylMass_eq`, `cylMass_continuous`); `dial_jump_into_L`
+  (`never_fires_ae_zero`, `ae_firesOnce`, `tape_never_fires_iff`); all of § V (`fadingTrials`); `law_two_faces`
+  (`tape_totality_two_faces`, in `BottomTotality.lean`). `dial_fire_jump`, `fireMass`, `fireMass_eq`,
+  `fireMass_not_continuousAt_zero`, `fireWithin` and `dial_digital_limit` use no declaration of those three
+  modules (theirs come from `ZeroParadox/Information/CrossingTrials.lean` and Mathlib), though their module
+  imports them.

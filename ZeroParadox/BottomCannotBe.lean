@@ -855,7 +855,8 @@ example : (∀ a b : ℕ → Bool, a ≤ b → a ⁻¹' {true} ⊆ b ⁻¹' {tru
     · rfl
     · exact absurd ht this
   · rintro rfl; exact Set.eq_empty_of_forall_notMem fun n h => Bool.false_ne_true h
--- Statement: it also reflects `⊆` to `≤`, so it is an order embedding of `ℕ → Bool` into `Set ℕ`.
+-- Statement: some order embedding of `ℕ → Bool` into `Set ℕ` exists; the type names no map (the
+-- term is built from the preimage map above, which therefore also reflects `⊆` to `≤`).
 example : (ℕ → Bool) ↪o Set ℕ :=
   OrderEmbedding.ofMapLEIff (fun t : ℕ → Bool => t ⁻¹' {true}) fun a b =>
     ⟨fun h _ => Bool.le_iff_imp.mpr fun hn => h hn,
@@ -916,7 +917,7 @@ example : ZeroParadox.Disjunctive (fun n => xor (ZeroParadox.champ n) false) := 
 -- minimal and maximal as being the totality of all of its representations?" Across charts the
 -- totality is a family indexed by chart, never a union of occupants (§ ROLE). "Minimal" is "fixed by
 -- one condition", not a measured complexity of the measure.
--- Statement: exactly one `p` has `binEntropy p = log 2`, and `binEntropy q ≤ log 2` for every real `q`.
+-- Statement: exactly one `p : NNReal` has `binEntropy p = log 2`, and `binEntropy q ≤ log 2` for every real `q`.
 -- Reading: the law is minimal in description (one condition fixes it) and maximal in entropy; no
 -- description length is measured.
 #check @ZeroParadox.law_two_faces
@@ -936,6 +937,10 @@ example : ZeroParadox.Disjunctive (fun n => xor (ZeroParadox.champ n) false) := 
 -- ⊥ of `L` at every stage; for `0 < p ≤ 1`, for almost every tape it is somewhere not ⊥ of `L`.
 -- Forward maps only.
 #check @ZeroParadox.dial_jump_into_L
+-- Statement: if ⊥ of `L` has a first step and the stage chances `q n` sum to ∞, then for
+-- `fadingTrials q hq`-almost every tape some `φ` makes the run `φ ∘ firedRun w hw` step off ⊥ of `L`
+-- to a cover. One way.
+#check @ZeroParadox.schedule_snap_ae
 
 /-! ### The givens at the die level: given (a) as a chart claim (least in ℤ_[2]'s norm preorder, greatest at its image in `ℕ∞`), and a limit -/
 
