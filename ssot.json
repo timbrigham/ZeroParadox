@@ -244874,8 +244874,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 4863,
-        "files": 248
+        "declarations": 4880,
+        "files": 249
       },
       "entries": [
         {
@@ -249613,6 +249613,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "06bd9965-3866-40aa-a94c-5aee4d897994",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dial_fire_jump",
+            "short": "dial_fire_jump"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.dial_fire_jump",
+            "short": "dial_fire_jump",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "v7 step 4 (rulings 92b, 94): the dial, Dial.lean landed 2026-11-25. P(change ever) jumps 0 -> 1 at p = 0; windows 1-(1-p)^n continuous, pointwise limit the switch, not uniform; the jump carried into L along slotRun; schedule dichotomy (divergent sum: a.s.; convergent sum, chances < 1: P(never) > 0) with the halving control; the fair coin's law minimal and maximal.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -258541,6 +258578,43 @@
             ]
           },
           "reason": "Die computability face (halting as arrival, clock machine), quotients of a motion (drawing vs set: hypersets, codes), carrier-changing steps (wrap, Option), PoleEnds with inhabitation",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "12a5a841-7a05-48db-9c5e-5933df321af2",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fireMass",
+            "short": "fireMass"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.fireMass",
+            "short": "fireMass",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "v7 step 4 (rulings 92b, 94): the dial, Dial.lean landed 2026-11-25. P(change ever) jumps 0 -> 1 at p = 0; windows 1-(1-p)^n continuous, pointwise limit the switch, not uniform; the jump carried into L along slotRun; schedule dichotomy (divergent sum: a.s.; convergent sum, chances < 1: P(never) > 0) with the halving control; the fair coin's law minimal and maximal.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -287418,6 +287492,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "3d640d95-3249-4264-94ee-b44fe2f78cd0",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fireMass_not_continuousAt_zero",
+            "short": "fireMass_not_continuousAt_zero"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.fireMass_not_continuousAt_zero",
+            "short": "fireMass_not_continuousAt_zero",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "v7 step 4 (rulings 92b, 94): the dial, Dial.lean landed 2026-11-25. P(change ever) jumps 0 -> 1 at p = 0; windows 1-(1-p)^n continuous, pointwise limit the switch, not uniform; the jump carried into L along slotRun; schedule dichotomy (divergent sum: a.s.; convergent sum, chances < 1: P(never) > 0) with the halving control; the fair coin's law minimal and maximal.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "3d66a9f6-c6c8-47d5-a7b4-bccd18634bdd",
           "new": {
@@ -288944,6 +289055,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "3ff6763c-c2dc-438a-800a-316591efba5a",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fireMass_eq",
+            "short": "fireMass_eq"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.fireMass_eq",
+            "short": "fireMass_eq",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "v7 step 4 (rulings 92b, 94): the dial, Dial.lean landed 2026-11-25. P(change ever) jumps 0 -> 1 at p = 0; windows 1-(1-p)^n continuous, pointwise limit the switch, not uniform; the jump carried into L along slotRun; schedule dichotomy (divergent sum: a.s.; convergent sum, chances < 1: P(never) > 0) with the halving control; the fair coin's law minimal and maximal.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "3ff8b997-b841-495b-bdaa-02d8138f9ecf",
           "new": {
@@ -289675,6 +289823,43 @@
             ]
           },
           "reason": "Ball line radii in ENNReal: isolated points accumulating only at 0 and top (BallLine.lean section V)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "412241aa-bae9-4046-b1a4-59e7e396b010",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dial_not_uniform",
+            "short": "dial_not_uniform"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.dial_not_uniform",
+            "short": "dial_not_uniform",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "v7 step 4 (rulings 92b, 94): the dial, Dial.lean landed 2026-11-25. P(change ever) jumps 0 -> 1 at p = 0; windows 1-(1-p)^n continuous, pointwise limit the switch, not uniform; the jump carried into L along slotRun; schedule dichotomy (divergent sum: a.s.; convergent sum, chances < 1: P(never) > 0) with the halving control; the fair coin's law minimal and maximal.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -293774,6 +293959,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "468d4ff6-4ef1-48d7-9a0b-d9602e7d9c60",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fireWithin_continuous",
+            "short": "fireWithin_continuous"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.fireWithin_continuous",
+            "short": "fireWithin_continuous",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "v7 step 4 (rulings 92b, 94): the dial, Dial.lean landed 2026-11-25. P(change ever) jumps 0 -> 1 at p = 0; windows 1-(1-p)^n continuous, pointwise limit the switch, not uniform; the jump carried into L along slotRun; schedule dichotomy (divergent sum: a.s.; convergent sum, chances < 1: P(never) > 0) with the halving control; the fair coin's law minimal and maximal.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "469af0be-ce7c-4075-81bd-7bde481e81e0",
           "new": {
             "file": "ZeroParadox/Valuation/RiemannSphere.lean",
@@ -294429,6 +294651,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "47b546b7-fa93-4ae2-b4ac-6750b615d528",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.schedule_halving_control",
+            "short": "schedule_halving_control"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.schedule_halving_control",
+            "short": "schedule_halving_control",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "v7 step 4 (rulings 92b, 94): the dial, Dial.lean landed 2026-11-25. P(change ever) jumps 0 -> 1 at p = 0; windows 1-(1-p)^n continuous, pointwise limit the switch, not uniform; the jump carried into L along slotRun; schedule dichotomy (divergent sum: a.s.; convergent sum, chances < 1: P(never) > 0) with the halving control; the fair coin's law minimal and maximal.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -315934,6 +316193,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "67693f9a-12ab-4ed3-981d-1f0ee62489da",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.schedule_never_pos",
+            "short": "schedule_never_pos"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.schedule_never_pos",
+            "short": "schedule_never_pos",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "v7 step 4 (rulings 92b, 94): the dial, Dial.lean landed 2026-11-25. P(change ever) jumps 0 -> 1 at p = 0; windows 1-(1-p)^n continuous, pointwise limit the switch, not uniform; the jump carried into L along slotRun; schedule dichotomy (divergent sum: a.s.; convergent sum, chances < 1: P(never) > 0) with the halving control; the fair coin's law minimal and maximal.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "678aaaea-635e-42d9-9958-f733f8015171",
           "new": {
             "file": "ZeroParadox/Multihomed/SeparatedSuccession.lean",
@@ -317671,6 +317967,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "69c7a054-72e2-46f8-ac0c-ddb5dd75a991",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fadingTrials_fires_iIndepSet",
+            "short": "fadingTrials_fires_iIndepSet"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.fadingTrials_fires_iIndepSet",
+            "short": "fadingTrials_fires_iIndepSet",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "v7 step 4 (rulings 92b, 94): the dial, Dial.lean landed 2026-11-25. P(change ever) jumps 0 -> 1 at p = 0; windows 1-(1-p)^n continuous, pointwise limit the switch, not uniform; the jump carried into L along slotRun; schedule dichotomy (divergent sum: a.s.; convergent sum, chances < 1: P(never) > 0) with the halving control; the fair coin's law minimal and maximal.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -340517,6 +340850,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "8b44720a-bdcc-453e-820b-23be30116460",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.law_two_faces",
+            "short": "law_two_faces"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.law_two_faces",
+            "short": "law_two_faces",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "v7 step 4 (rulings 92b, 94): the dial, Dial.lean landed 2026-11-25. P(change ever) jumps 0 -> 1 at p = 0; windows 1-(1-p)^n continuous, pointwise limit the switch, not uniform; the jump carried into L along slotRun; schedule dichotomy (divergent sum: a.s.; convergent sum, chances < 1: P(never) > 0) with the halving control; the fair coin's law minimal and maximal.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "8b46fba5-21f9-4be5-8ab4-3291c61a2f27",
           "new": {
             "file": "ZeroParadox/Multihomed/TwoAdicBend.lean",
@@ -348470,6 +348840,43 @@
             ]
           },
           "reason": "New file ZeroParadox/Information/Disjunctive.lean: disjunctive (rich) sequences; all-false control; choice-free primitive recursive Champernowne-style witness; fair-coin tape disjunctive a.s. (infinite monkey, 2nd Borel-Cantelli); hypothesis-form presence of every Code's word. PRESENCE only, no execution.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "96e2eb10-dae7-4670-bee4-e6692a4cfd5e",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dial_digital_limit",
+            "short": "dial_digital_limit"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.dial_digital_limit",
+            "short": "dial_digital_limit",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "v7 step 4 (rulings 92b, 94): the dial, Dial.lean landed 2026-11-25. P(change ever) jumps 0 -> 1 at p = 0; windows 1-(1-p)^n continuous, pointwise limit the switch, not uniform; the jump carried into L along slotRun; schedule dichotomy (divergent sum: a.s.; convergent sum, chances < 1: P(never) > 0) with the halving control; the fair coin's law minimal and maximal.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -366254,6 +366661,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "af365b73-3fdf-4743-a8b8-5c7028729ad7",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dial_fire_within",
+            "short": "dial_fire_within"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.dial_fire_within",
+            "short": "dial_fire_within",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "v7 step 4 (rulings 92b, 94): the dial, Dial.lean landed 2026-11-25. P(change ever) jumps 0 -> 1 at p = 0; windows 1-(1-p)^n continuous, pointwise limit the switch, not uniform; the jump carried into L along slotRun; schedule dichotomy (divergent sum: a.s.; convergent sum, chances < 1: P(never) > 0) with the halving control; the fair coin's law minimal and maximal.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "af374ddb-3b4f-4248-9913-1175077b7e09",
           "new": {
@@ -374910,6 +375354,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "bb0915e8-66fe-4c94-9e7c-4b0c3b92086a",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fireWithin",
+            "short": "fireWithin"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.fireWithin",
+            "short": "fireWithin",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "v7 step 4 (rulings 92b, 94): the dial, Dial.lean landed 2026-11-25. P(change ever) jumps 0 -> 1 at p = 0; windows 1-(1-p)^n continuous, pointwise limit the switch, not uniform; the jump carried into L along slotRun; schedule dichotomy (divergent sum: a.s.; convergent sum, chances < 1: P(never) > 0) with the halving control; the fair coin's law minimal and maximal.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "bb23e23c-365a-4a5c-908e-2604b23ed5e5",
           "new": {
             "file": "ZeroParadox/Information/Disjunctive.lean",
@@ -380637,6 +381118,43 @@
             ]
           },
           "reason": "Land 2026-11-10 cells-joint, local-towers, interleave probes and the new one-way-flow results into ZeroParadox/Valuation (CellsJoint, Interleave, LocalTowers, OneWayFlow).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c3ec16f7-c040-4257-badb-cfcf90284a4a",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.tape_never_fires_iff",
+            "short": "tape_never_fires_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.tape_never_fires_iff",
+            "short": "tape_never_fires_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "v7 step 4 (rulings 92b, 94): the dial, Dial.lean landed 2026-11-25. P(change ever) jumps 0 -> 1 at p = 0; windows 1-(1-p)^n continuous, pointwise limit the switch, not uniform; the jump carried into L along slotRun; schedule dichotomy (divergent sum: a.s.; convergent sum, chances < 1: P(never) > 0) with the halving control; the fair coin's law minimal and maximal.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -399140,6 +399658,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "dc6de53b-5961-42be-8c1e-423979b2f3b4",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.schedule_fires_of_tsum_top",
+            "short": "schedule_fires_of_tsum_top"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.schedule_fires_of_tsum_top",
+            "short": "schedule_fires_of_tsum_top",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "v7 step 4 (rulings 92b, 94): the dial, Dial.lean landed 2026-11-25. P(change ever) jumps 0 -> 1 at p = 0; windows 1-(1-p)^n continuous, pointwise limit the switch, not uniform; the jump carried into L along slotRun; schedule dichotomy (divergent sum: a.s.; convergent sum, chances < 1: P(never) > 0) with the halving control; the fair coin's law minimal and maximal.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "dc79db7c-06eb-40b3-bffb-837ceb3b32be",
           "new": {
             "file": "ZeroParadox/Category/NextTimeCategorical.lean",
@@ -403742,6 +404297,43 @@
             ]
           },
           "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e3188163-1520-4164-800e-e1494eee8bf5",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dial_jump_into_L",
+            "short": "dial_jump_into_L"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.dial_jump_into_L",
+            "short": "dial_jump_into_L",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "v7 step 4 (rulings 92b, 94): the dial, Dial.lean landed 2026-11-25. P(change ever) jumps 0 -> 1 at p = 0; windows 1-(1-p)^n continuous, pointwise limit the switch, not uniform; the jump carried into L along slotRun; schedule dichotomy (divergent sum: a.s.; convergent sum, chances < 1: P(never) > 0) with the halving control; the fair coin's law minimal and maximal.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -419910,6 +420502,43 @@
             ]
           },
           "reason": "DieBranches § IV-V: branch-map shift square, closed embedding, PiNat metric (x1/2), Z_2 composite, not-relabelling, complement x -> -1 - x (2026-11-21).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f95d7885-3400-4f10-8953-b97f3c6c145c",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dial_not_uniform_witness",
+            "short": "dial_not_uniform_witness"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.dial_not_uniform_witness",
+            "short": "dial_not_uniform_witness",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "v7 step 4 (rulings 92b, 94): the dial, Dial.lean landed 2026-11-25. P(change ever) jumps 0 -> 1 at p = 0; windows 1-(1-p)^n continuous, pointwise limit the switch, not uniform; the jump carried into L along slotRun; schedule dichotomy (divergent sum: a.s.; convergent sum, chances < 1: P(never) > 0) with the halving control; the fair coin's law minimal and maximal.",
           "verify": {
             "axioms": null,
             "sorry_free": null

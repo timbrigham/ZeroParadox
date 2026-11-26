@@ -16,6 +16,7 @@ import ZeroParadox.Information.PoleWithinEnsemble
 import ZeroParadox.Valuation.TowerTapeSnap
 import ZeroParadox.Information.StartBit
 import ZeroParadox.Settheory.QuineDichotomy
+import ZeroParadox.Information.Dial
 
 /-!
 # Machine-checked characterization index of the snap ⊥ → ε₀ — what the snap IS and IS NOT
@@ -153,6 +154,9 @@ example (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p) :
 #check @ZeroParadox.never_fires_ae_zero               -- Statement: CONTROL, `trials 0 hp`-almost every tape fires nowhere
 #check @ZeroParadox.fires_germ_eq_bot_zero            -- Statement: CONTROL, at `p = 0`, "fires somewhere" is ⊥ of `Germ (ae (trials 0 hp)) Prop`
 #check @ZeroParadox.germ_top_ne_bot                   -- Statement: CONTROL, ⊤ ≠ ⊥ in `Germ (ae (trials p hp)) Prop` for every `p ≤ 1`: the quotient is not degenerate
+#check @ZeroParadox.dial_jump_into_L                  -- Statement: the dial (`ZeroParadox/Information/Dial.lean`): if `φ : Bool → L` sends `false` to ⊥ of `L` and `true` elsewhere, at `p = 0` almost every image run `φ ∘ slotRun w` is ⊥ of `L` at every stage, and for `0 < p ≤ 1` almost every one is somewhere not ⊥ of `L`; forward maps only
+#check @ZeroParadox.dial_digital_limit                -- Statement: the mass of "fires within the first `n` stages", `1 - (1 - p) ^ n` and continuous in `p`, tends as `n → ∞` to the switch, 0 at `p = 0` and 1 for `p > 0`; not uniformly on `(0, 1]` (`dial_not_uniform`)
+#check @ZeroParadox.schedule_fires_of_tsum_top        -- Statement: with independent stage chances `q n` (`fadingTrials`) whose sum diverges, some stage fires with probability one; `schedule_never_pos`: with a convergent sum and every `q n < 1`, no stage fires with positive probability
 -- Reading: CARRIER, the tower tape fed to the snap as a family indexed by chart, never a union
 --   (`ZeroParadox/Valuation/TowerTapeSnap.lean`): `tapeIso` carries `towerTape [] x` to a tape `ℕ → Bool`.
 #check @ZeroParadox.towerTape_fires_iff               -- Statement: `tapeIso (towerTape [] x)` fires iff `x ≠ botEnd`; at `botEnd` it is ⊥ of `ℕ → Bool` (`towerTape_floor_allFalse`)
