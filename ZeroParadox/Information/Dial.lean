@@ -924,7 +924,7 @@ theorem leave_zero_of_selfOnlyAt {α : Type*} [MeasurableSpace α] (K : Kernel �
   exact measure_mono_null (fun b hb hs => hb (hy.2 b hs)) (ae_iff.1 (hK y))
 
 /-- `Statement:` under a subordinate kernel, positive leave-weight at `y` gives a step from `y`
-elsewhere; one way (the `slotKernel 0` CONTROL below fails the converse). -/
+elsewhere; one way (the `example` after the `slotKernel 0` CONTROL below fails the converse). -/
 theorem leavesAt_of_pos {α : Type*} [MeasurableSpace α] (K : Kernel α α) (M : Motion α)
     (hK : Subordinate M K) {y : α} (h : 0 < K y {y}ᶜ) : M.LeavesAt y := by
   by_contra hl
@@ -992,6 +992,12 @@ theorem glauber_slot_leaves (ΔE T : ℝ) :
 -- leaves `false`.
 example : ¬ ∀ᵐ x ∂(runLaw (slotKernel 0 zero_le_one) false), ∃ i, x i ≠ false := by
   rw [ae_leaves_iff, slotKernel_leave]; simp
+
+-- Statement: CONTROL, the converse of `leavesAt_of_pos` fails: `slotKernel 0` is subordinate to
+-- `slotMotion`, `false` steps elsewhere there, and the leave-weight at `false` is 0.
+example : Subordinate slotMotion (slotKernel 0 zero_le_one) ∧ slotMotion.LeavesAt false ∧
+    slotKernel 0 zero_le_one false {false}ᶜ = 0 :=
+  ⟨slotKernel_subordinate 0 zero_le_one, slotMotion_leavesAt_false.1, by rw [slotKernel_leave]; simp⟩
 
 /-- `Statement:` if the binary entropy of the leave-weight at `x₀` is `log 2`, the leave-weight is
 `1/2`; `eq_half_of_maxEntropy` applied to it. -/

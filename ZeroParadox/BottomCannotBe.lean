@@ -963,8 +963,9 @@ example : ZeroParadox.Disjunctive (fun n => xor (ZeroParadox.champ n) false) := 
 #check @ZeroParadox.xorOffset_bot
 -- Statement: for `p ≤ 1`, `xorOffset t` preserves `trials p hp` iff `t` is ⊥ of `ℕ → Bool` or `p = 1/2`.
 #check @ZeroParadox.xorOffset_measurePreserving_iff
--- Statement: under the law of the Markov chain with a supplied transition kernel `K` started at `x₀`,
--- almost every run leaves `x₀` iff `K x₀` gives positive mass to leaving; the `ZPSemilattice` case
+-- Statement: on a state space whose single points are measurable (`MeasurableSingletonClass`), under
+-- the law of the Markov chain with a supplied Markov kernel `K` started at `x₀`, almost every run
+-- leaves `x₀` iff `K x₀` gives positive mass to leaving; the `ZPSemilattice` case
 -- starts at ⊥ of `L` (the `example` closing `ZeroParadox/Information/Dial.lean` § XI).
 #check @ZeroParadox.ae_leaves_iff
 
