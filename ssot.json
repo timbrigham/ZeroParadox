@@ -244874,7 +244874,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 4880,
+        "declarations": 4881,
         "files": 249
       },
       "entries": [
@@ -308998,6 +308998,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "5cb6d962-aaa4-42a6-b78d-a6a52aa4af19",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fireWithin_mono",
+            "short": "fireWithin_mono"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.fireWithin_mono",
+            "short": "fireWithin_mono",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "v7 step 4 round-1 fix: fireWithin n is monotone in p, the hypothesis of the Polya / Dini second theorem cited in Dial.md.",
           "verify": {
             "axioms": null,
             "sorry_free": null

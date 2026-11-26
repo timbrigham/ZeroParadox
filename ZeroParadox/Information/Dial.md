@@ -21,20 +21,25 @@ this file holds what was already in the corpus, the prior art, and the fences.
 - Second Borel-Cantelli lemma, Mathlib `ProbabilityTheory.measure_limsup_eq_one` (independent events, divergent
   sum, limsup has measure one); used by `schedule_fires_of_tsum_top`. First lemma, Mathlib
   `MeasureTheory.measure_limsup_atTop_eq_zero` (not `measure_limsup_eq_zero`), used by StartBit's
-  `fadingTrials_eventuallyFalse`. Both lemmas in prose: Koukoulopoulos, arXiv:2109.11003, Theorem 2.4
-  (a theoremsearch hit, statement only; the paper was not retrieved).
+  `fadingTrials_eventuallyFalse`. Both lemmas in prose, a secondary source: Koukoulopoulos, arXiv:2109.11003,
+  Theorem 2.4 (a survey on metric Diophantine approximation; (b) assumes the events mutually independent).
 - `schedule_never_pos` is the convergent half of the standard fact that, for independent events with
   probabilities below one, none occurs with positive probability iff the sum converges. Its proof here is a
-  tail bound (a block of `N` silent stages, then a union bound on the rest), not an infinite product. Mathlib
-  has infinite products (`Real.multipliable_of_summable_log`); a statement in this form was not located as of
-  2026-11-25 (lean-explore, one phrasing; theoremsearch, one phrasing).
+  tail bound (a block of `N` silent stages, then a union bound on the rest), not an infinite product. The
+  analytic core of that half in product form is Mathlib `tprod_one_add_ne_zero_of_summable` (with `f = -q`,
+  `∏ (1 - q n) ≠ 0` in a complete normed ring when every `1 - q n ≠ 0` and `∑ ‖q n‖` converges); see also
+  `multipliable_one_sub_of_summable` and `Real.multipliable_of_summable_log`. The measure-theoretic statement
+  was not located as of 2026-11-25 (lean-explore, two phrasings; theoremsearch, one phrasing).
 - The volume tending to the switch: a uniform limit of continuous functions is continuous (Mathlib
-  `TendstoUniformly.continuous`), so the jump of `fireMass` forces non-uniform convergence on `[0, 1]`. Each
-  `fireWithin n` is monotone in `p`; a monotone sequence converging pointwise to a CONTINUOUS limit converges
-  uniformly (Bogoya, Böttcher, Maximenko, arXiv:1509.01836, Proposition 3.2; a theoremsearch hit, statement
-  only, not retrieved), so here the non-uniformity and
-  the discontinuity are the same fact read from two sides. `dial_not_uniform` proves it on `(0, 1]`, where the
-  limit is continuous, by an explicit witness (`dial_not_uniform_witness`).
+  `TendstoUniformly.continuous`), so the jump of `fireMass` forces non-uniform convergence on `[0, 1]`.
+  Conversely, Pólya's theorem (Dini's second theorem), in the form of Bogoya, Böttcher, Maximenko,
+  arXiv:1509.01836, Proposition 3.2: if `g` is continuous on `[0, 1]` and functions `f n : [0, 1] → ℝ`, each
+  increasing (non-strict), converge to `g` at every point of `[0, 1]`, the convergence is uniform on `[0, 1]`.
+  Each `fireWithin n` is monotone in `p` (`fireWithin_mono`), so on the segment `[0, 1]` uniform convergence
+  and a continuous limit go together, and the jump at 0 is what blocks it. `dial_not_uniform` proves more, on
+  `(0, 1]`, by an explicit witness (`dial_not_uniform_witness`): there the limit is constantly 1 and
+  continuous and the convergence is still not uniform, which the proposition does not forbid, since `(0, 1]`
+  is not compact; non-uniformity on `(0, 1]` gives it on `[0, 1]`.
 
 ## Fences
 
@@ -44,3 +49,5 @@ this file holds what was already in the corpus, the prior art, and the fences.
 - Analog and digital are a `Reading:`; the theorems say continuous (`fireWithin_continuous`) and jump
   (`fireMass_not_continuousAt_zero`).
 - The schedule's dichotomy assumes independent stages; `schedule_never_pos` also needs every chance below one.
+- `Dial.lean` imports two EXPERIMENTAL modules, `ZeroParadox/Information/PoleWithinEnsemble.lean` and
+  `ZeroParadox/Information/StartBit.lean`; `tape_never_fires_iff` and `dial_jump_into_L` rest on them.

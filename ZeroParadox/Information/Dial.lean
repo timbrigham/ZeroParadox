@@ -97,6 +97,15 @@ theorem fireWithin_continuous (n : ℕ) : Continuous (fireWithin n) := by
   rw [this]
   exact (ENNReal.continuous_sub_left ENNReal.one_ne_top).comp (cylMass_continuous n)
 
+/-- `Statement:` `fireWithin n` is monotone in `p`: a larger chance never lowers the mass of "some
+stage below `n` fires". -/
+theorem fireWithin_mono (n : ℕ) : Monotone (fireWithin n) := by
+  intro p q hpq
+  rw [dial_fire_within, dial_fire_within]
+  apply tsub_le_tsub_left
+  apply pow_le_pow_left₀ (by positivity)
+  exact_mod_cast tsub_le_tsub_left (min_le_min_right 1 hpq) 1
+
 /-- `Statement:` for each `p`, `fireWithin n p` tends to `fireMass p` as `n → ∞`, the value 0 at
 `p = 0` and 1 for `p > 0` (`fireMass_eq`). -/
 theorem dial_digital_limit (p : NNReal) :
@@ -142,7 +151,7 @@ theorem dial_not_uniform :
 /-- `Statement:` let `φ : Bool → L` send `false` to ⊥ of `L` and `true` elsewhere. Every image run
 `φ ∘ slotRun w` starts at ⊥ of `L`; for `trials 0 hp`-almost every tape it is ⊥ of `L` at every stage;
 for `0 < p ≤ 1` and `trials p hp`-almost every tape it is somewhere not ⊥ of `L`. From
-`never_fires_ae_zero` and `ae_firesOnce`; on `firedRun` the second half is `snap_ae_fixed_phi`. Maps
+`never_fires_ae_zero` and `ae_firesOnce`; on `firedRun` the third conjunct is `snap_ae_fixed_phi`. Maps
 run tape → run → image; no map from ⊥ of `L` to a tape is claimed. -/
 theorem dial_jump_into_L {L : Type*} [ZPSemilattice L] (φ : Bool → L)
     (hφ0 : φ false = ZPSemilattice.bot) (hφ1 : φ true ≠ ZPSemilattice.bot) :
@@ -263,8 +272,8 @@ theorem schedule_halving_control :
 
 /-- `Statement:` exactly one `p : NNReal` has `binEntropy p = log 2`, and it lies in `(0, 1]`
 (`tape_totality_two_faces`, first conjunct); and `binEntropy q ≤ log 2` for every real `q`
-(Mathlib `Real.binEntropy_le_log_two`). The law minimal in description, one condition fixing it, is
-the law maximal in entropy. -/
+(Mathlib `Real.binEntropy_le_log_two`). `Reading:` the law minimal in description, one condition
+fixing it, is the law maximal in entropy; no description length is measured. -/
 theorem law_two_faces :
     (∃ p : NNReal, Real.binEntropy (p : ℝ) = Real.log 2 ∧ 0 < p ∧ p ≤ 1 ∧
         ∀ q : NNReal, Real.binEntropy (q : ℝ) = Real.log 2 → q = p) ∧
@@ -284,6 +293,7 @@ open ZeroParadox
 #print axioms fireWithin
 #print axioms dial_fire_within
 #print axioms fireWithin_continuous
+#print axioms fireWithin_mono
 #print axioms dial_digital_limit
 #print axioms dial_not_uniform_witness
 #print axioms dial_not_uniform
