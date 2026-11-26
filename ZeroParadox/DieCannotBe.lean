@@ -73,6 +73,7 @@ import ZeroParadox.Multihomed.TwoAdicBend
 import ZeroParadox.DieSameness
 import ZeroParadox.Computability.GapDecoder
 import ZeroParadox.Givens
+import ZeroParadox.Information.Dial
 
 set_option maxHeartbeats 400000
 
@@ -2967,6 +2968,9 @@ example : (ZeroParadox.Motion.ofFun Nat.pred).SelfOnlyAt 0 :=
 -- x once it first visits x; such states are called absorbing"); the corpus uses the term at
 -- `blockKernel_pure0_stationary` (`ZeroParadox/Computability/MarkovNuUniversal.lean`). A transition
 -- matrix gives every state a step, so the second set's points with no step have no counterpart there.
+#check @ZeroParadox.not_subordinate_of_noStepAt -- Statement: CONTROL: at a point with no step, no Markov kernel gives full mass to the steps out of it (`ZeroParadox/Information/Dial.lean` § XI)
+#check @ZeroParadox.ofFun_kernel_dirac          -- Statement: CONTROL: a kernel subordinate to `Motion.ofFun g` gives `{g a}ᶜ` mass 0 at every `a`
+#check @ZeroParadox.ae_leaves_iff               -- Statement: under the chain law of a supplied kernel `K` from `x₀`, almost every run leaves `x₀` iff `K x₀ {x₀}ᶜ > 0`; both directions
 -- Statement: ZP-A's join step `a → a ⊔ z` raises in the induced order, so
 -- `eq_of_step_le_of_stepRaises` re-derives `t_snap_irreversible`.
 example {L : Type*} [ZeroParadox.ZPSemilattice L] {x y : L} (hle : ZeroParadox.ZPSemilattice.le x y)

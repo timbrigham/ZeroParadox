@@ -2,6 +2,7 @@ import ZeroParadox.Information.BottomTotality
 import ZeroParadox.Information.StartBit
 import ZeroParadox.Information.TwoRequirements
 import ZeroParadox.Valuation.UltrametricView
+import Mathlib.Probability.Kernel.IonescuTulcea.Traj
 import Mathlib.Tactic
 
 /-!
@@ -22,8 +23,8 @@ analog and a digital value
 ## Formal Overview (AI-assisted)
 Switch (§ II): "some stage fires" has mass 0 at `p = 0`, 1 for `0 < p ≤ 1`. Volume (§ III): "fires within `n`
 stages" is continuous in `p` and tends to the switch non-uniformly. § IV: the jump in `L`; § V-VI: schedules,
-the law; § VII: mean of `wait + 1` is `p⁻¹`; § VIII: columns; § IX: entropy pins `0 < p < 1`; § X: translations.
--/
+the law; § VII: mean of `wait + 1` is `p⁻¹`; § VIII: columns; § IX: entropy pins `0 < p < 1`; § X: translations;
+§ XI: a supplied Markov kernel on the die. -/
 
 set_option maxHeartbeats 400000
 
@@ -645,6 +646,370 @@ example : ¬ MeasurePreserving (xorOffset (fun k => decide (k = 0)))
 
 end WaitPackFaces
 
+/-! ### § XI. The dial on the die: a Markov kernel subordinate to the step relation
+
+`Reading:` to an observer of values, a halted state padded with "stay" and a self-loop give the same
+constant run, and the observable question is heads versus non-heads, which `ae_leaves_iff` asks; to an
+observer of available moves they differ. Value side: `loop_is_a_trap`, `da1_minimal_path`,
+`carry_steps_onward_forever_yet_shows_nothing`, `stutter_obs_const`, `Motion.quot_leavesAt_iff`,
+`Motion.selectedTotal_of_option`. Move side: `not_halted_is_stepping_head`,
+`dead_yields_live_withholds`, `Motion.LaxHom.noStepAt_iff`. The kernel `K` is a supplied argument
+throughout; nothing derives it from the die or from `L`. -/
+
+section MarkovDie
+
+open Finset
+
+/-- `Statement:` the last coordinate of a path indexed by `Iic n`. -/
+def pathLast {α : Type*} (n : ℕ) (x : Π _ : Iic n, α) : α := x ⟨n, mem_Iic.2 le_rfl⟩
+
+/-- `Statement:` `pathLast n` is measurable. -/
+theorem measurable_pathLast {α : Type*} [MeasurableSpace α] (n : ℕ) :
+    Measurable (pathLast (α := α) n) :=
+  measurable_pi_apply _
+
+/-- `Statement:` the time-homogeneous kernel on paths: read the last state, apply `K`. -/
+noncomputable def homK {α : Type*} [MeasurableSpace α] (K : Kernel α α) (n : ℕ) :
+    Kernel (Π _ : Iic n, α) α :=
+  K.comap (pathLast n) (measurable_pathLast n)
+
+/-- `Statement:` `homK K n` is a Markov kernel when `K` is. -/
+instance isMarkovKernel_homK {α : Type*} [MeasurableSpace α] (K : Kernel α α) [IsMarkovKernel K]
+    (n : ℕ) : IsMarkovKernel (homK K n) := by
+  unfold homK; infer_instance
+
+/-- `Statement:` the law on `ℕ → α` of the Markov chain with transition kernel `K` started at `x₀`:
+Mathlib's `Kernel.trajMeasure` (Ionescu-Tulcea) of `dirac x₀` and `homK K`. -/
+noncomputable def runLaw {α : Type*} [MeasurableSpace α] (K : Kernel α α) [IsMarkovKernel K]
+    (x₀ : α) : Measure (ℕ → α) :=
+  Kernel.trajMeasure (X := fun _ => α) (Measure.dirac x₀) (homK K)
+
+/-- `Statement:` `runLaw K x₀` is a probability measure. -/
+instance isProbabilityMeasure_runLaw {α : Type*} [MeasurableSpace α] (K : Kernel α α)
+    [IsMarkovKernel K] (x₀ : α) : IsProbabilityMeasure (runLaw K x₀) := by
+  unfold runLaw; infer_instance
+
+/-- `Statement:` at every `a`, `K a` gives full mass to the steps of `M` out of `a`. `Reading:` the
+weighted die; standard name, a Markov chain whose directed graph lies in the step relation. -/
+def Subordinate {α : Type*} [MeasurableSpace α] (M : Motion α) (K : Kernel α α) : Prop :=
+  ∀ a, ∀ᵐ b ∂(K a), M.step a b
+
+/-- `Statement:` the paths indexed by `Iic k` that sit at `x₀` throughout. -/
+def stayPaths {α : Type*} (x₀ : α) (k : ℕ) : Set (Π _ : Iic k, α) := {y | ∀ i, y i = x₀}
+
+/-- `Statement:` `stayPaths x₀ k` is measurable. -/
+theorem measurableSet_stayPaths {α : Type*} [MeasurableSpace α] [MeasurableSingletonClass α]
+    (x₀ : α) (k : ℕ) : MeasurableSet (stayPaths x₀ k) := by
+  have : stayPaths x₀ k = ⋂ i, (fun y : Π _ : Iic k, α => y i) ⁻¹' {x₀} := by
+    ext y; simp [stayPaths]
+  rw [this]
+  exact MeasurableSet.iInter fun i => measurable_pi_apply i (measurableSet_singleton x₀)
+
+/-- `Statement:` one more transition keeps a path in `stayPaths x₀` with mass `K x₀ {x₀}` if it was
+there, and 0 otherwise. -/
+theorem stayPaths_step_mass {α : Type*} [MeasurableSpace α] [MeasurableSingletonClass α]
+    (K : Kernel α α) [IsMarkovKernel K] (x₀ : α) (k : ℕ) (y : Π _ : Iic k, α) :
+    Kernel.partialTraj (X := fun _ => α) (homK K) k (k + 1) y (stayPaths x₀ (k + 1)) =
+      (stayPaths x₀ k).indicator (fun _ => K x₀ {x₀}) y := by
+  set μ := Kernel.partialTraj (X := fun _ => α) (homK K) k (k + 1) y with hμ
+  have hf : Measurable (Preorder.frestrictLe₂ (π := fun _ : ℕ => α) (Nat.le_succ k)) :=
+    Preorder.measurable_frestrictLe₂ _
+  have hl : Measurable (fun z : Π _ : Iic (k + 1), α => z ⟨k + 1, mem_Iic.2 le_rfl⟩) :=
+    measurable_pi_apply _
+  have hmap : μ.map (Preorder.frestrictLe₂ (π := fun _ : ℕ => α) (Nat.le_succ k)) =
+      Measure.dirac y := by
+    rw [hμ, Kernel.partialTraj_map_frestrictLe₂_apply, Kernel.partialTraj_self]; rfl
+  have hlast : μ.map (fun z : Π _ : Iic (k + 1), α => z ⟨k + 1, mem_Iic.2 le_rfl⟩) =
+      homK K k y := by
+    rw [hμ, ← Kernel.map_apply _ hl, Kernel.map_partialTraj_succ_self]
+  have hset : stayPaths x₀ (k + 1) =
+      (Preorder.frestrictLe₂ (π := fun _ : ℕ => α) (Nat.le_succ k)) ⁻¹' stayPaths x₀ k ∩
+        (fun z : Π _ : Iic (k + 1), α => z ⟨k + 1, mem_Iic.2 le_rfl⟩) ⁻¹' {x₀} := by
+    ext z
+    simp only [stayPaths, Set.mem_ofPred_eq, Set.mem_inter_iff, Set.mem_preimage,
+      Set.mem_singleton_iff, Preorder.frestrictLe₂_apply]
+    refine ⟨fun h => ⟨fun i => h _, h _⟩, fun ⟨h1, h2⟩ i => ?_⟩
+    obtain ⟨i, hi⟩ := i
+    have hi' := mem_Iic.1 hi
+    rcases Nat.lt_or_ge i (k + 1) with h | h
+    · exact h1 ⟨i, mem_Iic.2 (by omega)⟩
+    · have : i = k + 1 := by omega
+      subst this; exact h2
+  have hA : μ ((Preorder.frestrictLe₂ (π := fun _ : ℕ => α) (Nat.le_succ k)) ⁻¹' stayPaths x₀ k) =
+      (Measure.dirac y) (stayPaths x₀ k) := by
+    rw [← hmap, Measure.map_apply hf (measurableSet_stayPaths x₀ k)]
+  by_cases hy : y ∈ stayPaths x₀ k
+  · rw [Set.indicator_of_mem hy, hset, Set.inter_comm, measure_inter_conull]
+    · rw [← Measure.map_apply hl (measurableSet_singleton x₀), hlast]
+      simp only [homK, Kernel.comap_apply, pathLast]
+      rw [hy]
+    · rw [← Set.preimage_compl, ← Measure.map_apply hf (measurableSet_stayPaths x₀ k).compl, hmap,
+        Measure.dirac_apply' _ (measurableSet_stayPaths x₀ k).compl]
+      simp [hy]
+  · rw [Set.indicator_of_notMem hy]
+    refine le_antisymm ?_ bot_le
+    rw [hset]
+    refine (measure_mono Set.inter_subset_left).trans (le_of_eq ?_)
+    rw [hA, Measure.dirac_apply' _ (measurableSet_stayPaths x₀ k)]
+    simp [hy]
+
+/-- `Statement:` the length-1 path at `x₀` lies in `stayPaths x₀ 0`. -/
+theorem start_mem_stayPaths {α : Type*} [MeasurableSpace α] (x₀ : α) :
+    ((MeasurableEquiv.piUnique (fun _ : Iic 0 => α)).symm x₀) ∈ stayPaths x₀ 0 := by
+  intro i
+  rw [Unique.eq_default i]
+  exact (MeasurableEquiv.piUnique (fun _ : Iic 0 => α)).apply_symm_apply x₀
+
+/-- `Statement:` from the length-1 path at `x₀`, the first `k` transitions stay at `x₀` with mass
+`(K x₀ {x₀}) ^ k`. -/
+theorem partialTraj_stayPaths {α : Type*} [MeasurableSpace α] [MeasurableSingletonClass α]
+    (K : Kernel α α) [IsMarkovKernel K] (x₀ : α) (k : ℕ) :
+    Kernel.partialTraj (X := fun _ => α) (homK K) 0 k
+      ((MeasurableEquiv.piUnique (fun _ : Iic 0 => α)).symm x₀) (stayPaths x₀ k) =
+      (K x₀ {x₀}) ^ k := by
+  induction k with
+  | zero =>
+    rw [Kernel.partialTraj_zero, Kernel.deterministic_apply,
+      Measure.dirac_apply' _ (measurableSet_stayPaths x₀ 0), pow_zero]
+    refine Set.indicator_of_mem ?_ _
+    intro i
+    simp only [Preorder.frestrictLe₂_apply]
+    exact start_mem_stayPaths x₀ _
+  | succ k ih =>
+    rw [Kernel.partialTraj_succ_eq_comp (Nat.zero_le k),
+      Kernel.comp_apply' _ _ _ (measurableSet_stayPaths x₀ (k + 1))]
+    simp_rw [stayPaths_step_mass K x₀ k]
+    rw [lintegral_indicator_const (measurableSet_stayPaths x₀ k), ih, pow_succ, mul_comm]
+
+/-- `Statement:` `runLaw K x₀` is `Kernel.traj (homK K) 0` at the length-1 path at `x₀`. -/
+theorem runLaw_eq {α : Type*} [MeasurableSpace α] (K : Kernel α α) [IsMarkovKernel K] (x₀ : α) :
+    runLaw K x₀ = Kernel.traj (X := fun _ => α) (homK K) 0
+      ((MeasurableEquiv.piUnique (fun _ : Iic 0 => α)).symm x₀) := by
+  ext s hs
+  rw [runLaw, Kernel.trajMeasure, Measure.bind_apply hs (Kernel.aemeasurable _),
+    lintegral_map (Kernel.measurable_coe _ hs) (MeasurableEquiv.measurable _)]
+  exact lintegral_dirac' x₀ ((Kernel.measurable_coe _ hs).comp (MeasurableEquiv.measurable _))
+
+/-- `Statement:` the run stays at `x₀` through `k` transitions with probability `(K x₀ {x₀}) ^ k`. -/
+theorem runLaw_stay {α : Type*} [MeasurableSpace α] [MeasurableSingletonClass α]
+    (K : Kernel α α) [IsMarkovKernel K] (x₀ : α) (k : ℕ) :
+    runLaw K x₀ {x | ∀ i ≤ k, x i = x₀} = (K x₀ {x₀}) ^ k := by
+  have hs : {x : ℕ → α | ∀ i ≤ k, x i = x₀} =
+      Preorder.frestrictLe (π := fun _ : ℕ => α) k ⁻¹' stayPaths x₀ k := by
+    ext x
+    simp only [Set.mem_ofPred_eq, Set.mem_preimage, stayPaths, Preorder.frestrictLe_apply]
+    exact ⟨fun h i => h i.1 (mem_Iic.1 i.2), fun h i hi => h ⟨i, mem_Iic.2 hi⟩⟩
+  rw [hs, runLaw_eq, ← Measure.map_apply (Preorder.measurable_frestrictLe k)
+    (measurableSet_stayPaths x₀ k), Kernel.traj_map_frestrictLe_apply, partialTraj_stayPaths]
+
+/-- `Statement:` the runs that sit at `x₀` through stage `k` form a measurable set. -/
+theorem measurableSet_stayRun {α : Type*} [MeasurableSpace α] [MeasurableSingletonClass α]
+    (x₀ : α) (k : ℕ) : MeasurableSet {x : ℕ → α | ∀ i ≤ k, x i = x₀} := by
+  have : {x : ℕ → α | ∀ i ≤ k, x i = x₀} =
+      ⋂ i ∈ Finset.range (k + 1), (fun x => x i) ⁻¹' {x₀} := by
+    ext x; simp
+  rw [this]
+  exact Finset.measurableSet_biInter _ fun i _ => measurable_pi_apply i (measurableSet_singleton x₀)
+
+/-- `Statement:` with leave-weight `p = (K x₀ {x₀}ᶜ).toNNReal`, the run stays at `x₀` through `k`
+transitions with the `trials p` mass of the cylinder of ⊥ of `ℕ → Bool` of length `k`. -/
+theorem runLaw_stay_eq_trials {α : Type*} [MeasurableSpace α] [MeasurableSingletonClass α]
+    (K : Kernel α α) [IsMarkovKernel K] (x₀ : α) (k : ℕ) :
+    runLaw K x₀ {x | ∀ i ≤ k, x i = x₀} =
+      trials (K x₀ {x₀}ᶜ).toNNReal
+        (by rw [← ENNReal.coe_le_coe, ENNReal.coe_toNNReal (measure_ne_top _ _)]; exact prob_le_one)
+        (PiNat.cylinder (⊥ : ℕ → Bool) k) := by
+  rw [runLaw_stay, trials_cyl]
+  have hb : ∀ i, (⊥ : ℕ → Bool) i = false := fun _ => rfl
+  simp only [hb, Bool.false_eq_true, ite_false, Finset.prod_const, Finset.card_range]
+  congr 1
+  rw [prob_compl_eq_one_sub (measurableSet_singleton x₀), ENNReal.toNNReal_sub (measure_ne_top _ _),
+    ENNReal.toNNReal_one, tsub_tsub_cancel_of_le, ENNReal.coe_toNNReal (measure_ne_top _ _)]
+  rw [← ENNReal.coe_le_coe, ENNReal.coe_toNNReal (measure_ne_top _ _)]
+  exact prob_le_one
+
+/-- `Statement:` the run ever leaves `x₀` with probability 0 if the leave-weight
+`(K x₀ {x₀}ᶜ).toNNReal` is 0 and 1 otherwise; reduced to `dial_fire_jump`. -/
+theorem runLaw_leaves {α : Type*} [MeasurableSpace α] [MeasurableSingletonClass α]
+    (K : Kernel α α) [IsMarkovKernel K] (x₀ : α) :
+    runLaw K x₀ {x | ∃ i, x i ≠ x₀} = if (K x₀ {x₀}ᶜ).toNNReal = 0 then 0 else 1 := by
+  set p := (K x₀ {x₀}ᶜ).toNNReal
+  have hp : p ≤ 1 := by
+    rw [← ENNReal.coe_le_coe, ENNReal.coe_toNNReal (measure_ne_top _ _)]; exact prob_le_one
+  rw [← dial_fire_jump p hp]
+  have e1 : {x : ℕ → α | ∃ i, x i ≠ x₀} = (⋂ k, {x : ℕ → α | ∀ i ≤ k, x i = x₀})ᶜ := by
+    ext x; simp only [Set.mem_ofPred_eq, Set.mem_compl_iff, Set.mem_iInter, not_forall]
+    exact ⟨fun ⟨i, hi⟩ => ⟨i, i, le_rfl, hi⟩, fun ⟨_, i, _, hi⟩ => ⟨i, hi⟩⟩
+  have e2 : {w : ℕ → Bool | ∃ k, w k = true} = (⋂ k, PiNat.cylinder (⊥ : ℕ → Bool) k)ᶜ := by
+    ext w; simp only [Set.mem_ofPred_eq, Set.mem_compl_iff, Set.mem_iInter, not_forall,
+      PiNat.cylinder]
+    constructor
+    · rintro ⟨k, hk⟩; exact ⟨k + 1, k, by omega, by simp [hk]⟩
+    · rintro ⟨_, i, _, hi⟩; exact ⟨i, by simpa using hi⟩
+  have hm1 : MeasurableSet (⋂ k, {x : ℕ → α | ∀ i ≤ k, x i = x₀}) :=
+    MeasurableSet.iInter fun k => measurableSet_stayRun x₀ k
+  have hm2 : MeasurableSet (⋂ k, PiNat.cylinder (⊥ : ℕ → Bool) k) :=
+    MeasurableSet.iInter fun k => (PiNat.isOpen_cylinder (fun _ : ℕ => Bool) ⊥ k).measurableSet
+  rw [e1, e2, prob_compl_eq_one_sub hm1, prob_compl_eq_one_sub hm2]
+  congr 1
+  have t1 := tendsto_measure_iInter_atTop (μ := runLaw K x₀)
+    (s := fun k => {x : ℕ → α | ∀ i ≤ k, x i = x₀})
+    (fun k => (measurableSet_stayRun x₀ k).nullMeasurableSet)
+    (fun a b hab x hx i hi => hx i (le_trans hi hab)) ⟨0, measure_ne_top _ _⟩
+  have t2 := tendsto_measure_iInter_atTop (μ := trials p hp)
+    (s := fun k => PiNat.cylinder (⊥ : ℕ → Bool) k)
+    (fun k => (PiNat.isOpen_cylinder (fun _ : ℕ => Bool) ⊥ k).measurableSet.nullMeasurableSet)
+    (fun a b hab w hw i hi => hw i (lt_of_lt_of_le hi hab)) ⟨0, measure_ne_top _ _⟩
+  have hfun : (runLaw K x₀ ∘ fun k => {x : ℕ → α | ∀ i ≤ k, x i = x₀}) =
+      (trials p hp ∘ fun k => PiNat.cylinder (⊥ : ℕ → Bool) k) := by
+    funext k; exact runLaw_stay_eq_trials K x₀ k
+  rw [hfun] at t1
+  exact tendsto_nhds_unique t1 t2
+
+/-- `Statement:` almost every run leaves `x₀` iff `K x₀` gives positive mass to leaving; both
+directions. -/
+theorem ae_leaves_iff {α : Type*} [MeasurableSpace α] [MeasurableSingletonClass α]
+    (K : Kernel α α) [IsMarkovKernel K] (x₀ : α) :
+    (∀ᵐ x ∂(runLaw K x₀), ∃ i, x i ≠ x₀) ↔ 0 < K x₀ {x₀}ᶜ := by
+  have hm : MeasurableSet {x : ℕ → α | ∃ i, x i ≠ x₀} := by
+    have : {x : ℕ → α | ∃ i, x i ≠ x₀} = ⋃ i, ((fun x => x i) ⁻¹' {x₀})ᶜ := by ext x; simp
+    rw [this]
+    exact MeasurableSet.iUnion fun i => (measurable_pi_apply i (measurableSet_singleton x₀)).compl
+  rw [ae_iff_measure_eq hm.nullMeasurableSet, measure_univ, runLaw_leaves]
+  have hz : (K x₀ {x₀}ᶜ).toNNReal = 0 ↔ K x₀ {x₀}ᶜ = 0 := by
+    rw [ENNReal.toNNReal_eq_zero_iff]; simp [measure_ne_top]
+  split_ifs with h
+  · simp [hz.1 h]
+  · simp only [true_iff]; exact pos_iff_ne_zero.2 (fun h0 => h (hz.2 h0))
+
+/-- `Statement:` if `K` is subordinate to `M` and the step relation is measurable, almost every run is
+a run of `M`. -/
+theorem ae_isRun {α : Type*} [MeasurableSpace α] (K : Kernel α α) [IsMarkovKernel K]
+    (M : Motion α) (hK : Subordinate M K) (hm : MeasurableSet {q : α × α | M.step q.1 q.2})
+    (x₀ : α) : ∀ᵐ x ∂(runLaw K x₀), M.IsRun x := by
+  refine ae_all_iff.2 fun n => ?_
+  set T : Set ((Π _ : Iic n, α) × α) := {q | ¬ M.step (pathLast n q.1) q.2} with hT
+  have hTm : MeasurableSet T :=
+    (((measurable_pathLast n).comp measurable_fst).prodMk measurable_snd) hm |>.compl
+  have hf : Measurable fun x : ℕ → α =>
+      (Preorder.frestrictLe (π := fun _ : ℕ => α) n x, x (n + 1)) :=
+    (Preorder.measurable_frestrictLe n).prodMk (measurable_pi_apply _)
+  rw [ae_iff]
+  have hset : {x : ℕ → α | ¬ M.step (x n) (x (n + 1))} =
+      (fun x : ℕ → α => (Preorder.frestrictLe (π := fun _ : ℕ => α) n x, x (n + 1))) ⁻¹' T := by
+    ext x; simp [hT, pathLast, Preorder.frestrictLe_apply]
+  rw [hset, ← Measure.map_apply hf hTm]
+  unfold runLaw
+  rw [← Kernel.map_frestrictLe_trajMeasure_compProd_eq_map_trajMeasure,
+    Measure.compProd_apply hTm]
+  refine lintegral_eq_zero_of_ae_eq_zero (Filter.Eventually.of_forall fun y => ?_)
+  simp only [homK, Kernel.comap_apply, Pi.zero_apply]
+  exact ae_iff.1 (hK (pathLast n y))
+
+/-- `Statement:` CONTROL, at a point with no step no Markov kernel gives full mass to the steps out of
+it. -/
+theorem not_subordinate_of_noStepAt {α : Type*} [MeasurableSpace α] (K : Kernel α α)
+    [IsMarkovKernel K] (M : Motion α) {y : α} (hy : M.NoStepAt y) :
+    ¬ ∀ᵐ b ∂(K y), M.step y b := by
+  intro h
+  have : K y {b | ¬ M.step y b} = 0 := ae_iff.1 h
+  have hu : {b | ¬ M.step y b} = Set.univ := Set.eq_univ_of_forall fun b => hy b
+  rw [hu, measure_univ] at this
+  exact one_ne_zero this
+
+/-- `Statement:` CONTROL, at a point stepping to itself only (absorbing), a subordinate kernel has
+leave-weight 0. -/
+theorem leave_zero_of_selfOnlyAt {α : Type*} [MeasurableSpace α] (K : Kernel α α) (M : Motion α)
+    (hK : Subordinate M K) {y : α} (hy : M.SelfOnlyAt y) : K y {y}ᶜ = 0 := by
+  exact measure_mono_null (fun b hb hs => hb (hy.2 b hs)) (ae_iff.1 (hK y))
+
+/-- `Statement:` under a subordinate kernel, positive leave-weight at `y` gives a step from `y`
+elsewhere; one way (the `slotKernel 0` CONTROL below fails the converse). -/
+theorem leavesAt_of_pos {α : Type*} [MeasurableSpace α] (K : Kernel α α) (M : Motion α)
+    (hK : Subordinate M K) {y : α} (h : 0 < K y {y}ᶜ) : M.LeavesAt y := by
+  by_contra hl
+  exact h.ne' (measure_mono_null (fun b hb hs => hl ⟨b, hs, hb⟩) (ae_iff.1 (hK y)))
+
+/-- `Statement:` CONTROL, a kernel subordinate to `Motion.ofFun g` gives `{g a}ᶜ` mass 0 at every `a`:
+no room for weights. -/
+theorem ofFun_kernel_dirac {α : Type*} [MeasurableSpace α] (K : Kernel α α) (g : α → α)
+    (hK : Subordinate (Motion.ofFun g) K) (a : α) : K a {g a}ᶜ = 0 := by
+  exact measure_mono_null (fun b hb hs => hb hs) (ae_iff.1 (hK a))
+
+set_option linter.deprecated false in
+/-- `Statement:` the kernel on `Bool` that at `false` is Bernoulli(`p`) and at `true` the Dirac mass at
+`true`. -/
+noncomputable def slotKernel (p : NNReal) (hp : p ≤ 1) : Kernel Bool Bool :=
+  Kernel.ofFunOfCountable fun b => if b then Measure.dirac true else (PMF.bernoulli p hp).toMeasure
+
+set_option linter.deprecated false in
+/-- `Statement:` `slotKernel p hp` is a Markov kernel. -/
+instance isMarkovKernel_slotKernel (p : NNReal) (hp : p ≤ 1) : IsMarkovKernel (slotKernel p hp) :=
+  ⟨fun b => by
+    cases b
+    · show IsProbabilityMeasure (PMF.bernoulli p hp).toMeasure; infer_instance
+    · show IsProbabilityMeasure (Measure.dirac true); infer_instance⟩
+
+/-- `Statement:` `slotKernel p hp` is subordinate to `slotMotion`. -/
+theorem slotKernel_subordinate (p : NNReal) (hp : p ≤ 1) :
+    Subordinate slotMotion (slotKernel p hp) := by
+  intro a
+  cases a
+  · exact Filter.Eventually.of_forall fun b => by
+      cases b
+      · exact Or.inl rfl
+      · exact Or.inr ⟨rfl, rfl⟩
+  · show ∀ᵐ b ∂(Measure.dirac true), true = b ∨ (true = false ∧ b = true)
+    rw [ae_dirac_eq]; exact Filter.eventually_pure.2 (Or.inl rfl)
+
+set_option linter.deprecated false in
+/-- `Statement:` the leave-weight of `slotKernel p hp` at `false` is `p`. -/
+theorem slotKernel_leave (p : NNReal) (hp : p ≤ 1) : slotKernel p hp false {false}ᶜ = p := by
+  have : ({false}ᶜ : Set Bool) = {true} := by ext b; cases b <;> simp
+  show (PMF.bernoulli p hp).toMeasure {false}ᶜ = p
+  rw [this, PMF.toMeasure_apply_singleton _ _ (measurableSet_singleton _)]
+  simp [PMF.bernoulli]
+
+/-- `Statement:` from `false`, the run of `slotKernel p hp` stays at `false` through `k` transitions
+with the `trials p hp` mass of the cylinder of ⊥ of `ℕ → Bool` of length `k`. -/
+theorem slot_stay_eq_trials (p : NNReal) (hp : p ≤ 1) (k : ℕ) :
+    runLaw (slotKernel p hp) false {x | ∀ i ≤ k, x i = false} =
+      trials p hp (PiNat.cylinder (⊥ : ℕ → Bool) k) := by
+  have key : ∀ (q : NNReal) (hq : q ≤ 1), q = p → trials q hq = trials p hp := by
+    rintro q hq rfl; rfl
+  rw [runLaw_stay_eq_trials, key _ _ (by rw [slotKernel_leave]; simp)]
+
+/-- `Statement:` with leave-weight `glauberExciteNN ΔE T`, almost every run of the slot kernel leaves
+`false`, at every `ΔE` and `T`. `Reading:` the temperature relocates `0 < p` into
+`glauberExciteNN_pos`; it does not remove it. -/
+theorem glauber_slot_leaves (ΔE T : ℝ) :
+    ∀ᵐ x ∂(runLaw (slotKernel (glauberExciteNN ΔE T) (glauberExciteNN_le_one ΔE T)) false),
+      ∃ i, x i ≠ false := by
+  rw [ae_leaves_iff, slotKernel_leave]
+  exact_mod_cast glauberExciteNN_pos ΔE T
+
+-- Statement: CONTROL, `slotKernel 0` (subordinate, since `false` steps to itself): almost no run
+-- leaves `false`.
+example : ¬ ∀ᵐ x ∂(runLaw (slotKernel 0 zero_le_one) false), ∃ i, x i ≠ false := by
+  rw [ae_leaves_iff, slotKernel_leave]; simp
+
+/-- `Statement:` if the binary entropy of the leave-weight at `x₀` is `log 2`, the leave-weight is
+`1/2`; `eq_half_of_maxEntropy` applied to it. -/
+theorem leave_half_of_maxEntropy {α : Type*} [MeasurableSpace α] (K : Kernel α α) (x₀ : α)
+    (h : Real.binEntropy ((K x₀ {x₀}ᶜ).toNNReal : ℝ) = Real.log 2) :
+    (K x₀ {x₀}ᶜ).toNNReal = 2⁻¹ := by
+  exact eq_half_of_maxEntropy _ h
+
+-- Statement: in a `ZPSemilattice` with measurable singletons, a supplied Markov kernel gives a law on
+-- runs from ⊥ of `L`, and almost every run leaves ⊥ of `L` iff leaving has positive weight.
+example {L : Type*} [ZPSemilattice L] [MeasurableSpace L] [MeasurableSingletonClass L]
+    (K : Kernel L L) [IsMarkovKernel K] :
+    (∀ᵐ x ∂(runLaw K ZPSemilattice.bot), ∃ i, x i ≠ ZPSemilattice.bot) ↔
+      0 < K ZPSemilattice.bot {ZPSemilattice.bot}ᶜ :=
+  ae_leaves_iff K _
+
+end MarkovDie
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -689,4 +1054,34 @@ open ZeroParadox
 #print axioms xorOffset_measurePreserving_fair
 #print axioms fair_wait_offset
 #print axioms xorOffset_measurePreserving_iff
+#print axioms pathLast
+#print axioms measurable_pathLast
+#print axioms homK
+#print axioms isMarkovKernel_homK
+#print axioms runLaw
+#print axioms isProbabilityMeasure_runLaw
+#print axioms Subordinate
+#print axioms stayPaths
+#print axioms measurableSet_stayPaths
+#print axioms stayPaths_step_mass
+#print axioms start_mem_stayPaths
+#print axioms partialTraj_stayPaths
+#print axioms runLaw_eq
+#print axioms runLaw_stay
+#print axioms measurableSet_stayRun
+#print axioms runLaw_stay_eq_trials
+#print axioms runLaw_leaves
+#print axioms ae_leaves_iff
+#print axioms ae_isRun
+#print axioms not_subordinate_of_noStepAt
+#print axioms leave_zero_of_selfOnlyAt
+#print axioms leavesAt_of_pos
+#print axioms ofFun_kernel_dirac
+#print axioms slotKernel
+#print axioms isMarkovKernel_slotKernel
+#print axioms slotKernel_subordinate
+#print axioms slotKernel_leave
+#print axioms slot_stay_eq_trials
+#print axioms glauber_slot_leaves
+#print axioms leave_half_of_maxEntropy
 end PurityCheck

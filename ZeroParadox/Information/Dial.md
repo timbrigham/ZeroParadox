@@ -32,6 +32,17 @@ this file holds what was already in the corpus, the prior art, and the fences.
   measurable equivalence. `det_eq_ofNat_iff` (`ZeroParadox/Information/TapeHalting.lean`); `fairTape`
   (`ZeroParadox/Information/Disjunctive.lean`); `trials_fires`, `fires_measurable`
   (`ZeroParadox/Information/CrossingTrials.lean`).
+- § XI: `slotMotion` (`ZeroParadox/Information/CrossingTrials.lean`) is reused as the die `slotKernel` is
+  subordinate to; `Motion`, `NoStepAt`, `SelfOnlyAt`, `LeavesAt`, `ofFun` (`ZeroParadox/Die.lean`).
+  `trials_det_eq_geometric` (`ZeroParadox/Information/PoleWithinEnsemble.lean`) is the first-hit law of
+  `trials p hp` as Mathlib's `geometricMeasure`; `runLaw_stay` is the same geometric holding read off the
+  chain. `InvariantMarkovKernel` (`ZeroParadox/Valuation/BottomInvariant.lean`) bundles a Markov kernel
+  with an invariant law; § XI uses no invariant law. The two observers of the `Reading:` at § XI's header:
+  value side `loop_is_a_trap`, `stutter_obs_const`, `carry_steps_onward_forever_yet_shows_nothing`
+  (`ZeroParadox/Computability/Occurrence.lean`), `da1_minimal_path` (`ZeroParadox/Order/Snap.lean`),
+  `Motion.quot_leavesAt_iff`, `Motion.selectedTotal_of_option` (`ZeroParadox/Die.lean`); move side
+  `not_halted_is_stepping_head` (`ZeroParadox/Computability/GroundZero.lean`), `dead_yields_live_withholds`
+  (`ZeroParadox/Computability/Occurrence.lean`), `Motion.LaxHom.noStepAt_iff` (`ZeroParadox/Die.lean`).
 
 ## Prior art (searched 2026-11-25)
 
@@ -134,6 +145,31 @@ this file holds what was already in the corpus, the prior art, and the fences.
   Sussman, arXiv:2210.02495, Remark at the end of p. 3: the Haar measure on the Cantor group `{−1, +1}^ℕ` makes
   the coordinates independent fair ±1 signs.
 
+## Prior art for § XI (searched 2026-11-26)
+
+- Standard names. A Markov kernel `K` with `Subordinate M K` is a Markov chain whose directed graph lies in
+  the step relation: Levin, Peres, Wilmer, *Markov Chains and Mixing Times*, 2nd ed., Remark 1.24, p. 15,
+  "the directed graph with vertex set equal to the state space of the chain, that includes the directed edge
+  (x, y) in its edge set iff P(x, y) > 0". A point stepping to itself only carries an absorbing state (p. 15:
+  "the chain never leaves x once it first visits x; such states are called absorbing"); a chain that may stay
+  put is lazy (p. 8, "We call Q a lazy version of P"). `slotKernel` is their Example 1.1 (p. 3, the frog,
+  east coin `p`) with the west pad made absorbing.
+- The chain law. `runLaw` is Mathlib's `Kernel.trajMeasure` (the Ionescu-Tulcea theorem,
+  `Mathlib/Probability/Kernel/IonescuTulcea/Traj.lean`) of `dirac x₀` and the time-homogeneous `homK K`; the
+  pinned Mathlib has no time-homogeneous wrapper. The same construction is `markovChainLaw` in TauCeti
+  (repository TauCetiProject/TauCeti, commit 656ded17, `TauCeti/Probability/Process/MarkovChain.lean`), and
+  `absorbingChain p : Kernel Bool Bool` there (`.../MarkovChain/Examples/Absorbing.lean`) is `slotKernel`.
+  PARTLY VERIFIED: statements fetched, not elaborated, outside this repository's dependency closure. § XI's
+  own part is the die side: `Subordinate`, its controls, and the identity of the stay record with `trials p`.
+- Exact weights. `ae_leaves_iff` depends only on whether the leave-weight is positive; the law itself
+  depends on the exact weight. For product measures that is Kakutani's dichotomy: van Erven, Harremoës,
+  arXiv:1206.2459, Theorem 29, p. 16 (equivalence or mutual singularity of infinite products; with
+  `α = 1/2` equivalent to Kakutani, *Ann. of Math.* 49 (1948)); Dutkay, Jorgensen, arXiv:math/0501077,
+  Corollary 5.17, p. 21: on `{1, ..., N}^ℕ` the product measures `μ_p`, `μ_p'` are mutually singular for
+  `p ≠ p'`, credited to Kakutani 1948 (not retrieved). Cited, not formalized here.
+- Maximum entropy (`leave_half_of_maxEntropy`): Jaynes, *Phys. Rev.* 106 (1957) 620; abstract only
+  retrieved, cited for existence.
+
 ## Fences
 
 - "The bottom is the set of all tapes" is the tape-chart `Reading:` (ruling 94). Nothing identifies ⊥ of a
@@ -169,6 +205,12 @@ this file holds what was already in the corpus, the prior art, and the fences.
   wait is computed from: the cylinders of ⊥ of `ℕ → Bool` a tape lies in number wait + 1
   (`tsum_cylinder_bot_indicator`), and their masses `(1 - p)^k` (`trials_cyl` at ⊥) give the mean of wait + 1
   (`lintegral_wait_succ`); § X moves that reference to any `t`.
+- § XI: the observer is named (Tim, 2026-11-26). To an observer of values, a halted state padded with
+  "stay" and a self-loop give the same constant run, and the question asked is heads versus non-heads
+  (`ae_leaves_iff`); to an observer of available moves they differ (the move-side pointers above). The kernel
+  `K` is a supplied argument: nothing derives it from the die or from a `ZPSemilattice`, and in the
+  `ZPSemilattice` `example` the law from ⊥ of `L` exists because `K` is given. `glauber_slot_leaves`
+  relocates the hypothesis `0 < p` into `glauberExciteNN_pos`; it does not remove it.
 - EXPERIMENTAL dependence. `Dial.lean` imports modules marked EXPERIMENTAL; the theorems that use a declaration
   of one are listed below. Uses, by section: `tape_never_fires_iff` (`exists_startBit_iff`, StartBit);
   `dial_fire_within`, `fireWithin_continuous`, `fireWithin_mono`, `dial_not_uniform_witness`, `dial_not_uniform`
@@ -182,7 +224,10 @@ this file holds what was already in the corpus, the prior art, and the fences.
   `wait_bot` and `waitENat` in the `example` naming what singles out ⊥ of `ℕ → Bool`, and `tape_never_fires_iff`
   in the same `example`. § X: `xorHomeo`,
   `xorWith_involutive` (UltrametricView), `det_eq_ofNat_iff` (TapeHalting), `waitENat` (DepthIsWait),
-  `tape_never_fires_iff`. `dial_fire_jump`, `fireMass`, `fireMass_eq`, `fireMass_not_continuousAt_zero`,
+  `tape_never_fires_iff`. § XI: `runLaw_stay_eq_trials`, `runLaw_leaves`, `ae_leaves_iff`,
+  `slot_stay_eq_trials`, `glauber_slot_leaves` and the two `example`s use `trials_cyl` (PoleWithinEnsemble);
+  `glauber_slot_leaves` also `glauberExciteNN` (PoleWithinEnsemble); `leave_half_of_maxEntropy` uses
+  `eq_half_of_maxEntropy` (MaxEntropy); the rest of § XI uses none. `dial_fire_jump`, `fireMass`, `fireMass_eq`, `fireMass_not_continuousAt_zero`,
   `fireWithin`, `dial_digital_limit`, `unpack`, `unpack_apply`, `unpack_measurePreserving`,
   `pack_measurePreserving` and `dial_entropy_pos_iff` use no declaration of an EXPERIMENTAL module (theirs come from
   `ZeroParadox/Information/CrossingTrials.lean` and Mathlib), though their module imports them.
