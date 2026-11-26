@@ -527,8 +527,8 @@ example (w : ℕ → Bool) : (⊥ : ℕ → Bool) ≤ w ∧ ((¬ ∃ k, w k = tr
 
 `Reading:` every tape is a local bottom. Proved: `xorOffset t` sends `t` to ⊥ of `ℕ → Bool`
 (`xorOffset_bot`), so `t` is least in the pointwise order transported along `xorOffset t` (the
-`example` after the not-monotone CONTROL); the order's own ⊥ of `ℕ → Bool` does not move (that
-CONTROL). -/
+`example` after the not-monotone CONTROL); for `t` not ⊥ of `ℕ → Bool`, `xorOffset t` does not
+preserve the pointwise order (that CONTROL). -/
 
 /-- `Statement:` translation by `t` under pointwise `xor` (the compact group `(ℤ/2ℤ)^ℕ`): `xorHomeo t`
 (`ZeroParadox/Valuation/UltrametricView.lean`) as a measurable equivalence. -/
@@ -545,8 +545,9 @@ theorem xorOffset_bot (t : ℕ → Bool) :
   ⟨funext fun n => by rw [xorOffset_apply]; simp, funext fun n => by rw [xorOffset_apply]; simp,
     xorWith_involutive t⟩
 
--- Statement: CONTROL, for `t` not ⊥ of `ℕ → Bool`, `xorOffset t` is not monotone for the pointwise
--- order: it sends ⊥ ≤ `t` to `t` and ⊥; the order bottom does not move with the offset.
+-- Statement: CONTROL, for `t` not ⊥ of `ℕ → Bool`, `xorOffset t` does not preserve the pointwise
+-- order (not monotone): it sends the pair ⊥ of `ℕ → Bool` ≤ `t` to `t` and ⊥ of `ℕ → Bool`
+-- (`xorOffset_bot`).
 example (t : ℕ → Bool) (ht : t ≠ ⊥) : ¬ Monotone (xorOffset t) := fun h => by
   have := h (bot_le : (⊥ : ℕ → Bool) ≤ t)
   rw [(xorOffset_bot t).1, (xorOffset_bot t).2.1] at this
