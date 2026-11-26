@@ -244874,7 +244874,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 4902,
+        "declarations": 4932,
         "files": 249
       },
       "entries": [
@@ -254891,6 +254891,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "0d655c89-031a-44ea-99de-dc5a7d96b9e6",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ae_isRun",
+            "short": "ae_isRun"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ae_isRun",
+            "short": "ae_isRun",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XI (2026-11-26): the dial on the die. A Markov kernel subordinate to the step relation (a Markov chain whose directed graph lies in Motion.step, Levin-Peres-Wilmer Rem. 1.24); the chain law by Ionescu-Tulcea (Kernel.trajMeasure); geometric holding identified with trials p; almost every run leaves iff leaving has positive weight; controls: no kernel at a point with no step, absorbing points have leave-weight 0, ofFun forces Dirac.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "withdrawn",
           "id": "0d6dd94c-0a97-40a4-9383-024a2abe98bb",
           "new": {
@@ -260090,6 +260127,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "14853252-ccca-409d-9a61-89df9dd43e6d",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.isMarkovKernel_slotKernel",
+            "short": "isMarkovKernel_slotKernel"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.isMarkovKernel_slotKernel",
+            "short": "isMarkovKernel_slotKernel",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XI (2026-11-26): the dial on the die. A Markov kernel subordinate to the step relation (a Markov chain whose directed graph lies in Motion.step, Levin-Peres-Wilmer Rem. 1.24); the chain law by Ionescu-Tulcea (Kernel.trajMeasure); geometric holding identified with trials p; almost every run leaves iff leaving has positive weight; controls: no kernel at a point with no step, absorbing points have leave-weight 0, ofFun forces Dirac.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -266544,6 +266618,43 @@
             ]
           },
           "reason": "Land DepthIsWait: endVal on End is the first hitting time det of its digit tape, read in ENat (2026-11-10).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "1ebf4b6c-86ef-4fe9-bb7d-327c1b56600a",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.isMarkovKernel_homK",
+            "short": "isMarkovKernel_homK"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.isMarkovKernel_homK",
+            "short": "isMarkovKernel_homK",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XI (2026-11-26): the dial on the die. A Markov kernel subordinate to the step relation (a Markov chain whose directed graph lies in Motion.step, Levin-Peres-Wilmer Rem. 1.24); the chain law by Ionescu-Tulcea (Kernel.trajMeasure); geometric holding identified with trials p; almost every run leaves iff leaving has positive weight; controls: no kernel at a point with no step, absorbing points have leave-weight 0, ofFun forces Dirac.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -280906,6 +281017,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "3324dfa5-e937-4f2c-be81-ee2212bda684",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.runLaw_leaves",
+            "short": "runLaw_leaves"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.runLaw_leaves",
+            "short": "runLaw_leaves",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XI (2026-11-26): the dial on the die. A Markov kernel subordinate to the step relation (a Markov chain whose directed graph lies in Motion.step, Levin-Peres-Wilmer Rem. 1.24); the chain law by Ionescu-Tulcea (Kernel.trajMeasure); geometric holding identified with trials p; almost every run leaves iff leaving has positive weight; controls: no kernel at a point with no step, absorbing points have leave-weight 0, ofFun forces Dirac.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "334370bb-9765-4575-a1cf-92f200691497",
           "new": {
             "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
@@ -282610,6 +282758,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "364a2d5e-f37f-44c3-80cd-557fe89e5d27",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.leavesAt_of_pos",
+            "short": "leavesAt_of_pos"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.leavesAt_of_pos",
+            "short": "leavesAt_of_pos",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XI (2026-11-26): the dial on the die. A Markov kernel subordinate to the step relation (a Markov chain whose directed graph lies in Motion.step, Levin-Peres-Wilmer Rem. 1.24); the chain law by Ionescu-Tulcea (Kernel.trajMeasure); geometric holding identified with trials p; almost every run leaves iff leaving has positive weight; controls: no kernel at a point with no step, absorbing points have leave-weight 0, ofFun forces Dirac.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "3660e8e8-5a1e-4aed-b9e7-ae36d6bced2e",
           "new": {
             "file": "ZeroParadox/Valuation/PolePassage.lean",
@@ -283517,6 +283702,43 @@
             "role": []
           },
           "reason": "LawvereTaboo: the general fixed-point-free-endomap principle implies weak excluded middle (choice-free), making Lawvere.lean's classical essential rather than accidental",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "37b86c68-d770-40c7-a2af-24dd4390785a",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.measurableSet_stayPaths",
+            "short": "measurableSet_stayPaths"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.measurableSet_stayPaths",
+            "short": "measurableSet_stayPaths",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XI (2026-11-26): the dial on the die. A Markov kernel subordinate to the step relation (a Markov chain whose directed graph lies in Motion.step, Levin-Peres-Wilmer Rem. 1.24); the chain law by Ionescu-Tulcea (Kernel.trajMeasure); geometric holding identified with trials p; almost every run leaves iff leaving has positive weight; controls: no kernel at a point with no step, absorbing points have leave-weight 0, ofFun forces Dirac.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -288150,6 +288372,43 @@
             ]
           },
           "reason": "Die mining landing (ruled 2026-10-21): trap data (emptiness, rank, monotone), no reversal under <, reverse of an injective step, RelHom maps of motions, wheel as a die face",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "3e370285-2edb-4868-b4d1-9d0f1f9d3104",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.stayPaths_step_mass",
+            "short": "stayPaths_step_mass"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.stayPaths_step_mass",
+            "short": "stayPaths_step_mass",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XI (2026-11-26): the dial on the die. A Markov kernel subordinate to the step relation (a Markov chain whose directed graph lies in Motion.step, Levin-Peres-Wilmer Rem. 1.24); the chain law by Ionescu-Tulcea (Kernel.trajMeasure); geometric holding identified with trials p; almost every run leaves iff leaving has positive weight; controls: no kernel at a point with no step, absorbing points have leave-weight 0, ofFun forces Dirac.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -292870,6 +293129,43 @@
             ]
           },
           "reason": "New experimental probe MetaFork.lean — meta-level of the instance-vs-requirements fork (conjecture step c, iterations 1-5)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "44b668bb-fe88-401d-94f6-b5be9ee64565",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.isProbabilityMeasure_runLaw",
+            "short": "isProbabilityMeasure_runLaw"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.isProbabilityMeasure_runLaw",
+            "short": "isProbabilityMeasure_runLaw",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XI (2026-11-26): the dial on the die. A Markov kernel subordinate to the step relation (a Markov chain whose directed graph lies in Motion.step, Levin-Peres-Wilmer Rem. 1.24); the chain law by Ionescu-Tulcea (Kernel.trajMeasure); geometric holding identified with trials p; almost every run leaves iff leaving has positive weight; controls: no kernel at a point with no step, absorbing points have leave-weight 0, ofFun forces Dirac.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -299044,6 +299340,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "4dbde773-dd5c-4ec8-9ee8-2a547f427a8c",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.measurableSet_stayRun",
+            "short": "measurableSet_stayRun"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.measurableSet_stayRun",
+            "short": "measurableSet_stayRun",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XI (2026-11-26): the dial on the die. A Markov kernel subordinate to the step relation (a Markov chain whose directed graph lies in Motion.step, Levin-Peres-Wilmer Rem. 1.24); the chain law by Ionescu-Tulcea (Kernel.trajMeasure); geometric holding identified with trials p; almost every run leaves iff leaving has positive weight; controls: no kernel at a point with no step, absorbing points have leave-weight 0, ofFun forces Dirac.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "4dbdfe56-826e-4549-802e-cfc6c7c6279b",
           "new": {
             "file": "ZeroParadox/Multihomed/OrbitDie.lean",
@@ -303421,6 +303754,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "53fa258c-c75d-4548-91ec-58c15692734e",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.slot_stay_eq_trials",
+            "short": "slot_stay_eq_trials"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.slot_stay_eq_trials",
+            "short": "slot_stay_eq_trials",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XI (2026-11-26): the dial on the die. A Markov kernel subordinate to the step relation (a Markov chain whose directed graph lies in Motion.step, Levin-Peres-Wilmer Rem. 1.24); the chain law by Ionescu-Tulcea (Kernel.trajMeasure); geometric holding identified with trials p; almost every run leaves iff leaving has positive weight; controls: no kernel at a point with no step, absorbing points have leave-weight 0, ofFun forces Dirac.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "5455af27-066a-4099-b9dd-ed70a62f137f",
           "new": {
             "file": "ZeroParadox/Computability/GroundZero.lean",
@@ -304457,6 +304827,43 @@
             ]
           },
           "reason": "New file: the Bernoulli trial space assembled from Mathlib's infinitePi, iIndepFun_infinitePi and second Borel-Cantelli. A consistency result — if the crossing carries a constant positive probability with independent trials, it fires almost surely. Explicitly NOT a necessity result and not an instance-of claim about the framework's bottom.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "55ece9ae-2acb-44e6-8e70-878713477c10",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.runLaw_eq",
+            "short": "runLaw_eq"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.runLaw_eq",
+            "short": "runLaw_eq",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XI (2026-11-26): the dial on the die. A Markov kernel subordinate to the step relation (a Markov chain whose directed graph lies in Motion.step, Levin-Peres-Wilmer Rem. 1.24); the chain law by Ionescu-Tulcea (Kernel.trajMeasure); geometric holding identified with trials p; almost every run leaves iff leaving has positive weight; controls: no kernel at a point with no step, absorbing points have leave-weight 0, ofFun forces Dirac.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -312251,6 +312658,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "60ec6e2f-3a45-45c1-9eea-6a0cebc8a396",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.homK",
+            "short": "homK"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.homK",
+            "short": "homK",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XI (2026-11-26): the dial on the die. A Markov kernel subordinate to the step relation (a Markov chain whose directed graph lies in Motion.step, Levin-Peres-Wilmer Rem. 1.24); the chain law by Ionescu-Tulcea (Kernel.trajMeasure); geometric holding identified with trials p; almost every run leaves iff leaving has positive weight; controls: no kernel at a point with no step, absorbing points have leave-weight 0, ofFun forces Dirac.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "60ef057d-39a0-4e38-a203-6bf15362c187",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -315341,6 +315785,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "6513f06a-58a2-4f0b-b054-4ffbeaff95af",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.runLaw_stay",
+            "short": "runLaw_stay"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.runLaw_stay",
+            "short": "runLaw_stay",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XI (2026-11-26): the dial on the die. A Markov kernel subordinate to the step relation (a Markov chain whose directed graph lies in Motion.step, Levin-Peres-Wilmer Rem. 1.24); the chain law by Ionescu-Tulcea (Kernel.trajMeasure); geometric holding identified with trials p; almost every run leaves iff leaving has positive weight; controls: no kernel at a point with no step, absorbing points have leave-weight 0, ofFun forces Dirac.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "6519232a-72b8-4c9c-a2dc-f7afa682ee69",
           "new": {
             "file": "ZeroParadox/Information/Dial.lean",
@@ -315923,6 +316404,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "664fa4c4-a3dc-4105-99cd-6663bae099c2",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.stayPaths",
+            "short": "stayPaths"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.stayPaths",
+            "short": "stayPaths",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XI (2026-11-26): the dial on the die. A Markov kernel subordinate to the step relation (a Markov chain whose directed graph lies in Motion.step, Levin-Peres-Wilmer Rem. 1.24); the chain law by Ionescu-Tulcea (Kernel.trajMeasure); geometric holding identified with trials p; almost every run leaves iff leaving has positive weight; controls: no kernel at a point with no step, absorbing points have leave-weight 0, ofFun forces Dirac.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -318631,6 +319149,43 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "6a27ba16-f29a-4e40-8b54-386012323190",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.slotKernel",
+            "short": "slotKernel"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.slotKernel",
+            "short": "slotKernel",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XI (2026-11-26): the dial on the die. A Markov kernel subordinate to the step relation (a Markov chain whose directed graph lies in Motion.step, Levin-Peres-Wilmer Rem. 1.24); the chain law by Ionescu-Tulcea (Kernel.trajMeasure); geometric holding identified with trials p; almost every run leaves iff leaving has positive weight; controls: no kernel at a point with no step, absorbing points have leave-weight 0, ofFun forces Dirac.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -327293,6 +327848,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "77390b04-af6b-4486-845a-d904de48bfff",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Subordinate",
+            "short": "Subordinate"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Subordinate",
+            "short": "Subordinate",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XI (2026-11-26): the dial on the die. A Markov kernel subordinate to the step relation (a Markov chain whose directed graph lies in Motion.step, Levin-Peres-Wilmer Rem. 1.24); the chain law by Ionescu-Tulcea (Kernel.trajMeasure); geometric holding identified with trials p; almost every run leaves iff leaving has positive weight; controls: no kernel at a point with no step, absorbing points have leave-weight 0, ofFun forces Dirac.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "774753cf-8ad4-483f-ae98-93bfcd63909f",
           "new": {
@@ -331072,6 +331664,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "7c76f076-5520-4962-b486-d465b5f00386",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.runLaw",
+            "short": "runLaw"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.runLaw",
+            "short": "runLaw",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XI (2026-11-26): the dial on the die. A Markov kernel subordinate to the step relation (a Markov chain whose directed graph lies in Motion.step, Levin-Peres-Wilmer Rem. 1.24); the chain law by Ionescu-Tulcea (Kernel.trajMeasure); geometric holding identified with trials p; almost every run leaves iff leaving has positive weight; controls: no kernel at a point with no step, absorbing points have leave-weight 0, ofFun forces Dirac.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -345416,6 +346045,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "91b58580-dc25-4f38-8295-71144d812e2c",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.glauber_slot_leaves",
+            "short": "glauber_slot_leaves"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.glauber_slot_leaves",
+            "short": "glauber_slot_leaves",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XI (2026-11-26): the dial on the die. A Markov kernel subordinate to the step relation (a Markov chain whose directed graph lies in Motion.step, Levin-Peres-Wilmer Rem. 1.24); the chain law by Ionescu-Tulcea (Kernel.trajMeasure); geometric holding identified with trials p; almost every run leaves iff leaving has positive weight; controls: no kernel at a point with no step, absorbing points have leave-weight 0, ofFun forces Dirac.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "91bc99a6-9626-424b-a508-d6b4721860d0",
           "new": {
             "file": "ZeroParadox/Ordinal/NaturalOpsPow.lean",
@@ -347947,6 +348613,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "95391bd2-c042-4c6c-ad38-91da08e8b7b2",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.runLaw_stay_eq_trials",
+            "short": "runLaw_stay_eq_trials"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.runLaw_stay_eq_trials",
+            "short": "runLaw_stay_eq_trials",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XI (2026-11-26): the dial on the die. A Markov kernel subordinate to the step relation (a Markov chain whose directed graph lies in Motion.step, Levin-Peres-Wilmer Rem. 1.24); the chain law by Ionescu-Tulcea (Kernel.trajMeasure); geometric holding identified with trials p; almost every run leaves iff leaving has positive weight; controls: no kernel at a point with no step, absorbing points have leave-weight 0, ofFun forces Dirac.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "9539b078-60ab-4edc-b7f4-00c3b52d6c86",
           "new": {
             "file": "ZeroParadox/Valuation/DepthIsWait.lean",
@@ -349550,6 +350253,43 @@
             ]
           },
           "reason": "Ruling 280 (a): universe-zoom probe landed (UniverseZoom.lean). Below Ordinal.univ a copy of the lower level, one succ over it leaves every copy; lift commutes with omega-power and fixes epsilon-zero; roleAbove gives epsilon-zero at {0} and univ at the range of lift (H-ONE-MOVE, ordinal instance) (2026-11-15).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "9784c555-670a-4e52-bf69-dd734dd42a9c",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.slotKernel_subordinate",
+            "short": "slotKernel_subordinate"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.slotKernel_subordinate",
+            "short": "slotKernel_subordinate",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XI (2026-11-26): the dial on the die. A Markov kernel subordinate to the step relation (a Markov chain whose directed graph lies in Motion.step, Levin-Peres-Wilmer Rem. 1.24); the chain law by Ionescu-Tulcea (Kernel.trajMeasure); geometric holding identified with trials p; almost every run leaves iff leaving has positive weight; controls: no kernel at a point with no step, absorbing points have leave-weight 0, ofFun forces Dirac.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -356144,6 +356884,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "9fdac96a-31b2-4803-8161-5d385868e4a5",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ofFun_kernel_dirac",
+            "short": "ofFun_kernel_dirac"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ofFun_kernel_dirac",
+            "short": "ofFun_kernel_dirac",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XI (2026-11-26): the dial on the die. A Markov kernel subordinate to the step relation (a Markov chain whose directed graph lies in Motion.step, Levin-Peres-Wilmer Rem. 1.24); the chain law by Ionescu-Tulcea (Kernel.trajMeasure); geometric holding identified with trials p; almost every run leaves iff leaving has positive weight; controls: no kernel at a point with no step, absorbing points have leave-weight 0, ofFun forces Dirac.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "9fe0ece1-9ae7-4f25-b961-ad2677cc38cc",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -356543,6 +357320,80 @@
             ]
           },
           "reason": "Land TapeHalting: toComp (det w) halts exactly at the first firing, equals the slot run's crossing step, a.s. under trials p with 0 < p, and depth endVal (2026-11-10).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a0411ac4-7c8b-47f7-85a8-77567fdf702f",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ae_leaves_iff",
+            "short": "ae_leaves_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ae_leaves_iff",
+            "short": "ae_leaves_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XI (2026-11-26): the dial on the die. A Markov kernel subordinate to the step relation (a Markov chain whose directed graph lies in Motion.step, Levin-Peres-Wilmer Rem. 1.24); the chain law by Ionescu-Tulcea (Kernel.trajMeasure); geometric holding identified with trials p; almost every run leaves iff leaving has positive weight; controls: no kernel at a point with no step, absorbing points have leave-weight 0, ofFun forces Dirac.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a0466350-5f12-42e7-a179-efab64d66437",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.slotKernel_leave",
+            "short": "slotKernel_leave"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.slotKernel_leave",
+            "short": "slotKernel_leave",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XI (2026-11-26): the dial on the die. A Markov kernel subordinate to the step relation (a Markov chain whose directed graph lies in Motion.step, Levin-Peres-Wilmer Rem. 1.24); the chain law by Ionescu-Tulcea (Kernel.trajMeasure); geometric holding identified with trials p; almost every run leaves iff leaving has positive weight; controls: no kernel at a point with no step, absorbing points have leave-weight 0, ofFun forces Dirac.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -360935,6 +361786,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "a7878f9a-190a-4f93-a250-b713443a842f",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.partialTraj_stayPaths",
+            "short": "partialTraj_stayPaths"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.partialTraj_stayPaths",
+            "short": "partialTraj_stayPaths",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XI (2026-11-26): the dial on the die. A Markov kernel subordinate to the step relation (a Markov chain whose directed graph lies in Motion.step, Levin-Peres-Wilmer Rem. 1.24); the chain law by Ionescu-Tulcea (Kernel.trajMeasure); geometric holding identified with trials p; almost every run leaves iff leaving has positive weight; controls: no kernel at a point with no step, absorbing points have leave-weight 0, ofFun forces Dirac.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "a79fe9eb-f7b1-4a77-91ff-953e3dbe173c",
           "new": {
             "file": "ZeroParadox/Multihomed/BendDie.lean",
@@ -361993,6 +362881,43 @@
             ]
           },
           "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a8ee0f24-493a-4458-a33a-a86a8566c8f5",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.measurable_pathLast",
+            "short": "measurable_pathLast"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.measurable_pathLast",
+            "short": "measurable_pathLast",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XI (2026-11-26): the dial on the die. A Markov kernel subordinate to the step relation (a Markov chain whose directed graph lies in Motion.step, Levin-Peres-Wilmer Rem. 1.24); the chain law by Ionescu-Tulcea (Kernel.trajMeasure); geometric holding identified with trials p; almost every run leaves iff leaving has positive weight; controls: no kernel at a point with no step, absorbing points have leave-weight 0, ofFun forces Dirac.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -379025,6 +379950,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "bfa77586-ff2d-4f93-8313-5ace26beb1cb",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.not_subordinate_of_noStepAt",
+            "short": "not_subordinate_of_noStepAt"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.not_subordinate_of_noStepAt",
+            "short": "not_subordinate_of_noStepAt",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XI (2026-11-26): the dial on the die. A Markov kernel subordinate to the step relation (a Markov chain whose directed graph lies in Motion.step, Levin-Peres-Wilmer Rem. 1.24); the chain law by Ionescu-Tulcea (Kernel.trajMeasure); geometric holding identified with trials p; almost every run leaves iff leaving has positive weight; controls: no kernel at a point with no step, absorbing points have leave-weight 0, ofFun forces Dirac.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "bfbf82e5-5516-4cc8-9e8e-39243462e1f8",
           "new": {
             "file": "ZeroParadox/Information/CrossingTrials.lean",
@@ -384662,6 +385624,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "c802ee1e-255b-4d1c-8ceb-1155aaab09ce",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.pathLast",
+            "short": "pathLast"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.pathLast",
+            "short": "pathLast",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XI (2026-11-26): the dial on the die. A Markov kernel subordinate to the step relation (a Markov chain whose directed graph lies in Motion.step, Levin-Peres-Wilmer Rem. 1.24); the chain law by Ionescu-Tulcea (Kernel.trajMeasure); geometric holding identified with trials p; almost every run leaves iff leaving has positive weight; controls: no kernel at a point with no step, absorbing points have leave-weight 0, ofFun forces Dirac.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "c811f970-f6f0-4727-ac55-29281cb6b451",
           "new": {
             "file": "ZeroParadox/Multihomed/CollapseDie.lean",
@@ -387505,6 +388504,43 @@
             ]
           },
           "reason": "Die v2 final batch: drawing vs set (self-steps, accessibility, forced rank), ends of a view, orders on motions, placements as views, relaxed least-fixed-point schema, UP legs as nuclei",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "cbfe7026-2b8b-4bc7-a66b-ff44c3e3a9c9",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.leave_half_of_maxEntropy",
+            "short": "leave_half_of_maxEntropy"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.leave_half_of_maxEntropy",
+            "short": "leave_half_of_maxEntropy",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XI (2026-11-26): the dial on the die. A Markov kernel subordinate to the step relation (a Markov chain whose directed graph lies in Motion.step, Levin-Peres-Wilmer Rem. 1.24); the chain law by Ionescu-Tulcea (Kernel.trajMeasure); geometric holding identified with trials p; almost every run leaves iff leaving has positive weight; controls: no kernel at a point with no step, absorbing points have leave-weight 0, ofFun forces Dirac.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -418210,6 +419246,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "f5187dd2-8aa7-4fda-9834-d3e1400c4d9e",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.leave_zero_of_selfOnlyAt",
+            "short": "leave_zero_of_selfOnlyAt"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.leave_zero_of_selfOnlyAt",
+            "short": "leave_zero_of_selfOnlyAt",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XI (2026-11-26): the dial on the die. A Markov kernel subordinate to the step relation (a Markov chain whose directed graph lies in Motion.step, Levin-Peres-Wilmer Rem. 1.24); the chain law by Ionescu-Tulcea (Kernel.trajMeasure); geometric holding identified with trials p; almost every run leaves iff leaving has positive weight; controls: no kernel at a point with no step, absorbing points have leave-weight 0, ofFun forces Dirac.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "f5380a16-40dd-4f9d-8c9e-ec123f2d1d45",
           "new": {
@@ -422164,6 +423237,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "fa63747b-eea8-48d7-aa1f-6fb967edc548",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.start_mem_stayPaths",
+            "short": "start_mem_stayPaths"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.start_mem_stayPaths",
+            "short": "start_mem_stayPaths",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XI (2026-11-26): the dial on the die. A Markov kernel subordinate to the step relation (a Markov chain whose directed graph lies in Motion.step, Levin-Peres-Wilmer Rem. 1.24); the chain law by Ionescu-Tulcea (Kernel.trajMeasure); geometric holding identified with trials p; almost every run leaves iff leaving has positive weight; controls: no kernel at a point with no step, absorbing points have leave-weight 0, ofFun forces Dirac.",
           "verify": {
             "axioms": null,
             "sorry_free": null
