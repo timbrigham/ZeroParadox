@@ -67,6 +67,7 @@ import ZeroParadox.Valuation.PadicWavelet
 import ZeroParadox.Information.BottomTotality
 import ZeroParadox.Valuation.PadicKoopmanVladimirov
 import ZeroParadox.Givens
+import ZeroParadox.Information.Dial
 import Mathlib.RingTheory.Valuation.PrimeMultiplicity
 import Mathlib.Order.FixedPoints
 import Mathlib.SetTheory.Ordinal.FixedPoint
@@ -914,6 +915,20 @@ example : ZeroParadox.Disjunctive (fun n => xor (ZeroParadox.champ n) false) := 
 -- minimal and maximal as being the totality of all of its representations?" Across charts the
 -- totality is a family indexed by chart, never a union of occupants (§ ROLE). "Minimal" is "fixed by
 -- one condition", not a measured complexity of the measure.
+-- Statement: the law is minimal in description and maximal in entropy: exactly one `p` has
+-- `binEntropy p = log 2`, and `binEntropy q ≤ log 2` for every real `q`.
+#check @ZeroParadox.law_two_faces
+
+/-! ### The dial: the chance of changing state as the parameter `p` of `trials p hp` -/
+
+-- Statement: a tape never fires iff it is ⊥ of `ℕ → Bool`, the all-`false` tape.
+#check @ZeroParadox.tape_never_fires_iff
+-- Statement: the `trials p hp` mass of "some stage fires" is 0 at `p = 0` and 1 at every `0 < p ≤ 1`,
+-- and as a function of `p` it is not continuous at 0 (`fireMass_not_continuousAt_zero`).
+#check @ZeroParadox.dial_fire_jump
+-- Statement: for `trials 0 hp`-almost every tape the image run `φ ∘ slotRun w` is ⊥ of `L` at every
+-- stage; for `0 < p ≤ 1`, for almost every tape it is somewhere not ⊥ of `L`. Forward maps only.
+#check @ZeroParadox.dial_jump_into_L
 
 /-! ### The givens at the die level: given (a) as a chart claim (least in ℤ_[2]'s norm preorder, greatest at its image in `ℕ∞`), and a limit -/
 
