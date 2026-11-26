@@ -1,6 +1,7 @@
 import ZeroParadox.Information.BottomTotality
 import ZeroParadox.Information.StartBit
 import ZeroParadox.Information.TwoRequirements
+import ZeroParadox.Valuation.UltrametricView
 import Mathlib.Tactic
 
 /-!
@@ -19,9 +20,9 @@ analog and a digital value
 ---
 
 ## Formal Overview (AI-assisted)
-Switch (§ II): "some stage fires" has mass 0 at `p = 0`, 1 for `0 < p ≤ 1`. Volume (§ III): "fires
-within `n` stages", `1 - (1 - p) ^ n`, continuous, tends to the switch non-uniformly. § IV: the jump in
-`L`, forward only; § V-VI: schedules, the law; § VII: mean wait `p⁻¹`; § VIII: columns; § IX: two faces.
+Switch (§ II): "some stage fires" has mass 0 at `p = 0`, 1 for `0 < p ≤ 1`. Volume (§ III): "fires within `n`
+stages" is continuous in `p` and tends to the switch non-uniformly. § IV: the jump in `L`; § V-VI: schedules,
+the law; § VII: mean of `wait + 1` is `p⁻¹`; § VIII: columns; § IX: entropy pins `0 < p < 1`; § X: translations.
 -/
 
 set_option maxHeartbeats 400000
@@ -306,7 +307,7 @@ section WaitPackFaces
 
 open NInf
 
-/-! ### § VII. The wait chart: chance `p`, mean waiting count `p⁻¹` -/
+/-! ### § VII. The wait chart: chance `p`, mean of `wait + 1` equal to `p⁻¹` -/
 
 /-- `Statement:` for every tape `w`, counting the `k` with `w ∈ PiNat.cylinder ⊥ k` (first `k` stages
 all `false`, ⊥ of `ℕ → Bool`) gives `waitENat (det w) + 1` in `ℝ≥0∞`: the tail-sum formula, pointwise. -/
@@ -440,43 +441,197 @@ example : ¬ MeasurePreserving unpack (Measure.dirac (fun k => decide (k = 0)))
   rw [Set.indicator_of_notMem h1, Set.indicator_of_mem h2] at e
   simp at e
 
-/-! ### § IX. Two faces pin the dial -/
+/-! ### § IX. Positive entropy pins the dial -/
+
+/-- `Statement:` for `p ≤ 1`, `binEntropy p > 0` iff `0 < p < 1`; both directions. -/
+theorem dial_entropy_pos_iff (p : NNReal) (hp : p ≤ 1) :
+    0 < Real.binEntropy (p : ℝ) ↔ 0 < p ∧ p < 1 := by
+  constructor
+  · intro h
+    refine ⟨pos_iff_ne_zero.2 fun h0 => ?_, lt_of_le_of_ne hp fun h1 => ?_⟩
+    · subst h0; simp at h
+    · subst h1; simp at h
+  · rintro ⟨h0, h1⟩
+    exact Real.binEntropy_pos (by exact_mod_cast h0) (by exact_mod_cast h1)
+
+/-- `Statement:` if `binEntropy p > 0`, ⊥ of `ℕ → Bool` is in the support of `trials p hp`; one way
+(the `p = 0` CONTROL below refutes the converse). -/
+theorem bot_mem_support_of_entropy_pos (p : NNReal) (hp : p ≤ 1)
+    (h : 0 < Real.binEntropy (p : ℝ)) : (⊥ : ℕ → Bool) ∈ (trials p hp).support :=
+  (bot_mem_support_iff p hp).2 ((dial_entropy_pos_iff p hp).1 h).2
 
 /-- `Statement:` ⊥ of `ℕ → Bool` is in the support of `trials p hp` and `binEntropy p > 0` iff
-`0 < p < 1`; both directions. -/
+`0 < p < 1`; the support conjunct is implied by the entropy one (`bot_mem_support_of_entropy_pos`). -/
 theorem dial_two_faces_iff (p : NNReal) (hp : p ≤ 1) :
     ((⊥ : ℕ → Bool) ∈ (trials p hp).support ∧ 0 < Real.binEntropy (p : ℝ)) ↔ 0 < p ∧ p < 1 := by
-  rw [bot_mem_support_iff]
-  constructor
-  · rintro ⟨h1, h0⟩
-    refine ⟨pos_iff_ne_zero.2 fun h => ?_, h1⟩
-    subst h; simp at h0
-  · rintro ⟨h0, h1⟩
-    exact ⟨h1, Real.binEntropy_pos (by exact_mod_cast h0) (by exact_mod_cast h1)⟩
+  rw [← dial_entropy_pos_iff p hp]
+  exact ⟨And.right, fun h => ⟨bot_mem_support_of_entropy_pos p hp h, h⟩⟩
 
-/-- `Statement:` under those two faces, "some stage fires" has `trials p hp` mass 1
-(`dial_fire_jump`), and ⊥ of `ℕ → Bool` is in the support and null (`trials_bot_null`).
-`Reading:` (Tim's) ⊥ simultaneously minimally and maximally complex: the law contains the point, the
-point does not contain the law (on ⊥ of `End`, columns all ⊥ exactly at ⊥: `natDirs_bot_iff`). -/
-theorem dial_pinned_faces (p : NNReal) (hp : p ≤ 1)
-    (h : (⊥ : ℕ → Bool) ∈ (trials p hp).support ∧ 0 < Real.binEntropy (p : ℝ)) :
-    trials p hp {w | ∃ k, w k = true} = 1 ∧ (⊥ : ℕ → Bool) ∈ (trials p hp).support ∧
-      trials p hp {(⊥ : ℕ → Bool)} = 0 := by
-  obtain ⟨h0, -⟩ := (dial_two_faces_iff p hp).1 h
-  exact ⟨by rw [dial_fire_jump, ite_eq_right h0.ne'], h.1, trials_bot_null p hp h0⟩
+/-- `Statement:` if `0 < p < 1`, every tape `t` is in the support of `trials p hp` and `{t}` is
+`trials p hp`-null: full support and no atoms. -/
+theorem trials_support_null (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p) (hp1 : p < 1)
+    (t : ℕ → Bool) : t ∈ (trials p hp).support ∧ trials p hp {t} = 0 := by
+  refine ⟨by rw [trials_support_univ p hp hp0 hp1]; trivial, ?_⟩
+  set m : NNReal := max p (1 - p) with hm
+  have hm1 : m < 1 := max_lt hp1 (tsub_lt_self zero_lt_one hp0)
+  have hle : ∀ n : ℕ, trials p hp {t} ≤ (m : ENNReal) ^ n := fun n => by
+    have hsub : ({t} : Set (ℕ → Bool)) ⊆ PiNat.cylinder t n := fun w hw => by
+      rw [Set.mem_singleton_iff] at hw; subst hw; exact PiNat.self_mem_cylinder _ _
+    refine (measure_mono hsub).trans ?_
+    rw [trials_cyl]
+    refine (Finset.prod_le_prod (s := Finset.range n) (g := fun _ => (m : ENNReal))
+      fun i _ => ?_).trans (by rw [Finset.prod_const, Finset.card_range])
+    split_ifs
+    · exact_mod_cast le_max_left _ _
+    · exact_mod_cast le_max_right _ _
+  have ht : Tendsto (fun n : ℕ => (m : ENNReal) ^ n) atTop (𝓝 0) :=
+    ENNReal.tendsto_pow_atTop_nhds_zero_of_lt_one (by exact_mod_cast hm1)
+  exact le_antisymm (ge_of_tendsto' ht hle) zero_le
 
--- Statement: CONTROL `p = 0`: ⊥ of `ℕ → Bool` in the support, entropy 0. Reading: the point
--- without the law.
+-- Statement: CONTROL `p = 0`: `{⊥}` of `ℕ → Bool` has `trials 0` mass 1, an atom.
+example : trials 0 zero_le_one {(⊥ : ℕ → Bool)} = 1 := by
+  rw [trials_zero_eq_dirac]; exact Measure.dirac_apply_of_mem (Set.mem_singleton _)
+
+/-- `Statement:` if `binEntropy p > 0`, "some stage fires" has `trials p hp` mass 1
+(`dial_fire_jump`), and every tape, ⊥ of `ℕ → Bool` among them, is in the support and null
+(`trials_support_null`). No conjunct singles out ⊥ of `ℕ → Bool`; the `example` after the
+CONTROLs states what does. -/
+theorem dial_pinned_faces (p : NNReal) (hp : p ≤ 1) (h : 0 < Real.binEntropy (p : ℝ)) :
+    trials p hp {w | ∃ k, w k = true} = 1 ∧
+      ∀ t : ℕ → Bool, t ∈ (trials p hp).support ∧ trials p hp {t} = 0 := by
+  obtain ⟨h0, h1⟩ := (dial_entropy_pos_iff p hp).1 h
+  exact ⟨by rw [dial_fire_jump, ite_eq_right h0.ne'], trials_support_null p hp h0 h1⟩
+
+-- Statement: CONTROL `p = 0`: ⊥ of `ℕ → Bool` in the support, entropy 0; the converse of
+-- `bot_mem_support_of_entropy_pos` fails.
 example : (⊥ : ℕ → Bool) ∈ (trials 0 zero_le_one).support ∧
     Real.binEntropy ((0 : NNReal) : ℝ) = 0 :=
   ⟨(bot_mem_support_iff 0 _).2 zero_lt_one, by simp⟩
 
--- Statement: CONTROL `p = 1`: ⊥ of `ℕ → Bool` not in the support, entropy 0, firing of mass 1.
--- Reading: the law without the point.
+-- Statement: CONTROL `p = 1`: entropy 0, ⊥ of `ℕ → Bool` not in the support, firing of mass 1; it
+-- meets neither conjunct of `dial_two_faces_iff`, so firing of mass 1 does not give positive entropy.
 example : (⊥ : ℕ → Bool) ∉ (trials 1 le_rfl).support ∧ Real.binEntropy ((1 : NNReal) : ℝ) = 0 ∧
     trials 1 le_rfl {w | ∃ k, w k = true} = 1 :=
   ⟨by rw [bot_mem_support_iff]; exact lt_irrefl 1, by simp,
     by rw [dial_fire_jump, ite_eq_right one_ne_zero]⟩
+
+-- Statement: what singles out ⊥ of `ℕ → Bool`, at every `p`: the least tape in the pointwise order
+-- (`bot_le`), the only never-firing tape (`tape_never_fires_iff`), wait ⊤ of `ℕ∞` (`wait_bot`).
+-- Reading: (Tim's) ⊥ simultaneously minimally and maximally complex; the complexity rate of
+-- `trials p` tapes is in `ZeroParadox/Information/MaxEntropy.lean` § V (Brudno, Bernoulli case).
+example (w : ℕ → Bool) : (⊥ : ℕ → Bool) ≤ w ∧ ((¬ ∃ k, w k = true) ↔ w = fun _ => false) ∧
+    waitENat (det (⊥ : ℕ → Bool)) = ⊤ :=
+  ⟨bot_le, tape_never_fires_iff w, wait_bot⟩
+
+/-! ### § X. Every tape is a local bottom: translation in the Cantor group -/
+
+/-- `Statement:` translation by `t` under pointwise `xor` (the compact group `(ℤ/2ℤ)^ℕ`): `xorHomeo t`
+(`ZeroParadox/Valuation/UltrametricView.lean`) as a measurable equivalence. -/
+noncomputable def xorOffset (t : ℕ → Bool) : (ℕ → Bool) ≃ᵐ (ℕ → Bool) :=
+  (xorHomeo t).toMeasurableEquiv
+
+/-- `Statement:` `xorOffset t w n = xor (t n) (w n)`. -/
+theorem xorOffset_apply (t w : ℕ → Bool) (n : ℕ) : xorOffset t w n = xor (t n) (w n) := rfl
+
+/-- `Statement:` `xorOffset t` sends ⊥ of `ℕ → Bool` to `t` and `t` to ⊥ of `ℕ → Bool`, and is its
+own inverse. -/
+theorem xorOffset_bot (t : ℕ → Bool) :
+    xorOffset t ⊥ = t ∧ xorOffset t t = ⊥ ∧ Function.Involutive (xorOffset t) :=
+  ⟨funext fun n => by rw [xorOffset_apply]; simp, funext fun n => by rw [xorOffset_apply]; simp,
+    xorWith_involutive t⟩
+
+-- Statement: CONTROL, for `t` not ⊥ of `ℕ → Bool`, `xorOffset t` is not monotone for the pointwise
+-- order: it sends ⊥ ≤ `t` to `t` and ⊥; the order bottom does not move with the offset.
+example (t : ℕ → Bool) (ht : t ≠ ⊥) : ¬ Monotone (xorOffset t) := fun h => by
+  have := h (bot_le : (⊥ : ℕ → Bool) ≤ t)
+  rw [(xorOffset_bot t).1, (xorOffset_bot t).2.1] at this
+  exact ht (le_bot_iff.1 this)
+
+/-- `Statement:` the wait of `xorOffset t w` is the first disagreement of `w` with `t`:
+`det (xorOffset t w) = ofNat n` iff `w n ≠ t n` and `w k = t k` for every `k < n`. -/
+theorem det_xorOffset_eq_ofNat_iff (t w : ℕ → Bool) (n : ℕ) :
+    det (xorOffset t w) = ofNat n ↔ w n ≠ t n ∧ ∀ k < n, w k = t k := by
+  rw [det_eq_ofNat_iff]
+  simp only [xorOffset_apply]
+  constructor
+  · rintro ⟨h1, h2⟩
+    refine ⟨fun h => by rw [h] at h1; simp at h1, fun k hk => ?_⟩
+    have := h2 k hk
+    cases ht : t k <;> cases hw : w k <;> simp_all
+  · rintro ⟨h1, h2⟩
+    refine ⟨?_, fun k hk => by rw [h2 k hk]; simp⟩
+    cases ht : t n <;> cases hw : w n <;> simp_all
+
+set_option linter.deprecated false in
+/-- `Statement:` `xorOffset t` preserves `fairTape` for every tape `t`: the fair coin is invariant
+under every translation. -/
+theorem xorOffset_measurePreserving_fair (t : ℕ → Bool) :
+    MeasurePreserving (xorOffset t) fairTape fairTape := by
+  have hT : (PMF.bernoulli (1/2) (by norm_num)).toMeasure.map (xor true) =
+      (PMF.bernoulli (1/2) (by norm_num)).toMeasure := by
+    ext s hs
+    rw [Measure.map_apply (measurable_of_finite _) hs, PMF.toMeasure_apply_fintype,
+      PMF.toMeasure_apply_fintype, Fintype.sum_bool, Fintype.sum_bool]
+    by_cases h1 : true ∈ s <;> by_cases h0 : false ∈ s <;> simp [h1, h0, PMF.bernoulli_apply]
+  have hF : (xor false : Bool → Bool) = id := funext fun b => Bool.false_xor b
+  refine ⟨(xorOffset t).measurable, ?_⟩
+  show Measure.map (fun w i => xor (t i) (w i)) (trials (1/2) _) = trials (1/2) _
+  unfold trials
+  rw [Measure.infinitePi_map_pi _ (fun i => measurable_of_finite _)]
+  congr 1; funext i
+  cases t i
+  · rw [hF, Measure.map_id]
+  · exact hT
+
+/-- `Statement:` under `fairTape`, the wait to the first disagreement with `t` has the law of the wait
+from ⊥ of `ℕ → Bool`: the two masses agree on every set `S` of values in `ℕ∞`. -/
+theorem fair_wait_offset (t : ℕ → Bool) (S : Set ℕ∞) :
+    fairTape {w | waitENat (det (xorOffset t w)) ∈ S} = fairTape {w | waitENat (det w) ∈ S} :=
+  (xorOffset_measurePreserving_fair t).measure_preimage_equiv {w | waitENat (det w) ∈ S}
+
+/-- `Statement:` for `p ≤ 1`, `xorOffset t` preserves `trials p hp` iff `t` is ⊥ of `ℕ → Bool` or
+`p = 1/2`; both directions. `Reading:` (Tim's) a baseline and a local reference change: every tape is
+the never-firing bottom of its own offset chart, and only the fair coin makes the change free. -/
+theorem xorOffset_measurePreserving_iff (p : NNReal) (hp : p ≤ 1) (t : ℕ → Bool) :
+    MeasurePreserving (xorOffset t) (trials p hp) (trials p hp) ↔ t = ⊥ ∨ p = 1/2 := by
+  constructor
+  · intro h
+    by_cases ht : t = ⊥
+    · exact Or.inl ht
+    right
+    obtain ⟨k, hk⟩ : ∃ k, t k = true := by
+      by_contra hn; exact ht ((tape_never_fires_iff t).1 hn)
+    have e := h.measure_preimage_equiv (fires k)
+    have hpre : xorOffset t ⁻¹' fires k = (fires k)ᶜ := by
+      ext w; simp [fires, xorOffset_apply, hk]
+    rw [hpre, prob_compl_eq_one_sub (fires_measurable k), trials_fires] at e
+    have e' : ((1 - p : NNReal) : ENNReal) = p := by
+      rw [ENNReal.coe_sub, ENNReal.coe_one]; exact e
+    have e'' : 1 - p = p := by exact_mod_cast e'
+    have h2 : (1 : NNReal) = p + p := by
+      calc (1 : NNReal) = 1 - p + p := (tsub_add_cancel_of_le hp).symm
+        _ = p + p := by rw [e'']
+    apply NNReal.eq
+    have h3 := congrArg (fun x : NNReal => (x : ℝ)) h2
+    push_cast at h3 ⊢
+    linarith
+  · rintro (rfl | rfl)
+    · have e : xorOffset ⊥ = MeasurableEquiv.refl _ := by ext w n; simp [xorOffset_apply]
+      rw [e]; exact MeasurePreserving.id _
+    · exact xorOffset_measurePreserving_fair t
+
+-- Statement: CONTROL `p = 1/2`, `t = ⊥` of `ℕ → Bool`: the identity translation, trivially preserving.
+example : MeasurePreserving (xorOffset ⊥) fairTape fairTape :=
+  (xorOffset_measurePreserving_iff (1/2) (by norm_num) ⊥).2 (Or.inl rfl)
+
+-- Statement: CONTROL `p = 1/4`, `t` true only at stage 0: not preserving.
+example : ¬ MeasurePreserving (xorOffset (fun k => decide (k = 0)))
+    (trials (1/4) (div_le_one_of_le₀ (by norm_num) (by norm_num)))
+    (trials (1/4) (div_le_one_of_le₀ (by norm_num) (by norm_num))) := by
+  rw [xorOffset_measurePreserving_iff]
+  rintro (h | h)
+  · have := congrFun h 0; simp at this
+  · norm_num at h
 
 end WaitPackFaces
 
@@ -512,6 +667,16 @@ open ZeroParadox
 #print axioms unpack_apply
 #print axioms unpack_measurePreserving
 #print axioms pack_measurePreserving
+#print axioms dial_entropy_pos_iff
+#print axioms bot_mem_support_of_entropy_pos
 #print axioms dial_two_faces_iff
+#print axioms trials_support_null
 #print axioms dial_pinned_faces
+#print axioms xorOffset
+#print axioms xorOffset_apply
+#print axioms xorOffset_bot
+#print axioms det_xorOffset_eq_ofNat_iff
+#print axioms xorOffset_measurePreserving_fair
+#print axioms fair_wait_offset
+#print axioms xorOffset_measurePreserving_iff
 end PurityCheck
