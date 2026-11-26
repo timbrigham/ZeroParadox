@@ -517,12 +517,17 @@ example : (⊥ : ℕ → Bool) ∉ (trials 1 le_rfl).support ∧ Real.binEntropy
     by rw [dial_fire_jump, ite_eq_right one_ne_zero]⟩
 
 -- Statement: what singles out ⊥ of `ℕ → Bool`, at every `p`: the least tape in the pointwise order
--- (`bot_le`), the only never-firing tape (`tape_never_fires_iff`), wait ⊤ of `ℕ∞` (`wait_bot`).
+-- (`bot_le`), the only never-firing tape (`tape_never_fires_iff`), the only tape with wait ⊤ of
+-- `ℕ∞` (`wait_bot`; converse via `natCast_le_waitENat_iff`).
 -- Reading: (Tim's) ⊥ simultaneously minimally and maximally complex; the complexity rate of
 -- `trials p` tapes is `brudno_ae_trials` (`ZeroParadox/Information/BrudnoBridge.lean`).
 example (w : ℕ → Bool) : (⊥ : ℕ → Bool) ≤ w ∧ ((¬ ∃ k, w k = true) ↔ w = fun _ => false) ∧
-    waitENat (det (⊥ : ℕ → Bool)) = ⊤ :=
-  ⟨bot_le, tape_never_fires_iff w, wait_bot⟩
+    (waitENat (det w) = ⊤ ↔ w = ⊥) := by
+  refine ⟨bot_le, tape_never_fires_iff w, fun h => ?_, fun h => h ▸ wait_bot⟩
+  funext k
+  have h1 : ((k + 1 : ℕ) : ℕ∞) ≤ waitENat (det w) := by rw [h]; exact le_top
+  rw [natCast_le_waitENat_iff, ofNat_le_det_iff] at h1
+  exact h1 k (Nat.lt_succ_self k)
 
 /-! ### § X. Translation in the Cantor group
 
@@ -989,9 +994,11 @@ theorem glauber_slot_leaves (ΔE T : ℝ) :
   exact_mod_cast glauberExciteNN_pos ΔE T
 
 -- Statement: CONTROL, `slotKernel 0` (subordinate, since `false` steps to itself): almost no run
--- leaves `false`.
-example : ¬ ∀ᵐ x ∂(runLaw (slotKernel 0 zero_le_one) false), ∃ i, x i ≠ false := by
-  rw [ae_leaves_iff, slotKernel_leave]; simp
+-- leaves `false` (`runLaw_leaves` at leave-weight 0).
+example : ∀ᵐ x ∂(runLaw (slotKernel 0 zero_le_one) false), ∀ i, x i = false := by
+  have h := runLaw_leaves (slotKernel 0 zero_le_one) false
+  rw [slotKernel_leave] at h
+  rw [ae_iff]; simpa using h
 
 -- Statement: CONTROL, the converse of `leavesAt_of_pos` fails: `slotKernel 0` is subordinate to
 -- `slotMotion`, `false` steps elsewhere there, and the leave-weight at `false` is 0.
