@@ -901,7 +901,8 @@ example : ZeroParadox.Disjunctive (fun n => xor (ZeroParadox.champ n) false) := 
 
 /-! ### One ensemble, two faces: the law and its members -/
 
--- Statement: one ensemble, `fairTape`: exactly one coin maximizes binary entropy (its `trials` is
+-- Statement: one ensemble, `fairTape`: exactly one coin attains binary entropy `log 2` (that `log 2`
+-- bounds it everywhere is `law_two_faces` below, not this theorem; its `trials` is
 -- `fairTape`, `trials_eq_fairTape_of_maxEntropy`, not a conjunct); for each prefix-free decoder `D`,
 -- almost every tape is incompressible for `D`; ⊥ of `ℕ → Bool` is not Martin-Löf random for it and
 -- is in the closure of its random firing tapes.
@@ -915,19 +916,25 @@ example : ZeroParadox.Disjunctive (fun n => xor (ZeroParadox.champ n) false) := 
 -- minimal and maximal as being the totality of all of its representations?" Across charts the
 -- totality is a family indexed by chart, never a union of occupants (§ ROLE). "Minimal" is "fixed by
 -- one condition", not a measured complexity of the measure.
--- Statement: the law is minimal in description and maximal in entropy: exactly one `p` has
--- `binEntropy p = log 2`, and `binEntropy q ≤ log 2` for every real `q`.
+-- Statement: exactly one `p` has `binEntropy p = log 2`, and `binEntropy q ≤ log 2` for every real `q`.
+-- Reading: the law is minimal in description (one condition fixes it) and maximal in entropy; no
+-- description length is measured.
 #check @ZeroParadox.law_two_faces
 
 /-! ### The dial: the chance of changing state as the parameter `p` of `trials p hp` -/
 
 -- Statement: a tape never fires iff it is ⊥ of `ℕ → Bool`, the all-`false` tape.
 #check @ZeroParadox.tape_never_fires_iff
--- Statement: the `trials p hp` mass of "some stage fires" is 0 at `p = 0` and 1 at every `0 < p ≤ 1`,
--- and as a function of `p` it is not continuous at 0 (`fireMass_not_continuousAt_zero`).
+-- Statement: the `trials p hp` mass of "some stage fires" is 0 at `p = 0` and 1 at every `0 < p ≤ 1`.
 #check @ZeroParadox.dial_fire_jump
--- Statement: for `trials 0 hp`-almost every tape the image run `φ ∘ slotRun w` is ⊥ of `L` at every
--- stage; for `0 < p ≤ 1`, for almost every tape it is somewhere not ⊥ of `L`. Forward maps only.
+-- Statement: that mass, clamped to `fireMass p` on all of `NNReal`, is not continuous at `p = 0`.
+#check @ZeroParadox.fireMass_not_continuousAt_zero
+-- Statement: the mass of "some stage below `n` fires", `fireWithin n`, is monotone in `p`.
+#check @ZeroParadox.fireWithin_mono
+-- Statement: if `φ : Bool → L` sends `false` to ⊥ of `L` and `true` to a point other than ⊥ of `L`,
+-- every image run `φ ∘ slotRun w` is ⊥ of `L` at stage 0; for `trials 0 hp`-almost every tape it is
+-- ⊥ of `L` at every stage; for `0 < p ≤ 1`, for almost every tape it is somewhere not ⊥ of `L`.
+-- Forward maps only.
 #check @ZeroParadox.dial_jump_into_L
 
 /-! ### The givens at the die level: given (a) as a chart claim (least in ℤ_[2]'s norm preorder, greatest at its image in `ℕ∞`), and a limit -/
