@@ -139,8 +139,8 @@ this file holds what was already in the corpus, the prior art, and the fences.
 - "The bottom is the set of all tapes" is the tape-chart `Reading:` (ruling 94). Nothing identifies ⊥ of a
   `ZPSemilattice` with `ℕ → Bool`; `dial_jump_into_L` runs tape → `slotRun` → image under `φ`, forward only.
 - "Certain" means probability one. ⊥ of `ℕ → Bool` is in the support of `trials p hp` exactly for `p < 1`
-  (`bot_mem_support_iff`) and its singleton has mass 0 exactly for `0 < p` (`trials_bot_null`, and mass 1 at
-  `p = 0`); for `0 < p < 1` every tape has both properties (`trials_support_null`).
+  (`bot_mem_support_iff`) and its singleton has mass 0 exactly for `0 < p`: mass 0 for `0 < p`
+  (`trials_bot_null`) and mass 1 at `p = 0` (`trials_zero_eq_dirac`); for `0 < p < 1` every tape has both properties (`trials_support_null`).
 - Analog and digital are a `Reading:`; the theorems say continuous (`fireWithin_continuous`) and jump
   (`fireMass_not_continuousAt_zero`).
 - The schedule's dichotomy assumes independent stages; `schedule_never_pos` also needs every chance below one.
@@ -152,15 +152,18 @@ this file holds what was already in the corpus, the prior art, and the fences.
   binary entropy, mass 1 and mass 0. Positive entropy alone pins `0 < p < 1` and implies ⊥ of `ℕ → Bool` in the
   support, one way: the `p = 0` control meets the support condition and not the entropy one, and no `p` meets
   the entropy condition without the support one. The `p = 1` control meets neither, and shows firing of mass 1
-  without positive entropy. No measure-level statement in § IX singles out ⊥ of `ℕ → Bool`; the order (`bot_le`),
-  never firing (`tape_never_fires_iff`) and wait ⊤ (`wait_bot`) do.
+  without positive entropy. Under positive entropy (`0 < p < 1`) no measure-level statement singles out ⊥ of
+  `ℕ → Bool` (`dial_pinned_faces`, `trials_support_null`); at `p = 0` the law is the Dirac mass at ⊥ of `ℕ → Bool`
+  (`trials_zero_eq_dirac`, the § IX `p = 0` CONTROL); at every `p` the order (`bot_le`), never firing
+  (`tape_never_fires_iff`) and wait ⊤ (`wait_bot`) single it out (the § IX `example`).
 - § X: "every tape is a local bottom" is a `Reading:` (Tim, 2026-11-26: "that's exactly a baseline and a local
   reference change to it"). Proved: `xorOffset t` exchanges ⊥ of `ℕ → Bool` and `t`, and under the fair coin the
   wait to first disagreement with `t` has the law of the wait from ⊥ (`fair_wait_offset`). The order bottom is
   unique: ⊥ of `ℕ → Bool` is the least tape (`bot_le`), and `xorOffset t` for `t` not ⊥ of `ℕ → Bool` is not an
-  order automorphism; it is not even monotone (the `example` after `xorOffset_bot`). Only `p = 1/2` makes the
-  change of baseline measure preserving (`xorOffset_measurePreserving_iff`). "The zero tape is needed for the
-  other options to exist" is stronger than what is proved, which is that ⊥ of `ℕ → Bool` is the reference the
+  order automorphism; it is not even monotone (the `example` after `xorOffset_bot`). For a tape `t` other than
+  ⊥ of `ℕ → Bool`, only `p = 1/2` makes `xorOffset t` measure preserving (`xorOffset_measurePreserving_iff`).
+  "Needed to exist" in Tim's "The local existance of the zero tape is needed as a hypothetical in order for the
+  other options to exist" (Tim, 2026-11-26) is stronger than what is proved, which is that ⊥ of `ℕ → Bool` is the reference the
   wait is computed from: the cylinders of ⊥ of `ℕ → Bool` a tape lies in number wait + 1
   (`tsum_cylinder_bot_indicator`), and their masses `(1 - p)^k` (`trials_cyl` at ⊥) give the mean of wait + 1
   (`lintegral_wait_succ`); § X moves that reference to any `t`.
@@ -174,7 +177,8 @@ this file holds what was already in the corpus, the prior art, and the fences.
   `natCast_le_waitENat_iff` (DepthIsWait). § VIII: the `example` after `unpack_apply` uses `tapeIso`
   (DepthIsWait) and `natDirsOrderIso` (Interleave); `natDirs_bot_iff` (TowerTape) is a pointer only. § IX:
   `bot_mem_support_iff`, `trials_support_univ`, `trials_cyl`, `trials_zero_eq_dirac` (PoleWithinEnsemble),
-  `wait_bot` and `waitENat` in the `example` naming what singles out ⊥ of `ℕ → Bool`. § X: `xorHomeo`,
+  `wait_bot` and `waitENat` in the `example` naming what singles out ⊥ of `ℕ → Bool`, and `tape_never_fires_iff`
+  in the same `example`. § X: `xorHomeo`,
   `xorWith_involutive` (UltrametricView), `det_eq_ofNat_iff` (TapeHalting), `waitENat` (DepthIsWait),
   `tape_never_fires_iff`. `dial_fire_jump`, `fireMass`, `fireMass_eq`, `fireMass_not_continuousAt_zero`,
   `fireWithin`, `dial_digital_limit`, `unpack`, `unpack_apply`, `unpack_measurePreserving`,
