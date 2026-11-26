@@ -16,6 +16,7 @@ import ZeroParadox.Information.PoleWithinEnsemble
 import ZeroParadox.Valuation.TowerTapeSnap
 import ZeroParadox.Information.StartBit
 import ZeroParadox.Settheory.QuineDichotomy
+import ZeroParadox.Information.Dial
 
 /-!
 # Machine-checked characterization index of the snap ⊥ → ε₀ — what the snap IS and IS NOT
@@ -124,7 +125,7 @@ example : ¬ @CovBy ℕ (ZeroParadox.zpSemilatticeSup ℕ).toLT 0 2 := fun h =>
 --   hypothesis and neither discharged (the `NNReal` and all-`false` controls in `ZeroParadox/Information/TwoRequirements.lean`).
 #check @ZeroParadox.snap_of_firstStep_MLRandom        -- Statement: the same conclusion with `ZeroBlockTypical` replaced by Martin-Löf randomness for `trials p hp` (`MLRandom`, defined in `ZeroParadox/Information/TwoRequirements.lean`), which implies it (`zeroBlockTypical_of_MLRandom`); one way. No tape is named and ⊥ of `L` is not claimed random
 #check @ZeroParadox.phase_snap_of_MLRandom            -- Statement: CORNER, on `WithBot Ordinal` under join `max` (`ZeroParadox/Information/SnapEpsilonZero.lean`): if `w` is Martin-Löf random for `trials p hp` with `0 < p`, some run's `S 1` covers ⊥ of `WithBot Ordinal`, equals the snap `↑0 ≠ ↑ε₀`, and `phaseUpAndOver.up` sends it to `↑ε₀`; one way
-#check @ZeroParadox.epsilonOrZero_snap_of_MLRandom    -- Statement: COVER, on `EpsilonOrZero`, the carrier of the example above, under join `max`: if `w` is as above, some run's `S 1` covers `epsilonOrZero_bot`, ⊥ of `EpsilonOrZero` (value 0 of `Ordinal`), and has value ε₀ ≠ 0; one way. The two are related by `epsilonOrZeroIsoLanding_spec`, and neither is the snap's only form
+#check @ZeroParadox.epsilonOrZero_snap_of_MLRandom    -- Statement: COVER, on `EpsilonOrZero`, the subtype `{o : Ordinal // o = 0 ∨ ω ^ o = o}` (the carrier of the ε₀-covers-0 `example` earlier in this section), under join `max`: if `w` is as above, some run's `S 1` covers `epsilonOrZero_bot`, ⊥ of `EpsilonOrZero` (value 0 of `Ordinal`), and has value ε₀ ≠ 0; one way. The two are related by `epsilonOrZeroIsoLanding_spec`, and neither is the snap's only form
 #check @ZeroParadox.snap_ae_of_firstStep              -- Statement: if ⊥ of `L` has a first step (`BotHasFirstStep L`) and `0 < p ≤ 1`, then for `trials p hp`-almost every tape `w` some `φ` and `hw` give `snap_of_two_requirements`'s conclusion; one way. Almost every, not every: the all-`false` tape never fires. No map from ⊥ of `L` to a tape or to `trials p hp` appears
 -- `Statement:` at `L := MachinePhase` the first step is proved (`t_snap_derived_cover`), so there
 -- `snap_ae_of_firstStep` needs only `0 < p ≤ 1`; almost every tape, not every.
@@ -153,6 +154,12 @@ example (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p) :
 #check @ZeroParadox.never_fires_ae_zero               -- Statement: CONTROL, `trials 0 hp`-almost every tape fires nowhere
 #check @ZeroParadox.fires_germ_eq_bot_zero            -- Statement: CONTROL, at `p = 0`, "fires somewhere" is ⊥ of `Germ (ae (trials 0 hp)) Prop`
 #check @ZeroParadox.germ_top_ne_bot                   -- Statement: CONTROL, ⊤ ≠ ⊥ in `Germ (ae (trials p hp)) Prop` for every `p ≤ 1`: the quotient is not degenerate
+#check @ZeroParadox.dial_jump_into_L                  -- Statement: the dial (`ZeroParadox/Information/Dial.lean`): if `φ : Bool → L` sends `false` to ⊥ of `L` and `true` elsewhere, at `p = 0` almost every image run `φ ∘ slotRun w` is ⊥ of `L` at every stage, and for `0 < p ≤ 1` almost every one is somewhere not ⊥ of `L`; forward maps only
+#check @ZeroParadox.dial_digital_limit                -- Statement: the mass of "fires within the first `n` stages", `1 - (1 - p) ^ n` and continuous in `p`, tends as `n → ∞` to the switch, 0 at `p = 0` and 1 for `p > 0`; not uniformly on `(0, 1]` (`dial_not_uniform`)
+#check @ZeroParadox.schedule_fires_of_tsum_top        -- Statement: with independent stage chances `q n` (`fadingTrials`) whose sum diverges, some stage fires with probability one; `schedule_never_pos`: with a convergent sum and every `q n < 1`, with positive probability no stage fires
+#check @ZeroParadox.schedule_snap_ae                  -- Statement: `snap_ae_of_firstStep` with `trials p hp` replaced by `fadingTrials q hq` whose chances sum to ∞: if ⊥ of `L` has a first step, almost every tape gives a run stepping off ⊥ of `L` to a cover; one way
+#check @ZeroParadox.dial_pinned_faces                 -- Statement: if `binEntropy p > 0` (equivalently `0 < p < 1`, `dial_entropy_pos_iff`), "some stage fires" has mass 1 and every tape, ⊥ of `ℕ → Bool` among them, is in the support of `trials p hp` and null
+#check @ZeroParadox.fair_wait_offset                  -- Statement: under `fairTape`, the wait to the first disagreement with a tape `t` (`det_xorOffset_eq_ofNat_iff`) has the law of the wait from ⊥ of `ℕ → Bool`; `xorOffset_measurePreserving_iff`: for `p ≤ 1` and `t` not ⊥ of `ℕ → Bool`, `xorOffset t` preserves `trials p hp` only at `p = 1/2`
 -- Reading: CARRIER, the tower tape fed to the snap as a family indexed by chart, never a union
 --   (`ZeroParadox/Valuation/TowerTapeSnap.lean`): `tapeIso` carries `towerTape [] x` to a tape `ℕ → Bool`.
 #check @ZeroParadox.towerTape_fires_iff               -- Statement: `tapeIso (towerTape [] x)` fires iff `x ≠ botEnd`; at `botEnd` it is ⊥ of `ℕ → Bool` (`towerTape_floor_allFalse`)
@@ -247,8 +254,10 @@ example : da3_accessibleCardinality (1 : ℕ) = da3_accessibleCardinality (bot :
       invFun := fun x => ⟨x.1 + 1, (hle _ _).2 (by omega)⟩
       left_inv := fun x => Subtype.ext (by have := (hle _ _).1 x.2; simp only; omega)
       right_inv := fun x => Subtype.ext (by simp only; omega) }
--- `Statement:` `Set ℝ` under `∪` is a `ZPSemilattice` with ⊥ = ∅, and the covers of ∅ in inclusion
--- (the singletons) are not countable: the number of first steps above ⊥ depends on the carrier.
+-- `Statement:` `Nonempty (ZPSemilattice (Set ℝ))`, and the covers of ∅ in `Set ℝ`'s inclusion order
+-- (the singletons) are not countable. The first conjunct holds for every nonempty type (the
+-- well-ordering `example` in `ZeroParadox/Order/Lattice.lean`); the instance in the proof term is `∪`
+-- with ⊥ = ∅, whose induced order is inclusion, but the type does not carry it.
 example : Nonempty (ZeroParadox.ZPSemilattice (Set ℝ)) ∧
     ¬ ({a : Set ℝ | (∅ : Set ℝ) ⋖ a}).Countable := by
   refine ⟨⟨⟨(· ∪ ·), ∅, Set.union_assoc, Set.union_comm, Set.union_self, Set.empty_union⟩⟩,

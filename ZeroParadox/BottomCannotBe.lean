@@ -67,6 +67,7 @@ import ZeroParadox.Valuation.PadicWavelet
 import ZeroParadox.Information.BottomTotality
 import ZeroParadox.Valuation.PadicKoopmanVladimirov
 import ZeroParadox.Givens
+import ZeroParadox.Information.Dial
 import Mathlib.RingTheory.Valuation.PrimeMultiplicity
 import Mathlib.Order.FixedPoints
 import Mathlib.SetTheory.Ordinal.FixedPoint
@@ -854,7 +855,8 @@ example : (∀ a b : ℕ → Bool, a ≤ b → a ⁻¹' {true} ⊆ b ⁻¹' {tru
     · rfl
     · exact absurd ht this
   · rintro rfl; exact Set.eq_empty_of_forall_notMem fun n h => Bool.false_ne_true h
--- Statement: it also reflects `⊆` to `≤`, so it is an order embedding of `ℕ → Bool` into `Set ℕ`.
+-- Statement: some order embedding of `ℕ → Bool` into `Set ℕ` exists; the type names no map (the
+-- term is built from the preimage map above, which therefore also reflects `⊆` to `≤`).
 example : (ℕ → Bool) ↪o Set ℕ :=
   OrderEmbedding.ofMapLEIff (fun t : ℕ → Bool => t ⁻¹' {true}) fun a b =>
     ⟨fun h _ => Bool.le_iff_imp.mpr fun hn => h hn,
@@ -900,7 +902,8 @@ example : ZeroParadox.Disjunctive (fun n => xor (ZeroParadox.champ n) false) := 
 
 /-! ### One ensemble, two faces: the law and its members -/
 
--- Statement: one ensemble, `fairTape`: exactly one coin maximizes binary entropy (its `trials` is
+-- Statement: one ensemble, `fairTape`: exactly one coin attains binary entropy `log 2` (that `log 2`
+-- bounds it everywhere is `law_two_faces` below, not this theorem; its `trials` is
 -- `fairTape`, `trials_eq_fairTape_of_maxEntropy`, not a conjunct); for each prefix-free decoder `D`,
 -- almost every tape is incompressible for `D`; ⊥ of `ℕ → Bool` is not Martin-Löf random for it and
 -- is in the closure of its random firing tapes.
@@ -914,6 +917,52 @@ example : ZeroParadox.Disjunctive (fun n => xor (ZeroParadox.champ n) false) := 
 -- minimal and maximal as being the totality of all of its representations?" Across charts the
 -- totality is a family indexed by chart, never a union of occupants (§ ROLE). "Minimal" is "fixed by
 -- one condition", not a measured complexity of the measure.
+-- Statement: exactly one `p : NNReal` has `binEntropy p = log 2`, and `binEntropy q ≤ log 2` for every real `q`.
+-- Reading: the law is minimal in description (one condition fixes it) and maximal in entropy; no
+-- description length is measured.
+#check @ZeroParadox.law_two_faces
+
+/-! ### The dial: the chance of changing state as the parameter `p` of `trials p hp` -/
+
+-- Statement: a tape never fires iff it is ⊥ of `ℕ → Bool`, the all-`false` tape.
+#check @ZeroParadox.tape_never_fires_iff
+-- Statement: the `trials p hp` mass of "some stage fires" is 0 at `p = 0` and 1 at every `0 < p ≤ 1`.
+#check @ZeroParadox.dial_fire_jump
+-- Statement: that mass, clamped to `fireMass p` on all of `NNReal`, is not continuous at `p = 0`.
+#check @ZeroParadox.fireMass_not_continuousAt_zero
+-- Statement: the mass of "some stage below `n` fires", `fireWithin n`, is monotone in `p`.
+#check @ZeroParadox.fireWithin_mono
+-- Statement: if `φ : Bool → L` sends `false` to ⊥ of `L` and `true` to a point other than ⊥ of `L`,
+-- every image run `φ ∘ slotRun w` is ⊥ of `L` at stage 0; for `trials 0 hp`-almost every tape it is
+-- ⊥ of `L` at every stage; for `0 < p ≤ 1`, for almost every tape it is somewhere not ⊥ of `L`.
+-- Forward maps only.
+#check @ZeroParadox.dial_jump_into_L
+-- Statement: if ⊥ of `L` has a first step and the stage chances `q n` sum to ∞, then for
+-- `fadingTrials q hq`-almost every tape some `φ` makes the run `φ ∘ firedRun w hw` step off ⊥ of `L`
+-- to a cover. One way.
+#check @ZeroParadox.schedule_snap_ae
+-- Statement: the mean of `wait + 1` under `trials p hp` is `p⁻¹` in `ℝ≥0∞`, every `p ≤ 1`, ⊤ at `p = 0`.
+#check @ZeroParadox.lintegral_wait_succ
+-- Statement: for `1 ≤ x`, `(x⁻¹).toNNReal = 0` iff `x = ⊤`; at `p = 0` the mean of `wait + 1` is ⊤ and
+-- almost every tape never fires; ⊥ of `ℕ → Bool` has wait ⊤ of `ℕ∞`.
+#check @ZeroParadox.wait_chart_top
+-- Statement: `unpack`, the columns of a tape along `Nat.pairEquiv`, is measure preserving from
+-- `trials p hp` to the product of countably many copies of `trials p hp`.
+#check @ZeroParadox.unpack_measurePreserving
+-- Statement: for `p ≤ 1`, `binEntropy p > 0` iff `0 < p < 1`.
+#check @ZeroParadox.dial_entropy_pos_iff
+-- Statement: `binEntropy p > 0` implies ⊥ of `ℕ → Bool` is in the support of `trials p hp`; one way.
+#check @ZeroParadox.bot_mem_support_of_entropy_pos
+-- Statement: if `0 < p < 1`, every tape is in the support of `trials p hp` and its singleton is null.
+#check @ZeroParadox.trials_support_null
+-- Statement: if `binEntropy p > 0`, "some stage fires" has mass 1, and every tape, ⊥ of `ℕ → Bool`
+-- among them, is in the support and null.
+#check @ZeroParadox.dial_pinned_faces
+-- Statement: `xorOffset t` (pointwise `xor` with `t`) sends ⊥ of `ℕ → Bool` to `t` and `t` to ⊥ of
+-- `ℕ → Bool`, and is its own inverse.
+#check @ZeroParadox.xorOffset_bot
+-- Statement: for `p ≤ 1`, `xorOffset t` preserves `trials p hp` iff `t` is ⊥ of `ℕ → Bool` or `p = 1/2`.
+#check @ZeroParadox.xorOffset_measurePreserving_iff
 
 /-! ### The givens at the die level: given (a) as a chart claim (least in ℤ_[2]'s norm preorder, greatest at its image in `ℕ∞`), and a limit -/
 

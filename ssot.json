@@ -244874,8 +244874,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 4863,
-        "files": 248
+        "declarations": 4902,
+        "files": 249
       },
       "entries": [
         {
@@ -249624,6 +249624,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "06bd9965-3866-40aa-a94c-5aee4d897994",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dial_fire_jump",
+            "short": "dial_fire_jump"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.dial_fire_jump",
+            "short": "dial_fire_jump",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "v7 step 4 (rulings 92b, 94): the dial, Dial.lean landed 2026-11-25. P(change ever) jumps 0 -> 1 at p = 0; windows 1-(1-p)^n continuous, pointwise limit the switch, not uniform; the jump carried into L along slotRun; schedule dichotomy (divergent sum: a.s.; convergent sum, chances < 1: P(never) > 0) with the halving control; the fair coin's law minimal and maximal.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "06c269b0-69af-406b-a8b3-dae9fa3fb0da",
           "new": {
             "file": "ZeroParadox/Ordinal/Epsilon0LeastFP.lean",
@@ -251831,6 +251868,43 @@
             ]
           },
           "reason": "Collapse family as die motions: one lemma in two forms plus the loop obstruction, six legacy results as instances, with controls (ZeroParadox/Multihomed/CollapseDie.lean; Tim: \"One collapse file\", 2026-11-19)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0971b3a2-5cf0-4c9f-a937-74a8b04efc58",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_support_null",
+            "short": "trials_support_null"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_support_null",
+            "short": "trials_support_null",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean round 2 (2026-11-26): § IX restated (binary entropy positive iff 0 < p < 1 pins the dial and implies bot of N -> Bool in the support, one way; for 0 < p < 1 the Bernoulli product has full support and no atoms) and § X (translation by t in the Cantor group (Z/2Z)^N under pointwise xor: preserves the fair coin, the Haar measure, for every t, and preserves trials p only at p = 1/2 or t = bot; the wait to first disagreement with t has the law of the wait from bot).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -256842,6 +256916,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "1005a56c-810c-458f-b935-6014fbbd4968",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.unpack_apply",
+            "short": "unpack_apply"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.unpack_apply",
+            "short": "unpack_apply",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § VII-IX (2026-11-26): the wait chart (shifted-geometric mean p^-1 in ENNReal by the tail-sum formula, p = 0 included as the defective endpoint; chart x = p^-1 via OrderIso.invENNReal), packing (unpack along Nat.pairEquiv, measure preserving both directions between trials p and its countable product; reindexing of an infinite product measure), and the two faces pinning the dial (bot of N -> Bool in the support and binEntropy p > 0 iff 0 < p < 1; then firing has mass 1 and bot is a null member).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "10345751-67f1-4244-ad3a-34786a4f4319",
           "new": {
@@ -258552,6 +258663,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "12a5a841-7a05-48db-9c5e-5933df321af2",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fireMass",
+            "short": "fireMass"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.fireMass",
+            "short": "fireMass",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "v7 step 4 (rulings 92b, 94): the dial, Dial.lean landed 2026-11-25. P(change ever) jumps 0 -> 1 at p = 0; windows 1-(1-p)^n continuous, pointwise limit the switch, not uniform; the jump carried into L along slotRun; schedule dichotomy (divergent sum: a.s.; convergent sum, chances < 1: P(never) > 0) with the halving control; the fair coin's law minimal and maximal.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "12a8b6d7-b30b-4f03-b311-392d563188d5",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -259869,6 +260017,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "147bdc2f-f3a9-4c79-b0ad-0eb66305d3d2",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.xorOffset",
+            "short": "xorOffset"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.xorOffset",
+            "short": "xorOffset",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean round 2 (2026-11-26): § IX restated (binary entropy positive iff 0 < p < 1 pins the dial and implies bot of N -> Bool in the support, one way; for 0 < p < 1 the Bernoulli product has full support and no atoms) and § X (translation by t in the Cantor group (Z/2Z)^N under pointwise xor: preserves the fair coin, the Haar measure, for every t, and preserves trials p only at p = 1/2 or t = bot; the wait to first disagreement with t has the law of the wait from bot).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -269378,6 +269563,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "23987c28-be34-470e-bb69-ac09c487b3e4",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dial_two_faces_iff",
+            "short": "dial_two_faces_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.dial_two_faces_iff",
+            "short": "dial_two_faces_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § VII-IX (2026-11-26): the wait chart (shifted-geometric mean p^-1 in ENNReal by the tail-sum formula, p = 0 included as the defective endpoint; chart x = p^-1 via OrderIso.invENNReal), packing (unpack along Nat.pairEquiv, measure preserving both directions between trials p and its countable product; reindexing of an infinite product measure), and the two faces pinning the dial (bot of N -> Bool in the support and binEntropy p > 0 iff 0 < p < 1; then firing has mass 1 and bot is a null member).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "23a3f123-88e6-4c40-a4fc-6a16ce31309f",
           "new": {
@@ -276244,6 +276466,43 @@
             ]
           },
           "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "2d070b1e-9076-4a17-9b1c-11bb5d39d426",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.schedule_snap_ae",
+            "short": "schedule_snap_ae"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.schedule_snap_ae",
+            "short": "schedule_snap_ae",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "v7 step 4 final pass (ruling 97): snap_ae_of_firstStep under a divergent schedule (fadingTrials), from schedule_fires_of_tsum_top and snap_of_firstStep_fires_once; backs the \"(more generally ...)\" cover clause.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -286082,6 +286341,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "3bbf9fbb-972e-40d7-b08a-d43ff9242b16",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bot_mem_support_of_entropy_pos",
+            "short": "bot_mem_support_of_entropy_pos"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bot_mem_support_of_entropy_pos",
+            "short": "bot_mem_support_of_entropy_pos",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean round 2 (2026-11-26): § IX restated (binary entropy positive iff 0 < p < 1 pins the dial and implies bot of N -> Bool in the support, one way; for 0 < p < 1 the Bernoulli product has full support and no atoms) and § X (translation by t in the Cantor group (Z/2Z)^N under pointwise xor: preserves the fair coin, the Haar measure, for every t, and preserves trials p only at p = 1/2 or t = bot; the wait to first disagreement with t has the law of the wait from bot).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "3bc1aa6d-14ae-41eb-8134-7945c5f6f37e",
           "new": {
             "file": "ZeroParadox/Valuation/PoleCornersBridge.lean",
@@ -287408,6 +287704,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "3d640d95-3249-4264-94ee-b44fe2f78cd0",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fireMass_not_continuousAt_zero",
+            "short": "fireMass_not_continuousAt_zero"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.fireMass_not_continuousAt_zero",
+            "short": "fireMass_not_continuousAt_zero",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "v7 step 4 (rulings 92b, 94): the dial, Dial.lean landed 2026-11-25. P(change ever) jumps 0 -> 1 at p = 0; windows 1-(1-p)^n continuous, pointwise limit the switch, not uniform; the jump carried into L along slotRun; schedule dichotomy (divergent sum: a.s.; convergent sum, chances < 1: P(never) > 0) with the halving control; the fair coin's law minimal and maximal.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -288944,6 +289277,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "3ff6763c-c2dc-438a-800a-316591efba5a",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fireMass_eq",
+            "short": "fireMass_eq"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.fireMass_eq",
+            "short": "fireMass_eq",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "v7 step 4 (rulings 92b, 94): the dial, Dial.lean landed 2026-11-25. P(change ever) jumps 0 -> 1 at p = 0; windows 1-(1-p)^n continuous, pointwise limit the switch, not uniform; the jump carried into L along slotRun; schedule dichotomy (divergent sum: a.s.; convergent sum, chances < 1: P(never) > 0) with the halving control; the fair coin's law minimal and maximal.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "3ff8b997-b841-495b-bdaa-02d8138f9ecf",
           "new": {
@@ -289430,6 +289800,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "408dd850-cca4-41cf-96ef-6c69f437f8e0",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fair_wait_offset",
+            "short": "fair_wait_offset"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.fair_wait_offset",
+            "short": "fair_wait_offset",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean round 2 (2026-11-26): § IX restated (binary entropy positive iff 0 < p < 1 pins the dial and implies bot of N -> Bool in the support, one way; for 0 < p < 1 the Bernoulli product has full support and no atoms) and § X (translation by t in the Cantor group (Z/2Z)^N under pointwise xor: preserves the fair coin, the Haar measure, for every t, and preserves trials p only at p = 1/2 or t = bot; the wait to first disagreement with t has the law of the wait from bot).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "40b6a06b-d1d2-4605-91ff-46373d23cdfd",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -289675,6 +290082,43 @@
             ]
           },
           "reason": "Ball line radii in ENNReal: isolated points accumulating only at 0 and top (BallLine.lean section V)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "412241aa-bae9-4046-b1a4-59e7e396b010",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dial_not_uniform",
+            "short": "dial_not_uniform"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.dial_not_uniform",
+            "short": "dial_not_uniform",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "v7 step 4 (rulings 92b, 94): the dial, Dial.lean landed 2026-11-25. P(change ever) jumps 0 -> 1 at p = 0; windows 1-(1-p)^n continuous, pointwise limit the switch, not uniform; the jump carried into L along slotRun; schedule dichotomy (divergent sum: a.s.; convergent sum, chances < 1: P(never) > 0) with the halving control; the fair coin's law minimal and maximal.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -293774,6 +294218,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "468d4ff6-4ef1-48d7-9a0b-d9602e7d9c60",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fireWithin_continuous",
+            "short": "fireWithin_continuous"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.fireWithin_continuous",
+            "short": "fireWithin_continuous",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "v7 step 4 (rulings 92b, 94): the dial, Dial.lean landed 2026-11-25. P(change ever) jumps 0 -> 1 at p = 0; windows 1-(1-p)^n continuous, pointwise limit the switch, not uniform; the jump carried into L along slotRun; schedule dichotomy (divergent sum: a.s.; convergent sum, chances < 1: P(never) > 0) with the halving control; the fair coin's law minimal and maximal.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "469af0be-ce7c-4075-81bd-7bde481e81e0",
           "new": {
             "file": "ZeroParadox/Valuation/RiemannSphere.lean",
@@ -294429,6 +294910,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "47b546b7-fa93-4ae2-b4ac-6750b615d528",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.schedule_halving_control",
+            "short": "schedule_halving_control"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.schedule_halving_control",
+            "short": "schedule_halving_control",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "v7 step 4 (rulings 92b, 94): the dial, Dial.lean landed 2026-11-25. P(change ever) jumps 0 -> 1 at p = 0; windows 1-(1-p)^n continuous, pointwise limit the switch, not uniform; the jump carried into L along slotRun; schedule dichotomy (divergent sum: a.s.; convergent sum, chances < 1: P(never) > 0) with the halving control; the fair coin's law minimal and maximal.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -305719,6 +306237,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "585222a7-9ad8-4c0d-8205-b906cc80e558",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.xorOffset_apply",
+            "short": "xorOffset_apply"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.xorOffset_apply",
+            "short": "xorOffset_apply",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean round 2 (2026-11-26): § IX restated (binary entropy positive iff 0 < p < 1 pins the dial and implies bot of N -> Bool in the support, one way; for 0 < p < 1 the Bernoulli product has full support and no atoms) and § X (translation by t in the Cantor group (Z/2Z)^N under pointwise xor: preserves the fair coin, the Haar measure, for every t, and preserves trials p only at p = 1/2 or t = bot; the wait to first disagreement with t has the law of the wait from bot).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "58591904-25da-4d43-832e-bfed531a1d9a",
           "new": {
             "file": "ZeroParadox/Valuation/RiemannSphere.lean",
@@ -308750,6 +309305,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "5cb6d962-aaa4-42a6-b78d-a6a52aa4af19",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fireWithin_mono",
+            "short": "fireWithin_mono"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.fireWithin_mono",
+            "short": "fireWithin_mono",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "v7 step 4 round-1 fix: fireWithin n is monotone in p, the hypothesis of the Polya / Dini second theorem cited in Dial.md.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "5cbd6b91-46b9-4b11-b19a-da047d28364f",
           "new": {
             "file": "ZeroParadox/Valuation/TreeNotForced.lean",
@@ -309991,6 +310583,43 @@
             ]
           },
           "reason": "Die CannotBe mining batch: trap sets (order and function causes), keep-above kernel and a two-node UpAndOver on HSet 2, SelfCopyRef in die form",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "5e7fc0c3-f0bf-45fc-83e1-679c30c81779",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.xorOffset_measurePreserving_iff",
+            "short": "xorOffset_measurePreserving_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.xorOffset_measurePreserving_iff",
+            "short": "xorOffset_measurePreserving_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean round 2 (2026-11-26): § IX restated (binary entropy positive iff 0 < p < 1 pins the dial and implies bot of N -> Bool in the support, one way; for 0 < p < 1 the Bernoulli product has full support and no atoms) and § X (translation by t in the Cantor group (Z/2Z)^N under pointwise xor: preserves the fair coin, the Haar measure, for every t, and preserves trials p only at p = 1/2 or t = bot; the wait to first disagreement with t has the law of the wait from bot).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -314712,6 +315341,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "6519232a-72b8-4c9c-a2dc-f7afa682ee69",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.xorOffset_measurePreserving_fair",
+            "short": "xorOffset_measurePreserving_fair"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.xorOffset_measurePreserving_fair",
+            "short": "xorOffset_measurePreserving_fair",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean round 2 (2026-11-26): § IX restated (binary entropy positive iff 0 < p < 1 pins the dial and implies bot of N -> Bool in the support, one way; for 0 < p < 1 the Bernoulli product has full support and no atoms) and § X (translation by t in the Cantor group (Z/2Z)^N under pointwise xor: preserves the fair coin, the Haar measure, for every t, and preserves trials p only at p = 1/2 or t = bot; the wait to first disagreement with t has the law of the wait from bot).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "652175bb-93d3-400f-b3fb-a2957f92170f",
           "new": {
             "file": "ZeroParadox/Multihomed/TH3Die.lean",
@@ -315923,6 +316589,43 @@
             "role": []
           },
           "reason": "die-bend-1104: Tim's \"bend\" (ruling 38): first-occurrence time det as a Galois insertion of tapes onto NInf, order reversed (Die.lean § XXV)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "67693f9a-12ab-4ed3-981d-1f0ee62489da",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.schedule_never_pos",
+            "short": "schedule_never_pos"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.schedule_never_pos",
+            "short": "schedule_never_pos",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "v7 step 4 (rulings 92b, 94): the dial, Dial.lean landed 2026-11-25. P(change ever) jumps 0 -> 1 at p = 0; windows 1-(1-p)^n continuous, pointwise limit the switch, not uniform; the jump carried into L along slotRun; schedule dichotomy (divergent sum: a.s.; convergent sum, chances < 1: P(never) > 0) with the halving control; the fair coin's law minimal and maximal.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -317671,6 +318374,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "69c7a054-72e2-46f8-ac0c-ddb5dd75a991",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fadingTrials_fires_iIndepSet",
+            "short": "fadingTrials_fires_iIndepSet"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.fadingTrials_fires_iIndepSet",
+            "short": "fadingTrials_fires_iIndepSet",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "v7 step 4 (rulings 92b, 94): the dial, Dial.lean landed 2026-11-25. P(change ever) jumps 0 -> 1 at p = 0; windows 1-(1-p)^n continuous, pointwise limit the switch, not uniform; the jump carried into L along slotRun; schedule dichotomy (divergent sum: a.s.; convergent sum, chances < 1: P(never) > 0) with the halving control; the fair coin's law minimal and maximal.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -340517,6 +341257,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "8b44720a-bdcc-453e-820b-23be30116460",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.law_two_faces",
+            "short": "law_two_faces"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.law_two_faces",
+            "short": "law_two_faces",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "v7 step 4 (rulings 92b, 94): the dial, Dial.lean landed 2026-11-25. P(change ever) jumps 0 -> 1 at p = 0; windows 1-(1-p)^n continuous, pointwise limit the switch, not uniform; the jump carried into L along slotRun; schedule dichotomy (divergent sum: a.s.; convergent sum, chances < 1: P(never) > 0) with the halving control; the fair coin's law minimal and maximal.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "8b46fba5-21f9-4be5-8ab4-3291c61a2f27",
           "new": {
             "file": "ZeroParadox/Multihomed/TwoAdicBend.lean",
@@ -346587,6 +347364,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "941c4df2-c185-4726-957e-a17e09497b1d",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.xorOffset_bot",
+            "short": "xorOffset_bot"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.xorOffset_bot",
+            "short": "xorOffset_bot",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean round 2 (2026-11-26): § IX restated (binary entropy positive iff 0 < p < 1 pins the dial and implies bot of N -> Bool in the support, one way; for 0 < p < 1 the Bernoulli product has full support and no atoms) and § X (translation by t in the Cantor group (Z/2Z)^N under pointwise xor: preserves the fair coin, the Haar measure, for every t, and preserves trials p only at p = 1/2 or t = bot; the wait to first disagreement with t has the law of the wait from bot).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "94234ef2-0265-428b-b412-eb4914a604b9",
           "new": {
             "file": "ZeroParadox/Ordinal/UniverseZoom.lean",
@@ -348470,6 +349284,43 @@
             ]
           },
           "reason": "New file ZeroParadox/Information/Disjunctive.lean: disjunctive (rich) sequences; all-false control; choice-free primitive recursive Champernowne-style witness; fair-coin tape disjunctive a.s. (infinite monkey, 2nd Borel-Cantelli); hypothesis-form presence of every Code's word. PRESENCE only, no execution.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "96e2eb10-dae7-4670-bee4-e6692a4cfd5e",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dial_digital_limit",
+            "short": "dial_digital_limit"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.dial_digital_limit",
+            "short": "dial_digital_limit",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "v7 step 4 (rulings 92b, 94): the dial, Dial.lean landed 2026-11-25. P(change ever) jumps 0 -> 1 at p = 0; windows 1-(1-p)^n continuous, pointwise limit the switch, not uniform; the jump carried into L along slotRun; schedule dichotomy (divergent sum: a.s.; convergent sum, chances < 1: P(never) > 0) with the halving control; the fair coin's law minimal and maximal.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -365210,6 +366061,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "adf849ad-db0b-44f6-a197-7d8063f77b18",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dial_entropy_pos_iff",
+            "short": "dial_entropy_pos_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.dial_entropy_pos_iff",
+            "short": "dial_entropy_pos_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean round 2 (2026-11-26): § IX restated (binary entropy positive iff 0 < p < 1 pins the dial and implies bot of N -> Bool in the support, one way; for 0 < p < 1 the Bernoulli product has full support and no atoms) and § X (translation by t in the Cantor group (Z/2Z)^N under pointwise xor: preserves the fair coin, the Haar measure, for every t, and preserves trials p only at p = 1/2 or t = bot; the wait to first disagreement with t has the law of the wait from bot).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "ae073fc1-084d-436b-9cbd-41320712a0c9",
           "new": {
             "file": "ZeroParadox/Computability/SelfApp.lean",
@@ -366254,6 +367142,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "af365b73-3fdf-4743-a8b8-5c7028729ad7",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dial_fire_within",
+            "short": "dial_fire_within"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.dial_fire_within",
+            "short": "dial_fire_within",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "v7 step 4 (rulings 92b, 94): the dial, Dial.lean landed 2026-11-25. P(change ever) jumps 0 -> 1 at p = 0; windows 1-(1-p)^n continuous, pointwise limit the switch, not uniform; the jump carried into L along slotRun; schedule dichotomy (divergent sum: a.s.; convergent sum, chances < 1: P(never) > 0) with the halving control; the fair coin's law minimal and maximal.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "af374ddb-3b4f-4248-9913-1175077b7e09",
           "new": {
@@ -367211,6 +368136,43 @@
             ]
           },
           "reason": "The 2-adic bend: multiplier maps z -> c z on OnePoint Q_2 up to topological conjugacy (discrete twist u^v(z) z; every |c| != 1 conjugate to x2, control |d| = 1 not; four flips, Klein four subgroup of Aut(Q_2^x); four multipliers on OnePoint C; attracting/repelling fixed points on OnePoint K, conj_swaps_poles). Jenkins-Spallone Prop 7.1 is the classical statement (ZeroParadox/Multihomed/TwoAdicBend.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b07a2270-af93-496c-9058-95659c7f9937",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.det_xorOffset_eq_ofNat_iff",
+            "short": "det_xorOffset_eq_ofNat_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.det_xorOffset_eq_ofNat_iff",
+            "short": "det_xorOffset_eq_ofNat_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean round 2 (2026-11-26): § IX restated (binary entropy positive iff 0 < p < 1 pins the dial and implies bot of N -> Bool in the support, one way; for 0 < p < 1 the Bernoulli product has full support and no atoms) and § X (translation by t in the Cantor group (Z/2Z)^N under pointwise xor: preserves the fair coin, the Haar measure, for every t, and preserves trials p only at p = 1/2 or t = bot; the wait to first disagreement with t has the law of the wait from bot).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -371796,6 +372758,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "b650431b-708f-416b-ad7e-39bd129ff3ce",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.unpack",
+            "short": "unpack"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.unpack",
+            "short": "unpack",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § VII-IX (2026-11-26): the wait chart (shifted-geometric mean p^-1 in ENNReal by the tail-sum formula, p = 0 included as the defective endpoint; chart x = p^-1 via OrderIso.invENNReal), packing (unpack along Nat.pairEquiv, measure preserving both directions between trials p and its countable product; reindexing of an infinite product measure), and the two faces pinning the dial (bot of N -> Bool in the support and binEntropy p > 0 iff 0 < p < 1; then firing has mass 1 and bot is a null member).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "b6697cca-4d52-46ab-b6aa-29ae6d0e93cc",
           "new": {
             "file": "ZeroParadox/Settheory/LawvereBridge.lean",
@@ -374899,6 +375898,43 @@
             "role": []
           },
           "reason": "die-coalg-1028: motion as a Part x Set coalgebra (Die § XX) and observation as a parameter of a pair (Die § XXI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "bb0915e8-66fe-4c94-9e7c-4b0c3b92086a",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fireWithin",
+            "short": "fireWithin"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.fireWithin",
+            "short": "fireWithin",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "v7 step 4 (rulings 92b, 94): the dial, Dial.lean landed 2026-11-25. P(change ever) jumps 0 -> 1 at p = 0; windows 1-(1-p)^n continuous, pointwise limit the switch, not uniform; the jump carried into L along slotRun; schedule dichotomy (divergent sum: a.s.; convergent sum, chances < 1: P(never) > 0) with the halving control; the fair coin's law minimal and maximal.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -380637,6 +381673,43 @@
             ]
           },
           "reason": "Land 2026-11-10 cells-joint, local-towers, interleave probes and the new one-way-flow results into ZeroParadox/Valuation (CellsJoint, Interleave, LocalTowers, OneWayFlow).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c3ec16f7-c040-4257-badb-cfcf90284a4a",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.tape_never_fires_iff",
+            "short": "tape_never_fires_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.tape_never_fires_iff",
+            "short": "tape_never_fires_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "v7 step 4 (rulings 92b, 94): the dial, Dial.lean landed 2026-11-25. P(change ever) jumps 0 -> 1 at p = 0; windows 1-(1-p)^n continuous, pointwise limit the switch, not uniform; the jump carried into L along slotRun; schedule dichotomy (divergent sum: a.s.; convergent sum, chances < 1: P(never) > 0) with the halving control; the fair coin's law minimal and maximal.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -399140,6 +400213,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "dc6de53b-5961-42be-8c1e-423979b2f3b4",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.schedule_fires_of_tsum_top",
+            "short": "schedule_fires_of_tsum_top"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.schedule_fires_of_tsum_top",
+            "short": "schedule_fires_of_tsum_top",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "v7 step 4 (rulings 92b, 94): the dial, Dial.lean landed 2026-11-25. P(change ever) jumps 0 -> 1 at p = 0; windows 1-(1-p)^n continuous, pointwise limit the switch, not uniform; the jump carried into L along slotRun; schedule dichotomy (divergent sum: a.s.; convergent sum, chances < 1: P(never) > 0) with the halving control; the fair coin's law minimal and maximal.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "dc79db7c-06eb-40b3-bffb-837ceb3b32be",
           "new": {
             "file": "ZeroParadox/Category/NextTimeCategorical.lean",
@@ -400246,6 +401356,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "de25431f-dafd-4330-a0b5-4342e454d9ee",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.pack_measurePreserving",
+            "short": "pack_measurePreserving"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.pack_measurePreserving",
+            "short": "pack_measurePreserving",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § VII-IX (2026-11-26): the wait chart (shifted-geometric mean p^-1 in ENNReal by the tail-sum formula, p = 0 included as the defective endpoint; chart x = p^-1 via OrderIso.invENNReal), packing (unpack along Nat.pairEquiv, measure preserving both directions between trials p and its countable product; reindexing of an infinite product measure), and the two faces pinning the dial (bot of N -> Bool in the support and binEntropy p > 0 iff 0 < p < 1; then firing has mass 1 and bot is a null member).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -403752,6 +404899,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "e3188163-1520-4164-800e-e1494eee8bf5",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dial_jump_into_L",
+            "short": "dial_jump_into_L"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.dial_jump_into_L",
+            "short": "dial_jump_into_L",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "v7 step 4 (rulings 92b, 94): the dial, Dial.lean landed 2026-11-25. P(change ever) jumps 0 -> 1 at p = 0; windows 1-(1-p)^n continuous, pointwise limit the switch, not uniform; the jump carried into L along slotRun; schedule dichotomy (divergent sum: a.s.; convergent sum, chances < 1: P(never) > 0) with the halving control; the fair coin's law minimal and maximal.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "e31907d0-62e4-404d-b129-9064efcb1624",
           "new": {
@@ -406848,6 +408032,43 @@
             ]
           },
           "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e6f4d432-d89c-433e-9cdc-16046fef8d20",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.unpack_measurePreserving",
+            "short": "unpack_measurePreserving"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.unpack_measurePreserving",
+            "short": "unpack_measurePreserving",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § VII-IX (2026-11-26): the wait chart (shifted-geometric mean p^-1 in ENNReal by the tail-sum formula, p = 0 included as the defective endpoint; chart x = p^-1 via OrderIso.invENNReal), packing (unpack along Nat.pairEquiv, measure preserving both directions between trials p and its countable product; reindexing of an infinite product measure), and the two faces pinning the dial (bot of N -> Bool in the support and binEntropy p > 0 iff 0 < p < 1; then firing has mass 1 and bot is a null member).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -410044,6 +411265,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "eb075dfb-8935-4e8b-b87e-7b0e9087f4d3",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.wait_chart_top",
+            "short": "wait_chart_top"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.wait_chart_top",
+            "short": "wait_chart_top",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § VII-IX (2026-11-26): the wait chart (shifted-geometric mean p^-1 in ENNReal by the tail-sum formula, p = 0 included as the defective endpoint; chart x = p^-1 via OrderIso.invENNReal), packing (unpack along Nat.pairEquiv, measure preserving both directions between trials p and its countable product; reindexing of an infinite product measure), and the two faces pinning the dial (bot of N -> Bool in the support and binEntropy p > 0 iff 0 < p < 1; then firing has mass 1 and bot is a null member).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "eb12c8ba-9bbb-4041-9264-7758d4938be8",
           "new": {
             "file": "ZeroParadox/Valuation/PadicStillPoint.lean",
@@ -410749,6 +412007,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "ebbaf91b-3d38-4bef-86e0-9e9488d77f52",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lintegral_wait_succ_inv",
+            "short": "lintegral_wait_succ_inv"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lintegral_wait_succ_inv",
+            "short": "lintegral_wait_succ_inv",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § VII-IX (2026-11-26): the wait chart (shifted-geometric mean p^-1 in ENNReal by the tail-sum formula, p = 0 included as the defective endpoint; chart x = p^-1 via OrderIso.invENNReal), packing (unpack along Nat.pairEquiv, measure preserving both directions between trials p and its countable product; reindexing of an infinite product measure), and the two faces pinning the dial (bot of N -> Bool in the support and binEntropy p > 0 iff 0 < p < 1; then firing has mass 1 and bot is a null member).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "ebbe8114-e739-4b58-ae82-1858648924fb",
           "new": {
             "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
@@ -411108,6 +412403,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ec46f42f-cd58-4895-9ef5-70282afdc66d",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dial_pinned_faces",
+            "short": "dial_pinned_faces"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.dial_pinned_faces",
+            "short": "dial_pinned_faces",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § VII-IX (2026-11-26): the wait chart (shifted-geometric mean p^-1 in ENNReal by the tail-sum formula, p = 0 included as the defective endpoint; chart x = p^-1 via OrderIso.invENNReal), packing (unpack along Nat.pairEquiv, measure preserving both directions between trials p and its countable product; reindexing of an infinite product measure), and the two faces pinning the dial (bot of N -> Bool in the support and binEntropy p > 0 iff 0 < p < 1; then firing has mass 1 and bot is a null member).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -412254,6 +413586,43 @@
             "role": []
           },
           "reason": "die-bend-1104: Tim's \"bend\" (ruling 38): first-occurrence time det as a Galois insertion of tapes onto NInf, order reversed (Die.lean § XXV)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "edd63796-3aa2-4535-b513-98139131e2b1",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.tsum_cylinder_bot_indicator",
+            "short": "tsum_cylinder_bot_indicator"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.tsum_cylinder_bot_indicator",
+            "short": "tsum_cylinder_bot_indicator",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § VII-IX (2026-11-26): the wait chart (shifted-geometric mean p^-1 in ENNReal by the tail-sum formula, p = 0 included as the defective endpoint; chart x = p^-1 via OrderIso.invENNReal), packing (unpack along Nat.pairEquiv, measure preserving both directions between trials p and its countable product; reindexing of an infinite product measure), and the two faces pinning the dial (bot of N -> Bool in the support and binEntropy p > 0 iff 0 < p < 1; then firing has mass 1 and bot is a null member).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -418607,6 +419976,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "f712142a-1baf-493a-b5ac-83f95e71f08e",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lintegral_wait_succ",
+            "short": "lintegral_wait_succ"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lintegral_wait_succ",
+            "short": "lintegral_wait_succ",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § VII-IX (2026-11-26): the wait chart (shifted-geometric mean p^-1 in ENNReal by the tail-sum formula, p = 0 included as the defective endpoint; chart x = p^-1 via OrderIso.invENNReal), packing (unpack along Nat.pairEquiv, measure preserving both directions between trials p and its countable product; reindexing of an infinite product measure), and the two faces pinning the dial (bot of N -> Bool in the support and binEntropy p > 0 iff 0 < p < 1; then firing has mass 1 and bot is a null member).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "f71764ba-6798-47d1-8abb-7007aad09254",
           "new": {
@@ -419910,6 +421316,43 @@
             ]
           },
           "reason": "DieBranches § IV-V: branch-map shift square, closed embedding, PiNat metric (x1/2), Z_2 composite, not-relabelling, complement x -> -1 - x (2026-11-21).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f95d7885-3400-4f10-8953-b97f3c6c145c",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dial_not_uniform_witness",
+            "short": "dial_not_uniform_witness"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.dial_not_uniform_witness",
+            "short": "dial_not_uniform_witness",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "v7 step 4 (rulings 92b, 94): the dial, Dial.lean landed 2026-11-25. P(change ever) jumps 0 -> 1 at p = 0; windows 1-(1-p)^n continuous, pointwise limit the switch, not uniform; the jump carried into L along slotRun; schedule dichotomy (divergent sum: a.s.; convergent sum, chances < 1: P(never) > 0) with the halving control; the fair coin's law minimal and maximal.",
           "verify": {
             "axioms": null,
             "sorry_free": null
