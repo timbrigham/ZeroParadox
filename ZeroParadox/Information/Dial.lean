@@ -1030,9 +1030,10 @@ end MarkovDie
 observer sees is again a Markov chain (`lumps_iff_runLaw_map`), the weighted analogue of the die's
 `StepCompat`. Both directions of the arrow are stated: coarse-graining can erase a time arrow
 (`a4_direction_erased`), and from a reversible start it creates none, for a measurable lumping map
-in general (`isReversible_map_of_lumps`) and, at three times, for every measurable observer on a
-finite carrier with measurable singletons (`chainLaw_coarse3_reverse`). The kernel is a supplied
-argument throughout. -/
+in general (`isReversible_map_of_lumps`) and, on a finite carrier with measurable singletons, from an
+initial probability law w.r.t. which the Markov kernel is reversible, for every measurable observer and
+every window of consecutive times (`chainLaw_window_map_reverse`); `coarse_graining_trade` states both
+directions. The kernel is a supplied argument throughout. -/
 
 -- Provenance: the lumping and run-law declarations marked `[ZP]` are adapted and modified from
 -- MurphyHoops/UEOT, `formalization/ueot-core/UEOT/V3/DynamicsKernel.lean` (lean4-core-export v1.0.0,
@@ -1619,7 +1620,8 @@ theorem rot4_lumps_parity4 :
       (Kernel.deterministic (fun b : Bool => !b) (measurable_of_finite _)) parity4 :=
   (lumps_deterministic_iff _ _ (measurable_of_finite _)).2 (by decide)
 
-/-- `Statement:` the swap of `Bool` is reversible w.r.t. the counting measure on `Bool`. -/
+/-- `Statement:` the swap of `Bool` is reversible w.r.t. the counting measure on `Bool`, of mass 2 (the
+probability version: `boolSwap_reversible_half`). -/
 theorem boolSwap_reversible :
     (Kernel.deterministic (fun b : Bool => !b) (measurable_of_finite _)).IsReversible
       (Measure.dirac true + Measure.dirac false) := by
@@ -1629,7 +1631,8 @@ theorem boolSwap_reversible :
   simp [add_comm]
 
 /-- `Statement:` `rot4` is reversible w.r.t. no probability measure, lumps along `parity4` to the swap
-of `Bool`, and the swap is reversible w.r.t. the counting measure on `Bool`.
+of `Bool`, and the swap is reversible w.r.t. the counting measure on `Bool`, which is not a probability
+measure (with a probability measure: `coarse_graining_trade`).
 `Reading:` coarse-graining erases an arrow. -/
 theorem a4_direction_erased :
     (∀ π : Measure (Fin 4), IsProbabilityMeasure π →
@@ -1944,6 +1947,520 @@ theorem chainLaw_coarse3_reverse [Finite α] {κ : Type*} [MeasurableSpace κ]
 
 end Discrete
 
+/-! #### § XII, every window: reversal at every number of times, and the trade
+
+`Reading:` under detailed balance a path and its reversal have equal weight at every length
+(`pathWeight_rev`); the chain-level statements, every premise in their docstrings, are
+`chainLaw_coarseN_map_reverse` (from time 0) and `chainLaw_window_map_reverse` (from every time).
+Without detailed balance the reversal can fail: `rot4_coarse_not_reversal_symmetric` (matrix level) and
+`rot4_chainLaw_not_reversal_symmetric` (chain level). `coarse_graining_trade` pairs the reversal with
+`a4_direction_erased`. -/
+
+section MatrixN
+variable {ι κ R : Type*} [CommSemiring R]
+
+/-- `Statement:` the weight `π (x 0) * ∏ i < n, P (x i) (x (i + 1))` of the path `x 0, …, x n`. -/
+def pathWeight (π : ι → R) (P : ι → ι → R) {n : ℕ} (x : Fin (n + 1) → ι) : R :=
+  π (x 0) * ∏ i : Fin n, P (x i.castSucc) (x i.succ)
+
+/-- `Statement:` under detailed balance, a path's weight is the end weight `π (x n)` times the
+transitions read backwards. -/
+theorem pathWeight_eq_end {P : ι → ι → R} {π : ι → R} (h : DetailedBalance P π) :
+    ∀ (n : ℕ) (x : Fin (n + 1) → ι),
+      pathWeight π P x = π (x (Fin.last n)) * ∏ i : Fin n, P (x i.succ) (x i.castSucc) := by
+  intro n
+  induction n with
+  | zero => intro x; simp [pathWeight]
+  | succ n ih =>
+    intro x
+    have hi : π (x 0) * ∏ i : Fin n, P (x i.castSucc.castSucc) (x i.succ.castSucc) =
+        π (x (Fin.last n).castSucc) * ∏ i : Fin n, P (x i.succ.castSucc) (x i.castSucc.castSucc) :=
+      ih (Fin.init x)
+    unfold pathWeight
+    rw [Fin.prod_univ_castSucc, Fin.prod_univ_castSucc]
+    show π (x 0) * ((∏ i : Fin n, P (x i.castSucc.castSucc) (x i.succ.castSucc)) *
+        P (x (Fin.last n).castSucc) (x (Fin.last (n + 1)))) =
+      π (x (Fin.last (n + 1))) * ((∏ i : Fin n, P (x i.succ.castSucc) (x i.castSucc.castSucc)) *
+        P (x (Fin.last (n + 1))) (x (Fin.last n).castSucc))
+    rw [← mul_assoc, hi]
+    calc π (x (Fin.last n).castSucc) * (∏ i : Fin n, P (x i.succ.castSucc) (x i.castSucc.castSucc)) *
+          P (x (Fin.last n).castSucc) (x (Fin.last (n + 1)))
+        = (π (x (Fin.last n).castSucc) * P (x (Fin.last n).castSucc) (x (Fin.last (n + 1)))) *
+            ∏ i : Fin n, P (x i.succ.castSucc) (x i.castSucc.castSucc) := by ring
+      _ = (π (x (Fin.last (n + 1))) * P (x (Fin.last (n + 1))) (x (Fin.last n).castSucc)) *
+            ∏ i : Fin n, P (x i.succ.castSucc) (x i.castSucc.castSucc) := by rw [h]
+      _ = π (x (Fin.last (n + 1))) *
+            ((∏ i : Fin n, P (x i.succ.castSucc) (x i.castSucc.castSucc)) *
+              P (x (Fin.last (n + 1))) (x (Fin.last n).castSucc)) := by ring
+
+/-- `Statement:` under detailed balance, a path and its reversal `x ∘ Fin.rev` have equal weight, at
+every length. -/
+theorem pathWeight_rev {P : ι → ι → R} {π : ι → R} (h : DetailedBalance P π) {n : ℕ}
+    (x : Fin (n + 1) → ι) : pathWeight π P x = pathWeight π P (x ∘ Fin.rev) := by
+  rw [pathWeight_eq_end h]
+  unfold pathWeight
+  simp only [Function.comp_apply, Fin.rev_zero, Fin.rev_castSucc, Fin.rev_succ]
+  congr 1
+  exact (Equiv.prod_comp Fin.revPerm (fun i : Fin n => P (x i.succ) (x i.castSucc))).symm
+
+/-- `Statement:` the weight of a path of length `n + 2` is the weight of its initial segment times the
+last transition. -/
+theorem pathWeight_succ (π : ι → R) (P : ι → ι → R) {n : ℕ} (y : Fin (n + 2) → ι) :
+    pathWeight π P y = pathWeight π P (Fin.init y) * P (y (Fin.last n).castSucc) (y (Fin.last (n + 1))) := by
+  unfold pathWeight
+  rw [Fin.prod_univ_castSucc, mul_assoc]
+  rfl
+
+variable [Fintype ι] [DecidableEq κ]
+
+/-- `Statement:` the observed statistic of `n + 1` consecutive times: the total weight of the paths `x`
+with `f ∘ x = a`. -/
+def coarseLawN (π : ι → R) (P : ι → ι → R) (f : ι → κ) {n : ℕ} (a : Fin (n + 1) → κ) : R :=
+  ∑ x : Fin (n + 1) → ι, if f ∘ x = a then pathWeight π P x else 0
+
+/-- `Statement:` under detailed balance, over any commutative semiring, for every observer `f` and every
+`n`, `coarseLawN π P f a = coarseLawN π P f (a ∘ Fin.rev)`. -/
+theorem coarseLawN_reverse {P : ι → ι → R} {π : ι → R} (h : DetailedBalance P π) (f : ι → κ)
+    {n : ℕ} (a : Fin (n + 1) → κ) : coarseLawN π P f a = coarseLawN π P f (a ∘ Fin.rev) := by
+  unfold coarseLawN
+  let σ : Equiv.Perm (Fin (n + 1) → ι) :=
+    Function.Involutive.toPerm (fun x => x ∘ Fin.rev) (fun x => by funext i; simp)
+  rw [← Equiv.sum_comp σ]
+  refine Finset.sum_congr rfl fun x _ => ?_
+  have hσ : σ x = x ∘ Fin.rev := rfl
+  rw [hσ]
+  have hiff : (f ∘ (x ∘ Fin.rev) = a) ↔ (f ∘ x = a ∘ Fin.rev) := by
+    constructor
+    · intro e; funext i
+      have := congrFun e (Fin.rev i)
+      simpa using this
+    · intro e; funext i
+      have := congrFun e (Fin.rev i)
+      simpa using this
+  by_cases hc : f ∘ x = a ∘ Fin.rev
+  · rw [ite_eq_left_of_eq_true _ _ (eq_true (hiff.2 hc)), ite_eq_left_of_eq_true _ _ (eq_true hc),
+      pathWeight_rev h x]
+  · rw [ite_eq_right_of_eq_false _ _ (eq_false (fun e => hc (hiff.1 e))),
+      ite_eq_right_of_eq_false _ _ (eq_false hc)]
+
+/-- `Statement:` along the identity observer, `coarseLawN` is the path weight. -/
+theorem coarseLawN_id (π : ι → R) (P : ι → ι → R) [DecidableEq ι] {n : ℕ} (a : Fin (n + 1) → ι) :
+    coarseLawN π P id a = pathWeight π P a := by
+  unfold coarseLawN
+  rw [Finset.sum_eq_single a]
+  · simp
+  · intro b _ hb; simp [hb]
+  · simp
+
+/-- `Statement:` a sum over `Fin 3 → ι` is the triple sum over `![a, b, c]`. -/
+theorem sum_fin3 {M : Type*} [AddCommMonoid M] (G : (Fin 3 → ι) → M) :
+    ∑ x : Fin 3 → ι, G x = ∑ a, ∑ b, ∑ c, G ![a, b, c] := by
+  rw [← (Fin.consEquiv fun _ => ι).sum_comp, Fintype.sum_prod_type]
+  refine Finset.sum_congr rfl fun a _ => ?_
+  rw [← (Fin.consEquiv fun _ => ι).sum_comp, Fintype.sum_prod_type]
+  refine Finset.sum_congr rfl fun b _ => ?_
+  rw [← (Fin.consEquiv fun _ => ι).sum_comp, Fintype.sum_prod_type]
+  refine Finset.sum_congr rfl fun c _ => ?_
+  rw [Fintype.sum_unique]
+  congr 1
+
+/-- `Statement:` `coarseLaw3 π P f a b c = coarseLawN π P f ![a, b, c]`. -/
+theorem coarseLaw3_eq_coarseLawN (π : ι → R) (P : ι → ι → R) (f : ι → κ) (a b c : κ) :
+    coarseLaw3 π P f a b c = coarseLawN π P f ![a, b, c] := by
+  unfold coarseLaw3 coarseLawN
+  rw [sum_fin3]
+  refine Finset.sum_congr rfl fun x _ => Finset.sum_congr rfl fun y _ =>
+    Finset.sum_congr rfl fun z _ => ?_
+  have hiff : (f ∘ ![x, y, z] = ![a, b, c]) ↔ (f x = a ∧ f y = b ∧ f z = c) := by
+    constructor
+    · intro e
+      exact ⟨congrFun e 0, congrFun e 1, congrFun e 2⟩
+    · rintro ⟨h1, h2, h3⟩; funext i; fin_cases i <;> simp [h1, h2, h3]
+  by_cases hc : f x = a ∧ f y = b ∧ f z = c
+  · rw [ite_eq_left_of_eq_true _ _ (eq_true hc), ite_eq_left_of_eq_true _ _ (eq_true (hiff.2 hc))]
+    simp [pathWeight, Fin.prod_univ_two, mul_assoc]
+  · rw [ite_eq_right_of_eq_false _ _ (eq_false hc),
+      ite_eq_right_of_eq_false _ _ (eq_false (fun e => hc (hiff.1 e)))]
+
+-- Statement: `coarseLaw3_reverse` is `coarseLawN_reverse` at `n = 2`.
+example {P : ι → ι → R} {π : ι → R} (h : DetailedBalance P π) (f : ι → κ) (a b c : κ) :
+    coarseLaw3 π P f a b c = coarseLaw3 π P f c b a := by
+  rw [coarseLaw3_eq_coarseLawN, coarseLaw3_eq_coarseLawN, coarseLawN_reverse h]
+  congr 1
+  funext i; fin_cases i <;> rfl
+
+end MatrixN
+
+-- Statement: `lazyPairs` under `lazyPairsProj` (not lumpable, `lazyPairs_not_lumpable`) has a
+-- reversal-symmetric observed statistic at every `n`.
+example (n : ℕ) (a : Fin (n + 1) → Fin 3) :
+    coarseLawN unifFin4 lazyPairs lazyPairsProj a =
+      coarseLawN unifFin4 lazyPairs lazyPairsProj (a ∘ Fin.rev) :=
+  coarseLawN_reverse detailedBalance_lazyPairs lazyPairsProj a
+
+/-- `Statement:` the transition matrix of `rot4` over ℚ: `rotMat x y = 1` iff `y = rot4 x`, else 0. -/
+def rotMat (x y : Fin 4) : ℚ := if y = rot4 x then 1 else 0
+
+/-- `Statement:` `rotMat` does not satisfy detailed balance w.r.t. `unifFin4`. -/
+theorem rotMat_not_detailedBalance : ¬ DetailedBalance rotMat unifFin4 := by
+  intro h
+  have := h 0 1
+  simp [rotMat, unifFin4, rot4] at this
+
+/-- `Statement:` CONTROL for `coarseLawN_reverse` without detailed balance: along the identity observer,
+the two-time statistic of `rotMat` from `unifFin4` at `(0, 1)` differs from that at `(1, 0)`. -/
+theorem rot4_coarse_not_reversal_symmetric :
+    coarseLawN unifFin4 rotMat id (![0, 1] : Fin 2 → Fin 4) ≠
+      coarseLawN unifFin4 rotMat id ((![0, 1] : Fin 2 → Fin 4) ∘ Fin.rev) := by
+  rw [coarseLawN_id, coarseLawN_id]
+  simp [pathWeight, rotMat, unifFin4, rot4, Fin.rev]
+
+section MeasureN
+
+/-- `Statement:` the first `n + 1` coordinates of a path, indexed by `Fin (n + 1)`. -/
+def finPath (n : ℕ) (x : ℕ → α) : Fin (n + 1) → α := fun i => x i
+
+/-- `Statement:` `finPath n` is measurable. -/
+theorem measurable_finPath (n : ℕ) : Measurable (finPath (α := α) n) :=
+  measurable_pi_iff.mpr fun _ => measurable_pi_apply _
+
+/-- `Statement:` the time-0 marginal of `chainLaw μ K` is `μ`. -/
+theorem chainLaw_map_zero (μ : Measure α) [IsProbabilityMeasure μ] (K : Kernel α α)
+    [IsMarkovKernel K] : (chainLaw μ K).map (fun x => x 0) = μ := by
+  have : (fun x : ℕ → α => x 0) = Prod.fst ∘ (fun x => (x 0, x 1)) := rfl
+  rw [this, ← Measure.map_map measurable_fst (by fun_prop), chainLaw_pair, ← Measure.fst,
+    Measure.fst_compProd]
+
+variable [MeasurableSingletonClass α]
+
+/-- `Statement:` with measurable singletons, the first `n + 1` coordinates of `chainLaw μ K` put mass
+`pathWeight (measureVec μ) (kernelMat K) y`, that is `μ {y 0} * ∏ i < n, K (y i) {y (i + 1)}`, on `{y}`. -/
+theorem chainLaw_finPath_singleton (μ : Measure α) [IsProbabilityMeasure μ] (K : Kernel α α)
+    [IsMarkovKernel K] : ∀ (n : ℕ) (y : Fin (n + 1) → α),
+      (chainLaw μ K).map (finPath n) {y} = pathWeight (measureVec μ) (kernelMat K) y := by
+  intro n
+  induction n with
+  | zero =>
+    intro y
+    rw [Measure.map_apply (measurable_finPath 0) (measurableSet_singleton y)]
+    have hpre : finPath 0 ⁻¹' {y} = (fun x : ℕ → α => x 0) ⁻¹' {y 0} := by
+      ext x
+      simp only [Set.mem_preimage, Set.mem_singleton_iff, funext_iff]
+      constructor
+      · intro e; exact e 0
+      · intro e i
+        obtain ⟨k, hk⟩ := i
+        obtain rfl : k = 0 := by omega
+        exact e
+    rw [hpre, ← Measure.map_apply (measurable_pi_apply 0) (measurableSet_singleton _),
+      chainLaw_map_zero]
+    simp [pathWeight, measureVec]
+  | succ n ih =>
+    intro y
+    let h : (i : Finset.Iic n) → α := fun i =>
+      y ⟨i, by have := Finset.mem_Iic.mp i.2; omega⟩
+    have hpre : finPath (n + 1) ⁻¹' {y} =
+        (fun x : ℕ → α => (Preorder.frestrictLe n x, x (n + 1))) ⁻¹' {(h, y (Fin.last (n + 1)))} := by
+      ext x
+      simp only [Set.mem_preimage, Set.mem_singleton_iff, Prod.mk.injEq, funext_iff]
+      constructor
+      · intro e
+        refine ⟨fun i => ?_, e (Fin.last (n + 1))⟩
+        rw [Preorder.frestrictLe_apply]
+        exact e ⟨i, by have := Finset.mem_Iic.mp i.2; omega⟩
+      · rintro ⟨e1, e2⟩ i
+        by_cases hi : (i : ℕ) ≤ n
+        · have := e1 ⟨i, Finset.mem_Iic.mpr hi⟩
+          rw [Preorder.frestrictLe_apply] at this
+          exact this
+        · have hl : i = Fin.last (n + 1) := Fin.ext (by have := i.2; simp; omega)
+          subst hl
+          exact e2
+    have hpre2 : (Preorder.frestrictLe n : (ℕ → α) → ((i : Finset.Iic n) → α)) ⁻¹'
+        ({h} : Set ((i : Finset.Iic n) → α)) = finPath n ⁻¹' {Fin.init y} := by
+      ext x
+      simp only [Set.mem_preimage, Set.mem_singleton_iff, funext_iff]
+      constructor
+      · intro e i
+        have := e ⟨i, Finset.mem_Iic.mpr (by omega)⟩
+        rw [Preorder.frestrictLe_apply] at this
+        exact this
+      · intro e i
+        rw [Preorder.frestrictLe_apply]
+        exact e ⟨i, by have := Finset.mem_Iic.mp i.2; omega⟩
+    have hprod : Measurable (fun x : ℕ → α => (Preorder.frestrictLe n x, x (n + 1))) := by fun_prop
+    rw [Measure.map_apply (measurable_finPath (n + 1)) (measurableSet_singleton y), hpre,
+      ← Measure.map_apply hprod (measurableSet_singleton _), ← chainLaw_step,
+      ← Set.singleton_prod_singleton, Measure.compProd_apply_prod (measurableSet_singleton _)
+        (measurableSet_singleton _), lintegral_singleton,
+      Measure.map_apply (Preorder.measurable_frestrictLe n) (measurableSet_singleton _), hpre2,
+      ← Measure.map_apply (measurable_finPath n) (measurableSet_singleton _), ih,
+      pathWeight_succ, mul_comm]
+    rfl
+
+/-- `Statement:` on a finite carrier with measurable singletons, for an initial probability law `μ`, a
+Markov kernel `K` and a measurable observer `f` into a space with measurable singletons, the law of
+`(f (x 0), …, f (x n))` at `a` is `coarseLawN (measureVec μ) (kernelMat K) f a`. -/
+theorem chainLaw_coarseN_eq_coarseLawN [Fintype α] {κ : Type*} [MeasurableSpace κ]
+    [MeasurableSingletonClass κ] [DecidableEq κ] (μ : Measure α) [IsProbabilityMeasure μ]
+    (K : Kernel α α) [IsMarkovKernel K] (f : α → κ) (hf : Measurable f) (n : ℕ)
+    (a : Fin (n + 1) → κ) :
+    (chainLaw μ K).map (fun x (i : Fin (n + 1)) => f (x i)) {a} =
+      coarseLawN (measureVec μ) (kernelMat K) f a := by
+  classical
+  have hg : Measurable (fun y : Fin (n + 1) → α => f ∘ y) :=
+    measurable_pi_iff.mpr fun i => hf.comp (measurable_pi_apply i)
+  have hcomp : (fun (x : ℕ → α) (i : Fin (n + 1)) => f (x i)) =
+      (fun y : Fin (n + 1) → α => f ∘ y) ∘ finPath n := rfl
+  rw [hcomp, ← Measure.map_map hg (measurable_finPath n),
+    Measure.map_apply hg (measurableSet_singleton _)]
+  set ν := (chainLaw μ K).map (finPath n) with hν
+  have hS : ν ((fun y : Fin (n + 1) → α => f ∘ y) ⁻¹' {a}) =
+      ∑ y : Fin (n + 1) → α, if f ∘ y = a then ν {y} else 0 := by
+    rw [← Finset.sum_filter, sum_measure_singleton]
+    congr 1
+    ext y; simp
+  rw [hS]
+  unfold coarseLawN
+  refine Finset.sum_congr rfl fun y _ => ?_
+  split_ifs
+  · exact chainLaw_finPath_singleton μ K n y
+  · rfl
+
+/-- `Statement:` on a finite carrier with measurable singletons, if the Markov kernel `K` is reversible
+w.r.t. the initial probability law `μ`, then for every measurable observer `f` into a space with
+measurable singletons and every `n`, the observed law of `n + 1` times at `a` equals that at
+`a ∘ Fin.rev`. -/
+theorem chainLaw_coarseN_reverse [Finite α] {κ : Type*} [MeasurableSpace κ]
+    [MeasurableSingletonClass κ] (μ : Measure α) [IsProbabilityMeasure μ]
+    (K : Kernel α α) [IsMarkovKernel K] (hrev : K.IsReversible μ) (f : α → κ) (hf : Measurable f)
+    (n : ℕ) (a : Fin (n + 1) → κ) :
+    (chainLaw μ K).map (fun x (i : Fin (n + 1)) => f (x i)) {a} =
+      (chainLaw μ K).map (fun x (i : Fin (n + 1)) => f (x i)) {a ∘ Fin.rev} := by
+  classical
+  have := Fintype.ofFinite α
+  rw [chainLaw_coarseN_eq_coarseLawN μ K f hf, chainLaw_coarseN_eq_coarseLawN μ K f hf,
+    coarseLawN_reverse (detailedBalance_of_isReversible μ K hrev)]
+
+-- Statement: `chainLaw_coarseN_reverse` at `n = 2` gives the three-time reversal, `(a 0, a 1, a 2)`
+-- against `(a 2, a 1, a 0)`.
+example [Finite α] {κ : Type*} [MeasurableSpace κ] [MeasurableSingletonClass κ]
+    (μ : Measure α) [IsProbabilityMeasure μ] (K : Kernel α α) [IsMarkovKernel K]
+    (hrev : K.IsReversible μ) (f : α → κ) (hf : Measurable f) (a : Fin 3 → κ) :
+    (chainLaw μ K).map (fun x (i : Fin 3) => f (x i)) {a} =
+      (chainLaw μ K).map (fun x (i : Fin 3) => f (x i)) {![a 2, a 1, a 0]} := by
+  rw [chainLaw_coarseN_reverse μ K hrev f hf 2 a]
+  congr 2
+  funext i; fin_cases i <;> rfl
+
+/-- `Statement:` on a finite carrier with measurable singletons, if the Markov kernel `K` is reversible
+w.r.t. the initial probability law `μ`, then for every `n` the law of `(x 0, …, x n)` equals the law of
+`(x n, …, x 0)`. -/
+theorem chainLaw_finPath_map_rev [Finite α] (μ : Measure α) [IsProbabilityMeasure μ]
+    (K : Kernel α α) [IsMarkovKernel K] (hrev : K.IsReversible μ) (n : ℕ) :
+    (chainLaw μ K).map (finPath n) =
+      (chainLaw μ K).map (fun x (i : Fin (n + 1)) => x (Fin.rev i)) := by
+  have hr : Measurable (fun y : Fin (n + 1) → α => y ∘ Fin.rev) :=
+    measurable_pi_iff.mpr fun i => measurable_pi_apply _
+  have hc : (fun (x : ℕ → α) (i : Fin (n + 1)) => x (Fin.rev i)) =
+      (fun y : Fin (n + 1) → α => y ∘ Fin.rev) ∘ finPath n := rfl
+  rw [hc, ← Measure.map_map hr (measurable_finPath n)]
+  refine Measure.ext_iff_singleton.2 fun y => ?_
+  have hpre : (fun y : Fin (n + 1) → α => y ∘ Fin.rev) ⁻¹' {y} = {y ∘ Fin.rev} := by
+    ext z
+    simp only [Set.mem_preimage, Set.mem_singleton_iff]
+    constructor
+    · rintro rfl; funext i; simp
+    · rintro rfl; funext i; simp
+  rw [Measure.map_apply hr (measurableSet_singleton _), hpre, chainLaw_finPath_singleton,
+    chainLaw_finPath_singleton]
+  exact pathWeight_rev (detailedBalance_of_isReversible μ K hrev) y
+
+/-- `Statement:` on a finite carrier with measurable singletons, if the Markov kernel `K` is reversible
+w.r.t. the initial probability law `μ`, then for every measurable observer `f` and every `n` the law of
+`(f (x 0), …, f (x n))` equals the law of `(f (x n), …, f (x 0))`, as measures. -/
+theorem chainLaw_coarseN_map_reverse [Finite α] {κ : Type*} [MeasurableSpace κ]
+    (μ : Measure α) [IsProbabilityMeasure μ] (K : Kernel α α) [IsMarkovKernel K]
+    (hrev : K.IsReversible μ) (f : α → κ) (hf : Measurable f) (n : ℕ) :
+    (chainLaw μ K).map (fun x (i : Fin (n + 1)) => f (x i)) =
+      (chainLaw μ K).map (fun x (i : Fin (n + 1)) => f (x (Fin.rev i))) := by
+  have hg : Measurable (fun y : Fin (n + 1) → α => f ∘ y) :=
+    measurable_pi_iff.mpr fun i => hf.comp (measurable_pi_apply i)
+  have hr : Measurable (fun (x : ℕ → α) (i : Fin (n + 1)) => x (Fin.rev i)) :=
+    measurable_pi_iff.mpr fun i => measurable_pi_apply _
+  have h1 : (fun (x : ℕ → α) (i : Fin (n + 1)) => f (x (Fin.rev i))) =
+      (fun y : Fin (n + 1) → α => f ∘ y) ∘ (fun x i => x (Fin.rev i)) := rfl
+  have h2 : (fun (x : ℕ → α) (i : Fin (n + 1)) => f (x i)) =
+      (fun y : Fin (n + 1) → α => f ∘ y) ∘ finPath n := rfl
+  rw [h1, h2, ← Measure.map_map hg hr, ← Measure.map_map hg (measurable_finPath n),
+    chainLaw_finPath_map_rev μ K hrev n]
+
+/-- `Statement:` for a measure `ν` on `Fin (n + 2) → α`, `α` finite with measurable singletons, the
+image of `ν` under `Fin.tail` puts mass `∑ a, ν {Fin.cons a y}` on `{y}`. -/
+theorem map_tail_singleton [Fintype α] {n : ℕ} (ν : Measure (Fin (n + 2) → α))
+    (y : Fin (n + 1) → α) :
+    ν.map (fun z : Fin (n + 2) → α => Fin.tail z) {y} = ∑ a : α, ν {Fin.cons a y} := by
+  classical
+  have ht : Measurable (fun z : Fin (n + 2) → α => Fin.tail z) :=
+    measurable_pi_iff.mpr fun i => measurable_pi_apply _
+  rw [Measure.map_apply ht (measurableSet_singleton _)]
+  have hpre : (fun z : Fin (n + 2) → α => Fin.tail z) ⁻¹' {y} =
+      ↑(Finset.univ.image (fun a : α => (Fin.cons a y : Fin (n + 2) → α))) := by
+    ext z
+    simp only [Set.mem_preimage, Set.mem_singleton_iff, Finset.coe_image, Finset.coe_univ,
+      Set.image_univ, Set.mem_range]
+    constructor
+    · rintro rfl; exact ⟨z 0, Fin.cons_self_tail z⟩
+    · rintro ⟨a, rfl⟩; exact Fin.tail_cons (α := fun _ => α) a y
+  rw [hpre, ← sum_measure_singleton, Finset.sum_image]
+  intro a _ b _ h
+  exact Fin.cons_left_injective (α := fun _ => α) y h
+
+/-- `Statement:` on a finite carrier with measurable singletons, if the Markov kernel `K` leaves the
+initial probability law `μ` invariant (Mathlib `Kernel.Invariant`), then for every start `t` and every
+`n` the window `(x t, …, x (t + n))` puts mass `pathWeight (measureVec μ) (kernelMat K) y` on `{y}`. -/
+theorem chainLaw_window_singleton [Finite α] (μ : Measure α) [IsProbabilityMeasure μ]
+    (K : Kernel α α) [IsMarkovKernel K] (hinv : K.Invariant μ) :
+    ∀ (t n : ℕ) (y : Fin (n + 1) → α),
+      (chainLaw μ K).map (fun x (i : Fin (n + 1)) => x (t + i)) {y} =
+        pathWeight (measureVec μ) (kernelMat K) y := by
+  have := Fintype.ofFinite α
+  have hstat : ∀ b : α, ∑ a, measureVec μ a * kernelMat K a b = measureVec μ b := by
+    intro b
+    have : (μ.bind K) {b} = μ {b} := by rw [hinv.def]
+    rw [Measure.bind_apply (measurableSet_singleton b) (Kernel.aemeasurable _),
+      lintegral_fintype] at this
+    simpa [measureVec, kernelMat, mul_comm] using this
+  intro t
+  induction t with
+  | zero =>
+    intro n y
+    have : (fun (x : ℕ → α) (i : Fin (n + 1)) => x (0 + i)) = finPath n := by
+      funext x i; simp [finPath]
+    rw [this, chainLaw_finPath_singleton]
+  | succ t ih =>
+    intro n y
+    have hw : Measurable (fun (x : ℕ → α) (i : Fin (n + 2)) => x (t + i)) :=
+      measurable_pi_iff.mpr fun i => measurable_pi_apply _
+    have ht : Measurable (fun z : Fin (n + 2) → α => Fin.tail z) :=
+      measurable_pi_iff.mpr fun i => measurable_pi_apply _
+    have hc : (fun (x : ℕ → α) (i : Fin (n + 1)) => x (t + 1 + i)) =
+        (fun z : Fin (n + 2) → α => Fin.tail z) ∘ (fun x (i : Fin (n + 2)) => x (t + i)) := by
+      funext x i
+      simp only [Function.comp_apply, Fin.tail, Fin.val_succ]
+      congr 1; omega
+    rw [hc, ← Measure.map_map ht hw, map_tail_singleton]
+    simp_rw [ih (n + 1)]
+    unfold pathWeight
+    simp only [Fin.prod_univ_succ, Fin.cons_zero, Fin.castSucc_zero, ← Fin.succ_castSucc,
+      Fin.cons_succ]
+    rw [← hstat (y 0), Finset.sum_mul]
+    refine Finset.sum_congr rfl fun a _ => ?_
+    ring
+
+/-- `Statement:` on a finite carrier with measurable singletons, if the Markov kernel `K` leaves the
+initial probability law `μ` invariant, then for every start `t` and every `n` the window
+`(x t, …, x (t + n))` has the law of `(x 0, …, x n)`. -/
+theorem chainLaw_window_eq_finPath [Finite α] (μ : Measure α) [IsProbabilityMeasure μ]
+    (K : Kernel α α) [IsMarkovKernel K] (hinv : K.Invariant μ) (t n : ℕ) :
+    (chainLaw μ K).map (fun x (i : Fin (n + 1)) => x (t + i)) =
+      (chainLaw μ K).map (finPath n) := by
+  refine Measure.ext_iff_singleton.2 fun y => ?_
+  rw [chainLaw_window_singleton μ K hinv, chainLaw_finPath_singleton]
+
+/-- `Statement:` on a finite carrier with measurable singletons, if the Markov kernel `K` is reversible
+w.r.t. the initial probability law `μ`, then for every measurable observer `f`, every start `t` and every
+`n` the law of `(f (x t), …, f (x (t + n)))` equals the law of `(f (x (t + n)), …, f (x t))`, as
+measures. -/
+theorem chainLaw_window_map_reverse [Finite α] {κ : Type*} [MeasurableSpace κ]
+    (μ : Measure α) [IsProbabilityMeasure μ] (K : Kernel α α) [IsMarkovKernel K]
+    (hrev : K.IsReversible μ) (f : α → κ) (hf : Measurable f) (t n : ℕ) :
+    (chainLaw μ K).map (fun x (i : Fin (n + 1)) => f (x (t + i))) =
+      (chainLaw μ K).map (fun x (i : Fin (n + 1)) => f (x (t + Fin.rev i))) := by
+  have hw : Measurable (fun (x : ℕ → α) (i : Fin (n + 1)) => x (t + i)) :=
+    measurable_pi_iff.mpr fun i => measurable_pi_apply _
+  have hg : Measurable (fun y : Fin (n + 1) → α => f ∘ y) :=
+    measurable_pi_iff.mpr fun i => hf.comp (measurable_pi_apply i)
+  have hg' : Measurable (fun y : Fin (n + 1) → α => f ∘ y ∘ Fin.rev) :=
+    measurable_pi_iff.mpr fun i => hf.comp (measurable_pi_apply _)
+  have h1 : (fun (x : ℕ → α) (i : Fin (n + 1)) => f (x (t + i))) =
+      (fun y : Fin (n + 1) → α => f ∘ y) ∘ (fun x i => x (t + i)) := rfl
+  have h2 : (fun (x : ℕ → α) (i : Fin (n + 1)) => f (x (t + Fin.rev i))) =
+      (fun y : Fin (n + 1) → α => f ∘ y ∘ Fin.rev) ∘ (fun x i => x (t + i)) := rfl
+  rw [h1, h2, ← Measure.map_map hg hw, ← Measure.map_map hg' hw,
+    chainLaw_window_eq_finPath μ K hrev.invariant t n,
+    Measure.map_map hg (measurable_finPath n), Measure.map_map hg' (measurable_finPath n)]
+  exact chainLaw_coarseN_map_reverse μ K hrev f hf n
+
+/-- `Statement:` CONTROL for `chainLaw_window_map_reverse` without reversibility: for the deterministic
+kernel of `rot4` from any probability law `μ` with `μ {0} ≠ 0`, along the identity observer, the law of
+`(x 0, x 1)` puts different masses on `(0, 1)` and `(1, 0)`. -/
+theorem rot4_chainLaw_not_reversal_symmetric (μ : Measure (Fin 4)) [IsProbabilityMeasure μ]
+    (h0 : μ {0} ≠ 0) :
+    (chainLaw μ (Kernel.deterministic rot4 (measurable_of_finite _))).map
+        (fun x (i : Fin 2) => x i) {![0, 1]} ≠
+      (chainLaw μ (Kernel.deterministic rot4 (measurable_of_finite _))).map
+        (fun x (i : Fin 2) => x i) {![1, 0]} := by
+  have h := chainLaw_finPath_singleton μ (Kernel.deterministic rot4 (measurable_of_finite _)) 1
+  change (chainLaw μ _).map (finPath 1) {![0, 1]} ≠ (chainLaw μ _).map (finPath 1) {![1, 0]}
+  rw [h, h]
+  have h01 : rot4 0 = 1 := by decide
+  have h10 : rot4 1 = 2 := by decide
+  simp [pathWeight, measureVec, kernelMat, Kernel.deterministic_apply, h01, h10, h0]
+
+end MeasureN
+
+/-- `Statement:` the swap of `Bool` is reversible w.r.t. the probability measure
+`(1/2) • (dirac true + dirac false)`. -/
+theorem boolSwap_reversible_half :
+    (Kernel.deterministic (fun b : Bool => !b) (measurable_of_finite _)).IsReversible
+      ((2⁻¹ : ENNReal) • (Measure.dirac true + Measure.dirac false)) := by
+  refine isReversible_deterministic_involutive _ Bool.not_not ?_
+  rw [Measure.map_smul, Measure.map_add _ _ (measurable_of_finite _),
+    Measure.map_dirac' (measurable_of_finite _), Measure.map_dirac' (measurable_of_finite _)]
+  all_goals first | exact (measurable_of_finite _).aemeasurable | simp [add_comm]
+
+/-- `Statement:` `(1/2) • (dirac true + dirac false)` is a probability measure on `Bool`. -/
+instance isProbabilityMeasure_halfBool :
+    IsProbabilityMeasure ((2⁻¹ : ENNReal) • (Measure.dirac true + Measure.dirac false)) := by
+  constructor
+  rw [Measure.smul_apply, Measure.add_apply, measure_univ, measure_univ, one_add_one_eq_two,
+    smul_eq_mul, ENNReal.inv_mul_cancel two_ne_zero ENNReal.ofNat_ne_top]
+
+-- Statement: the measure in `a4_direction_erased` and `boolSwap_reversible`, `dirac true + dirac false`,
+-- has total mass 2, so it is not a probability measure.
+example : (Measure.dirac true + Measure.dirac false : Measure Bool) Set.univ = 2 := by
+  simp [one_add_one_eq_two]
+
+section Trade
+universe u v
+
+/-- `Statement:` both directions. First: the deterministic kernel of `rot4` is reversible w.r.t. no
+probability measure, lumps along `parity4` to the swap of `Bool`, and the swap is reversible w.r.t. some
+probability measure. Second: on a finite carrier with measurable singletons, for every initial
+probability law `μ`, Markov kernel `K` with `K.IsReversible μ`, measurable observer `f`, start `t` and
+`n`, the law of `(f (x t), …, f (x (t + n)))` equals the law of `(f (x (t + n)), …, f (x t))`.
+`Reading:` coarse-graining can erase an arrow, and from a reversible start it creates none in any window
+of consecutive times. -/
+theorem coarse_graining_trade :
+    ((∀ π : Measure (Fin 4), IsProbabilityMeasure π →
+        ¬ (Kernel.deterministic rot4 (measurable_of_finite _)).IsReversible π) ∧
+      Lumps (Kernel.deterministic rot4 (measurable_of_finite _))
+        (Kernel.deterministic (fun b : Bool => !b) (measurable_of_finite _)) parity4 ∧
+      ∃ ν : Measure Bool, IsProbabilityMeasure ν ∧
+        (Kernel.deterministic (fun b : Bool => !b) (measurable_of_finite _)).IsReversible ν) ∧
+    (∀ (α : Type u) [MeasurableSpace α] [MeasurableSingletonClass α] [Finite α]
+      (κ : Type v) [MeasurableSpace κ]
+      (μ : Measure α) [IsProbabilityMeasure μ] (K : Kernel α α) [IsMarkovKernel K],
+      K.IsReversible μ → ∀ f : α → κ, Measurable f → ∀ (t n : ℕ),
+        (chainLaw μ K).map (fun x (i : Fin (n + 1)) => f (x (t + i))) =
+          (chainLaw μ K).map (fun x (i : Fin (n + 1)) => f (x (t + Fin.rev i)))) :=
+  ⟨⟨a4_direction_erased.1, a4_direction_erased.2.1,
+      ⟨_, isProbabilityMeasure_halfBool, boolSwap_reversible_half⟩⟩,
+    fun _ _ _ _ _ _ μ _ K _ hrev f hf t n => chainLaw_window_map_reverse μ K hrev f hf t n⟩
+
+end Trade
+
 end Lumping
 
 end ZeroParadox
@@ -2103,4 +2620,32 @@ open ZeroParadox
 #print axioms chainLaw_coarse3_eq_coarseLaw3
 #print axioms detailedBalance_of_isReversible
 #print axioms chainLaw_coarse3_reverse
+#print axioms pathWeight
+#print axioms pathWeight_eq_end
+#print axioms pathWeight_rev
+#print axioms pathWeight_succ
+#print axioms coarseLawN
+#print axioms coarseLawN_reverse
+#print axioms coarseLawN_id
+#print axioms sum_fin3
+#print axioms coarseLaw3_eq_coarseLawN
+#print axioms rotMat
+#print axioms rotMat_not_detailedBalance
+#print axioms rot4_coarse_not_reversal_symmetric
+#print axioms finPath
+#print axioms measurable_finPath
+#print axioms chainLaw_map_zero
+#print axioms chainLaw_finPath_singleton
+#print axioms chainLaw_coarseN_eq_coarseLawN
+#print axioms chainLaw_coarseN_reverse
+#print axioms chainLaw_finPath_map_rev
+#print axioms chainLaw_coarseN_map_reverse
+#print axioms map_tail_singleton
+#print axioms chainLaw_window_singleton
+#print axioms chainLaw_window_eq_finPath
+#print axioms chainLaw_window_map_reverse
+#print axioms rot4_chainLaw_not_reversal_symmetric
+#print axioms boolSwap_reversible_half
+#print axioms isProbabilityMeasure_halfBool
+#print axioms coarse_graining_trade
 end PurityCheck

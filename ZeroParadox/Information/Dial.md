@@ -212,7 +212,8 @@ this file holds what was already in the corpus, the prior art, and the fences.
   chain of an irreducible reversible chain is reversible: Eldar, Ozols, Thompson, "The Need for Structure
   in Quantum LDPC Codes", *IEEE Trans. Inf. Theory* 66(3) (2020), arXiv:1610.07478, Definition 23, p. 11,
   and Fact 27, p. 12; `aggregatedChain_detailedBalance` is that statement for matrices over ℚ with nonzero
-  class weights. That a non-reversible chain can lump to a reversible one (`a4_direction_erased`) is noted
+  class weights. That a non-reversible chain can lump to a reversible one (`a4_direction_erased`, w.r.t. the
+  counting measure on `Bool`; w.r.t. a probability measure, `boolSwap_reversible_half`) is noted
   by Wolfer and Watanabe, § 4.4.3, p. 26: embedding a reversible chain, "even by a Markov embedding", can
   yield a non-reversible one, and a Markov embedding serves "as a right inverse of the lumping operation"
   (§ 2.1, p. 5), so that chain lumps back to the reversible one. paulklemstine/Lean `cycleLumpable` (below) lumps the `n`-cycle onto the
@@ -251,6 +252,44 @@ this file holds what was already in the corpus, the prior art, and the fences.
   `publications/artifacts/lean4-core-export/export_lean4_archive.py` builds from
   `formalization/ueot-core/UEOT/` (v1.0.0, base commit 83ecdb12, DOI 10.5281/zenodo.24433585), licensed
   Apache License, Version 2.0, with its `NOTICE` in the same directory.
+
+## Prior art for § XII, every window (searched 2026-11-27)
+
+- Kelly, *Reversibility and Stochastic Networks* (1979), § 1.2, p. 5: a process is reversible if
+  `(X(t1), ..., X(tn))` has the law of `(X(τ − t1), ..., X(τ − tn))` for all `t1, ..., tn, τ`; Lemma 1.1,
+  p. 5: a reversible process is stationary. Theorem 1.2, pp. 5-6: a stationary Markov chain is reversible iff
+  some positive `π(j)` summing to one satisfy detailed balance; its proof writes the probability of
+  `m + 1` consecutive states as `π` times a product of transitions and reverses it, the argument of
+  `pathWeight_rev`.
+- Levin, Peres, Wilmer, *Markov Chains and Mixing Times*, 2nd ed., § 1.6, (1.29)-(1.31), pp. 13-14: for a
+  probability distribution `π` satisfying detailed balance (1.29), the weight of a path equals that of its
+  reversal (1.30), so from `π` the law of `(X0, ..., Xn)` is the law of `(Xn, ..., X0)` (1.31). (1.30) is
+  `pathWeight_rev`; (1.31) is `chainLaw_finPath_map_rev`. LPW take `π` a probability distribution, not
+  positive; Kelly's Theorem 1.2 takes it positive.
+- Kelly 1979, Exercise 1.2.9, p. 10: "If X(t) is a reversible stochastic process show that so is
+  Y(t) = f[X(t)] for any function f." `chainLaw_coarseN_map_reverse` composes that step with (1.31), and
+  `chainLaw_window_map_reverse` adds stationarity (Mathlib `Kernel.IsReversible.invariant`,
+  `chainLaw_window_eq_finPath`).
+- What is ours is the formalization only: the reversal on Mathlib's `Kernel.trajMeasure` with
+  `Kernel.IsReversible`, composed with a measurable observer, for every window of consecutive times, and
+  the two-sided `coarse_graining_trade`.
+- Lean neighbours, PARTLY VERIFIED (source read, type not elaborated, outside this dependency closure).
+  gszep/times-arrow (commit 0f8e977) `TimesArrow.Markov.pathPMF_reversePath`: under pointwise detailed
+  balance the path `PMF` of every length `T` is invariant under path reversal; no observer step.
+  itakura-hidetoshi/4d-mass-gap (commit 615babf), `MGAP4D/MathlibAnalytic/LinearMarkovFinitePathReversal.lean`:
+  `linearMarkovFinitePathPMF_map_reverse_of_detailedBalance`, the same as a `PMF.map` equality on a finite
+  carrier, and `linearMarkovFinitePathPMF_expectation_reverse_of_detailedBalance`, the expectation of every
+  real path function invariant under reversal; `MGAP4D/MathlibAnalytic/LinearMarkovTwoSidedIntegerPathReflectionInvariance.lean`:
+  `linearMarkovTwoSidedIntegerPathMeasure_map_reflection`, a two-sided ℤ-indexed path measure invariant
+  under `t ↦ -t`, and `linearMarkovIntegerFiniteMarginalMeasure_map_reflectionReindex`, every finite time
+  set. TauCeti (repository TauCetiProject/TauCeti, commit 9f9b83d)
+  `TauCeti.Probability.markovChainLaw_map_prefix_apply_singleton` (`Process/MarkovChain.lean`): the
+  product formula `ν {w 0} * ∏ i, κ (w i) {w (i + 1)}` for the finite path masses of `markovChainLaw`,
+  which `chainLaw_finPath_singleton` states for `chainLaw`; and, in the same repository and commit,
+  `MeasureTheory.Measure.markovChainLaw_setOf_forall_apply_eq` (`MarkovChain/Cylinder.lean`), the
+  cylinder formula at monotone times.
+- The erasing half of `coarse_graining_trade` from the lift side: Wolfer and Watanabe, § 4.4.3, p. 26
+  (under § XII above).
 
 ## Fences
 
@@ -295,7 +334,8 @@ this file holds what was already in the corpus, the prior art, and the fences.
   relocates the hypothesis `0 < p` into `glauberExciteNN_pos`; it does not remove it.
 - § XII, motivation only. Tim, 2026-07-11: "There's also the fact that the.bridge.runs one direction and
   to get it to run the other way you look at it from when zero and Infinity reverse roles (the snap
-  itself)". This is a `Reading:`; § XII proves nothing about the snap or about zero and infinity.
+  itself)". This is a `Reading:`; § XII proves nothing about the snap or about zero and infinity. The
+  statement it motivates is `coarse_graining_trade`, read as two arrows trading places (`Reading:`).
 - § XII, lumping. A step-compatible die does not force lumpable weights on a kernel subordinate to it
   (CONTROL B, whose kernel's own support die is not step-compatible), and a subordinate kernel that lumps
   does not make the die's relation step-compatible (CONTROL A), since the die may hold steps of weight 0.
@@ -304,22 +344,31 @@ this file holds what was already in the corpus, the prior art, and the fences.
   refutes the converse of the second. `lumps_id_of_upStepInvariant` needs `UpStepInvariant` as a
   hypothesis, on a carrier with measurable singletons; it is not derived.
 - § XII, reversibility, both directions. A kernel reversible w.r.t. no probability measure can lump to a
-  reversible one: `rot4` and its lumping along parity (`a4_direction_erased`). From a reversible start,
+  reversible one: `rot4` and its lumping along parity (`a4_direction_erased`), where the swap of `Bool` is
+  reversible w.r.t. the counting measure `dirac true + dirac false`, of mass 2 and not a probability
+  measure; w.r.t. the probability measure `(1/2) • (dirac true + dirac false)` it is
+  `boolSwap_reversible_half`. From a reversible start,
   lumping gives a reversible kernel for a measurable lumping map on a general measurable carrier
   (`isReversible_map_of_lumps`; along the map to `Unit` its conclusion holds for every kernel, the CONTROL
-  after `a4_direction_erased`), and every measurable observer, lumpable or not, has a reversal-symmetric
-  three-time law on a finite carrier with measurable singletons and an observed space with measurable
-  singletons (`chainLaw_coarse3_reverse`; a reversible start is stationary, Mathlib
-  `Kernel.IsReversible.invariant`). `Reading:` coarse-graining can erase an arrow, and from a reversible
-  start it creates none. The observer need not see a Markov chain: `lazyPairs` under `lazyPairsProj` is
-  not lumpable and its observed three-time statistic fits no Markov chain over ℚ
-  (`lazyPairs_coarse_not_markov`), and that statistic is still reversal-symmetric. At the matrix level two
-  and three time points are proved (`coarseLaw2_reverse`, `coarseLaw3_reverse`); at the measure level three
-  time points (`chainLaw_coarse3_reverse`); longer windows are not stated. The `lazyPairs` statements are at
-  the matrix level over ℚ and are not instantiated at the measure level. Detailed balance and a reversing involution of the
+  after `a4_direction_erased`), and, on a finite carrier with measurable singletons, from a probability
+  initial law w.r.t. which the Markov kernel is reversible, every measurable observer, lumpable or not, sees
+  each window of consecutive times with the law of its reversal (`chainLaw_window_map_reverse`; from time
+  0: `chainLaw_coarseN_map_reverse`; singleton masses: `chainLaw_coarseN_reverse`, three times
+  `chainLaw_coarse3_reverse`). `coarse_graining_trade` states both directions. `Reading:`
+  coarse-graining can erase an arrow, and from a reversible start it creates none in any window of
+  consecutive times; "two arrows trade places" is this reading. Without detailed balance the reversal can
+  fail: at the matrix level, `rotMat` from `unifFin4` (`rot4_coarse_not_reversal_symmetric`, with
+  `rotMat_not_detailedBalance`); at the chain level, `rot4` from every probability law giving `0` positive
+  mass (`rot4_chainLaw_not_reversal_symmetric`). The observer need not see a
+  Markov chain: `lazyPairs` under `lazyPairsProj` is not lumpable and its observed three-time statistic fits
+  no Markov chain over ℚ (`lazyPairs_coarse_not_markov`), and its observed statistic is reversal-symmetric
+  at every `n` (the `example` after `coarseLawN_reverse`'s section). At the matrix level every `n` is proved
+  over any commutative semiring (`coarseLawN_reverse`; `coarseLaw2_reverse`, `coarseLaw3_reverse`). The
+  `lazyPairs` statements are at the matrix level over ℚ and are not instantiated at the measure level.
+  Detailed balance and a reversing involution of the
   steps are different conditions: `absorb4` admits no reversing involution of its steps
   (`absorb4_not_sigma_reversible`) and its kernel is reversible w.r.t. every measure on its fixed points
-  (`absorb4_reversible`). "Two arrows trade places" is a `Reading:` and nothing here states it.
+  (`absorb4_reversible`).
 - EXPERIMENTAL dependence. `Dial.lean` imports modules marked EXPERIMENTAL; the theorems that use a declaration
   of one are listed below. Uses, by section: `tape_never_fires_iff` (`exists_startBit_iff`, StartBit);
   `dial_fire_within`, `fireWithin_continuous`, `fireWithin_mono`, `dial_not_uniform_witness`, `dial_not_uniform`
