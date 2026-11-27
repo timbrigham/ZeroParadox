@@ -471860,6 +471860,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "06cca59b-ea0b-4676-b1c3-64056b3d9107",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.pathWeight_eq_end",
+            "short": "pathWeight_eq_end"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.pathWeight_eq_end",
+            "short": "pathWeight_eq_end",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XII every-window subsection: n-time reversal under detailed balance for any observer, and coarse_graining_trade.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "06cd132b-3155-4161-8400-1a7b507fdc4d",
           "new": {
             "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
@@ -490845,6 +490882,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "21059e07-fe74-44de-ab73-d8dfb044df41",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.chainLaw_finPath_singleton",
+            "short": "chainLaw_finPath_singleton"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.chainLaw_finPath_singleton",
+            "short": "chainLaw_finPath_singleton",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XII every-window subsection: n-time reversal under detailed balance for any observer, and coarse_graining_trade.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "21071804-7c68-4bcb-a536-46d7c4d29fd3",
           "new": {
             "file": "ZeroParadox/Meta/AxiomLedger.lean",
@@ -492685,6 +492759,43 @@
             ]
           },
           "reason": "Dial § XII landed at 26e2ba68: register the remaining 82 new declarations (lumpability + reversibility under coarse-graining).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "246c730b-e80e-43f8-b0ee-6ecd31af4aa0",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.sum_fin3",
+            "short": "sum_fin3"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.sum_fin3",
+            "short": "sum_fin3",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XII every-window subsection: n-time reversal under detailed balance for any observer, and coarse_graining_trade.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -501886,6 +501997,43 @@
             ]
           },
           "reason": "The no-go gauge for scale_not_surjective: on trivialValBridge the valuation is constantly top, so no valuation-0 point exists, that theorem's hypothesis is unsatisfiable, and scale = id is a bijection. One-wayness is a property of carriers having a valuation-0 point, never of the class.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "307e623e-6bbc-41fa-9dfb-bf1d07f7ab49",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.pathWeight",
+            "short": "pathWeight"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.pathWeight",
+            "short": "pathWeight",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XII every-window subsection: n-time reversal under detailed balance for any observer, and coarse_graining_trade.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -528036,6 +528184,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "5617d87a-fc84-4d53-a94c-6c83a7f30635",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.coarseLawN_id",
+            "short": "coarseLawN_id"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.coarseLawN_id",
+            "short": "coarseLawN_id",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XII every-window subsection: n-time reversal under detailed balance for any observer, and coarse_graining_trade.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "562f70b1-8c8a-47f9-af63-6f3dc34d37ac",
           "new": {
@@ -532394,6 +532579,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "5c00a3fa-e257-4a29-9a48-6bda8bfcf2c3",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.isProbabilityMeasure_halfBool",
+            "short": "isProbabilityMeasure_halfBool"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.isProbabilityMeasure_halfBool",
+            "short": "isProbabilityMeasure_halfBool",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XII every-window subsection: n-time reversal under detailed balance for any observer, and coarse_graining_trade.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "5c0da8c1-6780-4dd0-a64a-5f6840a92a38",
           "new": {
             "file": "ZeroParadox/Multihomed/OrbitDie.lean",
@@ -535631,6 +535853,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "60662ac8-935d-4ca2-be6e-b479405dbbc5",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.finPath",
+            "short": "finPath"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.finPath",
+            "short": "finPath",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XII every-window subsection: n-time reversal under detailed balance for any observer, and coarse_graining_trade.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "60804aa8-ac89-4c52-b183-28d8e2c66122",
           "new": {
             "file": "ZeroParadox/Multihomed/TwoAdicBend.lean",
@@ -537296,6 +537555,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "62648bef-fe66-4754-a37e-f7001b29b927",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.chainLaw_coarseN_eq_coarseLawN",
+            "short": "chainLaw_coarseN_eq_coarseLawN"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.chainLaw_coarseN_eq_coarseLawN",
+            "short": "chainLaw_coarseN_eq_coarseLawN",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XII every-window subsection: n-time reversal under detailed balance for any observer, and coarse_graining_trade.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -539786,6 +540082,43 @@
             ]
           },
           "reason": "Dial.lean § XI (2026-11-26): the dial on the die. A Markov kernel subordinate to the step relation (a Markov chain whose directed graph lies in Motion.step, Levin-Peres-Wilmer Rem. 1.24); the chain law by Ionescu-Tulcea (Kernel.trajMeasure); geometric holding identified with trials p; almost every run leaves iff leaving has positive weight; controls: no kernel at a point with no step, absorbing points have leave-weight 0, ofFun forces Dirac.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "665faa46-d4ed-4a4f-9cca-d8bcc577d7a2",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.pathWeight_rev",
+            "short": "pathWeight_rev"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.pathWeight_rev",
+            "short": "pathWeight_rev",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XII every-window subsection: n-time reversal under detailed balance for any observer, and coarse_graining_trade.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -570423,6 +570756,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "923edf3d-9733-4655-89fb-6ffb599866ea",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.rotMat_not_detailedBalance",
+            "short": "rotMat_not_detailedBalance"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.rotMat_not_detailedBalance",
+            "short": "rotMat_not_detailedBalance",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XII every-window subsection: n-time reversal under detailed balance for any observer, and coarse_graining_trade.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "9241f52e-3548-470d-b666-5313c3920131",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -572360,6 +572730,43 @@
             ]
           },
           "reason": "Die views batch: views (order as data), restriction to an up-closed set, adjoined points and the empty carrier, arrival and fan-in",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "948e0826-d83e-491e-965a-587b5d7c937e",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.chainLaw_coarseN_reverse",
+            "short": "chainLaw_coarseN_reverse"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.chainLaw_coarseN_reverse",
+            "short": "chainLaw_coarseN_reverse",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XII every-window subsection: n-time reversal under detailed balance for any observer, and coarse_graining_trade.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -574338,6 +574745,43 @@
             ]
           },
           "reason": "Die views batch: views (order as data), restriction to an up-closed set, adjoined points and the empty carrier, arrival and fan-in",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "9779d19f-d0e4-4b0c-9eca-440ab352c1ec",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.rot4_coarse_not_reversal_symmetric",
+            "short": "rot4_coarse_not_reversal_symmetric"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.rot4_coarse_not_reversal_symmetric",
+            "short": "rot4_coarse_not_reversal_symmetric",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XII every-window subsection: n-time reversal under detailed balance for any observer, and coarse_graining_trade.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -582160,6 +582604,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "a0d7c972-1ff2-48d9-923b-8246ff9f7ba9",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.chainLaw_map_zero",
+            "short": "chainLaw_map_zero"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.chainLaw_map_zero",
+            "short": "chainLaw_map_zero",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XII every-window subsection: n-time reversal under detailed balance for any observer, and coarse_graining_trade.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "a0e81178-38b7-4764-87e4-203b1b9ae409",
           "new": {
             "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
@@ -587798,6 +588279,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "a9aa83a7-e1f3-4557-8ac2-9ca80d314d79",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.measurable_finPath",
+            "short": "measurable_finPath"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.measurable_finPath",
+            "short": "measurable_finPath",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XII every-window subsection: n-time reversal under detailed balance for any observer, and coarse_graining_trade.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "a9ad60c5-2fc2-4c5a-a608-a1fc35dc2640",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -592028,6 +592546,43 @@
             ]
           },
           "reason": "New file ZeroParadox/Information/TwoRequirements.lean (experimental): BotHasFirstStep (cover of bot of L, AX-B1's form) and tape typicality (zero-block, local Martin-Loef, frequency/strong law) as hypotheses giving t_snap_given_cover's conclusion; tape-to-real dyadic iff. Hypotheses, neither discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "aeb63a94-ef31-41ad-addb-2a125fe79224",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.rotMat",
+            "short": "rotMat"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.rotMat",
+            "short": "rotMat",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XII every-window subsection: n-time reversal under detailed balance for any observer, and coarse_graining_trade.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -618513,6 +619068,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "d2a3bc2c-abfa-4144-b9de-158bc3bb7d64",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.boolSwap_reversible_half",
+            "short": "boolSwap_reversible_half"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.boolSwap_reversible_half",
+            "short": "boolSwap_reversible_half",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XII every-window subsection: n-time reversal under detailed balance for any observer, and coarse_graining_trade.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "d2a798d1-3363-46ed-b19d-f90146f11de1",
           "new": {
             "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
@@ -623323,6 +623915,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "d8d0150e-5645-4885-819a-d9663a32b9ce",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.coarseLawN",
+            "short": "coarseLawN"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.coarseLawN",
+            "short": "coarseLawN",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XII every-window subsection: n-time reversal under detailed balance for any observer, and coarse_graining_trade.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "d8d2243b-4456-4c4e-927c-2e5abb35225e",
           "new": {
@@ -625881,6 +626510,43 @@
             ]
           },
           "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "dc426031-222e-41b7-bd18-3e50172efed0",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.coarseLaw3_eq_coarseLawN",
+            "short": "coarseLaw3_eq_coarseLawN"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.coarseLaw3_eq_coarseLawN",
+            "short": "coarseLaw3_eq_coarseLawN",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XII every-window subsection: n-time reversal under detailed balance for any observer, and coarse_graining_trade.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -635354,6 +636020,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "e8aaf7e6-5fb1-4473-a705-2abfa477dfbd",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.coarseLawN_reverse",
+            "short": "coarseLawN_reverse"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.coarseLawN_reverse",
+            "short": "coarseLawN_reverse",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XII every-window subsection: n-time reversal under detailed balance for any observer, and coarse_graining_trade.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "e8b4e2bf-f59c-4aae-b5a6-0163bfac969c",
           "new": {
             "file": "ZeroParadox/Givens.lean",
@@ -636816,6 +637519,43 @@
             ]
           },
           "reason": "Land four probes: UltrametricView (isosceles from a centre, doubling on Z_2, homogeneity), PadicBallWave (ball integrals of p-adic characters), DieBranches (branches of the tree_of_square word tree), PadicWavelet (character times ball indicator: mean zero, orthogonality, D^alpha eigenfunction) (2026-11-20).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ea52e32e-3e7a-4683-837c-9fed444f9c4c",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.pathWeight_succ",
+            "short": "pathWeight_succ"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.pathWeight_succ",
+            "short": "pathWeight_succ",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XII every-window subsection: n-time reversal under detailed balance for any observer, and coarse_graining_trade.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -643735,6 +644475,43 @@
             ]
           },
           "reason": "Die v2 final batch: drawing vs set (self-steps, accessibility, forced rank), ends of a view, orders on motions, placements as views, relaxed least-fixed-point schema, UP legs as nuclei",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f43b4c0f-a8ff-4326-b878-db615966bd4c",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.coarse_graining_trade",
+            "short": "coarse_graining_trade"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.coarse_graining_trade",
+            "short": "coarse_graining_trade",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XII every-window subsection: n-time reversal under detailed balance for any observer, and coarse_graining_trade.",
           "verify": {
             "axioms": null,
             "sorry_free": null

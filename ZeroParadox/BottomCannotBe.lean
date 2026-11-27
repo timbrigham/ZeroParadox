@@ -983,6 +983,16 @@ example : ZeroParadox.Disjunctive (fun n => xor (ZeroParadox.champ n) false) := 
 -- to the swap of `Bool`, which is reversible w.r.t. the counting measure on `Bool`.
 -- Reading: coarse-graining can erase an arrow.
 #check @ZeroParadox.a4_direction_erased
+-- Statement: on a finite carrier with measurable singletons, if the Markov kernel `K` is reversible
+-- w.r.t. the initial probability law `μ`, every measurable observer, lumpable or not, with measurable
+-- singletons on its target has, for every `n`, an observed law of `n + 1` times invariant under
+-- reversing the index.
+#check @ZeroParadox.chainLaw_coarseN_reverse
+-- Statement: both directions: `rot4` is reversible w.r.t. no probability measure and lumps along parity
+-- to the swap of `Bool`, which is reversible w.r.t. some probability measure; and, with every premise of
+-- `chainLaw_coarseN_reverse`, the reversal of every observed window from a reversible start.
+-- Reading: coarse-graining can erase an arrow, and from a reversible start it creates none.
+#check @ZeroParadox.coarse_graining_trade
 
 /-! ### The givens at the die level: given (a) as a chart claim (least in ℤ_[2]'s norm preorder, greatest at its image in `ℕ∞`), and a limit -/
 
