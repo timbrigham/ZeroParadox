@@ -260,23 +260,34 @@ this file holds what was already in the corpus, the prior art, and the fences.
   p. 5: a reversible process is stationary. Theorem 1.2, pp. 5-6: a stationary Markov chain is reversible iff
   some positive `π(j)` summing to one satisfy detailed balance; its proof writes the probability of
   `m + 1` consecutive states as `π` times a product of transitions and reverses it, the argument of
-  `pathWeight_rev`. `chainLaw_coarseN_reverse` is the direction from detailed balance to reversal, on a
-  window `Fin (n + 1)` of a chain indexed by ℕ, with Mathlib's measure-level `Kernel.IsReversible`, so
-  states of mass zero are allowed.
-- That a function of a reversible process is reversible was not located as a citable sentence as of
-  2026-11-27, searched: Kelly pp. 5-8, the extracted text of Wolfer and Watanabe, arXiv:2203.04575, and
-  theoremsearch (one phrasing). Under Kelly's definition it follows in one step, mapping both equal laws
-  coordinatewise; `chainLaw_coarseN_reverse` composes that step with the reversal.
+  `pathWeight_rev`.
+- Levin, Peres, Wilmer, *Markov Chains and Mixing Times*, 2nd ed., § 1.6, (1.29)-(1.31), pp. 13-14: for a
+  probability distribution `π` satisfying detailed balance (1.29), the weight of a path equals that of its
+  reversal (1.30), so from `π` the law of `(X0, ..., Xn)` is the law of `(Xn, ..., X0)` (1.31). (1.30) is
+  `pathWeight_rev`; (1.31) is `chainLaw_finPath_map_rev`. LPW take `π` a probability distribution, not
+  positive; Kelly's Theorem 1.2 takes it positive.
+- Kelly 1979, Exercise 1.2.9, p. 10: "If X(t) is a reversible stochastic process show that so is
+  Y(t) = f[X(t)] for any function f." `chainLaw_coarseN_map_reverse` composes that step with (1.31), and
+  `chainLaw_window_map_reverse` adds stationarity (Mathlib `Kernel.IsReversible.invariant`,
+  `chainLaw_window_eq_finPath`).
+- What is ours is the formalization only: the reversal on Mathlib's `Kernel.trajMeasure` with
+  `Kernel.IsReversible`, composed with a measurable observer, for every window of consecutive times, and
+  the two-sided `coarse_graining_trade`.
 - Lean neighbours, PARTLY VERIFIED (source read, type not elaborated, outside this dependency closure).
   gszep/times-arrow (commit 0f8e977) `TimesArrow.Markov.pathPMF_reversePath`: under pointwise detailed
   balance the path `PMF` of every length `T` is invariant under path reversal; no observer step.
-  itakura-hidetoshi/4d-mass-gap (commit 615babf)
-  `linearMarkovFinitePathPMF_map_reverse_of_detailedBalance`: the same as a `PMF.map` equality on a finite
-  carrier. TauCeti (commit 9f9b83d) `TauCeti.Probability.markovChainLaw_map_prefix_apply_singleton`: the
+  itakura-hidetoshi/4d-mass-gap (commit 615babf), `MGAP4D/MathlibAnalytic/LinearMarkovFinitePathReversal.lean`:
+  `linearMarkovFinitePathPMF_map_reverse_of_detailedBalance`, the same as a `PMF.map` equality on a finite
+  carrier, and `linearMarkovFinitePathPMF_expectation_reverse_of_detailedBalance`, the expectation of every
+  real path function invariant under reversal; `MGAP4D/MathlibAnalytic/LinearMarkovTwoSidedIntegerPathReflectionInvariance.lean`:
+  `linearMarkovTwoSidedIntegerPathMeasure_map_reflection`, a two-sided ℤ-indexed path measure invariant
+  under `t ↦ -t`, and `linearMarkovIntegerFiniteMarginalMeasure_map_reflectionReindex`, every finite time
+  set. TauCeti (repository TauCetiProject/TauCeti, commit 9f9b83d)
+  `TauCeti.Probability.markovChainLaw_map_prefix_apply_singleton` (`Process/MarkovChain.lean`): the
   product formula `ν {w 0} * ∏ i, κ (w i) {w (i + 1)}` for the finite path masses of `markovChainLaw`,
-  which `chainLaw_finPath_singleton` states for `chainLaw`; `MeasureTheory.Measure.markovChainLaw_setOf_forall_apply_eq`,
-  the cylinder formula at monotone times. Here: the reversal on Mathlib's `Kernel.trajMeasure` with
-  `Kernel.IsReversible`, composed with any measurable observer, and `coarse_graining_trade`.
+  which `chainLaw_finPath_singleton` states for `chainLaw`; and, in the same repository and commit,
+  `MeasureTheory.Measure.markovChainLaw_setOf_forall_apply_eq` (`MarkovChain/Cylinder.lean`), the
+  cylinder formula at monotone times.
 - The erasing half of `coarse_graining_trade` from the lift side: Wolfer and Watanabe, § 4.4.3, p. 26
   (under § XII above).
 
@@ -339,14 +350,16 @@ this file holds what was already in the corpus, the prior art, and the fences.
   `boolSwap_reversible_half`. From a reversible start,
   lumping gives a reversible kernel for a measurable lumping map on a general measurable carrier
   (`isReversible_map_of_lumps`; along the map to `Unit` its conclusion holds for every kernel, the CONTROL
-  after `a4_direction_erased`), and every measurable observer, lumpable or not, has a reversal-symmetric
-  law of `n + 1` times, for every `n`, on a finite carrier with measurable singletons, a probability
-  initial law, a Markov kernel and an observed space with measurable singletons (`chainLaw_coarseN_reverse`;
-  three times: `chainLaw_coarse3_reverse`; a reversible start is stationary, Mathlib
-  `Kernel.IsReversible.invariant`). `coarse_graining_trade` states both directions. `Reading:`
-  coarse-graining can erase an arrow, and from a reversible start it creates none in any finite window;
-  "two arrows trade places" is this reading. Without detailed balance the conclusion fails
-  (`rot4_coarse_not_reversal_symmetric`, with `rotMat_not_detailedBalance`). The observer need not see a
+  after `a4_direction_erased`), and, on a finite carrier with measurable singletons, from a probability
+  initial law w.r.t. which the Markov kernel is reversible, every measurable observer, lumpable or not, sees
+  each window of consecutive times with the law of its reversal (`chainLaw_window_map_reverse`; from time
+  0: `chainLaw_coarseN_map_reverse`; singleton masses: `chainLaw_coarseN_reverse`, three times
+  `chainLaw_coarse3_reverse`). `coarse_graining_trade` states both directions. `Reading:`
+  coarse-graining can erase an arrow, and from a reversible start it creates none in any window of
+  consecutive times; "two arrows trade places" is this reading. Without detailed balance the reversal can
+  fail: at the matrix level, `rotMat` from `unifFin4` (`rot4_coarse_not_reversal_symmetric`, with
+  `rotMat_not_detailedBalance`); at the chain level, `rot4` from every probability law giving `0` positive
+  mass (`rot4_chainLaw_not_reversal_symmetric`). The observer need not see a
   Markov chain: `lazyPairs` under `lazyPairsProj` is not lumpable and its observed three-time statistic fits
   no Markov chain over ℚ (`lazyPairs_coarse_not_markov`), and its observed statistic is reversal-symmetric
   at every `n` (the `example` after `coarseLawN_reverse`'s section). At the matrix level every `n` is proved

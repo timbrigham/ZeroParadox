@@ -484666,6 +484666,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "17ab57b4-9b06-4565-92dd-f7b07500f58d",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.chainLaw_window_map_reverse",
+            "short": "chainLaw_window_map_reverse"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.chainLaw_window_map_reverse",
+            "short": "chainLaw_window_map_reverse",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XII every window, ruling 114: full-law and every-window reversal under detailed balance, and the chain-level rot4 control.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "17add508-0274-44fa-9e94-063ec34d90e3",
           "new": {
             "file": "ZeroParadox/Multihomed/BoundaryOrder.lean",
@@ -500301,6 +500338,43 @@
             ]
           },
           "reason": "Collapse family as die motions: one lemma in two forms plus the loop obstruction, six legacy results as instances, with controls (ZeroParadox/Multihomed/CollapseDie.lean; Tim: \"One collapse file\", 2026-11-19)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "2e01e0e8-6b24-423c-88fe-d181df94f000",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.chainLaw_coarseN_map_reverse",
+            "short": "chainLaw_coarseN_map_reverse"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.chainLaw_coarseN_map_reverse",
+            "short": "chainLaw_coarseN_map_reverse",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XII every window, ruling 114: full-law and every-window reversal under detailed balance, and the chain-level rot4 control.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -520827,6 +520901,43 @@
             "role": []
           },
           "reason": "die-bend-1104: Tim's \"bend\" (ruling 38): first-occurrence time det as a Galois insertion of tapes onto NInf, order reversed (Die.lean § XXV)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "4b75b217-e433-4e41-aa3d-3a60fc012d54",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.map_tail_singleton",
+            "short": "map_tail_singleton"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.map_tail_singleton",
+            "short": "map_tail_singleton",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XII every window, ruling 114: full-law and every-window reversal under detailed balance, and the chain-level rot4 control.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -544136,6 +544247,43 @@
             ]
           },
           "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "6bf6a6ab-e1b2-435f-8a6f-72dd8ad6e0e3",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.chainLaw_window_eq_finPath",
+            "short": "chainLaw_window_eq_finPath"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.chainLaw_window_eq_finPath",
+            "short": "chainLaw_window_eq_finPath",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XII every window, ruling 114: full-law and every-window reversal under detailed balance, and the chain-level rot4 control.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -616552,6 +616700,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "cf1ea023-e6c0-447f-84d0-ae906520d679",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.rot4_chainLaw_not_reversal_symmetric",
+            "short": "rot4_chainLaw_not_reversal_symmetric"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.rot4_chainLaw_not_reversal_symmetric",
+            "short": "rot4_chainLaw_not_reversal_symmetric",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XII every window, ruling 114: full-law and every-window reversal under detailed balance, and the chain-level rot4 control.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "cf25985c-b14b-4fbe-8e74-a59457df99c3",
           "new": {
             "file": "ZeroParadox/Reals/ConnectedNoFirstStep.lean",
@@ -630647,6 +630832,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "e1efbd45-d01c-4c3a-8415-ba3cf1897c8d",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.chainLaw_window_singleton",
+            "short": "chainLaw_window_singleton"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.chainLaw_window_singleton",
+            "short": "chainLaw_window_singleton",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XII every window, ruling 114: full-law and every-window reversal under detailed balance, and the chain-level rot4 control.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "e208ad38-18db-4c17-9cba-165eb0152374",
           "new": {
@@ -639447,6 +639669,43 @@
             ]
           },
           "reason": "ignorance-seam-viii: the bend NInf.det on 2-adic digit tapes is the 2-adic valuation (IgnoranceSeam.lean § VIII)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ece8c727-3f0d-4c0e-ac8b-9d463dafb6d5",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.chainLaw_finPath_map_rev",
+            "short": "chainLaw_finPath_map_rev"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.chainLaw_finPath_map_rev",
+            "short": "chainLaw_finPath_map_rev",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XII every window, ruling 114: full-law and every-window reversal under detailed balance, and the chain-level rot4 control.",
           "verify": {
             "axioms": null,
             "sorry_free": null

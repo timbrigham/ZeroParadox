@@ -1030,10 +1030,10 @@ end MarkovDie
 observer sees is again a Markov chain (`lumps_iff_runLaw_map`), the weighted analogue of the die's
 `StepCompat`. Both directions of the arrow are stated: coarse-graining can erase a time arrow
 (`a4_direction_erased`), and from a reversible start it creates none, for a measurable lumping map
-in general (`isReversible_map_of_lumps`) and, at every number of times, for every measurable observer
-on a finite carrier with measurable singletons (`chainLaw_coarseN_reverse`; three times:
-`chainLaw_coarse3_reverse`); `coarse_graining_trade` states both directions. The kernel is a supplied
-argument throughout. -/
+in general (`isReversible_map_of_lumps`) and, on a finite carrier with measurable singletons, from an
+initial probability law w.r.t. which the Markov kernel is reversible, for every measurable observer and
+every window of consecutive times (`chainLaw_window_map_reverse`); `coarse_graining_trade` states both
+directions. The kernel is a supplied argument throughout. -/
 
 -- Provenance: the lumping and run-law declarations marked `[ZP]` are adapted and modified from
 -- MurphyHoops/UEOT, `formalization/ueot-core/UEOT/V3/DynamicsKernel.lean` (lean4-core-export v1.0.0,
@@ -1950,9 +1950,11 @@ end Discrete
 /-! #### § XII, every window: reversal at every number of times, and the trade
 
 `Reading:` under detailed balance a path and its reversal have equal weight at every length
-(`pathWeight_rev`), so from a reversible start no observer, lumpable or not, sees a different law
-forwards and backwards in any finite window (`chainLaw_coarseN_reverse`); `coarse_graining_trade`
-pairs that with `a4_direction_erased`. -/
+(`pathWeight_rev`); the chain-level statements, every premise in their docstrings, are
+`chainLaw_coarseN_map_reverse` (from time 0) and `chainLaw_window_map_reverse` (from every time).
+Without detailed balance the reversal can fail: `rot4_coarse_not_reversal_symmetric` (matrix level) and
+`rot4_chainLaw_not_reversal_symmetric` (chain level). `coarse_graining_trade` pairs the reversal with
+`a4_direction_erased`. -/
 
 section MatrixN
 variable {ι κ R : Type*} [CommSemiring R]
@@ -2251,6 +2253,161 @@ example [Finite α] {κ : Type*} [MeasurableSpace κ] [MeasurableSingletonClass 
   congr 2
   funext i; fin_cases i <;> rfl
 
+/-- `Statement:` on a finite carrier with measurable singletons, if the Markov kernel `K` is reversible
+w.r.t. the initial probability law `μ`, then for every `n` the law of `(x 0, …, x n)` equals the law of
+`(x n, …, x 0)`. -/
+theorem chainLaw_finPath_map_rev [Finite α] (μ : Measure α) [IsProbabilityMeasure μ]
+    (K : Kernel α α) [IsMarkovKernel K] (hrev : K.IsReversible μ) (n : ℕ) :
+    (chainLaw μ K).map (finPath n) =
+      (chainLaw μ K).map (fun x (i : Fin (n + 1)) => x (Fin.rev i)) := by
+  have hr : Measurable (fun y : Fin (n + 1) → α => y ∘ Fin.rev) :=
+    measurable_pi_iff.mpr fun i => measurable_pi_apply _
+  have hc : (fun (x : ℕ → α) (i : Fin (n + 1)) => x (Fin.rev i)) =
+      (fun y : Fin (n + 1) → α => y ∘ Fin.rev) ∘ finPath n := rfl
+  rw [hc, ← Measure.map_map hr (measurable_finPath n)]
+  refine Measure.ext_iff_singleton.2 fun y => ?_
+  have hpre : (fun y : Fin (n + 1) → α => y ∘ Fin.rev) ⁻¹' {y} = {y ∘ Fin.rev} := by
+    ext z
+    simp only [Set.mem_preimage, Set.mem_singleton_iff]
+    constructor
+    · rintro rfl; funext i; simp
+    · rintro rfl; funext i; simp
+  rw [Measure.map_apply hr (measurableSet_singleton _), hpre, chainLaw_finPath_singleton,
+    chainLaw_finPath_singleton]
+  exact pathWeight_rev (detailedBalance_of_isReversible μ K hrev) y
+
+/-- `Statement:` on a finite carrier with measurable singletons, if the Markov kernel `K` is reversible
+w.r.t. the initial probability law `μ`, then for every measurable observer `f` and every `n` the law of
+`(f (x 0), …, f (x n))` equals the law of `(f (x n), …, f (x 0))`, as measures. -/
+theorem chainLaw_coarseN_map_reverse [Finite α] {κ : Type*} [MeasurableSpace κ]
+    (μ : Measure α) [IsProbabilityMeasure μ] (K : Kernel α α) [IsMarkovKernel K]
+    (hrev : K.IsReversible μ) (f : α → κ) (hf : Measurable f) (n : ℕ) :
+    (chainLaw μ K).map (fun x (i : Fin (n + 1)) => f (x i)) =
+      (chainLaw μ K).map (fun x (i : Fin (n + 1)) => f (x (Fin.rev i))) := by
+  have hg : Measurable (fun y : Fin (n + 1) → α => f ∘ y) :=
+    measurable_pi_iff.mpr fun i => hf.comp (measurable_pi_apply i)
+  have hr : Measurable (fun (x : ℕ → α) (i : Fin (n + 1)) => x (Fin.rev i)) :=
+    measurable_pi_iff.mpr fun i => measurable_pi_apply _
+  have h1 : (fun (x : ℕ → α) (i : Fin (n + 1)) => f (x (Fin.rev i))) =
+      (fun y : Fin (n + 1) → α => f ∘ y) ∘ (fun x i => x (Fin.rev i)) := rfl
+  have h2 : (fun (x : ℕ → α) (i : Fin (n + 1)) => f (x i)) =
+      (fun y : Fin (n + 1) → α => f ∘ y) ∘ finPath n := rfl
+  rw [h1, h2, ← Measure.map_map hg hr, ← Measure.map_map hg (measurable_finPath n),
+    chainLaw_finPath_map_rev μ K hrev n]
+
+/-- `Statement:` for a measure `ν` on `Fin (n + 2) → α`, `α` finite with measurable singletons, the
+image of `ν` under `Fin.tail` puts mass `∑ a, ν {Fin.cons a y}` on `{y}`. -/
+theorem map_tail_singleton [Fintype α] {n : ℕ} (ν : Measure (Fin (n + 2) → α))
+    (y : Fin (n + 1) → α) :
+    ν.map (fun z : Fin (n + 2) → α => Fin.tail z) {y} = ∑ a : α, ν {Fin.cons a y} := by
+  classical
+  have ht : Measurable (fun z : Fin (n + 2) → α => Fin.tail z) :=
+    measurable_pi_iff.mpr fun i => measurable_pi_apply _
+  rw [Measure.map_apply ht (measurableSet_singleton _)]
+  have hpre : (fun z : Fin (n + 2) → α => Fin.tail z) ⁻¹' {y} =
+      ↑(Finset.univ.image (fun a : α => (Fin.cons a y : Fin (n + 2) → α))) := by
+    ext z
+    simp only [Set.mem_preimage, Set.mem_singleton_iff, Finset.coe_image, Finset.coe_univ,
+      Set.image_univ, Set.mem_range]
+    constructor
+    · rintro rfl; exact ⟨z 0, Fin.cons_self_tail z⟩
+    · rintro ⟨a, rfl⟩; exact Fin.tail_cons (α := fun _ => α) a y
+  rw [hpre, ← sum_measure_singleton, Finset.sum_image]
+  intro a _ b _ h
+  exact Fin.cons_left_injective (α := fun _ => α) y h
+
+/-- `Statement:` on a finite carrier with measurable singletons, if the Markov kernel `K` leaves the
+initial probability law `μ` invariant (Mathlib `Kernel.Invariant`), then for every start `t` and every
+`n` the window `(x t, …, x (t + n))` puts mass `pathWeight (measureVec μ) (kernelMat K) y` on `{y}`. -/
+theorem chainLaw_window_singleton [Finite α] (μ : Measure α) [IsProbabilityMeasure μ]
+    (K : Kernel α α) [IsMarkovKernel K] (hinv : K.Invariant μ) :
+    ∀ (t n : ℕ) (y : Fin (n + 1) → α),
+      (chainLaw μ K).map (fun x (i : Fin (n + 1)) => x (t + i)) {y} =
+        pathWeight (measureVec μ) (kernelMat K) y := by
+  have := Fintype.ofFinite α
+  have hstat : ∀ b : α, ∑ a, measureVec μ a * kernelMat K a b = measureVec μ b := by
+    intro b
+    have : (μ.bind K) {b} = μ {b} := by rw [hinv.def]
+    rw [Measure.bind_apply (measurableSet_singleton b) (Kernel.aemeasurable _),
+      lintegral_fintype] at this
+    simpa [measureVec, kernelMat, mul_comm] using this
+  intro t
+  induction t with
+  | zero =>
+    intro n y
+    have : (fun (x : ℕ → α) (i : Fin (n + 1)) => x (0 + i)) = finPath n := by
+      funext x i; simp [finPath]
+    rw [this, chainLaw_finPath_singleton]
+  | succ t ih =>
+    intro n y
+    have hw : Measurable (fun (x : ℕ → α) (i : Fin (n + 2)) => x (t + i)) :=
+      measurable_pi_iff.mpr fun i => measurable_pi_apply _
+    have ht : Measurable (fun z : Fin (n + 2) → α => Fin.tail z) :=
+      measurable_pi_iff.mpr fun i => measurable_pi_apply _
+    have hc : (fun (x : ℕ → α) (i : Fin (n + 1)) => x (t + 1 + i)) =
+        (fun z : Fin (n + 2) → α => Fin.tail z) ∘ (fun x (i : Fin (n + 2)) => x (t + i)) := by
+      funext x i
+      simp only [Function.comp_apply, Fin.tail, Fin.val_succ]
+      congr 1; omega
+    rw [hc, ← Measure.map_map ht hw, map_tail_singleton]
+    simp_rw [ih (n + 1)]
+    unfold pathWeight
+    simp only [Fin.prod_univ_succ, Fin.cons_zero, Fin.castSucc_zero, ← Fin.succ_castSucc,
+      Fin.cons_succ]
+    rw [← hstat (y 0), Finset.sum_mul]
+    refine Finset.sum_congr rfl fun a _ => ?_
+    ring
+
+/-- `Statement:` on a finite carrier with measurable singletons, if the Markov kernel `K` leaves the
+initial probability law `μ` invariant, then for every start `t` and every `n` the window
+`(x t, …, x (t + n))` has the law of `(x 0, …, x n)`. -/
+theorem chainLaw_window_eq_finPath [Finite α] (μ : Measure α) [IsProbabilityMeasure μ]
+    (K : Kernel α α) [IsMarkovKernel K] (hinv : K.Invariant μ) (t n : ℕ) :
+    (chainLaw μ K).map (fun x (i : Fin (n + 1)) => x (t + i)) =
+      (chainLaw μ K).map (finPath n) := by
+  refine Measure.ext_iff_singleton.2 fun y => ?_
+  rw [chainLaw_window_singleton μ K hinv, chainLaw_finPath_singleton]
+
+/-- `Statement:` on a finite carrier with measurable singletons, if the Markov kernel `K` is reversible
+w.r.t. the initial probability law `μ`, then for every measurable observer `f`, every start `t` and every
+`n` the law of `(f (x t), …, f (x (t + n)))` equals the law of `(f (x (t + n)), …, f (x t))`, as
+measures. -/
+theorem chainLaw_window_map_reverse [Finite α] {κ : Type*} [MeasurableSpace κ]
+    (μ : Measure α) [IsProbabilityMeasure μ] (K : Kernel α α) [IsMarkovKernel K]
+    (hrev : K.IsReversible μ) (f : α → κ) (hf : Measurable f) (t n : ℕ) :
+    (chainLaw μ K).map (fun x (i : Fin (n + 1)) => f (x (t + i))) =
+      (chainLaw μ K).map (fun x (i : Fin (n + 1)) => f (x (t + Fin.rev i))) := by
+  have hw : Measurable (fun (x : ℕ → α) (i : Fin (n + 1)) => x (t + i)) :=
+    measurable_pi_iff.mpr fun i => measurable_pi_apply _
+  have hg : Measurable (fun y : Fin (n + 1) → α => f ∘ y) :=
+    measurable_pi_iff.mpr fun i => hf.comp (measurable_pi_apply i)
+  have hg' : Measurable (fun y : Fin (n + 1) → α => f ∘ y ∘ Fin.rev) :=
+    measurable_pi_iff.mpr fun i => hf.comp (measurable_pi_apply _)
+  have h1 : (fun (x : ℕ → α) (i : Fin (n + 1)) => f (x (t + i))) =
+      (fun y : Fin (n + 1) → α => f ∘ y) ∘ (fun x i => x (t + i)) := rfl
+  have h2 : (fun (x : ℕ → α) (i : Fin (n + 1)) => f (x (t + Fin.rev i))) =
+      (fun y : Fin (n + 1) → α => f ∘ y ∘ Fin.rev) ∘ (fun x i => x (t + i)) := rfl
+  rw [h1, h2, ← Measure.map_map hg hw, ← Measure.map_map hg' hw,
+    chainLaw_window_eq_finPath μ K hrev.invariant t n,
+    Measure.map_map hg (measurable_finPath n), Measure.map_map hg' (measurable_finPath n)]
+  exact chainLaw_coarseN_map_reverse μ K hrev f hf n
+
+/-- `Statement:` CONTROL for `chainLaw_window_map_reverse` without reversibility: for the deterministic
+kernel of `rot4` from any probability law `μ` with `μ {0} ≠ 0`, along the identity observer, the law of
+`(x 0, x 1)` puts different masses on `(0, 1)` and `(1, 0)`. -/
+theorem rot4_chainLaw_not_reversal_symmetric (μ : Measure (Fin 4)) [IsProbabilityMeasure μ]
+    (h0 : μ {0} ≠ 0) :
+    (chainLaw μ (Kernel.deterministic rot4 (measurable_of_finite _))).map
+        (fun x (i : Fin 2) => x i) {![0, 1]} ≠
+      (chainLaw μ (Kernel.deterministic rot4 (measurable_of_finite _))).map
+        (fun x (i : Fin 2) => x i) {![1, 0]} := by
+  have h := chainLaw_finPath_singleton μ (Kernel.deterministic rot4 (measurable_of_finite _)) 1
+  change (chainLaw μ _).map (finPath 1) {![0, 1]} ≠ (chainLaw μ _).map (finPath 1) {![1, 0]}
+  rw [h, h]
+  have h01 : rot4 0 = 1 := by decide
+  have h10 : rot4 1 = 2 := by decide
+  simp [pathWeight, measureVec, kernelMat, Kernel.deterministic_apply, h01, h10, h0]
+
 end MeasureN
 
 /-- `Statement:` the swap of `Bool` is reversible w.r.t. the probability measure
@@ -2281,11 +2438,10 @@ universe u v
 /-- `Statement:` both directions. First: the deterministic kernel of `rot4` is reversible w.r.t. no
 probability measure, lumps along `parity4` to the swap of `Bool`, and the swap is reversible w.r.t. some
 probability measure. Second: on a finite carrier with measurable singletons, for every initial
-probability law `μ`, Markov kernel `K` with `K.IsReversible μ`, measurable observer `f` into a space with
-measurable singletons, and every `n`, the observed law of `n + 1` times at `a` equals that at
-`a ∘ Fin.rev`.
-`Reading:` coarse-graining can erase an arrow, and from a reversible start it creates none in any finite
-window. -/
+probability law `μ`, Markov kernel `K` with `K.IsReversible μ`, measurable observer `f`, start `t` and
+`n`, the law of `(f (x t), …, f (x (t + n)))` equals the law of `(f (x (t + n)), …, f (x t))`.
+`Reading:` coarse-graining can erase an arrow, and from a reversible start it creates none in any window
+of consecutive times. -/
 theorem coarse_graining_trade :
     ((∀ π : Measure (Fin 4), IsProbabilityMeasure π →
         ¬ (Kernel.deterministic rot4 (measurable_of_finite _)).IsReversible π) ∧
@@ -2294,14 +2450,14 @@ theorem coarse_graining_trade :
       ∃ ν : Measure Bool, IsProbabilityMeasure ν ∧
         (Kernel.deterministic (fun b : Bool => !b) (measurable_of_finite _)).IsReversible ν) ∧
     (∀ (α : Type u) [MeasurableSpace α] [MeasurableSingletonClass α] [Finite α]
-      (κ : Type v) [MeasurableSpace κ] [MeasurableSingletonClass κ]
+      (κ : Type v) [MeasurableSpace κ]
       (μ : Measure α) [IsProbabilityMeasure μ] (K : Kernel α α) [IsMarkovKernel K],
-      K.IsReversible μ → ∀ f : α → κ, Measurable f → ∀ (n : ℕ) (a : Fin (n + 1) → κ),
-        (chainLaw μ K).map (fun x (i : Fin (n + 1)) => f (x i)) {a} =
-          (chainLaw μ K).map (fun x (i : Fin (n + 1)) => f (x i)) {a ∘ Fin.rev}) :=
+      K.IsReversible μ → ∀ f : α → κ, Measurable f → ∀ (t n : ℕ),
+        (chainLaw μ K).map (fun x (i : Fin (n + 1)) => f (x (t + i))) =
+          (chainLaw μ K).map (fun x (i : Fin (n + 1)) => f (x (t + Fin.rev i)))) :=
   ⟨⟨a4_direction_erased.1, a4_direction_erased.2.1,
       ⟨_, isProbabilityMeasure_halfBool, boolSwap_reversible_half⟩⟩,
-    fun _ _ _ _ _ _ _ μ _ K _ hrev f hf n a => chainLaw_coarseN_reverse μ K hrev f hf n a⟩
+    fun _ _ _ _ _ _ μ _ K _ hrev f hf t n => chainLaw_window_map_reverse μ K hrev f hf t n⟩
 
 end Trade
 
@@ -2482,6 +2638,13 @@ open ZeroParadox
 #print axioms chainLaw_finPath_singleton
 #print axioms chainLaw_coarseN_eq_coarseLawN
 #print axioms chainLaw_coarseN_reverse
+#print axioms chainLaw_finPath_map_rev
+#print axioms chainLaw_coarseN_map_reverse
+#print axioms map_tail_singleton
+#print axioms chainLaw_window_singleton
+#print axioms chainLaw_window_eq_finPath
+#print axioms chainLaw_window_map_reverse
+#print axioms rot4_chainLaw_not_reversal_symmetric
 #print axioms boolSwap_reversible_half
 #print axioms isProbabilityMeasure_halfBool
 #print axioms coarse_graining_trade

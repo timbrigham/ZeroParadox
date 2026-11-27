@@ -975,9 +975,10 @@ example : ZeroParadox.Disjunctive (fun n => xor (ZeroParadox.champ n) false) := 
 -- Statement: if `K` lumps to `L` along measurable `f`, from every initial probability law `μ` the
 -- observed run has the law of the `L`-chain from `μ.map f`; one way.
 #check @ZeroParadox.chainLaw_map_of_lumps
--- Statement: on a finite carrier with measurable singletons, if `K` is reversible w.r.t. the initial
--- law, every measurable observer with measurable singletons on its target has a reversal-symmetric
--- three-time law.
+-- Statement: on a finite carrier with measurable singletons, if the Markov kernel `K` is reversible
+-- w.r.t. the initial probability law, every measurable observer with measurable singletons on its target
+-- puts equal mass on `{(a, b, c)}` and `{(c, b, a)}` at times 0, 1, 2 (the full law, every window:
+-- `chainLaw_window_map_reverse`).
 #check @ZeroParadox.chainLaw_coarse3_reverse
 -- Statement: the rotation of `Fin 4` is reversible w.r.t. no probability measure and lumps along parity
 -- to the swap of `Bool`, which is reversible w.r.t. the counting measure on `Bool`.
@@ -985,12 +986,16 @@ example : ZeroParadox.Disjunctive (fun n => xor (ZeroParadox.champ n) false) := 
 #check @ZeroParadox.a4_direction_erased
 -- Statement: on a finite carrier with measurable singletons, if the Markov kernel `K` is reversible
 -- w.r.t. the initial probability law `μ`, every measurable observer, lumpable or not, with measurable
--- singletons on its target has, for every `n`, an observed law of `n + 1` times invariant under
--- reversing the index.
+-- singletons on its target puts, for every `n`, equal mass on `{a}` and `{a ∘ Fin.rev}` at times
+-- 0, …, n.
 #check @ZeroParadox.chainLaw_coarseN_reverse
+-- Statement: on a finite carrier with measurable singletons, if the Markov kernel `K` is reversible
+-- w.r.t. the initial probability law `μ`, then for every measurable observer, every start `t` and every
+-- `n`, the law of the observed window at times t, …, t + n equals the law of its reversal, as measures.
+#check @ZeroParadox.chainLaw_window_map_reverse
 -- Statement: both directions: `rot4` is reversible w.r.t. no probability measure and lumps along parity
 -- to the swap of `Bool`, which is reversible w.r.t. some probability measure; and, with every premise of
--- `chainLaw_coarseN_reverse`, the reversal of every observed window from a reversible start.
+-- `chainLaw_window_map_reverse`, its statement.
 -- Reading: coarse-graining can erase an arrow, and from a reversible start it creates none.
 #check @ZeroParadox.coarse_graining_trade
 
