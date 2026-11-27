@@ -1463,7 +1463,8 @@ theorem lumps_iff_runLaw_map (K : Kernel α α) (L : Kernel β β) [IsMarkovKern
 -- Statement: CONTROL, the identity map: every kernel lumps to itself.
 example (K : Kernel α α) : Lumps K K id := fun _ => Measure.map_id
 
-/-- `Statement:` for deterministic kernels, lumping along `f` is the semiconjugacy `f ∘ g = g' ∘ f`. -/
+/-- `Statement:` for deterministic kernels, with measurable singletons on `β`, lumping along `f` is the
+semiconjugacy `f ∘ g = g' ∘ f`. -/
 theorem lumps_deterministic_iff [MeasurableSingletonClass β] {g : α → α} {g' : β → β}
     (hg : Measurable g) (hg' : Measurable g') {f : α → β} (hf : Measurable f) :
     Lumps (Kernel.deterministic g hg) (Kernel.deterministic g' hg') f ↔ ∀ a, f (g a) = g' (f a) := by
@@ -1831,12 +1832,18 @@ variable {ι κ R : Type*} [Fintype ι] [DecidableEq κ] [CommSemiring R]
 /-- `Statement:` detailed balance, matrix form: `π x * P x y = π y * P y x`. -/
 def DetailedBalance (P : ι → ι → R) (π : ι → R) : Prop := ∀ x y, π x * P x y = π y * P y x
 
-/-- `Statement:` the observed two-time statistic `Pr(f X₀ = a, f X₁ = b)` from `π`. -/
-def coarseLaw2 (π : ι → R) (P : ι → ι → R) (f : ι → κ) (a b : κ) : R :=
+/-- `Statement:` the two-time weight of the observed pair `(a, b)`: the sum of `π x * P x y` over
+`x, y` with `f x = a`, `f y = b`; when `π` is a distribution and `P` is stochastic, this is
+`Pr(f X₀ = a, f X₁ = b)`. -/
+def coarseLaw2 (π : ι → R) (P : ι → ι → R) (f : ι → κ)
+    (a b : κ) : R :=
   ∑ x, ∑ y, if f x = a ∧ f y = b then π x * P x y else 0
 
-/-- `Statement:` the observed three-time statistic `Pr(f X₀ = a, f X₁ = b, f X₂ = c)` from `π`. -/
-def coarseLaw3 (π : ι → R) (P : ι → ι → R) (f : ι → κ) (a b c : κ) : R :=
+/-- `Statement:` the three-time weight of the observed triple `(a, b, c)`: the sum of
+`π x * P x y * P y z` over `x, y, z` with `f x = a`, `f y = b`, `f z = c`; when `π` is a distribution
+and `P` is stochastic, this is `Pr(f X₀ = a, f X₁ = b, f X₂ = c)`. -/
+def coarseLaw3 (π : ι → R) (P : ι → ι → R) (f : ι → κ)
+    (a b c : κ) : R :=
   ∑ x, ∑ y, ∑ z, if f x = a ∧ f y = b ∧ f z = c then π x * P x y * P y z else 0
 
 /-- `Statement:` reversing the order of a triple finite sum. -/
@@ -1917,8 +1924,8 @@ theorem detailedBalance_lazyPairs : DetailedBalance lazyPairs unifFin4 := by
 def projClassMass (P : Fin 4 → Fin 4 → ℚ) (x : Fin 4) (b : Fin 3) : ℚ :=
   ∑ y, if lazyPairsProj y = b then P x y else 0
 
-/-- `Statement:` `lazyPairs` is not lumpable along `lazyPairsProj`: `1` and `3` share a class and send
-different mass into class `0`. -/
+/-- `Statement:` the witness that `lazyPairs` is not lumpable along `lazyPairsProj`: `1` and `3` share a
+class and send different mass into class `0`. -/
 theorem lazyPairs_not_lumpable :
     lazyPairsProj 1 = lazyPairsProj 3 ∧ projClassMass lazyPairs 1 0 ≠ projClassMass lazyPairs 3 0 := by
   refine ⟨by decide, ?_⟩
@@ -2065,9 +2072,9 @@ noncomputable def kernelMat (K : Kernel α α) (x y : α) : ENNReal := K x {y}
 /-- `Statement:` the vector `μ {x}` read off a measure. -/
 noncomputable def measureVec (μ : Measure α) (x : α) : ENNReal := μ {x}
 
-/-- `Statement:` on a finite carrier, for every kernel, every initial probability law `μ` and every
-measurable observer `f`, the law of `(f (x 0), f (x 1), f (x 2))` at `(a, b, c)` is `coarseLaw3` of
-`measureVec μ` and `kernelMat K`. -/
+/-- `Statement:` on a finite carrier with measurable singletons, for every Markov kernel, every initial
+probability law `μ` and every measurable observer `f` into a space with measurable singletons, the law
+of `(f (x 0), f (x 1), f (x 2))` at `(a, b, c)` is `coarseLaw3` of `measureVec μ` and `kernelMat K`. -/
 theorem chainLaw_coarse3_eq_coarseLaw3 [Fintype α] {κ : Type*} [MeasurableSpace κ]
     [MeasurableSingletonClass κ] [DecidableEq κ] (μ : Measure α) [IsProbabilityMeasure μ]
     (K : Kernel α α) [IsMarkovKernel K] (f : α → κ) (hf : Measurable f) (a b c : κ) :
