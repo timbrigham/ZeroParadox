@@ -477219,7 +477219,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 5062,
+        "declarations": 5063,
         "files": 249
       },
       "entries": [
@@ -553603,6 +553603,43 @@
             ]
           },
           "reason": "Dial.lean § XI (2026-11-26): the dial on the die. A Markov kernel subordinate to the step relation (a Markov chain whose directed graph lies in Motion.step, Levin-Peres-Wilmer Rem. 1.24); the chain law by Ionescu-Tulcea (Kernel.trajMeasure); geometric holding identified with trials p; almost every run leaves iff leaving has positive weight; controls: no kernel at a point with no step, absorbing points have leave-weight 0, ofFun forces Dirac.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "6a4bfb4f-4426-40f8-8021-5689283564b7",
+          "new": {
+            "file": "ZeroParadox/Givens.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.doubling_counter_iff_isHausdorff",
+            "short": "doubling_counter_iff_isHausdorff"
+          },
+          "old": {
+            "file": "ZeroParadox/Givens.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.doubling_counter_iff_isHausdorff",
+            "short": "doubling_counter_iff_isHausdorff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ruling 120: doubling_counter_iff with 2-adic separation stated as Mathlib's IsHausdorff (Ideal.span {2}) R",
           "verify": {
             "axioms": null,
             "sorry_free": null
