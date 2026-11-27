@@ -39,8 +39,8 @@ These are finite lattices, not trees, with no infinite chain, so they fail the c
 shows only that branching leaves the arity **free**. `Reading:` conjecture: a `p`-ary tree meets all four, `p ≥ 2`.
 
 **What the un-captured freedom IS.** The framework already names it: **AX-B1**, "binary / discrete existence,"
-the framework's *one substantive modeling commitment* (a discrete alphabet, and specifically the binary
-alphabet, over a continuum). The completeness-critic hunt independently re-surfaces exactly this: arity is a
+a discrete alphabet, and specifically the binary alphabet, over a continuum; discreteness at the least
+element is a coordinate of `stepOff_mass` (`ZeroParadox/Information/Dial.lean` § IV), not a commitment. The completeness-critic hunt independently re-surfaces exactly this: arity is a
 degree of freedom the branching axis does not force, so fixing it (to two) is a **commitment, not a theorem** —
 which is precisely AX-B1's status. The `IrreversibilityProbe` cardinality result complements this: two is the
 *value-pole* threshold (a unique fixed point already costs injectivity there - irreversibility, not

@@ -83,11 +83,18 @@ Tim named three. Each one splits into the predicates below.
 ## AX-B1 has two faces
 
 Reading (the Engineer's Take in `ZeroParadox/Givens.lean`): AX-B1 is a chart choice, the discrete chart
-being where we evaluate. It is also the framework's one substantive commitment: the discrete chart is
-where the step happens. The continuous chart stands beside it and is not denied. The connectivity of each
-chart is proved: 0 and ∞ lie in one connected component of `OnePoint ℝ` (`real_GConnected`), and no path
-joins them in the 2-adic sphere (`q2_not_GJoined`). The commitment is the hypothesis `BotHasFirstStep L`
-(§ VI).
+being where we evaluate. Which chart steps off its least element is a theorem, not a commitment. For
+every carrier, the step-off mass is 1 when the least element has a first step and the dial is nonzero,
+and 0 otherwise (`stepOff_mass`). So the discrete chart is a choice of where to evaluate, not an
+assumption about the world: Bool (join or) gives the switch, NNReal (join max) gives 0 at every dial
+(`two_charts_snap`). Kept separate, on purpose: discreteness ALONG the run (every doubling step is a
+cover, `GDiscrete`) is a different notion from a first step AT the least element. The 2-adic chart has
+discreteness along the run (`q2_GDiscrete`) and lacks a first step at 0 of `ℚ_[2]`
+(`q2_zero_not_firstStep`). The continuous chart stands beside the discrete one and is not denied. The
+connectivity of each chart is proved: 0 and ∞ lie in one connected component of `OnePoint ℝ`
+(`real_GConnected`), and no path joins them in the 2-adic sphere (`q2_not_GJoined`).
+`BotHasFirstStep L` (§ VI) stays a hypothesis of the theorems that use it; `stepOff_mass` says what
+follows on each side of it.
 
 ## The field lines
 

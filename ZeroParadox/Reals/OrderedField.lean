@@ -49,9 +49,9 @@ namespace ZeroParadox
 
 /-! ## § 0. AX-B1 AS AN EXPLICIT COMMITMENT
 
-**The framework's one substantive modelling commitment is DISCRETENESS**, and until now it was in
-the least visible of the three encodings (CLAUDE.md, "Commitments Go In HYPOTHESES"): baked into a
-carrier. `ax_b1_distinct : nullState ≠ firstAtomicState := by decide` only checks that the two
+**DISCRETENESS at the least element is a coordinate of `stepOff_mass` (Dial § IV), not a commitment**,
+and until now it was in the least visible of the three encodings (CLAUDE.md, "Commitments Go In
+HYPOTHESES"): baked into a carrier. `ax_b1_distinct : nullState ≠ firstAtomicState := by decide` only checks that the two
 constructors of a two-element type differ — **it does not check the choice of a discrete alphabet
 over a continuum**, which is the actual commitment.
 
@@ -77,8 +77,8 @@ section AxB1
     wrong.** `CovBy` already existed, is stated over the weaker `[LT α]` rather than
     `[Preorder α]`, and carries `CovBy.unique_right`, `not_covBy_of_denselyOrdered`, and the
     biconditional below.
-    The framework had simply never identified its own one substantive modelling commitment with
-    the standard notion. Recorded here rather than quietly corrected, so that the same
+    The framework had simply never identified discreteness at the least element (a coordinate of
+    `stepOff_mass`, Dial § IV, not a commitment) with the standard notion. Recorded here rather than quietly corrected, so that the same
     unidentified-notion failure is easier to spot if it appears elsewhere.
 
     **Second standard name, pointer only.** Where a bottom element exists,
