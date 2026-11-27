@@ -477219,7 +477219,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 5056,
+        "declarations": 5062,
         "files": 249
       },
       "entries": [
@@ -491965,6 +491965,43 @@
             ]
           },
           "reason": "die-negswap-1111: negation on the double-negation layer as the pole swap (PoleCorners § VI); the corner's DNE reduction to excluded middle (Die § III); Escardó searchability against Bool-valued OVER (Die § XXIII); Tim 'Land it' 2026-11-11",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "1362de5b-759c-4f71-a747-faaf708a07ea",
+          "new": {
+            "file": "ZeroParadox/Givens.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.doubling_counter_iff",
+            "short": "doubling_counter_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Givens.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.doubling_counter_iff",
+            "short": "doubling_counter_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ruling 118: GCoincidence / doubling counter widened from characteristic-0 fields to every field; ring characterisation via emultiplicity 2",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -533400,6 +533437,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "4e5b0d26-a8d1-4fca-89c5-6c7e0f0e3eb9",
+          "new": {
+            "file": "ZeroParadox/Givens.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.doubling_counter_zero",
+            "short": "doubling_counter_zero"
+          },
+          "old": {
+            "file": "ZeroParadox/Givens.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.doubling_counter_zero",
+            "short": "doubling_counter_zero",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ruling 118: GCoincidence / doubling counter widened from characteristic-0 fields to every field; ring characterisation via emultiplicity 2",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "4e755c2f-089f-4ee0-aa26-e36a46a34bee",
           "new": {
             "file": "ZeroParadox/Order/UpAndOver.lean",
@@ -535749,6 +535823,43 @@
             ]
           },
           "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "5159b0f8-2bd0-471a-b270-e868a623bcc6",
+          "new": {
+            "file": "ZeroParadox/Givens.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.doubling_counter_two_ne_zero_not_isUnit",
+            "short": "doubling_counter_two_ne_zero_not_isUnit"
+          },
+          "old": {
+            "file": "ZeroParadox/Givens.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.doubling_counter_two_ne_zero_not_isUnit",
+            "short": "doubling_counter_two_ne_zero_not_isUnit",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ruling 118: GCoincidence / doubling counter widened from characteristic-0 fields to every field; ring characterisation via emultiplicity 2",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -575060,6 +575171,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "8849d47e-fd8f-4f40-9a0d-3a2e4e6462c3",
+          "new": {
+            "file": "ZeroParadox/Givens.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.field_no_GCoincidence_any",
+            "short": "field_no_GCoincidence_any"
+          },
+          "old": {
+            "file": "ZeroParadox/Givens.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.field_no_GCoincidence_any",
+            "short": "field_no_GCoincidence_any",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ruling 118: GCoincidence / doubling counter widened from characteristic-0 fields to every field; ring characterisation via emultiplicity 2",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "8852b28a-634b-4663-a1ff-27587da2fe42",
           "new": {
             "file": "ZeroParadox/Multihomed/TwoAdicBend.lean",
@@ -591059,6 +591207,43 @@
             "role": []
           },
           "reason": "die-tagged-1029: the adjoined point tagged (Option ℕ) or a limit (Escardó's ℕ∞, NInf): uniform Bool-step trichotomy and selector free on NInf, LPO on Option ℕ; WLPO at ∞; the chain Option ℕ → NInf → Part ℕ and NInf ≃ Computation Unit (Die § XXIII); Tim ruling 2026-10-29",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "9e68e401-5ba4-4c71-b0e8-f5e8772152db",
+          "new": {
+            "file": "ZeroParadox/Givens.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.no_doubling_valuation_field_any",
+            "short": "no_doubling_valuation_field_any"
+          },
+          "old": {
+            "file": "ZeroParadox/Givens.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.no_doubling_valuation_field_any",
+            "short": "no_doubling_valuation_field_any",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ruling 118: GCoincidence / doubling counter widened from characteristic-0 fields to every field; ring characterisation via emultiplicity 2",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -637018,6 +637203,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "db72b920-b665-4af9-baab-b5ce491460f0",
+          "new": {
+            "file": "ZeroParadox/Givens.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.doubling_counter_pow",
+            "short": "doubling_counter_pow"
+          },
+          "old": {
+            "file": "ZeroParadox/Givens.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.doubling_counter_pow",
+            "short": "doubling_counter_pow",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ruling 118: GCoincidence / doubling counter widened from characteristic-0 fields to every field; ring characterisation via emultiplicity 2",
           "verify": {
             "axioms": null,
             "sorry_free": null
