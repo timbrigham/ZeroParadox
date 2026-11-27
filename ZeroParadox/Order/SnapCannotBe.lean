@@ -162,7 +162,7 @@ example (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p) :
 #check @ZeroParadox.stepOff_ae_iff                    -- Statement: at `0 < p ≤ 1`, almost every tape is in `stepOff L` iff `BotHasFirstStep L`; both directions
 #check @ZeroParadox.linear_stepOff_mass_one_iff       -- Statement: on a linear order with a least element (join `max`), that mass is 1 iff the order has an atom (`IsAtom`, via `bot_covBy_iff`) and `p ≠ 0`
 #check @ZeroParadox.dense_stepOff_mass_zero           -- Statement: one way: densely ordered gives mass 0 at every `p`; CONTROL `W := WithTop (WithTop NNReal)` is not densely ordered (`W_not_dense`) and its ⊥ has no first step (`W_not_firstStep`), so the converse fails
-#check @ZeroParadox.dial_pinned_faces                 --Statement: if `binEntropy p > 0` (equivalently `0 < p < 1`, `dial_entropy_pos_iff`), "some stage fires" has mass 1 and every tape, ⊥ of `ℕ → Bool` among them, is in the support of `trials p hp` and null
+#check @ZeroParadox.dial_pinned_faces                 -- Statement: if `binEntropy p > 0` (equivalently `0 < p < 1`, `dial_entropy_pos_iff`), "some stage fires" has mass 1 and every tape, ⊥ of `ℕ → Bool` among them, is in the support of `trials p hp` and null
 #check @ZeroParadox.fair_wait_offset                  -- Statement: under `fairTape`, the wait to the first disagreement with a tape `t` (`det_xorOffset_eq_ofNat_iff`) has the law of the wait from ⊥ of `ℕ → Bool`; `xorOffset_measurePreserving_iff`: for `p ≤ 1` and `t` not ⊥ of `ℕ → Bool`, `xorOffset t` preserves `trials p hp` only at `p = 1/2`
 -- Reading: CARRIER, the tower tape fed to the snap as a family indexed by chart, never a union
 --   (`ZeroParadox/Valuation/TowerTapeSnap.lean`): `tapeIso` carries `towerTape [] x` to a tape `ℕ → Bool`.

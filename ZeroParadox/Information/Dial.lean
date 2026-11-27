@@ -1833,8 +1833,8 @@ variable {ι κ R : Type*} [Fintype ι] [DecidableEq κ] [CommSemiring R]
 def DetailedBalance (P : ι → ι → R) (π : ι → R) : Prop := ∀ x y, π x * P x y = π y * P y x
 
 /-- `Statement:` the two-time weight of the observed pair `(a, b)`: the sum of `π x * P x y` over
-`x, y` with `f x = a`, `f y = b`; when `π` is a distribution and `P` is stochastic, this is
-`Pr(f X₀ = a, f X₁ = b)`. -/
+`x, y` with `f x = a`, `f y = b`. `Reading:` when `π` is a distribution and `P` is stochastic, this
+is `Pr(f X₀ = a, f X₁ = b)`; the three-time case is proved (`chainLaw_coarse3_eq_coarseLaw3`). -/
 def coarseLaw2 (π : ι → R) (P : ι → ι → R) (f : ι → κ)
     (a b : κ) : R :=
   ∑ x, ∑ y, if f x = a ∧ f y = b then π x * P x y else 0
