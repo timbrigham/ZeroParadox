@@ -39,7 +39,7 @@ still "what they are".. each one of those field lines that I'm visualizing is un
 Every given is a `Prop`, never a class field. All but `GConnected` and `GJoined` take a die `Motion`
 (`ZeroParadox/Die.lean`); those two take two points of a topological space. § 0 the
 charts; § I the givens; § II per chart, with controls; § III the field lines; § IV given these,
-then; § V the limits; § VI the commitments that stay hypotheses. Long form: `ZeroParadox/Givens.md`.
+then; § V the limits; § VI the preconditions that stay hypotheses. Long form: `ZeroParadox/Givens.md`.
 -/
 
 set_option maxHeartbeats 400000
@@ -1138,7 +1138,7 @@ theorem ZeroParadox.q2_not_leavesByRun_zero :
 #check @ZeroParadox.q2_double_covBy            -- Statement: LIMIT (c): each 2-adic doubling step from a nonzero point is a cover in the norm order; the value group is discrete (`q2_norm_image`).
 #check @ZeroParadox.real_hlv_returnToStart     -- Statement: LIMIT (c), control: under real halving some sequence from 0 of ℝ also meets `GReturnToStart` (its tail's closure contains 0 of ℝ), through a dense value group (`real_norm_image`).
 
-/-! ### § VI. The commitments that stay hypotheses -/
+/-! ### § VI. The preconditions that stay hypotheses -/
 #check @ZeroParadox.BotHasFirstStep            -- Statement: AX-B1's first-step form, a `Prop` on `L`, used as the hypothesis `hR1`.
 #check @ZeroParadox.t_snap_given               -- Statement: CC-1 is the hypothesis `hcc1 : S 0 = bot`; occurrence at index 1 is `hocc`.
 -- Statement: the coin `0 < p ≤ 1` is two hypotheses, `hp` and `hp0`, beside `hR1`.
