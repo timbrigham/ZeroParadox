@@ -33,6 +33,13 @@ Third-party material, covered by neither licence above:
     CombinatorialGames/NatOrdinal/Pow.lean from vihdzp/combinatorial-games;
     the port's changes are marked "-- [ZP]" in the file.
     Apache License, Version 2.0. Full text in LICENSE.
+  ZeroParadox/Information/Dial.lean, § XII (the run-law helper lemmas)
+    Adapted from formalization/ueot-core/UEOT/V3/DynamicsKernel.lean in
+    MurphyHoops/UEOT, lean4-core-export v1.0.0, base commit
+    83ecdb1242f97b406d68444b34d792b7d29c3682, DOI 10.5281/zenodo.24433585.
+    Apache License, Version 2.0. Full text in LICENSE. Its NOTICE reads:
+      Pure-Kernel Lean 4 Formalization Archive (Exported Software & Proof Bundle)
+      Copyright 2025-2026 Degui Qian
   scripts/fonts/ (DejaVu)
     Bitstream Vera and Arev font licences; the DejaVu changes are in the
     public domain. Text in scripts/fonts/LICENSE-DejaVu.txt.
