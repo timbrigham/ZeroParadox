@@ -98,19 +98,42 @@ the repo root. Outside it (FLT, carleson, pfr), Tim ruled 2026-10-31 that the so
 elaborated**. `get_dependencies` returns a partial list as a JSON-encoded string (2026-10-31: for
 `Nat.Partrec.Code.fixed_point₂`, some statement constants, but not `Partrec₂` from its hypothesis, nor
 the proof's constants), and LeanExplore's snapshot is not the pinned Mathlib, so confirm a hit at the pin.
-Then search Reservoir's own index (`https://reservoir.lean-lang.org/packages?q=<term>`, three terms
-minimum, the concept's standard name first) for packages on the topic, and read any candidate's source
-(Tim, 2026-11-22, ruling 47: Reservoir is a named source, never only implied). Its search is
-client-side: a plain fetch (WebFetch, curl) of the `?q=` URL returns the first page of the UNFILTERED
-catalogue (20 rows and a total, 955 as of 2026-11-22), so a fetch-only null is recorded NOT RUN, never as
-a null. In a browser (e.g. Claude in Chrome) the search filters client-side (measured 2026-11-22:
-`q=mathlib` returned 5 results); wait for the "Search Results for" header and run that positive control
-before recording a null. Then GitHub code
-search with `extension:lean`, not `language:Lean` (2026-10-31: 9 files against 0), `perPage` ≤ 10 and
-`-repo:timbrigham/ZeroParadox`, for the Reservoir long tail (955 packages as of 2026-11-22). The LeanExplore half may be recorded NOT RUN if the tools are unavailable or refused; the
-code search is always required. Its null is uninformative too; both services are rate-limited, and only
-a rate-limit response is a wait. A Lean-only prior art is cited by repository, declaration name and
-commit read, plus that verification status. Full rules: `.claude/commands/prior-art-review.md`, rung B2.
+Then Reservoir (Tim, 2026-11-22, ruling 47: Reservoir is a named source, never only implied; reshaped
+by ruling 111, 2026-11-27). Reservoir and GitHub code search FIND repositories; the grep of each one's
+verified archive is the step that SEARCHES a repository's text, and every repository either finds goes
+through it. Measured 2026-11-27, Reservoir's matching depends on the route: the `reservoirSearch` MCP's
+`search` matches package name, description and keywords, every term of one query required; the
+website's `?q=` matches owner/name only (per the site's source, leanprover/reservoir
+`site/pages/packages.vue`), keywords only through the exact-match `?keyword=<kw>`. Either way it
+ENUMERATES candidates and never establishes whether a theorem is stated. Shortlist with broad field terms
+(e.g. `markov`, `probability`, `kernel`, `measure`), three separate searches minimum, since one
+multi-term query narrows rather than widens, the standard name first, taking each package's `repoUrl` —
+via the MCP (`search`, `get_package`, over a possibly partial local index whose package count and load
+date `status()` reports) or the website (`https://reservoir.lean-lang.org/packages?q=<term>`), whose
+search is client-side: a plain fetch (WebFetch, curl) of the `?q=` URL returns the first page of the
+UNFILTERED catalogue (20 rows and the whole catalogue's total, measured 2026-11-22), so a fetch-only null
+is recorded NOT RUN, never as a null. In a browser (e.g. Claude in Chrome) the search filters client-side
+(measured 2026-11-22: `q=mathlib` returned 5 results); wait for the "Search Results for" header and run
+that positive control before recording a null. GitHub code search with `extension:lean`, not
+`language:Lean` (2026-10-31: 9 files against 0), `perPage` ≤ 10 and `-repo:timbrigham/ZeroParadox`,
+FINDS repositories that are not Reservoir packages (2026-11-27: MurphyHoops/UEOT, Erotemic/shufflemath
+and paulklemstine/Lean, cited in one review, were found only this way). For each repository found
+either way, download its archive at a fixed commit (e.g.
+`https://codeload.github.com/<owner>/<repo>/zip/<commit>`) into its own new, empty scratchpad directory,
+check it is complete (`zipfile` `testzip()` under `python -I`, run from another directory, prints `None`;
+its `.lean` count matches `mcp__github__get_repository_tree`, recursive at the commit, whose `truncated`
+flag is read first, and a truncated tree leaves the count unverified), and grep every `.lean` file for
+declaration-level terms, recording `owner/repo@commit` with each hit, which is PARTLY VERIFIED: source
+read at owner/repo@commit, type not elaborated. Never execute anything from the archive; a repository
+whose archive could not be fetched or verified is recorded NOT RUN, never a null, and a "none located"
+covers only the repositories searched. The LeanExplore half may be recorded NOT RUN if the tools are
+unavailable or refused; the Reservoir, code-search and archive steps are always required. Code search's
+misses are uninformative (2026-11-27: `Feller` returned 0 hits in scottnarmstrong/MarkovProcess, which
+uses the word throughout, and a `repo:` query with no search term also returned 0, so that repository is
+absent from GitHub's code index). LeanExplore, code search, the Reservoir website and codeload archive
+downloads are all hosted services, and only a rate-limit response is a wait. A Lean-only prior art is
+cited by repository, declaration name and commit read, plus that verification status. Full rules:
+`.claude/commands/prior-art-review.md`, rung B2.
 
 **Rung 4 — the open web.** Runs when rung 2 returns no good match, **and also when it returns a
 neighbourhood hit whose actual source needs identifying**. This is where everything pre-arXiv lives —
@@ -305,8 +328,8 @@ free analyticity lemmas, and the standard NAME for a thing described longhand.
    name you would never have guessed, and it reaches the attribute-generated siblings (`@[to_dual]`,
    `@[simps]`) that have **no source line to grep**.
 3. **One literature search** if the object has a name — **run the LADDER in order: `.claude-local/papers/`
-   → `theoremsearch` (one phrasing `formality: "formal"`) → Lean libraries (LeanExplore, GitHub
-   `extension:lean`) → the open web → RETRIEVE THE FULL DOCUMENT.** Three phrasings minimum at
+   → `theoremsearch` (one phrasing `formality: "formal"`) → Lean libraries (LeanExplore; Reservoir
+   and GitHub `extension:lean` to find repositories, then each one's archive) → the open web → RETRIEVE THE FULL DOCUMENT.** Three phrasings minimum at
    `theoremsearch`; ignore its similarity score; **every null is UNINFORMATIVE** (coverage-bounded).
    **Rungs 1–4 are DISCOVERY, only rung 5 is VERIFICATION** — a returned body is not a passage in hand.
    📖 `tools/process/prior-art.md` §§ 2a–2b.
