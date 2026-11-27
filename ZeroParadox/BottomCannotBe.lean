@@ -972,6 +972,9 @@ example : ZeroParadox.Disjunctive (fun n => xor (ZeroParadox.champ n) false) := 
 -- start the observed run has the law of the `L`-chain from the observed start; both directions
 -- (`ZeroParadox/Information/Dial.lean` § XII).
 #check @ZeroParadox.lumps_iff_runLaw_map
+-- Statement: if `K` lumps to `L` along measurable `f`, from every initial probability law `μ` the
+-- observed run has the law of the `L`-chain from `μ.map f`; one way.
+#check @ZeroParadox.chainLaw_map_of_lumps
 -- Statement: on a finite carrier with measurable singletons, if `K` is reversible w.r.t. the initial
 -- law, every measurable observer with measurable singletons on its target has a reversal-symmetric
 -- three-time law.

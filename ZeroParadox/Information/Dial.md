@@ -192,13 +192,16 @@ this file holds what was already in the corpus, the prior art, and the fences.
 - Lumping. The lumped chain is Levin, Peres, Wilmer, *Markov Chains and Mixing Times*, 2nd ed., Lemma 2.5,
   p. 25, under the per-class condition (2.10), which is `FiberConst`; Wolfer and Watanabe, arXiv:2203.04575,
   Theorem 3.1, p. 12, attribute that characterisation to Kemeny and Snell (not retrieved, not cited as read
-  here). `Lumps.fiberConst` is its one-way relation to `Lumps`. The forward direction of
-  `lumps_iff_runLaw_map` (intertwining gives the observed process the lumped chain's law, from every
-  initial law) is Dynkin's criterion as Rogers and Pitman (1981), Remark (iii), p. 575, state it; Burke and
-  Rosenblatt (1958), Corollary 1, p. 1113, give the per-class condition as sufficient for every initial law
-  and "not generally necessary". The converse half (the `L`-chain's law from every point start forces the
-  intertwining) is classical for finite chains: Kemeny and Snell, Theorem 6.3.2, as Wolfer and Watanabe,
-  Theorem 3.1, p. 12, state it. The version here (a supplied `L`, point starts, a general measurable
+  here). `Lumps.fiberConst` is its one-way relation to `Lumps`. That intertwining gives the observed
+  process the lumped chain's law from every initial probability law (`chainLaw_map_of_lumps`; from every
+  point start, the forward direction of `lumps_iff_runLaw_map`) is Dynkin's criterion as Rogers and Pitman
+  (1981), Remark (iii), p. 575, state it; Burke and Rosenblatt (1958), Corollary 1, p. 1113, give the
+  per-class condition as sufficient for every initial distribution with all weights positive (`w_i > 0`,
+  foot of p. 1112) and "not generally necessary". The converse half of `lumps_iff_runLaw_map` (the
+  `L`-chain's law from every point start forces the intertwining) is, for irreducible finite chains, Wolfer
+  and Watanabe, Theorem 3.1, p. 12 (their `W(Y, E)` is the irreducible stochastic matrices, p. 9, and
+  lumpability there is strong lumpability, "independent of the starting distribution", footnote 8, p. 12),
+  which they attribute to Kemeny and Snell, Theorem 6.3.2 (not retrieved). The version here (a supplied `L`, point starts, a general measurable
   carrier) follows UEOT's `pathLaw_implies_strongLumpability` (below) and reads off the time-1 marginal
   (`runLaw_time_one`).
 - Reversibility. Detailed balance and reversibility of a stationary process: Kelly, *Reversibility and
@@ -211,7 +214,8 @@ this file holds what was already in the corpus, the prior art, and the fences.
   and Fact 27, p. 12; `aggregatedChain_detailedBalance` is that statement for matrices over ℚ with nonzero
   class weights. That a non-reversible chain can lump to a reversible one (`a4_direction_erased`) is noted
   by Wolfer and Watanabe, § 4.4.3, p. 26: embedding a reversible chain, "even by a Markov embedding", can
-  yield a non-reversible one. paulklemstine/Lean `cycleLumpable` (below) lumps the `n`-cycle onto the
+  yield a non-reversible one, and a Markov embedding serves "as a right inverse of the lumping operation"
+  (§ 2.1, p. 5), so that chain lumps back to the reversible one. paulklemstine/Lean `cycleLumpable` (below) lumps the `n`-cycle onto the
   `m`-cycle for `m ∣ n`, which at `n = 4`, `m = 2` is the lumping half of `a4_direction_erased`.
 - Lumping without a Markov observer. For a stationary reversible chain with positive weights, the observed
   process is Markov iff the per-class condition holds: Burke and Rosenblatt, Theorem 1, p. 1112.
@@ -225,12 +229,17 @@ this file holds what was already in the corpus, the prior art, and the fences.
   `strongLumpability_iff_pathLaw` (all probability initial laws), the path-law characterisation closest to
   `lumps_iff_runLaw_map`. paulklemstine/Lean `Catalog/Probability/MarkovLumpability.lean` (`Lumpable`, a
   bounded morphism of support frames, `cycleLumpable`; no reversibility result). TauCeti `markovChainLaw`,
-  the construction behind `chainLaw` (already cited under § XI).
-- Credit, adapted Lean. § XII's path-law block is adapted from UEOT's
+  the construction behind `chainLaw` (already cited under § XI). or4nge19/MCMC (commit a7a5ccab):
+  `isReversible_iff_kernel_reversible` (`MCMC/Finite/toKernel.lean`), matrix detailed balance iff Mathlib
+  `Kernel.IsReversible` on a finite carrier; `eq_trajMeasure_iff`, `trajMeasure_map_eval` and
+  `trajMeasure_map_eval_eval_add` (`MCMC/ToMathlib/Probability/Kernel/IonescuTulcea/Traj.lean`), the
+  characterisation of `Kernel.trajMeasure` by its initial law and one-step joint laws, and the one- and
+  two-time laws of the chain of a single kernel.
+- Credit, adapted Lean. § XII's path-law block is UEOT's
   `formalization/ueot-core/UEOT/V3/DynamicsKernel.lean` (namespace `UEOT.V3.DynamicsKernel`, Copyright
   2025-2026 Degui Qian), adapted to `homK`: `Lumps.fiberConst` from `strongLumpability_fiber_constant`,
   `mapHist` and `measurable_mapHist` from `mapHistory` and `measurable_mapHistory`, `appendHist` and `measurable_appendHist` from `appendHistory` and
-  `measurable_appendHistory`, `mapHist_comp_appendHist` from `mapHistory_comp_appendHistory`,
+  `measurable_appendHistory`, `mapHist_comp_appendHist` from `mapHistory_comp_appendHistory` and `mapHistory_appendHistory`,
   `appendHist_prefix` from `appendHistory_prefix_next`, `chainLaw_prefix_zero` and `chainLaw_prefix_succ`
   from `homTrajMeasure_prefix_zero` and `homTrajMeasure_prefix_succ`, `chainLaw_step` from the first step
   of `homTrajMeasure_prefix_succ`, `homK_compProd_naturality` from `homHistory_compProd_naturality` and
