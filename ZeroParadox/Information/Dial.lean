@@ -1034,6 +1034,9 @@ in general (`isReversible_map_of_lumps`) and, at three times, for every measurab
 finite carrier with measurable singletons (`chainLaw_coarse3_reverse`). The kernel is a supplied
 argument throughout. -/
 
+-- Provenance: the lumping and run-law declarations marked `[ZP]` are adapted and modified from
+-- MurphyHoops/UEOT, `formalization/ueot-core/UEOT/V3/DynamicsKernel.lean` (lean4-core-export v1.0.0,
+-- Apache-2.0); each mark names its UEOT original. See NOTICE.
 section Lumping
 
 open Finset
@@ -1048,28 +1051,31 @@ Peres, Wilmer (2.10); attributed to Kemeny-Snell via Wolfer-Watanabe Theorem 3.1
 def FiberConst (K : Kernel α α) (f : α → β) : Prop :=
   ∀ a a', f a = f a' → (K a).map f = (K a').map f
 
-/-- `Statement:` lumping to some `L` gives the per-class form; one way. -/
+/-- [ZP] adapted from UEOT `strongLumpability_fiber_constant`. `Statement:` lumping to some `L`
+gives the per-class form; one way. -/
 theorem Lumps.fiberConst {K : Kernel α α} {L : Kernel β β} {f : α → β} (h : Lumps K L f) :
     FiberConst K f := fun a a' e => by rw [h a, h a', e]
 
-/-- `Statement:` the coordinatewise map of a finite history. -/
+/-- [ZP] adapted from UEOT `mapHistory`. `Statement:` the coordinatewise map of a finite history. -/
 def mapHist (f : α → β) (n : ℕ) (x : (i : Iic n) → α) : (i : Iic n) → β := fun i => f (x i)
 
-/-- `Statement:` `mapHist f n` is measurable when `f` is. -/
+/-- [ZP] adapted from UEOT `measurable_mapHistory`. `Statement:` `mapHist f n` is measurable when
+`f` is. -/
 theorem measurable_mapHist {f : α → β} (hf : Measurable f) (n : ℕ) : Measurable (mapHist f n) :=
   measurable_pi_iff.mpr fun i => hf.comp (measurable_pi_apply i)
 
-/-- `Statement:` append one state to a finite history. -/
+/-- [ZP] adapted from UEOT `appendHistory`. `Statement:` append one state to a finite history. -/
 def appendHist (n : ℕ) (p : ((i : Iic n) → α) × α) : (i : Iic (n + 1)) → α :=
   IicProdIoc (X := fun _ : ℕ => α) n (n + 1)
     (p.1, MeasurableEquiv.piSingleton (X := fun _ : ℕ => α) n p.2)
 
-/-- `Statement:` `appendHist n` is measurable. -/
+/-- [ZP] adapted from UEOT `measurable_appendHistory`. `Statement:` `appendHist n` is measurable. -/
 theorem measurable_appendHist (n : ℕ) : Measurable (appendHist (α := α) n) :=
   measurable_IicProdIoc.comp (measurable_fst.prodMk
     ((MeasurableEquiv.piSingleton (X := fun _ : ℕ => α) n).measurable.comp measurable_snd))
 
-/-- `Statement:` mapping coordinatewise commutes with appending. -/
+/-- [ZP] adapted from UEOT `mapHistory_comp_appendHistory` and `mapHistory_appendHistory`.
+`Statement:` mapping coordinatewise commutes with appending. -/
 theorem mapHist_comp_appendHist (f : α → β) (n : ℕ) :
     mapHist f (n + 1) ∘ appendHist n = appendHist n ∘ Prod.map (mapHist f n) f := by
   funext p
@@ -1081,7 +1087,8 @@ theorem mapHist_comp_appendHist (f : α → β) (n : ℕ) :
     subst hieq
     simp [mapHist, appendHist, IicProdIoc_def, MeasurableEquiv.piSingleton]
 
-/-- `Statement:` the prefix of length `n + 2` is the prefix of length `n + 1` with `x (n + 1)` appended. -/
+/-- [ZP] adapted from UEOT `appendHistory_prefix_next`. `Statement:` the prefix of length `n + 2`
+is the prefix of length `n + 1` with `x (n + 1)` appended. -/
 theorem appendHist_prefix (n : ℕ) (x : ℕ → α) :
     appendHist n (Preorder.frestrictLe n x, x (n + 1)) = Preorder.frestrictLe (n + 1) x := by
   ext i
@@ -1105,7 +1112,8 @@ instance isProbabilityMeasure_chainLaw (μ : Measure α) [IsProbabilityMeasure �
 theorem runLaw_eq_chainLaw (K : Kernel α α) [IsMarkovKernel K] (x₀ : α) :
     runLaw K x₀ = chainLaw (Measure.dirac x₀) K := rfl
 
-/-- `Statement:` the length-1 prefix of `chainLaw μ K` is `μ`, read on `Iic 0`. -/
+/-- [ZP] adapted from UEOT `homTrajMeasure_prefix_zero`. `Statement:` the length-1 prefix of
+`chainLaw μ K` is `μ`, read on `Iic 0`. -/
 theorem chainLaw_prefix_zero (μ : Measure α) [IsProbabilityMeasure μ] (K : Kernel α α)
     [IsMarkovKernel K] :
     (chainLaw μ K).map (Preorder.frestrictLe 0) =
@@ -1113,7 +1121,8 @@ theorem chainLaw_prefix_zero (μ : Measure α) [IsProbabilityMeasure μ] (K : Ke
   rw [chainLaw, Kernel.trajMeasure, Measure.map_comp _ _ (by fun_prop),
     Kernel.traj_map_frestrictLe, Kernel.partialTraj_self, Measure.id_comp]
 
-/-- `Statement:` the law of (prefix to `n`, state `n + 1`) is the prefix law `⊗ₘ homK K n`
+/-- [ZP] adapted from the first step of UEOT `homTrajMeasure_prefix_succ`. `Statement:` the law of
+(prefix to `n`, state `n + 1`) is the prefix law `⊗ₘ homK K n`
 (Mathlib's `Kernel.map_frestrictLe_trajMeasure_compProd_eq_map_trajMeasure`). -/
 theorem chainLaw_step (μ : Measure α) [IsProbabilityMeasure μ] (K : Kernel α α)
     [IsMarkovKernel K] (n : ℕ) :
@@ -1122,7 +1131,8 @@ theorem chainLaw_step (μ : Measure α) [IsProbabilityMeasure μ] (K : Kernel α
   Kernel.map_frestrictLe_trajMeasure_compProd_eq_map_trajMeasure
     (X := fun _ : ℕ => α) (μ₀ := μ) (κ := homK K) (a := n)
 
-/-- `Statement:` the next prefix law is the current one `⊗ₘ homK K n`, appended. -/
+/-- [ZP] adapted from UEOT `homTrajMeasure_prefix_succ`. `Statement:` the next prefix law is the
+current one `⊗ₘ homK K n`, appended. -/
 theorem chainLaw_prefix_succ (μ : Measure α) [IsProbabilityMeasure μ] (K : Kernel α α)
     [IsMarkovKernel K] (n : ℕ) :
     (((chainLaw μ K).map (Preorder.frestrictLe n)) ⊗ₘ homK K n).map (appendHist n) =
@@ -1132,7 +1142,8 @@ theorem chainLaw_prefix_succ (μ : Measure α) [IsProbabilityMeasure μ] (K : Ke
   funext x
   exact appendHist_prefix n x
 
-/-- `Statement:` pushing the first factor of `μh ⊗ₘ κ.comap e` along `e` gives `μh.map e ⊗ₘ κ`. -/
+/-- [ZP] adapted from the last step of UEOT `homHistory_compProd_naturality`. `Statement:` pushing
+the first factor of `μh ⊗ₘ κ.comap e` along `e` gives `μh.map e ⊗ₘ κ`. -/
 theorem compProd_comap_map {Y Z X : Type*} [MeasurableSpace Y] [MeasurableSpace Z]
     [MeasurableSpace X] (μh : Measure Y) [SFinite μh] {e : Y → X} (he : Measurable e)
     (κ : Kernel X Z) [IsSFiniteKernel κ] :
@@ -1143,7 +1154,8 @@ theorem compProd_comap_map {Y Z X : Type*} [MeasurableSpace Y] [MeasurableSpace 
     lintegral_map (Kernel.measurable_kernel_prodMk_left hs) he]
   rfl
 
-/-- `Statement:` if `K` lumps to `L` along `f`, one step of the history commutes with `f`. -/
+/-- [ZP] adapted from UEOT `homHistory_compProd_naturality`. `Statement:` if `K` lumps to `L` along
+`f`, one step of the history commutes with `f`. -/
 theorem homK_compProd_naturality {n : ℕ} (μh : Measure ((i : Iic n) → α)) [SFinite μh]
     (K : Kernel α α) (L : Kernel β β) [IsMarkovKernel K] [IsMarkovKernel L]
     {f : α → β} (hf : Measurable f) (h : Lumps K L f) :
@@ -1164,7 +1176,8 @@ theorem homK_compProd_naturality {n : ℕ} (μh : Measure ((i : Iic n) → α)) 
     _ = (μh ⊗ₘ (homK L n).comap (mapHist f n) hF).map (Prod.map (mapHist f n) id) := by rw [hk]
     _ = (μh.map (mapHist f n)) ⊗ₘ homK L n := compProd_comap_map μh hF (homK L n)
 
-/-- `Statement:` under lumping, every finite prefix of the observed chain has the lumped prefix law. -/
+/-- [ZP] adapted from UEOT `homTrajMeasure_prefix_naturality`. `Statement:` under lumping, every
+finite prefix of the observed chain has the lumped prefix law. -/
 theorem chainLaw_prefix_naturality (μ : Measure α) [IsProbabilityMeasure μ]
     (K : Kernel α α) (L : Kernel β β) [IsMarkovKernel K] [IsMarkovKernel L]
     {f : α → β} (hf : Measurable f) (h : Lumps K L f) (n : ℕ) :
@@ -1184,8 +1197,8 @@ theorem chainLaw_prefix_naturality (μ : Measure α) [IsProbabilityMeasure μ]
       homK_compProd_naturality _ K L hf h, ih]
     exact chainLaw_prefix_succ (μ.map f) L n
 
-/-- `Statement:` two probability measures on `ℕ → β` with equal laws on every prefix are equal
-(Mathlib's `IsProjectiveLimit.unique`). -/
+/-- [ZP] adapted from UEOT `pathMeasure_eq_of_prefix_eq`. `Statement:` two probability measures on
+`ℕ → β` with equal laws on every prefix are equal (Mathlib's `IsProjectiveLimit.unique`). -/
 theorem pathMeasure_eq_of_prefix_eq (μp νp : Measure (ℕ → β))
     [IsProbabilityMeasure μp] [IsProbabilityMeasure νp]
     (hp : ∀ n, μp.map (Preorder.frestrictLe n) = νp.map (Preorder.frestrictLe n)) : μp = νp := by
@@ -1206,8 +1219,9 @@ theorem pathMeasure_eq_of_prefix_eq (μp νp : Measure (ℕ → β))
     rw [e, e μp, h]
   exact (show IsProjectiveLimit (ι := ℕ) (α := fun _ => β) μp P from fun _ => rfl).unique hν
 
-/-- `Statement:` if `K` lumps to `L` along measurable `f`, the observed process `n ↦ f (x n)` of the
-chain from `μ` has the law of the `L`-chain from `μ.map f`. -/
+/-- [ZP] adapted from UEOT `homTrajMeasure_path_naturality`. `Statement:` if `K` lumps to `L` along
+measurable `f`, the observed process `n ↦ f (x n)` of the chain from `μ` has the law of the
+`L`-chain from `μ.map f`. -/
 theorem chainLaw_map_of_lumps (μ : Measure α) [IsProbabilityMeasure μ]
     (K : Kernel α α) (L : Kernel β β) [IsMarkovKernel K] [IsMarkovKernel L]
     {f : α → β} (hf : Measurable f) (h : Lumps K L f) :
@@ -1221,14 +1235,16 @@ theorem chainLaw_map_of_lumps (μ : Measure α) [IsProbabilityMeasure μ]
   rw [this, ← Measure.map_map (measurable_mapHist hf n) (Preorder.measurable_frestrictLe n)]
   exact chainLaw_prefix_naturality μ K L hf h n
 
-/-- `Statement:` the same from a point: the observed run of `runLaw K x₀` has law `runLaw L (f x₀)`. -/
+/-- [ZP] adapted from UEOT `homTrajMeasure_path_naturality`, at a Dirac start. `Statement:` the same
+from a point: the observed run of `runLaw K x₀` has law `runLaw L (f x₀)`. -/
 theorem runLaw_map_of_lumps (K : Kernel α α) (L : Kernel β β) [IsMarkovKernel K] [IsMarkovKernel L]
     {f : α → β} (hf : Measurable f) (h : Lumps K L f) (x₀ : α) :
     (runLaw K x₀).map (fun x n => f (x n)) = runLaw L (f x₀) := by
   rw [runLaw_eq_chainLaw, runLaw_eq_chainLaw, ← Measure.map_dirac' hf]
   exact chainLaw_map_of_lumps (Measure.dirac x₀) K L hf h
 
-/-- `Statement:` the time-1 marginal of `runLaw K x` is `K x`. -/
+/-- [ZP] adapted from UEOT `homTrajMeasure_dirac_time_one`. `Statement:` the time-1 marginal of
+`runLaw K x` is `K x`. -/
 theorem runLaw_time_one (K : Kernel α α) [IsMarkovKernel K] (x : α) :
     (runLaw K x).map (fun z => z 1) = K x := by
   have hstep := chainLaw_prefix_succ (Measure.dirac x) K 0
@@ -1249,7 +1265,8 @@ theorem runLaw_time_one (K : Kernel α α) [IsMarkovKernel K] (x : α) :
     Measure.dirac_bind (Kernel.measurable _)]
   rfl
 
-/-- `Statement:` if from every start the observed run has the `L`-chain's law, `K` lumps to `L`. -/
+/-- [ZP] adapted from UEOT `pathLaw_implies_strongLumpability`. `Statement:` if from every start the
+observed run has the `L`-chain's law, `K` lumps to `L`. -/
 theorem lumps_of_runLaw_map (K : Kernel α α) (L : Kernel β β) [IsMarkovKernel K] [IsMarkovKernel L]
     {f : α → β} (hf : Measurable f)
     (h : ∀ x₀, (runLaw K x₀).map (fun x n => f (x n)) = runLaw L (f x₀)) : Lumps K L f := by
@@ -1261,8 +1278,9 @@ theorem lumps_of_runLaw_map (K : Kernel α α) (L : Kernel β β) [IsMarkovKerne
   rw [← this, ← runLaw_time_one K a, Measure.map_map hf (measurable_pi_apply 1)]
   rfl
 
-/-- `Statement:` for measurable `f`, `K` lumps to `L` along `f` iff from every start the observed run
-has the law of the `L`-chain from the observed start; both directions. -/
+/-- [ZP] adapted from UEOT `strongLumpability_iff_pathLaw`. `Statement:` for measurable `f`, `K`
+lumps to `L` along `f` iff from every start the observed run has the law of the `L`-chain from the
+observed start; both directions. -/
 theorem lumps_iff_runLaw_map (K : Kernel α α) (L : Kernel β β) [IsMarkovKernel K]
     [IsMarkovKernel L] {f : α → β} (hf : Measurable f) :
     Lumps K L f ↔ ∀ x₀, (runLaw K x₀).map (fun x n => f (x n)) = runLaw L (f x₀) :=

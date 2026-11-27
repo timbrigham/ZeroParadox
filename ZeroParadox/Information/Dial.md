@@ -197,8 +197,10 @@ this file holds what was already in the corpus, the prior art, and the fences.
   initial law) is Dynkin's criterion as Rogers and Pitman (1981), Remark (iii), p. 575, state it; Burke and
   Rosenblatt (1958), Corollary 1, p. 1113, give the per-class condition as sufficient for every initial law
   and "not generally necessary". The converse half (the `L`-chain's law from every point start forces the
-  intertwining) is not in those sources; it follows UEOT's `pathLaw_implies_strongLumpability` (below) and
-  reads off the time-1 marginal (`runLaw_time_one`).
+  intertwining) is classical for finite chains: Kemeny and Snell, Theorem 6.3.2, as Wolfer and Watanabe,
+  Theorem 3.1, p. 12, state it. The version here (a supplied `L`, point starts, a general measurable
+  carrier) follows UEOT's `pathLaw_implies_strongLumpability` (below) and reads off the time-1 marginal
+  (`runLaw_time_one`).
 - Reversibility. Detailed balance and reversibility of a stationary process: Kelly, *Reversibility and
   Stochastic Networks* (1979), § 1.2, Lemma 1.1 and Theorem 1.2. That lumping preserves reversibility
   (`isReversible_map_of_lumps`) is Wolfer and Watanabe, Proposition 4.2, p. 26, for irreducible finite
@@ -226,14 +228,15 @@ this file holds what was already in the corpus, the prior art, and the fences.
   the construction behind `chainLaw` (already cited under § XI).
 - Credit, adapted Lean. § XII's path-law block is adapted from UEOT's
   `formalization/ueot-core/UEOT/V3/DynamicsKernel.lean` (namespace `UEOT.V3.DynamicsKernel`, Copyright
-  2025-2026 Degui Qian), adapted to `homK`: `mapHist` and `measurable_mapHist` from `mapHistory` and
-  `measurable_mapHistory`, `appendHist` and `measurable_appendHist` from `appendHistory` and
+  2025-2026 Degui Qian), adapted to `homK`: `Lumps.fiberConst` from `strongLumpability_fiber_constant`,
+  `mapHist` and `measurable_mapHist` from `mapHistory` and `measurable_mapHistory`, `appendHist` and `measurable_appendHist` from `appendHistory` and
   `measurable_appendHistory`, `mapHist_comp_appendHist` from `mapHistory_comp_appendHistory`,
   `appendHist_prefix` from `appendHistory_prefix_next`, `chainLaw_prefix_zero` and `chainLaw_prefix_succ`
-  from `homTrajMeasure_prefix_zero` and `homTrajMeasure_prefix_succ`, `homK_compProd_naturality` from
-  `homHistory_compProd_naturality`, `pathMeasure_eq_of_prefix_eq` from the declaration of the same name,
-  `runLaw_time_one` from `homTrajMeasure_dirac_time_one`, `lumps_of_runLaw_map` from
-  `pathLaw_implies_strongLumpability`, `lumps_iff_runLaw_map` from `strongLumpability_iff_pathLaw`, and
+  from `homTrajMeasure_prefix_zero` and `homTrajMeasure_prefix_succ`, `chainLaw_step` from the first step
+  of `homTrajMeasure_prefix_succ`, `homK_compProd_naturality` from `homHistory_compProd_naturality` and
+  `compProd_comap_map` from its last step, `pathMeasure_eq_of_prefix_eq` from the declaration of the same
+  name, `runLaw_map_of_lumps` from `homTrajMeasure_path_naturality` at a Dirac start, `runLaw_time_one`
+  from `homTrajMeasure_dirac_time_one`, `lumps_of_runLaw_map` from `pathLaw_implies_strongLumpability`, `lumps_iff_runLaw_map` from `strongLumpability_iff_pathLaw`, and
   `chainLaw_prefix_naturality` and `chainLaw_map_of_lumps` from `homTrajMeasure_prefix_naturality` and
   `homTrajMeasure_path_naturality`. That file is in UEOT's Apache-2.0 export, the archive that
   `publications/artifacts/lean4-core-export/export_lean4_archive.py` builds from
