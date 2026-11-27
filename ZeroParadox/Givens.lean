@@ -478,7 +478,9 @@ theorem givens_two_charts :
 
 /-- `Statement:` 2-adic doubling meets `GDiscrete` in `lmSphN` and real doubling fails it in
 `lmRealN`; the `trials p hp` mass of `stepOff` is the switch on `Bool` (join `||`) and 0 on `NNReal`
-(join `max`) at every `p`; and 0 of ℝ has no first step. -/
+(join `max`) at every `p`; and 0 of ℝ has no first step. The probability conjuncts are on `Bool` and
+`NNReal`, not on the 2-adic or real charts; at 0 of `ℚ_[2]` in `lmSphN` there is no first step
+(`q2_zero_not_firstStep`). -/
 theorem two_charts_snap :
     (GDiscrete dblQ2 lmSphN ∧ ¬ GDiscrete dblReal lmRealN) ∧
     (∀ p (hp : p ≤ 1), trials p hp (@stepOff Bool boolOrZPS) = if p = 0 then 0 else 1) ∧
