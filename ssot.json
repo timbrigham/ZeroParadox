@@ -477047,7 +477047,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 5043,
+        "declarations": 5056,
         "files": 249
       },
       "entries": [
@@ -510654,6 +510654,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "2e96dcb8-f072-43d8-97b1-9a606fd0ae63",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.linear_stepOff_mass_one_iff",
+            "short": "linear_stepOff_mass_one_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.linear_stepOff_mass_one_iff",
+            "short": "linear_stepOff_mass_one_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § IV step-off event: the mass of snap_ae_of_firstStep's event for every carrier L (stepOff_mass), its a.e. iff, the linear-order atom corollary, the one-way dense corollary with the W control; Givens § II-1/II-3: 0 of Q_2 has no first step in lmSphN though GDiscrete holds, and two_charts_snap.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "2ea09a13-b4dd-45a5-ba3d-7e8be606c71b",
           "new": {
             "file": "ZeroParadox/Valuation/PadicVladimirov.lean",
@@ -531776,6 +531813,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "4c4aa5a9-cb0e-4241-b077-5dd6ff319a06",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.stepOff_of_not_firstStep",
+            "short": "stepOff_of_not_firstStep"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.stepOff_of_not_firstStep",
+            "short": "stepOff_of_not_firstStep",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § IV step-off event: the mass of snap_ae_of_firstStep's event for every carrier L (stepOff_mass), its a.e. iff, the linear-order atom corollary, the one-way dense corollary with the W control; Givens § II-1/II-3: 0 of Q_2 has no first step in lmSphN though GDiscrete holds, and two_charts_snap.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "4c6f3a77-828f-4206-a2fa-47249ac91503",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -532882,6 +532956,43 @@
               "probe": "lean #print axioms"
             },
             "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "4de4d479-f99b-472c-965f-40d1c1507fef",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.W",
+            "short": "W"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.W",
+            "short": "W",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § IV step-off event: the mass of snap_ae_of_firstStep's event for every carrier L (stepOff_mass), its a.e. iff, the linear-order atom corollary, the one-way dense corollary with the W control; Givens § II-1/II-3: 0 of Q_2 has no first step in lmSphN though GDiscrete holds, and two_charts_snap.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
           }
         },
         {
@@ -534918,6 +535029,43 @@
             ]
           },
           "reason": "Land 2026-11-10 cells-joint, local-towers, interleave probes and the new one-way-flow results into ZeroParadox/Valuation (CellsJoint, Interleave, LocalTowers, OneWayFlow).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "50c4477b-2a24-4737-9d52-d995b083fbc9",
+          "new": {
+            "file": "ZeroParadox/Givens.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.two_charts_snap",
+            "short": "two_charts_snap"
+          },
+          "old": {
+            "file": "ZeroParadox/Givens.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.two_charts_snap",
+            "short": "two_charts_snap",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Dial § IV step-off event: the mass of snap_ae_of_firstStep's event for every carrier L (stepOff_mass), its a.e. iff, the linear-order atom corollary, the one-way dense corollary with the W control; Givens § II-1/II-3: 0 of Q_2 has no first step in lmSphN though GDiscrete holds, and two_charts_snap.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -545162,6 +545310,43 @@
             ]
           },
           "reason": "The 2-adic bend: multiplier maps z -> c z on OnePoint Q_2 up to topological conjugacy (discrete twist u^v(z) z; every |c| != 1 conjugate to x2, control |d| = 1 not; four flips, Klein four subgroup of Aut(Q_2^x); four multipliers on OnePoint C; attracting/repelling fixed points on OnePoint K, conj_swaps_poles). Jenkins-Spallone Prop 7.1 is the classical statement (ZeroParadox/Multihomed/TwoAdicBend.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "5ef3b433-fecd-4fc9-a8d6-eee4324a0faf",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.stepOff_mass",
+            "short": "stepOff_mass"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.stepOff_mass",
+            "short": "stepOff_mass",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § IV step-off event: the mass of snap_ae_of_firstStep's event for every carrier L (stepOff_mass), its a.e. iff, the linear-order atom corollary, the one-way dense corollary with the W control; Givens § II-1/II-3: 0 of Q_2 has no first step in lmSphN though GDiscrete holds, and two_charts_snap.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -557864,6 +558049,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "70e82a8e-a39e-4bd8-9ecc-f7a9df526423",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.stepOff_of_firstStep",
+            "short": "stepOff_of_firstStep"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.stepOff_of_firstStep",
+            "short": "stepOff_of_firstStep",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § IV step-off event: the mass of snap_ae_of_firstStep's event for every carrier L (stepOff_mass), its a.e. iff, the linear-order atom corollary, the one-way dense corollary with the W control; Givens § II-1/II-3: 0 of Q_2 has no first step in lmSphN though GDiscrete holds, and two_charts_snap.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "70eb4208-406e-4289-88a3-07cd40608dca",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -568754,6 +568976,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "7ffe204b-8d3a-4a56-a7d1-903a3d12d1f0",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.stepOff",
+            "short": "stepOff"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.stepOff",
+            "short": "stepOff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § IV step-off event: the mass of snap_ae_of_firstStep's event for every carrier L (stepOff_mass), its a.e. iff, the linear-order atom corollary, the one-way dense corollary with the W control; Givens § II-1/II-3: 0 of Q_2 has no first step in lmSphN though GDiscrete holds, and two_charts_snap.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "800b12ec-7204-4083-8e19-36bfd6be3796",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -572611,6 +572870,43 @@
             ]
           },
           "reason": "Die v2 final batch: drawing vs set (self-steps, accessibility, forced rank), ends of a view, orders on motions, placements as views, relaxed least-fixed-point schema, UP legs as nuclei",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "8580a87e-b600-4798-b988-80e43af2e9b6",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.stepOff_ae_iff",
+            "short": "stepOff_ae_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.stepOff_ae_iff",
+            "short": "stepOff_ae_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § IV step-off event: the mass of snap_ae_of_firstStep's event for every carrier L (stepOff_mass), its a.e. iff, the linear-order atom corollary, the one-way dense corollary with the W control; Givens § II-1/II-3: 0 of Q_2 has no first step in lmSphN though GDiscrete holds, and two_charts_snap.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -591609,6 +591905,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "9faf81e7-ce03-41c0-bb63-b41b78d18f7e",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.W_not_firstStep",
+            "short": "W_not_firstStep"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.W_not_firstStep",
+            "short": "W_not_firstStep",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § IV step-off event: the mass of snap_ae_of_firstStep's event for every carrier L (stepOff_mass), its a.e. iff, the linear-order atom corollary, the one-way dense corollary with the W control; Givens § II-1/II-3: 0 of Q_2 has no first step in lmSphN though GDiscrete holds, and two_charts_snap.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "9fb8747a-d6ee-4a4d-9e20-ea0efbbbeb0e",
           "new": {
             "file": "ZeroParadox/Valuation/TowerTape.lean",
@@ -608890,6 +609223,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "b65d6dd1-6551-4eca-b739-f4d61fa0bb09",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.W_not_dense",
+            "short": "W_not_dense"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.W_not_dense",
+            "short": "W_not_dense",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § IV step-off event: the mass of snap_ae_of_firstStep's event for every carrier L (stepOff_mass), its a.e. iff, the linear-order atom corollary, the one-way dense corollary with the W control; Givens § II-1/II-3: 0 of Q_2 has no first step in lmSphN though GDiscrete holds, and two_charts_snap.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "b6697cca-4d52-46ab-b6aa-29ae6d0e93cc",
           "new": {
             "file": "ZeroParadox/Settheory/LawvereBridge.lean",
@@ -624605,6 +624975,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "ccaaa089-d60d-4dd4-b686-2070af126f5d",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dense_stepOff_mass_zero",
+            "short": "dense_stepOff_mass_zero"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.dense_stepOff_mass_zero",
+            "short": "dense_stepOff_mass_zero",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § IV step-off event: the mass of snap_ae_of_firstStep's event for every carrier L (stepOff_mass), its a.e. iff, the linear-order atom corollary, the one-way dense corollary with the W control; Givens § II-1/II-3: 0 of Q_2 has no first step in lmSphN though GDiscrete holds, and two_charts_snap.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "ccb4209e-e226-48f0-ae09-ba9e4ccf221b",
           "new": {
             "file": "ZeroParadox/Ordinal/NaturalOpsPow.lean",
@@ -629143,6 +629550,43 @@
             ]
           },
           "reason": "New file QuineHost.lean — the Quine-Host requirements typeclass (AFA-requirements reframe, honesty thread)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d25cc2b3-1db0-4d4f-927d-05de758fa605",
+          "new": {
+            "file": "ZeroParadox/Givens.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.q2_zero_not_firstStep",
+            "short": "q2_zero_not_firstStep"
+          },
+          "old": {
+            "file": "ZeroParadox/Givens.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.q2_zero_not_firstStep",
+            "short": "q2_zero_not_firstStep",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Dial § IV step-off event: the mass of snap_ae_of_firstStep's event for every carrier L (stepOff_mass), its a.e. iff, the linear-order atom corollary, the one-way dense corollary with the W control; Givens § II-1/II-3: 0 of Q_2 has no first step in lmSphN though GDiscrete holds, and two_charts_snap.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -635686,6 +636130,43 @@
             ]
           },
           "reason": "Die computability face (halting as arrival, clock machine), quotients of a motion (drawing vs set: hypersets, codes), carrier-changing steps (wrap, Option), PoleEnds with inhabitation",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "da565f71-be06-4cc7-8d06-b5c6f66c3106",
+          "new": {
+            "file": "ZeroParadox/Givens.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.sph_lt_iff",
+            "short": "sph_lt_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Givens.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.sph_lt_iff",
+            "short": "sph_lt_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Dial § IV step-off event: the mass of snap_ae_of_firstStep's event for every carrier L (stepOff_mass), its a.e. iff, the linear-order atom corollary, the one-way dense corollary with the W control; Givens § II-1/II-3: 0 of Q_2 has no first step in lmSphN though GDiscrete holds, and two_charts_snap.",
           "verify": {
             "axioms": null,
             "sorry_free": null

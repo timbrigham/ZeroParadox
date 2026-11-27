@@ -937,6 +937,12 @@ example : ZeroParadox.Disjunctive (fun n => xor (ZeroParadox.champ n) false) := 
 -- ⊥ of `L` at every stage; for `0 < p ≤ 1`, for almost every tape it is somewhere not ⊥ of `L`.
 -- Forward maps only.
 #check @ZeroParadox.dial_jump_into_L
+-- Statement: for every carrier `L`, no hypothesis on it, the `trials p hp` mass of `stepOff L` (the tape
+-- fires and its run steps off ⊥ of `L` to a cover) is 1 if ⊥ of `L` has a first step and `p ≠ 0`, else 0.
+#check @ZeroParadox.stepOff_mass
+-- Statement: one way: on a densely ordered linear order with a least element that mass is 0 at every `p`;
+-- `W_not_firstStep` and `W_not_dense` show the converse fails.
+#check @ZeroParadox.dense_stepOff_mass_zero
 -- Statement: if ⊥ of `L` has a first step and the stage chances `q n` sum to ∞, then for
 -- `fadingTrials q hq`-almost every tape some `φ` makes the run `φ ∘ firedRun w hw` step off ⊥ of `L`
 -- to a cover. One way.
@@ -977,8 +983,8 @@ example : ZeroParadox.Disjunctive (fun n => xor (ZeroParadox.champ n) false) := 
 #check @ZeroParadox.chainLaw_map_of_lumps
 -- Statement: on a finite carrier with measurable singletons, if the Markov kernel `K` is reversible
 -- w.r.t. the initial probability law, every measurable observer with measurable singletons on its target
--- puts equal mass on `{(a, b, c)}` and `{(c, b, a)}` at times 0, 1, 2 (the full law, every window:
--- `chainLaw_window_map_reverse`).
+-- puts equal mass on `{(a, b, c)}` and `{(c, b, a)}` at times 0, 1, 2 (the full law at every window of
+-- consecutive times is `chainLaw_window_map_reverse`).
 #check @ZeroParadox.chainLaw_coarse3_reverse
 -- Statement: the rotation of `Fin 4` is reversible w.r.t. no probability measure and lumps along parity
 -- to the swap of `Bool`, which is reversible w.r.t. the counting measure on `Bool`.
@@ -996,7 +1002,8 @@ example : ZeroParadox.Disjunctive (fun n => xor (ZeroParadox.champ n) false) := 
 -- Statement: both directions: `rot4` is reversible w.r.t. no probability measure and lumps along parity
 -- to the swap of `Bool`, which is reversible w.r.t. some probability measure; and, with every premise of
 -- `chainLaw_window_map_reverse`, its statement.
--- Reading: coarse-graining can erase an arrow, and from a reversible start it creates none.
+-- Reading: coarse-graining can erase an arrow, and from a reversible start it creates none, in any
+-- window of consecutive times.
 #check @ZeroParadox.coarse_graining_trade
 
 /-! ### The givens at the die level: given (a) as a chart claim (least in ℤ_[2]'s norm preorder, greatest at its image in `ℕ∞`), and a limit -/

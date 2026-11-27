@@ -10,6 +10,7 @@ import ZeroParadox.Information.TwoRequirements
 import ZeroParadox.Information.MaxEntropy
 import ZeroParadox.Information.BottomTotality
 import ZeroParadox.Information.Surprisal
+import ZeroParadox.Information.Dial
 
 /-!
 # The givens at the die level: each a `Prop` (all but `GConnected`, `GJoined` on a die `Motion`), proved or refuted per chart
@@ -423,6 +424,29 @@ theorem unit_not_GDiscrete (M : Motion Unit) (P : Preorder Unit) : ¬ GDiscrete 
 -- Statement: CONTROL (ℝ): there is no `UpAndOver` on ℝ at all.
 example : IsEmpty (UpAndOver ℝ) := UpAndOver.isEmpty_of_denselyOrdered
 
+/-- `Statement:` in `lmSphN`, `a < b` for points of `ℚ_[2]` iff `‖a‖ < ‖b‖`. -/
+theorem sph_lt_iff (a b : ℚ_[2]) :
+    @LT.lt Sphere lmSphN.toLT (OnePoint.some a) (OnePoint.some b) ↔ ‖a‖ < ‖b‖ := by
+  show sNorm (OnePoint.some a) < sNorm (OnePoint.some b) ↔ _
+  simp only [sNorm, ENNReal.coe_lt_coe, ← NNReal.coe_lt_coe, coe_nnnorm]
+
+/-- `Statement:` in `lmSphN`, 0 of `ℚ_[2]` has no first step (no cover), although
+`GDiscrete dblQ2 lmSphN` holds (`q2_GDiscrete`): covers along the run do not give a first step at
+0 of `ℚ_[2]`. -/
+theorem q2_zero_not_firstStep : ¬ @HasFirstStep Sphere lmSphN.toLT (OnePoint.some 0) := by
+  rintro ⟨c, h0c, hc⟩
+  have h2n : ‖(2 : ℚ_[2])‖ = 2⁻¹ := by simpa using (Padic.norm_p (p := 2))
+  induction c using OnePoint.rec with
+  | infty =>
+    refine hc (c := OnePoint.some 1) ((sph_lt_iff _ _).2 (by simp)) ?_
+    show sNorm (OnePoint.some 1) < sNorm OnePoint.infty
+    simp [sNorm]
+  | coe x =>
+    have hx : 0 < ‖x‖ := by simpa using (sph_lt_iff _ _).1 h0c
+    refine hc (c := OnePoint.some (2 * x)) ((sph_lt_iff _ _).2 ?_) ((sph_lt_iff _ _).2 ?_)
+    · rw [norm_zero, norm_mul, h2n]; positivity
+    · rw [norm_mul, h2n]; linarith
+
 /-! ### § II-2. Given (b), continuous face -/
 
 /-- `Statement:` on `OnePoint ℝ`, ∞ is in the connected component of 0 of ℝ. -/
@@ -451,6 +475,19 @@ theorem givens_two_charts :
   ⟨⟨lm_q2_dipole, lm_real_dipole, arc_never_meets_infty.2.2.2.1,
     by rw [PreconnectedSpace.connectedComponent_eq_univ]; trivial⟩,
    doubling_place_dichotomy 1 one_ne_zero⟩
+
+/-- `Statement:` 2-adic doubling meets `GDiscrete` in `lmSphN` and real doubling fails it in
+`lmRealN`; the `trials p hp` mass of `stepOff` is the switch on `Bool` (join `||`) and 0 on `NNReal`
+(join `max`) at every `p`; and 0 of ℝ has no first step. -/
+theorem two_charts_snap :
+    (GDiscrete dblQ2 lmSphN ∧ ¬ GDiscrete dblReal lmRealN) ∧
+    (∀ p (hp : p ≤ 1), trials p hp (@stepOff Bool boolOrZPS) = if p = 0 then 0 else 1) ∧
+    (∀ p (hp : p ≤ 1), trials p hp (@stepOff NNReal nnrealMaxZPS) = 0) ∧
+    ¬ HasFirstStep (0 : ℝ) := by
+  refine ⟨⟨q2_GDiscrete, real_not_GDiscrete⟩, fun p hp => ?_, fun p hp => ?_,
+    axb1_fails_in_ordered_field⟩
+  · rw [@stepOff_of_firstStep Bool boolOrZPS bool_botHasFirstStep, dial_fire_jump]
+  · rw [@stepOff_of_not_firstStep NNReal nnrealMaxZPS nnreal_not_botHasFirstStep]; simp
 
 /-- `Statement:` no homeomorphism `Sphere ≃ₜ OnePoint ℝ`. -/
 theorem no_homeo_sphere_real : IsEmpty (Sphere ≃ₜ OnePoint ℝ) := by
@@ -995,10 +1032,13 @@ open ZeroParadox
 #print axioms upAndOver_GDiscrete
 #print axioms upAndOver_GCoverAtLanding
 #print axioms unit_not_GDiscrete
+#print axioms sph_lt_iff
+#print axioms q2_zero_not_firstStep
 #print axioms real_GConnected
 #print axioms q2_not_GConnected
 #print axioms q2_not_GJoined
 #print axioms givens_two_charts
+#print axioms two_charts_snap
 #print axioms no_homeo_sphere_real
 #print axioms no_homeoIso_dblQ2_dblReal
 #print axioms strictIso_zero_to_infty
