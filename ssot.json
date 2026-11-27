@@ -457361,6 +457361,138 @@
           "signature": "one witness: endTopMotion.Doubling ∧ FixedPole endTopIsoProd botEnd ∧ NonDegenerateAt botEnd ∧ ¬∃ f (tree) — the premises hold at one motion and the tree fails there"
         },
         {
+          "decl": "ZeroParadox.stepOff_mass",
+          "diff_kind": "other",
+          "dispositions": [
+            {
+              "decided_by": null,
+              "disposition": "open",
+              "line_sha256": "1513c44a6db3816dc239fc32464bb09bbee536b4ca3b56c744cb74c4dae90329",
+              "reason": null,
+              "utc": null
+            },
+            {
+              "decided_by": "Orchestrating agent (caller of this recorder), 2026-11-27: the stepOff_mass wording item is carried as outstanding to Tim's queue (queue/twochart-ordinary-residuals-2026-11-27.md); any .lean edit needs Tim's approval. Not a Tim ruling.",
+              "disposition": "carried",
+              "line_sha256": "502e6fdd8faa98bc25913361532d9947041b53087ed0258f7e2f55665078cafc",
+              "reason": "ordinary (other): gloss wording carried as outstanding to Tim's queue; any .lean edit needs Tim's approval. The reader's note, DIFF 1: the gloss for `stepOff_mass` says \"for every carrier L, no hypothesis on it\", but the signature takes a `[ZPSemilattice L]` structure; that is data with no further assumption, so \"no assumption beyond the semilattice structure\" is the exact reading. Ordinary wording.",
+              "utc": "2026-11-27T21:25:58+00:00"
+            }
+          ],
+          "git_blob_id": "5fd7bffd7e325c97a5c2460e858fc1780ec96bdf",
+          "id": "rc-cf42c02e-twochart-2026-11-27#1",
+          "key_kind": "registry_id",
+          "kind": "diff1",
+          "kind_detail": "The reader's note, DIFF 1: the gloss for `stepOff_mass` says \"for every carrier L, no hypothesis on it\", but the signature takes a `[ZPSemilattice L]` structure; that is data with no further assumption, so \"no assumption beyond the semilattice structure\" is the exact reading. Ordinary wording.",
+          "line": 211,
+          "line_sha256": "1513c44a6db3816dc239fc32464bb09bbee536b4ca3b56c744cb74c4dae90329",
+          "path": "ZeroParadox/Information/Dial.lean",
+          "prose": "/-- `Statement:` for every carrier `L`, no hypothesis on it: the `trials p hp` mass of `stepOff L`",
+          "registry_id": "5ef3b433-fecd-4fc9-a8d6-eee4324a0faf",
+          "registry_id_reason": null,
+          "run_id": "rc-cf42c02e-twochart-2026-11-27",
+          "signature": "see the elaborated type in C:\\Users\\timbr\\AppData\\Local\\Temp\\claude\\f800153db889b496\\df830dce-1a65-464d-93cd-5891c94da9e4\\scratchpad\\rc_twochart\\Dial_enum.log"
+        },
+        {
+          "decl": "ZeroParadox.stepOff_mass",
+          "diff_kind": "other",
+          "dispositions": [
+            {
+              "decided_by": null,
+              "disposition": "open",
+              "line_sha256": "5661558761df88beb2656b3744d0da55ad4e6e4dead7c4947c0bf8bfdbedceed",
+              "reason": null,
+              "utc": null
+            },
+            {
+              "decided_by": "Orchestrating agent (caller of this recorder), 2026-11-27: the stepOff_mass wording item is carried as outstanding to Tim's queue (queue/twochart-ordinary-residuals-2026-11-27.md); any .lean edit needs Tim's approval. Not a Tim ruling.",
+              "disposition": "carried",
+              "line_sha256": "607baec3b7df18d227c26778e685c12b656dacf2dd730f109857ecec38cb7358",
+              "reason": "ordinary (other): gloss wording carried as outstanding to Tim's queue; any .lean edit needs Tim's approval. The reader's note, DIFF 1: the gloss for `stepOff_mass` says \"for every carrier L, no hypothesis on it\", but the signature takes a `[ZPSemilattice L]` structure; that is data with no further assumption, so \"no assumption beyond the semilattice structure\" is the exact reading. Ordinary wording.",
+              "utc": "2026-11-27T21:25:58+00:00"
+            }
+          ],
+          "git_blob_id": "5a0bc1e80e644abb8a978c321afce7480aaeb559",
+          "id": "rc-cf42c02e-twochart-2026-11-27#2",
+          "key_kind": "registry_id",
+          "kind": "diff1",
+          "kind_detail": "The reader's note, DIFF 1: the gloss for `stepOff_mass` says \"for every carrier L, no hypothesis on it\", but the signature takes a `[ZPSemilattice L]` structure; that is data with no further assumption, so \"no assumption beyond the semilattice structure\" is the exact reading. Ordinary wording.",
+          "line": 940,
+          "line_sha256": "5661558761df88beb2656b3744d0da55ad4e6e4dead7c4947c0bf8bfdbedceed",
+          "path": "ZeroParadox/BottomCannotBe.lean",
+          "prose": "-- Statement: for every carrier `L`, no hypothesis on it, the `trials p hp` mass of `stepOff L` (the tape",
+          "registry_id": "5ef3b433-fecd-4fc9-a8d6-eee4324a0faf",
+          "registry_id_reason": null,
+          "run_id": "rc-cf42c02e-twochart-2026-11-27",
+          "signature": "see the elaborated type in C:\\Users\\timbr\\AppData\\Local\\Temp\\claude\\f800153db889b496\\df830dce-1a65-464d-93cd-5891c94da9e4\\scratchpad\\rc_twochart\\Dial_enum.log"
+        },
+        {
+          "decl": "ZeroParadox.stepOff_mass",
+          "diff_kind": "other",
+          "dispositions": [
+            {
+              "decided_by": null,
+              "disposition": "open",
+              "line_sha256": "30290993efe04653e7cbee6eb688c67dd1892f05a968115e4aa0f220e1d11c03",
+              "reason": null,
+              "utc": null
+            },
+            {
+              "decided_by": "Orchestrating agent (caller of this recorder), 2026-11-27: the stepOff_mass wording item is carried as outstanding to Tim's queue (queue/twochart-ordinary-residuals-2026-11-27.md); any .lean edit needs Tim's approval. Not a Tim ruling.",
+              "disposition": "carried",
+              "line_sha256": "28776a0d9d3a8182cf725927a7c22431f7183f42cf2b8af2e377fd3acf67c5f9",
+              "reason": "ordinary (other): gloss wording carried as outstanding to Tim's queue; any .lean edit needs Tim's approval. The reader's note, DIFF 1: the gloss for `stepOff_mass` says \"for every carrier L, no hypothesis on it\", but the signature takes a `[ZPSemilattice L]` structure; that is data with no further assumption, so \"no assumption beyond the semilattice structure\" is the exact reading. Ordinary wording.",
+              "utc": "2026-11-27T21:25:58+00:00"
+            }
+          ],
+          "git_blob_id": "047cf746ab43e92efebb3686fcc6b859708853e5",
+          "id": "rc-cf42c02e-twochart-2026-11-27#3",
+          "key_kind": "registry_id",
+          "kind": "diff1",
+          "kind_detail": "The reader's note, DIFF 1: the gloss for `stepOff_mass` says \"for every carrier L, no hypothesis on it\", but the signature takes a `[ZPSemilattice L]` structure; that is data with no further assumption, so \"no assumption beyond the semilattice structure\" is the exact reading. Ordinary wording.",
+          "line": 161,
+          "line_sha256": "30290993efe04653e7cbee6eb688c67dd1892f05a968115e4aa0f220e1d11c03",
+          "path": "ZeroParadox/Order/SnapCannotBe.lean",
+          "prose": "#check @ZeroParadox.stepOff_mass                      -- Statement: the dial (`ZeroParadox/Information/Dial.lean` § IV): for every carrier `L`, no hypothesis on it, the `trials p hp` mass of `stepOff L`, `snap_ae_of_firstStep`'s event, is 1 if ⊥ of `L` has a first step (`BotHasFirstStep L`) and `p ≠ 0`, and 0 otherwise",
+          "registry_id": "5ef3b433-fecd-4fc9-a8d6-eee4324a0faf",
+          "registry_id_reason": null,
+          "run_id": "rc-cf42c02e-twochart-2026-11-27",
+          "signature": "see the elaborated type in C:\\Users\\timbr\\AppData\\Local\\Temp\\claude\\f800153db889b496\\df830dce-1a65-464d-93cd-5891c94da9e4\\scratchpad\\rc_twochart\\Dial_enum.log"
+        },
+        {
+          "decl": "ZeroParadox.stepOff_mass",
+          "diff_kind": "other",
+          "dispositions": [
+            {
+              "decided_by": null,
+              "disposition": "open",
+              "line_sha256": "ccd9fe5aef0c39baec2d1ed9ef2eb7ecefe6654a6983a86d51be219b1997af63",
+              "reason": null,
+              "utc": null
+            },
+            {
+              "decided_by": "Orchestrating agent (caller of this recorder), 2026-11-27: the stepOff_mass wording item is carried as outstanding to Tim's queue (queue/twochart-ordinary-residuals-2026-11-27.md); any .lean edit needs Tim's approval. Not a Tim ruling.",
+              "disposition": "carried",
+              "line_sha256": "0400dda63bdeb68f35e98fc14503d51dfd028cf0d7be2195795c744898283359",
+              "reason": "ordinary (other): gloss wording carried as outstanding to Tim's queue; any .lean edit needs Tim's approval. The reader's note, DIFF 1: the gloss for `stepOff_mass` says \"for every carrier L, no hypothesis on it\", but the signature takes a `[ZPSemilattice L]` structure; that is data with no further assumption, so \"no assumption beyond the semilattice structure\" is the exact reading. Ordinary wording.",
+              "utc": "2026-11-27T21:25:58+00:00"
+            }
+          ],
+          "git_blob_id": "cad144d607afdfff432da79a72d70fe850c8a98f",
+          "id": "rc-cf42c02e-twochart-2026-11-27#4",
+          "key_kind": "registry_id",
+          "kind": "diff1",
+          "kind_detail": "The reader's note, DIFF 1: the gloss for `stepOff_mass` says \"for every carrier L, no hypothesis on it\", but the signature takes a `[ZPSemilattice L]` structure; that is data with no further assumption, so \"no assumption beyond the semilattice structure\" is the exact reading. Ordinary wording.",
+          "line": 5466,
+          "line_sha256": "ccd9fe5aef0c39baec2d1ed9ef2eb7ecefe6654a6983a86d51be219b1997af63",
+          "path": "ZeroParadox/DieCannotBe.lean",
+          "prose": "#check @ZeroParadox.stepOff_mass               -- Statement: for every carrier `L`, no hypothesis on it, the mass of `stepOff L` is 1 if `BotHasFirstStep L` and `p ≠ 0`, and 0 otherwise (`ZeroParadox/Information/Dial.lean` § IV)",
+          "registry_id": "5ef3b433-fecd-4fc9-a8d6-eee4324a0faf",
+          "registry_id_reason": null,
+          "run_id": "rc-cf42c02e-twochart-2026-11-27",
+          "signature": "see the elaborated type in C:\\Users\\timbr\\AppData\\Local\\Temp\\claude\\f800153db889b496\\df830dce-1a65-464d-93cd-5891c94da9e4\\scratchpad\\rc_twochart\\Dial_enum.log"
+        },
+        {
           "decl": "module header (Engineer's Take)",
           "diff_kind": "not_stated",
           "dispositions": [
@@ -476371,6 +476503,46 @@
           "run_id": "rc-b790d5f8-DXIIw-2026-11-27",
           "skipped": [],
           "started_utc": "2026-11-27T18:06:13+00:00"
+        },
+        {
+          "brief": {
+            "git_blob_id": "d3642ae3166d2d26139a6f98cfba3af65c79aae7",
+            "path": ".claude/commands/reconstruct.md"
+          },
+          "commit": "e7aa3c9d7cec6a5fc3fc6958cc05d8d855f79263",
+          "diff1_count": 4,
+          "examined": [
+            {
+              "git_blob_id": "5fd7bffd7e325c97a5c2460e858fc1780ec96bdf",
+              "path": "ZeroParadox/Information/Dial.lean"
+            },
+            {
+              "git_blob_id": "861c10052b95509430ee4f43a0084282602a2acc",
+              "path": "ZeroParadox/Givens.lean"
+            },
+            {
+              "git_blob_id": "5a0bc1e80e644abb8a978c321afce7480aaeb559",
+              "path": "ZeroParadox/BottomCannotBe.lean"
+            },
+            {
+              "git_blob_id": "047cf746ab43e92efebb3686fcc6b859708853e5",
+              "path": "ZeroParadox/Order/SnapCannotBe.lean"
+            },
+            {
+              "git_blob_id": "cad144d607afdfff432da79a72d70fe850c8a98f",
+              "path": "ZeroParadox/DieCannotBe.lean"
+            }
+          ],
+          "finished_utc": "2026-11-27T21:24:33+00:00",
+          "line_sha256": "47ba39e4f46a3622fbc3a2e5b60a523c08e1e108c21d5b14ce9515ad46e88e07",
+          "reader_model": "claude-opus-5-5",
+          "reader_prompt": {
+            "git_blob_id": "2a14b85101f90c8345296bdf17eaf2c3a712843e",
+            "path": ".claude-local/notes/reconstruct_runs/prompts/2a14b85101f90c8345296bdf17eaf2c3a712843e.md"
+          },
+          "run_id": "rc-cf42c02e-twochart-2026-11-27",
+          "skipped": [],
+          "started_utc": "2026-11-27T21:17:29+00:00"
         }
       ],
       "schema_version": "1"
