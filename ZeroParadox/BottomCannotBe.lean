@@ -1015,11 +1015,12 @@ example : ZeroParadox.Disjunctive (fun n => xor (ZeroParadox.champ n) false) := 
 -- norm preorder, stepping only to itself) to a point greatest in `ℕ∞` and stepping only to itself,
 -- and sends no other point there. The proof's map is `q2Val` (`q2ValHom`), sending 0 to ⊤ of `ℕ∞`.
 -- Reading: COINCIDENCE; on any characteristic-0 field (universe 0) a map of the same shape, doubling into
--- `+1` on `ℕ∞`, fails (`field_no_GCoincidence`).
+-- `+1` on `ℕ∞`, fails (`field_no_GCoincidence`), and on every field (`field_no_GCoincidence_any`).
 #check @ZeroParadox.z2_GCoincidence
 -- Statement: on every field, any characteristic, `GCoincidence` of doubling into `+1` on `ℕ∞` fails
--- at the field's 0; on a commutative ring a doubling counter exists iff `2x = 0` forces `x = 0` and
--- no nonzero point is divisible by every `2 ^ k` (`doubling_counter_iff`).
+-- at the field's 0; on a commutative ring a map `f` into `ℕ∞` with `f (2 * x) = f x + 1`, finite off
+-- R's 0, exists iff `2x = 0` forces `x = 0` and no nonzero point is divisible by every `2 ^ k`
+-- (`doubling_counter_iff`; the second condition as `IsHausdorff`, `doubling_counter_iff_isHausdorff`).
 #check @ZeroParadox.field_no_GCoincidence_any
 -- Statement: no run of doubling from 0 of `ℚ_[2]` leaves it at the first step (`¬ GLeavesByRun`).
 -- Reading: CARRIER, departure is supplied by another chart: a run leaves `c₀`, ⊥ of `MachinePhase`
