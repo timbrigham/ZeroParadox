@@ -25,7 +25,7 @@ analog and a digital value
 Switch (§ II): "some stage fires" has mass 0 at `p = 0`, 1 for `0 < p ≤ 1`. Volume (§ III): "fires within `n`
 stages" is continuous in `p` and tends to the switch non-uniformly. § IV: the jump in `L`; § V-VI: schedules,
 the law; § VII: mean of `wait + 1` is `p⁻¹`; § VIII: columns; § IX: entropy pins `0 < p < 1`; § X: translations;
-§ XI: a supplied Markov kernel on the die; § XII: lumping, and the time arrow under coarse-graining. -/
+§ XI: a supplied Markov kernel on the die; § XII: lumping, and reversibility under coarse-graining. -/
 
 set_option maxHeartbeats 400000
 
@@ -1024,14 +1024,15 @@ example {L : Type*} [ZPSemilattice L] [MeasurableSpace L] [MeasurableSingletonCl
 
 end MarkovDie
 
-/-! ### § XII. Lumping: the observed chain, and the time arrow under coarse-graining
+/-! ### § XII. Lumping: the observed chain, and reversibility under coarse-graining
 
 `Reading:` a map `f` out of the states is an observer; when the kernel lumps along `f`, what the
 observer sees is again a Markov chain (`lumps_iff_runLaw_map`), the weighted analogue of the die's
 `StepCompat`. Both directions of the arrow are stated: coarse-graining can erase a time arrow
-(`a4_direction_erased`), and from a reversible start it creates none, for a lumping map in general
-(`isReversible_map_of_lumps`) and for every observer at three times on a finite carrier
-(`chainLaw_coarse3_reverse`). The kernel is a supplied argument throughout. -/
+(`a4_direction_erased`), and from a reversible start it creates none, for a measurable lumping map
+in general (`isReversible_map_of_lumps`) and, at three times, for every measurable observer on a
+finite carrier with measurable singletons (`chainLaw_coarse3_reverse`). The kernel is a supplied
+argument throughout. -/
 
 section Lumping
 
@@ -1042,7 +1043,8 @@ variable {α β : Type*} [MeasurableSpace α] [MeasurableSpace β]
 /-- `Statement:` strong lumpability, Dynkin's intertwining form: `(K a).map f = L (f a)` at every `a`. -/
 def Lumps (K : Kernel α α) (L : Kernel β β) (f : α → β) : Prop := ∀ a, (K a).map f = L (f a)
 
-/-- `Statement:` related starts put the same image mass on every class (Kemeny-Snell's form). -/
+/-- `Statement:` related starts put the same image mass on every class (the per-class form; Levin,
+Peres, Wilmer (2.10); attributed to Kemeny-Snell via Wolfer-Watanabe Theorem 3.1). -/
 def FiberConst (K : Kernel α α) (f : α → β) : Prop :=
   ∀ a a', f a = f a' → (K a).map f = (K a').map f
 
@@ -1310,7 +1312,7 @@ theorem subordinate_supp [Countable α] [MeasurableSingletonClass α] (K : Kerne
   exact fun b hb => hb
 
 /-- `Statement:` on a countable carrier, if `K` has the per-class form along the classes of `s`, its
-support die is step-compatible with `s`; one way (CONTROL B below). -/
+support die is step-compatible with `s`; one way (`suppControlKernel_stepCompat_not_fiberConst`). -/
 theorem stepCompat_supp_of_fiberConst [Countable α] [MeasurableSingletonClass α]
     (K : Kernel α α) (s : Setoid α) (h : FiberConst K (Quotient.mk s)) :
     (suppMotion K).StepCompat s := by
@@ -1354,20 +1356,80 @@ example : let obs : Fin 3 → Bool := fun x => decide (x = 2)
     · exact (by decide : ¬ (decide ((2 : Fin 3) = 2) = decide ((1 : Fin 3) = 2))) hr
     · exact absurd h1 (by decide)
 
--- Statement: CONTROL B, step-compatible moves do not force lumpable weights: on `Fin 3`, classes
--- `{0, 1}` and `{2}`, a die stepping everywhere, and the deterministic kernel `0 ↦ 0, 1 ↦ 2, 2 ↦ 2`.
+-- Statement: CONTROL B, a step-compatible die does not force lumpable weights on a kernel subordinate
+-- to it: on `Fin 3`, classes `{0, 1}` and `{2}`, a die stepping everywhere, and the deterministic
+-- kernel `0 ↦ 0, 1 ↦ 2, 2 ↦ 2`; that kernel's own support die is not step-compatible.
 example : let obs : Fin 3 → Bool := fun x => decide (x = 2)
     let g : Fin 3 → Fin 3 := fun x => if x = 1 then 2 else x
     let M : Motion (Fin 3) := Motion.ofTotal id (fun _ => rfl) (fun _ _ => True)
     M.StepCompat (Setoid.ker obs) ∧ Subordinate M (Kernel.deterministic g (by fun_prop)) ∧
-      ¬ FiberConst (Kernel.deterministic g (by fun_prop)) obs := by
+      ¬ FiberConst (Kernel.deterministic g (by fun_prop)) obs ∧
+      ¬ (suppMotion (Kernel.deterministic g (by fun_prop))).StepCompat (Setoid.ker obs) := by
   intro obs g M
   refine ⟨fun a a' b _ _ => ⟨b, trivial, rfl⟩, fun a => Filter.Eventually.of_forall fun _ => trivial,
-    fun h => ?_⟩
-  have := h 0 1 (show decide ((0 : Fin 3) = 2) = decide ((1 : Fin 3) = 2) by decide)
-  simp only [Kernel.deterministic_apply, Measure.map_dirac' (by fun_prop : Measurable obs),
-    dirac_eq_dirac_iff] at this
-  exact absurd this (by decide)
+    fun h => ?_, fun h => ?_⟩
+  · have := h 0 1 (show decide ((0 : Fin 3) = 2) = decide ((1 : Fin 3) = 2) by decide)
+    simp only [Kernel.deterministic_apply, Measure.map_dirac' (by fun_prop : Measurable obs),
+      dirac_eq_dirac_iff] at this
+    exact absurd this (by decide)
+  · have h00 : (suppMotion (Kernel.deterministic g (by fun_prop))).step 0 0 := by
+      show 0 < Kernel.deterministic g _ 0 {0}
+      rw [Kernel.deterministic_apply, Measure.dirac_apply' _ (measurableSet_singleton _)]
+      simp [g]
+    obtain ⟨b', hb', hr⟩ := h 0 1 0 (show obs 0 = obs 1 by decide) h00
+    change 0 < Kernel.deterministic g _ 1 {b'} at hb'
+    rw [Kernel.deterministic_apply, Measure.dirac_apply' _ (measurableSet_singleton _)] at hb'
+    have : g 1 = b' := by
+      by_contra hne
+      simp [Set.indicator, hne] at hb'
+    subst this
+    change obs 0 = obs (g 1) at hr
+    simp [obs, g] at hr
+
+/-- `Statement:` a kernel on `Fin 3`: `0` to `0` and `2` with masses 1/2, 1/2; `1` to `1` and `2` with
+masses 1/4, 3/4; `2` to `2`. -/
+noncomputable def suppControlKernel : Kernel (Fin 3) (Fin 3) :=
+  Kernel.ofFunOfCountable fun a =>
+    if a = 0 then (1/2 : ENNReal) • Measure.dirac 0 + (1/2 : ENNReal) • Measure.dirac 2
+    else if a = 1 then (1/4 : ENNReal) • Measure.dirac 1 + (3/4 : ENNReal) • Measure.dirac 2
+    else Measure.dirac 2
+
+/-- `Statement:` CONTROL for the converse of `stepCompat_supp_of_fiberConst`: with classes `{0, 1}`
+and `{2}`, the support die of `suppControlKernel` is step-compatible, and `suppControlKernel` does not
+have the per-class form. -/
+theorem suppControlKernel_stepCompat_not_fiberConst :
+    (suppMotion suppControlKernel).StepCompat (Setoid.ker (fun x : Fin 3 => decide (x = 2))) ∧
+      ¬ FiberConst suppControlKernel (fun x : Fin 3 => decide (x = 2)) := by
+  have hK : ∀ a, suppControlKernel a =
+      if a = 0 then (1/2 : ENNReal) • Measure.dirac 0 + (1/2 : ENNReal) • Measure.dirac 2
+      else if a = 1 then (1/4 : ENNReal) • Measure.dirac 1 + (3/4 : ENNReal) • Measure.dirac 2
+      else Measure.dirac 2 := fun _ => rfl
+  have key : ∀ a b : Fin 3, (suppMotion suppControlKernel).step a b ↔
+      ((a = 0 ∧ b = 0) ∨ (a = 0 ∧ b = 2) ∨ (a = 1 ∧ b = 1) ∨ (a = 1 ∧ b = 2) ∨ (a = 2 ∧ b = 2)) := by
+    intro a b
+    show 0 < suppControlKernel a {b} ↔ _
+    rw [hK]
+    fin_cases a <;> fin_cases b <;>
+      simp [Measure.add_apply, Measure.smul_apply, smul_eq_mul]
+  refine ⟨?_, ?_⟩
+  · intro a a' b hr hb
+    change decide (a = 2) = decide (a' = 2) at hr
+    rw [key] at hb
+    simp only [key]
+    change ∃ b', ((a' = 0 ∧ b' = 0) ∨ (a' = 0 ∧ b' = 2) ∨ (a' = 1 ∧ b' = 1) ∨ (a' = 1 ∧ b' = 2) ∨
+      (a' = 2 ∧ b' = 2)) ∧ decide (b = 2) = decide (b' = 2)
+    revert a a' b
+    decide
+  · intro h
+    have e := congrArg (fun ν : Measure Bool => ν {false}) (h 0 1 (by decide))
+    rw [Measure.map_apply (by fun_prop) (measurableSet_singleton _),
+      Measure.map_apply (by fun_prop) (measurableSet_singleton _)] at e
+    have hpre : (fun x : Fin 3 => decide (x = 2)) ⁻¹' {false} = {0} ∪ {1} := by
+      ext x; fin_cases x <;> simp
+    rw [hpre, measure_union (by simp) (measurableSet_singleton _),
+      measure_union (by simp) (measurableSet_singleton _)] at e
+    rw [hK, hK] at e
+    simp [Measure.add_apply, Measure.smul_apply, smul_eq_mul] at e
 
 /-- `Statement:` the runs whose observed value at some stage differs from `y₀` form a measurable set. -/
 theorem measurableSet_leaves [MeasurableSingletonClass β] (y₀ : β) :
@@ -1419,8 +1481,8 @@ example : let M : Motion Bool := Motion.ofTotal id (fun _ => rfl) (fun _ _ => Tr
   rw [ae_leaves_iff, Kernel.id_apply, Measure.dirac_apply' _ (measurableSet_singleton _).compl]
   simp
 
-/-- `Statement:` if UP is a total idempotent `r` unchanged along steps (`UpStepInvariant`), a subordinate
-kernel lumps along `r` to the identity kernel. -/
+/-- `Statement:` on a carrier with measurable singletons, if UP is a total idempotent `r` unchanged
+along steps (`UpStepInvariant`), a subordinate Markov kernel lumps along `r` to the identity kernel. -/
 theorem lumps_id_of_upStepInvariant [MeasurableSingletonClass α] {r : α → α}
     (hr : ∀ x, r (r x) = r x) (st : α → α → Prop) (K : Kernel α α) [IsMarkovKernel K]
     (hK : Subordinate (Motion.ofTotal r hr st) K)
@@ -1470,7 +1532,8 @@ theorem isReversible_map_of_lumps {K : Kernel α α} {L : Kernel β β} {f : α 
 example (K : Kernel α α) [IsMarkovKernel K] (π : Measure α) (h : K.IsReversible π) :
     K.Invariant π := h.invariant
 
-/-- `Statement:` CONTROL, every Markov kernel on `Unit` is reversible w.r.t. every measure. -/
+/-- `Statement:` every Markov kernel on `Unit` is reversible w.r.t. every measure; the CONTROL
+`example` after `a4_direction_erased` uses it. -/
 theorem isReversible_unit (L : Kernel Unit Unit) [IsMarkovKernel L] (ν : Measure Unit) :
     L.IsReversible ν := by
   intro A B _ _
@@ -1547,8 +1610,9 @@ theorem boolSwap_reversible :
     Measure.map_dirac' (measurable_of_finite _)]
   simp [add_comm]
 
-/-- `Statement:` coarse-graining erases an arrow: `rot4` is reversible w.r.t. no probability measure,
-lumps along `parity4` to the swap of `Bool`, and the swap is reversible. -/
+/-- `Statement:` `rot4` is reversible w.r.t. no probability measure, lumps along `parity4` to the swap
+of `Bool`, and the swap is reversible w.r.t. the counting measure on `Bool`.
+`Reading:` coarse-graining erases an arrow. -/
 theorem a4_direction_erased :
     (∀ π : Measure (Fin 4), IsProbabilityMeasure π →
         ¬ (Kernel.deterministic rot4 (measurable_of_finite _)).IsReversible π) ∧
@@ -1557,6 +1621,15 @@ theorem a4_direction_erased :
       (Kernel.deterministic (fun b : Bool => !b) (measurable_of_finite _)).IsReversible
         (Measure.dirac true + Measure.dirac false) :=
   ⟨fun π _ => rot4_not_reversible π, rot4_lumps_parity4, boolSwap_reversible⟩
+
+-- Statement: CONTROL for `isReversible_map_of_lumps`, a target `Unit` makes its conclusion hold for
+-- every kernel: `rot4` lumps along the map to `Unit`, and the kernel on `Unit` is reversible w.r.t.
+-- every measure, while `rot4` is reversible w.r.t. no probability measure.
+example : Lumps (Kernel.deterministic rot4 (measurable_of_finite _))
+      (Kernel.deterministic (id : Unit → Unit) measurable_id) (fun _ : Fin 4 => ()) ∧
+    ∀ ν : Measure Unit, (Kernel.deterministic (id : Unit → Unit) measurable_id).IsReversible ν :=
+  ⟨(lumps_deterministic_iff _ _ (measurable_of_finite _)).2 fun _ => rfl,
+    fun ν => isReversible_unit _ ν⟩
 
 section Matrix
 variable {ι κ R : Type*} [Fintype ι] [DecidableEq κ] [CommSemiring R]
@@ -1677,7 +1750,8 @@ theorem lazyPairs_coarse_not_markov :
     intro e; rw [e, mul_zero] at h2; norm_num at h2
   exact mul_ne_zero a1 a2 h3.symm
 
-/-- `Statement:` and its observed three-time statistic is reversal-symmetric. -/
+/-- `Statement:` the observed three-time statistic of `lazyPairs` under `lazyPairsProj` from `unifFin4`
+is reversal-symmetric. -/
 theorem lazyPairs_coarse_reversal_symmetric (a b c : Fin 3) :
     coarseLaw3 unifFin4 lazyPairs lazyPairsProj a b c =
       coarseLaw3 unifFin4 lazyPairs lazyPairsProj c b a :=
@@ -1702,7 +1776,8 @@ theorem absorb4_lumps :
       (Kernel.deterministic absorb4Coarse (measurable_of_finite _)) lazyPairsProj :=
   (lumps_deterministic_iff _ _ (measurable_of_finite _)).2 (by decide)
 
-/-- `Statement:` it is reversible w.r.t. every measure carried by its fixed points `1` and `3`. -/
+/-- `Statement:` the deterministic kernel of `absorb4` is reversible w.r.t. every measure carried by
+the fixed points `1` and `3` of `absorb4`. -/
 theorem absorb4_reversible (s t : ENNReal) :
     (Kernel.deterministic absorb4 (measurable_of_finite _)).IsReversible
       (s • Measure.dirac (1 : Fin 4) + t • Measure.dirac (3 : Fin 4)) := by
@@ -1712,7 +1787,8 @@ theorem absorb4_reversible (s t : ENNReal) :
   refine ⟨Measure.ae_smul_measure ((ae_dirac_iff hm).2 (by decide)) _,
     Measure.ae_smul_measure ((ae_dirac_iff hm).2 (by decide)) _⟩
 
-/-- `Statement:` so `absorb4Coarse` is reversible w.r.t. the image law (`isReversible_map_of_lumps`). -/
+/-- `Statement:` the deterministic kernel of `absorb4Coarse` is reversible w.r.t. the image under
+`lazyPairsProj` of each of those measures (`isReversible_map_of_lumps`). -/
 theorem absorb4_coarse_reversible (s t : ENNReal) :
     (Kernel.deterministic absorb4Coarse (measurable_of_finite _)).IsReversible
       ((s • Measure.dirac (1 : Fin 4) + t • Measure.dirac (3 : Fin 4)).map lazyPairsProj) :=
@@ -1834,8 +1910,9 @@ theorem detailedBalance_of_isReversible (μ : Measure α) (K : Kernel α α) (h 
   rw [lintegral_singleton, lintegral_singleton] at this
   simpa [kernelMat, measureVec, mul_comm] using this
 
-/-- `Statement:` on a finite carrier, if `K` is reversible w.r.t. the initial law `μ`, then for every
-measurable observer `f` the observed three-time law at `(a, b, c)` equals that at `(c, b, a)`. -/
+/-- `Statement:` on a finite carrier with measurable singletons, if `K` is reversible w.r.t. the initial
+law `μ`, then for every measurable observer `f` into a space with measurable singletons the observed
+three-time law at `(a, b, c)` equals that at `(c, b, a)`. -/
 theorem chainLaw_coarse3_reverse [Finite α] {κ : Type*} [MeasurableSpace κ]
     [MeasurableSingletonClass κ] (μ : Measure α) [IsProbabilityMeasure μ]
     (K : Kernel α α) [IsMarkovKernel K] (hrev : K.IsReversible μ) (f : α → κ) (hf : Measurable f)
@@ -1955,6 +2032,8 @@ open ZeroParadox
 #print axioms suppMotion
 #print axioms subordinate_supp
 #print axioms stepCompat_supp_of_fiberConst
+#print axioms suppControlKernel
+#print axioms suppControlKernel_stepCompat_not_fiberConst
 #print axioms measurableSet_leaves
 #print axioms ae_obs_leaves_iff
 #print axioms lumped_leave_weight

@@ -972,11 +972,13 @@ example : ZeroParadox.Disjunctive (fun n => xor (ZeroParadox.champ n) false) := 
 -- start the observed run has the law of the `L`-chain from the observed start; both directions
 -- (`ZeroParadox/Information/Dial.lean` § XII).
 #check @ZeroParadox.lumps_iff_runLaw_map
--- Statement: on a finite carrier, if `K` is reversible w.r.t. the initial law, every measurable
--- observer's three-time law is reversal-symmetric.
+-- Statement: on a finite carrier with measurable singletons, if `K` is reversible w.r.t. the initial
+-- law, every measurable observer with measurable singletons on its target has a reversal-symmetric
+-- three-time law.
 #check @ZeroParadox.chainLaw_coarse3_reverse
 -- Statement: the rotation of `Fin 4` is reversible w.r.t. no probability measure and lumps along parity
--- to the swap of `Bool`, which is reversible: coarse-graining can erase an arrow.
+-- to the swap of `Bool`, which is reversible w.r.t. the counting measure on `Bool`.
+-- Reading: coarse-graining can erase an arrow.
 #check @ZeroParadox.a4_direction_erased
 
 /-! ### The givens at the die level: given (a) as a chart claim (least in ℤ_[2]'s norm preorder, greatest at its image in `ℕ∞`), and a limit -/

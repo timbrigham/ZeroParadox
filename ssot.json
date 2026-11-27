@@ -270234,6 +270234,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "23efdd5a-a295-47ed-ba2d-42efdf58aaa0",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.suppControlKernel",
+            "short": "suppControlKernel"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.suppControlKernel",
+            "short": "suppControlKernel",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "23f053f1-6749-43d0-a99a-7194ecb4b5ec",
           "new": {
             "file": "ZeroParadox/Valuation/DepthIsWait.lean",
@@ -330020,6 +330057,43 @@
             ]
           },
           "reason": "The 2-adic bend: multiplier maps z -> c z on OnePoint Q_2 up to topological conjugacy (discrete twist u^v(z) z; every |c| != 1 conjugate to x2, control |d| = 1 not; four flips, Klein four subgroup of Aut(Q_2^x); four multipliers on OnePoint C; attracting/repelling fixed points on OnePoint K, conj_swaps_poles). Jenkins-Spallone Prop 7.1 is the classical statement (ZeroParadox/Multihomed/TwoAdicBend.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "78319301-5ed1-4291-8d19-26e304c8b524",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.suppControlKernel_stepCompat_not_fiberConst",
+            "short": "suppControlKernel_stepCompat_not_fiberConst"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.suppControlKernel_stepCompat_not_fiberConst",
+            "short": "suppControlKernel_stepCompat_not_fiberConst",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
           "verify": {
             "axioms": null,
             "sorry_free": null

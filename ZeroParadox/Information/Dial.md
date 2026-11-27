@@ -190,28 +190,55 @@ this file holds what was already in the corpus, the prior art, and the fences.
 ## Prior art for § XII (searched 2026-11-27)
 
 - Lumping. The lumped chain is Levin, Peres, Wilmer, *Markov Chains and Mixing Times*, 2nd ed., Lemma 2.5,
-  p. 25. The intertwining form `(K a).map f = L (f a)` and its characterisation by the observed process
-  (`lumps_iff_runLaw_map`) is Dynkin's criterion: Burke and Rosenblatt (1958), Theorem 1 and Corollary 1;
-  Rogers and Pitman (1981), Remark (iii). `FiberConst` is the per-class form; `Lumps.fiberConst` is its
-  one-way relation to `Lumps`.
+  p. 25, under the per-class condition (2.10), which is `FiberConst`; Wolfer and Watanabe, arXiv:2203.04575,
+  Theorem 3.1, p. 12, attribute that characterisation to Kemeny and Snell (not retrieved, not cited as read
+  here). `Lumps.fiberConst` is its one-way relation to `Lumps`. The forward direction of
+  `lumps_iff_runLaw_map` (intertwining gives the observed process the lumped chain's law, from every
+  initial law) is Dynkin's criterion as Rogers and Pitman (1981), Remark (iii), p. 575, state it; Burke and
+  Rosenblatt (1958), Corollary 1, p. 1113, give the per-class condition as sufficient for every initial law
+  and "not generally necessary". The converse half (the `L`-chain's law from every point start forces the
+  intertwining) is not in those sources; it follows UEOT's `pathLaw_implies_strongLumpability` (below) and
+  reads off the time-1 marginal (`runLaw_time_one`).
 - Reversibility. Detailed balance and reversibility of a stationary process: Kelly, *Reversibility and
   Stochastic Networks* (1979), § 1.2, Lemma 1.1 and Theorem 1.2. That lumping preserves reversibility
-  (`isReversible_map_of_lumps`) is Wolfer and Watanabe, arXiv:2203.04575, Proposition 4.2, for finite
-  chains; they attribute it to Kemeny and Snell, which was not retrieved and is not cited as read here.
-  § XII states it with Mathlib's `Kernel.IsReversible` on a general measurable carrier. Coarse-graining
-  and entropy production: Esposito, arXiv:1112.5410, cited for the topic only.
+  (`isReversible_map_of_lumps`) is Wolfer and Watanabe, Proposition 4.2, p. 26, for irreducible finite
+  chains; they attribute it to Kemeny and Snell. § XII states it with Mathlib's `Kernel.IsReversible` on a
+  general measurable carrier. For every partition, not only a lumping one, the `π`-weighted coarse-grained
+  chain of an irreducible reversible chain is reversible: Eldar, Ozols, Thompson, "The Need for Structure
+  in Quantum LDPC Codes", *IEEE Trans. Inf. Theory* 66(3) (2020), arXiv:1610.07478, Definition 23, p. 11,
+  and Fact 27, p. 12; `aggregatedChain_detailedBalance` is that statement for matrices over ℚ with nonzero
+  class weights. That a non-reversible chain can lump to a reversible one (`a4_direction_erased`) is noted
+  by Wolfer and Watanabe, § 4.4.3, p. 26: embedding a reversible chain, "even by a Markov embedding", can
+  yield a non-reversible one. paulklemstine/Lean `cycleLumpable` (below) lumps the `n`-cycle onto the
+  `m`-cycle for `m ∣ n`, which at `n = 4`, `m = 2` is the lumping half of `a4_direction_erased`.
+- Lumping without a Markov observer. For a stationary reversible chain with positive weights, the observed
+  process is Markov iff the per-class condition holds: Burke and Rosenblatt, Theorem 1, p. 1112.
+  `lazyPairs` with `unifFin4` is such a chain and fails the condition (`lazyPairs_not_lumpable`), so
+  `lazyPairs_coarse_not_markov` is an instance of their Theorem 1, refuted explicitly at three times.
+  Coarse-graining and entropy production: Esposito, arXiv:1112.5410, cited for the topic only.
 - Lean neighbours, PARTLY VERIFIED (source read, type not elaborated, outside this dependency closure).
   Erotemic/shufflemath `Shufflemath.ReversibleQuotient.reversible_quotient`: the same intertwining
   hypothesis plus matrix detailed balance, on finite carriers with rational masses; the delta here is
   `Kernel.IsReversible` on a general measurable carrier. MurphyHoops UEOT `StrongLumpability` and
-  `strongLumpability_iff_pathLaw`, the path-law characterisation closest to `lumps_iff_runLaw_map`; the
-  proof route of `chainLaw_prefix_naturality` follows that repository's
-  `UEOT.V3.DynamicsKernel.homTrajMeasure_path_naturality` (commit e871d52), adapted to `homK`.
-  paulklemstine/Lean `Catalog/Probability/MarkovLumpability.lean` (`Lumpable`, a bounded morphism of
-  support frames; no reversibility result). TauCeti `markovChainLaw`, the construction behind `chainLaw`
-  (already cited under § XI).
-- The same condition is described, second-hand and not read here, as a probabilistic bisimulation in
-  the sense of Larsen and Skou.
+  `strongLumpability_iff_pathLaw` (all probability initial laws), the path-law characterisation closest to
+  `lumps_iff_runLaw_map`. paulklemstine/Lean `Catalog/Probability/MarkovLumpability.lean` (`Lumpable`, a
+  bounded morphism of support frames, `cycleLumpable`; no reversibility result). TauCeti `markovChainLaw`,
+  the construction behind `chainLaw` (already cited under § XI).
+- Credit, adapted Lean. § XII's path-law block is adapted from UEOT's
+  `formalization/ueot-core/UEOT/V3/DynamicsKernel.lean` (namespace `UEOT.V3.DynamicsKernel`, Copyright
+  2025-2026 Degui Qian), adapted to `homK`: `mapHist` and `measurable_mapHist` from `mapHistory` and
+  `measurable_mapHistory`, `appendHist` and `measurable_appendHist` from `appendHistory` and
+  `measurable_appendHistory`, `mapHist_comp_appendHist` from `mapHistory_comp_appendHistory`,
+  `appendHist_prefix` from `appendHistory_prefix_next`, `chainLaw_prefix_zero` and `chainLaw_prefix_succ`
+  from `homTrajMeasure_prefix_zero` and `homTrajMeasure_prefix_succ`, `homK_compProd_naturality` from
+  `homHistory_compProd_naturality`, `pathMeasure_eq_of_prefix_eq` from the declaration of the same name,
+  `runLaw_time_one` from `homTrajMeasure_dirac_time_one`, `lumps_of_runLaw_map` from
+  `pathLaw_implies_strongLumpability`, `lumps_iff_runLaw_map` from `strongLumpability_iff_pathLaw`, and
+  `chainLaw_prefix_naturality` and `chainLaw_map_of_lumps` from `homTrajMeasure_prefix_naturality` and
+  `homTrajMeasure_path_naturality`. That file is in UEOT's Apache-2.0 export, the archive that
+  `publications/artifacts/lean4-core-export/export_lean4_archive.py` builds from
+  `formalization/ueot-core/UEOT/` (v1.0.0, base commit 83ecdb12, DOI 10.5281/zenodo.24433585), licensed
+  Apache License, Version 2.0, with its `NOTICE` in the same directory.
 
 ## Fences
 
@@ -257,21 +284,27 @@ this file holds what was already in the corpus, the prior art, and the fences.
 - § XII, motivation only. Tim, 2026-07-11: "There's also the fact that the.bridge.runs one direction and
   to get it to run the other way you look at it from when zero and Infinity reverse roles (the snap
   itself)". This is a `Reading:`; § XII proves nothing about the snap or about zero and infinity.
-- § XII, lumping. Step-compatible moves do not force lumpable weights (CONTROL B), and a subordinate
-  kernel that lumps does not make the die's relation step-compatible (CONTROL A), since the die may hold
-  steps of weight 0. `stepCompat_supp_of_fiberConst` and `quot_leavesAt_of_ae` are one way; the `Bool`
-  CONTROL refutes the converse of the second. `lumps_id_of_upStepInvariant` needs `UpStepInvariant` as a
-  hypothesis; it is not derived.
-- § XII, the arrow, both directions. Coarse-graining can remove an arrow: `rot4` is reversible w.r.t. no
-  probability measure and its lumping along parity is reversible (`a4_direction_erased`). From a reversible start it creates
-  none: for a lumping map on a general measurable carrier (`isReversible_map_of_lumps`), and for every
-  measurable observer, lumpable or not, at three times on a finite carrier (`chainLaw_coarse3_reverse`;
-  a reversible start is stationary, Mathlib `Kernel.IsReversible.invariant`). The observer need not see a
-  Markov chain: `lazyPairs` under `lazyPairsProj` is not lumpable and its observed three-time statistic
-  fits no Markov chain over ℚ (`lazyPairs_coarse_not_markov`), and that statistic is still
-  reversal-symmetric. Two and three time points are what is proved (`coarseLaw2_reverse`,
-  `coarseLaw3_reverse`); longer windows are not stated. The `lazyPairs` statements are at the matrix level
-  over ℚ and are not instantiated at the measure level. Detailed balance and a reversing involution of the
+- § XII, lumping. A step-compatible die does not force lumpable weights on a kernel subordinate to it
+  (CONTROL B, whose kernel's own support die is not step-compatible), and a subordinate kernel that lumps
+  does not make the die's relation step-compatible (CONTROL A), since the die may hold steps of weight 0.
+  `stepCompat_supp_of_fiberConst` and `quot_leavesAt_of_ae` are one way: a step-compatible support die
+  does not give the per-class form (`suppControlKernel_stepCompat_not_fiberConst`), and the `Bool` CONTROL
+  refutes the converse of the second. `lumps_id_of_upStepInvariant` needs `UpStepInvariant` as a
+  hypothesis, on a carrier with measurable singletons; it is not derived.
+- § XII, reversibility, both directions. A kernel reversible w.r.t. no probability measure can lump to a
+  reversible one: `rot4` and its lumping along parity (`a4_direction_erased`). From a reversible start,
+  lumping gives a reversible kernel for a measurable lumping map on a general measurable carrier
+  (`isReversible_map_of_lumps`; along the map to `Unit` its conclusion holds for every kernel, the CONTROL
+  after `a4_direction_erased`), and every measurable observer, lumpable or not, has a reversal-symmetric
+  three-time law on a finite carrier with measurable singletons and an observed space with measurable
+  singletons (`chainLaw_coarse3_reverse`; a reversible start is stationary, Mathlib
+  `Kernel.IsReversible.invariant`). `Reading:` coarse-graining can erase an arrow, and from a reversible
+  start it creates none. The observer need not see a Markov chain: `lazyPairs` under `lazyPairsProj` is
+  not lumpable and its observed three-time statistic fits no Markov chain over ℚ
+  (`lazyPairs_coarse_not_markov`), and that statistic is still reversal-symmetric. At the matrix level two
+  and three time points are proved (`coarseLaw2_reverse`, `coarseLaw3_reverse`); at the measure level three
+  time points (`chainLaw_coarse3_reverse`); longer windows are not stated. The `lazyPairs` statements are at
+  the matrix level over ℚ and are not instantiated at the measure level. Detailed balance and a reversing involution of the
   steps are different conditions: `absorb4` admits no reversing involution of its steps
   (`absorb4_not_sigma_reversible`) and its kernel is reversible w.r.t. every measure on its fixed points
   (`absorb4_reversible`). "Two arrows trade places" is a `Reading:` and nothing here states it.
