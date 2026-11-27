@@ -781,7 +781,7 @@ COST     issues are the public record of what is open or contested; an issue tha
          seeking validation converts a transparency mechanism into an outreach one.
 READ     tools/process/naming-and-labels.md
 
-## R-FRAMEWORK  The layer dependency order, and the one substantive commitment.
+## R-FRAMEWORK  The layer dependency order, and AX-B1 as a precondition.
 TRIGGER  you need the framework's shape, or are about to describe a layer's status.
 RULE     dependency order: **ZP-A** (lattice) → **ZP-B** (p-adic) → **ZP-C** (information) →
          **ZP-D** (state) → **ZP-E** (DA-1 / T-SNAP). **ZP-G** (category) → **ZP-H** (bridge)
@@ -789,15 +789,15 @@ RULE     dependency order: **ZP-A** (lattice) → **ZP-B** (p-adic) → **ZP-C**
          the initial-object half of AX-G1 are grounded, not novel; AX-G1's no-terminal half is
          ZP-G's own commitment — in ZP-A it is the optional hypothesis `HasNoTop`
          (`ZeroParadox/Order/Lattice.lean`), which the two-state carriers `MachinePhase` and
-         `OntologicalStates` do not satisfy. **AX-B1 is the framework's ONE substantive
-         modelling commitment** — discrete Boolean existence, not a continuum of partial
-         states — so never call it "directly verifiable" or "not a novel commitment"; the
-         `decide` proof only checks the two states are distinct GIVEN the two-element type.
-         AX-1 is retired (Tim, 2026-09-14): its shape is Theorem T-SNAP, its occurrence the
-         occurrence commitment.
-COST     the ZP-C forcing lemmas discharge the no-half-state worry but force only the
-         >=2-outcome lower bound; the residual commitment is DISCRETENESS, which they do not
-         eliminate and which the reals lack — the snap fails there (`f_snap_impossible`).
+         `OntologicalStates` do not satisfy. **AX-B1 is a PRECONDITION, a chart choice, never
+         "the one substantive commitment"** (rulings 100, 119): which chart steps off its least
+         element is the theorem `stepOff_mass` (`ZeroParadox/Information/Dial.lean`), both charts
+         `two_charts_snap`. Never call it "directly verifiable": the `decide` proof only checks
+         the two states are distinct GIVEN the two-element type. AX-1 is retired: its shape is
+         Theorem T-SNAP, its occurrence the occurrence commitment.
+COST     the ZP-C forcing lemmas force only the >=2-outcome lower bound; what they leave is the
+         chart choice — the discrete chart steps at any nonzero dial, the reals never do
+         (`f_snap_impossible`). v6.0 PDFs keep the old wording until the v7.0 bump.
 READ     tools/process/repository-layout.md
 
 ## R-HANDOFF  "Update the handoff" is a compound action defined in the file itself.
