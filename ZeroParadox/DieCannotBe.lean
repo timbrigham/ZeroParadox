@@ -2970,6 +2970,7 @@ example : (ZeroParadox.Motion.ofFun Nat.pred).SelfOnlyAt 0 :=
 -- matrix gives every state a step, so the second set's points with no step have no counterpart there.
 #check @ZeroParadox.not_subordinate_of_noStepAt -- Statement: CONTROL: at a point with no step, no Markov kernel gives full mass to the steps out of it (`ZeroParadox/Information/Dial.lean` § XI)
 #check @ZeroParadox.ofFun_kernel_dirac          -- Statement: CONTROL: a kernel subordinate to `Motion.ofFun g` gives `{g a}ᶜ` mass 0 at every `a`
+#check @ZeroParadox.ae_isRun                    -- Statement: the positive half of the two CONTROLs above: if a Markov kernel `K` is subordinate to `M` and the step relation is a measurable set of pairs, almost every run from `x₀` is a run of `M`
 #check @ZeroParadox.ae_leaves_iff               -- Statement: with measurable single points (`MeasurableSingletonClass`), under the chain law of a supplied Markov kernel `K` from `x₀`, almost every run leaves `x₀` iff `K x₀ {x₀}ᶜ > 0`; both directions
 -- Statement: ZP-A's join step `a → a ⊔ z` raises in the induced order, so
 -- `eq_of_step_le_of_stepRaises` re-derives `t_snap_irreversible`.
@@ -4601,6 +4602,19 @@ example :
     exact hne (Quotient.sound ((ZeroParadox.carry_stutters a' b hs).trans (Quotient.exact ha')))
 -- Reading: when the kernel of the observation is step-compatible, stepping elsewhere is reflected by
 -- the observation (`leavesAt_of_quot`) and, by `carry`, not carried forward.
+-- Reading: the weighted observer (`ZeroParadox/Information/Dial.lean` § XII): lumping, `Lumps`, is to a
+-- supplied Markov kernel what `StepCompat` is to the steps.
+#check @ZeroParadox.lumps_deterministic_iff      -- Statement: with measurable singletons on the target, the deterministic kernel of measurable `g` lumps along measurable `f` to that of measurable `g'` iff `f (g a) = g' (f a)` for every `a`; both directions (that semiconjugacy is a strict map `ofFun g → ofFun g'`: `Motion.semiconj_iff_exists_hom`; a `RelHom` of the steps: `Motion.semiconj_iff_exists_relHom`)
+#check @ZeroParadox.lumps_iff_runLaw_map         -- Statement: for measurable `f`, `K` lumps to `L` along `f` iff from every start the observed run has the law of the `L`-chain; both directions
+#check @ZeroParadox.chainLaw_map_of_lumps        -- Statement: if `K` lumps to `L` along measurable `f`, from every initial probability law `μ` the observed run has the law of the `L`-chain from `μ.map f`; one way
+#check @ZeroParadox.stepCompat_supp_of_fiberConst -- Statement: on a countable carrier, lumpable weights make the support die step-compatible; one way (`suppControlKernel_stepCompat_not_fiberConst`: a step-compatible support die, weights that do not lump)
+#check @ZeroParadox.quot_leavesAt_of_ae          -- Statement: if `K` is subordinate to `M` and lumps along `f`, the kernel of `f` is step-compatible, and almost every observed run changes value, the class of `x₀` steps elsewhere in the quotient; one way
+#check @ZeroParadox.lumps_id_of_upStepInvariant  -- Statement: on a carrier with measurable singletons, with a total idempotent UP `r` and `UpStepInvariant`, a subordinate Markov kernel lumps along `r` to the identity kernel
+#check @ZeroParadox.ae_landing_const             -- Statement: on a carrier with measurable singletons, with a measurable total idempotent UP `r` and `UpStepInvariant`, under a subordinate Markov kernel almost every run from `x₀` has `r (x n) = r x₀` at every `n`
+#check @ZeroParadox.isReversible_map_of_lumps    -- Statement: if `K` is reversible w.r.t. `π` (Mathlib `Kernel.IsReversible`) and lumps to `L` along measurable `f`, `L` is reversible w.r.t. `π.map f`; one way
+#check @ZeroParadox.a4_direction_erased          -- Statement: the rotation of `Fin 4` is reversible w.r.t. no probability measure and lumps along parity to the swap of `Bool`, which is reversible w.r.t. the counting measure on `Bool`
+#check @ZeroParadox.chainLaw_coarse3_reverse     -- Statement: on a finite carrier with measurable singletons, if `K` is reversible w.r.t. the initial law, every measurable observer with measurable singletons on its target has a reversal-symmetric three-time law
+#check @ZeroParadox.absorb4_not_sigma_reversible -- Statement: no involution reverses the steps of `Motion.ofFun absorb4` (§ XIV's shape), while its kernel is reversible w.r.t. every measure on its fixed points (`absorb4_reversible`)
 #check @ZeroParadox.Motion.dom_factor            -- Statement: if the kernel of `obs` is UP-compatible, UP-definedness is `D ∘ obs` for some `D`
 #check @ZeroParadox.Motion.registeredDecidable_of_factor -- Statement: if UP-definedness is `D ∘ obs` and `D` is decided at every point, registration is decided
 #check @ZeroParadox.Motion.upCompat_ker_dom      -- Statement: the kernel of the definedness map `a ↦ (up a).Dom` is UP-compatible

@@ -3,6 +3,7 @@ import ZeroParadox.Information.StartBit
 import ZeroParadox.Information.TwoRequirements
 import ZeroParadox.Valuation.UltrametricView
 import Mathlib.Probability.Kernel.IonescuTulcea.Traj
+import Mathlib.Probability.Kernel.Invariance
 import Mathlib.Tactic
 
 /-!
@@ -24,7 +25,7 @@ analog and a digital value
 Switch (§ II): "some stage fires" has mass 0 at `p = 0`, 1 for `0 < p ≤ 1`. Volume (§ III): "fires within `n`
 stages" is continuous in `p` and tends to the switch non-uniformly. § IV: the jump in `L`; § V-VI: schedules,
 the law; § VII: mean of `wait + 1` is `p⁻¹`; § VIII: columns; § IX: entropy pins `0 < p < 1`; § X: translations;
-§ XI: a supplied Markov kernel on the die. -/
+§ XI: a supplied Markov kernel on the die; § XII: lumping, and reversibility under coarse-graining. -/
 
 set_option maxHeartbeats 400000
 
@@ -1023,6 +1024,928 @@ example {L : Type*} [ZPSemilattice L] [MeasurableSpace L] [MeasurableSingletonCl
 
 end MarkovDie
 
+/-! ### § XII. Lumping: the observed chain, and reversibility under coarse-graining
+
+`Reading:` a map `f` out of the states is an observer; when the kernel lumps along `f`, what the
+observer sees is again a Markov chain (`lumps_iff_runLaw_map`), the weighted analogue of the die's
+`StepCompat`. Both directions of the arrow are stated: coarse-graining can erase a time arrow
+(`a4_direction_erased`), and from a reversible start it creates none, for a measurable lumping map
+in general (`isReversible_map_of_lumps`) and, at three times, for every measurable observer on a
+finite carrier with measurable singletons (`chainLaw_coarse3_reverse`). The kernel is a supplied
+argument throughout. -/
+
+-- Provenance: the lumping and run-law declarations marked `[ZP]` are adapted and modified from
+-- MurphyHoops/UEOT, `formalization/ueot-core/UEOT/V3/DynamicsKernel.lean` (lean4-core-export v1.0.0,
+-- Apache-2.0); each mark names its UEOT original. See NOTICE.
+section Lumping
+
+open Finset
+
+variable {α β : Type*} [MeasurableSpace α] [MeasurableSpace β]
+
+/-- `Statement:` strong lumpability, Dynkin's intertwining form: `(K a).map f = L (f a)` at every `a`. -/
+def Lumps (K : Kernel α α) (L : Kernel β β) (f : α → β) : Prop := ∀ a, (K a).map f = L (f a)
+
+/-- `Statement:` related starts put the same image mass on every class (the per-class form; Levin,
+Peres, Wilmer (2.10); attributed to Kemeny-Snell via Wolfer-Watanabe Theorem 3.1). -/
+def FiberConst (K : Kernel α α) (f : α → β) : Prop :=
+  ∀ a a', f a = f a' → (K a).map f = (K a').map f
+
+/-- [ZP] adapted from UEOT `strongLumpability_fiber_constant`. `Statement:` lumping to some `L`
+gives the per-class form; one way. -/
+theorem Lumps.fiberConst {K : Kernel α α} {L : Kernel β β} {f : α → β} (h : Lumps K L f) :
+    FiberConst K f := fun a a' e => by rw [h a, h a', e]
+
+/-- [ZP] adapted from UEOT `mapHistory`. `Statement:` the coordinatewise map of a finite history. -/
+def mapHist (f : α → β) (n : ℕ) (x : (i : Iic n) → α) : (i : Iic n) → β := fun i => f (x i)
+
+/-- [ZP] adapted from UEOT `measurable_mapHistory`. `Statement:` `mapHist f n` is measurable when
+`f` is. -/
+theorem measurable_mapHist {f : α → β} (hf : Measurable f) (n : ℕ) : Measurable (mapHist f n) :=
+  measurable_pi_iff.mpr fun i => hf.comp (measurable_pi_apply i)
+
+/-- [ZP] adapted from UEOT `appendHistory`. `Statement:` append one state to a finite history. -/
+def appendHist (n : ℕ) (p : ((i : Iic n) → α) × α) : (i : Iic (n + 1)) → α :=
+  IicProdIoc (X := fun _ : ℕ => α) n (n + 1)
+    (p.1, MeasurableEquiv.piSingleton (X := fun _ : ℕ => α) n p.2)
+
+/-- [ZP] adapted from UEOT `measurable_appendHistory`. `Statement:` `appendHist n` is measurable. -/
+theorem measurable_appendHist (n : ℕ) : Measurable (appendHist (α := α) n) :=
+  measurable_IicProdIoc.comp (measurable_fst.prodMk
+    ((MeasurableEquiv.piSingleton (X := fun _ : ℕ => α) n).measurable.comp measurable_snd))
+
+/-- [ZP] adapted from UEOT `mapHistory_comp_appendHistory` and `mapHistory_appendHistory`.
+`Statement:` mapping coordinatewise commutes with appending. -/
+theorem mapHist_comp_appendHist (f : α → β) (n : ℕ) :
+    mapHist f (n + 1) ∘ appendHist n = appendHist n ∘ Prod.map (mapHist f n) f := by
+  funext p
+  ext i
+  by_cases hi : (i : ℕ) ≤ n
+  · simp [mapHist, appendHist, IicProdIoc_def, hi]
+  · have hin : (i : ℕ) = n + 1 := by have := Finset.mem_Iic.mp i.2; omega
+    have hieq : i = ⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩ := Subtype.ext hin
+    subst hieq
+    simp [mapHist, appendHist, IicProdIoc_def, MeasurableEquiv.piSingleton]
+
+/-- [ZP] adapted from UEOT `appendHistory_prefix_next`. `Statement:` the prefix of length `n + 2`
+is the prefix of length `n + 1` with `x (n + 1)` appended. -/
+theorem appendHist_prefix (n : ℕ) (x : ℕ → α) :
+    appendHist n (Preorder.frestrictLe n x, x (n + 1)) = Preorder.frestrictLe (n + 1) x := by
+  ext i
+  by_cases hi : (i : ℕ) ≤ n
+  · simp [appendHist, IicProdIoc_def, Preorder.frestrictLe_apply, hi]
+  · have hin : (i : ℕ) = n + 1 := by have := Finset.mem_Iic.mp i.2; omega
+    have hieq : i = (⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩ : Iic (n + 1)) := Subtype.ext hin
+    rw [hieq]
+    simp [appendHist, IicProdIoc_def, Preorder.frestrictLe_apply, MeasurableEquiv.piSingleton]
+
+/-- `Statement:` the chain law from an initial law `μ`: `Kernel.trajMeasure μ (homK K)`. -/
+noncomputable abbrev chainLaw (μ : Measure α) (K : Kernel α α) [IsMarkovKernel K] :
+    Measure (ℕ → α) :=
+  Kernel.trajMeasure (X := fun _ => α) μ (homK K)
+
+/-- `Statement:` `chainLaw μ K` is a probability measure when `μ` is. -/
+instance isProbabilityMeasure_chainLaw (μ : Measure α) [IsProbabilityMeasure μ] (K : Kernel α α)
+    [IsMarkovKernel K] : IsProbabilityMeasure (chainLaw μ K) := by unfold chainLaw; infer_instance
+
+/-- `Statement:` `runLaw K x₀` is `chainLaw` from the Dirac law at `x₀`, by `rfl`. -/
+theorem runLaw_eq_chainLaw (K : Kernel α α) [IsMarkovKernel K] (x₀ : α) :
+    runLaw K x₀ = chainLaw (Measure.dirac x₀) K := rfl
+
+/-- [ZP] adapted from UEOT `homTrajMeasure_prefix_zero`. `Statement:` the length-1 prefix of
+`chainLaw μ K` is `μ`, read on `Iic 0`. -/
+theorem chainLaw_prefix_zero (μ : Measure α) [IsProbabilityMeasure μ] (K : Kernel α α)
+    [IsMarkovKernel K] :
+    (chainLaw μ K).map (Preorder.frestrictLe 0) =
+      μ.map (MeasurableEquiv.piUnique (fun _ : Iic 0 => α)).symm := by
+  rw [chainLaw, Kernel.trajMeasure, Measure.map_comp _ _ (by fun_prop),
+    Kernel.traj_map_frestrictLe, Kernel.partialTraj_self, Measure.id_comp]
+
+/-- [ZP] adapted from the first step of UEOT `homTrajMeasure_prefix_succ`. `Statement:` the law of
+(prefix to `n`, state `n + 1`) is the prefix law `⊗ₘ homK K n`
+(Mathlib's `Kernel.map_frestrictLe_trajMeasure_compProd_eq_map_trajMeasure`). -/
+theorem chainLaw_step (μ : Measure α) [IsProbabilityMeasure μ] (K : Kernel α α)
+    [IsMarkovKernel K] (n : ℕ) :
+    ((chainLaw μ K).map (Preorder.frestrictLe n)) ⊗ₘ homK K n =
+      (chainLaw μ K).map (fun x => (Preorder.frestrictLe n x, x (n + 1))) :=
+  Kernel.map_frestrictLe_trajMeasure_compProd_eq_map_trajMeasure
+    (X := fun _ : ℕ => α) (μ₀ := μ) (κ := homK K) (a := n)
+
+/-- [ZP] adapted from UEOT `homTrajMeasure_prefix_succ`. `Statement:` the next prefix law is the
+current one `⊗ₘ homK K n`, appended. -/
+theorem chainLaw_prefix_succ (μ : Measure α) [IsProbabilityMeasure μ] (K : Kernel α α)
+    [IsMarkovKernel K] (n : ℕ) :
+    (((chainLaw μ K).map (Preorder.frestrictLe n)) ⊗ₘ homK K n).map (appendHist n) =
+      (chainLaw μ K).map (Preorder.frestrictLe (n + 1)) := by
+  rw [chainLaw_step, Measure.map_map (measurable_appendHist n) (by fun_prop)]
+  congr 1
+  funext x
+  exact appendHist_prefix n x
+
+/-- [ZP] adapted from the last step of UEOT `homHistory_compProd_naturality`. `Statement:` pushing
+the first factor of `μh ⊗ₘ κ.comap e` along `e` gives `μh.map e ⊗ₘ κ`. -/
+theorem compProd_comap_map {Y Z X : Type*} [MeasurableSpace Y] [MeasurableSpace Z]
+    [MeasurableSpace X] (μh : Measure Y) [SFinite μh] {e : Y → X} (he : Measurable e)
+    (κ : Kernel X Z) [IsSFiniteKernel κ] :
+    (μh ⊗ₘ κ.comap e he).map (Prod.map e id) = μh.map e ⊗ₘ κ := by
+  ext s hs
+  rw [Measure.map_apply (he.prodMap measurable_id) hs,
+    Measure.compProd_apply (he.prodMap measurable_id hs), Measure.compProd_apply hs,
+    lintegral_map (Kernel.measurable_kernel_prodMk_left hs) he]
+  rfl
+
+/-- [ZP] adapted from UEOT `homHistory_compProd_naturality`. `Statement:` if `K` lumps to `L` along
+`f`, one step of the history commutes with `f`. -/
+theorem homK_compProd_naturality {n : ℕ} (μh : Measure ((i : Iic n) → α)) [SFinite μh]
+    (K : Kernel α α) (L : Kernel β β) [IsMarkovKernel K] [IsMarkovKernel L]
+    {f : α → β} (hf : Measurable f) (h : Lumps K L f) :
+    (μh ⊗ₘ homK K n).map (Prod.map (mapHist f n) f) =
+      (μh.map (mapHist f n)) ⊗ₘ homK L n := by
+  have hF := measurable_mapHist hf n
+  have hk : (homK K n).map f = (homK L n).comap (mapHist f n) hF := by
+    ext x B hB
+    rw [Kernel.map_apply' _ hf _ hB, Kernel.comap_apply']
+    simp only [homK, Kernel.comap_apply']
+    rw [← Measure.map_apply hf hB, h]
+    rfl
+  calc (μh ⊗ₘ homK K n).map (Prod.map (mapHist f n) f)
+      = ((μh ⊗ₘ homK K n).map (Prod.map id f)).map (Prod.map (mapHist f n) id) := by
+        rw [Measure.map_map (by fun_prop) (by fun_prop)]; rfl
+    _ = (μh ⊗ₘ (homK K n).map f).map (Prod.map (mapHist f n) id) := by
+        rw [← Measure.compProd_map hf]
+    _ = (μh ⊗ₘ (homK L n).comap (mapHist f n) hF).map (Prod.map (mapHist f n) id) := by rw [hk]
+    _ = (μh.map (mapHist f n)) ⊗ₘ homK L n := compProd_comap_map μh hF (homK L n)
+
+/-- [ZP] adapted from UEOT `homTrajMeasure_prefix_naturality`. `Statement:` under lumping, every
+finite prefix of the observed chain has the lumped prefix law. -/
+theorem chainLaw_prefix_naturality (μ : Measure α) [IsProbabilityMeasure μ]
+    (K : Kernel α α) (L : Kernel β β) [IsMarkovKernel K] [IsMarkovKernel L]
+    {f : α → β} (hf : Measurable f) (h : Lumps K L f) (n : ℕ) :
+    ((chainLaw μ K).map (Preorder.frestrictLe n)).map (mapHist f n) =
+      (chainLaw (μ.map f) L).map (Preorder.frestrictLe n) := by
+  induction n with
+  | zero =>
+    rw [chainLaw_prefix_zero μ K, chainLaw_prefix_zero (μ.map f) L,
+      Measure.map_map (measurable_mapHist hf 0) (by fun_prop), Measure.map_map (by fun_prop) hf]
+    rfl
+  | succ n ih =>
+    rw [← chainLaw_prefix_succ μ K n,
+      Measure.map_map (measurable_mapHist hf (n + 1)) (measurable_appendHist n),
+      mapHist_comp_appendHist f n,
+      ← Measure.map_map (measurable_appendHist (α := β) n)
+        ((measurable_mapHist hf n).prodMap hf),
+      homK_compProd_naturality _ K L hf h, ih]
+    exact chainLaw_prefix_succ (μ.map f) L n
+
+/-- [ZP] adapted from UEOT `pathMeasure_eq_of_prefix_eq`. `Statement:` two probability measures on
+`ℕ → β` with equal laws on every prefix are equal (Mathlib's `IsProjectiveLimit.unique`). -/
+theorem pathMeasure_eq_of_prefix_eq (μp νp : Measure (ℕ → β))
+    [IsProbabilityMeasure μp] [IsProbabilityMeasure νp]
+    (hp : ∀ n, μp.map (Preorder.frestrictLe n) = νp.map (Preorder.frestrictLe n)) : μp = νp := by
+  let P : (I : Finset ℕ) → Measure ((i : I) → β) := fun I => μp.map (I.restrict (π := fun _ => β))
+  have : ∀ I, IsProbabilityMeasure (P I) := fun I => by dsimp only [P]; infer_instance
+  have hν : IsProjectiveLimit (ι := ℕ) (α := fun _ => β) νp P := by
+    intro I
+    have hsub : I ⊆ Finset.Iic (I.sup id) := I.subset_Iic_sup_id
+    have h := hp (I.sup id)
+    change μp.map ((Finset.Iic (I.sup id)).restrict (π := fun _ => β)) =
+      νp.map ((Finset.Iic (I.sup id)).restrict (π := fun _ => β)) at h
+    show νp.map (I.restrict (π := fun _ => β)) = μp.map (I.restrict (π := fun _ => β))
+    have e : ∀ ρ : Measure (ℕ → β), ρ.map (I.restrict (π := fun _ => β)) =
+        (ρ.map ((Finset.Iic (I.sup id)).restrict (π := fun _ => β))).map
+          (Finset.restrict₂ (π := fun _ => β) hsub) := fun ρ => by
+      rw [Measure.map_map (Finset.measurable_restrict₂ (X := fun _ => β) hsub)
+        (Finset.measurable_restrict _)]; rfl
+    rw [e, e μp, h]
+  exact (show IsProjectiveLimit (ι := ℕ) (α := fun _ => β) μp P from fun _ => rfl).unique hν
+
+/-- [ZP] adapted from UEOT `homTrajMeasure_path_naturality`. `Statement:` if `K` lumps to `L` along
+measurable `f`, the observed process `n ↦ f (x n)` of the chain from `μ` has the law of the
+`L`-chain from `μ.map f`. -/
+theorem chainLaw_map_of_lumps (μ : Measure α) [IsProbabilityMeasure μ]
+    (K : Kernel α α) (L : Kernel β β) [IsMarkovKernel K] [IsMarkovKernel L]
+    {f : α → β} (hf : Measurable f) (h : Lumps K L f) :
+    (chainLaw μ K).map (fun x n => f (x n)) = chainLaw (μ.map f) L := by
+  have hF : Measurable (fun (x : ℕ → α) n => f (x n)) :=
+    measurable_pi_iff.mpr fun k => hf.comp (measurable_pi_apply k)
+  refine pathMeasure_eq_of_prefix_eq _ _ fun n => ?_
+  rw [Measure.map_map (Preorder.measurable_frestrictLe n) hF]
+  have : Preorder.frestrictLe n ∘ (fun (x : ℕ → α) k => f (x k)) =
+      mapHist f n ∘ Preorder.frestrictLe n := rfl
+  rw [this, ← Measure.map_map (measurable_mapHist hf n) (Preorder.measurable_frestrictLe n)]
+  exact chainLaw_prefix_naturality μ K L hf h n
+
+/-- [ZP] adapted from UEOT `homTrajMeasure_path_naturality`, at a Dirac start. `Statement:` the same
+from a point: the observed run of `runLaw K x₀` has law `runLaw L (f x₀)`. -/
+theorem runLaw_map_of_lumps (K : Kernel α α) (L : Kernel β β) [IsMarkovKernel K] [IsMarkovKernel L]
+    {f : α → β} (hf : Measurable f) (h : Lumps K L f) (x₀ : α) :
+    (runLaw K x₀).map (fun x n => f (x n)) = runLaw L (f x₀) := by
+  rw [runLaw_eq_chainLaw, runLaw_eq_chainLaw, ← Measure.map_dirac' hf]
+  exact chainLaw_map_of_lumps (Measure.dirac x₀) K L hf h
+
+/-- [ZP] adapted from UEOT `homTrajMeasure_dirac_time_one`. `Statement:` the time-1 marginal of
+`runLaw K x` is `K x`. -/
+theorem runLaw_time_one (K : Kernel α α) [IsMarkovKernel K] (x : α) :
+    (runLaw K x).map (fun z => z 1) = K x := by
+  have hstep := chainLaw_prefix_succ (Measure.dirac x) K 0
+  have hzero := chainLaw_prefix_zero (Measure.dirac x) K
+  have hlast : (fun h : (i : Iic 1) → α => h ⟨1, Finset.mem_Iic.mpr le_rfl⟩) ∘ appendHist 0 =
+      Prod.snd := by
+    funext p; simp [appendHist, IicProdIoc_def, MeasurableEquiv.piSingleton]
+  have e1 : (runLaw K x).map (fun z => z 1) =
+      ((chainLaw (Measure.dirac x) K).map (Preorder.frestrictLe 1)).map
+        (fun h : (i : Iic 1) → α => h ⟨1, Finset.mem_Iic.mpr le_rfl⟩) := by
+    have hc : (fun z : ℕ → α => z 1) = (fun h : (i : Iic 1) → α => h ⟨1, Finset.mem_Iic.mpr le_rfl⟩) ∘
+        Preorder.frestrictLe 1 := rfl
+    rw [runLaw_eq_chainLaw, hc]
+    exact (Measure.map_map (measurable_pi_apply _) (Preorder.measurable_frestrictLe 1)).symm
+  rw [e1, ← hstep, Measure.map_map (measurable_pi_apply _) (measurable_appendHist 0), hlast,
+    ← Measure.snd, Measure.snd_compProd, hzero,
+    Measure.map_dirac' (MeasurableEquiv.piUnique (fun _ : Iic 0 => α)).symm.measurable,
+    Measure.dirac_bind (Kernel.measurable _)]
+  rfl
+
+/-- [ZP] adapted from UEOT `pathLaw_implies_strongLumpability`. `Statement:` if from every start the
+observed run has the `L`-chain's law, `K` lumps to `L`. -/
+theorem lumps_of_runLaw_map (K : Kernel α α) (L : Kernel β β) [IsMarkovKernel K] [IsMarkovKernel L]
+    {f : α → β} (hf : Measurable f)
+    (h : ∀ x₀, (runLaw K x₀).map (fun x n => f (x n)) = runLaw L (f x₀)) : Lumps K L f := by
+  intro a
+  have := congrArg (fun ν : Measure (ℕ → β) => ν.map (fun z => z 1)) (h a)
+  have hF : Measurable (fun (x : ℕ → α) (n : ℕ) => f (x n)) :=
+    measurable_pi_iff.mpr fun k => hf.comp (measurable_pi_apply k)
+  rw [runLaw_time_one, Measure.map_map (measurable_pi_apply 1) hF] at this
+  rw [← this, ← runLaw_time_one K a, Measure.map_map hf (measurable_pi_apply 1)]
+  rfl
+
+/-- [ZP] adapted from UEOT `strongLumpability_iff_pathLaw`. `Statement:` for measurable `f`, `K`
+lumps to `L` along `f` iff from every start the observed run has the law of the `L`-chain from the
+observed start; both directions. -/
+theorem lumps_iff_runLaw_map (K : Kernel α α) (L : Kernel β β) [IsMarkovKernel K]
+    [IsMarkovKernel L] {f : α → β} (hf : Measurable f) :
+    Lumps K L f ↔ ∀ x₀, (runLaw K x₀).map (fun x n => f (x n)) = runLaw L (f x₀) :=
+  ⟨fun h x₀ => runLaw_map_of_lumps K L hf h x₀, lumps_of_runLaw_map K L hf⟩
+
+-- Statement: CONTROL, the identity map: every kernel lumps to itself.
+example (K : Kernel α α) : Lumps K K id := fun _ => Measure.map_id
+
+/-- `Statement:` for deterministic kernels, lumping along `f` is the semiconjugacy `f ∘ g = g' ∘ f`. -/
+theorem lumps_deterministic_iff [MeasurableSingletonClass β] {g : α → α} {g' : β → β}
+    (hg : Measurable g) (hg' : Measurable g') {f : α → β} (hf : Measurable f) :
+    Lumps (Kernel.deterministic g hg) (Kernel.deterministic g' hg') f ↔ ∀ a, f (g a) = g' (f a) := by
+  unfold Lumps
+  simp only [Kernel.deterministic_apply, Measure.map_dirac' hf, dirac_eq_dirac_iff]
+
+/-- `Statement:` if `K` is subordinate to `M` and lumps to `L` along the classes of `s`, and the quotient's
+step sections are measurable, `L` is subordinate to `M.quot s`; one way. -/
+theorem subordinate_quot_of_lumps (M : Motion α) (K : Kernel α α) (s : Setoid α)
+    (L : Kernel (Quotient s) (Quotient s)) (hK : Subordinate M K) (h : Lumps K L (Quotient.mk s))
+    (hm : ∀ X, MeasurableSet {Y | (M.quot s).step X Y}) : Subordinate (M.quot s) L := by
+  intro X
+  induction X using Quotient.ind with
+  | _ a =>
+    rw [← h a, ae_map_iff (measurable_quotient_mk'' (s := s)).aemeasurable (hm _)]
+    filter_upwards [hK a] with b hb
+    exact ⟨a, b, hb, rfl, rfl⟩
+
+/-- `Statement:` the same on a countable carrier with measurable singletons, with no side condition. -/
+theorem subordinate_quot_of_lumps_countable [Countable α] [MeasurableSingletonClass α]
+    (M : Motion α) (K : Kernel α α) (s : Setoid α) (L : Kernel (Quotient s) (Quotient s))
+    (hK : Subordinate M K) (h : Lumps K L (Quotient.mk s)) : Subordinate (M.quot s) L :=
+  subordinate_quot_of_lumps M K s L hK h fun _ =>
+    measurableSet_quotient.2 (Set.to_countable _).measurableSet
+
+/-- `Statement:` the support die of `K`: OVER is positive one-step mass, UP the identity. -/
+def suppMotion (K : Kernel α α) : Motion α :=
+  Motion.ofTotal id (fun _ => rfl) (fun a b => 0 < K a {b})
+
+/-- `Statement:` on a countable carrier with measurable singletons, `K` is subordinate to its support die. -/
+theorem subordinate_supp [Countable α] [MeasurableSingletonClass α] (K : Kernel α α) :
+    Subordinate (suppMotion K) K := by
+  intro a
+  rw [ae_iff]
+  have : {b | ¬ (suppMotion K).step a b} = ⋃ b ∈ {b | K a {b} = 0}, ({b} : Set α) := by
+    ext b; simp [suppMotion, Motion.ofTotal, pos_iff_ne_zero]
+  rw [this, measure_biUnion_null_iff (Set.to_countable _)]
+  exact fun b hb => hb
+
+/-- `Statement:` on a countable carrier, if `K` has the per-class form along the classes of `s`, its
+support die is step-compatible with `s`; one way (`suppControlKernel_stepCompat_not_fiberConst`). -/
+theorem stepCompat_supp_of_fiberConst [Countable α] [MeasurableSingletonClass α]
+    (K : Kernel α α) (s : Setoid α) (h : FiberConst K (Quotient.mk s)) :
+    (suppMotion K).StepCompat s := by
+  intro a a' b hr hb
+  change 0 < K a {b} at hb
+  have hC : MeasurableSet ((Quotient.mk s) ⁻¹' {Quotient.mk s b}) := (Set.to_countable _).measurableSet
+  have hpos : 0 < K a' ((Quotient.mk s) ⁻¹' {Quotient.mk s b}) := by
+    have e := congrArg (fun ν : Measure (Quotient s) => ν {Quotient.mk s b})
+      (h a a' (Quotient.sound hr))
+    rw [Measure.map_apply (measurable_quotient_mk'' (s := s))
+        (measurableSet_quotient.2 hC),
+      Measure.map_apply (measurable_quotient_mk'' (s := s))
+        (measurableSet_quotient.2 hC)] at e
+    rw [← e]
+    exact lt_of_lt_of_le hb (measure_mono (by intro c hc; rw [Set.mem_singleton_iff.1 hc]; rfl))
+  by_contra hno
+  push Not at hno
+  apply hpos.ne'
+  have : (Quotient.mk s) ⁻¹' {Quotient.mk s b} = ⋃ c ∈ (Quotient.mk s) ⁻¹' {Quotient.mk s b},
+      ({c} : Set α) := by ext c; simp
+  rw [this, measure_biUnion_null_iff (Set.to_countable _)]
+  intro c hc
+  by_contra hne
+  exact hno c (pos_iff_ne_zero.2 hne) (Quotient.exact (Set.mem_singleton_iff.1 hc).symm)
+
+-- Statement: CONTROL A, a subordinate kernel that lumps does not make the die's relation
+-- step-compatible: on `Fin 3`, classes `{0, 1}` and `{2}`, the identity kernel, and a die that also
+-- steps `0 → 2` with weight 0.
+example : let obs : Fin 3 → Bool := fun x => decide (x = 2)
+    let M : Motion (Fin 3) := Motion.ofTotal id (fun _ => rfl) (fun a b => b = a ∨ (a = 0 ∧ b = 2))
+    Subordinate M Kernel.id ∧ Lumps (Kernel.id : Kernel (Fin 3) (Fin 3)) Kernel.id obs ∧
+      ¬ M.StepCompat (Setoid.ker obs) := by
+  intro obs M
+  refine ⟨fun a => ?_, fun a => ?_, fun h => ?_⟩
+  · rw [Kernel.id_apply, ae_dirac_iff (Set.toFinite _).measurableSet]
+    exact Or.inl rfl
+  · rw [Kernel.id_apply, Kernel.id_apply, Measure.map_dirac' (by fun_prop)]
+  · obtain ⟨b', hb', hr⟩ := h 0 1 2
+      (show decide ((0 : Fin 3) = 2) = decide ((1 : Fin 3) = 2) by decide) (Or.inr ⟨rfl, rfl⟩)
+    rcases hb' with rfl | ⟨h1, _⟩
+    · exact (by decide : ¬ (decide ((2 : Fin 3) = 2) = decide ((1 : Fin 3) = 2))) hr
+    · exact absurd h1 (by decide)
+
+-- Statement: CONTROL B, a step-compatible die does not force lumpable weights on a kernel subordinate
+-- to it: on `Fin 3`, classes `{0, 1}` and `{2}`, a die stepping everywhere, and the deterministic
+-- kernel `0 ↦ 0, 1 ↦ 2, 2 ↦ 2`; that kernel's own support die is not step-compatible.
+example : let obs : Fin 3 → Bool := fun x => decide (x = 2)
+    let g : Fin 3 → Fin 3 := fun x => if x = 1 then 2 else x
+    let M : Motion (Fin 3) := Motion.ofTotal id (fun _ => rfl) (fun _ _ => True)
+    M.StepCompat (Setoid.ker obs) ∧ Subordinate M (Kernel.deterministic g (by fun_prop)) ∧
+      ¬ FiberConst (Kernel.deterministic g (by fun_prop)) obs ∧
+      ¬ (suppMotion (Kernel.deterministic g (by fun_prop))).StepCompat (Setoid.ker obs) := by
+  intro obs g M
+  refine ⟨fun a a' b _ _ => ⟨b, trivial, rfl⟩, fun a => Filter.Eventually.of_forall fun _ => trivial,
+    fun h => ?_, fun h => ?_⟩
+  · have := h 0 1 (show decide ((0 : Fin 3) = 2) = decide ((1 : Fin 3) = 2) by decide)
+    simp only [Kernel.deterministic_apply, Measure.map_dirac' (by fun_prop : Measurable obs),
+      dirac_eq_dirac_iff] at this
+    exact absurd this (by decide)
+  · have h00 : (suppMotion (Kernel.deterministic g (by fun_prop))).step 0 0 := by
+      show 0 < Kernel.deterministic g _ 0 {0}
+      rw [Kernel.deterministic_apply, Measure.dirac_apply' _ (measurableSet_singleton _)]
+      simp [g]
+    obtain ⟨b', hb', hr⟩ := h 0 1 0 (show obs 0 = obs 1 by decide) h00
+    change 0 < Kernel.deterministic g _ 1 {b'} at hb'
+    rw [Kernel.deterministic_apply, Measure.dirac_apply' _ (measurableSet_singleton _)] at hb'
+    have : g 1 = b' := by
+      by_contra hne
+      simp [Set.indicator, hne] at hb'
+    subst this
+    change obs 0 = obs (g 1) at hr
+    simp [obs, g] at hr
+
+/-- `Statement:` a kernel on `Fin 3`: `0` to `0` and `2` with masses 1/2, 1/2; `1` to `1` and `2` with
+masses 1/4, 3/4; `2` to `2`. -/
+noncomputable def suppControlKernel : Kernel (Fin 3) (Fin 3) :=
+  Kernel.ofFunOfCountable fun a =>
+    if a = 0 then (1/2 : ENNReal) • Measure.dirac 0 + (1/2 : ENNReal) • Measure.dirac 2
+    else if a = 1 then (1/4 : ENNReal) • Measure.dirac 1 + (3/4 : ENNReal) • Measure.dirac 2
+    else Measure.dirac 2
+
+/-- `Statement:` CONTROL for the converse of `stepCompat_supp_of_fiberConst`: with classes `{0, 1}`
+and `{2}`, the support die of `suppControlKernel` is step-compatible, and `suppControlKernel` does not
+have the per-class form. -/
+theorem suppControlKernel_stepCompat_not_fiberConst :
+    (suppMotion suppControlKernel).StepCompat (Setoid.ker (fun x : Fin 3 => decide (x = 2))) ∧
+      ¬ FiberConst suppControlKernel (fun x : Fin 3 => decide (x = 2)) := by
+  have hK : ∀ a, suppControlKernel a =
+      if a = 0 then (1/2 : ENNReal) • Measure.dirac 0 + (1/2 : ENNReal) • Measure.dirac 2
+      else if a = 1 then (1/4 : ENNReal) • Measure.dirac 1 + (3/4 : ENNReal) • Measure.dirac 2
+      else Measure.dirac 2 := fun _ => rfl
+  have key : ∀ a b : Fin 3, (suppMotion suppControlKernel).step a b ↔
+      ((a = 0 ∧ b = 0) ∨ (a = 0 ∧ b = 2) ∨ (a = 1 ∧ b = 1) ∨ (a = 1 ∧ b = 2) ∨ (a = 2 ∧ b = 2)) := by
+    intro a b
+    show 0 < suppControlKernel a {b} ↔ _
+    rw [hK]
+    fin_cases a <;> fin_cases b <;>
+      simp [Measure.add_apply, Measure.smul_apply, smul_eq_mul]
+  refine ⟨?_, ?_⟩
+  · intro a a' b hr hb
+    change decide (a = 2) = decide (a' = 2) at hr
+    rw [key] at hb
+    simp only [key]
+    change ∃ b', ((a' = 0 ∧ b' = 0) ∨ (a' = 0 ∧ b' = 2) ∨ (a' = 1 ∧ b' = 1) ∨ (a' = 1 ∧ b' = 2) ∨
+      (a' = 2 ∧ b' = 2)) ∧ decide (b = 2) = decide (b' = 2)
+    revert a a' b
+    decide
+  · intro h
+    have e := congrArg (fun ν : Measure Bool => ν {false}) (h 0 1 (by decide))
+    rw [Measure.map_apply (by fun_prop) (measurableSet_singleton _),
+      Measure.map_apply (by fun_prop) (measurableSet_singleton _)] at e
+    have hpre : (fun x : Fin 3 => decide (x = 2)) ⁻¹' {false} = {0} ∪ {1} := by
+      ext x; fin_cases x <;> simp
+    rw [hpre, measure_union (by simp) (measurableSet_singleton _),
+      measure_union (by simp) (measurableSet_singleton _)] at e
+    rw [hK, hK] at e
+    simp [Measure.add_apply, Measure.smul_apply, smul_eq_mul] at e
+
+/-- `Statement:` the runs whose observed value at some stage differs from `y₀` form a measurable set. -/
+theorem measurableSet_leaves [MeasurableSingletonClass β] (y₀ : β) :
+    MeasurableSet {y : ℕ → β | ∃ i, y i ≠ y₀} := by
+  have : {y : ℕ → β | ∃ i, y i ≠ y₀} = ⋃ i, ((fun y => y i) ⁻¹' {y₀})ᶜ := by ext y; simp
+  rw [this]
+  exact MeasurableSet.iUnion fun i => (measurable_pi_apply i (measurableSet_singleton y₀)).compl
+
+/-- `Statement:` if `K` lumps to `L` along `f`, almost every run's observed value changes iff `L` puts
+positive mass off `f x₀`; both directions. -/
+theorem ae_obs_leaves_iff [MeasurableSingletonClass β] (K : Kernel α α) (L : Kernel β β)
+    [IsMarkovKernel K] [IsMarkovKernel L] {f : α → β} (hf : Measurable f) (h : Lumps K L f)
+    (x₀ : α) :
+    (∀ᵐ x ∂(runLaw K x₀), ∃ i, f (x i) ≠ f x₀) ↔ 0 < L (f x₀) {f x₀}ᶜ := by
+  have hF : Measurable (fun (x : ℕ → α) (n : ℕ) => f (x n)) :=
+    measurable_pi_iff.mpr fun k => hf.comp (measurable_pi_apply k)
+  rw [← ae_leaves_iff L (f x₀), ← runLaw_map_of_lumps K L hf h x₀,
+    ae_map_iff hF.aemeasurable (measurableSet_leaves _)]
+
+/-- `Statement:` if `K` lumps to `L` along `f`, `L`'s leave-weight at `f x₀` is `K x₀`'s mass off the class. -/
+theorem lumped_leave_weight [MeasurableSingletonClass β] (K : Kernel α α) (L : Kernel β β)
+    {f : α → β} (hf : Measurable f) (h : Lumps K L f) (x₀ : α) :
+    L (f x₀) {f x₀}ᶜ = K x₀ (f ⁻¹' {f x₀}ᶜ) := by
+  rw [← h x₀, Measure.map_apply hf (measurableSet_singleton _).compl]
+
+/-- `Statement:` if `K` is subordinate to `M`, lumps along `f`, the kernel of `f` is step-compatible,
+and almost every observed run changes value, the quotient die's class of `x₀` steps elsewhere; one way. -/
+theorem quot_leavesAt_of_ae [MeasurableSingletonClass β] (M : Motion α) (K : Kernel α α)
+    (L : Kernel β β) [IsMarkovKernel K] [IsMarkovKernel L] {f : α → β} (hf : Measurable f)
+    (hK : Subordinate M K) (hc : M.StepCompat (Setoid.ker f)) (h : Lumps K L f) (x₀ : α)
+    (hae : ∀ᵐ x ∂(runLaw K x₀), ∃ i, f (x i) ≠ f x₀) :
+    (M.quot (Setoid.ker f)).LeavesAt (Quotient.mk _ x₀) := by
+  rw [ae_obs_leaves_iff K L hf h, lumped_leave_weight K L hf h] at hae
+  rw [Motion.quot_leavesAt_iff M f hc]
+  by_contra hno
+  push Not at hno
+  apply hae.ne'
+  exact measure_mono_null (fun b hb hs => hb (hno b hs)) (ae_iff.1 (hK x₀))
+
+-- Statement: CONTROL, the converse of `quot_leavesAt_of_ae` fails: on `Bool`, a die stepping
+-- everywhere, `f = id`, the identity kernel; the class of `false` steps elsewhere, and almost no run
+-- leaves `false`.
+example : let M : Motion Bool := Motion.ofTotal id (fun _ => rfl) (fun _ _ => True)
+    (M.quot (Setoid.ker (id : Bool → Bool))).LeavesAt (Quotient.mk _ false) ∧
+      ¬ ∀ᵐ x ∂(runLaw (Kernel.id : Kernel Bool Bool) false), ∃ i, x i ≠ false := by
+  intro M
+  refine ⟨(Motion.quot_leavesAt_iff M id (fun a a' b _ _ => ⟨b, trivial, rfl⟩) false).2
+    ⟨true, trivial, by decide⟩, ?_⟩
+  rw [ae_leaves_iff, Kernel.id_apply, Measure.dirac_apply' _ (measurableSet_singleton _).compl]
+  simp
+
+/-- `Statement:` on a carrier with measurable singletons, if UP is a total idempotent `r` unchanged
+along steps (`UpStepInvariant`), a subordinate Markov kernel lumps along `r` to the identity kernel. -/
+theorem lumps_id_of_upStepInvariant [MeasurableSingletonClass α] {r : α → α}
+    (hr : ∀ x, r (r x) = r x) (st : α → α → Prop) (K : Kernel α α) [IsMarkovKernel K]
+    (hK : Subordinate (Motion.ofTotal r hr st) K)
+    (hU : (Motion.ofTotal r hr st).UpStepInvariant) : Lumps K Kernel.id r := by
+  intro a
+  rw [Kernel.id_apply]
+  have he : r =ᵐ[K a] fun _ => r a := by
+    filter_upwards [hK a] with b hb
+    exact (Part.some_injective (hU a b hb)).symm
+  rw [Measure.map_congr he, Measure.map_const, measure_univ, one_smul]
+
+/-- `Statement:` under the same hypotheses, almost every run keeps the landing `r x₀` at every stage. -/
+theorem ae_landing_const [MeasurableSingletonClass α] {r : α → α} (hrm : Measurable r)
+    (hr : ∀ x, r (r x) = r x) (st : α → α → Prop) (K : Kernel α α) [IsMarkovKernel K]
+    (hK : Subordinate (Motion.ofTotal r hr st) K)
+    (hU : (Motion.ofTotal r hr st).UpStepInvariant) (x₀ : α) :
+    ∀ᵐ x ∂(runLaw K x₀), ∀ n, r (x n) = r x₀ := by
+  have hF : Measurable (fun (x : ℕ → α) (n : ℕ) => r (x n)) :=
+    measurable_pi_iff.mpr fun k => hrm.comp (measurable_pi_apply k)
+  have hm : MeasurableSet {y : ℕ → α | ∀ n, y n = r x₀} := by
+    have : {y : ℕ → α | ∀ n, y n = r x₀} = ⋂ n, (fun y => y n) ⁻¹' {r x₀} := by ext; simp
+    rw [this]; exact MeasurableSet.iInter fun n => measurable_pi_apply n (measurableSet_singleton _)
+  have h0 : runLaw (Kernel.id : Kernel α α) (r x₀) {y | ∃ i, y i ≠ r x₀} = 0 := by
+    have h := runLaw_leaves (Kernel.id : Kernel α α) (r x₀)
+    rw [Kernel.id_apply, Measure.dirac_apply' _ (measurableSet_singleton _).compl] at h
+    simpa using h
+  have hid : ∀ᵐ y ∂(runLaw (Kernel.id : Kernel α α) (r x₀)), ∀ n, y n = r x₀ := by
+    rw [ae_iff]; simpa using h0
+  have hl := runLaw_map_of_lumps K Kernel.id hrm (lumps_id_of_upStepInvariant hr st K hK hU) x₀
+  rw [← hl, ae_map_iff hF.aemeasurable hm] at hid
+  exact hid
+
+/-- `Statement:` if `K` is reversible w.r.t. `π` (Mathlib `Kernel.IsReversible`) and lumps to `L`
+along measurable `f`, then `L` is reversible w.r.t. `π.map f`. -/
+theorem isReversible_map_of_lumps {K : Kernel α α} {L : Kernel β β} {f : α → β}
+    (hf : Measurable f) (h : Lumps K L f) {π : Measure α} (hrev : K.IsReversible π) :
+    L.IsReversible (π.map f) := by
+  intro A B hA hB
+  rw [setLIntegral_map hA (L.measurable_coe hB) hf, setLIntegral_map hB (L.measurable_coe hA) hf]
+  have e : ∀ D : Set β, MeasurableSet D → ∀ x, L (f x) D = K x (f ⁻¹' D) := fun D hD x => by
+    rw [← h x, Measure.map_apply hf hD]
+  simp only [e B hB, e A hA]
+  exact hrev (hf hA) (hf hB)
+
+-- Statement: a reversible Markov kernel leaves its measure invariant (Mathlib
+-- `Kernel.IsReversible.invariant`), so a reversible start is a stationary one.
+example (K : Kernel α α) [IsMarkovKernel K] (π : Measure α) (h : K.IsReversible π) :
+    K.Invariant π := h.invariant
+
+/-- `Statement:` every Markov kernel on `Unit` is reversible w.r.t. every measure; the CONTROL
+`example` after `a4_direction_erased` uses it. -/
+theorem isReversible_unit (L : Kernel Unit Unit) [IsMarkovKernel L] (ν : Measure Unit) :
+    L.IsReversible ν := by
+  intro A B _ _
+  rcases Set.eq_empty_or_nonempty A with rfl | hA'
+  · simp
+  rcases Set.eq_empty_or_nonempty B with rfl | hB'
+  · simp
+  rw [hA'.eq_univ, hB'.eq_univ]
+
+/-- `Statement:` the deterministic kernel of a measurable involution `g` with `π.map g = π` is
+reversible w.r.t. `π`. -/
+theorem isReversible_deterministic_involutive {g : α → α} (hg : Measurable g)
+    (hinv : Function.Involutive g) {π : Measure α} (hπ : π.map g = π) :
+    (Kernel.deterministic g hg).IsReversible π := by
+  intro A B hA hB
+  simp only [Kernel.deterministic_apply]
+  have e : ∀ C : Set α, MeasurableSet C → ∀ D : Set α, MeasurableSet D →
+      ∫⁻ x in C, Measure.dirac (g x) D ∂π = π (g ⁻¹' D ∩ C) := by
+    intro C hC D hD
+    simp_rw [Measure.dirac_apply' _ hD]
+    have : ∀ x, D.indicator (1 : α → ENNReal) (g x) = (g ⁻¹' D).indicator 1 x := fun _ => rfl
+    simp_rw [this]
+    rw [lintegral_indicator_one (hg hD), Measure.restrict_apply (hg hD)]
+  rw [e A hA B hB, e B hB A hA]
+  conv_lhs => rw [← hπ]
+  rw [Measure.map_apply hg ((hg hB).inter hA), Set.preimage_inter, ← Set.preimage_comp,
+    hinv.comp_self, Set.preimage_id, Set.inter_comm]
+
+/-- `Statement:` a deterministic kernel is reversible w.r.t. `π` if `π`-almost every point is fixed. -/
+theorem isReversible_deterministic_of_ae_id {g : α → α} (hg : Measurable g) {π : Measure α}
+    (hid : ∀ᵐ x ∂π, g x = x) : (Kernel.deterministic g hg).IsReversible π := by
+  intro A B hA hB
+  have e : ∀ C : Set α, MeasurableSet C → ∀ D : Set α, MeasurableSet D →
+      ∫⁻ x in C, Kernel.deterministic g hg x D ∂π = π (D ∩ C) := by
+    intro C hC D hD
+    have : ∀ᵐ x ∂(π.restrict C), Kernel.deterministic g hg x D = D.indicator 1 x := by
+      filter_upwards [ae_restrict_of_ae hid] with x hx
+      rw [Kernel.deterministic_apply, Measure.dirac_apply' _ hD, hx]
+    rw [lintegral_congr_ae this, lintegral_indicator_one hD, Measure.restrict_apply hD]
+  rw [e A hA B hB, e B hB A hA, Set.inter_comm]
+
+/-- `Statement:` rotation of the 4-cycle. -/
+def rot4 (x : Fin 4) : Fin 4 := x + 1
+
+/-- `Statement:` the parity of a point of `Fin 4`. -/
+def parity4 (x : Fin 4) : Bool := decide (x.val % 2 = 1)
+
+/-- `Statement:` the deterministic kernel of `rot4` is reversible w.r.t. no probability measure. -/
+theorem rot4_not_reversible (π : Measure (Fin 4)) [IsProbabilityMeasure π] :
+    ¬ (Kernel.deterministic rot4 (measurable_of_finite _)).IsReversible π := by
+  intro h
+  have hz : ∀ x : Fin 4, π {x} = 0 := by
+    intro x
+    have := h (measurableSet_singleton x) (measurableSet_singleton (x + 1))
+    rw [lintegral_singleton, lintegral_singleton, Kernel.deterministic_apply,
+      Kernel.deterministic_apply, Measure.dirac_apply' _ (measurableSet_singleton _),
+      Measure.dirac_apply' _ (measurableSet_singleton _)] at this
+    fin_cases x <;> simpa [rot4, Set.indicator] using this
+  have : π = 0 := (Measure.ext_iff_singleton).2 (by simpa using hz)
+  exact IsProbabilityMeasure.ne_zero π this
+
+/-- `Statement:` `rot4` lumps along `parity4` to the swap of `Bool`. -/
+theorem rot4_lumps_parity4 :
+    Lumps (Kernel.deterministic rot4 (measurable_of_finite _))
+      (Kernel.deterministic (fun b : Bool => !b) (measurable_of_finite _)) parity4 :=
+  (lumps_deterministic_iff _ _ (measurable_of_finite _)).2 (by decide)
+
+/-- `Statement:` the swap of `Bool` is reversible w.r.t. the counting measure on `Bool`. -/
+theorem boolSwap_reversible :
+    (Kernel.deterministic (fun b : Bool => !b) (measurable_of_finite _)).IsReversible
+      (Measure.dirac true + Measure.dirac false) := by
+  refine isReversible_deterministic_involutive _ Bool.not_not ?_
+  rw [Measure.map_add _ _ (measurable_of_finite _), Measure.map_dirac' (measurable_of_finite _),
+    Measure.map_dirac' (measurable_of_finite _)]
+  simp [add_comm]
+
+/-- `Statement:` `rot4` is reversible w.r.t. no probability measure, lumps along `parity4` to the swap
+of `Bool`, and the swap is reversible w.r.t. the counting measure on `Bool`.
+`Reading:` coarse-graining erases an arrow. -/
+theorem a4_direction_erased :
+    (∀ π : Measure (Fin 4), IsProbabilityMeasure π →
+        ¬ (Kernel.deterministic rot4 (measurable_of_finite _)).IsReversible π) ∧
+      Lumps (Kernel.deterministic rot4 (measurable_of_finite _))
+        (Kernel.deterministic (fun b : Bool => !b) (measurable_of_finite _)) parity4 ∧
+      (Kernel.deterministic (fun b : Bool => !b) (measurable_of_finite _)).IsReversible
+        (Measure.dirac true + Measure.dirac false) :=
+  ⟨fun π _ => rot4_not_reversible π, rot4_lumps_parity4, boolSwap_reversible⟩
+
+-- Statement: CONTROL for `isReversible_map_of_lumps`, a target `Unit` makes its conclusion hold for
+-- every kernel: `rot4` lumps along the map to `Unit`, and the kernel on `Unit` is reversible w.r.t.
+-- every measure, while `rot4` is reversible w.r.t. no probability measure.
+example : Lumps (Kernel.deterministic rot4 (measurable_of_finite _))
+      (Kernel.deterministic (id : Unit → Unit) measurable_id) (fun _ : Fin 4 => ()) ∧
+    ∀ ν : Measure Unit, (Kernel.deterministic (id : Unit → Unit) measurable_id).IsReversible ν :=
+  ⟨(lumps_deterministic_iff _ _ (measurable_of_finite _)).2 fun _ => rfl,
+    fun ν => isReversible_unit _ ν⟩
+
+section Matrix
+variable {ι κ R : Type*} [Fintype ι] [DecidableEq κ] [CommSemiring R]
+
+/-- `Statement:` detailed balance, matrix form: `π x * P x y = π y * P y x`. -/
+def DetailedBalance (P : ι → ι → R) (π : ι → R) : Prop := ∀ x y, π x * P x y = π y * P y x
+
+/-- `Statement:` the observed two-time statistic `Pr(f X₀ = a, f X₁ = b)` from `π`. -/
+def coarseLaw2 (π : ι → R) (P : ι → ι → R) (f : ι → κ) (a b : κ) : R :=
+  ∑ x, ∑ y, if f x = a ∧ f y = b then π x * P x y else 0
+
+/-- `Statement:` the observed three-time statistic `Pr(f X₀ = a, f X₁ = b, f X₂ = c)` from `π`. -/
+def coarseLaw3 (π : ι → R) (P : ι → ι → R) (f : ι → κ) (a b c : κ) : R :=
+  ∑ x, ∑ y, ∑ z, if f x = a ∧ f y = b ∧ f z = c then π x * P x y * P y z else 0
+
+/-- `Statement:` reversing the order of a triple finite sum. -/
+theorem sum3_reverse {M : Type*} [AddCommMonoid M] (F : ι → ι → ι → M) :
+    ∑ x, ∑ y, ∑ z, F z y x = ∑ x, ∑ y, ∑ z, F x y z :=
+  calc ∑ x, ∑ y, ∑ z, F z y x = ∑ y, ∑ x, ∑ z, F z y x := Finset.sum_comm
+    _ = ∑ y, ∑ z, ∑ x, F z y x := Finset.sum_congr rfl fun _ _ => Finset.sum_comm
+    _ = ∑ z, ∑ y, ∑ x, F z y x := Finset.sum_comm
+
+/-- `Statement:` under detailed balance, for every observer `f`, `coarseLaw2` is symmetric in `a, b`. -/
+theorem coarseLaw2_reverse {P : ι → ι → R} {π : ι → R} (h : DetailedBalance P π) (f : ι → κ)
+    (a b : κ) : coarseLaw2 π P f a b = coarseLaw2 π P f b a := by
+  unfold coarseLaw2
+  rw [Finset.sum_comm]
+  refine Finset.sum_congr rfl fun x _ => Finset.sum_congr rfl fun y _ => ?_
+  by_cases hc : f y = a ∧ f x = b
+  · rw [ite_eq_left_of_eq_true _ _ (eq_true hc), ite_eq_left_of_eq_true _ _ (eq_true ⟨hc.2, hc.1⟩), h]
+  · rw [ite_eq_right_of_eq_false _ _ (eq_false hc),
+      ite_eq_right_of_eq_false _ _ (eq_false fun h' => hc ⟨h'.2, h'.1⟩)]
+
+/-- `Statement:` under detailed balance, for every observer `f`, `coarseLaw3 a b c = coarseLaw3 c b a`. -/
+theorem coarseLaw3_reverse {P : ι → ι → R} {π : ι → R} (h : DetailedBalance P π) (f : ι → κ)
+    (a b c : κ) : coarseLaw3 π P f a b c = coarseLaw3 π P f c b a := by
+  unfold coarseLaw3
+  have key : ∀ x y z, (if f x = a ∧ f y = b ∧ f z = c then π x * P x y * P y z else 0) =
+      (if f z = c ∧ f y = b ∧ f x = a then π z * P z y * P y x else 0) := by
+    intro x y z
+    by_cases hc : f x = a ∧ f y = b ∧ f z = c
+    · rw [ite_eq_left_of_eq_true _ _ (eq_true hc),
+        ite_eq_left_of_eq_true _ _ (eq_true ⟨hc.2.2, hc.2.1, hc.1⟩)]
+      calc π x * P x y * P y z = (π y * P y x) * P y z := by rw [h x y]
+        _ = P y x * (π y * P y z) := by ring
+        _ = P y x * (π z * P z y) := by rw [h y z]
+        _ = π z * P z y * P y x := by ring
+    · rw [ite_eq_right_of_eq_false _ _ (eq_false hc),
+        ite_eq_right_of_eq_false _ _ (eq_false fun h' => hc ⟨h'.2.2, h'.2.1, h'.1⟩)]
+  simp_rw [key]
+  exact sum3_reverse (fun z y x => if f z = c ∧ f y = b ∧ f x = a then π z * P z y * P y x else 0)
+
+end Matrix
+
+section Aggregated
+variable {ι κ : Type*} [Fintype ι] [DecidableEq κ]
+
+/-- `Statement:` the `π`-weight of the class `a` of `f`. -/
+noncomputable def classWeight (π : ι → ℚ) (f : ι → κ) (a : κ) : ℚ := ∑ x, if f x = a then π x else 0
+
+/-- `Statement:` the aggregated chain `coarseLaw2 a b / classWeight a`, for every observer `f`. -/
+noncomputable def aggregatedChain (π : ι → ℚ) (P : ι → ι → ℚ) (f : ι → κ) (a b : κ) : ℚ :=
+  coarseLaw2 π P f a b / classWeight π f a
+
+/-- `Statement:` under detailed balance, if every class has nonzero weight, the aggregated chain
+satisfies detailed balance w.r.t. `classWeight`, for every observer `f`. -/
+theorem aggregatedChain_detailedBalance {P : ι → ι → ℚ} {π : ι → ℚ} (h : DetailedBalance P π)
+    (f : ι → κ) (hpos : ∀ a, classWeight π f a ≠ 0) :
+    DetailedBalance (aggregatedChain π P f) (classWeight π f) := by
+  intro a b
+  unfold aggregatedChain
+  rw [mul_div_cancel₀ _ (hpos a), mul_div_cancel₀ _ (hpos b), coarseLaw2_reverse h]
+
+end Aggregated
+
+/-- `Statement:` the lazy pair chain on `Fin 4`: `0 ↔ 1` and `2 ↔ 3`, each with weight 1/2. -/
+def lazyPairs : Fin 4 → Fin 4 → ℚ :=
+  ![![1/2, 1/2, 0, 0], ![1/2, 1/2, 0, 0], ![0, 0, 1/2, 1/2], ![0, 0, 1/2, 1/2]]
+
+/-- `Statement:` the uniform weight vector on `Fin 4`. -/
+def unifFin4 : Fin 4 → ℚ := fun _ => 1/4
+
+/-- `Statement:` the observer `0 ↦ 0`, `2 ↦ 1`, `1, 3 ↦ 2`. -/
+def lazyPairsProj (x : Fin 4) : Fin 3 := if x.val = 0 then 0 else if x.val = 2 then 1 else 2
+
+/-- `Statement:` `lazyPairs` satisfies detailed balance w.r.t. `unifFin4`. -/
+theorem detailedBalance_lazyPairs : DetailedBalance lazyPairs unifFin4 := by
+  intro x y; fin_cases x <;> fin_cases y <;> simp [lazyPairs, unifFin4]
+
+/-- `Statement:` the mass row `x` of `P` sends into the class `b` of `lazyPairsProj`. -/
+def projClassMass (P : Fin 4 → Fin 4 → ℚ) (x : Fin 4) (b : Fin 3) : ℚ :=
+  ∑ y, if lazyPairsProj y = b then P x y else 0
+
+/-- `Statement:` `lazyPairs` is not lumpable along `lazyPairsProj`: `1` and `3` share a class and send
+different mass into class `0`. -/
+theorem lazyPairs_not_lumpable :
+    lazyPairsProj 1 = lazyPairsProj 3 ∧ projClassMass lazyPairs 1 0 ≠ projClassMass lazyPairs 3 0 := by
+  refine ⟨by decide, ?_⟩
+  simp [projClassMass, Fin.sum_univ_four, lazyPairsProj, lazyPairs]
+
+/-- `Statement:` no `ν : Fin 3 → ℚ` and `Q : Fin 3 → Fin 3 → ℚ` give
+`coarseLaw3 unifFin4 lazyPairs lazyPairsProj a b c = ν a * Q a b * Q b c` at every `a b c`. -/
+theorem lazyPairs_coarse_not_markov :
+    ¬ ∃ (ν : Fin 3 → ℚ) (Q : Fin 3 → Fin 3 → ℚ),
+      ∀ a b c, coarseLaw3 unifFin4 lazyPairs lazyPairsProj a b c = ν a * Q a b * Q b c := by
+  rintro ⟨ν, Q, hQ⟩
+  have e020 : coarseLaw3 unifFin4 lazyPairs lazyPairsProj 0 2 0 = 1/16 := by
+    simp [coarseLaw3, Fin.sum_univ_four, lazyPairsProj, lazyPairs, unifFin4]; norm_num
+  have e121 : coarseLaw3 unifFin4 lazyPairs lazyPairsProj 1 2 1 = 1/16 := by
+    simp [coarseLaw3, Fin.sum_univ_four, lazyPairsProj, lazyPairs, unifFin4]; norm_num
+  have e021 : coarseLaw3 unifFin4 lazyPairs lazyPairsProj 0 2 1 = 0 := by
+    simp [coarseLaw3, Fin.sum_univ_four, lazyPairsProj, lazyPairs, unifFin4]
+  have h1 := hQ 0 2 0; have h2 := hQ 1 2 1; have h3 := hQ 0 2 1
+  rw [e020] at h1; rw [e121] at h2; rw [e021] at h3
+  have a1 : ν 0 * Q 0 2 ≠ 0 := by
+    intro e; rw [e, zero_mul] at h1; norm_num at h1
+  have a2 : Q 2 1 ≠ 0 := by
+    intro e; rw [e, mul_zero] at h2; norm_num at h2
+  exact mul_ne_zero a1 a2 h3.symm
+
+/-- `Statement:` the observed three-time statistic of `lazyPairs` under `lazyPairsProj` from `unifFin4`
+is reversal-symmetric. -/
+theorem lazyPairs_coarse_reversal_symmetric (a b c : Fin 3) :
+    coarseLaw3 unifFin4 lazyPairs lazyPairsProj a b c =
+      coarseLaw3 unifFin4 lazyPairs lazyPairsProj c b a :=
+  coarseLaw3_reverse detailedBalance_lazyPairs lazyPairsProj a b c
+
+/-- `Statement:` the involution `x ↦ 3 - x` of `Fin 4`. -/
+def flip4 (x : Fin 4) : Fin 4 := ⟨3 - x.val, by omega⟩
+
+/-- `Statement:` `lazyPairs x y = lazyPairs (flip4 y) (flip4 x)` at every `x y`. -/
+theorem lazyPairs_sigma_reversible : ∀ x y, lazyPairs x y = lazyPairs (flip4 y) (flip4 x) := by
+  intro x y; fin_cases x <;> fin_cases y <;> rfl
+
+/-- `Statement:` the absorbing map on `Fin 4`: `0 ↦ 1`, `2 ↦ 3`, `1` and `3` fixed. -/
+def absorb4 (x : Fin 4) : Fin 4 := if x.val = 0 then 1 else if x.val = 2 then 3 else x
+
+/-- `Statement:` the constant map to `2` on `Fin 3`. -/
+def absorb4Coarse (_ : Fin 3) : Fin 3 := 2
+
+/-- `Statement:` the deterministic kernel of `absorb4` lumps along `lazyPairsProj` to `absorb4Coarse`. -/
+theorem absorb4_lumps :
+    Lumps (Kernel.deterministic absorb4 (measurable_of_finite _))
+      (Kernel.deterministic absorb4Coarse (measurable_of_finite _)) lazyPairsProj :=
+  (lumps_deterministic_iff _ _ (measurable_of_finite _)).2 (by decide)
+
+/-- `Statement:` the deterministic kernel of `absorb4` is reversible w.r.t. every measure carried by
+the fixed points `1` and `3` of `absorb4`. -/
+theorem absorb4_reversible (s t : ENNReal) :
+    (Kernel.deterministic absorb4 (measurable_of_finite _)).IsReversible
+      (s • Measure.dirac (1 : Fin 4) + t • Measure.dirac (3 : Fin 4)) := by
+  refine isReversible_deterministic_of_ae_id _ ?_
+  rw [ae_add_measure_iff]
+  have hm : MeasurableSet {x : Fin 4 | absorb4 x = x} := (Set.toFinite _).measurableSet
+  refine ⟨Measure.ae_smul_measure ((ae_dirac_iff hm).2 (by decide)) _,
+    Measure.ae_smul_measure ((ae_dirac_iff hm).2 (by decide)) _⟩
+
+/-- `Statement:` the deterministic kernel of `absorb4Coarse` is reversible w.r.t. the image under
+`lazyPairsProj` of each of those measures (`isReversible_map_of_lumps`). -/
+theorem absorb4_coarse_reversible (s t : ENNReal) :
+    (Kernel.deterministic absorb4Coarse (measurable_of_finite _)).IsReversible
+      ((s • Measure.dirac (1 : Fin 4) + t • Measure.dirac (3 : Fin 4)).map lazyPairsProj) :=
+  isReversible_map_of_lumps (measurable_of_finite _) absorb4_lumps (absorb4_reversible s t)
+
+/-- `Statement:` no involution `σ` of `Fin 4` has `step a b ↔ step (σ b) (σ a)` in `Motion.ofFun absorb4`. -/
+theorem absorb4_not_sigma_reversible :
+    ¬ ∃ σ : Fin 4 → Fin 4, Function.Involutive σ ∧
+      ∀ a b, (Motion.ofFun absorb4).step a b ↔ (Motion.ofFun absorb4).step (σ b) (σ a) := by
+  rintro ⟨σ, hσ, h⟩
+  have e0 : σ 0 = absorb4 (σ 1) := (h 0 1).1 (show (1 : Fin 4) = absorb4 0 by decide)
+  have e1 : σ 1 = absorb4 (σ 1) := (h 1 1).1 (show (1 : Fin 4) = absorb4 1 by decide)
+  exact absurd (hσ.injective (e0.trans e1.symm)) (by decide)
+
+/-- `Statement:` under the chain from any probability law `μ`, `(x 0, x 1)` has law `μ ⊗ₘ K`. -/
+theorem chainLaw_pair (μ : Measure α) [IsProbabilityMeasure μ] (K : Kernel α α)
+    [IsMarkovKernel K] :
+    (chainLaw μ K).map (fun x => (x 0, x 1)) = μ ⊗ₘ K := by
+  have h01 : (fun x : ℕ → α => (x 0, x 1)) =
+      Prod.map (pathLast 0) id ∘ (fun x => (Preorder.frestrictLe 0 x, x (0 + 1))) := by
+    funext x; rfl
+  rw [h01, ← Measure.map_map ((measurable_pathLast 0).prodMap measurable_id) (by fun_prop),
+    ← chainLaw_step μ K 0]
+  have hk : homK K 0 = K.comap (pathLast 0) (measurable_pathLast 0) := rfl
+  rw [hk, compProd_comap_map _ (measurable_pathLast 0), chainLaw_prefix_zero,
+    Measure.map_map (measurable_pathLast 0)
+      (MeasurableEquiv.piUnique (fun _ : Iic 0 => α)).symm.measurable]
+  have : pathLast 0 ∘ (MeasurableEquiv.piUnique (fun _ : Iic 0 => α)).symm = id := by
+    funext a; rfl
+  rw [this, Measure.map_id]
+
+/-- `Statement:` the first two coordinates of a history indexed by `Iic 1`. -/
+def histFirst2 (h : (i : Iic 1) → α) : α × α :=
+  (h ⟨0, Finset.mem_Iic.mpr (Nat.zero_le _)⟩, h ⟨1, Finset.mem_Iic.mpr le_rfl⟩)
+
+/-- `Statement:` `histFirst2` is measurable. -/
+theorem measurable_histFirst2 : Measurable (histFirst2 (α := α)) := by
+  unfold histFirst2; fun_prop
+
+/-- `Statement:` `((x 0, x 1), x 2)` has law `(μ ⊗ₘ K) ⊗ₘ K` read at the second coordinate. -/
+theorem chainLaw_triple (μ : Measure α) [IsProbabilityMeasure μ] (K : Kernel α α)
+    [IsMarkovKernel K] :
+    (chainLaw μ K).map (fun x => ((x 0, x 1), x 2)) =
+      (μ ⊗ₘ K) ⊗ₘ K.comap Prod.snd measurable_snd := by
+  have h12 : (fun x : ℕ → α => ((x 0, x 1), x 2)) =
+      Prod.map histFirst2 id ∘ (fun x => (Preorder.frestrictLe 1 x, x (1 + 1))) := by
+    funext x; rfl
+  rw [h12, ← Measure.map_map (measurable_histFirst2.prodMap measurable_id) (by fun_prop),
+    ← chainLaw_step μ K 1]
+  have hk : homK K 1 = (K.comap Prod.snd measurable_snd).comap histFirst2 measurable_histFirst2 := by
+    ext h s hs; rfl
+  rw [hk, compProd_comap_map _ measurable_histFirst2,
+    Measure.map_map measurable_histFirst2 (Preorder.measurable_frestrictLe 1)]
+  have : histFirst2 ∘ Preorder.frestrictLe 1 = fun x : ℕ → α => (x 0, x 1) := by funext x; rfl
+  rw [this, chainLaw_pair]
+
+section Discrete
+variable [MeasurableSingletonClass α] [Countable α]
+
+/-- `Statement:` `Pr_μ(x 0 = a, x 1 = b, x 2 = c) = μ {a} * K a {b} * K b {c}`. -/
+theorem chainLaw_triple_singleton (μ : Measure α) [IsProbabilityMeasure μ] (K : Kernel α α)
+    [IsMarkovKernel K] (a b c : α) :
+    (chainLaw μ K).map (fun x => (x 0, x 1, x 2)) {(a, b, c)} = μ {a} * K a {b} * K b {c} := by
+  have hm1 : Measurable (fun x : ℕ → α => (x 0, x 1, x 2)) := by fun_prop
+  have hm2 : Measurable (fun x : ℕ → α => ((x 0, x 1), x 2)) := by fun_prop
+  rw [Measure.map_apply hm1 (measurableSet_singleton _)]
+  have hpre : (fun x : ℕ → α => (x 0, x 1, x 2)) ⁻¹' {(a, b, c)} =
+      (fun x : ℕ → α => ((x 0, x 1), x 2)) ⁻¹' ({(a, b)} ×ˢ {c}) := by
+    ext x; simp [and_assoc]
+  rw [hpre, ← Measure.map_apply hm2 ((measurableSet_singleton _).prod (measurableSet_singleton _)),
+    chainLaw_triple, Measure.compProd_apply_prod (measurableSet_singleton _)
+      (measurableSet_singleton _), lintegral_singleton, Kernel.comap_apply,
+    ← Set.singleton_prod_singleton, Measure.compProd_apply_prod (measurableSet_singleton _)
+      (measurableSet_singleton _), lintegral_singleton]
+  ring
+
+/-- `Statement:` the matrix `K x {y}` read off a kernel. -/
+noncomputable def kernelMat (K : Kernel α α) (x y : α) : ENNReal := K x {y}
+
+/-- `Statement:` the vector `μ {x}` read off a measure. -/
+noncomputable def measureVec (μ : Measure α) (x : α) : ENNReal := μ {x}
+
+/-- `Statement:` on a finite carrier, for every kernel, every initial probability law `μ` and every
+measurable observer `f`, the law of `(f (x 0), f (x 1), f (x 2))` at `(a, b, c)` is `coarseLaw3` of
+`measureVec μ` and `kernelMat K`. -/
+theorem chainLaw_coarse3_eq_coarseLaw3 [Fintype α] {κ : Type*} [MeasurableSpace κ]
+    [MeasurableSingletonClass κ] [DecidableEq κ] (μ : Measure α) [IsProbabilityMeasure μ]
+    (K : Kernel α α) [IsMarkovKernel K] (f : α → κ) (hf : Measurable f) (a b c : κ) :
+    (chainLaw μ K).map (fun x => (f (x 0), f (x 1), f (x 2))) {(a, b, c)} =
+      coarseLaw3 (measureVec μ) (kernelMat K) f a b c := by
+  have hg : Measurable (fun t : α × α × α => (f t.1, f t.2.1, f t.2.2)) := by fun_prop
+  have hcomp : (fun x : ℕ → α => (f (x 0), f (x 1), f (x 2))) =
+      (fun t : α × α × α => (f t.1, f t.2.1, f t.2.2)) ∘ (fun x => (x 0, x 1, x 2)) := rfl
+  classical
+  rw [hcomp, ← Measure.map_map hg (by fun_prop), Measure.map_apply hg (measurableSet_singleton _)]
+  set ν := (chainLaw μ K).map (fun x => (x 0, x 1, x 2)) with hν
+  have hS : ν ((fun t : α × α × α => (f t.1, f t.2.1, f t.2.2)) ⁻¹' {(a, b, c)}) =
+      ∑ t : α × α × α, if (f t.1, f t.2.1, f t.2.2) = (a, b, c) then ν {t} else 0 := by
+    rw [← Finset.sum_filter, sum_measure_singleton]
+    congr 1
+    ext t; simp
+  rw [hS]
+  unfold coarseLaw3
+  rw [Fintype.sum_prod_type]
+  refine Finset.sum_congr rfl fun x _ => ?_
+  rw [Fintype.sum_prod_type]
+  refine Finset.sum_congr rfl fun y _ => Finset.sum_congr rfl fun z _ => ?_
+  simp only [Prod.mk.injEq]
+  split_ifs
+  · exact chainLaw_triple_singleton μ K x y z
+  · rfl
+
+omit [Countable α] in
+/-- `Statement:` `K.IsReversible μ` gives `DetailedBalance (kernelMat K) (measureVec μ)`. -/
+theorem detailedBalance_of_isReversible (μ : Measure α) (K : Kernel α α) (h : K.IsReversible μ) :
+    DetailedBalance (kernelMat K) (measureVec μ) := by
+  intro x y
+  have := h (measurableSet_singleton x) (measurableSet_singleton y)
+  rw [lintegral_singleton, lintegral_singleton] at this
+  simpa [kernelMat, measureVec, mul_comm] using this
+
+/-- `Statement:` on a finite carrier with measurable singletons, if `K` is reversible w.r.t. the initial
+law `μ`, then for every measurable observer `f` into a space with measurable singletons the observed
+three-time law at `(a, b, c)` equals that at `(c, b, a)`. -/
+theorem chainLaw_coarse3_reverse [Finite α] {κ : Type*} [MeasurableSpace κ]
+    [MeasurableSingletonClass κ] (μ : Measure α) [IsProbabilityMeasure μ]
+    (K : Kernel α α) [IsMarkovKernel K] (hrev : K.IsReversible μ) (f : α → κ) (hf : Measurable f)
+    (a b c : κ) :
+    (chainLaw μ K).map (fun x => (f (x 0), f (x 1), f (x 2))) {(a, b, c)} =
+      (chainLaw μ K).map (fun x => (f (x 0), f (x 1), f (x 2))) {(c, b, a)} := by
+  classical
+  have := Fintype.ofFinite α
+  rw [chainLaw_coarse3_eq_coarseLaw3 μ K f hf, chainLaw_coarse3_eq_coarseLaw3 μ K f hf,
+    coarseLaw3_reverse (detailedBalance_of_isReversible μ K hrev)]
+
+end Discrete
+
+end Lumping
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -1097,4 +2020,87 @@ open ZeroParadox
 #print axioms slot_stay_eq_trials
 #print axioms glauber_slot_leaves
 #print axioms leave_half_of_maxEntropy
+#print axioms Lumps
+#print axioms FiberConst
+#print axioms Lumps.fiberConst
+#print axioms mapHist
+#print axioms measurable_mapHist
+#print axioms appendHist
+#print axioms measurable_appendHist
+#print axioms mapHist_comp_appendHist
+#print axioms appendHist_prefix
+#print axioms chainLaw
+#print axioms isProbabilityMeasure_chainLaw
+#print axioms runLaw_eq_chainLaw
+#print axioms chainLaw_prefix_zero
+#print axioms chainLaw_step
+#print axioms chainLaw_prefix_succ
+#print axioms compProd_comap_map
+#print axioms homK_compProd_naturality
+#print axioms chainLaw_prefix_naturality
+#print axioms pathMeasure_eq_of_prefix_eq
+#print axioms chainLaw_map_of_lumps
+#print axioms runLaw_map_of_lumps
+#print axioms runLaw_time_one
+#print axioms lumps_of_runLaw_map
+#print axioms lumps_iff_runLaw_map
+#print axioms lumps_deterministic_iff
+#print axioms subordinate_quot_of_lumps
+#print axioms subordinate_quot_of_lumps_countable
+#print axioms suppMotion
+#print axioms subordinate_supp
+#print axioms stepCompat_supp_of_fiberConst
+#print axioms suppControlKernel
+#print axioms suppControlKernel_stepCompat_not_fiberConst
+#print axioms measurableSet_leaves
+#print axioms ae_obs_leaves_iff
+#print axioms lumped_leave_weight
+#print axioms quot_leavesAt_of_ae
+#print axioms lumps_id_of_upStepInvariant
+#print axioms ae_landing_const
+#print axioms isReversible_map_of_lumps
+#print axioms isReversible_unit
+#print axioms isReversible_deterministic_involutive
+#print axioms isReversible_deterministic_of_ae_id
+#print axioms rot4
+#print axioms parity4
+#print axioms rot4_not_reversible
+#print axioms rot4_lumps_parity4
+#print axioms boolSwap_reversible
+#print axioms a4_direction_erased
+#print axioms DetailedBalance
+#print axioms coarseLaw2
+#print axioms coarseLaw3
+#print axioms sum3_reverse
+#print axioms coarseLaw2_reverse
+#print axioms coarseLaw3_reverse
+#print axioms classWeight
+#print axioms aggregatedChain
+#print axioms aggregatedChain_detailedBalance
+#print axioms lazyPairs
+#print axioms unifFin4
+#print axioms lazyPairsProj
+#print axioms detailedBalance_lazyPairs
+#print axioms projClassMass
+#print axioms lazyPairs_not_lumpable
+#print axioms lazyPairs_coarse_not_markov
+#print axioms lazyPairs_coarse_reversal_symmetric
+#print axioms flip4
+#print axioms lazyPairs_sigma_reversible
+#print axioms absorb4
+#print axioms absorb4Coarse
+#print axioms absorb4_lumps
+#print axioms absorb4_reversible
+#print axioms absorb4_coarse_reversible
+#print axioms absorb4_not_sigma_reversible
+#print axioms chainLaw_pair
+#print axioms histFirst2
+#print axioms measurable_histFirst2
+#print axioms chainLaw_triple
+#print axioms chainLaw_triple_singleton
+#print axioms kernelMat
+#print axioms measureVec
+#print axioms chainLaw_coarse3_eq_coarseLaw3
+#print axioms detailedBalance_of_isReversible
+#print axioms chainLaw_coarse3_reverse
 end PurityCheck
