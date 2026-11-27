@@ -244874,7 +244874,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 4932,
+        "declarations": 5013,
         "files": 249
       },
       "entries": [
@@ -245057,6 +245057,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0055aee8-e1fe-42b3-a9a9-3a45d0838b24",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.absorb4",
+            "short": "absorb4"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.absorb4",
+            "short": "absorb4",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -245983,6 +246020,43 @@
           "verify": {
             "axioms": [],
             "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "018d9dfb-6070-4ef5-a631-5a5b26b1a970",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lazyPairs_coarse_not_markov",
+            "short": "lazyPairs_coarse_not_markov"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lazyPairs_coarse_not_markov",
+            "short": "lazyPairs_coarse_not_markov",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
           }
         },
         {
@@ -252955,6 +253029,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "0aab5d70-9dca-4354-86f2-62d5f42812f6",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.measurable_mapHist",
+            "short": "measurable_mapHist"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.measurable_mapHist",
+            "short": "measurable_mapHist",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "0ab50298-92ad-4def-8735-365dfcf39803",
           "new": {
             "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
@@ -258556,6 +258667,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "125ad57e-c8bf-4177-bd13-34dd7a0af55a",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.rot4_not_reversible",
+            "short": "rot4_not_reversible"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.rot4_not_reversible",
+            "short": "rot4_not_reversible",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "126909b4-25a7-4cfd-b8a3-a9bb237da843",
           "new": {
             "file": "ZeroParadox/Ordinal/OrdinalChoiceEssential.lean",
@@ -261423,6 +261571,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "16501e50-f27a-4970-952f-15a4f4b498c0",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.appendHist",
+            "short": "appendHist"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.appendHist",
+            "short": "appendHist",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "16824b3b-a0fd-469d-a92f-4c4a7dd75d75",
           "new": {
@@ -262459,6 +262644,43 @@
             ]
           },
           "reason": "New file ZeroParadox/Information/MaxEntropy.lean (experimental, Tim ruling 154): fair coin maximizes entropy, missing information zero iff fair, chain to mlRandom_and_snap_ae under binEntropy p = log 2, Kraft in measure form, almost every fair tape incompressible for any prefix-free decoder. The occurrence commitment is reduced, not discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "18107545-bb7d-47c5-bb74-66743a5fb578",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.mapHist",
+            "short": "mapHist"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.mapHist",
+            "short": "mapHist",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -266036,6 +266258,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "1d744d71-a643-49ba-ac2f-25b09bae64d8",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.coarseLaw2_reverse",
+            "short": "coarseLaw2_reverse"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.coarseLaw2_reverse",
+            "short": "coarseLaw2_reverse",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "1d886ddf-b5c7-41a0-b0eb-33306c7122b1",
           "new": {
             "file": "ZeroParadox/Valuation/Padic.lean",
@@ -267070,6 +267329,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "1f346c6c-e47e-48e1-b6e3-052396da875b",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.histFirst2",
+            "short": "histFirst2"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.histFirst2",
+            "short": "histFirst2",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "1f3c3c5a-32f0-4a05-974e-b51cd268e9b8",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -267925,6 +268221,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "2056a5f9-aa11-4d29-88db-b24606ccb1dc",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Lumps.fiberConst",
+            "short": "fiberConst"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Lumps.fiberConst",
+            "short": "fiberConst",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -268898,6 +269231,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "2224967f-29d3-457c-9bc1-c80de593a9e7",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lazyPairs",
+            "short": "lazyPairs"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lazyPairs",
+            "short": "lazyPairs",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "2227c004-38bc-42fe-941f-31d131839b78",
           "new": {
@@ -269329,6 +269699,43 @@
             "role": []
           },
           "reason": "die-bend-1104: Tim's \"bend\" (ruling 38): first-occurrence time det as a Galois insertion of tapes onto NInf, order reversed (Die.lean § XXV)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "22ccd6e0-81e0-4fa1-a3da-a0598737dbb3",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lazyPairsProj",
+            "short": "lazyPairsProj"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lazyPairsProj",
+            "short": "lazyPairsProj",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -278510,6 +278917,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "2fbfcbba-fb57-4b17-8b89-0307795846a4",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.projClassMass",
+            "short": "projClassMass"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.projClassMass",
+            "short": "projClassMass",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "2fc6a3aa-8404-45c1-86e8-12d37fc5b160",
           "new": {
             "file": "ZeroParadox/Category/IgnoranceSeam.lean",
@@ -279321,6 +279765,43 @@
             ]
           },
           "reason": "RiemannSphere § IX: rounding the 2-adic valuation to an even landing (UP/DOWN), the flip conjugating one into the other, and rInv conjugating multiplication by u into multiplication by u^-1",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "30c37f0e-943b-43c3-8365-1b071fb51844",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.isReversible_unit",
+            "short": "isReversible_unit"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.isReversible_unit",
+            "short": "isReversible_unit",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -286790,6 +287271,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "3bf65c6b-74d3-4700-8b54-839c01cd55bd",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.coarseLaw2",
+            "short": "coarseLaw2"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.coarseLaw2",
+            "short": "coarseLaw2",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "3bf6a52e-105c-4cab-8f85-160cc2779952",
           "new": {
             "file": "ZeroParadox/Multihomed/TwoAdicBend.lean",
@@ -290701,6 +291219,43 @@
             "role": []
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "41d11d15-abaf-437c-b18b-50c80086f5b0",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.chainLaw_coarse3_reverse",
+            "short": "chainLaw_coarse3_reverse"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.chainLaw_coarse3_reverse",
+            "short": "chainLaw_coarse3_reverse",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -295254,6 +295809,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "47be8055-ce22-4001-8cb9-98783072f2fb",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.chainLaw_map_of_lumps",
+            "short": "chainLaw_map_of_lumps"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.chainLaw_map_of_lumps",
+            "short": "chainLaw_map_of_lumps",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "47c6b618-fd8d-4984-bf20-bbca7ab9568b",
           "new": {
             "file": "ZeroParadox/Category/Node4Generation.lean",
@@ -295835,6 +296427,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "48ac0775-d7ba-40fe-9987-7d36ca7a2222",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.homK_compProd_naturality",
+            "short": "homK_compProd_naturality"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.homK_compProd_naturality",
+            "short": "homK_compProd_naturality",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -303346,6 +303975,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "5336871f-b755-4e98-8d74-ea7627b77b88",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.absorb4_not_sigma_reversible",
+            "short": "absorb4_not_sigma_reversible"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.absorb4_not_sigma_reversible",
+            "short": "absorb4_not_sigma_reversible",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "5372faca-c17b-4076-ac5e-bea3f4eceba6",
           "new": {
             "file": "ZeroParadox/Computability/Occurrence.lean",
@@ -304279,6 +304945,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "55421b4d-fec1-4c9d-b5fd-d55a286e49d1",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.runLaw_time_one",
+            "short": "runLaw_time_one"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.runLaw_time_one",
+            "short": "runLaw_time_one",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "55526654-8f6e-414e-a304-ef1506f6bc6a",
           "new": {
             "file": "ZeroParadox/Valuation/DoublingAndTree.lean",
@@ -305059,6 +305762,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "56700c43-c598-44d2-a288-92c874dfd8b3",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.aggregatedChain_detailedBalance",
+            "short": "aggregatedChain_detailedBalance"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.aggregatedChain_detailedBalance",
+            "short": "aggregatedChain_detailedBalance",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "567cbd95-f84f-489d-a5f6-40c52dced0ab",
           "new": {
             "file": "ZeroParadox/Settheory/Coalgebra.lean",
@@ -305124,6 +305864,43 @@
             ]
           },
           "reason": "K2 motion-level ends (bijOn_sources_sinks) and EM23-CARRY-1k: the die's registration and selection classicals reduced to excluded middle (ChoiceCannotBe § IV cases 4-5)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "569007e7-e521-4777-910b-7e3431d07b98",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.isReversible_deterministic_involutive",
+            "short": "isReversible_deterministic_involutive"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.isReversible_deterministic_involutive",
+            "short": "isReversible_deterministic_involutive",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -306560,6 +307337,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "5848bd88-115b-44e7-8aa7-6ae105130329",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.pathMeasure_eq_of_prefix_eq",
+            "short": "pathMeasure_eq_of_prefix_eq"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.pathMeasure_eq_of_prefix_eq",
+            "short": "pathMeasure_eq_of_prefix_eq",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -311886,6 +312700,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "5f927f2c-7292-4543-ac78-ac94a0b2bc6d",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.a4_direction_erased",
+            "short": "a4_direction_erased"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.a4_direction_erased",
+            "short": "a4_direction_erased",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "5fad9829-e4c5-42f8-8eae-2d9fa53aa9bc",
           "new": {
             "file": "ZeroParadox/Multihomed/BendDie.lean",
@@ -312793,6 +313644,43 @@
             ]
           },
           "reason": "New file ScaleRealization.lean: the realization map carrying an abstract scale step to 2-adic doubling (Function.Semiconj), with the valuation law derived rather than asserted, two refutation-grade falsifiers, and a non-vacuity witness.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "6103102d-2577-486e-a1e8-69d6eff1464c",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.chainLaw",
+            "short": "chainLaw"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.chainLaw",
+            "short": "chainLaw",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -315970,6 +316858,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "657120ac-3a34-4c15-b77e-dd1e13a86352",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.stepCompat_supp_of_fiberConst",
+            "short": "stepCompat_supp_of_fiberConst"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.stepCompat_supp_of_fiberConst",
+            "short": "stepCompat_supp_of_fiberConst",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "657cf8c3-d69c-4443-a834-267701ba3563",
           "new": {
             "file": "ZeroParadox/Valuation/ScaleBridge.lean",
@@ -317217,6 +318142,43 @@
             "role": []
           },
           "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "679eb98a-fe1f-4065-b103-cef46e5da718",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.isProbabilityMeasure_chainLaw",
+            "short": "isProbabilityMeasure_chainLaw"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.isProbabilityMeasure_chainLaw",
+            "short": "isProbabilityMeasure_chainLaw",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -320321,6 +321283,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "6be64b1c-53e4-4d57-95f9-eb05131201f8",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Lumps",
+            "short": "Lumps"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Lumps",
+            "short": "Lumps",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "6bec9c3c-55cc-41a1-9488-a18c4e3cccde",
           "new": {
             "file": "ZeroParadox/Settheory/HypersetOrder.lean",
@@ -320604,6 +321603,80 @@
             ]
           },
           "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "6c53365f-bbdf-422c-8f13-bd12270092dc",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.chainLaw_step",
+            "short": "chainLaw_step"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.chainLaw_step",
+            "short": "chainLaw_step",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "6c545708-c199-447e-a9b9-e6d85af0f2c3",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.kernelMat",
+            "short": "kernelMat"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.kernelMat",
+            "short": "kernelMat",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -322006,6 +323079,43 @@
             ]
           },
           "reason": "T-H3 conjuncts as die motions, with controls and two obstructions (ZeroParadox/Multihomed/TH3Die.lean; Tim: \"Land it\", 2026-11-18)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "6e08c1be-d2de-48a6-bc05-8c04cd6de711",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.unifFin4",
+            "short": "unifFin4"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.unifFin4",
+            "short": "unifFin4",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -325331,6 +326441,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "7384aba5-4cb9-499d-a070-142dadfc48e7",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lazyPairs_coarse_reversal_symmetric",
+            "short": "lazyPairs_coarse_reversal_symmetric"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lazyPairs_coarse_reversal_symmetric",
+            "short": "lazyPairs_coarse_reversal_symmetric",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "739f829e-f920-4bae-89e2-43d4a5efa3e7",
           "new": {
             "file": "ZeroParadox/Valuation/TreeNotForced.lean",
@@ -325618,6 +326765,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "73f3c1d4-a42e-4b1b-883c-f847e2a17a8d",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.DetailedBalance",
+            "short": "DetailedBalance"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.DetailedBalance",
+            "short": "DetailedBalance",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -327021,6 +328205,43 @@
             ]
           },
           "reason": "DS1113-1 fix (values-not-domain control, total corollary, isometric iso carries UpOrthogonal) and the qubit as a die: measurement, bit flip as isometric StrictIso, flip vs orthocomplement on lines (Tim approved 2026-11-13)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "75b1d1bb-ba9d-44e9-85cf-3e182dbe0506",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.chainLaw_triple",
+            "short": "chainLaw_triple"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.chainLaw_triple",
+            "short": "chainLaw_triple",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -329811,6 +331032,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "79ca14d0-9560-4eee-8628-41d65849e92b",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.chainLaw_pair",
+            "short": "chainLaw_pair"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.chainLaw_pair",
+            "short": "chainLaw_pair",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "79cc3b18-4555-40f1-98ed-5555a1ec680a",
           "new": {
             "file": "ZeroParadox/Meta/AxiomLedger.lean",
@@ -330546,6 +331804,80 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "7af0a787-cd25-4758-be26-62765e7e2440",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.coarseLaw3_reverse",
+            "short": "coarseLaw3_reverse"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.coarseLaw3_reverse",
+            "short": "coarseLaw3_reverse",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "7b10a380-a18a-4c6f-8875-6dcabdd7b209",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.absorb4_lumps",
+            "short": "absorb4_lumps"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.absorb4_lumps",
+            "short": "absorb4_lumps",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -335670,6 +337002,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "81f75631-de62-4534-926b-547a7a53c421",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.rot4",
+            "short": "rot4"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.rot4",
+            "short": "rot4",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "820c2504-46a1-4245-9236-6f5720d1c8a1",
           "new": {
             "file": "ZeroParadox/Information/Disjunctive.lean",
@@ -335995,6 +337364,43 @@
             "role": []
           },
           "reason": "die-double-1111: two copies of a motion (Die § XXVI): interleaving pairing for the doubling premise; doubling, fixed pole and non-degeneracy as three separate premises; lockstep pairing as the lax product with its counterexample; carrier controls in DoublingAndTree § IX. Tim ruling 2026-11-11",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "8273a982-a504-4a61-b498-f64d7a278f30",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.runLaw_eq_chainLaw",
+            "short": "runLaw_eq_chainLaw"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.runLaw_eq_chainLaw",
+            "short": "runLaw_eq_chainLaw",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -336523,6 +337929,43 @@
           "reason": "LawvereTwoAdic.lean: partial 2-adic digit streams, add-one and doubling (2026-10-07)",
           "verify": {
             "axioms": [],
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "8324b200-9d59-464f-b281-502ad2ef46e6",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ae_landing_const",
+            "short": "ae_landing_const"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ae_landing_const",
+            "short": "ae_landing_const",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
+          "verify": {
+            "axioms": null,
             "sorry_free": null
           }
         },
@@ -341851,6 +343294,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "8b206d50-6bcb-42f2-89da-f9bce09443f6",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.subordinate_supp",
+            "short": "subordinate_supp"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.subordinate_supp",
+            "short": "subordinate_supp",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "8b446f91-284c-41ac-99fb-f7309433bf7e",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -342915,6 +344395,43 @@
             ]
           },
           "reason": "New file ZeroParadox/Valuation/PricedPadicInterface.lean — p-adic Group A priced carrier (29 decls)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "8cb99824-fa90-409f-9094-b813004114d4",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lumps_id_of_upStepInvariant",
+            "short": "lumps_id_of_upStepInvariant"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lumps_id_of_upStepInvariant",
+            "short": "lumps_id_of_upStepInvariant",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -346192,6 +347709,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "91fe2585-f1ca-4441-939a-f412ec506fa6",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lumped_leave_weight",
+            "short": "lumped_leave_weight"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lumped_leave_weight",
+            "short": "lumped_leave_weight",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "920b6a91-b894-4073-903b-70eae356d2c0",
           "new": {
             "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
@@ -347993,6 +349547,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "94154f06-25c2-4411-bdbb-84c077cdafc2",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lazyPairs_sigma_reversible",
+            "short": "lazyPairs_sigma_reversible"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lazyPairs_sigma_reversible",
+            "short": "lazyPairs_sigma_reversible",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "9418e020-2f4d-46fa-a945-d0275ae6c164",
           "new": {
             "file": "ZeroParadox/Valuation/PadicBallWave.lean",
@@ -348093,6 +349684,43 @@
             ]
           },
           "reason": "Ruling 280 (a): universe-zoom probe landed (UniverseZoom.lean). Below Ordinal.univ a copy of the lower level, one succ over it leaves every copy; lift commutes with omega-power and fixes epsilon-zero; roleAbove gives epsilon-zero at {0} and univ at the range of lift (H-ONE-MOVE, ordinal instance) (2026-11-15).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "9443aab4-c08e-48e3-9ea0-c139a3c7235d",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.chainLaw_prefix_succ",
+            "short": "chainLaw_prefix_succ"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.chainLaw_prefix_succ",
+            "short": "chainLaw_prefix_succ",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -350109,6 +351737,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "97352dd5-73e6-49bd-9225-fbc34336926c",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.chainLaw_coarse3_eq_coarseLaw3",
+            "short": "chainLaw_coarse3_eq_coarseLaw3"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.chainLaw_coarse3_eq_coarseLaw3",
+            "short": "chainLaw_coarse3_eq_coarseLaw3",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "973f2c54-c88b-474a-b7c1-227075c73cf4",
           "new": {
             "file": "ZeroParadox/DieSameness.lean",
@@ -350805,6 +352470,43 @@
             ]
           },
           "reason": "Land the p = 0 jump and the explicit choice-free limit in PoleWithinEnsemble, and TreeNotForced: the hypotheses at ⊥ alone do not force a binary tree above it (Comb); depth at every element with IsStronglyAtomic does, one way (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "984558a1-860c-4215-94e5-0c24c93225ae",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.absorb4Coarse",
+            "short": "absorb4Coarse"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.absorb4Coarse",
+            "short": "absorb4Coarse",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -353406,6 +355108,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "9af9e0d9-f668-4cd6-ae23-4a4936580d92",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.boolSwap_reversible",
+            "short": "boolSwap_reversible"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.boolSwap_reversible",
+            "short": "boolSwap_reversible",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "9aff295b-1a06-400e-aa22-e6ae6504e4ce",
           "new": {
             "file": "ZeroParadox/Order/DieJoints.lean",
@@ -353989,6 +355728,43 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "9c33f11c-156c-4164-939d-5a9e0188eb73",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.flip4",
+            "short": "flip4"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.flip4",
+            "short": "flip4",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -357843,6 +359619,43 @@
             ]
           },
           "reason": "twin de-scar: <base>_<FileBasename> file-suffix rename",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a0cafe3e-ea55-461b-8737-d39bbaac4fbe",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.chainLaw_prefix_zero",
+            "short": "chainLaw_prefix_zero"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.chainLaw_prefix_zero",
+            "short": "chainLaw_prefix_zero",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -363341,6 +365154,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "a94c9969-a1ed-4ffc-9637-bceee28f57f6",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.subordinate_quot_of_lumps",
+            "short": "subordinate_quot_of_lumps"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.subordinate_quot_of_lumps",
+            "short": "subordinate_quot_of_lumps",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "a953dd0f-d54a-47f3-b9ba-dcca9842ff57",
           "new": {
             "file": "ZeroParadox/Valuation/RiemannSphere.lean",
@@ -366391,6 +368241,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "acf3aefc-df93-4b68-a0a6-09fd1b148179",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.sum3_reverse",
+            "short": "sum3_reverse"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.sum3_reverse",
+            "short": "sum3_reverse",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "acfbfa55-835c-435d-9c49-b1097cceb573",
           "new": {
             "file": "ZeroParadox/Valuation/PoleCorners.lean",
@@ -368881,6 +370768,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "b029ddc4-3cba-4165-a907-f5b987fb4fa9",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.measurable_appendHist",
+            "short": "measurable_appendHist"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.measurable_appendHist",
+            "short": "measurable_appendHist",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "b032721e-9326-487a-bf81-a08de4954dd9",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -369512,6 +371436,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b0f9dcb8-d577-48a8-8b5e-ffc6c3cc6c4b",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.suppMotion",
+            "short": "suppMotion"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.suppMotion",
+            "short": "suppMotion",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -371304,6 +373265,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "b36288ad-afaa-43dc-a758-24a6d1cca2bc",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.detailedBalance_of_isReversible",
+            "short": "detailedBalance_of_isReversible"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.detailedBalance_of_isReversible",
+            "short": "detailedBalance_of_isReversible",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "b3639541-585d-45e3-9d2b-7559be6a2868",
           "new": {
@@ -371369,6 +373367,43 @@
             ]
           },
           "reason": "Land 2026-11-10 cells-joint, local-towers, interleave probes and the new one-way-flow results into ZeroParadox/Valuation (CellsJoint, Interleave, LocalTowers, OneWayFlow).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b37a7bb3-3f7b-46d2-9454-fda2c0028e41",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.absorb4_coarse_reversible",
+            "short": "absorb4_coarse_reversible"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.absorb4_coarse_reversible",
+            "short": "absorb4_coarse_reversible",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -372901,6 +374936,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "b5639a2a-bb6b-4b16-8ccf-af4b53aa0978",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.subordinate_quot_of_lumps_countable",
+            "short": "subordinate_quot_of_lumps_countable"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.subordinate_quot_of_lumps_countable",
+            "short": "subordinate_quot_of_lumps_countable",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "b5732440-0d86-477b-a26a-a19b789a83cf",
           "new": {
@@ -373894,6 +375966,43 @@
             "role": []
           },
           "reason": "ExcludedMiddleBridge: choice fragment -> EM -> Prop nucleus trivial, plus the Fin 3 non-Boolean fence",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b6d2a5fc-bba1-4c97-806d-984e1279a9b8",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lumps_of_runLaw_map",
+            "short": "lumps_of_runLaw_map"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lumps_of_runLaw_map",
+            "short": "lumps_of_runLaw_map",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -375537,6 +377646,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "b927be5f-e1c5-4943-8682-95a029ff636f",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.chainLaw_triple_singleton",
+            "short": "chainLaw_triple_singleton"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.chainLaw_triple_singleton",
+            "short": "chainLaw_triple_singleton",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "b9313319-b55a-451e-ba61-6bbfad4a5ebc",
           "new": {
             "file": "ZeroParadox/Settheory/HypersetOrder.lean",
@@ -376189,6 +378335,43 @@
             ]
           },
           "reason": "New file GraphBisim.lean: finite membership graphs, Aczel bisimulation, dropLoops (control) vs wfPart (bisimulation-invariant), Omega/empty/zero-star/one/two-cycle examples",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ba308c24-5b80-4be0-bd04-2dc8fc9a3729",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.runLaw_map_of_lumps",
+            "short": "runLaw_map_of_lumps"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.runLaw_map_of_lumps",
+            "short": "runLaw_map_of_lumps",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -379314,6 +381497,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "bea66416-53c2-4268-8c2b-3e4ae21a9a8e",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.coarseLaw3",
+            "short": "coarseLaw3"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.coarseLaw3",
+            "short": "coarseLaw3",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "becc14f9-f6a5-42ae-9e5e-cfeb6b5dbbdd",
           "new": {
@@ -379524,6 +381744,43 @@
             "role": []
           },
           "reason": "die-tagged-1029: the adjoined point tagged (Option ℕ) or a limit (Escardó's ℕ∞, NInf): uniform Bool-step trichotomy and selector free on NInf, LPO on Option ℕ; WLPO at ∞; the chain Option ℕ → NInf → Part ℕ and NInf ≃ Computation Unit (Die § XXIII); Tim ruling 2026-10-29",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "bf06c5d1-725b-4e31-9dfc-a6f9acd2c0a0",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.measurable_histFirst2",
+            "short": "measurable_histFirst2"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.measurable_histFirst2",
+            "short": "measurable_histFirst2",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -380311,6 +382568,43 @@
             ]
           },
           "reason": "TwoRequirements ensemble form: with BotHasFirstStep L and 0<p<=1, trials p hp-almost every tape gives the snap (snap_ae_of_firstStep) and is Martin-Loef random as well (mlRandom_and_snap_ae). Hypotheses, neither discharged; almost every, not every.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c03cf088-dbff-43db-b9cc-9ccefd71750a",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.parity4",
+            "short": "parity4"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.parity4",
+            "short": "parity4",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -383571,6 +385865,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "c56309d7-3a3c-404e-b728-771d200a8b0f",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.chainLaw_prefix_naturality",
+            "short": "chainLaw_prefix_naturality"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.chainLaw_prefix_naturality",
+            "short": "chainLaw_prefix_naturality",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "c566ffb2-d5ef-45f2-a879-3c99967d4928",
           "new": {
             "file": "ZeroParadox/Category/BottomUndecidable.lean",
@@ -385218,6 +387549,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "c74989d2-4f0f-4f78-a00a-1be749fef600",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lumps_iff_runLaw_map",
+            "short": "lumps_iff_runLaw_map"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lumps_iff_runLaw_map",
+            "short": "lumps_iff_runLaw_map",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "c75abb99-450b-4012-82b4-4f26e3f526b3",
           "new": {
@@ -386333,6 +388701,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "c90aea81-08cb-4589-b326-4bb884ab80d3",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lazyPairs_not_lumpable",
+            "short": "lazyPairs_not_lumpable"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lazyPairs_not_lumpable",
+            "short": "lazyPairs_not_lumpable",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "c915ef5a-af88-4d19-906e-cdd5c9180ada",
           "new": {
             "file": "ZeroParadox/Settheory/APG.lean",
@@ -386874,6 +389279,43 @@
             ]
           },
           "reason": "Land 2026-11-10 cells-joint, local-towers, interleave probes and the new one-way-flow results into ZeroParadox/Valuation (CellsJoint, Interleave, LocalTowers, OneWayFlow).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ca154688-0daa-4926-9d4c-83f465dd5554",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.isReversible_map_of_lumps",
+            "short": "isReversible_map_of_lumps"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.isReversible_map_of_lumps",
+            "short": "isReversible_map_of_lumps",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -387653,6 +390095,43 @@
             ]
           },
           "reason": "New experimental files ZeroParadox/Information/BrudnoBridge.lean (trials and MLRandom bridged to Milovanov's kolmogorov-complexity-lean, citing his Brudno and Levin-Schnorr theorems) and ZeroParadox/Information/SnapEpsilonZero.lean (snap_of_firstStep_MLRandom instantiated on WithBot Ordinal and on EpsilonOrZero, with an order isomorphism between them).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "cb26a9a1-73cd-4e1a-b090-cc2006416f8f",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.appendHist_prefix",
+            "short": "appendHist_prefix"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.appendHist_prefix",
+            "short": "appendHist_prefix",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -389623,6 +392102,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "cd2426be-09f9-4e70-9f66-da26c50cbdbb",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.aggregatedChain",
+            "short": "aggregatedChain"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.aggregatedChain",
+            "short": "aggregatedChain",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "cd27636f-6f1c-48d0-9081-af8b27636082",
           "new": {
             "file": "ZeroParadox/Computability/Kleene.lean",
@@ -389649,6 +392165,43 @@
             ]
           },
           "reason": "Die computability face (halting as arrival, clock machine), quotients of a motion (drawing vs set: hypersets, codes), carrier-changing steps (wrap, Option), PoleEnds with inhabitation",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "cd2b7811-b899-4327-9544-f81e32c7ed70",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.measureVec",
+            "short": "measureVec"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.measureVec",
+            "short": "measureVec",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -396720,6 +399273,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "d633d6cc-3c68-4894-a5f2-dc736686bc27",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.mapHist_comp_appendHist",
+            "short": "mapHist_comp_appendHist"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.mapHist_comp_appendHist",
+            "short": "mapHist_comp_appendHist",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "d6348d7e-2aca-4959-a2da-c2aad6878549",
           "new": {
@@ -400614,6 +403204,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "db395444-541c-4fd7-89b4-3ada1ed767eb",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.rot4_lumps_parity4",
+            "short": "rot4_lumps_parity4"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.rot4_lumps_parity4",
+            "short": "rot4_lumps_parity4",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "db54910b-9983-4c54-8a5c-068c9cb84168",
           "new": {
             "file": "ZeroParadox/Ordinal/PricedInterface.lean",
@@ -401390,6 +404017,43 @@
             ]
           },
           "reason": "Die arc 1 2026-11-01: CC-2 restated as the Quine-atom role (SelfOnlyAt); bot is the only occupant under selfApp and in a QuineAtomHost",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "dcb0ba20-01c0-4b74-899f-889c6b220046",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.compProd_comap_map",
+            "short": "compProd_comap_map"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.compProd_comap_map",
+            "short": "compProd_comap_map",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -405156,6 +407820,80 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "e1bb9657-e81d-40ad-83cf-f3b83c291d11",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.isReversible_deterministic_of_ae_id",
+            "short": "isReversible_deterministic_of_ae_id"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.isReversible_deterministic_of_ae_id",
+            "short": "isReversible_deterministic_of_ae_id",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e1ec6b5b-8f5f-42c3-8473-4e654017d269",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lumps_deterministic_iff",
+            "short": "lumps_deterministic_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lumps_deterministic_iff",
+            "short": "lumps_deterministic_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "e208ad38-18db-4c17-9cba-165eb0152374",
           "new": {
@@ -407141,6 +409879,43 @@
             "role": []
           },
           "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e4867f78-8a82-4c62-a85b-fe6a6ccb95eb",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ae_obs_leaves_iff",
+            "short": "ae_obs_leaves_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ae_obs_leaves_iff",
+            "short": "ae_obs_leaves_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -415754,6 +418529,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "ef8a5195-f3ae-4557-bfb0-fc3d88b51ba8",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.measurableSet_leaves",
+            "short": "measurableSet_leaves"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.measurableSet_leaves",
+            "short": "measurableSet_leaves",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "ef931093-212f-4093-aa1f-37bd0e52048b",
           "new": {
             "file": "ZeroParadox/Valuation/TreeNotForced.lean",
@@ -418957,6 +421769,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "f49670d6-f343-4c5e-b190-481f847b8206",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.detailedBalance_lazyPairs",
+            "short": "detailedBalance_lazyPairs"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.detailedBalance_lazyPairs",
+            "short": "detailedBalance_lazyPairs",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "f49bf2b0-223d-433b-a710-719c29281eb8",
           "new": {
             "file": "ZeroParadox/Ordinal/OrdinalChoiceEssential.lean",
@@ -419824,6 +422673,43 @@
             ]
           },
           "reason": "The 2-adic bend: multiplier maps z -> c z on OnePoint Q_2 up to topological conjugacy (discrete twist u^v(z) z; every |c| != 1 conjugate to x2, control |d| = 1 not; four flips, Klein four subgroup of Aut(Q_2^x); four multipliers on OnePoint C; attracting/repelling fixed points on OnePoint K, conj_swaps_poles). Jenkins-Spallone Prop 7.1 is the classical statement (ZeroParadox/Multihomed/TwoAdicBend.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f5c9614a-88c2-4299-9f0d-579654227c08",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.absorb4_reversible",
+            "short": "absorb4_reversible"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.absorb4_reversible",
+            "short": "absorb4_reversible",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -422437,6 +425323,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "f9697660-e373-4d40-a89a-32fbe44f374e",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.quot_leavesAt_of_ae",
+            "short": "quot_leavesAt_of_ae"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.quot_leavesAt_of_ae",
+            "short": "quot_leavesAt_of_ae",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "f9733d46-31df-435f-bf3c-625822c938ce",
           "new": {
             "file": "ZeroParadox/Order/UpAndOver.lean",
@@ -423475,6 +426398,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "fa8ef206-95ef-423e-80c5-ab25981ef777",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.classWeight",
+            "short": "classWeight"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.classWeight",
+            "short": "classWeight",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "fa95d2ef-f93e-4392-ba3b-eb3701928225",
           "new": {
@@ -424044,6 +427004,43 @@
             ]
           },
           "reason": "die-sameness round 1: upper control (HomeoIso without LipIso: R vs (-1,1); x2 vs x4 on R) ported from probe 39dd870c96, and measured choice members at the HomeoIso level (handTopBool vs Mathlib Bool, N)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "fb3f4ac9-c325-439f-a4b8-8ee4c6c01cc4",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.FiberConst",
+            "short": "FiberConst"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.FiberConst",
+            "short": "FiberConst",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § XII (2026-11-27): lumping and the time arrow under coarse-graining. Strong lumpability in Dynkin's intertwining form (Lumps); the observed run of a lumpable chain is the lumped chain, both directions (lumps_iff_runLaw_map); bridge to the die's quot and StepCompat with controls; under UpStepInvariant the landing map lumps to the identity. Arrow: lumping preserves Kernel.IsReversible; coarse-graining can erase an arrow (rot4 on Fin 4 to the Bool swap); from a reversible start every observer's three-time law is reversal-symmetric on a finite carrier.",
           "verify": {
             "axioms": null,
             "sorry_free": null

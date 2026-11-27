@@ -968,6 +968,16 @@ example : ZeroParadox.Disjunctive (fun n => xor (ZeroParadox.champ n) false) := 
 -- leaves `x₀` iff `K x₀` gives positive mass to leaving; the `ZPSemilattice` case
 -- starts at ⊥ of `L` (the `example` closing `ZeroParadox/Information/Dial.lean` § XI).
 #check @ZeroParadox.ae_leaves_iff
+-- Statement: for measurable `f`, a supplied Markov kernel `K` lumps to `L` along `f` iff from every
+-- start the observed run has the law of the `L`-chain from the observed start; both directions
+-- (`ZeroParadox/Information/Dial.lean` § XII).
+#check @ZeroParadox.lumps_iff_runLaw_map
+-- Statement: on a finite carrier, if `K` is reversible w.r.t. the initial law, every measurable
+-- observer's three-time law is reversal-symmetric.
+#check @ZeroParadox.chainLaw_coarse3_reverse
+-- Statement: the rotation of `Fin 4` is reversible w.r.t. no probability measure and lumps along parity
+-- to the swap of `Bool`, which is reversible: coarse-graining can erase an arrow.
+#check @ZeroParadox.a4_direction_erased
 
 /-! ### The givens at the die level: given (a) as a chart claim (least in ℤ_[2]'s norm preorder, greatest at its image in `ℕ∞`), and a limit -/
 

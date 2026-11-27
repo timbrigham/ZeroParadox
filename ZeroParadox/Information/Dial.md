@@ -46,6 +46,14 @@ this file holds what was already in the corpus, the prior art, and the fences.
   `Motion.quot_leavesAt_iff`, `Motion.selectedTotal_of_option` (`ZeroParadox/Die.lean`); move side
   `not_halted_is_stepping_head` (`ZeroParadox/Computability/GroundZero.lean`), `dead_yields_live_withholds`
   (`ZeroParadox/Computability/Occurrence.lean`), `Motion.LaxHom.noStepAt_iff` (`ZeroParadox/Die.lean`).
+- § XII: the unweighted counterparts are `Motion.StepCompat`, `Motion.quot`, `Motion.quot_step_mk_iff`,
+  `Motion.quot_leavesAt_iff`, `Motion.UpStepInvariant` (`ZeroParadox/Die.lean`); `subordinate_quot_of_lumps`
+  and `quot_leavesAt_of_ae` connect `Lumps` to them. The relational reversal shape
+  `step a b ↔ step (σ b) (σ a)` for an involution `σ`, used by `absorb4_not_sigma_reversible`, is
+  `Motion.bijOn_sources_sinks` and `Motion.not_exists_involution_reverses_lt` (`ZeroParadox/Die.lean` § X).
+  A real-valued detailed-balance predicate on `Fin n → PMF (Fin n)` is `Reversible`
+  (`ZeroParadox/State/ReversibleSpectrum.lean`); § XII uses Mathlib's `Kernel.IsReversible` on a general
+  measurable carrier, and `DetailedBalance` only for the finite-matrix statements.
 
 ## Prior art (searched 2026-11-25)
 
@@ -179,6 +187,32 @@ this file holds what was already in the corpus, the prior art, and the fences.
 - Maximum entropy (`leave_half_of_maxEntropy`): Jaynes, *Phys. Rev.* 106 (1957) 620; abstract only
   retrieved, cited for existence.
 
+## Prior art for § XII (searched 2026-11-27)
+
+- Lumping. The lumped chain is Levin, Peres, Wilmer, *Markov Chains and Mixing Times*, 2nd ed., Lemma 2.5,
+  p. 25. The intertwining form `(K a).map f = L (f a)` and its characterisation by the observed process
+  (`lumps_iff_runLaw_map`) is Dynkin's criterion: Burke and Rosenblatt (1958), Theorem 1 and Corollary 1;
+  Rogers and Pitman (1981), Remark (iii). `FiberConst` is the per-class form; `Lumps.fiberConst` is its
+  one-way relation to `Lumps`.
+- Reversibility. Detailed balance and reversibility of a stationary process: Kelly, *Reversibility and
+  Stochastic Networks* (1979), § 1.2, Lemma 1.1 and Theorem 1.2. That lumping preserves reversibility
+  (`isReversible_map_of_lumps`) is Wolfer and Watanabe, arXiv:2203.04575, Proposition 4.2, for finite
+  chains; they attribute it to Kemeny and Snell, which was not retrieved and is not cited as read here.
+  § XII states it with Mathlib's `Kernel.IsReversible` on a general measurable carrier. Coarse-graining
+  and entropy production: Esposito, arXiv:1112.5410, cited for the topic only.
+- Lean neighbours, PARTLY VERIFIED (source read, type not elaborated, outside this dependency closure).
+  Erotemic/shufflemath `Shufflemath.ReversibleQuotient.reversible_quotient`: the same intertwining
+  hypothesis plus matrix detailed balance, on finite carriers with rational masses; the delta here is
+  `Kernel.IsReversible` on a general measurable carrier. MurphyHoops UEOT `StrongLumpability` and
+  `strongLumpability_iff_pathLaw`, the path-law characterisation closest to `lumps_iff_runLaw_map`; the
+  proof route of `chainLaw_prefix_naturality` follows that repository's
+  `UEOT.V3.DynamicsKernel.homTrajMeasure_path_naturality` (commit e871d52), adapted to `homK`.
+  paulklemstine/Lean `Catalog/Probability/MarkovLumpability.lean` (`Lumpable`, a bounded morphism of
+  support frames; no reversibility result). TauCeti `markovChainLaw`, the construction behind `chainLaw`
+  (already cited under § XI).
+- The same condition is described, second-hand and not read here, as a probabilistic bisimulation in
+  the sense of Larsen and Skou.
+
 ## Fences
 
 - "The bottom is the set of all tapes" is the tape-chart `Reading:` (ruling 94). Nothing identifies ⊥ of a
@@ -220,6 +254,27 @@ this file holds what was already in the corpus, the prior art, and the fences.
   `K` is a supplied argument: nothing derives it from the die or from a `ZPSemilattice`, and in the
   `ZPSemilattice` `example` the law from ⊥ of `L` exists because `K` is given. `glauber_slot_leaves`
   relocates the hypothesis `0 < p` into `glauberExciteNN_pos`; it does not remove it.
+- § XII, motivation only. Tim, 2026-07-11: "There's also the fact that the.bridge.runs one direction and
+  to get it to run the other way you look at it from when zero and Infinity reverse roles (the snap
+  itself)". This is a `Reading:`; § XII proves nothing about the snap or about zero and infinity.
+- § XII, lumping. Step-compatible moves do not force lumpable weights (CONTROL B), and a subordinate
+  kernel that lumps does not make the die's relation step-compatible (CONTROL A), since the die may hold
+  steps of weight 0. `stepCompat_supp_of_fiberConst` and `quot_leavesAt_of_ae` are one way; the `Bool`
+  CONTROL refutes the converse of the second. `lumps_id_of_upStepInvariant` needs `UpStepInvariant` as a
+  hypothesis; it is not derived.
+- § XII, the arrow, both directions. Coarse-graining can remove an arrow: `rot4` is reversible w.r.t. no
+  probability measure and its lumping along parity is reversible (`a4_direction_erased`). From a reversible start it creates
+  none: for a lumping map on a general measurable carrier (`isReversible_map_of_lumps`), and for every
+  measurable observer, lumpable or not, at three times on a finite carrier (`chainLaw_coarse3_reverse`;
+  a reversible start is stationary, Mathlib `Kernel.IsReversible.invariant`). The observer need not see a
+  Markov chain: `lazyPairs` under `lazyPairsProj` is not lumpable and its observed three-time statistic
+  fits no Markov chain over ℚ (`lazyPairs_coarse_not_markov`), and that statistic is still
+  reversal-symmetric. Two and three time points are what is proved (`coarseLaw2_reverse`,
+  `coarseLaw3_reverse`); longer windows are not stated. The `lazyPairs` statements are at the matrix level
+  over ℚ and are not instantiated at the measure level. Detailed balance and a reversing involution of the
+  steps are different conditions: `absorb4` admits no reversing involution of its steps
+  (`absorb4_not_sigma_reversible`) and its kernel is reversible w.r.t. every measure on its fixed points
+  (`absorb4_reversible`). "Two arrows trade places" is a `Reading:` and nothing here states it.
 - EXPERIMENTAL dependence. `Dial.lean` imports modules marked EXPERIMENTAL; the theorems that use a declaration
   of one are listed below. Uses, by section: `tape_never_fires_iff` (`exists_startBit_iff`, StartBit);
   `dial_fire_within`, `fireWithin_continuous`, `fireWithin_mono`, `dial_not_uniform_witness`, `dial_not_uniform`
@@ -238,7 +293,9 @@ this file holds what was already in the corpus, the prior art, and the fences.
   `example` use `trials_cyl` (PoleWithinEnsemble); the converse CONTROL `example` (after the `slotKernel 0`
   control) uses no EXPERIMENTAL declaration;
   `glauber_slot_leaves` also `glauberExciteNN` (PoleWithinEnsemble); `leave_half_of_maxEntropy` uses
-  `eq_half_of_maxEntropy` (MaxEntropy); the rest of § XI uses none. `dial_fire_jump`, `fireMass`, `fireMass_eq`, `fireMass_not_continuousAt_zero`,
+  `eq_half_of_maxEntropy` (MaxEntropy); the rest of § XI uses none. § XII: `ae_obs_leaves_iff`,
+  `quot_leavesAt_of_ae`, `ae_landing_const` and the `Bool` converse CONTROL `example` use `trials_cyl`
+  (PoleWithinEnsemble), through `ae_leaves_iff` or `runLaw_leaves`; the rest of § XII uses none. `dial_fire_jump`, `fireMass`, `fireMass_eq`, `fireMass_not_continuousAt_zero`,
   `fireWithin`, `dial_digital_limit`, `unpack`, `unpack_apply`, `unpack_measurePreserving`,
   `pack_measurePreserving` and `dial_entropy_pos_iff` use no declaration of an EXPERIMENTAL module (theirs come from
   `ZeroParadox/Information/CrossingTrials.lean` and Mathlib), though their module imports them.
