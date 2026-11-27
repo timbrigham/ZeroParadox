@@ -10,7 +10,7 @@ set_option maxHeartbeats 400000
 ## Engineer's Take
 
 I went hunting for what the four axes miss, and it is the arity. Branching says it forks, and not into how
-many, so a p-ary tree meets all four for any p. That free choice is exactly the binary commitment we already
+many, so a p-ary tree meets all four for any p. That free choice is exactly the binary precondition (chart choice) we already
 flagged as the one real modeling assumption, and the hunt found it on its own.
 
 This was the hunt for what the four axes miss, which turned out to be the arity. Sometimes it helps to work
@@ -41,14 +41,14 @@ shows only that branching leaves the arity **free**. `Reading:` conjecture: a `p
 **What the un-captured freedom IS.** The framework already names it: **AX-B1**, "binary / discrete existence,"
 a discrete alphabet, and specifically the binary alphabet, over a continuum; discreteness at the least
 element is a coordinate of `stepOff_mass` (`ZeroParadox/Information/Dial.lean` § IV), not a commitment. The completeness-critic hunt independently re-surfaces exactly this: arity is a
-degree of freedom the branching axis does not force, so fixing it (to two) is a **commitment, not a theorem** —
+degree of freedom the branching axis does not force, so fixing it (to two) is a **precondition (chart choice), not a theorem** —
 which is precisely AX-B1's status. The `IrreversibilityProbe` cardinality result complements this: two is the
 *value-pole* threshold (a unique fixed point already costs injectivity there - irreversibility, not
 occurrence); binary *arity* is the separate branching choice.
 
 `Reading:` the completeness picture, a conjecture: no forced fifth *structural* axis, the four are mutually independent, and the one
-thing left open is the arity — recovered here as AX-B1, a modeling commitment rather than a derived axis. This
-is evidence the four structural axes plus the single AX-B1 commitment are the whole story.
+thing left open is the arity — recovered here as AX-B1, a precondition (chart choice) rather than a derived axis. This
+is evidence the four structural axes plus the single AX-B1 precondition (chart choice) are the whole story.
 
 **§ V — Perfectness (no isolated points) is DERIVED, not a new axis.** A second Cantor-set property:
 *perfect* = every point is a limit of distinct points (no isolated point). `boundary_perfect`: in the tree
@@ -57,9 +57,9 @@ the first `n` digits (flip the digit at position `n`). So every point is a limit
 boundary is perfect — and this falls straight out of the **branching** axis (at each depth there is an
 alternative digit). Perfectness is therefore *derived*, not an independent fifth axis.
 
-**Honest scope.** Two Cantor-set properties probed: **arity** is un-captured (= AX-B1, a commitment);
+**Honest scope.** Two Cantor-set properties probed: **arity** is un-captured (= AX-B1, a precondition (chart choice));
 **perfectness** is derived from branching (no new axis). This does not claim AX-B1 is the *unique* remaining
-freedom (compactness in particular tracks *finite* arity, a facet of this same commitment), but the pattern
+freedom (compactness in particular tracks *finite* arity, a facet of this same precondition), but the pattern
 holds: the structural properties are derived, and the one genuine open degree of freedom is the arity.
 -/
 
@@ -104,12 +104,12 @@ theorem arity_is_uncaptured :
       ¬ (((false, false, true) : Bool × Bool × Bool) ≤ (true, false, false))) :=
   ⟨binary_branch, ternary_branch⟩
 
-/-! ### § IV. Branching does not even force FINITE arity — so compactness is part of the commitment too. -/
+/-! ### § IV. Branching does not even force FINITE arity — so compactness is part of the precondition too. -/
 
 /-- **Infinite branching.** In `Set ℕ`, the bottom `∅` has infinitely many pairwise-incomparable successors —
 the singletons `{i}` (`{i} ⊆ {j}` iff `i = j`). So the branching axis does not force *finite* arity, let
 alone binary. Hence "finite arity" — which is what makes the boundary *compact* — is itself part of the AX-B1
-commitment, at a deeper level than binary-vs-ternary: the arity is structurally free all the way up. -/
+precondition (chart choice), at a deeper level than binary-vs-ternary: the arity is structurally free all the way up. -/
 theorem infinite_branch :
     (∀ i : ℕ, (∅ : Set ℕ) ⊆ {i}) ∧ (∀ i j : ℕ, i ≠ j → ¬ ({i} ⊆ ({j} : Set ℕ))) := by
   refine ⟨fun i => Set.empty_subset _, fun i j hij hsub => ?_⟩

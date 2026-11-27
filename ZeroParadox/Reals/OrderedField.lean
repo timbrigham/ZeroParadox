@@ -25,7 +25,7 @@ argument does not apply (dividing by 2 moves AWAY from zero, lowering the valuat
 and v₂(0) = +∞ while every non-zero element has finite valuation. **That removes the
 obstruction; it does not supply a first step** — the 2-adic norms still accumulate at
 zero (‖2ⁿ‖₂ = 2⁻ⁿ), so zero is a limit of the non-zero elements there, not isolated
-from them. The first step is AX-B1 (§ 0), a commitment.
+from them. The first step is AX-B1 (§ 0), a precondition (chart choice).
 
 **General case (any [Field F] [LinearOrder F] [IsStrictOrderedRing F]):**
 
@@ -69,7 +69,7 @@ section AxB1
 /-- **AX-B1, in standard order-theoretic vocabulary: the bottom is COVERED by something.**
 
     Mathlib's `CovBy` (notation `a ⋖ b`) says `b` is directly above `a` with nothing strictly
-    between. The framework's discreteness chart choice is exactly `∃ a, bot ⋖ a`, so AX-B1 is
+    between. The framework's discreteness precondition is exactly `∃ a, bot ⋖ a`, so AX-B1 is
     kept as the name and `CovBy` supplies the content and the lemmas.
 
     **Honest transition note (2026-07-27).** This was first written (2026-07-26) as a bespoke
@@ -194,7 +194,7 @@ theorem firstStep_unique {α : Type*} [LinearOrder α] {bot a b : α}
   · exact h
   · exact absurd h (ha.2 hb.1)
 
-/-- **What the commitment buys.** Assume AX-B1 and the snap's target exists and is UNIQUE, so
+/-- **What the precondition buys.** Assume AX-B1 and the snap's target exists and is UNIQUE, so
     the transition has a well-defined destination. The hypothesis is visible on the face of the
     statement, so no reader can mistake the conclusion for something derived without it. -/
 theorem axb1_gives_unique_target {α : Type*} [LinearOrder α] (bot : α)
@@ -290,7 +290,7 @@ theorem f_snap_impossible : ¬∃ ε₀ : F, 0 < ε₀ ∧ ¬∃ δ : F, 0 < δ 
 
 /-- **AX-B1 FAILS in every ordered field.** Ordered fields are densely ordered in Mathlib
     (`LinearOrderedSemiField.toDenselyOrdered`), and in a dense order nothing covers anything
-    (`not_covBy_of_denselyOrdered`). So the commitment is refuted pointwise against its own counterexample: what
+    (`not_covBy_of_denselyOrdered`). So the precondition is refuted pointwise against its own counterexample: what
     the framework commits to is exactly what the reals do not have.
 
     Proved through Mathlib rather than through `f_snap_impossible` — the halving argument above
