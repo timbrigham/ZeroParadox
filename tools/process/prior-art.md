@@ -93,21 +93,26 @@ two phrasings minimum (`packages=[...]` narrows to named packages), then `get_so
 candidate plus its elaborated type, because the returned text can omit section binders (2026-10-31:
 `OrderHom.lfp` lost `[CompleteLattice α]`). Inside this project's dependency closure, running it is the
 only route: `#check` and `exact?` in a scratchpad `.lean`, run with `lake env lean <absolute path>` from
-the repo root. Outside it (FLT, carleson, pfr), Tim ruled 2026-10-31 that the source file read via
+the repo root; that file can also call `#loogle`, `#leansearch` and the tactic `#statesearch`, already in
+the closure through `LeanSearchClient`, which search Mathlib only and are hosted services. Outside it (FLT, carleson, pfr), Tim ruled 2026-10-31 that the source file read via
 `get_source_link`, section `variable` lines included, is cited **PARTLY VERIFIED: source read, type not
 elaborated**. `get_dependencies` returns a partial list as a JSON-encoded string (2026-10-31: for
 `Nat.Partrec.Code.fixed_point₂`, some statement constants, but not `Partrec₂` from its hypothesis, nor
 the proof's constants), and LeanExplore's snapshot is not the pinned Mathlib, so confirm a hit at the pin.
 Then Reservoir (Tim, 2026-11-22, ruling 47: Reservoir is a named source, never only implied; reshaped
-by ruling 111, 2026-11-27). Reservoir and GitHub code search FIND repositories; the grep of each one's
-verified archive is the step that SEARCHES a repository's text, and every repository either finds goes
-through it. Measured 2026-11-27, Reservoir's matching depends on the route: the `reservoirSearch` MCP's
-`search` matches package name, description and keywords, every term of one query required; the
-website's `?q=` matches owner/name only (per the site's source, leanprover/reservoir
-`site/pages/packages.vue`), keywords only through the exact-match `?keyword=<kw>`. Either way it
+by ruling 111, 2026-11-27, and ruling 112, 2026-11-27, for code-search finds). Reservoir and GitHub code
+search FIND repositories; the grep of each one's verified archive is the step that SEARCHES a
+repository's text, and every repository either finds goes through it. Measured 2026-11-27, Reservoir's
+matching depends on the route: the `reservoirSearch` MCP's `search` matches package name, description
+and keywords, every term of one query required; the website's `?q=` matches owner/name only (per the
+site's source, leanprover/reservoir `site/pages/packages.vue` at commit 4a58a5f), keywords only through
+the exact-match `?keyword=<kw>`. The header search box's dropdown (`site/components/SearchBar.vue`, same
+commit) also matches descriptions; the `?q=` results page does not. The MCP's local index also lists
+packages the website does not show (2026-11-27), so neither is a superset of the other. Either way it
 ENUMERATES candidates and never establishes whether a theorem is stated. Shortlist with broad field terms
 (e.g. `markov`, `probability`, `kernel`, `measure`), three separate searches minimum, since one
-multi-term query narrows rather than widens, the standard name first, taking each package's `repoUrl` —
+multi-term query narrows rather than widens, the standard name first, taking each package's `repoUrl`;
+run field terms through the MCP, since a website `?q=` null for a field term covers package names only —
 via the MCP (`search`, `get_package`, over a possibly partial local index whose package count and load
 date `status()` reports) or the website (`https://reservoir.lean-lang.org/packages?q=<term>`), whose
 search is client-side: a plain fetch (WebFetch, curl) of the `?q=` URL returns the first page of the
@@ -119,18 +124,26 @@ that positive control before recording a null. GitHub code search with `extensio
 FINDS repositories that are not Reservoir packages (2026-11-27: MurphyHoops/UEOT, Erotemic/shufflemath
 and paulklemstine/Lean, cited in one review, were found only this way). For each repository found
 either way, download its archive at a fixed commit (e.g.
-`https://codeload.github.com/<owner>/<repo>/zip/<commit>`) into its own new, empty scratchpad directory,
-check it is complete (`zipfile` `testzip()` under `python -I`, run from another directory, prints `None`;
-its `.lean` count matches `mcp__github__get_repository_tree`, recursive at the commit, whose `truncated`
-flag is read first, and a truncated tree leaves the count unverified), and grep every `.lean` file for
-declaration-level terms, recording `owner/repo@commit` with each hit, which is PARTLY VERIFIED: source
-read at owner/repo@commit, type not elaborated. Never execute anything from the archive; a repository
-whose archive could not be fetched or verified is recorded NOT RUN, never a null, and a "none located"
-covers only the repositories searched. The LeanExplore half may be recorded NOT RUN if the tools are
+`https://codeload.github.com/<owner>/<repo>/zip/<commit>`: a package's Reservoir revision, or for a
+code-search find the default branch's HEAD at search time, read via `mcp__github__list_commits` and
+recorded) into its own new, empty scratchpad directory, check it is complete by the brief's two
+`python -I` commands run from another directory (`testzip()` prints `None`, and a damaged archive can
+raise instead; the archive's `.lean` count equals that of `mcp__github__get_repository_tree`, recursive
+at the commit, whose `truncated` flag reports only GitHub's own 100,000-entry / 7 MB cap, not a response
+too large for the client, measured 2026-11-27 at about 80k characters for 260 files with `truncated:
+false`; if the response overflows or `truncated` is true, the repository is recorded NOT RUN), and grep
+every `.lean` file for declaration-level terms, recording `owner/repo@commit` with each hit. A hit is a
+lead; once the declaration's source is read in the archive, section `variable` lines included, it is
+PARTLY VERIFIED: source read at owner/repo@commit, type not elaborated. Never execute anything from the
+archive; a repository whose archive could not be fetched or verified is recorded NOT RUN, never a null,
+and a "none located" covers only the repositories searched, names each NOT RUN repository beside it, and
+still rests on rungs 2 and 4. The LeanExplore half may be recorded NOT RUN if the tools are
 unavailable or refused; the Reservoir, code-search and archive steps are always required. Code search's
 misses are uninformative (2026-11-27: `Feller` returned 0 hits in scottnarmstrong/MarkovProcess, which
-uses the word throughout, and a `repo:` query with no search term also returned 0, so that repository is
-absent from GitHub's code index). LeanExplore, code search, the Reservoir website and codeload archive
+uses the word throughout, and a `repo:` query with no search term also returned 0, both with
+`incomplete_results: true`, so that repository was not returned by GitHub code search; the bare `repo:`
+control is valid, `repo:leanprover/reservoir` returning 82 with `incomplete_results: false`). Read
+`incomplete_results` on every code-search null. LeanExplore, code search, the Reservoir website and codeload archive
 downloads are all hosted services, and only a rate-limit response is a wait. A Lean-only prior art is
 cited by repository, declaration name and commit read, plus that verification status. Full rules:
 `.claude/commands/prior-art-review.md`, rung B2.
