@@ -5464,6 +5464,10 @@ example : ¬ ZeroParadox.Motion.unitMotion.Loop := fun ⟨_, _, _, _, hne, _⟩ 
 #check @ZeroParadox.q2_zero_not_firstStep      -- Statement: in `lmSphN`, 0 of `ℚ_[2]` has no first step, although `q2_GDiscrete` holds
 #check @ZeroParadox.two_charts_snap            -- Statement: `q2_GDiscrete` and `real_not_GDiscrete`; the `trials p hp` mass of `stepOff` is the switch on `Bool` (join `||`) and 0 on `NNReal` (join `max`); 0 of ℝ has no first step
 #check @ZeroParadox.stepOff_mass               -- Statement: for every carrier `L`, no hypothesis on it, the mass of `stepOff L` is 1 if `BotHasFirstStep L` and `p ≠ 0`, and 0 otherwise (`ZeroParadox/Information/Dial.lean` § IV)
+#check @ZeroParadox.z2_GCoincidence            -- Statement: `GCoincidence` of doubling into `+1` on `ℕ∞` holds at ℤ_[2]'s 0, witness `q2Val`
+#check @ZeroParadox.field_no_GCoincidence_any  -- Statement: CONTROL — the same `GCoincidence` fails at 0 of every field, any characteristic
+#check @ZeroParadox.doubling_counter_iff       -- Statement: on a commutative ring, a doubling counter into `ℕ∞` exists iff `2x = 0` forces `x = 0` and no nonzero point is divisible by every `2 ^ k`
+#check @ZeroParadox.doubling_counter_two_ne_zero_not_isUnit -- Statement: one way: a counter on a nontrivial commutative ring forces `2 ≠ 0` and 2 not a unit; the converse fails at `ZMod 4` and `ℤ × ℚ`
 #check @ZeroParadox.q2_not_leavesByRun_zero    -- Statement: LIMIT — 0 of `ℚ_[2]` never leaves under doubling; `machine_leavesByRun` leaves `c₀`, ⊥ of `MachinePhase`
 
 end DieCannotBeIndex

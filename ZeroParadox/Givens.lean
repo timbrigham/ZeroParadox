@@ -752,6 +752,131 @@ theorem z2_GCoincidence :
   · show z ≤ q2Val 0; rw [q2Val_bot]; exact le_top
   · exact q2Val_unique x (h.trans q2Val_bot)
 
+/-- `Statement:` on a commutative ring, `f (2x) = f x + 1` iterates to `f (2 ^ k * y) = f y + k`. -/
+theorem doubling_counter_pow {R : Type} [CommRing R] (f : R → ℕ∞)
+    (hf : ∀ x, f (2 * x) = f x + 1) (k : ℕ) (y : R) : f ((2 : R) ^ k * y) = f y + k := by
+  induction k generalizing y with
+  | zero => simp
+  | succ k ih =>
+    rw [pow_succ, mul_comm ((2 : R) ^ k) 2, mul_assoc, hf, ih]; push_cast; ring
+
+/-- `Statement:` on a commutative ring, `f (2x) = f x + 1` forces `f 0 = ⊤`, ⊤ of `ℕ∞`. -/
+theorem doubling_counter_zero {R : Type} [CommRing R] (f : R → ℕ∞)
+    (hf : ∀ x, f (2 * x) = f x + 1) : f 0 = ⊤ := by
+  by_contra h
+  obtain ⟨n, hn⟩ := ENat.ne_top_iff_exists.1 h
+  have h1 := hf 0
+  rw [mul_zero, ← hn] at h1
+  have h2 : ((n : ℕ) : ℕ∞) = ((n + 1 : ℕ) : ℕ∞) := by rw [h1]; push_cast; rfl
+  exact absurd (Nat.cast_injective h2) (by omega)
+
+/-- `Statement:` on a commutative ring `R`, some `f : R → ℕ∞` has `f (2x) = f x + 1` and finite
+values off R's 0 iff `2x = 0` forces `x = 0` and no nonzero `x` is divisible by every `2 ^ k`. The
+backward witness is Mathlib's `emultiplicity 2`. -/
+theorem doubling_counter_iff {R : Type} [CommRing R] :
+    (∃ f : R → ℕ∞, (∀ x, f (2 * x) = f x + 1) ∧ ∀ x, x ≠ 0 → f x ≠ ⊤) ↔
+      (∀ x : R, 2 * x = 0 → x = 0) ∧ ∀ x : R, x ≠ 0 → ∃ k : ℕ, ¬ (2 : R) ^ k ∣ x := by
+  constructor
+  · rintro ⟨f, hf, hfin⟩
+    have h0 := doubling_counter_zero f hf
+    refine ⟨fun x hx => ?_, fun x hx => ?_⟩
+    · by_contra hne
+      have h1 := hf x
+      rw [hx, h0] at h1
+      refine hfin x hne ?_
+      by_contra ht
+      obtain ⟨n, hn⟩ := ENat.ne_top_iff_exists.1 ht
+      rw [← hn] at h1
+      exact absurd h1.symm (by exact_mod_cast (ENat.natCast_ne_top (n + 1)))
+    · obtain ⟨n, hn⟩ := ENat.ne_top_iff_exists.1 (hfin x hx)
+      refine ⟨n + 1, fun ⟨y, hy⟩ => ?_⟩
+      have h1 := doubling_counter_pow f hf (n + 1) y
+      rw [← hy, ← hn] at h1
+      have hle : (((n + 1 : ℕ)) : ℕ∞) ≤ n := by rw [h1]; exact le_add_self
+      exact absurd (Nat.cast_le.1 hle) (by omega)
+  · rintro ⟨hreg, hint⟩
+    have hcan : ∀ (k : ℕ) (x : R), (2 : R) ^ (k + 1) ∣ 2 * x ↔ (2 : R) ^ k ∣ x := by
+      intro k x
+      constructor
+      · rintro ⟨y, hy⟩
+        refine ⟨y, sub_eq_zero.1 (hreg _ ?_)⟩
+        rw [mul_sub, hy, pow_succ]; ring
+      · rintro ⟨y, rfl⟩; exact ⟨y, by rw [pow_succ]; ring⟩
+    refine ⟨emultiplicity (2 : R), fun x => _root_.le_antisymm ?_ ?_, fun x hx htop => ?_⟩
+    · rw [← ENat.forall_natCast_le_iff_le]
+      intro a ha
+      rcases a with _ | a
+      · simp
+      · have h1 := le_emultiplicity_of_pow_dvd ((hcan a x).1 (pow_dvd_of_le_emultiplicity ha))
+        push_cast; exact add_le_add h1 le_rfl
+    · rw [← ENat.forall_natCast_le_iff_le]
+      intro a ha
+      rcases a with _ | a
+      · simp
+      · have ha' : (a : ℕ∞) ≤ emultiplicity 2 x := by
+          push_cast at ha; exact (ENat.add_le_add_iff_right ENat.one_ne_top).1 ha
+        exact le_emultiplicity_of_pow_dvd ((hcan a x).2 (pow_dvd_of_le_emultiplicity ha'))
+    · obtain ⟨k, hk⟩ := hint x hx
+      exact hk (pow_dvd_of_le_emultiplicity (htop ▸ le_top))
+
+/-- `Statement:` one way: on a nontrivial commutative ring, a doubling counter forces `2 ≠ 0` and
+2 not a unit. The converse fails (CONTROLS below, `ZMod 4` and `ℤ × ℚ`). -/
+theorem doubling_counter_two_ne_zero_not_isUnit {R : Type} [CommRing R] [Nontrivial R]
+    (f : R → ℕ∞) (hf : ∀ x, f (2 * x) = f x + 1) (hfin : ∀ x, x ≠ 0 → f x ≠ ⊤) :
+    (2 : R) ≠ 0 ∧ ¬ IsUnit (2 : R) := by
+  obtain ⟨hreg, hint⟩ := doubling_counter_iff.1 ⟨f, hf, hfin⟩
+  refine ⟨fun h2 => one_ne_zero (hreg 1 (by rw [mul_one, h2])), fun hu => ?_⟩
+  obtain ⟨k, hk⟩ := hint 1 one_ne_zero
+  exact hk (hu.pow k).dvd
+
+/-- `Statement:` on every field no `f : K → ℕ∞` has `f (2x) = f x + 1` and finite values off 0:
+in a field 2 is 0 or a unit. -/
+theorem no_doubling_valuation_field_any {K : Type} [Field K] (f : K → ℕ∞)
+    (hf : ∀ x, f (2 * x) = f x + 1) (hfin : ∀ x, x ≠ 0 → f x ≠ ⊤) : False := by
+  obtain ⟨h2, hu⟩ := doubling_counter_two_ne_zero_not_isUnit f hf hfin
+  exact hu (Ne.isUnit h2)
+
+/-- `Statement:` on every field, `GCoincidence` of doubling into `+1` on `ℕ∞` fails at the
+field's 0. With `z2_GCoincidence` (occupied at ℤ_[2]'s 0): the occupancy pair. -/
+theorem field_no_GCoincidence_any {K : Type} [Field K] (P : Preorder K) :
+    ¬ GCoincidence (Motion.ofFun (fun x : K => 2 * x)) (Motion.ofFun (fun n : ℕ∞ => n + 1)) P
+      inferInstance 0 := by
+  rintro ⟨φ, -, -, -, htop, hoff⟩
+  have hf : ∀ x, φ.toFun (2 * x) = φ.toFun x + 1 := fun x => φ.map_step (a := x) (b := 2 * x) rfl
+  have h0 : φ.toFun 0 = ⊤ := top_le_iff.1 (htop ⊤)
+  exact no_doubling_valuation_field_any φ.toFun hf (fun x hx => by rw [← h0]; exact hoff x hx)
+
+-- Statement: the doubling counter exists at ℤ_[2] (`q2Val`) and at ℤ.
+example : ∃ f : ℤ_[2] → ℕ∞, (∀ x, f (2 * x) = f x + 1) ∧ ∀ x, x ≠ 0 → f x ≠ ⊤ :=
+  ⟨q2Val, q2Val_double, fun x hx h => hx (q2Val_unique x h)⟩
+example : ∃ f : ℤ → ℕ∞, (∀ x, f (2 * x) = f x + 1) ∧ ∀ x, x ≠ 0 → f x ≠ ⊤ := by
+  refine doubling_counter_iff.2 ⟨fun x hx => by omega, fun x hx => ?_⟩
+  obtain ⟨n, hn⟩ := FiniteMultiplicity.def.1
+    (Int.finiteMultiplicity_iff.2 ⟨by norm_num, hx⟩ : FiniteMultiplicity (2 : ℤ) x)
+  exact ⟨n + 1, hn⟩
+-- Statement: CONTROL: on the zero ring `Unit` the constant ⊤ is a counter, and 2 is a unit there.
+example : ∃ f : Unit → ℕ∞, (∀ x, f (2 * x) = f x + 1) ∧ ∀ x, x ≠ 0 → f x ≠ ⊤ :=
+  ⟨fun _ => ⊤, fun _ => (top_add 1).symm, fun x hx => absurd (Subsingleton.elim x 0) hx⟩
+-- Statement: CONTROL: no counter on `ZMod 2`, where 2 = 0.
+example : ¬ ∃ f : ZMod 2 → ℕ∞, (∀ x, f (2 * x) = f x + 1) ∧ ∀ x, x ≠ 0 → f x ≠ ⊤ :=
+  fun ⟨f, hf, hfin⟩ => (doubling_counter_two_ne_zero_not_isUnit f hf hfin).1 (by decide)
+-- Statement: CONTROL: in `ZMod 4`, 2 is nonzero and not a unit, and no counter exists.
+example : (2 : ZMod 4) ≠ 0 ∧ ¬ IsUnit (2 : ZMod 4) ∧
+    ¬ ∃ f : ZMod 4 → ℕ∞, (∀ x, f (2 * x) = f x + 1) ∧ ∀ x, x ≠ 0 → f x ≠ ⊤ :=
+  ⟨by decide, by decide, fun h => absurd ((doubling_counter_iff.1 h).1 2 (by decide)) (by decide)⟩
+-- Statement: CONTROL: in `ℤ × ℚ`, `2x = 0` forces `x = 0` and 2 is not a unit, and no counter
+-- exists: `(0, 1)` is divisible by every `2 ^ k`.
+example : (∀ x : ℤ × ℚ, 2 * x = 0 → x = 0) ∧ ¬ IsUnit (2 : ℤ × ℚ) ∧
+    ¬ ∃ f : ℤ × ℚ → ℕ∞, (∀ x, f (2 * x) = f x + 1) ∧ ∀ x, x ≠ 0 → f x ≠ ⊤ := by
+  refine ⟨fun x hx => ?_, fun hu => ?_, fun h => ?_⟩
+  · ext
+    · simpa using congrArg Prod.fst hx
+    · simpa using congrArg Prod.snd hx
+  · have h2 : IsUnit (2 : ℤ) := by simpa using (Prod.isUnit_iff.1 hu).1
+    exact absurd (Int.isUnit_iff.1 h2) (by omega)
+  · obtain ⟨k, hk⟩ := (doubling_counter_iff.1 h).2 (0, 1) (by simp)
+    exact hk ⟨(0, ((2 : ℚ) ^ k)⁻¹), by ext <;> simp⟩
+
 /-- `Statement:` on a characteristic-0 field no `f : K → ℕ∞` has `f (2x) = f x + 1` and finite
 values off 0: halving would push a finite value past every natural number. -/
 theorem no_doubling_valuation_field {K : Type} [Field K] [CharZero K] (f : K → ℕ∞)
@@ -1070,6 +1195,12 @@ open ZeroParadox
 #print axioms z2_GCoincidence
 #print axioms no_doubling_valuation_field
 #print axioms field_no_GCoincidence
+#print axioms doubling_counter_pow
+#print axioms doubling_counter_zero
+#print axioms doubling_counter_iff
+#print axioms doubling_counter_two_ne_zero_not_isUnit
+#print axioms no_doubling_valuation_field_any
+#print axioms field_no_GCoincidence_any
 #print axioms valuation_two_zpow_mul
 #print axioms fieldLine_decomp
 #print axioms fieldLineLabel_zpow_mul

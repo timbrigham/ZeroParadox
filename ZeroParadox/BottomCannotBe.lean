@@ -1017,6 +1017,10 @@ example : ZeroParadox.Disjunctive (fun n => xor (ZeroParadox.champ n) false) := 
 -- Reading: COINCIDENCE; on any characteristic-0 field (universe 0) a map of the same shape, doubling into
 -- `+1` on `ℕ∞`, fails (`field_no_GCoincidence`).
 #check @ZeroParadox.z2_GCoincidence
+-- Statement: on every field, any characteristic, `GCoincidence` of doubling into `+1` on `ℕ∞` fails
+-- at the field's 0; on a commutative ring a doubling counter exists iff `2x = 0` forces `x = 0` and
+-- no nonzero point is divisible by every `2 ^ k` (`doubling_counter_iff`).
+#check @ZeroParadox.field_no_GCoincidence_any
 -- Statement: no run of doubling from 0 of `ℚ_[2]` leaves it at the first step (`¬ GLeavesByRun`).
 -- Reading: CARRIER, departure is supplied by another chart: a run leaves `c₀`, ⊥ of `MachinePhase`
 -- (`machine_leavesByRun`, `ZeroParadox/Givens.lean` § V).
