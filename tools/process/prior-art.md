@@ -94,7 +94,10 @@ candidate plus its elaborated type, because the returned text can omit section b
 `OrderHom.lfp` lost `[CompleteLattice α]`). Inside this project's dependency closure, running it is the
 only route: `#check` and `exact?` in a scratchpad `.lean`, run with `lake env lean <absolute path>` from
 the repo root; that file can also call `#loogle`, `#leansearch` and the tactic `#statesearch`, already in
-the closure through `LeanSearchClient`, which search Mathlib only and are hosted services. Outside it (FLT, carleson, pfr), Tim ruled 2026-10-31 that the source file read via
+the closure through `LeanSearchClient`, which search Mathlib and its dependencies, Lean core included,
+at the service's own Mathlib revision, not this project's pin (2026-11-27: `#loogle` returned hits in
+`Init.Prelude` and `Init.Data.List.Lemmas`), and are hosted services; `#statesearch` is a tactic, and its
+server was unreachable on 2026-11-27. Outside it (FLT, carleson, pfr), Tim ruled 2026-10-31 that the source file read via
 `get_source_link`, section `variable` lines included, is cited **PARTLY VERIFIED: source read, type not
 elaborated**. `get_dependencies` returns a partial list as a JSON-encoded string (2026-10-31: for
 `Nat.Partrec.Code.fixed_point₂`, some statement constants, but not `Partrec₂` from its hypothesis, nor
@@ -107,7 +110,8 @@ matching depends on the route: the `reservoirSearch` MCP's `search` matches pack
 and keywords, every term of one query required; the website's `?q=` matches owner/name only (per the
 site's source, leanprover/reservoir `site/pages/packages.vue` at commit 4a58a5f), keywords only through
 the exact-match `?keyword=<kw>`. The header search box's dropdown (`site/components/SearchBar.vue`, same
-commit) also matches descriptions; the `?q=` results page does not. The MCP's local index also lists
+commit) also matches descriptions, except a description that begins with the query
+(`if (descrIdx && descrIdx > -1)` at 4a58a5f); the `?q=` results page does not. The MCP's local index also lists
 packages the website does not show (2026-11-27), so neither is a superset of the other. Either way it
 ENUMERATES candidates and never establishes whether a theorem is stated. Shortlist with broad field terms
 (e.g. `markov`, `probability`, `kernel`, `measure`), three separate searches minimum, since one
@@ -121,30 +125,38 @@ is recorded NOT RUN, never as a null. In a browser (e.g. Claude in Chrome) the s
 (measured 2026-11-22: `q=mathlib` returned 5 results); wait for the "Search Results for" header and run
 that positive control before recording a null. GitHub code search with `extension:lean`, not
 `language:Lean` (2026-10-31: 9 files against 0), `perPage` ≤ 10 and `-repo:timbrigham/ZeroParadox`,
-FINDS repositories that are not Reservoir packages (2026-11-27: MurphyHoops/UEOT, Erotemic/shufflemath
+FINDS repositories that are not in the local Reservoir index (loaded 2026-11-22; 2026-11-27: MurphyHoops/UEOT, Erotemic/shufflemath
 and paulklemstine/Lean, cited in one review, were found only this way). For each repository found
 either way, download its archive at a fixed commit (e.g.
 `https://codeload.github.com/<owner>/<repo>/zip/<commit>`: a package's Reservoir revision, or for a
 code-search find the default branch's HEAD at search time, read via `mcp__github__list_commits` and
-recorded) into its own new, empty scratchpad directory, check it is complete by the brief's two
-`python -I` commands run from another directory (`testzip()` prints `None`, and a damaged archive can
-raise instead; the archive's `.lean` count equals that of `mcp__github__get_repository_tree`, recursive
-at the commit, whose `truncated` flag reports only GitHub's own 100,000-entry / 7 MB cap, not a response
-too large for the client, measured 2026-11-27 at about 80k characters for 260 files with `truncated:
-false`; if the response overflows or `truncated` is true, the repository is recorded NOT RUN), and grep
-every `.lean` file for declaration-level terms, recording `owner/repo@commit` with each hit. A hit is a
-lead; once the declaration's source is read in the archive, section `variable` lines included, it is
-PARTLY VERIFIED: source read at owner/repo@commit, type not elaborated. Never execute anything from the
-archive; a repository whose archive could not be fetched or verified is recorded NOT RUN, never a null,
-and a "none located" covers only the repositories searched, names each NOT RUN repository beside it, and
-still rests on rungs 2 and 4. The LeanExplore half may be recorded NOT RUN if the tools are
+recorded) into its own new, empty scratchpad directory, and verify it by the brief's `python -I`
+commands run from another directory: it is VERIFIED when `testzip()` prints `None` (a damaged archive
+may instead raise `BadZipFile` or `zlib.error`, measured 2026-11-27, or print a member name: anything but
+`None` fails). Comparing the archive's `.lean` count with `mcp__github__get_repository_tree` (recursive,
+at the commit) is a cross-check, not the gate, run when that response is readable; the harness may save
+an oversized response to a file, which is still readable (2026-11-27: about 80k characters, saved,
+`truncated: false`, 260 `.lean` files, equal to the archive's 260). `truncated: true` (GitHub's cap:
+100,000 entries / 7 MB per the REST docs) or an unreadable response means the cross-check was NOT RUN,
+recorded with the reason; a count mismatch means the archive is not trusted and the repository is
+recorded NOT RUN. Then grep every `.lean` file for declaration-level terms, recording
+`owner/repo@commit` with each hit. A hit is a lead; once the declaration's source is read in the archive,
+section `variable` lines included, it is PARTLY VERIFIED: source read at owner/repo@commit, type not
+elaborated, by analogy with the outside-the-closure ruling above. For a repository inside this project's
+dependency closure (e.g. batteries, mathlib), defer to the closure route above: elaborate, do not rely
+on the archive read. Never execute anything from the archive; a repository whose archive could not be
+fetched or verified is recorded NOT RUN, never a null, and a "none located" covers only the repositories
+searched, names each NOT RUN repository beside it, and still rests on rungs 2 and 4. If every repository
+was recorded NOT RUN, this step counts as NOT RUN, and the null must say so. The LeanExplore half may be recorded NOT RUN if the tools are
 unavailable or refused; the Reservoir, code-search and archive steps are always required. Code search's
 misses are uninformative (2026-11-27: `Feller` returned 0 hits in scottnarmstrong/MarkovProcess, which
 uses the word throughout, and a `repo:` query with no search term also returned 0, both with
 `incomplete_results: true`, so that repository was not returned by GitHub code search; the bare `repo:`
 control is valid, `repo:leanprover/reservoir` returning 82 with `incomplete_results: false`). Read
-`incomplete_results` on every code-search null. LeanExplore, code search, the Reservoir website and codeload archive
-downloads are all hosted services, and only a rate-limit response is a wait. A Lean-only prior art is
+`incomplete_results` on every code-search null. LeanExplore, code search, the Reservoir website, codeload archive
+downloads and the `LeanSearchClient` backends (loogle.lean-lang.org, leansearch.net, premise-search.com,
+which receive the query text, so phrase queries neutrally) are all hosted services, and only a
+rate-limit response is a wait. A Lean-only prior art is
 cited by repository, declaration name and commit read, plus that verification status. Full rules:
 `.claude/commands/prior-art-review.md`, rung B2.
 
