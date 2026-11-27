@@ -454882,6 +454882,171 @@
           "signature": "tape_totality_two_faces is stated for fairTape (p = 1/2) only: its law conjunct says p = 1/2 is the unique solution of binEntropy p = log 2 (the maximum-entropy coin), its member conjunct is fairTape-a.e. incompressibility, its point conjunct is bot_not_MLRandom at p = 1/2."
         },
         {
+          "decl": "ZeroParadox.coarseLaw2",
+          "diff_kind": "other",
+          "dispositions": [
+            {
+              "decided_by": null,
+              "disposition": "open",
+              "line_sha256": "a2aa7c43826e8ae5e307316a35eba3b60305914453df520fad44900e11fa0544",
+              "reason": null,
+              "utc": null
+            },
+            {
+              "decided_by": "Orchestrating agent (caller of this recorder), 2026-11-27: the five DIFF-1 items are the rc-26e2ba68 ordinary items still standing, carried as outstanding to a later wording sweep exactly as rc-26e2ba68 carried them; none rejected, none applied; any .lean edit needs Tim's approval. Not a Tim ruling.",
+              "disposition": "carried",
+              "line_sha256": "f0ce4e4c0dcac84ee3f0417460906f4b8016d385dbdbcc6d0b65d6b33d6eaebd",
+              "reason": "ordinary (other): gloss mismatch carried as outstanding to a later wording sweep; any .lean edit needs Tim's approval. `coarseLaw2` glossed `Pr(f X0 = a, ...)` over a generic semiring (note, DIFF 1). Reader's note, DIFF 1 (verbatim): \"The five ordinary items recorded by `rc-26e2ba68` sit on unchanged lines and persist\"; this item is the reader's restatement of rc-26e2ba68 item rc-26e2ba68-DXII-Dial-2026-11-27#1.",
+              "utc": "2026-11-27T18:20:32+00:00"
+            }
+          ],
+          "git_blob_id": "815658329a00a002961c987654cda6f5175c243d",
+          "id": "rc-b790d5f8-DXIIw-2026-11-27#1",
+          "key_kind": "registry_id",
+          "kind": "diff1",
+          "kind_detail": "`coarseLaw2` glossed `Pr(f X0 = a, ...)` over a generic semiring (note, DIFF 1). Reader's note, DIFF 1 (verbatim): \"The five ordinary items recorded by `rc-26e2ba68` sit on unchanged lines and persist\"; this item is the reader's restatement of rc-26e2ba68 item rc-26e2ba68-DXII-Dial-2026-11-27#1.",
+          "line": 1661,
+          "line_sha256": "a2aa7c43826e8ae5e307316a35eba3b60305914453df520fad44900e11fa0544",
+          "path": "ZeroParadox/Information/Dial.lean",
+          "prose": "/-- `Statement:` the observed two-time statistic `Pr(f X₀ = a, f X₁ = b)` from `π`. -/",
+          "registry_id": "5b145b71-74f3-4dfd-80d2-5e497b1d5b70",
+          "registry_id_reason": null,
+          "run_id": "rc-b790d5f8-DXIIw-2026-11-27",
+          "signature": "see the elaborated type in C:\\Users\\timbr\\AppData\\Local\\Temp\\claude\\f800153db889b496\\df830dce-1a65-464d-93cd-5891c94da9e4\\scratchpad\\rc_ntime\\Dial_enum.log; unchanged from rc-26e2ba68-DXII-Dial-2026-11-27#1"
+        },
+        {
+          "decl": "ZeroParadox.coarseLaw3",
+          "diff_kind": "scope_widened",
+          "dispositions": [
+            {
+              "decided_by": null,
+              "disposition": "open",
+              "line_sha256": "b341b94249af39fec7e847ebb940f27dc41aac578090112511a884bd083e3a89",
+              "reason": null,
+              "utc": null
+            },
+            {
+              "decided_by": "Orchestrating agent (caller of this recorder), 2026-11-27: the five DIFF-1 items are the rc-26e2ba68 ordinary items still standing, carried as outstanding to a later wording sweep exactly as rc-26e2ba68 carried them; none rejected, none applied; any .lean edit needs Tim's approval. Not a Tim ruling.",
+              "disposition": "carried",
+              "line_sha256": "2ec2f1aedbf8f96ba258b3b9f95551c04eef1a11bb24206bf5eedc8e720c41ac",
+              "reason": "ordinary (scope_widened): gloss mismatch carried as outstanding to a later wording sweep; any .lean edit needs Tim's approval. `coarseLaw3` glossed `Pr(f X0 = a, ...)` over a generic semiring (note, DIFF 1). Reader's note, DIFF 1 (verbatim): \"The five ordinary items recorded by `rc-26e2ba68` sit on unchanged lines and persist\"; this item is the reader's restatement of rc-26e2ba68 item rc-26e2ba68-DXII-Dial-2026-11-27#2.",
+              "utc": "2026-11-27T18:20:32+00:00"
+            }
+          ],
+          "git_blob_id": "815658329a00a002961c987654cda6f5175c243d",
+          "id": "rc-b790d5f8-DXIIw-2026-11-27#2",
+          "key_kind": "registry_id",
+          "kind": "diff1",
+          "kind_detail": "`coarseLaw3` glossed `Pr(f X0 = a, ...)` over a generic semiring (note, DIFF 1). Reader's note, DIFF 1 (verbatim): \"The five ordinary items recorded by `rc-26e2ba68` sit on unchanged lines and persist\"; this item is the reader's restatement of rc-26e2ba68 item rc-26e2ba68-DXII-Dial-2026-11-27#2.",
+          "line": 1665,
+          "line_sha256": "b341b94249af39fec7e847ebb940f27dc41aac578090112511a884bd083e3a89",
+          "path": "ZeroParadox/Information/Dial.lean",
+          "prose": "/-- `Statement:` the observed three-time statistic `Pr(f X₀ = a, f X₁ = b, f X₂ = c)` from `π`. -/",
+          "registry_id": "e90afdc7-4761-4c76-aed5-e8b5b1010d77",
+          "registry_id_reason": null,
+          "run_id": "rc-b790d5f8-DXIIw-2026-11-27",
+          "signature": "see the elaborated type in C:\\Users\\timbr\\AppData\\Local\\Temp\\claude\\f800153db889b496\\df830dce-1a65-464d-93cd-5891c94da9e4\\scratchpad\\rc_ntime\\Dial_enum.log; unchanged from rc-26e2ba68-DXII-Dial-2026-11-27#2"
+        },
+        {
+          "decl": "ZeroParadox.lazyPairs_not_lumpable",
+          "diff_kind": "not_stated",
+          "dispositions": [
+            {
+              "decided_by": null,
+              "disposition": "open",
+              "line_sha256": "0298ee114048647f7125c7d09d7282935bd15927b24fcc0ea21724a3d0d440d5",
+              "reason": null,
+              "utc": null
+            },
+            {
+              "decided_by": "Orchestrating agent (caller of this recorder), 2026-11-27: the five DIFF-1 items are the rc-26e2ba68 ordinary items still standing, carried as outstanding to a later wording sweep exactly as rc-26e2ba68 carried them; none rejected, none applied; any .lean edit needs Tim's approval. Not a Tim ruling.",
+              "disposition": "carried",
+              "line_sha256": "82f258e2b3d1e43e200a510fea5688460f97d5ddf5828dacad5aadddab17d4fa",
+              "reason": "ordinary (not_stated): gloss mismatch carried as outstanding to a later wording sweep; any .lean edit needs Tim's approval. `lazyPairs_not_lumpable` \"is not lumpable\" while the type states only the witness (note, DIFF 1). Reader's note, DIFF 1 (verbatim): \"The five ordinary items recorded by `rc-26e2ba68` sit on unchanged lines and persist\"; this item is the reader's restatement of rc-26e2ba68 item rc-26e2ba68-DXII-Dial-2026-11-27#3.",
+              "utc": "2026-11-27T18:20:32+00:00"
+            }
+          ],
+          "git_blob_id": "815658329a00a002961c987654cda6f5175c243d",
+          "id": "rc-b790d5f8-DXIIw-2026-11-27#3",
+          "key_kind": "registry_id",
+          "kind": "diff1",
+          "kind_detail": "`lazyPairs_not_lumpable` \"is not lumpable\" while the type states only the witness (note, DIFF 1). Reader's note, DIFF 1 (verbatim): \"The five ordinary items recorded by `rc-26e2ba68` sit on unchanged lines and persist\"; this item is the reader's restatement of rc-26e2ba68 item rc-26e2ba68-DXII-Dial-2026-11-27#3.",
+          "line": 1747,
+          "line_sha256": "0298ee114048647f7125c7d09d7282935bd15927b24fcc0ea21724a3d0d440d5",
+          "path": "ZeroParadox/Information/Dial.lean",
+          "prose": "/-- `Statement:` `lazyPairs` is not lumpable along `lazyPairsProj`: `1` and `3` share a class and send",
+          "registry_id": "ab7df772-bf3d-4ba0-b91f-b4a2c7ff5e04",
+          "registry_id_reason": null,
+          "run_id": "rc-b790d5f8-DXIIw-2026-11-27",
+          "signature": "see the elaborated type in C:\\Users\\timbr\\AppData\\Local\\Temp\\claude\\f800153db889b496\\df830dce-1a65-464d-93cd-5891c94da9e4\\scratchpad\\rc_ntime\\Dial_enum.log; unchanged from rc-26e2ba68-DXII-Dial-2026-11-27#3"
+        },
+        {
+          "decl": "ZeroParadox.chainLaw_coarse3_eq_coarseLaw3",
+          "diff_kind": "dropped_hypothesis",
+          "dispositions": [
+            {
+              "decided_by": null,
+              "disposition": "open",
+              "line_sha256": "494072d8e219417c555519aa5d750098e8e5d272315cbe31afd9c01ee3e834cf",
+              "reason": null,
+              "utc": null
+            },
+            {
+              "decided_by": "Orchestrating agent (caller of this recorder), 2026-11-27: the five DIFF-1 items are the rc-26e2ba68 ordinary items still standing, carried as outstanding to a later wording sweep exactly as rc-26e2ba68 carried them; none rejected, none applied; any .lean edit needs Tim's approval. Not a Tim ruling.",
+              "disposition": "carried",
+              "line_sha256": "6004b1a2966fa1d92645b1caf01db918a5855a424e3ca0755d22061f99faf19a",
+              "reason": "ordinary (dropped_hypothesis): gloss mismatch carried as outstanding to a later wording sweep; any .lean edit needs Tim's approval. `chainLaw_coarse3_eq_coarseLaw3` \"on a finite carrier, for every kernel\" dropping measurable singletons and the Markov condition, now in contrast with its N-time successor `chainLaw_coarseN_eq_coarseLawN`, which states them (note, DIFF 1). Reader's note, DIFF 1 (verbatim): \"The five ordinary items recorded by `rc-26e2ba68` sit on unchanged lines and persist\"; this item is the reader's restatement of rc-26e2ba68 item rc-26e2ba68-DXII-Dial-2026-11-27#4.",
+              "utc": "2026-11-27T18:20:32+00:00"
+            }
+          ],
+          "git_blob_id": "815658329a00a002961c987654cda6f5175c243d",
+          "id": "rc-b790d5f8-DXIIw-2026-11-27#4",
+          "key_kind": "registry_id",
+          "kind": "diff1",
+          "kind_detail": "`chainLaw_coarse3_eq_coarseLaw3` \"on a finite carrier, for every kernel\" dropping measurable singletons and the Markov condition, now in contrast with its N-time successor `chainLaw_coarseN_eq_coarseLawN`, which states them (note, DIFF 1). Reader's note, DIFF 1 (verbatim): \"The five ordinary items recorded by `rc-26e2ba68` sit on unchanged lines and persist\"; this item is the reader's restatement of rc-26e2ba68 item rc-26e2ba68-DXII-Dial-2026-11-27#4.",
+          "line": 1895,
+          "line_sha256": "494072d8e219417c555519aa5d750098e8e5d272315cbe31afd9c01ee3e834cf",
+          "path": "ZeroParadox/Information/Dial.lean",
+          "prose": "/-- `Statement:` on a finite carrier, for every kernel, every initial probability law `μ` and every",
+          "registry_id": "0707c69e-1818-40c2-b7d1-107e86e1c1e9",
+          "registry_id_reason": null,
+          "run_id": "rc-b790d5f8-DXIIw-2026-11-27",
+          "signature": "see the elaborated type in C:\\Users\\timbr\\AppData\\Local\\Temp\\claude\\f800153db889b496\\df830dce-1a65-464d-93cd-5891c94da9e4\\scratchpad\\rc_ntime\\Dial_enum.log; unchanged from rc-26e2ba68-DXII-Dial-2026-11-27#4"
+        },
+        {
+          "decl": "ZeroParadox.lumps_deterministic_iff",
+          "diff_kind": "dropped_hypothesis",
+          "dispositions": [
+            {
+              "decided_by": null,
+              "disposition": "open",
+              "line_sha256": "8f795d6d6f1bf822a9d928dd1e375c1beef5b08a9dfab33d58138d99501af0cb",
+              "reason": null,
+              "utc": null
+            },
+            {
+              "decided_by": "Orchestrating agent (caller of this recorder), 2026-11-27: the five DIFF-1 items are the rc-26e2ba68 ordinary items still standing, carried as outstanding to a later wording sweep exactly as rc-26e2ba68 carried them; none rejected, none applied; any .lean edit needs Tim's approval. Not a Tim ruling.",
+              "disposition": "carried",
+              "line_sha256": "9e90d9d6013bafaf62d800df812f0472510f9f6accfcabf12e46012c82412a70",
+              "reason": "ordinary (dropped_hypothesis): gloss mismatch carried as outstanding to a later wording sweep; any .lean edit needs Tim's approval. `lumps_deterministic_iff` dropping measurable singletons on beta (note, DIFF 1). Reader's note, DIFF 1 (verbatim): \"The five ordinary items recorded by `rc-26e2ba68` sit on unchanged lines and persist\"; this item is the reader's restatement of rc-26e2ba68 item rc-26e2ba68-DXII-Dial-2026-11-27#5.",
+              "utc": "2026-11-27T18:20:32+00:00"
+            }
+          ],
+          "git_blob_id": "815658329a00a002961c987654cda6f5175c243d",
+          "id": "rc-b790d5f8-DXIIw-2026-11-27#5",
+          "key_kind": "registry_id",
+          "kind": "diff1",
+          "kind_detail": "`lumps_deterministic_iff` dropping measurable singletons on beta (note, DIFF 1). Reader's note, DIFF 1 (verbatim): \"The five ordinary items recorded by `rc-26e2ba68` sit on unchanged lines and persist\"; this item is the reader's restatement of rc-26e2ba68 item rc-26e2ba68-DXII-Dial-2026-11-27#5.",
+          "line": 1293,
+          "line_sha256": "8f795d6d6f1bf822a9d928dd1e375c1beef5b08a9dfab33d58138d99501af0cb",
+          "path": "ZeroParadox/Information/Dial.lean",
+          "prose": "/-- `Statement:` for deterministic kernels, lumping along `f` is the semiconjugacy `f ∘ g = g' ∘ f`. -/",
+          "registry_id": "642ab12d-bf2a-40fa-901f-3430154b4c6e",
+          "registry_id_reason": null,
+          "run_id": "rc-b790d5f8-DXIIw-2026-11-27",
+          "signature": "see the elaborated type in C:\\Users\\timbr\\AppData\\Local\\Temp\\claude\\f800153db889b496\\df830dce-1a65-464d-93cd-5891c94da9e4\\scratchpad\\rc_ntime\\Dial_enum.log; unchanged from rc-26e2ba68-DXII-Dial-2026-11-27#5"
+        },
+        {
           "decl": "example@L160",
           "diff_kind": "not_stated",
           "dispositions": [
@@ -476174,6 +476339,38 @@
             }
           ],
           "started_utc": "2026-11-27T13:20:10+00:00"
+        },
+        {
+          "brief": {
+            "git_blob_id": "d3642ae3166d2d26139a6f98cfba3af65c79aae7",
+            "path": ".claude/commands/reconstruct.md"
+          },
+          "commit": "e69a9a11b693203819ed02394a46c703a7cd47c7",
+          "diff1_count": 5,
+          "examined": [
+            {
+              "git_blob_id": "815658329a00a002961c987654cda6f5175c243d",
+              "path": "ZeroParadox/Information/Dial.lean"
+            },
+            {
+              "git_blob_id": "8011ebd6f70a2cd431984e4a35ba2f6082770b89",
+              "path": "ZeroParadox/BottomCannotBe.lean"
+            },
+            {
+              "git_blob_id": "1739c7470206c762314ff89037a6ecef4321ddb9",
+              "path": "ZeroParadox/DieCannotBe.lean"
+            }
+          ],
+          "finished_utc": "2026-11-27T18:14:33+00:00",
+          "line_sha256": "2488ecc6f74238e8b7c19884747e7cae9fb15865565ee15d26335c888b47f3b3",
+          "reader_model": "claude-opus-5-5",
+          "reader_prompt": {
+            "git_blob_id": "9c7113113daebcf63b094ffc0c5ccdce479dc44a",
+            "path": ".claude-local/notes/reconstruct_runs/prompts/9c7113113daebcf63b094ffc0c5ccdce479dc44a.md"
+          },
+          "run_id": "rc-b790d5f8-DXIIw-2026-11-27",
+          "skipped": [],
+          "started_utc": "2026-11-27T18:06:13+00:00"
         }
       ],
       "schema_version": "1"
