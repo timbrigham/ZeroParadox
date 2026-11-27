@@ -47,29 +47,29 @@ namespace ZeroParadox
 
 /-! ### General case: any LinearOrderedField -/
 
-/-! ## § 0. AX-B1 AS AN EXPLICIT COMMITMENT
+/-! ## § 0. AX-B1 AS AN EXPLICIT PRECONDITION
 
 **DISCRETENESS at the least element is a coordinate of `stepOff_mass` (Dial § IV), not a commitment**,
 and until now it was in the least visible of the three encodings (CLAUDE.md, "Commitments Go In
 HYPOTHESES"): baked into a carrier. `ax_b1_distinct : nullState ≠ firstAtomicState := by decide` only checks that the two
 constructors of a two-element type differ — **it does not check the choice of a discrete alphabet
-over a continuum**, which is the actual commitment.
+over a continuum**, which is the actual chart choice.
 
-Stated as a predicate, the commitment becomes visible at every use site, and something else falls
+Stated as a predicate, the chart choice becomes visible at every use site, and something else falls
 out for free: **it is exactly what the reals lack.** `f_snap_impossible` in this same file proves
-no ordered field has it. The commitment and its counterexample are now the same proposition, in
+no ordered field has it. The chart choice and its counterexample are now the same proposition, in
 opposite directions.
 
 The ZP-C forcing lemmas (`pmf_subsingleton_isPure`, `binaryState_exhaustive`) discharge the
 "no half-state" worry — leaving ⊥ needs a second outcome — but they force only the ≥ 2 lower bound.
-**The residual commitment is that the outcome space is DISCRETE, and that is `HasFirstStep`.** -/
+**The residual chart choice is that the outcome space is DISCRETE, and that is `HasFirstStep`.** -/
 
 section AxB1
 
 /-- **AX-B1, in standard order-theoretic vocabulary: the bottom is COVERED by something.**
 
     Mathlib's `CovBy` (notation `a ⋖ b`) says `b` is directly above `a` with nothing strictly
-    between. The framework's discreteness commitment is exactly `∃ a, bot ⋖ a`, so AX-B1 is
+    between. The framework's discreteness chart choice is exactly `∃ a, bot ⋖ a`, so AX-B1 is
     kept as the name and `CovBy` supplies the content and the lemmas.
 
     **Honest transition note (2026-07-27).** This was first written (2026-07-26) as a bespoke
