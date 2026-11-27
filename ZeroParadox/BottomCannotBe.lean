@@ -937,6 +937,12 @@ example : ZeroParadox.Disjunctive (fun n => xor (ZeroParadox.champ n) false) := 
 -- ⊥ of `L` at every stage; for `0 < p ≤ 1`, for almost every tape it is somewhere not ⊥ of `L`.
 -- Forward maps only.
 #check @ZeroParadox.dial_jump_into_L
+-- Statement: for every carrier `L`, no hypothesis on it, the `trials p hp` mass of `stepOff L` (the tape
+-- fires and its run steps off ⊥ of `L` to a cover) is 1 if ⊥ of `L` has a first step and `p ≠ 0`, else 0.
+#check @ZeroParadox.stepOff_mass
+-- Statement: one way: on a densely ordered linear order with a least element that mass is 0 at every `p`;
+-- `W_not_firstStep` and `W_not_dense` show the converse fails.
+#check @ZeroParadox.dense_stepOff_mass_zero
 -- Statement: if ⊥ of `L` has a first step and the stage chances `q n` sum to ∞, then for
 -- `fadingTrials q hq`-almost every tape some `φ` makes the run `φ ∘ firedRun w hw` step off ⊥ of `L`
 -- to a cover. One way.

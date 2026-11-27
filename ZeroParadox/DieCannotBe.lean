@@ -5461,6 +5461,9 @@ example : ¬ ZeroParadox.Motion.unitMotion.Loop := fun ⟨_, _, _, _, hne, _⟩ 
 #check @ZeroParadox.GMinMax                    -- Statement: `p` steps only to itself and is the limit sink off `q`; `q2_GMinMax` at 0 of `ℚ_[2]` under doubling, `const_GMinMax` the control
 #check @ZeroParadox.GReturnToStart             -- Statement: a sequence's tail is a run whose stage closure contains its start; `q2_arc_returnToStart` holds, `real_dbl_no_return_zero` fails for every sequence starting at 0 of ℝ
 #check @ZeroParadox.given_then_fixed_destination -- Statement: a limit sink off `q`, UP unchanged along steps, a run from off `q` with no landing: the run closes at UP of its start, holds the sink there, and the start does not arrive at the sink (`¬ Arrives`). One way
+#check @ZeroParadox.q2_zero_not_firstStep      -- Statement: in `lmSphN`, 0 of `ℚ_[2]` has no first step, although `q2_GDiscrete` holds
+#check @ZeroParadox.two_charts_snap            -- Statement: `q2_GDiscrete` and `real_not_GDiscrete`; the `trials p hp` mass of `stepOff` is the switch on `Bool` and 0 on `NNReal`; 0 of ℝ has no first step
+#check @ZeroParadox.stepOff_mass               -- Statement: for every carrier `L`, no hypothesis on it, the mass of `stepOff L` is 1 if `BotHasFirstStep L` and `p ≠ 0`, and 0 otherwise (`ZeroParadox/Information/Dial.lean` § IV)
 #check @ZeroParadox.q2_not_leavesByRun_zero    -- Statement: LIMIT — 0 of `ℚ_[2]` never leaves under doubling; `machine_leavesByRun` leaves `c₀`, ⊥ of `MachinePhase`
 
 end DieCannotBeIndex

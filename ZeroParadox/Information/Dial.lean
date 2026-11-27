@@ -1,6 +1,7 @@
 import ZeroParadox.Information.BottomTotality
 import ZeroParadox.Information.StartBit
 import ZeroParadox.Information.TwoRequirements
+import ZeroParadox.Information.SnapEpsilonZero
 import ZeroParadox.Valuation.UltrametricView
 import Mathlib.Probability.Kernel.IonescuTulcea.Traj
 import Mathlib.Probability.Kernel.Invariance
@@ -23,7 +24,7 @@ analog and a digital value
 
 ## Formal Overview (AI-assisted)
 Switch (§ II): "some stage fires" has mass 0 at `p = 0`, 1 for `0 < p ≤ 1`. Volume (§ III): "fires within `n`
-stages" is continuous in `p` and tends to the switch non-uniformly. § IV: the jump in `L`; § V-VI: schedules,
+stages" is continuous in `p` and tends to the switch non-uniformly. § IV: the jump in `L`, the step-off mass; § V-VI: schedules,
 the law; § VII: mean of `wait + 1` is `p⁻¹`; § VIII: columns; § IX: entropy pins `0 < p < 1`; § X: translations;
 § XI: a supplied Markov kernel on the die; § XII: lumping, and reversibility under coarse-graining. -/
 
@@ -171,6 +172,178 @@ theorem dial_jump_into_L {L : Type*} [ZPSemilattice L] (φ : Bool → L)
   · filter_upwards [ae_firesOnce p hp hp0] with w hw
     obtain ⟨n, hn⟩ := (slotRun_crosses_iff w).2.2 hw
     exact ⟨n, by rw [hn]; exact hφ1⟩
+
+/-! #### § IV, the step-off event: one statement, the carrier `L` a coordinate of it -/
+
+section StepOff
+
+open ZPSemilattice
+
+/-- `Statement:` the tapes that fire and drive, for some `φ : Bool → L`, a run `φ ∘ firedRun w hw`
+that starts at ⊥ of `L`, moves at index 1, is a state sequence, and first moves to a cover of ⊥ of
+`L` (covering relation in ZP-A's induced order): the event of `snap_ae_of_firstStep`. -/
+def stepOff (L : Type*) [ZPSemilattice L] : Set (ℕ → Bool) :=
+  {w | ∃ (φ : Bool → L) (hw : ∃ k, w k = true),
+      let S := φ ∘ firedRun w hw
+      (S 0 = bot ∧ S 1 ≠ S 0 ∧ IsStateSequence S) ∧
+      ((S 0 ≠ S 1 ∧ S 1 ≠ S 0 ∧ join (S 0) (S 1) = S 1) ∧
+        letI := zpSemilatticeSup L; (bot : L) ⋖ S 1)}
+
+/-- `Statement:` if ⊥ of `L` has a first step, `stepOff L` is the set of tapes that fire. -/
+theorem stepOff_of_firstStep {L : Type*} [ZPSemilattice L] (h : BotHasFirstStep L) :
+    stepOff L = {w | ∃ k, w k = true} := by
+  ext w
+  constructor
+  · rintro ⟨_, hw, _⟩; exact hw
+  · intro hw
+    obtain ⟨φ, hφ⟩ := snap_of_firstStep_fires_once h w hw
+    exact ⟨φ, hw, hφ⟩
+
+/-- `Statement:` if ⊥ of `L` has no first step, `stepOff L` is empty. -/
+theorem stepOff_of_not_firstStep {L : Type*} [ZPSemilattice L] (h : ¬ BotHasFirstStep L) :
+    stepOff L = ∅ := by
+  ext w
+  simp only [Set.mem_empty_iff_false, iff_false]
+  rintro ⟨φ, hw, -, -, hcov⟩
+  exact h ⟨_, hcov⟩
+
+open Classical in
+/-- `Statement:` for every carrier `L`, no hypothesis on it: the `trials p hp` mass of `stepOff L`
+is 1 if ⊥ of `L` has a first step and `p ≠ 0`, and 0 otherwise. -/
+theorem stepOff_mass (L : Type*) [ZPSemilattice L] (p : NNReal) (hp : p ≤ 1) :
+    trials p hp (stepOff L) = if BotHasFirstStep L ∧ p ≠ 0 then 1 else 0 := by
+  by_cases h : BotHasFirstStep L
+  · rw [stepOff_of_firstStep h, dial_fire_jump]
+    by_cases h0 : p = 0 <;> simp [h, h0]
+  · rw [stepOff_of_not_firstStep h]; simp [h]
+
+/-- `Statement:` at `0 < p ≤ 1`, almost every tape is in `stepOff L` iff ⊥ of `L` has a first step;
+both directions. -/
+theorem stepOff_ae_iff (L : Type*) [ZPSemilattice L] (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p) :
+    (∀ᵐ w ∂(trials p hp), w ∈ stepOff L) ↔ BotHasFirstStep L := by
+  constructor
+  · intro hae
+    by_contra h
+    rw [stepOff_of_not_firstStep h] at hae
+    have : trials p hp Set.univ = 0 := by
+      rw [ae_iff] at hae; simp at hae
+    simp at this
+  · intro h
+    filter_upwards [snap_ae_of_firstStep h p hp hp0] with w hw
+    exact hw
+
+/-- `Statement:` on a linear order with a least element (join `max`, `linearMaxZPS`), the mass of
+`stepOff` is 1 iff the order has an atom (Mathlib `IsAtom`, through `bot_covBy_iff`) and `p ≠ 0`. -/
+theorem linear_stepOff_mass_one_iff {α : Type*} [LinearOrder α] [OrderBot α] (p : NNReal)
+    (hp : p ≤ 1) :
+    (trials p hp (@stepOff α (linearMaxZPS α ⊥ (fun _ => bot_le))) = 1) ↔
+      ((∃ a : α, IsAtom a) ∧ p ≠ 0) := by
+  classical
+  rw [stepOff_mass, linearMaxZPS_botHasFirstStep_iff]
+  have : HasFirstStep (⊥ : α) ↔ ∃ a : α, IsAtom a :=
+    ⟨fun ⟨a, ha⟩ => ⟨a, bot_covBy_iff.1 ha⟩, fun ⟨a, ha⟩ => ⟨a, bot_covBy_iff.2 ha⟩⟩
+  rw [this]
+  split_ifs with hc <;> simp [hc]
+
+/-- `Statement:` one way: on a densely ordered linear order with a least element, the mass of
+`stepOff` is 0 at every `p`. The converse fails: `W` is not densely ordered (`W_not_dense`) and its
+⊥ has no first step (`W_not_firstStep`). -/
+theorem dense_stepOff_mass_zero {α : Type*} [LinearOrder α] [OrderBot α] [DenselyOrdered α]
+    (p : NNReal) (hp : p ≤ 1) :
+    trials p hp (@stepOff α (linearMaxZPS α ⊥ (fun _ => bot_le))) = 0 := by
+  have h : ¬ @BotHasFirstStep α (linearMaxZPS α ⊥ (fun _ => bot_le)) := by
+    rw [linearMaxZPS_botHasFirstStep_iff]
+    exact axb1_fails_everywhere_iff_dense.mp inferInstance ⊥
+  rw [@stepOff_of_not_firstStep α (linearMaxZPS α ⊥ (fun _ => bot_le)) h]; simp
+
+section BoolC
+attribute [local instance] boolOrZPS
+-- Statement: CONTROL, on `Bool` (join `||`): the mass is 0 at `p = 0` and 1 otherwise.
+example (p : NNReal) (hp : p ≤ 1) : trials p hp (stepOff Bool) = if p = 0 then 0 else 1 := by
+  classical
+  rw [stepOff_of_firstStep bool_botHasFirstStep, dial_fire_jump]
+end BoolC
+
+section NNRealC
+attribute [local instance] nnrealMaxZPS
+-- Statement: CONTROL, on `NNReal` (join `max`): the mass is 0 at every `p`.
+example (p : NNReal) (hp : p ≤ 1) : trials p hp (stepOff NNReal) = 0 := by
+  rw [stepOff_of_not_firstStep nnreal_not_botHasFirstStep]; simp
+-- Statement: CONTROL, a run can still leave ⊥ of `NNReal` (to 1); it does not move to a cover of it.
+example : ∃ (φ : Bool → NNReal) (hw : ∃ k, (fun _ => true : ℕ → Bool) k = true),
+    (φ ∘ firedRun (fun _ => true) hw) 0 = bot ∧
+    (φ ∘ firedRun (fun _ => true) hw) 1 ≠ (φ ∘ firedRun (fun _ => true) hw) 0 := by
+  refine ⟨fun b => if b then 1 else 0, ⟨0, rfl⟩, ?_, ?_⟩
+  · simp [(firedRun_spec (fun _ => true) ⟨0, rfl⟩).1]; rfl
+  · simp [(firedRun_spec (fun _ => true) ⟨0, rfl⟩).1, (firedRun_spec (fun _ => true) ⟨0, rfl⟩).2 0]
+end NNRealC
+
+-- Statement: CONTROL, on `ℕ∞` (join `min`): the mass is 0 at every `p`.
+example (p : NNReal) (hp : p ≤ 1) : trials p hp (stepOff ℕ∞) = 0 := by
+  rw [stepOff_of_not_firstStep natInf_not_botHasFirstStep]; simp
+
+-- Statement: CONTROL, on `Fin 3` (join `max`): ⊥ is covered by 1, and the mass is the switch.
+example (p : NNReal) (hp : p ≤ 1) :
+    trials p hp (@stepOff (Fin 3) (linearMaxZPS (Fin 3) ⊥ (fun _ => bot_le))) =
+      if p = 0 then 0 else 1 := by
+  have h : @BotHasFirstStep (Fin 3) (linearMaxZPS (Fin 3) ⊥ (fun _ => bot_le)) := by
+    rw [linearMaxZPS_botHasFirstStep_iff]
+    exact ⟨1, by decide, fun {c} h1 h2 => by revert c; decide⟩
+  rw [@stepOff_of_firstStep (Fin 3) (linearMaxZPS (Fin 3) ⊥ (fun _ => bot_le)) h, dial_fire_jump]
+
+-- Statement: CONTROL, on `Unit` under any `ZPSemilattice`: the mass is 0 at every `p`.
+example [ZPSemilattice Unit] (p : NNReal) (hp : p ≤ 1) : trials p hp (stepOff Unit) = 0 := by
+  have h : ¬ BotHasFirstStep Unit := by
+    rintro ⟨a, ha⟩
+    exact @LT.lt.ne Unit (zpSemilatticeSup Unit).toPreorder _ _ ha.1 (Subsingleton.elim _ _)
+  rw [stepOff_of_not_firstStep h]; simp
+
+/-- `Statement:` `WithTop (WithTop NNReal)`, the control carrier for `dense_stepOff_mass_zero`. -/
+abbrev W := WithTop (WithTop NNReal)
+
+/-- `Statement:` ⊥ of `W` has no first step. -/
+theorem W_not_firstStep : ¬ HasFirstStep (⊥ : W) := by
+  rintro ⟨a, h0a, hc⟩
+  induction a using WithTop.recTopCoe with
+  | top =>
+    exact hc (c := (((1 : NNReal) : WithTop NNReal) : W)) (by
+      show ((((0 : NNReal) : WithTop NNReal)) : W) < _
+      exact WithTop.coe_lt_coe.2 (WithTop.coe_lt_coe.2 one_pos)) (WithTop.coe_lt_top _)
+  | coe b =>
+    induction b using WithTop.recTopCoe with
+    | top =>
+      exact hc (c := (((1 : NNReal) : WithTop NNReal) : W)) (by
+        show ((((0 : NNReal) : WithTop NNReal)) : W) < _
+        exact WithTop.coe_lt_coe.2 (WithTop.coe_lt_coe.2 one_pos))
+        (WithTop.coe_lt_coe.2 (WithTop.coe_lt_top _))
+    | coe x =>
+      have hx : (0 : NNReal) < x := by
+        have : ((((0 : NNReal) : WithTop NNReal)) : W) < ((x : WithTop NNReal) : W) := h0a
+        exact WithTop.coe_lt_coe.1 (WithTop.coe_lt_coe.1 this)
+      exact hc (c := (((x / 2 : NNReal) : WithTop NNReal) : W))
+        (by
+          show ((((0 : NNReal) : WithTop NNReal)) : W) < _
+          exact WithTop.coe_lt_coe.2 (WithTop.coe_lt_coe.2 (half_pos hx)))
+        (WithTop.coe_lt_coe.2 (WithTop.coe_lt_coe.2 (half_lt_self hx)))
+
+/-- `Statement:` `W` is not densely ordered: the inner ⊤ is covered by the outer ⊤. -/
+theorem W_not_dense : ¬ DenselyOrdered W := by
+  intro hd
+  refine axb1_fails_everywhere_iff_dense.mp hd ((⊤ : WithTop NNReal) : W)
+    ⟨⊤, WithTop.coe_lt_top _, fun {c} h1 h2 => ?_⟩
+  induction c using WithTop.recTopCoe with
+  | top => exact lt_irrefl _ h2
+  | coe b => exact not_top_lt (WithTop.coe_lt_coe.1 h1)
+
+-- Statement: CONTROL, on `W` (join `max`): the mass is 0 at every `p`, and `W` is not densely ordered.
+example (p : NNReal) (hp : p ≤ 1) :
+    trials p hp (@stepOff W (linearMaxZPS W ⊥ (fun _ => bot_le))) = 0 ∧ ¬ DenselyOrdered W := by
+  refine ⟨?_, W_not_dense⟩
+  have h : ¬ @BotHasFirstStep W (linearMaxZPS W ⊥ (fun _ => bot_le)) := by
+    rw [linearMaxZPS_botHasFirstStep_iff]; exact W_not_firstStep
+  rw [@stepOff_of_not_firstStep W (linearMaxZPS W ⊥ (fun _ => bot_le)) h]; simp
+
+end StepOff
 
 /-! ### § V. A schedule of chances -/
 
@@ -2481,6 +2654,16 @@ open ZeroParadox
 #print axioms dial_not_uniform_witness
 #print axioms dial_not_uniform
 #print axioms dial_jump_into_L
+#print axioms stepOff
+#print axioms stepOff_of_firstStep
+#print axioms stepOff_of_not_firstStep
+#print axioms stepOff_mass
+#print axioms stepOff_ae_iff
+#print axioms linear_stepOff_mass_one_iff
+#print axioms dense_stepOff_mass_zero
+#print axioms W
+#print axioms W_not_firstStep
+#print axioms W_not_dense
 #print axioms fadingTrials_fires_iIndepSet
 #print axioms schedule_fires_of_tsum_top
 #print axioms schedule_snap_ae
