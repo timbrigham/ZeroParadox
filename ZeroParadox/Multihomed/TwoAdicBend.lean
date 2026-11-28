@@ -1515,8 +1515,8 @@ theorem q2_arc_zero {γ : ℝ → ℚ_[2]} (hγ : Continuous γ) (s : Set ℝ) :
     exact (isPreconnected_range hγ).subsingleton ⟨a, rfl⟩ ⟨b, rfl⟩)
 
 /-- `Statement:` the up-and-over step `dTwist 3` sends `2` to `6`, the chord `dist 2 6` is `1/4`, and
-    no continuous `γ : ℝ → ℚ_[2]` has `γ 0 = 2` and `γ 1 = 6`: a chord with no arc. On ℝ the chord
-    falls short of an arc (`chordSum_lt`) and the gap closes under refinement (`chordSum_tendsto`). -/
+    no continuous `γ : ℝ → ℚ_[2]` has `γ 0 = 2` and `γ 1 = 6`: a chord with no arc. In ℂ, on the
+    unit circle, the chord falls short of an arc (`chordSum_lt`) and the gap closes under refinement (`chordSum_tendsto`). -/
 theorem dTwist_step_no_arc :
     dTwist 3 2 = 6 ∧ dist (2 : ℚ_[2]) 6 = 1 / 4 ∧
     ¬ ∃ γ : ℝ → ℚ_[2], Continuous γ ∧ γ 0 = 2 ∧ γ 1 = 6 := by

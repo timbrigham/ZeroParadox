@@ -477487,7 +477487,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 5233,
+        "declarations": 5234,
         "files": 249
       },
       "entries": [
@@ -583815,6 +583815,43 @@
             ]
           },
           "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "906e4d71-e22f-451b-a131-e06a5c855670",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.log_law_iff_ladder",
+            "short": "log_law_iff_ladder"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.log_law_iff_ladder",
+            "short": "log_law_iff_ladder",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Ruling 126 Q2 (Tim 2026-11-28): converse of ladder_count_eq_log for positive summable gaps (Dial § XIII).",
           "verify": {
             "axioms": null,
             "sorry_free": null

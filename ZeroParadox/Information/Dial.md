@@ -115,9 +115,9 @@ this file holds what was already in the corpus, the prior art, and the fences.
   at `p = 0` (`integral_id_map_cast_geometricMeasure_zero`, Mathlib's `geometricMeasure 0 = dirac 0`), and
   by danlyng/Econlib at commit d7bd947, `CountDist.geometric_expect`, for `0 < p ≤ 1`; both read at those
   commits, types not elaborated. Our `lintegral_wait` gives ⊤ of `ℝ≥0∞` at `p = 0`, and that is the mean
-  itself: at `p = 0` almost every tape never fires (`never_fires_ae_zero`), so it is ⊥ of `ℕ → Bool`
-  (`tape_never_fires_iff`), whose wait is ⊤ of `ℕ∞` (`wait_bot`), and the wait is infinite almost surely. The convention `0⁻¹ = ⊤`
-  in `ℝ≥0∞` makes the closed form `p⁻¹ − 1` agree. TauCeti gives 0 there and Econlib excludes `p = 0`.
+  itself: at `p = 0` almost every tape never fires (`never_fires_ae_zero`), so almost every tape is ⊥ of `ℕ → Bool`
+  (`tape_never_fires_iff`; the `p = 0` facts together: `wait_chart_top`), whose wait is ⊤ of `ℕ∞` (`wait_bot`), and the wait is infinite almost surely. The convention `0⁻¹ = ⊤`
+  in `ℝ≥0∞` makes the closed form `p⁻¹ - 1` agree. TauCeti gives 0 there and Econlib excludes `p = 0`.
 - § VIII. `unpack_measurePreserving` reindexes an infinite product measure, from Mathlib's
   `Measure.infinitePi_map_piCongrLeft` and `Measure.infinitePi_map_curry`. A published measure-level pairing
   statement: Brattka, Gherardi, Hölzl, "Probabilistic computability and choice", *Information and
@@ -310,9 +310,10 @@ this file holds what was already in the corpus, the prior art, and the fences.
   Mathlib lemma as of 2026-11-27, searched as follows: grep of `Mathlib/NumberTheory/Padics`, `exact?` on
   three phrasings, LeanExplore on two. It follows from `PadicInt.norm_eq_zpow_neg_valuation` and
   `norm_zero`; `n2Run_eq_norm` uses `PadicInt.norm_p_pow`.
-- `e2 : ℕ∞ᵒᵈ ≃o N2` has a Mathlib sibling with the same target, `IsDiscreteValuationRing.idealOrderIsoENat`
-  (ideals of a discrete valuation ring; ideal `(2 ^ n)` for norm `2⁻¹ ^ n`), and a value-group form,
-  `Valuation.IsRankOneDiscrete.valueGroup₀_equiv_withZeroMulInt`. Its order content on ℤ_[2] is
+- Mathlib's `IsDiscreteValuationRing.idealOrderIsoENat : Ideal R ≃o ℕ∞ᵒᵈ` ends where `e2 : ℕ∞ᵒᵈ ≃o N2`
+  starts; composed they give `Ideal ℤ_[2] ≃o N2` (ideals of a discrete valuation ring; ideal `(2 ^ n)` for
+  norm `2⁻¹ ^ n`). There is also a value-group form,
+  `Valuation.IsRankOneDiscrete.valueGroup₀_equiv_withZeroMulInt`. The order content of `e2` on ℤ_[2] is
   `q2Val_le_iff_norm_le` (`ZeroParadox/Valuation/Scale.lean`).
 - Sutherland, MIT 18.782 Lecture 4 (Fall 2013), Def. 4.10, p. 3 (`v_p(0) = ∞`) and Thm. 4.16, p. 4 (every
   nonzero ideal of ℤ_p is `(p^m)`); Stacks Project tags 00IE (discrete valuation ring) and 00IH (ideals of a
@@ -320,6 +321,34 @@ this file holds what was already in the corpus, the prior art, and the fences.
   retrieved text states the norm image itself.
 - `boolN2_bot_cover_and_limit` takes its order conjuncts from `boolNInfL_bot_cover_and_limit` along
   `boolN2Iso`; its limit conjunct is proved directly, in the subspace topology of `N2` in `ℝ≥0`.
+
+## Prior art for § XIII, the gap count (searched 2026-11-27)
+
+- Fractal strings: Dettmers, Giza, Knox, Morales, Rock, "A survey of complex dimensions, measurability, and
+  the lattice/nonlattice dichotomy", arXiv:1510.06467. Def. 3.1, p. 10: "An ordinary fractal string Ω is a
+  bounded open subset of the real line. A fractal string L = (ℓj)_{j=1}^∞ is a nonincreasing sequence of
+  positive real numbers such that lim_{j→∞} ℓj = 0." Def. 3.8, p. 12: the geometric counting function, defined for
+  `x > 0` by `N_L(x) := #{j ∈ ℕ : ℓj⁻¹ ≤ x}`. Def. 3.3, p. 11: the dimension `D_L` is the abscissa of
+  convergence of `Σ ℓj^s`. Thm. 3.4, p. 11, a restatement of Lapidus-van Frankenhuijsen Thm. 1.10: for an
+  ordinary fractal string with infinitely many components and `vol1(Ω) = sup Ω - inf Ω`,
+  `D_L = dim_M(∂Ω)`.
+- Read through these, the gaps `n2GapInt n` of `n2Real` form an ordinary fractal string with lengths
+  `(1/2)^(n+1)` (`volume_n2GapInt`) summing to the span (`tsum_volume_n2GapInt`, `spanGap_n2Real`), which is
+  Thm. 3.4's hypothesis; `Σ ((1/2)^(n+1))^s` converges exactly for `s > 0`, so `D_L = 0`. The corpus
+  proves the Hausdorff dimension (`dimH_n2Real`), not the Minkowski one. For a fractal string `ℓ` and
+  `r > 0`, `gapCount ℓ r` is `N_L(1/r)`.
+- The 2-adic side: Lapidus, Lũ' Hùng, van Frankenhuijsen, "Minkowski dimension and explicit tube formulas
+  for p-adic fractal strings", arXiv:1603.09409 (v4, 2018). § 2.3, pp. 7-8: the p-adic Euler string
+  `E_p = ⋃_{n≥0} (a_n + p^n ℤ_p)`, with geometric zeta function `Σ p^(-ns) = 1/(1 - p^(-s))` and `D = 0`.
+  Remark 2.7, p. 8 (the punctured unit ball): "The unit ball minus the origin is not a ball itself, but
+  instead the infinite union" `ℤ_p \ {0} = ⋃_{n≥0} ⋃_{k=1}^{p-1} (k p^n + p^(n+1) ℤ_p)`, and "This union is
+  isomorphic to the Euler string". At `p = 2` the pieces are `2^n + 2^(n+1) ℤ_2`, each of Haar measure
+  `2^(-(n+1))` (our arithmetic, not stated there): the lengths of `n2GapInt`.
+- What is ours: the exact identity `cxQ2_eq_gap_count` (`cxQ2_eq_gapCount`): for `x ≠ 0` in `ℚ_[2]`,
+  `cxQ2 x = N_L(1/‖x‖)` for the string of lengths `(1/2)^(n+1)`, and at 0 of `ℚ_[2]` both sides are ⊤ of
+  `ℕ∞` (the count at threshold 0, outside Def. 3.8's `x > 0`); the log law on the scaled ladder
+  (`ladder_count_eq_log`), its converse for positive summable gaps (`log_law_iff_ladder`, with controls for
+  each hypothesis), the control `harm_no_log_law`; and the Lean. The fractal-string framework is not ours.
 
 ## Fences
 
