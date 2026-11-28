@@ -1026,6 +1026,15 @@ example : ZeroParadox.Disjunctive (fun n => xor (ZeroParadox.champ n) false) := 
 -- Reading: coarse-graining can erase an arrow, and from a reversible start it creates none, in any
 -- window of consecutive times.
 #check @ZeroParadox.coarse_graining_trade
+-- Statement: at every `x : ℚ_[2]`, 0 of `ℚ_[2]` included (both sides ⊤ of `ℕ∞`), `cxQ2 x` is the number of
+-- gaps of `n2Real` (`N2` read in ℝ) of length at least `‖x‖`; the amount missing, `spanGap`, is a separate
+-- quantity (`spanGap_scaled_n2Real`) (`ZeroParadox/Information/Dial.lean` § XIII).
+#check @ZeroParadox.cxQ2_eq_gap_count
+-- Statement: one way: on the fixed-ratio ladder scaled by `t > 0`, at every level, the gap count equals
+-- `log₂ (1 / remaining) + log₂ t`; the converse is not claimed.
+#check @ZeroParadox.ladder_count_eq_log
+-- Statement: CONTROL, on the gaps `1/((n+1)(n+2))` no constant `c` gives count = `log₂ (1 / remaining) + c`.
+#check @ZeroParadox.harm_no_log_law
 
 /-! ### The givens at the die level: given (a) as a chart claim (least in ℤ_[2]'s norm preorder, greatest at its image in `ℕ∞`), and a limit -/
 

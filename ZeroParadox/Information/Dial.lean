@@ -3,6 +3,8 @@ import ZeroParadox.Information.StartBit
 import ZeroParadox.Information.TwoRequirements
 import ZeroParadox.Information.SnapEpsilonZero
 import ZeroParadox.Valuation.UltrametricView
+import ZeroParadox.Reals.ConnectedNoFirstStep
+import Mathlib.Topology.MetricSpace.HausdorffDimension
 import Mathlib.Probability.Kernel.IonescuTulcea.Traj
 import Mathlib.Probability.Kernel.Invariance
 import Mathlib.Topology.Instances.ENat
@@ -28,7 +30,7 @@ analog and a digital value
 Switch (§ II): "some stage fires" has mass 0 at `p = 0`, 1 for `0 < p ≤ 1`. Volume (§ III): "fires within `n`
 stages" is continuous in `p` and tends to the switch non-uniformly. § IV: the jump in `L`, the step-off mass, `Bool × ℕ∞ᵒᵈ` and its 2-adic norm form `Bool × N2`; § V-VI: schedules,
 the law; § VII: mean of `wait + 1` is `p⁻¹`; § VIII: columns; § IX: entropy pins `0 < p < 1`; § X: translations;
-§ XI: a supplied Markov kernel on the die; § XII: lumping, and reversibility under coarse-graining. -/
+§ XI: a Markov kernel on the die; § XII: lumping, reversibility under coarse-graining; § XIII: `cxQ2` as a gap count. -/
 
 set_option maxHeartbeats 400000
 
@@ -3112,6 +3114,397 @@ end Trade
 
 end Lumping
 
+/-! ### § XIII. `N2` in ℝ: span minus material, the gap count, and the amount -/
+
+section GapCount
+
+open Set Metric
+open scoped ENNReal
+
+/-- `Statement:` `N2` read in ℝ, the image of `N2` under `ℝ≥0 → ℝ`. -/
+def n2Real : Set ℝ := ((↑) : NNReal → ℝ) '' N2
+
+/-- `Statement:` `n2Real = {0} ∪ {(1/2)^n | n : ℕ}`. -/
+theorem n2Real_eq : n2Real = insert 0 (range fun n : ℕ => (1 / 2 : ℝ) ^ n) := by
+  ext r
+  constructor
+  · rintro ⟨q, hq | ⟨n, rfl⟩, rfl⟩
+    · exact Or.inl (by simp [hq])
+    · exact Or.inr ⟨n, by push_cast; rw [one_div]⟩
+  · rintro (rfl | ⟨n, rfl⟩)
+    · exact ⟨0, Or.inl rfl, by simp⟩
+    · exact ⟨(2⁻¹ : NNReal) ^ n, Or.inr ⟨n, rfl⟩, by push_cast; rw [one_div]⟩
+
+/-- `Statement:` `(1/2)^k = 2^(-k)` in ℝ. -/
+theorem n2_half_pow_eq_zpow (k : ℕ) : (1 / 2 : ℝ) ^ k = (2 : ℝ) ^ (-(k : ℤ)) := by
+  rw [zpow_neg, zpow_natCast, one_div, inv_pow]
+
+/-- `Statement:` `(1/2)^n → 0`. -/
+theorem n2_half_pow_tendsto : Tendsto (fun n : ℕ => (1 / 2 : ℝ) ^ n) atTop (𝓝 0) :=
+  tendsto_pow_atTop_nhds_zero_of_lt_one (by norm_num) (by norm_num)
+
+/-- `Statement:` `n2Real` is closed in ℝ. -/
+theorem isClosed_n2Real : IsClosed n2Real := by
+  rw [n2Real_eq]; exact n2_half_pow_tendsto.isCompact_insert_range.isClosed
+
+/-- `Statement:` `n2Real` has Lebesgue measure 0 (countable). -/
+theorem volume_n2Real : volume n2Real = 0 := by
+  rw [n2Real_eq]; exact ((Set.countable_range _).insert 0).measure_zero _
+
+/-- `Statement:` `n2Real ⊆ [0, 1]`. -/
+theorem n2Real_subset_Icc : n2Real ⊆ Icc 0 1 := by
+  rw [n2Real_eq]
+  rintro r (rfl | ⟨n, rfl⟩)
+  · exact ⟨le_refl _, zero_le_one⟩
+  · exact ⟨by positivity, pow_le_one₀ (by norm_num) (by norm_num)⟩
+
+/-- `Statement:` `n2Real` has diameter 1. -/
+theorem ediam_n2Real : ediam n2Real = 1 := by
+  apply le_antisymm
+  · calc ediam n2Real ≤ ediam (Icc (0 : ℝ) 1) := ediam_mono n2Real_subset_Icc
+      _ = 1 := by simp
+  · have h0 : (0 : ℝ) ∈ n2Real := by rw [n2Real_eq]; exact Or.inl rfl
+    have h1 : (1 : ℝ) ∈ n2Real := by rw [n2Real_eq]; exact Or.inr ⟨0, by simp⟩
+    have h := edist_le_ediam_of_mem h0 h1
+    rw [edist_dist, Real.dist_eq] at h
+    norm_num at h
+    exact h
+
+/-- `Statement:` `spanGap n2Real = 1` (`spanGap`, `ZeroParadox/Reals/ConnectedNoFirstStep.lean`):
+    material 0, span 1; so `n2Real`, closed, is not an interval (`spanGap_eq_zero_iff_interval`). -/
+theorem spanGap_n2Real : spanGap n2Real = 1 := by
+  rw [spanGap, volume_n2Real, ediam_n2Real, tsub_zero]
+
+/-- `Statement:` the `n`-th gap of `n2Real`, the open interval `((1/2)^(n+1), (1/2)^n)`. -/
+def n2GapInt (n : ℕ) : Set ℝ := Ioo ((1 / 2 : ℝ) ^ (n + 1)) ((1 / 2 : ℝ) ^ n)
+
+/-- `Statement:` `[0, 1] \ n2Real` is the union of the gaps `n2GapInt n`. -/
+theorem Icc_diff_n2Real : Icc (0 : ℝ) 1 \ n2Real = ⋃ n, n2GapInt n := by
+  rw [n2Real_eq]
+  ext x
+  simp only [Set.mem_sdiff, mem_Icc, mem_iUnion, n2GapInt, mem_Ioo, mem_insert_iff, mem_range,
+    not_or, not_exists]
+  constructor
+  · rintro ⟨⟨h0, h1⟩, hx0, hxn⟩
+    have hpos : 0 < x := lt_of_le_of_ne h0 (Ne.symm hx0)
+    have hex : ∃ n, (1 / 2 : ℝ) ^ n < x := exists_pow_lt_of_lt_one hpos (by norm_num)
+    classical
+    let n := Nat.find hex
+    have hn : (1 / 2 : ℝ) ^ n < x := Nat.find_spec hex
+    have hn0 : n ≠ 0 := by
+      intro h; rw [h, pow_zero] at hn; linarith
+    obtain ⟨m, hm⟩ := Nat.exists_eq_succ_of_ne_zero hn0
+    have hmin : ¬ (1 / 2 : ℝ) ^ m < x := Nat.find_min hex (by omega)
+    have hm1 : m + 1 = n := by omega
+    refine ⟨m, by rw [hm1]; exact hn, ?_⟩
+    exact lt_of_le_of_ne (not_lt.1 hmin) (fun h => hxn m h.symm)
+  · rintro ⟨n, h1, h2⟩
+    have hpos : 0 < x := lt_trans (by positivity) h1
+    refine ⟨⟨hpos.le, h2.le.trans (pow_le_one₀ (by norm_num) (by norm_num))⟩, hpos.ne', ?_⟩
+    intro m hm
+    rw [← hm] at h1 h2
+    have a := (pow_lt_pow_iff_right_of_lt_one₀ (by norm_num : (0 : ℝ) < 1 / 2)
+      (by norm_num)).1 h1
+    have b := (pow_lt_pow_iff_right_of_lt_one₀ (by norm_num : (0 : ℝ) < 1 / 2)
+      (by norm_num)).1 h2
+    omega
+
+/-- `Statement:` the `n`-th gap has length `(1/2)^(n+1)`. -/
+theorem volume_n2GapInt (n : ℕ) :
+    volume (n2GapInt n) = ENNReal.ofReal ((1 / 2 : ℝ) ^ (n + 1)) := by
+  rw [n2GapInt, Real.volume_Ioo]; congr 1; ring
+
+/-- `Statement:` the gaps are pairwise disjoint. -/
+theorem n2GapInt_pairwise_disjoint : Pairwise (Function.onFun Disjoint n2GapInt) := by
+  intro m n hmn
+  rcases lt_or_gt_of_ne hmn with h | h
+  · rw [Function.onFun, Set.disjoint_left]
+    rintro x ⟨a1, _⟩ ⟨_, b2⟩
+    have : (1 / 2 : ℝ) ^ n ≤ (1 / 2 : ℝ) ^ (m + 1) :=
+      pow_le_pow_of_le_one (by norm_num) (by norm_num) (by omega)
+    linarith
+  · rw [Function.onFun, Set.disjoint_left]
+    rintro x ⟨_, a2⟩ ⟨b1, _⟩
+    have : (1 / 2 : ℝ) ^ m ≤ (1 / 2 : ℝ) ^ (n + 1) :=
+      pow_le_pow_of_le_one (by norm_num) (by norm_num) (by omega)
+    linarith
+
+/-- `Statement:` the gaps' lengths sum to `spanGap n2Real`. -/
+theorem tsum_volume_n2GapInt : ∑' n, volume (n2GapInt n) = spanGap n2Real := by
+  rw [spanGap_n2Real]
+  simp_rw [volume_n2GapInt]
+  rw [← ENNReal.ofReal_tsum_of_nonneg (fun n => by positivity)]
+  · have h : ∑' n : ℕ, (1 / 2 : ℝ) ^ (n + 1) = 1 := by
+      simp_rw [pow_succ]; rw [tsum_mul_right, tsum_geometric_two]; norm_num
+    rw [h, ENNReal.ofReal_one]
+  · exact (summable_geometric_two.mul_right (1 / 2)).congr fun n => by rw [pow_succ]
+
+/-- `Statement:` the measure of the union of the gaps is `spanGap n2Real`. -/
+theorem volume_iUnion_n2GapInt : volume (⋃ n, n2GapInt n) = spanGap n2Real := by
+  rw [measure_iUnion n2GapInt_pairwise_disjoint (fun n => measurableSet_Ioo),
+    tsum_volume_n2GapInt]
+
+/-- `Statement:` for `r > 0`, only finitely many gaps reach `r` or above. -/
+theorem n2Gaps_above_finite {r : ℝ} (hr : 0 < r) : {n | ∃ y ∈ n2GapInt n, r ≤ y}.Finite := by
+  obtain ⟨M, hM⟩ := Filter.eventually_atTop.1 (n2_half_pow_tendsto.eventually (gt_mem_nhds hr))
+  refine (Set.finite_Iio M).subset ?_
+  rintro n ⟨y, ⟨_, hy⟩, hry⟩
+  by_contra hn
+  have := hM n (not_lt.1 hn)
+  linarith
+
+/-- `Statement:` at every `x : ℚ_[2]`, 0 of `ℚ_[2]` included (both sides ⊤ of `ℕ∞`), `cxQ2 x` is the
+    number of gaps of `n2Real` of length at least `‖x‖`.
+    `Reading:` on a line, discreteness read as span minus material holds (`spanGap_eq_zero_iff_interval`);
+    complexity at 0 of `ℚ_[2]` counts the gaps, and the amount missing is a separate quantity
+    (`spanGap_scaled_n2Real`), tied to the count by a logarithm only on a fixed-ratio ladder
+    (`ladder_count_eq_log`, the control `harm_no_log_law`). -/
+theorem cxQ2_eq_gap_count (x : ℚ_[2]) :
+    cxQ2 x = {n : ℕ | ‖x‖ ≤ (1 / 2 : ℝ) ^ (n + 1)}.encard := by
+  by_cases h0 : x = 0
+  · subst h0
+    rw [cxQ2_zero]
+    have : {n : ℕ | ‖(0 : ℚ_[2])‖ ≤ (1 / 2 : ℝ) ^ (n + 1)} = univ := by
+      ext n; simp only [norm_zero, mem_ofPred_eq, mem_univ, iff_true]; positivity
+    rw [this, encard_univ, ENat.card_eq_top_of_infinite]
+  · have hset : {n : ℕ | ‖x‖ ≤ (1 / 2 : ℝ) ^ (n + 1)}
+        = ((Finset.range x.valuation.toNat : Finset ℕ) : Set ℕ) := by
+      ext n
+      simp only [mem_ofPred_eq, Finset.coe_range, mem_Iio]
+      rw [Padic.norm_eq_zpow_neg_valuation h0, n2_half_pow_eq_zpow]
+      push_cast
+      rw [zpow_le_zpow_iff_right₀ (by norm_num : (1 : ℝ) < 2)]
+      omega
+    rw [hset, encard_coe_eq_coe_finsetCard, Finset.card_range]
+    simp [cxQ2, h0]
+
+/-- `Statement:` CONTROL, the norm image of `[-1, 1]` in ℝ is `[0, 1]`, and its `spanGap` is 0. -/
+theorem real_spanGap_zero : spanGap ((fun x : ℝ => |x|) '' Icc (-1) 1) = 0 := by
+  have h : (fun x : ℝ => |x|) '' Icc (-1) 1 = Icc 0 1 := by
+    ext r
+    constructor
+    · rintro ⟨x, ⟨h1, h2⟩, rfl⟩
+      exact ⟨abs_nonneg x, abs_le.2 ⟨h1, h2⟩⟩
+    · rintro ⟨h0, h1⟩
+      exact ⟨r, ⟨by linarith, h1⟩, abs_of_nonneg h0⟩
+  rw [h]; exact spanGap_Icc
+
+/-- `Statement:` CONTROL, `spanGap` is not the count: for `t > 0`, `t • n2Real` keeps infinitely many
+    gaps at 0 and has `spanGap = t`. -/
+theorem spanGap_scaled_n2Real {t : ℝ} (ht : 0 < t) :
+    spanGap ((fun y => t * y) '' n2Real) = ENNReal.ofReal t := by
+  have hv : volume ((fun y => t * y) '' n2Real) = 0 := by
+    rw [n2Real_eq]; exact (((Set.countable_range _).insert 0).image _).measure_zero _
+  rw [spanGap, hv, tsub_zero]
+  have h0 : (0 : ℝ) ∈ n2Real := by rw [n2Real_eq]; exact Or.inl rfl
+  have h1 : (1 : ℝ) ∈ n2Real := by rw [n2Real_eq]; exact Or.inr ⟨0, by simp⟩
+  apply le_antisymm
+  · calc ediam ((fun y => t * y) '' n2Real) ≤ ediam (Icc (0 : ℝ) t) := by
+          apply ediam_mono
+          rintro _ ⟨y, hy, rfl⟩
+          obtain ⟨hy0, hy1⟩ := n2Real_subset_Icc hy
+          exact ⟨by positivity, by nlinarith⟩
+      _ = ENNReal.ofReal t := by simp
+  · have h := edist_le_ediam_of_mem (s := (fun y => t * y) '' n2Real)
+      (⟨0, h0, by simp⟩ : (0 : ℝ) ∈ (fun y => t * y) '' n2Real)
+      (⟨1, h1, by simp⟩ : t ∈ (fun y => t * y) '' n2Real)
+    rw [edist_dist, Real.dist_eq] at h
+    simpa [abs_of_pos ht] using h
+
+/-- `Statement:` the closed ball of radius `2^(-n)` about 0 of ℤ_[2] has diameter `2^(-n)`. -/
+theorem ediam_ball_Z2 (n : ℕ) :
+    ediam {x : ℤ_[2] | ‖x‖ ≤ (2 : ℝ) ^ (-(n : ℤ))} = ((2 : ℝ≥0∞) ^ n)⁻¹ := by
+  have key : ENNReal.ofReal ((2 : ℝ) ^ (-(n : ℤ))) = ((2 : ℝ≥0∞) ^ n)⁻¹ := by
+    rw [zpow_neg, zpow_natCast, ENNReal.ofReal_inv_of_pos (by positivity),
+      ENNReal.ofReal_pow (by norm_num)]
+    simp
+  rw [← key]
+  apply le_antisymm
+  · apply ediam_le_of_forall_dist_le
+    intro x hx y hy
+    rw [dist_eq_norm, sub_eq_add_neg]
+    exact (PadicInt.nonarchimedean x (-y)).trans (by rw [norm_neg]; exact max_le hx hy)
+  · have hmem0 : (0 : ℤ_[2]) ∈ {x : ℤ_[2] | ‖x‖ ≤ (2 : ℝ) ^ (-(n : ℤ))} := by
+      simp only [mem_ofPred_eq, norm_zero]; positivity
+    have hmem : ((2 : ℤ_[2]) ^ n) ∈ {x : ℤ_[2] | ‖x‖ ≤ (2 : ℝ) ^ (-(n : ℤ))} := by
+      simp only [mem_ofPred_eq, norm_pow]
+      have := PadicInt.norm_p (p := 2); push_cast at this; rw [this]
+      rw [zpow_neg, zpow_natCast, inv_pow]
+    have h := edist_le_ediam_of_mem hmem hmem0
+    rw [edist_dist, dist_eq_norm, sub_zero, norm_pow] at h
+    have := PadicInt.norm_p (p := 2); push_cast at this; rw [this] at h
+    refine le_trans (le_of_eq ?_) h
+    congr 1; rw [zpow_neg, zpow_natCast, inv_pow]
+
+/-- `Statement:` CONTROL, in ℤ_[2] under `haarZp` each closed ball about 0 has material (Haar
+    measure, `haarZp_ball`) equal to span (diameter): the gap lives on `n2Real`, not in ℤ_[2]. -/
+theorem haar_eq_ediam_ball_Z2 (n : ℕ) :
+    haarZp (p := 2) {x : ℤ_[2] | ‖x‖ ≤ (2 : ℝ) ^ (-(n : ℤ))}
+      = ediam {x : ℤ_[2] | ‖x‖ ≤ (2 : ℝ) ^ (-(n : ℤ))} := by
+  rw [ediam_ball_Z2]
+  have := haarZp_ball (p := 2) n
+  push_cast at this
+  exact this
+
+/-! #### § XIII, count against amount on a gap-length sequence -/
+
+/-- `Statement:` the total length of the gaps from index `k` on. -/
+noncomputable def gapRemaining (ℓ : ℕ → ℝ) (k : ℕ) : ℝ := ∑' j, ℓ (j + k)
+
+/-- `Statement:` the number of gaps of length at least `r`. -/
+noncomputable def gapCount (ℓ : ℕ → ℝ) (r : ℝ) : ℕ∞ := {n : ℕ | r ≤ ℓ n}.encard
+
+/-- `Statement:` the fixed-ratio ladder: gap `n` has length `t · (1/2)^(n+1)` (`n2Real` at `t = 1`). -/
+noncomputable def gapLadder (t : ℝ) (n : ℕ) : ℝ := t * (1 / 2 : ℝ) ^ (n + 1)
+
+/-- `Statement:` on the ladder, `gapRemaining k = t · (1/2)^k`. -/
+theorem gapRemaining_ladder (t : ℝ) (k : ℕ) :
+    gapRemaining (gapLadder t) k = t * (1 / 2 : ℝ) ^ k := by
+  unfold gapRemaining gapLadder
+  have h : ∀ j : ℕ, t * (1 / 2 : ℝ) ^ (j + k + 1)
+      = (t * (1 / 2 : ℝ) ^ (k + 1)) * (1 / 2 : ℝ) ^ j := by
+    intro j; rw [show j + k + 1 = j + (k + 1) by ring, pow_add]; ring
+  simp_rw [h]
+  rw [tsum_mul_left, tsum_geometric_two, pow_succ]; ring
+
+/-- `Statement:` for `t > 0`, the ladder has exactly `k` gaps of length at least `t · (1/2)^k`. -/
+theorem gapCount_ladder {t : ℝ} (ht : 0 < t) (k : ℕ) :
+    gapCount (gapLadder t) (t * (1 / 2 : ℝ) ^ k) = k := by
+  unfold gapCount gapLadder
+  have hset : {n : ℕ | t * (1 / 2 : ℝ) ^ k ≤ t * (1 / 2 : ℝ) ^ (n + 1)}
+      = ((Finset.range k : Finset ℕ) : Set ℕ) := by
+    ext n
+    simp only [mem_ofPred_eq, Finset.coe_range, mem_Iio]
+    rw [mul_le_mul_iff_of_pos_left ht,
+      pow_le_pow_iff_right_of_lt_one₀ (by norm_num : (0 : ℝ) < 1 / 2) (by norm_num)]
+    omega
+  rw [hset, encard_coe_eq_coe_finsetCard, Finset.card_range]
+
+/-- `Statement:` for `t > 0`, the count at the remaining amount after `k` gaps is `k`. -/
+theorem gapCount_remaining_ladder {t : ℝ} (ht : 0 < t) (k : ℕ) :
+    gapCount (gapLadder t) (gapRemaining (gapLadder t) k) = k := by
+  rw [gapRemaining_ladder, gapCount_ladder ht]
+
+/-- `Statement:` for `t > 0`, `log₂ (1 / gapRemaining k) = k - log₂ t` on the ladder. -/
+theorem logb_inv_gapRemaining_ladder {t : ℝ} (ht : 0 < t) (k : ℕ) :
+    Real.logb 2 (1 / gapRemaining (gapLadder t) k) = k - Real.logb 2 t := by
+  rw [gapRemaining_ladder]
+  have : 1 / (t * (1 / 2 : ℝ) ^ k) = t⁻¹ * (2 : ℝ) ^ k := by
+    rw [one_div_pow]; field_simp
+  rw [this, Real.logb_mul (inv_ne_zero ht.ne') (by positivity), Real.logb_inv, Real.logb_pow,
+    Real.logb_self_eq_one (by norm_num)]
+  ring
+
+/-- `Statement:` on the ladder scaled by `t > 0`, at every level `k`,
+    count = `log₂ (1 / remaining) + log₂ t`. One way: a fixed ratio gives the log law; the converse
+    is not claimed. -/
+theorem ladder_count_eq_log {t : ℝ} (ht : 0 < t) (k : ℕ) :
+    ((gapCount (gapLadder t) (gapRemaining (gapLadder t) k)).toNat : ℝ)
+      = Real.logb 2 (1 / gapRemaining (gapLadder t) k) + Real.logb 2 t := by
+  rw [gapCount_remaining_ladder ht, logb_inv_gapRemaining_ladder ht]
+  simp
+
+/-- `Statement:` for `t > 0`, the count against a threshold scaled by `t` is unchanged. -/
+theorem gapCount_ladder_scale {t : ℝ} (ht : 0 < t) (r : ℝ) :
+    gapCount (gapLadder t) (t * r) = gapCount (gapLadder 1) r := by
+  unfold gapCount gapLadder
+  congr 1; ext n
+  simp only [mem_ofPred_eq, one_mul]
+  exact mul_le_mul_iff_of_pos_left ht
+
+/-- `Statement:` `cxQ2 x` is the ladder count at threshold `‖x‖`, at every `x : ℚ_[2]`. -/
+theorem cxQ2_eq_gapCount (x : ℚ_[2]) : cxQ2 x = gapCount (gapLadder 1) ‖x‖ := by
+  rw [cxQ2_eq_gap_count]; unfold gapCount gapLadder; simp only [one_mul]
+
+/-- `Statement:` at `x = 2^k` in `ℚ_[2]`: `‖x‖` is the remaining amount after `k` gaps,
+    `cxQ2 x = k`, and `cxQ2 x = log₂ (1 / remaining)`. -/
+theorem cxQ2_two_pow_eq_log (k : ℕ) :
+    ‖(2 : ℚ_[2]) ^ k‖ = gapRemaining (gapLadder 1) k ∧
+    cxQ2 ((2 : ℚ_[2]) ^ k) = k ∧
+    ((cxQ2 ((2 : ℚ_[2]) ^ k)).toNat : ℝ) = Real.logb 2 (1 / gapRemaining (gapLadder 1) k) := by
+  have hn : ‖(2 : ℚ_[2]) ^ k‖ = gapRemaining (gapLadder 1) k := by
+    rw [norm_pow]
+    have := Padic.norm_p (p := 2); push_cast at this
+    rw [this, gapRemaining_ladder, one_mul, one_div]
+  have hc : cxQ2 ((2 : ℚ_[2]) ^ k) = k := by
+    rw [cxQ2_eq_gapCount, hn, gapCount_remaining_ladder one_pos]
+  refine ⟨hn, hc, ?_⟩
+  rw [hc, logb_inv_gapRemaining_ladder one_pos, Real.logb_one]; simp
+
+/-- `Statement:` `n2Real` has Hausdorff dimension 0 (countable; Mathlib's `dimH_countable`). -/
+theorem dimH_n2Real : dimH n2Real = 0 := by
+  rw [n2Real_eq]; exact dimH_countable ((Set.countable_range _).insert 0)
+
+/-- `Statement:` CONTROL, the chain `{0} ∪ {1/(n+1)}`: gap `n` has length `1/((n+1)(n+2))`. -/
+noncomputable def harmGaps (n : ℕ) : ℝ := 1 / (((n : ℝ) + 1) * ((n : ℝ) + 2))
+
+/-- `Statement:` on `harmGaps`, the remaining amount after `k` gaps is `1/(k+1)`. -/
+theorem gapRemaining_harm (k : ℕ) : gapRemaining harmGaps k = 1 / ((k : ℝ) + 1) := by
+  set f : ℕ → ℝ := fun j => 1 / ((j : ℝ) + k + 1) with hf
+  have hterm : ∀ j, harmGaps (j + k) = f j - f (j + 1) := by
+    intro j; simp only [harmGaps, hf]; push_cast
+    field_simp; ring
+  have hlim : Tendsto f atTop (𝓝 0) := by
+    have h := (tendsto_one_div_add_atTop_nhds_zero_nat (𝕜 := ℝ)).comp (tendsto_add_atTop_nat k)
+    refine h.congr fun j => ?_
+    simp only [Function.comp, hf]; push_cast; ring_nf
+  have hsum : HasSum (fun j => harmGaps (j + k)) (f 0) := by
+    rw [hasSum_iff_tendsto_nat_of_nonneg (fun j => by simp only [harmGaps]; positivity)]
+    have : (fun n => ∑ i ∈ Finset.range n, harmGaps (i + k)) = fun n => f 0 - f n := by
+      funext n; simp_rw [hterm]; exact Finset.sum_range_sub' f n
+    rw [this]
+    simpa using (tendsto_const_nhds (x := f 0)).sub hlim
+  unfold gapRemaining
+  rw [hsum.tsum_eq]; simp [hf]
+
+/-- `Statement:` on `harmGaps`, no gap reaches the remaining amount at level 0. -/
+theorem gapCount_harm_zero : gapCount harmGaps (gapRemaining harmGaps 0) = 0 := by
+  rw [gapRemaining_harm]; unfold gapCount
+  have : {n : ℕ | 1 / (((0 : ℕ) : ℝ) + 1) ≤ harmGaps n} = ∅ := by
+    ext n
+    simp only [mem_ofPred_eq, mem_empty_iff_false, iff_false, not_le, harmGaps]
+    push_cast
+    rw [div_lt_div_iff_of_pos_left one_pos (by positivity) (by norm_num)]
+    have : (0 : ℝ) ≤ n := Nat.cast_nonneg n
+    nlinarith
+  rw [this, encard_empty]
+
+/-- `Statement:` on `harmGaps`, exactly one gap reaches the remaining amount at level 2. -/
+theorem gapCount_harm_two : gapCount harmGaps (gapRemaining harmGaps 2) = 1 := by
+  rw [gapRemaining_harm]; unfold gapCount
+  have : {n : ℕ | 1 / (((2 : ℕ) : ℝ) + 1) ≤ harmGaps n} = {0} := by
+    ext n
+    simp only [mem_ofPred_eq, mem_singleton_iff, harmGaps]
+    push_cast
+    rw [one_div_le_one_div (by norm_num) (by positivity)]
+    constructor
+    · intro h
+      by_contra hn
+      have : (1 : ℝ) ≤ n := Nat.one_le_cast.2 (Nat.pos_of_ne_zero hn)
+      nlinarith
+    · rintro rfl; norm_num
+  rw [this, encard_singleton]
+
+/-- `Statement:` CONTROL, on `harmGaps` no constant `c` gives
+    count = `log₂ (1 / remaining) + c` at every level (levels 0 and 2 disagree). -/
+theorem harm_no_log_law :
+    ¬ ∃ c : ℝ, ∀ k : ℕ, ((gapCount harmGaps (gapRemaining harmGaps k)).toNat : ℝ)
+        = Real.logb 2 (1 / gapRemaining harmGaps k) + c := by
+  rintro ⟨c, hc⟩
+  have h0 := hc 0
+  have h2 := hc 2
+  rw [gapCount_harm_zero, gapRemaining_harm] at h0
+  rw [gapCount_harm_two, gapRemaining_harm] at h2
+  norm_num at h0 h2
+  have hc0 : c = 0 := by linarith
+  rw [hc0, add_zero] at h2
+  have hlt : Real.logb 2 2 < Real.logb 2 3 :=
+    Real.logb_lt_logb (by norm_num) (by norm_num) (by norm_num)
+  rw [Real.logb_self_eq_one (by norm_num)] at hlt
+  linarith
+
+end GapCount
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -3358,4 +3751,42 @@ open ZeroParadox
 #print axioms boolSwap_reversible_half
 #print axioms isProbabilityMeasure_halfBool
 #print axioms coarse_graining_trade
+#print axioms n2Real
+#print axioms n2Real_eq
+#print axioms n2_half_pow_eq_zpow
+#print axioms n2_half_pow_tendsto
+#print axioms isClosed_n2Real
+#print axioms volume_n2Real
+#print axioms n2Real_subset_Icc
+#print axioms ediam_n2Real
+#print axioms spanGap_n2Real
+#print axioms n2GapInt
+#print axioms Icc_diff_n2Real
+#print axioms volume_n2GapInt
+#print axioms n2GapInt_pairwise_disjoint
+#print axioms tsum_volume_n2GapInt
+#print axioms volume_iUnion_n2GapInt
+#print axioms n2Gaps_above_finite
+#print axioms cxQ2_eq_gap_count
+#print axioms real_spanGap_zero
+#print axioms spanGap_scaled_n2Real
+#print axioms ediam_ball_Z2
+#print axioms haar_eq_ediam_ball_Z2
+#print axioms gapRemaining
+#print axioms gapCount
+#print axioms gapLadder
+#print axioms gapRemaining_ladder
+#print axioms gapCount_ladder
+#print axioms gapCount_remaining_ladder
+#print axioms logb_inv_gapRemaining_ladder
+#print axioms ladder_count_eq_log
+#print axioms gapCount_ladder_scale
+#print axioms cxQ2_eq_gapCount
+#print axioms cxQ2_two_pow_eq_log
+#print axioms dimH_n2Real
+#print axioms harmGaps
+#print axioms gapRemaining_harm
+#print axioms gapCount_harm_zero
+#print axioms gapCount_harm_two
+#print axioms harm_no_log_law
 end PurityCheck
