@@ -210,8 +210,8 @@ theorem stepOff_of_not_firstStep {L : Type*} [ZPSemilattice L] (h : ¬ BotHasFir
   exact h ⟨_, hcov⟩
 
 open Classical in
-/-- `Statement:` for every carrier `L`, no hypothesis on it: the `trials p hp` mass of `stepOff L`
-is 1 if ⊥ of `L` has a first step and `p ≠ 0`, and 0 otherwise. -/
+/-- `Statement:` for every carrier `L`, no assumption beyond the `ZPSemilattice` structure: the
+`trials p hp` mass of `stepOff L` is 1 if ⊥ of `L` has a first step and `p ≠ 0`, and 0 otherwise. -/
 theorem stepOff_mass (L : Type*) [ZPSemilattice L] (p : NNReal) (hp : p ≤ 1) :
     trials p hp (stepOff L) = if BotHasFirstStep L ∧ p ≠ 0 then 1 else 0 := by
   by_cases h : BotHasFirstStep L
@@ -282,7 +282,9 @@ end NNRealC
 
 /-- `Statement:` the mass of `stepOff` is 0 in two settings with different runs: at `p = 0` on `Bool`
 (join `||`) almost every tape never fires; at `0 < p ≤ 1` on `NNReal` (join `max`) almost every tape
-fires. `Reading:` CARRIER, mass 0 alone does not tell the dial at 0 from ⊥ of the carrier having no first step. -/
+fires. `Reading:` CARRIER, mass 0 alone does not tell the dial at 0 from ⊥ of the carrier having no
+first step (⊥ of `Bool` has one, `bool_botHasFirstStep`; ⊥ of `NNReal` has none,
+`nnreal_not_botHasFirstStep`). -/
 theorem zero_mass_two_causes (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p) :
     (trials 0 zero_le_one (@stepOff Bool boolOrZPS) = 0 ∧
       ∀ᵐ w ∂(trials 0 zero_le_one), ¬ ∃ k, w k = true) ∧
@@ -780,7 +782,9 @@ example : trials 1 le_rfl (fires 0) = 1 ∧
   ⟨by rw [trials_fires]; simp, by rw [lintegral_wait_succ]; simp⟩
 
 /-- `Statement:` the mean of `wait` (stages before the first firing) under `trials p hp` is `p⁻¹ - 1`
-in `ℝ≥0∞`, every `p ≤ 1`: the geometric distribution's mean, `(1 - p)/p`; ⊤ of `ℝ≥0∞` at `p = 0`. -/
+in `ℝ≥0∞`, every `p ≤ 1`: for `0 < p`, the geometric distribution's mean `(1 - p)/p`; at `p = 0`, ⊤
+of `ℝ≥0∞`, where Mathlib's `ProbabilityTheory.geometricMeasure 0` is `Measure.dirac 0`, mean 0.
+Sources and other libraries: `ZeroParadox/Information/Dial.md` § VII. -/
 theorem lintegral_wait (p : NNReal) (hp : p ≤ 1) :
     ∫⁻ w, ((waitENat (det w) : ℕ∞) : ENNReal) ∂(trials p hp) = (p : ENNReal)⁻¹ - 1 := by
   have h := lintegral_wait_succ p hp

@@ -105,6 +105,17 @@ this file holds what was already in the corpus, the prior art, and the fences.
   fraction (Louzada, de Oliveira, Moreira, arXiv:1509.05244, p. 3: "S is an improper survival function"), here
   equal to 1. They credit the cure-rate model to Berkson and Gage (*JASA*, 1952), cited for existence only, not
   retrieved. The chart `x = p⁻¹` is Mathlib's `OrderIso.invENNReal`.
+- § VII, the unshifted mean (searched 2026-11-27). `lintegral_wait` proves the mean of the wait (failures
+  before the first success) is `p⁻¹ - 1`, which is `(1 - p)/p` for `0 < p`: the textbook mean of the
+  failures form of the geometric distribution (Wikipedia, "Geometric distribution", retrieved 2026-11-27:
+  `E(Y) = (1 - p)/p` for `Y = X - 1`, `0 < p ≤ 1`; ProofWiki, "Expectation of Geometric
+  Distribution/Formulation 2", retrieved: pmf `p(1 - p)^k`, `E X = (1 - p)/p`). Outside Mathlib the mean
+  is stated in ℝ by TauCetiProject/TauCeti at commit b12bdfa, `integral_id_map_cast_geometricMeasure`
+  (`∫ x, x ∂((geometricMeasure p).map Nat.cast) = (1 - p) / p` for every `p : unitInterval`), which gives 0
+  at `p = 0` (`integral_id_map_cast_geometricMeasure_zero`, Mathlib's `geometricMeasure 0 = dirac 0`), and
+  by danlyng/Econlib at commit d7bd947, `CountDist.geometric_expect`, for `0 < p ≤ 1`; both read at those
+  commits, types not elaborated. Our `lintegral_wait` gives ⊤ of `ℝ≥0∞` at `p = 0`, by the extended-real
+  convention `0⁻¹ = ⊤` in `ℝ≥0∞`: the never-firing law, where TauCeti gives 0 and Econlib excludes `p = 0`.
 - § VIII. `unpack_measurePreserving` reindexes an infinite product measure, from Mathlib's
   `Measure.infinitePi_map_piCongrLeft` and `Measure.infinitePi_map_curry`. A published measure-level pairing
   statement: Brattka, Gherardi, Hölzl, "Probabilistic computability and choice", *Information and

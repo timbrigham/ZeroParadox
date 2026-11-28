@@ -291,7 +291,7 @@ theorem f_snap_impossible : ¬∃ ε₀ : F, 0 < ε₀ ∧ ¬∃ δ : F, 0 < δ 
 /-- **AX-B1 FAILS in every ordered field.** Ordered fields are densely ordered in Mathlib
     (`LinearOrderedSemiField.toDenselyOrdered`), and in a dense order nothing covers anything
     (`not_covBy_of_denselyOrdered`). So the precondition is refuted pointwise against its own counterexample: what
-    the framework commits to is exactly what the reals do not have.
+    the framework's precondition requires is exactly what the reals do not have.
 
     Proved through Mathlib rather than through `f_snap_impossible` — the halving argument above
     is the same fact reached by hand, and is kept because it is the elementary route a reader

@@ -23,7 +23,7 @@ the thought process itself was what I needed.
 
 The generic object is a **Cantor set** (compact, totally disconnected, perfect, homogeneous, ultrametric; the
 compact/perfect/totally-disconnected core is Brouwer's 1910 topological characterization).
-Earlier probes settled *perfect* (derived from branching) and *arity* (un-captured = AX-B1). This last pass
+Earlier probes settled *perfect* (derived from branching) and *arity* (un-captured: the binary-arity precondition, not AX-B1). This last pass
 probes the remaining named properties; the completeness verdict at the end is a conjecture.
 
 **§ I — A shared node profile, not homogeneity** (a self-homeomorphism carrying any point to any other,
@@ -35,17 +35,17 @@ and `z` agree on the first `n`, then `x` and `z` agree on the first `n` — agre
 so `agree(x, z) ≥ min(agree(x, y), agree(y, z))`, exactly the ultrametric. This is pure prefix-transitivity of
 equality; it needs nothing but the sequence structure. Derived, not a new axis.
 
-**§ III — Compactness is a facet of AX-B1 (the arity commitment).** A Cantor set is *compact*, and for a
+**§ III — Compactness is a facet of the binary-arity precondition.** A Cantor set is *compact*, and for a
 tree-boundary compactness is exactly **finite branching** (König / profinite). `CompletenessCriticProbe.infinite_branch`
 already showed the branching axis does **not** force finite arity (`∅` has infinitely many incomparable
 successors in `Set ℕ`). So compactness is not forced by the four axes — it rides on choosing *finite* (indeed
-binary) arity, which is `AX-B1`. Compactness is therefore a consequence of the one modeling commitment, not an
+binary) arity, the binary-arity precondition, beside AX-B1 (discreteness only). Compactness is therefore a consequence of that precondition, not an
 independent fifth axis.
 
 **Completeness verdict, for the named properties.** `Reading:` a conjecture. No theorem here takes the four
 structural axes (pole, fork, chain, branching) as hypotheses; the results are facts about the concrete `End`.
 *Perfect* (`boundary_perfect`) and prefix-transitivity (`ultrametric_agreement`) are proved of `End`,
-homogeneity only as § I's profile equation; *compact* and the *arity* are assigned to § III's commitment.
+homogeneity only as § I's profile equation; *compact* and the *arity* are assigned to § III's precondition.
 That no further property is a fifth structural axis is conjectured, not proved.
 -/
 

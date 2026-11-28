@@ -38,9 +38,9 @@ Brouwer's 1910 topological characterization) that the four axes do
 These are finite lattices, not trees, with no infinite chain, so they fail the chain axis: `arity_is_uncaptured`
 shows only that branching leaves the arity **free**. `Reading:` conjecture: a `p`-ary tree meets all four, `p ≥ 2`.
 
-**What the un-captured freedom IS.** The framework already names it: **AX-B1**, "binary / discrete existence,"
-a discrete alphabet, and specifically the binary alphabet, over a continuum; discreteness at the least
-element is a coordinate of `stepOff_mass` (`ZeroParadox/Information/Dial.lean` § IV), not a commitment. The completeness-critic hunt independently re-surfaces exactly this: arity is a
+**What the un-captured freedom IS.** Not AX-B1: AX-B1 names discreteness only, a first step at the least
+element (`BotHasFirstStep`, the condition `stepOff_mass` branches on, `ZeroParadox/Information/Dial.lean` § IV).
+The arity is its own precondition, the binary-arity precondition: exactly two outcomes, finite branching. The completeness-critic hunt independently re-surfaces exactly this: arity is a
 degree of freedom the branching axis does not force, so fixing it (to two) is a **precondition, not a theorem**,
 the same status AX-B1 has. The `IrreversibilityProbe` cardinality result complements this: two is the
 *value-pole* threshold (a unique fixed point already costs injectivity there - irreversibility, not
@@ -48,7 +48,7 @@ occurrence); binary *arity* is the separate branching choice.
 
 `Reading:` the completeness picture, a conjecture: no forced fifth *structural* axis, the four are mutually independent, and the one
 thing left open is the arity — recovered here as a precondition beside AX-B1 rather than a derived axis. This
-is evidence the four structural axes plus the arity precondition beside AX-B1 are the whole story.
+is evidence the four structural axes plus the binary-arity precondition beside AX-B1 are the whole story.
 
 **§ V — Perfectness (no isolated points) is DERIVED, not a new axis.** A second Cantor-set property:
 *perfect* = every point is a limit of distinct points (no isolated point). `boundary_perfect`: in the tree
