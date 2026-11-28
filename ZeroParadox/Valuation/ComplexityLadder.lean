@@ -21,7 +21,7 @@ what I needed.
 
 ## Formal Overview (AI-assisted)
 
-The completeness-critic found the arity is the one un-captured degree of freedom (= AX-B1). Tim's reading: the
+The completeness-critic found the arity is the one un-captured degree of freedom (the binary-arity precondition, not AX-B1). Tim's reading: the
 arity being open **is** the original condition — "reference this with more and more complex sets of variables."
 This file makes that a theorem: the arity is the **variable-count** (independent distinctions at a node), and
 it is an **unbounded ladder**.
@@ -34,7 +34,7 @@ ceiling** — arity `n+1` strictly exceeds arity `n`, forever.
 **What this says.** The branching *width* (the arity) is the number of independent variables the object
 references at each step, and it is free and unbounded. This is the pivot's opening condition ("cover any
 complexity of variables using the self-reference shape") realized as a checkable ladder: the chain gives
-arbitrary *length* (axis 3), the arity gives arbitrary *width* (the free parameter). **AX-B1 is the knob** —
+arbitrary *length* (axis 3), the arity gives arbitrary *width* (the free parameter). **The binary-arity precondition is the knob** —
 fixing the arity at two is choosing the minimal rung; the generic object supports every rung.
 
 **Honest fence.** This is arbitrary variable *width* — not universal framework-encoding. "Cover any complexity
@@ -64,7 +64,7 @@ theorem complexity_ladder (n : ℕ) :
 
 /-- **No ceiling on variable-complexity.** For every `n` the bottom admits `n` independent successors — the
 arity/width is unbounded, so the object references arbitrarily complex sets of variables. This is the pivot's
-opening condition, checked; AX-B1 (binary) is the choice of the minimal rung. -/
+opening condition, checked; the binary-arity precondition is the choice of the minimal rung. -/
 theorem complexity_unbounded :
     ∀ n : ℕ, ∃ f : Fin n → Set ℕ,
       Function.Injective f ∧

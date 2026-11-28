@@ -937,8 +937,9 @@ example : ZeroParadox.Disjunctive (fun n => xor (ZeroParadox.champ n) false) := 
 -- ⊥ of `L` at every stage; for `0 < p ≤ 1`, for almost every tape it is somewhere not ⊥ of `L`.
 -- Forward maps only.
 #check @ZeroParadox.dial_jump_into_L
--- Statement: for every carrier `L`, no hypothesis on it, the `trials p hp` mass of `stepOff L` (the tape
--- fires and its run steps off ⊥ of `L` to a cover) is 1 if ⊥ of `L` has a first step and `p ≠ 0`, else 0.
+-- Statement: for every carrier `L`, no assumption beyond the `ZPSemilattice` structure, the `trials p hp`
+-- mass of `stepOff L` (the tape fires and its run steps off ⊥ of `L` to a cover) is 1 if ⊥ of `L` has a
+-- first step and `p ≠ 0`, else 0.
 #check @ZeroParadox.stepOff_mass
 -- Statement: one way: on a densely ordered linear order with a least element that mass is 0 at every `p`;
 -- `W_not_firstStep` and `W_not_dense` show the converse fails.
@@ -958,8 +959,9 @@ example : ZeroParadox.Disjunctive (fun n => xor (ZeroParadox.champ n) false) := 
 -- Statement: for `1 ≤ x`, `(x⁻¹).toNNReal = 0` iff `x = ⊤`; at `p = 0` the mean of `wait + 1` is ⊤ and
 -- almost every tape never fires; ⊥ of `ℕ → Bool` has wait ⊤ of `ℕ∞`.
 #check @ZeroParadox.wait_chart_top
--- Statement: the mean of `wait` under `trials p hp` is `p⁻¹ - 1` in `ℝ≥0∞`, the geometric distribution's
--- mean `(1 - p)/p`; ⊤ of `ℝ≥0∞` at `p = 0`.
+-- Statement: the mean of `wait` under `trials p hp` is `p⁻¹ - 1` in `ℝ≥0∞`: for `0 < p`, the geometric
+-- distribution's mean `(1 - p)/p`; at `p = 0`, ⊤ of `ℝ≥0∞`, where Mathlib's `geometricMeasure 0` is
+-- `Measure.dirac 0`, mean 0.
 #check @ZeroParadox.lintegral_wait
 -- Statement: every `y : ℝ≥0∞`, ⊤ included, is the mean of `wait` at exactly one `p ≤ 1`.
 #check @ZeroParadox.wait_mean_existsUnique

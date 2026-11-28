@@ -142,11 +142,12 @@ signature cannot be misread.
 
 **Prior art, and the corpus under-searched itself twice before this was written.**
 
-* Mathlib already has the object: `ProbabilityTheory.geometricPMFReal p n = (1 - p) ^ n * p`
-  (`Mathlib/Probability/Distributions/Geometric.lean`), of which `q n = (1 - p) ^ n` is the standard
-  **survival function** — the in-field name. ⚠ `geometricPMFReal_pos` does **not** carry the same
-  hypotheses as `survival_pos`: Mathlib's takes `0 < p` **and** `p < 1`, ours takes only `p < 1`, because
-  `(1-p)^n` needs no positivity where `(1-p)^n * p` does. Ours is the weaker-hypothesis one.
+* Mathlib already has the object: `ProbabilityTheory.geometricMeasure p` (`p : unitInterval`), with mass
+  `(1 - p) ^ n * p` at `n` (`Mathlib/Probability/Distributions/Geometric.lean`, at the current pin), of
+  which `q n = (1 - p) ^ n` is the standard **survival function** — the in-field name. ⚠
+  `geometricMeasure_pos` does **not** carry the same hypotheses as `survival_pos`: Mathlib's takes `p ≠ 0`
+  **and** `p ≠ 1`, ours takes only `p < 1`, because `(1-p)^n` needs no positivity where `(1-p)^n * p` does.
+  Ours is the weaker-hypothesis one.
 * The limit is Mathlib's `tendsto_pow_atTop_nhds_zero_of_lt_one`, cited not re-proved. ⚠ The nearest
   corpus work is `ZeroParadox/Valuation/ContractionRate.lean`, which uses the **biconditional**
   `tendsto_pow_atTop_nhds_zero_iff_norm_lt_one` — stronger than the implication used here, and the same

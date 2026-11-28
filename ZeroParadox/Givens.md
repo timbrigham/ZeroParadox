@@ -25,9 +25,12 @@ Tim named three. Each one splits into the predicates below.
 - `GCoincidence`: a strict map of motions sends a point `y` that steps only to itself and is least in
   the source view to a point that steps only to itself and is greatest in the target view, and sends no
   other point there. It holds for `q2Val` from doubling on ℤ_[2] to `+1` on `ℕ∞`, at ℤ_[2]'s 0
-  (`z2_GCoincidence`). With the target fixed as `+1` on `ℕ∞`, it fails at 0 of every field of
-  characteristic 0, ℝ and `ℚ_[2]` included (`field_no_GCoincidence`): halving would push a finite value
-  past every natural number (`no_doubling_valuation_field`).
+  (`z2_GCoincidence`). With the target fixed as `+1` on `ℕ∞`, it fails at 0 of every field, ℝ and
+  `ℚ_[2]` included (`field_no_GCoincidence_any`; the characteristic-0 form is `field_no_GCoincidence`):
+  in a field 2 is 0 or a unit, so no `f` with `f (2x) = f x + 1` is finite off 0
+  (`no_doubling_valuation_field_any`). On a commutative ring such an `f` exists exactly when 2 is a
+  non-zero-divisor and the ring is 2-adically separated (`doubling_counter_iff`,
+  `doubling_counter_iff_isHausdorff`).
 - Reading: COINCIDENCE, in the valuation chart (`z2_GCoincidence`). The tape-chart reading of (a) is the
   fair-coin ensemble: `tape_totality_two_faces` and `maxEntropy_mlRandom_and_snap_ae`. It sits beside
   the die-level face, and it is not a hypothesis of the snap.
@@ -83,12 +86,15 @@ Tim named three. Each one splits into the predicates below.
 ## AX-B1 as a chart choice
 
 Reading (the Engineer's Take in `ZeroParadox/Givens.lean`): AX-B1 is a chart choice, the discrete chart
-being where we evaluate. Which chart steps off its least element is a theorem, not a commitment. For
+being where we evaluate. Which carrier steps off its least element is a theorem, not a commitment. For
 every carrier, the step-off mass is 1 when the least element has a first step and the dial is nonzero,
 and 0 otherwise (`stepOff_mass`). The discrete chart is a choice of where to evaluate, not an
-assumption about the world: Bool (join or) gives the switch, NNReal (join max) gives 0 at every dial
-(`two_charts_snap`). Kept separate, on purpose: discreteness ALONG the run (every doubling step that moves is a
-cover, in the view order, `GDiscrete`) is a different notion from a first step AT the least element. The 2-adic chart has
+assumption about the world. Once the carrier is chosen the outcome is fixed: Bool (join or) gives the
+switch, NNReal (join max) gives 0 at every dial (`two_charts_snap`). Whether the world steps off in the
+discrete chart is a separate question, not settled here: it sits with the dial setting `p` and the
+occurrence hypothesis `hocc` of `t_snap_given` (§ VI). Kept separate, on purpose: discreteness ALONG
+the run (every doubling step that moves is a cover, one way or the other, in the view order,
+`GDiscrete`) is a different notion from a first step AT the least element. The 2-adic chart has
 discreteness along the run (`q2_GDiscrete`) and lacks a first step at 0 of `ℚ_[2]`
 (`q2_zero_not_firstStep`). The continuous chart stands beside the discrete one and is not denied. The
 connectivity of each chart is proved: 0 and ∞ lie in one connected component of `OnePoint ℝ`

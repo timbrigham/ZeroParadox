@@ -39,7 +39,7 @@ still "what they are".. each one of those field lines that I'm visualizing is un
 Every given is a `Prop`, never a class field. All but `GConnected` and `GJoined` take a die `Motion`
 (`ZeroParadox/Die.lean`); those two take two points of a topological space. § 0 the
 charts; § I the givens; § II per chart, with controls; § III the field lines; § IV given these,
-then; § V the limits; § VI the preconditions that stay hypotheses. Long form: `ZeroParadox/Givens.md`.
+then; § V the limits; § VI what stays a hypothesis. Long form: `ZeroParadox/Givens.md`.
 -/
 
 set_option maxHeartbeats 400000
@@ -478,9 +478,9 @@ theorem givens_two_charts :
 
 /-- `Statement:` 2-adic doubling meets `GDiscrete` in `lmSphN` and real doubling fails it in
 `lmRealN`; the `trials p hp` mass of `stepOff` is the switch on `Bool` (join `||`) and 0 on `NNReal`
-(join `max`) at every `p`; and 0 of ℝ has no first step. The probability conjuncts are on `Bool` and
-`NNReal`, not on the 2-adic or real charts; at 0 of `ℚ_[2]` in `lmSphN` there is no first step
-(`q2_zero_not_firstStep`). -/
+(join `max`) at every `p`; and 0 of ℝ has no first step in ℝ's standard order (not `lmRealN`). The
+probability conjuncts are on `Bool` and `NNReal`, not on the 2-adic or real charts; at 0 of `ℚ_[2]` in
+`lmSphN` there is no first step (`q2_zero_not_firstStep`). -/
 theorem two_charts_snap :
     (GDiscrete dblQ2 lmSphN ∧ ¬ GDiscrete dblReal lmRealN) ∧
     (∀ p (hp : p ≤ 1), trials p hp (@stepOff Bool boolOrZPS) = if p = 0 then 0 else 1) ∧
@@ -904,7 +904,8 @@ example : (∀ x : ℤ × ℚ, 2 * x = 0 → x = 0) ∧ ¬ IsUnit (2 : ℤ × �
     exact hk ⟨(0, ((2 : ℚ) ^ k)⁻¹), by ext <;> simp⟩
 
 /-- `Statement:` on a characteristic-0 field no `f : K → ℕ∞` has `f (2x) = f x + 1` and finite
-values off 0: halving would push a finite value past every natural number. -/
+values off 0: halving would push a finite value past every natural number. Every field:
+`no_doubling_valuation_field_any`. -/
 theorem no_doubling_valuation_field {K : Type} [Field K] [CharZero K] (f : K → ℕ∞)
     (hf : ∀ x, f (2 * x) = f x + 1) (hfin : ∀ x, x ≠ 0 → f x ≠ ⊤) : False := by
   have key : ∀ (k : ℕ) (y : K), f ((2 : K) ^ k * y) = f y + k := by
@@ -922,7 +923,7 @@ theorem no_doubling_valuation_field {K : Type} [Field K] [CharZero K] (f : K →
   exact absurd (Nat.cast_le.1 hle) (by omega)
 
 /-- `Statement:` CONTROL: on any characteristic-0 field (ℝ and `ℚ_[2]` both), `GCoincidence` of
-doubling into `+1` on `ℕ∞` fails at 0. -/
+doubling into `+1` on `ℕ∞` fails at 0. Every field: `field_no_GCoincidence_any`. -/
 theorem field_no_GCoincidence {K : Type} [Field K] [CharZero K] (P : Preorder K) :
     ¬ GCoincidence (Motion.ofFun (fun x : K => 2 * x)) (Motion.ofFun (fun n : ℕ∞ => n + 1)) P
       inferInstance 0 := by
@@ -1138,7 +1139,7 @@ theorem ZeroParadox.q2_not_leavesByRun_zero :
 #check @ZeroParadox.q2_double_covBy            -- Statement: LIMIT (c): each 2-adic doubling step from a nonzero point is a cover in the norm order; the value group is discrete (`q2_norm_image`).
 #check @ZeroParadox.real_hlv_returnToStart     -- Statement: LIMIT (c), control: under real halving some sequence from 0 of ℝ also meets `GReturnToStart` (its tail's closure contains 0 of ℝ), through a dense value group (`real_norm_image`).
 
-/-! ### § VI. The preconditions that stay hypotheses -/
+/-! ### § VI. What stays a hypothesis: AX-B1, CC-1, occurrence, the coin -/
 #check @ZeroParadox.BotHasFirstStep            -- Statement: AX-B1's first-step form, a `Prop` on `L`, used as the hypothesis `hR1`.
 #check @ZeroParadox.t_snap_given               -- Statement: CC-1 is the hypothesis `hcc1 : S 0 = bot`; occurrence at index 1 is `hocc`.
 -- Statement: the coin `0 < p ≤ 1` is two hypotheses, `hp` and `hp0`, beside `hR1`.
