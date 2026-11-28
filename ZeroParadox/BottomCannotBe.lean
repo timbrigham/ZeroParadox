@@ -1049,6 +1049,14 @@ example : ZeroParadox.Disjunctive (fun n => xor (ZeroParadox.champ n) false) := 
 #check @ZeroParadox.ladder_count_eq_log
 -- Statement: CONTROL, on the gaps `1/((n+1)(n+2))` no constant `c` gives count = `log₂ (1 / remaining) + c`.
 #check @ZeroParadox.harm_no_log_law
+-- Statement: for nonzero `x : ℤ_[2]`, `Int.log 2 ‖x‖ = -x.valuation` and `q2Val x = (-Int.log 2 ‖x‖).toNat`
+-- (`ZeroParadox/Information/Dial.lean` § XV); on `N2`, `Int.log 2` of `e2 (toDual n)` is `-n`
+-- (`log2_e2_toDual_coe`); `q2_log2_norm` for `ℚ_[2]`.
+#check @ZeroParadox.z2_log2_norm
+-- Statement: the gap `n2GapInt n` is the band `[2 ^ (-(n+1)), 2 ^ (-n))` without its left end; for nonzero
+-- `x : ℚ_[2]`, `cxQ2 x` is the number of band indices `k` with `Int.log 2 ‖x‖ ≤ k < 0`
+-- (`cxQ2_eq_log2Band_count`).
+#check @ZeroParadox.n2GapInt_eq_log2Band
 
 /-! ### The givens at the die level: given (a) as a chart claim (least in ℤ_[2]'s norm preorder, greatest at its image in `ℕ∞`), and a limit -/
 

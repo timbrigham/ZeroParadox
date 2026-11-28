@@ -477487,7 +477487,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 5212,
+        "declarations": 5233,
         "files": 249
       },
       "entries": [
@@ -479005,6 +479005,44 @@
             ]
           },
           "reason": "Bridge-audit C5/C7 cited formalizations: GroundZero § V-b (Acc of stepRel = eval.Dom = wfPart, clock-machine wfPart r.e. not decidable, complement unfolds to natInfinity; Mathlib PFun.fix, AMM); GapDecoder ML-random tapes decode and halt (0 < p); BrudnoBridge MLRandom implies FreqBalanced at computable p (Milovanov, SUV Thm 34).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "024da992-35bd-409a-a97c-bae94fd915c0",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.log2Band_length",
+            "short": "log2Band_length"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.log2Band_length",
+            "short": "log2Band_length",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XV + Givens (Tim 2026-11-28, key/keyway/tolerance): bands of Int.log 2 (fibres of Mathlib's Galois coinsertion Int.zpowLogGi); 2-adic norms on the left ends (rounding = valuation); § XIII gaps = bands minus left end; no first step off bottom of WithBot Int.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -493564,6 +493602,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "14979a3a-46b6-4e68-869f-ab877be4211a",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.withBotInt_no_atom",
+            "short": "withBotInt_no_atom"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.withBotInt_no_atom",
+            "short": "withBotInt_no_atom",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XV + Givens (Tim 2026-11-28, key/keyway/tolerance): bands of Int.log 2 (fibres of Mathlib's Galois coinsertion Int.zpowLogGi); 2-adic norms on the left ends (rounding = valuation); § XIII gaps = bands minus left end; no first step off bottom of WithBot Int.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "149e53b0-87e3-4241-bbb9-624297dace10",
           "new": {
@@ -495527,6 +495603,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "17742b18-13fc-473a-81a1-f119882ca7a7",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.log2Band",
+            "short": "log2Band"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.log2Band",
+            "short": "log2Band",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XV + Givens (Tim 2026-11-28, key/keyway/tolerance): bands of Int.log 2 (fibres of Mathlib's Galois coinsertion Int.zpowLogGi); 2-adic norms on the left ends (rounding = valuation); § XIII gaps = bands minus left end; no first step off bottom of WithBot Int.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "1788a01d-b274-4c7b-8a5e-c91343b23b47",
           "new": {
             "file": "ZeroParadox/Valuation/PoleCornersBridge.lean",
@@ -495887,6 +496001,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "181d75cc-b112-4cda-a0ed-db06061c30f2",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.log2WithBot",
+            "short": "log2WithBot"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.log2WithBot",
+            "short": "log2WithBot",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XV + Givens (Tim 2026-11-28, key/keyway/tolerance): bands of Int.log 2 (fibres of Mathlib's Galois coinsertion Int.zpowLogGi); 2-adic norms on the left ends (rounding = valuation); § XIII gaps = bands minus left end; no first step off bottom of WithBot Int.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -498603,6 +498755,44 @@
             ]
           },
           "reason": "givens-1125: the v7.0 givens as predicates on die Motions, per chart, with controls, field lines (ruling 84), and limits (ruling 85); ported from the compiled die-givens and field-line probes",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "1c50fb70-8dcc-4185-87c8-de2b54b42cea",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.z2_norm_not_mem_Ioo",
+            "short": "z2_norm_not_mem_Ioo"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.z2_norm_not_mem_Ioo",
+            "short": "z2_norm_not_mem_Ioo",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XV + Givens (Tim 2026-11-28, key/keyway/tolerance): bands of Int.log 2 (fibres of Mathlib's Galois coinsertion Int.zpowLogGi); 2-adic norms on the left ends (rounding = valuation); § XIII gaps = bands minus left end; no first step off bottom of WithBot Int.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -502264,6 +502454,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "215962a2-6dcc-4b2b-9d6c-f546fbd16ca3",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.n2GapInt_eq_log2Band",
+            "short": "n2GapInt_eq_log2Band"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.n2GapInt_eq_log2Band",
+            "short": "n2GapInt_eq_log2Band",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XV + Givens (Tim 2026-11-28, key/keyway/tolerance): bands of Int.log 2 (fibres of Mathlib's Galois coinsertion Int.zpowLogGi); 2-adic norms on the left ends (rounding = valuation); § XIII gaps = bands minus left end; no first step off bottom of WithBot Int.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "21682251-1305-44ed-8d59-3a93af9db103",
           "new": {
             "file": "ZeroParadox/Information/Dial.lean",
@@ -503613,6 +503841,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "23a3f9f1-4b98-4679-9e65-54a375a68b02",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.mem_log2Band_iff",
+            "short": "mem_log2Band_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.mem_log2Band_iff",
+            "short": "mem_log2Band_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XV + Givens (Tim 2026-11-28, key/keyway/tolerance): bands of Int.log 2 (fibres of Mathlib's Galois coinsertion Int.zpowLogGi); 2-adic norms on the left ends (rounding = valuation); § XIII gaps = bands minus left end; no first step off bottom of WithBot Int.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -529237,6 +529503,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "45dc853e-acf1-49f8-8957-8b66024e632c",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.q2_log2_norm",
+            "short": "q2_log2_norm"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.q2_log2_norm",
+            "short": "q2_log2_norm",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XV + Givens (Tim 2026-11-28, key/keyway/tolerance): bands of Int.log 2 (fibres of Mathlib's Galois coinsertion Int.zpowLogGi); 2-adic norms on the left ends (rounding = valuation); § XIII gaps = bands minus left end; no first step off bottom of WithBot Int.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "45ea27b1-f5d1-40dc-b7e4-0742cc922f3a",
           "new": {
             "file": "ZeroParadox/Valuation/UltrametricView.lean",
@@ -542486,6 +542790,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "5805f15f-2e55-49ae-94b7-271b2a188f65",
+          "new": {
+            "file": "ZeroParadox/Givens.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.realExpView_mem_log2Band",
+            "short": "realExpView_mem_log2Band"
+          },
+          "old": {
+            "file": "ZeroParadox/Givens.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.realExpView_mem_log2Band",
+            "short": "realExpView_mem_log2Band",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Dial § XV + Givens (Tim 2026-11-28, key/keyway/tolerance): bands of Int.log 2 (fibres of Mathlib's Galois coinsertion Int.zpowLogGi); 2-adic norms on the left ends (rounding = valuation); § XIII gaps = bands minus left end; no first step off bottom of WithBot Int.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "5807a5f0-46e6-4815-891c-101fe82b09c4",
           "new": {
             "file": "ZeroParadox/Information/Dial.lean",
@@ -553358,6 +553699,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "66b7a4bf-2963-4c11-b267-03b725ae181e",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.z2_log2_norm",
+            "short": "z2_log2_norm"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.z2_log2_norm",
+            "short": "z2_log2_norm",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XV + Givens (Tim 2026-11-28, key/keyway/tolerance): bands of Int.log 2 (fibres of Mathlib's Galois coinsertion Int.zpowLogGi); 2-adic norms on the left ends (rounding = valuation); § XIII gaps = bands minus left end; no first step off bottom of WithBot Int.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -571050,6 +571429,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "7f112ac8-9c08-44ac-90ea-ac3514210471",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.log2Chart_stepOff_mass_zero",
+            "short": "log2Chart_stepOff_mass_zero"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.log2Chart_stepOff_mass_zero",
+            "short": "log2Chart_stepOff_mass_zero",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XV + Givens (Tim 2026-11-28, key/keyway/tolerance): bands of Int.log 2 (fibres of Mathlib's Galois coinsertion Int.zpowLogGi); 2-adic norms on the left ends (rounding = valuation); § XIII gaps = bands minus left end; no first step off bottom of WithBot Int.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "7f1da094-5cd8-4c6b-90d2-980b30e9c138",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -575512,6 +575929,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "84dc69e9-294e-47a9-b232-36419ea2fe9f",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.log2WithBot_mono",
+            "short": "log2WithBot_mono"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.log2WithBot_mono",
+            "short": "log2WithBot_mono",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XV + Givens (Tim 2026-11-28, key/keyway/tolerance): bands of Int.log 2 (fibres of Mathlib's Galois coinsertion Int.zpowLogGi); 2-adic norms on the left ends (rounding = valuation); § XIII gaps = bands minus left end; no first step off bottom of WithBot Int.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "84dc76dd-4440-4d90-9f20-cf637a1ad8c9",
           "new": {
             "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
@@ -578627,6 +579082,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "8933a6f5-7152-4edf-a981-50ba47c047f5",
+          "new": {
+            "file": "ZeroParadox/Givens.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.log2Band_two_charts",
+            "short": "log2Band_two_charts"
+          },
+          "old": {
+            "file": "ZeroParadox/Givens.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.log2Band_two_charts",
+            "short": "log2Band_two_charts",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Dial § XV + Givens (Tim 2026-11-28, key/keyway/tolerance): bands of Int.log 2 (fibres of Mathlib's Galois coinsertion Int.zpowLogGi); 2-adic norms on the left ends (rounding = valuation); § XIII gaps = bands minus left end; no first step off bottom of WithBot Int.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "89546137-e111-44d2-93fb-d0be1f902846",
           "new": {
@@ -580273,6 +580766,44 @@
             ]
           },
           "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "8b98ad15-0f11-4468-b77b-8abe738e8e66",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.log2_e2_toDual_coe",
+            "short": "log2_e2_toDual_coe"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.log2_e2_toDual_coe",
+            "short": "log2_e2_toDual_coe",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XV + Givens (Tim 2026-11-28, key/keyway/tolerance): bands of Int.log 2 (fibres of Mathlib's Galois coinsertion Int.zpowLogGi); 2-adic norms on the left ends (rounding = valuation); § XIII gaps = bands minus left end; no first step off bottom of WithBot Int.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -612559,6 +613090,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "b56fa4e8-36ec-46a9-8f8a-be2bc48c1deb",
+          "new": {
+            "file": "ZeroParadox/Givens.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.real_log2Band_has_middle",
+            "short": "real_log2Band_has_middle"
+          },
+          "old": {
+            "file": "ZeroParadox/Givens.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.real_log2Band_has_middle",
+            "short": "real_log2Band_has_middle",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Dial § XV + Givens (Tim 2026-11-28, key/keyway/tolerance): bands of Int.log 2 (fibres of Mathlib's Galois coinsertion Int.zpowLogGi); 2-adic norms on the left ends (rounding = valuation); § XIII gaps = bands minus left end; no first step off bottom of WithBot Int.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "b5732440-0d86-477b-a26a-a19b789a83cf",
           "new": {
@@ -619443,6 +620011,44 @@
             ]
           },
           "reason": "Die v2 final batch: drawing vs set (self-steps, accessibility, forced rank), ends of a view, orders on motions, placements as views, relaxed least-fixed-point schema, UP legs as nuclei",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "beac4a2b-5739-4bfd-9d66-2e3053c83ce2",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.log2Band_pairwise_disjoint",
+            "short": "log2Band_pairwise_disjoint"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.log2Band_pairwise_disjoint",
+            "short": "log2Band_pairwise_disjoint",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XV + Givens (Tim 2026-11-28, key/keyway/tolerance): bands of Int.log 2 (fibres of Mathlib's Galois coinsertion Int.zpowLogGi); 2-adic norms on the left ends (rounding = valuation); § XIII gaps = bands minus left end; no first step off bottom of WithBot Int.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -629210,6 +629816,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "cbfcd36b-5d12-40dd-abf2-8c60918ce47b",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cxQ2_eq_log2Band_count",
+            "short": "cxQ2_eq_log2Band_count"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cxQ2_eq_log2Band_count",
+            "short": "cxQ2_eq_log2Band_count",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XV + Givens (Tim 2026-11-28, key/keyway/tolerance): bands of Int.log 2 (fibres of Mathlib's Galois coinsertion Int.zpowLogGi); 2-adic norms on the left ends (rounding = valuation); § XIII gaps = bands minus left end; no first step off bottom of WithBot Int.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "cbfe7026-2b8b-4bc7-a66b-ff44c3e3a9c9",
           "new": {
             "file": "ZeroParadox/Information/Dial.lean",
@@ -633485,6 +634129,44 @@
             "role": []
           },
           "reason": "die-wpb-1029: weak-pullback preservation for Part x Set (elementwise form) and, for motions, Rutten 5.1, 5.2, 5.4*, the greatest-bisimulation and equivalence clauses of 5.6, the bisimulation half of 5.7*, and 5.9*(2) (Die § XXII); Tim ruling 2026-10-29",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d0c1da20-a105-4df9-9bd5-f9c450e0efca",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.iUnion_log2Band",
+            "short": "iUnion_log2Band"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.iUnion_log2Band",
+            "short": "iUnion_log2Band",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XV + Givens (Tim 2026-11-28, key/keyway/tolerance): bands of Int.log 2 (fibres of Mathlib's Galois coinsertion Int.zpowLogGi); 2-adic norms on the left ends (rounding = valuation); § XIII gaps = bands minus left end; no first step off bottom of WithBot Int.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -645454,6 +646136,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "e0547909-7a70-4ab3-b6a2-729858a79b28",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.q2_norm_not_mem_Ioo",
+            "short": "q2_norm_not_mem_Ioo"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.q2_norm_not_mem_Ioo",
+            "short": "q2_norm_not_mem_Ioo",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XV + Givens (Tim 2026-11-28, key/keyway/tolerance): bands of Int.log 2 (fibres of Mathlib's Galois coinsertion Int.zpowLogGi); 2-adic norms on the left ends (rounding = valuation); § XIII gaps = bands minus left end; no first step off bottom of WithBot Int.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "e05ac17b-1e97-4b7c-8d26-3cc896509233",
           "new": {
@@ -653401,6 +654121,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "e977897c-36d3-4a9b-908a-7c2d144ff9b5",
+          "new": {
+            "file": "ZeroParadox/Givens.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.real_not_every_point_centre",
+            "short": "real_not_every_point_centre"
+          },
+          "old": {
+            "file": "ZeroParadox/Givens.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.real_not_every_point_centre",
+            "short": "real_not_every_point_centre",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Dial § XV + Givens (Tim 2026-11-28, key/keyway/tolerance): bands of Int.log 2 (fibres of Mathlib's Galois coinsertion Int.zpowLogGi); 2-adic norms on the left ends (rounding = valuation); § XIII gaps = bands minus left end; no first step off bottom of WithBot Int.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "e977ed8d-b38a-4824-adae-f6ea6a0e5ca3",
           "new": {
@@ -657218,6 +657975,44 @@
             ]
           },
           "reason": "Die v2 final batch: drawing vs set (self-steps, accessibility, forced rank), ends of a view, orders on motions, placements as views, relaxed least-fixed-point schema, UP legs as nuclei",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ee3d0263-5bbe-40ab-99ce-84bd8197e5b8",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.log2Band_existsUnique",
+            "short": "log2Band_existsUnique"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.log2Band_existsUnique",
+            "short": "log2Band_existsUnique",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XV + Givens (Tim 2026-11-28, key/keyway/tolerance): bands of Int.log 2 (fibres of Mathlib's Galois coinsertion Int.zpowLogGi); 2-adic norms on the left ends (rounding = valuation); § XIII gaps = bands minus left end; no first step off bottom of WithBot Int.",
           "verify": {
             "axioms": null,
             "sorry_free": null
