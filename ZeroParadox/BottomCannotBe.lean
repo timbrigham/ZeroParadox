@@ -946,6 +946,9 @@ example : ZeroParadox.Disjunctive (fun n => xor (ZeroParadox.champ n) false) := 
 -- Statement: the mass of `stepOff` is 0 at `p = 0` on `Bool` (join `||`), where almost every tape never
 -- fires, and at `0 < p ≤ 1` on `NNReal` (join `max`), where almost every tape fires.
 #check @ZeroParadox.zero_mass_two_causes
+-- Statement: ⊥ of `Bool × ℕ∞ᵒᵈ` (product order) has a first step, the cover `(true, ⊥)`, and is the
+-- greatest lower bound and limit of a strictly decreasing run of covers avoiding it.
+#check @ZeroParadox.boolNInfL_bot_cover_and_limit
 -- Statement: if ⊥ of `L` has a first step and the stage chances `q n` sum to ∞, then for
 -- `fadingTrials q hq`-almost every tape some `φ` makes the run `φ ∘ firedRun w hw` step off ⊥ of `L`
 -- to a cover. One way.
