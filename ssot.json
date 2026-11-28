@@ -448254,6 +448254,72 @@
           "signature": "epsilonOrZero_bot ⋖ (φ ∘ firedRun w hw) 1 ∧ ↑((φ ∘ firedRun w hw) 1) = Ordinal.epsilon 0 ∧ ↑(...) ≠ 0 — the cover ⋖ is in the subtype EpsilonOrZero = {o : Ordinal.{0} // o = 0 ∨ ω^o = o}"
         },
         {
+          "decl": "ZeroParadox.complexity_unbounded",
+          "diff_kind": "not_stated",
+          "dispositions": [
+            {
+              "decided_by": null,
+              "disposition": "open",
+              "line_sha256": "4364ba05690779d1f68003dd62fe04b01bd2636593d0e2afbabb678c1aa77a65",
+              "reason": null,
+              "utc": null
+            },
+            {
+              "decided_by": "Orchestrating agent (caller of this recorder), 2026-11-28: carried to Tim's queue. Not a Tim ruling.",
+              "disposition": "carried",
+              "line_sha256": "66dbb90c0438a6cae31602b194b8a4a5b3ff76514ccc7da11cabb04281ded54c",
+              "reason": "ordinary (not_stated): carried to Tim's Lean-wording queue; .lean comment edits are his. The reader's note, DIFF 1: L31-32 describe `complexity_unbounded` as `complexity_ladder` with the forall-n outside; the two elaborated types are identical and both already quantify n outside, so the sentence describes a difference that does not exist. Ordinary; experimental file.",
+              "utc": "2026-11-28T11:01:21+00:00"
+            }
+          ],
+          "git_blob_id": "53e984fd7255e8d55d5a51cf299242edc5a45e04",
+          "id": "rc-58dfad5b-eleven-2026-11-28#1",
+          "key_kind": "decl_name",
+          "kind": "diff1",
+          "kind_detail": "The reader's note, DIFF 1: L31-32 describe `complexity_unbounded` as `complexity_ladder` with the forall-n outside; the two elaborated types are identical and both already quantify n outside, so the sentence describes a difference that does not exist. Ordinary; experimental file.",
+          "line": 32,
+          "line_sha256": "4364ba05690779d1f68003dd62fe04b01bd2636593d0e2afbabb678c1aa77a65",
+          "path": "ZeroParadox/Valuation/ComplexityLadder.lean",
+          "prose": "`∀ n` outside: there is **no ceiling**. Neither theorem compares rungs.",
+          "registry_id": null,
+          "registry_id_reason": "not in the registry (ssot.json declarations, by new.qualified, at assembly)",
+          "run_id": "rc-58dfad5b-eleven-2026-11-28",
+          "signature": "see the elaborated types in C:\\Users\\timbr\\AppData\\Local\\Temp\\claude\\f800153db889b496\\df830dce-1a65-464d-93cd-5891c94da9e4\\scratchpad\\rc_zg2"
+        },
+        {
+          "decl": "ZeroParadox.parity4_eq_zoom",
+          "diff_kind": "not_stated",
+          "dispositions": [
+            {
+              "decided_by": null,
+              "disposition": "open",
+              "line_sha256": "78e31303c772e4d7733ea93e5177669b50f564f2f7676d4c82722ff3daa146bc",
+              "reason": null,
+              "utc": null
+            },
+            {
+              "decided_by": "Orchestrating agent (caller of this recorder), 2026-11-28: carried to Tim's queue. Not a Tim ruling.",
+              "disposition": "carried",
+              "line_sha256": "5752edb630d9be51874de597173adb8a6c63bfc91522d37d932a8a91312b8cba",
+              "reason": "ordinary (not_stated): carried to Tim's Lean-wording queue; .lean comment edits are his. The reader's note, DIFF 1 (minor): the index line says `parity4` is `zoom 1`; the theorem states parity4 x = decide (zoom 1 x = 1), a Bool against ZMod 2. DieCannotBe L4624 states it exactly. Ordinary; wording.",
+              "utc": "2026-11-28T11:01:21+00:00"
+            }
+          ],
+          "git_blob_id": "0b9fd204989e85715b533462077fd40dbf6ceaaf",
+          "id": "rc-58dfad5b-eleven-2026-11-28#2",
+          "key_kind": "registry_id",
+          "kind": "diff1",
+          "kind_detail": "The reader's note, DIFF 1 (minor): the index line says `parity4` is `zoom 1`; the theorem states parity4 x = decide (zoom 1 x = 1), a Bool against ZMod 2. DieCannotBe L4624 states it exactly. Ordinary; wording.",
+          "line": 1031,
+          "line_sha256": "78e31303c772e4d7733ea93e5177669b50f564f2f7676d4c82722ff3daa146bc",
+          "path": "ZeroParadox/BottomCannotBe.lean",
+          "prose": "-- (`ZeroParadox/Information/Dial.lean` § XIV; `parity4_eq_zoom`: `parity4` is `zoom 1`).",
+          "registry_id": "7469bdc6-9aca-46cc-a2c5-66dcc2574d77",
+          "registry_id_reason": null,
+          "run_id": "rc-58dfad5b-eleven-2026-11-28",
+          "signature": "see the elaborated types in C:\\Users\\timbr\\AppData\\Local\\Temp\\claude\\f800153db889b496\\df830dce-1a65-464d-93cd-5891c94da9e4\\scratchpad\\rc_zg2"
+        },
+        {
           "decl": "example@L182",
           "diff_kind": "not_stated",
           "dispositions": [
@@ -476811,6 +476877,70 @@
           "run_id": "rc-7433afa1-nine-2026-11-27",
           "skipped": [],
           "started_utc": "2026-11-28T03:09:15+00:00"
+        },
+        {
+          "brief": {
+            "git_blob_id": "d3642ae3166d2d26139a6f98cfba3af65c79aae7",
+            "path": ".claude/commands/reconstruct.md"
+          },
+          "commit": "833efbb26ff88edef6910ea93c215fc7682d698c",
+          "diff1_count": 2,
+          "examined": [
+            {
+              "git_blob_id": "b31038d923b12633c8659236738bed4d90aad5ec",
+              "path": "ZeroParadox/Information/Dial.lean"
+            },
+            {
+              "git_blob_id": "1a910eb49f5766f8a871f5490af87bfdc50f6a00",
+              "path": "ZeroParadox/Givens.lean"
+            },
+            {
+              "git_blob_id": "0b9fd204989e85715b533462077fd40dbf6ceaaf",
+              "path": "ZeroParadox/BottomCannotBe.lean"
+            },
+            {
+              "git_blob_id": "f28d3472517692f03680a17574ac27611e1ed05f",
+              "path": "ZeroParadox/DieCannotBe.lean"
+            },
+            {
+              "git_blob_id": "67f57c341ae535d0f512c253f29ddf0bc2341c39",
+              "path": "ZeroParadox/Order/SnapCannotBe.lean"
+            },
+            {
+              "git_blob_id": "3b40b0367949a5fae691b923feedc80f8493d589",
+              "path": "ZeroParadox/Multihomed/BendDie.lean"
+            },
+            {
+              "git_blob_id": "ec5178d6e483551108b47d0fdc51eccf5e2a173d",
+              "path": "ZeroParadox/Multihomed/TwoAdicBend.lean"
+            },
+            {
+              "git_blob_id": "035e9253d527c511d8f89b76727847e73d2376f0",
+              "path": "ZeroParadox/Reals/ConnectedNoFirstStep.lean"
+            },
+            {
+              "git_blob_id": "a26c4765e144630907bf9389bd7de59a67b3afc2",
+              "path": "ZeroParadox/Valuation/CantorPropertiesProbe.lean"
+            },
+            {
+              "git_blob_id": "637d7e40773fb2449bbb21500afd7f75c29135cd",
+              "path": "ZeroParadox/Valuation/CompletenessCriticProbe.lean"
+            },
+            {
+              "git_blob_id": "53e984fd7255e8d55d5a51cf299242edc5a45e04",
+              "path": "ZeroParadox/Valuation/ComplexityLadder.lean"
+            }
+          ],
+          "finished_utc": "2026-11-28T11:00:08+00:00",
+          "line_sha256": "39cf0e951b0d38996e7b73829b0355bdb2968c2b88cb48a7d4967d2833bce9ce",
+          "reader_model": "claude-opus-5-5",
+          "reader_prompt": {
+            "git_blob_id": "33686a65ea133a93c0cda72473856c6d9e682150",
+            "path": ".claude-local/notes/reconstruct_runs/prompts/33686a65ea133a93c0cda72473856c6d9e682150.md"
+          },
+          "run_id": "rc-58dfad5b-eleven-2026-11-28",
+          "skipped": [],
+          "started_utc": "2026-11-28T10:55:50+00:00"
         }
       ],
       "schema_version": "1"
