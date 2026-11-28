@@ -477487,7 +477487,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 5093,
+        "declarations": 5114,
         "files": 249
       },
       "entries": [
@@ -483587,6 +483587,45 @@
             ]
           },
           "reason": "Die: orthogonal projection as a motion; UpOrthogonal premise, landings determine UP with it, oblique control without it, StrictIso blind to the angle (Tim approved 2026-11-13)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "08645e6b-ec72-48e7-9256-358657200966",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.e2_toDual_top",
+            "short": "e2_toDual_top"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.e2_toDual_top",
+            "short": "e2_toDual_top",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § IV (ruling 125 Q3): N2, the norm image of Z_2 in NNReal; e2 : N-inf order dual =o N2; normN2 = e2 after q2Val; the both-faces bottom carried onto Bool x N2 by transport from boolNInfL_bot_cover_and_limit.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -497976,6 +498015,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "1ba8ceb8-7c84-49a4-b38a-53707c4ac504",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.n2Pow",
+            "short": "n2Pow"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.n2Pow",
+            "short": "n2Pow",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § IV (ruling 125 Q3): N2, the norm image of Z_2 in NNReal; e2 : N-inf order dual =o N2; normN2 = e2 after q2Val; the both-faces bottom carried onto Bool x N2 by transport from boolNInfL_bot_cover_and_limit.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "1bafe6e8-8b7f-49ef-b039-3bfd575e833a",
           "new": {
             "file": "ZeroParadox/Valuation/DepthIsWait.lean",
@@ -499082,6 +499158,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "1d2f4485-23d8-441f-9b14-70c961efe999",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.n2Run_eq_norm",
+            "short": "n2Run_eq_norm"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.n2Run_eq_norm",
+            "short": "n2Run_eq_norm",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § IV (ruling 125 Q3): N2, the norm image of Z_2 in NNReal; e2 : N-inf order dual =o N2; normN2 = e2 after q2Val; the both-faces bottom carried onto Bool x N2 by transport from boolNInfL_bot_cover_and_limit.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -506625,6 +506739,45 @@
             ]
           },
           "reason": "New experimental files ZeroParadox/Information/BrudnoBridge.lean (trials and MLRandom bridged to Milovanov's kolmogorov-complexity-lean, citing his Brudno and Levin-Schnorr theorems) and ZeroParadox/Information/SnapEpsilonZero.lean (snap_of_firstStep_MLRandom instantiated on WithBot Ordinal and on EpsilonOrZero, with an order isomorphism between them).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "2838fe17-5e0c-48b7-af09-5a21de033565",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.normN2_zero",
+            "short": "normN2_zero"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.normN2_zero",
+            "short": "normN2_zero",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Dial § IV (ruling 125 Q3): N2, the norm image of Z_2 in NNReal; e2 : N-inf order dual =o N2; normN2 = e2 after q2Val; the both-faces bottom carried onto Bool x N2 by transport from boolNInfL_bot_cover_and_limit.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -519385,6 +519538,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "3a201b54-bdb8-44d1-9905-7ed9b7bbb0f5",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.N2",
+            "short": "N2"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.N2",
+            "short": "N2",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § IV (ruling 125 Q3): N2, the norm image of Z_2 in NNReal; e2 : N-inf order dual =o N2; normN2 = e2 after q2Val; the both-faces bottom carried onto Bool x N2 by transport from boolNInfL_bot_cover_and_limit.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "3a238af3-8feb-4d7f-a61a-69f72451e8d4",
           "new": {
@@ -520545,6 +520735,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "3b605fa6-a9e9-46c2-919d-7788a229aa27",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.normN2_eq_e2_q2Val",
+            "short": "normN2_eq_e2_q2Val"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.normN2_eq_e2_q2Val",
+            "short": "normN2_eq_e2_q2Val",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Dial § IV (ruling 125 Q3): N2, the norm image of Z_2 in NNReal; e2 : N-inf order dual =o N2; normN2 = e2 after q2Val; the both-faces bottom carried onto Bool x N2 by transport from boolNInfL_bot_cover_and_limit.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "3ba6db6d-d96c-4643-8d95-996cb49c923d",
           "new": {
             "file": "ZeroParadox/Multihomed/BendDie.lean",
@@ -521501,6 +521730,43 @@
             ]
           },
           "reason": "Land PoleWithinEnsemble and TowerTape: ⊥ of ℕ → Bool null yet in the support of trials p hp (iff p < 1) and in the closure of random firing tapes; local floors as subtape poles; a local tower as one tape; limit and value forms (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "3cde0b1f-6049-4e70-baf6-d5f449ac3961",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.normN2",
+            "short": "normN2"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.normN2",
+            "short": "normN2",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § IV (ruling 125 Q3): N2, the norm image of Z_2 in NNReal; e2 : N-inf order dual =o N2; normN2 = e2 after q2Val; the both-faces bottom carried onto Bool x N2 by transport from boolNInfL_bot_cover_and_limit.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -524178,6 +524444,45 @@
             ]
           },
           "reason": "Dial.lean round 2 (2026-11-26): § IX restated (binary entropy positive iff 0 < p < 1 pins the dial and implies bot of N -> Bool in the support, one way; for 0 < p < 1 the Bernoulli product has full support and no atoms) and § X (translation by t in the Cantor group (Z/2Z)^N under pointwise xor: preserves the fair coin, the Haar measure, for every t, and preserves trials p only at p = 1/2 or t = bot; the wait to first disagreement with t has the law of the wait from bot).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "40b083b8-d23b-4565-8411-17d4dbd4b554",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.n2OrderBot",
+            "short": "n2OrderBot"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.n2OrderBot",
+            "short": "n2OrderBot",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § IV (ruling 125 Q3): N2, the norm image of Z_2 in NNReal; e2 : N-inf order dual =o N2; normN2 = e2 after q2Val; the both-faces bottom carried onto Bool x N2 by transport from boolNInfL_bot_cover_and_limit.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -541551,6 +541856,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "589905fe-621c-4c51-9f43-dba9487c204e",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.q2_nnnorm_mem",
+            "short": "q2_nnnorm_mem"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.q2_nnnorm_mem",
+            "short": "q2_nnnorm_mem",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § IV (ruling 125 Q3): N2, the norm image of Z_2 in NNReal; e2 : N-inf order dual =o N2; normN2 = e2 after q2Val; the both-faces bottom carried onto Bool x N2 by transport from boolNInfL_bot_cover_and_limit.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "58aed1d7-7212-442e-afd6-245562c52a84",
           "new": {
             "file": "ZeroParadox/Valuation/LocalTowers.lean",
@@ -554689,6 +555031,43 @@
             ]
           },
           "reason": "Land 2026-11-10 cells-joint, local-towers, interleave probes and the new one-way-flow results into ZeroParadox/Valuation (CellsJoint, Interleave, LocalTowers, OneWayFlow).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "6ae4f8b0-dc27-4fe9-82f1-b61a435757cf",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.e2_toDual_coe",
+            "short": "e2_toDual_coe"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.e2_toDual_coe",
+            "short": "e2_toDual_coe",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § IV (ruling 125 Q3): N2, the norm image of Z_2 in NNReal; e2 : N-inf order dual =o N2; normN2 = e2 after q2Val; the both-faces bottom carried onto Bool x N2 by transport from boolNInfL_bot_cover_and_limit.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -572548,6 +572927,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "8341b139-85c0-416d-9140-3853fc03bdbb",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.n2Run",
+            "short": "n2Run"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.n2Run",
+            "short": "n2Run",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § IV (ruling 125 Q3): N2, the norm image of Z_2 in NNReal; e2 : N-inf order dual =o N2; normN2 = e2 after q2Val; the both-faces bottom carried onto Bool x N2 by transport from boolNInfL_bot_cover_and_limit.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "834325e9-6d35-4e15-85e5-aa07c98f7bad",
           "new": {
             "file": "ZeroParadox/Valuation/PadicWavelet.lean",
@@ -579382,6 +579799,43 @@
             ]
           },
           "reason": "New files Die.lean + DieCannotBe.lean — the die: order-free Motion, switches, existence premises (provisional)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "8e0567bc-4e55-48a8-8928-49bd4df82937",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.n2Pow_mem",
+            "short": "n2Pow_mem"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.n2Pow_mem",
+            "short": "n2Pow_mem",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § IV (ruling 125 Q3): N2, the norm image of Z_2 in NNReal; e2 : N-inf order dual =o N2; normN2 = e2 after q2Val; the both-faces bottom carried onto Bool x N2 by transport from boolNInfL_bot_cover_and_limit.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -595201,6 +595655,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "a246b899-c840-4f95-be8b-204d00ac5e66",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.boolN2_bot_cover_and_limit",
+            "short": "boolN2_bot_cover_and_limit"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.boolN2_bot_cover_and_limit",
+            "short": "boolN2_bot_cover_and_limit",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § IV (ruling 125 Q3): N2, the norm image of Z_2 in NNReal; e2 : N-inf order dual =o N2; normN2 = e2 after q2Val; the both-faces bottom carried onto Bool x N2 by transport from boolNInfL_bot_cover_and_limit.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "a2538d67-cb81-4330-9984-604af4bd2f1d",
           "new": {
             "file": "ZeroParadox/State/FermiStepDie.lean",
@@ -606269,6 +606761,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b111b140-985f-4d32-93a3-4935054b79ff",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.n2Pow_coe",
+            "short": "n2Pow_coe"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.n2Pow_coe",
+            "short": "n2Pow_coe",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § IV (ruling 125 Q3): N2, the norm image of Z_2 in NNReal; e2 : N-inf order dual =o N2; normN2 = e2 after q2Val; the both-faces bottom carried onto Bool x N2 by transport from boolNInfL_bot_cover_and_limit.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -618614,6 +619143,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "c23a5cc5-1484-4195-9f4d-a6ef48c6e947",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.normN2_surjective",
+            "short": "normN2_surjective"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.normN2_surjective",
+            "short": "normN2_surjective",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § IV (ruling 125 Q3): N2, the norm image of Z_2 in NNReal; e2 : N-inf order dual =o N2; normN2 = e2 after q2Val; the both-faces bottom carried onto Bool x N2 by transport from boolNInfL_bot_cover_and_limit.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "c242edd9-4078-4aaf-884e-a40eb3227847",
           "new": {
@@ -619098,6 +619664,43 @@
           "verify": {
             "axioms": "[propext]",
             "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c2df889f-2f12-4183-ac6b-d3c4b0cdeb8a",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.n2Pow_top",
+            "short": "n2Pow_top"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.n2Pow_top",
+            "short": "n2Pow_top",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § IV (ruling 125 Q3): N2, the norm image of Z_2 in NNReal; e2 : N-inf order dual =o N2; normN2 = e2 after q2Val; the both-faces bottom carried onto Bool x N2 by transport from boolNInfL_bot_cover_and_limit.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
           }
         },
         {
@@ -637694,6 +638297,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "da9d5bad-61be-4c59-b9bb-550b05ded127",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.boolN2_stepOff_mass",
+            "short": "boolN2_stepOff_mass"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.boolN2_stepOff_mass",
+            "short": "boolN2_stepOff_mass",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § IV (ruling 125 Q3): N2, the norm image of Z_2 in NNReal; e2 : N-inf order dual =o N2; normN2 = e2 after q2Val; the both-faces bottom carried onto Bool x N2 by transport from boolNInfL_bot_cover_and_limit.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "da9e78a9-295a-47f8-b2d6-b05b7426261e",
           "new": {
@@ -652316,6 +652957,46 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "ed492b25-4be9-4bbf-a457-630c99c2aa2a",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.e2",
+            "short": "e2"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.e2",
+            "short": "e2",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation",
+              "information"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § IV (ruling 125 Q3): N2, the norm image of Z_2 in NNReal; e2 : N-inf order dual =o N2; normN2 = e2 after q2Val; the both-faces bottom carried onto Bool x N2 by transport from boolNInfL_bot_cover_and_limit.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "ed4f639a-2711-4516-8c24-0d87a90e7a76",
           "new": {
             "file": "ZeroParadox/Information/TwoRequirements.lean",
@@ -656959,6 +657640,43 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f3ed3c65-ae3b-445d-a123-114557588f32",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.q2_nnnorm_eq_inv_pow",
+            "short": "q2_nnnorm_eq_inv_pow"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.q2_nnnorm_eq_inv_pow",
+            "short": "q2_nnnorm_eq_inv_pow",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § IV (ruling 125 Q3): N2, the norm image of Z_2 in NNReal; e2 : N-inf order dual =o N2; normN2 = e2 after q2Val; the both-faces bottom carried onto Bool x N2 by transport from boolNInfL_bot_cover_and_limit.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -663736,6 +664454,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "fcc5411e-e382-4290-aca6-bd2f2a9282d3",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.boolN2Iso",
+            "short": "boolN2Iso"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.boolN2Iso",
+            "short": "boolN2Iso",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § IV (ruling 125 Q3): N2, the norm image of Z_2 in NNReal; e2 : N-inf order dual =o N2; normN2 = e2 after q2Val; the both-faces bottom carried onto Bool x N2 by transport from boolNInfL_bot_cover_and_limit.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "fcd04aeb-249d-414d-b712-bc60d83fc230",
           "new": {
@@ -664164,6 +664920,43 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "fd760918-ccf8-4c65-beb1-f3d7e244d331",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.n2Pow_strictAnti",
+            "short": "n2Pow_strictAnti"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.n2Pow_strictAnti",
+            "short": "n2Pow_strictAnti",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § IV (ruling 125 Q3): N2, the norm image of Z_2 in NNReal; e2 : N-inf order dual =o N2; normN2 = e2 after q2Val; the both-faces bottom carried onto Bool x N2 by transport from boolNInfL_bot_cover_and_limit.",
           "verify": {
             "axioms": null,
             "sorry_free": null

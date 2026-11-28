@@ -114,8 +114,10 @@ this file holds what was already in the corpus, the prior art, and the fences.
   (`∫ x, x ∂((geometricMeasure p).map Nat.cast) = (1 - p) / p` for every `p : unitInterval`), which gives 0
   at `p = 0` (`integral_id_map_cast_geometricMeasure_zero`, Mathlib's `geometricMeasure 0 = dirac 0`), and
   by danlyng/Econlib at commit d7bd947, `CountDist.geometric_expect`, for `0 < p ≤ 1`; both read at those
-  commits, types not elaborated. Our `lintegral_wait` gives ⊤ of `ℝ≥0∞` at `p = 0`, by the extended-real
-  convention `0⁻¹ = ⊤` in `ℝ≥0∞`: the never-firing law, where TauCeti gives 0 and Econlib excludes `p = 0`.
+  commits, types not elaborated. Our `lintegral_wait` gives ⊤ of `ℝ≥0∞` at `p = 0`, and that is the mean
+  itself: at `p = 0` almost every tape never fires (`never_fires_ae_zero`), so it is ⊥ of `ℕ → Bool`
+  (`tape_never_fires_iff`), whose wait is ⊤ of `ℕ∞` (`wait_bot`), and the wait is infinite almost surely. The convention `0⁻¹ = ⊤`
+  in `ℝ≥0∞` makes the closed form `p⁻¹ − 1` agree. TauCeti gives 0 there and Econlib excludes `p = 0`.
 - § VIII. `unpack_measurePreserving` reindexes an infinite product measure, from Mathlib's
   `Measure.infinitePi_map_piCongrLeft` and `Measure.infinitePi_map_curry`. A published measure-level pairing
   statement: Brattka, Gherardi, Hölzl, "Probabilistic computability and choice", *Information and
@@ -301,6 +303,23 @@ this file holds what was already in the corpus, the prior art, and the fences.
   cylinder formula at monotone times.
 - The erasing half of `coarse_graining_trade` from the lift side: Wolfer and Watanabe, § 4.4.3, p. 26
   (under § XII above).
+
+## Prior art for § IV, the 2-adic norm form (searched 2026-11-27)
+
+- The norm image of ℤ_[2] as a set, `N2` (`q2_nnnorm_mem`, `normN2_surjective`): not located as a single
+  Mathlib lemma as of 2026-11-27, searched as follows: grep of `Mathlib/NumberTheory/Padics`, `exact?` on
+  three phrasings, LeanExplore on two. It follows from `PadicInt.norm_eq_zpow_neg_valuation` and
+  `norm_zero`; `n2Run_eq_norm` uses `PadicInt.norm_p_pow`.
+- `e2 : ℕ∞ᵒᵈ ≃o N2` has a Mathlib sibling with the same target, `IsDiscreteValuationRing.idealOrderIsoENat`
+  (ideals of a discrete valuation ring; ideal `(2 ^ n)` for norm `2⁻¹ ^ n`), and a value-group form,
+  `Valuation.IsRankOneDiscrete.valueGroup₀_equiv_withZeroMulInt`. Its order content on ℤ_[2] is
+  `q2Val_le_iff_norm_le` (`ZeroParadox/Valuation/Scale.lean`).
+- Sutherland, MIT 18.782 Lecture 4 (Fall 2013), Def. 4.10, p. 3 (`v_p(0) = ∞`) and Thm. 4.16, p. 4 (every
+  nonzero ideal of ℤ_p is `(p^m)`); Stacks Project tags 00IE (discrete valuation ring) and 00IH (ideals of a
+  valuation ring correspond to ideals of its value group). These give the valuation and ideal side; no
+  retrieved text states the norm image itself.
+- `boolN2_bot_cover_and_limit` takes its order conjuncts from `boolNInfL_bot_cover_and_limit` along
+  `boolN2Iso`; its limit conjunct is proved directly, in the subspace topology of `N2` in `ℝ≥0`.
 
 ## Fences
 

@@ -164,6 +164,7 @@ example (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p) :
 #check @ZeroParadox.dense_stepOff_mass_zero           -- Statement: one way: densely ordered gives mass 0 at every `p`; CONTROL `W := WithTop (WithTop NNReal)` is not densely ordered (`W_not_dense`) and its ⊥ has no first step (`W_not_firstStep`), so the converse fails
 #check @ZeroParadox.zero_mass_two_causes              -- Statement: the mass of `stepOff` is 0 at `p = 0` on `Bool` (join `||`), where almost every tape never fires, and at `0 < p ≤ 1` on `NNReal` (join `max`), where almost every tape fires
 #check @ZeroParadox.boolNInfL_stepOff_mass            -- Statement: on `Bool × ℕ∞ᵒᵈ` (product order, join `⊔`) the mass of `stepOff` is the switch, while ⊥ of `Bool × ℕ∞ᵒᵈ` is also the limit of a run of covers (`boolNInfL_bot_cover_and_limit`); CONTROL `nInfDual_stepOff_mass`: 0 on `ℕ∞ᵒᵈ` alone
+#check @ZeroParadox.boolN2_stepOff_mass               -- Statement: the same on `Bool × N2`, `N2` the norm image of ℤ_[2] in `ℝ≥0` (`e2 : ℕ∞ᵒᵈ ≃o N2`, `normN2_eq_e2_q2Val`): the mass of `stepOff` is the switch, while ⊥ of `Bool × N2` is also the limit of a run of covers (`boolN2_bot_cover_and_limit`)
 -- Reading: CARRIER, mass 0 alone does not tell the dial at 0 from ⊥ of the carrier having no first step (⊥ of `Bool` has one, `bool_botHasFirstStep`; ⊥ of `NNReal` has none, `nnreal_not_botHasFirstStep`).
 #check @ZeroParadox.lintegral_wait                    -- Statement: the mean of `wait` (stages before the first firing) under `trials p hp` is `p⁻¹ - 1` in `ℝ≥0∞`: for `0 < p`, the geometric distribution's mean `(1 - p)/p`; at `p = 0`, ⊤ of `ℝ≥0∞`, where Mathlib's `geometricMeasure 0` is `Measure.dirac 0`, mean 0
 #check @ZeroParadox.wait_mean_existsUnique            -- Statement: every `y : ℝ≥0∞`, ⊤ included, is the mean of `wait` at exactly one `p ≤ 1` (`wait_mean_surj`, `wait_mean_inj`)
@@ -292,9 +293,9 @@ example : Nonempty (ZeroParadox.ZPSemilattice (Set ℝ)) ∧
 
 Reading: CARRIER. These lines BOUND the snap; none supplies it. ZP-F rules it out in every ordered
 field; ZP-B removes the topological obstruction in ℚ_p without replacing it. The first step is AX-B1,
-a modelling commitment. Its conditional form is a property a carrier has or lacks: `Bool` and `ℕ` have
+a precondition (chart choice). Its conditional form is a property a carrier has or lacks: `Bool` and `ℕ` have
 it, `ℝ` lacks it (the examples beside `HasFirstStep`, `ZeroParadox/Reals/OrderedField.lean`); the
-commitment is that the framework's carrier has it. AX-B1 holds at every state with anything above it:
+precondition is that the framework's carrier has it. AX-B1 holds at every state with anything above it:
 each has a first distinct state above it, with nothing strictly between. A state with nothing above it
 owes no step. -/
 #check @ZeroParadox.axb1_gives_unique_target          -- Statement: on a LINEAR order, AX-B1 at `bot` gives exactly one cover; the `Set Bool` control beside it in `ZeroParadox/Reals/OrderedField.lean` has two
