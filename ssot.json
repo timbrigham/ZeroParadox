@@ -477263,7 +477263,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 5068,
+        "declarations": 5093,
         "files": 249
       },
       "entries": [
@@ -480969,6 +480969,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "054d9f3d-6211-47be-a729-89d7a55211e2",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.supBotZPS_botHasFirstStep_iff",
+            "short": "supBotZPS_botHasFirstStep_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.supBotZPS_botHasFirstStep_iff",
+            "short": "supBotZPS_botHasFirstStep_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § IV: one carrier, Bool x N-inf order dual (product order), whose bottom has a first step (cover (true, bot)) and is the greatest lower bound and limit of a strictly decreasing run of covers; supBotZPS from any SemilatticeSup with OrderBot; controls N-inf dual alone and Bool alone.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "0556a1f4-a664-4648-8077-a1452f9f23dc",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -482411,6 +482448,43 @@
             ]
           },
           "reason": "Die views batch: views (order as data), restriction to an up-closed set, adjoined points and the empty carrier, arrival and fan-in",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "06ecf7e7-3df0-4b18-8c3f-bcc209331b2e",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.BoolNInfL",
+            "short": "BoolNInfL"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.BoolNInfL",
+            "short": "BoolNInfL",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § IV: one carrier, Bool x N-inf order dual (product order), whose bottom has a first step (cover (true, bot)) and is the greatest lower bound and limit of a strictly decreasing run of covers; supBotZPS from any SemilatticeSup with OrderBot; controls N-inf dual alone and Bool alone.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -490421,6 +490495,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "111c7154-0c59-4fd0-86eb-282392074dcf",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.boolNInfL_bot_eq",
+            "short": "boolNInfL_bot_eq"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.boolNInfL_bot_eq",
+            "short": "boolNInfL_bot_eq",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § IV: one carrier, Bool x N-inf order dual (product order), whose bottom has a first step (cover (true, bot)) and is the greatest lower bound and limit of a strictly decreasing run of covers; supBotZPS from any SemilatticeSup with OrderBot; controls N-inf dual alone and Bool alone.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "111c9fbd-c6f7-4874-ba67-6d8665fae0ac",
           "new": {
             "file": "ZeroParadox/Settheory/APG.lean",
@@ -495864,6 +495975,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "1909f6a0-f011-450c-b29e-4e6aa9eacf91",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.supBotZPS_le_iff",
+            "short": "supBotZPS_le_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.supBotZPS_le_iff",
+            "short": "supBotZPS_le_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § IV: one carrier, Bool x N-inf order dual (product order), whose bottom has a first step (cover (true, bot)) and is the greatest lower bound and limit of a strictly decreasing run of covers; supBotZPS from any SemilatticeSup with OrderBot; controls N-inf dual alone and Bool alone.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "19144c71-30c7-4aa0-b44e-71242c2bf7a2",
           "new": {
@@ -496041,6 +496189,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "19612f79-0dd6-4a4d-b4f4-85a3fb4ae699",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.nInfDualRun_strictAnti",
+            "short": "nInfDualRun_strictAnti"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.nInfDualRun_strictAnti",
+            "short": "nInfDualRun_strictAnti",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § IV: one carrier, Bool x N-inf order dual (product order), whose bottom has a first step (cover (true, bot)) and is the greatest lower bound and limit of a strictly decreasing run of covers; supBotZPS from any SemilatticeSup with OrderBot; controls N-inf dual alone and Bool alone.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -502544,6 +502729,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "234b530f-3c1e-44d1-bc12-5ac9219f1d84",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.boolNInfL_bot_covBy_true",
+            "short": "boolNInfL_bot_covBy_true"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.boolNInfL_bot_covBy_true",
+            "short": "boolNInfL_bot_covBy_true",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § IV: one carrier, Bool x N-inf order dual (product order), whose bottom has a first step (cover (true, bot)) and is the greatest lower bound and limit of a strictly decreasing run of covers; supBotZPS from any SemilatticeSup with OrderBot; controls N-inf dual alone and Bool alone.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "23634dd5-2818-457f-b613-3519ba226167",
           "new": {
             "file": "ZeroParadox/Givens.lean",
@@ -502570,6 +502792,43 @@
             ]
           },
           "reason": "givens-1125: the v7.0 givens as predicates on die Motions, per chart, with controls, field lines (ruling 84), and limits (ruling 85); ported from the compiled die-givens and field-line probes",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "23648fd4-9bdc-4ecc-9c58-0eeccb471a19",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.boolNInfL_bot_cover_and_limit",
+            "short": "boolNInfL_bot_cover_and_limit"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.boolNInfL_bot_cover_and_limit",
+            "short": "boolNInfL_bot_cover_and_limit",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § IV: one carrier, Bool x N-inf order dual (product order), whose bottom has a first step (cover (true, bot)) and is the greatest lower bound and limit of a strictly decreasing run of covers; supBotZPS from any SemilatticeSup with OrderBot; controls N-inf dual alone and Bool alone.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -508531,6 +508790,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "2b9797a9-48ee-495d-a843-7eba476fa044",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.nInfDual_stepOff_mass",
+            "short": "nInfDual_stepOff_mass"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.nInfDual_stepOff_mass",
+            "short": "nInfDual_stepOff_mass",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § IV: one carrier, Bool x N-inf order dual (product order), whose bottom has a first step (cover (true, bot)) and is the greatest lower bound and limit of a strictly decreasing run of covers; supBotZPS from any SemilatticeSup with OrderBot; controls N-inf dual alone and Bool alone.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "2ba626df-96bd-4176-9609-c73af239b2b3",
           "new": {
             "file": "ZeroParadox/Settheory/HypersetOrder.lean",
@@ -510640,6 +510936,43 @@
             ]
           },
           "reason": "Collapse family as die motions: one lemma in two forms plus the loop obstruction, six legacy results as instances, with controls (ZeroParadox/Multihomed/CollapseDie.lean; Tim: \"One collapse file\", 2026-11-19)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "2e033230-ed41-4ff8-a907-6096ea70460b",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.boolNInfL_stepOff_mass",
+            "short": "boolNInfL_stepOff_mass"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.boolNInfL_stepOff_mass",
+            "short": "boolNInfL_stepOff_mass",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § IV: one carrier, Bool x N-inf order dual (product order), whose bottom has a first step (cover (true, bot)) and is the greatest lower bound and limit of a strictly decreasing run of covers; supBotZPS from any SemilatticeSup with OrderBot; controls N-inf dual alone and Bool alone.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -517793,6 +518126,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "3890ea00-7e89-4833-903a-742fcebefa0b",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bool_bot_not_isGLB",
+            "short": "bool_bot_not_isGLB"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bool_bot_not_isGLB",
+            "short": "bool_bot_not_isGLB",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § IV: one carrier, Bool x N-inf order dual (product order), whose bottom has a first step (cover (true, bot)) and is the greatest lower bound and limit of a strictly decreasing run of covers; supBotZPS from any SemilatticeSup with OrderBot; controls N-inf dual alone and Bool alone.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -539004,6 +539374,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "563afe5d-370f-475e-8fe7-c8dbffe3a0ad",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.nInfDual_not_botHasFirstStep",
+            "short": "nInfDual_not_botHasFirstStep"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.nInfDual_not_botHasFirstStep",
+            "short": "nInfDual_not_botHasFirstStep",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § IV: one carrier, Bool x N-inf order dual (product order), whose bottom has a first step (cover (true, bot)) and is the greatest lower bound and limit of a strictly decreasing run of covers; supBotZPS from any SemilatticeSup with OrderBot; controls N-inf dual alone and Bool alone.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "5656b6e5-c546-4687-a85c-72f780b0fddf",
           "new": {
             "file": "ZeroParadox/Category/DieNucleus.lean",
@@ -552824,6 +553231,43 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "691076e4-2da8-43d5-a8bc-4cbcd44618e6",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.boolNInfL_botHasFirstStep",
+            "short": "boolNInfL_botHasFirstStep"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.boolNInfL_botHasFirstStep",
+            "short": "boolNInfL_botHasFirstStep",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § IV: one carrier, Bool x N-inf order dual (product order), whose bottom has a first step (cover (true, bot)) and is the greatest lower bound and limit of a strictly decreasing run of covers; supBotZPS from any SemilatticeSup with OrderBot; controls N-inf dual alone and Bool alone.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -571990,6 +572434,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "835ba2ed-71c9-435d-a0ab-7f3c9efc47b7",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.supBotZPS_covBy_iff",
+            "short": "supBotZPS_covBy_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.supBotZPS_covBy_iff",
+            "short": "supBotZPS_covBy_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § IV: one carrier, Bool x N-inf order dual (product order), whose bottom has a first step (cover (true, bot)) and is the greatest lower bound and limit of a strictly decreasing run of covers; supBotZPS from any SemilatticeSup with OrderBot; controls N-inf dual alone and Bool alone.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "8370e61c-8183-4f43-9a67-6e7c3c553fbb",
           "new": {
@@ -584410,6 +584891,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "958afb2e-bec9-48bc-914c-d0ff94f0e838",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.boolNInfL_bot_cover_unique",
+            "short": "boolNInfL_bot_cover_unique"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.boolNInfL_bot_cover_unique",
+            "short": "boolNInfL_bot_cover_unique",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § IV: one carrier, Bool x N-inf order dual (product order), whose bottom has a first step (cover (true, bot)) and is the greatest lower bound and limit of a strictly decreasing run of covers; supBotZPS from any SemilatticeSup with OrderBot; controls N-inf dual alone and Bool alone.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "95940c02-38e5-40ce-bb7a-45a8f4befe56",
           "new": {
             "file": "ZeroParadox/Category/IgnoranceSeam.lean",
@@ -596011,6 +596529,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "a4beaf5b-4cd5-49a1-9d1c-645143253bdb",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.nInfDualRun_tendsto",
+            "short": "nInfDualRun_tendsto"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.nInfDualRun_tendsto",
+            "short": "nInfDualRun_tendsto",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § IV: one carrier, Bool x N-inf order dual (product order), whose bottom has a first step (cover (true, bot)) and is the greatest lower bound and limit of a strictly decreasing run of covers; supBotZPS from any SemilatticeSup with OrderBot; controls N-inf dual alone and Bool alone.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "a4db48e6-cfe7-45bf-839b-8b3954bc9a4f",
           "new": {
             "file": "ZeroParadox/Multihomed/LimitMotion.lean",
@@ -597974,6 +598529,43 @@
             ]
           },
           "reason": "common meadow Q_a + wheel_three_distinct in WheelFrac.lean (2026-11-14)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a83b1672-477f-40a4-b1d5-6a9b117d5589",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.supBotZPS",
+            "short": "supBotZPS"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.supBotZPS",
+            "short": "supBotZPS",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § IV: one carrier, Bool x N-inf order dual (product order), whose bottom has a first step (cover (true, bot)) and is the greatest lower bound and limit of a strictly decreasing run of covers; supBotZPS from any SemilatticeSup with OrderBot; controls N-inf dual alone and Bool alone.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -600130,6 +600722,43 @@
             ]
           },
           "reason": "KleeneChoiceFree § VI: choice-free decoder ofNatCodeCF for Nat.Partrec.Code, both inverse laws at [propext, Quot.sound], and its equality with Mathlib's ofNatCode",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "aab815d4-4527-4ba4-9d9e-20f20a387280",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.boolNInfL_no_nInfDual_cover",
+            "short": "boolNInfL_no_nInfDual_cover"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.boolNInfL_no_nInfDual_cover",
+            "short": "boolNInfL_no_nInfDual_cover",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § IV: one carrier, Bool x N-inf order dual (product order), whose bottom has a first step (cover (true, bot)) and is the greatest lower bound and limit of a strictly decreasing run of covers; supBotZPS from any SemilatticeSup with OrderBot; controls N-inf dual alone and Bool alone.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -603776,6 +604405,43 @@
             ]
           },
           "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "af09c1cd-642e-42f4-9222-db603afc65a1",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.NInfDual",
+            "short": "NInfDual"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.NInfDual",
+            "short": "NInfDual",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § IV: one carrier, Bool x N-inf order dual (product order), whose bottom has a first step (cover (true, bot)) and is the greatest lower bound and limit of a strictly decreasing run of covers; supBotZPS from any SemilatticeSup with OrderBot; controls N-inf dual alone and Bool alone.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -630591,6 +631257,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "d2de0eeb-00f6-46e9-9c46-00b861a9ce31",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.nInfDualRun_ne_bot",
+            "short": "nInfDualRun_ne_bot"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.nInfDualRun_ne_bot",
+            "short": "nInfDualRun_ne_bot",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § IV: one carrier, Bool x N-inf order dual (product order), whose bottom has a first step (cover (true, bot)) and is the greatest lower bound and limit of a strictly decreasing run of covers; supBotZPS from any SemilatticeSup with OrderBot; controls N-inf dual alone and Bool alone.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "d2e0166f-3df4-4482-849d-8e1d3e50dd47",
           "new": {
@@ -640402,6 +641105,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "dfbfc9ec-51c6-400a-b998-c63055f90371",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.enat_natCast_covBy_succ",
+            "short": "enat_natCast_covBy_succ"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.enat_natCast_covBy_succ",
+            "short": "enat_natCast_covBy_succ",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § IV: one carrier, Bool x N-inf order dual (product order), whose bottom has a first step (cover (true, bot)) and is the greatest lower bound and limit of a strictly decreasing run of covers; supBotZPS from any SemilatticeSup with OrderBot; controls N-inf dual alone and Bool alone.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "dfd484fd-8d72-4759-b2bf-d6c54d6d7f71",
           "new": {
@@ -641800,6 +642540,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "e197089a-2966-4985-be4d-a22adc8bb752",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.nInfDual_bot_isGLB",
+            "short": "nInfDual_bot_isGLB"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.nInfDual_bot_isGLB",
+            "short": "nInfDual_bot_isGLB",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § IV: one carrier, Bool x N-inf order dual (product order), whose bottom has a first step (cover (true, bot)) and is the greatest lower bound and limit of a strictly decreasing run of covers; supBotZPS from any SemilatticeSup with OrderBot; controls N-inf dual alone and Bool alone.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "e19aaa90-372b-4a93-8931-edce08fdc4ba",
           "new": {
@@ -642495,6 +643272,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e2c21e79-0eb0-40ca-93a9-4ea1dd435a2a",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.supBotZPS_lt_iff",
+            "short": "supBotZPS_lt_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.supBotZPS_lt_iff",
+            "short": "supBotZPS_lt_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § IV: one carrier, Bool x N-inf order dual (product order), whose bottom has a first step (cover (true, bot)) and is the greatest lower bound and limit of a strictly decreasing run of covers; supBotZPS from any SemilatticeSup with OrderBot; controls N-inf dual alone and Bool alone.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -643605,6 +644419,43 @@
             "role": []
           },
           "reason": "SnapNucleusConstructive: machine-checked IMPOSSIBILITY - no idempotent endomap of ONote has epsilon-number closed points; obstruction is expressive reach (the carrier cannot name the closure), NOT choice",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e3f2da1a-c004-4065-8c52-3dd8ea37b4a2",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.boolNInfL_bot_isGLB",
+            "short": "boolNInfL_bot_isGLB"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.boolNInfL_bot_isGLB",
+            "short": "boolNInfL_bot_isGLB",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § IV: one carrier, Bool x N-inf order dual (product order), whose bottom has a first step (cover (true, bot)) and is the greatest lower bound and limit of a strictly decreasing run of covers; supBotZPS from any SemilatticeSup with OrderBot; controls N-inf dual alone and Bool alone.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -650761,6 +651612,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "ecc25bb4-d4ce-482f-99ff-1a29ce21c940",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.nInfDualRun_covBy",
+            "short": "nInfDualRun_covBy"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.nInfDualRun_covBy",
+            "short": "nInfDualRun_covBy",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § IV: one carrier, Bool x N-inf order dual (product order), whose bottom has a first step (cover (true, bot)) and is the greatest lower bound and limit of a strictly decreasing run of covers; supBotZPS from any SemilatticeSup with OrderBot; controls N-inf dual alone and Bool alone.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "ecda4a7e-0d40-4a26-a20a-bcec2725f141",
           "new": {
             "file": "ZeroParadox/Meta/AxiomLedger.lean",
@@ -653354,6 +654242,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f080adc7-cf7b-4a0f-bebb-eb09f115eaf4",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.nInfDualRun",
+            "short": "nInfDualRun"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.nInfDualRun",
+            "short": "nInfDualRun",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § IV: one carrier, Bool x N-inf order dual (product order), whose bottom has a first step (cover (true, bot)) and is the greatest lower bound and limit of a strictly decreasing run of covers; supBotZPS from any SemilatticeSup with OrderBot; controls N-inf dual alone and Bool alone.",
           "verify": {
             "axioms": null,
             "sorry_free": null

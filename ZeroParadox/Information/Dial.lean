@@ -5,6 +5,8 @@ import ZeroParadox.Information.SnapEpsilonZero
 import ZeroParadox.Valuation.UltrametricView
 import Mathlib.Probability.Kernel.IonescuTulcea.Traj
 import Mathlib.Probability.Kernel.Invariance
+import Mathlib.Topology.Instances.ENat
+import Mathlib.SetTheory.Ordinal.Veblen
 import Mathlib.Tactic
 
 /-!
@@ -24,7 +26,7 @@ analog and a digital value
 
 ## Formal Overview (AI-assisted)
 Switch (§ II): "some stage fires" has mass 0 at `p = 0`, 1 for `0 < p ≤ 1`. Volume (§ III): "fires within `n`
-stages" is continuous in `p` and tends to the switch non-uniformly. § IV: the jump in `L`, the step-off mass; § V-VI: schedules,
+stages" is continuous in `p` and tends to the switch non-uniformly. § IV: the jump in `L`, the step-off mass, `Bool × ℕ∞ᵒᵈ`; § V-VI: schedules,
 the law; § VII: mean of `wait + 1` is `p⁻¹`; § VIII: columns; § IX: entropy pins `0 < p < 1`; § X: translations;
 § XI: a supplied Markov kernel on the die; § XII: lumping, and reversibility under coarse-graining. -/
 
@@ -354,6 +356,212 @@ example (p : NNReal) (hp : p ≤ 1) :
   have h : ¬ @BotHasFirstStep W (linearMaxZPS W ⊥ (fun _ => bot_le)) := by
     rw [linearMaxZPS_botHasFirstStep_iff]; exact W_not_firstStep
   rw [@stepOff_of_not_firstStep W (linearMaxZPS W ⊥ (fun _ => bot_le)) h]; simp
+
+/-! #### § IV, one carrier whose ⊥ has a cover and is a limit: `Bool × ℕ∞ᵒᵈ` -/
+
+section BoolNInf
+
+open OrderDual
+
+/-- `Statement:` the `ZPSemilattice` of a `SemilatticeSup` with `OrderBot`: join `⊔`, ⊥ its ⊥. A
+definition, not an instance. -/
+abbrev supBotZPS (α : Type*) [SemilatticeSup α] [OrderBot α] : ZPSemilattice α where
+  join := (· ⊔ ·)
+  bot := ⊥
+  join_assoc := sup_assoc
+  join_comm := sup_comm
+  join_idem := sup_idem
+  bot_join := bot_sup_eq
+
+/-- `Statement:` under `supBotZPS`, ZP-A's induced `≤` is `α`'s own `≤`. -/
+theorem supBotZPS_le_iff {α : Type*} [SemilatticeSup α] [OrderBot α] (x y : α) :
+    @LE.le α (@zpSemilatticeSup α (supBotZPS α)).toLE x y ↔ x ≤ y := by
+  show x ⊔ y = y ↔ x ≤ y
+  exact sup_eq_right
+
+/-- `Statement:` under `supBotZPS`, ZP-A's induced `<` is `α`'s own `<`. -/
+theorem supBotZPS_lt_iff {α : Type*} [SemilatticeSup α] [OrderBot α] (x y : α) :
+    @LT.lt α (@zpSemilatticeSup α (supBotZPS α)).toLT x y ↔ x < y := by
+  rw [@lt_iff_le_not_ge α (@zpSemilatticeSup α (supBotZPS α)).toPreorder, lt_iff_le_not_ge,
+    supBotZPS_le_iff, supBotZPS_le_iff]
+
+/-- `Statement:` under `supBotZPS`, ZP-A's induced cover relation is `α`'s own `⋖`. -/
+theorem supBotZPS_covBy_iff {α : Type*} [SemilatticeSup α] [OrderBot α] (x y : α) :
+    @CovBy α (@zpSemilatticeSup α (supBotZPS α)).toLT x y ↔ x ⋖ y := by
+  constructor
+  · rintro ⟨h1, h2⟩
+    exact ⟨(supBotZPS_lt_iff _ _).1 h1, fun c hc1 hc2 =>
+      h2 ((supBotZPS_lt_iff _ _).2 hc1) ((supBotZPS_lt_iff _ _).2 hc2)⟩
+  · rintro ⟨h1, h2⟩
+    exact ⟨(supBotZPS_lt_iff _ _).2 h1, fun c hc1 hc2 =>
+      h2 ((supBotZPS_lt_iff _ _).1 hc1) ((supBotZPS_lt_iff _ _).1 hc2)⟩
+
+/-- `Statement:` `BotHasFirstStep` under `supBotZPS` iff `HasFirstStep ⊥` in `α`'s order. -/
+theorem supBotZPS_botHasFirstStep_iff {α : Type*} [SemilatticeSup α] [OrderBot α] :
+    @BotHasFirstStep α (supBotZPS α) ↔ HasFirstStep (⊥ : α) :=
+  ⟨fun ⟨a, ha⟩ => ⟨a, (supBotZPS_covBy_iff _ _).1 ha⟩,
+   fun ⟨a, ha⟩ => ⟨a, (supBotZPS_covBy_iff _ _).2 ha⟩⟩
+
+/-- `Statement:` `ℕ∞ᵒᵈ`, the order dual of `ℕ∞`; its ⊥ is `toDual ⊤`, ⊤ of `ℕ∞`. -/
+abbrev NInfDual := ℕ∞ᵒᵈ
+
+/-- `Statement:` `Bool × ℕ∞ᵒᵈ` with Mathlib's product order; its ⊥ is `(false, toDual ⊤)`. -/
+abbrev BoolNInfL := Bool × NInfDual
+
+/-- `Statement:` ⊥ of `Bool × ℕ∞ᵒᵈ` is `(false, toDual ⊤)`, ⊤ of `ℕ∞` in the second slot. -/
+theorem boolNInfL_bot_eq : (⊥ : BoolNInfL) = (false, toDual (⊤ : ℕ∞)) := rfl
+
+/-- `Statement:` ⊥ of `Bool × ℕ∞ᵒᵈ` is covered by `(true, ⊥)`; product covers are Mathlib's
+(`Prod.mk_covBy_mk_iff_left`, `Prod.covBy_iff`). -/
+theorem boolNInfL_bot_covBy_true : (⊥ : BoolNInfL) ⋖ (true, ⊥) :=
+  Prod.mk_covBy_mk_iff_left.2 (Bool.covBy_iff.2 (by decide))
+
+/-- `Statement:` ⊥ of `Bool × ℕ∞ᵒᵈ` has a first step under `supBotZPS`. -/
+theorem boolNInfL_botHasFirstStep : @BotHasFirstStep BoolNInfL (supBotZPS BoolNInfL) :=
+  supBotZPS_botHasFirstStep_iff.2 ⟨_, boolNInfL_bot_covBy_true⟩
+
+/-- `Statement:` on `Bool × ℕ∞ᵒᵈ` the mass of `stepOff` is 1 for `p ≠ 0` and 0 at `p = 0`. -/
+theorem boolNInfL_stepOff_mass (p : NNReal) (hp : p ≤ 1) :
+    trials p hp (@stepOff BoolNInfL (supBotZPS BoolNInfL)) = if p ≠ 0 then 1 else 0 := by
+  rw [@stepOff_mass BoolNInfL (supBotZPS BoolNInfL)]
+  simp [boolNInfL_botHasFirstStep]
+
+/-- `Statement:` the run `n ↦ (false, toDual n)` in `Bool × ℕ∞ᵒᵈ`. -/
+def nInfDualRun (n : ℕ) : BoolNInfL := (false, toDual (n : ℕ∞))
+
+/-- `Statement:` no stage of `nInfDualRun` is ⊥ of `Bool × ℕ∞ᵒᵈ`. -/
+theorem nInfDualRun_ne_bot (n : ℕ) : nInfDualRun n ≠ ⊥ := by
+  intro h
+  have := congrArg (fun x : BoolNInfL => ofDual x.2) h
+  simp [nInfDualRun, boolNInfL_bot_eq] at this
+
+/-- `Statement:` `nInfDualRun` is strictly decreasing. -/
+theorem nInfDualRun_strictAnti : StrictAnti nInfDualRun := by
+  intro m n hmn
+  refine Prod.mk_lt_mk_iff_right.2 ?_
+  exact toDual_lt_toDual.2 (by exact_mod_cast hmn)
+
+/-- `Statement:` in `ℕ∞`, `n` is covered by `n + 1`. -/
+theorem enat_natCast_covBy_succ (n : ℕ) : (n : ℕ∞) ⋖ ((n + 1 : ℕ) : ℕ∞) :=
+  WithTop.coe_covBy_coe.2 (Order.covBy_add_one n)
+
+/-- `Statement:` every step of `nInfDualRun` is a cover: stage `n + 1` is covered by stage `n`. -/
+theorem nInfDualRun_covBy (n : ℕ) : nInfDualRun (n + 1) ⋖ nInfDualRun n :=
+  Prod.mk_covBy_mk_iff_right.2 (toDual_covBy_toDual_iff.2 (enat_natCast_covBy_succ n))
+
+/-- `Statement:` ⊥ of `Bool × ℕ∞ᵒᵈ` is the greatest lower bound of the stages of `nInfDualRun`. -/
+theorem boolNInfL_bot_isGLB : IsGLB (Set.range nInfDualRun) (⊥ : BoolNInfL) := by
+  refine ⟨fun _ _ => bot_le, fun l hl => ?_⟩
+  have h2 : ∀ n : ℕ, (n : ℕ∞) ≤ ofDual l.2 := fun n => by
+    have := (hl ⟨n, rfl⟩ : l ≤ nInfDualRun n).2
+    exact this
+  have htop : ofDual l.2 = ⊤ := ENat.eq_top_iff_forall_ge.2 h2
+  have h1 : l.1 = false := by
+    have h0 : l.1 ≤ false := (hl ⟨0, rfl⟩ : l ≤ nInfDualRun 0).1
+    exact le_bot_iff.1 h0
+  refine Prod.mk_le_mk.2 ⟨by simp [h1], ?_⟩
+  show l.2 ≤ toDual (⊤ : ℕ∞)
+  rw [← toDual_ofDual l.2, htop]
+
+/-- `Statement:` `nInfDualRun` tends to ⊥ of `Bool × ℕ∞ᵒᵈ` in the product of the discrete topology on
+`Bool` and the order topology on `ℕ∞ᵒᵈ`. -/
+theorem nInfDualRun_tendsto : Tendsto nInfDualRun atTop (𝓝 (⊥ : BoolNInfL)) := by
+  have hN : Tendsto (fun n : ℕ => toDual (n : ℕ∞)) atTop (𝓝 (toDual (⊤ : ℕ∞))) :=
+    ENat.tendsto_natCast_nhds_top
+  exact tendsto_const_nhds.prodMk_nhds hN
+
+/-- `Statement:` no `(false, x)` covers ⊥ of `Bool × ℕ∞ᵒᵈ`: nothing covers ⊤ of `ℕ∞` from below. -/
+theorem boolNInfL_no_nInfDual_cover (x : NInfDual) : ¬ (⊥ : BoolNInfL) ⋖ (false, x) := by
+  intro h
+  have hN : (⊥ : NInfDual) ⋖ x := Prod.mk_covBy_mk_iff_right.1 h
+  have : ofDual x ⋖ (⊤ : ℕ∞) := by
+    rw [← toDual_covBy_toDual_iff]; exact hN
+  exact WithTop.not_covBy_top (α := ℕ) this
+
+/-- `Statement:` the only cover of ⊥ of `Bool × ℕ∞ᵒᵈ` is `(true, ⊥)`; both directions. -/
+theorem boolNInfL_bot_cover_unique (a : BoolNInfL) : (⊥ : BoolNInfL) ⋖ a ↔ a = (true, ⊥) := by
+  constructor
+  · intro h
+    rcases Prod.covBy_iff.1 h with ⟨h1, h2⟩ | ⟨h1, h2⟩
+    · have : a.1 = true := by
+        have := Bool.covBy_iff.1 h1
+        revert this; cases a.1 <;> simp
+      ext
+      · exact this
+      · exact h2.symm
+    · have ha : a = (false, a.2) := Prod.ext h2.symm rfl
+      rw [ha] at h
+      exact absurd h (boolNInfL_no_nInfDual_cover a.2)
+  · rintro rfl; exact boolNInfL_bot_covBy_true
+
+/-- `Statement:` ⊥ of `Bool × ℕ∞ᵒᵈ` has a first step, is the greatest lower bound and the limit of
+`nInfDualRun`, a strictly decreasing run of covers avoiding it, and no `(false, x)` covers it.
+`Reading:` CARRIER, both faces sit above ⊥ of `Bool × ℕ∞ᵒᵈ`, on two directions; at ε₀ of `Ordinal`
+the limit face is below and the cover above. Non-linearity makes both possible here, one way; on a
+linear order they exclude each other (the `example` below; compare `preconnected_iff_no_firstStep`). -/
+theorem boolNInfL_bot_cover_and_limit :
+    (@BotHasFirstStep BoolNInfL (supBotZPS BoolNInfL)) ∧
+    ((∀ n, nInfDualRun n ≠ ⊥) ∧ StrictAnti nInfDualRun ∧
+      (∀ n, nInfDualRun (n + 1) ⋖ nInfDualRun n) ∧
+      IsGLB (Set.range nInfDualRun) (⊥ : BoolNInfL) ∧
+      Tendsto nInfDualRun atTop (𝓝 (⊥ : BoolNInfL))) ∧
+    (∀ x : NInfDual, ¬ (⊥ : BoolNInfL) ⋖ (false, x)) :=
+  ⟨boolNInfL_botHasFirstStep,
+    ⟨nInfDualRun_ne_bot, nInfDualRun_strictAnti, nInfDualRun_covBy, boolNInfL_bot_isGLB,
+      nInfDualRun_tendsto⟩, boolNInfL_no_nInfDual_cover⟩
+
+-- Statement: on a linear order, if ⊥ is covered then no set avoiding ⊥ has ⊥ as greatest lower bound.
+example {α : Type*} [LinearOrder α] [OrderBot α] {a : α} (ha : (⊥ : α) ⋖ a) (S : Set α)
+    (hS : ∀ x ∈ S, x ≠ ⊥) : ¬ IsGLB S (⊥ : α) := fun h =>
+  ha.lt.not_ge (h.2 fun x hx => not_lt.1 fun hx' => ha.2 (bot_lt_iff_ne_bot.2 (hS x hx)) hx')
+
+/-- `Statement:` CONTROL, ⊥ of `ℕ∞ᵒᵈ` alone has no first step under `supBotZPS`. -/
+theorem nInfDual_not_botHasFirstStep : ¬ @BotHasFirstStep NInfDual (supBotZPS NInfDual) := by
+  rw [supBotZPS_botHasFirstStep_iff]
+  rintro ⟨x, hx⟩
+  have : ofDual x ⋖ (⊤ : ℕ∞) := by rw [← toDual_covBy_toDual_iff]; exact hx
+  exact WithTop.not_covBy_top (α := ℕ) this
+
+/-- `Statement:` CONTROL, on `ℕ∞ᵒᵈ` alone the mass of `stepOff` is 0 at every `p`. -/
+theorem nInfDual_stepOff_mass (p : NNReal) (hp : p ≤ 1) :
+    trials p hp (@stepOff NInfDual (supBotZPS NInfDual)) = 0 := by
+  rw [@stepOff_mass NInfDual (supBotZPS NInfDual)]
+  simp [nInfDual_not_botHasFirstStep]
+
+/-- `Statement:` CONTROL, ⊥ of `ℕ∞ᵒᵈ` alone is the greatest lower bound of `n ↦ toDual n`. -/
+theorem nInfDual_bot_isGLB : IsGLB (Set.range fun n : ℕ => toDual (n : ℕ∞)) (⊥ : NInfDual) := by
+  refine ⟨fun _ _ => bot_le, fun l hl => ?_⟩
+  have h2 : ∀ n : ℕ, (n : ℕ∞) ≤ ofDual l := fun n => (hl ⟨n, rfl⟩ : l ≤ toDual (n : ℕ∞))
+  have htop : ofDual l = ⊤ := ENat.eq_top_iff_forall_ge.2 h2
+  show l ≤ toDual (⊤ : ℕ∞)
+  rw [← toDual_ofDual l, htop]
+
+/-- `Statement:` CONTROL, no nonempty family avoiding ⊥ of `Bool` has ⊥ of `Bool` as greatest
+lower bound. -/
+theorem bool_bot_not_isGLB (ι : Type) [Nonempty ι] (t : ι → Bool) (ht : ∀ i, t i ≠ ⊥) :
+    ¬ IsGLB (Set.range t) (⊥ : Bool) := by
+  intro h
+  have : (true : Bool) ∈ lowerBounds (Set.range t) := by
+    rintro _ ⟨i, rfl⟩
+    have := ht i
+    revert this; cases t i <;> decide
+  have := h.2 this
+  exact absurd this (by decide)
+
+-- Statement: ε₀ of `Ordinal` is a successor limit and is covered by its successor.
+example : Order.IsSuccLimit (Ordinal.epsilon 0) ∧
+    Ordinal.epsilon 0 ⋖ Order.succ (Ordinal.epsilon 0) := by
+  refine ⟨?_, Order.covBy_succ _⟩
+  refine Order.IsSuccLimit.mk (not_isMin_iff.2 ⟨0, Ordinal.epsilon_pos 0⟩) ?_
+  rw [Ordinal.isSuccPrelimit_iff_omega0_dvd, ← Ordinal.omega0_opow_epsilon 0]
+  simpa only [Ordinal.opow_one] using
+    Ordinal.opow_dvd_opow Ordinal.omega0 (Order.one_le_iff_pos.2 (Ordinal.epsilon_pos 0))
+
+-- Statement: ⊥ of `Bool × ℕ∞ᵒᵈ` is minimal and is not a successor limit.
+example : IsMin (⊥ : BoolNInfL) ∧ ¬ Order.IsSuccLimit (⊥ : BoolNInfL) :=
+  ⟨isMin_bot, fun h => h.not_isMin isMin_bot⟩
+
+end BoolNInf
 
 end StepOff
 
@@ -2737,6 +2945,31 @@ open ZeroParadox
 #print axioms W
 #print axioms W_not_firstStep
 #print axioms W_not_dense
+#print axioms supBotZPS
+#print axioms supBotZPS_le_iff
+#print axioms supBotZPS_lt_iff
+#print axioms supBotZPS_covBy_iff
+#print axioms supBotZPS_botHasFirstStep_iff
+#print axioms NInfDual
+#print axioms BoolNInfL
+#print axioms boolNInfL_bot_eq
+#print axioms boolNInfL_bot_covBy_true
+#print axioms boolNInfL_botHasFirstStep
+#print axioms boolNInfL_stepOff_mass
+#print axioms nInfDualRun
+#print axioms nInfDualRun_ne_bot
+#print axioms nInfDualRun_strictAnti
+#print axioms enat_natCast_covBy_succ
+#print axioms nInfDualRun_covBy
+#print axioms boolNInfL_bot_isGLB
+#print axioms nInfDualRun_tendsto
+#print axioms boolNInfL_no_nInfDual_cover
+#print axioms boolNInfL_bot_cover_unique
+#print axioms boolNInfL_bot_cover_and_limit
+#print axioms nInfDual_not_botHasFirstStep
+#print axioms nInfDual_stepOff_mass
+#print axioms nInfDual_bot_isGLB
+#print axioms bool_bot_not_isGLB
 #print axioms fadingTrials_fires_iIndepSet
 #print axioms schedule_fires_of_tsum_top
 #print axioms schedule_snap_ae
