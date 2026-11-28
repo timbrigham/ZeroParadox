@@ -143,9 +143,9 @@ signature cannot be misread.
 **Prior art, and the corpus under-searched itself twice before this was written.**
 
 * Mathlib already has the object: `ProbabilityTheory.geometricMeasure p` (`p : unitInterval`), for `p ≠ 0`,
-  with mass `(1 - p) ^ n * p` at `n` (`geometricMeasure_singleton`); at `p = 0` Mathlib sets it to
-  `Measure.dirac 0` (`Mathlib/Probability/Distributions/Geometric.lean`, at the current pin), of
-  which `q n = (1 - p) ^ n` is the standard **survival function** — the in-field name. ⚠
+  with mass `(1 - p) ^ n * p` at `n` (`geometricMeasure_singleton`), of which `q n = (1 - p) ^ n` is the
+  standard **survival function** — the in-field name; at `p = 0` Mathlib sets it to `Measure.dirac 0`
+  (`Mathlib/Probability/Distributions/Geometric.lean`, at the current pin). ⚠
   `geometricMeasure_pos` does **not** carry the same hypotheses as `survival_pos`: Mathlib's takes `p ≠ 0`
   **and** `p ≠ 1`, ours takes only `p < 1`, because `(1-p)^n` needs no positivity where `(1-p)^n * p` does.
   Ours is the weaker-hypothesis one.
