@@ -477487,7 +477487,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 5181,
+        "declarations": 5212,
         "files": 249
       },
       "entries": [
@@ -486191,6 +486191,43 @@
             ]
           },
           "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; for periodic maps (c a root of unity) the die isomorphism sees only cycle structure, irrational rotations not covered; at |c| = 1 only c ~ conj c is proved, the separating half is Rybalkina-Sergeichuk literature (ZeroParadox/Multihomed/BendDie.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0afe8d86-9e90-4f27-9022-354de12181d0",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.uniformOn_univ_map_add",
+            "short": "uniformOn_univ_map_add"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.uniformOn_univ_map_add",
+            "short": "uniformOn_univ_map_add",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XIV (Tim 2026-11-28): zooming out on the 2-adic tower ZMod (2^(n+1)) -> ZMod (2^n) is a coarse-graining observer; lumping, reversibility and the arrow erased only at the last zoom.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -503851,6 +503888,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "244f036c-e96e-43b0-a40d-e59868426381",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.topBit_lumps_id",
+            "short": "topBit_lumps_id"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.topBit_lumps_id",
+            "short": "topBit_lumps_id",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XIV (Tim 2026-11-28): zooming out on the 2-adic tower ZMod (2^(n+1)) -> ZMod (2^n) is a coarse-graining observer; lumping, reversibility and the arrow erased only at the last zoom.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "245715c7-e3e2-4611-a632-f5d9379ea224",
           "new": {
             "file": "ZeroParadox/Category/SeamFrameChange.lean",
@@ -504249,6 +504323,43 @@
             ]
           },
           "reason": "Bridge-audit C5/C7 cited formalizations: GroundZero § V-b (Acc of stepRel = eval.Dom = wfPart, clock-machine wfPart r.e. not decidable, complement unfolds to natInfinity; Mathlib PFun.fix, AMM); GapDecoder ML-random tapes decode and halt (0 < p); BrudnoBridge MLRandom implies FreqBalanced at computable p (Milovanov, SUV Thm 34).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "251a483a-be4e-4673-9405-f8a2059431ad",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.zoom",
+            "short": "zoom"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.zoom",
+            "short": "zoom",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XIV (Tim 2026-11-28): zooming out on the 2-adic tower ZMod (2^(n+1)) -> ZMod (2^n) is a coarse-graining observer; lumping, reversibility and the arrow erased only at the last zoom.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -507720,6 +507831,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "2919f228-f905-4708-be6e-2b3a7c0f80c4",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.shr8_not_lumps",
+            "short": "shr8_not_lumps"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.shr8_not_lumps",
+            "short": "shr8_not_lumps",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Dial § XIV (Tim 2026-11-28): zooming out on the 2-adic tower ZMod (2^(n+1)) -> ZMod (2^n) is a coarse-graining observer; lumping, reversibility and the arrow erased only at the last zoom.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "292e3ec1-9e2b-4739-9a9d-bd58c375063d",
           "new": {
             "file": "ZeroParadox/Valuation/TreeNotForced.lean",
@@ -510864,6 +511012,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "2d0a13e8-7639-4b1c-9933-1ab74ef21fb3",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.zoom_preserves_rot_arrow",
+            "short": "zoom_preserves_rot_arrow"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.zoom_preserves_rot_arrow",
+            "short": "zoom_preserves_rot_arrow",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Dial § XIV (Tim 2026-11-28): zooming out on the 2-adic tower ZMod (2^(n+1)) -> ZMod (2^n) is a coarse-graining observer; lumping, reversibility and the arrow erased only at the last zoom.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -525522,6 +525707,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "41995740-bb4a-4c3c-bebe-c1583e1927dd",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.isMarkovKernel_symWalk",
+            "short": "isMarkovKernel_symWalk"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.isMarkovKernel_symWalk",
+            "short": "isMarkovKernel_symWalk",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XIV (Tim 2026-11-28): zooming out on the 2-adic tower ZMod (2^(n+1)) -> ZMod (2^n) is a coarse-graining observer; lumping, reversibility and the arrow erased only at the last zoom.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "419f1ce1-94e9-4255-8adb-2def0d688d19",
           "new": {
@@ -534439,6 +534661,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "4d5047bb-6a6a-4dd9-897f-88abaa28d4cf",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.symWalk_translate_pair",
+            "short": "symWalk_translate_pair"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.symWalk_translate_pair",
+            "short": "symWalk_translate_pair",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XIV (Tim 2026-11-28): zooming out on the 2-adic tower ZMod (2^(n+1)) -> ZMod (2^n) is a coarse-graining observer; lumping, reversibility and the arrow erased only at the last zoom.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "4d65fcf3-6ba6-4d32-92e0-7ae307f0b156",
           "new": {
@@ -538965,6 +539224,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "533dcb1e-5bd4-4310-9a38-247a20d7cfb6",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.isMarkovKernel_topBit",
+            "short": "isMarkovKernel_topBit"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.isMarkovKernel_topBit",
+            "short": "isMarkovKernel_topBit",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XIV (Tim 2026-11-28): zooming out on the 2-adic tower ZMod (2^(n+1)) -> ZMod (2^n) is a coarse-graining observer; lumping, reversibility and the arrow erased only at the last zoom.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "5372faca-c17b-4076-ac5e-bea3f4eceba6",
           "new": {
             "file": "ZeroParadox/Computability/Occurrence.lean",
@@ -539399,6 +539695,43 @@
             ]
           },
           "reason": "Dial.lean § XI (2026-11-26): the dial on the die. A Markov kernel subordinate to the step relation (a Markov chain whose directed graph lies in Motion.step, Levin-Peres-Wilmer Rem. 1.24); the chain law by Ionescu-Tulcea (Kernel.trajMeasure); geometric holding identified with trials p; almost every run leaves iff leaving has positive weight; controls: no kernel at a point with no step, absorbing points have leave-weight 0, ofFun forces Dirac.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "542a5314-26be-4270-bc74-6bb375201410",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.symWalk_unif_reversible",
+            "short": "symWalk_unif_reversible"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.symWalk_unif_reversible",
+            "short": "symWalk_unif_reversible",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XIV (Tim 2026-11-28): zooming out on the 2-adic tower ZMod (2^(n+1)) -> ZMod (2^n) is a coarse-graining observer; lumping, reversibility and the arrow erased only at the last zoom.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -557900,6 +558233,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "6d7a191f-3fcb-4683-88e3-64ca7fef7d47",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.symWalk_reversible",
+            "short": "symWalk_reversible"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.symWalk_reversible",
+            "short": "symWalk_reversible",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XIV (Tim 2026-11-28): zooming out on the 2-adic tower ZMod (2^(n+1)) -> ZMod (2^n) is a coarse-graining observer; lumping, reversibility and the arrow erased only at the last zoom.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "6d7fef1c-63a5-426d-a170-db904d655e03",
           "new": {
             "file": "ZeroParadox/Ordinal/SnapSuccession.lean",
@@ -562752,6 +563122,43 @@
             "role": []
           },
           "reason": "die-tagged-1029: the adjoined point tagged (Option ℕ) or a limit (Escardó's ℕ∞, NInf): uniform Bool-step trichotomy and selector free on NInf, LPO on Option ℕ; WLPO at ∞; the chain Option ℕ → NInf → Part ℕ and NInf ≃ Computation Unit (Die § XXIII); Tim ruling 2026-10-29",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "7469bdc6-9aca-46cc-a2c5-66dcc2574d77",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.parity4_eq_zoom",
+            "short": "parity4_eq_zoom"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.parity4_eq_zoom",
+            "short": "parity4_eq_zoom",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XIV (Tim 2026-11-28): zooming out on the 2-adic tower ZMod (2^(n+1)) -> ZMod (2^n) is a coarse-graining observer; lumping, reversibility and the arrow erased only at the last zoom.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -575293,6 +575700,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "851199b0-084c-4595-b2e5-ea668615499e",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.rot_not_reversible",
+            "short": "rot_not_reversible"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.rot_not_reversible",
+            "short": "rot_not_reversible",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Dial § XIV (Tim 2026-11-28): zooming out on the 2-adic tower ZMod (2^(n+1)) -> ZMod (2^n) is a coarse-graining observer; lumping, reversibility and the arrow erased only at the last zoom.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "85128d95-1438-4bec-ae5a-f96c82b562f2",
           "new": {
             "file": "ZeroParadox/Multihomed/TwoAdicBend.lean",
@@ -586125,6 +586569,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "94b575ef-541e-43cc-9212-bc67c2e86719",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.zoom_topBit_lumps_id",
+            "short": "zoom_topBit_lumps_id"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.zoom_topBit_lumps_id",
+            "short": "zoom_topBit_lumps_id",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XIV (Tim 2026-11-28): zooming out on the 2-adic tower ZMod (2^(n+1)) -> ZMod (2^n) is a coarse-graining observer; lumping, reversibility and the arrow erased only at the last zoom.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "94ba438e-6531-4173-ab32-91739232b625",
           "new": {
@@ -589802,6 +590283,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "994719da-7afc-40f6-8e91-3fd20552149a",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.zoom_comp_toZModPow",
+            "short": "zoom_comp_toZModPow"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.zoom_comp_toZModPow",
+            "short": "zoom_comp_toZModPow",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XIV (Tim 2026-11-28): zooming out on the 2-adic tower ZMod (2^(n+1)) -> ZMod (2^n) is a coarse-graining observer; lumping, reversibility and the arrow erased only at the last zoom.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "99512ba7-6054-4dd8-ad37-a2d3e398614d",
           "new": {
             "file": "ZeroParadox/Valuation/PadicStillPoint.lean",
@@ -593392,6 +593911,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "9db14fcf-285d-4703-9ee3-1818c16eea87",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.topBit",
+            "short": "topBit"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.topBit",
+            "short": "topBit",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XIV (Tim 2026-11-28): zooming out on the 2-adic tower ZMod (2^(n+1)) -> ZMod (2^n) is a coarse-graining observer; lumping, reversibility and the arrow erased only at the last zoom.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "9db38496-7763-46c1-b256-7738e903e123",
           "new": {
             "file": "ZeroParadox/Multihomed/LimitMotion.lean",
@@ -593671,6 +594227,43 @@
             "role": []
           },
           "reason": "die-tagged-1101: Prop-step trichotomy/selector reductions (EM, WEM), Rosolini lifting RosPart with toRos onto iff LPO, wlpo_of_discrete_tag (Die §§ VIII, IX, XXIII); Tim authorised 2026-11-01",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "9e28a794-733e-4574-be11-351d346836a3",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.setLIntegral_dirac_comp",
+            "short": "setLIntegral_dirac_comp"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.setLIntegral_dirac_comp",
+            "short": "setLIntegral_dirac_comp",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XIV (Tim 2026-11-28): zooming out on the 2-adic tower ZMod (2^(n+1)) -> ZMod (2^n) is a coarse-graining observer; lumping, reversibility and the arrow erased only at the last zoom.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -597313,6 +597906,43 @@
             ]
           },
           "reason": "Rulings 34-42 landing (2026-11-22): two-face asymptote (q2_zero_min_eq_max, cx_floor_eq_iSup_of_tendsto), the tower map (asymptote_preserved, eps0_no_preimage), negation on the sphere (sVal_rInv) and order-reversing involutions, die PinnedLimit/SelfOnlyAt cells, and the name side (disjunctive_of_MLRandom, class_selfOnlyAt_iff, pullback_not_computable)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a2ed98de-1d61-430b-9a1f-d33ccb6db5ea",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.zoom_doubling_lumps",
+            "short": "zoom_doubling_lumps"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.zoom_doubling_lumps",
+            "short": "zoom_doubling_lumps",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XIV (Tim 2026-11-28): zooming out on the 2-adic tower ZMod (2^(n+1)) -> ZMod (2^n) is a coarse-graining observer; lumping, reversibility and the arrow erased only at the last zoom.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -601552,6 +602182,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "a9071854-73cc-4c21-883d-47030ef777c6",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.toZModPow_measurable",
+            "short": "toZModPow_measurable"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.toZModPow_measurable",
+            "short": "toZModPow_measurable",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XIV (Tim 2026-11-28): zooming out on the 2-adic tower ZMod (2^(n+1)) -> ZMod (2^n) is a coarse-graining observer; lumping, reversibility and the arrow erased only at the last zoom.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "a90c1050-f861-4608-afe8-87e11b7504ab",
           "new": {
@@ -601725,6 +602393,43 @@
             ]
           },
           "reason": "RiemannSphere § 0: inversion on OnePoint K over any proper normed field, with ℚ₂ and ℝ instances (ZPQ-REALS-NO-REPAIR-1 evidence, ruling 64)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a9223bd3-6358-47e5-996e-d818b31d484e",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.topBit_apply",
+            "short": "topBit_apply"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.topBit_apply",
+            "short": "topBit_apply",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XIV (Tim 2026-11-28): zooming out on the 2-adic tower ZMod (2^(n+1)) -> ZMod (2^n) is a coarse-graining observer; lumping, reversibility and the arrow erased only at the last zoom.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -612447,6 +613152,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "b5fb4be3-c6c6-4fb8-bd10-ed6581d6e77d",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.zoom_rot_lumps",
+            "short": "zoom_rot_lumps"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.zoom_rot_lumps",
+            "short": "zoom_rot_lumps",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XIV (Tim 2026-11-28): zooming out on the 2-adic tower ZMod (2^(n+1)) -> ZMod (2^n) is a coarse-graining observer; lumping, reversibility and the arrow erased only at the last zoom.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "b60096af-f319-4632-8bbb-0bf386efb067",
           "new": {
             "file": "ZeroParadox/Valuation/LocalTowers.lean",
@@ -613676,6 +614418,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "b7adea6f-dd0f-449e-baa3-62c763e6a7ce",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.shr8",
+            "short": "shr8"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.shr8",
+            "short": "shr8",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XIV (Tim 2026-11-28): zooming out on the 2-adic tower ZMod (2^(n+1)) -> ZMod (2^n) is a coarse-graining observer; lumping, reversibility and the arrow erased only at the last zoom.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "b7b4984a-fe62-443b-8851-8235f15cd15d",
           "new": {
             "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
@@ -614368,6 +615147,43 @@
             ]
           },
           "reason": "Dial § XII every-window subsection: n-time reversal under detailed balance for any observer, and coarse_graining_trade.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b8e9ed36-a74d-4b55-9f2f-d4120a32121e",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.symWalk_lumps",
+            "short": "symWalk_lumps"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.symWalk_lumps",
+            "short": "symWalk_lumps",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XIV (Tim 2026-11-28): zooming out on the 2-adic tower ZMod (2^(n+1)) -> ZMod (2^n) is a coarse-graining observer; lumping, reversibility and the arrow erased only at the last zoom.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -622449,6 +623265,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "c4577867-b670-445b-8d8b-9817d41487dc",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.map_add_const_of_singleton_const",
+            "short": "map_add_const_of_singleton_const"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.map_add_const_of_singleton_const",
+            "short": "map_add_const_of_singleton_const",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XIV (Tim 2026-11-28): zooming out on the 2-adic tower ZMod (2^(n+1)) -> ZMod (2^n) is a coarse-graining observer; lumping, reversibility and the arrow erased only at the last zoom.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "c4818591-ccd1-468c-b56d-54eb53c25559",
           "new": {
             "file": "ZeroParadox/Valuation/OneWayFlow.lean",
@@ -627309,6 +628162,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "cb079bfc-4100-4849-9b93-e4bd837a3aeb",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.padic_doubling_lumps",
+            "short": "padic_doubling_lumps"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.padic_doubling_lumps",
+            "short": "padic_doubling_lumps",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XIV (Tim 2026-11-28): zooming out on the 2-adic tower ZMod (2^(n+1)) -> ZMod (2^n) is a coarse-graining observer; lumping, reversibility and the arrow erased only at the last zoom.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -633372,6 +634263,43 @@
             ]
           },
           "reason": "RiemannSphere § IX (UPDOWN-R2-1c): UP packaged as a ClosureOperator on the reverse sNorm preorder, with the nonzero-point sNorm/valuation comparison it uses",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d1f91f4b-c344-4788-bf90-fae825be37bd",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.zoom_measurable",
+            "short": "zoom_measurable"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.zoom_measurable",
+            "short": "zoom_measurable",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XIV (Tim 2026-11-28): zooming out on the 2-adic tower ZMod (2^(n+1)) -> ZMod (2^n) is a coarse-graining observer; lumping, reversibility and the arrow erased only at the last zoom.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -641316,6 +642244,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "dbd7fb9a-8d04-484d-be2a-b69087b6fa4d",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.zoom_symWalk_lumps",
+            "short": "zoom_symWalk_lumps"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.zoom_symWalk_lumps",
+            "short": "zoom_symWalk_lumps",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XIV (Tim 2026-11-28): zooming out on the 2-adic tower ZMod (2^(n+1)) -> ZMod (2^n) is a coarse-graining observer; lumping, reversibility and the arrow erased only at the last zoom.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "dbd8c71f-4e14-4ad7-a10c-3417bcaba006",
           "new": {
             "file": "ZeroParadox/Multihomed/TwoAdicBend.lean",
@@ -644738,6 +645703,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e0b661e6-9946-4e70-aa84-145c9ae850ce",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.symWalk",
+            "short": "symWalk"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.symWalk",
+            "short": "symWalk",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XIV (Tim 2026-11-28): zooming out on the 2-adic tower ZMod (2^(n+1)) -> ZMod (2^n) is a coarse-graining observer; lumping, reversibility and the arrow erased only at the last zoom.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -652022,6 +653024,43 @@
             ]
           },
           "reason": "common meadow Q_a + wheel_three_distinct in WheelFrac.lean (2026-11-14)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e91170c3-bf63-4d6b-95dd-2bd192a5d07e",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.rot2_reversible",
+            "short": "rot2_reversible"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.rot2_reversible",
+            "short": "rot2_reversible",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XIV (Tim 2026-11-28): zooming out on the 2-adic tower ZMod (2^(n+1)) -> ZMod (2^n) is a coarse-graining observer; lumping, reversibility and the arrow erased only at the last zoom.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -663218,6 +664257,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "f7cae8d4-e70f-4daa-bcd8-b525cfcce2a1",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.symWalk_apply",
+            "short": "symWalk_apply"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.symWalk_apply",
+            "short": "symWalk_apply",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XIV (Tim 2026-11-28): zooming out on the 2-adic tower ZMod (2^(n+1)) -> ZMod (2^n) is a coarse-graining observer; lumping, reversibility and the arrow erased only at the last zoom.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "f7ebbd20-1ec7-409a-a3ee-a5bca575a2f7",
           "new": {
@@ -666639,6 +667715,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "fc71fffe-c09f-4a4c-98e1-cdd1a612d08c",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.zoom_last_step_erases_arrow",
+            "short": "zoom_last_step_erases_arrow"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.zoom_last_step_erases_arrow",
+            "short": "zoom_last_step_erases_arrow",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XIV (Tim 2026-11-28): zooming out on the 2-adic tower ZMod (2^(n+1)) -> ZMod (2^n) is a coarse-graining observer; lumping, reversibility and the arrow erased only at the last zoom.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "fc78ef24-a6ae-4de8-bc41-e3522035a52d",
           "new": {
@@ -668107,6 +669220,43 @@
             ]
           },
           "reason": "New file Order/UpAndOver.lean — atlas core v1: the up-and-over shape (closure + cover), controls, ordinal instance",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "fe713322-150b-467a-b58a-e34ffe23ea85",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.zoom_symWalk_trade",
+            "short": "zoom_symWalk_trade"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.zoom_symWalk_trade",
+            "short": "zoom_symWalk_trade",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial § XIV (Tim 2026-11-28): zooming out on the 2-adic tower ZMod (2^(n+1)) -> ZMod (2^n) is a coarse-graining observer; lumping, reversibility and the arrow erased only at the last zoom.",
           "verify": {
             "axioms": null,
             "sorry_free": null
